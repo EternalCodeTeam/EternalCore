@@ -1,0 +1,68 @@
+plugins {
+    id('java-library')
+    id('com.github.johnrengelman.shadow') version '7.1.0'
+}
+
+group 'com.eternalcode.core'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    gradlePluginPortal()
+    mavenCentral()
+    maven { url = uri('https://papermc.io/repo/repository/maven-public/') }
+    maven { url = uri('https://storehouse.okaeri.eu/repository/maven-public/') }
+    maven { url = uri('https://repo.panda-lang.org/releases') }
+    maven { url = uri('https://repo.extendedclip.com/content/repositories/placeholderapi/') }
+}
+
+dependencies {
+    // lombok
+    compileOnly('org.projectlombok:lombok:1.18.22')
+    annotationProcessor('org.projectlombok:lombok:1.18.22')
+
+    // annotations for plugins
+    compileOnly 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
+    annotationProcessor 'org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT'
+
+    // paper api
+    compileOnly 'io.papermc.paper:paper-api:1.18-R0.1-SNAPSHOT'
+
+    // funnycommands
+    implementation 'net.dzikoysk:funnycommands:0.4.2'
+
+    // cdn configs
+    implementation 'net.dzikoysk:cdn:1.12.3'
+
+    // expresslibe
+    implementation 'org.panda-lang:expressible:1.1.9'
+
+    // bStats
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
+
+    // FastBoard API
+    implementation 'fr.mrmicky:fastboard:1.2.0'
+
+    // PlaceholderAPI
+    compileOnly 'me.clip:placeholderapi:2.10.10'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+compileJava.options.encoding = 'UTF-8'
+shadowJar {
+    archiveFileName = 'EternalCore v${project.version} (MC 1.8-1.17).jar'
+
+    exclude 'org/intellij/lang/annotations/**'
+    exclude 'org/jetbrains/annotations/**'
+    exclude 'javax/**'
+
+    relocate 'net.dzikoysk', 'com.eternalcode.core.libs.net.dzikoysk'
+    relocate 'org.bstats', 'com.eternalcode.core.libs.org.bstats'
+    relocate 'panda', 'com.eternalcode.core.libs.panda'
+    relocate 'org.panda_lang', 'com.eternalcode.core.libs.panda'
+    relocate 'fr.mrmicky.fastboard', 'com.eternalcode.core.libs.fastboard'
+
+}
