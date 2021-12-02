@@ -48,7 +48,7 @@ import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.stream.PandaStream;
 
 @Plugin(name = "EternalCore", version = "1.0")
-@Author("vLucky, Sidd, Dejmi, VelvetDuck, Rollczi, Jakubk15, Igoyek, MastersPR0, zitreF")
+@Author("vLucky, Sidd, Dejmi, VelvetDuck, Rollczi, Jakubk15, Igoyek, zitreF, MastersPR0")
 @ApiVersion(ApiVersion.Target.v1_17)
 @Description("More than Tools!")
 @SoftDependency(value = "PlaceholderAPI")

@@ -4,6 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.utils.BenchmarkUtils;
 import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
@@ -17,14 +18,6 @@ import java.util.List;
 
 @FunnyComponent
 public final class GcCommand {
-    private static long getUsedMemory() {
-        return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576L;
-    }
-
-    private static double[] getTPS() {
-        return Bukkit.getTPS();
-    }
-
     @FunnyCommand(
         name = "gc",
         aliases = {"garbagecollector", "tps", "mspt"},
@@ -35,12 +28,12 @@ public final class GcCommand {
 
     public void execute(Player player, String[] args) {
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS: " + String.format("%.1f", getTPS()[0])));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS: " + String.format("%.1f", BenchmarkUtils.getTPS()[0])));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Max Memory: &f" + Runtime.getRuntime().maxMemory() / 1024 / 1024L + " &7MB"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Total memory: &f" + Runtime.getRuntime().totalMemory() / 1024 / 1024L + " &7MB"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Free memory: &f" + Runtime.getRuntime().freeMemory() / 1024 / 1024L + " &7MB"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Used memory: &f" + getUsedMemory() + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Max Memory: &f" + BenchmarkUtils.maxMemory() + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Total memory: &f" + BenchmarkUtils.totalMemory() + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Free memory: &f" + BenchmarkUtils.freeMemory() + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Used memory: &f" + BenchmarkUtils.getUsedMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Worlds info: "));
         List<World> worlds = Bukkit.getWorlds();
