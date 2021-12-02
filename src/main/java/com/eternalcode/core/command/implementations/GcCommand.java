@@ -30,9 +30,9 @@ public final class GcCommand {
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS: " + String.format("%.1f", BenchmarkUtils.getTPS()[0])));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Max Memory: &f" + Runtime.getRuntime().maxMemory() / 1024 / 1024L + " &7MB"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Total memory: &f" + Runtime.getRuntime().totalMemory() / 1024 / 1024L + " &7MB"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Free memory: &f" + Runtime.getRuntime().freeMemory() / 1024 / 1024L + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Max Memory: &f" + BenchmarkUtils.maxMemory() + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Total memory: &f" + BenchmarkUtils.totalMemory() + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Free memory: &f" + BenchmarkUtils.freeMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Used memory: &f" + BenchmarkUtils.getUsedMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Worlds info: "));
