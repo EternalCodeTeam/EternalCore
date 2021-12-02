@@ -52,7 +52,7 @@ java {
 
 compileJava.options.encoding = 'UTF-8'
 shadowJar {
-    archiveFileName = 'EternalCore v${project.version} (MC 1.8-1.17).jar'
+    archiveFileName = 'EternalCore v${project.version} (MC 1.13-1.18).jar'
 
     exclude 'org/intellij/lang/annotations/**'
     exclude 'org/jetbrains/annotations/**'

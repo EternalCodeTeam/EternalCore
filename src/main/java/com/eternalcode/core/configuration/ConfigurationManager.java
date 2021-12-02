@@ -5,6 +5,7 @@
 package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.EternalCore;
+import com.eternalcode.core.utils.ChatUtils;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.dzikoysk.cdn.Cdn;
@@ -37,7 +38,7 @@ public class ConfigurationManager {
         File file = new File(folderPath, fileName);
 
         if (!folderPath.exists() && folderPath.mkdir()) {
-            Bukkit.getLogger().info("Created file " + fileName);
+            Bukkit.getConsoleSender().sendMessage(ChatUtils.color("[EternalCore] &aSuccessfully created file &7" + fileName));
         }
 
         T load = cdn.load(Source.of(file), configurationClass);
