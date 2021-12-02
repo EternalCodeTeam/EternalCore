@@ -14,10 +14,10 @@ import org.bukkit.entity.Player;
 @FunnyComponent
 public final class CartographyTableCommand {
 
-    private final MessagesConfiguration messagesConfiguration;
+    private final ConfigurationManager configurationManager;
 
     public CartographyTableCommand(ConfigurationManager configurationManager) {
-        this.messagesConfiguration = configurationManager.getMessagesConfiguration();
+        this.configurationManager = configurationManager;
     }
 
     @FunnyCommand(
@@ -27,7 +27,8 @@ public final class CartographyTableCommand {
         acceptsExceeded = true
     )
     public void execute(Player player, String[] args) {
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         player.openCartographyTable(null, true);
-        player.sendMessage(ChatUtils.color(messagesConfiguration.cartographyTableGuiOpenMessage));
+        player.sendMessage(ChatUtils.color(config.cartographyTableGuiOpenMessage));
     }
 }

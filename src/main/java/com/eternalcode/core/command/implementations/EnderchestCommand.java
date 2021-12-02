@@ -4,6 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
@@ -14,6 +16,11 @@ import panda.std.Option;
 
 @FunnyComponent
 public final class EnderchestCommand {
+    private final ConfigurationManager configurationManager;
+
+    public EnderchestCommand(ConfigurationManager configurationManager) {
+        this.configurationManager = configurationManager;
+    }
     @FunnyCommand(
         name = "enderchest",
         aliases = {"ec"},
@@ -22,11 +29,12 @@ public final class EnderchestCommand {
         acceptsExceeded = true
     )
     public void execute(Player player, String[] args) {
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .peek((other) -> {
                 Inventory otherInventory = other.getEnderChest();
                 player.openInventory(otherInventory);
-                player.sendMessage(ChatUtils.color("&8» &7Otwarto enderchesta gracza &f" + other.getName()));
+                player.sendMessage(ChatUtils.color(config.enderchestGuiOpenPlayerMessage + other.getName()));
             }).onEmpty(() -> {
                 player.openInventory(player.getEnderChest());
             });

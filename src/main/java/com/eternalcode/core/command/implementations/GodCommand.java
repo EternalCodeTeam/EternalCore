@@ -4,6 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import org.bukkit.Bukkit;
@@ -12,6 +14,13 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 public final class GodCommand {
+
+    private final ConfigurationManager configurationManager;
+
+    public GodCommand(ConfigurationManager configurationManager) {
+        this.configurationManager = configurationManager;
+    }
+
     @FunnyCommand(
         name = "god",
         aliases = {"godmode"},
@@ -20,11 +29,12 @@ public final class GodCommand {
         acceptsExceeded = true
     )
     public void execute(CommandSender sender, String[] args) {
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .orElse(Option.of(sender).is(Player.class))
             .peek(player -> {
                 player.setInvulnerable(!player.isInvulnerable());
                 player.sendMessage(ChatUtils.color(""));
-            }).onEmpty(() -> sender.sendMessage(ChatUtils.color("&8» &cPodany gracz jest offline.")));
+            }).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
     }
 }
