@@ -15,10 +15,11 @@ import org.bukkit.entity.Player;
 
 @FunnyComponent
 public final class DisposalCommand {
-    private final MessagesConfiguration messagesConfiguration;
+
+    private final ConfigurationManager configurationManager;
 
     public DisposalCommand(ConfigurationManager configurationManager) {
-        this.messagesConfiguration = configurationManager.getMessagesConfiguration();
+        this.configurationManager = configurationManager;
     }
 
     @FunnyCommand(
@@ -29,7 +30,8 @@ public final class DisposalCommand {
         acceptsExceeded = true
     )
     public void execute(Player player) {
-        player.openInventory(Bukkit.createInventory(null, 54, (ChatUtils.component(messagesConfiguration.disposalTitle))));
-        player.sendMessage(ChatUtils.color(messagesConfiguration.disposalGuiOpenMessage));
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
+        player.openInventory(Bukkit.createInventory(null, 54, (ChatUtils.component(config.disposalTitle))));
+        player.sendMessage(ChatUtils.color(config.disposalGuiOpenMessage));
     }
 }

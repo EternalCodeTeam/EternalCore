@@ -17,10 +17,10 @@ import panda.std.Option;
 
 @FunnyComponent
 public final class ClearCommand {
-    private final MessagesConfiguration messagesConfiguration;
+    private final ConfigurationManager configurationManager;
 
     public ClearCommand(ConfigurationManager configurationManager) {
-        this.messagesConfiguration = configurationManager.getMessagesConfiguration();
+        this.configurationManager = configurationManager;
     }
 
     @FunnyCommand(
@@ -30,12 +30,13 @@ public final class ClearCommand {
         acceptsExceeded = true
     )
     public void execute(CommandSender sender, String[] args) {
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .orElse(Option.of(sender).is(Player.class))
             .peek(player -> {
                 player.getInventory().setArmorContents(new ItemStack[0]);
                 player.getInventory().clear();
-                player.sendMessage(ChatUtils.color("&8» &cEkwipunek gracza został wyczyszczony!"));
-            }).onEmpty(() -> sender.sendMessage(ChatUtils.color("&8» &cPodany gracz jest offline.")));
+                player.sendMessage(ChatUtils.color(config.inventoryCleared));
+            }).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
     }
 }

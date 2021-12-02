@@ -4,6 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
@@ -14,6 +16,13 @@ import org.bukkit.inventory.PlayerInventory;
 
 @FunnyComponent
 public final class HatCommand {
+
+    private final ConfigurationManager configurationManager;
+
+    public HatCommand(ConfigurationManager configurationManager) {
+        this.configurationManager = configurationManager;
+    }
+
     @FunnyCommand(
         name = "hat",
         permission = "eternalcore.command.hat",
@@ -21,6 +30,7 @@ public final class HatCommand {
         acceptsExceeded = true
     )
     public void execute(Player player) {
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         PlayerInventory playerInventory = player.getInventory();
         ItemStack itemStack = playerInventory.getHelmet();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
@@ -28,6 +38,6 @@ public final class HatCommand {
             playerInventory.setHelmet(handItem);
             return;
         }
-        player.sendMessage(ChatUtils.color("&8» &cNie możesz użyć komendy /hat, najpierw ściągnij to co masz na głowie."));
+        player.sendMessage(ChatUtils.color(config.nullHatMessage));
     }
 }

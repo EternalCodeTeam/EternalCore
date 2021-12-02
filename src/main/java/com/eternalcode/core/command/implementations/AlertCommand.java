@@ -29,7 +29,6 @@ public final class AlertCommand {
         this.configurationManager = configurationManager;
     }
 
-
     @FunnyCommand(
         name = "alert",
         aliases = {"broadcast", "bc"},
