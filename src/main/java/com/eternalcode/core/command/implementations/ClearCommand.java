@@ -35,7 +35,7 @@ public final class ClearCommand {
             .peek(player -> {
                 player.getInventory().setArmorContents(new ItemStack[0]);
                 player.getInventory().clear();
-                player.sendMessage(ChatUtils.color("&8» &cEkwipunek gracza został wyczyszczony!"));
-            }).onEmpty(() -> sender.sendMessage(ChatUtils.color("&8» &cPodany gracz jest offline.")));
+                player.sendMessage(ChatUtils.color(messagesConfiguration.inventoryCleared));
+            }).onEmpty(() -> sender.sendMessage(ChatUtils.color(messagesConfiguration.offlinePlayer)));
     }
 }

@@ -28,7 +28,7 @@ public final class BanCommand {
             sender.sendMessage(ChatUtils.color("&8» Podany gracz jest offline."));
         }
         targetPlayer.banPlayer(ChatUtils.color(args[1]));
-        sender.sendMessage(ChatUtils.color("&8» &67banowano IP gracza &f" + targetPlayer.getName() + "&7 za: &c" + args[1]));
+        sender.sendMessage(ChatUtils.color("&8» &7banowano IP gracza &f" + targetPlayer.getName() + "&7 za: &c" + args[1]));
         Bukkit.broadcast(ChatUtils.component("&8» &7Gracz &f" + targetPlayer.getName() + "&7 został zbanowany za &c" + args[1]));
     }
 }
