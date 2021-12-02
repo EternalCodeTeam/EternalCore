@@ -1,4 +1,4 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/4funcode/eternalcore/badge)](https://www.codefactor.io/repository/github/4funcode/eternalcore)
+[![CodeFactor](https://www.codefactor.io/repository/github/eternalcodeteam/eternalcore/badge)](https://www.codefactor.io/repository/github/eternalcodeteam/eternalcore)
 
 # EternalCore
 
