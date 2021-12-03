@@ -22,11 +22,10 @@ public final class BanIPCommand {
     )
     public void execute(CommandSender sender, String[] args, CommandInfo commandInfo) {
         // TODO: Simplify code and setup configs, Nullabity check
-
-        //
-        // ban nick
-        // ban nick reason
-        //
+        /*
+        / ban nick
+        / ban nick reason
+         */
         when(args.length < 1, commandInfo.getUsageMessage());
         Player targetPlayer = Bukkit.getPlayer(args[0]);
         if (targetPlayer != null) {
