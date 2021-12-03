@@ -24,6 +24,7 @@ import com.eternalcode.core.command.implementations.GrindstoneCommand;
 import com.eternalcode.core.command.implementations.HatCommand;
 import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
+import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
@@ -33,6 +34,8 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.listeners.PlayerChatListener;
 import com.eternalcode.core.listeners.WeatherChangeListener;
+import com.eternalcode.core.scoreboard.ScoreboardListener;
+import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
 import com.eternalcode.core.utils.ChatUtils;
@@ -50,12 +53,13 @@ import panda.std.stream.PandaStream;
 @Plugin(name = "EternalCore", version = "1.0")
 @Author("vLucky, Sidd, Dejmi, VelvetDuck, Rollczi, Jakubk15, Igoyek, zitreF, MastersPR0")
 @ApiVersion(ApiVersion.Target.v1_17)
-@Description("More than Tools!")
+@Description("Essential plugin for your server!")
 @SoftDependency(value = "PlaceholderAPI")
 
 public final class EternalCore extends JavaPlugin {
 
     @Getter private static EternalCore instance;
+    @Getter private ScoreboardManager scoreboardManager;
     @Getter private UserService userService;
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
@@ -65,9 +69,12 @@ public final class EternalCore extends JavaPlugin {
         long startTime = System.currentTimeMillis();
         instance = this;
 
+        this.scoreboardManager = new ScoreboardManager(this);
+        this.scoreboardManager.updateTask();
         this.configurationManager = new ConfigurationManager(this);
         this.configurationManager.loadConfigs();
-        MessagesConfiguration messagesConfiguration = configurationManager.getMessagesConfiguration();
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
+
 
         // bStats metrics
         // TODO: Jakieś ładne custom charty
@@ -82,7 +89,7 @@ public final class EternalCore extends JavaPlugin {
             .bind(resources -> resources.on(ConfigurationManager.class).assignInstance(configurationManager))
             .bind(new CommandInfoBind())
             .registerDefaultComponents()
-            .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(messagesConfiguration.permissionMessage.replace("{PERMISSION}", permission))))
+            .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(config.permissionMessage.replace("{PERMISSION}", permission))))
             .commands(
                 AlertCommand.class,
                 AnvilCommand.class,
@@ -107,13 +114,15 @@ public final class EternalCore extends JavaPlugin {
                 WorkbenchCommand.class,
                 EternalCoreCommand.class,
                 BanCommand.class,
-                BanIPCommand.class
+                BanIPCommand.class,
+                ScoreboardCommand.class
             ).install();
 
         // Register events
         PandaStream.of(
             new PlayerChatListener(),
             new WeatherChangeListener(),
+            new ScoreboardListener(this),
             new CreateUserListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
