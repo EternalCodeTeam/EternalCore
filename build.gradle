@@ -1,6 +1,6 @@
 plugins {
-    id("java-library")
-    id("com.github.johnrengelman.shadow") version "7.1.0"
+    id "java-library"
+    id "com.github.johnrengelman.shadow" version "7.1.0"
 }
 
 group "com.eternalcode.core"
@@ -18,8 +18,8 @@ repositories {
 
 dependencies {
     // lombok
-    compileOnly("org.projectlombok:lombok:1.18.22")
-    annotationProcessor("org.projectlombok:lombok:1.18.22")
+    compileOnly "org.projectlombok:lombok:1.18.22"
+    annotationProcessor "org.projectlombok:lombok:1.18.22"
 
     // annotations for plugins
     compileOnly "org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT"
