@@ -23,6 +23,7 @@ public final class SkullCommand {
         name = "skull",
         permission = "eternalcore.command.skull",
         usage = "&8» &cPoprawne użycie &7/skull <player>",
+        aliases = "głowa, glowa",
         playerOnly = true,
         acceptsExceeded = true
     )

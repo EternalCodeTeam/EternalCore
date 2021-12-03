@@ -12,15 +12,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class CreateUserListener implements Listener {
 
-    private final EternalCore plugin;
+    private final EternalCore eternalCore;
 
-    public CreateUserListener(EternalCore plugin) {
-        this.plugin = plugin;
+    public CreateUserListener(EternalCore eternalCore) {
+        this.eternalCore = eternalCore;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        UserService userService = plugin.getUserService();
+        UserService userService = eternalCore.getUserService();
         Player player = event.getPlayer();
         //userService.create(player.getUniqueId(), player.getName()).peek(user -> Bukkit.getLogger().info("Created new user " + user.getName() + " [" + user.getUuid() + "]"));
     }
