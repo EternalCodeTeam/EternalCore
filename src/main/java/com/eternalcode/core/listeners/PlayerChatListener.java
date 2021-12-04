@@ -27,9 +27,7 @@ public class PlayerChatListener implements Listener {
 
     @EventHandler
     public void onPlayerKick(PlayerKickEvent event) {
-        if (event.reason().contains(Component.text("disconnect.spam"))) {
-            event.setCancelled(true);
-        }
+        event.setCancelled(event.reason().contains(Component.text("disconnect.spam"))); 
     }
 
     @EventHandler
