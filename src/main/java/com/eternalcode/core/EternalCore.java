@@ -89,6 +89,8 @@ public final class EternalCore extends JavaPlugin {
             .commands(
                 AlertCommand.class,
                 AnvilCommand.class,
+                BanCommand.class,
+                BanIPCommand.class,
                 CartographyTableCommand.class,
                 ChatCommand.class,
                 ClearCommand.class,
@@ -108,9 +110,7 @@ public final class EternalCore extends JavaPlugin {
                 StonecutterCommand.class,
                 WhoIsCommand.class,
                 WorkbenchCommand.class,
-                EternalCoreCommand.class,
-                BanCommand.class,
-                BanIPCommand.class
+                EternalCoreCommand.class
             ).install();
 
         // Register events
