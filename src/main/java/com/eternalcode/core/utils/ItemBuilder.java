@@ -5,16 +5,19 @@
 package com.eternalcode.core.utils;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public final class ItemBuilder {
 
@@ -37,7 +40,8 @@ public final class ItemBuilder {
 
     public ItemBuilder lore(List<String> lore) {
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setLore(lore);
+        // długie, ale przynajmniej non-deprecated :)
+        itemMeta.lore((List<Component>) Component.text((Consumer<? super TextComponent.Builder>) lore));
         itemStack.setItemMeta(itemMeta);
         return this;
     }
@@ -56,7 +60,7 @@ public final class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder skullOwner(String owner) {
+    public ItemBuilder skullOwner(Player owner) {
         ItemMeta meta = itemStack.getItemMeta();
 
         Validate.isTrue(meta instanceof SkullMeta, "Item must be skull.");
@@ -67,7 +71,7 @@ public final class ItemBuilder {
         }
 
         SkullMeta skullMeta = (SkullMeta) meta;
-        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(owner));
+        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(owner.getUniqueId()));
         itemStack.setItemMeta(skullMeta);
         return this;
     }
