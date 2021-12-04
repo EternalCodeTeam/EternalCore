@@ -42,6 +42,9 @@ dependencies {
 
     // PlaceholderAPI
     compileOnly "me.clip:placeholderapi:2.10.10"
+
+    // kyori
+    implementation "net.kyori:adventure-api:4.9.3"
 }
 
 java {
@@ -60,4 +63,5 @@ shadowJar {
     relocate "org.bstats", "com.eternalcode.core.libs.org.bstats"
     relocate "panda", "com.eternalcode.core.libs.panda"
     relocate "org.panda_lang", "com.eternalcode.core.libs.panda"
+    relocate "net.kyori", "com.eternalcode.core.libs.kyori"
 }
