@@ -5,7 +5,30 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.command.binds.CommandInfoBind;
-import com.eternalcode.core.command.implementations.*;
+import com.eternalcode.core.command.implementations.AlertCommand;
+import com.eternalcode.core.command.implementations.AnvilCommand;
+import com.eternalcode.core.command.implementations.BanCommand;
+import com.eternalcode.core.command.implementations.BanIPCommand;
+import com.eternalcode.core.command.implementations.CartographyTableCommand;
+import com.eternalcode.core.command.implementations.ChatCommand;
+import com.eternalcode.core.command.implementations.ClearCommand;
+import com.eternalcode.core.command.implementations.DisposalCommand;
+import com.eternalcode.core.command.implementations.EnderchestCommand;
+import com.eternalcode.core.command.implementations.EternalCoreCommand;
+import com.eternalcode.core.command.implementations.FeedCommand;
+import com.eternalcode.core.command.implementations.FlyCommand;
+import com.eternalcode.core.command.implementations.GamemodeCommand;
+import com.eternalcode.core.command.implementations.GcCommand;
+import com.eternalcode.core.command.implementations.GodCommand;
+import com.eternalcode.core.command.implementations.GrindstoneCommand;
+import com.eternalcode.core.command.implementations.HatCommand;
+import com.eternalcode.core.command.implementations.HealCommand;
+import com.eternalcode.core.command.implementations.KillCommand;
+import com.eternalcode.core.command.implementations.SkullCommand;
+import com.eternalcode.core.command.implementations.SpeedCommand;
+import com.eternalcode.core.command.implementations.StonecutterCommand;
+import com.eternalcode.core.command.implementations.WhoIsCommand;
+import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.listeners.PlayerChatListener;
@@ -32,7 +55,8 @@ import panda.std.stream.PandaStream;
 
 public final class EternalCore extends JavaPlugin {
 
-    @Getter private static EternalCore instance;
+    @Getter
+    private static EternalCore instance;
     @Getter private UserService userService;
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
