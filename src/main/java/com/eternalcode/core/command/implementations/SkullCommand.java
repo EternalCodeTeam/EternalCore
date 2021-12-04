@@ -29,7 +29,6 @@ public final class SkullCommand {
     )
     public void execute(EternalCore plugin, Player player, String[] args, CommandInfo commandInfo) {
         when(args.length != 1, commandInfo.getUsageMessage());
-
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD)
                 .displayName(args[0])

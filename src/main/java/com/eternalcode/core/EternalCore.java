@@ -43,6 +43,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.annotation.dependency.SoftDependency;
 import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
 import org.bukkit.plugin.java.annotation.plugin.Description;
+import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.stream.PandaStream;
@@ -52,10 +53,12 @@ import panda.std.stream.PandaStream;
 @ApiVersion(ApiVersion.Target.v1_17)
 @Description("More than Tools!")
 @SoftDependency(value = "PlaceholderAPI")
+@LogPrefix("[EternalCore]")
 
 public final class EternalCore extends JavaPlugin {
 
-    @Getter private static EternalCore instance;
+    @Getter
+    private static EternalCore instance;
     @Getter private UserService userService;
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
@@ -86,6 +89,8 @@ public final class EternalCore extends JavaPlugin {
             .commands(
                 AlertCommand.class,
                 AnvilCommand.class,
+                BanCommand.class,
+                BanIPCommand.class,
                 CartographyTableCommand.class,
                 ChatCommand.class,
                 ClearCommand.class,
@@ -105,9 +110,7 @@ public final class EternalCore extends JavaPlugin {
                 StonecutterCommand.class,
                 WhoIsCommand.class,
                 WorkbenchCommand.class,
-                EternalCoreCommand.class,
-                BanCommand.class,
-                BanIPCommand.class
+                EternalCoreCommand.class
             ).install();
 
         // Register events
@@ -117,7 +120,7 @@ public final class EternalCore extends JavaPlugin {
             new CreateUserListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        Bukkit.getConsoleSender().sendMessage(ChatUtils.color("&7[EternalCore] Successfully loaded EternalCore in " + (System.currentTimeMillis() - startTime) + "ms"));
+        getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + (System.currentTimeMillis() - startTime) + "ms"));
     }
 
     @Override
