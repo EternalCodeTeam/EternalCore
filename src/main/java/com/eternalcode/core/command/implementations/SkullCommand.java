@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import static com.eternalcode.core.command.Valid.when;
-import static org.bukkit.Bukkit.getPlayer;
 
 @FunnyComponent
 public final class SkullCommand {
@@ -30,11 +29,10 @@ public final class SkullCommand {
     )
     public void execute(EternalCore plugin, Player player, String[] args, CommandInfo commandInfo) {
         when(args.length != 1, commandInfo.getUsageMessage());
-        Player player1 = getPlayer(args[0]);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD)
                 .displayName(args[0])
-                .skullOwner(player1)
+                .skullOwner(args[0])
                 .build();
 
             player.getInventory().addItem(item);
