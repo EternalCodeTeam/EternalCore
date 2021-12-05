@@ -27,7 +27,6 @@ public class ScoreboardManager {
 
     public void updateTask() {
         eternalCore.getServer().getScheduler().runTaskTimerAsynchronously(eternalCore, () -> {
-            AsynchronousFileChannel file = (java.nio.channels.AsynchronousFileChannel) AsynchronousFileChannel;
             for (FastBoard board : this.boards.values()) {
                 updateBoard(board);
             }
