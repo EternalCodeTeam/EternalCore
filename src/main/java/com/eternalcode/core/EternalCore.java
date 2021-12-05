@@ -63,9 +63,11 @@ public final class EternalCore extends JavaPlugin {
     @Getter private UserService userService;
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
+    private boolean isPaper = false;
 
     @Override
     public void onEnable() {
+        this.softwareCheck();
         long startTime = System.currentTimeMillis();
         instance = this;
 
@@ -132,5 +134,25 @@ public final class EternalCore extends JavaPlugin {
     @Override
     public void onDisable() {
         funnyCommands.dispose();
+    }
+
+    private void softwareCheck() {
+        try {
+            Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
+            isPaper = true;
+        } catch (ClassNotFoundException classNotFoundException) {
+            getLogger().warning("");
+            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software use paper minecraft software and other paper 1.13x forks"));
+            getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
+            getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.13-1.18x"));
+            getLogger().warning("");
+        }
+
+        if (isPaper) {
+            getLogger().info("");
+            getLogger().info(ChatUtils.color("&a&lYour server running on supported software congratulations!"));
+            getLogger().info(ChatUtils.color("&a&lServer version: &7" + getServer().getVersion() ));
+            getLogger().info("");
+        }
     }
 }
