@@ -33,6 +33,7 @@ import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.listeners.PlayerChatListener;
+import com.eternalcode.core.listeners.PlayerKickListener;
 import com.eternalcode.core.listeners.WeatherChangeListener;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
@@ -124,6 +125,7 @@ public final class EternalCore extends JavaPlugin {
         PandaStream.of(
             new PlayerChatListener(),
             new WeatherChangeListener(),
+            new PlayerKickListener(),
             new ScoreboardListener(this),
             new CreateUserListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
