@@ -33,16 +33,17 @@ public final class MessagesConfiguration implements Serializable {
 
     @Description("# Gargabage Collector command style")
     public List<String> garbageCollectorMessage = Arrays.asList(
-            "&8[&e⭐&8]",
-            ""
+        "&8[&e⭐&8]",
+        ""
     );
 
     @Description("# Scoreboard Style")
     public String scoreboardTitle = "&e&lExampleCraft.pl";
 
     public List<String> scoreboardStyle = Arrays.asList(
-            "%player_seconds_lived%",
-            "%server_tps_15_colored%",
-            "%localtime_time%"
+        "%player_seconds_lived%",
+        "%server_tps_15_colored%",
+        "%localtime_time%",
+        ""
     );
 }
