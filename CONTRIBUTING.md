@@ -12,3 +12,8 @@
 `[GH-{NUMBER}] Title of PR`
 
 Please don't include troll, racist and sexual names. We are a mature project.
+
+## Building
+
+#### You can build EternalCore using `shadowJar` Gradle task.
+#### Output file will be located at `build/libs`
