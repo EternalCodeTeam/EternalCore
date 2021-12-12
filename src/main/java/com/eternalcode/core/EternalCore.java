@@ -36,6 +36,7 @@ import com.eternalcode.core.listeners.WeatherChangeListener;
 import com.eternalcode.core.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
 import com.eternalcode.core.utils.ChatUtils;
+import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import net.dzikoysk.funnycommands.FunnyCommands;
 import org.bukkit.Bukkit;
@@ -48,6 +49,8 @@ import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.stream.PandaStream;
 
+import java.util.concurrent.TimeUnit;
+
 @Plugin(name = "EternalCore", version = "1.0")
 @Author("vLucky, Sidd, Dejmi, VelvetDuck, Rollczi, Jakubk15, Igoyek, zitreF, MastersPR0")
 @ApiVersion(ApiVersion.Target.v1_17)
@@ -57,15 +60,15 @@ import panda.std.stream.PandaStream;
 
 public final class EternalCore extends JavaPlugin {
 
-    @Getter
-    private static EternalCore instance;
+    @Getter private static EternalCore instance;
     @Getter private UserService userService;
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
 
     @Override
     public void onEnable() {
-        long startTime = System.currentTimeMillis();
+        Stopwatch started = Stopwatch.createStarted();
+
         instance = this;
 
         this.configurationManager = new ConfigurationManager(this);
@@ -120,7 +123,8 @@ public final class EternalCore extends JavaPlugin {
             new CreateUserListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + (System.currentTimeMillis() - startTime) + "ms"));
+        long millis = started.elapsed(TimeUnit.MILLISECONDS);
+        this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
     }
 
     @Override
