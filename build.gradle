@@ -26,7 +26,7 @@ dependencies {
     annotationProcessor "org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT"
 
     // paper api
-    compileOnly "io.papermc.paper:paper-api:1.18-R0.1-SNAPSHOT"
+    compileOnly "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
 
     // funnycommands
     implementation "net.dzikoysk:funnycommands:0.4.2"
