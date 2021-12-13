@@ -7,6 +7,7 @@ package com.eternalcode.core.utils;
 import org.bukkit.Bukkit;
 
 public final class BenchmarkUtils {
+
     public static long getUsedMemory() {
         return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576L;
     }
@@ -26,4 +27,5 @@ public final class BenchmarkUtils {
     public static double[] getTPS() {
         return Bukkit.getTPS();
     }
+
 }
