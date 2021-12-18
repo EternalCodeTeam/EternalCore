@@ -16,7 +16,7 @@ public final class GrindstoneCommand {
         usage = "&8» &cPoprawne użycie &7/grindstone <player>",
         acceptsExceeded = true
     )
-    public void execute(Player player, String[] args) {
+    public void execute(Player player) {
         player.openGrindstone(null, true);
     }
 }

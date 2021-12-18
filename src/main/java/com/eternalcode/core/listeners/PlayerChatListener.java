@@ -47,4 +47,3 @@ public class PlayerChatListener implements Listener {
         event.quitMessage(Component.text("Bye, " + event.getPlayer().getName()));
     }
 }
-

@@ -16,7 +16,7 @@ public final class WorkbenchCommand {
         usage = "&8» &cPoprawne użycie &7/workbench",
         acceptsExceeded = true
     )
-    public void execute(Player player, String[] args) {
+    public void execute(Player player) {
         player.openWorkbench(null, true);
     }
 }

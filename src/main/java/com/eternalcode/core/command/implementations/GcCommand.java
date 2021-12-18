@@ -26,7 +26,7 @@ public final class GcCommand {
         acceptsExceeded = true
     )
 
-    public void execute(Player player, String[] args) {
+    public void execute(Player player) {
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS: " + String.format("%.1f", BenchmarkUtils.getTPS()[0])));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));

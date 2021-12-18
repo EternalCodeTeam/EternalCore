@@ -16,7 +16,7 @@ public final class StonecutterCommand {
         usage = "&8» &cPoprawne użycie &7/stonecutter <player>",
         acceptsExceeded = true
     )
-    public void execute(Player player, String[] args) {
+    public void execute(Player player) {
         player.openStonecutter(null, true);
     }
 }

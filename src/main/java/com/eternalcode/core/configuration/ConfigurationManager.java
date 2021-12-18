@@ -18,13 +18,13 @@ import java.io.Serializable;
 
 public class ConfigurationManager {
 
-    private final EternalCore plugin;
+    private final EternalCore eternalCore;
     private final Cdn cdn = CdnFactory.createYamlLike();
     @Getter private PluginConfiguration pluginConfiguration;
     @Getter private MessagesConfiguration messagesConfiguration;
 
-    public ConfigurationManager(EternalCore plugin) {
-        this.plugin = plugin;
+    public ConfigurationManager(EternalCore eternalCore) {
+        this.eternalCore = eternalCore;
     }
 
     public void loadConfigs() {
@@ -34,11 +34,11 @@ public class ConfigurationManager {
 
     @SneakyThrows
     public <T extends Serializable> T generate(Class<T> configurationClass, String fileName) {
-        File folderPath = plugin.getDataFolder();
+        File folderPath = eternalCore.getDataFolder();
         File file = new File(folderPath, fileName);
 
         if (!folderPath.exists() && folderPath.mkdir()) {
-            Bukkit.getConsoleSender().sendMessage(ChatUtils.color("[EternalCore] &aSuccessfully created file &7" + fileName));
+            Bukkit.getLogger().warning(ChatUtils.color("Can't create configuration files, please try again!"));
         }
 
         T load = cdn.load(Source.of(file), configurationClass);

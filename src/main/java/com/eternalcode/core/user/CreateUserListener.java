@@ -27,4 +27,3 @@ public class CreateUserListener implements Listener {
             .peek(user -> Bukkit.getLogger().info("Created new user " + user.getName() + " [" + user.getUuid() + "]"));
     }
 }
-

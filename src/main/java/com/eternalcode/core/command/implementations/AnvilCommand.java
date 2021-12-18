@@ -28,7 +28,7 @@ public final class AnvilCommand {
         acceptsExceeded = true
     )
 
-    public void execute(Player player, String[] args) {
+    public void execute(Player player) {
         player.openAnvil(null, true);
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         player.sendMessage(ChatUtils.color(config.anvilGuiOpenMessage));
