@@ -15,5 +15,5 @@ Please don't include troll, racist and sexual names. We are a mature project.
 
 ## Building
 
-#### You can build EternalCore using `shadowJar` Gradle task.
+#### You can build EternalCore using `shadowJar` Gradle task or `./gradlew shadowJar` Command in GitBash.
 #### Output file will be located at `build/libs`
