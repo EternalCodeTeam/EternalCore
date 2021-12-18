@@ -21,6 +21,7 @@ public final class EnderchestCommand {
     public EnderchestCommand(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
     }
+
     @FunnyCommand(
         name = "enderchest",
         aliases = {"ec"},

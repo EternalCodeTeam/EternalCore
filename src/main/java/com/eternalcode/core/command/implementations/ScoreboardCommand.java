@@ -1,7 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.entity.Player;
@@ -15,6 +14,6 @@ public final class ScoreboardCommand {
         acceptsExceeded = true
     )
     public void execute(Player player) {
-       EternalCore.getInstance().getScoreboardManager().toggleScoreboard(player);
+        EternalCore.getInstance().getScoreboardManager().toggleScoreboard(player);
     }
 }

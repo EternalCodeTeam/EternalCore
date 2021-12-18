@@ -20,8 +20,10 @@ public class ConfigurationManager {
 
     private final EternalCore eternalCore;
     private final Cdn cdn = CdnFactory.createYamlLike();
-    @Getter private PluginConfiguration pluginConfiguration;
-    @Getter private MessagesConfiguration messagesConfiguration;
+    @Getter
+    private PluginConfiguration pluginConfiguration;
+    @Getter
+    private MessagesConfiguration messagesConfiguration;
 
     public ConfigurationManager(EternalCore eternalCore) {
         this.eternalCore = eternalCore;

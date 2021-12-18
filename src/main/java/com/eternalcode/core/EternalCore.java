@@ -156,7 +156,7 @@ public final class EternalCore extends JavaPlugin {
         if (isPaper) {
             getLogger().info("    ");
             getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
-            getLogger().info(ChatUtils.color("&a&lServer version: &7" + getServer().getVersion() ));
+            getLogger().info(ChatUtils.color("&a&lServer version: &7" + getServer().getVersion()));
             getLogger().info("    ");
         }
     }

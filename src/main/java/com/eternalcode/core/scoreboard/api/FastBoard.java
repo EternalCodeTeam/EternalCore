@@ -25,16 +25,6 @@ public class FastBoard {
 
     private static final Map<Class<?>, Field[]> PACKETS = new HashMap<>(8);
     private static final String[] COLOR_CODES;
-
-    static {
-        List<String> list = new ArrayList<>();
-        for (ChatColor chatColor : ChatColor.values()) {
-            String toString = chatColor.toString();
-            list.add(toString);
-        }
-        COLOR_CODES = list.toArray(new String[0]);
-    }
-
     private static final VersionType VERSION_TYPE;
     private static final Class<?> CHAT_COMPONENT_CLASS;
     private static final Class<?> CHAT_FORMAT_ENUM;
@@ -54,6 +44,15 @@ public class FastBoard {
     private static final Object ENUM_SB_HEALTH_DISPLAY_INTEGER;
     private static final Object ENUM_SB_ACTION_CHANGE;
     private static final Object ENUM_SB_ACTION_REMOVE;
+
+    static {
+        List<String> list = new ArrayList<>();
+        for (ChatColor chatColor : ChatColor.values()) {
+            String toString = chatColor.toString();
+            list.add(toString);
+        }
+        COLOR_CODES = list.toArray(new String[0]);
+    }
 
     static {
         try {
@@ -80,14 +79,14 @@ public class FastBoard {
             Class<?> packetSbScoreClass = FastReflection.nmsClass(gameProtocolPackage, "PacketPlayOutScoreboardScore");
             Class<?> packetSbTeamClass = FastReflection.nmsClass(gameProtocolPackage, "PacketPlayOutScoreboardTeam");
             Class<?> sbTeamClass = VersionType.V1_17.isHigherOrEqual()
-                    ? FastReflection.innerClass(packetSbTeamClass, innerClass -> !innerClass.isEnum()) : null;
+                ? FastReflection.innerClass(packetSbTeamClass, innerClass -> !innerClass.isEnum()) : null;
             Field playerConnectionField = Arrays.stream(entityPlayerClass.getFields())
-                    .filter(field -> field.getType().isAssignableFrom(playerConnectionClass))
-                    .findFirst().orElseThrow(NoSuchFieldException::new);
+                .filter(field -> field.getType().isAssignableFrom(playerConnectionClass))
+                .findFirst().orElseThrow(NoSuchFieldException::new);
             Class<?>[] sendPacketParameters = new Class[]{packetClass};
             Method sendPacketMethod = Arrays.stream(playerConnectionClass.getMethods())
-                    .filter(method -> Arrays.equals(method.getParameterTypes(), sendPacketParameters))
-                    .findFirst().orElseThrow(NoSuchMethodException::new);
+                .filter(method -> Arrays.equals(method.getParameterTypes(), sendPacketParameters))
+                .findFirst().orElseThrow(NoSuchMethodException::new);
 
             MESSAGE_FROM_STRING = lookup.unreflect(craftChatMessageClass.getMethod("fromString", String.class));
             CHAT_COMPONENT_CLASS = FastReflection.nmsClass("network.chat", "IChatBaseComponent");
@@ -108,8 +107,8 @@ public class FastBoard {
                     continue;
                 }
                 Field[] fields = Arrays.stream(clazz.getDeclaredFields())
-                        .filter(field -> !Modifier.isStatic(field.getModifiers()))
-                        .toArray(Field[]::new);
+                    .filter(field -> !Modifier.isStatic(field.getModifiers()))
+                    .toArray(Field[]::new);
                 for (Field field : fields) {
                     field.setAccessible(true);
                 }
@@ -118,8 +117,8 @@ public class FastBoard {
 
             if (VersionType.V1_8.isHigherOrEqual()) {
                 String enumSbActionClass = VersionType.V1_13.isHigherOrEqual()
-                        ? "ScoreboardServer$Action"
-                        : "PacketPlayOutScoreboardScore$EnumScoreboardAction";
+                    ? "ScoreboardServer$Action"
+                    : "PacketPlayOutScoreboardScore$EnumScoreboardAction";
                 ENUM_SB_HEALTH_DISPLAY = FastReflection.nmsClass("world.scores.criteria", "IScoreboardCriteria$EnumScoreboardHealthDisplay");
                 ENUM_SB_ACTION = FastReflection.nmsClass("server", enumSbActionClass);
                 ENUM_SB_HEALTH_DISPLAY_INTEGER = FastReflection.enumValueOf(ENUM_SB_HEALTH_DISPLAY, "INTEGER", 0);
