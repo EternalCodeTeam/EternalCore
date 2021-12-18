@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021. EternalCode.pl
+ */
+
 package com.eternalcode.core.configuration;
 
 import net.dzikoysk.cdn.entity.Description;

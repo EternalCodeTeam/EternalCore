@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021. EternalCode.pl
+ */
+
 package com.eternalcode.core.command.implementations;
 
 import net.dzikoysk.funnycommands.commands.CommandInfo;

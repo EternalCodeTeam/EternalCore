@@ -1,4 +1,8 @@
-package com.eternalcode.core.scoreboard.api;
+/*
+ * Copyright (c) 2021. EternalCode.pl
+ */
+
+package com.eternalcode.core.scoreboard;
 
 import org.bukkit.Bukkit;
 
@@ -9,7 +13,7 @@ import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public final class FastReflection {
+public final class ScoreboardRelfection {
 
     public static final String OBC_PACKAGE = "org.bukkit.craftbukkit";
     public static final String VERSION = Bukkit.getServer().getClass().getPackage().getName().substring(OBC_PACKAGE.length() + 1);
@@ -20,7 +24,7 @@ public final class FastReflection {
 
     private static volatile Object theUnsafe;
 
-    private FastReflection() {
+    private ScoreboardRelfection() {
         throw new UnsupportedOperationException();
     }
 
@@ -50,10 +54,6 @@ public final class FastReflection {
 
     public static Class<?> obcClass(String className) throws ClassNotFoundException {
         return Class.forName(obcClassName(className));
-    }
-
-    public static Optional<Class<?>> obcOptionalClass(String className) {
-        return optionalClass(obcClassName(className));
     }
 
     public static Optional<Class<?>> optionalClass(String className) {
@@ -98,7 +98,7 @@ public final class FastReflection {
         }
 
         if (theUnsafe == null) {
-            synchronized (FastReflection.class) {
+            synchronized (ScoreboardRelfection.class) {
                 if (theUnsafe == null) {
                     Class<?> unsafeClass = Class.forName("sun.misc.Unsafe");
                     Field theUnsafeField = unsafeClass.getDeclaredField("theUnsafe");
