@@ -4,7 +4,7 @@ plugins {
 }
 
 group "com.eternalcode.core"
-version "1.0.0-SNAPSHOT"
+version "1.0.1-SNAPSHOT"
 
 repositories {
     gradlePluginPortal()
@@ -48,7 +48,10 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-compileJava.options.encoding = "UTF-8"
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 shadowJar {
     archiveFileName = "EternalCore v${project.version} (MC 1.13-1.18).jar"
 
