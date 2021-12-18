@@ -33,13 +33,13 @@ import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.listeners.PlayerChatListener;
-import com.eternalcode.core.listeners.PlayerKickListener;
 import com.eternalcode.core.listeners.WeatherChangeListener;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
 import com.eternalcode.core.utils.ChatUtils;
+import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import net.dzikoysk.funnycommands.FunnyCommands;
 import org.bukkit.Bukkit;
@@ -50,6 +50,8 @@ import org.bukkit.plugin.java.annotation.plugin.Description;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.stream.PandaStream;
+
+import java.util.concurrent.TimeUnit;
 
 @Plugin(name = "EternalCore", version = "1.0")
 @Author("vLucky, Sidd, Dejmi, VelvetDuck, Rollczi, Jakubk15, Igoyek, zitreF, MastersPR0")
@@ -69,7 +71,9 @@ public final class EternalCore extends JavaPlugin {
     @Override
     public void onEnable() {
         this.softwareCheck();
-        long startTime = System.currentTimeMillis();
+
+        Stopwatch started = Stopwatch.createStarted();
+
         instance = this;
 
         this.scoreboardManager = new ScoreboardManager(this);
@@ -125,12 +129,12 @@ public final class EternalCore extends JavaPlugin {
         PandaStream.of(
             new PlayerChatListener(),
             new WeatherChangeListener(),
-            new PlayerKickListener(),
             new ScoreboardListener(this),
             new CreateUserListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        getLogger().info(ChatUtils.color("&aSuccessfully loaded EternalCore in " + (System.currentTimeMillis() - startTime) + "ms"));
+        long millis = started.elapsed(TimeUnit.MILLISECONDS);
+        this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
     }
 
     @Override

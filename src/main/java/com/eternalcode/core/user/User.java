@@ -28,6 +28,14 @@ public class User {
         this.uuid = uuid;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
     public void ifOnline(Consumer<Player> playerConsumer) {
         Option.of(Bukkit.getPlayer(name)).peek(playerConsumer);
     }
@@ -55,4 +63,5 @@ public class User {
     public void subTitle(String subTitle, long in, long stay, long out) {
         title(StringUtils.EMPTY, subTitle, in, stay, out);
     }
+
 }

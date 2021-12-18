@@ -23,7 +23,7 @@ public class CreateUserListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         UserService userService = eternalCore.getUserService();
         Player player = event.getPlayer();
-        userService.create(player.getUniqueId(), player.getName()).peek(user -> Bukkit.getLogger().info("Created new user " + player.getName() + " [" + player.getUniqueId() + "]"));
+        userService.create(player.getUniqueId(), player.getName())
+            .peek(user -> Bukkit.getLogger().info("Created new user " + user.getName() + " [" + user.getUuid() + "]"));
     }
 }
-

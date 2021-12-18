@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerChatListener implements Listener {
@@ -22,6 +23,13 @@ public class PlayerChatListener implements Listener {
             return;
         }
         event.getPlayer().sendMessage(ChatUtils.color("Chat jest obecnie wyłączony"));
+    }
+
+    @EventHandler
+    public void onPlayerKick(PlayerKickEvent event) {
+        if (event.reason().contains(Component.text("disconnect.spam"))) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -39,4 +47,3 @@ public class PlayerChatListener implements Listener {
         event.quitMessage(Component.text("Bye, " + event.getPlayer().getName()));
     }
 }
-
