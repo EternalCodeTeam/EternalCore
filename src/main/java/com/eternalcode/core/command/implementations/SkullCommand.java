@@ -23,12 +23,12 @@ public final class SkullCommand {
         name = "skull",
         permission = "eternalcore.command.skull",
         usage = "&8» &cPoprawne użycie &7/skull <player>",
+        aliases = "głowa, glowa",
         playerOnly = true,
         acceptsExceeded = true
     )
     public void execute(EternalCore plugin, Player player, String[] args, CommandInfo commandInfo) {
         when(args.length != 1, commandInfo.getUsageMessage());
-
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD)
                 .displayName(args[0])

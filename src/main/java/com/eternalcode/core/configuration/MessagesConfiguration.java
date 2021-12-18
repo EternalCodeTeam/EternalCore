@@ -31,7 +31,7 @@ public final class MessagesConfiguration implements Serializable {
     public String chatAlreadyDisabled = "&8» &aChat already off!";
     public String chatAlreadyEnabled = "&8» &aChat already on";
 
-    @Description("# Gargabage Collector command style")
+    @Description("# Garbage Collector command style")
     public List<String> garbageCollectorMessage = Arrays.asList(
         "&8[&e⭐&8]",
         ""
