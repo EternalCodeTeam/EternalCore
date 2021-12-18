@@ -15,6 +15,6 @@ public final class ScoreboardCommand {
         acceptsExceeded = true
     )
     public void execute(Player player) {
-       // EternalCore.getInstance().getScoreboardManager().toggleScoreboard(player);
+       EternalCore.getInstance().getScoreboardManager().toggleScoreboard(player);
     }
 }

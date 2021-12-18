@@ -24,6 +24,7 @@ import com.eternalcode.core.command.implementations.GrindstoneCommand;
 import com.eternalcode.core.command.implementations.HatCommand;
 import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
+import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
@@ -33,6 +34,8 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.listeners.PlayerChatListener;
 import com.eternalcode.core.listeners.WeatherChangeListener;
+import com.eternalcode.core.scoreboard.ScoreboardListener;
+import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
 import com.eternalcode.core.utils.ChatUtils;
@@ -56,7 +59,7 @@ import java.util.concurrent.TimeUnit;
 @ApiVersion(ApiVersion.Target.v1_17)
 @Description("More than Tools!")
 @SoftDependency(value = "PlaceholderAPI")
-@LogPrefix("[EternalCore]")
+@LogPrefix("EternalCore")
 
 public final class EternalCore extends JavaPlugin {
 
@@ -64,10 +67,14 @@ public final class EternalCore extends JavaPlugin {
     @Getter private UserService userService;
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
+    @Getter private ScoreboardManager scoreboardManager;
+    private boolean isPaper = false;
 
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
+
+        this.softwareCheck();
 
         instance = this;
 
@@ -113,14 +120,16 @@ public final class EternalCore extends JavaPlugin {
                 StonecutterCommand.class,
                 WhoIsCommand.class,
                 WorkbenchCommand.class,
-                EternalCoreCommand.class
+                EternalCoreCommand.class,
+                ScoreboardCommand.class
             ).install();
 
         // Register events
         PandaStream.of(
             new PlayerChatListener(),
             new WeatherChangeListener(),
-            new CreateUserListener(this)
+            new CreateUserListener(this),
+            new ScoreboardListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
@@ -130,5 +139,25 @@ public final class EternalCore extends JavaPlugin {
     @Override
     public void onDisable() {
         funnyCommands.dispose();
+    }
+
+    private void softwareCheck() {
+        try {
+            Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
+            isPaper = true;
+        } catch (ClassNotFoundException classNotFoundException) {
+            getLogger().warning("    ");
+            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software use paper minecraft software and other paper 1.13x forks"));
+            getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
+            getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.13-1.18x"));
+            getLogger().warning("    ");
+        }
+
+        if (isPaper) {
+            getLogger().info("    ");
+            getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
+            getLogger().info(ChatUtils.color("&a&lServer version: &7" + getServer().getVersion() ));
+            getLogger().info("    ");
+        }
     }
 }
