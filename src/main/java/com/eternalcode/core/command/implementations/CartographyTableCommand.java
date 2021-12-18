@@ -26,7 +26,7 @@ public final class CartographyTableCommand {
         usage = "&8» &cPoprawne użycie &7/cartopgraphytable <player>",
         acceptsExceeded = true
     )
-    public void execute(Player player, String[] args) {
+    public void execute(Player player) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         player.openCartographyTable(null, true);
         player.sendMessage(ChatUtils.color(config.cartographyTableGuiOpenMessage));

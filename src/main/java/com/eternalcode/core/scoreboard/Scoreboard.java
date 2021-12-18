@@ -146,7 +146,7 @@ public class Scoreboard {
             sendObjectivePacket(ObjectiveMode.CREATE);
             sendDisplayObjectivePacket();
         } catch (Throwable t) {
-            throw new RuntimeException("Unable to create SternalBoard", t);
+            throw new RuntimeException("Unable to create scoreboard", t);
         }
     }
 
@@ -168,7 +168,7 @@ public class Scoreboard {
         try {
             sendObjectivePacket(ObjectiveMode.UPDATE);
         } catch (Throwable t) {
-            throw new RuntimeException("Unable to update SternalBoard title", t);
+            throw new RuntimeException("Unable to update scoreboard title", t);
         }
     }
 
@@ -205,7 +205,7 @@ public class Scoreboard {
 
             updateLines(newLines);
         } catch (Throwable t) {
-            throw new RuntimeException("Unable to update SternalBoard lines", t);
+            throw new RuntimeException("Unable to update scoreboard lines", t);
         }
     }
 
@@ -438,7 +438,7 @@ public class Scoreboard {
 
     private void sendPacket(Object packet) throws Throwable {
         if (this.deleted) {
-            throw new IllegalStateException("This SternalBoard is deleted");
+            throw new IllegalStateException("This scoreboard is deleted");
         }
 
         if (this.player.isOnline()) {

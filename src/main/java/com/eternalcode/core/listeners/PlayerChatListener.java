@@ -20,9 +20,9 @@ public class PlayerChatListener implements Listener {
     public void onPlayerChat(AsyncChatEvent event) {
         if (ChatCommand.chatMuted && !event.getPlayer().hasPermission("eternalcore.chat.bypass")) {
             event.setCancelled(true);
+            event.getPlayer().sendMessage(ChatUtils.color("Chat jest obecnie wyłączony"));
             return;
         }
-        event.getPlayer().sendMessage(ChatUtils.color("Chat jest obecnie wyłączony"));
     }
 
     @EventHandler
