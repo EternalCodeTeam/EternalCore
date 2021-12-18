@@ -130,7 +130,7 @@ public final class EternalCore extends JavaPlugin {
             new CreateUserListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        Bukkit.getConsoleSender().sendMessage(ChatUtils.color("&7[EternalCore] Successfully loaded EternalCore in " + (System.currentTimeMillis() - startTime) + "ms"));
+        getLogger().info(ChatUtils.color("&aSuccessfully loaded EternalCore in " + (System.currentTimeMillis() - startTime) + "ms"));
     }
 
     @Override
