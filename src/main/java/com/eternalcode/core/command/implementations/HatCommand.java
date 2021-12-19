@@ -35,8 +35,8 @@ public final class HatCommand {
         ItemStack itemStack = playerInventory.getHelmet();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
         if (itemStack == null || itemStack.getType() == Material.AIR) {
-            playerInventory.remove(handItem);
             playerInventory.setHelmet(handItem);
+            playerInventory.remove(handItem);
             return;
         }
         player.sendMessage(ChatUtils.color(config.nullHatMessage));

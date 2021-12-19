@@ -28,6 +28,7 @@ import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
+import com.eternalcode.core.command.implementations.TeleportCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
@@ -79,12 +80,12 @@ public final class EternalCore extends JavaPlugin {
 
         this.configurationManager = new ConfigurationManager(this);
         this.configurationManager.loadConfigs();
-        MessagesConfiguration messagesConfiguration = configurationManager.getMessagesConfiguration();
+        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
 
         // bStats metrics
         // TODO: Jakieś ładne custom charty
-        //Metrics metrics = new Metrics(this, 13026);
-        //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
+        // Metrics metrics = new Metrics(this, 13026);
+        // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         // Services
         this.userService = new UserService();
@@ -94,7 +95,7 @@ public final class EternalCore extends JavaPlugin {
             .bind(resources -> resources.on(ConfigurationManager.class).assignInstance(configurationManager))
             .bind(new CommandInfoBind())
             .registerDefaultComponents()
-            .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(messagesConfiguration.permissionMessage.replace("{PERMISSION}", permission))))
+            .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(config.permissionMessage.replace("{PERMISSION}", permission))))
             .commands(
                 AlertCommand.class,
                 AnvilCommand.class,
@@ -120,7 +121,8 @@ public final class EternalCore extends JavaPlugin {
                 WhoIsCommand.class,
                 WorkbenchCommand.class,
                 EternalCoreCommand.class,
-                ScoreboardCommand.class
+                ScoreboardCommand.class,
+                TeleportCommand.class
             ).install();
 
         // Register events

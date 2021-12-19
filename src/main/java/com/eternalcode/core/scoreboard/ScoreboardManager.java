@@ -7,6 +7,7 @@ package com.eternalcode.core.scoreboard;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.PlaceholderUtils;
+import fr.mrmicky.fastboard.FastBoard;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class ScoreboardManager {
     private final EternalCore eternalCore;
-    private ConcurrentMap<UUID, Scoreboard> boards = new ConcurrentHashMap<>();
+    private ConcurrentMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
     public ScoreboardManager(EternalCore eternalCore) {
         this.eternalCore = eternalCore;
@@ -24,20 +25,20 @@ public class ScoreboardManager {
 
     public void updateTask() {
         eternalCore.getServer().getScheduler().runTaskTimerAsynchronously(eternalCore, () -> {
-            for (Scoreboard board : this.boards.values()) {
+            for (FastBoard board : this.boards.values()) {
                 updateBoard(board);
             }
         }, 0, 20);
     }
 
-    private void updateBoard(Scoreboard board) {
+    private void updateBoard(FastBoard board) {
         List<String> scoreboardLines = this.eternalCore.getConfigurationManager().getMessagesConfiguration().scoreboardStyle;
         scoreboardLines.replaceAll(s -> PlaceholderUtils.parsePlaceholders(board.getPlayer(), s));
         board.updateLines(scoreboardLines);
     }
 
     public void removeScoreboard(Player player) {
-        Scoreboard board = boards.remove(player.getUniqueId());
+        FastBoard board = boards.remove(player.getUniqueId());
 
         if (board != null) {
             board.delete();
@@ -45,7 +46,7 @@ public class ScoreboardManager {
     }
 
     public void setScoreboard(Player player) {
-        Scoreboard board = new Scoreboard(player);
+        FastBoard board = new FastBoard(player);
 
         board.updateTitle(ChatUtils.color(this.eternalCore.getConfigurationManager().getMessagesConfiguration().scoreboardTitle));
 
@@ -53,7 +54,7 @@ public class ScoreboardManager {
     }
 
     public void toggleScoreboard(Player player) {
-        Scoreboard fastBoard = boards.remove(player.getUniqueId());
+        FastBoard fastBoard = boards.remove(player.getUniqueId());
 
         if (fastBoard != null) {
             fastBoard.delete();

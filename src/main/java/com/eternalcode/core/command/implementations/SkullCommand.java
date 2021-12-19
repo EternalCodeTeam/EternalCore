@@ -27,9 +27,9 @@ public final class SkullCommand {
         playerOnly = true,
         acceptsExceeded = true
     )
-    public void execute(EternalCore plugin, Player player, String[] args, CommandInfo commandInfo) {
+    public void execute(EternalCore eternalCore, Player player, String[] args, CommandInfo commandInfo) {
         when(args.length != 1, commandInfo.getUsageMessage());
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(eternalCore, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD)
                 .displayName(args[0])
                 .skullOwner(args[0])

@@ -36,8 +36,6 @@ public final class EnderchestCommand {
                 Inventory otherInventory = other.getEnderChest();
                 player.openInventory(otherInventory);
                 player.sendMessage(ChatUtils.color(config.enderchestGuiOpenPlayerMessage + other.getName()));
-            }).onEmpty(() -> {
-                player.openInventory(player.getEnderChest());
-            });
+            }).onEmpty(() -> player.openInventory(player.getEnderChest()));
     }
 }
