@@ -41,7 +41,7 @@ dependencies {
     implementation "org.bstats:bstats-bukkit:2.2.1"
 
     // PlaceholderAPI
-    compileOnly "me.clip:placeholderapi:2.11.0"
+    compileOnly "me.clip:placeholderapi:2.11.1"
 
     // FastBoard API
     implementation "fr.mrmicky:fastboard:1.2.1"
