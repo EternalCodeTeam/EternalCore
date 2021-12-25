@@ -7,8 +7,6 @@ package com.eternalcode.core;
 import com.eternalcode.core.command.binds.CommandInfoBind;
 import com.eternalcode.core.command.implementations.AlertCommand;
 import com.eternalcode.core.command.implementations.AnvilCommand;
-import com.eternalcode.core.command.implementations.BanCommand;
-import com.eternalcode.core.command.implementations.BanIPCommand;
 import com.eternalcode.core.command.implementations.CartographyTableCommand;
 import com.eternalcode.core.command.implementations.ChatCommand;
 import com.eternalcode.core.command.implementations.ClearCommand;
@@ -80,6 +78,10 @@ public final class EternalCore extends JavaPlugin {
 
         this.configurationManager = new ConfigurationManager(this);
         this.configurationManager.loadConfigs();
+
+        this.scoreboardManager = new ScoreboardManager(this);
+        this.scoreboardManager.updateTask();
+
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
 
         // bStats metrics
@@ -93,14 +95,13 @@ public final class EternalCore extends JavaPlugin {
             .bind(resources -> resources.on(EternalCore.class).assignInstance(this))
             .bind(resources -> resources.on(UserService.class).assignInstance(userService))
             .bind(resources -> resources.on(ConfigurationManager.class).assignInstance(configurationManager))
+            .bind(resources -> resources.on(ScoreboardManager.class).assignInstance(scoreboardManager))
             .bind(new CommandInfoBind())
             .registerDefaultComponents()
             .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(config.permissionMessage.replace("{PERMISSION}", permission))))
             .commands(
                 AlertCommand.class,
                 AnvilCommand.class,
-                BanCommand.class,
-                BanIPCommand.class,
                 CartographyTableCommand.class,
                 ChatCommand.class,
                 ClearCommand.class,
@@ -157,7 +158,7 @@ public final class EternalCore extends JavaPlugin {
         if (isPaper) {
             getLogger().info("    ");
             getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
-            getLogger().info(ChatUtils.color("&a&lServer version: &7" + getServer().getVersion()));
+            getLogger().info(ChatUtils.color("&a&lServer version: &7" + Bukkit.getServer().getVersion()));
             getLogger().info("    ");
         }
     }
