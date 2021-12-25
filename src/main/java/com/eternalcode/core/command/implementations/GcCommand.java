@@ -22,7 +22,7 @@ public final class GcCommand {
         name = "gc",
         aliases = {"garbagecollector", "tps", "mspt"},
         permission = "eternalcore.command.gc",
-        usage = "&cPoprawne użycie &7/gc <full/worlds>",
+        usage = "&cPoprawne użycie &7/gc",
         acceptsExceeded = true
     )
 
@@ -34,6 +34,8 @@ public final class GcCommand {
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Total memory: &f" + BenchmarkUtils.totalMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Free memory: &f" + BenchmarkUtils.freeMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Used memory: &f" + BenchmarkUtils.getUsedMemory() + " &7MB"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7CPU Cores: &f" + BenchmarkUtils.cpuCores()));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Worlds info: "));
         List<World> worlds = Bukkit.getWorlds();

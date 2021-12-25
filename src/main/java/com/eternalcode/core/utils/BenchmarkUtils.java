@@ -24,6 +24,10 @@ public final class BenchmarkUtils {
         return Runtime.getRuntime().freeMemory() / 1024 / 1024L;
     }
 
+    public static long cpuCores() {
+        return Runtime.getRuntime().availableProcessors();
+    }
+
     public static double[] getTPS() {
         return Bukkit.getTPS();
     }
