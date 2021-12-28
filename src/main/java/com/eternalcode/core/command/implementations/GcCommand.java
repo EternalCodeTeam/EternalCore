@@ -28,7 +28,7 @@ public final class GcCommand {
 
     public void execute(Player player) {
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS: " + String.format("%.1f", BenchmarkUtils.getTPS()[0])));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS from last 1m, 5m, 15m: " + BenchmarkUtils.getTPS()));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Max Memory: &f" + BenchmarkUtils.maxMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Total memory: &f" + BenchmarkUtils.totalMemory() + " &7MB"));
@@ -36,6 +36,7 @@ public final class GcCommand {
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Used memory: &f" + BenchmarkUtils.getUsedMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7CPU Cores: &f" + BenchmarkUtils.cpuCores()));
+        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7CPU Model: &f" + BenchmarkUtils.cpuName()));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Worlds info: "));
         List<World> worlds = Bukkit.getWorlds();
