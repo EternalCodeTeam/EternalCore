@@ -4,12 +4,6 @@
 
 package com.eternalcode.core.utils;
 
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-
-import java.util.Arrays;
-
 public final class BenchmarkUtils {
 
     public static long getUsedMemory() {
@@ -34,17 +28,5 @@ public final class BenchmarkUtils {
 
     public static String cpuName() {
         return System.getenv("PROCESSOR_IDENTIFIER");
-    }
-
-    public static String getTPS() {
-        double[] tps = Bukkit.getTPS();
-        String[] tpsAvg = Arrays.stream(tps).mapToObj(BenchmarkUtils::format).toArray(String[]::new);
-
-        return StringUtils.join(tpsAvg, ", ");
-    }
-
-    private static String format(double tps) {
-        return ((tps > 18.0) ? ChatColor.GREEN : (tps > 16.0) ? ChatColor.YELLOW : ChatColor.RED)
-            + ((tps > 20.0) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0);
     }
 }
