@@ -4,8 +4,6 @@
 
 package com.eternalcode.core.utils;
 
-import org.bukkit.Bukkit;
-
 public final class BenchmarkUtils {
 
     public static long getUsedMemory() {
@@ -28,8 +26,7 @@ public final class BenchmarkUtils {
         return Runtime.getRuntime().availableProcessors();
     }
 
-    public static double[] getTPS() {
-        return Bukkit.getTPS();
+    public static String cpuName() {
+        return System.getenv("PROCESSOR_IDENTIFIER");
     }
-
 }
