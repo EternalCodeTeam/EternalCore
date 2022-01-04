@@ -27,6 +27,7 @@ public final class SkullCommand {
         playerOnly = true,
         acceptsExceeded = true
     )
+
     public void execute(EternalCore eternalCore, Player player, String[] args, CommandInfo commandInfo) {
         when(args.length != 1, commandInfo.getUsageMessage());
         Bukkit.getScheduler().runTaskAsynchronously(eternalCore, () -> {

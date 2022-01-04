@@ -26,7 +26,7 @@ public final class MessagesConfiguration implements Serializable {
     public String nullHatMessage = "&8» &cYou cannot use the /hat command.";
     public String adminChatFormat = "&8[&4AdminChat&8] &c{TEXT}";
     public String helpOpFormat = "&8[&4HelpOp&8] &c{TEXT}";
-    public String helpOpSend = "&8» This message has been successfully sent to administration";
+    public String helpOpSend = "&8» &aThis message has been successfully sent to administration";
     public String chatDisabled = "&8» &aThe chat has been off by {NICK}!";
     public String chatEnabled = "&8» &aThe chat has been on by {NICK}!";
     public String chatCleared = "&8» &aChat has been cleared by {NICK}!";

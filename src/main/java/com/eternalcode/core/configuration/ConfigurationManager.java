@@ -39,8 +39,10 @@ public final class ConfigurationManager {
         File folderPath = eternalCore.getDataFolder();
         File file = new File(folderPath, fileName);
 
-        if (!folderPath.exists() && folderPath.mkdir()) {
-            Bukkit.getLogger().warning(ChatUtils.color("Can't create configuration files, please try again!"));
+        if (!eternalCore.getDataFolder().exists()) {
+            if (!eternalCore.getDataFolder().mkdir()) {
+                Bukkit.getLogger().warning("Can't create data folder!");
+            }
         }
 
         Resource resource = Source.of(file);

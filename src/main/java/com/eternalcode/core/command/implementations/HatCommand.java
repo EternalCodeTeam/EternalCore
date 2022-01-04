@@ -29,6 +29,7 @@ public final class HatCommand {
         usage = "&8» &cPoprawne użycie &7/hat",
         acceptsExceeded = true
     )
+
     public void execute(Player player) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         PlayerInventory playerInventory = player.getInventory();

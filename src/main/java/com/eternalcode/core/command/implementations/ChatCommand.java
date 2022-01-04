@@ -36,6 +36,7 @@ public final class ChatCommand {
         usage = "&cPoprawne użycie &7/chat <clear/on/off>",
         acceptsExceeded = true
     )
+
     public void execute(CommandSender sender, String[] args, CommandInfo commandInfo) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         when(args.length < 1, commandInfo.getUsageMessage());

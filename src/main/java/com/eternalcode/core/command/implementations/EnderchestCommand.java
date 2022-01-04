@@ -29,6 +29,7 @@ public final class EnderchestCommand {
         usage = "&8» &cPoprawne użycie &7/enderchest <player>",
         acceptsExceeded = true
     )
+
     public void execute(Player player, String[] args) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))

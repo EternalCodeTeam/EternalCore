@@ -2,6 +2,7 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
@@ -24,16 +25,17 @@ public final class AdminChatCommand {
         aliases = {"ac"},
         permission = "eternalcore.command.adminchat",
         usage = "&8» &cPoprawne użycie &7/adminchat <text>",
-        acceptsExceeded = true
+        acceptsExceeded = true,
+        async = true
     )
 
     public void execute(String[] args, CommandInfo commandInfo) {
         when(args.length < 1, commandInfo.getUsageMessage());
-        String text = StringUtils.join(args, " ", 1, args.length);
+        String text = StringUtils.join(args, " ", 0, args.length);
 
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Bukkit.getOnlinePlayers().stream().filter(players ->
             players.hasPermission("eternalcode.adminchat.spy")).forEach(players ->
-            players.sendMessage(config.adminChatFormat.replace("{TEXT}", text)));
+            players.sendMessage(ChatUtils.color(config.adminChatFormat.replace("{TEXT}", text))));
     }
 }

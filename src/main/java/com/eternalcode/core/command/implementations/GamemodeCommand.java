@@ -27,6 +27,7 @@ public final class GamemodeCommand {
         usage = "&8» &cPoprawne użycie &7/gamemode <player>",
         acceptsExceeded = true
     )
+
     public void execute(CommandSender sender, String[] args, CommandInfo commandInfo) {
         when(args.length < 1, commandInfo.getUsageMessage());
         Player player = (Player) sender;

@@ -17,6 +17,7 @@ public final class ScoreboardCommand {
         usage = "&8» &cPoprawne użycie &7/scoreboard",
         acceptsExceeded = true
     )
+
     public void execute(Player player) {
         EternalCore.getInstance().getScoreboardManager().toggleScoreboard(player);
     }
