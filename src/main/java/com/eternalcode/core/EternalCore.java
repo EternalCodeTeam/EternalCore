@@ -5,6 +5,7 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.command.binds.CommandInfoBind;
+import com.eternalcode.core.command.implementations.AdminChatCommand;
 import com.eternalcode.core.command.implementations.AlertCommand;
 import com.eternalcode.core.command.implementations.AnvilCommand;
 import com.eternalcode.core.command.implementations.CartographyTableCommand;
@@ -21,6 +22,7 @@ import com.eternalcode.core.command.implementations.GodCommand;
 import com.eternalcode.core.command.implementations.GrindstoneCommand;
 import com.eternalcode.core.command.implementations.HatCommand;
 import com.eternalcode.core.command.implementations.HealCommand;
+import com.eternalcode.core.command.implementations.HelpOpCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
 import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
@@ -31,8 +33,8 @@ import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.listeners.PlayerBasicListeners;
 import com.eternalcode.core.listeners.PlayerChatListener;
-import com.eternalcode.core.listeners.WeatherChangeListener;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
@@ -50,11 +52,10 @@ import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.stream.PandaStream;
-
 import java.util.concurrent.TimeUnit;
 
 @Plugin(name = "EternalCore", version = "1.0")
-@Author("vLucky, Sidd, Dejmi, VelvetDuck, Rollczi, Jakubk15, Igoyek, zitreF, MastersPR0")
+@Author("EternalCodeTeam")
 @ApiVersion(ApiVersion.Target.v1_17)
 @Description("Essential plugin for your server!")
 @SoftDependency(value = "PlaceholderAPI")
@@ -124,13 +125,15 @@ public final class EternalCore extends JavaPlugin {
                 WorkbenchCommand.class,
                 EternalCoreCommand.class,
                 ScoreboardCommand.class,
-                TeleportCommand.class
+                TeleportCommand.class,
+                AdminChatCommand.class,
+                HelpOpCommand.class
             ).install();
 
         // Register events
         PandaStream.of(
             new PlayerChatListener(),
-            new WeatherChangeListener(),
+            new PlayerBasicListeners(configurationManager),
             new CreateUserListener(this),
             new ScoreboardListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
@@ -149,18 +152,14 @@ public final class EternalCore extends JavaPlugin {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
             isPaper = true;
         } catch (ClassNotFoundException classNotFoundException) {
-            getLogger().warning("    ");
-            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software use paper minecraft software and other paper 1.13x forks"));
+            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.13x forks"));
             getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
             getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.13-1.18x"));
-            getLogger().warning("    ");
         }
 
         if (isPaper) {
-            getLogger().info("    ");
             getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
             getLogger().info(ChatUtils.color("&a&lServer version: &7" + Bukkit.getServer().getVersion()));
-            getLogger().info("    ");
         }
     }
 }
