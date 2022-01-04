@@ -20,6 +20,7 @@ public final class KillCommand {
         usage = "&8» &cPoprawne użycie &7/kill <player>",
         acceptsExceeded = true
     )
+
     public void execute(CommandSender sender, String[] args) {
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .orElse(Option.of(sender).is(Player.class))

@@ -26,19 +26,4 @@ public class PlayerChatListener implements Listener {
             return;
         }
     }
-
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        event.deathMessage(null);
-    }
-
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        event.joinMessage(Component.text("Hello, " + event.getPlayer().getName()));
-    }
-
-    @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent event) {
-        event.quitMessage(Component.text("Bye, " + event.getPlayer().getName()));
-    }
 }

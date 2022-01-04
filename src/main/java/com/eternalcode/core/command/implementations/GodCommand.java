@@ -28,6 +28,7 @@ public final class GodCommand {
         usage = "&8» &cPoprawne użycie &7/god <player>",
         acceptsExceeded = true
     )
+
     public void execute(CommandSender sender, String[] args) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))

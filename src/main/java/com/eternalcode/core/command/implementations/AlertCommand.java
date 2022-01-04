@@ -36,6 +36,7 @@ public final class AlertCommand {
         usage = "&8» &cPoprawne użycie &7/alert <title/actionbar/chat> <text>",
         acceptsExceeded = true
     )
+
     public void execute(UserService service, String[] args, CommandInfo commandInfo) {
         when(args.length < 2, commandInfo.getUsageMessage());
         String text = StringUtils.join(args, " ", 1, args.length);

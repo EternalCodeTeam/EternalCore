@@ -22,13 +22,13 @@ public final class FeedCommand {
         this.configurationManager = configurationManager;
     }
 
-
     @FunnyCommand(
         name = "feed",
         permission = "eternalcore.command.feed",
         usage = "&8» &cPoprawne użycie &7/feed <player>",
         acceptsExceeded = true
     )
+
     public void execute(CommandSender sender, String[] args) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))

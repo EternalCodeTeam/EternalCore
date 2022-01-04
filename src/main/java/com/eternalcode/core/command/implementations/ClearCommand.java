@@ -29,6 +29,7 @@ public final class ClearCommand {
         usage = "&8» &cPoprawne użycie &7/clear <player>",
         acceptsExceeded = true
     )
+
     public void execute(CommandSender sender, String[] args) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
