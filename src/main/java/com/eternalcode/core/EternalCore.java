@@ -54,7 +54,7 @@ import panda.std.stream.PandaStream;
 import java.util.concurrent.TimeUnit;
 
 @Plugin(name = "EternalCore", version = "1.0")
-@Author(EternalCodeTeam")
+@Author("EternalCodeTeam")
 @ApiVersion(ApiVersion.Target.v1_17)
 @Description("Essential plugin for your server!")
 @SoftDependency(value = "PlaceholderAPI")
