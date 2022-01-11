@@ -69,6 +69,7 @@ public final class EternalCore extends JavaPlugin {
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
+    private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
     private boolean isPaper = false;
 
     @Override
@@ -138,6 +139,11 @@ public final class EternalCore extends JavaPlugin {
                 new ScoreboardListener(this, configurationManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
+        switch (version) {
+            case "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_14_R1", "v1_15_R1", "v1_16_R1" ->
+                Bukkit.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
+        }
+
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
     }
@@ -152,7 +158,7 @@ public final class EternalCore extends JavaPlugin {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
             isPaper = true;
         } catch (ClassNotFoundException classNotFoundException) {
-            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.13x forks"));
+            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.17x forks"));
             getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
             getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.17-1.18x"));
         }

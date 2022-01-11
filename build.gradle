@@ -12,7 +12,6 @@ repositories {
     maven { url "https://papermc.io/repo/repository/maven-public/" }
     maven { url "https://repo.panda-lang.org/releases" }
     maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
-    maven { url 'https://jitpack.io' }
 
 }
 
