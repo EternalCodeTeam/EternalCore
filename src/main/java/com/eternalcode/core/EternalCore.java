@@ -4,6 +4,7 @@
 
 package com.eternalcode.core;
 
+import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.command.binds.CommandInfoBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
 import com.eternalcode.core.command.implementations.AlertCommand;
@@ -33,7 +34,7 @@ import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.listeners.PlayerBasicListeners;
-import com.eternalcode.core.listeners.PlayerChatListener;
+import com.eternalcode.core.chat.PlayerChatListener;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
@@ -62,11 +63,14 @@ import java.util.concurrent.TimeUnit;
 
 public final class EternalCore extends JavaPlugin {
 
-    @Getter private static EternalCore instance;
-    @Getter private UserService userService;
-    @Getter private FunnyCommands funnyCommands;
-    @Getter private ConfigurationManager configurationManager;
-    @Getter private ScoreboardManager scoreboardManager;
+    @Getter private static EternalCore      instance;
+
+    @Getter private FunnyCommands           funnyCommands;
+    @Getter private UserService             userService;
+
+    @Getter private ConfigurationManager    configurationManager;
+    @Getter private ScoreboardManager       scoreboardManager;
+    @Getter private ChatManager             chatManager;
     private boolean isPaper = false;
 
     @Override
@@ -83,6 +87,8 @@ public final class EternalCore extends JavaPlugin {
         this.scoreboardManager = new ScoreboardManager(this);
         this.scoreboardManager.updateTask();
 
+        this.chatManager = new ChatManager(configurationManager);
+
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
 
         // bStats metrics
@@ -97,6 +103,7 @@ public final class EternalCore extends JavaPlugin {
             .bind(resources -> resources.on(UserService.class).assignInstance(userService))
             .bind(resources -> resources.on(ConfigurationManager.class).assignInstance(configurationManager))
             .bind(resources -> resources.on(ScoreboardManager.class).assignInstance(scoreboardManager))
+            .bind(resources -> resources.on(ChatManager.class).assignInstance(chatManager))
             .bind(new CommandInfoBind())
             .registerDefaultComponents()
             .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(config.permissionMessage.replace("{PERMISSION}", permission))))
@@ -130,7 +137,7 @@ public final class EternalCore extends JavaPlugin {
 
         // Register events
         PandaStream.of(
-            new PlayerChatListener(),
+            new PlayerChatListener(this),
             new PlayerBasicListeners(configurationManager),
             new CreateUserListener(this),
             new ScoreboardListener(this)

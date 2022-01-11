@@ -4,64 +4,42 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatManager;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-
-import java.util.stream.IntStream;
 
 import static com.eternalcode.core.command.Valid.when;
 
 @FunnyComponent
 public final class ChatCommand {
-    public static boolean chatMuted = false;
 
-    private final ConfigurationManager configurationManager;
+    private final ChatManager chatManager;
 
-    public ChatCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public ChatCommand(ChatManager chatManager) {
+        this.chatManager = chatManager;
     }
 
     @FunnyCommand(
         name = "chat",
         aliases = {"czat"},
         permission = "eternalcore.command.chat",
-        usage = "&cPoprawne użycie &7/chat <clear/on/off>",
+        usage = "&cPoprawne użycie &7/chat <clear/on/off/slowmode> [time]",
         acceptsExceeded = true
     )
 
     public void execute(CommandSender sender, String[] args, CommandInfo commandInfo) {
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         when(args.length < 1, commandInfo.getUsageMessage());
+
         switch (args[0].toLowerCase()) {
-            case "clear" -> {
-                IntStream.range(0, 100).forEach(i -> Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" ")));
-                Bukkit.broadcast(Component.text(ChatUtils.color(config.chatCleared).replace("{NICK}", sender.getName())));
-            }
-            case "on" -> {
-                if (!chatMuted) {
-                    sender.sendMessage(ChatUtils.color(config.chatAlreadyEnabled));
-                    return;
-                }
-
-                chatMuted = false;
-                Bukkit.broadcast(Component.text(ChatUtils.color(config.chatEnabled).replace("{NICK}", sender.getName())));
-            }
-            case "off" -> {
-                if (chatMuted) {
-                    sender.sendMessage(ChatUtils.color(config.chatAlreadyDisabled));
-                    return;
-                }
-
-                chatMuted = true;
-                Bukkit.broadcast(Component.text(ChatUtils.color(config.chatDisabled).replace("{NICK}", sender.getName())));
+            case "clear" -> this.chatManager.clearChat(sender);
+            case "on" -> this.chatManager.switchChat(sender, true);
+            case "off" -> this.chatManager.switchChat(sender, false);
+            case "slowmode" -> {
+                when(args.length != 2, "&cPoprawne użycie &7/chat slowmode [time]");
+                this.chatManager.slowMode(sender, args[1]);
             }
             default -> throw new ValidationException(commandInfo.getUsageMessage());
         }

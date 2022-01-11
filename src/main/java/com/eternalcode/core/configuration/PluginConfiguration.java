@@ -21,4 +21,7 @@ public final class PluginConfiguration implements Serializable {
     public boolean disableBlockPlacing = false;
     public boolean disableFood = false;
     public boolean clearDropAtDeath = false;
+
+    @Description("# Chat Settings")
+    public int chatSlowMode = 15;
 }
