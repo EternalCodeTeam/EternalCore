@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class ScoreboardManager {
     private final EternalCore eternalCore;
-    private ConcurrentMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
+    private final ConcurrentMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
     public ScoreboardManager(EternalCore eternalCore) {
         this.eternalCore = eternalCore;

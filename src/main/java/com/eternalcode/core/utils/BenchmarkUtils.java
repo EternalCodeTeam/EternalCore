@@ -45,4 +45,7 @@ public final class BenchmarkUtils {
         return ((tps > 18.0) ? ChatColor.GREEN : (tps > 16.0) ? ChatColor.YELLOW : ChatColor.RED)
             + ((tps > 20.0) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0);
     }
+
+    private BenchmarkUtils(){
+    }
 }

@@ -12,4 +12,7 @@ public final class PlaceholderUtils {
         }
         return ChatUtils.color(string);
     }
+
+    private PlaceholderUtils(){
+    }
 }

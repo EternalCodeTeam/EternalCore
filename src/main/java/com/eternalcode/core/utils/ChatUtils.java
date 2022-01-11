@@ -21,7 +21,9 @@ public final class ChatUtils {
     }
 
     public static List<String> color(Iterable<String> texts) {
-        return PandaStream.of(texts).map(ChatUtils::color).toList();
+        return PandaStream.of(texts)
+            .map(ChatUtils::color)
+            .toList();
     }
 
     public static Component component(String text) {
@@ -29,6 +31,15 @@ public final class ChatUtils {
     }
 
     public static List<Component> component(Iterable<String> texts) {
-        return PandaStream.of(texts).map(ChatUtils::component).toList();
+        return PandaStream.of(texts)
+            .map(ChatUtils::component)
+            .toList();
+    }
+
+    public static boolean isNumber(String text) {
+        return text.chars().allMatch(Character::isDigit);
+    }
+
+    private ChatUtils(){
     }
 }
