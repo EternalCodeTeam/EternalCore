@@ -9,7 +9,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -41,7 +40,7 @@ public final class ChatManager {
         MessagesConfiguration messages = this.configManager.getMessagesConfiguration();
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.sendMessage(String.valueOf(clearMessage));
-            Bukkit.broadcast(Component.text(ChatUtils.color(messages.chatCleared).replace("{NICK}", sender.getName())));
+            Bukkit.broadcast(ChatUtils.component(messages.chatCleared.replace("{NICK}", sender.getName())));
 
         });
     }
@@ -54,7 +53,7 @@ public final class ChatManager {
                 return;
             }
             this.enabled = true;
-            Bukkit.broadcast(Component.text(ChatUtils.color(messages.chatEnabled).replace("{NICK}", sender.getName())));
+            Bukkit.broadcast(ChatUtils.component(messages.chatEnabled.replace("{NICK}", sender.getName())));
             return;
         }
         if (!this.enabled){
@@ -62,7 +61,7 @@ public final class ChatManager {
             return;
         }
         this.enabled = false;
-        Bukkit.broadcast(Component.text(ChatUtils.color(messages.chatDisabled).replace("{NICK}", sender.getName())));
+        Bukkit.broadcast(ChatUtils.component(messages.chatDisabled.replace("{NICK}", sender.getName())));
     }
 
     public void slowMode(CommandSender sender, String slowMode){

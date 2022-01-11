@@ -39,7 +39,4 @@ public final class ChatUtils {
     public static boolean isNumber(String text) {
         return text.chars().allMatch(Character::isDigit);
     }
-
-    private ChatUtils(){
-    }
 }

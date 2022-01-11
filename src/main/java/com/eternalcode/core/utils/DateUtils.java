@@ -32,7 +32,4 @@ public final class DateUtils {
 
         return stringBuilder.toString();
     }
-
-    private DateUtils(){
-    }
 }
