@@ -10,7 +10,6 @@ import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.scoreboard.api.FastBoard;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.PlaceholderUtils;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -22,7 +21,7 @@ public class ScoreboardManager {
     private final EternalCore eternalCore;
     private final ConfigurationManager configurationManager;
 
-    @Getter private ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
     public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
         this.eternalCore = eternalCore;
