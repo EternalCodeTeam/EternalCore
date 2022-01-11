@@ -9,11 +9,11 @@ version "1.0.1-SNAPSHOT"
 repositories {
     gradlePluginPortal()
     mavenCentral()
-    maven { url = "https://papermc.io/repo/repository/maven-public/" }
-    maven { url = "https://storehouse.okaeri.eu/repository/maven-public/" }
-    maven { url = "https://repo.panda-lang.org/releases" }
-    maven { url = "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
-    maven { url = "https://repo.lucko.me/" }
+    maven { url "https://papermc.io/repo/repository/maven-public/" }
+    maven { url "https://repo.panda-lang.org/releases" }
+    maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
+    maven { url 'https://jitpack.io' }
+
 }
 
 dependencies {
@@ -42,9 +42,6 @@ dependencies {
 
     // PlaceholderAPI
     compileOnly "me.clip:placeholderapi:2.11.1"
-
-    // FastBoard API
-    implementation "fr.mrmicky:fastboard:1.2.1"
 }
 
 java {

@@ -9,6 +9,7 @@ import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import static com.eternalcode.core.command.Valid.when;
 
@@ -34,9 +35,13 @@ public final class HelpOpCommand {
         String text = StringUtils.join(args, " ", 0, args.length);
 
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
-        Bukkit.getOnlinePlayers().stream().filter(players ->
-            players.hasPermission("eternalcode.helpop.spy") || players.isOp()).forEach(players ->
-            players.sendMessage(ChatUtils.color(config.helpOpFormat.replace("{TEXT}", text))));
+
+        for (Player players : Bukkit.getOnlinePlayers()) {
+            if (players.hasPermission("eternalcode.helpop.spy") || players.isOp()) {
+                players.sendMessage(ChatUtils.color(config.helpOpFormat.replace("{TEXT}", text)));
+            }
+        }
+
         sender.sendMessage(ChatUtils.color(config.helpOpSend));
     }
 }

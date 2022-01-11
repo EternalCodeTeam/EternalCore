@@ -33,13 +33,16 @@ public final class HatCommand {
     public void execute(Player player) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         PlayerInventory playerInventory = player.getInventory();
+
         ItemStack itemStack = playerInventory.getHelmet();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
+
         if (itemStack == null || itemStack.getType() == Material.AIR) {
             playerInventory.setHelmet(handItem);
             playerInventory.remove(handItem);
             return;
         }
+
         player.sendMessage(ChatUtils.color(config.nullHatMessage));
     }
 }

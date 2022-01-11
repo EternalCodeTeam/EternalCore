@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class UserService {
 
-    private final Map<UUID, User> usersByUUID = new ConcurrentHashMap<>();
-    private final Map<String, User> usersByName = new ConcurrentHashMap<>();
+    private Map<UUID, User> usersByUUID = new ConcurrentHashMap<>();
+    private Map<String, User> usersByName = new ConcurrentHashMap<>();
 
     public Set<User> getUsers() {
         return new HashSet<>(usersByUUID.values());

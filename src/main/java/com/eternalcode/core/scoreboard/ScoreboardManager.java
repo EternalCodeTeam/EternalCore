@@ -5,35 +5,47 @@
 package com.eternalcode.core.scoreboard;
 
 import com.eternalcode.core.EternalCore;
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.scoreboard.api.FastBoard;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.PlaceholderUtils;
-import fr.mrmicky.fastboard.FastBoard;
+import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 public class ScoreboardManager {
     private final EternalCore eternalCore;
-    private ConcurrentMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
+    private final ConfigurationManager configurationManager;
 
-    public ScoreboardManager(EternalCore eternalCore) {
+    @Getter private ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
+
+    public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
         this.eternalCore = eternalCore;
+        this.configurationManager = configurationManager;
     }
 
     public void updateTask() {
-        eternalCore.getServer().getScheduler().runTaskTimerAsynchronously(eternalCore, () -> {
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(eternalCore, () -> {
             for (FastBoard board : this.boards.values()) {
-                updateBoard(board);
+                this.updateBoard(board);
             }
-        }, 0, 20);
+        }, 0, config.scoreboardRefresh);
     }
 
     private void updateBoard(FastBoard board) {
-        List<String> scoreboardLines = this.eternalCore.getConfigurationManager().getMessagesConfiguration().scoreboardStyle;
-        scoreboardLines.replaceAll(s -> PlaceholderUtils.parsePlaceholders(board.getPlayer(), s));
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+
+        List<String> scoreboardLines = config.scoreboardStyle;
+
+        scoreboardLines.replaceAll(scoreboard -> PlaceholderUtils.parsePlaceholders(board.getPlayer(), scoreboard));
+
         board.updateLines(scoreboardLines);
     }
 
@@ -47,8 +59,9 @@ public class ScoreboardManager {
 
     public void setScoreboard(Player player) {
         FastBoard board = new FastBoard(player);
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
 
-        board.updateTitle(ChatUtils.color(this.eternalCore.getConfigurationManager().getMessagesConfiguration().scoreboardTitle));
+        board.updateTitle(ChatUtils.color(config.scoreboardTitle));
 
         this.boards.put(player.getUniqueId(), board);
     }
