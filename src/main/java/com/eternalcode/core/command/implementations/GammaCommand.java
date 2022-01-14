@@ -22,7 +22,7 @@ public final class GammaCommand {
             name = "gamma",
             aliases = {"nightvision, fullbright"},
             permission = "eternalcore.command.nightvision",
-            usage = "&cPoprawne użycie &7/chat <clear/on/off>",
+            usage = "&cPoprawne użycie &7/gamma",
             acceptsExceeded = true
     )
 

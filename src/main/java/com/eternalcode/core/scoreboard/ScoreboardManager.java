@@ -21,7 +21,7 @@ public class ScoreboardManager {
     private final EternalCore eternalCore;
     private final ConfigurationManager configurationManager;
 
-    private ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
     public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
         this.eternalCore = eternalCore;

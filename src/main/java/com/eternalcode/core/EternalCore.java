@@ -33,8 +33,8 @@ import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.listeners.PlayerListeners;
 import com.eternalcode.core.listeners.PlayerChatListener;
+import com.eternalcode.core.listeners.PlayerListeners;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
@@ -96,53 +96,48 @@ public final class EternalCore extends JavaPlugin {
         // Services
         this.userService = new UserService();
         this.funnyCommands = FunnyCommands.configuration(() -> this)
-                .bind(resources -> resources.on(EternalCore.class).assignInstance(this))
-                .bind(resources -> resources.on(UserService.class).assignInstance(userService))
-                .bind(resources -> resources.on(ConfigurationManager.class).assignInstance(configurationManager))
-                .bind(new CommandInfoBind())
-                .registerDefaultComponents()
-                .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(config.permissionMessage.replace("{PERMISSION}", permission))))
-                .commands(
-                        AlertCommand.class,
-                        AnvilCommand.class,
-                        CartographyTableCommand.class,
-                        ChatCommand.class,
-                        ClearCommand.class,
-                        DisposalCommand.class,
-                        EnderchestCommand.class,
-                        FeedCommand.class,
-                        FlyCommand.class,
-                        GamemodeCommand.class,
-                        GcCommand.class,
-                        GodCommand.class,
-                        GrindstoneCommand.class,
-                        HatCommand.class,
-                        HealCommand.class,
-                        KillCommand.class,
-                        SkullCommand.class,
-                        SpeedCommand.class,
-                        StonecutterCommand.class,
-                        WhoIsCommand.class,
-                        WorkbenchCommand.class,
-                        EternalCoreCommand.class,
-                        ScoreboardCommand.class,
-                        AdminChatCommand.class,
-                        HelpOpCommand.class,
-                        GammaCommand.class
-                ).install();
+            .bind(resources -> resources.on(EternalCore.class).assignInstance(this))
+            .bind(resources -> resources.on(UserService.class).assignInstance(userService))
+            .bind(resources -> resources.on(ConfigurationManager.class).assignInstance(configurationManager))
+            .bind(new CommandInfoBind())
+            .registerDefaultComponents()
+            .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(config.permissionMessage.replace("{PERMISSION}", permission))))
+            .commands(
+                AlertCommand.class,
+                AnvilCommand.class,
+                CartographyTableCommand.class,
+                ChatCommand.class,
+                ClearCommand.class,
+                DisposalCommand.class,
+                EnderchestCommand.class,
+                FeedCommand.class,
+                FlyCommand.class,
+                GamemodeCommand.class,
+                GcCommand.class,
+                GodCommand.class,
+                GrindstoneCommand.class,
+                HatCommand.class,
+                HealCommand.class,
+                KillCommand.class,
+                SkullCommand.class,
+                SpeedCommand.class,
+                StonecutterCommand.class,
+                WhoIsCommand.class,
+                WorkbenchCommand.class,
+                EternalCoreCommand.class,
+                ScoreboardCommand.class,
+                AdminChatCommand.class,
+                HelpOpCommand.class,
+                GammaCommand.class
+            ).install();
 
         // Register events
         PandaStream.of(
-                new PlayerChatListener(),
-                new PlayerListeners(configurationManager),
-                new CreateUserListener(this),
-                new ScoreboardListener(this, configurationManager)
+            new PlayerChatListener(),
+            new PlayerListeners(configurationManager),
+            new CreateUserListener(this),
+            new ScoreboardListener(this, configurationManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
-
-        switch (version) {
-            case "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_14_R1", "v1_15_R1", "v1_16_R1" ->
-                Bukkit.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
-        }
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
@@ -166,6 +161,10 @@ public final class EternalCore extends JavaPlugin {
         if (isPaper) {
             getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
             getLogger().info(ChatUtils.color("&a&lServer version: &7" + Bukkit.getServer().getVersion()));
+        }
+
+        switch (version) {
+            case "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> Bukkit.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
         }
     }
 }
