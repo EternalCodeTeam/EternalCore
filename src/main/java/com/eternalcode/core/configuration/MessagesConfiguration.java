@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class MessagesConfiguration implements Serializable {
+    @Description("# Simple messages")
     public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
     public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSION})";
     public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
@@ -32,14 +33,6 @@ public final class MessagesConfiguration implements Serializable {
     public String chatCleared = "&8» &aChat has been cleared by {NICK}!";
     public String chatAlreadyDisabled = "&8» &aChat already off!";
     public String chatAlreadyEnabled = "&8» &aChat already on";
-
-    @Description("# Scoreboard Style")
-    public String scoreboardTitle = "&e&lExampleCraft.pl";
-
-    public List<String> scoreboardStyle = Arrays.asList(
-        "%player_seconds_lived%",
-        "%server_tps_15_colored%",
-        "%localtime_time%",
-        ""
-    );
+    public String gammaEnabled = "&8» &aGamma has ben on!";
+    public String gammaDisable = "&8» &cGamma has ben off!";
 }

@@ -11,11 +11,9 @@ import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-
-import java.util.stream.IntStream;
+import org.bukkit.entity.Player;
 
 import static com.eternalcode.core.command.Valid.when;
 
@@ -42,8 +40,13 @@ public final class ChatCommand {
         when(args.length < 1, commandInfo.getUsageMessage());
         switch (args[0].toLowerCase()) {
             case "clear" -> {
-                IntStream.range(0, 100).forEach(i -> Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" ")));
-                Bukkit.broadcast(Component.text(ChatUtils.color(config.chatCleared).replace("{NICK}", sender.getName())));
+                for (int i = 0; i < 255; i++) {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.sendMessage(" ");
+                    }
+                }
+
+                Bukkit.broadcast(ChatUtils.component(config.chatCleared.replace("{NICK}", sender.getName())));
             }
             case "on" -> {
                 if (!chatMuted) {
@@ -52,7 +55,7 @@ public final class ChatCommand {
                 }
 
                 chatMuted = false;
-                Bukkit.broadcast(Component.text(ChatUtils.color(config.chatEnabled).replace("{NICK}", sender.getName())));
+                Bukkit.broadcast(ChatUtils.component(config.chatEnabled.replace("{NICK}", sender.getName())));
             }
             case "off" -> {
                 if (chatMuted) {
@@ -61,7 +64,7 @@ public final class ChatCommand {
                 }
 
                 chatMuted = true;
-                Bukkit.broadcast(Component.text(ChatUtils.color(config.chatDisabled).replace("{NICK}", sender.getName())));
+                Bukkit.broadcast(ChatUtils.component(config.chatDisabled.replace("{NICK}", sender.getName())));
             }
             default -> throw new ValidationException(commandInfo.getUsageMessage());
         }

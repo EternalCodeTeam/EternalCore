@@ -17,6 +17,7 @@ import com.eternalcode.core.command.implementations.EternalCoreCommand;
 import com.eternalcode.core.command.implementations.FeedCommand;
 import com.eternalcode.core.command.implementations.FlyCommand;
 import com.eternalcode.core.command.implementations.GamemodeCommand;
+import com.eternalcode.core.command.implementations.GammaCommand;
 import com.eternalcode.core.command.implementations.GcCommand;
 import com.eternalcode.core.command.implementations.GodCommand;
 import com.eternalcode.core.command.implementations.GrindstoneCommand;
@@ -32,8 +33,8 @@ import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.listeners.PlayerBasicListeners;
 import com.eternalcode.core.listeners.PlayerChatListener;
+import com.eternalcode.core.listeners.PlayerListeners;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
@@ -51,6 +52,7 @@ import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.stream.PandaStream;
+
 import java.util.concurrent.TimeUnit;
 
 @Plugin(name = "EternalCore", version = "1.0")
@@ -67,6 +69,7 @@ public final class EternalCore extends JavaPlugin {
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
+    private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
     private boolean isPaper = false;
 
     @Override
@@ -80,7 +83,7 @@ public final class EternalCore extends JavaPlugin {
         this.configurationManager = new ConfigurationManager(this);
         this.configurationManager.loadConfigs();
 
-        this.scoreboardManager = new ScoreboardManager(this);
+        this.scoreboardManager = new ScoreboardManager(this, configurationManager);
         this.scoreboardManager.updateTask();
 
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
@@ -96,7 +99,6 @@ public final class EternalCore extends JavaPlugin {
             .bind(resources -> resources.on(EternalCore.class).assignInstance(this))
             .bind(resources -> resources.on(UserService.class).assignInstance(userService))
             .bind(resources -> resources.on(ConfigurationManager.class).assignInstance(configurationManager))
-            .bind(resources -> resources.on(ScoreboardManager.class).assignInstance(scoreboardManager))
             .bind(new CommandInfoBind())
             .registerDefaultComponents()
             .permissionHandler((message, permission) -> message.getCommandSender().sendMessage(ChatUtils.color(config.permissionMessage.replace("{PERMISSION}", permission))))
@@ -125,15 +127,16 @@ public final class EternalCore extends JavaPlugin {
                 EternalCoreCommand.class,
                 ScoreboardCommand.class,
                 AdminChatCommand.class,
-                HelpOpCommand.class
+                HelpOpCommand.class,
+                GammaCommand.class
             ).install();
 
         // Register events
         PandaStream.of(
             new PlayerChatListener(),
-            new PlayerBasicListeners(configurationManager),
+            new PlayerListeners(configurationManager),
             new CreateUserListener(this),
-            new ScoreboardListener(this)
+            new ScoreboardListener(this, configurationManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
@@ -150,14 +153,18 @@ public final class EternalCore extends JavaPlugin {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
             isPaper = true;
         } catch (ClassNotFoundException classNotFoundException) {
-            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.13x forks"));
+            getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.17x forks"));
             getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
-            getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.13-1.18x"));
+            getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.17-1.18x"));
         }
 
         if (isPaper) {
             getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
             getLogger().info(ChatUtils.color("&a&lServer version: &7" + Bukkit.getServer().getVersion()));
+        }
+
+        switch (version) {
+            case "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> Bukkit.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
         }
     }
 }

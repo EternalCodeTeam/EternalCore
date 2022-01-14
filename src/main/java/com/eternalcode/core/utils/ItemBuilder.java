@@ -61,7 +61,6 @@ public final class ItemBuilder {
 
         Validate.isTrue(meta instanceof SkullMeta, "Item must be skull.");
 
-        // TODO use-non deprecated methods (see ItemMeta)
         if (itemStack.getDurability() != 3) {
             itemStack.setDurability((short) 3);
         }

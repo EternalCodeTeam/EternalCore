@@ -2,6 +2,7 @@ package com.eternalcode.core.listeners;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,10 +15,10 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 
-public class PlayerBasicListeners implements Listener {
+public class PlayerListeners implements Listener {
     private final ConfigurationManager configurationManager;
 
-    public PlayerBasicListeners(ConfigurationManager configurationManager) {
+    public PlayerListeners(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
     }
 
@@ -52,9 +53,9 @@ public class PlayerBasicListeners implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
-        event.deathMessage(Component.text(config.deathMessage.replace("{PLAYER}", event.getPlayer().getName())));
+        event.deathMessage(ChatUtils.component(config.deathMessage.replace("{PLAYER}", event.getPlayer().getName())));
 
-        if (config.clearDropAtDeath)  {
+        if (config.clearDropAtDeath) {
             event.getDrops().clear();
         }
     }
@@ -63,20 +64,26 @@ public class PlayerBasicListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
-        event.joinMessage(Component.text(config.joinMessage.replace("{PLAYER}", event.getPlayer().getName())));
+        if (!event.getPlayer().hasPlayedBefore()) {
+            event.joinMessage(ChatUtils.component(config.firstJoinMessage.replace("{PLAYER}", event.getPlayer().getName())));
+        }
+        event.joinMessage(ChatUtils.component(config.joinMessage.replace("{PLAYER}", event.getPlayer().getName())));
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
-        event.quitMessage(Component.text(config.leaveMessage.replace("{PLAYER}", event.getPlayer().getName())));
+        event.quitMessage(ChatUtils.component(config.leaveMessage.replace("{PLAYER}", event.getPlayer().getName())));
     }
 
     @EventHandler
     public void onPlayerKick(PlayerKickEvent event) {
-        if (event.reason().contains(Component.text("disconnect.spam"))) {
-            event.setCancelled(true);
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+        if (config.antiDisconectSpam) {
+            if (event.reason().contains(Component.text("disconnect.spam"))) {
+                event.setCancelled(true);
+            }
         }
     }
 }
