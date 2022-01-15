@@ -35,8 +35,4 @@ public final class ChatUtils {
             .map(ChatUtils::component)
             .toList();
     }
-
-    public static boolean isNumber(String text) {
-        return text.chars().allMatch(Character::isDigit);
-    }
 }

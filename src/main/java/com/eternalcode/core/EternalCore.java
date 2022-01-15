@@ -63,14 +63,14 @@ import java.util.concurrent.TimeUnit;
 
 public final class EternalCore extends JavaPlugin {
 
-    @Getter private static EternalCore      instance;
+    @Getter private static EternalCore instance;
 
-    @Getter private FunnyCommands           funnyCommands;
-    @Getter private UserService             userService;
+    @Getter private FunnyCommands funnyCommands;
+    @Getter private UserService userService;
 
-    @Getter private ConfigurationManager    configurationManager;
-    @Getter private ScoreboardManager       scoreboardManager;
-    @Getter private ChatManager             chatManager;
+    @Getter private ConfigurationManager configurationManager;
+    @Getter private ScoreboardManager scoreboardManager;
+    @Getter private ChatManager chatManager;
     private boolean isPaper = false;
 
     @Override

@@ -15,6 +15,7 @@ public final class MessagesConfiguration implements Serializable {
     public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSION})";
     public String offlinePlayer = "&8» &cThis player is currently offline!";
     public String notNumber = "&8» &cArgument isnt a number!";
+    public String numberBiggerThanZero = "&8» &cLiczba musi byc wieksza niz 0!";
 
     @Description("")
     @Description("# Helpop messages")
