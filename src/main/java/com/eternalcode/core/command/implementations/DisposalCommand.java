@@ -25,7 +25,7 @@ public final class DisposalCommand {
     @FunnyCommand(
         name = "disposal",
         aliases = {"smietnik"},
-        permission = "eternalcode.command.disposal",
+        permission = "eternalcore.command.disposal",
         usage = "&cPoprawne użycie &7/disposal <player>",
         acceptsExceeded = true
     )

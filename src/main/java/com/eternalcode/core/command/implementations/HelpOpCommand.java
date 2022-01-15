@@ -35,7 +35,7 @@ public final class HelpOpCommand {
 
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Bukkit.getOnlinePlayers().stream().filter(players ->
-            players.hasPermission("eternalcode.helpop.spy") || players.isOp()).forEach(players ->
+            players.hasPermission("eternalcore.helpop.spy") || players.isOp()).forEach(players ->
             players.sendMessage(ChatUtils.color(config.helpOpFormat.replace("{TEXT}", text))));
         sender.sendMessage(ChatUtils.color(config.helpOpSend));
     }

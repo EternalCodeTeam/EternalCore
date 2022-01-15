@@ -18,7 +18,7 @@ import static com.eternalcode.core.command.Valid.when;
 public final class KickCommand {
     @FunnyCommand(
         name = "kick",
-        permission = "eternalcode.command.kick",
+        permission = "eternalcore.command.kick",
         usage = "&8» &cPoprawne użycie &7/kick <player> <reason>",
         acceptsExceeded = true
     )
