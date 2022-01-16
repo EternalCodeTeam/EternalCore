@@ -6,7 +6,7 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.entity.Player;

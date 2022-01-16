@@ -2,7 +2,7 @@ package com.eternalcode.core.listeners;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

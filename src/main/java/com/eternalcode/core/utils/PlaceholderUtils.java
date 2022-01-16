@@ -1,6 +1,7 @@
 package com.eternalcode.core.utils;
 
 import com.eternalcode.core.EternalCore;
+import com.eternalcode.core.chat.ChatUtils;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 

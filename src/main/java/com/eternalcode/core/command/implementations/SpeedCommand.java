@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatUtils;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
@@ -39,7 +39,7 @@ public final class SpeedCommand {
 
         Player player = Option.when(args.length == 2, () -> Bukkit.getPlayer(args[1]))
             .orElse(() -> Option.when(args.length == 1, sender).is(Player.class))
-            .orThrow(() -> new ValidationException(ChatUtils.color("&8» &cPodany gracz jest offline.")));
+            .orThrow(() -> new ValidationException("&8» &cPodany gracz jest offline."));
 
         Option.attempt(NumberFormatException.class, () -> Float.parseFloat(args[0])).peek(amount -> {
             when(amount >= 0 && 10 <= amount, "» Podaj prędkość od 0 do 10");
@@ -48,7 +48,7 @@ public final class SpeedCommand {
             player.setFlySpeed(amount);
             sender.sendMessage(ChatUtils.color("&8» &7Ustawiono prędkość dla gracza &f" + player.getName() + " &7na &f" + amount));
             player.sendMessage(ChatUtils.color("&8» &7Ustawiono prędkość na &f" + amount));
-        }).orThrow(() -> new ValidationException(ChatUtils.color("&8» &cPodaj poprawną liczbę!")));
+        }).orThrow(() -> new ValidationException("&8» &cPodaj poprawną liczbę!"));
     }
 }
 

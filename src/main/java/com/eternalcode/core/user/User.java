@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;

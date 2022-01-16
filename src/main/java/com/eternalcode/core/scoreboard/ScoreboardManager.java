@@ -8,7 +8,7 @@ import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.scoreboard.api.impl.ScoreboardAPI;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatUtils;
 import com.eternalcode.core.utils.PlaceholderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

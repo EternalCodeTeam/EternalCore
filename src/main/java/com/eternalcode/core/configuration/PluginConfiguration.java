@@ -34,7 +34,7 @@ public final class PluginConfiguration implements Serializable {
 
     @Description(" ")
     @Description("# Chat Settings")
-    public int chatSlowMode = 5;
+    public double chatSlowMode = 5.0;
     public boolean chatStatue = true;
 
     @Description(" ")

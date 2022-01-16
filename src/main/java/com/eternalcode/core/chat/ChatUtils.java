@@ -2,7 +2,7 @@
  * Copyright (c) 2021. EternalCode.pl
  */
 
-package com.eternalcode.core.utils;
+package com.eternalcode.core.chat;
 
 
 import io.papermc.paper.text.PaperComponents;
