@@ -13,7 +13,6 @@ repositories {
     maven { url = "https://storehouse.okaeri.eu/repository/maven-public/" }
     maven { url = "https://repo.panda-lang.org/releases" }
     maven { url = "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
-    maven { url = "https://repo.mattstudios.me/artifactory/public/" }
     maven { url = "https://repo.lucko.me/" }
 }
 
@@ -46,9 +45,6 @@ dependencies {
 
     // FastBoard API
     implementation "fr.mrmicky:fastboard:1.2.1"
-
-    // Gui
-    implementation "dev.triumphteam:triumph-gui:3.0.5"
 }
 
 java {
@@ -72,5 +68,4 @@ shadowJar {
     relocate "panda", "com.eternalcode.core.libs.panda"
     relocate "org.panda_lang", "com.eternalcode.core.libs.panda"
     relocate "fr.mrmicky.fastboard", "com.eternalcode.core.libs.fastboard"
-    relocate "dev.triumphteam.gui", "com.eternalcode.core.libs.gui"
 }
