@@ -6,7 +6,10 @@ import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+<<<<<<< Updated upstream
 import org.bukkit.Bukkit;
+=======
+>>>>>>> Stashed changes
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -36,6 +39,7 @@ public final class ChatManager {
             .build();
     }
 
+<<<<<<< Updated upstream
     public void clearChat(CommandSender sender){
         MessagesConfiguration messages = this.configManager.getMessagesConfiguration();
 
@@ -46,6 +50,8 @@ public final class ChatManager {
         });
     }
 
+=======
+>>>>>>> Stashed changes
     public void slowMode(CommandSender sender, String slowMode) {
         MessagesConfiguration messages = this.configManager.getMessagesConfiguration();
         PluginConfiguration config = this.configManager.getPluginConfiguration();

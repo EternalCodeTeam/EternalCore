@@ -44,7 +44,17 @@ public final class ChatCommand {
         MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
 
         switch (args[0].toLowerCase()) {
+<<<<<<< Updated upstream
             case "clear" -> this.chatManager.clearChat(sender);
+=======
+            case "clear" -> {
+                for (int i = 0; i < 256; i++){
+                    Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
+                }
+                Bukkit.broadcast(ChatUtils.component(messages.chatCleared.replace("{NICK}", sender.getName())));
+            }
+
+>>>>>>> Stashed changes
             case "on" -> {
                 if (this.chatManager.isEnabled()){
                     sender.sendMessage(ChatUtils.component(messages.chatAlreadyEnabled));

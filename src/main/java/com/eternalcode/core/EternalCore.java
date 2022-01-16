@@ -5,6 +5,7 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
+<<<<<<< Updated upstream
 import com.eternalcode.core.command.binds.CommandInfoBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
 import com.eternalcode.core.command.implementations.AlertCommand;
@@ -35,6 +36,14 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.listeners.PlayerBasicListeners;
 import com.eternalcode.core.chat.PlayerChatListener;
+=======
+import com.eternalcode.core.chat.PlayerChatListener;
+import com.eternalcode.core.command.binds.CommandInfoBind;
+import com.eternalcode.core.command.implementations.*;
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.listeners.PlayerListeners;
+>>>>>>> Stashed changes
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
@@ -71,6 +80,10 @@ public final class EternalCore extends JavaPlugin {
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
     @Getter private ChatManager chatManager;
+<<<<<<< Updated upstream
+=======
+    private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
+>>>>>>> Stashed changes
     private boolean isPaper = false;
 
     @Override
@@ -138,7 +151,11 @@ public final class EternalCore extends JavaPlugin {
         // Register events
         PandaStream.of(
             new PlayerChatListener(this),
+<<<<<<< Updated upstream
             new PlayerBasicListeners(configurationManager),
+=======
+            new PlayerListeners(configurationManager),
+>>>>>>> Stashed changes
             new CreateUserListener(this),
             new ScoreboardListener(this)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));

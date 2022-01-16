@@ -1,7 +1,10 @@
+<<<<<<< Updated upstream
 /*
  * Copyright (c) 2021. EternalCode.pl
  */
 
+=======
+>>>>>>> Stashed changes
 package com.eternalcode.core.chat;
 
 import com.eternalcode.core.EternalCore;

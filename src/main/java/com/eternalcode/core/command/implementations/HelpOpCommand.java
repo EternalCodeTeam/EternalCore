@@ -34,9 +34,21 @@ public final class HelpOpCommand {
         String text = StringUtils.join(args, " ", 0, args.length);
 
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
+<<<<<<< Updated upstream
         Bukkit.getOnlinePlayers().stream().filter(players ->
             players.hasPermission("eternalcore.helpop.spy") || players.isOp()).forEach(players ->
             players.sendMessage(ChatUtils.color(config.helpOpFormat.replace("{TEXT}", text))));
+=======
+
+        String helpOpFormat = ChatUtils.color(config.helpOpFormat.replace("{TEXT}", text));
+
+        for (Player players : Bukkit.getOnlinePlayers()) {
+            if (players.hasPermission("eternalcore.helpop.spy") || players.isOp()) {
+                players.sendMessage(helpOpFormat);
+            }
+        }
+
+>>>>>>> Stashed changes
         sender.sendMessage(ChatUtils.color(config.helpOpSend));
     }
 }

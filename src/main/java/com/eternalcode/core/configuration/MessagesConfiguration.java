@@ -7,10 +7,9 @@ package com.eternalcode.core.configuration;
 import net.dzikoysk.cdn.entity.Description;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 
 public final class MessagesConfiguration implements Serializable {
+<<<<<<< Updated upstream
     @Description("# Arguments")
     public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSION})";
     public String offlinePlayer = "&8» &cThis player is currently offline!";
@@ -35,6 +34,9 @@ public final class MessagesConfiguration implements Serializable {
 
     @Description("")
     @Description("# Others messages")
+=======
+    @Description("# Simple messages")
+>>>>>>> Stashed changes
     public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
     public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
     public String anvilGuiOpenMessage = "&8» &aSuccessfully opened anvil.";
@@ -48,6 +50,7 @@ public final class MessagesConfiguration implements Serializable {
     public String nullHatMessage = "&8» &cYou cannot use the /hat command.";
     public String adminChatFormat = "&8[&4AdminChat&8] &c{TEXT}";
 
+<<<<<<< Updated upstream
 
     @Description("# Scoreboard Style")
     public String scoreboardTitle = "&e&lExampleCraft.pl";
@@ -58,4 +61,32 @@ public final class MessagesConfiguration implements Serializable {
         "%localtime_time%",
         ""
     );
+=======
+    @Description("# Arguments")
+    public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSION})";
+    public String offlinePlayer = "&8» &cThis player is currently offline!";
+    public String notNumber = "&8» &cArgument isnt a number!";
+    public String numberBiggerThanZero = "&8» &cNumber must be bigger than 0!";
+
+    @Description("")
+    @Description("# Helpop messages")
+    public String helpOpFormat = "&8[&4HelpOp&8] &c{TEXT}";
+    public String helpOpSend = "&8» &aThis message has been successfully sent to administration";
+
+    @Description("")
+    @Description("# gamma messages")
+    public String gammaEnabled = "&8» &aGamma has ben on!";
+    public String gammaDisable = "&8» &cGamma has ben off!";
+
+    @Description("")
+    @Description("# Chat messages")
+    public String chatDisabled = "&8» &cThe chat has been off by {NICK}!";
+    public String chatEnabled = "&8» &aThe chat has been on by {NICK}!";
+    public String chatCleared = "&8» &aChat has been cleared by {NICK}!";
+    public String chatAlreadyDisabled = "&8» &aChat already off!";
+    public String chatAlreadyEnabled = "&8» &aChat already on!";
+    public String chatSlowModeSet = "&8» &aSlowmode set to: {SLOWMODE}";
+    public String chatSlowMode = "&8» &cYou can write the next message for: &6{TIME}";
+    public String chatDisable = "&8» &cChat is currently disabled!";
+>>>>>>> Stashed changes
 }

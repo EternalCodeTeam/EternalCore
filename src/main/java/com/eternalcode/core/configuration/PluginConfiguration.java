@@ -38,6 +38,10 @@ public final class PluginConfiguration implements Serializable {
     public boolean chatStatue = true;
 
     @Description(" ")
+    @Description("# Chat Settings")
+    public int chatSlowMode = 15;
+    public boolean chatStatue = true;
+    @Description(" ")
     @Description("# Useful Assets")
     public boolean disableBlockBreaking = false;
     public boolean disableBlockPlacing = false;
