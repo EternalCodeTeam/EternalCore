@@ -7,7 +7,7 @@ package com.eternalcode.core.scoreboard;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
-import com.eternalcode.core.scoreboard.api.FastBoard;
+import com.eternalcode.core.scoreboard.api.impl.ScoreboardAPI;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.PlaceholderUtils;
 import org.bukkit.Bukkit;
@@ -21,7 +21,7 @@ public class ScoreboardManager {
     private final EternalCore eternalCore;
     private final ConfigurationManager configurationManager;
 
-    private final ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, ScoreboardAPI> boards = new ConcurrentHashMap<>();
 
     public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
         this.eternalCore = eternalCore;
@@ -32,13 +32,13 @@ public class ScoreboardManager {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(eternalCore, () -> {
-            for (FastBoard board : this.boards.values()) {
+            for (ScoreboardAPI board : this.boards.values()) {
                 this.updateBoard(board);
             }
         }, 0, config.scoreboardRefresh);
     }
 
-    private void updateBoard(FastBoard board) {
+    private void updateBoard(ScoreboardAPI board) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
         List<String> scoreboardLines = config.scoreboardStyle;
@@ -49,7 +49,7 @@ public class ScoreboardManager {
     }
 
     public void removeScoreboard(Player player) {
-        FastBoard board = boards.remove(player.getUniqueId());
+        ScoreboardAPI board = boards.remove(player.getUniqueId());
 
         if (board != null) {
             board.delete();
@@ -57,7 +57,7 @@ public class ScoreboardManager {
     }
 
     public void setScoreboard(Player player) {
-        FastBoard board = new FastBoard(player);
+        ScoreboardAPI board = new ScoreboardAPI(player);
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
         board.updateTitle(ChatUtils.color(config.scoreboardTitle));
@@ -66,10 +66,10 @@ public class ScoreboardManager {
     }
 
     public void toggleScoreboard(Player player) {
-        FastBoard fastBoard = boards.remove(player.getUniqueId());
+        ScoreboardAPI scoreboardAPI = boards.remove(player.getUniqueId());
 
-        if (fastBoard != null) {
-            fastBoard.delete();
+        if (scoreboardAPI != null) {
+            scoreboardAPI.delete();
             return;
         }
 
