@@ -77,7 +77,7 @@ public final class ChatCommand {
 
                     chatManager.setChatDelay(amount);
                     sender.sendMessage(ChatUtils.color(messages.chatSlowModeSet.replace("{SLOWMODE}", args[1])));
-                }).orThrow(() -> new ValidationException(ChatUtils.color(messages.notNumber)));
+                }).orThrow(() -> new ValidationException(messages.notNumber));
             }
             default -> throw new ValidationException(commandInfo.getUsageMessage());
         }
