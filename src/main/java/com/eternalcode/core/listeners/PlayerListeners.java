@@ -81,7 +81,7 @@ public class PlayerListeners implements Listener {
     public void onPlayerKick(PlayerKickEvent event) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         if (config.antiDisconectSpam) {
-            if (event.reason().contains(Component.text("disconnect.spam"))) {
+            if (event.reason().contains(Component.text("disconnect.spam")) || event.reason().contains(Component.text("Kicked for spamming"))) {
                 event.setCancelled(true);
             }
         }

@@ -39,7 +39,7 @@ public final class ChatManager {
         sender.sendMessage(ChatUtils.color(messages.chatSlowModeSet.replace("{SLOWMODE}", slowMode)));
     }
 
-    public void useChat(final Player player) {
+    public void useChat(Player player) {
         PluginConfiguration config = configManager.getPluginConfiguration();
 
         this.chatCache.put(player.getUniqueId(), System.currentTimeMillis() + config.chatSlowMode * 1000L);
