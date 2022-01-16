@@ -17,7 +17,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public final class ChatManager {
-    private static final char[] clearMessage = new char[10000];
+    private static final char[] clearMessage = new char[6000];
     private final ConfigurationManager configManager;
     private final Cache<UUID, Long> chatCache;
     private boolean enabled;
