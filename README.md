@@ -18,5 +18,5 @@ If you want to get help regarding our products or just want to ask something, jo
 - PlaceholderAPI Hook (In progress)
 - Big amount of commands (In progress)
 - Benchmark system (/gc command)
-- ChatManager System (/chat on/off/clear + planned censorship)
+- ChatManager System (/chat on/off/clear/slowmode + planned censorship)
 - and other features...

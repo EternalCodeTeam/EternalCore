@@ -39,7 +39,7 @@ public final class HelpOpCommand {
         String helpOpFormat = ChatUtils.color(config.helpOpFormat.replace("{TEXT}", text));
 
         for (Player players : Bukkit.getOnlinePlayers()) {
-            if (players.hasPermission("eternalcode.helpop.spy") || players.isOp()) {
+            if (players.hasPermission("eternalcore.helpop.spy") || players.isOp()) {
                 players.sendMessage(helpOpFormat);
             }
         }

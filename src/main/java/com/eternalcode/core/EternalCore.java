@@ -4,36 +4,12 @@
 
 package com.eternalcode.core;
 
+import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.PlayerChatListener;
 import com.eternalcode.core.command.binds.CommandInfoBind;
-import com.eternalcode.core.command.implementations.AdminChatCommand;
-import com.eternalcode.core.command.implementations.AlertCommand;
-import com.eternalcode.core.command.implementations.AnvilCommand;
-import com.eternalcode.core.command.implementations.CartographyTableCommand;
-import com.eternalcode.core.command.implementations.ChatCommand;
-import com.eternalcode.core.command.implementations.ClearCommand;
-import com.eternalcode.core.command.implementations.DisposalCommand;
-import com.eternalcode.core.command.implementations.EnderchestCommand;
-import com.eternalcode.core.command.implementations.EternalCoreCommand;
-import com.eternalcode.core.command.implementations.FeedCommand;
-import com.eternalcode.core.command.implementations.FlyCommand;
-import com.eternalcode.core.command.implementations.GamemodeCommand;
-import com.eternalcode.core.command.implementations.GammaCommand;
-import com.eternalcode.core.command.implementations.GcCommand;
-import com.eternalcode.core.command.implementations.GodCommand;
-import com.eternalcode.core.command.implementations.GrindstoneCommand;
-import com.eternalcode.core.command.implementations.HatCommand;
-import com.eternalcode.core.command.implementations.HealCommand;
-import com.eternalcode.core.command.implementations.HelpOpCommand;
-import com.eternalcode.core.command.implementations.KillCommand;
-import com.eternalcode.core.command.implementations.ScoreboardCommand;
-import com.eternalcode.core.command.implementations.SkullCommand;
-import com.eternalcode.core.command.implementations.SpeedCommand;
-import com.eternalcode.core.command.implementations.StonecutterCommand;
-import com.eternalcode.core.command.implementations.WhoIsCommand;
-import com.eternalcode.core.command.implementations.WorkbenchCommand;
+import com.eternalcode.core.command.implementations.*;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.listeners.PlayerChatListener;
 import com.eternalcode.core.listeners.PlayerListeners;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
@@ -69,6 +45,7 @@ public final class EternalCore extends JavaPlugin {
     @Getter private FunnyCommands funnyCommands;
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
+    @Getter private ChatManager chatManager;
     private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
     private boolean isPaper = false;
 
@@ -85,6 +62,8 @@ public final class EternalCore extends JavaPlugin {
 
         this.scoreboardManager = new ScoreboardManager(this, configurationManager);
         this.scoreboardManager.updateTask();
+
+        this.chatManager = new ChatManager(configurationManager);
 
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
 
@@ -133,7 +112,7 @@ public final class EternalCore extends JavaPlugin {
 
         // Register events
         PandaStream.of(
-            new PlayerChatListener(),
+            new PlayerChatListener(this),
             new PlayerListeners(configurationManager),
             new CreateUserListener(this),
             new ScoreboardListener(this, configurationManager)

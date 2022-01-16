@@ -25,11 +25,18 @@ public final class PluginConfiguration implements Serializable {
     public String joinMessage = "Welcome {PLAYER}";
     public String firstJoinMessage = "Hello {PLAYER}, for the first time on the server!!";
     public String leaveMessage = "Goodbye {PLAYER}";
+
     @Description(" ")
     @Description("# Welcome title message")
     public boolean enableWelcomeTitle = true;
     public String welcomeTitle = "&6EternalCode.pl";
     public String welcomeSubTitle = "&eWelcome back {PLAYER}";
+
+    @Description(" ")
+    @Description("# Chat Settings")
+    public int chatSlowMode = 15;
+    public boolean chatStatue = true;
+
     @Description(" ")
     @Description("# Useful Assets")
     public boolean disableBlockBreaking = false;
@@ -37,11 +44,13 @@ public final class PluginConfiguration implements Serializable {
     public boolean disableFood = false;
     public boolean clearDropAtDeath = false;
     public boolean antiDisconectSpam = true;
+
     @Description(" ")
     @Description("# Scoreboard Settings")
     public boolean enableScoreboard = true;
     public int scoreboardRefresh = 20;
     public String scoreboardTitle = "&6&lEternalCode.pl";
+
     @Description(" ")
     public List<String> scoreboardStyle = Arrays.asList(
         "",

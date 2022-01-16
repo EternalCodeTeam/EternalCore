@@ -38,7 +38,7 @@ public final class AdminChatCommand {
         String adminChatFormat = ChatUtils.color(config.adminChatFormat.replace("{TEXT}", text));
 
         for (Player players : Bukkit.getOnlinePlayers()) {
-            if (players.hasPermission("eternalcode.adminchat.spy")) {
+            if (players.hasPermission("eternalcore.adminchat.spy")) {
                 players.sendMessage(adminChatFormat);
             }
         }
