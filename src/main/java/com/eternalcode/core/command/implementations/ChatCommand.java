@@ -4,6 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.EternalCore;
+import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
@@ -13,58 +15,66 @@ import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import panda.std.Option;
 
 import static com.eternalcode.core.command.Valid.when;
 
 @FunnyComponent
 public final class ChatCommand {
-    public static boolean chatMuted = false;
 
-    private final ConfigurationManager configurationManager;
+    private final ConfigurationManager  configurationManager;
+    private final ChatManager chatManager;
 
-    public ChatCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public ChatCommand(EternalCore core) {
+        this.chatManager = core.getChatManager();
+        this.configurationManager = core.getConfigurationManager();
     }
 
     @FunnyCommand(
         name = "chat",
         aliases = {"czat"},
         permission = "eternalcore.command.chat",
-        usage = "&cPoprawne użycie &7/chat <clear/on/off>",
+        usage = "&cPoprawne użycie &7/chat <clear/on/off/slowmode [time]>",
         acceptsExceeded = true
     )
 
     public void execute(CommandSender sender, String[] args, CommandInfo commandInfo) {
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         when(args.length < 1, commandInfo.getUsageMessage());
+
+        MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
+
         switch (args[0].toLowerCase()) {
             case "clear" -> {
-                for (int i = 0; i < 255; i++) {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        player.sendMessage(" ");
-                    }
+                for (int i = 0; i < 256; i++){
+                    Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
                 }
-
-                Bukkit.broadcast(ChatUtils.component(config.chatCleared.replace("{NICK}", sender.getName())));
+                Bukkit.broadcast(ChatUtils.component(messages.chatCleared.replace("{NICK}", sender.getName())));
             }
             case "on" -> {
-                if (!chatMuted) {
-                    sender.sendMessage(ChatUtils.color(config.chatAlreadyEnabled));
+                if (this.chatManager.isEnabled()){
+                    sender.sendMessage(ChatUtils.component(messages.chatAlreadyEnabled));
                     return;
                 }
-
-                chatMuted = false;
-                Bukkit.broadcast(ChatUtils.component(config.chatEnabled.replace("{NICK}", sender.getName())));
+                this.chatManager.setEnabled(true);
+                Bukkit.broadcast(ChatUtils.component(messages.chatEnabled.replace("{NICK}", sender.getName())));
             }
+
             case "off" -> {
-                if (chatMuted) {
-                    sender.sendMessage(ChatUtils.color(config.chatAlreadyDisabled));
+                if (!this.chatManager.isEnabled()){
+                    sender.sendMessage(ChatUtils.component(messages.chatAlreadyDisabled));
                     return;
                 }
+                this.chatManager.setEnabled(false);
+                Bukkit.broadcast(ChatUtils.component(messages.chatDisabled.replace("{NICK}", sender.getName())));
+            }
 
-                chatMuted = true;
-                Bukkit.broadcast(ChatUtils.component(config.chatDisabled.replace("{NICK}", sender.getName())));
+            case "slowmode" -> {
+                when(args.length != 2, "&cPoprawne użycie &7/chat slowmode [time]");
+                Option.attempt(NumberFormatException.class, () -> Integer.parseInt(args[1])).peek(amount -> {
+                    when(amount >= 0, messages.numberBiggerThanZero);
+
+                    this.chatManager.slowMode(sender, args[1]);
+                }).orThrow(() -> new ValidationException(ChatUtils.color(messages.notNumber)));
             }
             default -> throw new ValidationException(commandInfo.getUsageMessage());
         }
