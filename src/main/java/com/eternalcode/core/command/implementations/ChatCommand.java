@@ -71,7 +71,7 @@ public final class ChatCommand {
             case "slowmode" -> {
                 when(args.length != 2, "&cPoprawne użycie &7/chat slowmode [time]");
                 Option.attempt(NumberFormatException.class, () -> Integer.parseInt(args[1])).peek(amount -> {
-                    when(amount >= 0, messages.numberBiggerThanZero);
+                    when(amount <= 0, messages.numberBiggerThanZero);
 
                     this.chatManager.slowMode(sender, args[1]);
                 }).orThrow(() -> new ValidationException(ChatUtils.color(messages.notNumber)));
