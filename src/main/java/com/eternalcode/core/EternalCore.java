@@ -35,12 +35,13 @@ import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.listeners.PlayerListeners;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatUtils;
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import net.dzikoysk.funnycommands.FunnyCommands;
@@ -82,7 +83,7 @@ public final class EternalCore extends JavaPlugin {
 
         instance = this;
 
-        this.configurationManager = new ConfigurationManager(this);
+        this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadConfigs();
 
         this.scoreboardManager = new ScoreboardManager(this, configurationManager);
@@ -137,7 +138,7 @@ public final class EternalCore extends JavaPlugin {
 
         // Register events
         PandaStream.of(
-            new PlayerChatListener(this),
+            new PlayerChatListener(chatManager, configurationManager),
             new PlayerListeners(configurationManager),
             new CreateUserListener(this),
             new ScoreboardListener(this, configurationManager)
@@ -150,6 +151,13 @@ public final class EternalCore extends JavaPlugin {
     @Override
     public void onDisable() {
         funnyCommands.dispose();
+
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+
+        config.chatStatue = chatManager.isChatEnabled();
+        config.chatSlowMode = chatManager.getChatDelay();
+
+        configurationManager.saveConfigs();
     }
 
     private void softwareCheck() {

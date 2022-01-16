@@ -5,7 +5,7 @@
 package com.eternalcode.core.command;
 
 
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.ChatUtils;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 
 public class Valid {

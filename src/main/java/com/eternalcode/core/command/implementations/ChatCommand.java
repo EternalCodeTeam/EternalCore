@@ -8,7 +8,8 @@ import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.chat.ChatUtils;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
@@ -42,6 +43,7 @@ public final class ChatCommand {
         when(args.length < 1, commandInfo.getUsageMessage());
 
         MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
+        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
 
         switch (args[0].toLowerCase()) {
             case "clear" -> {
@@ -51,29 +53,30 @@ public final class ChatCommand {
                 Bukkit.broadcast(ChatUtils.component(messages.chatCleared.replace("{NICK}", sender.getName())));
             }
             case "on" -> {
-                if (this.chatManager.isEnabled()){
+                if (this.chatManager.isChatEnabled()){
                     sender.sendMessage(ChatUtils.component(messages.chatAlreadyEnabled));
                     return;
                 }
-                this.chatManager.setEnabled(true);
+                this.chatManager.setChatEnabled(true);
                 Bukkit.broadcast(ChatUtils.component(messages.chatEnabled.replace("{NICK}", sender.getName())));
             }
 
             case "off" -> {
-                if (!this.chatManager.isEnabled()){
+                if (!this.chatManager.isChatEnabled()){
                     sender.sendMessage(ChatUtils.component(messages.chatAlreadyDisabled));
                     return;
                 }
-                this.chatManager.setEnabled(false);
+                this.chatManager.setChatEnabled(false);
                 Bukkit.broadcast(ChatUtils.component(messages.chatDisabled.replace("{NICK}", sender.getName())));
             }
 
             case "slowmode" -> {
                 when(args.length != 2, "&cPoprawne użycie &7/chat slowmode [time]");
-                Option.attempt(NumberFormatException.class, () -> Integer.parseInt(args[1])).peek(amount -> {
-                    when(amount >= 0, messages.numberBiggerThanZero);
+                Option.attempt(NumberFormatException.class, () -> Double.parseDouble(args[1])).peek(amount -> {
+                    when(amount < 0.0D, messages.numberBiggerThanOrEqualZero);
 
-                    this.chatManager.slowMode(sender, args[1]);
+                    chatManager.setChatDelay(amount);
+                    sender.sendMessage(ChatUtils.color(messages.chatSlowModeSet.replace("{SLOWMODE}", args[1])));
                 }).orThrow(() -> new ValidationException(ChatUtils.color(messages.notNumber)));
             }
             default -> throw new ValidationException(commandInfo.getUsageMessage());
