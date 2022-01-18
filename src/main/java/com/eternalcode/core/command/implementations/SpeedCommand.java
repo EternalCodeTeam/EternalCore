@@ -42,7 +42,7 @@ public final class SpeedCommand {
             .orThrow(() -> new ValidationException("&8» &cPodany gracz jest offline."));
 
         Option.attempt(NumberFormatException.class, () -> Float.parseFloat(args[0])).peek(amount -> {
-            when(amount >= 0 && 10 <= amount, "» Podaj prędkość od 0 do 10");
+            when(amount < -10 || amount > 10, "» Podaj prędkość od 0 do 10");
 
             player.setWalkSpeed(amount / 10.0F);
             player.setFlySpeed(amount / 10.0F);
