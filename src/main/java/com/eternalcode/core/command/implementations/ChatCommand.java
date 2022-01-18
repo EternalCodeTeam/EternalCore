@@ -6,10 +6,10 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.ChatUtils;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
@@ -23,7 +23,7 @@ import static com.eternalcode.core.command.Valid.when;
 @FunnyComponent
 public final class ChatCommand {
 
-    private final ConfigurationManager  configurationManager;
+    private final ConfigurationManager configurationManager;
     private final ChatManager chatManager;
 
     public ChatCommand(EternalCore core) {
@@ -47,13 +47,13 @@ public final class ChatCommand {
 
         switch (args[0].toLowerCase()) {
             case "clear" -> {
-                for (int i = 0; i < 256; i++){
+                for (int i = 0; i < 256; i++) {
                     Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
                 }
                 Bukkit.broadcast(ChatUtils.component(messages.chatCleared.replace("{NICK}", sender.getName())));
             }
             case "on" -> {
-                if (this.chatManager.isChatEnabled()){
+                if (this.chatManager.isChatEnabled()) {
                     sender.sendMessage(ChatUtils.component(messages.chatAlreadyEnabled));
                     return;
                 }
@@ -62,7 +62,7 @@ public final class ChatCommand {
             }
 
             case "off" -> {
-                if (!this.chatManager.isChatEnabled()){
+                if (!this.chatManager.isChatEnabled()) {
                     sender.sendMessage(ChatUtils.component(messages.chatAlreadyDisabled));
                     return;
                 }
