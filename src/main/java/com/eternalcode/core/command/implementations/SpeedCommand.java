@@ -42,10 +42,10 @@ public final class SpeedCommand {
             .orThrow(() -> new ValidationException("&8» &cPodany gracz jest offline."));
 
         Option.attempt(NumberFormatException.class, () -> Float.parseFloat(args[0])).peek(amount -> {
-            when(amount >= 0 && 10 <= amount, "» Podaj prędkość od 0 do 10");
+            when(amount < -10 || amount > 10, "» Podaj prędkość od 0 do 10");
 
-            player.setWalkSpeed(amount);
-            player.setFlySpeed(amount);
+            player.setWalkSpeed(amount / 10.0F);
+            player.setFlySpeed(amount / 10.0F);
             sender.sendMessage(ChatUtils.color("&8» &7Ustawiono prędkość dla gracza &f" + player.getName() + " &7na &f" + amount));
             player.sendMessage(ChatUtils.color("&8» &7Ustawiono prędkość na &f" + amount));
         }).orThrow(() -> new ValidationException("&8» &cPodaj poprawną liczbę!"));
