@@ -1,22 +1,19 @@
-[![CodeFactor](https://www.codefactor.io/repository/github/eternalcodeteam/eternalcore/badge)](https://www.codefactor.io/repository/github/eternalcodeteam/eternalcore)
-
-Essential plugin for your server! ❤️
 # EternalCore
+[![CodeFactor](https://www.codefactor.io/repository/github/eternalcodeteam/eternalcore/badge/master)](https://www.codefactor.io/repository/github/eternalcodeteam/eternalcore/overview/master)
+[![Build Status](https://github.com/EternalCodeTeam/EternalCore/actions/workflows/gradle.yml/badge.svg)](https://github.com/EternalCodeTeam/EternalCore/actions/actions/workflows/gradle.yml)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/EternalCodeTeam/EternalCore.svg)](http://isitmaintained.com/project/EternalCodeTeam/EternalCore "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/EternalCodeTeam/EternalCore.svg)](http://isitmaintained.com/project/EternalCodeTeam/EternalCore "Percentage of issues still open")
+[![GitHub forks](https://img.shields.io/github/forks/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/network)
+[![GitHub stars](https://img.shields.io/github/stars/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/stargazers)
+[![GitHub license](https://img.shields.io/github/license/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/blob/master/LICENSE)
 
-## Discord
+# Discord
 
 If you want to get help regarding our products or just want to ask something, join our [discord](https://discord.gg/MUCKhgFUCA).
 
-##### Other API usages:
-[FastBoard](https://github.com/MrMicky-FR/FastBoard)
+# Other API usages
+- [FastBoard](https://github.com/MrMicky-FR/FastBoard)
 
-
-## Features:
-- AntiDisconnectSpam system
-- Scoreboard System (In progress)
-- Full configuration (In progress)
-- PlaceholderAPI Hook (In progress)
-- Big amount of commands (In progress)
-- Benchmark system (/gc command)
-- ChatManager System (/chat on/off/clear/slowmode + planned censorship)
-- and other features...
+# Hooks
+- PlaceholderAPI
+- Vault
