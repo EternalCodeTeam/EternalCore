@@ -18,38 +18,25 @@ public final class ConfigurationManager {
     private final File dataFolder;
     private final Cdn cdn = CdnFactory.createYamlLike();
 
-    @Getter private PluginConfiguration pluginConfiguration;
-    @Getter private MessagesConfiguration messagesConfiguration;
+    @Getter private final PluginConfiguration pluginConfiguration = new PluginConfiguration();
+    @Getter private final MessagesConfiguration messagesConfiguration = new MessagesConfiguration();
 
     public ConfigurationManager(File dataFolder) {
         this.dataFolder = dataFolder;
     }
 
-    public void saveConfigs() {
-        this.save(this.pluginConfiguration, "config.yml");
-        this.save(this.messagesConfiguration, "messages.yml");
+    public void loadAndRenderConfigs() {
+        this.loadAndRender(pluginConfiguration, "config.yml");
+        this.loadAndRender(messagesConfiguration, "messages.yml");
     }
 
-    public void loadConfigs() {
-        this.pluginConfiguration = loadOrCreate(PluginConfiguration.class, "config.yml");
-        this.messagesConfiguration = loadOrCreate(MessagesConfiguration.class, "messages.yml");
-    }
-
-    public <T extends Serializable> T loadOrCreate(Class<T> configurationClass, String fileName) {
-        Resource resource = this.getResourceFromDataFolder(fileName);
-        T load = cdn.load(resource, configurationClass)
+    public <T extends Serializable> void loadAndRender(T config, String fileName) {
+        Resource resource = Source.of(new File(dataFolder, fileName));
+         cdn.load(resource, config)
             .orElseThrow(RuntimeException::new);
 
-        cdn.render(load, resource);
-        return load;
+        cdn.render(config, resource);
     }
 
-    public <T extends Serializable> void save(T config, String fileName) {
-        cdn.render(config, this.getResourceFromDataFolder(fileName));
-    }
-
-    private Resource getResourceFromDataFolder(String fileName) {
-        return Source.of(new File(dataFolder, fileName));
-    }
 
 }

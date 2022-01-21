@@ -32,7 +32,7 @@ public final class EternalCoreCommand {
 
         switch (args[0]) {
             case "reload" -> {
-                configurationManager.loadConfigs();
+                configurationManager.loadAndRenderConfigs();
                 player.sendMessage(config.successfullyReloaded);
                 Bukkit.getLogger().info(ChatUtils.color("Configs has ben successfuly reloaded!"));
             }

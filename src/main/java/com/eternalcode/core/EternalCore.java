@@ -84,7 +84,7 @@ public final class EternalCore extends JavaPlugin {
         instance = this;
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
-        this.configurationManager.loadConfigs();
+        this.configurationManager.loadAndRenderConfigs();
 
         this.scoreboardManager = new ScoreboardManager(this, configurationManager);
         this.scoreboardManager.updateTask();
@@ -156,8 +156,6 @@ public final class EternalCore extends JavaPlugin {
 
         config.chatStatue = chatManager.isChatEnabled();
         config.chatSlowMode = chatManager.getChatDelay();
-
-        configurationManager.saveConfigs();
     }
 
     private void softwareCheck() {
