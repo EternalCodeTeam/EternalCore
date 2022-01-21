@@ -94,7 +94,7 @@ public final class EternalCore extends JavaPlugin {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
 
         // bStats metrics
-        // TODO: Jakieś ładne custom charty
+        // Jakieś ładne custom charty
         // Metrics metrics = new Metrics(this, 13026);
         // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 

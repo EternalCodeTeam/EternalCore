@@ -87,7 +87,7 @@ public final class ScoreboardReflection {
         }
     }
 
-    static Class<?> innerClass(Class<?> parentClass, Predicate<Class<?>> classPredicate) throws ClassNotFoundException {
+    public static Class<?> innerClass(Class<?> parentClass, Predicate<Class<?>> classPredicate) throws ClassNotFoundException {
         for (Class<?> innerClass : parentClass.getDeclaredClasses()) {
             if (classPredicate.test(innerClass)) {
                 return innerClass;

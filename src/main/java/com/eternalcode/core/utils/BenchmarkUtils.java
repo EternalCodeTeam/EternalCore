@@ -32,15 +32,10 @@ public final class BenchmarkUtils {
         return Runtime.getRuntime().availableProcessors();
     }
 
-    public static String cpuName() {
-        return System.getenv("PROCESSOR_IDENTIFIER");
-    }
-
     public static String getTPS() {
         return Arrays.stream(Bukkit.getTPS()).mapToObj(BenchmarkUtils::tpsFormat).collect(Collectors.joining(", "));
     }
 
-    // TODO: MOVE COLORS TO CONFIG
     private static String tpsFormat(double tps) {
         return ((tps > 18.0) ? ChatColor.GREEN : (tps > 16.0) ? ChatColor.YELLOW : ChatColor.RED)
             + ((tps > 20.0) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0);

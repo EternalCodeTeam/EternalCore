@@ -1,12 +1,15 @@
 package com.eternalcode.core.scoreboard.api.impl;
 
+import com.eternalcode.core.scoreboard.api.enums.ObjectiveMode;
+import com.eternalcode.core.scoreboard.api.enums.ScoreboardAction;
+import com.eternalcode.core.scoreboard.api.enums.TeamMode;
+import com.eternalcode.core.scoreboard.api.enums.VersionType;
 import com.eternalcode.core.scoreboard.api.interfances.PacketConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -22,30 +25,34 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+public final class ScoreboardAPI {
 
-public class ScoreboardAPI {
-
-    private static final Map<Class<?>, Field[]> PACKETS = new HashMap<>(8);
+    public static final Map<Class<?>, Field[]> PACKETS = new HashMap<>(8);
     private static final String[] COLOR_CODES = Arrays.stream(ChatColor.values()).map(Object::toString).toArray(String[]::new);
-    private static final VersionType VERSION_TYPE;
-    private static final Class<?> CHAT_COMPONENT_CLASS;
-    private static final Class<?> CHAT_FORMAT_ENUM;
-    private static final Object EMPTY_MESSAGE;
-    private static final Object RESET_FORMATTING;
-    private static final MethodHandle MESSAGE_FROM_STRING;
-    private static final MethodHandle PLAYER_CONNECTION;
-    private static final MethodHandle SEND_PACKET;
-    private static final MethodHandle PLAYER_GET_HANDLE;
-    private static final PacketConstructor PACKET_SB_OBJ;
-    private static final PacketConstructor PACKET_SB_DISPLAY_OBJ;
-    private static final PacketConstructor PACKET_SB_SCORE;
-    private static final PacketConstructor PACKET_SB_TEAM;
-    private static final PacketConstructor PACKET_SB_SERIALIZABLE_TEAM;
-    private static final Class<?> ENUM_SB_HEALTH_DISPLAY;
-    private static final Class<?> ENUM_SB_ACTION;
-    private static final Object ENUM_SB_HEALTH_DISPLAY_INTEGER;
-    private static final Object ENUM_SB_ACTION_CHANGE;
-    private static final Object ENUM_SB_ACTION_REMOVE;
+    private static VersionType VERSION_TYPE;
+    private static Class<?> CHAT_COMPONENT_CLASS;
+    private static Class<?> CHAT_FORMAT_ENUM;
+    private static Object EMPTY_MESSAGE;
+    private static Object RESET_FORMATTING;
+    private static MethodHandle MESSAGE_FROM_STRING;
+    private static MethodHandle PLAYER_CONNECTION;
+    private static MethodHandle SEND_PACKET;
+    private static MethodHandle PLAYER_GET_HANDLE;
+    private static PacketConstructor PACKET_SB_OBJ;
+    private static PacketConstructor PACKET_SB_DISPLAY_OBJ;
+    private static PacketConstructor PACKET_SB_SCORE;
+    private static PacketConstructor PACKET_SB_TEAM;
+    private static PacketConstructor PACKET_SB_SERIALIZABLE_TEAM;
+    private static Class<?> ENUM_SB_HEALTH_DISPLAY;
+    private static Class<?> ENUM_SB_ACTION;
+    private static Object ENUM_SB_HEALTH_DISPLAY_INTEGER;
+    private static Object ENUM_SB_ACTION_CHANGE;
+    private static Object ENUM_SB_ACTION_REMOVE;
+    private final Player player;
+    private final String id;
+    private final List<String> lines = new ArrayList<>();
+    private String title = ChatColor.RESET.toString();
+    private boolean deleted = false;
 
     static {
         try {
@@ -62,7 +69,6 @@ public class ScoreboardAPI {
             }
 
             String gameProtocolPackage = "network.protocol.game";
-            Class<?> craftPlayerClass = ScoreboardReflection.obcClass("entity.CraftPlayer");
             Class<?> craftChatMessageClass = ScoreboardReflection.obcClass("util.CraftChatMessage");
             Class<?> entityPlayerClass = ScoreboardReflection.nmsClass("server.level", "EntityPlayer");
             Class<?> playerConnectionClass = ScoreboardReflection.nmsClass("server.network", "PlayerConnection");
@@ -79,7 +85,6 @@ public class ScoreboardAPI {
             CHAT_FORMAT_ENUM = ScoreboardReflection.nmsClass(null, "EnumChatFormat");
             EMPTY_MESSAGE = Array.get(MESSAGE_FROM_STRING.invoke(""), 0);
             RESET_FORMATTING = ScoreboardReflection.enumValueOf(CHAT_FORMAT_ENUM, "RESET", 21);
-            PLAYER_GET_HANDLE = lookup.findVirtual(craftPlayerClass, "getHandle", MethodType.methodType(entityPlayerClass));
             PLAYER_CONNECTION = lookup.unreflectGetter(playerConnectionField);
             SEND_PACKET = lookup.unreflect(sendPacketMethod);
             PACKET_SB_OBJ = ScoreboardReflection.findPacketConstructor(packetSbObjClass, lookup);
@@ -92,12 +97,13 @@ public class ScoreboardAPI {
                 if (clazz == null) {
                     continue;
                 }
-                Field[] fields = Arrays.stream(clazz.getDeclaredFields())
-                    .filter(field -> !Modifier.isStatic(field.getModifiers()))
-                    .toArray(Field[]::new);
+
+                Field[] fields = Arrays.stream(clazz.getDeclaredFields()).filter(field -> !Modifier.isStatic(field.getModifiers())).toArray(Field[]::new);
+
                 for (Field field : fields) {
                     field.setAccessible(true);
                 }
+
                 PACKETS.put(clazz, fields);
             }
 
@@ -105,33 +111,22 @@ public class ScoreboardAPI {
                 String enumSbActionClass = VersionType.V1_13.isHigherOrEqual() ? "ScoreboardServer$Action" : "PacketPlayOutScoreboardScore$EnumScoreboardAction";
                 ENUM_SB_HEALTH_DISPLAY = ScoreboardReflection.nmsClass("world.scores.criteria", "IScoreboardCriteria$EnumScoreboardHealthDisplay");
                 ENUM_SB_ACTION = ScoreboardReflection.nmsClass("server", enumSbActionClass);
-                ENUM_SB_HEALTH_DISPLAY_INTEGER = ScoreboardReflection.enumValueOf(ENUM_SB_HEALTH_DISPLAY, "INTEGER", 0);
                 ENUM_SB_ACTION_CHANGE = ScoreboardReflection.enumValueOf(ENUM_SB_ACTION, "CHANGE", 0);
                 ENUM_SB_ACTION_REMOVE = ScoreboardReflection.enumValueOf(ENUM_SB_ACTION, "REMOVE", 1);
             } else {
                 ENUM_SB_HEALTH_DISPLAY = null;
                 ENUM_SB_ACTION = null;
-                ENUM_SB_HEALTH_DISPLAY_INTEGER = null;
                 ENUM_SB_ACTION_CHANGE = null;
                 ENUM_SB_ACTION_REMOVE = null;
             }
-        } catch (Throwable t) {
-            throw new ExceptionInInitializerError(t);
+        } catch (Throwable throwable) {
+            throw new ExceptionInInitializerError(throwable);
         }
     }
 
-    private final Player player;
-    private final String id;
-
-    private final List<String> lines = new ArrayList<>();
-    private String title = ChatColor.RESET.toString();
-
-    private boolean deleted = false;
-
-
     public ScoreboardAPI(Player player) {
-        this.player = Objects.requireNonNull(player, "player");
-        this.id = "fb-" + Integer.toHexString(ThreadLocalRandom.current().nextInt());
+        this.player = player;
+        id = "fb-" + Integer.toHexString(ThreadLocalRandom.current().nextInt());
 
         try {
             sendObjectivePacket(ObjectiveMode.CREATE);
@@ -141,14 +136,51 @@ public class ScoreboardAPI {
         }
     }
 
-
-    public String getTitle() {
-        return this.title;
+    private static boolean hasLinesMaxLength() {
+        return !VersionType.V1_13.isHigherOrEqual();
     }
 
+    private static String getLineByScore(List<String> lines, int score) {
+        return lines.get(lines.size() - score - 1);
+    }
+
+    private static void setField(Object object, Class<?> fieldType, Object value) throws ReflectiveOperationException {
+        setField(object, fieldType, value, 0);
+    }
+
+    private static void setField(Object packet, Class<?> fieldType, Object value, int count) throws ReflectiveOperationException {
+        int i = 0;
+        for (Field field : PACKETS.get(packet.getClass())) {
+            if (field.getType() == fieldType && count == i++) {
+                field.set(packet, value);
+            }
+        }
+    }
+
+    private static void setComponentField(Object packet, String value, int count) throws Throwable {
+        if (!VersionType.V1_13.isHigherOrEqual()) {
+            setField(packet, String.class, value, count);
+            return;
+        }
+
+        int i = 0;
+        for (Field field : PACKETS.get(packet.getClass())) {
+            if ((field.getType() == String.class || field.getType() == CHAT_COMPONENT_CLASS) && count == i++) {
+                field.set(packet, value.isEmpty() ? EMPTY_MESSAGE : Array.get(MESSAGE_FROM_STRING.invoke(value), 0));
+            }
+        }
+    }
+
+    public static void setPlayerGetHandle(MethodHandle playerGetHandle) {
+        PLAYER_GET_HANDLE = playerGetHandle;
+    }
+
+    public static void setEnumSbHealthDisplayInteger(Object enumSbHealthDisplayInteger) {
+        ENUM_SB_HEALTH_DISPLAY_INTEGER = enumSbHealthDisplayInteger;
+    }
 
     public void updateTitle(String title) {
-        if (this.title.equals(Objects.requireNonNull(title, "title"))) {
+        if (title.equals(title)) {
             return;
         }
 
@@ -156,7 +188,7 @@ public class ScoreboardAPI {
             throw new IllegalArgumentException("Title is longer than 32 chars");
         }
 
-        this.title = title;
+        title = title;
 
         try {
             sendObjectivePacket(ObjectiveMode.UPDATE);
@@ -165,34 +197,31 @@ public class ScoreboardAPI {
         }
     }
 
-
     public List<String> getLines() {
-        return new ArrayList<>(this.lines);
+        return new ArrayList<>(lines);
     }
-
 
     public String getLine(int line) {
         checkLineNumber(line, true, false);
 
-        return this.lines.get(line);
+        return lines.get(line);
     }
-
 
     public synchronized void updateLine(int line, String text) {
         checkLineNumber(line, false, true);
 
         try {
-            if (line < size()) {
-                this.lines.set(line, text);
+            if (line < getSize()) {
+                lines.set(line, text);
 
                 sendTeamPacket(getScoreByLine(line), TeamMode.UPDATE);
                 return;
             }
 
-            List<String> newLines = new ArrayList<>(this.lines);
+            List<String> newLines = new ArrayList<>(lines);
 
-            if (line > size()) {
-                for (int i = size(); i < line; i++) {
+            if (line > getSize()) {
+                for (int i = getSize(); i < line; i++) {
                     newLines.add("");
                 }
             }
@@ -200,32 +229,28 @@ public class ScoreboardAPI {
             newLines.add(text);
 
             updateLines(newLines);
-        } catch (Throwable t) {
-            throw new RuntimeException("Unable to update scoreboard lines", t);
+        } catch (Throwable throwable) {
+            throw new RuntimeException("Unable to update scoreboard lines", throwable);
         }
     }
-
 
     public synchronized void removeLine(int line) {
         checkLineNumber(line, false, false);
 
-        if (line >= size()) {
+        if (line >= getSize()) {
             return;
         }
 
-        List<String> newLines = new ArrayList<>(this.lines);
+        List<String> newLines = new ArrayList<>(lines);
         newLines.remove(line);
         updateLines(newLines);
     }
-
 
     public void updateLines(String... lines) {
         updateLines(Arrays.asList(lines));
     }
 
-
     public synchronized void updateLines(Collection<String> lines) {
-        Objects.requireNonNull(lines, "lines");
         checkLineNumber(lines.size(), false, true);
 
         if (!VersionType.V1_13.isHigherOrEqual()) {
@@ -238,11 +263,11 @@ public class ScoreboardAPI {
             }
         }
 
-        List<String> oldLines = new ArrayList<>(this.lines);
-        this.lines.clear();
-        this.lines.addAll(lines);
+        List<String> oldLines = new ArrayList<>(lines);
+        lines.clear();
+        lines.addAll(lines);
 
-        int linesSize = this.lines.size();
+        int linesSize = lines.size();
 
         try {
             if (oldLines.size() != linesSize) {
@@ -270,49 +295,27 @@ public class ScoreboardAPI {
                     sendTeamPacket(i, TeamMode.UPDATE);
                 }
             }
-        } catch (Throwable t) {
-            throw new RuntimeException("Unable to update scoreboard lines", t);
+        } catch (Throwable throwable) {
+            throw new RuntimeException("Unable to update scoreboard lines", throwable);
         }
     }
 
-
-    public Player getPlayer() {
-        return this.player;
+    public int getSize() {
+        return lines.size();
     }
-
-
-    public String getId() {
-        return this.id;
-    }
-
-
-    public boolean isDeleted() {
-        return this.deleted;
-    }
-
-
-    public int size() {
-        return this.lines.size();
-    }
-
 
     public void delete() {
         try {
-            for (int i = 0; i < this.lines.size(); i++) {
+            for (int i = 0; i < lines.size(); i++) {
                 sendTeamPacket(i, TeamMode.REMOVE);
             }
 
             sendObjectivePacket(ObjectiveMode.REMOVE);
-        } catch (Throwable t) {
-            throw new RuntimeException("Unable to delete scoreboard", t);
+        } catch (Throwable throwable) {
+            throw new RuntimeException("Unable to delete scoreboard", throwable);
         }
 
-        this.deleted = true;
-    }
-
-
-    protected boolean hasLinesMaxLength() {
-        return !VersionType.V1_13.isHigherOrEqual();
+        deleted = true;
     }
 
     private void checkLineNumber(int line, boolean checkInRange, boolean checkMax) {
@@ -320,8 +323,8 @@ public class ScoreboardAPI {
             throw new IllegalArgumentException("Line number must be positive");
         }
 
-        if (checkInRange && line >= this.lines.size()) {
-            throw new IllegalArgumentException("Line number must be under " + this.lines.size());
+        if (checkInRange && line >= lines.size()) {
+            throw new IllegalArgumentException("Line number must be under " + lines.size());
         }
 
         if (checkMax && line >= COLOR_CODES.length - 1) {
@@ -330,30 +333,28 @@ public class ScoreboardAPI {
     }
 
     private int getScoreByLine(int line) {
-        return this.lines.size() - line - 1;
+        return lines.size() - line - 1;
     }
 
     private String getLineByScore(int score) {
-        return getLineByScore(this.lines, score);
-    }
-
-    private String getLineByScore(List<String> lines, int score) {
-        return lines.get(lines.size() - score - 1);
+        return getLineByScore(lines, score);
     }
 
     private void sendObjectivePacket(ObjectiveMode mode) throws Throwable {
         Object packet = PACKET_SB_OBJ.invoke();
 
-        setField(packet, String.class, this.id);
+        setField(packet, String.class, id);
         setField(packet, int.class, mode.ordinal());
 
         if (mode != ObjectiveMode.REMOVE) {
-            setComponentField(packet, this.title, 1);
+            setComponentField(packet, title, 1);
 
             if (VersionType.V1_8.isHigherOrEqual()) {
                 setField(packet, ENUM_SB_HEALTH_DISPLAY, ENUM_SB_HEALTH_DISPLAY_INTEGER);
             }
-        } else if (VERSION_TYPE == VersionType.V1_7) {
+        }
+
+        if (VERSION_TYPE == VersionType.V1_7) {
             setField(packet, String.class, "", 1);
         }
 
@@ -364,7 +365,7 @@ public class ScoreboardAPI {
         Object packet = PACKET_SB_DISPLAY_OBJ.invoke();
 
         setField(packet, int.class, 1);
-        setField(packet, String.class, this.id);
+        setField(packet, String.class, id);
 
         sendPacket(packet);
     }
@@ -381,7 +382,7 @@ public class ScoreboardAPI {
         }
 
         if (action == ScoreboardAction.CHANGE) {
-            setField(packet, String.class, this.id, 1);
+            setField(packet, String.class, id, 1);
             setField(packet, int.class, score);
         }
 
@@ -396,39 +397,40 @@ public class ScoreboardAPI {
         int maxLength = hasLinesMaxLength() ? 16 : 1024;
         Object packet = PACKET_SB_TEAM.invoke();
 
-        setField(packet, String.class, this.id + ':' + score);
+        setField(packet, String.class, id + ':' + score);
         setField(packet, int.class, mode.ordinal(), VERSION_TYPE == VersionType.V1_8 ? 1 : 0);
 
         if (mode == TeamMode.CREATE || mode == TeamMode.UPDATE) {
             String line = getLineByScore(score);
             String prefix;
-            String suffix = null;
+            String suffix;
 
             if (line == null || line.isEmpty()) {
                 prefix = COLOR_CODES[score] + ChatColor.RESET;
-            } else if (line.length() <= maxLength) {
-                prefix = line;
-            } else {
-
-                int index = line.charAt(maxLength - 1) == ChatColor.COLOR_CHAR ? (maxLength - 1) : maxLength;
-                prefix = line.substring(0, index);
-                String suffixTmp = line.substring(index);
-                ChatColor chatColor = null;
-
-                if (suffixTmp.length() >= 2 && suffixTmp.charAt(0) == ChatColor.COLOR_CHAR) {
-                    chatColor = ChatColor.getByChar(suffixTmp.charAt(1));
-                }
-
-                String color = ChatColor.getLastColors(prefix);
-                boolean addColor = chatColor == null || chatColor.isFormat();
-
-                suffix = (addColor ? (color.isEmpty() ? ChatColor.RESET.toString() : color) : "") + suffixTmp;
             }
 
-            if (prefix.length() > maxLength || (suffix != null && suffix.length() > maxLength)) {
+            if (line != null && line.length() <= maxLength) {
+                prefix = line;
+            }
+
+            int index = line.charAt(maxLength - 1) == ChatColor.COLOR_CHAR ? (maxLength - 1) : maxLength;
+            prefix = line.substring(0, index);
+            String suffixTmp = line.substring(index);
+            ChatColor chatColor = null;
+
+            if (suffixTmp.length() >= 2 && suffixTmp.charAt(0) == ChatColor.COLOR_CHAR) {
+                chatColor = ChatColor.getByChar(suffixTmp.charAt(1));
+            }
+
+            String color = ChatColor.getLastColors(prefix);
+            boolean addColor = chatColor == null || chatColor.isFormat();
+
+            suffix = (addColor ? (color.isEmpty() ? ChatColor.RESET.toString() : color) : "") + suffixTmp;
+
+            if (suffix.length() > maxLength) {
 
                 prefix = prefix.substring(0, maxLength);
-                suffix = (suffix != null) ? suffix.substring(0, maxLength) : null;
+                suffix = suffix.substring(0, maxLength);
             }
 
             if (VersionType.V1_17.isHigherOrEqual()) {
@@ -437,16 +439,16 @@ public class ScoreboardAPI {
                 setComponentField(team, "", 0);
                 setField(team, CHAT_FORMAT_ENUM, RESET_FORMATTING);
                 setComponentField(team, prefix, 1);
-                setComponentField(team, suffix == null ? "" : suffix, 2);
+                setComponentField(team, suffix, 2);
                 setField(team, String.class, "always", 0);
                 setField(team, String.class, "always", 1);
                 setField(packet, Optional.class, Optional.of(team));
-            } else {
-                setComponentField(packet, prefix, 2);
-                setComponentField(packet, suffix == null ? "" : suffix, 3);
-                setField(packet, String.class, "always", 4);
-                setField(packet, String.class, "always", 5);
             }
+
+            setComponentField(packet, prefix, 2);
+            setComponentField(packet, suffix, 3);
+            setField(packet, String.class, "always", 4);
+            setField(packet, String.class, "always", 5);
 
             if (mode == TeamMode.CREATE) {
                 setField(packet, Collection.class, Collections.singletonList(COLOR_CODES[score]));
@@ -457,61 +459,38 @@ public class ScoreboardAPI {
     }
 
     private void sendPacket(Object packet) throws Throwable {
-        if (this.deleted) {
+        if (deleted) {
             throw new IllegalStateException("This scoreboard is deleted");
         }
 
-        if (this.player.isOnline()) {
-            Object entityPlayer = PLAYER_GET_HANDLE.invoke(this.player);
+        if (player.isOnline()) {
+            Object entityPlayer = PLAYER_GET_HANDLE.invoke(player);
             Object playerConnection = PLAYER_CONNECTION.invoke(entityPlayer);
             SEND_PACKET.invoke(playerConnection, packet);
         }
     }
 
-    private void setField(Object object, Class<?> fieldType, Object value) throws ReflectiveOperationException {
-        setField(object, fieldType, value, 0);
+    public Player getPlayer() {
+        return this.player;
     }
 
-    private void setField(Object packet, Class<?> fieldType, Object value, int count) throws ReflectiveOperationException {
-        int i = 0;
-        for (Field field : PACKETS.get(packet.getClass())) {
-            if (field.getType() == fieldType && count == i++) {
-                field.set(packet, value);
-            }
-        }
+    public String getId() {
+        return this.id;
     }
 
-    private void setComponentField(Object packet, String value, int count) throws Throwable {
-        if (!VersionType.V1_13.isHigherOrEqual()) {
-            setField(packet, String.class, value, count);
-            return;
-        }
-
-        int i = 0;
-        for (Field field : PACKETS.get(packet.getClass())) {
-            if ((field.getType() == String.class || field.getType() == CHAT_COMPONENT_CLASS) && count == i++) {
-                field.set(packet, value.isEmpty() ? EMPTY_MESSAGE : Array.get(MESSAGE_FROM_STRING.invoke(value), 0));
-            }
-        }
+    public String getTitle() {
+        return this.title;
     }
 
-    private enum ObjectiveMode {
-        CREATE, REMOVE, UPDATE
+    public boolean isDeleted() {
+        return this.deleted;
     }
 
-    private enum TeamMode {
-        CREATE, REMOVE, UPDATE, ADD_PLAYERS, REMOVE_PLAYERS
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    private enum ScoreboardAction {
-        CHANGE, REMOVE
-    }
-
-    private enum VersionType {
-        V1_7, V1_8, V1_13, V1_17;
-
-        public boolean isHigherOrEqual() {
-            return VERSION_TYPE.ordinal() >= ordinal();
-        }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

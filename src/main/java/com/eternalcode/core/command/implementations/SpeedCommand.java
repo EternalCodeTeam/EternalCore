@@ -23,16 +23,6 @@ public final class SpeedCommand {
         usage = "&8» &cPoprawne użycie &7/speed <liczba> [gracz]",
         acceptsExceeded = true
     )
-
-    // Examples of command usages
-    // console -> 2 player +
-    // console -> 2 offplayer +
-    // player -> 2 player +
-    // player -> 2 offplayer +
-    // console -> 1 (no player) +
-    // player -> 1 (player) +
-
-    // TODO: Full fix
     public void execute(CommandSender sender, String[] args) {
         when(args.length == 0, "» Podaj argument");
         when(args.length == 1 && !(sender instanceof Player), "» A czego tutaj szukasz?");

@@ -9,7 +9,6 @@ import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.ChatUtils;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.configuration.PluginConfiguration;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
@@ -43,7 +42,6 @@ public final class ChatCommand {
         when(args.length < 1, commandInfo.getUsageMessage());
 
         MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
-        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
 
         switch (args[0].toLowerCase()) {
             case "clear" -> {

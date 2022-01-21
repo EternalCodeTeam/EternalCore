@@ -30,7 +30,7 @@ public final class EternalCoreCommand {
     public void execute(Player player, String[] args) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
 
-        switch (args[0]) {
+        switch (args[0].toLowerCase()) {
             case "reload" -> {
                 configurationManager.loadAndRenderConfigs();
                 player.sendMessage(config.successfullyReloaded);
