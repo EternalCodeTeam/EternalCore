@@ -7,8 +7,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/stargazers)
 [![GitHub license](https://img.shields.io/github/license/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/blob/master/LICENSE)
 
-# Discord
-
 If you want to get help regarding our products or just want to ask something, join our [discord](https://discord.gg/MUCKhgFUCA).
 
 # Other API usages
