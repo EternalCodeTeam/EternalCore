@@ -44,9 +44,9 @@ dependencies {
     compileOnly "me.clip:placeholderapi:2.11.1"
 
     // tests
-    testImplementation 'org.spigotmc:spigot-api:1.16.2-R0.1-SNAPSHOT'
-    testImplementation 'org.codehaus.groovy:groovy-all:3.0.9'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
+    testImplementation "org.codehaus.groovy:groovy-all:3.0.9"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.1"
 }
 
 test { useJUnitPlatform() }
