@@ -5,6 +5,7 @@
 package com.eternalcode.core.configuration;
 
 import net.dzikoysk.cdn.entity.Description;
+import org.bukkit.ChatColor;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -44,6 +45,13 @@ public final class PluginConfiguration implements Serializable {
     public boolean disableFood = false;
     public boolean clearDropAtDeath = false;
     public boolean antiDisconectSpam = true;
+
+
+    @Description(" ")
+    @Description("# TPS Colors")
+    public ChatColor FlawlessTPS = ChatColor.GREEN;
+    public ChatColor FairTPS = ChatColor.YELLOW;
+    public ChatColor PoorTPS = ChatColor.RED;
 
     @Description(" ")
     @Description("# Scoreboard Settings")

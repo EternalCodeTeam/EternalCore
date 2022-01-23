@@ -4,13 +4,21 @@
 
 package com.eternalcode.core.utils;
 
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.PluginConfiguration;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public final class BenchmarkUtils {
+
+    private static ConfigurationManager configurationManager;
+
+    public BenchmarkUtils(ConfigurationManager configurationManager) {
+        BenchmarkUtils.configurationManager = configurationManager;
+    }
+
 
     public static long getUsedMemory() {
         return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576L;
@@ -38,7 +46,9 @@ public final class BenchmarkUtils {
 
     // TODO: Move tps colors to configuration
     private static String tpsFormat(double tps) {
-        return ((tps > 18.0) ? ChatColor.GREEN : (tps > 16.0) ? ChatColor.YELLOW : ChatColor.RED)
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+
+        return ((tps > 18.0) ? config.FlawlessTPS : (tps > 16.0) ? config.FairTPS : config.PoorTPS)
             + ((tps > 20.0) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0);
     }
 }

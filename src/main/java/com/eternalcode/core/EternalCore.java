@@ -141,7 +141,7 @@ public final class EternalCore extends JavaPlugin {
             new PlayerChatListener(chatManager, configurationManager),
             new PlayerListeners(configurationManager),
             new CreateUserListener(this),
-            new ScoreboardListener(this, configurationManager)
+            new ScoreboardListener(configurationManager, scoreboardManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
