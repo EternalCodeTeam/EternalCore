@@ -89,7 +89,7 @@ public final class EternalCore extends JavaPlugin {
         this.scoreboardManager = new ScoreboardManager(this, configurationManager);
         this.scoreboardManager.updateTask();
 
-        this.chatManager = new ChatManager(configurationManager);
+        this.chatManager = new ChatManager(configurationManager.getPluginConfiguration());
 
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
 

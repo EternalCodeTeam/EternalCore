@@ -15,8 +15,7 @@ public final class ChatManager {
     private double chatDelay;
     private boolean chatEnabled;
 
-    public ChatManager(ConfigurationManager configManager) {
-        PluginConfiguration config = configManager.getPluginConfiguration();
+    public ChatManager(PluginConfiguration config) {
 
         this.chatDelay = config.chatSlowMode;
         this.chatEnabled = config.chatStatue;
