@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.UUID;
+
 public class PlayerChatListener implements Listener {
 
     private final ChatManager chatManager;
@@ -29,14 +31,16 @@ public class PlayerChatListener implements Listener {
             return;
         }
 
-        if (this.chatManager.isSlowedOnChat(player) && !player.hasPermission("enernalCore.chat.noslowmode")) {
-            long time = this.chatManager.getSlowDown(player);
+        UUID uuid = player.getUniqueId();
+
+        if (this.chatManager.isSlowedOnChat(uuid) && !player.hasPermission("enernalCore.chat.noslowmode")) {
+            long time = this.chatManager.getSlowDown(uuid);
 
             player.sendMessage(ChatUtils.color(messages.chatSlowMode.replace("{TIME}", DateUtils.durationToString(time))));
             event.setCancelled(true);
             return;
         }
 
-        this.chatManager.useChat(player);
+        this.chatManager.useChat(uuid);
     }
 }
