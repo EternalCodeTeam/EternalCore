@@ -43,12 +43,11 @@ public final class BenchmarkUtils {
     public static String getTPS() {
         return Arrays.stream(Bukkit.getTPS()).mapToObj(BenchmarkUtils::tpsFormat).collect(Collectors.joining(", "));
     }
-
-    // TODO: Move tps colors to configuration
+    
     private static String tpsFormat(double tps) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
-        return ((tps > 18.0) ? config.FlawlessTPS : (tps > 16.0) ? config.FairTPS : config.PoorTPS)
+        return ((tps > 18.0) ? config.flawlessTPS : (tps > 16.0) ? config.fairTPS : config.poorTPS)
             + ((tps > 20.0) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0);
     }
 }
