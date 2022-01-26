@@ -38,7 +38,7 @@ dependencies {
     implementation "org.panda-lang:expressible:1.1.12"
 
     // bStats
-    implementation "org.bstats:bstats-bukkit:2.2.1"
+    implementation "org.bstats:bstats-bukkit:3.0.0"
 
     // PlaceholderAPI
     compileOnly "me.clip:placeholderapi:2.11.1"
