@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-
 @FunnyComponent
 public final class GcCommand {
     @FunnyCommand(
@@ -27,6 +26,8 @@ public final class GcCommand {
     )
 
     public void execute(Player player) {
+        //TODO: :skull:
+
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS from last 1m, 5m, 15m: " + BenchmarkUtils.getTPS()));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));

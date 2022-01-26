@@ -14,6 +14,7 @@ import panda.std.stream.PandaStream;
 import java.util.List;
 
 public final class ChatUtils {
+
     private static final LegacyComponentSerializer serializer = PaperComponents.legacySectionSerializer();
 
     public static String color(String text) {

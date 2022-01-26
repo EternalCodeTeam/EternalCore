@@ -4,7 +4,6 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.Map;
@@ -16,8 +15,7 @@ public final class ChatManager {
     private double chatDelay;
     private boolean chatEnabled;
 
-    public ChatManager(ConfigurationManager configManager) {
-        PluginConfiguration config = configManager.getPluginConfiguration();
+    public ChatManager(PluginConfiguration config) {
 
         this.chatDelay = config.chatSlowMode;
         this.chatEnabled = config.chatStatue;
@@ -26,8 +24,8 @@ public final class ChatManager {
             .build();
     }
 
-    public void useChat(Player player) {
-        this.slowdown.put(player.getUniqueId(), (long) (System.currentTimeMillis() + this.chatDelay * 1000L));
+    public void useChat(UUID userUuid) {
+        this.slowdown.put(userUuid, (long) (System.currentTimeMillis() + this.chatDelay * 1000L));
     }
 
     public boolean isChatEnabled() {
@@ -38,12 +36,12 @@ public final class ChatManager {
         this.chatEnabled = chatEnabled;
     }
 
-    public boolean isSlowedOnChat(Player player) {
-        return slowdown.asMap().getOrDefault(player.getUniqueId(), 0L) > System.currentTimeMillis();
+    public boolean isSlowedOnChat(UUID userUuid) {
+        return slowdown.asMap().getOrDefault(userUuid, 0L) > System.currentTimeMillis();
     }
 
-    public long getSlowDown(Player player) {
-        return Math.max(slowdown.asMap().getOrDefault(player.getUniqueId(), 0L) - System.currentTimeMillis(), 0L);
+    public long getSlowDown(UUID userUuid) {
+        return Math.max(slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
     }
 
     public double getChatDelay() {
