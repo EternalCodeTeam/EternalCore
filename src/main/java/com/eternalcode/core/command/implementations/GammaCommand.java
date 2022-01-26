@@ -11,7 +11,6 @@ import org.bukkit.potion.PotionEffectType;
 
 @FunnyComponent
 public final class GammaCommand {
-    private static final PotionEffect potionEffect = new PotionEffect(PotionEffectType.NIGHT_VISION, 999999999, 0, false);
     private final ConfigurationManager configurationManager;
 
     public GammaCommand(ConfigurationManager configurationManager) {
@@ -19,22 +18,24 @@ public final class GammaCommand {
     }
 
     @FunnyCommand(
-            name = "gamma",
-            aliases = {"nightvision, fullbright"},
-            permission = "eternalcore.command.nightvision",
-            usage = "&cPoprawne użycie &7/gamma",
-            acceptsExceeded = true
+        name = "gamma",
+        aliases = {"nightvision, fullbright"},
+        permission = "eternalcore.command.nightvision",
+        usage = "&cPoprawne użycie &7/gamma",
+        acceptsExceeded = true
     )
 
     public void execute(Player player) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
+
         if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
             player.removePotionEffect(PotionEffectType.NIGHT_VISION);
             player.sendMessage(ChatUtils.color(config.gammaDisable));
-        } else {
-            player.addPotionEffect(potionEffect);
-            player.sendMessage(ChatUtils.color(config.gammaEnabled));
+            return;
         }
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 9999, 0, false));
+        player.sendMessage(ChatUtils.color(config.gammaEnabled));
     }
 }
 
