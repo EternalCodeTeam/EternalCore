@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. EternalCode.pl
+ * Copyright (c) 2022. EternalCode.pl
  */
 
 package com.eternalcode.core.utils;

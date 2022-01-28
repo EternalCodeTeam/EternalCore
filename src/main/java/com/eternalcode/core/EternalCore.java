@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. EternalCode.pl
+ * Copyright (c) 2022. EternalCode.pl
  */
 
 package com.eternalcode.core;
@@ -141,7 +141,7 @@ public final class EternalCore extends JavaPlugin {
             new PlayerChatListener(chatManager, configurationManager),
             new PlayerListeners(configurationManager),
             new CreateUserListener(this),
-            new ScoreboardListener(configurationManager, scoreboardManager)
+            new ScoreboardListener(configurationManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);

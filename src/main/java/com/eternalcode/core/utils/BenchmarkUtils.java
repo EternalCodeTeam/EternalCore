@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. EternalCode.pl
+ * Copyright (c) 2022. EternalCode.pl
  */
 
 package com.eternalcode.core.utils;
@@ -43,7 +43,7 @@ public final class BenchmarkUtils {
     public static String getTPS() {
         return Arrays.stream(Bukkit.getTPS()).mapToObj(BenchmarkUtils::tpsFormat).collect(Collectors.joining(", "));
     }
-    
+
     private static String tpsFormat(double tps) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 

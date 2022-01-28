@@ -1,11 +1,9 @@
 /*
- * Copyright (c) 2021. EternalCode.pl
+ * Copyright (c) 2022. EternalCode.pl
  */
 
 package com.eternalcode.core.command;
 
-
-import com.eternalcode.core.chat.ChatUtils;
 import net.dzikoysk.funnycommands.resources.ValidationException;
 
 public class Valid {

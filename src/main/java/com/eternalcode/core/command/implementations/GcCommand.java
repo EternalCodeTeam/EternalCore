@@ -1,6 +1,7 @@
 /*
- * Copyright (c) 2021. EternalCode.pl
+ * Copyright (c) 2022. EternalCode.pl
  */
+
 
 package com.eternalcode.core.command.implementations;
 
@@ -26,7 +27,7 @@ public final class GcCommand {
     )
 
     public void execute(Player player) {
-        //TODO: :skull:
+        // TODO: :skull:
 
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7TPS from last 1m, 5m, 15m: " + BenchmarkUtils.getTPS()));

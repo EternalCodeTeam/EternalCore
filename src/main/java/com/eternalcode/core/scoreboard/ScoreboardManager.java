@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021. EternalCode.pl
+ * Copyright (c) 2022. EternalCode.pl
  */
 
 package com.eternalcode.core.scoreboard;
@@ -7,7 +7,7 @@ package com.eternalcode.core.scoreboard;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
-import com.eternalcode.core.scoreboard.api.impl.ScoreboardAPI;
+import com.eternalcode.core.scoreboard.api.ScoreboardAPI;
 import com.eternalcode.core.chat.ChatUtils;
 import com.eternalcode.core.utils.PlaceholderUtils;
 import org.bukkit.Bukkit;
