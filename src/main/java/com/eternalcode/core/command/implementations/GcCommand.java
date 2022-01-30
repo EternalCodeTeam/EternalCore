@@ -2,7 +2,6 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.utils.BenchmarkUtils;
@@ -36,8 +35,6 @@ public final class GcCommand {
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Total memory: &f" + BenchmarkUtils.totalMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Free memory: &f" + BenchmarkUtils.freeMemory() + " &7MB"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Used memory: &f" + BenchmarkUtils.getUsedMemory() + " &7MB"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
-        player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7CPU Cores: &f" + BenchmarkUtils.cpuCores()));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8]"));
         player.sendMessage(ChatUtils.color("&8[&e⭐&8] &7Worlds info: "));
         List<World> worlds = Bukkit.getWorlds();

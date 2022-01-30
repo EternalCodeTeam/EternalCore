@@ -5,6 +5,7 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.ChatUtils;
 import com.eternalcode.core.chat.PlayerChatListener;
 import com.eternalcode.core.command.binds.CommandInfoBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
@@ -41,7 +42,6 @@ import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
-import com.eternalcode.core.chat.ChatUtils;
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import net.dzikoysk.funnycommands.FunnyCommands;
@@ -57,7 +57,7 @@ import panda.std.stream.PandaStream;
 
 import java.util.concurrent.TimeUnit;
 
-@Plugin(name = "EternalCore", version = "1.0")
+@Plugin(name = "EternalCore", version = "1.0.1c-APLHA")
 @Author("EternalCodeTeam")
 @ApiVersion(ApiVersion.Target.v1_17)
 @Description("Essential plugin for your server!")

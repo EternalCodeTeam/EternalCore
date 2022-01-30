@@ -5,7 +5,7 @@ plugins {
 }
 
 group "com.eternalcode.core"
-version "1.0.1-SNAPSHOT"
+version "1.0.1c-APLHA"
 
 repositories {
     gradlePluginPortal()
@@ -42,6 +42,9 @@ dependencies {
     // PlaceholderAPI
     compileOnly "me.clip:placeholderapi:2.11.1"
 
+    // ormlite jdbc
+    implementation "com.j256.ormlite:ormlite-jdbc:6.1"
+
     // tests
     testImplementation "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
     testImplementation "org.codehaus.groovy:groovy-all:3.0.9"
@@ -68,4 +71,5 @@ shadowJar {
     relocate "org.panda_lang", "com.eternalcode.core.libs.panda"
     relocate "fr.mrmicky.fastboard", "com.eternalcode.core.libs.fastboard"
     relocate "panda", "com.eternalcode.core.libs.panda"
+    relocate "com.j256.ormlite", "com.eternalcode.lobby.ormlite"
 }

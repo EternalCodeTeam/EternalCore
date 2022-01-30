@@ -33,8 +33,6 @@ public final class FlyCommand {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .orElse(Option.of(sender).is(Player.class))
-            .peek(player -> {
-                player.setAllowFlight(!player.isFlying());
-            }).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
+            .peek(player -> player.setAllowFlight(!player.isFlying())).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
     }
 }

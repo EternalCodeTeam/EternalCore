@@ -29,7 +29,7 @@ public class PlayerChatListener implements Listener {
         MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
         Player player = event.getPlayer();
 
-        if (!this.chatManager.isChatEnabled() && !player.hasPermission("enernalCore.chat.bypass")){
+        if (!this.chatManager.isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")){
             player.sendMessage(ChatUtils.color(messages.chatDisable));
             event.setCancelled(true);
             return;
@@ -37,7 +37,7 @@ public class PlayerChatListener implements Listener {
 
         UUID uuid = player.getUniqueId();
 
-        if (this.chatManager.isSlowedOnChat(uuid) && !player.hasPermission("enernalCore.chat.noslowmode")) {
+        if (this.chatManager.isSlowedOnChat(uuid) && !player.hasPermission("enernalcore.chat.noslowmode")) {
             long time = this.chatManager.getSlowDown(uuid);
 
             player.sendMessage(ChatUtils.color(messages.chatSlowMode.replace("{TIME}", DateUtils.durationToString(time))));

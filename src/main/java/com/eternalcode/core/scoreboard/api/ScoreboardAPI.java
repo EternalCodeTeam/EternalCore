@@ -4,6 +4,7 @@
 
 package com.eternalcode.core.scoreboard.api;
 
+import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -134,11 +135,11 @@ public class ScoreboardAPI {
         }
     }
 
-    private final Player player;
-    private final String id;
+    @Getter private final Player player;
+    @Getter private final String id;
 
     private final List<String> lines = new ArrayList<>();
-    private String title = ChatColor.RESET.toString();
+    @Getter private String title = ChatColor.RESET.toString();
 
     private boolean deleted = false;
 
@@ -154,12 +155,6 @@ public class ScoreboardAPI {
             throw new RuntimeException("Unable to create scoreboard", throwable);
         }
     }
-
-
-    public String getTitle() {
-        return this.title;
-    }
-
 
     public void updateTitle(String title) {
         if (this.title.equals(title)) {
@@ -279,17 +274,6 @@ public class ScoreboardAPI {
             throw new RuntimeException("Unable to update scoreboard lines", throwable);
         }
     }
-
-
-    public Player getPlayer() {
-        return this.player;
-    }
-
-
-    public String getId() {
-        return this.id;
-    }
-
 
     public boolean isDeleted() {
         return this.deleted;

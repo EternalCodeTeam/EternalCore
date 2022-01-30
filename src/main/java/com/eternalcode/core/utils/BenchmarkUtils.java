@@ -36,10 +36,6 @@ public final class BenchmarkUtils {
         return Runtime.getRuntime().freeMemory() / 1024 / 1024L;
     }
 
-    public static long cpuCores() {
-        return Runtime.getRuntime().availableProcessors();
-    }
-
     public static String getTPS() {
         return Arrays.stream(Bukkit.getTPS()).mapToObj(BenchmarkUtils::tpsFormat).collect(Collectors.joining(", "));
     }

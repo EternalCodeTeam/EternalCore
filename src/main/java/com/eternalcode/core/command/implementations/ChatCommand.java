@@ -69,7 +69,7 @@ public final class ChatCommand {
             }
 
             case "slowmode" -> {
-                when(args.length != 2, "&cPoprawne użycie &7/chat slowmode [time]");
+                when(args.length != 2, commandInfo.getUsageMessage());
                 Option.attempt(NumberFormatException.class, () -> Double.parseDouble(args[1])).peek(amount -> {
                     when(amount < 0.0D, messages.numberBiggerThanOrEqualZero);
 
