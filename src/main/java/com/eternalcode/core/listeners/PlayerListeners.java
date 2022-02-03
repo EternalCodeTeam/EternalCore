@@ -8,6 +8,7 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.chat.ChatUtils;
 import net.kyori.adventure.text.Component;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;

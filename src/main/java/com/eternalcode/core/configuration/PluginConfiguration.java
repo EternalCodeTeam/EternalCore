@@ -5,7 +5,6 @@
 package com.eternalcode.core.configuration;
 
 import net.dzikoysk.cdn.entity.Description;
-import net.dzikoysk.cdn.entity.Exclude;
 import org.bukkit.ChatColor;
 
 import java.io.Serializable;
@@ -53,7 +52,7 @@ public final class PluginConfiguration implements Serializable {
     public int scoreboardRefresh = 20;
     public String scoreboardTitle = "&6&lEternalCode.pl";
 
-    @Description(" ")
+    @Description({"", "Scoreboard Style"})
     public List<String> scoreboardStyle = Arrays.asList(
         "",
         " &fProfile:",

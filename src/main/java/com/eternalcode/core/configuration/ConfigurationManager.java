@@ -37,6 +37,4 @@ public final class ConfigurationManager {
 
         cdn.render(config, resource);
     }
-
-
 }
