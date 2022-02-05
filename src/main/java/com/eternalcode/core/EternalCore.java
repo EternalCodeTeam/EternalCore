@@ -5,6 +5,7 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.ChatUtils;
 import com.eternalcode.core.chat.PlayerChatListener;
 import com.eternalcode.core.command.binds.CommandInfoBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
@@ -26,6 +27,7 @@ import com.eternalcode.core.command.implementations.GrindstoneCommand;
 import com.eternalcode.core.command.implementations.HatCommand;
 import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.HelpOpCommand;
+import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
 import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
@@ -37,11 +39,14 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.listeners.PlayerListeners;
+import com.eternalcode.core.listeners.inventory.InventoryClickListener;
+import com.eternalcode.core.listeners.inventory.InventoryCloseListener;
+import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
+import com.eternalcode.core.listeners.sign.SignChangeListener;
 import com.eternalcode.core.scoreboard.ScoreboardListener;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
-import com.eternalcode.core.chat.ChatUtils;
 import com.google.common.base.Stopwatch;
 import lombok.Getter;
 import net.dzikoysk.funnycommands.FunnyCommands;
@@ -133,7 +138,8 @@ public final class EternalCore extends JavaPlugin {
                 ScoreboardCommand.class,
                 AdminChatCommand.class,
                 HelpOpCommand.class,
-                GammaCommand.class
+                GammaCommand.class,
+                InventoryOpenCommand.class
             ).install();
 
         // Register events
@@ -141,7 +147,11 @@ public final class EternalCore extends JavaPlugin {
             new PlayerChatListener(chatManager, configurationManager),
             new PlayerListeners(configurationManager),
             new CreateUserListener(this),
-            new ScoreboardListener(configurationManager)
+            new ScoreboardListener(configurationManager),
+            new InventoryClickListener(),
+            new InventoryCloseListener(),
+            new PlayerCommandPreprocessListener(configurationManager),
+            new SignChangeListener()
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
