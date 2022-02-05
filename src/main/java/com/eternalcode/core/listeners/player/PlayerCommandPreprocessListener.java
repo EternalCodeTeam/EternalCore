@@ -21,12 +21,11 @@ public class PlayerCommandPreprocessListener implements Listener {
     }
 
     @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent event){
+    public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         String command = event.getMessage().split(" ")[0];
         Option<HelpTopic> helpTopic = Option.of(Bukkit.getHelpMap().getHelpTopic(command));
         MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
-
 
         helpTopic.onEmpty(() -> {
             event.setCancelled(true);

@@ -9,10 +9,10 @@ import panda.std.Option;
 public class InventoryCloseListener implements Listener {
 
     @EventHandler
-    public void onClose(org.bukkit.event.inventory.InventoryCloseEvent event){
+    public void onClose(org.bukkit.event.inventory.InventoryCloseEvent event) {
         String title = event.getView().getTitle();
 
-        if (title.contains("Armor player: ")){
+        if (title.contains("Armor player: ")) {
             String playerString = title.replace("Armor player: ", "");
             Option<Player> playerOption = Option.of(Bukkit.getPlayer(playerString));
 

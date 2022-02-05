@@ -21,7 +21,7 @@ import static com.eternalcode.core.command.Valid.when;
 public final class InventoryOpenCommand {
     private final ConfigurationManager configurationManager;
 
-    public InventoryOpenCommand(ConfigurationManager configurationManager){
+    public InventoryOpenCommand(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
     }
 
@@ -40,8 +40,8 @@ public final class InventoryOpenCommand {
         Option<Player> playerOption = Option.of(Bukkit.getPlayer(args[0]));
 
         playerOption.peek(arg -> {
-            if (args.length == 2){
-                switch (args[1]){
+            if (args.length == 2) {
+                switch (args[1]) {
                     case "ec" -> player.openInventory(arg.getEnderChest());
                     case "armor" -> player.openInventory(createInventory(arg));
                     default -> player.openInventory(arg.getInventory());
@@ -52,14 +52,14 @@ public final class InventoryOpenCommand {
         }).onEmpty(() -> player.sendMessage(ChatUtils.component(messages.offlinePlayer)));
     }
 
-    private Inventory createInventory(Player player){
+    private Inventory createInventory(Player player) {
         Inventory inventory = Bukkit.createInventory(null, 9, ChatUtils.component("Armor player: "+player.getName()));
 
         inventory.setContents(player.getInventory().getArmorContents());
 
         ItemStack empty = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
 
-        for (int i = 4; i < 9; i++){
+        for (int i = 4; i < 9; i++) {
             inventory.setItem(i, empty);
         }
 
