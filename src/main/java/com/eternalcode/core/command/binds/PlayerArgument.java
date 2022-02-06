@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.binds;
 
 import dev.rollczi.litecommands.LiteInvocation;
+import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import dev.rollczi.litecommands.valid.ValidationInfo;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+@ArgumentName("player")
 public class PlayerArgument implements SingleArgumentHandler<Player> {
 
     @Override

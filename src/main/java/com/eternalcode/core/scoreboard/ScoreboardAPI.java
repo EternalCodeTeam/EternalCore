@@ -2,7 +2,7 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.scoreboard.api;
+package com.eternalcode.core.scoreboard;
 
 import lombok.Getter;
 import org.bukkit.ChatColor;

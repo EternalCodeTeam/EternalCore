@@ -4,14 +4,15 @@
 
 package com.eternalcode.core.configuration;
 
+import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+@Contextual
 public class PluginConfiguration implements Serializable {
     @Description({"# ",
         "# This is the main configuration file for EternalCore.",

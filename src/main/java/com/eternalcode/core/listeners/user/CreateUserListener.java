@@ -2,9 +2,10 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.user;
+package com.eternalcode.core.listeners.user;
 
 import com.eternalcode.core.EternalCore;
+import com.eternalcode.core.user.UserService;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

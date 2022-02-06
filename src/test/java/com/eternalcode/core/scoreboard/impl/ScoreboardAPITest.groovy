@@ -1,4 +1,4 @@
-package com.eternalcode.core.scoreboard.api.impl
+package com.eternalcode.core.scoreboard.impl
 
 class ScoreboardAPITest extends GroovyTestCase {
     void testGetTitle() {

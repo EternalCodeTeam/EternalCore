@@ -43,16 +43,18 @@ import com.eternalcode.core.listeners.inventory.InventoryClickListener;
 import com.eternalcode.core.listeners.inventory.InventoryCloseListener;
 import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listeners.sign.SignChangeListener;
-import com.eternalcode.core.managers.ChatManager;
-import com.eternalcode.core.scoreboard.ScoreboardListener;
-import com.eternalcode.core.scoreboard.ScoreboardManager;
-import com.eternalcode.core.user.CreateUserListener;
+import com.eternalcode.core.managers.chat.ChatManager;
+import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
+import com.eternalcode.core.managers.scoreboard.ScoreboardManager;
+import com.eternalcode.core.listeners.user.CreateUserListener;
 import com.eternalcode.core.user.UserService;
 import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import lombok.Getter;
+import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -71,7 +73,7 @@ import java.util.concurrent.TimeUnit;
 @Description("Essential plugin for your server!")
 @LogPrefix("EternalCore")
 
-public final class EternalCore extends JavaPlugin {
+public class EternalCore extends JavaPlugin {
 
     private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
     @Getter private static EternalCore instance;
@@ -100,9 +102,8 @@ public final class EternalCore extends JavaPlugin {
 
 
         // bStats metrics
-        // Some nice custom charts
-        // Metrics metrics = new Metrics(this, 13026);
-        // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
+        Metrics metrics = new Metrics(this, 13964);
+        metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         // Services
         this.userService = new UserService();

@@ -2,12 +2,12 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.scoreboard;
+package com.eternalcode.core.managers.scoreboard;
 
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
-import com.eternalcode.core.scoreboard.api.ScoreboardAPI;
+import com.eternalcode.core.scoreboard.ScoreboardAPI;
 import com.eternalcode.core.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -8,7 +8,6 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
@@ -20,17 +19,16 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.eternalcore")
 public class EternalCoreCommand {
     private final MessagesConfiguration message;
-    private final ConfigurationManager configurationManager;
 
-    public EternalCoreCommand(MessagesConfiguration message, ConfigurationManager configurationManager) {
+    public EternalCoreCommand(MessagesConfiguration message) {
         this.message = message;
-        this.configurationManager = configurationManager;
     }
 
     @Execute(route = "reload")
-    public void reload(Player player) {
-        configurationManager.loadAndRenderConfigs();
-        player.sendMessage(ChatUtils.color(message.messagesSection.successfullyReloaded));
+    @Permission("eternalcore.command.reload")
+    public void reload(Player sender, ConfigurationManager manager) {
+        manager.loadAndRenderConfigs();
+        sender.sendMessage(ChatUtils.color(message.messagesSection.successfullyReloaded));
         Bukkit.getLogger().info(ChatUtils.color("Configs has ben successfuly reloaded!"));
     }
 }

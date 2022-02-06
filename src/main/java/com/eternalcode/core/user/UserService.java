@@ -4,8 +4,8 @@
 
 package com.eternalcode.core.user;
 
-import org.bukkit.OfflinePlayer; // to remove
-import org.bukkit.entity.Player; // to remove
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import panda.std.Option;
 
 import java.util.Collection;

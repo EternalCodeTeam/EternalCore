@@ -1,8 +1,8 @@
 package com.eternalcode.core.listeners;
 
-import com.eternalcode.core.managers.ChatManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.managers.chat.ChatManager;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.DateUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
@@ -29,7 +29,7 @@ public class PlayerChatListener implements Listener {
     public void onChatSlowmode(AsyncChatEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.chatManager.isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")){
+        if (!this.chatManager.isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
             player.sendMessage(ChatUtils.color(message.messagesSection.chatDisable));
             event.setCancelled(true);
             return;

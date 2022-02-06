@@ -10,7 +10,8 @@ import org.bukkit.entity.Player;
 @Section(route = "tp", aliases = {"teleport"})
 @Permission("eternalcore.command.tp")
 public class TeleportCommand {
-    @Execute @Required(1)
+    @Execute
+    @Required(1)
     public void execute(Player sender, @Arg(0) Player player) {
         sender.teleportAsync(player.getLocation());
     }

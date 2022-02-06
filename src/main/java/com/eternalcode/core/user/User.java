@@ -5,10 +5,10 @@
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.utils.ChatUtils;
-import net.kyori.adventure.text.Component; // to remove
-import net.kyori.adventure.title.Title; // to remove
-import org.bukkit.Bukkit; // to remove
-import org.bukkit.entity.Player; // to remove
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import panda.std.Option;
 import panda.utilities.StringUtils;
 

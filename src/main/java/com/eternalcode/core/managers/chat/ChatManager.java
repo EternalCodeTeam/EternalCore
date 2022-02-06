@@ -2,7 +2,7 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.managers;
+package com.eternalcode.core.managers.chat;
 
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.google.common.cache.Cache;
@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public final class ChatManager {
+public class ChatManager {
     private final Cache<UUID, Long> slowdown;
     private double chatDelay;
     private boolean chatEnabled;

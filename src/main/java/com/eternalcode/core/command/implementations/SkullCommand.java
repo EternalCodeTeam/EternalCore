@@ -21,7 +21,8 @@ import org.bukkit.inventory.ItemStack;
 @UsageMessage("&8» &cPoprawne użycie &7/skull <player>")
 public class SkullCommand {
 
-    @Execute @MinArgs(1)
+    @Execute
+    @MinArgs(1)
     public void execute(EternalCore eternalCore, Player player, String[] args) {
         Bukkit.getScheduler().runTaskAsynchronously(eternalCore, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD)
