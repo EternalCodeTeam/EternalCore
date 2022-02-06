@@ -19,7 +19,6 @@ public final class BenchmarkUtils {
         BenchmarkUtils.configurationManager = configurationManager;
     }
 
-
     public static long getUsedMemory() {
         return (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576L;
     }

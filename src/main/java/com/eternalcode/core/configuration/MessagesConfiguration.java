@@ -35,6 +35,7 @@ public final class MessagesConfiguration implements Serializable {
     public String chatSlowModeSet = "&8» &aSlowmode set to: {SLOWMODE}";
     public String chatSlowMode = "&8» &cYou can write the next message for: &6{TIME}";
     public String chatDisable = "&8» &cChat is currently disabled!";
+    public String chatNoCommand = "&8» &cCommand &e{COMMAND} &cdoesnt exists!";
 
     @Description({" ", "# Simple Messages"})
     public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
