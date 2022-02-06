@@ -4,38 +4,32 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Section;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-public final class GodCommand {
+@Section(route = "god", aliases = "godmode")
+public class GodCommand {
 
-    private final ConfigurationManager configurationManager;
+    private final MessagesConfiguration message;
 
-    public GodCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public GodCommand(MessagesConfiguration message) {
+        this.message = message;
     }
 
-    @FunnyCommand(
-        name = "god",
-        aliases = {"godmode"},
-        permission = "eternalcore.command.god",
-        usage = "&8» &cPoprawne użycie &7/god <player>",
-        acceptsExceeded = true
-    )
-
+    // TODO: add send message in config
+    @Execute
     public void execute(CommandSender sender, String[] args) {
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .orElse(Option.of(sender).is(Player.class))
             .peek(player -> {
                 player.setInvulnerable(!player.isInvulnerable());
-                player.sendMessage(ChatUtils.color(""));
-            }).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
+            }).onEmpty(() -> sender.sendMessage(ChatUtils.color(message.messagesSection.offlinePlayer)));
     }
 }

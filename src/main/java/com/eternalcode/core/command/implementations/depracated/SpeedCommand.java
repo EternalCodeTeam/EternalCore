@@ -2,9 +2,9 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
@@ -19,7 +19,7 @@ import panda.std.Option;
 import static com.eternalcode.core.command.Valid.when;
 
 @FunnyComponent
-public final class SpeedCommand {
+public  class SpeedCommand {
 
     private final ConfigurationManager configurationManager;
 

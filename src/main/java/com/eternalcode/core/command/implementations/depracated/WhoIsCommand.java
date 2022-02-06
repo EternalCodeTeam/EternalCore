@@ -2,11 +2,11 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.Bukkit;
@@ -15,7 +15,7 @@ import panda.std.Option;
 
 
 @FunnyComponent
-public final class WhoIsCommand {
+public class WhoIsCommand {
     private final ConfigurationManager configurationManager;
 
     public WhoIsCommand(ConfigurationManager configurationManager) {

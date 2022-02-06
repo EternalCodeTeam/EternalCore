@@ -8,8 +8,7 @@ import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.scoreboard.api.ScoreboardAPI;
-import com.eternalcode.core.chat.ChatUtils;
-import com.eternalcode.core.utils.PlaceholderUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -42,8 +41,6 @@ public class ScoreboardManager {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
         List<String> scoreboardLines = config.scoreboardStyle;
-
-        scoreboardLines.replaceAll(scoreboard -> PlaceholderUtils.parsePlaceholders(board.getPlayer(), scoreboard));
 
         board.updateLines(scoreboardLines);
     }

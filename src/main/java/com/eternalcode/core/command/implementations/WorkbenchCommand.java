@@ -4,21 +4,26 @@
 
 package com.eternalcode.core.command.implementations;
 
-import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
+import com.eternalcode.core.configuration.MessagesConfiguration;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.entity.Player;
 
-@FunnyComponent
-public final class WorkbenchCommand {
-    @FunnyCommand(
-        name = "workbench",
-        permission = "eternalcore.command.workbench",
-        usage = "&8» &cPoprawne użycie &7/workbench",
-        acceptsExceeded = true
-    )
+@Section(route = "workbench")
+@Permission("eternalcore.command.workbench")
+public class WorkbenchCommand {
 
+    private final MessagesConfiguration message;
+
+    public WorkbenchCommand(MessagesConfiguration message) {
+        this.message = message;
+    }
+
+    @Execute
     public void execute(Player player) {
         player.openWorkbench(null, true);
+        player.sendMessage(message.messagesSection.workbenchOpenPlayerMessage);
     }
 }
 

@@ -2,11 +2,11 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.Bukkit;
@@ -15,24 +15,30 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @FunnyComponent
-public final class FlyCommand {
+public class HealCommand {
 
     private final ConfigurationManager configurationManager;
 
-    public FlyCommand(ConfigurationManager configurationManager) {
+    public HealCommand(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
     }
 
     @FunnyCommand(
-        name = "fly",
-        permission = "eternalcore.command.fly",
-        usage = "&8» &cPoprawne użycie &7/fly <player>",
+        name = "heal",
+        permission = "eternalcore.command.heal",
+        usage = "&8» &cPoprawne użycie &7/heal <player>",
         acceptsExceeded = true
     )
+
     public void execute(CommandSender sender, String[] args) {
         MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .orElse(Option.of(sender).is(Player.class))
-            .peek(player -> player.setAllowFlight(!player.isFlying())).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
+            .peek(player -> {
+                player.setFoodLevel(20);
+                player.setHealth(20);
+                player.setFireTicks(0);
+                player.sendMessage(ChatUtils.color(config.healMessage));
+            }).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
     }
 }

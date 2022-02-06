@@ -2,7 +2,7 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.utils;
+package com.eternalcode.core.builders;
 
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.Validate;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.Arrays;
 import java.util.List;
 
-public final class ItemBuilder {
+public class ItemBuilder {
 
     private final ItemStack itemStack;
 

@@ -4,39 +4,33 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import panda.std.Option;
 
-@FunnyComponent
-public final class EnderchestCommand {
-    private final ConfigurationManager configurationManager;
+@Section(route = "enderchest", aliases = { "ec" })
+@Permission("eternalcore.command.enderchest")
+public class EnderchestCommand {
+    private final MessagesConfiguration message;
 
-    public EnderchestCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public EnderchestCommand(MessagesConfiguration message) {
+        this.message = message;
     }
 
-    @FunnyCommand(
-        name = "enderchest",
-        aliases = {"ec"},
-        permission = "eternalcore.command.enderchest",
-        usage = "&8» &cPoprawne użycie &7/enderchest <player>",
-        acceptsExceeded = true
-    )
-
+    @Execute
     public void execute(Player player, String[] args) {
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .peek((other) -> {
                 Inventory otherInventory = other.getEnderChest();
                 player.openInventory(otherInventory);
-                player.sendMessage(ChatUtils.color(config.enderchestGuiOpenPlayerMessage + other.getName()));
+                player.sendMessage(ChatUtils.color(message.messagesSection.enderchestOpenPlayerMessage.replace("{PLAYER}", other.getName())));
             }).onEmpty(() -> player.openInventory(player.getEnderChest()));
     }
 }

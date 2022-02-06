@@ -2,11 +2,11 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import static com.eternalcode.core.command.Valid.when;
 
 @FunnyComponent
-public final class HelpOpCommand {
+public class HelpOpCommand {
 
     private final ConfigurationManager configurationManager;
 

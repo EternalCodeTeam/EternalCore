@@ -4,6 +4,7 @@
 
 package com.eternalcode.core.configuration;
 
+import com.eternalcode.core.configuration.composer.CustomStringComposer;
 import lombok.Getter;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
@@ -13,10 +14,14 @@ import net.dzikoysk.cdn.source.Source;
 import java.io.File;
 import java.io.Serializable;
 
-public final class ConfigurationManager {
+public class ConfigurationManager {
 
     private final File dataFolder;
-    private final Cdn cdn = CdnFactory.createYamlLike();
+    private final Cdn cdn = CdnFactory
+        .createYamlLike()
+        .getSettings()
+        .withComposer(String.class, new CustomStringComposer())
+        .build();
 
     @Getter private final PluginConfiguration pluginConfiguration = new PluginConfiguration();
     @Getter private final MessagesConfiguration messagesConfiguration = new MessagesConfiguration();
@@ -32,7 +37,7 @@ public final class ConfigurationManager {
 
     public <T extends Serializable> void loadAndRender(T config, String fileName) {
         Resource resource = Source.of(new File(dataFolder, fileName));
-         cdn.load(resource, config)
+        cdn.load(resource, config)
             .orElseThrow(RuntimeException::new);
 
         cdn.render(config, resource);

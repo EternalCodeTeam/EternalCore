@@ -3,7 +3,7 @@
  */
 
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
@@ -17,7 +17,7 @@ import panda.std.stream.PandaStream;
 import static com.eternalcode.core.command.Valid.when;
 
 @FunnyComponent
-public final class GamemodeCommand {
+public class GamemodeCommand {
 
     private final GameMode[] gameModes = {GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR};
 

@@ -2,10 +2,11 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.chat;
+package com.eternalcode.core.utils;
 
 
 import io.papermc.paper.text.PaperComponents;
+import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
@@ -13,7 +14,8 @@ import panda.std.stream.PandaStream;
 
 import java.util.List;
 
-public final class ChatUtils {
+@UtilityClass
+public class ChatUtils {
 
     private static final LegacyComponentSerializer serializer = PaperComponents.legacySectionSerializer();
 

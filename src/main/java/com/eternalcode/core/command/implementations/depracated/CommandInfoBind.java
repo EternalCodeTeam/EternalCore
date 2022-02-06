@@ -2,7 +2,7 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.command.implementations.depracated;
 
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.commands.CommandUtils;
@@ -11,7 +11,7 @@ import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.panda_lang.utilities.inject.Resources;
 
 @FunnyComponent
-public final class CommandInfoBind implements Bind {
+public class CommandInfoBind implements Bind {
 
     @Override
     public void accept(Resources resources) {

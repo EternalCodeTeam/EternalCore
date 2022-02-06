@@ -1,13 +1,13 @@
-/*
- * Copyright (c) 2022. EternalCode.pl
- */
+package com.eternalcode.core.listeners;
 
-package com.eternalcode.core.chat;
-
+import com.eternalcode.core.managers.ChatManager;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.DateUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,7 +25,7 @@ public class PlayerChatListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerChat(AsyncChatEvent event) {
+    public void onChatSlowmode(AsyncChatEvent event) {
         MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
         Player player = event.getPlayer();
 
@@ -46,5 +46,17 @@ public class PlayerChatListener implements Listener {
         }
 
         this.chatManager.useChat(uuid);
+    }
+
+
+    @EventHandler
+    public void onPlayerChat(AsyncChatEvent event) {
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+
+        if (config.enableSoundAfterChatMessage) {
+            for (Player players : Bukkit.getOnlinePlayers()) {
+                players.playSound(players.getLocation(), config.soundAfterChatMessage, config.soundAfterChatMessageVolume, config.soundAfterChatMessagePitch);
+            }
+        }
     }
 }

@@ -30,6 +30,9 @@ dependencies {
     // funnycommands
     implementation "net.dzikoysk:funnycommands:0.4.2"
 
+    // LiteCommands
+    implementation "dev.rollczi.litecommands:bukkit:1.5.0"
+
     // cdn configs
     implementation "net.dzikoysk:cdn:1.13.5"
 
@@ -67,6 +70,7 @@ shadowJar {
     exclude "javax/**"
 
     relocate "net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk"
+    relocate "dev.rollczi", "com.eternalcode.core.libs.dev.rollczi"
     relocate "org.bstats", "com.eternalcode.core.libs.org.bstats"
     relocate "org.panda_lang", "com.eternalcode.core.libs.panda"
     relocate "fr.mrmicky.fastboard", "com.eternalcode.core.libs.fastboard"

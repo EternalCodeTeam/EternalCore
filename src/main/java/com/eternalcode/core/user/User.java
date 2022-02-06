@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component; // to remove
 import net.kyori.adventure.title.Title; // to remove
 import org.bukkit.Bukkit; // to remove
@@ -69,5 +69,4 @@ public class User {
     public void subTitle(String subTitle, long in, long stay, long out) {
         title(StringUtils.EMPTY, subTitle, in, stay, out);
     }
-
 }

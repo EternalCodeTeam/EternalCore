@@ -2,10 +2,10 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.utils.ItemBuilder;
+import com.eternalcode.core.builders.ItemBuilder;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import static com.eternalcode.core.command.Valid.when;
 
 @FunnyComponent
-public final class SkullCommand {
+public class SkullCommand {
 
     @FunnyCommand(
         name = "skull",

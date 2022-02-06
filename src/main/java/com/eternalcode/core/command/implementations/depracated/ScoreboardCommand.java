@@ -2,7 +2,7 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
@@ -12,7 +12,7 @@ import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.entity.Player;
 
 @FunnyComponent
-public final class ScoreboardCommand {
+public class ScoreboardCommand {
     private final ConfigurationManager configurationManager;
     private final EternalCore eternalCore;
 

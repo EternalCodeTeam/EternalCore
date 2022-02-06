@@ -4,53 +4,36 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.utils.MessageAction;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.user.UserService;
-import net.dzikoysk.funnycommands.commands.CommandInfo;
-import net.dzikoysk.funnycommands.resources.ValidationException;
-import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
+import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Arg;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.MinArgs;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.annotations.UsageMessage;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import panda.std.stream.PandaStream;
 
-import java.util.function.Consumer;
+@Section(route = "alert", aliases = { "broadcast", "bc" })
+@Permission("eternalcore.command.alert")
+@UsageMessage("&8» &cPoprawne użycie &7/alert <title/actionbar/chat> <text>")
+public class AlertCommand {
 
-import static com.eternalcode.core.command.Valid.when;
+    private final MessagesConfiguration messages;
 
-@FunnyComponent
-public final class AlertCommand {
-
-    private final ConfigurationManager configurationManager;
-
-    public AlertCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public AlertCommand(MessagesConfiguration messages) {
+        this.messages = messages;
     }
 
-    @FunnyCommand(
-        name = "alert",
-        aliases = {"broadcast", "bc"},
-        permission = "eternalcore.command.alert",
-        usage = "&8» &cPoprawne użycie &7/alert <title/actionbar/chat> <text>",
-        acceptsExceeded = true
-    )
-
-    public void execute(UserService service, String[] args, CommandInfo commandInfo) {
-        when(args.length < 2, commandInfo.getUsageMessage());
+    @Execute @MinArgs(2)
+    public void execute(String[] args, @Arg(0) MessageAction messageAction) {
         String text = StringUtils.join(args, " ", 1, args.length);
+        Component component = ChatUtils.component(messages.messagesSection.alertMessagePrefix)
+            .replaceText(builder -> builder.match("\\{BROADCAST}").replacement(text));
 
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
-        Consumer<User> consumer = switch (args[0].toLowerCase()) {
-            case "title" -> user -> user.subTitle(config.alertMessagePrefix.replace("{BROADCAST}", text), 1, 80, 1);
-            case "actionbar" -> user -> user.actionBar(config.alertMessagePrefix.replace("{BROADCAST}", text));
-            case "chat" -> user -> user.message(config.alertMessagePrefix.replace("{BROADCAST}", text));
-            default -> throw new ValidationException(commandInfo.getUsageMessage());
-        };
-
-        PandaStream.of(Bukkit.getOnlinePlayers())
-            .flatMap(service::getUser)
-            .forEach(consumer);
+        Bukkit.getOnlinePlayers().forEach(player -> messageAction.action(player, component));
     }
 }

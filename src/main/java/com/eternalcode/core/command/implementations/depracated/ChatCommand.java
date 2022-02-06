@@ -2,11 +2,11 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.managers.ChatManager;
+import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import net.dzikoysk.funnycommands.commands.CommandInfo;
@@ -20,7 +20,7 @@ import panda.std.Option;
 import static com.eternalcode.core.command.Valid.when;
 
 @FunnyComponent
-public final class ChatCommand {
+public class ChatCommand {
 
     private final ConfigurationManager configurationManager;
     private final ChatManager chatManager;

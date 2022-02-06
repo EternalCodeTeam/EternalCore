@@ -6,12 +6,13 @@ package com.eternalcode.core.configuration;
 
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public final class PluginConfiguration implements Serializable {
+public class PluginConfiguration implements Serializable {
     @Description({"# ",
         "# This is the main configuration file for EternalCore.",
         "# ",
@@ -31,21 +32,25 @@ public final class PluginConfiguration implements Serializable {
     public String welcomeTitle = "&6EternalCode.pl";
     public String welcomeSubTitle = "&eWelcome back {PLAYER}";
 
+    @Description({" ", "# Awesome sound"})
+    public boolean enabledSoundAfterJoin = true;
+    public Sound soundAfterJoin = Sound.BLOCK_NOTE_BLOCK_PLING;
+    public float soudnAfterJoinVolume = 1.8F;
+    public float soundAfterJoinPitch = 1F;
+
+    public boolean enableSoundAfterQuit = true;
+    public Sound soundAfterQuit = Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
+    public float soundAfterQuitVolume = 1.8F;
+    public float soundAfterQuitPitch = 1F;
+
+    public boolean enableSoundAfterChatMessage = true;
+    public Sound soundAfterChatMessage = Sound.ENTITY_ITEM_PICKUP;
+    public float soundAfterChatMessageVolume = 1.8F;
+    public float soundAfterChatMessagePitch = 1F;
+
     @Description({" ", "# Chat Settings"})
     public double chatSlowMode = 5.0;
     public boolean chatStatue = true;
-
-    @Description({" ", "# Useful Assets"})
-    public boolean disableBlockBreaking = false;
-    public boolean disableBlockPlacing = false;
-    public boolean disableFood = false;
-    public boolean clearDropAtDeath = false;
-    public boolean antiDisconectSpam = true;
-
-    @Description({" ", "# TPS Colors"})
-    public ChatColor flawlessTPS = ChatColor.GREEN;
-    public ChatColor fairTPS = ChatColor.YELLOW;
-    public ChatColor poorTPS = ChatColor.RED;
 
     @Description({" ", "# Scoreboard Settings"})
     public boolean enableScoreboard = true;

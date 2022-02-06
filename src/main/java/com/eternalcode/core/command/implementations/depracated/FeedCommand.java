@@ -2,11 +2,11 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.Bukkit;
@@ -15,18 +15,17 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @FunnyComponent
-public final class HealCommand {
-
+public class FeedCommand {
     private final ConfigurationManager configurationManager;
 
-    public HealCommand(ConfigurationManager configurationManager) {
+    public FeedCommand(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
     }
 
     @FunnyCommand(
-        name = "heal",
-        permission = "eternalcore.command.heal",
-        usage = "&8» &cPoprawne użycie &7/heal <player>",
+        name = "feed",
+        permission = "eternalcore.command.feed",
+        usage = "&8» &cPoprawne użycie &7/feed <player>",
         acceptsExceeded = true
     )
 
@@ -36,9 +35,7 @@ public final class HealCommand {
             .orElse(Option.of(sender).is(Player.class))
             .peek(player -> {
                 player.setFoodLevel(20);
-                player.setHealth(20);
-                player.setFireTicks(0);
-                player.sendMessage(ChatUtils.color(config.healMessage));
+                player.sendMessage(ChatUtils.color(config.foodMessage));
             }).onEmpty(() -> sender.sendMessage(ChatUtils.color(config.offlinePlayer)));
     }
 }

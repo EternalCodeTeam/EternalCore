@@ -2,7 +2,7 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.chat;
+package com.eternalcode.core.managers;
 
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.google.common.cache.Cache;

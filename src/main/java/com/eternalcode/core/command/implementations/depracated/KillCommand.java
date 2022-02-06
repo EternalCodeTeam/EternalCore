@@ -3,9 +3,9 @@
  */
 
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @FunnyComponent
-public final class KillCommand {
+public class KillCommand {
     @FunnyCommand(
         name = "kill",
         permission = "eternalcore.command.kill",

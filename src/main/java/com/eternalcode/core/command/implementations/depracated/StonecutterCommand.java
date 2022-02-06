@@ -2,23 +2,23 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations;
+package com.eternalcode.core.command.implementations.depracated;
 
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.entity.Player;
 
 @FunnyComponent
-public final class GrindstoneCommand {
+public class StonecutterCommand {
     @FunnyCommand(
-        name = "grindstone",
-        permission = "eternalcore.command.grindstone",
-        usage = "&8» &cPoprawne użycie &7/grindstone <player>",
+        name = "stonecutter",
+        permission = "eternalcore.command.stonecutter",
+        usage = "&8» &cPoprawne użycie &7/stonecutter <player>",
         acceptsExceeded = true
     )
 
     public void execute(Player player) {
-        player.openGrindstone(null, true);
+        player.openStonecutter(null, true);
     }
 }
 

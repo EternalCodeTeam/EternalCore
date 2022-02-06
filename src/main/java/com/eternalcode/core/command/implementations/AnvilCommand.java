@@ -4,34 +4,26 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
-import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
+import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.entity.Player;
 
-@FunnyComponent
-public final class AnvilCommand {
+@Section(route = "anvil", aliases = { "kowadlo", "kowadło" })
+@Permission("eternalcore.command.anvil")
+public class AnvilCommand {
 
-    private final ConfigurationManager configurationManager;
+    private final MessagesConfiguration messages;
 
-    public AnvilCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public AnvilCommand(MessagesConfiguration messages) {
+        this.messages = messages;
     }
 
-    @FunnyCommand(
-        name = "anvil",
-        aliases = {"kowadlo", "kowadło"},
-        permission = "eternalcore.command.anvil",
-        usage = "&8» &cPoprawne użycie &7/anvil <player>",
-        acceptsExceeded = true
-    )
-
+    @Execute
     public void execute(Player player) {
         player.openAnvil(null, true);
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
-        player.sendMessage(ChatUtils.color(config.anvilGuiOpenMessage));
+        player.sendMessage(ChatUtils.color(messages.messagesSection.anvilGuiOpenMessage));
     }
 }
-

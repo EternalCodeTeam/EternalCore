@@ -4,32 +4,27 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
 import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
 import org.bukkit.entity.Player;
 
-@FunnyComponent
-public final class CartographyTableCommand {
+@Section(route = "cartopgraphytable")
+@Permission("eternalcore.command.cartopgraphytable")
+public class CartographyTableCommand {
 
-    private final ConfigurationManager configurationManager;
+    private final MessagesConfiguration message;
 
-    public CartographyTableCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public CartographyTableCommand(MessagesConfiguration message) {
+        this.message = message;
     }
 
-    @FunnyCommand(
-        name = "cartopgraphytable",
-        permission = "eternalcore.command.cartopgraphytable",
-        usage = "&8» &cPoprawne użycie &7/cartopgraphytable <player>",
-        acceptsExceeded = true
-    )
-
+    @Execute
     public void execute(Player player) {
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         player.openCartographyTable(null, true);
-        player.sendMessage(ChatUtils.color(config.cartographyTableGuiOpenMessage));
+        player.sendMessage(ChatUtils.color(message.messagesSection.cartographyTableOpenMessage));
     }
 }
