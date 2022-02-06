@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.utils.MessageAction;
+import com.eternalcode.core.command.binds.MessageAction;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
@@ -17,7 +17,7 @@ import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 
-@Section(route = "alert", aliases = { "broadcast", "bc" })
+@Section(route = "alert", aliases = {"broadcast", "bc"})
 @Permission("eternalcore.command.alert")
 @UsageMessage("&8» &cPoprawne użycie &7/alert <title/actionbar/chat> <text>")
 public class AlertCommand {
@@ -28,7 +28,8 @@ public class AlertCommand {
         this.messages = messages;
     }
 
-    @Execute @MinArgs(2)
+    @Execute
+    @MinArgs(2)
     public void execute(String[] args, @Arg(0) MessageAction messageAction) {
         String text = StringUtils.join(args, " ", 1, args.length);
         Component component = ChatUtils.component(messages.messagesSection.alertMessagePrefix)

@@ -1,5 +1,6 @@
 package com.eternalcode.core.listeners.inventory;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,9 +11,9 @@ public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        String title = event.getView().getTitle();
+        Component title = event.getView().title();
 
-        if (title.contains("Armor player: ")) {
+        if (title.contains(Component.text("Armor player: "))) {
             ItemStack itemStack = event.getCurrentItem();
 
             if (itemStack != null && itemStack.getType() == Material.GRAY_STAINED_GLASS_PANE) {

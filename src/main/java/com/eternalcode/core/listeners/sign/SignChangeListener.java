@@ -1,6 +1,6 @@
 package com.eternalcode.core.listeners.sign;
 
-import com.eternalcode.core.chat.ChatUtils;
+import com.eternalcode.core.utils.ChatUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +15,7 @@ public class SignChangeListener implements Listener {
 
         if (player.hasPermission("eternalCore.sign")) {
             for (int i = 0; i < lines.length; i++) {
-                event.setLine(i, ChatUtils.color(event.getLine(i)));
+                event.line(i, ChatUtils.component(event.getLine(i)));
             }
         }
     }

@@ -5,6 +5,7 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -23,7 +24,7 @@ public class WorkbenchCommand {
     @Execute
     public void execute(Player player) {
         player.openWorkbench(null, true);
-        player.sendMessage(message.messagesSection.workbenchOpenPlayerMessage);
+        player.sendMessage(ChatUtils.color(message.messagesSection.workbenchOpenMessage));
     }
 }
 

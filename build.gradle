@@ -5,14 +5,13 @@ plugins {
 }
 
 group "com.eternalcode.core"
-version "1.0.1c-APLHA"
+version "1.0.1-APLHA"
 
 repositories {
     gradlePluginPortal()
     mavenCentral()
-    maven { url "https://papermc.io/repo/repository/maven-public/" }
-    maven { url "https://repo.panda-lang.org/releases" }
-    maven { url "https://repo.extendedclip.com/content/repositories/placeholderapi/" }
+    maven { url = "https://papermc.io/repo/repository/maven-public/" }
+    maven { url = "https://repo.panda-lang.org/releases" }
 }
 
 dependencies {
@@ -27,9 +26,6 @@ dependencies {
     // paper api
     compileOnly "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
 
-    // funnycommands
-    implementation "net.dzikoysk:funnycommands:0.4.2"
-
     // LiteCommands
     implementation "dev.rollczi.litecommands:bukkit:1.5.0"
 
@@ -41,9 +37,6 @@ dependencies {
 
     // bStats
     implementation "org.bstats:bstats-bukkit:3.0.0"
-
-    // PlaceholderAPI
-    compileOnly "me.clip:placeholderapi:2.11.1"
 
     // ormlite jdbc
     implementation "com.j256.ormlite:ormlite-jdbc:6.1"

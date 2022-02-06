@@ -4,12 +4,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import panda.std.Option;
 
 public class InventoryCloseListener implements Listener {
 
     @EventHandler
-    public void onClose(org.bukkit.event.inventory.InventoryCloseEvent event) {
+    public void onClose(InventoryCloseEvent event) {
         String title = event.getView().getTitle();
 
         if (title.contains("Armor player: ")) {

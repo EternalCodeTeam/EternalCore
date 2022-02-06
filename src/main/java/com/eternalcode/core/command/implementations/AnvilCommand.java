@@ -11,7 +11,7 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.entity.Player;
 
-@Section(route = "anvil", aliases = { "kowadlo", "kowadło" })
+@Section(route = "anvil", aliases = {"kowadlo", "kowadło"})
 @Permission("eternalcore.command.anvil")
 public class AnvilCommand {
 

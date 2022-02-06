@@ -2,36 +2,32 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations.depracated;
+package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
-import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-@FunnyComponent
+@Section(route = "hat")
+@Permission("eternalcore.command.hat")
+@UsageMessage("&8» &cPoprawne użycie &7/hat")
 public class HatCommand {
 
-    private final ConfigurationManager configurationManager;
+    private final MessagesConfiguration message;
 
-    public HatCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public HatCommand(MessagesConfiguration message) {
+        this.message = message;
     }
 
-    @FunnyCommand(
-        name = "hat",
-        permission = "eternalcore.command.hat",
-        usage = "&8» &cPoprawne użycie &7/hat",
-        acceptsExceeded = true
-    )
-
+    @Execute
     public void execute(Player player) {
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
         PlayerInventory playerInventory = player.getInventory();
 
         ItemStack itemStack = playerInventory.getHelmet();
@@ -43,6 +39,6 @@ public class HatCommand {
             return;
         }
 
-        player.sendMessage(ChatUtils.color(config.nullHatMessage));
+        player.sendMessage(ChatUtils.color(message.messagesSection.nullHatMessage));
     }
 }

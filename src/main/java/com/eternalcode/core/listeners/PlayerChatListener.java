@@ -1,7 +1,6 @@
 package com.eternalcode.core.listeners;
 
 import com.eternalcode.core.managers.ChatManager;
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
@@ -17,20 +16,21 @@ import java.util.UUID;
 public class PlayerChatListener implements Listener {
 
     private final ChatManager chatManager;
-    private final ConfigurationManager configurationManager;
+    private final MessagesConfiguration message;
+    private final PluginConfiguration config;
 
-    public PlayerChatListener(ChatManager chatManager, ConfigurationManager configurationManager) {
+    public PlayerChatListener(ChatManager chatManager, MessagesConfiguration message, PluginConfiguration config) {
         this.chatManager = chatManager;
-        this.configurationManager = configurationManager;
+        this.message = message;
+        this.config = config;
     }
 
     @EventHandler
     public void onChatSlowmode(AsyncChatEvent event) {
-        MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
         Player player = event.getPlayer();
 
         if (!this.chatManager.isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")){
-            player.sendMessage(ChatUtils.color(messages.chatDisable));
+            player.sendMessage(ChatUtils.color(message.messagesSection.chatDisable));
             event.setCancelled(true);
             return;
         }
@@ -40,7 +40,7 @@ public class PlayerChatListener implements Listener {
         if (this.chatManager.isSlowedOnChat(uuid) && !player.hasPermission("enernalcore.chat.noslowmode")) {
             long time = this.chatManager.getSlowDown(uuid);
 
-            player.sendMessage(ChatUtils.color(messages.chatSlowMode.replace("{TIME}", DateUtils.durationToString(time))));
+            player.sendMessage(ChatUtils.color(message.messagesSection.chatSlowMode).replace("{TIME}", DateUtils.durationToString(time)));
             event.setCancelled(true);
             return;
         }
@@ -51,8 +51,6 @@ public class PlayerChatListener implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncChatEvent event) {
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
-
         if (config.enableSoundAfterChatMessage) {
             for (Player players : Bukkit.getOnlinePlayers()) {
                 players.playSound(players.getLocation(), config.soundAfterChatMessage, config.soundAfterChatMessageVolume, config.soundAfterChatMessagePitch);

@@ -3,25 +3,25 @@
  */
 
 
-package com.eternalcode.core.command.implementations.depracated;
+package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.utils.ChatUtils;
-import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-@FunnyComponent
-public class KillCommand {
-    @FunnyCommand(
-        name = "kill",
-        permission = "eternalcore.command.kill",
-        usage = "&8» &cPoprawne użycie &7/kill <player>",
-        acceptsExceeded = true
-    )
 
+@Section(route = "kill")
+@Permission("eternalcore.command.kill")
+@UsageMessage("&8» &cPoprawne użycie &7/kill <player>")
+public class KillCommand {
+
+    @Execute
     public void execute(CommandSender sender, String[] args) {
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .orElse(Option.of(sender).is(Player.class))

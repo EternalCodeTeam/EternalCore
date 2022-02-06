@@ -1,6 +1,5 @@
 package com.eternalcode.core.command.binds;
 
-import com.eternalcode.core.utils.MessageAction;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
@@ -25,5 +24,4 @@ public class MessageActionArgument implements SingleArgumentHandler<MessageActio
             .map(messageAction -> messageAction.name().toLowerCase())
             .toList();
     }
-
 }

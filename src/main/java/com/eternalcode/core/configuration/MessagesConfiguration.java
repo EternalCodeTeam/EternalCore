@@ -20,7 +20,7 @@ public class MessagesConfiguration implements Serializable {
     public MessagesSection messagesSection = new MessagesSection();
 
     @Contextual
-    public class MessagesSection {
+    public static class MessagesSection {
 
         public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSION})";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
@@ -40,6 +40,7 @@ public class MessagesConfiguration implements Serializable {
         public String chatSlowModeSet = "&8» &aSlowmode set to: {SLOWMODE}";
         public String chatSlowMode = "&8» &cYou can write the next message for: &6{TIME}";
         public String chatDisable = "&8» &cChat is currently disabled!";
+        public String chatNoCommand = "&8» &cCommand &e{COMMAND} &cdoesn't exists!";
 
         @Description({" ", "# Simple Messages"})
         public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
@@ -49,13 +50,13 @@ public class MessagesConfiguration implements Serializable {
         public String inventoryCleared = "&8» &cYour inventory has been cleared!";
         public String disposalTitle = "&f&lTrash";
         public String disposalOpenMessage = "&8» &aSuccessfully opened Trash.";
-        public String enderchestOpenPlayerMessage = "&8» &aSuccessfully opened EnderChest {PLAYER}";
-        public String workbenchOpenPlayerMessage = "&8» &aSuccessfully opened WorkBench.";
+        public String enderchestOpenMessage = "&8» &aSuccessfully opened EnderChest {PLAYER}";
+        public String workbenchOpenMessage = "&8» &aSuccessfully opened WorkBench.";
+        public String stonecutterOpenMessage = "&8» &aSuccessfully opened StoneCutter.";
+        public String grindstoneOpenMessage = "&8» &aSuccessfully opened WorkBench.";
         public String foodMessage = "&8» &aYou've been feed!";
         public String healMessage = "&8» &aYou've been heal!";
         public String nullHatMessage = "&8» &cYou cannot use the /hat command.";
         public String adminChatFormat = "&8[&4AdminChat&8] &c{TEXT}";
-        public String gammaEnabled = "&8» &aGamma has been enabled!";
-        public String gammaDisable = "&8» &cGamma has been disabled!";
     }
 }

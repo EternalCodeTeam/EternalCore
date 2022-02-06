@@ -1,8 +1,7 @@
 package com.eternalcode.core.listeners.player;
 
-import com.eternalcode.core.chat.ChatUtils;
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.utils.ChatUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,10 +13,10 @@ import panda.std.Option;
 
 public class PlayerCommandPreprocessListener implements Listener {
 
-    private final ConfigurationManager configurationManager;
+    private final MessagesConfiguration message;
 
-    public PlayerCommandPreprocessListener(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public PlayerCommandPreprocessListener(MessagesConfiguration message) {
+        this.message = message;
     }
 
     @EventHandler
@@ -25,11 +24,10 @@ public class PlayerCommandPreprocessListener implements Listener {
         Player player = event.getPlayer();
         String command = event.getMessage().split(" ")[0];
         Option<HelpTopic> helpTopic = Option.of(Bukkit.getHelpMap().getHelpTopic(command));
-        MessagesConfiguration messages = this.configurationManager.getMessagesConfiguration();
 
         helpTopic.onEmpty(() -> {
             event.setCancelled(true);
-            player.sendMessage(ChatUtils.color(StringUtils.replace(messages.chatNoCommand, "{COMMAND}", command)));
+            player.sendMessage(ChatUtils.color(StringUtils.replace(message.messagesSection.chatNoCommand, "{COMMAND}", command)));
         });
     }
 }

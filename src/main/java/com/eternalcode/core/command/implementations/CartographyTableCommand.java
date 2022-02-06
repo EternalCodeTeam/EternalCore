@@ -9,7 +9,6 @@ import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
-import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
 import org.bukkit.entity.Player;
 
 @Section(route = "cartopgraphytable")

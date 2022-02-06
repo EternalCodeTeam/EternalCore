@@ -2,36 +2,31 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.command.implementations.depracated;
+package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
-import net.dzikoysk.funnycommands.stereotypes.FunnyCommand;
-import net.dzikoysk.funnycommands.stereotypes.FunnyComponent;
+import dev.rollczi.litecommands.annotations.Arg;
+import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-
-@FunnyComponent
+@Section(route = "whois")
+@Permission("eternalcore.command.whois")
+@UsageMessage("&8» &cPoprawne użycie &7/whois <player>")
 public class WhoIsCommand {
-    private final ConfigurationManager configurationManager;
+    private final MessagesConfiguration message;
 
-    public WhoIsCommand(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    public WhoIsCommand(MessagesConfiguration message) {
+        this.message = message;
     }
 
-    @FunnyCommand(
-        name = "whois",
-        permission = "eternalcore.command.whois",
-        usage = "&8» &cPoprawne użycie &7/whois <player>",
-        acceptsExceeded = true
-    )
-
-    public void execute(Player player, String[] args) {
-        MessagesConfiguration config = configurationManager.getMessagesConfiguration();
-
+    @Execute
+    public void execute(@Arg(0) Player player, String[] args) {
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0]))
             .peek((other) -> {
                 player.sendMessage(ChatUtils.color("&8» &7Target name: &f" + player.getName()));
@@ -43,7 +38,7 @@ public class WhoIsCommand {
                 player.sendMessage(ChatUtils.color("&8» &7Target exp: &f" + player.getExp()));
                 player.sendMessage(ChatUtils.color("&8» &7Target health: &f" + player.getHealth()));
                 player.sendMessage(ChatUtils.color("&8» &7Target food level: &f" + player.getFoodLevel()));
-            }).onEmpty(() -> player.sendMessage(ChatUtils.color(config.offlinePlayer)));
+            }).onEmpty(() -> player.sendMessage(ChatUtils.color(message.messagesSection.offlinePlayer)));
     }
 }
 

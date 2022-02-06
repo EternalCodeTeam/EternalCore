@@ -4,7 +4,6 @@
 
 package com.eternalcode.core.configuration;
 
-import com.eternalcode.core.configuration.composer.CustomStringComposer;
 import lombok.Getter;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
@@ -20,7 +19,6 @@ public class ConfigurationManager {
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
-        .withComposer(String.class, new CustomStringComposer())
         .build();
 
     @Getter private final PluginConfiguration pluginConfiguration = new PluginConfiguration();
