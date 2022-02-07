@@ -30,7 +30,7 @@ dependencies {
     implementation "dev.rollczi.litecommands:bukkit:1.5.1"
 
     // cdn configs
-    implementation "net.dzikoysk:cdn:1.13.5"
+    implementation "net.dzikoysk:cdn:1.13.6"
 
     // expresslibe
     implementation "org.panda-lang:expressible:1.1.12"
