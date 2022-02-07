@@ -109,9 +109,9 @@ public class EternalCore extends JavaPlugin {
         this.userService = new UserService();
 
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "EternalCore")
-            .argument(Player.class, new PlayerArgument())
+            .argument(Player.class, new PlayerArgument(configurationManager.getMessagesConfiguration()))
             .argument(MessageAction.class, new MessageActionArgument())
-            .bind(Player.class, new PlayerSenderBind())
+            .bind(Player.class, new PlayerSenderBind(configurationManager.getMessagesConfiguration()))
             .bind(ConfigurationManager.class, () -> configurationManager)
             .bind(MessagesConfiguration.class, () -> configurationManager.getMessagesConfiguration())
             .bind(PluginConfiguration.class, () -> configurationManager.getPluginConfiguration())

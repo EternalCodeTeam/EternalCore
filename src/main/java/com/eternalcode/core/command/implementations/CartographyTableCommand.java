@@ -15,15 +15,10 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.cartopgraphytable")
 public class CartographyTableCommand {
 
-    private final MessagesConfiguration message;
-
-    public CartographyTableCommand(MessagesConfiguration message) {
-        this.message = message;
-    }
-
     @Execute
-    public void execute(Player player) {
+    public void execute(MessagesConfiguration message, Player player) {
         player.openCartographyTable(null, true);
         player.sendMessage(ChatUtils.color(message.messagesSection.cartographyTableOpenMessage));
     }
+
 }
