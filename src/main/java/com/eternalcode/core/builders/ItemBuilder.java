@@ -35,14 +35,14 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder lore(List<String> lore) {
+    public ItemBuilder lore(List<Component> lore) {
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setLore(lore);
+        itemMeta.lore(lore);
         itemStack.setItemMeta(itemMeta);
         return this;
     }
 
-    public ItemBuilder lore(String... lore) {
+    public ItemBuilder lore(Component... lore) {
         return lore(Arrays.asList(lore));
     }
 

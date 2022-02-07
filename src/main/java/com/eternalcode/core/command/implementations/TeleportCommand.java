@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.configuration.MessagesConfiguration;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -12,7 +13,8 @@ import org.bukkit.entity.Player;
 public class TeleportCommand {
     @Execute
     @Required(1)
-    public void execute(Player sender, @Arg(0) Player player) {
+    public void execute(Player sender, @Arg(0) Player player, MessagesConfiguration message) {
         sender.teleportAsync(player.getLocation());
+        sender.sendMessage(message.messagesSection.successfulyyTeleported);
     }
 }

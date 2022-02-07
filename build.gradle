@@ -41,6 +41,9 @@ dependencies {
     // ormlite jdbc
     implementation "com.j256.ormlite:ormlite-jdbc:6.1"
 
+    // FastBoard
+    implementation 'fr.mrmicky:fastboard:1.2.1'
+
     // tests
     testImplementation "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
     testImplementation "org.codehaus.groovy:groovy-all:3.0.9"

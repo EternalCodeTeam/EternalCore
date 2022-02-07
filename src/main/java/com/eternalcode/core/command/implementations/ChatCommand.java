@@ -41,7 +41,7 @@ public class ChatCommand {
     }
 
     @Execute(route = "on")
-    public void enableChat(CommandSender sender) {
+    public void enable(CommandSender sender) {
         if (this.chatManager.isChatEnabled()) {
             sender.sendMessage(ChatUtils.component(message.messagesSection.chatAlreadyEnabled));
             return;
@@ -51,7 +51,7 @@ public class ChatCommand {
     }
 
     @Execute(route = "off")
-    public void disableChat(CommandSender sender) {
+    public void disable(CommandSender sender) {
         if (!this.chatManager.isChatEnabled()) {
             sender.sendMessage(ChatUtils.component(message.messagesSection.chatAlreadyDisabled));
             return;
@@ -62,7 +62,7 @@ public class ChatCommand {
 
     @Execute(route = "slowmode")
     @MinArgs(1)
-    public void slowmodeChat(CommandSender sender, String[] args) {
+    public void slowmode(CommandSender sender, String[] args) {
         Option.attempt(NumberFormatException.class, () -> Double.parseDouble(args[1])).peek(amount -> {
             Valid.when(amount < 0.0D, message.messagesSection.numberBiggerThanOrEqualZero);
 

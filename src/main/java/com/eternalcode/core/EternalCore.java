@@ -31,6 +31,7 @@ import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
+import com.eternalcode.core.command.implementations.TeleportCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
@@ -117,7 +118,9 @@ public class EternalCore extends JavaPlugin {
             .bind(PluginConfiguration.class, () -> configurationManager.getPluginConfiguration())
             .bind(EternalCore.class, () -> this)
             .bind(UserService.class, () -> userService)
-            .command(AdminChatCommand.class,
+            .command(
+                AdminChatCommand.class,
+                TeleportCommand.class,
                 AlertCommand.class,
                 AnvilCommand.class,
                 CartographyTableCommand.class,

@@ -16,15 +16,9 @@ import org.bukkit.entity.Player;
 @UsageMessage("&8» &cPoprawne użycie &7/adminchat <text>")
 public class AdminChatCommand {
 
-    private final MessagesConfiguration message;
-
-    public AdminChatCommand(MessagesConfiguration message) {
-        this.message = message;
-    }
-
     @Execute
     @MinArgs(1)
-    public void execute(String[] args) {
+    public void execute(String[] args, MessagesConfiguration message) {
         String text = StringUtils.join(args, " ", 0, args.length);
 
         String adminChatFormat = ChatUtils.color(message.messagesSection.adminChatFormat.replace("{TEXT}", text));

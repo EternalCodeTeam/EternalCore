@@ -18,15 +18,10 @@ import org.bukkit.entity.Player;
 @UsageMessage("&8» &cPoprawne użycie &7/eternalcore <reload>")
 @Permission("eternalcore.command.eternalcore")
 public class EternalCoreCommand {
-    private final MessagesConfiguration message;
-
-    public EternalCoreCommand(MessagesConfiguration message) {
-        this.message = message;
-    }
 
     @Execute(route = "reload")
     @Permission("eternalcore.command.reload")
-    public void reload(Player sender, ConfigurationManager manager) {
+    public void reload(Player sender, ConfigurationManager manager, MessagesConfiguration message) {
         manager.loadAndRenderConfigs();
         sender.sendMessage(ChatUtils.color(message.messagesSection.successfullyReloaded));
         Bukkit.getLogger().info(ChatUtils.color("Configs has ben successfuly reloaded!"));

@@ -22,17 +22,11 @@ import org.bukkit.Bukkit;
 @UsageMessage("&8» &cPoprawne użycie &7/alert <title/actionbar/chat> <text>")
 public class AlertCommand {
 
-    private final MessagesConfiguration messages;
-
-    public AlertCommand(MessagesConfiguration messages) {
-        this.messages = messages;
-    }
-
     @Execute
     @MinArgs(2)
-    public void execute(String[] args, @Arg(0) MessageAction messageAction) {
+    public void execute(String[] args, @Arg(0) MessageAction messageAction, MessagesConfiguration message) {
         String text = StringUtils.join(args, " ", 1, args.length);
-        Component component = ChatUtils.component(messages.messagesSection.alertMessagePrefix)
+        Component component = ChatUtils.component(message.messagesSection.alertMessagePrefix)
             .replaceText(builder -> builder.match("\\{BROADCAST}").replacement(text));
 
         Bukkit.getOnlinePlayers().forEach(player -> messageAction.action(player, component));

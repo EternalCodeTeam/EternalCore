@@ -32,6 +32,9 @@ public class MessagesConfiguration implements Serializable {
         public String helpOpFormat = "&8[&4HelpOp&8] &c{TEXT}";
         public String helpOpSend = "&8» &aThis message has been successfully sent to administration";
 
+        @Description({" ", "# AdminChat format"})
+        public String adminChatFormat = "&8[&4AdminChat&8] &c{TEXT}";
+
         @Description({" ", "# Chat messages"})
         public String chatDisabled = "&8» &cChat has been disabled by {NICK}!";
         public String chatEnabled = "&8» &aThe chat has been enabled by {NICK}!";
@@ -45,6 +48,7 @@ public class MessagesConfiguration implements Serializable {
 
         @Description({" ", "# Simple Messages"})
         public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
+        public String successfulyyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";
         public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
         public String anvilGuiOpenMessage = "&8» &aSuccessfully opened anvil.";
         public String cartographyTableOpenMessage = "&8» &aSuccessfully opened CartographyTable.";
@@ -56,8 +60,8 @@ public class MessagesConfiguration implements Serializable {
         public String stonecutterOpenMessage = "&8» &aSuccessfully opened StoneCutter.";
         public String grindstoneOpenMessage = "&8» &aSuccessfully opened WorkBench.";
         public String foodMessage = "&8» &aYou've been feed!";
+        public String foodMessageOther = "&8» &aYou've fed the {PLAYER}";
         public String healMessage = "&8» &aYou've been heal!";
         public String nullHatMessage = "&8» &cYou cannot use the /hat command.";
-        public String adminChatFormat = "&8[&4AdminChat&8] &c{TEXT}";
     }
 }
