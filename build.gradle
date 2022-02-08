@@ -11,6 +11,7 @@ repositories {
     gradlePluginPortal()
     mavenCentral()
     maven { url = "https://papermc.io/repo/repository/maven-public/" }
+    maven { url = "https://repo.mattstudios.me/artifactory/public/" }
     maven { url = "https://repo.panda-lang.org/releases" }
 }
 
@@ -44,6 +45,9 @@ dependencies {
     // FastBoard
     implementation 'fr.mrmicky:fastboard:1.2.1'
 
+    // TriumphGui
+    implementation "dev.triumphteam:triumph-gui:3.1.1"
+
     // tests
     testImplementation "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
     testImplementation "org.codehaus.groovy:groovy-all:3.0.9"
@@ -71,5 +75,6 @@ shadowJar {
     relocate "org.panda_lang", "com.eternalcode.core.libs.panda"
     relocate "fr.mrmicky.fastboard", "com.eternalcode.core.libs.fastboard"
     relocate "panda", "com.eternalcode.core.libs.panda"
-    relocate "com.j256.ormlite", "com.eternalcode.lobby.ormlite"
+    relocate "com.j256.ormlite", "com.eternalcode.core.libs.ormlite"
+    relocate "dev.triumphteam.gui", "com.eternalcode.core.libs.gui"
 }
