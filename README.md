@@ -11,8 +11,8 @@
 If you want to get help regarding our products or just want to ask something, join our [discord](https://discord.gg/MUCKhgFUCA).
 
 # Other API usages
+- [LiteCommands by Rollczi ❤️](https://github.com/Rollczi/LiteCommands)
 - [Lombok](https://projectlombok.org/)
-- [LiteCommand by Rollczi ❤️](https://github.com/Rollczi/LiteCommands)
 - [CDN Configs](https://github.com/dzikoysk/cdn)
 - [Expresslibe](https://github.com/panda-lang/expressible)
 - [Ormlite jdbc](https://github.com/j256/ormlite-jdbc)
