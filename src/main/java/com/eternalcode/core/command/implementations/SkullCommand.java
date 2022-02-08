@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import panda.utilities.StringUtils;
 
-@Section(route = "skull", aliases = {"głowa, glowa"})
+@Section(route = "skull", aliases = "glowa")
 @Permission("eternalcore.command.skull")
 @UsageMessage("&8» &cPoprawne użycie &7/skull <player>")
 public class SkullCommand {
