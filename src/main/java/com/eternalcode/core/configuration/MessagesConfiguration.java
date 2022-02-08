@@ -27,6 +27,7 @@ public class MessagesConfiguration implements Serializable {
         public String onlyPlayer = "&8» &cCommand is only for players!";
         public String notNumber = "&8» &cArgument isnt a number!";
         public String numberBiggerThanOrEqualZero = "&8» &cThe number must be greater than or equal to 0!";
+        public String noItem = "&8» &cYou need item to use this command!";
 
         @Description({" ", "# HelpOp Messages"})
         public String helpOpFormat = "&8[&4HelpOp&8] &c{TEXT}";
@@ -46,6 +47,15 @@ public class MessagesConfiguration implements Serializable {
         public String chatDisable = "&8» &cChat is currently disabled!";
         public String chatNoCommand = "&8» &cCommand &e{COMMAND} &cdoesn't exists!";
 
+        @Description({"", "# Kill message"})
+        public String killMessage = "&8» &cYou were killed by {NICK}";
+        public String killedMessage = "&8» &cKilled {NICK}";
+
+        @Description({"", "# Speed message"})
+        public String speedBetweenZeroAndTen = "&8» &cEnter speed from 0 to 10!";
+        public String speedSetted = "&8» &cSpeed is set to {SPEED}";
+        public String speedSet = "&8» &cSpeed for {NICK} is set to {SPEED}";
+
         @Description({" ", "# Simple Messages"})
         public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
         public String successfulyyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";
@@ -63,5 +73,7 @@ public class MessagesConfiguration implements Serializable {
         public String foodMessageOther = "&8» &aYou've fed the {PLAYER}";
         public String healMessage = "&8» &aYou've been heal!";
         public String nullHatMessage = "&8» &cYou cannot use the /hat command.";
+        public String repairMessage = "&8» &aRepaired!";
+        public String skullMessage = "&8» &aPlayer {NICK} heads received";
     }
 }
