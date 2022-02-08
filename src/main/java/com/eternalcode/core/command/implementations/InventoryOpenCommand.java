@@ -2,9 +2,9 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.MaxArgs;
-import dev.rollczi.litecommands.annotations.MinArgs;
+import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
@@ -13,11 +13,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import panda.std.Option;
 
 @Section(route = "inventoryopen", aliases = {"io", "oi", "open"})
 @Permission("eternalcore.command.inventoryopen")
-@UsageMessage("&8» &cPoprawne użycie &7/inventoryopen <player> [ec/armor]")
+@UsageMessage("&8» &cPoprawne użycie &7/inventoryopen <ar/ec/inv> <player>")
 public class InventoryOpenCommand {
     private final MessagesConfiguration message;
 
@@ -25,27 +24,23 @@ public class InventoryOpenCommand {
         this.message = message;
     }
 
-    @Execute
-    @MinArgs(1)
-    @MaxArgs(2)
-    public void execute(Player player, String[] args) {
-        Option<Player> playerOption = Option.of(Bukkit.getPlayer(args[0]));
-
-        playerOption.peek(arg -> {
-            if (args.length == 2) {
-                switch (args[1]) {
-                    case "ec" -> player.openInventory(arg.getEnderChest());
-                    case "armor" -> player.openInventory(createInventory(arg));
-                    default -> player.openInventory(arg.getInventory());
-                }
-                return;
-            }
-
-            player.openInventory(arg.getInventory());
-
-        }).onEmpty(() -> player.sendMessage(ChatUtils.component(message.messagesSection.offlinePlayer)));
+    @Execute(route = "enderchest", aliases = {"ec"})
+    public void enderchest(Player sender, @Arg(0) Player player) {
+        sender.openInventory(player.getEnderChest());
     }
 
+    @Execute(route = "armor", aliases = {"ar"})
+    public void armor(Player sender, @Arg(0) Player player) {
+        sender.openInventory(createInventory(player));
+    }
+
+    @Execute(route = "iventory", aliases = {"inv"})
+    public void inventory(Player sender, @Arg(0) Player player) {
+        sender.openInventory(player.getInventory());
+    }
+
+
+    @IgnoreMethod
     private Inventory createInventory(Player player) {
         Inventory inventory = Bukkit.createInventory(null, 9, ChatUtils.component("Armor player: " + player.getName()));
 
