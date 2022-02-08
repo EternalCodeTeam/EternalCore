@@ -27,6 +27,7 @@ import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.HelpOpCommand;
 import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
+import com.eternalcode.core.command.implementations.RepairCommand;
 import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
@@ -40,14 +41,12 @@ import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.listeners.PlayerChatListener;
 import com.eternalcode.core.listeners.PlayerJoinListener;
 import com.eternalcode.core.listeners.PlayerQuitListener;
-import com.eternalcode.core.listeners.inventory.InventoryClickListener;
-import com.eternalcode.core.listeners.inventory.InventoryCloseListener;
 import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
-import com.eternalcode.core.listeners.sign.SignChangeListener;
-import com.eternalcode.core.managers.chat.ChatManager;
 import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
-import com.eternalcode.core.managers.scoreboard.ScoreboardManager;
+import com.eternalcode.core.listeners.sign.SignChangeListener;
 import com.eternalcode.core.listeners.user.CreateUserListener;
+import com.eternalcode.core.managers.chat.ChatManager;
+import com.eternalcode.core.managers.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.UserService;
 import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.base.Stopwatch;
@@ -145,7 +144,8 @@ public class EternalCore extends JavaPlugin {
                 ScoreboardCommand.class,
                 AdminChatCommand.class,
                 HelpOpCommand.class,
-                InventoryOpenCommand.class)
+                InventoryOpenCommand.class,
+                RepairCommand.class)
             .register();
 
         // Register events
@@ -155,8 +155,6 @@ public class EternalCore extends JavaPlugin {
             new PlayerQuitListener(configurationManager),
             new CreateUserListener(this),
             new ScoreboardListener(configurationManager),
-            new InventoryClickListener(),
-            new InventoryCloseListener(),
             new PlayerCommandPreprocessListener(configurationManager.getMessagesConfiguration()),
             new SignChangeListener()
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
