@@ -21,12 +21,6 @@ public class AdminChatCommand {
     public void execute(String[] args, MessagesConfiguration message) {
         String text = StringUtils.join(args, " ", 0, args.length);
 
-        String adminChatFormat = ChatUtils.color(message.messagesSection.adminChatFormat.replace("{TEXT}", text));
-
-        for (Player players : Bukkit.getOnlinePlayers()) {
-            if (players.hasPermission("eternalcore.adminchat.spy")) {
-                players.sendMessage(adminChatFormat);
-            }
-        }
+        Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eternalcore.adminchat.spy")).forEach(players -> players.sendMessage(ChatUtils.color(message.messagesSection.adminChatFormat.replace("{TEXT}", text))));
     }
 }

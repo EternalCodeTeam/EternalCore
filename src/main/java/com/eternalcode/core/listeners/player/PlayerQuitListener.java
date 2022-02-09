@@ -1,4 +1,4 @@
-package com.eternalcode.core.listeners;
+package com.eternalcode.core.listeners.player;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
@@ -7,31 +7,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-public class PlayerJoinListener implements Listener {
+public class PlayerQuitListener implements Listener {
     private final ConfigurationManager configurationManager;
 
-    public PlayerJoinListener(ConfigurationManager configurationManager) {
+    public PlayerQuitListener(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
         Player player = event.getPlayer();
 
-        if (!player.hasPlayedBefore()) {
-            event.joinMessage(ChatUtils.component(config.firstJoinMessage.replace("{PLAYER}", event.getPlayer().getName())));
-        }
+        event.quitMessage(ChatUtils.component(config.leaveMessage.replace("{PLAYER}", player.getName())));
 
-        if (config.enabledSoundAfterJoin) {
+        if (config.enableSoundAfterQuit) {
             for (Player players : Bukkit.getOnlinePlayers()) {
                 players.playSound(players.getLocation(), config.soundAfterJoin, config.soudnAfterJoinVolume, config.soundAfterJoinPitch);
             }
         }
-
-        event.joinMessage(ChatUtils.component(config.joinMessage.replace("{PLAYER}", event.getPlayer().getName())));
     }
 }

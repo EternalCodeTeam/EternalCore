@@ -14,21 +14,21 @@ public class RepairCommand {
 
     @Execute
     public void repair(Player player, MessagesConfiguration messages) {
-        ItemStack handItem = player.getItemInHand();
+        ItemStack handItem = player.getItemInUse();
 
         if (handItem.getType().isBlock() || handItem.getType().isAir()) {
             player.sendMessage(ChatUtils.color(messages.messagesSection.noItem));
             return;
         }
-        player.getItemInHand().setDurability((short) 0);
+        player.getItemInUse().setDurability((short) 0);
 
         player.sendMessage(ChatUtils.color(messages.messagesSection.repairMessage));
     }
 
     @Execute(route = "all")
     public void repairAll(Player player, MessagesConfiguration messages) {
-        for (ItemStack itemStack : player.getInventory().getContents()){
-            if (itemStack != null){
+        for (ItemStack itemStack : player.getInventory().getContents()) {
+            if (itemStack != null) {
                 itemStack.setDurability((short) 0);
             }
         }
@@ -38,8 +38,8 @@ public class RepairCommand {
 
     @Execute(route = "armor")
     public void repairArmor(Player player, MessagesConfiguration messages) {
-        for (ItemStack itemStack : player.getInventory().getArmorContents()){
-            if (itemStack != null){
+        for (ItemStack itemStack : player.getInventory().getArmorContents()) {
+            if (itemStack != null) {
                 itemStack.setDurability((short) 0);
             }
         }

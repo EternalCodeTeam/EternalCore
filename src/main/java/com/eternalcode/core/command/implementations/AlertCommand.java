@@ -16,6 +16,7 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 @Section(route = "alert", aliases = {"broadcast", "bc"})
 @Permission("eternalcore.command.alert")

@@ -2,7 +2,7 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.builders;
+package com.eternalcode.core.helpers.builders;
 
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.Validate;

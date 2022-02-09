@@ -17,7 +17,11 @@ import dev.rollczi.litecommands.valid.Valid;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import panda.std.Option;
+
+import java.util.function.Function;
+import java.util.stream.IntStream;
 
 @Section(route = "chat", aliases = {"czat"})
 @Permission("eternalcore.command.chat")
@@ -34,9 +38,7 @@ public class ChatCommand {
 
     @Execute(route = "clear")
     public void clear(CommandSender sender) {
-        for (int i = 0; i < 256; i++) {
-            Bukkit.getOnlinePlayers().forEach(player -> player.sendMessage(" "));
-        }
+        IntStream.range(0, 256).mapToObj(i -> Bukkit.getOnlinePlayers().stream()).flatMap(Function.identity()).forEach(player -> player.sendMessage(" "));
         Bukkit.broadcast(ChatUtils.component(message.messagesSection.chatCleared.replace("{NICK}", sender.getName())));
     }
 
