@@ -33,18 +33,8 @@ public class UserService {
         return Option.of(usersByName.get(name));
     }
 
-    @Deprecated
-    public Option<User> getUser(OfflinePlayer player) {
-        return getUser(player.getUniqueId());
-    }
-
     public User getOrCreate(UUID uuid, String name) {
         return create(uuid, name).orElseGet(usersByUUID.get(uuid));
-    }
-
-    @Deprecated
-    public User getOrCreate(Player player) {
-        return getOrCreate(player.getUniqueId(), player.getName());
     }
 
     public Option<User> create(UUID uuid, String name) {

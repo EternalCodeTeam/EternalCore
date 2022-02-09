@@ -90,7 +90,7 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
-        instance = this;
+        this.instance = this;
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
@@ -155,7 +155,7 @@ public class EternalCore extends JavaPlugin {
             new PlayerQuitListener(configurationManager),
             new CreateUserListener(this),
             new ScoreboardListener(configurationManager),
-            new PlayerCommandPreprocessListener(configurationManager.getMessagesConfiguration()),
+            new PlayerCommandPreprocessListener(configurationManager.getMessagesConfiguration(), configurationManager.getPluginConfiguration()),
             new SignChangeListener()
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 

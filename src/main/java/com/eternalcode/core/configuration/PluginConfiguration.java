@@ -53,6 +53,9 @@ public class PluginConfiguration implements Serializable {
     public double chatSlowMode = 5.0;
     public boolean chatStatue = true;
 
+    @Description({" ", "# Other features"})
+    public boolean commandExact = false;
+
     @Description({" ", "# Scoreboard Settings"})
     public boolean enableScoreboard = true;
     public int scoreboardRefresh = 20;

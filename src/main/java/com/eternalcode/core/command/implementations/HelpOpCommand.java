@@ -14,7 +14,6 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 @Section(route = "helpop", aliases = {"report"})
 @Permission("eternalcore.command.helpop")
