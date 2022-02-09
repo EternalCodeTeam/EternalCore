@@ -42,7 +42,7 @@ public class ScoreboardManager {
 
         List<String> scoreboardLines = config.scoreboardStyle;
 
-        board.updateLines(scoreboardLines);
+        board.updateLines(ChatUtils.color(scoreboardLines));
     }
 
     public void removeScoreboard(Player player) {
