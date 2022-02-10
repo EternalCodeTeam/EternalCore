@@ -30,11 +30,11 @@ public class MessagesConfiguration implements Serializable {
         public String noItem = "&8» &cYou need item to use this command!";
 
         @Description({" ", "# HelpOp Messages"})
-        public String helpOpFormat = "&8[&4HelpOp&8] &c{TEXT}";
+        public String helpOpFormat = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String helpOpSend = "&8» &aThis message has been successfully sent to administration";
 
         @Description({" ", "# AdminChat format"})
-        public String adminChatFormat = "&8[&4AdminChat&8] &c{TEXT}";
+        public String adminChatFormat = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
 
         @Description({" ", "# Chat messages"})
         public String chatDisabled = "&8» &cChat has been disabled by {NICK}!";

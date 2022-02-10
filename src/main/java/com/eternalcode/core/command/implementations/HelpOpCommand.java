@@ -31,7 +31,7 @@ public class HelpOpCommand {
     public void execute(CommandSender sender, String[] args) {
         String text = StringUtils.join(args, " ", 0, args.length);
 
-        Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eternalcore.helpop.spy") || players.isOp()).forEach(players -> players.sendMessage(ChatUtils.color(message.messagesSection.helpOpFormat.replace("{TEXT}", text))));
+        Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eternalcore.helpop.spy") || players.isOp()).forEach(players -> players.sendMessage(ChatUtils.color(StringUtils.replaceEach(messages.messagesSection.helpOpFormat, new String[]{"{NICK}", "{TEXT}"}, new String[]{sender.getName(), text})))));
 
         sender.sendMessage(ChatUtils.color(message.messagesSection.helpOpSend));
     }

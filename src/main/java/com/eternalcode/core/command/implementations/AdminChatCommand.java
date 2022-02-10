@@ -17,9 +17,9 @@ public class AdminChatCommand {
 
     @Execute
     @MinArgs(1)
-    public void execute(String[] args, MessagesConfiguration message) {
+    public void execute(CommandSender sender, String[] args, MessagesConfiguration message) {
         String text = StringUtils.join(args, " ", 0, args.length);
 
-        Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eternalcore.adminchat.spy")).forEach(players -> players.sendMessage(ChatUtils.color(message.messagesSection.adminChatFormat.replace("{TEXT}", text))));
+        Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eternalcore.adminchat.spy")).forEach(players -> players.sendMessage(ChatUtils.color(StringUtils.replaceEach(message.messagesSection.adminChatFormat, new String[]{"{NICK}", "{TEXT}"}, new String[]{sender.getName(), text})))));
     }
 }
