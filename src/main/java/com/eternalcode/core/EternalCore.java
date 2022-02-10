@@ -39,9 +39,9 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.listeners.player.PlayerChatListener;
+import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listeners.player.PlayerJoinListener;
 import com.eternalcode.core.listeners.player.PlayerQuitListener;
-import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listeners.sign.SignChangeListener;
 import com.eternalcode.core.listeners.user.CreateUserListener;
@@ -90,7 +90,7 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
-        this.instance = this;
+        instance = this;
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
@@ -154,7 +154,7 @@ public class EternalCore extends JavaPlugin {
             new PlayerJoinListener(configurationManager),
             new PlayerQuitListener(configurationManager),
             new CreateUserListener(this),
-            new ScoreboardListener(configurationManager),
+            new ScoreboardListener(configurationManager.getPluginConfiguration(), scoreboardManager),
             new PlayerCommandPreprocessListener(configurationManager.getMessagesConfiguration(), configurationManager.getPluginConfiguration()),
             new SignChangeListener()
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));

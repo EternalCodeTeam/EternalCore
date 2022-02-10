@@ -36,6 +36,9 @@ dependencies {
     // expresslibe
     implementation "org.panda-lang:expressible:1.1.13"
 
+    // MiniMessages
+    implementation "net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT"
+
     // bStats
     implementation "org.bstats:bstats-bukkit:3.0.0"
 
@@ -77,4 +80,5 @@ shadowJar {
     relocate "panda", "com.eternalcode.core.libs.panda"
     relocate "com.j256.ormlite", "com.eternalcode.core.libs.ormlite"
     relocate "dev.triumphteam.gui", "com.eternalcode.core.libs.gui"
+    relocate "net.kyori", "com.eternalcode.core.libs.kyori"
 }

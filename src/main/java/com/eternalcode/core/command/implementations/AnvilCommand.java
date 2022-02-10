@@ -20,5 +20,4 @@ public class AnvilCommand {
         player.openAnvil(null, true);
         player.sendMessage(ChatUtils.color(messages.messagesSection.anvilGuiOpenMessage));
     }
-
 }
