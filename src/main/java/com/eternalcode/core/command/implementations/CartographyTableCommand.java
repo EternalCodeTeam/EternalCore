@@ -11,12 +11,12 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.entity.Player;
 
-@Section (route = "cartopgraphytable")
-@Permission ("eternalcore.command.cartopgraphytable")
+@Section(route = "cartopgraphytable")
+@Permission("eternalcore.command.cartopgraphytable")
 public class CartographyTableCommand {
 
     @Execute
-    public void execute (MessagesConfiguration message, Player player) {
+    public void execute(MessagesConfiguration message, Player player) {
         player.openCartographyTable(null, true);
         player.sendMessage(ChatUtils.color(message.messagesSection.cartographyTableOpenMessage));
     }

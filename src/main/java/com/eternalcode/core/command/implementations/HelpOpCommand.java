@@ -15,20 +15,20 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-@Section (route = "helpop", aliases = { "report" })
-@Permission ("eternalcore.command.helpop")
-@UsageMessage ("&8» &cPoprawne użycie &7/helpop <text>")
+@Section(route = "helpop", aliases = { "report" })
+@Permission("eternalcore.command.helpop")
+@UsageMessage("&8» &cPoprawne użycie &7/helpop <text>")
 public class HelpOpCommand {
 
     private final MessagesConfiguration message;
 
-    public HelpOpCommand (MessagesConfiguration message) {
+    public HelpOpCommand(MessagesConfiguration message) {
         this.message = message;
     }
 
     @Execute
-    @MinArgs (1)
-    public void execute (CommandSender sender, String[] args) {
+    @MinArgs(1)
+    public void execute(CommandSender sender, String[] args) {
         String text = StringUtils.join(args, " ", 0, args.length);
 
         Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eternalcore.helpop.spy") || players.isOp()).forEach(players -> players.sendMessage(ChatUtils.color(message.messagesSection.helpOpFormat.replace("{TEXT}", text))));

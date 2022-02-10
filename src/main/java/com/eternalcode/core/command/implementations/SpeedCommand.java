@@ -19,14 +19,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-@Section (route = "speed")
-@Permission ("eternalcore.command.fly")
-@UsageMessage ("&8» &cPoprawne użycie &7/speed <liczba> [gracz]")
+@Section(route = "speed")
+@Permission("eternalcore.command.fly")
+@UsageMessage("&8» &cPoprawne użycie &7/speed <liczba> [gracz]")
 public class SpeedCommand {
 
     @Execute
-    @MinArgs (1)
-    public void execute (CommandSender sender, String[] args, MessagesConfiguration messages) {
+    @MinArgs(1)
+    public void execute(CommandSender sender, String[] args, MessagesConfiguration messages) {
         Player player = Option.when(args.length == 2, () -> Bukkit.getPlayer(args[1])).orElse(() -> Option.when(args.length == 1, sender).is(Player.class)).orThrow(() -> new ValidationCommandException(messages.messagesSection.offlinePlayer));
 
         Option.attempt(NumberFormatException.class, () -> Float.parseFloat(args[0])).peek(amount -> {

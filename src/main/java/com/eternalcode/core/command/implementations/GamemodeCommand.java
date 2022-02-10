@@ -17,17 +17,17 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 import panda.std.stream.PandaStream;
 
-@Section (route = "gamemode", aliases = { "gm" })
-@Permission ("eternalcore.command.gamemode")
-@UsageMessage ("&8» &cPoprawne użycie &7/gamemode <0/1/2/3> <player>")
+@Section(route = "gamemode", aliases = { "gm" })
+@Permission("eternalcore.command.gamemode")
+@UsageMessage("&8» &cPoprawne użycie &7/gamemode <0/1/2/3> <player>")
 public class GamemodeCommand {
 
     private final GameMode[] gameModes = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
 
     @Execute
-    @MinArgs (1)
-    @MaxArgs (2)
-    public void execute (CommandSender sender, String[] args) {
+    @MinArgs(1)
+    @MaxArgs(2)
+    public void execute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
         Option.attempt(NumberFormatException.class, () -> Integer.parseInt(args[0])).map(value -> gameModes[value]).orElse(PandaStream.of(gameModes).find(gameMode -> gameMode.name().equalsIgnoreCase(args[0]))).peek(player::setGameMode);
     }

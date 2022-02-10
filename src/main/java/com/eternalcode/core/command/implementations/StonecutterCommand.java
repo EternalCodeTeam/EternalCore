@@ -11,18 +11,18 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.entity.Player;
 
-@Section (route = "stonecutter")
-@Permission ("eternalcore.command.workbench")
+@Section(route = "stonecutter")
+@Permission("eternalcore.command.workbench")
 public class StonecutterCommand {
 
     private final MessagesConfiguration message;
 
-    public StonecutterCommand (MessagesConfiguration message) {
+    public StonecutterCommand(MessagesConfiguration message) {
         this.message = message;
     }
 
     @Execute
-    public void execute (Player player) {
+    public void execute(Player player) {
         player.openWorkbench(null, true);
         player.sendMessage(ChatUtils.color(message.messagesSection.stonecutterOpenMessage));
     }

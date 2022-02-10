@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-@Contextual
 public class PluginConfiguration implements Serializable {
     @Description({"# ",
         "# This is the main configuration file for EternalCore.",

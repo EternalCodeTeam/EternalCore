@@ -18,13 +18,13 @@ import panda.std.Option;
 import panda.utilities.StringUtils;
 
 
-@Section (route = "kill")
-@Permission ("eternalcore.command.kill")
-@UsageMessage ("&8» &cPoprawne użycie &7/kill <player>")
+@Section(route = "kill")
+@Permission("eternalcore.command.kill")
+@UsageMessage("&8» &cPoprawne użycie &7/kill <player>")
 public class KillCommand {
 
     @Execute
-    public void execute (CommandSender sender, String[] args, MessagesConfiguration messages) {
+    public void execute(CommandSender sender, String[] args, MessagesConfiguration messages) {
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0])).orElse(Option.of(sender).is(Player.class)).peek(player -> {
             player.setHealth(0);
             player.sendMessage(ChatUtils.color(StringUtils.replace(messages.messagesSection.killMessage, "{NICK}", sender.getName())));

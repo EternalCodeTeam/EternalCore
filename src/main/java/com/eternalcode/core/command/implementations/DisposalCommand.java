@@ -13,18 +13,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 
-@Section (route = "disposal", aliases = { "smietnik" })
-@Permission ("eternalcore.command.disposal")
+@Section(route = "disposal", aliases = { "smietnik" })
+@Permission("eternalcore.command.disposal")
 public class DisposalCommand {
 
     private final MessagesConfiguration message;
 
-    public DisposalCommand (MessagesConfiguration message) {
+    public DisposalCommand(MessagesConfiguration message) {
         this.message = message;
     }
 
     @Execute
-    public void execute (Player player) {
+    public void execute(Player player) {
         player.openInventory(Bukkit.createInventory(null, 54, (ChatUtils.component(message.messagesSection.disposalTitle))));
         player.sendMessage(ChatUtils.color(message.messagesSection.disposalOpenMessage));
     }

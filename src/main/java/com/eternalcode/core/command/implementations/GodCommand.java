@@ -13,18 +13,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-@Section (route = "god", aliases = "godmode")
+@Section(route = "god", aliases = "godmode")
 public class GodCommand {
 
     private final MessagesConfiguration message;
 
-    public GodCommand (MessagesConfiguration message) {
+    public GodCommand(MessagesConfiguration message) {
         this.message = message;
     }
 
     // TODO: add send message in config
     @Execute
-    public void execute (CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String[] args) {
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0])).orElse(Option.of(sender).is(Player.class)).peek(player -> player.setInvulnerable(!player.isInvulnerable())).onEmpty(() -> sender.sendMessage(ChatUtils.color(message.messagesSection.offlinePlayer)));
     }
 }

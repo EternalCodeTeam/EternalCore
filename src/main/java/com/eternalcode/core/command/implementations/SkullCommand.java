@@ -19,14 +19,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import panda.utilities.StringUtils;
 
-@Section (route = "skull", aliases = "glowa")
-@Permission ("eternalcore.command.skull")
-@UsageMessage ("&8» &cPoprawne użycie &7/skull <player>")
+@Section(route = "skull", aliases = "glowa")
+@Permission("eternalcore.command.skull")
+@UsageMessage("&8» &cPoprawne użycie &7/skull <player>")
 public class SkullCommand {
 
     @Execute
-    @MinArgs (1)
-    public void execute (EternalCore eternalCore, Player player, String[] args, MessagesConfiguration messages) {
+    @MinArgs(1)
+    public void execute(EternalCore eternalCore, Player player, String[] args, MessagesConfiguration messages) {
         Bukkit.getScheduler().runTaskAsynchronously(eternalCore, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(args[0]).skullOwner(args[0]).build();
 

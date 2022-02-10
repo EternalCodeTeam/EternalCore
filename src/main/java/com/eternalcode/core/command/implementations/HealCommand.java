@@ -16,20 +16,20 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-@Section (route = "heal")
-@Permission ("eternalcore.command.heal")
-@UsageMessage ("&8» &cPoprawne użycie &7/heal <player>")
+@Section(route = "heal")
+@Permission("eternalcore.command.heal")
+@UsageMessage("&8» &cPoprawne użycie &7/heal <player>")
 public class HealCommand {
 
     private final MessagesConfiguration message;
 
-    public HealCommand (MessagesConfiguration message) {
+    public HealCommand(MessagesConfiguration message) {
         this.message = message;
     }
 
     @Execute
-    @MaxArgs (1)
-    public void execute (CommandSender sender, String[] args) {
+    @MaxArgs(1)
+    public void execute(CommandSender sender, String[] args) {
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0])).orElse(Option.of(sender).is(Player.class)).peek(player -> {
             player.setFoodLevel(20);
             player.setHealth(20);

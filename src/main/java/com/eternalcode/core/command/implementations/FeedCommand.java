@@ -14,20 +14,20 @@ import dev.rollczi.litecommands.platform.LiteSender;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Section (route = "feed")
-@UsageMessage ("&8» &cPoprawne użycie &7/feed <player>")
-@Permission ("eternalcore.command.fly")
+@Section(route = "feed")
+@UsageMessage("&8» &cPoprawne użycie &7/feed <player>")
+@Permission("eternalcore.command.fly")
 public class FeedCommand {
     private final Server server;
     private final MessagesConfiguration message;
 
-    public FeedCommand (Server server, MessagesConfiguration message) {
+    public FeedCommand(Server server, MessagesConfiguration message) {
         this.server = server;
         this.message = message;
     }
 
     @Execute
-    public void execute (LiteSender sender, String[] args) {
+    public void execute(LiteSender sender, String[] args) {
         if (args.length == 0) {
             if (!(sender.getSender() instanceof Player player)) {
                 sender.sendMessage(message.messagesSection.onlyPlayer);

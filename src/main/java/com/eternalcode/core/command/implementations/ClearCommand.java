@@ -15,20 +15,20 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Section (route = "clear")
-@Permission ("eternalcore.command.clear")
+@Section(route = "clear")
+@Permission("eternalcore.command.clear")
 public class ClearCommand {
 
     private final Server server;
     private final MessagesConfiguration message;
 
-    public ClearCommand (Server server, MessagesConfiguration message) {
+    public ClearCommand(Server server, MessagesConfiguration message) {
         this.server = server;
         this.message = message;
     }
 
     @Execute
-    public void execute (LiteSender sender, String[] args) {
+    public void execute(LiteSender sender, String[] args) {
         if (args.length == 0) {
             if (!(sender.getSender() instanceof Player player)) {
                 sender.sendMessage(message.messagesSection.onlyPlayer);
@@ -50,7 +50,7 @@ public class ClearCommand {
     }
 
     @IgnoreMethod
-    private void clear (Player player) {
+    private void clear(Player player) {
         player.getInventory().setArmorContents(new ItemStack[0]);
         player.getInventory().clear();
         player.sendMessage(ChatUtils.color(message.messagesSection.inventoryCleared));

@@ -12,13 +12,13 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import dev.rollczi.litecommands.platform.LiteSender;
 import org.bukkit.entity.Player;
 
-@Section (route = "whois")
-@Permission ("eternalcore.command.whois")
-@UsageMessage ("&8» &cPoprawne użycie &7/whois <player>")
+@Section(route = "whois")
+@Permission("eternalcore.command.whois")
+@UsageMessage("&8» &cPoprawne użycie &7/whois <player>")
 public class WhoIsCommand {
 
     @Execute
-    public void execute (LiteSender sender, @Arg (0) Player player) {
+    public void execute(LiteSender sender, @Arg(0) Player player) {
         sender.sendMessage("&8» &7Target name: &f" + player.getName());
         sender.sendMessage("&8» &7Target UUID: &f" + player.getUniqueId());
         sender.sendMessage("&8» &7Target address: &f" + player.getAddress());

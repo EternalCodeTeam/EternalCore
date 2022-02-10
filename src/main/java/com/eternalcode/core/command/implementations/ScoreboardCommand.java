@@ -13,20 +13,20 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.entity.Player;
 
 
-@Section (route = "scoreboard")
-@UsageMessage ("&8» &cPoprawne użycie &7/scoreboard")
-@Permission ("eternalcore.command.scoreboard")
+@Section(route = "scoreboard")
+@UsageMessage("&8» &cPoprawne użycie &7/scoreboard")
+@Permission("eternalcore.command.scoreboard")
 public class ScoreboardCommand {
     private final PluginConfiguration config;
     private final EternalCore eternalCore;
 
-    public ScoreboardCommand (PluginConfiguration config, EternalCore eternalCore) {
+    public ScoreboardCommand(PluginConfiguration config, EternalCore eternalCore) {
         this.config = config;
         this.eternalCore = eternalCore;
     }
 
     @Execute
-    public void execute (Player player) {
+    public void execute(Player player) {
         if (config.enableScoreboard) {
             this.eternalCore.getScoreboardManager().toggleScoreboard(player);
         }
