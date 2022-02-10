@@ -4,6 +4,7 @@
 
 package com.eternalcode.core;
 
+import com.eternalcode.core.command.binds.MaterialArgument;
 import com.eternalcode.core.command.binds.MessageAction;
 import com.eternalcode.core.command.binds.MessageActionArgument;
 import com.eternalcode.core.command.binds.PlayerArgument;
@@ -20,6 +21,7 @@ import com.eternalcode.core.command.implementations.EternalCoreCommand;
 import com.eternalcode.core.command.implementations.FeedCommand;
 import com.eternalcode.core.command.implementations.FlyCommand;
 import com.eternalcode.core.command.implementations.GamemodeCommand;
+import com.eternalcode.core.command.implementations.GiveCommand;
 import com.eternalcode.core.command.implementations.GodCommand;
 import com.eternalcode.core.command.implementations.GrindstoneCommand;
 import com.eternalcode.core.command.implementations.HatCommand;
@@ -56,6 +58,7 @@ import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
@@ -111,6 +114,7 @@ public class EternalCore extends JavaPlugin {
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "EternalCore")
             .argument(Player.class, new PlayerArgument(configurationManager.getMessagesConfiguration()))
             .argument(MessageAction.class, new MessageActionArgument())
+            .argument(Material.class, new MaterialArgument())
             .bind(Player.class, new PlayerSenderBind(configurationManager.getMessagesConfiguration()))
             .bind(ConfigurationManager.class, () -> configurationManager)
             .bind(MessagesConfiguration.class, () -> configurationManager.getMessagesConfiguration())
@@ -145,7 +149,9 @@ public class EternalCore extends JavaPlugin {
                 AdminChatCommand.class,
                 HelpOpCommand.class,
                 InventoryOpenCommand.class,
-                RepairCommand.class)
+                RepairCommand.class,
+                GiveCommand.class
+            )
             .register();
 
         // Register events
@@ -189,7 +195,7 @@ public class EternalCore extends JavaPlugin {
         }
 
         switch (version) {
-            case "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> Bukkit.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
+            case "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> this.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
         }
     }
 }

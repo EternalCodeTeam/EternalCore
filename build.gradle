@@ -80,5 +80,5 @@ shadowJar {
     relocate "panda", "com.eternalcode.core.libs.panda"
     relocate "com.j256.ormlite", "com.eternalcode.core.libs.ormlite"
     relocate "dev.triumphteam.gui", "com.eternalcode.core.libs.gui"
-    relocate "net.kyori", "com.eternalcode.core.libs.kyori"
+    relocate "net.kyori.adventure.text.minimessage", "com.eternalcode.core.libs.net.kyori.adventure.text.minimessage"
 }
