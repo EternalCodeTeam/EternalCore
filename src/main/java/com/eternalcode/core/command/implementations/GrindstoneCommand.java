@@ -12,19 +12,19 @@ import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.entity.Player;
 
-@Section(route = "grindstone")
-@UsageMessage("&8» &cPoprawne użycie &7/grindstone <player>")
-@Permission("eternalcore.command.grindstone")
+@Section (route = "grindstone")
+@UsageMessage ("&8» &cPoprawne użycie &7/grindstone <player>")
+@Permission ("eternalcore.command.grindstone")
 public class GrindstoneCommand {
 
     private final MessagesConfiguration message;
 
-    public GrindstoneCommand(MessagesConfiguration message) {
+    public GrindstoneCommand (MessagesConfiguration message) {
         this.message = message;
     }
 
     @Execute
-    public void execute(Player player) {
+    public void execute (Player player) {
         player.openGrindstone(null, true);
         player.sendMessage(ChatUtils.color(message.messagesSection.grindstoneOpenMessage));
     }

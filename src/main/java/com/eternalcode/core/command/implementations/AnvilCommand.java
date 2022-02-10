@@ -11,12 +11,12 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.entity.Player;
 
-@Section(route = "anvil", aliases = {"kowadlo", "kowadło"})
-@Permission("eternalcore.command.anvil")
+@Section (route = "anvil", aliases = { "kowadlo", "kowadło" })
+@Permission ("eternalcore.command.anvil")
 public class AnvilCommand {
 
     @Execute
-    public void execute(MessagesConfiguration messages, Player player) {
+    public void execute (MessagesConfiguration messages, Player player) {
         player.openAnvil(null, true);
         player.sendMessage(ChatUtils.color(messages.messagesSection.anvilGuiOpenMessage));
     }

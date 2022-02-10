@@ -13,20 +13,20 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Section(route = "give", aliases = {"i", "item"})
-@Permission("eternalcore.commands.give")
-@UsageMessage("&8» &cPoprawne użycie &7/give <materiał> [gracz]")
+@Section (route = "give", aliases = { "i", "item" })
+@Permission ("eternalcore.commands.give")
+@UsageMessage ("&8» &cPoprawne użycie &7/give <materiał> [gracz]")
 public class GiveCommand {
 
     private final EternalCore eternalCore;
 
-    public GiveCommand(EternalCore eternalCore) {
+    public GiveCommand (EternalCore eternalCore) {
         this.eternalCore = eternalCore;
     }
 
     @Execute
-    @Required(2)
-    public void execute(@Arg(0) Player player, @Arg(1) Material material) {
+    @Required (2)
+    public void execute (@Arg (0) Player player, @Arg (1) Material material) {
         Bukkit.getScheduler().runTaskAsynchronously(eternalCore, () -> {
             ItemStack item = new ItemBuilder(material).build();
 

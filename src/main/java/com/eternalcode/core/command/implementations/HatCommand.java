@@ -15,19 +15,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-@Section(route = "hat")
-@Permission("eternalcore.command.hat")
-@UsageMessage("&8» &cPoprawne użycie &7/hat")
+@Section (route = "hat")
+@Permission ("eternalcore.command.hat")
+@UsageMessage ("&8» &cPoprawne użycie &7/hat")
 public class HatCommand {
 
     private final MessagesConfiguration message;
 
-    public HatCommand(MessagesConfiguration message) {
+    public HatCommand (MessagesConfiguration message) {
         this.message = message;
     }
 
     @Execute
-    public void execute(Player player) {
+    public void execute (Player player) {
         PlayerInventory playerInventory = player.getInventory();
 
         ItemStack itemStack = playerInventory.getHelmet();

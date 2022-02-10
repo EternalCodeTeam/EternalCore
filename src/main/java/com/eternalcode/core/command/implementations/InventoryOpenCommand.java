@@ -16,32 +16,29 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import panda.std.Option;
 
-@Section(route = "inventoryopen", aliases = {"io", "oi", "open"})
-@Permission("eternalcore.command.inventoryopen")
-@UsageMessage("&8» &cPoprawne użycie &7/inventoryopen <ar/ec/inv> <player>")
+@Section (route = "inventoryopen", aliases = { "io", "oi", "open" })
+@Permission ("eternalcore.command.inventoryopen")
+@UsageMessage ("&8» &cPoprawne użycie &7/inventoryopen <ar/ec/inv> <player>")
 public class InventoryOpenCommand {
 
-    @Execute(route = "enderchest", aliases = {"ec"})
-    public void enderchest(Player sender, @Arg(0) Player player) {
+    @Execute (route = "enderchest", aliases = { "ec" })
+    public void enderchest (Player sender, @Arg (0) Player player) {
         sender.openInventory(player.getEnderChest());
     }
 
-    @Execute(route = "armor", aliases = {"ar"})
-    public void armor(Player sender, @Arg(0) Player player) {
+    @Execute (route = "armor", aliases = { "ar" })
+    public void armor (Player sender, @Arg (0) Player player) {
         createInventory(player).open(sender);
     }
 
-    @Execute(route = "iventory", aliases = {"inv"})
-    public void inventory(Player sender, @Arg(0) Player player) {
+    @Execute (route = "iventory", aliases = { "inv" })
+    public void inventory (Player sender, @Arg (0) Player player) {
         sender.openInventory(player.getInventory());
     }
 
     @IgnoreMethod
-    private Gui createInventory(Player player) {
-        Gui gui = Gui.gui()
-            .rows(1)
-            .title(ChatUtils.component("Armor player: " + player.getName()))
-            .create();
+    private Gui createInventory (Player player) {
+        Gui gui = Gui.gui().rows(1).title(ChatUtils.component("Armor player: " + player.getName())).create();
 
         if (player.getInventory().getHelmet() != null) {
             gui.setItem(0, new GuiItem(player.getInventory().getHelmet()));
@@ -68,8 +65,7 @@ public class InventoryOpenCommand {
         gui.setDefaultClickAction(event -> {
             Option<ItemStack> itemStackOption = Option.of(event.getCurrentItem());
 
-            itemStackOption.filter(itemStack -> itemStack.getType() == Material.GRAY_STAINED_GLASS_PANE)
-                .peek(itemStack -> event.setCancelled(true));
+            itemStackOption.filter(itemStack -> itemStack.getType() == Material.GRAY_STAINED_GLASS_PANE).peek(itemStack -> event.setCancelled(true));
         });
 
         gui.setCloseGuiAction(event -> {
