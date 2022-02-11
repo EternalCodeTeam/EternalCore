@@ -21,7 +21,6 @@ public class PluginConfiguration implements Serializable {
         "# Discord: https://dc.eternalcode.pl/",
         "# Website: https://eternalcode.pl/", " " })
 
-
     @Description({ "", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
     @Description({ "", "# Awesome sounds" })

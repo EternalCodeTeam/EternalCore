@@ -28,6 +28,8 @@ public class MessagesConfiguration implements Serializable {
     public AdminChatSection adminChatSection = new AdminChatSection();
     @Description({ "", "# Chat Section" })
     public ChatSection chatSection = new ChatSection();
+    @Description({ "", "# Teleport Section" })
+    public TeleportSection teleportSection = new TeleportSection();
     @Description({ "", "# Other messages" })
     public OtherMessages otherMessages = new OtherMessages();
 
@@ -53,6 +55,15 @@ public class MessagesConfiguration implements Serializable {
     public static class AdminChatSection {
         public String format = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
     }
+
+    @Contextual
+    public static class TeleportSection {
+        public String actionBarMessage = "&aTeleporting in &f{TIME}";
+        public String cancel = "&8» &cYou've moved, teleportation canceled!";
+        public String teleported = "&8» &aTeleported!";
+        public String teleporting = "&8» &aTeleporting...";
+    }
+
 
     @Contextual
     public static class ChatSection {
@@ -105,6 +116,9 @@ public class MessagesConfiguration implements Serializable {
             "&8» &7Target level: &f{LEVEL}",
             "&8» &7Target health: &f{HEALTH}",
             "&8» &7Target food level: &f{FOOD}");
-
+        public String spawnSet = "&8» &aSpawn set!";
+        public String spawnNoSet = "&8» &cSpawn is not set!";
+        public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {NICK}!";
+        public String spawnTeleportedOther = "&8» &cYou teleported player {NICK} to spawn!";
     }
 }

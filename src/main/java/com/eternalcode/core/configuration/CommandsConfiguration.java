@@ -3,6 +3,7 @@ package com.eternalcode.core.configuration;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
+import net.dzikoysk.cdn.entity.Exclude;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class CommandsConfiguration implements Serializable {
         "# Discord: https://dc.eternalcode.pl/",
         "# Website: https://eternalcode.pl/", " " })
 
+    @Exclude
     public CommandsSection commandsSection = new CommandsSection();
 
     @Contextual
