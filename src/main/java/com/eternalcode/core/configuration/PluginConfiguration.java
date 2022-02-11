@@ -23,10 +23,10 @@ public class PluginConfiguration implements Serializable {
 
 
     @Description({"", "# Useful Event Messages", "# Set to empty, if you want to delete this message"})
-    public eventMessage eventMessage = new eventMessage();
+    public EventMessage eventMessage = new EventMessage();
 
     @Contextual
-    public static class eventMessage {
+    public static class EventMessage {
         public String deathMessage = "Player {PLAYER} death";
         public String joinMessage = "Welcome {PLAYER}";
         public String firstJoinMessage = "Hello {PLAYER}, for the first time on the server!!";
@@ -38,10 +38,10 @@ public class PluginConfiguration implements Serializable {
     }
 
     @Description({ "", "# Awesome sounds"})
-    public sound sound = new sound();
+    public Sounds sound = new Sounds();
 
     @Contextual
-    public static class sound {
+    public static class Sounds {
         public boolean enabledAfterJoin = true;
         public Sound afterJoin = Sound.BLOCK_NOTE_BLOCK_PLING;
         public float afterJoinVolume = 1.8F;
@@ -61,29 +61,29 @@ public class PluginConfiguration implements Serializable {
     }
 
     @Description({" ", "# Chat Section"})
-    public chat chat = new chat();
+    public Chat chat = new Chat();
 
     @Contextual
-    public static class chat {
+    public static class Chat {
         public double slowMode = 5.0;
         public boolean enabled = true;
         public boolean commandExact = false;
     }
 
     @Description({ "", "# Formating on/off" })
-    public format format = new format();
+    public Format format = new Format();
 
     @Contextual
-    public static class format {
+    public static class Format {
         public String enabled = "&aenabled";
         public String disabled = "&6disabled";
     }
 
     @Description({ "", "# Scoreboard Section"})
-    public scoreboard scoreboard = new scoreboard();
+    public Scoreboard scoreboard = new Scoreboard();
 
     @Contextual
-    public static class scoreboard {
+    public static class Scoreboard {
         public boolean enabled = true;
         public int refresh = 20;
         public String title = "&6&lEternalCode.pl";
