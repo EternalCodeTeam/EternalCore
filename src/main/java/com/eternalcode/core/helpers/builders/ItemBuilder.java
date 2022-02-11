@@ -46,6 +46,12 @@ public class ItemBuilder {
         return lore(Arrays.asList(lore));
     }
 
+    public ItemBuilder amount(int amount){
+        itemStack.setAmount(amount);
+
+        return this;
+    }
+
     public ItemBuilder itemData(short data) {
         itemStack.setDurability(data);
         return this;

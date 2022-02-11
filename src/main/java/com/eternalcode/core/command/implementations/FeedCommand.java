@@ -19,35 +19,35 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.fly")
 public class FeedCommand {
     private final Server server;
-    private final MessagesConfiguration message;
+    private final MessagesConfiguration messages;
 
     public FeedCommand(Server server, MessagesConfiguration message) {
         this.server = server;
-        this.message = message;
+        this.messages = message;
     }
 
     @Execute
     public void execute(LiteSender sender, String[] args) {
         if (args.length == 0) {
             if (!(sender.getSender() instanceof Player player)) {
-                sender.sendMessage(message.messagesSection.onlyPlayer);
+                sender.sendMessage(this.messages.argumentSection.onlyPlayer);
                 return;
             }
 
             player.setFoodLevel(20);
-            player.sendMessage(ChatUtils.color(message.messagesSection.foodMessage));
+            player.sendMessage(ChatUtils.color(this.messages.otherMessages.foodMessage));
             return;
         }
 
         Player player = server.getPlayer(args[0]);
 
         if (player == null) {
-            sender.sendMessage(message.messagesSection.offlinePlayer);
+            sender.sendMessage(this.messages.argumentSection.offlinePlayer);
             return;
         }
 
         player.setFoodLevel(20);
-        player.sendMessage(ChatUtils.color(message.messagesSection.foodMessageOther).replace("{PLAYER}", player.getName()));
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.foodMessageOther).replace("{PLAYER}", player.getName()));
     }
 }
 

@@ -13,8 +13,8 @@ import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import panda.utilities.StringUtils;
@@ -24,14 +24,24 @@ import panda.utilities.StringUtils;
 @UsageMessage("&8» &cPoprawne użycie &7/skull <player>")
 public class SkullCommand {
 
+    private final MessagesConfiguration messages;
+    private final EternalCore eternalCore;
+    private final Server server;
+
+    public SkullCommand(EternalCore eternalCore) {
+        this.eternalCore = eternalCore;
+        this.messages = eternalCore.getConfigurationManager().getMessagesConfiguration();
+        this.server = eternalCore.getServer();
+    }
+
     @Execute
     @MinArgs(1)
-    public void execute(EternalCore eternalCore, Player player, String[] args, MessagesConfiguration messages) {
-        Bukkit.getScheduler().runTaskAsynchronously(eternalCore, () -> {
+    public void execute(Player player, String[] args) {
+        this.server.getScheduler().runTaskAsynchronously(this.eternalCore, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(args[0]).skullOwner(args[0]).build();
 
             player.getInventory().addItem(item);
-            player.sendMessage(ChatUtils.color(StringUtils.replace(messages.messagesSection.skullMessage, "{NICK}", args[0])));
+            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.skullMessage, "{NICK}", args[0])));
         });
     }
 }

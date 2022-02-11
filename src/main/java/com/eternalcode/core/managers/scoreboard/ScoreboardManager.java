@@ -17,30 +17,27 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ScoreboardManager {
+
+    private final PluginConfiguration config;
     private final EternalCore eternalCore;
-    private final ConfigurationManager configurationManager;
 
     private final ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
     public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
         this.eternalCore = eternalCore;
-        this.configurationManager = configurationManager;
+        this.config = configurationManager.getPluginConfiguration();
     }
 
     public void updateTask() {
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
-
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(eternalCore, () -> {
+        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this.eternalCore, () -> {
             for (FastBoard board : this.boards.values()) {
                 this.updateBoard(board);
             }
-        }, 0, config.scoreboardRefresh);
+        }, 0, this.config.scoreboard.refresh);
     }
 
     private void updateBoard(FastBoard board) {
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
-
-        List<String> scoreboardLines = config.scoreboardStyle;
+        List<String> scoreboardLines = this.config.scoreboard.style;
 
         board.updateLines(ChatUtils.color(scoreboardLines));
     }
@@ -55,9 +52,8 @@ public class ScoreboardManager {
 
     public void setScoreboard(Player player) {
         FastBoard board = new FastBoard(player);
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
 
-        board.updateTitle(ChatUtils.color(config.scoreboardTitle));
+        board.updateTitle(ChatUtils.color(this.config.scoreboard.title));
 
         this.boards.put(player.getUniqueId(), board);
     }

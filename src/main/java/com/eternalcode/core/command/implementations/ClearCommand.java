@@ -10,8 +10,8 @@ import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.platform.LiteSender;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,21 +28,17 @@ public class ClearCommand {
     }
 
     @Execute
-    public void execute(LiteSender sender, String[] args) {
+    public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
-            if (!(sender.getSender() instanceof Player player)) {
-                sender.sendMessage(message.messagesSection.onlyPlayer);
-                return;
-            }
 
-            this.clear(player);
+            this.clear((Player) sender);
             return;
         }
 
-        Player player = server.getPlayer(args[0]);
+        Player player = this.server.getPlayer(args[0]);
 
         if (player == null) {
-            sender.sendMessage(message.messagesSection.offlinePlayer);
+            sender.sendMessage(this.message.argumentSection.offlinePlayer);
             return;
         }
 
@@ -53,7 +49,7 @@ public class ClearCommand {
     private void clear(Player player) {
         player.getInventory().setArmorContents(new ItemStack[0]);
         player.getInventory().clear();
-        player.sendMessage(ChatUtils.color(message.messagesSection.inventoryCleared));
+        player.sendMessage(ChatUtils.color(this.message.otherMessages.inventoryCleared));
     }
 
 }

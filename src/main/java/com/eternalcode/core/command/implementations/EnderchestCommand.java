@@ -36,14 +36,14 @@ public class EnderchestCommand {
         Player other = server.getPlayer(args[0]);
 
         if (other == null) {
-            sender.sendMessage(message.messagesSection.offlinePlayer);
+            sender.sendMessage(this.message.argumentSection.offlinePlayer);
             return;
         }
 
         Inventory otherInventory = other.getEnderChest();
 
         other.openInventory(otherInventory);
-        other.sendMessage(ChatUtils.color(message.messagesSection.enderchestOpenMessage.replace("{PLAYER}", other.getName())));
+        other.sendMessage(ChatUtils.color(this.message.otherMessages.enderchestOpenMessage.replace("{PLAYER}", other.getName())));
     }
 
 }

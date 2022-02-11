@@ -16,6 +16,7 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import dev.rollczi.litecommands.valid.Valid;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import panda.std.Option;
 
@@ -29,47 +30,49 @@ public class ChatCommand {
 
     private final MessagesConfiguration message;
     private final ChatManager chatManager;
+    private final Server server;
 
-    public ChatCommand(MessagesConfiguration message, EternalCore core) {
-        this.message = message;
+    public ChatCommand(EternalCore core) {
+        this.message = core.getConfigurationManager().getMessagesConfiguration();
         this.chatManager = core.getChatManager();
+        this.server = core.getServer();
     }
 
     @Execute(route = "clear")
     public void clear(CommandSender sender) {
         IntStream.range(0, 256).mapToObj(i -> Bukkit.getOnlinePlayers().stream()).flatMap(Function.identity()).forEach(player -> player.sendMessage(" "));
-        Bukkit.broadcast(ChatUtils.component(message.messagesSection.chatCleared.replace("{NICK}", sender.getName())));
+        this.server.broadcast(ChatUtils.component(this.message.chatSection.cleared.replace("{NICK}", sender.getName())));
     }
 
     @Execute(route = "on")
     public void enable(CommandSender sender) {
         if (this.chatManager.isChatEnabled()) {
-            sender.sendMessage(ChatUtils.component(message.messagesSection.chatAlreadyEnabled));
+            sender.sendMessage(ChatUtils.component(this.message.chatSection.alreadyEnabled));
             return;
         }
         this.chatManager.setChatEnabled(true);
-        Bukkit.broadcast(ChatUtils.component(message.messagesSection.chatEnabled.replace("{NICK}", sender.getName())));
+        this.server.broadcast(ChatUtils.component(this.message.chatSection.enabled.replace("{NICK}", sender.getName())));
     }
 
     @Execute(route = "off")
     public void disable(CommandSender sender) {
         if (!this.chatManager.isChatEnabled()) {
-            sender.sendMessage(ChatUtils.component(message.messagesSection.chatAlreadyDisabled));
+            sender.sendMessage(ChatUtils.component(this.message.chatSection.alreadyDisabled));
             return;
         }
         this.chatManager.setChatEnabled(false);
-        Bukkit.broadcast(ChatUtils.component(message.messagesSection.chatDisabled.replace("{NICK}", sender.getName())));
+        this.server.broadcast(ChatUtils.component(this.message.chatSection.disabled.replace("{NICK}", sender.getName())));
     }
 
     @Execute(route = "slowmode")
     @MinArgs(1)
     public void slowmode(CommandSender sender, String[] args) {
         Option.attempt(NumberFormatException.class, () -> Double.parseDouble(args[1])).peek(amount -> {
-            Valid.when(amount < 0.0D, message.messagesSection.numberBiggerThanOrEqualZero);
+            Valid.when(amount < 0.0D, this.message.argumentSection.numberBiggerThanOrEqualZero);
 
-            chatManager.setChatDelay(amount);
-            sender.sendMessage(ChatUtils.color(message.messagesSection.chatSlowModeSet.replace("{SLOWMODE}", args[1])));
-        }).orThrow(() -> new ValidationCommandException(message.messagesSection.notNumber));
+            this.chatManager.setChatDelay(amount);
+            sender.sendMessage(ChatUtils.color(this.message.chatSection.slowModeSet.replace("{SLOWMODE}", args[1])));
+        }).orThrow(() -> new ValidationCommandException(this.message.argumentSection.notNumber));
     }
 }
 

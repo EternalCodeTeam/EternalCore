@@ -26,7 +26,7 @@ public class GrindstoneCommand {
     @Execute
     public void execute(Player player) {
         player.openGrindstone(null, true);
-        player.sendMessage(ChatUtils.color(message.messagesSection.grindstoneOpenMessage));
+        player.sendMessage(ChatUtils.color(this.message.otherMessages.grindstoneOpenMessage));
     }
 }
 

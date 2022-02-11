@@ -1,10 +1,11 @@
 package com.eternalcode.core.listeners.player;
 
+import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,21 +17,23 @@ public class PlayerCommandPreprocessListener implements Listener {
 
     private final MessagesConfiguration message;
     private final PluginConfiguration config;
+    private final Server server;
 
-    public PlayerCommandPreprocessListener(MessagesConfiguration message, PluginConfiguration config) {
-        this.message = message;
-        this.config = config;
+    public PlayerCommandPreprocessListener(ConfigurationManager configurationManager, Server server) {
+        this.message = configurationManager.getMessagesConfiguration();
+        this.config = configurationManager.getPluginConfiguration();
+        this.server = server;
     }
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         String command = event.getMessage().split(" ")[0];
-        Option<HelpTopic> helpTopic = Option.of(Bukkit.getHelpMap().getHelpTopic(command));
+        Option<HelpTopic> helpTopic = Option.of(this.server.getHelpMap().getHelpTopic(command));
 
         helpTopic.onEmpty(() -> {
 
-            if (!config.commandExact) {
+            if (!this.config.chat.commandExact) {
                 return;
             }
 
@@ -39,7 +42,7 @@ public class PlayerCommandPreprocessListener implements Listener {
             }
 
             event.setCancelled(true);
-            player.sendMessage(ChatUtils.color(StringUtils.replace(message.messagesSection.chatNoCommand, "{COMMAND}", command)));
+            player.sendMessage(ChatUtils.color(StringUtils.replace(message.chatSection.noCommand, "{COMMAND}", command)));
         });
     }
 }

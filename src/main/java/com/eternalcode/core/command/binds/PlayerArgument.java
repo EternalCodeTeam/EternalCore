@@ -7,6 +7,7 @@ import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
@@ -16,17 +17,19 @@ import java.util.List;
 public class PlayerArgument implements SingleArgumentHandler<Player> {
 
     private final MessagesConfiguration messages;
+    private final Server server;
 
-    public PlayerArgument(MessagesConfiguration messages) {
+    public PlayerArgument(MessagesConfiguration messages, Server server) {
         this.messages = messages;
+        this.server = server;
     }
 
     @Override
     public Player parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Player player = Bukkit.getPlayer(argument);
+        Player player = this.server.getPlayer(argument);
 
         if (player == null) {
-            throw new ValidationCommandException(ValidationInfo.CUSTOM, messages.messagesSection.offlinePlayer);
+            throw new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.argumentSection.offlinePlayer);
         }
 
         return player;

@@ -29,6 +29,10 @@ public class GamemodeCommand {
     @MaxArgs(2)
     public void execute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
-        Option.attempt(NumberFormatException.class, () -> Integer.parseInt(args[0])).map(value -> gameModes[value]).orElse(PandaStream.of(gameModes).find(gameMode -> gameMode.name().equalsIgnoreCase(args[0]))).peek(player::setGameMode);
+        Option.attempt(NumberFormatException.class, () -> Integer.parseInt(args[0]))
+            .map(value -> this.gameModes[value])
+            .orElse(PandaStream.of(this.gameModes)
+                .find(gameMode -> gameMode.name().equalsIgnoreCase(args[0])))
+            .peek(player::setGameMode);
     }
 }

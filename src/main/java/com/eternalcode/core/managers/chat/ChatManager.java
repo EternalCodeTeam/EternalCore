@@ -19,9 +19,8 @@ public class ChatManager {
     private boolean chatEnabled;
 
     public ChatManager(PluginConfiguration config) {
-
-        this.chatDelay = config.chatSlowMode;
-        this.chatEnabled = config.chatStatue;
+        this.chatDelay = config.chat.slowMode;
+        this.chatEnabled = config.chat.enabled;
         this.slowdown = CacheBuilder.newBuilder()
             .expireAfterWrite((long) (this.chatDelay + 10), TimeUnit.SECONDS)
             .build();
@@ -40,11 +39,11 @@ public class ChatManager {
     }
 
     public boolean isSlowedOnChat(UUID userUuid) {
-        return slowdown.asMap().getOrDefault(userUuid, 0L) > System.currentTimeMillis();
+        return this.slowdown.asMap().getOrDefault(userUuid, 0L) > System.currentTimeMillis();
     }
 
     public long getSlowDown(UUID userUuid) {
-        return Math.max(slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
+        return Math.max(this.slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
     }
 
     public double getChatDelay() {
@@ -58,5 +57,4 @@ public class ChatManager {
     public Map<UUID, Long> getSlowdown() {
         return Collections.unmodifiableMap(this.slowdown.asMap());
     }
-
 }

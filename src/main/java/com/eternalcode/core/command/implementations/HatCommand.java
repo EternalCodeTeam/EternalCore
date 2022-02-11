@@ -39,6 +39,6 @@ public class HatCommand {
             return;
         }
 
-        player.sendMessage(ChatUtils.color(message.messagesSection.nullHatMessage));
+        player.sendMessage(ChatUtils.color(this.message.otherMessages.nullHatMessage));
     }
 }

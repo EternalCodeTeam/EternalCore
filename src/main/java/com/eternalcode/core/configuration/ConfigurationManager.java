@@ -9,6 +9,7 @@ import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
+import panda.std.Result;
 
 import java.io.File;
 import java.io.Serializable;
@@ -19,6 +20,13 @@ public class ConfigurationManager {
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
+        .withComposer(String.class, text -> Result.ok("\"" + text + "\""), text -> {
+            if (!text.startsWith("\"") || !text.endsWith("\"")) {
+                return Result.error(new IllegalStateException("Brakuje \" w confingu!"));
+            }
+
+            return Result.ok(text.substring(1, text.length() - 1));
+        })
         .build();
 
     @Getter private final PluginConfiguration pluginConfiguration = new PluginConfiguration();

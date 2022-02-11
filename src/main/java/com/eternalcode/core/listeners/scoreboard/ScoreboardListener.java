@@ -4,7 +4,6 @@
 
 package com.eternalcode.core.listeners.scoreboard;
 
-import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.managers.scoreboard.ScoreboardManager;
 import org.bukkit.event.EventHandler;
@@ -25,13 +24,13 @@ public class ScoreboardListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (config.enableScoreboard) {
-           scoreboardManager.setScoreboard(event.getPlayer());
+        if (this.config.scoreboard.enabled) {
+           this.scoreboardManager.setScoreboard(event.getPlayer());
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        scoreboardManager.removeScoreboard(event.getPlayer());
+        this.scoreboardManager.removeScoreboard(event.getPlayer());
     }
 }

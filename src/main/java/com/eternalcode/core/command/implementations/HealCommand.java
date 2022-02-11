@@ -34,7 +34,8 @@ public class HealCommand {
             player.setFoodLevel(20);
             player.setHealth(20);
             player.setFireTicks(0);
-            player.sendMessage(ChatUtils.color(message.messagesSection.healMessage));
-        }).onEmpty(() -> sender.sendMessage(ChatUtils.color(message.messagesSection.offlinePlayer)));
+            player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
+            player.sendMessage(ChatUtils.color(this.message.otherMessages.healMessage));
+        }).onEmpty(() -> sender.sendMessage(ChatUtils.color(this.message.argumentSection.offlinePlayer)));
     }
 }

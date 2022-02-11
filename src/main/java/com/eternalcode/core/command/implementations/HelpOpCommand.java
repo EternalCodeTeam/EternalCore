@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 @Section(route = "helpop", aliases = { "report" })
@@ -20,19 +20,28 @@ import org.bukkit.command.CommandSender;
 @UsageMessage("&8» &cPoprawne użycie &7/helpop <text>")
 public class HelpOpCommand {
 
-    private final MessagesConfiguration message;
+    private final MessagesConfiguration messages;
+    private final Server server;
 
-    public HelpOpCommand(MessagesConfiguration message) {
-        this.message = message;
+    public HelpOpCommand(MessagesConfiguration messages, Server server) {
+        this.messages = messages;
+        this.server = server;
     }
+
 
     @Execute
     @MinArgs(1)
     public void execute(CommandSender sender, String[] args) {
         String text = StringUtils.join(args, " ", 0, args.length);
 
-        Bukkit.getOnlinePlayers().stream().filter(players -> players.hasPermission("eternalcore.helpop.spy") || players.isOp()).forEach(players -> players.sendMessage(ChatUtils.color(StringUtils.replaceEach(messages.messagesSection.helpOpFormat, new String[]{"{NICK}", "{TEXT}"}, new String[]{sender.getName(), text})))));
+        this.server.getOnlinePlayers()
+            .stream()
+            .filter(players -> players.hasPermission("eternalcore.helpop.spy") || players.isOp())
+            .forEach(players -> players.sendMessage(
+                ChatUtils.color(StringUtils.replaceEach(this.messages.helpOpSection.format,
+                    new String[]{ "{NICK}", "{TEXT}" },
+                    new String[]{ sender.getName(), text }))));
 
-        sender.sendMessage(ChatUtils.color(message.messagesSection.helpOpSend));
+        sender.sendMessage(ChatUtils.color(this.messages.helpOpSection.send));
     }
 }
