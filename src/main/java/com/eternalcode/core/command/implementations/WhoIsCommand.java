@@ -30,13 +30,13 @@ public class WhoIsCommand {
     @Execute
     @Required(1)
     public void execute(CommandSender sender, @Arg(0) Player player) {
-        for (String string : this.messages.otherMessages.whoisCommand){
+        for (String string : this.messages.otherMessages.whoisCommand) {
             sender.sendMessage(ChatUtils.color(replacement(player, string)));
         }
     }
 
     @IgnoreMethod
-    public String replacement(Player player, String replacement){
+    public String replacement(Player player, String replacement) {
         replacement = replacement.replace("{PLAYER}", player.getName());
         replacement = replacement.replace("{UUID}", player.getUniqueId().toString());
         replacement = replacement.replace("{IP}", player.getAddress().getHostString());
@@ -51,4 +51,3 @@ public class WhoIsCommand {
     }
 
 }
-

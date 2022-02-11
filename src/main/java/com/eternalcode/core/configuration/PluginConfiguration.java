@@ -13,17 +13,25 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PluginConfiguration implements Serializable {
-    @Description({"# ",
+    @Description({ "# ",
         "# This is the main configuration file for EternalCore.",
         "# ",
         "# if you need help with the configration or have any questions related to EternalCore, join us in our Discord",
         "# ",
         "# Discord: https://dc.eternalcode.pl/",
-        "# Website: https://eternalcode.pl/", " "})
+        "# Website: https://eternalcode.pl/", " " })
 
 
-    @Description({"", "# Useful Event Messages", "# Set to empty, if you want to delete this message"})
+    @Description({ "", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
+    @Description({ "", "# Awesome sounds" })
+    public Sounds sound = new Sounds();
+    @Description({ " ", "# Chat Section" })
+    public Chat chat = new Chat();
+    @Description({ "", "# Formating on/off" })
+    public Format format = new Format();
+    @Description({ "", "# Scoreboard Section" })
+    public Scoreboard scoreboard = new Scoreboard();
 
     @Contextual
     public static class EventMessage {
@@ -36,9 +44,6 @@ public class PluginConfiguration implements Serializable {
         public String welcomeTitle = "&6EternalCode.pl";
         public String welcomeSubTitle = "&eWelcome back {PLAYER}";
     }
-
-    @Description({ "", "# Awesome sounds"})
-    public Sounds sound = new Sounds();
 
     @Contextual
     public static class Sounds {
@@ -60,9 +65,6 @@ public class PluginConfiguration implements Serializable {
         public float afterChatMessagePitch = 1F;
     }
 
-    @Description({" ", "# Chat Section"})
-    public Chat chat = new Chat();
-
     @Contextual
     public static class Chat {
         public double slowMode = 5.0;
@@ -70,17 +72,11 @@ public class PluginConfiguration implements Serializable {
         public boolean commandExact = false;
     }
 
-    @Description({ "", "# Formating on/off" })
-    public Format format = new Format();
-
     @Contextual
     public static class Format {
         public String enabled = "&aenabled";
         public String disabled = "&6disabled";
     }
-
-    @Description({ "", "# Scoreboard Section"})
-    public Scoreboard scoreboard = new Scoreboard();
 
     @Contextual
     public static class Scoreboard {

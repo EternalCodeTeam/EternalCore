@@ -34,8 +34,7 @@ public class AlertCommand {
     @MinArgs(2)
     public void execute(String[] args, @Arg(0) MessageAction messageAction) {
         String text = StringUtils.join(args, " ", 1, args.length);
-        Component component = ChatUtils
-            .component(this.messages.otherMessages.alertMessagePrefix)
+        Component component = ChatUtils.component(this.messages.otherMessages.alertMessagePrefix)
             .replaceText(builder -> builder.match("\\{BROADCAST}").replacement(text));
 
         this.server.getOnlinePlayers().forEach(player -> messageAction.action(player, component));

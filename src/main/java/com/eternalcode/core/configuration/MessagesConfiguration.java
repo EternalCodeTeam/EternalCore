@@ -12,16 +12,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MessagesConfiguration implements Serializable {
-    @Description({"# ",
+    @Description({ "# ",
         "# This is the part of configuration file for EternalCore.",
         "# ",
         "# if you need help with the configration or have any questions related to EternalCore, join us in our Discord",
         "# ",
         "# Discord: https://dc.eternalcode.pl/",
-        "# Website: https://eternalcode.pl/", " "})
+        "# Website: https://eternalcode.pl/", " " })
 
     @Description("# Argument Section")
     public ArgumentSection argumentSection = new ArgumentSection();
+    @Description({ "", "# HelpOp Section" })
+    public HelpopSection helpOpSection = new HelpopSection();
+    @Description({ "", "# AdminChat Section" })
+    public AdminChatSection adminChatSection = new AdminChatSection();
+    @Description({ "", "# Chat Section" })
+    public ChatSection chatSection = new ChatSection();
+    @Description({ "", "# Other messages" })
+    public OtherMessages otherMessages = new OtherMessages();
 
     @Contextual
     public static class ArgumentSection {
@@ -35,25 +43,16 @@ public class MessagesConfiguration implements Serializable {
         public String noArgument = "&8» &cThis argument doesn't exist";
     }
 
-    @Description({ "", "# HelpOp Section" })
-    public HelpopSection helpOpSection = new HelpopSection();
-
     @Contextual
     public static class HelpopSection {
         public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String send = "&8» &aThis message has been successfully sent to administration";
     }
 
-    @Description({ "", "# AdminChat Section" })
-    public AdminChatSection adminChatSection = new AdminChatSection();
-
     @Contextual
     public static class AdminChatSection {
         public String format = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
     }
-
-    @Description({ "", "# Chat Section" })
-    public ChatSection chatSection = new ChatSection();
 
     @Contextual
     public static class ChatSection {
@@ -67,9 +66,6 @@ public class MessagesConfiguration implements Serializable {
         public String disable = "&8» &cChat is currently disabled!";
         public String noCommand = "&8» &cCommand &e{COMMAND} &cdoesn't exists!";
     }
-
-    @Description({ "", "# Other messages" })
-    public OtherMessages otherMessages = new OtherMessages();
 
     @Contextual
     public static class OtherMessages {
