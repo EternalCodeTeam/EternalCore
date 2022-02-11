@@ -49,8 +49,10 @@ import com.eternalcode.core.listeners.player.PlayerQuitListener;
 import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listeners.sign.SignChangeListener;
 import com.eternalcode.core.listeners.user.CreateUserListener;
-import com.eternalcode.core.managers.chat.ChatManager;
-import com.eternalcode.core.managers.scoreboard.ScoreboardManager;
+import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
+import com.eternalcode.core.scheduler.Scheduler;
+import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.user.UserService;
 import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.base.Stopwatch;
@@ -58,8 +60,6 @@ import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import lombok.Getter;
-import org.bstats.bukkit.Metrics;
-import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -87,6 +87,7 @@ public class EternalCore extends JavaPlugin {
 
     private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
     @Getter private static EternalCore instance;
+    @Getter private Scheduler scheduler;
     @Getter private UserService userService;
     @Getter private LiteCommands liteCommands;
     @Getter private ConfigurationManager configurationManager;
@@ -102,6 +103,7 @@ public class EternalCore extends JavaPlugin {
 
         instance = this;
 
+        this.scheduler = new BukkitSchedulerImpl(this);
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
 
@@ -111,8 +113,8 @@ public class EternalCore extends JavaPlugin {
         this.chatManager = new ChatManager(configurationManager.getPluginConfiguration());
 
         // bStats metrics
-        Metrics metrics = new Metrics(this, 13964);
-        metrics.addCustomChart(new SingleLineChart("users", () -> 0));
+        // Metrics metrics = new Metrics(this, 13964);
+        // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         // Services
         this.userService = new UserService();

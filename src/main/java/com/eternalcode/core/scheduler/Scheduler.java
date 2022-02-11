@@ -1,4 +1,4 @@
-package com.eternalcode.core.helpers.interfance;
+package com.eternalcode.core.scheduler;
 
 public interface Scheduler {
 

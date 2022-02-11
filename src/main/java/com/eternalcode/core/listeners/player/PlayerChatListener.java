@@ -3,7 +3,7 @@ package com.eternalcode.core.listeners.player;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
-import com.eternalcode.core.managers.chat.ChatManager;
+import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.DateUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
