@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.listeners.user;
 
-import com.eternalcode.core.user.UserService;
+import com.eternalcode.core.user.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,10 +13,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class CreateUserListener implements Listener {
 
-    private final UserService userService;
+    private final UserManager userService;
 
-    public CreateUserListener(UserService userService) {
-        this.userService = userService;
+    public CreateUserListener(UserManager userManager) {
+        this.userService = userManager;
     }
 
     @EventHandler

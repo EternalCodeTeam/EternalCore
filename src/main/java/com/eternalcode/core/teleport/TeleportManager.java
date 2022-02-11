@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class TeleportManager {
 
-    private Map<UUID, Teleport> teleportMap = new HashMap<>();
+    private final Map<UUID, Teleport> teleportMap = new HashMap<>();
 
     public void createTeleport(UUID uuid, Location location, int secounds){
         Teleport teleport = new Teleport(uuid, location, secounds);

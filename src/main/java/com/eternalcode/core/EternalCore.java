@@ -59,7 +59,7 @@ import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.teleport.TeleportListeners;
 import com.eternalcode.core.teleport.TeleportManager;
 import com.eternalcode.core.teleport.TeleportTask;
-import com.eternalcode.core.user.UserService;
+import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
@@ -99,7 +99,7 @@ public class EternalCore extends JavaPlugin {
     @Getter private static EternalCore instance;
     @Getter private LiteCommands liteCommands;
     @Getter private ChatManager chatManager;
-    @Getter private UserService userService;
+    @Getter private UserManager userManager;
     @Getter private Scheduler scheduler;
     private boolean isPaper = false;
 
@@ -127,7 +127,7 @@ public class EternalCore extends JavaPlugin {
         // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         // Services
-        this.userService = new UserService();
+        this.userManager = new UserManager();
 
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "EternalCore")
             .argument(Player.class, new PlayerArgument(this.configurationManager.getMessagesConfiguration(), this.getServer()))
@@ -141,7 +141,7 @@ public class EternalCore extends JavaPlugin {
             .bind(LocationsConfiguration.class, () -> this.configurationManager.getLocationsConfiguration())
             .bind(TeleportManager.class, () -> this.teleportManager)
             .bind(EternalCore.class, () -> this)
-            .bind(UserService.class, () -> this.userService)
+            .bind(UserManager.class, () -> this.userManager)
             .bind(Server.class, this.getServer())
             .placeholders(this.configurationManager.getCommandsConfiguration().commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
             .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(this.configurationManager.getMessagesConfiguration()))
@@ -185,7 +185,7 @@ public class EternalCore extends JavaPlugin {
             new PlayerChatListener(this.chatManager, this.configurationManager, this.getServer()),
             new PlayerJoinListener(this.configurationManager, this.getServer()),
             new PlayerQuitListener(this.configurationManager, this.getServer()),
-            new CreateUserListener(this.userService),
+            new CreateUserListener(this.userManager),
             new ScoreboardListener(this.configurationManager.getPluginConfiguration(), this.scoreboardManager),
             new PlayerCommandPreprocessListener(this.configurationManager, this.getServer()),
             new SignChangeListener(),
