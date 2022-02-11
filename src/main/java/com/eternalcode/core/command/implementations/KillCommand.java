@@ -23,12 +23,18 @@ import panda.utilities.StringUtils;
 @UsageMessage("&8» &cPoprawne użycie &7/kill <player>")
 public class KillCommand {
 
+    private final MessagesConfiguration messages;
+
+    public KillCommand(MessagesConfiguration messages) {
+        this.messages = messages;
+    }
+
     @Execute
-    public void execute(CommandSender sender, String[] args, MessagesConfiguration messages) {
+    public void execute(CommandSender sender, String[] args) {
         Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0])).orElse(Option.of(sender).is(Player.class)).peek(player -> {
             player.setHealth(0);
-            player.sendMessage(ChatUtils.color(StringUtils.replace(messages.messagesSection.killMessage, "{NICK}", sender.getName())));
-            sender.sendMessage(ChatUtils.color(StringUtils.replace(messages.messagesSection.killedMessage, "{NICK}", player.getName())));
-        }).onEmpty(() -> sender.sendMessage(ChatUtils.color(messages.messagesSection.offlinePlayer)));
+            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.killMessage, "{NICK}", sender.getName())));
+            sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.killedMessage, "{NICK}", player.getName())));
+        }).onEmpty(() -> sender.sendMessage(ChatUtils.color(this.messages.argumentSection.offlinePlayer)));
     }
 }

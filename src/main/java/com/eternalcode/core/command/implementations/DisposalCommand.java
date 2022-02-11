@@ -25,7 +25,7 @@ public class DisposalCommand {
 
     @Execute
     public void execute(Player player) {
-        player.openInventory(Bukkit.createInventory(null, 54, (ChatUtils.component(message.messagesSection.disposalTitle))));
-        player.sendMessage(ChatUtils.color(message.messagesSection.disposalOpenMessage));
+        player.openInventory(Bukkit.createInventory(null, 54, ChatUtils.component(this.message.otherMessages.disposalTitle)));
+        player.sendMessage(ChatUtils.color(this.message.otherMessages.disposalOpenMessage));
     }
 }

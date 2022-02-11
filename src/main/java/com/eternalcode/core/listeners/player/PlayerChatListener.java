@@ -1,12 +1,13 @@
 package com.eternalcode.core.listeners.player;
 
+import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.managers.chat.ChatManager;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.DateUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,11 +19,13 @@ public class PlayerChatListener implements Listener {
     private final ChatManager chatManager;
     private final MessagesConfiguration message;
     private final PluginConfiguration config;
+    private final Server server;
 
-    public PlayerChatListener(ChatManager chatManager, MessagesConfiguration message, PluginConfiguration config) {
+    public PlayerChatListener(ChatManager chatManager, ConfigurationManager configurationManager, Server server) {
         this.chatManager = chatManager;
-        this.message = message;
-        this.config = config;
+        this.message = configurationManager.getMessagesConfiguration();
+        this.config = configurationManager.getPluginConfiguration();
+        this.server = server;
     }
 
     @EventHandler
@@ -30,7 +33,7 @@ public class PlayerChatListener implements Listener {
         Player player = event.getPlayer();
 
         if (!this.chatManager.isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
-            player.sendMessage(ChatUtils.color(message.messagesSection.chatDisable));
+            player.sendMessage(ChatUtils.color(message.chatSection.disable));
             event.setCancelled(true);
             return;
         }
@@ -40,21 +43,20 @@ public class PlayerChatListener implements Listener {
         if (this.chatManager.isSlowedOnChat(uuid) && !player.hasPermission("enernalcore.chat.noslowmode")) {
             long time = this.chatManager.getSlowDown(uuid);
 
-            player.sendMessage(ChatUtils.color(message.messagesSection.chatSlowMode).replace("{TIME}", DateUtils.durationToString(time)));
+            player.sendMessage(ChatUtils.color(message.chatSection.slowMode).replace("{TIME}", DateUtils.durationToString(time)));
             event.setCancelled(true);
             return;
         }
 
-        this.chatManager.useChat(uuid);
-    }
-
-
-    @EventHandler
-    public void onPlayerChat(AsyncChatEvent event) {
-        if (config.enableSoundAfterChatMessage) {
-            for (Player players : Bukkit.getOnlinePlayers()) {
-                players.playSound(players.getLocation(), config.soundAfterChatMessage, config.soundAfterChatMessageVolume, config.soundAfterChatMessagePitch);
-            }
+        if (this.config.sound.enableAfterChatMessage){
+            this.server.getOnlinePlayers()
+                .forEach(online -> online.playSound(online.getLocation(),
+                    this.config.sound.afterChatMessage,
+                    this.config.sound.afterChatMessageVolume,
+                    this.config.sound.afterChatMessagePitch)
+                );
         }
+
+        this.chatManager.useChat(uuid);
     }
 }

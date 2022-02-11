@@ -3,35 +3,41 @@ package com.eternalcode.core.listeners.player;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
-import org.bukkit.Bukkit;
+import net.kyori.adventure.title.Title;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
-    private final ConfigurationManager configurationManager;
 
-    public PlayerJoinListener(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
+    private final PluginConfiguration config;
+    private final Server server;
+
+    public PlayerJoinListener(ConfigurationManager configurationManager, Server server) {
+        this.config = configurationManager.getPluginConfiguration();
+        this.server = server;
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
-
         Player player = event.getPlayer();
 
         if (!player.hasPlayedBefore()) {
-            event.joinMessage(ChatUtils.component(config.firstJoinMessage.replace("{PLAYER}", event.getPlayer().getName())));
+            event.joinMessage(ChatUtils.component(config.eventMessage.firstJoinMessage.replace("{PLAYER}", event.getPlayer().getName())));
         }
 
-        if (config.enabledSoundAfterJoin) {
-            for (Player players : Bukkit.getOnlinePlayers()) {
-                players.playSound(players.getLocation(), config.soundAfterJoin, config.soudnAfterJoinVolume, config.soundAfterJoinPitch);
-            }
+        if (config.sound.enabledAfterJoin) {
+            this.server.getOnlinePlayers()
+                .forEach(online -> online.playSound(online.getLocation(), config.sound.afterJoin, config.sound.afterJoinVolume, config.sound.afterJoinPitch));
         }
 
-        event.joinMessage(ChatUtils.component(config.joinMessage.replace("{PLAYER}", event.getPlayer().getName())));
+        if (config.eventMessage.enableWelcomeTitle){
+            player.showTitle(Title.title(ChatUtils.component(config.eventMessage.welcomeTitle.replace("{PLAYER}", player.getName())),
+                ChatUtils.component(config.eventMessage.welcomeSubTitle.replace("{PLAYER}", player.getName()))));
+        }
+
+        event.joinMessage(ChatUtils.component(config.eventMessage.joinMessage.replace("{PLAYER}", player.getName())));
     }
 }

@@ -12,10 +12,17 @@ import org.bukkit.entity.Player;
 @Section(route = "tp", aliases = { "teleport" })
 @Permission("eternalcore.command.tp")
 public class TeleportCommand {
+
+    private final MessagesConfiguration messages;
+
+    public TeleportCommand(MessagesConfiguration messages) {
+        this.messages = messages;
+    }
+
     @Execute
     @Required(1)
-    public void execute(Player sender, @Arg(0) Player player, MessagesConfiguration message) {
+    public void execute(Player sender, @Arg(0) Player player) {
         sender.teleportAsync(player.getLocation());
-        sender.sendMessage(ChatUtils.color(message.messagesSection.successfulyyTeleported.replace("{PLAYER}", player.getName())));
+        sender.sendMessage(ChatUtils.color(this.messages.otherMessages.successfulyyTeleported.replace("{PLAYER}", player.getName())));
     }
 }

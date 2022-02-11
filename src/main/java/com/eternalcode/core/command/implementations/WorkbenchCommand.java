@@ -24,7 +24,7 @@ public class WorkbenchCommand {
     @Execute
     public void execute(Player player) {
         player.openWorkbench(null, true);
-        player.sendMessage(ChatUtils.color(message.messagesSection.workbenchOpenMessage));
+        player.sendMessage(ChatUtils.color(this.message.otherMessages.workbenchOpenMessage));
     }
 }
 

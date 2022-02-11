@@ -4,8 +4,6 @@
 
 package com.eternalcode.core.user;
 
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import panda.std.Option;
 
 import java.util.Collection;
@@ -22,29 +20,29 @@ public class UserService {
     private final Map<String, User> usersByName = new ConcurrentHashMap<>();
 
     public Set<User> getUsers() {
-        return new HashSet<>(usersByUUID.values());
+        return new HashSet<>(this.usersByUUID.values());
     }
 
     public Option<User> getUser(UUID uuid) {
-        return Option.of(usersByUUID.get(uuid));
+        return Option.of(this.usersByUUID.get(uuid));
     }
 
     public Option<User> getUser(String name) {
-        return Option.of(usersByName.get(name));
+        return Option.of(this.usersByName.get(name));
     }
 
     public User getOrCreate(UUID uuid, String name) {
-        return create(uuid, name).orElseGet(usersByUUID.get(uuid));
+        return create(uuid, name).orElseGet(this.usersByUUID.get(uuid));
     }
 
     public Option<User> create(UUID uuid, String name) {
-        if (usersByUUID.containsKey(uuid) || usersByName.containsKey(name)) {
+        if (this.usersByUUID.containsKey(uuid) || usersByName.containsKey(name)) {
             return Option.none();
         }
 
         User user = new User(uuid, name);
-        usersByUUID.put(uuid, user);
-        usersByName.put(name, user);
+        this.usersByUUID.put(uuid, user);
+        this.usersByName.put(name, user);
 
         return Option.of(user);
     }

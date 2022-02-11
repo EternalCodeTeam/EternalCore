@@ -23,8 +23,8 @@ public class StonecutterCommand {
 
     @Execute
     public void execute(Player player) {
-        player.openWorkbench(null, true);
-        player.sendMessage(ChatUtils.color(message.messagesSection.stonecutterOpenMessage));
+        player.openStonecutter(null, true);
+        player.sendMessage(ChatUtils.color(this.message.otherMessages.stonecutterOpenMessage));
     }
 }
 

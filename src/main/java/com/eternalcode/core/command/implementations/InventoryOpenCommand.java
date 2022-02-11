@@ -5,28 +5,37 @@ import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.PermissionExclude;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import panda.std.Option;
 
 @Section(route = "inventoryopen", aliases = { "io", "oi", "open" })
-@Permission("eternalcore.command.inventoryopen")
+@PermissionExclude("eternalcore.command.inventoryopen")
 @UsageMessage("&8» &cPoprawne użycie &7/inventoryopen <ar/ec/inv> <player>")
 public class InventoryOpenCommand {
 
+    private final Server server;
+
+    public InventoryOpenCommand(Server server) {
+        this.server = server;
+    }
+
     @Execute(route = "enderchest", aliases = { "ec" })
+    @Permission("eternalcore.command.inventoryopen.enderchest")
     public void enderchest(Player sender, @Arg(0) Player player) {
         sender.openInventory(player.getEnderChest());
     }
 
     @Execute(route = "armor", aliases = { "ar" })
+    @Permission("eternalcore.command.inventoryopen.armor")
     public void armor(Player sender, @Arg(0) Player player) {
         createInventory(player).open(sender);
     }
@@ -72,7 +81,7 @@ public class InventoryOpenCommand {
             Inventory inventory = event.getInventory();
             String title = event.getView().getTitle();
             String playerString = title.replace("Armor player: ", "");
-            Option<Player> playerOption = Option.of(Bukkit.getPlayer(playerString));
+            Option<Player> playerOption = Option.of(this.server.getPlayer(playerString));
 
             playerOption.peek(playerPeek -> {
                 playerPeek.getInventory().setHelmet(inventory.getItem(0));

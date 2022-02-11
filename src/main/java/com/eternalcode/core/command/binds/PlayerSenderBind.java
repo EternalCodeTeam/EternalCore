@@ -23,7 +23,7 @@ public class PlayerSenderBind implements LiteBind {
         LiteSender sender = invocation.sender();
 
         if (!(sender.getSender() instanceof Player)) {
-            throw new ValidationCommandException(ValidationInfo.CUSTOM, messages.messagesSection.onlyPlayer);
+            throw new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.argumentSection.onlyPlayer);
         }
 
         return sender.getSender();

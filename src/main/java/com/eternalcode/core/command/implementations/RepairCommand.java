@@ -12,38 +12,44 @@ import org.bukkit.inventory.ItemStack;
 @Permission("eternalcore.command.repair")
 public class RepairCommand {
 
+    private final MessagesConfiguration messages;
+
+    public RepairCommand(MessagesConfiguration messages) {
+        this.messages = messages;
+    }
+
     @Execute
-    public void repair(Player player, MessagesConfiguration messages) {
+    public void repair(Player player) {
         ItemStack handItem = player.getItemInUse();
 
         if (handItem.getType().isBlock() || handItem.getType().isAir()) {
-            player.sendMessage(ChatUtils.color(messages.messagesSection.noItem));
+            player.sendMessage(ChatUtils.color(this.messages.argumentSection.noItem));
             return;
         }
         player.getItemInUse().setDurability((short) 0);
 
-        player.sendMessage(ChatUtils.color(messages.messagesSection.repairMessage));
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.repairMessage));
     }
 
     @Execute(route = "all")
-    public void repairAll(Player player, MessagesConfiguration messages) {
+    public void repairAll(Player player) {
         for (ItemStack itemStack : player.getInventory().getContents()) {
             if (itemStack != null) {
                 itemStack.setDurability((short) 0);
             }
         }
 
-        player.sendMessage(ChatUtils.color(messages.messagesSection.repairMessage));
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.repairMessage));
     }
 
     @Execute(route = "armor")
-    public void repairArmor(Player player, MessagesConfiguration messages) {
+    public void repairArmor(Player player) {
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
             if (itemStack != null) {
                 itemStack.setDurability((short) 0);
             }
         }
 
-        player.sendMessage(ChatUtils.color(messages.messagesSection.repairMessage));
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.repairMessage));
     }
 }

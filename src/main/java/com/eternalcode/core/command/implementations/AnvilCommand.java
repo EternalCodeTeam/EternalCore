@@ -15,9 +15,15 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.anvil")
 public class AnvilCommand {
 
+    private final MessagesConfiguration messages;
+
+    public AnvilCommand(MessagesConfiguration messages) {
+        this.messages = messages;
+    }
+
     @Execute
-    public void execute(MessagesConfiguration messages, Player player) {
+    public void execute(Player player) {
         player.openAnvil(null, true);
-        player.sendMessage(ChatUtils.color(messages.messagesSection.anvilGuiOpenMessage));
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.anvilGuiOpenMessage));
     }
 }

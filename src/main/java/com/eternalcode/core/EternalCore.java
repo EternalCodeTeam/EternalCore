@@ -7,6 +7,7 @@ package com.eternalcode.core;
 import com.eternalcode.core.command.binds.MaterialArgument;
 import com.eternalcode.core.command.binds.MessageAction;
 import com.eternalcode.core.command.binds.MessageActionArgument;
+import com.eternalcode.core.command.binds.PermissionMessage;
 import com.eternalcode.core.command.binds.PlayerArgument;
 import com.eternalcode.core.command.binds.PlayerSenderBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
@@ -42,6 +43,7 @@ import com.eternalcode.core.configuration.MessagesConfiguration;
 import com.eternalcode.core.configuration.PluginConfiguration;
 import com.eternalcode.core.listeners.player.PlayerChatListener;
 import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
+import com.eternalcode.core.listeners.player.PlayerDeathListener;
 import com.eternalcode.core.listeners.player.PlayerJoinListener;
 import com.eternalcode.core.listeners.player.PlayerQuitListener;
 import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
@@ -54,11 +56,13 @@ import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
+import dev.rollczi.litecommands.valid.ValidationInfo;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
@@ -66,6 +70,7 @@ import org.bukkit.plugin.java.annotation.plugin.Description;
 import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
 import org.bukkit.plugin.java.annotation.plugin.Plugin;
 import org.bukkit.plugin.java.annotation.plugin.author.Author;
+import panda.std.Option;
 import panda.std.stream.PandaStream;
 
 import java.util.concurrent.TimeUnit;
@@ -98,11 +103,10 @@ public class EternalCore extends JavaPlugin {
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
 
-        this.scoreboardManager = new ScoreboardManager(this, configurationManager);
+        this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
         this.chatManager = new ChatManager(configurationManager.getPluginConfiguration());
-
 
         // bStats metrics
         Metrics metrics = new Metrics(this, 13964);
@@ -112,15 +116,18 @@ public class EternalCore extends JavaPlugin {
         this.userService = new UserService();
 
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "EternalCore")
-            .argument(Player.class, new PlayerArgument(configurationManager.getMessagesConfiguration()))
-            .argument(MessageAction.class, new MessageActionArgument())
-            .argument(Material.class, new MaterialArgument())
-            .bind(Player.class, new PlayerSenderBind(configurationManager.getMessagesConfiguration()))
-            .bind(ConfigurationManager.class, () -> configurationManager)
-            .bind(MessagesConfiguration.class, () -> configurationManager.getMessagesConfiguration())
-            .bind(PluginConfiguration.class, () -> configurationManager.getPluginConfiguration())
+            .argument(Player.class, new PlayerArgument(this.configurationManager.getMessagesConfiguration(), this.getServer()))
+            .argument(Option.class, new PlayerArgument(this.configurationManager.getMessagesConfiguration(), this.getServer()).toOptionHandler())
+            .argument(MessageAction.class, new MessageActionArgument(this.configurationManager.getMessagesConfiguration()))
+            .argument(Material.class, new MaterialArgument(this.configurationManager.getMessagesConfiguration()))
+            .bind(Player.class, new PlayerSenderBind(this.configurationManager.getMessagesConfiguration()))
+            .bind(ConfigurationManager.class, () -> this.configurationManager)
+            .bind(MessagesConfiguration.class, () -> this.configurationManager.getMessagesConfiguration())
+            .bind(PluginConfiguration.class, () -> this.configurationManager.getPluginConfiguration())
             .bind(EternalCore.class, () -> this)
-            .bind(UserService.class, () -> userService)
+            .bind(UserService.class, () -> this.userService)
+            .bind(Server.class, this.getServer())
+            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(this.configurationManager.getMessagesConfiguration()))
             .command(
                 AdminChatCommand.class,
                 TeleportCommand.class,
@@ -156,13 +163,14 @@ public class EternalCore extends JavaPlugin {
 
         // Register events
         PandaStream.of(
-            new PlayerChatListener(chatManager, configurationManager.getMessagesConfiguration(), configurationManager.getPluginConfiguration()),
-            new PlayerJoinListener(configurationManager),
-            new PlayerQuitListener(configurationManager),
-            new CreateUserListener(this),
-            new ScoreboardListener(configurationManager.getPluginConfiguration(), scoreboardManager),
-            new PlayerCommandPreprocessListener(configurationManager.getMessagesConfiguration(), configurationManager.getPluginConfiguration()),
-            new SignChangeListener()
+            new PlayerChatListener(this.chatManager, this.configurationManager, this.getServer()),
+            new PlayerJoinListener(this.configurationManager, this.getServer()),
+            new PlayerQuitListener(this.configurationManager, this.getServer()),
+            new CreateUserListener(this.userService),
+            new ScoreboardListener(this.configurationManager.getPluginConfiguration(), this.scoreboardManager),
+            new PlayerCommandPreprocessListener(this.configurationManager, this.getServer()),
+            new SignChangeListener(),
+            new PlayerDeathListener(this.configurationManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
@@ -173,23 +181,23 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
 
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
+        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
 
-        config.chatStatue = chatManager.isChatEnabled();
-        config.chatSlowMode = chatManager.getChatDelay();
+        config.chat.enabled = chatManager.isChatEnabled();
+        config.chat.slowMode = chatManager.getChatDelay();
     }
 
     private void softwareCheck() {
         try {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
-            isPaper = true;
+            this.isPaper = true;
         } catch (ClassNotFoundException classNotFoundException) {
             this.getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.17x forks"));
             this.getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
             this.getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.17-1.18x"));
         }
 
-        if (isPaper) {
+        if (this.isPaper) {
             this.getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
             this.getLogger().info(ChatUtils.color("&a&lServer version: &7" + Bukkit.getServer().getVersion()));
         }

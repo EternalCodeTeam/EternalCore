@@ -12,7 +12,6 @@ import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.entity.Player;
 
-
 @Section(route = "scoreboard")
 @UsageMessage("&8» &cPoprawne użycie &7/scoreboard")
 @Permission("eternalcore.command.scoreboard")
@@ -27,7 +26,7 @@ public class ScoreboardCommand {
 
     @Execute
     public void execute(Player player) {
-        if (config.enableScoreboard) {
+        if (this.config.scoreboard.enabled) {
             this.eternalCore.getScoreboardManager().toggleScoreboard(player);
         }
     }
