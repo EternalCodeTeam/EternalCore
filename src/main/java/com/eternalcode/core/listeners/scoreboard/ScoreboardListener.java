@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.listeners.scoreboard;
 
-import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

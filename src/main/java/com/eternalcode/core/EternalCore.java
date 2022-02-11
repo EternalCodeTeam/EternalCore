@@ -4,6 +4,7 @@
 
 package com.eternalcode.core;
 
+import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.command.binds.MaterialArgument;
 import com.eternalcode.core.command.binds.MessageAction;
 import com.eternalcode.core.command.binds.MessageActionArgument;
@@ -32,15 +33,18 @@ import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
 import com.eternalcode.core.command.implementations.RepairCommand;
 import com.eternalcode.core.command.implementations.ScoreboardCommand;
+import com.eternalcode.core.command.implementations.SetSpawnCommand;
 import com.eternalcode.core.command.implementations.SkullCommand;
+import com.eternalcode.core.command.implementations.SpawnCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
 import com.eternalcode.core.command.implementations.TeleportCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.listeners.player.PlayerChatListener;
 import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listeners.player.PlayerDeathListener;
@@ -49,11 +53,13 @@ import com.eternalcode.core.listeners.player.PlayerQuitListener;
 import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listeners.sign.SignChangeListener;
 import com.eternalcode.core.listeners.user.CreateUserListener;
-import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
-import com.eternalcode.core.user.UserService;
+import com.eternalcode.core.teleport.TeleportListeners;
+import com.eternalcode.core.teleport.TeleportManager;
+import com.eternalcode.core.teleport.TeleportTask;
+import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
@@ -85,14 +91,16 @@ import java.util.stream.Collectors;
 
 public class EternalCore extends JavaPlugin {
 
-    private static final String version = Bukkit.getServer().getClass().getName().split("\\.")[3];
-    @Getter private static EternalCore instance;
-    @Getter private Scheduler scheduler;
-    @Getter private UserService userService;
-    @Getter private LiteCommands liteCommands;
+    private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
+
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
+    @Getter private TeleportManager teleportManager;
+    @Getter private static EternalCore instance;
+    @Getter private LiteCommands liteCommands;
     @Getter private ChatManager chatManager;
+    @Getter private UserManager userManager;
+    @Getter private Scheduler scheduler;
     private boolean isPaper = false;
 
     @Override
@@ -112,12 +120,14 @@ public class EternalCore extends JavaPlugin {
 
         this.chatManager = new ChatManager(configurationManager.getPluginConfiguration());
 
+        this.teleportManager = new TeleportManager();
+
         // bStats metrics
         // Metrics metrics = new Metrics(this, 13964);
         // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         // Services
-        this.userService = new UserService();
+        this.userManager = new UserManager();
 
         this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "EternalCore")
             .argument(Player.class, new PlayerArgument(this.configurationManager.getMessagesConfiguration(), this.getServer()))
@@ -128,8 +138,10 @@ public class EternalCore extends JavaPlugin {
             .bind(ConfigurationManager.class, () -> this.configurationManager)
             .bind(MessagesConfiguration.class, () -> this.configurationManager.getMessagesConfiguration())
             .bind(PluginConfiguration.class, () -> this.configurationManager.getPluginConfiguration())
+            .bind(LocationsConfiguration.class, () -> this.configurationManager.getLocationsConfiguration())
+            .bind(TeleportManager.class, () -> this.teleportManager)
             .bind(EternalCore.class, () -> this)
-            .bind(UserService.class, () -> this.userService)
+            .bind(UserManager.class, () -> this.userManager)
             .bind(Server.class, this.getServer())
             .placeholders(this.configurationManager.getCommandsConfiguration().commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
             .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(this.configurationManager.getMessagesConfiguration()))
@@ -162,7 +174,9 @@ public class EternalCore extends JavaPlugin {
                 HelpOpCommand.class,
                 InventoryOpenCommand.class,
                 RepairCommand.class,
-                GiveCommand.class
+                GiveCommand.class,
+                SetSpawnCommand.class,
+                SpawnCommand.class
             )
             .register();
 
@@ -171,12 +185,17 @@ public class EternalCore extends JavaPlugin {
             new PlayerChatListener(this.chatManager, this.configurationManager, this.getServer()),
             new PlayerJoinListener(this.configurationManager, this.getServer()),
             new PlayerQuitListener(this.configurationManager, this.getServer()),
-            new CreateUserListener(this.userService),
+            new CreateUserListener(this.userManager),
             new ScoreboardListener(this.configurationManager.getPluginConfiguration(), this.scoreboardManager),
             new PlayerCommandPreprocessListener(this.configurationManager, this.getServer()),
             new SignChangeListener(),
-            new PlayerDeathListener(this.configurationManager)
+            new PlayerDeathListener(this.configurationManager),
+            new TeleportListeners(this.configurationManager.getMessagesConfiguration(), this.teleportManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
+
+        TeleportTask task = new TeleportTask(this.configurationManager.getMessagesConfiguration(), this.teleportManager, this.getServer());
+
+        this.scheduler.runTaskTimer(task, 10, 10);
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
@@ -190,6 +209,8 @@ public class EternalCore extends JavaPlugin {
 
         config.chat.enabled = chatManager.isChatEnabled();
         config.chat.slowMode = chatManager.getChatDelay();
+
+        this.configurationManager.render(config);
     }
 
     private void softwareCheck() {
@@ -207,7 +228,7 @@ public class EternalCore extends JavaPlugin {
             this.getLogger().info(ChatUtils.color("&a&lServer version: &7" + Bukkit.getServer().getVersion()));
         }
 
-        switch (version) {
+        switch (VERSION) {
             case "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> this.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
         }
     }

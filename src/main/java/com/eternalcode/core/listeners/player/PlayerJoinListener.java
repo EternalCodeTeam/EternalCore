@@ -1,7 +1,7 @@
 package com.eternalcode.core.listeners.player;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Server;

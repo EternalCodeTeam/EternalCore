@@ -1,13 +1,20 @@
-package com.eternalcode.core.configuration;
+package com.eternalcode.core.configuration.implementations;
 
+import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
+import net.dzikoysk.cdn.entity.Exclude;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Map;
 
-public class CommandsConfiguration implements Serializable {
+public class CommandsConfiguration extends AbstractConfigWithResource {
+
+    public CommandsConfiguration(File folder, String child) {
+        super(folder, child);
+    }
 
     @Description({ "# ",
         "# This is the part of configuration file for EternalCore.",
@@ -17,6 +24,7 @@ public class CommandsConfiguration implements Serializable {
         "# Discord: https://dc.eternalcode.pl/",
         "# Website: https://eternalcode.pl/", " " })
 
+    @Exclude
     public CommandsSection commandsSection = new CommandsSection();
 
     @Contextual

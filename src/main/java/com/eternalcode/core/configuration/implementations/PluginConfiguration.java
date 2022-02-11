@@ -2,17 +2,25 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.configuration;
+package com.eternalcode.core.configuration.implementations;
 
+import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
+import net.dzikoysk.cdn.source.Resource;
 import org.bukkit.Sound;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class PluginConfiguration implements Serializable {
+public class PluginConfiguration extends AbstractConfigWithResource {
+
+    public PluginConfiguration(File folder, String child) {
+        super(folder, child);
+    }
+
     @Description({ "# ",
         "# This is the main configuration file for EternalCore.",
         "# ",
@@ -20,7 +28,6 @@ public class PluginConfiguration implements Serializable {
         "# ",
         "# Discord: https://dc.eternalcode.pl/",
         "# Website: https://eternalcode.pl/", " " })
-
 
     @Description({ "", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
@@ -30,6 +37,7 @@ public class PluginConfiguration implements Serializable {
     public Chat chat = new Chat();
     @Description({ "", "# Formating on/off" })
     public Format format = new Format();
+
     @Description({ "", "# Scoreboard Section" })
     public Scoreboard scoreboard = new Scoreboard();
 

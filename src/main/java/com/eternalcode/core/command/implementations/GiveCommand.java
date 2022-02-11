@@ -2,8 +2,8 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.command.binds.PlayerArgument;
-import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.helpers.builders.ItemBuilder;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.builders.ItemBuilder;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Between;
@@ -41,29 +41,32 @@ public class GiveCommand {
     @Execute
     @Between(min = 1, max = 2)
     public void execute(CommandSender sender, @Arg(0) Material material, @Arg(1) @Handler(PlayerArgument.class) Option<Player> option) {
-        if (option.isEmpty()){
+        if (option.isEmpty()) {
             Option.of(sender).is(Player.class).peek(playerSender -> {
                 giveItem(playerSender, material);
                 playerSender.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
             }).orThrow(() -> new ValidationCommandException(ValidationInfo.CUSTOM, "&8» &cPoprawne użycie &7/give <material> [player]"));
-        }else {
-            option.peek(player -> {
-                giveItem(player, material);
-                player.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
-                sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(
-                    this.messages.otherMessages.giveGiven,
-                    new String[]{ "{PLAYER}", "{ITEM}" },
-                    new String[]{ player.getName(), material.name().replaceAll("_", " ")}))
-                );
-            });
+            return;
         }
+        Player player = option.get();
+
+        giveItem(player, material);
+
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
+        sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(this.messages.otherMessages.giveGiven, new String[]{ "{PLAYER}", "{ITEM}" }, new String[]{ player.getName(), material.name().replaceAll("_", " ")})));
     }
 
     @IgnoreMethod
     private void giveItem(Player player, Material material){
         this.server.getScheduler().runTaskAsynchronously(eternalCore, () -> {
+            int amount = 64;
+
+            if (material.isItem()){
+                amount = 1;
+            }
+
             ItemStack item = new ItemBuilder(material)
-                .amount(64)
+                .amount(amount)
                 .build();
 
             player.getInventory().addItem(item);
