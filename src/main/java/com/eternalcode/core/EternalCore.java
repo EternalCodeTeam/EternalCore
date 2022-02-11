@@ -73,7 +73,9 @@ import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.Option;
 import panda.std.stream.PandaStream;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Plugin(name = "EternalCore", version = "1.0.1-APLHA")
 @Author("EternalCodeTeam")
@@ -127,6 +129,7 @@ public class EternalCore extends JavaPlugin {
             .bind(EternalCore.class, () -> this)
             .bind(UserService.class, () -> this.userService)
             .bind(Server.class, this.getServer())
+            .placeholders(this.configurationManager.getCommandsConfiguration().commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
             .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(this.configurationManager.getMessagesConfiguration()))
             .command(
                 AdminChatCommand.class,

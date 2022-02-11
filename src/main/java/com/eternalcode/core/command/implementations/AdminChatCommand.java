@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
-@Section(route = "adminchat")
+@Section(route = "{commands.adminchat}")
 @Permission("eternalcore.command.adminchat")
 @UsageMessage("&8» &cPoprawne użycie &7/adminchat <text>")
 public class AdminChatCommand {

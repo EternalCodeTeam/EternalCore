@@ -31,6 +31,7 @@ public class ConfigurationManager {
 
     @Getter private final PluginConfiguration pluginConfiguration = new PluginConfiguration();
     @Getter private final MessagesConfiguration messagesConfiguration = new MessagesConfiguration();
+    @Getter private final CommandsConfiguration commandsConfiguration = new CommandsConfiguration();
 
     public ConfigurationManager(File dataFolder) {
         this.dataFolder = dataFolder;
@@ -39,6 +40,7 @@ public class ConfigurationManager {
     public void loadAndRenderConfigs() {
         this.loadAndRender(pluginConfiguration, "config.yml");
         this.loadAndRender(messagesConfiguration, "messages.yml");
+        this.loadAndRender(commandsConfiguration, "commands.yml");
     }
 
     public <T extends Serializable> void loadAndRender(T config, String fileName) {
