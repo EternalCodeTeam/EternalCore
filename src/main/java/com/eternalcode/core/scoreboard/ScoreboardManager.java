@@ -6,7 +6,7 @@ package com.eternalcode.core.scoreboard;
 
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import fr.mrmicky.fastboard.FastBoard;
 import org.bukkit.Bukkit;

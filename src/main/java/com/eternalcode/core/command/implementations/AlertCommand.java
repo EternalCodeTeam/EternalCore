@@ -5,7 +5,7 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.command.binds.MessageAction;
-import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;

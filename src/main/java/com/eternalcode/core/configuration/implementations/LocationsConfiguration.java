@@ -1,11 +1,18 @@
-package com.eternalcode.core.configuration;
+package com.eternalcode.core.configuration.implementations;
 
+import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Location;
 
+import java.io.File;
 import java.io.Serializable;
 
-public class LocationsConfiguration implements Serializable {
+public class LocationsConfiguration extends AbstractConfigWithResource {
+
+    public LocationsConfiguration(File folder, String child) {
+        super(folder, child);
+    }
+
     @Description({ "# ",
         "# This is the part of configuration file for EternalCore.",
         "# ",

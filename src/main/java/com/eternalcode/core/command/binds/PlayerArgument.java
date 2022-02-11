@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.binds;
 
-import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;

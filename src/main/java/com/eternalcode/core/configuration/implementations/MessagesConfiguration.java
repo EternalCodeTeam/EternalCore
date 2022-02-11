@@ -2,16 +2,23 @@
  * Copyright (c) 2022. EternalCode.pl
  */
 
-package com.eternalcode.core.configuration;
+package com.eternalcode.core.configuration.implementations;
 
+import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public class MessagesConfiguration implements Serializable {
+public class MessagesConfiguration extends AbstractConfigWithResource {
+
+    public MessagesConfiguration(File folder, String child) {
+        super(folder, child);
+    }
+
     @Description({ "# ",
         "# This is the part of configuration file for EternalCore.",
         "# ",
@@ -30,6 +37,7 @@ public class MessagesConfiguration implements Serializable {
     public ChatSection chatSection = new ChatSection();
     @Description({ "", "# Teleport Section" })
     public TeleportSection teleportSection = new TeleportSection();
+
     @Description({ "", "# Other messages" })
     public OtherMessages otherMessages = new OtherMessages();
 

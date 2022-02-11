@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.binds;
 
-import com.eternalcode.core.configuration.MessagesConfiguration;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.valid.messages.LiteMessage;
 import dev.rollczi.litecommands.valid.messages.MessageInfoContext;
 import panda.utilities.text.Joiner;

@@ -42,9 +42,9 @@ import com.eternalcode.core.command.implementations.TeleportCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.LocationsConfiguration;
-import com.eternalcode.core.configuration.MessagesConfiguration;
-import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.listeners.player.PlayerChatListener;
 import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listeners.player.PlayerDeathListener;
@@ -209,7 +209,8 @@ public class EternalCore extends JavaPlugin {
 
         config.chat.enabled = chatManager.isChatEnabled();
         config.chat.slowMode = chatManager.getChatDelay();
-        
+
+        this.configurationManager.render(config);
     }
 
     private void softwareCheck() {

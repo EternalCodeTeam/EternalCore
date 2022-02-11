@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.chat;
 
-import com.eternalcode.core.configuration.PluginConfiguration;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -14,6 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class ChatManager {
+
     private final Cache<UUID, Long> slowdown;
     private double chatDelay;
     private boolean chatEnabled;
