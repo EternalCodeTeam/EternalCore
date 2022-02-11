@@ -21,10 +21,10 @@ public class MessagesConfiguration implements Serializable {
         "# Website: https://eternalcode.pl/", " "})
 
     @Description("# Argument Section")
-    public argumentSection argumentSection = new argumentSection();
+    public ArgumentSection argumentSection = new ArgumentSection();
 
     @Contextual
-    public static class argumentSection {
+    public static class ArgumentSection {
         public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
         public String onlyPlayer = "&8» &cCommand is only for players!";
@@ -36,27 +36,27 @@ public class MessagesConfiguration implements Serializable {
     }
 
     @Description({ "", "# HelpOp Section" })
-    public helpOpSection helpOpSection = new helpOpSection();
+    public HelpopSection helpOpSection = new HelpopSection();
 
     @Contextual
-    public static class helpOpSection {
+    public static class HelpopSection {
         public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String send = "&8» &aThis message has been successfully sent to administration";
     }
 
     @Description({ "", "# AdminChat Section" })
-    public adminChatSection adminChatSection = new adminChatSection();
+    public AdminChatSection adminChatSection = new AdminChatSection();
 
     @Contextual
-    public static class adminChatSection {
+    public static class AdminChatSection {
         public String format = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
     }
 
     @Description({ "", "# Chat Section" })
-    public chatSection chatSection = new chatSection();
+    public ChatSection chatSection = new ChatSection();
 
     @Contextual
-    public static class chatSection {
+    public static class ChatSection {
         public String disabled = "&8» &cChat has been disabled by {NICK}!";
         public String enabled = "&8» &aThe chat has been enabled by {NICK}!";
         public String cleared = "&8» &6Chat has been cleared by {NICK}!";
@@ -69,10 +69,10 @@ public class MessagesConfiguration implements Serializable {
     }
 
     @Description({ "", "# Other messages" })
-    public otherMessages otherMessages = new otherMessages();
+    public OtherMessages otherMessages = new OtherMessages();
 
     @Contextual
-    public static class otherMessages {
+    public static class OtherMessages {
         public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
         public String successfulyyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";
         public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
