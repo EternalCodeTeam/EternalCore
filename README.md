@@ -14,6 +14,6 @@ If you want to get help regarding our products or just want to ask something, jo
 - [LiteCommands by Rollczi ❤️](https://github.com/Rollczi/LiteCommands)
 - [Lombok](https://projectlombok.org/)
 - [CDN Configs](https://github.com/dzikoysk/cdn)
-- [Expresslibe](https://github.com/panda-lang/expressible)
+- [Expressible](https://github.com/panda-lang/expressible)
 - [Ormlite jdbc](https://github.com/j256/ormlite-jdbc)
 - [FastBoard](https://github.com/MrMicky-FR/FastBoard)
