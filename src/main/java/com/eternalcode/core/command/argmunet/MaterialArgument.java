@@ -11,7 +11,7 @@ import org.bukkit.Material;
 import java.util.Arrays;
 import java.util.List;
 
-@ArgumentName("block")
+@ArgumentName("material")
 public class MaterialArgument implements SingleArgumentHandler<Material> {
 
     private final MessagesConfiguration messages;
