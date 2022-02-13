@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.command.binds.PlayerArgument;
+import com.eternalcode.core.command.argmunet.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.teleport.TeleportManager;

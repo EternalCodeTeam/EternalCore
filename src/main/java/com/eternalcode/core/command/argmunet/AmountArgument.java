@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.command.argmunet;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;
@@ -22,14 +22,13 @@ public class AmountArgument implements SingleArgumentHandler<Integer> {
 
     @Override
     public Integer parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
-            .orThrow(() -> new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.argumentSection.notNumber));
-
-        return Integer.parseInt(argument);
+        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
+            .orThrow(() -> new ValidationCommandException(this.messages.argumentSection.notNumber));
     }
 
     @Override
     public List<String> tabulation(String command, String[] args) {
-        return Arrays.asList("1", "100");
+        return Arrays.asList("1", "8", "16", "32", "64", "100");
     }
+
 }

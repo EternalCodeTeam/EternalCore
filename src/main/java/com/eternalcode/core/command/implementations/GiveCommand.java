@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.command.binds.PlayerArgument;
+import com.eternalcode.core.command.argmunet.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.builders.ItemBuilder;
 import com.eternalcode.core.utils.ChatUtils;
@@ -42,12 +42,14 @@ public class GiveCommand {
     @Between(min = 1, max = 2)
     public void execute(CommandSender sender, @Arg(0) Material material, @Arg(1) @Handler(PlayerArgument.class) Option<Player> option) {
         if (option.isEmpty()) {
-            Option.of(sender).is(Player.class).peek(playerSender -> {
-                giveItem(playerSender, material);
-                playerSender.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
-            }).orThrow(() -> new ValidationCommandException(ValidationInfo.CUSTOM, "&8» &cPoprawne użycie &7/give <material> [player]"));
-            return;
+            if (sender instanceof Player player) {
+                giveItem(player, material);
+                player.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
+            }
+
+            throw new ValidationCommandException("&8» &cPoprawne użycie &7/give <material> [player]");
         }
+
         Player player = option.get();
 
         giveItem(player, material);
@@ -57,20 +59,19 @@ public class GiveCommand {
     }
 
     @IgnoreMethod
-    private void giveItem(Player player, Material material){
-        this.server.getScheduler().runTaskAsynchronously(eternalCore, () -> {
-            int amount = 64;
+    private void giveItem(Player player, Material material) {
+        int amount = 64;
 
-            if (material.isItem()){
-                amount = 1;
-            }
+        if (!material.isItem()) {
+            // TODO: Message [this type isn't represent item]
+            return;
+        }
 
-            ItemStack item = new ItemBuilder(material)
-                .amount(amount)
-                .build();
+        ItemStack item = new ItemBuilder(material)
+            .amount(amount)
+            .build();
 
-            player.getInventory().addItem(item);
-        });
+        player.getInventory().addItem(item);
     }
 
 }

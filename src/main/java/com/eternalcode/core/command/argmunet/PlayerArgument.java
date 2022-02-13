@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.command.argmunet;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;
@@ -29,7 +29,7 @@ public class PlayerArgument implements SingleArgumentHandler<Player> {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {
-            throw new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.argumentSection.offlinePlayer);
+            throw new ValidationCommandException(this.messages.argumentSection.offlinePlayer);
         }
 
         return player;
