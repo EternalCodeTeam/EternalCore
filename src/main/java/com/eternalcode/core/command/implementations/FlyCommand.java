@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.command.argmunet.PlayerArgument;
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
@@ -40,7 +40,7 @@ public class FlyCommand {
 
                 player.sendMessage(ChatUtils.color(StringUtils.replace(
                     this.messages.otherMessages.flyMessage,
-                    "{STATUE}",
+                    "{STATE}",
                     player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)));
 
                 return;
@@ -54,12 +54,12 @@ public class FlyCommand {
 
         player.sendMessage(ChatUtils.color(StringUtils.replace(
             this.messages.otherMessages.flyMessage,
-            "{STATUE}",
+            "{STATE}",
             player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)));
 
         sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(
             this.messages.otherMessages.flySetMessage,
-            new String[]{ "{PLAYER}", "{STATUE}" },
+            new String[]{ "{PLAYER}", "{STATE}" },
             new String[]{ player.getName(), player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled})));
     }
 }

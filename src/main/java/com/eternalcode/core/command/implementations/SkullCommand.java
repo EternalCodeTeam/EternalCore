@@ -6,7 +6,7 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.builders.ItemBuilder;
-import com.eternalcode.core.command.argmunet.StringPlayerArg;
+import com.eternalcode.core.command.argument.StringPlayerArgument;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
@@ -37,7 +37,7 @@ public class SkullCommand {
     }
 
     @Execute
-    public void execute(Player player, @Arg(0) @Handler(StringPlayerArg.class) String name) {
+    public void execute(Player player, @Arg(0) @Handler(StringPlayerArgument.class) String name) {
         this.server.getScheduler().runTaskAsynchronously(this.eternalCore, () -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(name).skullOwner(name).build();
 

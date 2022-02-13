@@ -1,6 +1,7 @@
-package com.eternalcode.core.command.argmunet;
+package com.eternalcode.core.command.argument;
 
 import dev.rollczi.litecommands.LiteInvocation;
+import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.Server;
@@ -8,11 +9,12 @@ import org.bukkit.entity.HumanEntity;
 
 import java.util.List;
 
-public class StringPlayerArg implements SingleArgumentHandler<String> {
+@ArgumentName("stringplayer")
+public class StringPlayerArgument implements SingleArgumentHandler<String> {
 
     private final Server server;
 
-    public StringPlayerArg(Server server) {
+    public StringPlayerArgument(Server server) {
         this.server = server;
     }
 
@@ -23,7 +25,7 @@ public class StringPlayerArg implements SingleArgumentHandler<String> {
 
     @Override
     public List<String> tabulation(String command, String[] args) {
-        return server.getOnlinePlayers().stream()
+        return this.server.getOnlinePlayers().stream()
             .map(HumanEntity::getName)
             .toList();
     }

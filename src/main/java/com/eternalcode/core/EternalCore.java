@@ -5,13 +5,13 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.command.argmunet.AmountArgument;
-import com.eternalcode.core.command.argmunet.GameModeArgument;
-import com.eternalcode.core.command.argmunet.MaterialArgument;
+import com.eternalcode.core.command.argument.AmountArgument;
+import com.eternalcode.core.command.argument.GameModeArgument;
+import com.eternalcode.core.command.argument.MaterialArgument;
 import com.eternalcode.core.chat.MessageAction;
-import com.eternalcode.core.command.argmunet.MessageActionArgument;
-import com.eternalcode.core.command.argmunet.PlayerArgument;
-import com.eternalcode.core.command.argmunet.StringPlayerArg;
+import com.eternalcode.core.command.argument.MessageActionArgument;
+import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.command.argument.StringPlayerArgument;
 import com.eternalcode.core.command.bind.PlayerSenderBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
 import com.eternalcode.core.command.implementations.AlertCommand;
@@ -140,7 +140,7 @@ public class EternalCore extends JavaPlugin {
         this.userManager = new UserManager();
 
         this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
-            .argument(String.class, new StringPlayerArg(server))
+            .argument(String.class, new StringPlayerArgument(server))
             .argument(Integer.class, new AmountArgument(messages))
             .argument(Player.class, new PlayerArgument(messages, server))
             .argument(Option.class, new PlayerArgument(messages, server).toOptionHandler())

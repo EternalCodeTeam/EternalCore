@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.argmunet;
+package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;

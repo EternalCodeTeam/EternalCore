@@ -1,12 +1,10 @@
-package com.eternalcode.core.command.argmunet;
+package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
-import dev.rollczi.litecommands.valid.ValidationInfo;
-import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -37,7 +35,7 @@ public class PlayerArgument implements SingleArgumentHandler<Player> {
 
     @Override
     public List<String> tabulation(String command, String[] args) {
-        return Bukkit.getOnlinePlayers().stream()
+        return this.server.getOnlinePlayers().stream()
             .map(HumanEntity::getName)
             .toList();
     }

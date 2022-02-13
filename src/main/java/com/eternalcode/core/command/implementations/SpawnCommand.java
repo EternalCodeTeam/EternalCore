@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.command.argmunet.PlayerArgument;
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.teleport.TeleportManager;
@@ -33,7 +33,7 @@ public class SpawnCommand {
     public void execute(Player sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption){
         Location location = this.locations.spawn;
 
-        if (location == null) {
+        if (location == null || location.getWorld() == null) {
             sender.sendMessage(ChatUtils.color(this.messages.otherMessages.spawnNoSet));
             return;
         }
