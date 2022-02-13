@@ -3,6 +3,7 @@ package com.eternalcode.core.command.implementations;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Joiner;
 import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -11,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
-@Section(route = "{commands.adminchat}")
+@Section(route = "adminchat", aliases = "ac")
 @Permission("eternalcore.command.adminchat")
 @UsageMessage("&8» &cPoprawne użycie &7/adminchat <text>")
 public class AdminChatCommand {
@@ -26,9 +27,7 @@ public class AdminChatCommand {
 
     @Execute
     @MinArgs(1)
-    public void execute(CommandSender sender, String[] args) {
-        String text = StringUtils.join(args, " ", 0, args.length);
-
+    public void execute(CommandSender sender, @Joiner String text) {
         this.server.getOnlinePlayers()
             .stream()
             .filter(players -> players.hasPermission("eternalcore.adminchat.spy"))
