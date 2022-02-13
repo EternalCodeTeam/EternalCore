@@ -1,45 +1,35 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.Audience;
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.PermissionExclude;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.*;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import panda.std.Option;
 
 @Section(route = "ping")
-@PermissionExclude("eternalcore.command.ping")
-@UsageMessage("&8» &cPoprawne użycie &7/ping [player]")
-public class PingCommand {
+@Permission("eternalcore.command.ping")
+@UsageMessage("&8» &cPoprawne użycie &7/kill (player)")
+public final class PingCommand {
 
-    private final NoticeService noticeService;
+    private final MessagesConfiguration messages;
 
-    public PingCommand(NoticeService noticeService) {
-        this.noticeService = noticeService;
+    public PingCommand(MessagesConfiguration messages) {
+        this.messages = messages;
     }
 
     @Execute
-    public void execute(CommandSender sender, Audience audience, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
-        if (sender.equals(player)) {
-            this.noticeService.notice()
-                .message(messages -> messages.other().pingMessage())
-                .placeholder("{PING}", String.valueOf(player.getPing()))
-                .audience(audience)
-                .send();
+    public void execute(Player player, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
 
+        if (playerOption.isEmpty()) {
+            player.sendMessage(ChatUtils.color(messages.otherMessages.pingMessage.replace("{PING}", String.valueOf(player.spigot().getPing()))));
             return;
         }
 
-        this.noticeService.notice()
-            .message(messages -> messages.other().pingOtherMessage())
-            .placeholder("{PING}", String.valueOf(player.getPing()))
-            .placeholder("{PLAYER}", player.getName())
-            .audience(audience)
-            .send();
+        Player target = playerOption.get();
+
+        player.sendMessage(ChatUtils.color(StringUtils.replaceEach(messages.otherMessages.pingMessage, new String[]{"{PLAYER}", "{PING}"}, new String[]{target.getName(), String.valueOf(target.spigot().getPing())})));
     }
 }
