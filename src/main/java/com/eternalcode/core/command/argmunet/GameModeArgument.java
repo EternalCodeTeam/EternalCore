@@ -1,21 +1,23 @@
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.command.argmunet;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
+import dev.rollczi.litecommands.valid.AmountValidator;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
-import dev.rollczi.litecommands.valid.ValidationInfo;
 import org.bukkit.GameMode;
 import panda.std.Option;
 import panda.std.stream.PandaStream;
 
 import java.util.List;
 
-@ArgumentName("gameMode")
+@ArgumentName("gamemode")
 public class GameModeArgument implements SingleArgumentHandler<GameMode> {
 
-    private final GameMode[] gameModes = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
+    private final static GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
+    private final static AmountValidator GAME_MODE_VALID = AmountValidator.NONE.min(0).max(3);
+
     private final MessagesConfiguration messages;
 
     public GameModeArgument(MessagesConfiguration messages) {
@@ -24,24 +26,21 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
 
     @Override
     public GameMode parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        GameMode gameMode = GameMode.valueOf(argument);
+        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
-        if (gameMode != null){
-            return gameMode;
+        if (gameMode.isPresent()) {
+            return gameMode.get();
         }
 
-        Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument)).peek(amount -> {
-            if (amount < 3 || amount < 1) {
-                throw new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.otherMessages.gameModeNotCorrect);
-            }
-        }).orThrow(() -> new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.otherMessages.gameModeNotCorrect));
-
-        return this.gameModes[Integer.parseInt(argument)];
+        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
+            .filter(GAME_MODE_VALID::valid)
+            .map(integer -> GAME_MODES[integer])
+            .orThrow(() -> new ValidationCommandException(this.messages.otherMessages.gameModeNotCorrect));
     }
 
     @Override
     public List<String> tabulation(String command, String[] args) {
-        return PandaStream.of(this.gameModes)
+        return PandaStream.of(GAME_MODES)
             .map(Enum::name)
             .toList();
     }

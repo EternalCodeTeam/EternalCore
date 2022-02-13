@@ -5,7 +5,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.command.binds.PlayerArgument;
+import com.eternalcode.core.command.argmunet.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
@@ -45,12 +45,11 @@ public class GamemodeCommand {
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }
+
         Player player = playerOption.get();
 
         player.setGameMode(gameMode);
-
         player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.gameModeMessage, "{GAMEMODE}", gameMode.name())));
-
         sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(this.messages.otherMessages.gameModeSetMessage,
             new String[]{ "{PLAYER}", "{GAMEMODE}" },
             new String[]{ player.getName(), gameMode.name() })));

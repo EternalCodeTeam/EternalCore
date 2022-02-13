@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.command.message;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.valid.messages.LiteMessage;

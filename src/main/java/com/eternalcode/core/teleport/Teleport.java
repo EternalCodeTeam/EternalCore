@@ -10,10 +10,10 @@ public class Teleport {
     private final Location location;
     private final long time;
 
-    public Teleport(UUID uuid, Location location, int secounds){
+    public Teleport(UUID uuid, Location location, int seconds) {
         this.uuid = uuid;
         this.location = location;
-        this.time = System.currentTimeMillis() + 1000L * secounds;
+        this.time = System.currentTimeMillis() + 1000L * seconds;
     }
 
     public UUID getUuid() {
@@ -27,4 +27,5 @@ public class Teleport {
     public long getTime() {
         return this.time;
     }
+
 }
