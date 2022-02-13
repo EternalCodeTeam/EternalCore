@@ -68,10 +68,4 @@ public class ScoreboardManager {
 
         this.setScoreboard(player);
     }
-
-    public boolean getScoreboard(Player player) {
-        FastBoard fastBoard = this.boards.get(player.getUniqueId());
-
-        return !fastBoard.isDeleted();
-    }
 }

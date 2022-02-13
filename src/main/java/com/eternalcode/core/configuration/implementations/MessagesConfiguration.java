@@ -102,7 +102,7 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String repairMessage = "&8» &aRepaired!";
         public String skullMessage = "&8» &aPlayer {NICK} heads received";
         public String killSelf = "&8» &cYou kill yourself!";
-        public String killedMessage = "&8» &cKilled {NICK}";
+        public String killedMessage = "&8» &cKilled {PLAYER}";
         public String speedBetweenZeroAndTen = "&8» &cEnter speed from 0 to 10!";
         public String speedSet = "&8» &cSpeed is set to {SPEED}";
         public String speedSettedBy = "&8» &cSpeed for {PLAYER} is set to {SPEED}";
@@ -125,7 +125,6 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String spawnNoSet = "&8» &cSpawn is not set!";
         public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {NICK}!";
         public String spawnTeleportedOther = "&8» &cYou teleported player {NICK} to spawn!";
-        public String scoreboardMessage = "&8» &cScoreboard is now: {STATE}";
         public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
         public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
         public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
