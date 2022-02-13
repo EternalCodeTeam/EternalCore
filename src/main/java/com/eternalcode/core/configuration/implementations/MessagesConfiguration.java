@@ -112,6 +112,8 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String flySetMessage = "&8» &cFly for &6{PLAYER} &cis now {STATE}";
         public String giveRecived = "&8» &cYou have received: &6{ITEM}";
         public String giveGiven = "&8» &cPlayer &6{PLAYER} &chas received &6{ITEM}";
+        public String pingMessage = "&8» &cYour ping is: &6{PING}";
+        public String pingOtherMessage = "&8» &cPlayer &6{PLAYER} &cping is: &6{PING}";
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
             "&8» &7Target UUID: &f{UUID}",
             "&8» &7Target address: &f{IP}",
