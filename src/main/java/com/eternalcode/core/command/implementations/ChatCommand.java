@@ -5,8 +5,8 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.MinArgs;
@@ -15,7 +15,6 @@ import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import dev.rollczi.litecommands.valid.Valid;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
-import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import panda.std.Option;
@@ -40,7 +39,7 @@ public class ChatCommand {
 
     @Execute(route = "clear")
     public void clear(CommandSender sender) {
-        IntStream.range(0, 256).mapToObj(i -> Bukkit.getOnlinePlayers().stream()).flatMap(Function.identity()).forEach(player -> player.sendMessage(" "));
+        IntStream.range(0, 256).mapToObj(i -> this.server.getOnlinePlayers().stream()).flatMap(Function.identity()).forEach(player -> player.sendMessage(" "));
         this.server.broadcast(ChatUtils.component(this.message.chatSection.cleared.replace("{NICK}", sender.getName())));
     }
 

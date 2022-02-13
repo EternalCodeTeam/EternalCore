@@ -5,11 +5,11 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.builders.ItemBuilder;
+import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
@@ -35,13 +35,12 @@ public class SkullCommand {
     }
 
     @Execute
-    @MinArgs(1)
-    public void execute(Player player, String[] args) {
+    public void execute(Player player, @Arg(0) String name) {
         this.server.getScheduler().runTaskAsynchronously(this.eternalCore, () -> {
-            ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(args[0]).skullOwner(args[0]).build();
+            ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(name).skullOwner(name).build();
 
             player.getInventory().addItem(item);
-            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.skullMessage, "{NICK}", args[0])));
+            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.skullMessage, "{NICK}", name)));
         });
     }
 }

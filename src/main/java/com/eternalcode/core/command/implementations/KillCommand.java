@@ -5,18 +5,20 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.command.binds.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Handler;
+import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.bukkit.Bukkit;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
-import panda.utilities.StringUtils;
-
 
 @Section(route = "kill")
 @Permission("eternalcore.command.kill")
@@ -30,11 +32,26 @@ public class KillCommand {
     }
 
     @Execute
-    public void execute(CommandSender sender, String[] args) {
-        Option.when(args.length == 1, () -> Bukkit.getPlayer(args[0])).orElse(Option.of(sender).is(Player.class)).peek(player -> {
-            player.setHealth(0);
-            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.killMessage, "{NICK}", sender.getName())));
-            sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.killedMessage, "{NICK}", player.getName())));
-        }).onEmpty(() -> sender.sendMessage(ChatUtils.color(this.messages.argumentSection.offlinePlayer)));
+    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
+        if (playerOption.isEmpty()) {
+            if (sender instanceof Player player) {
+                killPlayer(player);
+                return;
+            }
+            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            return;
+        }
+        Player player = playerOption.get();
+
+        killPlayer(player);
+
+        sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.killedMessage, "{PLAYER}", player.getName())));
+    }
+
+    @IgnoreMethod
+    private void killPlayer(Player player) {
+        player.setHealth(0);
+
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.killSelf));
     }
 }

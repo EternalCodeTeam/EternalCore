@@ -43,7 +43,7 @@ public class ScoreboardManager {
     }
 
     public void removeScoreboard(Player player) {
-        FastBoard board = boards.remove(player.getUniqueId());
+        FastBoard board = this.boards.remove(player.getUniqueId());
 
         if (board != null) {
             board.delete();
@@ -59,7 +59,7 @@ public class ScoreboardManager {
     }
 
     public void toggleScoreboard(Player player) {
-        FastBoard scoreboardAPI = boards.remove(player.getUniqueId());
+        FastBoard scoreboardAPI = this.boards.remove(player.getUniqueId());
 
         if (scoreboardAPI != null) {
             scoreboardAPI.delete();
@@ -67,5 +67,11 @@ public class ScoreboardManager {
         }
 
         this.setScoreboard(player);
+    }
+
+    public boolean getScoreboard(Player player) {
+        FastBoard fastBoard = this.boards.get(player.getUniqueId());
+
+        return !fastBoard.isDeleted();
     }
 }
