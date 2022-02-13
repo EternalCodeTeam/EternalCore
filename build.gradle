@@ -5,7 +5,7 @@ plugins {
 }
 
 group "com.eternalcode.core"
-version "1.0.1-APLHA"
+version "1.0.2-APLHA"
 
 repositories {
     gradlePluginPortal()

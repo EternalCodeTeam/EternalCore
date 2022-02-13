@@ -5,10 +5,10 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.MessageAction;
 import com.eternalcode.core.command.argument.AmountArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.MaterialArgument;
-import com.eternalcode.core.chat.MessageAction;
 import com.eternalcode.core.command.argument.MessageActionArgument;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.StringPlayerArgument;
@@ -88,9 +88,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@Plugin(name = "EternalCore", version = "1.0.1-APLHA")
+@Plugin(name = "EternalCore", version = "1.0.2-APLHA")
 @Author("EternalCodeTeam")
-@ApiVersion(ApiVersion.Target.v1_17)
+@ApiVersion(ApiVersion.Target.v1_18)
 @Description("Essential plugin for your server!")
 @LogPrefix("EternalCore")
 
@@ -101,7 +101,6 @@ public class EternalCore extends JavaPlugin {
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
     @Getter private TeleportManager teleportManager;
-    @Getter private static EternalCore instance;
     @Getter private LiteCommands liteCommands;
     @Getter private ChatManager chatManager;
     @Getter private UserManager userManager;
@@ -115,12 +114,10 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
-        instance = this;
-
         this.scheduler = new BukkitSchedulerImpl(this);
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
-        
+
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
@@ -149,20 +146,19 @@ public class EternalCore extends JavaPlugin {
             .argument(MessageAction.class, new MessageActionArgument(messages))
 
             .bind(Player.class, new PlayerSenderBind(messages))
-            .bind(ConfigurationManager.class,   () -> this.configurationManager)
-            .bind(MessagesConfiguration.class,  () -> messages)
-            .bind(PluginConfiguration.class,    () -> config)
+            .bind(ConfigurationManager.class, () -> this.configurationManager)
+            .bind(MessagesConfiguration.class, () -> messages)
+            .bind(PluginConfiguration.class, () -> config)
             .bind(LocationsConfiguration.class, () -> locations)
-            .bind(TeleportManager.class,        () -> this.teleportManager)
-            .bind(EternalCore.class,            () -> this)
-            .bind(UserManager.class,            () -> this.userManager)
-            .bind(ScoreboardManager.class,      () -> this.scoreboardManager)
+            .bind(TeleportManager.class, () -> this.teleportManager)
+            .bind(EternalCore.class, () -> this)
+            .bind(UserManager.class, () -> this.userManager)
+            .bind(ScoreboardManager.class, () -> this.scoreboardManager)
 
             .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
             .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(messages))
 
             .command(
-                AdminChatCommand.class,
                 TeleportCommand.class,
                 AlertCommand.class,
                 AnvilCommand.class,
