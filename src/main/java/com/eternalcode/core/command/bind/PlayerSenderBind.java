@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.command.bind;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;
@@ -23,7 +23,7 @@ public class PlayerSenderBind implements LiteBind {
         LiteSender sender = invocation.sender();
 
         if (!(sender.getSender() instanceof Player)) {
-            throw new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.argumentSection.onlyPlayer);
+            throw new ValidationCommandException(this.messages.argumentSection.onlyPlayer);
         }
 
         return sender.getSender();

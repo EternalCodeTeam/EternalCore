@@ -4,8 +4,6 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -15,16 +13,9 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.workbench")
 public class StonecutterCommand {
 
-    private final MessagesConfiguration message;
-
-    public StonecutterCommand(MessagesConfiguration message) {
-        this.message = message;
-    }
-
     @Execute
     public void execute(Player player) {
         player.openStonecutter(null, true);
-        player.sendMessage(ChatUtils.color(this.message.otherMessages.stonecutterOpenMessage));
     }
 }
 

@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.chat;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;

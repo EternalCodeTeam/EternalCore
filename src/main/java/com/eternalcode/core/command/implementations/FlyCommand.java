@@ -4,15 +4,17 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
+import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -22,26 +24,42 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/fly <player>")
 public class FlyCommand {
 
-    private final MessagesConfiguration message;
+    private final MessagesConfiguration messages;
     private final PluginConfiguration config;
 
-    public FlyCommand(MessagesConfiguration message, PluginConfiguration config) {
-        this.message = message;
+    public FlyCommand(MessagesConfiguration messages, PluginConfiguration config) {
+        this.messages = messages;
         this.config = config;
     }
 
     @Execute
-    public void execute(CommandSender sender, String[] args) {
-        Option.when(args.length == 1, () ->
-            Bukkit.getPlayer(args[0]))
-            .orElse(Option.of(sender).is(Player.class))
-            .peek(player -> {
-                player.setAllowFlight(!player.isFlying());
+    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
+        if (playerOption.isEmpty()){
+            if (sender instanceof Player player){
+                player.setAllowFlight(!player.getAllowFlight());
+
                 player.sendMessage(ChatUtils.color(StringUtils.replace(
-                    this.message.otherMessages.flyChange,
+                    this.messages.otherMessages.flyMessage,
                     "{STATE}",
-                    player.getAllowFlight() ? ChatUtils.color(this.config.format.enabled) : ChatUtils.color(this.config.format.disabled))));
-            })
-            .onEmpty(() -> sender.sendMessage(ChatUtils.color(this.message.argumentSection.offlinePlayer)));
+                    player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)));
+
+                return;
+            }
+            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            return;
+        }
+        Player player = playerOption.get();
+
+        player.setAllowFlight(!player.getAllowFlight());
+
+        player.sendMessage(ChatUtils.color(StringUtils.replace(
+            this.messages.otherMessages.flyMessage,
+            "{STATE}",
+            player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)));
+
+        sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(
+            this.messages.otherMessages.flySetMessage,
+            new String[]{ "{PLAYER}", "{STATE}" },
+            new String[]{ player.getName(), player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled})));
     }
 }

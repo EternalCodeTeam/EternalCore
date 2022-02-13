@@ -1,11 +1,10 @@
-package com.eternalcode.core.command.binds;
+package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
-import dev.rollczi.litecommands.valid.ValidationInfo;
 import org.bukkit.Material;
 
 import java.util.Arrays;
@@ -22,11 +21,10 @@ public class MaterialArgument implements SingleArgumentHandler<Material> {
 
     @Override
     public Material parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Material material = Material.getMaterial(argument);
-
+        Material material = Material.getMaterial(argument.toUpperCase());
 
         if (material == null) {
-            throw new ValidationCommandException(ValidationInfo.CUSTOM, this.messages.argumentSection.noMaterial);
+            throw new ValidationCommandException(this.messages.argumentSection.noMaterial);
         }
 
         return material;

@@ -5,12 +5,14 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.command.binds.MaterialArgument;
-import com.eternalcode.core.command.binds.MessageAction;
-import com.eternalcode.core.command.binds.MessageActionArgument;
-import com.eternalcode.core.command.binds.PermissionMessage;
-import com.eternalcode.core.command.binds.PlayerArgument;
-import com.eternalcode.core.command.binds.PlayerSenderBind;
+import com.eternalcode.core.command.argument.AmountArgument;
+import com.eternalcode.core.command.argument.GameModeArgument;
+import com.eternalcode.core.command.argument.MaterialArgument;
+import com.eternalcode.core.chat.MessageAction;
+import com.eternalcode.core.command.argument.MessageActionArgument;
+import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.command.argument.StringPlayerArgument;
+import com.eternalcode.core.command.bind.PlayerSenderBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
 import com.eternalcode.core.command.implementations.AlertCommand;
 import com.eternalcode.core.command.implementations.AnvilCommand;
@@ -41,7 +43,9 @@ import com.eternalcode.core.command.implementations.StonecutterCommand;
 import com.eternalcode.core.command.implementations.TeleportCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
+import com.eternalcode.core.command.message.PermissionMessage;
 import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
@@ -67,6 +71,7 @@ import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -106,6 +111,7 @@ public class EternalCore extends JavaPlugin {
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
+        Server server = this.getServer();
 
         this.softwareCheck();
 
@@ -114,12 +120,16 @@ public class EternalCore extends JavaPlugin {
         this.scheduler = new BukkitSchedulerImpl(this);
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
+        
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+        MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
+        LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
+        CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
-        this.chatManager = new ChatManager(configurationManager.getPluginConfiguration());
-
+        this.chatManager = new ChatManager(config);
         this.teleportManager = new TeleportManager();
 
         // bStats metrics
@@ -129,22 +139,28 @@ public class EternalCore extends JavaPlugin {
         // Services
         this.userManager = new UserManager();
 
-        this.liteCommands = LiteBukkitFactory.builder(this.getServer(), "EternalCore")
-            .argument(Player.class, new PlayerArgument(this.configurationManager.getMessagesConfiguration(), this.getServer()))
-            .argument(Option.class, new PlayerArgument(this.configurationManager.getMessagesConfiguration(), this.getServer()).toOptionHandler())
-            .argument(MessageAction.class, new MessageActionArgument(this.configurationManager.getMessagesConfiguration()))
-            .argument(Material.class, new MaterialArgument(this.configurationManager.getMessagesConfiguration()))
-            .bind(Player.class, new PlayerSenderBind(this.configurationManager.getMessagesConfiguration()))
-            .bind(ConfigurationManager.class, () -> this.configurationManager)
-            .bind(MessagesConfiguration.class, () -> this.configurationManager.getMessagesConfiguration())
-            .bind(PluginConfiguration.class, () -> this.configurationManager.getPluginConfiguration())
-            .bind(LocationsConfiguration.class, () -> this.configurationManager.getLocationsConfiguration())
-            .bind(TeleportManager.class, () -> this.teleportManager)
-            .bind(EternalCore.class, () -> this)
-            .bind(UserManager.class, () -> this.userManager)
-            .bind(Server.class, this.getServer())
-            .placeholders(this.configurationManager.getCommandsConfiguration().commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
-            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(this.configurationManager.getMessagesConfiguration()))
+        this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
+            .argument(String.class, new StringPlayerArgument(server))
+            .argument(Integer.class, new AmountArgument(messages))
+            .argument(Player.class, new PlayerArgument(messages, server))
+            .argument(Option.class, new PlayerArgument(messages, server).toOptionHandler())
+            .argument(Material.class, new MaterialArgument(messages))
+            .argument(GameMode.class, new GameModeArgument(messages))
+            .argument(MessageAction.class, new MessageActionArgument(messages))
+
+            .bind(Player.class, new PlayerSenderBind(messages))
+            .bind(ConfigurationManager.class,   () -> this.configurationManager)
+            .bind(MessagesConfiguration.class,  () -> messages)
+            .bind(PluginConfiguration.class,    () -> config)
+            .bind(LocationsConfiguration.class, () -> locations)
+            .bind(TeleportManager.class,        () -> this.teleportManager)
+            .bind(EternalCore.class,            () -> this)
+            .bind(UserManager.class,            () -> this.userManager)
+            .bind(ScoreboardManager.class,      () -> this.scoreboardManager)
+
+            .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
+            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(messages))
+
             .command(
                 AdminChatCommand.class,
                 TeleportCommand.class,
@@ -182,18 +198,18 @@ public class EternalCore extends JavaPlugin {
 
         // Register events
         PandaStream.of(
-            new PlayerChatListener(this.chatManager, this.configurationManager, this.getServer()),
-            new PlayerJoinListener(this.configurationManager, this.getServer()),
-            new PlayerQuitListener(this.configurationManager, this.getServer()),
+            new PlayerChatListener(this.chatManager, this.configurationManager, server),
+            new PlayerJoinListener(this.configurationManager, server),
+            new PlayerQuitListener(this.configurationManager, server),
             new CreateUserListener(this.userManager),
-            new ScoreboardListener(this.configurationManager.getPluginConfiguration(), this.scoreboardManager),
-            new PlayerCommandPreprocessListener(this.configurationManager, this.getServer()),
+            new ScoreboardListener(config, this.scoreboardManager),
+            new PlayerCommandPreprocessListener(this.configurationManager, server),
             new SignChangeListener(),
             new PlayerDeathListener(this.configurationManager),
-            new TeleportListeners(this.configurationManager.getMessagesConfiguration(), this.teleportManager)
+            new TeleportListeners(messages, this.teleportManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        TeleportTask task = new TeleportTask(this.configurationManager.getMessagesConfiguration(), this.teleportManager, this.getServer());
+        TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
 
         this.scheduler.runTaskTimer(task, 10, 10);
 

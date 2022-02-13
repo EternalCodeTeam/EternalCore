@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.command.binds.PlayerArgument;
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.teleport.TeleportManager;
@@ -33,16 +33,20 @@ public class SpawnCommand {
     public void execute(Player sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption){
         Location location = this.locations.spawn;
 
-        if (location == null){
+        if (location == null || location.getWorld() == null) {
             sender.sendMessage(ChatUtils.color(this.messages.otherMessages.spawnNoSet));
             return;
         }
 
-        if (playerOption.isEmpty()){
-            if (sender.hasPermission("eternalcore.teleport.bypass")){
+        if (playerOption.isEmpty()) {
+            if (sender.hasPermission("eternalcore.teleport.bypass")) {
                 sender.teleportAsync(location);
 
                 sender.sendMessage(ChatUtils.color(this.messages.teleportSection.teleported));
+                return;
+            }
+            if (this.teleportManager.inTeleport(sender.getUniqueId())) {
+                sender.sendMessage(ChatUtils.color(this.messages.teleportSection.haveTeleport));
                 return;
             }
 

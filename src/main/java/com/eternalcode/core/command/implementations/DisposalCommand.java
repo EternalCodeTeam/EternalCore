@@ -9,7 +9,7 @@ import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
-import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 
@@ -17,15 +17,16 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.disposal")
 public class DisposalCommand {
 
-    private final MessagesConfiguration message;
+    private final MessagesConfiguration messages;
+    private final Server server;
 
-    public DisposalCommand(MessagesConfiguration message) {
-        this.message = message;
+    public DisposalCommand(MessagesConfiguration messages, Server server) {
+        this.messages = messages;
+        this.server = server;
     }
 
     @Execute
     public void execute(Player player) {
-        player.openInventory(Bukkit.createInventory(null, 54, ChatUtils.component(this.message.otherMessages.disposalTitle)));
-        player.sendMessage(ChatUtils.color(this.message.otherMessages.disposalOpenMessage));
+        player.openInventory(this.server.createInventory(null, 54, ChatUtils.component(this.messages.otherMessages.disposalTitle)));
     }
 }
