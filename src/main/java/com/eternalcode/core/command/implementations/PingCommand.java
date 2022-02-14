@@ -11,7 +11,7 @@ import panda.std.Option;
 
 @Section(route = "ping")
 @Permission("eternalcore.command.ping")
-@UsageMessage("&8» &cPoprawne użycie &7/kill (player)")
+@UsageMessage("&8» &cPoprawne użycie &7/ping (player)")
 public final class PingCommand {
 
     private final MessagesConfiguration messages;
@@ -30,6 +30,6 @@ public final class PingCommand {
 
         Player target = playerOption.get();
 
-        player.sendMessage(ChatUtils.color(StringUtils.replaceEach(messages.otherMessages.pingMessage, new String[]{"{PLAYER}", "{PING}"}, new String[]{target.getName(), String.valueOf(target.spigot().getPing())})));
+        player.sendMessage(ChatUtils.color(StringUtils.replaceEach(messages.otherMessages.pingOtherMessage, new String[]{"{PLAYER}", "{PING}"}, new String[]{target.getName(), String.valueOf(target.spigot().getPing())})));
     }
 }

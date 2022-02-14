@@ -130,5 +130,8 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
         public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
         public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
+        public String enchantNotFound = "&8» &cNo enchantment found!";
+        public String enchantSuccess = "&8» &cEnchantment &6{ENCHANTMENT} &cadded to your item!";
+        public String enchantNotNumber = "&8» &cYou must enter a number!";
     }
 }

@@ -164,7 +164,8 @@ public class EternalCore extends JavaPlugin {
                 GiveCommand.class,
                 SetSpawnCommand.class,
                 SpawnCommand.class,
-                PingCommand.class
+                PingCommand.class,
+                EnchantCommand.class
             )
             .register();
 
