@@ -32,6 +32,7 @@ import com.eternalcode.core.command.implementations.HatCommand;
 import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.HelpOpCommand;
 import com.eternalcode.core.command.implementations.InventoryOpenCommand;
+import com.eternalcode.core.command.implementations.ItemNameCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
 import com.eternalcode.core.command.implementations.RepairCommand;
 import com.eternalcode.core.command.implementations.ScoreboardCommand;
@@ -41,6 +42,7 @@ import com.eternalcode.core.command.implementations.SpawnCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
 import com.eternalcode.core.command.implementations.TeleportCommand;
+import com.eternalcode.core.command.implementations.VanishCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.command.message.PermissionMessage;
@@ -99,21 +101,28 @@ public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
-    @Getter private ConfigurationManager configurationManager;
-    @Getter private ScoreboardManager scoreboardManager;
-    @Getter private TeleportManager teleportManager;
-    @Getter private LiteCommands liteCommands;
-    @Getter private ChatManager chatManager;
-    @Getter private UserManager userManager;
-    @Getter private Scheduler scheduler;
+    @Getter
+    private ConfigurationManager configurationManager;
+    @Getter
+    private ScoreboardManager scoreboardManager;
+    @Getter
+    private TeleportManager teleportManager;
+    @Getter
+    private LiteCommands liteCommands;
+    @Getter
+    private ChatManager chatManager;
+    @Getter
+    private UserManager userManager;
+    @Getter
+    private Scheduler scheduler;
     private boolean isPaper = false;
     private BukkitAudiences adventure;
 
 
     @Override
     public void onEnable() {
-        Stopwatch started = Stopwatch.createStarted();
-        Server server = this.getServer();
+        final Stopwatch started = Stopwatch.createStarted();
+        final Server server = this.getServer();
 
         this.softwareCheck();
 
@@ -122,10 +131,10 @@ public class EternalCore extends JavaPlugin {
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
 
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
-        MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
-        LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
-        CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
+        final PluginConfiguration config = configurationManager.getPluginConfiguration();
+        final MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
+        final LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
+        final CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
@@ -211,11 +220,11 @@ public class EternalCore extends JavaPlugin {
             new TeleportListeners(messages, this.teleportManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
+        final TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
 
         this.scheduler.runTaskTimer(task, 10, 10);
 
-        long millis = started.elapsed(TimeUnit.MILLISECONDS);
+        final long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
     }
 
@@ -223,7 +232,7 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
 
-        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
+        final PluginConfiguration config = this.configurationManager.getPluginConfiguration();
 
         config.chat.enabled = chatManager.isChatEnabled();
         config.chat.slowMode = chatManager.getChatDelay();

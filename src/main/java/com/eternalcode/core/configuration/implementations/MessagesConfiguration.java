@@ -128,8 +128,7 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
         public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
         public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
-        public String vanishEnabled = "&8» &aVanish has been &7enabled.";
-        public String vanishDisabled = "&8» &aVanish has been &7disabled.";
+        public String vanish = "&8» &aVanish has been &7{STATE}.";
         public String itemNameChanged = "&8» &aYour item name was successfully changed.";
     }
 }
