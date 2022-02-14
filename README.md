@@ -10,7 +10,7 @@
 
 If you want to get help regarding our products or just want to ask something, join our [discord](https://discord.gg/MUCKhgFUCA).
 
-# Other API usages
+# Other Dependencies usages
 - [LiteCommands by Rollczi ❤️](https://github.com/Rollczi/LiteCommands)
 - [Lombok](https://projectlombok.org/)
 - [CDN Configs](https://github.com/dzikoysk/cdn)
