@@ -8,8 +8,8 @@ import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
+import dev.rollczi.litecommands.annotations.Required;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import net.kyori.adventure.text.Component;
@@ -33,7 +33,7 @@ public class ItemNameCommand {
 
 
     @Execute
-    @MinArgs(1)
+    @Required(1)
     public void execute(final Player player, @Arg(0) @Handler(StringPlayerArgument.class) final Option<String> stringOption) {
         final ItemStack itemStack = player.getItemInUse();
         final ItemMeta meta = itemStack.getItemMeta();
