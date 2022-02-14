@@ -99,20 +99,13 @@ public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
-    @Getter
-    private ConfigurationManager configurationManager;
-    @Getter
-    private ScoreboardManager scoreboardManager;
-    @Getter
-    private TeleportManager teleportManager;
-    @Getter
-    private LiteCommands liteCommands;
-    @Getter
-    private ChatManager chatManager;
-    @Getter
-    private UserManager userManager;
-    @Getter
-    private Scheduler scheduler;
+    @Getter private ConfigurationManager configurationManager;
+    @Getter private ScoreboardManager scoreboardManager;
+    @Getter private TeleportManager teleportManager;
+    @Getter private LiteCommands liteCommands;
+    @Getter private ChatManager chatManager;
+    @Getter private UserManager userManager;
+    @Getter private Scheduler scheduler;
     private boolean isPaper = false;
     private BukkitAudiences adventure;
 
@@ -222,7 +215,7 @@ public class EternalCore extends JavaPlugin {
 
         this.scheduler.runTaskTimer(task, 10, 10);
 
-        final long millis = started.elapsed(TimeUnit.MILLISECONDS);
+        long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
     }
 
@@ -230,7 +223,7 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
 
-        final PluginConfiguration config = this.configurationManager.getPluginConfiguration();
+        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
 
         config.chat.enabled = chatManager.isChatEnabled();
         config.chat.slowMode = chatManager.getChatDelay();
