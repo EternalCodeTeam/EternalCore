@@ -16,10 +16,8 @@ public class VanishCommand {
 
     @Execute
     public void execute(final CommandSender sender) {
-        if (sender instanceof Player player) {
-            player.setInvisible(!player.isInvisible());
-            player.sendMessage(ChatUtils.color("&8» &aVanish został &7" + (player.isInvisible() ? "włączony" : "wyłączony")));
-        }
+        ((Player) sender).setInvisible(!((Player) sender).isInvisible());
+        sender.sendMessage(ChatUtils.color("&8» &aVanish został &7" + (((Player) sender).isInvisible() ? "włączony" : "wyłączony")));
     }
 
 }
