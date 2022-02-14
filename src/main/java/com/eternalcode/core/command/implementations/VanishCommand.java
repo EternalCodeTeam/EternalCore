@@ -8,7 +8,6 @@ import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "vanish")
@@ -25,9 +24,9 @@ public class VanishCommand {
     }
 
     @Execute
-    public void execute(final CommandSender sender) {
-        ((Player) sender).setInvisible(!((Player) sender).isInvisible());
-        sender.sendMessage(ChatUtils.color(this.messages.otherMessages.vanish).replace("{STATE}", ((Player) sender).isInvisible() ? this.config.format.disabled : this.config.format.enabled));
+    public void execute(final Player player) {
+        player.setInvisible(!player.isInvisible());
+        player.sendMessage(ChatUtils.color(this.messages.otherMessages.vanish).replace("{STATE}", player.isInvisible() ? this.config.format.disabled : this.config.format.enabled));
     }
 
 }
