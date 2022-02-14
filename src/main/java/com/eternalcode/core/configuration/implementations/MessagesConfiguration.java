@@ -14,30 +14,30 @@ import java.util.List;
 
 public class MessagesConfiguration extends AbstractConfigWithResource {
 
-    public MessagesConfiguration(File folder, String child) {
+    public MessagesConfiguration(final File folder, final String child) {
         super(folder, child);
     }
 
-    @Description({ "# ",
+    @Description({"# ",
         "# This is the part of configuration file for EternalCore.",
         "# ",
         "# if you need help with the configration or have any questions related to EternalCore, join us in our Discord",
         "# ",
         "# Discord: https://dc.eternalcode.pl/",
-        "# Website: https://eternalcode.pl/", " " })
+        "# Website: https://eternalcode.pl/", " "})
 
     @Description("# Argument Section")
     public ArgumentSection argumentSection = new ArgumentSection();
-    @Description({ "", "# HelpOp Section" })
+    @Description({"", "# HelpOp Section"})
     public HelpopSection helpOpSection = new HelpopSection();
-    @Description({ "", "# AdminChat Section" })
+    @Description({"", "# AdminChat Section"})
     public AdminChatSection adminChatSection = new AdminChatSection();
-    @Description({ "", "# Chat Section" })
+    @Description({"", "# Chat Section"})
     public ChatSection chatSection = new ChatSection();
-    @Description({ "", "# Teleport Section" })
+    @Description({"", "# Teleport Section"})
     public TeleportSection teleportSection = new TeleportSection();
 
-    @Description({ "", "# Other messages" })
+    @Description({"", "# Other messages"})
     public OtherMessages otherMessages = new OtherMessages();
 
     @Contextual
@@ -128,5 +128,8 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
         public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
         public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
+        public String vanishEnabled = "&8» &aVanish has been &7enabled.";
+        public String vanishDisabled = "&8» &aVanish has been &7disabled.";
+        public String itemNameChanged = "&8» &aYour item name was successfully changed.";
     }
 }

@@ -51,6 +51,10 @@ dependencies {
     // TriumphGui
     implementation "dev.triumphteam:triumph-gui:3.1.1"
 
+    // kyori adventure
+    implementation "net.kyori:adventure-api:4.9.3"
+    implementation "net.kyori:adventure-platform-bukkit:4.0.1"
+
     // tests
     testImplementation "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
     testImplementation "org.codehaus.groovy:groovy-all:3.0.9"

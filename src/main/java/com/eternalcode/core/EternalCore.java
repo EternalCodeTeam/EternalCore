@@ -6,54 +6,16 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.MessageAction;
-import com.eternalcode.core.command.argument.AmountArgument;
-import com.eternalcode.core.command.argument.GameModeArgument;
-import com.eternalcode.core.command.argument.MaterialArgument;
-import com.eternalcode.core.command.argument.MessageActionArgument;
-import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.command.argument.StringPlayerArgument;
+import com.eternalcode.core.command.argument.*;
 import com.eternalcode.core.command.bind.PlayerSenderBind;
-import com.eternalcode.core.command.implementations.AdminChatCommand;
-import com.eternalcode.core.command.implementations.AlertCommand;
-import com.eternalcode.core.command.implementations.AnvilCommand;
-import com.eternalcode.core.command.implementations.CartographyTableCommand;
-import com.eternalcode.core.command.implementations.ChatCommand;
-import com.eternalcode.core.command.implementations.ClearCommand;
-import com.eternalcode.core.command.implementations.DisposalCommand;
-import com.eternalcode.core.command.implementations.EnderchestCommand;
-import com.eternalcode.core.command.implementations.EternalCoreCommand;
-import com.eternalcode.core.command.implementations.FeedCommand;
-import com.eternalcode.core.command.implementations.FlyCommand;
-import com.eternalcode.core.command.implementations.GamemodeCommand;
-import com.eternalcode.core.command.implementations.GiveCommand;
-import com.eternalcode.core.command.implementations.GodCommand;
-import com.eternalcode.core.command.implementations.GrindstoneCommand;
-import com.eternalcode.core.command.implementations.HatCommand;
-import com.eternalcode.core.command.implementations.HealCommand;
-import com.eternalcode.core.command.implementations.HelpOpCommand;
-import com.eternalcode.core.command.implementations.InventoryOpenCommand;
-import com.eternalcode.core.command.implementations.KillCommand;
-import com.eternalcode.core.command.implementations.RepairCommand;
-import com.eternalcode.core.command.implementations.ScoreboardCommand;
-import com.eternalcode.core.command.implementations.SetSpawnCommand;
-import com.eternalcode.core.command.implementations.SkullCommand;
-import com.eternalcode.core.command.implementations.SpawnCommand;
-import com.eternalcode.core.command.implementations.SpeedCommand;
-import com.eternalcode.core.command.implementations.StonecutterCommand;
-import com.eternalcode.core.command.implementations.TeleportCommand;
-import com.eternalcode.core.command.implementations.WhoIsCommand;
-import com.eternalcode.core.command.implementations.WorkbenchCommand;
+import com.eternalcode.core.command.implementations.*;
 import com.eternalcode.core.command.message.PermissionMessage;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.listeners.player.PlayerChatListener;
-import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
-import com.eternalcode.core.listeners.player.PlayerDeathListener;
-import com.eternalcode.core.listeners.player.PlayerJoinListener;
-import com.eternalcode.core.listeners.player.PlayerQuitListener;
+import com.eternalcode.core.listeners.player.*;
 import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listeners.sign.SignChangeListener;
 import com.eternalcode.core.listeners.user.CreateUserListener;
@@ -70,6 +32,7 @@ import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import lombok.Getter;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -98,30 +61,40 @@ public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
-    @Getter private ConfigurationManager configurationManager;
-    @Getter private ScoreboardManager scoreboardManager;
-    @Getter private TeleportManager teleportManager;
-    @Getter private LiteCommands liteCommands;
-    @Getter private ChatManager chatManager;
-    @Getter private UserManager userManager;
-    @Getter private Scheduler scheduler;
+    @Getter
+    private ConfigurationManager configurationManager;
+    @Getter
+    private ScoreboardManager scoreboardManager;
+    @Getter
+    private TeleportManager teleportManager;
+    @Getter
+    private LiteCommands liteCommands;
+    @Getter
+    private ChatManager chatManager;
+    @Getter
+    private UserManager userManager;
+    @Getter
+    private Scheduler scheduler;
     private boolean isPaper = false;
+    private BukkitAudiences adventure;
+
 
     @Override
     public void onEnable() {
-        Stopwatch started = Stopwatch.createStarted();
-        Server server = this.getServer();
+        final Stopwatch started = Stopwatch.createStarted();
+        final Server server = this.getServer();
 
         this.softwareCheck();
 
+        this.adventure = BukkitAudiences.create(this);
         this.scheduler = new BukkitSchedulerImpl(this);
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
 
-        PluginConfiguration config = configurationManager.getPluginConfiguration();
-        MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
-        LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
-        CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
+        final PluginConfiguration config = configurationManager.getPluginConfiguration();
+        final MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
+        final LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
+        final CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
@@ -159,7 +132,7 @@ public class EternalCore extends JavaPlugin {
             .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(messages))
 
             .command(
-                TeleportCommand.class,
+                AdminChatCommand.class,
                 AlertCommand.class,
                 AnvilCommand.class,
                 CartographyTableCommand.class,
@@ -167,28 +140,30 @@ public class EternalCore extends JavaPlugin {
                 ClearCommand.class,
                 DisposalCommand.class,
                 EnderchestCommand.class,
+                EternalCoreCommand.class,
                 FeedCommand.class,
                 FlyCommand.class,
                 GamemodeCommand.class,
+                GiveCommand.class,
                 GodCommand.class,
                 GrindstoneCommand.class,
                 HatCommand.class,
                 HealCommand.class,
-                KillCommand.class,
-                SkullCommand.class,
-                SpeedCommand.class,
-                StonecutterCommand.class,
-                WhoIsCommand.class,
-                WorkbenchCommand.class,
-                EternalCoreCommand.class,
-                ScoreboardCommand.class,
-                AdminChatCommand.class,
                 HelpOpCommand.class,
                 InventoryOpenCommand.class,
+                ItemNameCommand.class,
+                KillCommand.class,
                 RepairCommand.class,
-                GiveCommand.class,
+                ScoreboardCommand.class,
                 SetSpawnCommand.class,
-                SpawnCommand.class
+                SkullCommand.class,
+                SpawnCommand.class,
+                SpeedCommand.class,
+                StonecutterCommand.class,
+                TeleportCommand.class,
+                WhoIsCommand.class,
+                WorkbenchCommand.class,
+                VanishCommand.class
             )
             .register();
 
@@ -205,11 +180,11 @@ public class EternalCore extends JavaPlugin {
             new TeleportListeners(messages, this.teleportManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
+        final TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
 
         this.scheduler.runTaskTimer(task, 10, 10);
 
-        long millis = started.elapsed(TimeUnit.MILLISECONDS);
+        final long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
     }
 
@@ -217,22 +192,27 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
 
-        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
+        final PluginConfiguration config = this.configurationManager.getPluginConfiguration();
 
         config.chat.enabled = chatManager.isChatEnabled();
         config.chat.slowMode = chatManager.getChatDelay();
 
         this.configurationManager.render(config);
+
+        if (this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
+        }
     }
 
     private void softwareCheck() {
         try {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
             this.isPaper = true;
-        } catch (ClassNotFoundException classNotFoundException) {
-            this.getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.17x forks"));
+        } catch (final ClassNotFoundException classNotFoundException) {
+            this.getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.17.x forks"));
             this.getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
-            this.getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.17-1.18x"));
+            this.getLogger().warning(ChatUtils.color("&6&lWARNING&r &6Supported minecraft version is 1.17-1.18x"));
         }
 
         if (this.isPaper) {
