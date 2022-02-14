@@ -5,7 +5,7 @@ plugins {
 }
 
 group "com.eternalcode.core"
-version "1.0.2-APLHA"
+version "1.0.2-ALPHA"
 
 repositories {
     gradlePluginPortal()
@@ -33,7 +33,7 @@ dependencies {
     // cdn configs
     implementation "net.dzikoysk:cdn:1.13.8"
 
-    // expresslibe
+    // expressible
     implementation "org.panda-lang:expressible:1.1.13"
 
     // MiniMessages
