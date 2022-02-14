@@ -34,7 +34,7 @@ dependencies {
     implementation "net.dzikoysk:cdn:1.13.8"
 
     // expressible
-    implementation "org.panda-lang:expressible:1.1.13"
+    implementation "org.panda-lang:expressible:1.1.16"
 
     // MiniMessages
     implementation "net.kyori:adventure-text-minimessage:4.10.0-SNAPSHOT"
