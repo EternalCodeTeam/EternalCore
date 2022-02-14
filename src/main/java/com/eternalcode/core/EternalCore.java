@@ -112,8 +112,8 @@ public class EternalCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        final Stopwatch started = Stopwatch.createStarted();
-        final Server server = this.getServer();
+        Stopwatch started = Stopwatch.createStarted();
+        Server server = this.getServer();
 
         this.softwareCheck();
 
@@ -122,10 +122,10 @@ public class EternalCore extends JavaPlugin {
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
 
-        final PluginConfiguration config = configurationManager.getPluginConfiguration();
-        final MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
-        final LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
-        final CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
+        PluginConfiguration config = configurationManager.getPluginConfiguration();
+        MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
+        LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
+        CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
@@ -211,7 +211,7 @@ public class EternalCore extends JavaPlugin {
             new TeleportListeners(messages, this.teleportManager)
         ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
 
-        final TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
+        TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
 
         this.scheduler.runTaskTimer(task, 10, 10);
 
