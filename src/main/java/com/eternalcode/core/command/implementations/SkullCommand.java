@@ -16,7 +16,6 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import panda.utilities.StringUtils;
@@ -28,17 +27,15 @@ public class SkullCommand {
 
     private final MessagesConfiguration messages;
     private final EternalCore eternalCore;
-    private final Server server;
 
     public SkullCommand(EternalCore eternalCore) {
         this.eternalCore = eternalCore;
         this.messages = eternalCore.getConfigurationManager().getMessagesConfiguration();
-        this.server = eternalCore.getServer();
     }
 
     @Execute
     public void execute(Player player, @Arg(0) @Handler(StringPlayerArgument.class) String name) {
-        this.server.getScheduler().runTaskAsynchronously(this.eternalCore, () -> {
+        eternalCore.getScheduler().runTaskAsynchronously(() -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(name).skullOwner(name).build();
 
             player.getInventory().addItem(item);

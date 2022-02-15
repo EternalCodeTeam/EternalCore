@@ -9,7 +9,6 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import fr.mrmicky.fastboard.FastBoard;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class ScoreboardManager {
     }
 
     public void updateTask() {
-        Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this.eternalCore, () -> {
+        eternalCore.getScheduler().runTaskTimerAsynchronously(() -> {
             for (FastBoard board : this.boards.values()) {
                 this.updateBoard(board);
             }

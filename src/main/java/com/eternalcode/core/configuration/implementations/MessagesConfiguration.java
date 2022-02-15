@@ -112,6 +112,14 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String flySetMessage = "&8» &cFly for &6{PLAYER} &cis now {STATE}";
         public String giveRecived = "&8» &cYou have received: &6{ITEM}";
         public String giveGiven = "&8» &cPlayer &6{PLAYER} &chas received &6{ITEM}";
+        public String spawnSet = "&8» &aSpawn set!";
+        public String spawnNoSet = "&8» &cSpawn is not set!";
+        public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {NICK}!";
+        public String spawnTeleportedOther = "&8» &cYou teleported player {NICK} to spawn!";
+        public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
+        public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
+        public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
+        @Description({ "", "# Whois messsage Style" })
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
             "&8» &7Target UUID: &f{UUID}",
             "&8» &7Target address: &f{IP}",
@@ -121,12 +129,5 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
             "&8» &7Target level: &f{LEVEL}",
             "&8» &7Target health: &f{HEALTH}",
             "&8» &7Target food level: &f{FOOD}");
-        public String spawnSet = "&8» &aSpawn set!";
-        public String spawnNoSet = "&8» &cSpawn is not set!";
-        public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {NICK}!";
-        public String spawnTeleportedOther = "&8» &cYou teleported player {NICK} to spawn!";
-        public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
-        public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
-        public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
     }
 }
