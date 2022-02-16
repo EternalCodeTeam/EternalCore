@@ -33,6 +33,7 @@ import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.HelpOpCommand;
 import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
+import com.eternalcode.core.command.implementations.PingCommand;
 import com.eternalcode.core.command.implementations.RepairCommand;
 import com.eternalcode.core.command.implementations.ScoreboardCommand;
 import com.eternalcode.core.command.implementations.SetSpawnCommand;
@@ -188,7 +189,8 @@ public class EternalCore extends JavaPlugin {
                 RepairCommand.class,
                 GiveCommand.class,
                 SetSpawnCommand.class,
-                SpawnCommand.class
+                SpawnCommand.class,
+                PingCommand.class
             )
             .register();
 

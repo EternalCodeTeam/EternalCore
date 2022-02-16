@@ -14,10 +14,6 @@ import java.util.List;
 
 public class MessagesConfiguration extends AbstractConfigWithResource {
 
-    public MessagesConfiguration(File folder, String child) {
-        super(folder, child);
-    }
-
     @Description({ "# ",
         "# This is the part of configuration file for EternalCore.",
         "# ",
@@ -36,9 +32,12 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
     public ChatSection chatSection = new ChatSection();
     @Description({ "", "# Teleport Section" })
     public TeleportSection teleportSection = new TeleportSection();
-
     @Description({ "", "# Other messages" })
     public OtherMessages otherMessages = new OtherMessages();
+
+    public MessagesConfiguration(File folder, String child) {
+        super(folder, child);
+    }
 
     @Contextual
     public static class ArgumentSection {
@@ -119,6 +118,8 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
         public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
         public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
+        public String pingMessage = "&8» &cYour ping is: &6{PING}ms";
+        public String pingOtherMessage = "&8» &cPing of the &6{PLAYER} &cis: &6{PING}ms";
         @Description({ "", "# Whois messsage Style" })
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
             "&8» &7Target UUID: &f{UUID}",

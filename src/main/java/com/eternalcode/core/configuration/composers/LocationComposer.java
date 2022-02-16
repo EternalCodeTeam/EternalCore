@@ -22,12 +22,12 @@ public class LocationComposer implements SimpleComposer<Location> {
     public Result<String, Exception> serialize(Location entity) {
         String world = "world";
 
-        if (entity.getWorld() != null){
+        if (entity.getWorld() != null) {
             world = entity.getWorld().getName();
         }
 
         return Result.ok((world +
-            ";" +entity.getBlockX()) +
+            ";" + entity.getBlockX()) +
             ";" + entity.getBlockY() +
             ";" + entity.getBlockZ() +
             ";" + entity.getYaw() +

@@ -33,13 +33,13 @@ public class TeleportListeners implements Listener {
         }
         final Player player = event.getPlayer();
 
-        removeTeleport(player);
+        this.removeTeleport(player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamage(final EntityDamageEvent event) {
         if (event.getEntity() instanceof Player player) {
-            removeTeleport(player);
+            this.removeTeleport(player);
         }
     }
 
@@ -47,17 +47,17 @@ public class TeleportListeners implements Listener {
     public void onKick(final PlayerKickEvent event) {
         Player player = event.getPlayer();
 
-        removeTeleport(player);
+        this.removeTeleport(player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onQuit(final PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        removeTeleport(player);
+        this.removeTeleport(player);
     }
 
-    private void removeTeleport(Player player){
+    private void removeTeleport(Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.teleportManager.inTeleport(uuid)) {

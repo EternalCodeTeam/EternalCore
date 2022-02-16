@@ -46,7 +46,7 @@ public class TeleportTask implements Runnable {
 
             this.teleportManager.removeTeleport(uuid);
 
-            player.sendActionBar(Component.text());
+            player.sendActionBar(ChatUtils.component(this.messages.teleportSection.teleported));
             player.sendMessage(ChatUtils.color(this.messages.teleportSection.teleported));
         }
     }
