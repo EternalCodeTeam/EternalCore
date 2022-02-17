@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import panda.std.Option;
 
@@ -10,10 +11,10 @@ import java.util.UUID;
 
 public class TeleportManager {
 
-    private final Map<UUID, Teleport> teleportMap = new HashMap<>();
+   @Getter private final Map<UUID, Teleport> teleportMap = new HashMap<>();
 
-    public void createTeleport(UUID uuid, Location location, int secounds){
-        Teleport teleport = new Teleport(uuid, location, secounds);
+    public void createTeleport(UUID uuid, Location location, int seconds){
+        Teleport teleport = new Teleport(uuid, location, seconds);
 
         this.teleportMap.put(uuid, teleport);
     }
@@ -41,9 +42,5 @@ public class TeleportManager {
         this.removeTeleport(uuid);
 
         return false;
-    }
-
-    public Map<UUID, Teleport> getTeleports() {
-        return Collections.unmodifiableMap(this.teleportMap);
     }
 }

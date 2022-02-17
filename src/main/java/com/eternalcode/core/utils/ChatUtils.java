@@ -40,5 +40,4 @@ public class ChatUtils {
     public static List<Component> component(Iterable<String> texts) {
         return PandaStream.of(texts).map(ChatUtils::component).toList();
     }
-
 }

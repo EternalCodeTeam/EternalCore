@@ -34,8 +34,8 @@ public class FlyCommand {
 
     @Execute
     public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (playerOption.isEmpty()){
-            if (sender instanceof Player player){
+        if (playerOption.isEmpty()) {
+            if (sender instanceof Player player) {
                 player.setAllowFlight(!player.getAllowFlight());
 
                 player.sendMessage(ChatUtils.color(StringUtils.replace(
@@ -60,6 +60,6 @@ public class FlyCommand {
         sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(
             this.messages.otherMessages.flySetMessage,
             new String[]{ "{PLAYER}", "{STATE}" },
-            new String[]{ player.getName(), player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled})));
+            new String[]{ player.getName(), player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled })));
     }
 }

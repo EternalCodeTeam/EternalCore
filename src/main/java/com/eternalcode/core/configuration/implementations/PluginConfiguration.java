@@ -7,19 +7,13 @@ package com.eternalcode.core.configuration.implementations;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
-import net.dzikoysk.cdn.source.Resource;
 import org.bukkit.Sound;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 public class PluginConfiguration extends AbstractConfigWithResource {
-
-    public PluginConfiguration(File folder, String child) {
-        super(folder, child);
-    }
 
     @Description({ "# ",
         "# This is the main configuration file for EternalCore.",
@@ -37,9 +31,12 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     public Chat chat = new Chat();
     @Description({ "", "# Formating on/off" })
     public Format format = new Format();
-
     @Description({ "", "# Scoreboard Section" })
     public Scoreboard scoreboard = new Scoreboard();
+
+    public PluginConfiguration(File folder, String child) {
+        super(folder, child);
+    }
 
     @Contextual
     public static class EventMessage {

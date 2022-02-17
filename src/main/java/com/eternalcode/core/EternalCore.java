@@ -199,7 +199,7 @@ public class EternalCore extends JavaPlugin {
             new PlayerChatListener(this.chatManager, this.configurationManager, server),
             new PlayerJoinListener(this.configurationManager, server),
             new PlayerQuitListener(this.configurationManager, server),
-            new CreateUserListener(this.userManager),
+            new CreateUserListener(this.userManager, this),
             new ScoreboardListener(config, this.scoreboardManager),
             new PlayerCommandPreprocessListener(this.configurationManager, server),
             new SignChangeListener(),

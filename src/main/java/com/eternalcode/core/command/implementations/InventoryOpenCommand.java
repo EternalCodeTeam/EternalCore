@@ -28,19 +28,20 @@ public class InventoryOpenCommand {
         this.server = server;
     }
 
-    @Execute(route = "enderchest", aliases = { "ec" })
+    @Execute(route = "enderchest")
     @Permission("eternalcore.command.inventoryopen.enderchest")
     public void enderchest(Player sender, @Arg(0) Player player) {
         sender.openInventory(player.getEnderChest());
     }
 
-    @Execute(route = "armor", aliases = { "ar" })
+    @Execute(route = "armor")
     @Permission("eternalcore.command.inventoryopen.armor")
     public void armor(Player sender, @Arg(0) Player player) {
         createInventory(player).open(sender);
     }
 
-    @Execute(route = "iventory", aliases = { "inv" })
+    @Execute(route = "iventory")
+    @Permission("eternalcore.command.inventoryopen.inventory")
     public void inventory(Player sender, @Arg(0) Player player) {
         sender.openInventory(player.getInventory());
     }
