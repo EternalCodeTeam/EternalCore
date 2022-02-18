@@ -43,9 +43,11 @@ public class GodCommand {
 
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }
+
         Player player = playerOption.get();
 
         player.setInvulnerable(!player.isInvulnerable());

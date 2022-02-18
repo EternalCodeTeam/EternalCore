@@ -25,6 +25,9 @@ public class WorkbenchCommand {
                 player.openWorkbench(null, true);
                 return;
             }
+
+            //TODO: send NO CONSOLE
+            return;
         }
 
         Player player = playerOption.get();

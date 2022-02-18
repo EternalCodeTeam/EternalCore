@@ -45,6 +45,7 @@ public class SpawnCommand {
                 sender.sendMessage(ChatUtils.color(this.messages.teleportSection.teleported));
                 return;
             }
+
             if (this.teleportManager.inTeleport(sender.getUniqueId())) {
                 sender.sendMessage(ChatUtils.color(this.messages.teleportSection.haveTeleport));
                 return;

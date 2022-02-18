@@ -36,9 +36,11 @@ public class ClearCommand {
                 this.clear(player);
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }
+
         Player player = playerOption.get();
 
         this.clear(player);

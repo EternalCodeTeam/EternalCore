@@ -39,9 +39,11 @@ public class HealCommand {
                 healPlayer(player);
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }
+
         Player player = playerOption.get();
 
         healPlayer(player);

@@ -36,9 +36,11 @@ public class TeleportCommand {
                 sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.successfulyyTeleported, "{PLAYER}", player.getName())));
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }
+
         Player playerArgument = playerOption.get();
 
         player.teleportAsync(playerArgument.getLocation());

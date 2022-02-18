@@ -45,9 +45,11 @@ public class FlyCommand {
 
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }
+
         Player player = playerOption.get();
 
         player.setAllowFlight(!player.getAllowFlight());

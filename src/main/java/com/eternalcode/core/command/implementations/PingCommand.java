@@ -27,12 +27,12 @@ public class PingCommand {
 
     @Execute
     public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-
         if (playerOption.isEmpty()) {
             if (sender instanceof Player player) {
                 sender.sendMessage(ChatUtils.color(message.otherMessages.pingMessage.replace("{PING}", String.valueOf(player.spigot().getPing()))));
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.message.argumentSection.onlyPlayer));
             return;
         }

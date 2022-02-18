@@ -30,13 +30,13 @@ public class FeedCommand {
 
     @Execute
     public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (playerOption.isEmpty()){
+        if (playerOption.isEmpty()) {
             if (sender instanceof Player player) {
                 player.setFoodLevel(20);
-
                 player.sendMessage(ChatUtils.color(this.messages.otherMessages.foodMessage));
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }

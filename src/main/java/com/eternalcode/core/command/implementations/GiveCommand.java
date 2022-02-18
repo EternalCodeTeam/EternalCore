@@ -39,6 +39,7 @@ public class GiveCommand {
                 player.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }

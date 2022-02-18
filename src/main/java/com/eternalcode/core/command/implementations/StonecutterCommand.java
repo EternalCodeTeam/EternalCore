@@ -25,6 +25,9 @@ public class StonecutterCommand {
                 player.openStonecutter(null, true);
                 return;
             }
+
+            //TODO: send NO CONSOLE
+            return;
         }
 
         Player player = playerOption.get();

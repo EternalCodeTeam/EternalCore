@@ -42,6 +42,7 @@ public class GamemodeCommand {
                 player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.gameModeMessage, "{GAMEMODE}", gameMode.name())));
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }

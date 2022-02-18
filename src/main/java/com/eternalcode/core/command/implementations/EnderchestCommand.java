@@ -26,9 +26,12 @@ public class EnderchestCommand {
                 return;
             }
 
-            Player player = playerOption.get();
-
-            player.openInventory(player.getEnderChest());
+            //TODO: send NO CONSOLE
+            return;
         }
+
+        Player player = playerOption.get();
+
+        player.openInventory(player.getEnderChest());
     }
 }

@@ -24,6 +24,9 @@ public class CartographyTableCommand {
                 player.openCartographyTable(null, true);
                 return;
             }
+
+            //TODO: send NO CONSOLE
+            return;
         }
 
         Player player = playerOption.get();

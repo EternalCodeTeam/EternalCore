@@ -14,6 +14,7 @@ import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.valid.AmountValidator;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,6 +25,8 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/speed <liczba> [gracz]")
 public class SpeedCommand {
 
+    private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(-1).max(10);
+
     private final MessagesConfiguration messages;
 
     public SpeedCommand(MessagesConfiguration messages) {
@@ -33,7 +36,7 @@ public class SpeedCommand {
     @Execute
     @MinArgs(1)
     public void execute(CommandSender sender, @Arg(0) Integer amount, @Arg(1) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (amount < - 10 || amount > 10) {
+        if (SPEED_AMOUNT_VALIDATOR.valid(amount)) {
             sender.sendMessage(ChatUtils.color(this.messages.otherMessages.speedBetweenZeroAndTen));
             return;
         }
@@ -46,9 +49,11 @@ public class SpeedCommand {
                 player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.speedSet, "{SPEED}", String.valueOf(amount))));
                 return;
             }
+
             sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
             return;
         }
+
         Player player = playerOption.get();
 
         player.setFlySpeed(amount / 10.0f);

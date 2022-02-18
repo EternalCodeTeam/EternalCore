@@ -27,6 +27,9 @@ public class GrindstoneCommand {
                 player.openGrindstone(null, true);
                 return;
             }
+
+            //TODO: send NO CONSOLE
+            return;
         }
 
         Player player = playerOption.get();
