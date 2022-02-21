@@ -1,9 +1,7 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.DateUtils;
-import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Server;

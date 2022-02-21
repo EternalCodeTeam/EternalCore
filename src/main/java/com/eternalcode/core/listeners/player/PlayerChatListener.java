@@ -1,7 +1,6 @@
 package com.eternalcode.core.listeners.player;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.utils.ChatUtils;

@@ -72,6 +72,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Contextual
     public static class Chat {
+        public List<String> languages = Arrays.asList("en", "pl");
         public double slowMode = 5.0;
         public boolean enabled = true;
         public boolean commandExact = false;

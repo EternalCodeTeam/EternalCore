@@ -48,8 +48,11 @@ import com.eternalcode.core.command.message.PermissionMessage;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.lang.LanguageManager;
+import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.configuration.lang.en.ENMessagesConfiguration;
+import com.eternalcode.core.configuration.lang.pl.PLMessagesConfiguration;
 import com.eternalcode.core.listeners.player.PlayerChatListener;
 import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listeners.player.PlayerDeathListener;
@@ -88,6 +91,7 @@ import panda.std.stream.PandaStream;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Plugin(name = "EternalCore", version = "1.0.2-APLHA")
 @Author("EternalCodeTeam")
@@ -99,6 +103,7 @@ public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
+    @Getter private LanguageManager languageManager;
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
     @Getter private TeleportManager teleportManager;
@@ -120,9 +125,16 @@ public class EternalCore extends JavaPlugin {
         this.configurationManager.loadAndRenderConfigs();
 
         PluginConfiguration config = configurationManager.getPluginConfiguration();
-        MessagesConfiguration messages = configurationManager.getMessagesConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
+
+        Stream.of(
+            new ENMessagesConfiguration(this.getDataFolder(), "en_messages.yml"),
+            new PLMessagesConfiguration(this.getDataFolder(), "pl_messages.yml")
+        ).filter(messages -> config.chat.languages.contains(messages.getLang())).forEach(messages -> {
+            this.configurationManager.loadAndRender(messages);
+            this.languageManager.registerLang(messages.getLang(), messages);
+        });
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
