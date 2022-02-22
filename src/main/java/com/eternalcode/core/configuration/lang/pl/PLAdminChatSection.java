@@ -9,6 +9,6 @@ import net.dzikoysk.cdn.entity.Contextual;
 @Contextual
 public class PLAdminChatSection implements MessagesConfiguration.AdminChatSection {
 
-    public String format = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
+    public String format = "&8[&4Administracja&8] &c{NICK}&8: &f{TEXT}";
 
 }

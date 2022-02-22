@@ -9,14 +9,14 @@ import net.dzikoysk.cdn.entity.Contextual;
 @Contextual
 public class PLChatSection implements MessagesConfiguration.ChatSection {
 
-    public String disabled = "&8» &cChat has been disabled by {NICK}!";
-    public String enabled = "&8» &aThe chat has been enabled by {NICK}!";
-    public String cleared = "&8» &6Chat has been cleared by {NICK}!";
-    public String alreadyDisabled = "&8» &aChat already off!";
-    public String alreadyEnabled = "&8» &aChat already on!";
-    public String slowModeSet = "&8» &aSlowmode set to: {SLOWMODE}";
-    public String slowMode = "&8» &cYou can write the next message for: &6{TIME}";
-    public String disable = "&8» &cChat is currently disabled!";
-    public String noCommand = "&8» &cCommand &e{COMMAND} &cdoesn't exists!";
+    public String disabled = "&8» &cCzat został wyłączony przez &6{NICK}&c!";
+    public String enabled = "&8» &aCzat został włączony przez &f{NICK}&a!";
+    public String cleared = "&8» &6Czat zotał wyczyszczony przez &c{NICK}&6!";
+    public String alreadyDisabled = "&4Blad: &cCzat jest juz wylaczony!";
+    public String alreadyEnabled = "&4Blad: &cCzat jest juz wlaczony!";
+    public String slowModeSet = "&8» &aSlowmode został ustawiony na {SLOWMODE}";
+    public String slowMode = "&8» &cNastępną wiadomość możesz wysłać za: &6{TIME}&c!";
+    public String disable = "&8» &cCzat jest aktualnie wyłaczony!";
+    public String noCommand = "&8» &cKomenda &e{COMMAND} &cnie istnieje!";
 
 }

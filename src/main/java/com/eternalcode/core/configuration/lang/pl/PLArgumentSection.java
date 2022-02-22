@@ -9,13 +9,13 @@ import net.dzikoysk.cdn.entity.Contextual;
 @Contextual
 public class PLArgumentSection implements MessagesConfiguration.ArgumentSection {
 
-    public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
-    public String offlinePlayer = "&8» &cThis player is currently offline!";
-    public String onlyPlayer = "&8» &cCommand is only for players!";
-    public String notNumber = "&8» &cArgument isnt a number!";
-    public String numberBiggerThanOrEqualZero = "&8» &cThe number must be greater than or equal to 0!";
-    public String noItem = "&8» &cYou need item to use this command!";
-    public String noMaterial = "&8» &cThis item doesn't exist";
-    public String noArgument = "&8» &cThis argument doesn't exist";
+    public String permissionMessage = "&4Blad: &cNie masz uprawnien do tej komendy! &7({PERMISSIONS})";
+    public String offlinePlayer = "&4Blad: &cTen gracz jest offline!";
+    public String onlyPlayer = "&4Blad: &cKomenda tylko dla graczy!";
+    public String notNumber = "&4Blad: &cArgument nie jest liczba!";
+    public String numberBiggerThanOrEqualZero = "&4Blad: &cLiczba musi byc rowna lub wieksza 0!";
+    public String noItem = "&4Blad: &cMusisz miec item w rece!";
+    public String noMaterial = "&4Blad: &cTaki material nie istenieje!";
+    public String noArgument = "&4Blad: &cTaki argument nie istenieje!";
 
 }

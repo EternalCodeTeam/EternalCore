@@ -10,6 +10,6 @@ import net.dzikoysk.cdn.entity.Contextual;
 public class PLHelpopSection implements MessagesConfiguration.HelpopSection {
 
     public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
-    public String send = "&8» &aThis message has been successfully sent to administration";
+    public String send = "&8» &aWiadomość została wysłana do administracji";
 
 }

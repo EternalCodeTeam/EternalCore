@@ -4,7 +4,6 @@ import com.eternalcode.core.configuration.lang.MessagesConfiguration;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,49 +12,48 @@ import java.util.List;
 @Contextual
 public class PLOtherMessages implements MessagesConfiguration.OtherMessages {
 
-    public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
-    public String successfullyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";
-    public String successfullyTeleportedPlayer = "&8» &aSuccessfuly teleported {PLAYER} to {ARG-PLAYER}!";
-    public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
-    public String clearMessage = "&8» &cYour inventory has been cleared!";
-    public String clearByMessage = "&8» &cPlayer {PLAYER} inventory cleared";
-    public String disposalTitle = "&f&lTrash";
-    public String foodMessage = "&8» &aYou've been feed!";
-    public String foodOtherMessage = "&8» &aYou've fed the {PLAYER}";
-    public String healMessage = "&8» &aYou've been heal!";
-    public String healedMessage = "&8» &cHealed &6{PLAYER}";
-    public String nullHatMessage = "&8» &cYou cannot use the /hat command.";
-    public String repairMessage = "&8» &aRepaired!";
-    public String skullMessage = "&8» &aPlayer {NICK} heads received";
-    public String killSelf = "&8» &cYou kill yourself!";
-    public String killedMessage = "&8» &cKilled {PLAYER}";
-    public String speedBetweenZeroAndTen = "&8» &cEnter speed from 0 to 10!";
-    public String speedSet = "&8» &cSpeed is set to {SPEED}";
-    public String speedSetBy = "&8» &cSpeed for {PLAYER} is set to {SPEED}";
-    public String godMessage = "&8» &cGod is now {STATE}";
-    public String godSetMessage = "&8» &cPlayer &6{PLAYER} god is now: {STATE}";
-    public String flyMessage = "&8» &cFly is now {STATE}";
-    public String flySetMessage = "&8» &cFly for &6{PLAYER} &cis now {STATE}";
-    public String giveReceived = "&8» &cYou have received: &6{ITEM}";
-    public String giveGiven = "&8» &cPlayer &6{PLAYER} &chas received &6{ITEM}";
-    public String spawnSet = "&8» &aSpawn set!";
-    public String spawnNoSet = "&8» &cSpawn is not set!";
-    public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {NICK}!";
-    public String spawnTeleportedOther = "&8» &cYou teleported player {NICK} to spawn!";
-    public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
-    public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
-    public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
-    public String pingMessage = "&8» &cYour ping is: &6{PING}ms";
-    public String pingOtherMessage = "&8» &cPing of the &6{PLAYER} &cis: &6{PING}ms";
-    @Description({ "", "# Whois messsage Style" })
-    public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
-        "&8» &7Target UUID: &f{UUID}",
-        "&8» &7Target address: &f{IP}",
-        "&8» &7Target walk speed: &f{WALK-SPEED}",
-        "&8» &7Target fly speed: &f{SPEED}",
-        "&8» &7Target ping: &f{PING}ms",
-        "&8» &7Target level: &f{LEVEL}",
-        "&8» &7Target health: &f{HEALTH}",
-        "&8» &7Target food level: &f{FOOD}");
+    public String successfullyReloaded = "&8» &aPrzeładowano plugin!";
+    public String successfullyTeleported = "&8» &aPrzeteleportowano do {PLAYER}!";
+    public String successfullyTeleportedPlayer = "&8» &aPrzeteleportowano {PLAYER} to {ARG-PLAYER}!";
+    public String alertMessagePrefix = "&c&lOGLOSZENIE: &7{BROADCAST}";
+    public String clearMessage = "&8» &aWyczyszczono ekwipunek!";
+    public String clearByMessage = "&8» &aWyczyszczono ekwipunek gracza {PLAYER}";
+    public String disposalTitle = "&f&lKosz";
+    public String foodMessage = "&8» &aZostałeś najedzony!";
+    public String foodOtherMessage = "&8» &aNajadłeś gracza {PLAYER}";
+    public String healMessage = "&8» &aZostałeś uleczony!";
+    public String healedMessage = "&8» &aUleczyłeś gracza {PLAYER}";
+    public String nullHatMessage = "&4Blad: &cNie możesz użyć /hat!";
+    public String repairMessage = "&8» &aNaprawiono!";
+    public String skullMessage = "&8» &aOtrzymałeś głowę gracza {PLAYER}";
+    public String killSelf = "&8» &cPopełniłeś samobójstwo!";
+    public String killedMessage = "&8» &cZabito gracza {PLAYER}";
+    public String speedBetweenZeroAndTen = "&4Blad: &cUstaw speed w przedziale 0-10!";
+    public String speedSet = "&8» &aUstawiono speed na {SPEED}";
+    public String speedSetBy = "&8» &cUstawiono {PLAYER} speeda na {SPEED}";
+    public String godMessage = "&8» &aGod został {STATE}";
+    public String godSetMessage = "&8» &aGod dla gracza &f{PLAYER} &azostał {STATE}";
+    public String flyMessage = "&8» &aLatanie zostało {STATE}";
+    public String flySetMessage = "&8» &aLatanie dla gracza &f{PLAYER} &azostało {STATE}";
+    public String giveReceived = "&8» &aOtrzymałeś &6{ITEM}";
+    public String giveGiven = "&8» &aGracz &f{PLAYER} &aotrzymał: &6{ITEM}";
+    public String spawnSet = "&8» &aUstawiono spawn!";
+    public String spawnNoSet = "&4Blad: &cSpawn nie jest ustawiony!";
+    public String spawnTeleportedBy = "&8» &aZostałeś przeteleportowany na spawn przez {NICK}!";
+    public String spawnTeleportedOther = "&8» &aGracz &f{NICK} &azostał przeteleportowany na spawn!";
+    public String gameModeNotCorrect = "&4Blad: &cNie prawidłowy typ!";
+    public String gameModeMessage = "&8» &aUstawiono tryb gry na: {GAMEMODE}";
+    public String gameModeSetMessage = "&8» &aUstawiono tryb gry graczowi &f{PLAYER} &ana: &f{GAMEMODE}";
+    public String pingMessage = "&8» &aTwój ping: &f{PING}ms";
+    public String pingOtherMessage = "&8» &aGracz &f{PLAYER} &ama: &f{PING}ms";
+    public List<String> whoisCommand = Arrays.asList("&8» &7Gracz: &f{PLAYER}",
+        "&8» &7UUID: &f{UUID}",
+        "&8» &7IP: &f{IP}",
+        "&8» &7Szybkość chodzenia: &f{WALK-SPEED}",
+        "&8» &7Szybkość latania: &f{SPEED}",
+        "&8» &7Opóźnienie: &f{PING}ms",
+        "&8» &7Poziom: &f{LEVEL}",
+        "&8» &7Zdrowie: &f{HEALTH}",
+        "&8» &7Poziom najedzenia: &f{FOOD}");
 
 }

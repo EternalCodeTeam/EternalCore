@@ -9,10 +9,10 @@ import net.dzikoysk.cdn.entity.Contextual;
 @Contextual
 public class PLTeleportSection implements MessagesConfiguration.TeleportSection {
 
-    public String actionBarMessage = "&aTeleporting in &f{TIME}";
-    public String cancel = "&8» &cYou've moved, teleportation canceled!";
-    public String teleported = "&8» &aTeleported!";
-    public String teleporting = "&8» &aTeleporting...";
-    public String haveTeleport = "&8» &cYou are in teleport!";
+    public String actionBarMessage = "&aTeleportacja za &f{TIME}";
+    public String cancel = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";
+    public String teleported = "&8» &aPrzeteleportowano!";
+    public String teleporting = "&8» &aTeleportuje...";
+    public String haveTeleport = "&4Blad: &cTeleportujesz się już!";
 
 }
