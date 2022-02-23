@@ -15,32 +15,32 @@ public class BukkitSchedulerImpl implements Scheduler {
 
     @Override
     public void runTask(Runnable task) {
-        this.rootScheduler.runTask(plugin, task);
+        this.rootScheduler.runTask(this.plugin, task);
     }
 
     @Override
     public void runTaskAsynchronously(Runnable task) {
-        this.rootScheduler.runTaskAsynchronously(plugin, task);
+        this.rootScheduler.runTaskAsynchronously(this.plugin, task);
     }
 
     @Override
     public void runTaskLater(Runnable task, long after) {
-        this.rootScheduler.runTaskLater(plugin, task, after);
+        this.rootScheduler.runTaskLater(this.plugin, task, after);
     }
 
     @Override
     public void runTaskLaterAsynchronously(Runnable task, long after) {
-        this.rootScheduler.runTaskLaterAsynchronously(plugin, task, after);
+        this.rootScheduler.runTaskLaterAsynchronously(this.plugin, task, after);
     }
 
     @Override
     public void runTaskTimer(Runnable task, long delay, long period) {
-        this.rootScheduler.runTaskTimer(plugin, task, delay, period);
+        this.rootScheduler.runTaskTimer(this.plugin, task, delay, period);
     }
 
     @Override
     public void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
-        this.rootScheduler.runTaskTimerAsynchronously(plugin, task, delay, period);
+        this.rootScheduler.runTaskTimerAsynchronously(this.plugin, task, delay, period);
     }
 
 }

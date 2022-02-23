@@ -55,6 +55,7 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
     public static class HelpopSection {
         public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String send = "&8» &aThis message has been successfully sent to administration";
+        public String cooldown = "&8» &cYou can use this command for: &6{TIME}";
     }
 
     @Contextual
