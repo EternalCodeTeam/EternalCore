@@ -36,9 +36,6 @@ dependencies {
     // expressible
     implementation "org.panda-lang:expressible:1.1.16"
 
-    // MiniMessages
-    implementation "net.kyori:adventure-text-minimessage:4.10.0-SNAPSHOT"
-
     // bStats
     implementation "org.bstats:bstats-bukkit:3.0.0"
 
@@ -54,7 +51,7 @@ dependencies {
     // tests
     testImplementation "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
     testImplementation "org.codehaus.groovy:groovy-all:3.0.9"
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
 }
 
 test { useJUnitPlatform() }
@@ -80,5 +77,5 @@ shadowJar {
     relocate "panda", "com.eternalcode.core.libs.panda"
     relocate "com.j256.ormlite", "com.eternalcode.core.libs.ormlite"
     relocate "dev.triumphteam.gui", "com.eternalcode.core.libs.gui"
-    relocate "net.kyori.adventure.text.minimessage", "com.eternalcode.core.libs.net.kyori.adventure.text.minimessage"
+    relocate "com.google.gson", "com.eternalcode.core.libs.com.google.gson"
 }
