@@ -28,7 +28,7 @@ dependencies {
     compileOnly "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
 
     // LiteCommands
-    implementation "dev.rollczi.litecommands:bukkit:1.7.1"
+    implementation "dev.rollczi.litecommands:bukkit:1.8.0"
 
     // cdn configs
     implementation "net.dzikoysk:cdn:1.13.9"
