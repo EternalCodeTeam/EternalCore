@@ -51,7 +51,7 @@ public class HelpOpCommand {
         if (this.cooldowns.asMap().getOrDefault(uuid, 0L) > System.currentTimeMillis()) {
             long time = Math.max(this.cooldowns.asMap().getOrDefault(uuid, 0L) - System.currentTimeMillis(), 0L);
 
-            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.helpOpSection.cooldown, "{TIME}", DateUtils.durationToString(time))));
+            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.helpOpSection.coolDown, "{TIME}", DateUtils.durationToString(time))));
             return;
         }
 

@@ -11,5 +11,6 @@ public class PLHelpopSection implements MessagesConfiguration.HelpopSection {
 
     public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
     public String send = "&8» &aWiadomość została wysłana do administracji";
+    public String coolDown = "&8» &cMożesz użyć tej komendy dopiero za &6{TIME}!";
 
 }

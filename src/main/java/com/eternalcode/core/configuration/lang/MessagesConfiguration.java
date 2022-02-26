@@ -27,6 +27,7 @@ public interface MessagesConfiguration {
     interface HelpopSection {
         String format();
         String send();
+        String coolDown();
     }
 
     interface AdminChatSection {
