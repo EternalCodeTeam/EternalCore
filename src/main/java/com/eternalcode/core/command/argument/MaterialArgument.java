@@ -33,7 +33,7 @@ public class MaterialArgument implements SingleArgumentHandler<Material> {
     public List<String> tabulation(String command, String[] args) {
         return Arrays.stream(Material.values())
             .map(Material::name)
-            .map(String::toUpperCase)
+            .map(String::toLowerCase)
             .toList();
 
     }
