@@ -121,6 +121,9 @@ public class MessagesConfiguration extends AbstractConfigWithResource {
         public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
         public String pingMessage = "&8» &cYour ping is: &6{PING}ms";
         public String pingOtherMessage = "&8» &cPing of the &6{PLAYER} &cis: &6{PING}ms";
+        public String onlineMessage = "&8» &6On server now is: &6{ONLINE} &cplayers!";
+        public String listMessage = "&8» &6On server is: &8({ONLINE}) &6{PLAYERS}";
+
         @Description({ "", "# Whois messsage Style" })
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
             "&8» &7Target UUID: &f{UUID}",

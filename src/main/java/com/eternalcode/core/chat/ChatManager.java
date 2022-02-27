@@ -4,24 +4,28 @@
 
 package com.eternalcode.core.chat;
 
+import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import lombok.Getter;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class ChatManager {
 
-    private final Cache<UUID, Long> slowdown;
-    private double chatDelay;
-    private boolean chatEnabled;
+    private final ConfigurationManager configurationManager;
+    @Getter private final Cache<UUID, Long> slowdown;
+    @Getter private double chatDelay;
+    @Getter private boolean chatEnabled;
 
-    public ChatManager(PluginConfiguration config) {
-        this.chatDelay = config.chat.slowMode;
-        this.chatEnabled = config.chat.enabled;
+    public ChatManager(ConfigurationManager configurationManager) {
+        PluginConfiguration.Chat chat = configurationManager.getPluginConfiguration().chat;
+        this.configurationManager = configurationManager;
+
+        this.chatDelay = chat.slowMode;
+        this.chatEnabled = chat.enabled;
         this.slowdown = CacheBuilder.newBuilder()
             .expireAfterWrite((long) (this.chatDelay + 10), TimeUnit.SECONDS)
             .build();
@@ -31,12 +35,10 @@ public class ChatManager {
         this.slowdown.put(userUuid, (long) (System.currentTimeMillis() + this.chatDelay * 1000L));
     }
 
-    public boolean isChatEnabled() {
-        return chatEnabled;
-    }
-
     public void setChatEnabled(boolean chatEnabled) {
         this.chatEnabled = chatEnabled;
+
+        this.configurationManager.render(this.configurationManager.getPluginConfiguration());
     }
 
     public boolean isSlowedOnChat(UUID userUuid) {
@@ -47,15 +49,9 @@ public class ChatManager {
         return Math.max(this.slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
     }
 
-    public double getChatDelay() {
-        return chatDelay;
-    }
-
     public void setChatDelay(double chatDelay) {
         this.chatDelay = chatDelay;
-    }
 
-    public Map<UUID, Long> getSlowdown() {
-        return Collections.unmodifiableMap(this.slowdown.asMap());
+        this.configurationManager.render(this.configurationManager.getPluginConfiguration());
     }
 }
