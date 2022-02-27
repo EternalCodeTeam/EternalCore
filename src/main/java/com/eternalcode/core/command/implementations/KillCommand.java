@@ -28,7 +28,17 @@ public class KillCommand {
     }
 
     @Execute
-    public void execute(CommandSender sender, @Arg(0) Player player) {
+    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
+        if (playerOption.isEmpty()) {
+            if (sender instanceof Player player) {
+                killPlayer(player);
+                return;
+            }
+            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            return;
+        }
+        Player player = playerOption.get();
+
         killPlayer(player);
 
         sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.killedMessage, "{PLAYER}", player.getName())));

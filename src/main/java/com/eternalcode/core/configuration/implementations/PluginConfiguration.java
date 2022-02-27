@@ -84,6 +84,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     public static class Format {
         public String enabled = "&aenabled";
         public String disabled = "&6disabled";
+        public String separator = "&7, ";
     }
 
     @Contextual
