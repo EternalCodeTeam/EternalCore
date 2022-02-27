@@ -44,21 +44,21 @@ public class ChatCommand {
 
     @Execute(route = "on")
     public void enable(CommandSender sender) {
-        if (this.chatManager.isChatEnabled()) {
+        if (this.chatManager.getChatSettings().isChatEnabled()) {
             sender.sendMessage(ChatUtils.component(this.message.chatSection.alreadyEnabled));
             return;
         }
-        this.chatManager.setChatEnabled(true);
+        this.chatManager.getChatSettings().setChatEnabled(true);
         this.server.broadcast(ChatUtils.component(this.message.chatSection.enabled.replace("{NICK}", sender.getName())));
     }
 
     @Execute(route = "off")
     public void disable(CommandSender sender) {
-        if (!this.chatManager.isChatEnabled()) {
+        if (!this.chatManager.getChatSettings().isChatEnabled()) {
             sender.sendMessage(ChatUtils.component(this.message.chatSection.alreadyDisabled));
             return;
         }
-        this.chatManager.setChatEnabled(false);
+        this.chatManager.getChatSettings().setChatEnabled(false);
         this.server.broadcast(ChatUtils.component(this.message.chatSection.disabled.replace("{NICK}", sender.getName())));
     }
 
@@ -68,7 +68,7 @@ public class ChatCommand {
         Option.attempt(NumberFormatException.class, () -> Double.parseDouble(args[1])).peek(amount -> {
             Valid.when(amount < 0.0D, this.message.argumentSection.numberBiggerThanOrEqualZero);
 
-            this.chatManager.setChatDelay(amount);
+            this.chatManager.getChatSettings().setChatDelay(amount);
             sender.sendMessage(ChatUtils.color(this.message.chatSection.slowModeSet.replace("{SLOWMODE}", args[1])));
         }).orThrow(() -> new ValidationCommandException(this.message.argumentSection.notNumber));
     }

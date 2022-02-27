@@ -143,7 +143,7 @@ public class EternalCore extends JavaPlugin {
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
-        this.chatManager = new ChatManager(this.configurationManager);
+        this.chatManager = new ChatManager(config.chat);
         this.teleportManager = new TeleportManager();
 
         // bStats metrics
@@ -238,6 +238,10 @@ public class EternalCore extends JavaPlugin {
     @Override
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
+
+        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
+
+        this.configurationManager.render(config);
     }
 
     private void softwareCheck() {

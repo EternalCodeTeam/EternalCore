@@ -39,7 +39,7 @@ public class PlayerChatListener implements Listener {
 
         UUID uuid = player.getUniqueId();
 
-        if (this.chatManager.isSlowedOnChat(uuid) && !player.hasPermission("enernalcore.chat.noslowmode")) {
+        if (this.chatManager.hasSlowedChat(uuid) && !player.hasPermission("enernalcore.chat.noslowmode")) {
             long time = this.chatManager.getSlowDown(uuid);
 
             player.sendMessage(ChatUtils.color(message.chatSection.slowMode).replace("{TIME}", DateUtils.durationToString(time)));
@@ -56,6 +56,6 @@ public class PlayerChatListener implements Listener {
                 );
         }
 
-        this.chatManager.useChat(uuid);
+        this.chatManager.markUseChat(uuid);
     }
 }

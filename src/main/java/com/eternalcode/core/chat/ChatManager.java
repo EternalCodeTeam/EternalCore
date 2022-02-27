@@ -4,44 +4,45 @@
 
 package com.eternalcode.core.chat;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import lombok.Getter;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class ChatManager {
 
-    private final ConfigurationManager configurationManager;
-    @Getter private final Cache<UUID, Long> slowdown;
-    @Getter private double chatDelay;
-    @Getter private boolean chatEnabled;
+    private final Cache<UUID, Long> slowdown;
+    private ChatSettings chatSettings = ChatSettings.NONE;
 
-    public ChatManager(ConfigurationManager configurationManager) {
-        PluginConfiguration.Chat chat = configurationManager.getPluginConfiguration().chat;
-        this.configurationManager = configurationManager;
-
-        this.chatDelay = chat.slowMode;
-        this.chatEnabled = chat.enabled;
+    public ChatManager() {
         this.slowdown = CacheBuilder.newBuilder()
-            .expireAfterWrite((long) (this.chatDelay + 10), TimeUnit.SECONDS)
+            .expireAfterWrite((long) (this.chatSettings.getChatDelay() + 10), TimeUnit.SECONDS)
             .build();
     }
 
-    public void useChat(UUID userUuid) {
-        this.slowdown.put(userUuid, (long) (System.currentTimeMillis() + this.chatDelay * 1000L));
+    public ChatManager(ChatSettings chatSettings) {
+        this.chatSettings = chatSettings;
+        this.slowdown = CacheBuilder.newBuilder()
+            .expireAfterWrite((long) (this.chatSettings.getChatDelay() + 10), TimeUnit.SECONDS)
+            .build();
     }
 
-    public void setChatEnabled(boolean chatEnabled) {
-        this.chatEnabled = chatEnabled;
-
-        this.configurationManager.render(this.configurationManager.getPluginConfiguration());
+    public ChatSettings getChatSettings() {
+        return chatSettings;
     }
 
-    public boolean isSlowedOnChat(UUID userUuid) {
+    public void setChatSettings(ChatSettings chatSettings) {
+        this.chatSettings = chatSettings;
+    }
+
+    public void markUseChat(UUID userUuid) {
+        this.slowdown.put(userUuid, (long) (System.currentTimeMillis() + this.chatSettings.getChatDelay() * 1000L));
+    }
+
+    public boolean hasSlowedChat(UUID userUuid) {
         return this.slowdown.asMap().getOrDefault(userUuid, 0L) > System.currentTimeMillis();
     }
 
@@ -49,9 +50,8 @@ public class ChatManager {
         return Math.max(this.slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
     }
 
-    public void setChatDelay(double chatDelay) {
-        this.chatDelay = chatDelay;
-
-        this.configurationManager.render(this.configurationManager.getPluginConfiguration());
+    public Map<UUID, Long> getSlowdown() {
+        return Collections.unmodifiableMap(this.slowdown.asMap());
     }
+
 }
