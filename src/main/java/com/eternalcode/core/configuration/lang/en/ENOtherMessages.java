@@ -47,6 +47,11 @@ public class ENOtherMessages implements MessagesConfiguration.OtherMessages {
     public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
     public String pingMessage = "&8» &cYour ping is: &6{PING}ms";
     public String pingOtherMessage = "&8» &cPing of the &6{PLAYER} &cis: &6{PING}ms";
+    public String onlineMessage = "&8» &6On server now is: &f{ONLINE} &6players!";
+    public String listMessage = "&8» &6On server is: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
+    public String tposMessage = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+    public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+    public String nameMessage = "&8» &6New name is: &6{NAME}";
     @Description({ "", "# Whois messsage Style" })
     public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
         "&8» &7Target UUID: &f{UUID}",

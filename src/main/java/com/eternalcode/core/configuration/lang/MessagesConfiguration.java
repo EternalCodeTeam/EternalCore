@@ -3,7 +3,6 @@ package com.eternalcode.core.configuration.lang;
 import com.eternalcode.core.language.Language;
 
 import java.util.List;
-import java.util.Locale;
 
 public interface MessagesConfiguration {
 
@@ -92,6 +91,11 @@ public interface MessagesConfiguration {
         String gameModeSetMessage();
         String pingMessage();
         String pingOtherMessage();
+        String onlineMessage();
+            String listMessage();
+            String tposMessage();
+                String tposByMessage();
+        String nameMessage();
         List<String> whoisCommand();
     }
 }
