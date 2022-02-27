@@ -24,7 +24,7 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/speed <liczba> [gracz]")
 public class SpeedCommand {
 
-    private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(-1).max(10);
+    private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(0).max(10);
 
     private final MessagesConfiguration messages;
 
@@ -35,7 +35,7 @@ public class SpeedCommand {
     @Execute
     @MinArgs(1)
     public void execute(CommandSender sender, @Arg(0) Integer amount, @Arg(1) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (SPEED_AMOUNT_VALIDATOR.valid(amount)) {
+        if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
             sender.sendMessage(ChatUtils.color(this.messages.otherMessages.speedBetweenZeroAndTen));
             return;
         }

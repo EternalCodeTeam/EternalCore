@@ -1,10 +1,13 @@
 package com.eternalcode.core.configuration.lang;
 
+import com.eternalcode.core.language.Language;
+
 import java.util.List;
+import java.util.Locale;
 
 public interface MessagesConfiguration {
 
-    String getLang();
+    Language getLanguage();
 
     ArgumentSection getArgumentSection();
     HelpopSection getHelpOpSection();

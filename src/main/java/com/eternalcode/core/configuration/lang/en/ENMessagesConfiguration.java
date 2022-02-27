@@ -2,6 +2,7 @@ package com.eternalcode.core.configuration.lang.en;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.language.Language;
 import lombok.Getter;
 
 import java.io.File;
@@ -21,8 +22,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENOtherMessages otherMessages = new ENOtherMessages();
 
     @Override
-    public String getLang() {
-        return "en";
+    public Language getLanguage() {
+        return Language.EN;
     }
-
 }

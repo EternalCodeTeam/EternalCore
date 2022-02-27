@@ -49,7 +49,7 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.configuration.lang.LanguageManager;
+import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.configuration.lang.MessagesConfiguration;
 import com.eternalcode.core.configuration.lang.en.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.pl.PLMessagesConfiguration;
@@ -131,9 +131,9 @@ public class EternalCore extends JavaPlugin {
         Stream.of(
             new ENMessagesConfiguration(this.getDataFolder(), "en_messages.yml"),
             new PLMessagesConfiguration(this.getDataFolder(), "pl_messages.yml")
-        ).filter(messages -> config.chat.languages.contains(messages.getLang())).forEach(messages -> {
+        ).filter(messages -> config.chat.languages.contains(messages.getLanguage())).forEach(messages -> {
             this.configurationManager.loadAndRender(messages);
-            this.languageManager.registerLang(messages.getLang(), messages);
+            this.languageManager.registerLang(messages.getLanguage(), messages);
         });
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);

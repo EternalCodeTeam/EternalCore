@@ -4,11 +4,13 @@
 
 package com.eternalcode.core.configuration;
 
+import com.eternalcode.core.configuration.composers.LanguageComposer;
 import com.eternalcode.core.configuration.composers.LocationComposer;
 import com.eternalcode.core.configuration.composers.StringComposer;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.language.Language;
 import lombok.Getter;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
@@ -21,6 +23,7 @@ public class ConfigurationManager {
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
+        .withComposer(Language.class, new LanguageComposer())
         .withComposer(Location.class, new LocationComposer())
         .withComposer(String.class, new StringComposer())
         .build();

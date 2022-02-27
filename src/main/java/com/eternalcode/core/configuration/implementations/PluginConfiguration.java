@@ -5,6 +5,7 @@
 package com.eternalcode.core.configuration.implementations;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.language.Language;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Sound;
@@ -72,7 +73,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Contextual
     public static class Chat {
-        public List<String> languages = Arrays.asList("en", "pl");
+        public List<Language> languages = Arrays.asList(Language.EN, Language.PL);
         public double helpopCooldown = 60.0;
         public double slowMode = 5.0;
         public boolean enabled = true;

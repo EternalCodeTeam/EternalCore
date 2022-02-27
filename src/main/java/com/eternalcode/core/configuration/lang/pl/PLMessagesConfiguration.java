@@ -2,6 +2,7 @@ package com.eternalcode.core.configuration.lang.pl;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.language.Language;
 import lombok.Getter;
 
 import java.io.File;
@@ -21,8 +22,8 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public PLOtherMessages otherMessages = new PLOtherMessages();
 
     @Override
-    public String getLang() {
-        return "pl";
+    public Language getLanguage() {
+        return Language.PL;
     }
 
 }
