@@ -33,6 +33,8 @@ import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.HelpOpCommand;
 import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
+import com.eternalcode.core.command.implementations.ListCommand;
+import com.eternalcode.core.command.implementations.OnlineCommand;
 import com.eternalcode.core.command.implementations.PingCommand;
 import com.eternalcode.core.command.implementations.RepairCommand;
 import com.eternalcode.core.command.implementations.ScoreboardCommand;
@@ -127,7 +129,7 @@ public class EternalCore extends JavaPlugin {
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
-        this.chatManager = new ChatManager(config);
+        this.chatManager = new ChatManager(this.configurationManager);
         this.teleportManager = new TeleportManager();
 
         // bStats metrics
@@ -190,7 +192,10 @@ public class EternalCore extends JavaPlugin {
                 GiveCommand.class,
                 SetSpawnCommand.class,
                 SpawnCommand.class,
-                PingCommand.class
+                PingCommand.class,
+                OnlineCommand.class,
+                ListCommand.class
+
             )
             .register();
 
@@ -218,13 +223,6 @@ public class EternalCore extends JavaPlugin {
     @Override
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
-
-        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
-
-        config.chat.enabled = chatManager.isChatEnabled();
-        config.chat.slowMode = chatManager.getChatDelay();
-
-        this.configurationManager.render(config);
     }
 
     private void softwareCheck() {
