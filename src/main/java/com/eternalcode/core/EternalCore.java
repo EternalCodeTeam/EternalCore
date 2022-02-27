@@ -34,6 +34,7 @@ import com.eternalcode.core.command.implementations.HelpOpCommand;
 import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
 import com.eternalcode.core.command.implementations.ListCommand;
+import com.eternalcode.core.command.implementations.NameCommand;
 import com.eternalcode.core.command.implementations.OnlineCommand;
 import com.eternalcode.core.command.implementations.PingCommand;
 import com.eternalcode.core.command.implementations.RepairCommand;
@@ -44,6 +45,7 @@ import com.eternalcode.core.command.implementations.SpawnCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
 import com.eternalcode.core.command.implementations.TeleportCommand;
+import com.eternalcode.core.command.implementations.TposCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.command.message.PermissionMessage;
@@ -194,8 +196,9 @@ public class EternalCore extends JavaPlugin {
                 SpawnCommand.class,
                 PingCommand.class,
                 OnlineCommand.class,
-                ListCommand.class
-
+                ListCommand.class,
+                TposCommand.class,
+                NameCommand.class
             )
             .register();
 

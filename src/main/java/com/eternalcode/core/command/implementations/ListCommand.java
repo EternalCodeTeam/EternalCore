@@ -8,8 +8,11 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import panda.utilities.text.Formatter;
 import panda.utilities.text.Joiner;
+
+import java.util.stream.Collectors;
 
 @Section(route = "list")
 @Permission("eternalcore.command.list")
@@ -29,7 +32,7 @@ public class ListCommand {
     public void execute(CommandSender sender) {
         Formatter formatter = new Formatter()
             .register("{ONLINE}", this.server.getOnlinePlayers().size())
-            .register("{PLAYERS}", Joiner.on(this.config.format.separator).join(this.server.getOnlinePlayers()));
+            .register("{PLAYERS}", Joiner.on(this.config.format.separator).join(this.server.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList())));
 
         sender.sendMessage(ChatUtils.color(formatter.format(this.messages.otherMessages.listMessage)));
     }
