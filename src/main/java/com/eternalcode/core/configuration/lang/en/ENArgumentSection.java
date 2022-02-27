@@ -1,13 +1,13 @@
 package com.eternalcode.core.configuration.lang.en;
 
-import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.configuration.lang.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 
 @Getter @Accessors(fluent = true)
 @Contextual
-public class ENArgumentSection implements MessagesConfiguration.ArgumentSection {
+public class ENArgumentSection implements Messages.ArgumentSection {
 
     public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
     public String offlinePlayer = "&8» &cThis player is currently offline!";

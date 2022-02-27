@@ -28,12 +28,12 @@ import java.util.concurrent.TimeUnit;
 @UsageMessage("&8» &cPoprawne użycie &7/helpop <text>")
 public class HelpOpCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
     private final Cache<UUID, Long> cooldowns;
     private final Server server;
 
-    public HelpOpCommand(MessagesConfiguration messages, PluginConfiguration config, Server server) {
+    public HelpOpCommand(AudiencesService audiencesService, PluginConfiguration config, Server server) {
         this.messages = messages;
         this.config = config;
         this.server = server;

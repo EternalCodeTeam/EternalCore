@@ -14,9 +14,9 @@ public class SetSpawnCommand {
 
     private final ConfigurationManager configurationManager;
     private final LocationsConfiguration locations;
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public SetSpawnCommand(ConfigurationManager configurationManager, LocationsConfiguration locations, MessagesConfiguration messages) {
+    public SetSpawnCommand(ConfigurationManager configurationManager, LocationsConfiguration locations, AudiencesService audiencesService) {
         this.configurationManager = configurationManager;
         this.locations = locations;
         this.messages = messages;

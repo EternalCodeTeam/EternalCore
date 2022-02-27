@@ -23,10 +23,10 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/fly <player>")
 public class FlyCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
 
-    public FlyCommand(MessagesConfiguration messages, PluginConfiguration config) {
+    public FlyCommand(AudiencesService audiencesService, PluginConfiguration config) {
         this.messages = messages;
         this.config = config;
     }

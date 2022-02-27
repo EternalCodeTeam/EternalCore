@@ -22,9 +22,9 @@ import panda.utilities.text.Formatter;
 @UsageMessage("&8» &cPoprawne użycie &7/tpos <x> <y> <z> [gracz]")
 public class TposCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public TposCommand(MessagesConfiguration messages) {
+    public TposCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

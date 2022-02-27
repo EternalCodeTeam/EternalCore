@@ -19,9 +19,9 @@ import org.bukkit.inventory.PlayerInventory;
 @UsageMessage("&8» &cPoprawne użycie &7/hat")
 public class HatCommand {
 
-    private final MessagesConfiguration message;
+    private final AudiencesService audiencesService;
 
-    public HatCommand(MessagesConfiguration message) {
+    public HatCommand(AudiencesService audiencesService) {
         this.message = message;
     }
 

@@ -2,18 +2,20 @@ package com.eternalcode.core.user;
 
 import com.eternalcode.core.language.Language;
 
+import java.util.function.Supplier;
+
 public class SettingsImpl implements Settings {
 
-    private final ClientSettings clientSettings;
+    private final Supplier<ClientSettings> clientSettings;
     private Language language;
 
-    public SettingsImpl(ClientSettings clientSettings) {
+    public SettingsImpl(Supplier<ClientSettings> clientSettings) {
         this.clientSettings = clientSettings;
     }
 
     @Override
     public Language getLanguage() {
-        return language != null ? language : Language.fromLocate(clientSettings.getLocate());
+        return language != null ? language : Language.fromLocate(clientSettings.get().getLocate());
     }
 
     @Override

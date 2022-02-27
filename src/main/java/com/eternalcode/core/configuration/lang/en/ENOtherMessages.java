@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.lang.en;
 
-import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.configuration.lang.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter @Accessors(fluent = true)
 @Contextual
-public class ENOtherMessages implements MessagesConfiguration.OtherMessages {
+public class ENOtherMessages implements Messages.OtherMessages {
 
     public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
     public String successfullyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";

@@ -24,7 +24,7 @@ import panda.utilities.StringUtils;
 @UsageMessage("&8» &cPoprawne użycie &7/skull <player>")
 public class SkullCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final EternalCore eternalCore;
 
     public SkullCommand(EternalCore eternalCore) {

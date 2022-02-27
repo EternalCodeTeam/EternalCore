@@ -12,10 +12,10 @@ import org.bukkit.command.CommandSender;
 @Permission("eternalcore.command.online")
 public class OnlineCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final Server server;
 
-    public OnlineCommand(MessagesConfiguration messages, Server server) {
+    public OnlineCommand(AudiencesService audiencesService, Server server) {
         this.messages = messages;
         this.server = server;
     }

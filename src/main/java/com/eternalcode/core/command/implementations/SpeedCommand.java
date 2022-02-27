@@ -26,9 +26,9 @@ public class SpeedCommand {
 
     private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(0).max(10);
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public SpeedCommand(MessagesConfiguration messages) {
+    public SpeedCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

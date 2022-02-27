@@ -21,10 +21,10 @@ import panda.std.Option;
 @Permission("eternalcore.command.god")
 public class GodCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
 
-    public GodCommand(MessagesConfiguration messages, PluginConfiguration configuration) {
+    public GodCommand(AudiencesService audiencesService, PluginConfiguration configuration) {
         this.config = configuration;
         this.messages = messages;
     }

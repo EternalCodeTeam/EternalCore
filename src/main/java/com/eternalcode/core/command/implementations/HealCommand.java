@@ -24,9 +24,9 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/heal <player>")
 public class HealCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public HealCommand(MessagesConfiguration messages) {
+    public HealCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

@@ -20,9 +20,9 @@ public class SpawnCommand {
 
     private final LocationsConfiguration locations;
     private final TeleportManager teleportManager;
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public SpawnCommand(LocationsConfiguration locations, MessagesConfiguration messages, TeleportManager teleportManager) {
+    public SpawnCommand(LocationsConfiguration locations, AudiencesService audiencesService, TeleportManager teleportManager) {
         this.teleportManager = teleportManager;
         this.locations = locations;
         this.messages = messages;

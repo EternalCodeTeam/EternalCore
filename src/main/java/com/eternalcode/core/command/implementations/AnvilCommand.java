@@ -4,8 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
@@ -20,10 +20,10 @@ import panda.std.Option;
 @Permission("eternalcore.command.anvil")
 public class AnvilCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public AnvilCommand(MessagesConfiguration messages) {
-        this.messages = messages;
+    public AnvilCommand(AudiencesService audiencesService) {
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -34,11 +34,12 @@ public class AnvilCommand {
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
         Player player = playerOption.get();
+
         player.openAnvil(null, true);
     }
 }

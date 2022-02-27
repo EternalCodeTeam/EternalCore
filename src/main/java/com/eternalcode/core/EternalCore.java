@@ -5,7 +5,7 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.chat.MessageAction;
+import com.eternalcode.core.chat.audience.NotificationType;
 import com.eternalcode.core.command.argument.AmountArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.MaterialArgument;
@@ -54,7 +54,7 @@ import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.configuration.lang.en.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.pl.PLMessagesConfiguration;
 import com.eternalcode.core.listeners.player.PlayerChatListener;
@@ -160,11 +160,11 @@ public class EternalCore extends JavaPlugin {
             .argument(Option.class, new PlayerArgument(messages, server).toOptionHandler())
             .argument(Material.class, new MaterialArgument(messages))
             .argument(GameMode.class, new GameModeArgument(messages))
-            .argument(MessageAction.class, new MessageActionArgument(messages))
+            .argument(NotificationType.class, new MessageActionArgument(messages))
 
             .bind(Player.class, new PlayerSenderBind(messages))
             .bind(ConfigurationManager.class, () -> this.configurationManager)
-            .bind(MessagesConfiguration.class, () -> messages)
+            .bind(Messages.class, () -> messages)
             .bind(PluginConfiguration.class, () -> config)
             .bind(LocationsConfiguration.class, () -> locations)
             .bind(TeleportManager.class, () -> this.teleportManager)

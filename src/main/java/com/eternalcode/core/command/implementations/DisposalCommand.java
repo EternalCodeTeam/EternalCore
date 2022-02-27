@@ -16,10 +16,10 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.disposal")
 public class DisposalCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final Server server;
 
-    public DisposalCommand(MessagesConfiguration messages, Server server) {
+    public DisposalCommand(AudiencesService audiencesService, Server server) {
         this.messages = messages;
         this.server = server;
     }

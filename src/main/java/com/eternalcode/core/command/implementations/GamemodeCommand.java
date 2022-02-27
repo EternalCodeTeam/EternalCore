@@ -25,9 +25,9 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/gamemode <0/1/2/3> <player>")
 public class GamemodeCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public GamemodeCommand(MessagesConfiguration messages) {
+    public GamemodeCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

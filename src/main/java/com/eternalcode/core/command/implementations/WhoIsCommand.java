@@ -20,9 +20,9 @@ import org.bukkit.entity.Player;
 @UsageMessage("&8» &cPoprawne użycie &7/whois <player>")
 public class WhoIsCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public WhoIsCommand(MessagesConfiguration messages) {
+    public WhoIsCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

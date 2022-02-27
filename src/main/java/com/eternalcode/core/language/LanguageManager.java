@@ -1,6 +1,6 @@
 package com.eternalcode.core.language;
 
-import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.user.Settings;
 import com.eternalcode.core.user.User;
 
@@ -10,30 +10,33 @@ import java.util.UUID;
 
 public class LanguageManager {
 
-    private MessagesConfiguration defaultMessages;
-    private final Map<Language, MessagesConfiguration> translatedMessages = new HashMap<>();
-    private final Map<UUID, Language> locale = new HashMap<>();
+    private Messages defaultMessages;
+    private final Map<Language, Messages> translatedMessages = new HashMap<>();
 
-    public LanguageManager(MessagesConfiguration defaultMessages) {
+    public LanguageManager(Messages defaultMessages) {
         this.defaultMessages = defaultMessages;
     }
 
-    public void registerLang(Language language, MessagesConfiguration translated) {
+    public void registerLang(Language language, Messages translated) {
         this.translatedMessages.put(language, translated);
     }
 
-    public void setDefaultMessages(MessagesConfiguration defaultMessages) {
+    public void setDefaultMessages(Messages defaultMessages) {
         this.defaultMessages = defaultMessages;
     }
 
-    public MessagesConfiguration getDefaultMessages() {
+    public Messages getDefaultMessages() {
         return defaultMessages;
     }
 
-    public MessagesConfiguration getMessages(User user) {
-        Settings settings = user.getSettings();
+    public Messages getMessages(User user) {
+        LanguageSettings settings = user.getSettings();
         Language language = settings.getLanguage();
 
+        return translatedMessages.getOrDefault(language, defaultMessages);
+    }
+
+    public Messages getMessages(Language language) {
         return translatedMessages.getOrDefault(language, defaultMessages);
     }
 

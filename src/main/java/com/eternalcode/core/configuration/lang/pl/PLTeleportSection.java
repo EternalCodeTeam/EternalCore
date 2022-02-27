@@ -1,13 +1,13 @@
 package com.eternalcode.core.configuration.lang.pl;
 
-import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.configuration.lang.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 
 @Getter @Accessors(fluent = true)
 @Contextual
-public class PLTeleportSection implements MessagesConfiguration.TeleportSection {
+public class PLTeleportSection implements Messages.TeleportSection {
 
     public String actionBarMessage = "&aTeleportacja za &f{TIME}";
     public String cancel = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";

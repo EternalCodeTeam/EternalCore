@@ -22,9 +22,9 @@ import panda.std.Option;
 @Permission("eternalcore.command.clear")
 public class ClearCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public ClearCommand(MessagesConfiguration message) {
+    public ClearCommand(AudiencesService audiencesService) {
         this.messages = message;
     }
 

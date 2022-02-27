@@ -22,9 +22,9 @@ import panda.std.Option;
 @Permission("eternalcore.command.grindstone")
 public class GrindstoneCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public GrindstoneCommand(MessagesConfiguration messages) {
+    public GrindstoneCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

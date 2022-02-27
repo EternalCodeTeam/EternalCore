@@ -4,16 +4,16 @@ import com.eternalcode.core.language.Language;
 
 import java.util.List;
 
-public interface MessagesConfiguration {
+public interface Messages {
 
     Language getLanguage();
 
-    ArgumentSection getArgumentSection();
-    HelpopSection getHelpOpSection();
-    AdminChatSection getAdminChatSection();
-    ChatSection getChatSection();
-    TeleportSection getTeleportSection();
-    OtherMessages getOtherMessages();
+    ArgumentSection argument();
+    HelpopSection helpOp();
+    AdminChatSection adminChat();
+    ChatSection chat();
+    TeleportSection teleport();
+    OtherMessages other();
 
     interface ArgumentSection {
         String permissionMessage();
@@ -52,7 +52,7 @@ public interface MessagesConfiguration {
         String alreadyEnabled();
         String slowModeSet();
         String slowMode();
-        String disable();
+        String disabledChatInfo();
         String noCommand();
     }
 

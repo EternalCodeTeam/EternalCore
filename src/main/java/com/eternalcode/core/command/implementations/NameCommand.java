@@ -18,9 +18,9 @@ import org.bukkit.inventory.PlayerInventory;
 @UsageMessage("&8» &cPoprawne użycie &7/name <nazwa>")
 public class NameCommand {
     
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     
-    public NameCommand(MessagesConfiguration messages) {
+    public NameCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

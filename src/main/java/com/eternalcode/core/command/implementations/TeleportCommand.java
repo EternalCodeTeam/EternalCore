@@ -19,9 +19,9 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/teleport <player> [player]")
 public class TeleportCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public TeleportCommand(MessagesConfiguration messages) {
+    public TeleportCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

@@ -20,9 +20,9 @@ import panda.std.Option;
 @Permission("eternalcore.command.workbench")
 public class StonecutterCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public StonecutterCommand(MessagesConfiguration messages) {
+    public StonecutterCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

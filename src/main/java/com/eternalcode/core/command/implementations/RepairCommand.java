@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 @UsageMessage("&8» &cPoprawne użycie &7/repair [all/armor]")
 public class RepairCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public RepairCommand(MessagesConfiguration messages) {
+    public RepairCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

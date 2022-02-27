@@ -7,6 +7,7 @@ public class Language {
 
     public static final Language PL = new Language("pl");
     public static final Language EN = Language.fromLocate(Locale.ENGLISH);
+    public static final Language DEFAULT = Language.fromLocate(Locale.ROOT);
 
     private final String lang;
 

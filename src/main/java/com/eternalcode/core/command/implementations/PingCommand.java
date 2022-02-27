@@ -18,9 +18,9 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/ping [player]")
 public class PingCommand {
 
-    private final MessagesConfiguration message;
+    private final AudiencesService audiencesService;
 
-    public PingCommand(MessagesConfiguration message) {
+    public PingCommand(AudiencesService audiencesService) {
         this.message = message;
     }
 

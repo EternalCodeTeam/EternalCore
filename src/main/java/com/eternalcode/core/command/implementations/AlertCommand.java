@@ -4,8 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.MessageAction;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.audience.NotificationType;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Joiner;
@@ -13,7 +13,6 @@ import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Server;
 
 @Section(route = "alert", aliases = { "broadcast", "bc" })
@@ -21,20 +20,20 @@ import org.bukkit.Server;
 @UsageMessage("&8» &cPoprawne użycie &7/alert <title/actionbar/chat> <text>")
 public class AlertCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final Server server;
 
-    public AlertCommand(MessagesConfiguration messages, Server server) {
-        this.messages = messages;
+    public AlertCommand(AudiencesService audiencesService, Server server) {
+        this.audiencesService = audiencesService;
         this.server = server;
     }
 
     @Execute
     @MinArgs(2)
-    public void execute(@Arg(0) MessageAction messageAction, @Joiner String text) {
-        Component component = ChatUtils.component(this.messages.otherMessages.alertMessagePrefix)
-            .replaceText(builder -> builder.match("\\{BROADCAST}").replacement(text));
-
-        this.server.getOnlinePlayers().forEach(player -> messageAction.action(player, component));
+    public void execute(@Arg(0) NotificationType type, @Joiner String text) {
+        audiencesService.notice()
+            .notice(type, messages -> messages.other().alertMessagePrefix())
+            .placeholder("{BROADCAST}", text)
+            .all();
     }
 }

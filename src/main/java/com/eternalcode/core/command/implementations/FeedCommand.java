@@ -21,9 +21,9 @@ import panda.std.Option;
 @Permission("eternalcore.command.fly")
 public class FeedCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public FeedCommand(MessagesConfiguration message) {
+    public FeedCommand(AudiencesService audiencesService) {
         this.messages = message;
     }
 

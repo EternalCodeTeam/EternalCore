@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.chat.MessageAction;
+import com.eternalcode.core.chat.audience.NotificationType;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @ArgumentName("action")
-public class MessageActionArgument implements SingleArgumentHandler<MessageAction> {
+public class MessageActionArgument implements SingleArgumentHandler<NotificationType> {
 
     private final MessagesConfiguration messages;
 
@@ -20,15 +20,15 @@ public class MessageActionArgument implements SingleArgumentHandler<MessageActio
     }
 
     @Override
-    public MessageAction parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        return Option.attempt(IllegalArgumentException.class, () -> MessageAction.valueOf(argument.toUpperCase()))
+    public NotificationType parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
+        return Option.attempt(IllegalArgumentException.class, () -> NotificationType.valueOf(argument.toUpperCase()))
             .orThrow(() -> new ValidationCommandException(this.messages.argumentSection.noArgument));
     }
 
     @Override
     public List<String> tabulation(String command, String[] args) {
-        return Arrays.stream(MessageAction.values())
-            .map(messageAction -> messageAction.name().toLowerCase())
+        return Arrays.stream(NotificationType.values())
+            .map(notificationType -> notificationType.name().toLowerCase())
             .toList();
     }
 }

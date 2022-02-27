@@ -20,9 +20,9 @@ import panda.std.Option;
 @Permission("eternalcore.command.workbench")
 public class WorkbenchCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public WorkbenchCommand(MessagesConfiguration messages) {
+    public WorkbenchCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

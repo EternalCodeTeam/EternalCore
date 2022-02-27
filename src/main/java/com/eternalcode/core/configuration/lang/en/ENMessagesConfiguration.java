@@ -1,14 +1,12 @@
 package com.eternalcode.core.configuration.lang.en;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
-import com.eternalcode.core.configuration.lang.MessagesConfiguration;
+import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.language.Language;
-import lombok.Getter;
 
 import java.io.File;
 
-@Getter
-public class ENMessagesConfiguration extends AbstractConfigWithResource implements MessagesConfiguration {
+public class ENMessagesConfiguration extends AbstractConfigWithResource implements Messages {
 
     public ENMessagesConfiguration(File folder, String child) {
         super(folder, child);
@@ -25,4 +23,35 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public Language getLanguage() {
         return Language.EN;
     }
+
+    @Override
+    public ArgumentSection argument() {
+        return argumentSection;
+    }
+
+    @Override
+    public HelpopSection helpOp() {
+        return helpOpSection;
+    }
+
+    @Override
+    public AdminChatSection adminChat() {
+        return adminChatSection;
+    }
+
+    @Override
+    public ChatSection chat() {
+        return chatSection;
+    }
+
+    @Override
+    public TeleportSection teleport() {
+        return teleportSection;
+    }
+
+    @Override
+    public OtherMessages other() {
+        return otherMessages;
+    }
+
 }

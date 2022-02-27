@@ -21,9 +21,9 @@ import org.bukkit.entity.Player;
 @UsageMessage("&8» &cPoprawne użycie &7/kill <player>")
 public class KillCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public KillCommand(MessagesConfiguration messages) {
+    public KillCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

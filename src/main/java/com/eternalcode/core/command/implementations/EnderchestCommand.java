@@ -20,9 +20,9 @@ import panda.std.Option;
 @Permission("eternalcore.command.enderchest")
 public class EnderchestCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public EnderchestCommand(MessagesConfiguration messages) {
+    public EnderchestCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 

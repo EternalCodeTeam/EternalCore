@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 @Permission("eternalcore.command.list")
 public class ListCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
     private final Server server;
 
-    public ListCommand(PluginConfiguration config, MessagesConfiguration messages, Server server) {
+    public ListCommand(PluginConfiguration config, AudiencesService audiencesService, Server server) {
         this.config = config;
         this.messages = messages;
         this.server = server;

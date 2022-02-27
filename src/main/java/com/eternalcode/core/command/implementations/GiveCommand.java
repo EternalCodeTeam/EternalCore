@@ -23,9 +23,9 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/give <material> [gracz]")
 public class GiveCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public GiveCommand(MessagesConfiguration messages) {
+    public GiveCommand(AudiencesService audiencesService) {
         this.messages = messages;
     }
 
