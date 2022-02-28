@@ -32,8 +32,9 @@ public class AlertCommand {
     @MinArgs(2)
     public void execute(@Arg(0) NotificationType type, @Joiner String text) {
         audiencesService.notice()
+            .all()
             .notice(type, messages -> messages.other().alertMessagePrefix())
             .placeholder("{BROADCAST}", text)
-            .all();
+            .send();
     }
 }
