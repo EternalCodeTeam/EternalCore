@@ -6,8 +6,8 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.tag.LegacyColorProcessor;
-import com.eternalcode.core.chat.audience.AudiencesService;
-import com.eternalcode.core.chat.audience.BukkitAudienceProvider;
+import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.BukkitAudienceProvider;
 import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.command.argument.AmountArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;

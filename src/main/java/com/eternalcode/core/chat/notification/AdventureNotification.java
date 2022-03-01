@@ -1,7 +1,5 @@
-package com.eternalcode.core.chat.audience;
+package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.chat.notification.NotificationType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 

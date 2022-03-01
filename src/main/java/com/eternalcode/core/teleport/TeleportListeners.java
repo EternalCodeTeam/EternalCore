@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

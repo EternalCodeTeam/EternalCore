@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.message;
+package com.eternalcode.core.chat.notification;
 
 import com.eternalcode.core.configuration.lang.Messages;
 

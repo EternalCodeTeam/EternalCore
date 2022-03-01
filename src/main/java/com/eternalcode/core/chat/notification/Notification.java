@@ -1,6 +1,5 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.audience.AdventureNotification;
 import net.kyori.adventure.text.Component;
 
 import java.util.Arrays;
@@ -13,12 +12,12 @@ public class Notification {
     protected final Set<NotificationType> types = new HashSet<>();
     protected final String message;
 
-    public Notification(String message, NotificationType... types) {
+    Notification(String message, NotificationType... types) {
         this.message = message;
         this.types.addAll(Arrays.asList(types));
     }
 
-    public Notification(String message, Set<NotificationType> types) {
+    Notification(String message, Set<NotificationType> types) {
         this.message = message;
         this.types.addAll(types);
     }
@@ -29,6 +28,10 @@ public class Notification {
 
     public AdventureNotification toAdventure(Function<String, Component> parser) {
         return new AdventureNotification(parser.apply(this.message), types);
+    }
+
+    public static Notification of(String message, NotificationType... types) {
+        return new Notification(message, types);
     }
 
 }

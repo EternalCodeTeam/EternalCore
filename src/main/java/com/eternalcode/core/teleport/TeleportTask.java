@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.utils.DateUtils;
 import org.bukkit.Location;

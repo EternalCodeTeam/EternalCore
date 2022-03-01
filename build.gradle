@@ -73,6 +73,7 @@ shadowJar {
 
     relocate "net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk"
     relocate "dev.rollczi", "com.eternalcode.core.libs.dev.rollczi"
+    relocate "net.kyori", "com.eternalcode.core.libs.net.kyori"
     relocate "org.bstats", "com.eternalcode.core.libs.org.bstats"
     relocate "org.panda_lang", "com.eternalcode.core.libs.panda"
     relocate "fr.mrmicky.fastboard", "com.eternalcode.core.libs.fastboard"

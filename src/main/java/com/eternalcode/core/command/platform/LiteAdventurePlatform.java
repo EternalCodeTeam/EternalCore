@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.platform;
 
-import com.eternalcode.core.chat.audience.AudienceProvider;
+import com.eternalcode.core.chat.notification.AudienceProvider;
 import dev.rollczi.litecommands.bukkit.LiteBukkitPlatformManager;
 import dev.rollczi.litecommands.platform.LitePlatformManager;
 import org.bukkit.Server;

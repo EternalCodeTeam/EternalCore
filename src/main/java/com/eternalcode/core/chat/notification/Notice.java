@@ -1,9 +1,5 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.audience.AdventureNotification;
-import com.eternalcode.core.chat.audience.Audience;
-import com.eternalcode.core.chat.audience.AudienceProvider;
-import com.eternalcode.core.chat.message.MessageExtractor;
 import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
@@ -36,7 +32,7 @@ public class Notice {
     private final List<NotificationExtractor> notifications = new ArrayList<>();
     private final Formatter placeholders = new Formatter();
 
-    public Notice(LanguageManager languageManager, AudienceProvider audienceProvider, MiniMessage miniMessage) {
+    Notice(LanguageManager languageManager, AudienceProvider audienceProvider, MiniMessage miniMessage) {
         this.languageManager = languageManager;
         this.audienceProvider = audienceProvider;
         this.miniMessage = miniMessage;

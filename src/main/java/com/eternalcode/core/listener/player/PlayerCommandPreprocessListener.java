@@ -1,6 +1,6 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import org.bukkit.Server;

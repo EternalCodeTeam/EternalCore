@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;

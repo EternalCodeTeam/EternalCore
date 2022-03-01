@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.platform;
 
-import com.eternalcode.core.chat.audience.AudienceProvider;
+import com.eternalcode.core.chat.notification.AudienceProvider;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.LiteFactory;
 import dev.rollczi.litecommands.bind.basic.OriginalSenderBind;

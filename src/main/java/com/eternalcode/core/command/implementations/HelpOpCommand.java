@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.chat.notification.Notice;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.DateUtils;

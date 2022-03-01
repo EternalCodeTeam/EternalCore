@@ -1,13 +1,13 @@
 package com.eternalcode.core.command.platform;
 
-import com.eternalcode.core.chat.audience.Audience;
+import com.eternalcode.core.chat.notification.Audience;
 import dev.rollczi.litecommands.platform.LiteSender;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 
 public class LiteAdventureSender implements LiteSender {
 
-    private final MiniMessage miniMessage = MiniMessage.get();
+    private final MiniMessage miniMessage = MiniMessage.miniMessage();
     private final CommandSender commandSender;
     private final Audience audience;
 
@@ -23,7 +23,7 @@ public class LiteAdventureSender implements LiteSender {
 
     @Override
     public void sendMessage(String message) {
-        this.audience.message(miniMessage.parse(message));
+        this.audience.message(miniMessage.deserialize(message));
     }
 
     @Override
