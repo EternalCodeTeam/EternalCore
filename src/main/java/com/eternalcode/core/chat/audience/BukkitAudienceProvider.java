@@ -50,16 +50,14 @@ public class BukkitAudienceProvider implements AudienceProvider {
 
     @Override
     public Audience player(UUID uuid) {
-        Language language = userManager.getUser(uuid)
+        return new Audience(this.audienceProvider.player(uuid), () -> userManager.getUser(uuid)
             .map(user -> user.getSettings().getLanguage())
-            .orElseGet(Language.DEFAULT);
-
-        return new Audience(this.audienceProvider.player(uuid), language);
+            .orElseGet(Language.DEFAULT));
     }
 
     @Override
     public Audience user(User user) {
-        return new Audience(this.audienceProvider.player(user.getUuid()), user.getSettings().getLanguage());
+        return new Audience(this.audienceProvider.player(user.getUuid()), () -> user.getSettings().getLanguage());
     }
 
 }
