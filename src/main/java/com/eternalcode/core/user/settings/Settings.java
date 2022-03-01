@@ -1,9 +1,7 @@
-package com.eternalcode.core.user;
+package com.eternalcode.core.user.settings;
 
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageSettings;
-
-import java.util.Locale;
 
 public interface Settings extends LanguageSettings {
 

@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Joiner;
@@ -21,7 +21,7 @@ public class NameCommand {
     private final AudiencesService audiencesService;
     
     public NameCommand(AudiencesService audiencesService) {
-        this.messages = messages;
+        this.audiencesService = audiencesService;
     }
 
     @Execute @MinArgs(1)
@@ -31,12 +31,22 @@ public class NameCommand {
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
         if (handItem == null || handItem.getType() == Material.AIR) {
-            player.sendMessage(ChatUtils.color(this.messages.argumentSection.noItem));
+            this.audiencesService
+                .notice()
+                .message(messages -> messages.argument().noItem())
+                .player(player.getUniqueId())
+                .send();
+
             return;
         }
 
         handItem.editMeta(itemMeta -> itemMeta.displayName(ChatUtils.component(name)));
 
-        player.sendMessage(ChatUtils.color(this.messages.otherMessages.nameMessage.replace("{NAME}", name)));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().nameMessage())
+            .placeholder("{NAME}", name)
+            .player(player.getUniqueId())
+            .send();
     }
 }

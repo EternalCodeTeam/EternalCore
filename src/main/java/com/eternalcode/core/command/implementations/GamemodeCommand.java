@@ -5,8 +5,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Between;
 import dev.rollczi.litecommands.annotations.Execute;
@@ -14,7 +14,6 @@ import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -28,7 +27,7 @@ public class GamemodeCommand {
     private final AudiencesService audiencesService;
 
     public GamemodeCommand(AudiencesService audiencesService) {
-        this.messages = messages;
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -38,21 +37,37 @@ public class GamemodeCommand {
             if (sender instanceof Player player) {
                 player.setGameMode(gameMode);
 
-                player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.gameModeMessage, "{GAMEMODE}", gameMode.name())));
+                this.audiencesService
+                    .notice()
+                    .message(messages -> messages.other().gameModeMessage())
+                    .placeholder("{GAMEMODE}", gameMode.name())
+                    .player(player.getUniqueId())
+                    .send();
+
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
-
         Player player = playerOption.get();
 
         player.setGameMode(gameMode);
-        player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.gameModeMessage, "{GAMEMODE}", gameMode.name())));
-        sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(this.messages.otherMessages.gameModeSetMessage,
-            new String[]{ "{PLAYER}", "{GAMEMODE}" },
-            new String[]{ player.getName(), gameMode.name() })));
+
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().gameModeMessage())
+            .placeholder("{GAMEMODE}", gameMode.name())
+            .player(player.getUniqueId())
+            .send();
+
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().gameModeSetMessage())
+            .placeholder("{GAMEMODE}", gameMode.name())
+            .placeholder("{PLAYER}", player.getName())
+            .sender(sender)
+            .send();
     }
 
 }

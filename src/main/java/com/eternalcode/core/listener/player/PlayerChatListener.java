@@ -1,9 +1,9 @@
-package com.eternalcode.core.listeners.player;
+package com.eternalcode.core.listener.player;
 
+import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.DateUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.Server;
@@ -16,13 +16,13 @@ import java.util.UUID;
 public class PlayerChatListener implements Listener {
 
     private final ChatManager chatManager;
-    private final MessagesConfiguration message;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
     private final Server server;
 
-    public PlayerChatListener(ChatManager chatManager, ConfigurationManager configurationManager, Server server) {
+    public PlayerChatListener(ChatManager chatManager, AudiencesService audiencesService, ConfigurationManager configurationManager, Server server) {
         this.chatManager = chatManager;
-        this.message = configurationManager.getMessagesConfiguration();
+        this.audiencesService = audiencesService;
         this.config = configurationManager.getPluginConfiguration();
         this.server = server;
     }
@@ -31,8 +31,13 @@ public class PlayerChatListener implements Listener {
     public void onChatSlowmode(AsyncChatEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.chatManager.isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
-            player.sendMessage(ChatUtils.color(message.chatSection.disable));
+        if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
+            this.audiencesService
+                .notice()
+                .player(player.getUniqueId())
+                .message(messages -> messages.chat().disabledChatInfo())
+                .send();
+
             event.setCancelled(true);
             return;
         }
@@ -42,7 +47,13 @@ public class PlayerChatListener implements Listener {
         if (this.chatManager.hasSlowedChat(uuid) && !player.hasPermission("enernalcore.chat.noslowmode")) {
             long time = this.chatManager.getSlowDown(uuid);
 
-            player.sendMessage(ChatUtils.color(message.chatSection.slowMode).replace("{TIME}", DateUtils.durationToString(time)));
+            this.audiencesService
+                .notice()
+                .player(player.getUniqueId())
+                .message(messages -> messages.chat().disabledChatInfo())
+                .placeholder("{TIME}", DateUtils.durationToString(time))
+                .send();
+
             event.setCancelled(true);
             return;
         }

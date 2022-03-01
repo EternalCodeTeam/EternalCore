@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.audience;
+package com.eternalcode.core.chat.message;
 
 import com.eternalcode.core.configuration.lang.Messages;
 

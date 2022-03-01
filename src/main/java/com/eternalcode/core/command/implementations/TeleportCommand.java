@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -9,7 +9,6 @@ import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -22,7 +21,7 @@ public class TeleportCommand {
     private final AudiencesService audiencesService;
 
     public TeleportCommand(AudiencesService audiencesService) {
-        this.messages = messages;
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -32,11 +31,17 @@ public class TeleportCommand {
             if (sender instanceof Player playerSender) {
                 playerSender.teleportAsync(player.getLocation());
 
-                sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.successfulyyTeleported, "{PLAYER}", player.getName())));
+                this.audiencesService
+                    .notice()
+                    .message(messages -> messages.other().successfullyTeleported())
+                    .placeholder("{PLAYER}", player.getName())
+                    .sender(sender)
+                    .send();
+
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
@@ -44,9 +49,12 @@ public class TeleportCommand {
 
         player.teleportAsync(playerArgument.getLocation());
 
-        sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(
-            this.messages.otherMessages.successfulyyTeleportedPlayer,
-            new String[]{ "{PLAYER}", "{ARG-PLAYER}" },
-            new String[]{ player.getName(), playerArgument.getName() })));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().successfullyTeleportedPlayer())
+            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER-ARG}", player.getName())
+            .sender(sender)
+            .send();
     }
 }

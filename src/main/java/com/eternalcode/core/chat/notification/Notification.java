@@ -1,5 +1,6 @@
-package com.eternalcode.core.chat.audience;
+package com.eternalcode.core.chat.notification;
 
+import com.eternalcode.core.chat.audience.AdventureNotification;
 import net.kyori.adventure.text.Component;
 
 import java.util.Arrays;

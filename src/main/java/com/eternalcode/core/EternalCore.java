@@ -5,7 +5,10 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.chat.audience.NotificationType;
+import com.eternalcode.core.chat.tag.LegacyColorProcessor;
+import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.audience.BukkitAudienceProvider;
+import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.command.argument.AmountArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.MaterialArgument;
@@ -53,18 +56,17 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.configuration.lang.en.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.pl.PLMessagesConfiguration;
-import com.eternalcode.core.listeners.player.PlayerChatListener;
-import com.eternalcode.core.listeners.player.PlayerCommandPreprocessListener;
-import com.eternalcode.core.listeners.player.PlayerDeathListener;
-import com.eternalcode.core.listeners.player.PlayerJoinListener;
-import com.eternalcode.core.listeners.player.PlayerQuitListener;
-import com.eternalcode.core.listeners.scoreboard.ScoreboardListener;
-import com.eternalcode.core.listeners.sign.SignChangeListener;
-import com.eternalcode.core.listeners.user.CreateUserListener;
+import com.eternalcode.core.language.LanguageManager;
+import com.eternalcode.core.listener.player.PlayerChatListener;
+import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
+import com.eternalcode.core.listener.player.PlayerDeathListener;
+import com.eternalcode.core.listener.player.PlayerJoinListener;
+import com.eternalcode.core.listener.player.PlayerQuitListener;
+import com.eternalcode.core.listener.scoreboard.ScoreboardListener;
+import com.eternalcode.core.listener.sign.SignChangeListener;
+import com.eternalcode.core.listener.user.CreateUserListener;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
@@ -72,12 +74,14 @@ import com.eternalcode.core.teleport.TeleportListeners;
 import com.eternalcode.core.teleport.TeleportManager;
 import com.eternalcode.core.teleport.TeleportTask;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.utils.ChatUtils;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import lombok.Getter;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -110,8 +114,11 @@ public class EternalCore extends JavaPlugin {
     @Getter private LanguageManager languageManager;
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
+    @Getter private AudiencesService audiencesService;
     @Getter private TeleportManager teleportManager;
+    @Getter private BukkitAudiences audiences;
     @Getter private LiteCommands liteCommands;
+    @Getter private MiniMessage miniMessage;
     @Getter private ChatManager chatManager;
     @Getter private UserManager userManager;
     @Getter private Scheduler scheduler;
@@ -127,6 +134,7 @@ public class EternalCore extends JavaPlugin {
         this.scheduler = new BukkitSchedulerImpl(this);
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
+        this.languageManager = new LanguageManager(this.userManager, new ENMessagesConfiguration(this.getDataFolder(), "en_messages.yml"));
 
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
@@ -139,6 +147,15 @@ public class EternalCore extends JavaPlugin {
             this.configurationManager.loadAndRender(messages);
             this.languageManager.registerLang(messages.getLanguage(), messages);
         });
+
+        this.audiences = BukkitAudiences.create(this);
+
+        this.miniMessage = MiniMessage.builder()
+            .postProcessor(new LegacyColorProcessor())
+            .tags(TagResolver.standard())
+            .build();
+
+        this.audiencesService = new AudiencesService(this.languageManager, new BukkitAudienceProvider(this.userManager, server, this.audiences), this.miniMessage);
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
@@ -155,25 +172,26 @@ public class EternalCore extends JavaPlugin {
 
         this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
             .argument(String.class, new StringPlayerArgument(server))
-            .argument(Integer.class, new AmountArgument(messages))
-            .argument(Player.class, new PlayerArgument(messages, server))
-            .argument(Option.class, new PlayerArgument(messages, server).toOptionHandler())
-            .argument(Material.class, new MaterialArgument(messages))
-            .argument(GameMode.class, new GameModeArgument(messages))
-            .argument(NotificationType.class, new MessageActionArgument(messages))
+            .argument(Integer.class, new AmountArgument(languageManager))
+            .argument(Player.class, new PlayerArgument(languageManager, server))
+            .argument(Option.class, new PlayerArgument(languageManager, server).toOptionHandler())
+            .argument(Material.class, new MaterialArgument(languageManager))
+            .argument(GameMode.class, new GameModeArgument(languageManager))
+            .argument(NotificationType.class, new MessageActionArgument(languageManager))
 
-            .bind(Player.class, new PlayerSenderBind(messages))
+            .bind(Player.class, new PlayerSenderBind(languageManager))
             .bind(ConfigurationManager.class, () -> this.configurationManager)
-            .bind(Messages.class, () -> messages)
+            .bind(LanguageManager.class, () -> languageManager)
             .bind(PluginConfiguration.class, () -> config)
             .bind(LocationsConfiguration.class, () -> locations)
             .bind(TeleportManager.class, () -> this.teleportManager)
             .bind(EternalCore.class, () -> this)
             .bind(UserManager.class, () -> this.userManager)
             .bind(ScoreboardManager.class, () -> this.scoreboardManager)
+            .bind(AudiencesService.class, () -> this.audiencesService)
 
             .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
-            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(messages))
+            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(languageManager))
 
             .command(
                 TeleportCommand.class,
@@ -216,23 +234,23 @@ public class EternalCore extends JavaPlugin {
 
         // Register events
         PandaStream.of(
-            new PlayerChatListener(this.chatManager, this.configurationManager, server),
-            new PlayerJoinListener(this.configurationManager, server),
+            new PlayerChatListener(this.chatManager, audiencesService, this.configurationManager, server),
+            new PlayerJoinListener(this.configurationManager, audiencesService, server),
             new PlayerQuitListener(this.configurationManager, server),
-            new CreateUserListener(this.userManager, this),
+            new CreateUserListener(this.userManager),
             new ScoreboardListener(config, this.scoreboardManager),
-            new PlayerCommandPreprocessListener(this.configurationManager, server),
-            new SignChangeListener(),
+            new PlayerCommandPreprocessListener(this.audiencesService, this.configurationManager, server),
+            new SignChangeListener(miniMessage),
             new PlayerDeathListener(this.configurationManager),
-            new TeleportListeners(messages, this.teleportManager)
-        ).forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, this));
+            new TeleportListeners(this.audiencesService, this.teleportManager)
+        ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
-        TeleportTask task = new TeleportTask(messages, this.teleportManager, server);
+        TeleportTask task = new TeleportTask(this.audiencesService, this.teleportManager, server);
 
         this.scheduler.runTaskTimer(task, 10, 10);
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
-        this.getLogger().info(ChatUtils.color("&7Successfully loaded EternalCore in " + millis + "ms"));
+        this.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
     }
 
     @Override
@@ -249,14 +267,14 @@ public class EternalCore extends JavaPlugin {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
             this.isPaper = true;
         } catch (ClassNotFoundException classNotFoundException) {
-            this.getLogger().warning(ChatUtils.color("&c&lYour server running on unsupported software, use paper minecraft software and other paper 1.17x forks"));
-            this.getLogger().warning(ChatUtils.color("&c&lDownload paper from https://papermc.io/downloads"));
-            this.getLogger().warning(ChatUtils.color("&6&lWARRING&r &6Supported minecraft version is 1.17-1.18x"));
+            this.getLogger().warning("Your server running on unsupported software, use paper minecraft software and other paper 1.17x forks");
+            this.getLogger().warning("Download paper from https://papermc.io/downloads");
+            this.getLogger().warning("WARRING: Supported minecraft version is 1.17-1.18x");
         }
 
         if (this.isPaper) {
-            this.getLogger().info(ChatUtils.color("&a&lYour server running on supported software, congratulations!"));
-            this.getLogger().info(ChatUtils.color("&a&lServer version: &7" + Bukkit.getServer().getVersion()));
+            this.getLogger().info("Your server running on supported software, congratulations!");
+            this.getLogger().info("Server version: " + this.getServer().getVersion());
         }
 
         switch (VERSION) {

@@ -7,7 +7,6 @@ package com.eternalcode.core.scoreboard;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import fr.mrmicky.fastboard.FastBoard;
 import org.bukkit.entity.Player;
 
@@ -35,10 +34,11 @@ public class ScoreboardManager {
         }, 0, this.config.scoreboard.refresh);
     }
 
+    //TODO: colors
     private void updateBoard(FastBoard board) {
         List<String> scoreboardLines = this.config.scoreboard.style;
 
-        board.updateLines(ChatUtils.color(scoreboardLines));
+        board.updateLines(scoreboardLines);
     }
 
     public void removeScoreboard(Player player) {
@@ -52,7 +52,7 @@ public class ScoreboardManager {
     public void setScoreboard(Player player) {
         FastBoard board = new FastBoard(player);
 
-        board.updateTitle(ChatUtils.color(this.config.scoreboard.title));
+        board.updateTitle(this.config.scoreboard.title);
 
         this.boards.put(player.getUniqueId(), board);
     }

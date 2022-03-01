@@ -1,12 +1,13 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.audience.AudiencesService;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 @Section(route = "repair", aliases = "napraw")
 @Permission("eternalcore.command.repair")
@@ -16,20 +17,31 @@ public class RepairCommand {
     private final AudiencesService audiencesService;
 
     public RepairCommand(AudiencesService audiencesService) {
-        this.messages = messages;
+        this.audiencesService = audiencesService;
     }
 
     @Execute
     public void repair(Player player) {
-        ItemStack handItem = player.getItemInHand();
+        PlayerInventory playerInventory = player.getInventory();
+        ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
         if (handItem.getType().isBlock() || handItem.getType().isAir()) {
-            player.sendMessage(ChatUtils.color(this.messages.argumentSection.noItem));
+            this.audiencesService
+                .notice()
+                .message(messages -> messages.argument().noItem())
+                .player(player.getUniqueId())
+                .send();
+
             return;
         }
-        handItem.setDurability((short) 0);
 
-        player.sendMessage(ChatUtils.color(this.messages.otherMessages.repairMessage));
+        handItem.editMeta(itemMeta -> itemMeta.setCustomModelData(0));
+
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().repairMessage())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(route = "all")
@@ -40,7 +52,11 @@ public class RepairCommand {
             }
         }
 
-        player.sendMessage(ChatUtils.color(this.messages.otherMessages.repairMessage));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().repairMessage())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(route = "armor")
@@ -51,6 +67,10 @@ public class RepairCommand {
             }
         }
 
-        player.sendMessage(ChatUtils.color(this.messages.otherMessages.repairMessage));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().repairMessage())
+            .player(player.getUniqueId())
+            .send();
     }
 }

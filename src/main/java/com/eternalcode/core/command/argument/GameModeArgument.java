@@ -1,11 +1,14 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.AmountValidator;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
 import panda.std.Option;
 import panda.std.stream.PandaStream;
 
@@ -17,11 +20,12 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
     private final static GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
     private final static AmountValidator GAME_MODE_VALID = AmountValidator.NONE.min(0).max(3);
 
-    private final MessagesConfiguration messages;
+    private final LanguageManager languageManager;
 
-    public GameModeArgument(MessagesConfiguration messages) {
-        this.messages = messages;
+    public GameModeArgument(LanguageManager languageManager) {
+        this.languageManager = languageManager;
     }
+
 
     @Override
     public GameMode parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
@@ -31,10 +35,13 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
             return gameMode.get();
         }
 
+        CommandSender sender = (CommandSender) invocation.sender().getSender();
+        Messages messages = this.languageManager.getMessages(sender);
+
         return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(GAME_MODE_VALID::valid)
             .map(integer -> GAME_MODES[integer])
-            .orThrow(() -> new ValidationCommandException(this.messages.otherMessages.gameModeNotCorrect));
+            .orThrow(() -> new ValidationCommandException(messages.other().gameModeNotCorrect()));
     }
 
     @Override

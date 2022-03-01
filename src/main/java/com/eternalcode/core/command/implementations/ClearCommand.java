@@ -4,15 +4,14 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +24,7 @@ public class ClearCommand {
     private final AudiencesService audiencesService;
 
     public ClearCommand(AudiencesService audiencesService) {
-        this.messages = message;
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -36,7 +35,7 @@ public class ClearCommand {
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            audiencesService.sender(sender, messages -> messages.argument().onlyPlayer());
             return;
         }
 
@@ -44,14 +43,22 @@ public class ClearCommand {
 
         this.clear(player);
 
-        sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.clearByMessage, "{PLAYER}", player.getName())));
+        audiencesService.notice()
+            .message(messages -> messages.other().clearByMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .sender(sender)
+            .send();
     }
 
     @IgnoreMethod
     private void clear(Player player) {
         player.getInventory().setArmorContents(new ItemStack[0]);
         player.getInventory().clear();
-        player.sendMessage(ChatUtils.color(this.messages.otherMessages.clearMessage));
+
+        audiencesService.notice()
+            .message(messages -> messages.other().clearMessage())
+            .player(player.getUniqueId())
+            .send();
     }
 
 }

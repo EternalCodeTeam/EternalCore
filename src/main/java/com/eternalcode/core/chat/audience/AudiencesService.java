@@ -1,5 +1,9 @@
 package com.eternalcode.core.chat.audience;
 
+import com.eternalcode.core.chat.message.MessageExtractor;
+import com.eternalcode.core.chat.notification.Notice;
+import com.eternalcode.core.chat.notification.NotificationExtractor;
+import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.language.LanguageManager;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;

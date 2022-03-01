@@ -1,9 +1,8 @@
-package com.eternalcode.core.listeners.player;
+package com.eternalcode.core.listener.player;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,12 +13,12 @@ import panda.std.Option;
 
 public class PlayerCommandPreprocessListener implements Listener {
 
-    private final MessagesConfiguration message;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
     private final Server server;
 
-    public PlayerCommandPreprocessListener(ConfigurationManager configurationManager, Server server) {
-        this.message = configurationManager.getMessagesConfiguration();
+    public PlayerCommandPreprocessListener(AudiencesService audiencesService, ConfigurationManager configurationManager, Server server) {
+        this.audiencesService = audiencesService;
         this.config = configurationManager.getPluginConfiguration();
         this.server = server;
     }
@@ -31,7 +30,6 @@ public class PlayerCommandPreprocessListener implements Listener {
         Option<HelpTopic> helpTopic = Option.of(this.server.getHelpMap().getHelpTopic(command));
 
         helpTopic.onEmpty(() -> {
-
             if (!this.config.chat.commandExact) {
                 return;
             }
@@ -41,7 +39,13 @@ public class PlayerCommandPreprocessListener implements Listener {
             }
 
             event.setCancelled(true);
-            player.sendMessage(ChatUtils.color(StringUtils.replace(message.chatSection.noCommand, "{COMMAND}", command)));
+
+            this.audiencesService
+                .notice()
+                .player(player.getUniqueId())
+                .message(messages -> messages.chat().noCommand())
+                .placeholder("{COMMAND}", command)
+                .send();
         });
     }
 }

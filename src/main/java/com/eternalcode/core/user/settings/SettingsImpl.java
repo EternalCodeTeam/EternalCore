@@ -1,6 +1,7 @@
-package com.eternalcode.core.user;
+package com.eternalcode.core.user.settings;
 
 import com.eternalcode.core.language.Language;
+import com.eternalcode.core.user.client.ClientSettings;
 
 import java.util.function.Supplier;
 

@@ -1,5 +1,9 @@
-package com.eternalcode.core.chat.audience;
+package com.eternalcode.core.chat.notification;
 
+import com.eternalcode.core.chat.audience.AdventureNotification;
+import com.eternalcode.core.chat.audience.Audience;
+import com.eternalcode.core.chat.audience.AudienceProvider;
+import com.eternalcode.core.chat.message.MessageExtractor;
 import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
@@ -10,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import panda.utilities.text.Formatter;
+import panda.utilities.text.Joiner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Notice {
@@ -30,7 +36,7 @@ public class Notice {
     private final List<NotificationExtractor> notifications = new ArrayList<>();
     private final Formatter placeholders = new Formatter();
 
-    Notice(LanguageManager languageManager, AudienceProvider audienceProvider, MiniMessage miniMessage) {
+    public Notice(LanguageManager languageManager, AudienceProvider audienceProvider, MiniMessage miniMessage) {
         this.languageManager = languageManager;
         this.audienceProvider = audienceProvider;
         this.miniMessage = miniMessage;
@@ -79,6 +85,16 @@ public class Notice {
         return this;
     }
 
+    public Notice messages(Function<Messages, List<String>> function) {
+        MessageExtractor messageExtractor = (messages) -> {
+            List<String> apply = function.apply(messages);
+
+            return Joiner.on("\n").join(apply).toString();
+        };
+
+        return this.message(messageExtractor);
+    }
+
     public Notice staticNotice(Component component) {
         this.notifications.add(messages -> new AdventureNotification(component, NotificationType.CHAT));
         return this;
@@ -125,7 +141,7 @@ public class Notice {
             for (NotificationExtractor extractor : this.notifications) {
                 AdventureNotification notification = extractor.extract(messages)
                     .edit(placeholders::format)
-                    .toAdventure(miniMessage::parse);
+                    .toAdventure(miniMessage::deserialize);
 
                 notifications.add(notification);
             }

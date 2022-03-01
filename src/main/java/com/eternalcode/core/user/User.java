@@ -4,6 +4,10 @@
 
 package com.eternalcode.core.user;
 
+import com.eternalcode.core.user.client.ClientSettings;
+import com.eternalcode.core.user.settings.Settings;
+import com.eternalcode.core.user.settings.SettingsImpl;
+
 import java.util.UUID;
 
 public class User {

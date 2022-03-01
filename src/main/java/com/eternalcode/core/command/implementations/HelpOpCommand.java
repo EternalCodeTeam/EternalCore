@@ -4,9 +4,9 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.notification.Notice;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import com.eternalcode.core.utils.DateUtils;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -16,7 +16,6 @@ import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -34,7 +33,7 @@ public class HelpOpCommand {
     private final Server server;
 
     public HelpOpCommand(AudiencesService audiencesService, PluginConfiguration config, Server server) {
-        this.messages = messages;
+        this.audiencesService = audiencesService;
         this.config = config;
         this.server = server;
 
@@ -51,19 +50,36 @@ public class HelpOpCommand {
         if (this.cooldowns.asMap().getOrDefault(uuid, 0L) > System.currentTimeMillis()) {
             long time = Math.max(this.cooldowns.asMap().getOrDefault(uuid, 0L) - System.currentTimeMillis(), 0L);
 
-            player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.helpOpSection.coolDown, "{TIME}", DateUtils.durationToString(time))));
+            this.audiencesService
+                .notice()
+                .message(messages -> messages.helpOp().coolDown())
+                .placeholder("{TIME}", DateUtils.durationToString(time))
+                .player(player.getUniqueId())
+                .send();
+
             return;
         }
 
-        this.server.getOnlinePlayers()
-            .stream()
-            .filter(players -> players.hasPermission("eternalcore.helpop.spy") || players.isOp())
-            .forEach(players -> players.sendMessage(
-                ChatUtils.color(StringUtils.replaceEach(this.messages.helpOpSection.format,
-                    new String[]{ "{NICK}", "{TEXT}" },
-                    new String[]{ player.getName(), text }))));
+        Notice notice = audiencesService.notice()
+            .console()
+            .message(messages -> messages.helpOp().format())
+            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{TEXT}", text);
 
-        player.sendMessage(ChatUtils.color(this.messages.helpOpSection.send));
+        for (Player admin : this.server.getOnlinePlayers()) {
+            if (!admin.hasPermission("eternalcore.helpop.spy")) {
+                continue;
+            }
+
+            notice.player(admin.getUniqueId());
+        }
+
+        notice.send();
+
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.helpOp().send())
+            .send();
 
         this.cooldowns.put(uuid, (long) (System.currentTimeMillis() + this.config.chat.helpopCooldown * 1000L));
     }

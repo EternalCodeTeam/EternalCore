@@ -1,4 +1,4 @@
-package com.eternalcode.core.listeners.player;
+package com.eternalcode.core.listener.player;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;

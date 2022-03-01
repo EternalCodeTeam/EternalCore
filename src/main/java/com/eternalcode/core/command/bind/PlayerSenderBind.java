@@ -1,29 +1,32 @@
 package com.eternalcode.core.command.bind;
 
+import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.bind.LiteBind;
-import dev.rollczi.litecommands.platform.LiteSender;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @ArgumentName("sender")
 public class PlayerSenderBind implements LiteBind {
 
-    private final MessagesConfiguration messages;
+    private final LanguageManager languageManager;
 
-    public PlayerSenderBind(MessagesConfiguration messages) {
-        this.messages = messages;
+    public PlayerSenderBind(LanguageManager languageManager) {
+        this.languageManager = languageManager;
     }
 
     @Override
     public Object apply(LiteInvocation invocation) {
-        LiteSender sender = invocation.sender();
+        CommandSender sender = (CommandSender) invocation.sender().getSender();
+        Messages messages = this.languageManager.getMessages(sender);
 
-        if (!(sender.getSender() instanceof Player)) {
-            throw new ValidationCommandException(this.messages.argumentSection.onlyPlayer);
+        if (!(sender instanceof Player)) {
+            throw new ValidationCommandException(messages.argument().onlyPlayer());
         }
 
-        return sender.getSender();
+        return invocation.sender();
     }
 }

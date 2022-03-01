@@ -1,4 +1,4 @@
-package com.eternalcode.core.user;
+package com.eternalcode.core.user.client;
 
 import org.bukkit.Server;
 import org.bukkit.entity.Player;

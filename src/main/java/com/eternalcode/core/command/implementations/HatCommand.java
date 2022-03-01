@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.audience.AudiencesService;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -22,7 +22,7 @@ public class HatCommand {
     private final AudiencesService audiencesService;
 
     public HatCommand(AudiencesService audiencesService) {
-        this.message = message;
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -38,6 +38,10 @@ public class HatCommand {
             return;
         }
 
-        player.sendMessage(ChatUtils.color(this.message.otherMessages.nullHatMessage));
+        this.audiencesService
+            .notice()
+            .player(player.getUniqueId())
+            .message(messages -> messages.other().nullHatMessage())
+            .send();
     }
 }

@@ -93,7 +93,7 @@ public class ChatCommand {
             this.chatManager.getChatSettings().setChatDelay(amount);
             this.audiences.notice()
                 .sender(sender)
-                .message(messages -> messages.chat().slowMode())
+                .message(messages -> messages.chat().slowModeSet())
                 .placeholder("{SLOWMODE}", amountArg).send();
 
         }).onEmpty(() -> this.audiences.sender(sender, messages -> messages.argument().notNumber()));

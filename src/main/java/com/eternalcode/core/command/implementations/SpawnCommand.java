@@ -1,15 +1,14 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.teleport.TeleportManager;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -25,7 +24,7 @@ public class SpawnCommand {
     public SpawnCommand(LocationsConfiguration locations, AudiencesService audiencesService, TeleportManager teleportManager) {
         this.teleportManager = teleportManager;
         this.locations = locations;
-        this.messages = messages;
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -33,7 +32,12 @@ public class SpawnCommand {
         Location location = this.locations.spawn;
 
         if (location == null || location.getWorld() == null) {
-            sender.sendMessage(ChatUtils.color(this.messages.otherMessages.spawnNoSet));
+            this.audiencesService
+                .notice()
+                .message(messages -> messages.other().spawnNoSet())
+                .player(sender.getUniqueId())
+                .send();
+
             return;
         }
 
@@ -41,25 +45,51 @@ public class SpawnCommand {
             if (sender.hasPermission("eternalcore.teleport.bypass")) {
                 sender.teleportAsync(location);
 
-                sender.sendMessage(ChatUtils.color(this.messages.teleportSection.teleported));
+                this.audiencesService
+                    .notice()
+                    .message(messages -> messages.teleport().teleported())
+                    .player(sender.getUniqueId())
+                    .send();
+
                 return;
             }
 
             if (this.teleportManager.inTeleport(sender.getUniqueId())) {
-                sender.sendMessage(ChatUtils.color(this.messages.teleportSection.haveTeleport));
+                this.audiencesService
+                    .notice()
+                    .message(messages -> messages.teleport().haveTeleport())
+                    .player(sender.getUniqueId())
+                    .send();
+
                 return;
             }
 
             this.teleportManager.createTeleport(sender.getUniqueId(), location, 10);
 
-            sender.sendMessage(ChatUtils.color(this.messages.teleportSection.teleporting));
+            this.audiencesService
+                .notice()
+                .message(messages -> messages.teleport().teleporting())
+                .player(sender.getUniqueId())
+                .send();
+
             return;
         }
         Player player = playerOption.get();
 
         player.teleportAsync(location);
 
-        player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.spawnTeleportedBy, "{NICK}", sender.getName())));
-        sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.spawnTeleportedOther, "{NICK}", player.getName())));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().spawnTeleportedBy())
+            .placeholder("{PLAYER}", sender.getName())
+            .player(player.getUniqueId())
+            .send();
+
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().spawnTeleportedOther())
+            .placeholder("{PLAYER}", player.getName())
+            .player(sender.getUniqueId())
+            .send();
     }
 }

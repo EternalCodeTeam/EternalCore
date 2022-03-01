@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.audience;
+package com.eternalcode.core.chat.notification;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;

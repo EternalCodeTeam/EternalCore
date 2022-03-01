@@ -92,9 +92,9 @@ public interface Messages {
         String pingMessage();
         String pingOtherMessage();
         String onlineMessage();
-            String listMessage();
-            String tposMessage();
-                String tposByMessage();
+        String listMessage();
+        String tposMessage();
+        String tposByMessage();
         String nameMessage();
         List<String> whoisCommand();
     }

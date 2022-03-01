@@ -1,9 +1,11 @@
-package com.eternalcode.core.listeners.player;
+package com.eternalcode.core.listener.player;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
+import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
-import net.kyori.adventure.title.Title;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,10 +15,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoinListener implements Listener {
 
     private final PluginConfiguration config;
+    private final AudiencesService audiencesService;
     private final Server server;
 
-    public PlayerJoinListener(ConfigurationManager configurationManager, Server server) {
+    public PlayerJoinListener(ConfigurationManager configurationManager, AudiencesService audiencesService, Server server) {
         this.config = configurationManager.getPluginConfiguration();
+        this.audiencesService = audiencesService;
         this.server = server;
     }
 
@@ -34,8 +38,13 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (config.eventMessage.enableWelcomeTitle){
-            player.showTitle(Title.title(ChatUtils.component(config.eventMessage.welcomeTitle.replace("{PLAYER}", player.getName())),
-                ChatUtils.component(config.eventMessage.welcomeSubTitle.replace("{PLAYER}", player.getName()))));
+            this.audiencesService
+                .notice()
+                .staticNotice(NotificationType.TITLE, Component.text(config.eventMessage.welcomeTitle))
+                .staticNotice(NotificationType.SUBTITLE, Component.text(config.eventMessage.welcomeSubTitle))
+                .placeholder("{PLAYER}", player.getName())
+                .player(player.getUniqueId())
+                .send();
         }
 
         event.joinMessage(ChatUtils.component(config.eventMessage.joinMessage.replace("{PLAYER}", player.getName())));

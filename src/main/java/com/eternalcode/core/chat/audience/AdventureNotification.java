@@ -1,5 +1,7 @@
 package com.eternalcode.core.chat.audience;
 
+import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.chat.notification.NotificationType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -8,7 +10,7 @@ import java.util.function.Function;
 
 public class AdventureNotification extends Notification {
 
-    private static final MiniMessage MINI_MESSAGE = MiniMessage.get();
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private final Component component;
 

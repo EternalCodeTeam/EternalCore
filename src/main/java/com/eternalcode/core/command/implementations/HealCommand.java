@@ -4,8 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.audience.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -14,7 +14,6 @@ import dev.rollczi.litecommands.annotations.MaxArgs;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -27,7 +26,7 @@ public class HealCommand {
     private final AudiencesService audiencesService;
 
     public HealCommand(AudiencesService audiencesService) {
-        this.messages = messages;
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -39,7 +38,7 @@ public class HealCommand {
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
@@ -47,7 +46,12 @@ public class HealCommand {
 
         healPlayer(player);
 
-        sender.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.healedMessage, "{PLAYER}", player.getName())));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().healedMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .sender(sender)
+            .send();
     }
 
     @IgnoreMethod
@@ -56,6 +60,11 @@ public class HealCommand {
         player.setHealth(20);
         player.setFireTicks(0);
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
-        player.sendMessage(ChatUtils.color(this.messages.otherMessages.healMessage));
+
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().healMessage())
+            .player(player.getUniqueId())
+            .send();
     }
 }
