@@ -4,8 +4,9 @@
 
 package com.eternalcode.core;
 
+import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.chat.tag.LegacyColorProcessor;
+import com.eternalcode.core.chat.notification.AudienceProvider;
 import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.chat.notification.BukkitAudienceProvider;
 import com.eternalcode.core.chat.notification.NotificationType;
@@ -56,8 +57,10 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.configuration.lang.en.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.pl.PLMessagesConfiguration;
+import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.listener.player.PlayerChatListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
@@ -75,13 +78,13 @@ import com.eternalcode.core.teleport.TeleportManager;
 import com.eternalcode.core.teleport.TeleportTask;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -96,10 +99,11 @@ import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.Option;
 import panda.std.stream.PandaStream;
 
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Plugin(name = "EternalCore", version = "1.0.2-APLHA")
 @Author("EternalCodeTeam")
@@ -114,6 +118,7 @@ public class EternalCore extends JavaPlugin {
     @Getter private LanguageManager languageManager;
     @Getter private ConfigurationManager configurationManager;
     @Getter private ScoreboardManager scoreboardManager;
+    @Getter private AudienceProvider audienceProvider;
     @Getter private AudiencesService audiencesService;
     @Getter private TeleportManager teleportManager;
     @Getter private BukkitAudiences audiences;
@@ -121,6 +126,7 @@ public class EternalCore extends JavaPlugin {
     @Getter private MiniMessage miniMessage;
     @Getter private ChatManager chatManager;
     @Getter private UserManager userManager;
+    @Getter private BukkitUserProvider userProvider;
     @Getter private Scheduler scheduler;
     private boolean isPaper = false;
 
@@ -131,31 +137,48 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
+        /** Scheduler */
+
         this.scheduler = new BukkitSchedulerImpl(this);
+
+        /** Configuration */
+
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
-        this.languageManager = new LanguageManager(this.userManager, new ENMessagesConfiguration(this.getDataFolder(), "en_messages.yml"));
 
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
 
-        Stream.of(
-            new ENMessagesConfiguration(this.getDataFolder(), "en_messages.yml"),
-            new PLMessagesConfiguration(this.getDataFolder(), "pl_messages.yml")
-        ).filter(messages -> config.chat.languages.contains(messages.getLanguage())).forEach(messages -> {
-            this.configurationManager.loadAndRender(messages);
-            this.languageManager.registerLang(messages.getLanguage(), messages);
-        });
+        /** Configuration (Language) */
 
-        this.audiences = BukkitAudiences.create(this);
-
-        this.miniMessage = MiniMessage.builder()
-            .postProcessor(new LegacyColorProcessor())
-            .tags(TagResolver.standard())
+        File langFolder = new File(this.getDataFolder(), "lang");
+        Map<Language, Messages> defaultImplementations = new ImmutableMap.Builder<Language, Messages>()
+            .put(Language.EN, new ENMessagesConfiguration(langFolder, "en_messages.yml"))
+            .put(Language.PL, new PLMessagesConfiguration(langFolder, "pl_messages.yml"))
             .build();
 
-        this.audiencesService = new AudiencesService(this.languageManager, new BukkitAudienceProvider(this.userManager, server, this.audiences), this.miniMessage);
+        List<Messages> messages = PandaStream.of(config.chat.languages)
+            .map(lang -> defaultImplementations.getOrDefault(lang, new ENMessagesConfiguration(langFolder, lang.getLang() + "_messages.yml")))
+            .toList();
+
+        Messages defaultMessages = PandaStream.of(messages)
+            .find(m -> m.getLanguage().equals(config.chat.defaultLanguage))
+            .orThrow(() -> new RuntimeException("Default language not found!"));
+
+        this.languageManager = new LanguageManager(defaultMessages);
+
+        for (Messages message : messages) {
+            this.configurationManager.loadAndRender(message);
+            this.languageManager.loadLanguage(message.getLanguage(), message);
+        }
+
+        /** Adventure */
+
+        this.audiences = BukkitAudiences.create(this);
+        this.miniMessage = MiniMessage.get(); //TODO: Nowe MiniMessage przeszkadza w debugowaniu na paper :(
+
+        /** Services */ // TODO: Przenieść wyżej serwisy (Poprawić architekturę, aby zależności szły w dobre strony)
 
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
@@ -163,21 +186,22 @@ public class EternalCore extends JavaPlugin {
         this.chatManager = new ChatManager(config.chat);
         this.teleportManager = new TeleportManager();
 
-        // bStats metrics
-        // Metrics metrics = new Metrics(this, 13964);
-        // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
-
-        // Services
         this.userManager = new UserManager();
+        this.userProvider = new BukkitUserProvider(userManager); //TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
+
+        this.audienceProvider = new BukkitAudienceProvider(this.userManager, server, this.audiences);
+        this.audiencesService = new AudiencesService(this.languageManager, this.audienceProvider, this.miniMessage);
+
+        /** Commands */
 
         this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
             .argument(String.class, new StringPlayerArgument(server))
-            .argument(Integer.class, new AmountArgument(languageManager))
-            .argument(Player.class, new PlayerArgument(languageManager, server))
-            .argument(Option.class, new PlayerArgument(languageManager, server).toOptionHandler())
-            .argument(Material.class, new MaterialArgument(languageManager))
-            .argument(GameMode.class, new GameModeArgument(languageManager))
-            .argument(NotificationType.class, new MessageActionArgument(languageManager))
+            .argument(Integer.class, new AmountArgument(languageManager, userProvider))
+            .argument(Player.class, new PlayerArgument(userProvider, languageManager, server))
+            .argument(Option.class, new PlayerArgument(userProvider, languageManager, server).toOptionHandler())
+            .argument(Material.class, new MaterialArgument(userProvider, languageManager))
+            .argument(GameMode.class, new GameModeArgument(userProvider, languageManager))
+            .argument(NotificationType.class, new MessageActionArgument(userProvider, languageManager))
 
             .bind(Player.class, new PlayerSenderBind(languageManager))
             .bind(ConfigurationManager.class, () -> this.configurationManager)
@@ -189,9 +213,12 @@ public class EternalCore extends JavaPlugin {
             .bind(UserManager.class, () -> this.userManager)
             .bind(ScoreboardManager.class, () -> this.scoreboardManager)
             .bind(AudiencesService.class, () -> this.audiencesService)
+            .bind(MiniMessage.class, () -> this.miniMessage)
+            .bind(ChatManager.class, () -> this.chatManager)
+            .bind(Scheduler.class, () -> this.scheduler)
 
             .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
-            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(languageManager))
+            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(userProvider, languageManager))
 
             .command(
                 TeleportCommand.class,
@@ -232,6 +259,8 @@ public class EternalCore extends JavaPlugin {
             )
             .register();
 
+        /** Listeners */
+
         // Register events
         PandaStream.of(
             new PlayerChatListener(this.chatManager, audiencesService, this.configurationManager, server),
@@ -245,9 +274,14 @@ public class EternalCore extends JavaPlugin {
             new TeleportListeners(this.audiencesService, this.teleportManager)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
-        TeleportTask task = new TeleportTask(this.audiencesService, this.teleportManager, server);
+        /** Tasks */
 
+        TeleportTask task = new TeleportTask(this.audiencesService, this.teleportManager, server);
         this.scheduler.runTaskTimer(task, 10, 10);
+
+        // bStats metrics
+        // Metrics metrics = new Metrics(this, 13964);
+        // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
@@ -281,4 +315,5 @@ public class EternalCore extends JavaPlugin {
             case "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> this.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
         }
     }
+
 }

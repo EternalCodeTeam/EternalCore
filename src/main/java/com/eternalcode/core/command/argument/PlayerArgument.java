@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
@@ -16,10 +17,12 @@ import java.util.List;
 @ArgumentName("player")
 public class PlayerArgument implements SingleArgumentHandler<Player> {
 
+    private final BukkitUserProvider userProvider;
     private final LanguageManager languageManager;
     private final Server server;
 
-    public PlayerArgument(LanguageManager languageManager, Server server) {
+    public PlayerArgument(BukkitUserProvider userProvider, LanguageManager languageManager, Server server) {
+        this.userProvider = userProvider;
         this.languageManager = languageManager;
         this.server = server;
     }
@@ -29,8 +32,9 @@ public class PlayerArgument implements SingleArgumentHandler<Player> {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {
-            CommandSender sender = (CommandSender) invocation.sender().getSender();
-            Messages messages = this.languageManager.getMessages(sender);
+            Messages messages = userProvider.getUser(invocation)
+                .map(languageManager::getMessages)
+                .orElseGet(languageManager.getDefaultMessages());
 
             throw new ValidationCommandException(messages.argument().offlinePlayer());
         }

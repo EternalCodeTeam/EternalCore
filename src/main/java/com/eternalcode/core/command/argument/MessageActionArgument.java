@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.language.LanguageManager;
@@ -16,20 +17,25 @@ import java.util.List;
 @ArgumentName("action")
 public class MessageActionArgument implements SingleArgumentHandler<NotificationType> {
 
+    private final BukkitUserProvider userProvider;
     private final LanguageManager languageManager;
 
-    public MessageActionArgument(LanguageManager languageManager) {
+    public MessageActionArgument(BukkitUserProvider userProvider, LanguageManager languageManager) {
+        this.userProvider = userProvider;
         this.languageManager = languageManager;
     }
 
 
     @Override
     public NotificationType parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        CommandSender sender = (CommandSender) invocation.sender().getSender();
-        Messages messages = this.languageManager.getMessages(sender);
-
         return Option.attempt(IllegalArgumentException.class, () -> NotificationType.valueOf(argument.toUpperCase()))
-            .orThrow(() -> new ValidationCommandException(messages.argument().noArgument()));
+            .orThrow(() -> {
+                Messages messages = userProvider.getUser(invocation)
+                    .map(languageManager::getMessages)
+                    .orElseGet(languageManager.getDefaultMessages());
+
+                return new ValidationCommandException(messages.argument().noArgument());
+            });
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class LiteAdventureSender implements LiteSender {
 
-    private final MiniMessage miniMessage = MiniMessage.miniMessage();
+    private final MiniMessage miniMessage = MiniMessage.get();
     private final CommandSender commandSender;
     private final Audience audience;
 

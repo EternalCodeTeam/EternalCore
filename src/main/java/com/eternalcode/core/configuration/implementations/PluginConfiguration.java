@@ -75,22 +75,6 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     }
 
     @Contextual
-    public static class Chat implements ChatSettings {
-
-        public List<Language> languages = Arrays.asList(Language.EN, Language.PL);
-
-        public double helpopCooldown = 60.0;
-
-        public boolean commandExact = false;
-
-        @Getter @Setter
-        public double chatDelay = 5.0;
-
-        @Getter @Setter
-        public boolean chatEnabled = true;
-    }
-
-    @Contextual
     public static class Format {
         public String enabled = "&aenabled";
         public String disabled = "&6disabled";

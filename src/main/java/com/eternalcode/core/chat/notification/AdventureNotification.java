@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 public class AdventureNotification extends Notification {
 
-    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.get();
 
     private final Component component;
 

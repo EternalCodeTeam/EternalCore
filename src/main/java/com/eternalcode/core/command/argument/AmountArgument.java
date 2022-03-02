@@ -1,7 +1,9 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.configuration.lang.Messages;
 import com.eternalcode.core.language.LanguageManager;
+import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
@@ -16,15 +18,18 @@ import java.util.List;
 public class AmountArgument implements SingleArgumentHandler<Integer> {
 
     private final LanguageManager languageManager;
+    private final BukkitUserProvider userProvider;
 
-    public AmountArgument(LanguageManager languageManager) {
+    public AmountArgument(LanguageManager languageManager, BukkitUserProvider userProvider) {
+        this.userProvider = userProvider;
         this.languageManager = languageManager;
     }
 
     @Override
     public Integer parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        CommandSender sender = (CommandSender) invocation.sender().getSender();
-        Messages messages = this.languageManager.getMessages(sender);
+        Messages messages = userProvider.getUser(invocation)
+            .map(languageManager::getMessages)
+            .orElseGet(languageManager.getDefaultMessages());
 
         return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
             .orThrow(() -> new ValidationCommandException(messages.argument().notNumber()));

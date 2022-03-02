@@ -5,6 +5,7 @@ import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.bind.LiteBind;
+import dev.rollczi.litecommands.platform.LiteSender;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,13 +21,14 @@ public class PlayerSenderBind implements LiteBind {
 
     @Override
     public Object apply(LiteInvocation invocation) {
-        CommandSender sender = (CommandSender) invocation.sender().getSender();
-        Messages messages = this.languageManager.getMessages(sender);
+        LiteSender sender = invocation.sender();
 
-        if (!(sender instanceof Player)) {
-            throw new ValidationCommandException(messages.argument().onlyPlayer());
+        if (!(sender.getSender() instanceof Player)) {
+            Messages defaultMessages = this.languageManager.getDefaultMessages();
+
+            throw new ValidationCommandException(defaultMessages.argument().onlyPlayer());
         }
 
-        return invocation.sender();
+        return sender.getSender();
     }
 }
