@@ -1,15 +1,13 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
-import panda.utilities.text.Formatter;
 import panda.utilities.text.Joiner;
 
 import java.util.stream.Collectors;
@@ -18,22 +16,29 @@ import java.util.stream.Collectors;
 @Permission("eternalcore.command.list")
 public class ListCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
     private final Server server;
 
-    public ListCommand(PluginConfiguration config, MessagesConfiguration messages, Server server) {
+    public ListCommand(PluginConfiguration config, AudiencesService audiencesService, Server server) {
         this.config = config;
-        this.messages = messages;
+        this.audiencesService = audiencesService;
         this.server = server;
     }
 
     @Execute
     public void execute(CommandSender sender) {
-        Formatter formatter = new Formatter()
-            .register("{ONLINE}", this.server.getOnlinePlayers().size())
-            .register("{PLAYERS}", Joiner.on(this.config.format.separator).join(this.server.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList())));
-
-        sender.sendMessage(ChatUtils.color(formatter.format(this.messages.otherMessages.listMessage)));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().listMessage())
+            .sender(sender)
+            .placeholder("{ONLINE}", String.valueOf(this.server.getOnlinePlayers().size()))
+            .placeholder("{PLAYERS}", String.valueOf(
+                Joiner.on(this.config.format.separator).join(
+                        this.server.getOnlinePlayers()
+                            .stream()
+                            .map(HumanEntity::getName)
+                            .collect(Collectors.toList()))))
+            .send();
     }
 }

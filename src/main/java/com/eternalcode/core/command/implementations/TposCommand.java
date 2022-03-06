@@ -1,8 +1,7 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Between;
 import dev.rollczi.litecommands.annotations.Execute;
@@ -15,17 +14,16 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
-import panda.utilities.text.Formatter;
 
 @Section(route = "tpos")
 @Permission("eternalcore.command.tpos")
 @UsageMessage("&8» &cPoprawne użycie &7/tpos <x> <y> <z> [gracz]")
 public class TposCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public TposCommand(MessagesConfiguration messages) {
-        this.messages = messages;
+    public TposCommand(AudiencesService audiencesService) {
+        this.audiencesService = audiencesService;
     }
 
     @Execute @Between(min = 3, max = 4)
@@ -35,20 +33,23 @@ public class TposCommand {
                 teleport(player, x, y, z);
                 return;
             }
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
         Player player = playerOption.get();
 
         teleport(player, x, y, z);
 
-        Formatter formatter = new Formatter()
-            .register("{PLAYER}", player.getName())
-            .register("{X}", x)
-            .register("{Y}", y)
-            .register("{Z}", z);
-
-        sender.sendMessage(ChatUtils.color(formatter.format(this.messages.otherMessages.tposByMessage)));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().tposByMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{X}", String.valueOf(x))
+            .placeholder("{Y}", String.valueOf(y))
+            .placeholder("{Z}", String.valueOf(z))
+            .sender(sender)
+            .send();
     }
 
     @IgnoreMethod
@@ -57,11 +58,14 @@ public class TposCommand {
 
         player.teleportAsync(location);
 
-        Formatter formatter = new Formatter()
-            .register("{X}", location.getBlockX())
-            .register("{Y}", location.getBlockY())
-            .register("{Z}", location.getBlockZ());
-
-        player.sendMessage(ChatUtils.color(formatter.format(this.messages.otherMessages.tposMessage)));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().tposMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{X}", String.valueOf(x))
+            .placeholder("{Y}", String.valueOf(y))
+            .placeholder("{Z}", String.valueOf(z))
+            .player(player.getUniqueId())
+            .send();
     }
 }

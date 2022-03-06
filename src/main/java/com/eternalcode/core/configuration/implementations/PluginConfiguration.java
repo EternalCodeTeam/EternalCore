@@ -4,7 +4,11 @@
 
 package com.eternalcode.core.configuration.implementations;
 
+import com.eternalcode.core.chat.ChatSettings;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.language.Language;
+import lombok.Getter;
+import lombok.Setter;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Sound;
@@ -68,14 +72,6 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
         public float afterChatMessageVolume = 1.8F;
         public float afterChatMessagePitch = 1F;
-    }
-
-    @Contextual
-    public static class Chat {
-        public double helpopCooldown = 60.0;
-        public double slowMode = 5.0;
-        public boolean enabled = true;
-        public boolean commandExact = false;
     }
 
     @Contextual

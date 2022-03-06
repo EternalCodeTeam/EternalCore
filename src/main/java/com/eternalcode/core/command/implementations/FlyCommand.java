@@ -4,17 +4,15 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -24,11 +22,11 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/fly <player>")
 public class FlyCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final PluginConfiguration config;
 
-    public FlyCommand(MessagesConfiguration messages, PluginConfiguration config) {
-        this.messages = messages;
+    public FlyCommand(AudiencesService audiencesService, PluginConfiguration config) {
+        this.audiencesService = audiencesService;
         this.config = config;
     }
 
@@ -38,15 +36,16 @@ public class FlyCommand {
             if (sender instanceof Player player) {
                 player.setAllowFlight(!player.getAllowFlight());
 
-                player.sendMessage(ChatUtils.color(StringUtils.replace(
-                    this.messages.otherMessages.flyMessage,
-                    "{STATE}",
-                    player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)));
+                this.audiencesService.notice()
+                    .player(player.getUniqueId())
+                    .placeholder("{STATE}", player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)
+                    .message(messages -> messages.other().flyMessage())
+                    .send();
 
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
@@ -54,14 +53,19 @@ public class FlyCommand {
 
         player.setAllowFlight(!player.getAllowFlight());
 
-        player.sendMessage(ChatUtils.color(StringUtils.replace(
-            this.messages.otherMessages.flyMessage,
-            "{STATE}",
-            player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().flyMessage())
+            .placeholder("{STATE}", player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)
+            .player(player.getUniqueId())
+            .send();
 
-        sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(
-            this.messages.otherMessages.flySetMessage,
-            new String[]{ "{PLAYER}", "{STATE}" },
-            new String[]{ player.getName(), player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled })));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().flySetMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{STATE}", player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)
+            .sender(sender)
+            .send();
     }
 }

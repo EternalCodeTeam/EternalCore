@@ -1,10 +1,8 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.utils.DateUtils;
-import net.kyori.adventure.text.Component;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -13,13 +11,13 @@ import java.util.UUID;
 
 public class TeleportTask implements Runnable {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final TeleportManager teleportManager;
     private final Server server;
 
-    public TeleportTask(MessagesConfiguration messages, TeleportManager teleportManager, Server server) {
+    public TeleportTask(AudiencesService audiencesService, TeleportManager teleportManager, Server server) {
+        this.audiencesService = audiencesService;
         this.teleportManager = teleportManager;
-        this.messages = messages;
         this.server = server;
     }
 
@@ -39,15 +37,24 @@ public class TeleportTask implements Runnable {
             if (System.currentTimeMillis() < time) {
                 long actionTime = time - System.currentTimeMillis();
 
-                player.sendActionBar(ChatUtils.component(StringUtils.replace(this.messages.teleportSection.actionBarMessage, "{TIME}", DateUtils.durationToString(actionTime))));
+                audiencesService.notice()
+                    .notice(NotificationType.ACTIONBAR, messages -> messages.teleport().actionBarMessage())
+                    .placeholder("{TIME}", DateUtils.durationToString(actionTime))
+                    .player(player.getUniqueId())
+                    .send();
+
                 continue;
             }
             player.teleportAsync(location);
 
             this.teleportManager.removeTeleport(uuid);
 
-            player.sendActionBar(ChatUtils.component(this.messages.teleportSection.teleported));
-            player.sendMessage(ChatUtils.color(this.messages.teleportSection.teleported));
+            audiencesService.notice()
+                .notice(NotificationType.ACTIONBAR, messages -> messages.teleport().teleported())
+                .message(messages -> messages.teleport().teleported())
+                .placeholder("{TIME}", DateUtils.durationToString(time))
+                .player(player.getUniqueId())
+                .send();
         }
     }
 }

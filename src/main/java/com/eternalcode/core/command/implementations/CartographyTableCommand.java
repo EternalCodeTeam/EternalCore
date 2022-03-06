@@ -4,9 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -20,10 +19,10 @@ import panda.std.Option;
 @Permission("eternalcore.command.cartopgraphytable")
 public class CartographyTableCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public CartographyTableCommand(MessagesConfiguration messages) {
-        this.messages = messages;
+    public CartographyTableCommand(AudiencesService audiencesService) {
+        this.audiencesService = audiencesService;
     }
 
 
@@ -35,7 +34,7 @@ public class CartographyTableCommand {
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 

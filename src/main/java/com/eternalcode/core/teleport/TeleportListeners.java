@@ -1,7 +1,6 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,12 +15,12 @@ import java.util.UUID;
 
 public class TeleportListeners implements Listener {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
     private final TeleportManager teleportManager;
 
-    public TeleportListeners(MessagesConfiguration messages, TeleportManager teleportManager) {
+    public TeleportListeners(AudiencesService audiencesService, TeleportManager teleportManager) {
+        this.audiencesService = audiencesService;
         this.teleportManager = teleportManager;
-        this.messages = messages;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -63,8 +62,11 @@ public class TeleportListeners implements Listener {
         if (this.teleportManager.inTeleport(uuid)) {
             this.teleportManager.removeTeleport(uuid);
 
-            player.sendMessage(ChatUtils.color(this.messages.teleportSection.cancel));
             player.sendActionBar(Component.text());
+
+            this.audiencesService.notice()
+                .message(messages -> messages.teleport().cancel())
+                .send();
         }
     }
 

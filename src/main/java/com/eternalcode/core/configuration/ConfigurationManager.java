@@ -4,47 +4,42 @@
 
 package com.eternalcode.core.configuration;
 
+import com.eternalcode.core.configuration.composers.LanguageComposer;
 import com.eternalcode.core.configuration.composers.LocationComposer;
 import com.eternalcode.core.configuration.composers.StringComposer;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.language.Language;
 import lombok.Getter;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
-import net.dzikoysk.cdn.source.Resource;
-import net.dzikoysk.cdn.source.Source;
 import org.bukkit.Location;
 
 import java.io.File;
 
 public class ConfigurationManager {
 
-    private final File dataFolder;
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
+        .withComposer(Language.class, new LanguageComposer())
         .withComposer(Location.class, new LocationComposer())
         .withComposer(String.class, new StringComposer())
         .build();
 
     @Getter private final PluginConfiguration pluginConfiguration;
-    @Getter private final MessagesConfiguration messagesConfiguration;
     @Getter private final CommandsConfiguration commandsConfiguration;
     @Getter private final LocationsConfiguration locationsConfiguration;
 
     public ConfigurationManager(File dataFolder) {
-        this.dataFolder = dataFolder;
         this.pluginConfiguration = new PluginConfiguration(dataFolder, "config.yml");
-        this.messagesConfiguration = new MessagesConfiguration(dataFolder, "messages.yml");
         this.commandsConfiguration = new CommandsConfiguration(dataFolder, "commands.yml");
         this.locationsConfiguration = new LocationsConfiguration(dataFolder, "locations.yml");
     }
 
     public void loadAndRenderConfigs() {
         this.loadAndRender(pluginConfiguration);
-        this.loadAndRender(messagesConfiguration);
         this.loadAndRender(commandsConfiguration);
         this.loadAndRender(locationsConfiguration);
     }

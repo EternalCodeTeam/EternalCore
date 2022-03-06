@@ -1,9 +1,8 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.builders.ItemBuilder;
+import com.eternalcode.core.builder.ItemBuilder;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Between;
 import dev.rollczi.litecommands.annotations.Execute;
@@ -12,7 +11,6 @@ import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,10 +22,10 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/give <material> [gracz]")
 public class GiveCommand {
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public GiveCommand(MessagesConfiguration messages) {
-        this.messages = messages;
+    public GiveCommand(AudiencesService audiencesService) {
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -36,11 +34,18 @@ public class GiveCommand {
         if (option.isEmpty()) {
             if (sender instanceof Player player) {
                 giveItem(player, material);
-                player.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
+
+                this.audiencesService
+                    .notice()
+                    .placeholder("{ITEM}", material.name().replaceAll("_", " "))
+                    .message(messages -> messages.other().giveReceived())
+                    .player(player.getUniqueId())
+                    .send();
+
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
@@ -48,8 +53,20 @@ public class GiveCommand {
 
         giveItem(player, material);
 
-        player.sendMessage(ChatUtils.color(this.messages.otherMessages.giveRecived.replace("{ITEM}", material.name().replaceAll("_", " "))));
-        sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(this.messages.otherMessages.giveGiven, new String[]{ "{PLAYER}", "{ITEM}" }, new String[]{ player.getName(), material.name().replaceAll("_", " ")})));
+        this.audiencesService
+            .notice()
+            .placeholder("{ITEM}", material.name().replaceAll("_", " "))
+            .message(messages -> messages.other().giveReceived())
+            .player(player.getUniqueId())
+            .send();
+
+        this.audiencesService
+            .notice()
+            .placeholder("{ITEM}", material.name().replaceAll("_", " "))
+            .placeholder("{PLAYER}", player.getName())
+            .message(messages -> messages.other().giveGiven())
+            .sender(sender)
+            .send();
     }
 
     @IgnoreMethod

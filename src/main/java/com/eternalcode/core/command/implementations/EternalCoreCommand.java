@@ -4,8 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -18,10 +18,12 @@ import org.bukkit.command.CommandSender;
 @Permission("eternalcore.command.eternalcore")
 public class EternalCoreCommand {
 
+    private final AudiencesService audiencesService;
     private final ConfigurationManager manager;
     private final Server server;
 
-    public EternalCoreCommand(ConfigurationManager manager, Server server) {
+    public EternalCoreCommand(AudiencesService audiencesService, ConfigurationManager manager, Server server) {
+        this.audiencesService = audiencesService;
         this.manager = manager;
         this.server = server;
     }
@@ -30,7 +32,9 @@ public class EternalCoreCommand {
     @Permission("eternalcore.command.reload")
     public void reload(CommandSender sender) {
         this.manager.loadAndRenderConfigs();
-        sender.sendMessage(ChatUtils.color(this.manager.getMessagesConfiguration().otherMessages.successfullyReloaded));
-        this.server.getLogger().info(ChatUtils.color("Configs has ben successfuly reloaded!"));
+
+        this.audiencesService.sender(sender, messages -> messages.other().successfullyReloaded());
+
+        this.server.getLogger().info("Configs has ben successfuly reloaded!");
     }
 }

@@ -1,6 +1,8 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.bukkit.BukkitUserProvider;
+import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
@@ -13,18 +15,25 @@ import java.util.List;
 @ArgumentName("material")
 public class MaterialArgument implements SingleArgumentHandler<Material> {
 
-    private final MessagesConfiguration messages;
+    private final BukkitUserProvider userProvider;
+    private final LanguageManager languageManager;
 
-    public MaterialArgument(MessagesConfiguration messages){
-        this.messages = messages;
+    public MaterialArgument(BukkitUserProvider userProvider, LanguageManager languageManager) {
+        this.userProvider = userProvider;
+        this.languageManager = languageManager;
     }
+
 
     @Override
     public Material parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
         Material material = Material.getMaterial(argument.toUpperCase());
 
         if (material == null) {
-            throw new ValidationCommandException(this.messages.argumentSection.noMaterial);
+            Messages messages = userProvider.getUser(invocation)
+                .map(languageManager::getMessages)
+                .orElseGet(languageManager.getDefaultMessages());
+
+            throw new ValidationCommandException(messages.argument().noMaterial());
         }
 
         return material;

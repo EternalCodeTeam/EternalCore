@@ -4,8 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.chat.notification.AudiencesService;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -20,10 +19,10 @@ import org.bukkit.inventory.PlayerInventory;
 @UsageMessage("&8» &cPoprawne użycie &7/hat")
 public class HatCommand {
 
-    private final MessagesConfiguration message;
+    private final AudiencesService audiencesService;
 
-    public HatCommand(MessagesConfiguration message) {
-        this.message = message;
+    public HatCommand(AudiencesService audiencesService) {
+        this.audiencesService = audiencesService;
     }
 
     @Execute
@@ -39,6 +38,10 @@ public class HatCommand {
             return;
         }
 
-        player.sendMessage(ChatUtils.color(this.message.otherMessages.nullHatMessage));
+        this.audiencesService
+            .notice()
+            .player(player.getUniqueId())
+            .message(messages -> messages.other().nullHatMessage())
+            .send();
     }
 }

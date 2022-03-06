@@ -1,26 +1,32 @@
 package com.eternalcode.core.command.message;
 
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
+import com.eternalcode.core.bukkit.BukkitUserProvider;
+import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.valid.messages.LiteMessage;
 import dev.rollczi.litecommands.valid.messages.MessageInfoContext;
 import panda.utilities.text.Joiner;
 
 public class PermissionMessage implements LiteMessage {
 
-    private final MessagesConfiguration messages;
+    private final BukkitUserProvider userProvider;
+    private final LanguageManager languageManager;
 
-    public PermissionMessage(MessagesConfiguration messages) {
-        this.messages = messages;
+    public PermissionMessage(BukkitUserProvider userProvider, LanguageManager languageManager) {
+        this.userProvider = userProvider;
+        this.languageManager = languageManager;
     }
 
     @Override
-    public String message(MessageInfoContext messageInfoContext) {
-        String permissions = Joiner
-            .on(", ")
-            .join(messageInfoContext.getMissingPermissions())
+    public String message(MessageInfoContext context) {
+        String permissionMessage = userProvider.getUser(context.getInvocation())
+            .map(languageManager::getMessages)
+            .orElseGet(languageManager.getDefaultMessages())
+            .argument().permissionMessage();
+
+        String permissions = Joiner.on(", ")
+            .join(context.getMissingPermissions())
             .toString();
 
-        return messages.argumentSection.permissionMessage.replace("{PERMISSIONS}", permissions);
+        return permissionMessage.replace("{PERMISSIONS}", permissions);
     }
-
 }

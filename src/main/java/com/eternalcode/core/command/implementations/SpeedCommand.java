@@ -4,9 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.configuration.implementations.MessagesConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -15,7 +14,6 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import dev.rollczi.litecommands.valid.AmountValidator;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -25,19 +23,24 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/speed <liczba> [gracz]")
 public class SpeedCommand {
 
-    private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(-1).max(10);
+    private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(0).max(10);
 
-    private final MessagesConfiguration messages;
+    private final AudiencesService audiencesService;
 
-    public SpeedCommand(MessagesConfiguration messages) {
-        this.messages = messages;
+    public SpeedCommand(AudiencesService audiencesService) {
+        this.audiencesService = audiencesService;
     }
 
     @Execute
     @MinArgs(1)
     public void execute(CommandSender sender, @Arg(0) Integer amount, @Arg(1) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (SPEED_AMOUNT_VALIDATOR.valid(amount)) {
-            sender.sendMessage(ChatUtils.color(this.messages.otherMessages.speedBetweenZeroAndTen));
+        if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
+            this.audiencesService
+                .notice()
+                .message(messages -> messages.other().speedBetweenZeroAndTen())
+                .sender(sender)
+                .send();
+
             return;
         }
 
@@ -46,11 +49,17 @@ public class SpeedCommand {
                 player.setWalkSpeed(amount / 10.0f);
                 player.setFlySpeed(amount / 10.0f);
 
-                player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.speedSet, "{SPEED}", String.valueOf(amount))));
+                this.audiencesService
+                    .notice()
+                    .message(messages -> messages.other().speedSet())
+                    .placeholder("{SPEED}", String.valueOf(amount))
+                    .player(player.getUniqueId())
+                    .send();
+
                 return;
             }
 
-            sender.sendMessage(ChatUtils.color(this.messages.argumentSection.onlyPlayer));
+            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
@@ -59,11 +68,19 @@ public class SpeedCommand {
         player.setFlySpeed(amount / 10.0f);
         player.setWalkSpeed(amount / 10.0f);
 
-        sender.sendMessage(ChatUtils.color(StringUtils.replaceEach(
-            this.messages.otherMessages.speedSettedBy,
-            new String[] { "{PLAYER}", "{SPEED}" },
-            new String[] { player.getName(), String.valueOf(amount) })));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().speedSet())
+            .placeholder("{SPEED}", String.valueOf(amount))
+            .player(player.getUniqueId())
+            .send();
 
-        player.sendMessage(ChatUtils.color(StringUtils.replace(this.messages.otherMessages.speedSet, "{SPEED}", String.valueOf(amount))));
+        this.audiencesService
+            .notice()
+            .message(messages -> messages.other().speedSetBy())
+            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{SPEED}", String.valueOf(amount))
+            .sender(sender)
+            .send();
     }
 }
