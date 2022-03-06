@@ -19,6 +19,7 @@ public class AudiencesService {
         return new Notice(languageManager, audienceProvider, announcer);
     }
 
+    @Deprecated
     public void sender(CommandSender sender, MessageExtractor extractor) {
         this.notice()
             .sender(sender)
