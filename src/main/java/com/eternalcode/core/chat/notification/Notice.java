@@ -1,11 +1,9 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.user.User;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -26,16 +24,16 @@ public class Notice {
 
     private final LanguageManager languageManager;
     private final AudienceProvider audienceProvider;
-    private final MiniMessage miniMessage;
+    private final NotificationAnnouncer announcer;
 
     private final List<Audience> audiences = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
     private final Formatter placeholders = new Formatter();
 
-    Notice(LanguageManager languageManager, AudienceProvider audienceProvider, MiniMessage miniMessage) {
+    Notice(LanguageManager languageManager, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
         this.languageManager = languageManager;
         this.audienceProvider = audienceProvider;
-        this.miniMessage = miniMessage;
+        this.announcer = announcer;
     }
 
     public Notice user(User user) {
@@ -48,6 +46,7 @@ public class Notice {
         return this;
     }
 
+    @Deprecated
     public Notice sender(CommandSender commandSender) {
         if (commandSender instanceof Player player) {
             this.player(player.getUniqueId());
@@ -91,13 +90,8 @@ public class Notice {
         return this.message(messageExtractor);
     }
 
-    public Notice staticNotice(Component component) {
-        this.notifications.add(messages -> new AdventureNotification(component, NotificationType.CHAT));
-        return this;
-    }
-
-    public Notice staticNotice(NotificationType type, Component component) {
-        this.notifications.add(messages -> new AdventureNotification(component, type));
+    public Notice staticNotice(Notification notification) {
+        this.notifications.add(messages -> notification);
         return this;
     }
 
@@ -122,22 +116,23 @@ public class Notice {
     }
 
     public void send() {
-        Set<Language> languages = new HashSet<>();
+        Map<Language, Set<Audience>> audiencesByLang = new HashMap<>();
 
         for (Audience audience : audiences) {
-            languages.add(audience.getLanguage());
+            audiencesByLang
+                .computeIfAbsent(audience.getLanguage(), (key) -> new HashSet<>())
+                .add(audience);
         }
 
-        Map<Language, List<AdventureNotification>> formattedMessages = new HashMap<>();
+        Map<Language, List<Notification>> formattedMessages = new HashMap<>();
 
-        for (Language language : languages) {
+        for (Language language : audiencesByLang.keySet()) {
             Messages messages = languageManager.getMessages(language);
-            ArrayList<AdventureNotification> notifications = new ArrayList<>();
+            ArrayList<Notification> notifications = new ArrayList<>();
 
             for (NotificationExtractor extractor : this.notifications) {
-                AdventureNotification notification = extractor.extract(messages)
-                    .edit(placeholders::format)
-                    .toAdventure(miniMessage::deserialize);
+                Notification notification = extractor.extract(messages)
+                    .edit(placeholders::format);
 
                 notifications.add(notification);
             }
@@ -145,15 +140,16 @@ public class Notice {
             formattedMessages.put(language, notifications);
         }
 
-        for (Audience audience : audiences) {
-            List<AdventureNotification> notifications = formattedMessages.get(audience.getLanguage());
+        for (Map.Entry<Language, Set<Audience>> entry : audiencesByLang.entrySet()) {
+            Language language = entry.getKey();
+            List<Notification> notifications = formattedMessages.get(language);
 
             if (notifications == null) {
-                return;
+                continue;
             }
 
-            for (AdventureNotification notification : notifications) {
-                notification.notify(audience);
+            for (Notification notification : notifications) {
+                announcer.announce(entry.getValue(), notification);
             }
         }
     }

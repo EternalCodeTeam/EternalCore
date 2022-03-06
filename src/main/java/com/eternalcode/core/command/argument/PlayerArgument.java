@@ -1,14 +1,13 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
-import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 

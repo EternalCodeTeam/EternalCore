@@ -1,35 +1,44 @@
 package com.eternalcode.core.chat.notification;
 
 import com.eternalcode.core.language.Language;
-import net.kyori.adventure.text.Component;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class Audience {
 
-    private final net.kyori.adventure.audience.Audience audience;
     private final Supplier<Language> language;
+    private final UUID uuid;
+    private final boolean console;
 
-    public Audience(net.kyori.adventure.audience.Audience audience, Language language) {
-        this.audience = audience;
-        this.language = () -> language;
+    private Audience(Language language, boolean console, UUID uuid) {
+        this(() -> language, console, uuid);
     }
 
-    public Audience(net.kyori.adventure.audience.Audience audience, Supplier<Language> language) {
-        this.audience = audience;
+    private Audience(Supplier<Language> language, boolean console, UUID uuid) {
         this.language = language;
-    }
-
-    public net.kyori.adventure.audience.Audience getAdventureAudience() {
-        return audience;
+        this.console = console;
+        this.uuid = uuid;
     }
 
     public Language getLanguage() {
         return language.get();
     }
 
-    public void message(Component component) {
-        this.audience.sendMessage(component);
+    public boolean isConsole() {
+        return console;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public static Audience console() {
+        return new Audience(Language.DEFAULT, true, UUID.nameUUIDFromBytes("console".getBytes()));
+    }
+
+    public static Audience player(UUID uuid, Language language) {
+        return new Audience(language, false, uuid);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.tag;
+package com.eternalcode.core.chat.legacy;
 
 import com.eternalcode.core.utils.ChatUtils;
 import net.kyori.adventure.text.Component;

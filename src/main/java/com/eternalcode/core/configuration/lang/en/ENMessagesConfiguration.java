@@ -1,7 +1,7 @@
 package com.eternalcode.core.configuration.lang.en;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
-import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.Language;
 
 import java.io.File;

@@ -40,8 +40,8 @@ public class PlayerJoinListener implements Listener {
         if (config.eventMessage.enableWelcomeTitle){
             this.audiencesService
                 .notice()
-                .staticNotice(NotificationType.TITLE, Component.text(config.eventMessage.welcomeTitle))
-                .staticNotice(NotificationType.SUBTITLE, Component.text(config.eventMessage.welcomeSubTitle))
+//                .notice(NotificationType.TITLE, messages -> config.eventMessage.welcomeTitle) //TODO: Move to messages config
+//                .notice(NotificationType.SUBTITLE, Component.text(config.eventMessage.welcomeSubTitle)) //TODO: Move to messages config
                 .placeholder("{PLAYER}", player.getName())
                 .player(player.getUniqueId())
                 .send();

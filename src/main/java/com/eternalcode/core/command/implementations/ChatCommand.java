@@ -5,7 +5,9 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.adventure.AdventureNotification;
 import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NotificationType;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -20,7 +22,7 @@ import panda.std.Option;
 @UsageMessage("&cPoprawne użycie &7/chat <clear/on/off/slowmode [time]>")
 public class ChatCommand {
 
-    private static final Component CLEAR;
+    private static final AdventureNotification CLEAR;
 
     static {
         Component clear = Component.empty();
@@ -29,7 +31,7 @@ public class ChatCommand {
             clear = clear.append(Component.newline());
         }
 
-        CLEAR = clear;
+        CLEAR = new AdventureNotification(clear, NotificationType.CHAT);
     }
 
     private final AudiencesService audiences;

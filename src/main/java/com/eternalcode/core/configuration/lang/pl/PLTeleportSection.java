@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.lang.pl;
 
-import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;

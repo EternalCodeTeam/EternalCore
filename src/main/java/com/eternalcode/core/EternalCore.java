@@ -6,9 +6,11 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.chat.notification.AudienceProvider;
 import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.chat.notification.BukkitAudienceProvider;
+import com.eternalcode.core.chat.adventure.BukkitAudienceProvider;
+import com.eternalcode.core.chat.notification.NotificationAnnouncer;
 import com.eternalcode.core.chat.notification.NotificationType;
 import com.eternalcode.core.command.argument.AmountArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
@@ -53,11 +55,12 @@ import com.eternalcode.core.command.implementations.TposCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
 import com.eternalcode.core.command.message.PermissionMessage;
+import com.eternalcode.core.command.platform.EternalCommandsFactory;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.configuration.lang.en.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.pl.PLMessagesConfiguration;
 import com.eternalcode.core.language.Language;
@@ -69,7 +72,7 @@ import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
-import com.eternalcode.core.listener.user.CreateUserListener;
+import com.eternalcode.core.listener.user.PrepareUserController;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
@@ -80,7 +83,6 @@ import com.eternalcode.core.user.UserManager;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
-import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -115,19 +117,32 @@ public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
-    @Getter private LanguageManager languageManager;
-    @Getter private ConfigurationManager configurationManager;
-    @Getter private ScoreboardManager scoreboardManager;
-    @Getter private AudienceProvider audienceProvider;
-    @Getter private AudiencesService audiencesService;
+    /** Services */
+    @Getter private Scheduler scheduler;
     @Getter private TeleportManager teleportManager;
-    @Getter private BukkitAudiences audiences;
-    @Getter private LiteCommands liteCommands;
-    @Getter private MiniMessage miniMessage;
-    @Getter private ChatManager chatManager;
     @Getter private UserManager userManager;
     @Getter private BukkitUserProvider userProvider;
-    @Getter private Scheduler scheduler;
+
+    /** Configuration */
+    @Getter private ConfigurationManager configurationManager;
+
+    /** Language & Chat */
+    @Getter private LanguageManager languageManager;
+    @Getter private ChatManager chatManager;
+
+    /** Adventure */
+    @Getter private BukkitAudiences adventureAudiences;
+    @Getter private MiniMessage miniMessage;
+
+    /** Audiences System */
+    @Getter private AudienceProvider audienceProvider;
+    @Getter private NotificationAnnouncer notificationAnnouncer;
+    @Getter private AudiencesService audiencesService;
+
+    /** FrameWorks & Libs */
+    @Getter private ScoreboardManager scoreboardManager;
+    @Getter private LiteCommands liteCommands;
+
     private boolean isPaper = false;
 
     @Override
@@ -137,9 +152,12 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
-        /** Scheduler */
+        /** Services */
 
         this.scheduler = new BukkitSchedulerImpl(this);
+        this.teleportManager = new TeleportManager();
+        this.userManager = new UserManager();
+        this.userProvider = new BukkitUserProvider(userManager); //TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 
         /** Configuration */
 
@@ -150,7 +168,7 @@ public class EternalCore extends JavaPlugin {
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
 
-        /** Configuration (Language) */
+        /** Language & Chat */
 
         File langFolder = new File(this.getDataFolder(), "lang");
         Map<Language, Messages> defaultImplementations = new ImmutableMap.Builder<Language, Messages>()
@@ -173,28 +191,24 @@ public class EternalCore extends JavaPlugin {
             this.languageManager.loadLanguage(message.getLanguage(), message);
         }
 
+        this.chatManager = new ChatManager(config.chat);
+
         /** Adventure */
 
-        this.audiences = BukkitAudiences.create(this);
+        this.adventureAudiences = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.get(); //TODO: Nowe MiniMessage przeszkadza w debugowaniu na paper :(
 
-        /** Services */ // TODO: Przenieść wyżej serwisy (Poprawić architekturę, aby zależności szły w dobre strony)
+        /** Audiences System */
 
+        this.audienceProvider = new BukkitAudienceProvider(this.userManager, server, this.adventureAudiences);
+        this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
+        this.audiencesService = new AudiencesService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
+
+        /** FrameWorks & Libs */
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
-        this.chatManager = new ChatManager(config.chat);
-        this.teleportManager = new TeleportManager();
-
-        this.userManager = new UserManager();
-        this.userProvider = new BukkitUserProvider(userManager); //TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
-
-        this.audienceProvider = new BukkitAudienceProvider(this.userManager, server, this.audiences);
-        this.audiencesService = new AudiencesService(this.languageManager, this.audienceProvider, this.miniMessage);
-
-        /** Commands */
-
-        this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
+        this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)
             .argument(String.class, new StringPlayerArgument(server))
             .argument(Integer.class, new AmountArgument(languageManager, userProvider))
             .argument(Player.class, new PlayerArgument(userProvider, languageManager, server))
@@ -266,7 +280,7 @@ public class EternalCore extends JavaPlugin {
             new PlayerChatListener(this.chatManager, audiencesService, this.configurationManager, server),
             new PlayerJoinListener(this.configurationManager, audiencesService, server),
             new PlayerQuitListener(this.configurationManager, server),
-            new CreateUserListener(this.userManager),
+            new PrepareUserController(this.userManager, server),
             new ScoreboardListener(config, this.scoreboardManager),
             new PlayerCommandPreprocessListener(this.audiencesService, this.configurationManager, server),
             new SignChangeListener(miniMessage),

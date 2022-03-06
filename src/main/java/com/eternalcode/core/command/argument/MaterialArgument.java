@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
-import com.eternalcode.core.configuration.lang.Messages;
+import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;

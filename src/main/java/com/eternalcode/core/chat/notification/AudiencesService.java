@@ -1,23 +1,22 @@
 package com.eternalcode.core.chat.notification;
 
 import com.eternalcode.core.language.LanguageManager;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 
 public class AudiencesService {
 
     private final LanguageManager languageManager;
     private final AudienceProvider audienceProvider;
-    private final MiniMessage miniMessage;
+    private final NotificationAnnouncer announcer;
 
-    public AudiencesService(LanguageManager languageManager, AudienceProvider audienceProvider, MiniMessage miniMessage) {
+    public AudiencesService(LanguageManager languageManager, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
         this.languageManager = languageManager;
         this.audienceProvider = audienceProvider;
-        this.miniMessage = miniMessage;
+        this.announcer = announcer;
     }
 
     public Notice notice() {
-        return new Notice(languageManager, audienceProvider, miniMessage);
+        return new Notice(languageManager, audienceProvider, announcer);
     }
 
     public void sender(CommandSender sender, MessageExtractor extractor) {

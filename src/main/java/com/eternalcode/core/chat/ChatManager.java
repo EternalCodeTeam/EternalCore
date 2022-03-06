@@ -50,8 +50,4 @@ public class ChatManager {
         return Math.max(this.slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
     }
 
-    public Map<UUID, Long> getSlowdown() {
-        return Collections.unmodifiableMap(this.slowdown.asMap());
-    }
-
 }

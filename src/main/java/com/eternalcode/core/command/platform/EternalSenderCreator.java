@@ -2,17 +2,20 @@ package com.eternalcode.core.command.platform;
 
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.AudienceProvider;
+import com.eternalcode.core.chat.notification.NotificationAnnouncer;
 import dev.rollczi.litecommands.platform.LiteSender;
 import dev.rollczi.litecommands.platform.LiteSenderCreator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class LiteAdventureSenderCreator implements LiteSenderCreator<CommandSender> {
+final class EternalSenderCreator implements LiteSenderCreator<CommandSender> {
 
+    private final NotificationAnnouncer announcer;
     private final AudienceProvider audienceProvider;
 
-    public LiteAdventureSenderCreator(AudienceProvider audienceProvider) {
+    public EternalSenderCreator(NotificationAnnouncer announcer, AudienceProvider audienceProvider) {
+        this.announcer = announcer;
         this.audienceProvider = audienceProvider;
     }
 
@@ -26,7 +29,7 @@ public class LiteAdventureSenderCreator implements LiteSenderCreator<CommandSend
             ? audienceProvider.player(player.getUniqueId())
             : audienceProvider.console();
 
-        return new LiteAdventureSender(sender, audience);
+        return new EternalSender(sender, audience, announcer);
     }
 
 }

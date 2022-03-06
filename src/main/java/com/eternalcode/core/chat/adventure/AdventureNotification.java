@@ -1,5 +1,7 @@
-package com.eternalcode.core.chat.notification;
+package com.eternalcode.core.chat.adventure;
 
+import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.chat.notification.NotificationType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -22,19 +24,8 @@ public class AdventureNotification extends Notification {
         this.component = component;
     }
 
-    public void notify(Audience audience) {
-        for (NotificationType type : types) {
-            type.notify(audience.getAdventureAudience(), this.component);
-        }
-    }
-
     @Override
     public Notification edit(Function<String, String> edit) {
-        return this;
-    }
-
-    @Override
-    public AdventureNotification toAdventure(Function<String, Component> parser) {
         return this;
     }
 

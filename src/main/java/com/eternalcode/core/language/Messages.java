@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.lang;
+package com.eternalcode.core.language;
 
 import com.eternalcode.core.configuration.ConfigWithResource;
 import com.eternalcode.core.language.Language;
