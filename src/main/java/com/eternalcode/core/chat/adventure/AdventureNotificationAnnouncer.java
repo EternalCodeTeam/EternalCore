@@ -22,7 +22,7 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
 
     @Override
     public void announce(Audience audience, Notification notification) {
-        Component component = miniMessage.parse(notification.getMessage());
+        Component component = miniMessage.deserialize(notification.getMessage());
 
         for (NotificationType type : notification.getTypes()) {
             this.send(this.toAdventureAudience(audience), type, component);
@@ -31,7 +31,7 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
 
     @Override
     public void announce(Iterable<Audience> audiences, Notification notification) {
-        Component component = miniMessage.parse(notification.getMessage());
+        Component component = miniMessage.deserialize(notification.getMessage());
 
         for (NotificationType type : notification.getTypes()) {
             for (Audience audience : audiences) {

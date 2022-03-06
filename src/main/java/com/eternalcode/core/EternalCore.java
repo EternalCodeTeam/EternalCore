@@ -7,6 +7,7 @@ package com.eternalcode.core;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
+import com.eternalcode.core.chat.legacy.LegacyColorProcessor;
 import com.eternalcode.core.chat.notification.AudienceProvider;
 import com.eternalcode.core.chat.notification.AudiencesService;
 import com.eternalcode.core.chat.adventure.BukkitAudienceProvider;
@@ -196,7 +197,9 @@ public class EternalCore extends JavaPlugin {
         /** Adventure */
 
         this.adventureAudiences = BukkitAudiences.create(this);
-        this.miniMessage = MiniMessage.get(); //TODO: Nowe MiniMessage przeszkadza w debugowaniu na paper :(
+        this.miniMessage = MiniMessage.builder()
+            .postProcessor(new LegacyColorProcessor())
+            .build();
 
         /** Audiences System */
 
