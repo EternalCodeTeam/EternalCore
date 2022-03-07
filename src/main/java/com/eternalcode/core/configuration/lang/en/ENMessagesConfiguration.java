@@ -26,10 +26,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENChatSection chat = new ENChatSection();
     public ENOtherMessages other = new ENOtherMessages();
 
-    @Getter @Accessors
-    private static final Language language = Language.EN;
+    @Accessors
+    private final Language language = Language.EN;
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class ENArgumentSection implements Messages.ArgumentSection {
         public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
@@ -41,19 +41,19 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noArgument = "&8» &cThis argument doesn't exist";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class ENHelpOpSection implements Messages.HelpOpSection {
         public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String send = "&8» &aThis message has been successfully sent to administration";
         public String coolDown = "&8» &cYou can use this command for: &6{TIME}";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class ENAdminChatSection implements Messages.AdminChatSection {
         public String format = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class ENTeleportSection implements Messages.TeleportSection {
         public String actionBarMessage = "&aTeleporting in &f{TIME}";
         public String cancel = "&8» &cYou've moved, teleportation canceled!";
@@ -62,7 +62,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String haveTeleport = "&8» &cYou are in teleport!";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class ENChatSection implements Messages.ChatSection {
         public String disabled = "&8» &cChat has been disabled by {NICK}!";
         public String enabled = "&8» &aThe chat has been enabled by {NICK}!";
@@ -75,7 +75,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noCommand = "&8» &cCommand &e{COMMAND} &cdoesn't exists!";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class ENOtherMessages implements Messages.OtherMessages {
         public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
         public String successfullyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";

@@ -25,10 +25,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public PLChatSection chat = new PLChatSection();
     public PLOtherMessages other = new PLOtherMessages();
 
-    @Getter @Accessors
-    private static final Language language = Language.PL;
+    @Accessors
+    private final Language language = Language.PL;
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class PLArgumentSection implements ArgumentSection {
         public String permissionMessage = "&4Blad: &cNie masz uprawnien do tej komendy! &7({PERMISSIONS})";
         public String offlinePlayer = "&4Blad: &cTen gracz jest offline!";
@@ -40,19 +40,19 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noArgument = "&4Blad: &cTaki argument nie istenieje!";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class PLHelpOpSection implements HelpOpSection {
         public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String send = "&8» &aWiadomość została wysłana do administracji";
         public String coolDown = "&8» &cMożesz użyć tej komendy dopiero za &6{TIME}!";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class PLAdminChatSection implements AdminChatSection {
         public String format = "&8[&4Administracja&8] &c{NICK}&8: &f{TEXT}";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class PLTeleportSection implements TeleportSection {
         public String actionBarMessage = "&aTeleportacja za &f{TIME}";
         public String cancel = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";
@@ -61,7 +61,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String haveTeleport = "&4Blad: &cTeleportujesz się już!";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class PLChatSection implements ChatSection {
         public String disabled = "&8» &cCzat został wyłączony przez &6{NICK}&c!";
         public String enabled = "&8» &aCzat został włączony przez &f{NICK}&a!";
@@ -74,7 +74,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noCommand = "&8» &cKomenda &e{COMMAND} &cnie istnieje!";
     }
 
-    @Getter @Accessors(fluent = true) @Contextual
+    @Contextual @Getter @Accessors(fluent = true)
     public static class PLOtherMessages implements OtherMessages {
         public String successfullyReloaded = "&8» &aPrzeładowano plugin!";
         public String successfullyTeleported = "&8» &aPrzeteleportowano do {PLAYER}!";

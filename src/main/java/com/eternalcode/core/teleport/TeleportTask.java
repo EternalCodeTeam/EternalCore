@@ -23,7 +23,7 @@ public class TeleportTask implements Runnable {
 
     @Override
     public void run() {
-        for (Teleport teleport : this.teleportManager.getTeleportMap().values()){
+        for (Teleport teleport : this.teleportManager.getTeleports()){
             Location location = teleport.getLocation();
             UUID uuid = teleport.getUuid();
             long time = teleport.getTime();
