@@ -16,7 +16,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     public ENArgumentSection argument = new ENArgumentSection();
-    public ENHelpopSection helpOp = new ENHelpopSection();
+    public ENHelpOpSection helpOp = new ENHelpOpSection();
     public ENAdminChatSection adminChat = new ENAdminChatSection();
     public ENTeleportSection teleport = new ENTeleportSection();
     public ENChatSection chat = new ENChatSection();

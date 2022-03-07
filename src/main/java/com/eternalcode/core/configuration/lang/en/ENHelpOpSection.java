@@ -7,7 +7,7 @@ import net.dzikoysk.cdn.entity.Contextual;
 
 @Getter @Accessors(fluent = true)
 @Contextual
-public class ENHelpopSection implements Messages.HelpopSection {
+public class ENHelpOpSection implements Messages.HelpOpSection {
 
     public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
     public String send = "&8» &aThis message has been successfully sent to administration";

@@ -1,7 +1,6 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.core.configuration.ConfigWithResource;
-import com.eternalcode.core.language.Language;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public interface Messages extends ConfigWithResource {
     Language getLanguage();
 
     ArgumentSection argument();
-    HelpopSection helpOp();
+    HelpOpSection helpOp();
     AdminChatSection adminChat();
     ChatSection chat();
     TeleportSection teleport();
@@ -27,7 +26,7 @@ public interface Messages extends ConfigWithResource {
         String noArgument();
     }
 
-    interface HelpopSection {
+    interface HelpOpSection {
         String format();
         String send();
         String coolDown();
