@@ -52,7 +52,7 @@ dependencies {
 
     // tests
     testImplementation "io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT"
-    testImplementation "org.codehaus.groovy:groovy-all:3.0.9"
+    testImplementation "org.codehaus.groovy:groovy-all:3.0.10"
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
 }
 
