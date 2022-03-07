@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.Notice;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Joiner;
@@ -17,18 +17,18 @@ import org.bukkit.entity.Player;
 @UsageMessage("&8» &cPoprawne użycie &7/adminchat <text>")
 public class AdminChatCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
     private final Server server;
 
-    public AdminChatCommand(AudiencesService audiencesService, Server server) {
-        this.audiencesService = audiencesService;
+    public AdminChatCommand(NoticeService noticeService, Server server) {
+        this.noticeService = noticeService;
         this.server = server;
     }
 
     @Execute
     @MinArgs(1)
     public void execute(CommandSender sender, @Joiner String text) {
-        Notice notice = audiencesService.notice()
+        Notice notice = noticeService.notice()
             .console()
             .message(messages -> messages.adminChat().format())
             .placeholder("{NICK}", sender.getName())
@@ -39,7 +39,7 @@ public class AdminChatCommand {
                 continue;
             }
 
-            notice.player(player.getUniqueId());
+            notice = notice.player(player.getUniqueId());
         }
 
         notice.send();

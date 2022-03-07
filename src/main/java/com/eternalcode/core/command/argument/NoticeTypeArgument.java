@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
@@ -14,20 +14,19 @@ import java.util.Arrays;
 import java.util.List;
 
 @ArgumentName("action")
-public class MessageActionArgument implements SingleArgumentHandler<NotificationType> {
+public class NoticeTypeArgument implements SingleArgumentHandler<NoticeType> {
 
     private final BukkitUserProvider userProvider;
     private final LanguageManager languageManager;
 
-    public MessageActionArgument(BukkitUserProvider userProvider, LanguageManager languageManager) {
+    public NoticeTypeArgument(BukkitUserProvider userProvider, LanguageManager languageManager) {
         this.userProvider = userProvider;
         this.languageManager = languageManager;
     }
 
-
     @Override
-    public NotificationType parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        return Option.attempt(IllegalArgumentException.class, () -> NotificationType.valueOf(argument.toUpperCase()))
+    public NoticeType parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
+        return Option.attempt(IllegalArgumentException.class, () -> NoticeType.valueOf(argument.toUpperCase()))
             .orThrow(() -> {
                 Messages messages = userProvider.getUser(invocation)
                     .map(languageManager::getMessages)
@@ -39,7 +38,7 @@ public class MessageActionArgument implements SingleArgumentHandler<Notification
 
     @Override
     public List<String> tabulation(String command, String[] args) {
-        return Arrays.stream(NotificationType.values())
+        return Arrays.stream(NoticeType.values())
             .map(notificationType -> notificationType.name().toLowerCase())
             .toList();
     }

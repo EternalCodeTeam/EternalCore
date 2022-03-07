@@ -10,11 +10,11 @@ import org.bukkit.entity.HumanEntity;
 import java.util.List;
 
 @ArgumentName("stringplayer")
-public class StringPlayerArgument implements SingleArgumentHandler<String> {
+public class PlayerNameArg implements SingleArgumentHandler<String> {
 
     private final Server server;
 
-    public StringPlayerArgument(Server server) {
+    public PlayerNameArg(Server server) {
         this.server = server;
     }
 

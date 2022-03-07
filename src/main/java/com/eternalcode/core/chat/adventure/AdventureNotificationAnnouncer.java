@@ -3,7 +3,7 @@ package com.eternalcode.core.chat.adventure;
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeType;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -24,7 +24,7 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
     public void announce(Audience audience, Notification notification) {
         Component component = miniMessage.deserialize(notification.getMessage());
 
-        for (NotificationType type : notification.getTypes()) {
+        for (NoticeType type : notification.getTypes()) {
             this.send(this.toAdventureAudience(audience), type, component);
         }
     }
@@ -33,14 +33,14 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
     public void announce(Iterable<Audience> audiences, Notification notification) {
         Component component = miniMessage.deserialize(notification.getMessage());
 
-        for (NotificationType type : notification.getTypes()) {
+        for (NoticeType type : notification.getTypes()) {
             for (Audience audience : audiences) {
                 this.send(this.toAdventureAudience(audience), type, component);
             }
         }
     }
 
-    private void send(net.kyori.adventure.audience.Audience audience, NotificationType type, Component component) {
+    private void send(net.kyori.adventure.audience.Audience audience, NoticeType type, Component component) {
         switch (type) {
             case CHAT: audience.sendMessage(component); return;
             case ACTIONBAR: audience.sendActionBar(component); return;

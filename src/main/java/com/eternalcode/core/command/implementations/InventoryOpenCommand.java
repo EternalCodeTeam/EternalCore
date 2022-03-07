@@ -15,6 +15,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import panda.std.Option;
 
 @Section(route = "inventoryopen", aliases = { "io", "oi", "open" })
@@ -85,10 +86,12 @@ public class InventoryOpenCommand {
             Option<Player> playerOption = Option.of(this.server.getPlayer(playerString));
 
             playerOption.peek(playerPeek -> {
-                playerPeek.getInventory().setHelmet(inventory.getItem(0));
-                playerPeek.getInventory().setChestplate(inventory.getItem(1));
-                playerPeek.getInventory().setLeggings(inventory.getItem(2));
-                playerPeek.getInventory().setBoots(inventory.getItem(3));
+                PlayerInventory inv = playerPeek.getInventory();
+
+                inv.setHelmet(inventory.getItem(0));
+                inv.setChestplate(inventory.getItem(1));
+                inv.setLeggings(inventory.getItem(2));
+                inv.setBoots(inventory.getItem(3));
                 playerPeek.updateInventory();
             });
         });

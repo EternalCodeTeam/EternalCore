@@ -6,6 +6,7 @@ import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
+import dev.rollczi.litecommands.component.LiteComponent;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import panda.std.Option;
 
@@ -36,6 +37,12 @@ public class AmountArgument implements SingleArgumentHandler<Integer> {
     @Override //TODO dodać do konfiguracji
     public List<String> tabulation(String command, String[] args) {
         return Arrays.asList("1", "8", "16", "32", "64", "100");
+    }
+
+    @Override
+    public boolean isValid(LiteComponent.ContextOfResolving context, String argument) {
+        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
+            .isPresent();
     }
 
 }

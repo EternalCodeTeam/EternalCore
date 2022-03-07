@@ -8,18 +8,22 @@ import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.chat.legacy.LegacyColorProcessor;
+import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.AudienceProvider;
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.adventure.BukkitAudienceProvider;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.command.argument.AmountArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.MaterialArgument;
-import com.eternalcode.core.command.argument.MessageActionArgument;
-import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.command.argument.StringPlayerArgument;
-import com.eternalcode.core.command.bind.PlayerSenderBind;
+import com.eternalcode.core.command.argument.NoticeTypeArgument;
+import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgOrSender;
+import com.eternalcode.core.command.argument.PlayerNameArg;
+import com.eternalcode.core.command.bind.AudienceBind;
+import com.eternalcode.core.command.bind.PlayerBind;
+import com.eternalcode.core.command.bind.UserBind;
 import com.eternalcode.core.command.implementations.AdminChatCommand;
 import com.eternalcode.core.command.implementations.AlertCommand;
 import com.eternalcode.core.command.implementations.AnvilCommand;
@@ -62,8 +66,8 @@ import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.language.Messages;
-import com.eternalcode.core.configuration.lang.en.ENMessagesConfiguration;
-import com.eternalcode.core.configuration.lang.pl.PLMessagesConfiguration;
+import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
+import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.listener.player.PlayerChatListener;
@@ -80,6 +84,7 @@ import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.teleport.TeleportListeners;
 import com.eternalcode.core.teleport.TeleportManager;
 import com.eternalcode.core.teleport.TeleportTask;
+import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
@@ -138,7 +143,7 @@ public class EternalCore extends JavaPlugin {
     /** Audiences System */
     @Getter private AudienceProvider audienceProvider;
     @Getter private NotificationAnnouncer notificationAnnouncer;
-    @Getter private AudiencesService audiencesService;
+    @Getter private NoticeService noticeService;
 
     /** FrameWorks & Libs */
     @Getter private ScoreboardManager scoreboardManager;
@@ -205,31 +210,41 @@ public class EternalCore extends JavaPlugin {
 
         this.audienceProvider = new BukkitAudienceProvider(this.userManager, server, this.adventureAudiences);
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
-        this.audiencesService = new AudiencesService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
+        this.noticeService = new NoticeService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
 
         /** FrameWorks & Libs */
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
         this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)
-            .argument(String.class, new StringPlayerArgument(server))
+
+            // arguments
+            .argument(String.class, new PlayerNameArg(server))
             .argument(Integer.class, new AmountArgument(languageManager, userProvider))
-            .argument(Player.class, new PlayerArgument(userProvider, languageManager, server))
-            .argument(Option.class, new PlayerArgument(userProvider, languageManager, server).toOptionHandler())
+            .argument(Player.class, new PlayerArg(userProvider, languageManager, server))
+            .argument(Player.class, new PlayerArgOrSender(languageManager, userProvider, server))
             .argument(Material.class, new MaterialArgument(userProvider, languageManager))
             .argument(GameMode.class, new GameModeArgument(userProvider, languageManager))
-            .argument(NotificationType.class, new MessageActionArgument(userProvider, languageManager))
+            .argument(NoticeType.class, new NoticeTypeArgument(userProvider, languageManager))
 
-            .bind(Player.class, new PlayerSenderBind(languageManager))
+            // Optional arguments
+            .argument(Option.class, new PlayerArg(userProvider, languageManager, server).toOptionHandler())
+
+            // Dynamic binds
+            .bind(Player.class, new PlayerBind(languageManager))
+            .bind(Audience.class, new AudienceBind(userManager))
+            .bind(User.class, new UserBind(languageManager, userManager))
+
+            // Static binds
+            .bind(EternalCore.class, () -> this)
             .bind(ConfigurationManager.class, () -> this.configurationManager)
             .bind(LanguageManager.class, () -> languageManager)
             .bind(PluginConfiguration.class, () -> config)
             .bind(LocationsConfiguration.class, () -> locations)
             .bind(TeleportManager.class, () -> this.teleportManager)
-            .bind(EternalCore.class, () -> this)
             .bind(UserManager.class, () -> this.userManager)
             .bind(ScoreboardManager.class, () -> this.scoreboardManager)
-            .bind(AudiencesService.class, () -> this.audiencesService)
+            .bind(NoticeService.class, () -> this.noticeService)
             .bind(MiniMessage.class, () -> this.miniMessage)
             .bind(ChatManager.class, () -> this.chatManager)
             .bind(Scheduler.class, () -> this.scheduler)
@@ -280,20 +295,20 @@ public class EternalCore extends JavaPlugin {
 
         // Register events
         PandaStream.of(
-            new PlayerChatListener(this.chatManager, audiencesService, this.configurationManager, server),
-            new PlayerJoinListener(this.configurationManager, audiencesService, server),
+            new PlayerChatListener(this.chatManager, noticeService, this.configurationManager, server),
+            new PlayerJoinListener(this.configurationManager, noticeService, server),
             new PlayerQuitListener(this.configurationManager, server),
             new PrepareUserController(this.userManager, server),
             new ScoreboardListener(config, this.scoreboardManager),
-            new PlayerCommandPreprocessListener(this.audiencesService, this.configurationManager, server),
+            new PlayerCommandPreprocessListener(this.noticeService, this.configurationManager, server),
             new SignChangeListener(miniMessage),
             new PlayerDeathListener(this.configurationManager),
-            new TeleportListeners(this.audiencesService, this.teleportManager)
+            new TeleportListeners(this.noticeService, this.teleportManager)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         /** Tasks */
 
-        TeleportTask task = new TeleportTask(this.audiencesService, this.teleportManager, server);
+        TeleportTask task = new TeleportTask(this.noticeService, this.teleportManager, server);
         this.scheduler.runTaskTimer(task, 10, 10);
 
         // bStats metrics

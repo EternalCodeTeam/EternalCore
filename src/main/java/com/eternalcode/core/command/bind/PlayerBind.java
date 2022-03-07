@@ -9,25 +9,24 @@ import dev.rollczi.litecommands.platform.LiteSender;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.entity.Player;
 
-@ArgumentName("sender")
-public class PlayerSenderBind implements LiteBind {
+public class PlayerBind implements LiteBind {
 
     private final LanguageManager languageManager;
 
-    public PlayerSenderBind(LanguageManager languageManager) {
+    public PlayerBind(LanguageManager languageManager) {
         this.languageManager = languageManager;
     }
 
     @Override
     public Object apply(LiteInvocation invocation) {
-        LiteSender sender = invocation.sender();
-
-        if (!(sender.getSender() instanceof Player)) {
-            Messages defaultMessages = this.languageManager.getDefaultMessages();
-
-            throw new ValidationCommandException(defaultMessages.argument().onlyPlayer());
+        if (invocation.sender().getSender() instanceof Player player) {
+            return player;
         }
 
-        return sender.getSender();
+        Messages messages = this.languageManager.getDefaultMessages();
+        String onlyPlayer = messages.argument().onlyPlayer();
+
+        throw new ValidationCommandException(onlyPlayer);
     }
+
 }

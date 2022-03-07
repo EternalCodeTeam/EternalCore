@@ -8,15 +8,15 @@ import java.util.function.Function;
 
 public class Notification {
 
-    protected final Set<NotificationType> types = new HashSet<>();
+    protected final Set<NoticeType> types = new HashSet<>();
     protected final String message;
 
-    protected Notification(String message, NotificationType... types) {
+    protected Notification(String message, NoticeType... types) {
         this.message = message;
         this.types.addAll(Arrays.asList(types));
     }
 
-    protected Notification(String message, Set<NotificationType> types) {
+    protected Notification(String message, Set<NoticeType> types) {
         this.message = message;
         this.types.addAll(types);
     }
@@ -25,7 +25,7 @@ public class Notification {
         return new Notification(edit.apply(this.message), types);
     }
 
-    public Set<NotificationType> getTypes() {
+    public Set<NoticeType> getTypes() {
         return Collections.unmodifiableSet(types);
     }
 
@@ -33,7 +33,7 @@ public class Notification {
         return message;
     }
 
-    public static Notification of(String message, NotificationType... types) {
+    public static Notification of(String message, NoticeType... types) {
         return new Notification(message, types);
     }
 

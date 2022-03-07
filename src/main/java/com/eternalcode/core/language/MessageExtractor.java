@@ -1,6 +1,4 @@
-package com.eternalcode.core.chat.notification;
-
-import com.eternalcode.core.language.Messages;
+package com.eternalcode.core.language;
 
 @FunctionalInterface
 public interface MessageExtractor {

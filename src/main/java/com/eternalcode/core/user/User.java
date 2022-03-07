@@ -4,13 +4,14 @@
 
 package com.eternalcode.core.user;
 
+import com.eternalcode.core.entity.Entity;
 import com.eternalcode.core.user.client.ClientSettings;
 import com.eternalcode.core.user.settings.Settings;
 import com.eternalcode.core.user.settings.SettingsImpl;
 
 import java.util.UUID;
 
-public class User {
+public class User implements Entity {
 
     private final String name;
     private final UUID uuid;
@@ -22,12 +23,14 @@ public class User {
         this.uuid = uuid;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
+    @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public UUID getUniqueId() {
+        return uuid;
     }
 
     public ClientSettings getClientSettings() {

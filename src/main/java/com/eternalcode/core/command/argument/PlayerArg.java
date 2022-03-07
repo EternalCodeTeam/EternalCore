@@ -14,13 +14,13 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 @ArgumentName("player")
-public class PlayerArgument implements SingleArgumentHandler<Player> {
+public class PlayerArg implements SingleArgumentHandler<Player> {
 
     private final BukkitUserProvider userProvider;
     private final LanguageManager languageManager;
     private final Server server;
 
-    public PlayerArgument(BukkitUserProvider userProvider, LanguageManager languageManager, Server server) {
+    public PlayerArg(BukkitUserProvider userProvider, LanguageManager languageManager, Server server) {
         this.userProvider = userProvider;
         this.languageManager = languageManager;
         this.server = server;
@@ -47,4 +47,5 @@ public class PlayerArgument implements SingleArgumentHandler<Player> {
             .map(HumanEntity::getName)
             .toList();
     }
+
 }

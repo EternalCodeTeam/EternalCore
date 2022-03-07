@@ -5,8 +5,9 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -23,41 +24,20 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/kill <player>")
 public class KillCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public KillCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public KillCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler( PlayerArgument.class) Option<Player> playerOption) {
-        if (playerOption.isEmpty()) {
-            if (sender instanceof Player player) {
-                killPlayer(player);
-                return;
-            }
-            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
-            return;
-        }
-        Player player = playerOption.get();
-
-        killPlayer(player);
-
-        this.audiencesService
-            .notice()
-            .message(messages -> messages.other().killedMessage())
-            .placeholder("{PLAYER}", player.getName())
-            .sender(sender)
-            .send();
-    }
-
-    @IgnoreMethod
-    private void killPlayer(Player player) {
+    public void execute(Audience audience, CommandSender sender, @Arg(0) @Handler(PlayerArg.class) Player player) {
         player.setHealth(0);
 
-        this.audiencesService
-            .notice()
-            .message(messages -> messages.other().killSelf())
+        this.noticeService.notice()
+            .message(messages -> messages.other().killedMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .audience(audience)
             .send();
     }
 

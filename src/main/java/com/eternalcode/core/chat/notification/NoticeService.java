@@ -1,15 +1,17 @@
 package com.eternalcode.core.chat.notification;
 
 import com.eternalcode.core.language.LanguageManager;
+import com.eternalcode.core.language.MessageExtractor;
+import com.eternalcode.core.language.NotificationExtractor;
 import org.bukkit.command.CommandSender;
 
-public class AudiencesService {
+public class NoticeService {
 
     private final LanguageManager languageManager;
     private final AudienceProvider audienceProvider;
     private final NotificationAnnouncer announcer;
 
-    public AudiencesService(LanguageManager languageManager, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
+    public NoticeService(LanguageManager languageManager, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
         this.languageManager = languageManager;
         this.audienceProvider = audienceProvider;
         this.announcer = announcer;
@@ -19,10 +21,9 @@ public class AudiencesService {
         return new Notice(languageManager, audienceProvider, announcer);
     }
 
-    @Deprecated
-    public void sender(CommandSender sender, MessageExtractor extractor) {
+    public void audience(Audience audience, MessageExtractor extractor) {
         this.notice()
-            .sender(sender)
+            .audience(audience)
             .message(extractor)
             .send();
     }
@@ -34,7 +35,7 @@ public class AudiencesService {
             .send();
     }
 
-    public void all(NotificationType type, MessageExtractor extractor) {
+    public void all(NoticeType type, MessageExtractor extractor) {
         this.notice()
             .all()
             .notice(type, extractor)

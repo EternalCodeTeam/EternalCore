@@ -1,5 +1,6 @@
 package com.eternalcode.core.bukkit;
 
+import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import dev.rollczi.litecommands.LiteInvocation;
@@ -28,6 +29,18 @@ public class BukkitUserProvider {
         return Option.none();
     }
 
+    public Audience getAudience(CommandSender sender) {
+        Option<User> userOption = getUser(sender);
+
+        if (userOption.isEmpty()) {
+            return Audience.console();
+        }
+
+        User user = userOption.get();
+
+        return Audience.player(user.getUniqueId(), user.getSettings().getLanguage());
+    }
+
     public Option<User> getUser(LiteInvocation invocation) {
         if (invocation.sender().getSender() instanceof Player player) {
             return this.getUser(player);
@@ -35,5 +48,18 @@ public class BukkitUserProvider {
 
         return Option.none();
     }
+
+    public Audience getAudience(LiteInvocation invocation) {
+        Option<User> userOption = getUser(invocation);
+
+        if (userOption.isEmpty()) {
+            return Audience.console();
+        }
+
+        User user = userOption.get();
+
+        return Audience.player(user.getUniqueId(), user.getSettings().getLanguage());
+    }
+
 
 }

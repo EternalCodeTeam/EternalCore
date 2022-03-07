@@ -4,8 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -19,22 +19,22 @@ import panda.std.Option;
 @Permission("eternalcore.command.cartopgraphytable")
 public class CartographyTableCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public CartographyTableCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public CartographyTableCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
 
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
+    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArg.class) Option<Player> playerOption) {
         if (playerOption.isEmpty()) {
             if (sender instanceof Player player) {
                 player.openCartographyTable(null, true);
                 return;
             }
 
-            audiencesService.console(messages -> messages.argument().onlyPlayer());
+            noticeService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 

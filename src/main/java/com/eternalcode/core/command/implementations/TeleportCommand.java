@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -18,20 +18,20 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/teleport <player> [player]")
 public class TeleportCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public TeleportCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public TeleportCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
     @MinArgs(1)
-    public void execute(CommandSender sender, @Arg(0) Player player, @Arg(1) @Handler(PlayerArgument.class) Option<Player> playerOption) {
+    public void execute(CommandSender sender, @Arg(0) Player player, @Arg(1) @Handler(PlayerArg.class) Option<Player> playerOption) {
         if (playerOption.isEmpty()) {
             if (sender instanceof Player playerSender) {
                 playerSender.teleportAsync(player.getLocation());
 
-                this.audiencesService
+                this.noticeService
                     .notice()
                     .message(messages -> messages.other().successfullyTeleported())
                     .placeholder("{PLAYER}", player.getName())
@@ -41,7 +41,7 @@ public class TeleportCommand {
                 return;
             }
 
-            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
+            this.noticeService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
@@ -49,7 +49,7 @@ public class TeleportCommand {
 
         player.teleportAsync(playerArgument.getLocation());
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().successfullyTeleportedPlayer())
             .placeholder("{PLAYER}", player.getName())

@@ -3,7 +3,7 @@ package com.eternalcode.core.command.platform;
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeType;
 import dev.rollczi.litecommands.platform.LiteSender;
 import org.bukkit.command.CommandSender;
 
@@ -26,7 +26,7 @@ final class EternalSender implements LiteSender {
 
     @Override
     public void sendMessage(String message) {
-        announcer.announce(audience, Notification.of(message, NotificationType.CHAT));
+        announcer.announce(audience, Notification.of(message, NoticeType.CHAT));
     }
 
     @Override

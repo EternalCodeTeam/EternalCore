@@ -58,7 +58,7 @@ public class BukkitAudienceProvider implements AudienceProvider {
 
     @Override
     public Audience user(User user) {
-        return Audience.player(user.getUuid(), user.getSettings().getLanguage());
+        return Audience.player(user.getUniqueId(), user.getSettings().getLanguage());
     }
 
 }

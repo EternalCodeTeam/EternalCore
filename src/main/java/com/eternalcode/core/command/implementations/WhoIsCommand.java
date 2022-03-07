@@ -4,7 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -19,16 +20,16 @@ import org.bukkit.entity.Player;
 @UsageMessage("&8» &cPoprawne użycie &7/whois <player>")
 public class WhoIsCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public WhoIsCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public WhoIsCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
     @Required(1)
-    public void execute(CommandSender sender, @Arg(0) Player player) {
-        this.audiencesService.notice()
+    public void execute(Audience audience, @Arg(0) Player player) {
+        this.noticeService.notice()
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{UUID}", String.valueOf(player.getUniqueId()))
             .placeholder("{IP}", player.getAddress().getHostString())
@@ -39,7 +40,7 @@ public class WhoIsCommand {
             .placeholder("{HEALTH}", String.valueOf(Math.round(player.getHealthScale())))
             .placeholder("{FOOD}", String.valueOf(player.getFoodLevel()))
             .messages(messages -> messages.other().whoisCommand())
-            .sender(sender)
+            .audience(audience)
             .send();
     }
 }
