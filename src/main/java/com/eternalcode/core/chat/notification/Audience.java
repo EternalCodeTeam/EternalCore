@@ -7,38 +7,41 @@ import java.util.function.Supplier;
 
 public class Audience {
 
-    private final Supplier<Language> language;
+    private final static Audience CONSOLE = new Audience(UUID.nameUUIDFromBytes("CONSOLE".getBytes()), true, Language.DEFAULT);
+
     private final UUID uuid;
     private final boolean console;
 
-    private Audience(Language language, boolean console, UUID uuid) {
-        this(() -> language, console, uuid);
+    private final Supplier<Language> language;
+
+    private Audience(UUID uuid, boolean console, Language language) {
+        this(uuid, console, () -> language);
     }
 
-    private Audience(Supplier<Language> language, boolean console, UUID uuid) {
-        this.language = language;
-        this.console = console;
+    private Audience(UUID uuid, boolean console, Supplier<Language> language) {
         this.uuid = uuid;
-    }
-
-    public Language getLanguage() {
-        return language.get();
-    }
-
-    public boolean isConsole() {
-        return console;
+        this.console = console;
+        this.language = language;
     }
 
     public UUID getUuid() {
         return uuid;
     }
 
+    public boolean isConsole() {
+        return console;
+    }
+
+    public Language getLanguage() {
+        return language.get();
+    }
+
     public static Audience console() {
-        return new Audience(Language.DEFAULT, true, UUID.nameUUIDFromBytes("console".getBytes()));
+        return CONSOLE;
     }
 
     public static Audience player(UUID uuid, Language language) {
-        return new Audience(language, false, uuid);
+        return new Audience(uuid, false, language);
     }
 
 }

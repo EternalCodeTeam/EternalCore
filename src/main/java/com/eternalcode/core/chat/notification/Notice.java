@@ -1,8 +1,10 @@
 package com.eternalcode.core.chat.notification;
 
+import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
+import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.user.User;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -10,6 +12,7 @@ import org.bukkit.entity.Player;
 import panda.utilities.text.Formatter;
 import panda.utilities.text.Joiner;
 
+import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,50 +39,63 @@ public class Notice {
         this.announcer = announcer;
     }
 
+    @CheckReturnValue
     public Notice user(User user) {
         this.audiences.add(audienceProvider.user(user));
         return this;
     }
 
+    @CheckReturnValue
     public Notice player(UUID uuid) {
         this.audiences.add(audienceProvider.player(uuid));
         return this;
     }
 
     @Deprecated
+    @CheckReturnValue
     public Notice sender(CommandSender commandSender) {
         if (commandSender instanceof Player player) {
-            this.player(player.getUniqueId());
-            return this;
+            return this.player(player.getUniqueId());
         }
 
         if (commandSender instanceof ConsoleCommandSender) {
-            this.console();
+            return this.console();
         }
 
         return this;
     }
 
+    @CheckReturnValue
+    public Notice audience(Audience audience) {
+        this.audiences.add(audience);
+        return this;
+    }
+
+    @CheckReturnValue
     public Notice console() {
         this.audiences.add(audienceProvider.console());
         return this;
     }
 
+    @CheckReturnValue
     public Notice all() {
         this.audiences.addAll(audienceProvider.all());
         return this;
     }
 
+    @CheckReturnValue
     public Notice allPlayers() {
         this.audiences.addAll(audienceProvider.allPlayers());
         return this;
     }
 
+    @CheckReturnValue
     public Notice message(MessageExtractor extractor) {
-        this.notifications.add(messages -> new Notification(extractor.extract(messages), NotificationType.CHAT));
+        this.notifications.add(messages -> new Notification(extractor.extract(messages), NoticeType.CHAT));
         return this;
     }
 
+    @CheckReturnValue
     public Notice messages(Function<Messages, List<String>> function) {
         MessageExtractor messageExtractor = (messages) -> {
             List<String> apply = function.apply(messages);
@@ -90,26 +106,31 @@ public class Notice {
         return this.message(messageExtractor);
     }
 
+    @CheckReturnValue
     public Notice staticNotice(Notification notification) {
         this.notifications.add(messages -> notification);
         return this;
     }
 
-    public Notice notice(NotificationType type, MessageExtractor extractor) {
+    @CheckReturnValue
+    public Notice notice(NoticeType type, MessageExtractor extractor) {
         this.notifications.add(messages -> new Notification(extractor.extract(messages), type));
         return this;
     }
 
+    @CheckReturnValue
     public Notice notice(NotificationExtractor extractor) {
         this.notifications.add(extractor);
         return this;
     }
 
+    @CheckReturnValue
     public Notice placeholder(String from, String to) {
         this.placeholders.register(from, () -> to);
         return this;
     }
 
+    @CheckReturnValue
     public Notice placeholder(String from, Supplier<String> to) {
         this.placeholders.register(from, to);
         return this;

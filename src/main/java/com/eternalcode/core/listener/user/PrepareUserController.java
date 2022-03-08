@@ -30,7 +30,7 @@ public class PrepareUserController implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         User user = this.userService.getOrCreate(player.getUniqueId(), player.getName());
-        ClientBukkitSettings clientSettings = new ClientBukkitSettings(server, user.getUuid());
+        ClientBukkitSettings clientSettings = new ClientBukkitSettings(server, user.getUniqueId());
 
         user.setClientSettings(clientSettings);
     }

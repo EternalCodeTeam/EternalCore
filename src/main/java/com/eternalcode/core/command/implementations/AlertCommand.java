@@ -4,8 +4,8 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.chat.notification.NoticeType;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Joiner;
@@ -19,17 +19,16 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 @UsageMessage("&8» &cPoprawne użycie &7/alert <title/actionbar/chat> <text>")
 public class AlertCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public AlertCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public AlertCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
     @MinArgs(2)
-    public void execute(@Arg(0) NotificationType type, @Joiner String text) {
-        audiencesService.notice()
-            .all()
+    public void execute(@Arg(0) NoticeType type, @Joiner String text) {
+        noticeService.notice()
             .notice(type, messages -> messages.other().alertMessagePrefix())
             .placeholder("{BROADCAST}", text)
             .all()

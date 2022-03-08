@@ -6,8 +6,9 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.adventure.AdventureNotification;
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.chat.notification.NoticeType;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -16,6 +17,8 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import panda.std.Option;
+
+import java.io.File;
 
 @Section(route = "chat", aliases = { "czat" })
 @Permission("eternalcore.command.chat")
@@ -31,13 +34,13 @@ public class ChatCommand {
             clear = clear.append(Component.newline());
         }
 
-        CLEAR = new AdventureNotification(clear, NotificationType.CHAT);
+        CLEAR = new AdventureNotification(clear, NoticeType.CHAT);
     }
 
-    private final AudiencesService audiences;
+    private final NoticeService audiences;
     private final ChatManager chatManager;
 
-    public ChatCommand(ChatManager chatManager, AudiencesService audiences) {
+    public ChatCommand(ChatManager chatManager, NoticeService audiences) {
         this.audiences = audiences;
         this.chatManager = chatManager;
     }
@@ -45,60 +48,62 @@ public class ChatCommand {
     @Execute(route = "clear")
     public void clear(CommandSender sender) {
         this.audiences.notice()
-            .allPlayers()
             .staticNotice(CLEAR)
             .message(messages -> messages.chat().cleared())
-            .placeholder("{NICK}", sender.getName());
+            .placeholder("{NICK}", sender.getName())
+            .allPlayers()
+            .send();
     }
 
     @Execute(route = "on")
-    public void enable(CommandSender sender) {
+    public void enable(Audience audience, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.sender(sender, messages -> messages.chat().alreadyEnabled());
+            this.audiences.audience(audience, messages -> messages.chat().alreadyEnabled());
             return;
         }
 
         this.chatManager.getChatSettings().setChatEnabled(true);
         this.audiences.notice()
-            .all()
             .message(messages -> messages.chat().enabled())
             .placeholder("{NICK}", sender.getName())
+            .all()
             .send();
     }
 
     @Execute(route = "off")
-    public void disable(CommandSender sender) {
+    public void disable(Audience audience, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.sender(sender, messages -> messages.chat().alreadyDisabled());
+            this.audiences.audience(audience, messages -> messages.chat().alreadyDisabled());
             return;
         }
 
         this.chatManager.getChatSettings().setChatEnabled(false);
         this.audiences.notice()
-            .all()
             .message(messages -> messages.chat().disabled())
             .placeholder("{NICK}", sender.getName())
+            .all()
             .send();
     }
 
     @Execute(route = "slowmode")
     @MinArgs(1)
-    public void slowmode(CommandSender sender, String[] args) {
+    public void slowmode(Audience audience, String[] args) {
         String amountArg = args[1];
 
         Option.attempt(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {
             if (amount < 0.0D) {
-                this.audiences.sender(sender, messages -> messages.argument().numberBiggerThanOrEqualZero());
+                this.audiences.audience(audience, messages -> messages.argument().numberBiggerThanOrEqualZero());
                 return;
             }
 
             this.chatManager.getChatSettings().setChatDelay(amount);
             this.audiences.notice()
-                .sender(sender)
                 .message(messages -> messages.chat().slowModeSet())
-                .placeholder("{SLOWMODE}", amountArg).send();
+                .placeholder("{SLOWMODE}", amountArg)
+                .audience(audience)
+                .send();
 
-        }).onEmpty(() -> this.audiences.sender(sender, messages -> messages.argument().notNumber()));
+        }).onEmpty(() -> this.audiences.audience(audience, messages -> messages.argument().notNumber()));
     }
 }
 

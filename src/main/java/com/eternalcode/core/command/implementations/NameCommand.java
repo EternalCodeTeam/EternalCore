@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Joiner;
@@ -18,10 +18,10 @@ import org.bukkit.inventory.PlayerInventory;
 @UsageMessage("&8» &cPoprawne użycie &7/name <nazwa>")
 public class NameCommand {
     
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
     
-    public NameCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public NameCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute @MinArgs(1)
@@ -31,7 +31,7 @@ public class NameCommand {
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
         if (handItem == null || handItem.getType() == Material.AIR) {
-            this.audiencesService
+            this.noticeService
                 .notice()
                 .message(messages -> messages.argument().noItem())
                 .player(player.getUniqueId())
@@ -42,7 +42,7 @@ public class NameCommand {
 
         handItem.editMeta(itemMeta -> itemMeta.displayName(ChatUtils.component(name)));
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().nameMessage())
             .placeholder("{NAME}", name)

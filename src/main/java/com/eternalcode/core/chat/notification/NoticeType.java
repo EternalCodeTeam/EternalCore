@@ -1,6 +1,6 @@
 package com.eternalcode.core.chat.notification;
 
-public enum NotificationType {
+public enum NoticeType {
 
     CHAT,
     ACTIONBAR,

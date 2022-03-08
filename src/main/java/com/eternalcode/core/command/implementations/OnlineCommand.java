@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -11,20 +12,20 @@ import org.bukkit.command.CommandSender;
 @Permission("eternalcore.command.online")
 public class OnlineCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
     private final Server server;
 
-    public OnlineCommand(AudiencesService audiencesService, Server server) {
-        this.audiencesService = audiencesService;
+    public OnlineCommand(NoticeService noticeService, Server server) {
+        this.noticeService = noticeService;
         this.server = server;
     }
 
     @Execute
-    public void execute(CommandSender sender) {
-        this.audiencesService
+    public void execute(Audience audience) {
+        this.noticeService
             .notice()
             .message(messages -> messages.other().onlineMessage())
-            .sender(sender)
+            .audience(audience)
             .placeholder("{ONLINE}", String.valueOf(this.server.getOnlinePlayers().size()))
             .send();
     }

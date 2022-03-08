@@ -4,8 +4,10 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -21,32 +23,24 @@ import panda.std.Option;
 @Permission("eternalcore.command.clear")
 public class ClearCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public ClearCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public ClearCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (playerOption.isEmpty()){
-            if (sender instanceof Player player){
-                this.clear(player);
-                return;
-            }
+    public void execute(Audience audience, CommandSender sender, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+        this.clear(player);
 
-            audiencesService.sender(sender, messages -> messages.argument().onlyPlayer());
+        if (sender.equals(player)) {
             return;
         }
 
-        Player player = playerOption.get();
-
-        this.clear(player);
-
-        audiencesService.notice()
+        noticeService.notice()
             .message(messages -> messages.other().clearByMessage())
             .placeholder("{PLAYER}", player.getName())
-            .sender(sender)
+            .audience(audience)
             .send();
     }
 
@@ -55,7 +49,7 @@ public class ClearCommand {
         player.getInventory().setArmorContents(new ItemStack[0]);
         player.getInventory().clear();
 
-        audiencesService.notice()
+        noticeService.notice()
             .message(messages -> messages.other().clearMessage())
             .player(player.getUniqueId())
             .send();

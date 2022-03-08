@@ -1,11 +1,9 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.ChatUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,12 +13,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoinListener implements Listener {
 
     private final PluginConfiguration config;
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
     private final Server server;
 
-    public PlayerJoinListener(ConfigurationManager configurationManager, AudiencesService audiencesService, Server server) {
+    public PlayerJoinListener(ConfigurationManager configurationManager, NoticeService noticeService, Server server) {
         this.config = configurationManager.getPluginConfiguration();
-        this.audiencesService = audiencesService;
+        this.noticeService = noticeService;
         this.server = server;
     }
 
@@ -38,7 +36,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (config.eventMessage.enableWelcomeTitle){
-            this.audiencesService
+            this.noticeService
                 .notice()
 //                .notice(NotificationType.TITLE, messages -> config.eventMessage.welcomeTitle) //TODO: Move to messages config
 //                .notice(NotificationType.SUBTITLE, Component.text(config.eventMessage.welcomeSubTitle)) //TODO: Move to messages config

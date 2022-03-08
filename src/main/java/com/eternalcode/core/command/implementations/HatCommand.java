@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -19,10 +19,10 @@ import org.bukkit.inventory.PlayerInventory;
 @UsageMessage("&8» &cPoprawne użycie &7/hat")
 public class HatCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public HatCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public HatCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
@@ -34,11 +34,11 @@ public class HatCommand {
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
             playerInventory.setHelmet(handItem);
-            playerInventory.remove(handItem);
+            playerInventory.remove(handItem); // TODO: to usunie wszystkie takie same itemy z tego co pamniętam
             return;
         }
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .player(player.getUniqueId())
             .message(messages -> messages.other().nullHatMessage())

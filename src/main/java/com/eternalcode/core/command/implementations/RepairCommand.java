@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
@@ -14,10 +14,10 @@ import org.bukkit.inventory.PlayerInventory;
 @UsageMessage("&8» &cPoprawne użycie &7/repair [all/armor]")
 public class RepairCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public RepairCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public RepairCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
@@ -25,8 +25,8 @@ public class RepairCommand {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
-        if (handItem.getType().isBlock() || handItem.getType().isAir()) {
-            this.audiencesService
+        if (handItem == null || handItem.getType().isBlock() || handItem.getType().isAir()) {
+            this.noticeService
                 .notice()
                 .message(messages -> messages.argument().noItem())
                 .player(player.getUniqueId())
@@ -37,7 +37,7 @@ public class RepairCommand {
 
         handItem.editMeta(itemMeta -> itemMeta.setCustomModelData(0));
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
@@ -52,7 +52,7 @@ public class RepairCommand {
             }
         }
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
@@ -67,7 +67,7 @@ public class RepairCommand {
             }
         }
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())

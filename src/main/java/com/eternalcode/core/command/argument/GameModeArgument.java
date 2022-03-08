@@ -55,4 +55,5 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
             .map(Enum::name)
             .toList();
     }
+
 }

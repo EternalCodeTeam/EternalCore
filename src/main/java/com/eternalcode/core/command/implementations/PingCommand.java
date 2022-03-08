@@ -1,7 +1,9 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -17,38 +19,29 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/ping [player]")
 public class PingCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public PingCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public PingCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (playerOption.isEmpty()) {
-            if (sender instanceof Player player) {
-                this.audiencesService
-                    .notice()
-                    .message(messages -> messages.other().pingMessage())
-                    .placeholder("{PING}", String.valueOf(player.getPing()))
-                    .player(player.getUniqueId())
-                    .send();
+    public void execute(CommandSender sender, Audience audience, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+        if (sender.equals(player)) {
+            this.noticeService.notice()
+                .message(messages -> messages.other().pingMessage())
+                .placeholder("{PING}", String.valueOf(player.getPing()))
+                .audience(audience)
+                .send();
 
-                return;
-            }
-
-            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
             return;
         }
 
-        Player player = playerOption.get();
-
-        this.audiencesService
-            .notice()
+        this.noticeService.notice()
             .message(messages -> messages.other().pingOtherMessage())
             .placeholder("{PING}", String.valueOf(player.getPing()))
             .placeholder("{PLAYER}", player.getName())
-            .sender(sender)
+            .audience(audience)
             .send();
     }
 }

@@ -1,7 +1,7 @@
 package com.eternalcode.core.chat.adventure;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -14,12 +14,12 @@ public class AdventureNotification extends Notification {
 
     private final Component component;
 
-    public AdventureNotification(Component component, NotificationType... types) {
+    public AdventureNotification(Component component, NoticeType... types) {
         super(MINI_MESSAGE.serialize(component), types);
         this.component = component;
     }
 
-    public AdventureNotification(Component component, Set<NotificationType> types) {
+    public AdventureNotification(Component component, Set<NoticeType> types) {
         super(MINI_MESSAGE.serialize(component), types);
         this.component = component;
     }

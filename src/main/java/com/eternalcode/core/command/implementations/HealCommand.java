@@ -4,8 +4,9 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -23,30 +24,31 @@ import panda.std.Option;
 @UsageMessage("&8» &cPoprawne użycie &7/heal <player>")
 public class HealCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public HealCommand(AudiencesService audiencesService) {
-        this.audiencesService = audiencesService;
+    public HealCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
     @MaxArgs(1)
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption) {
-        if (playerOption.isEmpty()) {
-            if (sender instanceof Player player) {
-                healPlayer(player);
-                return;
-            }
+    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+        player.setFoodLevel(20);
+        player.setHealth(20);
+        player.setFireTicks(0);
+        player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
 
-            this.audiencesService.console(messages -> messages.argument().onlyPlayer());
+        this.noticeService
+            .notice()
+            .message(messages -> messages.other().healMessage())
+            .player(player.getUniqueId())
+            .send();
+
+        if (sender.equals(player)) {
             return;
         }
 
-        Player player = playerOption.get();
-
-        healPlayer(player);
-
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().healedMessage())
             .placeholder("{PLAYER}", player.getName())
@@ -54,17 +56,4 @@ public class HealCommand {
             .send();
     }
 
-    @IgnoreMethod
-    private void healPlayer(Player player) {
-        player.setFoodLevel(20);
-        player.setHealth(20);
-        player.setFireTicks(0);
-        player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
-
-        this.audiencesService
-            .notice()
-            .message(messages -> messages.other().healMessage())
-            .player(player.getUniqueId())
-            .send();
-    }
 }

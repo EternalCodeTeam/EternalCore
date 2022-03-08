@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import dev.rollczi.litecommands.annotations.Execute;
@@ -14,12 +14,12 @@ public class SetSpawnCommand {
 
     private final ConfigurationManager configurationManager;
     private final LocationsConfiguration locations;
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public SetSpawnCommand(ConfigurationManager configurationManager, LocationsConfiguration locations, AudiencesService audiencesService) {
+    public SetSpawnCommand(ConfigurationManager configurationManager, LocationsConfiguration locations, NoticeService noticeService) {
         this.configurationManager = configurationManager;
         this.locations = locations;
-        this.audiencesService = audiencesService;
+        this.noticeService = noticeService;
     }
 
     @Execute
@@ -27,7 +27,7 @@ public class SetSpawnCommand {
         this.locations.spawn = player.getLocation().clone();
         this.configurationManager.render(locations);
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().spawnSet())
             .player(player.getUniqueId())

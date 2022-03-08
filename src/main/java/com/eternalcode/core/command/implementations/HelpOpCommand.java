@@ -4,7 +4,7 @@
 
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.Notice;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.DateUtils;
@@ -22,18 +22,19 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+//TODO: Refactor
 @Section(route = "helpop", aliases = { "report" })
 @Permission("eternalcore.command.helpop")
 @UsageMessage("&8» &cPoprawne użycie &7/helpop <text>")
 public class HelpOpCommand {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
     private final PluginConfiguration config;
-    private final Cache<UUID, Long> cooldowns;
+    private final Cache<UUID, Long> cooldowns; // <- nie trzymać tego w takim miejsu
     private final Server server;
 
-    public HelpOpCommand(AudiencesService audiencesService, PluginConfiguration config, Server server) {
-        this.audiencesService = audiencesService;
+    public HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {
+        this.noticeService = noticeService;
         this.config = config;
         this.server = server;
 
@@ -50,7 +51,7 @@ public class HelpOpCommand {
         if (this.cooldowns.asMap().getOrDefault(uuid, 0L) > System.currentTimeMillis()) {
             long time = Math.max(this.cooldowns.asMap().getOrDefault(uuid, 0L) - System.currentTimeMillis(), 0L);
 
-            this.audiencesService
+            this.noticeService
                 .notice()
                 .message(messages -> messages.helpOp().coolDown())
                 .placeholder("{TIME}", DateUtils.durationToString(time))
@@ -60,7 +61,7 @@ public class HelpOpCommand {
             return;
         }
 
-        Notice notice = audiencesService.notice()
+        Notice notice = noticeService.notice()
             .console()
             .message(messages -> messages.helpOp().format())
             .placeholder("{PLAYER}", player.getName())
@@ -71,12 +72,12 @@ public class HelpOpCommand {
                 continue;
             }
 
-            notice.player(admin.getUniqueId());
+            notice = notice.player(admin.getUniqueId());
         }
 
         notice.send();
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.helpOp().send())
             .send();

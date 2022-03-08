@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.chat.notification.NotificationType;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.utils.DateUtils;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -11,12 +11,12 @@ import java.util.UUID;
 
 public class TeleportTask implements Runnable {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
     private final TeleportManager teleportManager;
     private final Server server;
 
-    public TeleportTask(AudiencesService audiencesService, TeleportManager teleportManager, Server server) {
-        this.audiencesService = audiencesService;
+    public TeleportTask(NoticeService noticeService, TeleportManager teleportManager, Server server) {
+        this.noticeService = noticeService;
         this.teleportManager = teleportManager;
         this.server = server;
     }
@@ -37,8 +37,8 @@ public class TeleportTask implements Runnable {
             if (System.currentTimeMillis() < time) {
                 long actionTime = time - System.currentTimeMillis();
 
-                audiencesService.notice()
-                    .notice(NotificationType.ACTIONBAR, messages -> messages.teleport().actionBarMessage())
+                noticeService.notice()
+                    .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().actionBarMessage())
                     .placeholder("{TIME}", DateUtils.durationToString(actionTime))
                     .player(player.getUniqueId())
                     .send();
@@ -49,8 +49,8 @@ public class TeleportTask implements Runnable {
 
             this.teleportManager.removeTeleport(uuid);
 
-            audiencesService.notice()
-                .notice(NotificationType.ACTIONBAR, messages -> messages.teleport().teleported())
+            noticeService.notice()
+                .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
                 .message(messages -> messages.teleport().teleported())
                 .placeholder("{TIME}", DateUtils.durationToString(time))
                 .player(player.getUniqueId())

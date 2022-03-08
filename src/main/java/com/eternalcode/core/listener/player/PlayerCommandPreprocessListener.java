@@ -1,6 +1,6 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import org.bukkit.Server;
@@ -13,12 +13,12 @@ import panda.std.Option;
 
 public class PlayerCommandPreprocessListener implements Listener {
 
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
     private final PluginConfiguration config;
     private final Server server;
 
-    public PlayerCommandPreprocessListener(AudiencesService audiencesService, ConfigurationManager configurationManager, Server server) {
-        this.audiencesService = audiencesService;
+    public PlayerCommandPreprocessListener(NoticeService noticeService, ConfigurationManager configurationManager, Server server) {
+        this.noticeService = noticeService;
         this.config = configurationManager.getPluginConfiguration();
         this.server = server;
     }
@@ -40,7 +40,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 
             event.setCancelled(true);
 
-            this.audiencesService
+            this.noticeService
                 .notice()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().noCommand())

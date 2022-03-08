@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.AudiencesService;
-import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.teleport.TeleportManager;
 import dev.rollczi.litecommands.annotations.Arg;
@@ -19,20 +19,20 @@ public class SpawnCommand {
 
     private final LocationsConfiguration locations;
     private final TeleportManager teleportManager;
-    private final AudiencesService audiencesService;
+    private final NoticeService noticeService;
 
-    public SpawnCommand(LocationsConfiguration locations, AudiencesService audiencesService, TeleportManager teleportManager) {
+    public SpawnCommand(LocationsConfiguration locations, NoticeService noticeService, TeleportManager teleportManager) {
         this.teleportManager = teleportManager;
         this.locations = locations;
-        this.audiencesService = audiencesService;
+        this.noticeService = noticeService;
     }
 
     @Execute
-    public void execute(Player sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption){
+    public void execute(Player sender, @Arg(0) @Handler(PlayerArg.class) Option<Player> playerOption){
         Location location = this.locations.spawn;
 
         if (location == null || location.getWorld() == null) {
-            this.audiencesService
+            this.noticeService
                 .notice()
                 .message(messages -> messages.other().spawnNoSet())
                 .player(sender.getUniqueId())
@@ -45,7 +45,7 @@ public class SpawnCommand {
             if (sender.hasPermission("eternalcore.teleport.bypass")) {
                 sender.teleportAsync(location);
 
-                this.audiencesService
+                this.noticeService
                     .notice()
                     .message(messages -> messages.teleport().teleported())
                     .player(sender.getUniqueId())
@@ -55,7 +55,7 @@ public class SpawnCommand {
             }
 
             if (this.teleportManager.inTeleport(sender.getUniqueId())) {
-                this.audiencesService
+                this.noticeService
                     .notice()
                     .message(messages -> messages.teleport().haveTeleport())
                     .player(sender.getUniqueId())
@@ -66,7 +66,7 @@ public class SpawnCommand {
 
             this.teleportManager.createTeleport(sender.getUniqueId(), location, 10);
 
-            this.audiencesService
+            this.noticeService
                 .notice()
                 .message(messages -> messages.teleport().teleporting())
                 .player(sender.getUniqueId())
@@ -78,14 +78,14 @@ public class SpawnCommand {
 
         player.teleportAsync(location);
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().spawnTeleportedBy())
             .placeholder("{PLAYER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
-        this.audiencesService
+        this.noticeService
             .notice()
             .message(messages -> messages.other().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
