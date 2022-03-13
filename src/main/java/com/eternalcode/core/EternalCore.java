@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2022. EternalCode.pl
- */
-
 package com.eternalcode.core;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
@@ -158,14 +154,14 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
-        /** Services */
+        /* Services */
 
         this.scheduler = new BukkitSchedulerImpl(this);
         this.teleportManager = new TeleportManager();
         this.userManager = new UserManager();
         this.userProvider = new BukkitUserProvider(userManager); //TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 
-        /** Configuration */
+        /* Configuration */
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
         this.configurationManager.loadAndRenderConfigs();
@@ -174,7 +170,7 @@ public class EternalCore extends JavaPlugin {
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
 
-        /** Language & Chat */
+        /* Language & Chat */
 
         File langFolder = new File(this.getDataFolder(), "lang");
         Map<Language, Messages> defaultImplementations = new ImmutableMap.Builder<Language, Messages>()
@@ -199,20 +195,20 @@ public class EternalCore extends JavaPlugin {
 
         this.chatManager = new ChatManager(config.chat);
 
-        /** Adventure */
+        /* Adventure */
 
         this.adventureAudiences = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
             .postProcessor(new LegacyColorProcessor())
             .build();
 
-        /** Audiences System */
+        /* Audiences System */
 
         this.audienceProvider = new BukkitAudienceProvider(this.userManager, server, this.adventureAudiences);
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
         this.noticeService = new NoticeService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
 
-        /** FrameWorks & Libs */
+        /* FrameWorks & Libs */
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
@@ -231,23 +227,23 @@ public class EternalCore extends JavaPlugin {
             .argument(Option.class, new PlayerArg(userProvider, languageManager, server).toOptionHandler())
 
             // Dynamic binds
-            .bind(Player.class, new PlayerBind(languageManager))
-            .bind(Audience.class, new AudienceBind(userManager))
-            .bind(User.class, new UserBind(languageManager, userManager))
+            .parameterBind(Player.class, new PlayerBind(languageManager))
+            .parameterBind(Audience.class, new AudienceBind(userManager))
+            .parameterBind(User.class, new UserBind(languageManager, userManager))
 
             // Static binds
-            .bind(EternalCore.class, () -> this)
-            .bind(ConfigurationManager.class, () -> this.configurationManager)
-            .bind(LanguageManager.class, () -> languageManager)
-            .bind(PluginConfiguration.class, () -> config)
-            .bind(LocationsConfiguration.class, () -> locations)
-            .bind(TeleportManager.class, () -> this.teleportManager)
-            .bind(UserManager.class, () -> this.userManager)
-            .bind(ScoreboardManager.class, () -> this.scoreboardManager)
-            .bind(NoticeService.class, () -> this.noticeService)
-            .bind(MiniMessage.class, () -> this.miniMessage)
-            .bind(ChatManager.class, () -> this.chatManager)
-            .bind(Scheduler.class, () -> this.scheduler)
+            .typeBind(EternalCore.class, () -> this)
+            .typeBind(ConfigurationManager.class, () -> this.configurationManager)
+            .typeBind(LanguageManager.class, () -> languageManager)
+            .typeBind(PluginConfiguration.class, () -> config)
+            .typeBind(LocationsConfiguration.class, () -> locations)
+            .typeBind(TeleportManager.class, () -> this.teleportManager)
+            .typeBind(UserManager.class, () -> this.userManager)
+            .typeBind(ScoreboardManager.class, () -> this.scoreboardManager)
+            .typeBind(NoticeService.class, () -> this.noticeService)
+            .typeBind(MiniMessage.class, () -> this.miniMessage)
+            .typeBind(ChatManager.class, () -> this.chatManager)
+            .typeBind(Scheduler.class, () -> this.scheduler)
 
             .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
             .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(userProvider, languageManager))
@@ -291,9 +287,8 @@ public class EternalCore extends JavaPlugin {
             )
             .register();
 
-        /** Listeners */
+        /* Listeners */
 
-        // Register events
         PandaStream.of(
             new PlayerChatListener(this.chatManager, noticeService, this.configurationManager, server),
             new PlayerJoinListener(this.configurationManager, noticeService, server),
@@ -306,7 +301,7 @@ public class EternalCore extends JavaPlugin {
             new TeleportListeners(this.noticeService, this.teleportManager)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
-        /** Tasks */
+        /* Tasks */
 
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportManager, server);
         this.scheduler.runTaskTimer(task, 10, 10);

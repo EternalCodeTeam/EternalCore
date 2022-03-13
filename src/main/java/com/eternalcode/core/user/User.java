@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2022. EternalCode.pl
- */
-
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.entity.Entity;

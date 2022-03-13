@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2022. EternalCode.pl
- */
-
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.ChatManager;

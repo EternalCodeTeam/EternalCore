@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2022. EternalCode.pl
- */
-
 package com.eternalcode.core.listener.scoreboard;
 
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;

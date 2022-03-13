@@ -26,12 +26,7 @@ public class TposCommand {
     }
 
     @Execute @Between(min = 3, max = 4)
-    public void execute(CommandSender sender,
-                        @Arg(0) Integer x,
-                        @Arg(1) Integer y,
-                        @Arg(2) Integer z,
-                        @Arg(3) @Handler(PlayerArgOrSender.class) Player player
-    ) {
+    public void execute(CommandSender sender, @Arg(0) Integer x, @Arg(1) Integer y, @Arg(2) Integer z, @Arg(3) @Handler(PlayerArgOrSender.class) Player player) {
         this.teleport(player, x, y, z);
 
         if (sender.equals(player)) {

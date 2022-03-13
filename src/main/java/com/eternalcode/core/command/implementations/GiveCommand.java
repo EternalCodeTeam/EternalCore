@@ -17,7 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Section(route = "give", aliases = { "i", "item" })
+@Section(route = "give", aliases = {"i", "item"})
 @Permission("eternalcore.command.give")
 @UsageMessage("&8» &cPoprawne użycie &7/give <material> [gracz]")
 public class GiveCommand {
@@ -30,13 +30,10 @@ public class GiveCommand {
 
     @Execute
     @Between(min = 1, max = 2)
-    public void execute(Audience audience,
-                        CommandSender sender,
-                        @Arg(0) Material material,
-                        @Arg(1) @Handler(PlayerArgOrSender.class) Player player
-    ) {
+    public void execute(Audience audience, CommandSender sender, @Arg(0) Material material, @Arg(1) @Handler(PlayerArgOrSender.class) Player player) {
         String formattedMaterial = material.name().replaceAll("_", " "); // TODO: Add formatter to Material
-        giveItem(player, material);
+
+        this.giveItem(player, material);
 
         this.noticeService.notice()
             .placeholder("{ITEM}", formattedMaterial)

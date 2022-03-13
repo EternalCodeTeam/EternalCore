@@ -2,13 +2,14 @@ package com.eternalcode.core.command.bind;
 
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import dev.rollczi.litecommands.LiteInvocation;
-import dev.rollczi.litecommands.bind.LiteBind;
+import dev.rollczi.litecommands.bind.Parameter;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.entity.Player;
 
-public class UserBind implements LiteBind {
+public class UserBind implements Parameter<User> {
 
     private final LanguageManager languageManager;
     private final UserManager userManager;

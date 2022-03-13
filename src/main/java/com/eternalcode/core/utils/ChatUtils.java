@@ -1,9 +1,4 @@
-/*
- * Copyright (c) 2022. EternalCode.pl
- */
-
 package com.eternalcode.core.utils;
-
 
 import lombok.experimental.UtilityClass;
 import net.kyori.adventure.text.Component;

@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2022. EternalCode.pl
- */
-
 package com.eternalcode.core.builder;
 
 import net.kyori.adventure.text.Component;
@@ -10,12 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 import java.util.List;
 
+//TODO: recode
 public class ItemBuilder {
 
     private final ItemStack itemStack;
@@ -46,14 +44,19 @@ public class ItemBuilder {
         return lore(Arrays.asList(lore));
     }
 
-    public ItemBuilder amount(int amount){
+    public ItemBuilder amount(int amount) {
         itemStack.setAmount(amount);
 
         return this;
     }
 
     public ItemBuilder itemData(short data) {
-        itemStack.setDurability(data);
+        this.itemStack.editMeta(meta -> {
+            Damageable damageable = (Damageable) meta;
+
+            damageable.setDamage(data);
+        });
+
         return this;
     }
 
@@ -67,9 +70,8 @@ public class ItemBuilder {
 
         Validate.isTrue(meta instanceof SkullMeta, "Item must be skull.");
 
-        if (itemStack.getDurability() != 3) {
-            itemStack.setDurability((short) 3);
-        }
+        Damageable damageable = (Damageable) meta;
+        damageable.setDamage(3);
 
         SkullMeta skullMeta = (SkullMeta) meta;
         skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(owner));

@@ -5,6 +5,7 @@ import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import dev.rollczi.litecommands.LiteInvocation;
+import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.NotRequiredArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.Server;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+@ArgumentName("playerOrSender")
 public class PlayerArgOrSender implements NotRequiredArgumentHandler<Player> {
 
     private final LanguageManager languageManager;

@@ -2,12 +2,15 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.annotations.Execute;
+import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @Section(route = "repair", aliases = "napraw")
 @Permission("eternalcore.command.repair")
@@ -35,7 +38,7 @@ public class RepairCommand {
             return;
         }
 
-        handItem.editMeta(itemMeta -> itemMeta.setCustomModelData(0));
+        handItem.editMeta(this::repairItem);
 
         this.noticeService
             .notice()
@@ -47,9 +50,7 @@ public class RepairCommand {
     @Execute(route = "all")
     public void repairAll(Player player) {
         for (ItemStack itemStack : player.getInventory().getContents()) {
-            if (itemStack != null) {
-                itemStack.setDurability((short) 0);
-            }
+            itemStack.editMeta(this::repairItem);
         }
 
         this.noticeService
@@ -62,9 +63,7 @@ public class RepairCommand {
     @Execute(route = "armor")
     public void repairArmor(Player player) {
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
-            if (itemStack != null) {
-                itemStack.setDurability((short) 0);
-            }
+            itemStack.editMeta(this::repairItem);
         }
 
         this.noticeService
@@ -72,5 +71,11 @@ public class RepairCommand {
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
+    }
+
+    @IgnoreMethod
+    private void repairItem(ItemMeta itemMeta) {
+        Damageable damageable = (Damageable) itemMeta;
+        damageable.setDamage(0);
     }
 }

@@ -2,15 +2,14 @@ package com.eternalcode.core.command.bind;
 
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.user.UserManager;
 import dev.rollczi.litecommands.LiteInvocation;
-import dev.rollczi.litecommands.bind.LiteBind;
+import dev.rollczi.litecommands.bind.Parameter;
 import dev.rollczi.litecommands.platform.LiteSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class AudienceBind implements LiteBind {
+public class AudienceBind implements Parameter<Audience> {
 
     private final UserManager userManager;
 
