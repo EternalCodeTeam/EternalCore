@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2022 Rollczi
- */
-
 package com.eternalcode.core.configuration;
 
 import net.dzikoysk.cdn.source.Resource;
