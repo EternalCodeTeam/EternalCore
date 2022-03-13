@@ -44,7 +44,7 @@ public class ItemBuilder {
         return lore(Arrays.asList(lore));
     }
 
-    public ItemBuilder amount(int amount){
+    public ItemBuilder amount(int amount) {
         itemStack.setAmount(amount);
 
         return this;

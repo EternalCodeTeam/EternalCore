@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Section(route = "enderchest", aliases = { "ec" })
+@Section(route = "enderchest", aliases = {"ec"})
 @Permission("eternalcore.command.enderchest")
 public class EnderchestCommand {
 

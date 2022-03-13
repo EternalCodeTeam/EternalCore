@@ -1,10 +1,6 @@
 package com.eternalcode.core.configuration.implementations;
 
-import com.eternalcode.core.chat.ChatSettings;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
-import com.eternalcode.core.language.Language;
-import lombok.Getter;
-import lombok.Setter;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Sound;
@@ -15,23 +11,23 @@ import java.util.List;
 
 public class PluginConfiguration extends AbstractConfigWithResource {
 
-    @Description({ "# ",
-        "# This is the main configuration file for EternalCore.",
-        "# ",
-        "# if you need help with the configration or have any questions related to EternalCore, join us in our Discord",
-        "# ",
-        "# Discord: https://dc.eternalcode.pl/",
-        "# Website: https://eternalcode.pl/", " " })
+    @Description({"# ",
+            "# This is the main configuration file for EternalCore.",
+            "# ",
+            "# if you need help with the configration or have any questions related to EternalCore, join us in our Discord",
+            "# ",
+            "# Discord: https://dc.eternalcode.pl/",
+            "# Website: https://eternalcode.pl/", " "})
 
-    @Description({ "", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
+    @Description({"", "# Useful Event Messages", "# Set to empty, if you want to delete this message"})
     public EventMessage eventMessage = new EventMessage();
-    @Description({ "", "# Awesome sounds" })
+    @Description({"", "# Awesome sounds"})
     public Sounds sound = new Sounds();
-    @Description({ " ", "# Chat Section" })
+    @Description({" ", "# Chat Section"})
     public Chat chat = new Chat();
-    @Description({ "", "# Formating on/off" })
+    @Description({"", "# Formating on/off"})
     public Format format = new Format();
-    @Description({ "", "# Scoreboard Section" })
+    @Description({"", "# Scoreboard Section"})
     public Scoreboard scoreboard = new Scoreboard();
 
     public PluginConfiguration(File folder, String child) {
@@ -83,19 +79,19 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public int refresh = 20;
         public String title = "&6&lEternalCode.pl";
         public List<String> style = Arrays.asList(
-            "",
-            " &fProfile:",
-            " &f» &7Nickname: &f%player_name%",
-            " &f» &7Rank: &f%vault_rank%",
-            " &f» &7Ping: &f%player_ping%ms",
-            "",
-            " &fStatistics:",
-            " &f» &7Balance: &f%vault_eco_balance_fixed%$",
-            " &f» &7Kills: &f%statistic_player_kills%",
-            " &f» &7Deaths: &f%statistic_deaths%",
-            "",
-            " &ewww.eternalcode.pl",
-            ""
+                "",
+                " &fProfile:",
+                " &f» &7Nickname: &f%player_name%",
+                " &f» &7Rank: &f%vault_rank%",
+                " &f» &7Ping: &f%player_ping%ms",
+                "",
+                " &fStatistics:",
+                " &f» &7Balance: &f%vault_eco_balance_fixed%$",
+                " &f» &7Kills: &f%statistic_player_kills%",
+                " &f» &7Deaths: &f%statistic_deaths%",
+                "",
+                " &ewww.eternalcode.pl",
+                ""
         );
     }
 }
