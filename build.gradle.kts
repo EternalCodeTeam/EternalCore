@@ -35,7 +35,7 @@ dependencies {
     implementation("net.dzikoysk:cdn:1.13.10")
 
     // expressible
-    implementation("org.panda-lang:expressible:1.1.16")
+    implementation("org.panda-lang:expressible:1.1.17")
 
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.0")
