@@ -32,7 +32,7 @@ dependencies {
     implementation("dev.rollczi.litecommands:bukkit:1.8.4")
 
     // cdn configs
-    implementation("net.dzikoysk:cdn:1.13.17")
+    implementation("net.dzikoysk:cdn:1.13.20")
 
     // expressible
     implementation("org.panda-lang:expressible:1.1.17")
