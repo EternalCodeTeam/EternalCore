@@ -1,5 +1,5 @@
 plugins {
-    java
+    id("java-library")
 }
 
 dependencies {
@@ -11,8 +11,8 @@ dependencies {
     compileOnly("org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT")
     annotationProcessor("org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT")
 
-    // spigot api & kyori adventure
-    compileOnly("org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT")
+    // paper api & kyori adventure
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
@@ -47,14 +47,6 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-}
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
-
 tasks.withType <com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.18x).jar")
 
@@ -62,13 +54,13 @@ tasks.withType <com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     exclude("org/jetbrains/annotations/**")
     exclude("javax/**")
 
-    relocate("net.dzikoysk", "core.libs.net.dzikoysk")
-    relocate("dev.rollczi", "core.libs.dev.rollczi")
-    relocate("org.bstats", "core.libs.org.bstats")
-    relocate("org.panda_lang", "core.libs.panda")
-    relocate("fr.mrmicky.fastboard", "core.libs.fastboard")
-    relocate("panda", "core.libs.panda")
-    relocate("com.j256.ormlite", "core.libs.ormlite")
-    relocate("dev.triumphteam.gui", "core.libs.gui")
-    relocate("com.google.gson", "core.libs.com.google.gson")
+    relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
+    relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
+    relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
+    relocate("org.panda_lang", "com.eternalcode.core.libs.panda")
+    relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fastboard")
+    relocate("panda", "com.eternalcode.core.libs.panda")
+    relocate("com.j256.ormlite", "com.eternalcode.core.libs.ormlite")
+    relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.gui")
+    relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
 }
