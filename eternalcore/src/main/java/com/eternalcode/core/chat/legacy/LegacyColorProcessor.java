@@ -6,7 +6,7 @@ import net.kyori.adventure.text.Component;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-public class LegacyColorProcessor implements UnaryOperator<Component>  {
+public class LegacyColorProcessor implements UnaryOperator<Component> {
 
     @Override
     public Component apply(Component component) {

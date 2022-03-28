@@ -1,10 +1,10 @@
 package com.eternalcode.core.chat.adventure;
 
+import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.chat.notification.AudienceProvider;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.chat.notification.Audience;
-import com.eternalcode.core.chat.notification.AudienceProvider;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 

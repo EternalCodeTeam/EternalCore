@@ -13,7 +13,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.Arrays;
 import java.util.List;
 
-//TODO: recode
 public class ItemBuilder {
 
     private final ItemStack itemStack;
@@ -26,21 +25,21 @@ public class ItemBuilder {
         itemStack = new ItemStack(material, 1);
     }
 
-    public ItemBuilder displayName(String displayName) {
+     public ItemBuilder displayName(String name) {
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.setDisplayName(name);
+        itemStack.setItemMeta(meta);
+        return this;
+    }
+
+    public ItemBuilder lore(List<String> lore) {
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(displayName));
+        itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
         return this;
     }
 
-    public ItemBuilder lore(List<Component> lore) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.lore(lore);
-        itemStack.setItemMeta(itemMeta);
-        return this;
-    }
-
-    public ItemBuilder lore(Component... lore) {
+    public ItemBuilder lore(String... lore) {
         return lore(Arrays.asList(lore));
     }
 
@@ -50,15 +49,16 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder itemData(short data) {
-        this.itemStack.editMeta(meta -> {
+
+/*    public ItemBuilder itemData(short data) {
+        this.itemStack.edit(meta -> {
             Damageable damageable = (Damageable) meta;
 
             damageable.setDamage(data);
         });
 
         return this;
-    }
+    }*/
 
     public ItemBuilder enchant(Enchantment enchantment, int level) {
         itemStack.addUnsafeEnchantment(enchantment, level);

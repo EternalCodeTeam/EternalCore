@@ -45,7 +45,7 @@ public class TeleportTask implements Runnable {
 
                 continue;
             }
-            player.teleportAsync(location);
+            player.teleport(location);
 
             this.teleportManager.removeTeleport(uuid);
 

@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import fr.mrmicky.fastboard.FastBoard;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -14,12 +15,14 @@ public class ScoreboardManager {
 
     private final PluginConfiguration config;
     private final EternalCore eternalCore;
+    private final MiniMessage miniMessage;
 
     private final ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
-    public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
+    public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager, MiniMessage miniMessage) {
         this.eternalCore = eternalCore;
         this.config = configurationManager.getPluginConfiguration();
+        this.miniMessage = miniMessage;
     }
 
     public void updateTask() {

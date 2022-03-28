@@ -12,7 +12,7 @@ dependencies {
     annotationProcessor("org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT")
 
     // paper api & kyori adventure
-    compileOnly ("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly ("org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
@@ -38,7 +38,7 @@ dependencies {
     implementation("dev.triumphteam:triumph-gui:3.1.2")
 
     // tests
-    testImplementation("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
+    testImplementation("org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.10")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
 }

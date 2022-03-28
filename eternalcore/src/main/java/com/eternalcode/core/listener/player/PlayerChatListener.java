@@ -5,11 +5,11 @@ import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.utils.DateUtils;
-import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.UUID;
 
@@ -28,7 +28,7 @@ public class PlayerChatListener implements Listener {
     }
 
     @EventHandler
-    public void onChatSlowmode(AsyncChatEvent event) {
+    public void onChatSlowmode(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {

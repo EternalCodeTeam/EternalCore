@@ -60,7 +60,7 @@ public class TeleportListeners implements Listener {
         UUID uuid = player.getUniqueId();
 
         if (this.teleportManager.inTeleport(uuid)) {
-            this.teleportManager.removeTeleport(uuid);
+            this.teleportManager.removeTeleport(uuid)
 
             player.sendActionBar(Component.text());
 
