@@ -109,7 +109,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@Plugin(name = "EternalCore", version = "1.0.2-APLHA")
+@Plugin(name = "EternalCore", version = "1.0.3-BETA")
 @Author("EternalCodeTeam")
 @ApiVersion(ApiVersion.Target.v1_17)
 @Description("Essential plugin for your server!")

@@ -12,7 +12,7 @@ dependencies {
     annotationProcessor("org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT")
 
     // paper api & kyori adventure
-    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly ("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
