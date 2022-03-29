@@ -1,14 +1,16 @@
-# EternalCore
-[![Build Status](https://github.com/EternalCodeTeam/EternalCore/actions/workflows/gradle.yml/badge.svg)](https://github.com/EternalCodeTeam/EternalCore/actions/actions/workflows/gradle.yml)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/EternalCodeTeam/EternalCore.svg)](http://isitmaintained.com/project/EternalCodeTeam/EternalCore "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/EternalCodeTeam/EternalCore.svg)](http://isitmaintained.com/project/EternalCodeTeam/EternalCore "Percentage of issues still open")
-[![GitHub forks](https://img.shields.io/github/forks/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/network)
-[![GitHub stars](https://img.shields.io/github/stars/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/stargazers)
-[![GitHub license](https://img.shields.io/github/license/EternalCodeTeam/EternalCore)](https://github.com/EternalCodeTeam/EternalCore/blob/master/LICENSE)
+<div align="center">
 
-♾️ High performance and highly modifiable essential plugin for Minecraft (1.17-1.18), however remember EternalCore is at an early stage of development, you use it at your own risk!
+![Readme Banner](https://i.imgur.com/dspAsWz.png)
 
-If you want to get help regarding our products or just want to ask something, join our [discord](https://discord.gg/MUCKhgFUCA).
+[![Discord](https://img.shields.io/discord/889460117953720351?color=%237289DA&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/FQ7jmGBd6c)
+[![Oficjalna strona](https://img.shields.io/badge/-website-orange?style=for-the-badge&logo=internet-explorer&logoColor=white)](https://eternalcode.pl/)
+
+![Percentage of issues still open](https://img.shields.io/github/issues/EternalCodeTeam/EternalCore?style=for-the-badge)
+[![GitHub forks](https://img.shields.io/github/forks/EternalCodeTeam/EternalCore?style=for-the-badge)](https://github.com/EternalCodeTeam/EternalCore/network)
+[![GitHub stars](https://img.shields.io/github/stars/EternalCodeTeam/EternalCore?style=for-the-badge)](https://github.com/EternalCodeTeam/EternalCore/stargazers)
+[![GitHub license](https://img.shields.io/github/license/EternalCodeTeam/EternalCore?style=for-the-badge)](https://github.com/EternalCodeTeam/EternalCore/blob/master/LICENSE)    
+    
+</div>
 
 # Other Dependencies usages
 - [LiteCommands by Rollczi ❤️](https://github.com/Rollczi/LiteCommands)
