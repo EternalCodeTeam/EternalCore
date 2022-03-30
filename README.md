@@ -26,6 +26,8 @@ To build EternalCore do the following (Make sure you have JDK 17 or higher)
 ./gradlew shadowJar
 ```
 
+- #### Output file will be located at build/libs
+
 # Contributing
 Create a public EternalCore fork, make changes and then create a Pull Request
 See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master/.github/CONTRIBUTING.md) to find out more.
