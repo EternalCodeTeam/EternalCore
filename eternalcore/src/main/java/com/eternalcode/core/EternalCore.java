@@ -17,6 +17,7 @@ import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArg;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import com.eternalcode.core.command.argument.PlayerNameArg;
+import com.eternalcode.core.command.argument.WarpArgument;
 import com.eternalcode.core.command.bind.AudienceBind;
 import com.eternalcode.core.command.bind.PlayerBind;
 import com.eternalcode.core.command.bind.UserBind;
@@ -74,6 +75,8 @@ import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.listener.user.PrepareUserController;
+import com.eternalcode.core.providers.ContainerProvider;
+import com.eternalcode.core.providers.PaperContainerProvider;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
@@ -82,6 +85,8 @@ import com.eternalcode.core.teleport.TeleportManager;
 import com.eternalcode.core.teleport.TeleportTask;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import com.eternalcode.core.warps.Warp;
+import com.eternalcode.core.warps.WarpManager;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
@@ -95,11 +100,6 @@ import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.annotation.plugin.ApiVersion;
-import org.bukkit.plugin.java.annotation.plugin.Description;
-import org.bukkit.plugin.java.annotation.plugin.LogPrefix;
-import org.bukkit.plugin.java.annotation.plugin.Plugin;
-import org.bukkit.plugin.java.annotation.plugin.author.Author;
 import panda.std.Option;
 import panda.std.stream.PandaStream;
 
@@ -108,12 +108,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-@Plugin(name = "EternalCore", version = "1.0.3-BETA")
-@Author("EternalCodeTeam")
-@ApiVersion(ApiVersion.Target.v1_17)
-@Description("Essential plugin for your server!")
-@LogPrefix("EternalCore")
 
 public class EternalCore extends JavaPlugin {
 
@@ -124,6 +118,9 @@ public class EternalCore extends JavaPlugin {
     @Getter private TeleportManager teleportManager;
     @Getter private UserManager userManager;
     @Getter private BukkitUserProvider userProvider;
+
+    /** Providers */
+    @Getter ContainerProvider containerProvider;
 
     /** Configuration */
     @Getter private ConfigurationManager configurationManager;
@@ -143,6 +140,7 @@ public class EternalCore extends JavaPlugin {
 
     /** FrameWorks & Libs */
     @Getter private ScoreboardManager scoreboardManager;
+    @Getter private WarpManager warpManager;
     @Getter private LiteCommands liteCommands;
 
     private boolean isPaper = false;
@@ -159,7 +157,11 @@ public class EternalCore extends JavaPlugin {
         this.scheduler = new BukkitSchedulerImpl(this);
         this.teleportManager = new TeleportManager();
         this.userManager = new UserManager();
-        this.userProvider = new BukkitUserProvider(userManager); //TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
+        this.warpManager = new WarpManager();
+        this.userProvider = new BukkitUserProvider(userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
+
+        /* Providers */
+        containerProvider = new PaperContainerProvider();
 
         /* Configuration */
 
@@ -222,6 +224,7 @@ public class EternalCore extends JavaPlugin {
             .argument(Material.class, new MaterialArgument(userProvider, languageManager))
             .argument(GameMode.class, new GameModeArgument(userProvider, languageManager))
             .argument(NoticeType.class, new NoticeTypeArgument(userProvider, languageManager))
+                .argument(Warp.class, new WarpArgument(warpManager, languageManager, userProvider))
 
             // Optional arguments
             .argument(Option.class, new PlayerArg(userProvider, languageManager, server).toOptionHandler())
@@ -327,7 +330,7 @@ public class EternalCore extends JavaPlugin {
         try {
             Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
             this.isPaper = true;
-        } catch (ClassNotFoundException classNotFoundException) {
+        } catch (ClassNotFoundException exception) {
             this.getLogger().warning("Your server running on unsupported software, use paper minecraft software and other paper 1.17x forks");
             this.getLogger().warning("Download paper from https://papermc.io/downloads");
             this.getLogger().warning("WARRING: Supported minecraft version is 1.17-1.18x");

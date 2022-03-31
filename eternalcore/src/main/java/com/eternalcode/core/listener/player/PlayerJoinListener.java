@@ -5,7 +5,6 @@ import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.utils.ChatUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

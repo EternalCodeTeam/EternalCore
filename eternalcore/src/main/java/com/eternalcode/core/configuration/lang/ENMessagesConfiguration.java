@@ -25,9 +25,18 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENTeleportSection teleport = new ENTeleportSection();
     public ENChatSection chat = new ENChatSection();
     public ENOtherMessages other = new ENOtherMessages();
+    public ENWarpSection warp = new ENWarpSection();
 
     @Accessors
     private final Language language = Language.EN;
+
+    @Contextual @Getter @Accessors(fluent = true)
+    public static class ENWarpSection implements WarpSection {
+        public String availableList = "&8» List available warps: {WARPS}";
+        public String notExist = "&8» &cThis warp doesn't exist";
+        public String noPermission = "&8» &cYou don't have permission to this warp!";
+        public String disabled = "&8» &cThis warp is currently disabled!";
+    }
 
     @Contextual @Getter @Accessors(fluent = true)
     public static class ENArgumentSection implements Messages.ArgumentSection {

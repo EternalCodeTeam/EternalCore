@@ -34,7 +34,7 @@ public class AmountArgument implements SingleArgumentHandler<Integer> {
             .orThrow(() -> new ValidationCommandException(messages.argument().notNumber()));
     }
 
-    @Override //TODO dodać do konfiguracji
+    @Override // TODO: dodać do konfiguracji
     public List<String> tabulation(String command, String[] args) {
         return Arrays.asList("1", "8", "16", "32", "64", "100");
     }

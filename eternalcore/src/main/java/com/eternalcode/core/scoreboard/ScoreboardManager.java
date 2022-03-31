@@ -1,8 +1,8 @@
 package com.eternalcode.core.scoreboard;
 
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import fr.mrmicky.fastboard.FastBoard;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
@@ -18,6 +18,14 @@ public class ScoreboardManager {
     private final MiniMessage miniMessage;
 
     private final ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
+
+
+    /*
+    TODO:
+    Ogólnie z tym scoreboardem, to będzie trzeba jeszcze przemyśleć, ponieważ i tak prawdopodobnie nie będzie dużo osób z niego korzystać
+    ponieważ są też o wiele lepsze pluginy na scoreboarda, typu TAB, ma on ogólnie dostępne api do swojego scoreboarda, więc proponuje zamienić FastBoarda, który nie jest najlepszy
+    na właśnie api od Neznanego z pluginu "TAB"
+     */
 
     public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager, MiniMessage miniMessage) {
         this.eternalCore = eternalCore;

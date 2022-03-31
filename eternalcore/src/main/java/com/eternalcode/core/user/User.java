@@ -1,10 +1,13 @@
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.entity.Entity;
+import com.eternalcode.core.teleport.Teleport;
 import com.eternalcode.core.user.client.ClientSettings;
 import com.eternalcode.core.user.settings.Settings;
 import com.eternalcode.core.user.settings.SettingsImpl;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class User implements Entity {
@@ -13,10 +16,13 @@ public class User implements Entity {
     private final UUID uuid;
     private ClientSettings clientSettings = ClientSettings.NONE;
     private Settings settings = new SettingsImpl(() -> this.clientSettings);
+    private Teleport teleportation;
+    private List<com.eternalcode.core.user.Home> homeList;
 
     User(UUID uuid, String name) {
         this.name = name;
         this.uuid = uuid;
+        this.homeList = Collections.emptyList();
     }
 
     @Override

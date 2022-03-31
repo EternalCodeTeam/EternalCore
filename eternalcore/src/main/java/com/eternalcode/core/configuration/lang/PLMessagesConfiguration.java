@@ -23,10 +23,20 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public PLAdminChatSection adminChat = new PLAdminChatSection();
     public PLTeleportSection teleport = new PLTeleportSection();
     public PLChatSection chat = new PLChatSection();
+    public PLWarpSection player = new PLWarpSection();
     public PLOtherMessages other = new PLOtherMessages();
+    public PLWarpSection warp = new PLWarpSection();
 
     @Accessors
     private final Language language = Language.PL;
+
+    @Contextual @Getter @Accessors(fluent = true)
+    public static class PLWarpSection implements WarpSection {
+        public String availableList = "&8» Lista warpów: {WARPS}";
+        public String notExist = "&8» &cNie odnaleziono takiego warpa!";
+        public String noPermission = "&8» &cNie masz uprawnien do tego warpa!";
+        public String disabled = "&8» &cTen warp jest aktualnie wyłączony!";
+    }
 
     @Contextual @Getter @Accessors(fluent = true)
     public static class PLArgumentSection implements ArgumentSection {

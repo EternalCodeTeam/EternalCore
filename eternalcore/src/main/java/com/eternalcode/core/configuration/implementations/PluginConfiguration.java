@@ -11,23 +11,23 @@ import java.util.List;
 
 public class PluginConfiguration extends AbstractConfigWithResource {
 
-    @Description({"# ",
+    @Description({ "# ",
             "# This is the main configuration file for EternalCore.",
             "# ",
             "# if you need help with the configration or have any questions related to EternalCore, join us in our Discord",
             "# ",
             "# Discord: https://dc.eternalcode.pl/",
-            "# Website: https://eternalcode.pl/", " "})
+            "# Website: https://eternalcode.pl/", " " })
 
-    @Description({"", "# Useful Event Messages", "# Set to empty, if you want to delete this message"})
+    @Description({ "", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
-    @Description({"", "# Awesome sounds"})
+    @Description({ "", "# Awesome sounds" })
     public Sounds sound = new Sounds();
-    @Description({" ", "# Chat Section"})
+    @Description({ " ", "# Chat Section" })
     public Chat chat = new Chat();
-    @Description({"", "# Formating on/off"})
+    @Description({ "", "# Formating on/off" })
     public Format format = new Format();
-    @Description({"", "# Scoreboard Section"})
+    @Description({ "", "# Scoreboard Section" })
     public Scoreboard scoreboard = new Scoreboard();
 
     public PluginConfiguration(File folder, String child) {
@@ -69,7 +69,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     @Contextual
     public static class Format {
         public String enabled = "&aenabled";
-        public String disabled = "&6disabled";
+        public String disabled = "&cdisabled";
         public String separator = "&7, ";
     }
 

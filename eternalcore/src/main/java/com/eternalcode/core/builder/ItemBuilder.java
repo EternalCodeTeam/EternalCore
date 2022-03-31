@@ -1,6 +1,5 @@
 package com.eternalcode.core.builder;
 
-import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -51,7 +50,7 @@ public class ItemBuilder {
 
 
 /*    public ItemBuilder itemData(short data) {
-        this.itemStack.edit(meta -> {
+        this.itemStack.setItemMeta(meta -> {
             Damageable damageable = (Damageable) meta;
 
             damageable.setDamage(data);

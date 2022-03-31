@@ -1,5 +1,6 @@
 plugins {
     id("java-library")
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.1"
 }
 
 dependencies {
@@ -7,12 +8,12 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.22")
     annotationProcessor("org.projectlombok:lombok:1.18.22")
 
-    // annotations for plugins
-    compileOnly("org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT")
-    annotationProcessor("org.spigotmc:plugin-annotations:1.2.3-SNAPSHOT")
+    // paper lib, spigot api & kyori adventure
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    //compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
 
-    // paper api & kyori adventure
-    compileOnly ("org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT")
+    //api("io.papermc:paperlib:1.0.7")
+
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
@@ -47,7 +48,18 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
-tasks.withType <com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+
+bukkit {
+    main = "com.eternalcode.core.EternalCore"
+    apiVersion = "1.17"
+    prefix = "EternalCore"
+    author = "EternalCodeTeam"
+    name = "EternalCore"
+    description = "Essential plugin for your server!"
+    version = "v${project.version}"
+}
+
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.18x).jar")
 
     exclude("org/intellij/lang/annotations/**")
@@ -55,6 +67,7 @@ tasks.withType <com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     exclude("javax/**")
 
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
+    relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
     relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
     relocate("org.panda_lang", "com.eternalcode.core.libs.panda")
@@ -62,5 +75,6 @@ tasks.withType <com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     relocate("panda", "com.eternalcode.core.libs.panda")
     relocate("com.j256.ormlite", "com.eternalcode.core.libs.ormlite")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.gui")
+    relocate("io.papermc.lib", "com.eternalcode.core.libs.paperlib")
     relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
 }
