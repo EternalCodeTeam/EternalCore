@@ -52,7 +52,7 @@ bukkit {
     author = "EternalCodeTeam"
     name = "EternalCore"
     description = "Essential plugin for your server!"
-    version = "v${project.version}"
+    version = "${project.version}"
 }
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
