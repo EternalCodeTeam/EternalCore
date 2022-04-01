@@ -10,14 +10,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PLMessagesConfiguration extends AbstractConfigWithResource implements Messages {
-
     private final Language language = Language.PL;
+
     public PLArgumentSection argument = new PLArgumentSection();
     public PLHelpOpSection helpOp = new PLHelpOpSection();
     public PLAdminChatSection adminChat = new PLAdminChatSection();
     public PLTeleportSection teleport = new PLTeleportSection();
     public PLChatSection chat = new PLChatSection();
-    public PLWarpSection player = new PLWarpSection();
     public PLOtherMessages other = new PLOtherMessages();
     public PLWarpSection warp = new PLWarpSection();
 
@@ -43,10 +42,6 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public PLChatSection chat() {
         return this.chat;
-    }
-
-    public PLWarpSection player() {
-        return this.player;
     }
 
     public PLOtherMessages other() {
@@ -276,6 +271,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String tposMessage = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6New name is: &6{NAME}";
+
         public List<String> whoisCommand = Arrays.asList("&8» &7Gracz: &f{PLAYER}",
                 "&8» &7UUID: &f{UUID}",
                 "&8» &7IP: &f{IP}",
@@ -446,6 +442,4 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
             return this.whoisCommand;
         }
     }
-
-
 }

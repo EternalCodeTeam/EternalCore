@@ -10,8 +10,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class ENMessagesConfiguration extends AbstractConfigWithResource implements Messages {
+    private final Language language = Language.EN;
 
     public ENArgumentSection argument = new ENArgumentSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
@@ -20,11 +20,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENChatSection chat = new ENChatSection();
     public ENOtherMessages other = new ENOtherMessages();
     public ENWarpSection warp = new ENWarpSection();
+
     public ENMessagesConfiguration(File folder, String child) {
         super(folder, child);
     }
-
-    private final Language language = Language.EN;
 
     public ENArgumentSection argument() {
         return this.argument;
@@ -59,8 +58,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     @Contextual
-
-    public static class ENWarpSection implements WarpSection {
+    public static class ENWarpSection implements Messages.WarpSection {
         public String availableList = "&8» List available warps: {WARPS}";
         public String notExist = "&8» &cThis warp doesn't exist";
         public String noPermission = "&8» &cYou don't have permission to this warp!";
@@ -84,7 +82,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     @Contextual
-
     public static class ENArgumentSection implements Messages.ArgumentSection {
         public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
@@ -157,7 +154,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     @Contextual
-
     public static class ENTeleportSection implements Messages.TeleportSection {
         public String actionBarMessage = "&aTeleporting in &f{TIME}";
         public String cancel = "&8» &cYou've moved, teleportation canceled!";
@@ -187,7 +183,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     @Contextual
-
     public static class ENChatSection implements Messages.ChatSection {
         public String disabled = "&8» &cChat has been disabled by {NICK}!";
         public String enabled = "&8» &aThe chat has been enabled by {NICK}!";
@@ -237,11 +232,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     @Contextual
-
     public static class ENOtherMessages implements Messages.OtherMessages {
         public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
-        public String successfullyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";
-        public String successfullyTeleportedPlayer = "&8» &aSuccessfuly teleported {PLAYER} to {ARG-PLAYER}!";
+        public String successfullyTeleported = "&8» &aSuccessfully teleported to {PLAYER}!";
+        public String successfullyTeleportedPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
         public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
         public String clearMessage = "&8» &cYour inventory has been cleared!";
         public String clearByMessage = "&8» &cPlayer {PLAYER} inventory cleared";
@@ -279,6 +273,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6New name is: &6{NAME}";
         @Description({ "", "# Whois messsage Style" })
+
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
                 "&8» &7Target UUID: &f{UUID}",
                 "&8» &7Target address: &f{IP}",
@@ -449,5 +444,4 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
             return this.whoisCommand;
         }
     }
-
 }

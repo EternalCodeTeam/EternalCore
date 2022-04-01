@@ -75,8 +75,6 @@ import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.listener.user.PrepareUserController;
-import com.eternalcode.core.providers.ContainerProvider;
-import com.eternalcode.core.providers.PaperContainerProvider;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
@@ -118,9 +116,6 @@ public class EternalCore extends JavaPlugin {
     private UserManager userManager;
     private BukkitUserProvider userProvider;
 
-    /** Providers */
-    ContainerProvider containerProvider;
-
     /** Configuration */
     private ConfigurationManager configurationManager;
 
@@ -158,9 +153,6 @@ public class EternalCore extends JavaPlugin {
         this.userManager = new UserManager();
         this.warpManager = new WarpManager();
         this.userProvider = new BukkitUserProvider(userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
-
-        /* Providers */
-        containerProvider = new PaperContainerProvider();
 
         /* Configuration */
 
@@ -359,10 +351,6 @@ public class EternalCore extends JavaPlugin {
 
     public BukkitUserProvider getUserProvider() {
         return this.userProvider;
-    }
-
-    public ContainerProvider getContainerProvider() {
-        return this.containerProvider;
     }
 
     public ConfigurationManager getConfigurationManager() {
