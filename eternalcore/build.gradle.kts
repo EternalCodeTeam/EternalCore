@@ -4,10 +4,6 @@ plugins {
 }
 
 dependencies {
-    // lombok
-    compileOnly("org.projectlombok:lombok:1.18.22")
-    annotationProcessor("org.projectlombok:lombok:1.18.22")
-
     // paper lib, spigot api & kyori adventure
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     //compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
@@ -67,7 +63,6 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     exclude("javax/**")
 
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
-    relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
     relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
     relocate("org.panda_lang", "com.eternalcode.core.libs.panda")

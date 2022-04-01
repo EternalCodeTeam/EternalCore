@@ -1,11 +1,12 @@
 package com.eternalcode.core.utils;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.concurrent.TimeUnit;
 
-@UtilityClass
-public class DateUtils {
+public final class DateUtils {
+
+    private DateUtils() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
 
     public static String durationToString(long time) {
         if (time <= 0L) {

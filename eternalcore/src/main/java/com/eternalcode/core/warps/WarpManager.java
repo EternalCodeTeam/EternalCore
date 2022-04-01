@@ -1,6 +1,5 @@
 package com.eternalcode.core.warps;
 
-import lombok.Getter;
 import panda.std.Option;
 
 import java.util.HashMap;
@@ -8,7 +7,7 @@ import java.util.Map;
 
 public class WarpManager {
 
-    @Getter private final Map<String, Warp> warpMap = new HashMap<>();
+    private final Map<String, Warp> warpMap = new HashMap<>();
 
     public void createWarp(String name) {
         Warp warp = new Warp(name);
@@ -22,5 +21,9 @@ public class WarpManager {
 
     public Option<Warp> findWarp(String name) {
         return Option.of(this.warpMap.get(name));
+    }
+
+    public Map<String, Warp> getWarpMap() {
+        return this.warpMap;
     }
 }

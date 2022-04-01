@@ -91,7 +91,6 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.valid.ValidationInfo;
-import lombok.Getter;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
@@ -114,34 +113,34 @@ public class EternalCore extends JavaPlugin {
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
     /** Services */
-    @Getter private Scheduler scheduler;
-    @Getter private TeleportManager teleportManager;
-    @Getter private UserManager userManager;
-    @Getter private BukkitUserProvider userProvider;
+    private Scheduler scheduler;
+    private TeleportManager teleportManager;
+    private UserManager userManager;
+    private BukkitUserProvider userProvider;
 
     /** Providers */
-    @Getter ContainerProvider containerProvider;
+    ContainerProvider containerProvider;
 
     /** Configuration */
-    @Getter private ConfigurationManager configurationManager;
+    private ConfigurationManager configurationManager;
 
     /** Language & Chat */
-    @Getter private LanguageManager languageManager;
-    @Getter private ChatManager chatManager;
+    private LanguageManager languageManager;
+    private ChatManager chatManager;
 
     /** Adventure */
-    @Getter private BukkitAudiences adventureAudiences;
-    @Getter private MiniMessage miniMessage;
+    private BukkitAudiences adventureAudiences;
+    private MiniMessage miniMessage;
 
     /** Audiences System */
-    @Getter private AudienceProvider audienceProvider;
-    @Getter private NotificationAnnouncer notificationAnnouncer;
-    @Getter private NoticeService noticeService;
+    private AudienceProvider audienceProvider;
+    private NotificationAnnouncer notificationAnnouncer;
+    private NoticeService noticeService;
 
     /** FrameWorks & Libs */
-    @Getter private ScoreboardManager scoreboardManager;
-    @Getter private WarpManager warpManager;
-    @Getter private LiteCommands liteCommands;
+    private ScoreboardManager scoreboardManager;
+    private WarpManager warpManager;
+    private LiteCommands liteCommands;
 
     private boolean isPaper = false;
 
@@ -346,4 +345,67 @@ public class EternalCore extends JavaPlugin {
         }
     }
 
+    public Scheduler getScheduler() {
+        return this.scheduler;
+    }
+
+    public TeleportManager getTeleportManager() {
+        return this.teleportManager;
+    }
+
+    public UserManager getUserManager() {
+        return this.userManager;
+    }
+
+    public BukkitUserProvider getUserProvider() {
+        return this.userProvider;
+    }
+
+    public ContainerProvider getContainerProvider() {
+        return this.containerProvider;
+    }
+
+    public ConfigurationManager getConfigurationManager() {
+        return this.configurationManager;
+    }
+
+    public LanguageManager getLanguageManager() {
+        return this.languageManager;
+    }
+
+    public ChatManager getChatManager() {
+        return this.chatManager;
+    }
+
+    public BukkitAudiences getAdventureAudiences() {
+        return this.adventureAudiences;
+    }
+
+    public MiniMessage getMiniMessage() {
+        return this.miniMessage;
+    }
+
+    public AudienceProvider getAudienceProvider() {
+        return this.audienceProvider;
+    }
+
+    public NotificationAnnouncer getNotificationAnnouncer() {
+        return this.notificationAnnouncer;
+    }
+
+    public NoticeService getNoticeService() {
+        return this.noticeService;
+    }
+
+    public ScoreboardManager getScoreboardManager() {
+        return this.scoreboardManager;
+    }
+
+    public WarpManager getWarpManager() {
+        return this.warpManager;
+    }
+
+    public LiteCommands getLiteCommands() {
+        return this.liteCommands;
+    }
 }
