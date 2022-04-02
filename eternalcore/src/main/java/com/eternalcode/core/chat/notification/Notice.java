@@ -51,20 +51,6 @@ public class Notice {
         return this;
     }
 
-    @Deprecated
-    @CheckReturnValue
-    public Notice sender(CommandSender commandSender) {
-        if (commandSender instanceof Player player) {
-            return this.player(player.getUniqueId());
-        }
-
-        if (commandSender instanceof ConsoleCommandSender) {
-            return this.console();
-        }
-
-        return this;
-    }
-
     @CheckReturnValue
     public Notice audience(Audience audience) {
         this.audiences.add(audience);

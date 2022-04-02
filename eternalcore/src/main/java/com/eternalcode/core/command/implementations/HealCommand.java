@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import dev.rollczi.litecommands.annotations.Arg;
@@ -25,7 +26,7 @@ public class HealCommand {
 
     @Execute
     @MaxArgs(1)
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+    public void execute(CommandSender sender, Audience audience, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
         player.setFoodLevel(20);
         player.setHealth(20);
         player.setFireTicks(0);
@@ -45,7 +46,7 @@ public class HealCommand {
             .notice()
             .message(messages -> messages.other().healedMessage())
             .placeholder("{PLAYER}", player.getName())
-            .sender(sender)
+            .audience(audience)
             .send();
     }
 

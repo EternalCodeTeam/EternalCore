@@ -1,7 +1,9 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -26,7 +28,7 @@ public class TeleportCommand {
 
     @Execute
     @MinArgs(1)
-    public void execute(CommandSender sender, @Arg(0) Player player, @Arg(1) @Handler(PlayerArg.class) Option<Player> playerOption) {
+    public void execute(CommandSender sender, Audience audience, @Arg(0) Player player, @Arg(1) @Handler(PlayerArgOrSender.class) Option<Player> playerOption) {
         if (playerOption.isEmpty()) {
             if (sender instanceof Player playerSender) {
                 playerSender.teleportAsync(player.getLocation());
@@ -35,7 +37,7 @@ public class TeleportCommand {
                     .notice()
                     .message(messages -> messages.other().successfullyTeleported())
                     .placeholder("{PLAYER}", player.getName())
-                    .sender(sender)
+                    .audience(audience)
                     .send();
 
                 return;
@@ -54,7 +56,7 @@ public class TeleportCommand {
             .message(messages -> messages.other().successfullyTeleportedPlayer())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{PLAYER-ARG}", player.getName())
-            .sender(sender)
+            .audience(audience)
             .send();
     }
 }

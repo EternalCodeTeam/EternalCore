@@ -15,6 +15,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
+    implementation( "com.github.ben-manes.caffeine:caffeine:3.0.6")
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:1.8.4")

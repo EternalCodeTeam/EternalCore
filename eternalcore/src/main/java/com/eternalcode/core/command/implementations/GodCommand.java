@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
@@ -24,7 +25,7 @@ public class GodCommand {
     }
 
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+    public void execute(CommandSender sender, Audience audience, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
         player.setInvulnerable(!player.isInvulnerable());
 
         this.noticeService
@@ -43,7 +44,7 @@ public class GodCommand {
             .placeholder("{STATE}", player.isInvulnerable() ? this.config.format.enabled : this.config.format.disabled)
             .placeholder("{PLAYER}", player.getName())
             .message(messages -> messages.other().godSetMessage())
-            .sender(sender)
+            .audience(audience)
             .send();
     }
 }

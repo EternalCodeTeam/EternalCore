@@ -1,6 +1,5 @@
 plugins {
     id("java-library")
-    id("maven-publish")
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -9,7 +8,6 @@ allprojects {
     version = "1.0.3-BETA"
 
     apply(plugin = "java-library")
-    apply(plugin = "maven-publish")
     apply(plugin = "com.github.johnrengelman.shadow")
 
     java {
@@ -27,15 +25,8 @@ subprojects {
     }
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-    }
-
-    publishing {
-        publications {
-            repositories {
-                mavenLocal()
-            }
-        }
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
