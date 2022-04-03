@@ -79,7 +79,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String successfullyReloaded = "&8 » &aPrzeładowano plugin!";
         public String successfullyTeleported = "&8 » &aPrzeteleportowano do {PLAYER}!";
         public String successfullyTeleportedPlayer = "&8 » &aPrzeteleportowano {PLAYER} to {ARG-PLAYER}!";
-        public String alertMessagePrefix = "&8 » &c&lOGŁOSZENIE &8 » &c{BROADCAST}";
+        public String alertMessagePrefix = "&8 » &c&lOGLOSZENIE &8 » &c{BROADCAST}";
         public String clearMessage = "&8 » &aWyczyszczono ekwipunek!";
         public String clearByMessage = "&8 » &aWyczyszczono ekwipunek gracza {PLAYER}";
         public String disposalTitle = "&f&lKosz";

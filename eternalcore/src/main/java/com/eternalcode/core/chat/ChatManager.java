@@ -18,6 +18,10 @@ public class ChatManager {
             .build();
     }
 
+    public ChatSettings getChatSettings() {
+        return chatSettings;
+    }
+
     public void markUseChat(UUID userUuid) {
         this.slowdown.put(userUuid, (long) (System.currentTimeMillis() + this.chatSettings.getChatDelay() * 1000L));
     }
