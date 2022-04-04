@@ -19,6 +19,8 @@ public class PluginConfiguration extends AbstractConfigWithResource {
             "# Discord: https://dc.eternalcode.pl/",
             "# Website: https://eternalcode.pl/", " " })
 
+    @Description({ "", "# Database Section" })
+    public Database database = new Database();
     @Description({ "", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
     @Description({ "", "# Awesome sounds" })
@@ -32,6 +34,24 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     public PluginConfiguration(File folder, String child) {
         super(folder, child);
+    }
+
+    @Contextual
+    public static class Database {
+        @Description({
+                "# Database types",
+                "# SQLITE: org.sqlite.SQLiteDataSource",
+                "# MYSQL: com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
+                "# POSTGRESQL: org.postgresql.ds.PGSimpleDataSource",
+                "# H2: org.h2.jdbcx.JdbcDataSource",
+                "# All drivers available at: https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names"
+        })
+        public String databaseType = "org.sqlite.SQLiteDataSource";
+        public String databaseName = "database.db";
+        public String databaseHost = "localhost";
+        public String databasePort = "3306";
+        public String databaseUser = "root";
+        public String databasePassword = "";
     }
 
     @Contextual

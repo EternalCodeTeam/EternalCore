@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    // TODO: Full spigot compatibly 
+    // TODO: Full spigot compatibly
 
     // paper lib, spigot api & kyori adventure
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
@@ -27,8 +27,10 @@ dependencies {
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
-    // ormlite jdbc
-    implementation("com.j256.ormlite:ormlite-jdbc:6.1")
+    // HikariCP
+    //implementation("com.j256.ormlite:ormlite-jdbc:6.1")
+    implementation("com.zaxxer:HikariCP:5.0.1")
+
 
     // FastBoard
     implementation("fr.mrmicky:fastboard:1.2.1")
@@ -66,15 +68,20 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     exclude("org/intellij/lang/annotations/**")
     exclude("org/jetbrains/annotations/**")
     exclude("javax/**")
+    exclude("META-INF/**")
+
 
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
     relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
-    relocate("org.panda_lang", "com.eternalcode.core.libs.panda")
-    relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fastboard")
+    relocate("org.panda_lang", "com.eternalcode.core.libs.org.panda_lang")
+    relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
     relocate("panda", "com.eternalcode.core.libs.panda")
-    relocate("com.j256.ormlite", "com.eternalcode.core.libs.ormlite")
-    relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.gui")
-    relocate("io.papermc.lib", "com.eternalcode.core.libs.paperlib")
+    relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
     relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
+    relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
+    relocate("org.sl4j", "com.eternalcode.core.libs.org.sl4j")
+
+    //relocate("io.papermc.lib", "com.eternalcode.core.libs.paperlib")
+    //relocate("com.j256.ormlite", "com.eternalcode.core.libs.ormlite")
 }

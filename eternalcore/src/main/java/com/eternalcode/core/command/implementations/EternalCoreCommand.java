@@ -7,9 +7,10 @@ import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 
-@Section(route = "eternalcore", aliases = { "eternal", "eternalmc", "com/eternalcode/core", "eternalplugin", "eternaltools", "eternalessentials" })
+@Section(route = "eternalcore", aliases = { "eternal" })
 @UsageMessage("&8» &cPoprawne użycie &7/eternalcore <reload>")
 @Permission("eternalcore.command.eternalcore")
 public class EternalCoreCommand {
@@ -31,5 +32,11 @@ public class EternalCoreCommand {
 
         this.noticeService.audience(audience, messages -> messages.other().successfullyReloaded());
         this.server.getLogger().info("Configs has ben successfuly reloaded!");
+    }
+
+    @Execute(route = "info")
+    @Permission("eternalcore.command.info")
+    public void info(Audience audience) {
+        this.noticeService.audience(audience, messages -> messages.other().info());
     }
 }
