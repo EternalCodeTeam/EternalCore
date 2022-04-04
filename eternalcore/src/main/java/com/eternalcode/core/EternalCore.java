@@ -94,6 +94,7 @@ import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.valid.ValidationInfo;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -116,7 +117,7 @@ public class EternalCore extends JavaPlugin {
     /**
      * Services & Managers
      **/
-    private EternalCore instance;
+    private static EternalCore instance;
     private Scheduler scheduler;
     private UserManager userManager;
     private HomeManager homeManager;
@@ -322,8 +323,7 @@ public class EternalCore extends JavaPlugin {
         this.database.connect();
 
         // bStats metrics
-        // Metrics metrics = new Metrics(this, 13964);
-        // metrics.addCustomChart(new SingleLineChart("users", () -> 0));
+        Metrics metrics = new Metrics(this, 13964);
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
@@ -333,7 +333,6 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
         this.database.disconnect();
-
 
         PluginConfiguration config = this.configurationManager.getPluginConfiguration();
 
@@ -360,7 +359,7 @@ public class EternalCore extends JavaPlugin {
         }
     }
 
-    public EternalCore getInstance() {
+    public static EternalCore getInstance() {
         return instance;
     }
 

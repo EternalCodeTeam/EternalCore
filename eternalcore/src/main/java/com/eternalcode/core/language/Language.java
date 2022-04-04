@@ -40,5 +40,4 @@ public class Language {
     public static Language fromLocate(Locale locale) {
         return new Language(locale.getLanguage());
     }
-
 }
