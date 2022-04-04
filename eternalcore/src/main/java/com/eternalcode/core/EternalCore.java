@@ -66,7 +66,7 @@ import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.database.CacheWarpRepository;
 import com.eternalcode.core.database.Database;
-import com.eternalcode.core.home.HomeService;
+import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
@@ -114,23 +114,21 @@ public class EternalCore extends JavaPlugin {
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
     /**
-     * Services
+     * Services & Managers
      **/
     private EternalCore instance;
     private Scheduler scheduler;
     private UserManager userManager;
-    private HomeService homeService;
+    private HomeManager homeManager;
     private TeleportManager teleportManager;
+    private WarpManager warpManager;
     private BukkitUserProvider userProvider;
 
-    /**
-     * Configuration
-     **/
-    private ConfigurationManager configurationManager;
 
     /**
-     * Language & Chat
-     */
+     * Configuration, Language & Chat
+     **/
+    private ConfigurationManager configurationManager;
     private LanguageManager languageManager;
     private ChatManager chatManager;
 
@@ -152,7 +150,6 @@ public class EternalCore extends JavaPlugin {
      **/
     private Database database;
     private ScoreboardManager scoreboardManager;
-    private WarpManager warpManager;
     private LiteCommands liteCommands;
     private boolean isPaper = false;
 
@@ -170,7 +167,7 @@ public class EternalCore extends JavaPlugin {
 
         this.scheduler = new BukkitSchedulerImpl(this);
         this.userManager = new UserManager();
-        this.homeService = new HomeService();
+        this.homeManager = new HomeManager();
         this.teleportManager = new TeleportManager();
         this.warpManager = WarpManager.create(new CacheWarpRepository());
         this.userProvider = new BukkitUserProvider(userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)

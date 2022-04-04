@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class HomeService {
+public class HomeManager {
 
     private final Map<UUID, Set<Home>> homes = new HashMap<>();
 
