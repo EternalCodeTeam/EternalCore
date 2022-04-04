@@ -33,5 +33,4 @@ public class EternalCoreCommand {
         this.noticeService.audience(audience, messages -> messages.other().successfullyReloaded());
         this.server.getLogger().info("Configs has ben successfuly reloaded!");
     }
-
 }

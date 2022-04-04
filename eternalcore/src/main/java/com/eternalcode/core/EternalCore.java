@@ -116,6 +116,7 @@ public class EternalCore extends JavaPlugin {
     /**
      * Services
      **/
+    private EternalCore instance;
     private Scheduler scheduler;
     private UserManager userManager;
     private HomeService homeService;
@@ -153,13 +154,15 @@ public class EternalCore extends JavaPlugin {
     private ScoreboardManager scoreboardManager;
     private WarpManager warpManager;
     private LiteCommands liteCommands;
-
     private boolean isPaper = false;
+
 
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
         Server server = this.getServer();
+
+        instance = this;
 
         this.softwareCheck();
 
@@ -358,6 +361,10 @@ public class EternalCore extends JavaPlugin {
         switch (VERSION) {
             case "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> this.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
         }
+    }
+
+    public EternalCore getInstance() {
+        return instance;
     }
 
     public Scheduler getScheduler() {

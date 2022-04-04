@@ -47,4 +47,7 @@ public class UserManager {
         return Collections.unmodifiableCollection(usersByUUID.values());
     }
 
+    public Collection<User> getUsersByName() {
+        return Collections.unmodifiableCollection(usersByName.values());
+    }
 }
