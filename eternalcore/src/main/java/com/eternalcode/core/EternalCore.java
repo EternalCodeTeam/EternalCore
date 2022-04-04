@@ -66,6 +66,7 @@ import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.database.CacheWarpRepository;
 import com.eternalcode.core.database.Database;
+import com.eternalcode.core.home.HomeService;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
@@ -116,8 +117,9 @@ public class EternalCore extends JavaPlugin {
      * Services
      **/
     private Scheduler scheduler;
-    private TeleportManager teleportManager;
     private UserManager userManager;
+    private HomeService homeService;
+    private TeleportManager teleportManager;
     private BukkitUserProvider userProvider;
 
     /**
@@ -164,8 +166,9 @@ public class EternalCore extends JavaPlugin {
         /* Services */
 
         this.scheduler = new BukkitSchedulerImpl(this);
-        this.teleportManager = new TeleportManager();
         this.userManager = new UserManager();
+        this.homeService = new HomeService();
+        this.teleportManager = new TeleportManager();
         this.warpManager = WarpManager.create(new CacheWarpRepository());
         this.userProvider = new BukkitUserProvider(userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 

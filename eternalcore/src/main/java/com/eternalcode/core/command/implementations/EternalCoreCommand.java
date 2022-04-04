@@ -34,9 +34,4 @@ public class EternalCoreCommand {
         this.server.getLogger().info("Configs has ben successfuly reloaded!");
     }
 
-    @Execute(route = "info")
-    @Permission("eternalcore.command.info")
-    public void info(Audience audience) {
-        this.noticeService.audience(audience, messages -> messages.other().info());
-    }
 }

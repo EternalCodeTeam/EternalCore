@@ -2,7 +2,6 @@ package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.configuration.composers.LanguageComposer;
 import com.eternalcode.core.configuration.composers.LocationComposer;
-import com.eternalcode.core.configuration.composers.StringComposer;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
@@ -20,7 +19,6 @@ public class ConfigurationManager {
         .getSettings()
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Location.class, new LocationComposer())
-        .withComposer(String.class, new StringComposer())
         .build();
 
     private final PluginConfiguration pluginConfiguration;

@@ -84,4 +84,10 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
 
     //relocate("io.papermc.lib", "com.eternalcode.core.libs.paperlib")
     //relocate("com.j256.ormlite", "com.eternalcode.core.libs.ormlite")
+
+    // for debug :D
+//    copy {
+//        this.from("build/libs/" + archiveFileName.get())
+//        this.into("C:/Users/")
+//    }
 }

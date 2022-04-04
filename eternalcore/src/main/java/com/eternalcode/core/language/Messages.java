@@ -66,7 +66,6 @@ public interface Messages extends ConfigWithResource {
 
     interface OtherMessages {
         String successfullyReloaded();
-        String eternalCoreInfo();
         String successfullyTeleported();
         String successfullyTeleportedPlayer();
         String alertMessagePrefix();
