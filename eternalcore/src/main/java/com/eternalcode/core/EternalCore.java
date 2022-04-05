@@ -229,7 +229,7 @@ public class EternalCore extends JavaPlugin {
 
                 // arguments
                 .argument(String.class, new PlayerNameArg(server))
-                .argument(Integer.class, new AmountArgument(languageManager, userProvider))
+                .argument(Integer.class, new AmountArgument(languageManager, configurationManager, userProvider))
                 .argument(Player.class, new PlayerArg(userProvider, languageManager, server))
                 .argument(Player.class, new PlayerArgOrSender(languageManager, userProvider, server))
                 .argument(Material.class, new MaterialArgument(userProvider, languageManager))

@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Sound;
+import panda.utilities.StringUtils;
 
 import java.io.File;
 import java.util.Arrays;
@@ -11,25 +12,28 @@ import java.util.List;
 
 public class PluginConfiguration extends AbstractConfigWithResource {
 
-    @Description({ "# ",
+    @Description({
+            "# ",
             "# This is the main configuration file for EternalCore.",
             "# ",
             "# if you need help with the configration or have any questions related to EternalCore, join us in our Discord",
             "# ",
             "# Discord: https://dc.eternalcode.pl/",
-            "# Website: https://eternalcode.pl/", " " })
+            "# Website: https://eternalcode.pl/",
+            "# ",
+    })
 
-    @Description({ "", "# Database Section" })
+    @Description({ StringUtils.EMPTY, "# Database Section" })
     public Database database = new Database();
-    @Description({ "", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
+    @Description({ StringUtils.EMPTY, "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
-    @Description({ "", "# Awesome sounds" })
+    @Description({ StringUtils.EMPTY, "# Awesome sounds" })
     public Sounds sound = new Sounds();
-    @Description({ " ", "# Chat Section" })
+    @Description({ StringUtils.EMPTY, "# Chat Section" })
     public Chat chat = new Chat();
-    @Description({ "", "# Formating on/off" })
+    @Description({ StringUtils.EMPTY, "# Formating on/off" })
     public Format format = new Format();
-    @Description({ "", "# Scoreboard Section" })
+    @Description({ StringUtils.EMPTY, "# Scoreboard Section" })
     public Scoreboard scoreboard = new Scoreboard();
 
     public PluginConfiguration(File folder, String child) {
@@ -60,7 +64,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public String joinMessage = "Welcome {PLAYER}";
         public String firstJoinMessage = "Hello {PLAYER}, for the first time on the server!!";
         public String leaveMessage = "Goodbye {PLAYER}";
-        @Description("")
+        @Description(StringUtils.EMPTY)
         public boolean enableWelcomeTitle = true;
         public String welcomeTitle = "&6EternalCode.pl";
         public String welcomeSubTitle = "&eWelcome back {PLAYER}";
@@ -73,13 +77,13 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public float afterJoinVolume = 1.8F;
         public float afterJoinPitch = 1F;
 
-        @Description("")
+        @Description(StringUtils.EMPTY)
         public boolean enableAfterQuit = true;
         public Sound afterQuit = Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
         public float afterQuitVolume = 1.8F;
         public float afterQuitPitch = 1F;
 
-        @Description("")
+        @Description(StringUtils.EMPTY)
         public boolean enableAfterChatMessage = true;
         public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
         public float afterChatMessageVolume = 1.8F;
@@ -91,6 +95,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public String enabled = "&aenabled";
         public String disabled = "&cdisabled";
         public String separator = "&7, ";
+        public List<String> amountArgumentStatement = Arrays.asList("1", "8", "16", "32", "64", "100");
     }
 
     @Contextual
