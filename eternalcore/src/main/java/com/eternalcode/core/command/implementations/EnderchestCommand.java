@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.command.enderchest")
 public class EnderchestCommand {
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+    public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
         player.openInventory(player.getEnderChest());
     }
 }

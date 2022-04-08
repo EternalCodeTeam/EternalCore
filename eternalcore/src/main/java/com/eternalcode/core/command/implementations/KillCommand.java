@@ -26,7 +26,7 @@ public class KillCommand {
     }
 
     @Execute
-    public void execute(Audience audience, CommandSender sender, @Arg(0) @Handler(PlayerArg.class) Player player) {
+    public void execute(Audience audience, @Arg(0) @Handler(PlayerArg.class) Player player) {
         player.setHealth(0);
 
         this.noticeService.notice()

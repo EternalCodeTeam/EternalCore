@@ -28,11 +28,7 @@ public class GamemodeCommand {
 
     @Execute
     @Between(min = 1, max = 2)
-    public void execute(Audience audience,
-                        CommandSender sender,
-                        @Arg(0) GameMode gameMode,
-                        @Arg(1) @Handler(PlayerArgOrSender.class) Player player
-    ) {
+    public void execute(Audience audience, CommandSender sender, @Arg(0) GameMode gameMode, @Arg(1) @Handler(PlayerArgOrSender.class) Player player) {
         player.setGameMode(gameMode);
 
         this.noticeService.notice()

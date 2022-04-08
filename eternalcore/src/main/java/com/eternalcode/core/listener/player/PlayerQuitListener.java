@@ -22,7 +22,7 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        event.quitMessage(ChatUtils.component(this.config.eventMessage.leaveMessage.replace("{PLAYER}", player.getName())));
+     //   event.quitMessage(ChatUtils.component(this.config.eventMessage.leaveMessage.replace("{PLAYER}", player.getName())));
 
         if (this.config.sound.enableAfterQuit) {
             this.server.getOnlinePlayers()

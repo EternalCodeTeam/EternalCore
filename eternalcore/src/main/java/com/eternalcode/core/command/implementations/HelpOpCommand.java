@@ -26,7 +26,7 @@ public class HelpOpCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
-    private final Cache<UUID, Long> cooldowns; // <- nie trzymać tego w takim miejsu
+    private final Cache<UUID, Long> cooldowns; // TODO: <- nie trzymać tego w takim miejsu
     private final Server server;
 
     public HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {

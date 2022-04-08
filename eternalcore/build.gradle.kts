@@ -9,7 +9,6 @@ dependencies {
     // paper lib, spigot api & kyori adventure
     //compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
-
     api("io.papermc:paperlib:1.0.7")
 
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
@@ -29,9 +28,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
     // HikariCP
-    //implementation("com.j256.ormlite:ormlite-jdbc:6.1")
     implementation("com.zaxxer:HikariCP:5.0.1")
-
 
     // FastBoard
     implementation("fr.mrmicky:fastboard:1.2.1")

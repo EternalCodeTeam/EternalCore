@@ -43,7 +43,6 @@ public class ClientBukkitSettings implements ClientSettings {
 
     @Override
     public Locale getLocate() {
-        return this.getPlayerOrThrow().locale();
+        return new Locale(this.getPlayerOrThrow().getLocale());
     }
-
 }

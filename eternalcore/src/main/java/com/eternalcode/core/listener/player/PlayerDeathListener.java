@@ -20,6 +20,6 @@ public class PlayerDeathListener implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        event.deathMessage(ChatUtils.component(this.config.eventMessage.deathMessage.replace("{PLAYER}", player.getName())));
+       // event.deathMessage(ChatUtils.component(this.config.eventMessage.deathMessage.replace("{PLAYER}", player.getName())));
     }
 }

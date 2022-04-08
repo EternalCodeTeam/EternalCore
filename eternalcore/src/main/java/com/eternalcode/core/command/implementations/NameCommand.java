@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.legacy.Legacy;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.utils.ChatUtils;
 import dev.rollczi.litecommands.annotations.Execute;
@@ -11,7 +12,7 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @Section(route = "name", aliases = { "rename", "itemname" })
 @Permission("eternalcore.command.itemname")
@@ -27,11 +28,9 @@ public class NameCommand {
     @Execute
     @MinArgs(1)
     public void execute(Player player, @Joiner String name) {
-        PlayerInventory playerInventory = player.getInventory();
+        ItemStack itemStack = player.getInventory().getItemInOffHand();
 
-        ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
-
-        if (handItem == null || handItem.getType() == Material.AIR) {
+        if (itemStack.getType() == Material.AIR) {
             this.noticeService
                 .notice()
                 .message(messages -> messages.argument().noItem())
@@ -41,7 +40,12 @@ public class NameCommand {
             return;
         }
 
-        handItem.editMeta(itemMeta -> itemMeta.displayName(ChatUtils.component(name)));
+
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        String serialize = Legacy.SERIALIZER.serialize(ChatUtils.component(name));
+
+        itemMeta.setDisplayName(serialize);
+        itemStack.setItemMeta(itemMeta);
 
         this.noticeService
             .notice()

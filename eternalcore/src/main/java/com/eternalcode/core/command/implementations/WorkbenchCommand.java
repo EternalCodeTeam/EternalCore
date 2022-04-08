@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public class WorkbenchCommand {
 
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+    public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
         player.openWorkbench(null, true);
     }
 

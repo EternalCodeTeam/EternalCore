@@ -38,7 +38,7 @@ public class RepairCommand {
             return;
         }
 
-        handItem.editMeta(this::repairItem);
+      //  handItem.editMeta(this::repairItem);
 
         this.noticeService
             .notice()
@@ -50,7 +50,7 @@ public class RepairCommand {
     @Execute(route = "all")
     public void repairAll(Player player) {
         for (ItemStack itemStack : player.getInventory().getContents()) {
-            itemStack.editMeta(this::repairItem);
+      //      itemStack.editMeta(this::repairItem);
         }
 
         this.noticeService
@@ -63,7 +63,7 @@ public class RepairCommand {
     @Execute(route = "armor")
     public void repairArmor(Player player) {
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
-            itemStack.editMeta(this::repairItem);
+          //  itemStack.editMeta(this::repairItem);
         }
 
         this.noticeService
