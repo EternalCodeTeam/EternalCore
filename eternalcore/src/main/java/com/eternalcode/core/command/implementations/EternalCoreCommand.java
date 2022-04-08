@@ -29,8 +29,7 @@ public class EternalCoreCommand {
     @Permission("eternalcore.command.reload")
     public void reload(Audience audience) {
         this.manager.loadAndRenderConfigs();
-
         this.noticeService.audience(audience, messages -> messages.other().successfullyReloaded());
-        this.server.getLogger().info("Configs has ben successfuly reloaded!");
+        this.server.getLogger().info("Configs has ben successfully reloaded!");
     }
 }

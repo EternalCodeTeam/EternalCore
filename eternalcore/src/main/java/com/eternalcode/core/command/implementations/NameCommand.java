@@ -17,14 +17,15 @@ import org.bukkit.inventory.PlayerInventory;
 @Permission("eternalcore.command.itemname")
 @UsageMessage("&8» &cPoprawne użycie &7/name <nazwa>")
 public class NameCommand {
-    
+
     private final NoticeService noticeService;
-    
+
     public NameCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
-    @Execute @MinArgs(1)
+    @Execute
+    @MinArgs(1)
     public void execute(Player player, @Joiner String name) {
         PlayerInventory playerInventory = player.getInventory();
 

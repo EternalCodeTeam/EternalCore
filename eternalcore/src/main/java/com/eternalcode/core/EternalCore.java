@@ -152,7 +152,7 @@ public class EternalCore extends JavaPlugin {
     private Database database;
     private ScoreboardManager scoreboardManager;
     private LiteCommands liteCommands;
-    private boolean isPaper = false;
+    private boolean isSpigot = false;
 
 
     @Override
@@ -263,7 +263,6 @@ public class EternalCore extends JavaPlugin {
                 .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(userProvider, languageManager))
 
                 .command(
-                        TeleportCommand.class,
                         AlertCommand.class,
                         AnvilCommand.class,
                         CartographyTableCommand.class,
@@ -341,15 +340,15 @@ public class EternalCore extends JavaPlugin {
 
     private void softwareCheck() {
         try {
-            Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData");
-            this.isPaper = true;
+            Class.forName("org.spigotmc.SpigotConfig");
+            this.isSpigot = true;
         } catch (ClassNotFoundException exception) {
-            this.getLogger().warning("Your server running on unsupported software, use paper minecraft software and other paper 1.17x forks");
-            this.getLogger().warning("Download paper from https://papermc.io/downloads");
+            this.getLogger().warning("Your server running on unsupported software, use spigot/paper minecraft software and other spigot/paper 1.17x forks");
+            this.getLogger().warning("We recommend using paper, download paper from https://papermc.io/downloads");
             this.getLogger().warning("WARRING: Supported minecraft version is 1.17-1.18x");
         }
 
-        if (this.isPaper) {
+        if (this.isSpigot) {
             this.getLogger().info("Your server running on supported software, congratulations!");
             this.getLogger().info("Server version: " + this.getServer().getVersion());
         }

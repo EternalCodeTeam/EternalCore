@@ -7,14 +7,14 @@ dependencies {
     // TODO: Full spigot compatibly
 
     // paper lib, spigot api & kyori adventure
-    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
-    //compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    //compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
 
-    //api("io.papermc:paperlib:1.0.7")
+    api("io.papermc:paperlib:1.0.7")
 
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
-    implementation( "com.github.ben-manes.caffeine:caffeine:3.0.6")
+    implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:1.8.4")
@@ -71,7 +71,6 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     exclude("javax/**")
     exclude("META-INF/**")
 
-
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
     relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
@@ -79,16 +78,11 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
     relocate("panda", "com.eternalcode.core.libs.panda")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
-    relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
-    relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
-    relocate("org.sl4j", "com.eternalcode.core.libs.org.sl4j")
-
-    //relocate("io.papermc.lib", "com.eternalcode.core.libs.paperlib")
-    //relocate("com.j256.ormlite", "com.eternalcode.core.libs.ormlite")
+    relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
 
     // for debug :D
-//    copy {
-//        this.from("build/libs/" + archiveFileName.get())
-//        this.into("C:/Users/")
-//    }
+/*    copy {
+        this.from("build/libs/" + archiveFileName.get())
+        this.into("C:/Users/")
+    }*/
 }

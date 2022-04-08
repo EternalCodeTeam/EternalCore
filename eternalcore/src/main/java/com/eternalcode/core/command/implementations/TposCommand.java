@@ -11,6 +11,7 @@ import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -48,7 +49,7 @@ public class TposCommand {
     private void teleport(Player player, int x, int y, int z) {
         Location location = new Location(player.getWorld(), x, y, z);
 
-        player.teleportAsync(location);
+        PaperLib.teleportAsync(player, location);
 
         this.noticeService
             .notice()
