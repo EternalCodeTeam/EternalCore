@@ -2,8 +2,8 @@ package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;

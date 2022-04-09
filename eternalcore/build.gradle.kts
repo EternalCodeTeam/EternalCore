@@ -76,6 +76,7 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     relocate("panda", "com.eternalcode.core.libs.panda")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
     relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
+    relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
 
     // for debug :D
 /*    copy {

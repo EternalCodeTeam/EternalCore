@@ -6,9 +6,6 @@ import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.user.User;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 import panda.utilities.text.Formatter;
 import panda.utilities.text.Joiner;
 

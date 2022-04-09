@@ -6,7 +6,7 @@ import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.Server;
-import org.bukkit.command.CommandSender;
+
 
 @Section(route = "online")
 @Permission("eternalcore.command.online")

@@ -6,13 +6,10 @@ import com.eternalcode.core.command.argument.PlayerArg;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 @Section(route = "kill")
 @Permission("eternalcore.command.kill")

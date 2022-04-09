@@ -1,13 +1,9 @@
 package com.eternalcode.core.scoreboard;
 
 import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.chat.legacy.Legacy;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import fr.mrmicky.fastboard.FastBoard;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -18,7 +14,6 @@ public class ScoreboardManager {
 
     private final PluginConfiguration config;
     private final EternalCore eternalCore;
-    private final MiniMessage miniMessage;
 
     private final ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
@@ -29,10 +24,9 @@ public class ScoreboardManager {
     na właśnie api od Neznanego z pluginu "TAB"
      */
 
-    public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager, MiniMessage miniMessage) {
+    public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
         this.eternalCore = eternalCore;
         this.config = configurationManager.getPluginConfiguration();
-        this.miniMessage = miniMessage;
     }
 
     public void updateTask() {
