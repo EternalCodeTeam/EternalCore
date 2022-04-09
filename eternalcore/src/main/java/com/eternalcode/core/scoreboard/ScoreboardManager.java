@@ -7,14 +7,12 @@ import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import fr.mrmicky.fastboard.FastBoard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
 
 public class ScoreboardManager {
 
