@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.Notice;
+import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Joiner;
 import dev.rollczi.litecommands.annotations.MinArgs;

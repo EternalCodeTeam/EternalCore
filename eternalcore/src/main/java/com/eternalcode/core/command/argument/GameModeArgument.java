@@ -31,7 +31,7 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
 
     @Override
     public GameMode parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
+        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toLowerCase()));
 
         if (gameMode.isPresent()) {
             return gameMode.get();
@@ -55,5 +55,4 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
             .map(Enum::name)
             .toList();
     }
-
 }

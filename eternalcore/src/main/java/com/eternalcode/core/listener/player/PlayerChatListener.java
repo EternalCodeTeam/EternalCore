@@ -1,9 +1,9 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.DateUtils;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;

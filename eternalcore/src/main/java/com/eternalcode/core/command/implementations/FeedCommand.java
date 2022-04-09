@@ -11,7 +11,6 @@ import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 @Section(route = "feed")
 @UsageMessage("&8» &cPoprawne użycie &7/feed <player>")

@@ -1,14 +1,10 @@
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.entity.Entity;
-import com.eternalcode.core.home.Home;
-import com.eternalcode.core.teleport.Teleport;
 import com.eternalcode.core.user.client.ClientSettings;
 import com.eternalcode.core.user.settings.Settings;
 import com.eternalcode.core.user.settings.SettingsImpl;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 public class User implements Entity {

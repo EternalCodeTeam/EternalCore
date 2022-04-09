@@ -221,7 +221,7 @@ public class EternalCore extends JavaPlugin {
         this.noticeService = new NoticeService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
 
         /* FrameWorks & Libs */
-        this.scoreboardManager = new ScoreboardManager(this, this.configurationManager, miniMessage);
+        this.scoreboardManager = new ScoreboardManager(this, this.configurationManager);
         this.scoreboardManager.updateTask();
 
         this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)

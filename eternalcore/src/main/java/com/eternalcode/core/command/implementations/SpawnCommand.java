@@ -1,9 +1,9 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.teleport.TeleportManager;
-import com.eternalcode.core.command.argument.PlayerArg;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;

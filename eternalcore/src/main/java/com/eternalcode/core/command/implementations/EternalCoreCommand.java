@@ -7,7 +7,6 @@ import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 
 @Section(route = "eternalcore", aliases = { "eternal" })

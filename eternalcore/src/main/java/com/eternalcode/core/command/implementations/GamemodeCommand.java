@@ -13,7 +13,6 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 @Section(route = "gamemode", aliases = { "gm" })
 @Permission("eternalcore.command.gamemode")

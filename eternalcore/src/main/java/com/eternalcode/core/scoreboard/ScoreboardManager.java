@@ -4,7 +4,6 @@ import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.chat.legacy.Legacy;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.ChatUtils;
 import fr.mrmicky.fastboard.FastBoard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
