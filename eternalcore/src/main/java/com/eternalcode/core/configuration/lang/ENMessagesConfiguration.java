@@ -1,10 +1,8 @@
 package com.eternalcode.core.configuration.lang;
 
+import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 
@@ -12,12 +10,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-@Getter @Accessors(fluent = true)
 public class ENMessagesConfiguration extends AbstractConfigWithResource implements Messages {
-
-    public ENMessagesConfiguration(File folder, String child) {
-        super(folder, child);
-    }
+    private final Language language = Language.EN;
 
     public ENArgumentSection argument = new ENArgumentSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
@@ -25,11 +19,69 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENTeleportSection teleport = new ENTeleportSection();
     public ENChatSection chat = new ENChatSection();
     public ENOtherMessages other = new ENOtherMessages();
+    public ENWarpSection warp = new ENWarpSection();
 
-    @Accessors
-    private final Language language = Language.EN;
+    public ENMessagesConfiguration(File folder, String child) {
+        super(folder, child);
+    }
 
-    @Contextual @Getter @Accessors(fluent = true)
+    public ENArgumentSection argument() {
+        return this.argument;
+    }
+
+    public ENHelpOpSection helpOp() {
+        return this.helpOp;
+    }
+
+    public ENAdminChatSection adminChat() {
+        return this.adminChat;
+    }
+
+    public ENTeleportSection teleport() {
+        return this.teleport;
+    }
+
+    public ENChatSection chat() {
+        return this.chat;
+    }
+
+    public ENOtherMessages other() {
+        return this.other;
+    }
+
+    public ENWarpSection warp() {
+        return this.warp;
+    }
+
+    public Language getLanguage() {
+        return this.language;
+    }
+
+    @Contextual
+    public static class ENWarpSection implements Messages.WarpSection {
+        public String availableList = "&8» List available warps: {WARPS}";
+        public String notExist = "&8» &cThis warp doesn't exist";
+        public String noPermission = "&8» &cYou don't have permission to this warp!";
+        public String disabled = "&8» &cThis warp is currently disabled!";
+
+        public String availableList() {
+            return this.availableList;
+        }
+
+        public String notExist() {
+            return this.notExist;
+        }
+
+        public String noPermission() {
+            return this.noPermission;
+        }
+
+        public String disabled() {
+            return this.disabled;
+        }
+    }
+
+    @Contextual
     public static class ENArgumentSection implements Messages.ArgumentSection {
         public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
@@ -39,30 +91,108 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noItem = "&8» &cYou need item to use this command!";
         public String noMaterial = "&8» &cThis item doesn't exist";
         public String noArgument = "&8» &cThis argument doesn't exist";
+        public String noDamaged = "&8» &cThis item can't be repaired";
+        public String noDamagedItems = "&8» &cYou need damaged items to use this command!";
+
+        public String permissionMessage() {
+            return this.permissionMessage;
+        }
+
+        public String offlinePlayer() {
+            return this.offlinePlayer;
+        }
+
+        public String onlyPlayer() {
+            return this.onlyPlayer;
+        }
+
+        public String notNumber() {
+            return this.notNumber;
+        }
+
+        public String numberBiggerThanOrEqualZero() {
+            return this.numberBiggerThanOrEqualZero;
+        }
+
+        public String noItem() {
+            return this.noItem;
+        }
+
+        public String noMaterial() {
+            return this.noMaterial;
+        }
+
+        public String noArgument() {
+            return this.noArgument;
+        }
+
+        public String noDamaged() {
+            return this.noDamaged;
+        }
+
+        public String noDamagedItems() {
+            return this.noDamagedItems;
+        }
     }
 
-    @Contextual @Getter @Accessors(fluent = true)
+    @Contextual
     public static class ENHelpOpSection implements Messages.HelpOpSection {
         public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String send = "&8» &aThis message has been successfully sent to administration";
         public String coolDown = "&8» &cYou can use this command for: &6{TIME}";
+
+        public String format() {
+            return this.format;
+        }
+
+        public String send() {
+            return this.send;
+        }
+
+        public String coolDown() {
+            return this.coolDown;
+        }
     }
 
-    @Contextual @Getter @Accessors(fluent = true)
+    @Contextual
     public static class ENAdminChatSection implements Messages.AdminChatSection {
         public String format = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
+
+        public String format() {
+            return this.format;
+        }
     }
 
-    @Contextual @Getter @Accessors(fluent = true)
+    @Contextual
     public static class ENTeleportSection implements Messages.TeleportSection {
         public String actionBarMessage = "&aTeleporting in &f{TIME}";
         public String cancel = "&8» &cYou've moved, teleportation canceled!";
         public String teleported = "&8» &aTeleported!";
         public String teleporting = "&8» &aTeleporting...";
         public String haveTeleport = "&8» &cYou are in teleport!";
+
+        public String actionBarMessage() {
+            return this.actionBarMessage;
+        }
+
+        public String cancel() {
+            return this.cancel;
+        }
+
+        public String teleported() {
+            return this.teleported;
+        }
+
+        public String teleporting() {
+            return this.teleporting;
+        }
+
+        public String haveTeleport() {
+            return this.haveTeleport;
+        }
     }
 
-    @Contextual @Getter @Accessors(fluent = true)
+    @Contextual
     public static class ENChatSection implements Messages.ChatSection {
         public String disabled = "&8» &cChat has been disabled by {NICK}!";
         public String enabled = "&8» &aThe chat has been enabled by {NICK}!";
@@ -73,13 +203,49 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String slowMode = "&8» &cYou can write the next message for: &6{TIME}";
         public String disabledChatInfo = "&8» &cChat is currently disabled!";
         public String noCommand = "&8» &cCommand &e{COMMAND} &cdoesn't exists!";
+
+        public String disabled() {
+            return this.disabled;
+        }
+
+        public String enabled() {
+            return this.enabled;
+        }
+
+        public String cleared() {
+            return this.cleared;
+        }
+
+        public String alreadyDisabled() {
+            return this.alreadyDisabled;
+        }
+
+        public String alreadyEnabled() {
+            return this.alreadyEnabled;
+        }
+
+        public String slowModeSet() {
+            return this.slowModeSet;
+        }
+
+        public String slowMode() {
+            return this.slowMode;
+        }
+
+        public String disabledChatInfo() {
+            return this.disabledChatInfo;
+        }
+
+        public String noCommand() {
+            return this.noCommand;
+        }
     }
 
-    @Contextual @Getter @Accessors(fluent = true)
+    @Contextual
     public static class ENOtherMessages implements Messages.OtherMessages {
         public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
-        public String successfullyTeleported = "&8» &aSuccessfuly teleported to {PLAYER}!";
-        public String successfullyTeleportedPlayer = "&8» &aSuccessfuly teleported {PLAYER} to {ARG-PLAYER}!";
+        public String successfullyTeleported = "&8» &aSuccessfully teleported to {PLAYER}!";
+        public String successfullyTeleportedPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
         public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
         public String clearMessage = "&8» &cYour inventory has been cleared!";
         public String clearByMessage = "&8» &cPlayer {PLAYER} inventory cleared";
@@ -117,15 +283,175 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6New name is: &6{NAME}";
         @Description({ "", "# Whois messsage Style" })
-        public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
-            "&8» &7Target UUID: &f{UUID}",
-            "&8» &7Target address: &f{IP}",
-            "&8» &7Target walk speed: &f{WALK-SPEED}",
-            "&8» &7Target fly speed: &f{SPEED}",
-            "&8» &7Target ping: &f{PING}ms",
-            "&8» &7Target level: &f{LEVEL}",
-            "&8» &7Target health: &f{HEALTH}",
-            "&8» &7Target food level: &f{FOOD}");
-    }
 
+        public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
+                "&8» &7Target UUID: &f{UUID}",
+                "&8» &7Target address: &f{IP}",
+                "&8» &7Target walk speed: &f{WALK-SPEED}",
+                "&8» &7Target fly speed: &f{SPEED}",
+                "&8» &7Target ping: &f{PING}ms",
+                "&8» &7Target level: &f{LEVEL}",
+                "&8» &7Target health: &f{HEALTH}",
+                "&8» &7Target food level: &f{FOOD}");
+
+        public String successfullyReloaded() {
+            return this.successfullyReloaded;
+        }
+
+        public String successfullyTeleported() {
+            return this.successfullyTeleported;
+        }
+
+        public String successfullyTeleportedPlayer() {
+            return this.successfullyTeleportedPlayer;
+        }
+
+        public String alertMessagePrefix() {
+            return this.alertMessagePrefix;
+        }
+
+        public String clearMessage() {
+            return this.clearMessage;
+        }
+
+        public String clearByMessage() {
+            return this.clearByMessage;
+        }
+
+        public String disposalTitle() {
+            return this.disposalTitle;
+        }
+
+        public String foodMessage() {
+            return this.foodMessage;
+        }
+
+        public String foodOtherMessage() {
+            return this.foodOtherMessage;
+        }
+
+        public String healMessage() {
+            return this.healMessage;
+        }
+
+        public String healedMessage() {
+            return this.healedMessage;
+        }
+
+        public String nullHatMessage() {
+            return this.nullHatMessage;
+        }
+
+        public String repairMessage() {
+            return this.repairMessage;
+        }
+
+        public String skullMessage() {
+            return this.skullMessage;
+        }
+
+        public String killSelf() {
+            return this.killSelf;
+        }
+
+        public String killedMessage() {
+            return this.killedMessage;
+        }
+
+        public String speedBetweenZeroAndTen() {
+            return this.speedBetweenZeroAndTen;
+        }
+
+        public String speedSet() {
+            return this.speedSet;
+        }
+
+        public String speedSetBy() {
+            return this.speedSetBy;
+        }
+
+        public String godMessage() {
+            return this.godMessage;
+        }
+
+        public String godSetMessage() {
+            return this.godSetMessage;
+        }
+
+        public String flyMessage() {
+            return this.flyMessage;
+        }
+
+        public String flySetMessage() {
+            return this.flySetMessage;
+        }
+
+        public String giveReceived() {
+            return this.giveReceived;
+        }
+
+        public String giveGiven() {
+            return this.giveGiven;
+        }
+
+        public String spawnSet() {
+            return this.spawnSet;
+        }
+
+        public String spawnNoSet() {
+            return this.spawnNoSet;
+        }
+
+        public String spawnTeleportedBy() {
+            return this.spawnTeleportedBy;
+        }
+
+        public String spawnTeleportedOther() {
+            return this.spawnTeleportedOther;
+        }
+
+        public String gameModeNotCorrect() {
+            return this.gameModeNotCorrect;
+        }
+
+        public String gameModeMessage() {
+            return this.gameModeMessage;
+        }
+
+        public String gameModeSetMessage() {
+            return this.gameModeSetMessage;
+        }
+
+        public String pingMessage() {
+            return this.pingMessage;
+        }
+
+        public String pingOtherMessage() {
+            return this.pingOtherMessage;
+        }
+
+        public String onlineMessage() {
+            return this.onlineMessage;
+        }
+
+        public String listMessage() {
+            return this.listMessage;
+        }
+
+        public String tposMessage() {
+            return this.tposMessage;
+        }
+
+        public String tposByMessage() {
+            return this.tposByMessage;
+        }
+
+        public String nameMessage() {
+            return this.nameMessage;
+        }
+
+        public List<String> whoisCommand() {
+            return this.whoisCommand;
+        }
+    }
 }

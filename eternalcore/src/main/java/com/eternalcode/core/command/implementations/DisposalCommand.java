@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
+import com.eternalcode.core.chat.legacy.Legacy;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
@@ -36,8 +37,9 @@ public class DisposalCommand {
 
         Messages messages = languageManager.getMessages(language);
         Component component = miniMessage.deserialize(messages.other().disposalTitle());
+        String serialize = Legacy.SERIALIZER.serialize(component);
 
-        player.openInventory(this.server.createInventory(null, 54, component));
+        player.openInventory(this.server.createInventory(null, 54, serialize));
     }
 
 }

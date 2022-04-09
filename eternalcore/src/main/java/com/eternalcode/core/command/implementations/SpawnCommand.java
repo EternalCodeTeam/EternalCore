@@ -1,14 +1,15 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.command.argument.PlayerArg;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.teleport.TeleportManager;
-import com.eternalcode.core.command.argument.PlayerArg;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -43,7 +44,7 @@ public class SpawnCommand {
 
         if (playerOption.isEmpty()) {
             if (sender.hasPermission("eternalcore.teleport.bypass")) {
-                sender.teleportAsync(location);
+                PaperLib.teleportAsync(sender, location);
 
                 this.noticeService
                     .notice()
@@ -74,9 +75,9 @@ public class SpawnCommand {
 
             return;
         }
-        Player player = playerOption.get();
 
-        player.teleportAsync(location);
+        Player player = playerOption.get();
+        PaperLib.teleportAsync(player, location);
 
         this.noticeService
             .notice()

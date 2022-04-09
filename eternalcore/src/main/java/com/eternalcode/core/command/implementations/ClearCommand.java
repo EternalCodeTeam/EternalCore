@@ -12,7 +12,6 @@ import dev.rollczi.litecommands.annotations.Section;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import panda.std.Option;
 
 @Section(route = "clear")
 @Permission("eternalcore.command.clear")

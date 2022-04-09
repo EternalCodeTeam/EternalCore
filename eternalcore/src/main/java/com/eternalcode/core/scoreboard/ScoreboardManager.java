@@ -1,11 +1,15 @@
 package com.eternalcode.core.scoreboard;
 
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.EternalCore;
+import com.eternalcode.core.chat.legacy.Legacy;
 import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import fr.mrmicky.fastboard.FastBoard;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,12 +18,21 @@ public class ScoreboardManager {
 
     private final PluginConfiguration config;
     private final EternalCore eternalCore;
+    private final MiniMessage miniMessage;
 
     private final ConcurrentHashMap<UUID, FastBoard> boards = new ConcurrentHashMap<>();
 
-    public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager) {
+
+    /*
+    TODO: Ogólnie z tym scoreboardem, to będzie trzeba jeszcze przemyśleć, ponieważ i tak prawdopodobnie nie będzie dużo osób z niego korzystać
+    ponieważ są też o wiele lepsze pluginy na scoreboarda, typu TAB, ma on ogólnie dostępne api do swojego scoreboarda, więc proponuje zamienić FastBoarda, który nie jest najlepszy
+    na właśnie api od Neznanego z pluginu "TAB"
+     */
+
+    public ScoreboardManager(EternalCore eternalCore, ConfigurationManager configurationManager, MiniMessage miniMessage) {
         this.eternalCore = eternalCore;
         this.config = configurationManager.getPluginConfiguration();
+        this.miniMessage = miniMessage;
     }
 
     public void updateTask() {
@@ -30,11 +43,19 @@ public class ScoreboardManager {
         }, 0, this.config.scoreboard.refresh);
     }
 
-    //TODO: colors
     private void updateBoard(FastBoard board) {
         List<String> scoreboardLines = this.config.scoreboard.style;
+        List<String> colored = new ArrayList<>();
 
-        board.updateLines(scoreboardLines);
+        Component componentTitle = miniMessage.deserialize(this.config.scoreboard.title);
+
+        for (String scoreboardLine : scoreboardLines) {
+            Component componentLine = miniMessage.deserialize(scoreboardLine);
+            colored.add(Legacy.SERIALIZER.serialize(componentLine));
+        }
+
+        board.updateTitle(Legacy.SERIALIZER.serialize(componentTitle));
+        board.updateLines(colored);
     }
 
     public void removeScoreboard(Player player) {
@@ -48,7 +69,8 @@ public class ScoreboardManager {
     public void setScoreboard(Player player) {
         FastBoard board = new FastBoard(player);
 
-        board.updateTitle(this.config.scoreboard.title);
+        Component component = miniMessage.deserialize(this.config.scoreboard.title);
+        board.updateTitle(Legacy.SERIALIZER.serialize(component));
 
         this.boards.put(player.getUniqueId(), board);
     }

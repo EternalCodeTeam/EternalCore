@@ -1,40 +1,31 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;
-import org.bukkit.command.CommandSender;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import panda.std.Option;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
+import panda.utilities.StringUtils;
 
 @Section(route = "cartopgraphytable")
 @Permission("eternalcore.command.cartopgraphytable")
 public class CartographyTableCommand {
 
-    private final NoticeService noticeService;
 
-    public CartographyTableCommand(NoticeService noticeService) {
-        this.noticeService = noticeService;
+    private final Server server;
+
+    public CartographyTableCommand(Server server) {
+        this.server = server;
     }
 
-
     @Execute
-    public void execute(CommandSender sender, @Arg(0) @Handler(PlayerArg.class) Option<Player> playerOption) {
-        if (playerOption.isEmpty()) {
-            if (sender instanceof Player player) {
-                player.openCartographyTable(null, true);
-                return;
-            }
-
-            noticeService.console(messages -> messages.argument().onlyPlayer());
-            return;
-        }
-
-        Player player = playerOption.get();
-        player.openCartographyTable(null, true);
+    public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player playerOrSender) {
+        Inventory inventory = server.createInventory(playerOrSender, InventoryType.CARTOGRAPHY, StringUtils.EMPTY);
+        playerOrSender.openInventory(inventory);
     }
 }

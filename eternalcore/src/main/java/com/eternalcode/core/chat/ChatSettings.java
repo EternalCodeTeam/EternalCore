@@ -2,14 +2,6 @@ package com.eternalcode.core.chat;
 
 public interface ChatSettings {
 
-    boolean isChatEnabled();
-
-    void setChatEnabled(boolean chatEnabled);
-
-    double getChatDelay();
-
-    void setChatDelay(double chatDelay);
-
     ChatSettings NONE = new ChatSettings() {
 
         private boolean chatEnabled = true;
@@ -36,5 +28,13 @@ public interface ChatSettings {
         }
 
     };
+
+    boolean isChatEnabled();
+
+    void setChatEnabled(boolean chatEnabled);
+
+    double getChatDelay();
+
+    void setChatDelay(double chatDelay);
 
 }

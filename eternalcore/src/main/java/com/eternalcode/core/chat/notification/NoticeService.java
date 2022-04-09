@@ -3,7 +3,6 @@ package com.eternalcode.core.chat.notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.NotificationExtractor;
-import org.bukkit.command.CommandSender;
 
 public class NoticeService {
 

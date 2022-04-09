@@ -19,10 +19,10 @@ public class SignChangeListener implements Listener {
         Player player = event.getPlayer();
         String[] lines = event.getLines();
 
-        if (player.hasPermission("eternalcore.sign")) {
+/*        if (player.hasPermission("eternalcore.sign")) {
             for (int i = 0; i < lines.length; i++) {
-                event.line(i, miniMessage.deserialize(event.getLine(i)));
+                event.setLine(i, miniMessage.deserialize(event.getLine(i)));
             }
-        }
+        }*/
     }
 }

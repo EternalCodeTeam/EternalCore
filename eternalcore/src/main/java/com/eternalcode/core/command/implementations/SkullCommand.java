@@ -1,8 +1,8 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.builder.ItemBuilder;
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.command.argument.PlayerNameArg;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;

@@ -14,6 +14,7 @@ public interface Messages extends ConfigWithResource {
     ChatSection chat();
     TeleportSection teleport();
     OtherMessages other();
+    WarpSection warp();
 
     interface ArgumentSection {
         String permissionMessage();
@@ -24,6 +25,8 @@ public interface Messages extends ConfigWithResource {
         String noItem();
         String noMaterial();
         String noArgument();
+        String noDamaged();
+        String noDamagedItems();
     }
 
     interface HelpOpSection {
@@ -54,6 +57,13 @@ public interface Messages extends ConfigWithResource {
         String slowMode();
         String disabledChatInfo();
         String noCommand();
+    }
+
+    interface WarpSection {
+        String availableList();
+        String notExist();
+        String noPermission();
+        String disabled();
     }
 
     interface OtherMessages {

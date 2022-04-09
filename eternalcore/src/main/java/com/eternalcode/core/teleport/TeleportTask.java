@@ -3,6 +3,7 @@ package com.eternalcode.core.teleport;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.utils.DateUtils;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -45,16 +46,17 @@ public class TeleportTask implements Runnable {
 
                 continue;
             }
-            player.teleportAsync(location);
+
+            player.teleport(location);
 
             this.teleportManager.removeTeleport(uuid);
 
             noticeService.notice()
                 .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
                 .message(messages -> messages.teleport().teleported())
-                .placeholder("{TIME}", DateUtils.durationToString(time))
                 .player(player.getUniqueId())
                 .send();
         }
     }
 }
+

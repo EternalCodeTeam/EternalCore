@@ -24,6 +24,14 @@ public class Audience {
         this.language = language;
     }
 
+    public static Audience console() {
+        return CONSOLE;
+    }
+
+    public static Audience player(UUID uuid, Language language) {
+        return new Audience(uuid, false, language);
+    }
+
     public UUID getUuid() {
         return uuid;
     }
@@ -34,14 +42,6 @@ public class Audience {
 
     public Language getLanguage() {
         return language.get();
-    }
-
-    public static Audience console() {
-        return CONSOLE;
-    }
-
-    public static Audience player(UUID uuid, Language language) {
-        return new Audience(uuid, false, language);
     }
 
 }

@@ -1,9 +1,9 @@
 package com.eternalcode.core.chat.adventure;
 
-import com.eternalcode.core.chat.notification.NotificationAnnouncer;
 import com.eternalcode.core.chat.notification.Audience;
-import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.chat.notification.NoticeType;
+import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.chat.notification.NotificationAnnouncer;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -42,10 +42,18 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
 
     private void send(net.kyori.adventure.audience.Audience audience, NoticeType type, Component component) {
         switch (type) {
-            case CHAT: audience.sendMessage(component); return;
-            case ACTIONBAR: audience.sendActionBar(component); return;
-            case TITLE: audience.showTitle(Title.title(component, Component.text(StringUtils.EMPTY))); return;
-            case SUBTITLE: audience.showTitle(Title.title(Component.text(StringUtils.EMPTY), component)); return;
+            case CHAT:
+                audience.sendMessage(component);
+                return;
+            case ACTIONBAR:
+                audience.sendActionBar(component);
+                return;
+            case TITLE:
+                audience.showTitle(Title.title(component, Component.text(StringUtils.EMPTY)));
+                return;
+            case SUBTITLE:
+                audience.showTitle(Title.title(Component.text(StringUtils.EMPTY), component));
+                return;
             case NONE:
         }
     }

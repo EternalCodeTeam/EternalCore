@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import net.kyori.adventure.text.Component;
+import com.eternalcode.core.chat.notification.NoticeType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,8 +26,8 @@ public class TeleportListeners implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onMove(final PlayerMoveEvent event) {
         if (event.getFrom().getBlockX() == event.getTo().getBlockX()
-            && event.getFrom().getBlockY() == event.getTo().getBlockY()
-            && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
+                && event.getFrom().getBlockY() == event.getTo().getBlockY()
+                && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
             return;
         }
         final Player player = event.getPlayer();
@@ -62,11 +62,9 @@ public class TeleportListeners implements Listener {
         if (this.teleportManager.inTeleport(uuid)) {
             this.teleportManager.removeTeleport(uuid);
 
-            player.sendActionBar(Component.text());
-
             this.noticeService.notice()
-                .message(messages -> messages.teleport().cancel())
-                .send();
+                    .message(messages -> messages.teleport().cancel())
+                    .send();
         }
     }
 

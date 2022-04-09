@@ -14,5 +14,4 @@ public class LanguageComposer implements SimpleComposer<Language> {
     public Result<String, Exception> serialize(Language entity) {
         return Result.ok(entity.getLang());
     }
-
 }

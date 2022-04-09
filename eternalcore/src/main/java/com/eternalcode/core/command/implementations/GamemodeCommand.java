@@ -13,7 +13,6 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 @Section(route = "gamemode", aliases = { "gm" })
 @Permission("eternalcore.command.gamemode")
@@ -28,11 +27,7 @@ public class GamemodeCommand {
 
     @Execute
     @Between(min = 1, max = 2)
-    public void execute(Audience audience,
-                        CommandSender sender,
-                        @Arg(0) GameMode gameMode,
-                        @Arg(1) @Handler(PlayerArgOrSender.class) Player player
-    ) {
+    public void execute(Audience audience, CommandSender sender, @Arg(0) GameMode gameMode, @Arg(1) @Handler(PlayerArgOrSender.class) Player player) {
         player.setGameMode(gameMode);
 
         this.noticeService.notice()

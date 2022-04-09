@@ -5,12 +5,12 @@ import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.utils.ChatUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import panda.utilities.StringUtils;
 
 public class PlayerJoinListener implements Listener {
 
@@ -29,7 +29,11 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
 
         if (!player.hasPlayedBefore()) {
-            event.joinMessage(ChatUtils.component(config.eventMessage.firstJoinMessage.replace("{PLAYER}", event.getPlayer().getName())));
+            noticeService.notice()
+                .notice(NoticeType.CHAT, messages -> config.eventMessage.firstJoinMessage) // TODO: Move to messages config
+                .placeholder("{PLAYER}", player.getName())
+                .all()
+                .send();
         }
 
         if (config.sound.enabledAfterJoin) {
@@ -47,6 +51,11 @@ public class PlayerJoinListener implements Listener {
                 .send();
         }
 
-        event.joinMessage(ChatUtils.component(config.eventMessage.joinMessage.replace("{PLAYER}", player.getName())));
+        event.setJoinMessage(StringUtils.EMPTY);
+        noticeService.notice()
+            .notice(NoticeType.CHAT, messages -> config.eventMessage.joinMessage) // TODO: Move to messages config
+            .placeholder("{PLAYER}", player.getName())
+            .all()
+            .send();
     }
 }

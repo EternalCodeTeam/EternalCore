@@ -38,5 +38,4 @@ public class PrepareUserController implements Listener {
 
         user.setClientSettings(ClientSettings.NONE);
     }
-
 }

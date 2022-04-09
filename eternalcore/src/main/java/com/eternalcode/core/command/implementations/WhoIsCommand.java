@@ -8,7 +8,6 @@ import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Required;
 import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "whois")
