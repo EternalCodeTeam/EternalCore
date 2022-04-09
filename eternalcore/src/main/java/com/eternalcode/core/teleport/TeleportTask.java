@@ -47,16 +47,16 @@ public class TeleportTask implements Runnable {
                 continue;
             }
 
-            PaperLib.teleportAsync(player, location);
+            player.teleport(location);
 
             this.teleportManager.removeTeleport(uuid);
 
             noticeService.notice()
                 .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
                 .message(messages -> messages.teleport().teleported())
-                .placeholder("{TIME}", DateUtils.durationToString(time))
                 .player(player.getUniqueId())
                 .send();
         }
     }
 }
+

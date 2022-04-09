@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ItemBuilder {
 
@@ -21,21 +22,15 @@ public class ItemBuilder {
     }
 
     public ItemBuilder(Material material) {
-        itemStack = new ItemStack(material, 1);
+        this.itemStack = new ItemStack(material, 1);
     }
 
-     public ItemBuilder displayName(String name) {
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(name);
-        itemStack.setItemMeta(meta);
-        return this;
+    public ItemBuilder displayName(String name) {
+        return this.editMeta(itemMeta -> itemMeta.setDisplayName(name));
     }
 
     public ItemBuilder lore(List<String> lore) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setLore(lore);
-        itemStack.setItemMeta(itemMeta);
-        return this;
+        return this.editMeta(itemMeta -> itemMeta.setLore(lore));
     }
 
     public ItemBuilder lore(String... lore) {
@@ -43,42 +38,47 @@ public class ItemBuilder {
     }
 
     public ItemBuilder amount(int amount) {
-        itemStack.setAmount(amount);
+        this.itemStack.setAmount(amount);
 
         return this;
     }
 
-
-/*    public ItemBuilder itemData(short data) {
-        this.itemStack.setItemMeta(meta -> {
-            Damageable damageable = (Damageable) meta;
-
+    public ItemBuilder itemData(short data) {
+        return this.editMeta(meta -> {
+            Damageable damageable = (Damageable)this.itemStack.getItemMeta();
             damageable.setDamage(data);
         });
+    }
+
+    public ItemBuilder editMeta(Consumer<ItemMeta> consumer) {
+        ItemMeta meta = this.itemStack.getItemMeta();
+
+        consumer.accept(meta);
+
+        this.itemStack.setItemMeta(meta);
 
         return this;
-    }*/
+    }
 
     public ItemBuilder enchant(Enchantment enchantment, int level) {
-        itemStack.addUnsafeEnchantment(enchantment, level);
+        this.itemStack.addUnsafeEnchantment(enchantment, level);
         return this;
     }
 
     public ItemBuilder skullOwner(String owner) {
-        ItemMeta meta = itemStack.getItemMeta();
+        return this.editMeta(itemMeta -> {
+            Validate.isTrue(itemMeta instanceof SkullMeta, "Item must be skull.");
 
-        Validate.isTrue(meta instanceof SkullMeta, "Item must be skull.");
+            Damageable damageable = (Damageable) itemMeta;
+            damageable.setDamage(3);
 
-        Damageable damageable = (Damageable) meta;
-        damageable.setDamage(3);
-
-        SkullMeta skullMeta = (SkullMeta) meta;
-        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(owner));
-        itemStack.setItemMeta(skullMeta);
-        return this;
+            SkullMeta skullMeta = (SkullMeta) itemMeta;
+            skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(owner));
+        });
     }
 
     public ItemStack build() {
-        return new ItemStack(itemStack);
+        return this.itemStack;
     }
 }
+
