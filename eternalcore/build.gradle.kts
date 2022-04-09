@@ -4,10 +4,7 @@ plugins {
 }
 
 dependencies {
-    // TODO: Full spigot compatibly
-
     // paper lib, spigot api & kyori adventure
-    //compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
 

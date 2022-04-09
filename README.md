@@ -48,8 +48,7 @@ See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master
 
 # Other Dependencies usages
 - [LiteCommands by Rollczi ❤️](https://github.com/Rollczi/LiteCommands)
-- [Lombok](https://projectlombok.org/)
 - [CDN Configs](https://github.com/dzikoysk/cdn)
 - [Expressible](https://github.com/panda-lang/expressible)
-- [Ormlite jdbc](https://github.com/j256/ormlite-jdbc)
+- [HikariCP](https://github.com/brettwooldridge/HikariCP)
 - [FastBoard](https://github.com/MrMicky-FR/FastBoard)
