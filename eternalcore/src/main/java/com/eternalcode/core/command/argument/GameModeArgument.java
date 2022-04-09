@@ -12,7 +12,9 @@ import org.bukkit.GameMode;
 import panda.std.Option;
 import panda.std.stream.PandaStream;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @ArgumentName("gamemode")
 public class GameModeArgument implements SingleArgumentHandler<GameMode> {
@@ -31,7 +33,7 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
 
     @Override
     public GameMode parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toLowerCase()));
+        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {
             return gameMode.get();
@@ -51,8 +53,11 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
 
     @Override
     public List<String> tabulation(String command, String[] args) {
-        return PandaStream.of(GAME_MODES)
-            .map(Enum::name)
-            .toList();
+        List<String> gameModes = new ArrayList<>();
+
+        for (GameMode gameMode : GAME_MODES) {
+            gameModes.add(gameMode.name().toLowerCase());
+        }
+        return gameModes;
     }
 }
