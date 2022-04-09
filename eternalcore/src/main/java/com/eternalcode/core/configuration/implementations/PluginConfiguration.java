@@ -102,20 +102,20 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     public static class Scoreboard {
         public boolean enabled = true;
         public int refresh = 20;
-        public String title = "&6&lEternalCode.pl";
+        public String title = "&a&lEternalCode.pl";
         public List<String> style = Arrays.asList(
                 "",
-                " &fProfile:",
-                " &f» &7Nickname: &f%player_name%",
-                " &f» &7Rank: &f%vault_rank%",
-                " &f» &7Ping: &f%player_ping%ms",
+                " &aProfile:",
+                " &f▪ <gradient:#66ff99:#00ffff>Nickname:</gradient> &f%player_name%",
+                " &f▪ <gradient:#66ff99:#00ffff>Rank:</gradient> &f%vault_rank%",
+                " &f▪ <gradient:#66ff99:#00ffff>Ping:</gradient> &f%player_ping%ms",
                 "",
-                " &fStatistics:",
-                " &f» &7Balance: &f%vault_eco_balance_fixed%$",
-                " &f» &7Kills: &f%statistic_player_kills%",
-                " &f» &7Deaths: &f%statistic_deaths%",
+                " &aStatistics:",
+                " &f▪ <gradient:#66ff99:#00ffff>Balance:</gradient> &f%vault_eco_balance_fixed%$",
+                " &f▪ <gradient:#66ff99:#00ffff>Kills:</gradient> &f%statistic_player_kills%",
+                " &f▪ <gradient:#66ff99:#00ffff>Deaths:</gradient> &f%statistic_deaths%",
                 "",
-                " &ewww.eternalcode.pl",
+                " &awww.eternalcode.pl",
                 ""
         );
     }
