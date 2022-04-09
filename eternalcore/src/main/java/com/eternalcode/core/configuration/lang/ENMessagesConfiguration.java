@@ -91,6 +91,8 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noItem = "&8» &cYou need item to use this command!";
         public String noMaterial = "&8» &cThis item doesn't exist";
         public String noArgument = "&8» &cThis argument doesn't exist";
+        public String noDamaged = "&8» &cThis item can't be repaired";
+        public String noDamagedItems = "&8» &cYou need damaged items to use this command!";
 
         public String permissionMessage() {
             return this.permissionMessage;
@@ -122,6 +124,14 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String noArgument() {
             return this.noArgument;
+        }
+
+        public String noDamaged() {
+            return this.noDamaged;
+        }
+
+        public String noDamagedItems() {
+            return this.noDamagedItems;
         }
     }
 

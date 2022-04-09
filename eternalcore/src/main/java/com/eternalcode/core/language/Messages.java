@@ -25,6 +25,8 @@ public interface Messages extends ConfigWithResource {
         String noItem();
         String noMaterial();
         String noArgument();
+        String noDamaged();
+        String noDamagedItems();
     }
 
     interface HelpOpSection {

@@ -1,16 +1,13 @@
 package com.eternalcode.core.command.implementations;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.IgnoreMethod;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.annotations.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.Repairable;
 
 @Section(route = "repair", aliases = "napraw")
 @Permission("eternalcore.command.repair")
@@ -28,7 +25,7 @@ public class RepairCommand {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
-        if (handItem == null || handItem.getType().isBlock() || handItem.getType().isAir()) {
+        if (handItem == null || !(handItem.getItemMeta() instanceof Repairable)) {
             this.noticeService
                 .notice()
                 .message(messages -> messages.argument().noItem())
@@ -38,7 +35,17 @@ public class RepairCommand {
             return;
         }
 
-      //  handItem.editMeta(this::repairItem);
+        if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
+            this.noticeService
+                .notice()
+                .message(messages -> messages.argument().noDamaged())
+                .player(player.getUniqueId())
+                .send();
+
+            return;
+        }
+
+        repairItem(handItem);
 
         this.noticeService
             .notice()
@@ -49,8 +56,29 @@ public class RepairCommand {
 
     @Execute(route = "all")
     public void repairAll(Player player) {
+        boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getContents()) {
-      //      itemStack.editMeta(this::repairItem);
+
+            if (itemStack == null || itemStack.getType().isAir()) {
+                continue;
+            }
+
+            if (!(itemStack.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
+                continue;
+            }
+
+            exists = true;
+            repairItem(itemStack);
+        }
+
+        if (!exists) {
+            this.noticeService
+                .notice()
+                .message(messages -> messages.argument().noDamagedItems())
+                .player(player.getUniqueId())
+                .send();
+
+            return;
         }
 
         this.noticeService
@@ -62,8 +90,29 @@ public class RepairCommand {
 
     @Execute(route = "armor")
     public void repairArmor(Player player) {
+        boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
-          //  itemStack.editMeta(this::repairItem);
+
+            if (itemStack == null || itemStack.getType().isAir()) {
+                continue;
+            }
+
+            if (!(itemStack.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
+                continue;
+            }
+
+            exists = true;
+            repairItem(itemStack);
+        }
+
+        if (!exists) {
+            this.noticeService
+                .notice()
+                .message(messages -> messages.argument().noDamagedItems())
+                .player(player.getUniqueId())
+                .send();
+
+            return;
         }
 
         this.noticeService
@@ -74,8 +123,16 @@ public class RepairCommand {
     }
 
     @IgnoreMethod
-    private void repairItem(ItemMeta itemMeta) {
-        Damageable damageable = (Damageable) itemMeta;
+    private void repairItem(ItemStack itemStack) {
+        if (itemStack.getItemMeta() == null) {
+            return;
+        }
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (!(itemMeta instanceof Repairable) || !(itemMeta instanceof Damageable damageable) || damageable.getDamage() == 0) {
+            return;
+        }
         damageable.setDamage(0);
+        itemStack.setItemMeta(itemMeta);
     }
 }

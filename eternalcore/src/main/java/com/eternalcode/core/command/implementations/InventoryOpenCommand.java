@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import panda.std.Option;
 
-@Section(route = "inventoryopen", aliases = { "io", "oi", "open" })
+@Section(route = "inventoryopen", aliases = { "io", "oi", "open", "invsee" })
 @PermissionExclude("eternalcore.command.inventoryopen")
 @UsageMessage("&8» &cPoprawne użycie &7/inventoryopen <ar/ec/inv> <player>")
 public class InventoryOpenCommand {
@@ -41,7 +41,7 @@ public class InventoryOpenCommand {
         createInventory(player).open(sender);
     }
 
-    @Execute(route = "iventory")
+    @Execute(route = "inventory")
     @Permission("eternalcore.command.inventoryopen.inventory")
     public void inventory(Player sender, @Arg(0) Player player) {
         sender.openInventory(player.getInventory());
