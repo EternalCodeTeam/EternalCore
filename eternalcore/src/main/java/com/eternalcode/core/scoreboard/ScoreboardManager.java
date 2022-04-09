@@ -8,11 +8,14 @@ import com.eternalcode.core.utils.ChatUtils;
 import fr.mrmicky.fastboard.FastBoard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 public class ScoreboardManager {
 
@@ -43,11 +46,19 @@ public class ScoreboardManager {
         }, 0, this.config.scoreboard.refresh);
     }
 
-    //TODO: colors
     private void updateBoard(FastBoard board) {
         List<String> scoreboardLines = this.config.scoreboard.style;
+        List<String> colored = new ArrayList<>();
 
-        board.updateLines(scoreboardLines);
+        Component componentTitle = miniMessage.deserialize(this.config.scoreboard.title);
+
+        for (String scoreboardLine : scoreboardLines) {
+            Component componentLine = miniMessage.deserialize(scoreboardLine);
+            colored.add(Legacy.SERIALIZER.serialize(componentLine));
+        }
+
+        board.updateTitle(Legacy.SERIALIZER.serialize(componentTitle));
+        board.updateLines(colored);
     }
 
     public void removeScoreboard(Player player) {
@@ -61,7 +72,8 @@ public class ScoreboardManager {
     public void setScoreboard(Player player) {
         FastBoard board = new FastBoard(player);
 
-        board.updateTitle(this.config.scoreboard.title);
+        Component component = miniMessage.deserialize(this.config.scoreboard.title);
+        board.updateTitle(Legacy.SERIALIZER.serialize(component));
 
         this.boards.put(player.getUniqueId(), board);
     }

@@ -125,7 +125,6 @@ public class EternalCore extends JavaPlugin {
     private WarpManager warpManager;
     private BukkitUserProvider userProvider;
 
-
     /**
      * Configuration, Language & Chat
      **/
