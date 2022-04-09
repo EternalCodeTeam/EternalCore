@@ -52,7 +52,6 @@ import com.eternalcode.core.command.implementations.SkullCommand;
 import com.eternalcode.core.command.implementations.SpawnCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
-import com.eternalcode.core.command.implementations.TeleportCommand;
 import com.eternalcode.core.command.implementations.TposCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
@@ -304,12 +303,12 @@ public class EternalCore extends JavaPlugin {
         PandaStream.of(
                 new PlayerChatListener(this.chatManager, noticeService, this.configurationManager, server),
                 new PlayerJoinListener(this.configurationManager, noticeService, server),
-                new PlayerQuitListener(this.configurationManager, server),
+                new PlayerQuitListener(this.configurationManager, noticeService, server),
                 new PrepareUserController(this.userManager, server),
                 new ScoreboardListener(config, this.scoreboardManager),
                 new PlayerCommandPreprocessListener(this.noticeService, this.configurationManager, server),
                 new SignChangeListener(this.miniMessage),
-                new PlayerDeathListener(this.configurationManager),
+                new PlayerDeathListener(this.noticeService, configurationManager),
                 new TeleportListeners(this.noticeService, this.teleportManager)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
