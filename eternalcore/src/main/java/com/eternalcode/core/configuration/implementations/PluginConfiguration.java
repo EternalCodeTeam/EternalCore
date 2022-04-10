@@ -25,14 +25,19 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Description({ StringUtils.EMPTY, "# Database Section" })
     public Database database = new Database();
+
     @Description({ StringUtils.EMPTY, "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
+
     @Description({ StringUtils.EMPTY, "# Awesome sounds" })
     public Sounds sound = new Sounds();
+
     @Description({ StringUtils.EMPTY, "# Chat Section" })
     public Chat chat = new Chat();
+
     @Description({ StringUtils.EMPTY, "# Formating on/off" })
     public Format format = new Format();
+
     @Description({ StringUtils.EMPTY, "# Scoreboard Section" })
     public Scoreboard scoreboard = new Scoreboard();
 
@@ -64,6 +69,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public String joinMessage = "Welcome {PLAYER}";
         public String firstJoinMessage = "Hello {PLAYER}, for the first time on the server!!";
         public String leaveMessage = "Goodbye {PLAYER}";
+
         @Description(StringUtils.EMPTY)
         public boolean enableWelcomeTitle = true;
         public String welcomeTitle = "&6EternalCode.pl";
@@ -119,4 +125,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
                 ""
         );
     }
+
+    @Description({ StringUtils.EMPTY, "# Use unsafe enchantments?" })
+    public boolean unsafeEnchantments = true;
 }

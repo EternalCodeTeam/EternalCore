@@ -39,7 +39,7 @@ public class ChatCommand {
         this.chatManager = chatManager;
     }
 
-    @Execute(route = "clear")
+    @Execute(route = "clear", aliases = "cc")
     public void clear(CommandSender sender) {
         this.audiences.notice()
             .staticNotice(CLEAR)

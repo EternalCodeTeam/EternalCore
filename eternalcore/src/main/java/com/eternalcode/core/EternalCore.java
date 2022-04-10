@@ -11,6 +11,7 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
 import com.eternalcode.core.command.argument.AmountArgument;
+import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.MaterialArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
@@ -28,6 +29,7 @@ import com.eternalcode.core.command.implementations.CartographyTableCommand;
 import com.eternalcode.core.command.implementations.ChatCommand;
 import com.eternalcode.core.command.implementations.ClearCommand;
 import com.eternalcode.core.command.implementations.DisposalCommand;
+import com.eternalcode.core.command.implementations.EnchantCommand;
 import com.eternalcode.core.command.implementations.EnderchestCommand;
 import com.eternalcode.core.command.implementations.EternalCoreCommand;
 import com.eternalcode.core.command.implementations.FeedCommand;
@@ -91,6 +93,7 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.valid.ValidationInfo;
+import dev.rollczi.litecommands.valid.messages.UseSchemeFormatting;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
@@ -98,6 +101,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import panda.std.Option;
@@ -234,6 +238,7 @@ public class EternalCore extends JavaPlugin {
                 .argument(GameMode.class, new GameModeArgument(userProvider, languageManager))
                 .argument(NoticeType.class, new NoticeTypeArgument(userProvider, languageManager))
                 .argument(Warp.class, new WarpArgument(warpManager, languageManager, userProvider))
+                .argument(Enchantment.class, new EnchantmentArgument(userProvider, languageManager))
 
                 // Optional arguments
                 .argument(Option.class, new PlayerArg(userProvider, languageManager, server).toOptionHandler())
@@ -259,6 +264,7 @@ public class EternalCore extends JavaPlugin {
 
                 .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
                 .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(userProvider, languageManager))
+                .formattingUseScheme(UseSchemeFormatting.NORMAL)
 
                 .command(
                         AlertCommand.class,
@@ -294,7 +300,8 @@ public class EternalCore extends JavaPlugin {
                         OnlineCommand.class,
                         ListCommand.class,
                         TposCommand.class,
-                        NameCommand.class
+                        NameCommand.class,
+                        EnchantCommand.class
                 )
                 .register();
 

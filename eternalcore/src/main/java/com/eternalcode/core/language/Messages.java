@@ -27,6 +27,8 @@ public interface Messages extends ConfigWithResource {
         String noArgument();
         String noDamaged();
         String noDamagedItems();
+        String noEnchantment();
+        String noValidEnchantmentLevel();
     }
 
     interface HelpOpSection {
@@ -106,6 +108,7 @@ public interface Messages extends ConfigWithResource {
         String tposMessage();
         String tposByMessage();
         String nameMessage();
+        String enchantedMessage();
         List<String> whoisCommand();
     }
 }
