@@ -92,6 +92,8 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noArgument = "&4Blad: &cTaki argument nie istnieje!";
         public String noDamaged = "&4Blad: &cTen przedmiot nie moze być naprawiony!";
         public String noDamagedItems = "&4Blad: &cMusisz miec uszkodzone przedmioty!";
+        public String noEnchantment = "&4Blad: &cTaki enchant nie istnieje!";
+        public String noValidEnchantmentLevel = "&4Blad: &cTen poziom enchantu nie jest wspierany!";
 
         public String permissionMessage() {
             return this.permissionMessage;
@@ -131,6 +133,14 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String noDamagedItems() {
             return this.noDamagedItems;
+        }
+
+        public String noEnchantment() {
+            return this.noEnchantment;
+        }
+
+        public String noValidEnchantmentLevel() {
+            return this.noValidEnchantmentLevel;
         }
     }
 
@@ -278,9 +288,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String pingOtherMessage = "&8» &aGracz &f{PLAYER} &ama: &f{PING}ms";
         public String onlineMessage = "&8» &6Na serwerze jest: &f{ONLINE} &6graczy online!";
         public String listMessage = "&8» &6Na serwerze jest: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
-        public String tposMessage = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String nameMessage = "&8» &6New name is: &6{NAME}";
+        public String tposMessage = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String tposByMessage = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String nameMessage = "&8» &6Nowa nazwa itemu: &6{NAME}";
+        public String enchantedMessage = "&8» &6Item w rece zostal zenchantowany!";
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Gracz: &f{PLAYER}",
                 "&8» &7UUID: &f{UUID}",
@@ -450,6 +461,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public List<String> whoisCommand() {
             return this.whoisCommand;
+        }
+
+        public String enchantedMessage() {
+            return this.enchantedMessage;
         }
     }
 }

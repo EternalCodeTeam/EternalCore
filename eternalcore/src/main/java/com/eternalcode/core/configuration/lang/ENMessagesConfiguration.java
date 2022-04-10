@@ -93,6 +93,8 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noArgument = "&8» &cThis argument doesn't exist";
         public String noDamaged = "&8» &cThis item can't be repaired";
         public String noDamagedItems = "&8» &cYou need damaged items to use this command!";
+        public String noEnchantment = "&8» &cThis enchantment doesn't exist";
+        public String noValidEnchantmentLevel = "&8» &cThis enchantment level is not supported!";
 
         public String permissionMessage() {
             return this.permissionMessage;
@@ -132,6 +134,14 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String noDamagedItems() {
             return this.noDamagedItems;
+        }
+
+        public String noEnchantment() {
+            return this.noEnchantment;
+        }
+
+        public String noValidEnchantmentLevel() {
+            return this.noValidEnchantmentLevel;
         }
     }
 
@@ -282,6 +292,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String tposMessage = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6New name is: &6{NAME}";
+        public String enchantedMessage = "&8» &6Item in hand is enchanted!";
         @Description({ "", "# Whois messsage Style" })
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
@@ -452,6 +463,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public List<String> whoisCommand() {
             return this.whoisCommand;
+        }
+
+        public String enchantedMessage() {
+            return this.enchantedMessage;
         }
     }
 }
