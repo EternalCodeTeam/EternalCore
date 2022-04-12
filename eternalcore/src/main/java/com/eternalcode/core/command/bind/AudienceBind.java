@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.platform.LiteSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class AudienceBind implements Parameter<Audience> {
+public class AudienceBind implements Parameter {
 
     private final UserManager userManager;
 
@@ -35,5 +35,4 @@ public class AudienceBind implements Parameter<Audience> {
 
         throw new IllegalArgumentException("Unsupported sender type: " + sender.getClass().getName());
     }
-
 }

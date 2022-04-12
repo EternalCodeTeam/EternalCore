@@ -40,7 +40,7 @@ public class EnchantmentArgument implements SingleArgumentHandler<Enchantment> {
     }
 
     @Override
-    public List<String> tabulation(String command, String[] args) {
+    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
         return Arrays.stream(Enchantment.values())
             .map(Enchantment::getName)
             .collect(Collectors.toList());

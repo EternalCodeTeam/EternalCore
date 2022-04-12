@@ -254,7 +254,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public static class PLOtherMessages implements OtherMessages {
         public String successfullyReloaded = "&8» &aPrzeładowano plugin!";
         public String successfullyTeleported = "&8» &aPrzeteleportowano do {PLAYER}!";
-        public String successfullyTeleportedPlayer = "&8» &aPrzeteleportowano {PLAYER} to {ARG-PLAYER}!";
+        public String successfullyTeleportedPlayer = "&8» &aPrzeteleportowano {PLAYER} do {ARG-PLAYER}!";
         public String alertMessagePrefix = "&c&lOGLOSZENIE: &7{BROADCAST}";
         public String clearMessage = "&8» &aWyczyszczono ekwipunek!";
         public String clearByMessage = "&8» &aWyczyszczono ekwipunek gracza {PLAYER}";

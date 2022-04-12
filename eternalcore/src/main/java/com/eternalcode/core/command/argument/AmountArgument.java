@@ -38,7 +38,7 @@ public class AmountArgument implements SingleArgumentHandler<Integer> {
     }
 
     @Override
-    public List<String> tabulation(String command, String[] args) {
+    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
         return config.format.amountArgumentStatement;

@@ -42,6 +42,13 @@ public class PlayerArgOrSender implements NotRequiredArgumentHandler<Player> {
     }
 
     @Override
+    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
+        return this.server.getOnlinePlayers().stream()
+            .map(HumanEntity::getName)
+            .toList();
+    }
+
+    @Override
     public Player orElse(LiteInvocation invocation) throws ValidationCommandException {
         if (invocation.sender().getSender() instanceof Player player) {
             return player;
@@ -52,12 +59,4 @@ public class PlayerArgOrSender implements NotRequiredArgumentHandler<Player> {
 
         throw new ValidationCommandException(onlyPlayer);
     }
-
-    @Override
-    public List<String> tabulation(String command, String[] args) {
-        return this.server.getOnlinePlayers().stream()
-            .map(HumanEntity::getName)
-            .toList();
-    }
-
 }

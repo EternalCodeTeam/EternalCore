@@ -24,7 +24,7 @@ public class PlayerNameArg implements SingleArgumentHandler<String> {
     }
 
     @Override
-    public List<String> tabulation(String command, String[] args) {
+    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
         return this.server.getOnlinePlayers().stream()
             .map(HumanEntity::getName)
             .toList();

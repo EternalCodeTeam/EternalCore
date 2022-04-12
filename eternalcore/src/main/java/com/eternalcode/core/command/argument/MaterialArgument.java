@@ -40,7 +40,7 @@ public class MaterialArgument implements SingleArgumentHandler<Material> {
     }
 
     @Override
-    public List<String> tabulation(String command, String[] args) {
+    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
         return Arrays.stream(Material.values())
             .map(Material::name)
             .map(String::toLowerCase)

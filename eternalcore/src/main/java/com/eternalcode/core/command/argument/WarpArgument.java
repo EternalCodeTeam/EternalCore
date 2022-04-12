@@ -41,7 +41,7 @@ public class WarpArgument implements SingleArgumentHandler<Warp> {
     }
 
     @Override
-    public List<String> tabulation(String command, String[] args) {
+    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
         return this.warpManager.getWarpMap()
                 .keySet()
                 .stream()

@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.bind.Parameter;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
 import org.bukkit.entity.Player;
 
-public class UserBind implements Parameter<User> {
+public class UserBind implements Parameter {
 
     private final LanguageManager languageManager;
     private final UserManager userManager;

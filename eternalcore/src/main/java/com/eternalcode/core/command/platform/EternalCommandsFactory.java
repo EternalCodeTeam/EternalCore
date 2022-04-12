@@ -14,8 +14,8 @@ public final class EternalCommandsFactory {
 
     public static LiteCommandsBuilder<CommandSender, EternalPlatform> builder(Server server, String fallbackPrefix, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
         return LiteFactory.<CommandSender, EternalPlatform>builder()
-            .bind(Server.class, server)
-            .bind(CommandSender.class, new OriginalSenderBind())
+            .typeBind(Server.class, server)
+            .parameterBind(CommandSender.class, new OriginalSenderBind())
             .platform(new EternalPlatform(server, fallbackPrefix, audienceProvider, announcer));
     }
 

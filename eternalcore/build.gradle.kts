@@ -13,7 +13,7 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
 
     // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:1.8.4")
+    implementation("dev.rollczi.litecommands:bukkit:1.9.0")
 
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.20")

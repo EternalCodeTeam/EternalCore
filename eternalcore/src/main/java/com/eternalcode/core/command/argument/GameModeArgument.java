@@ -52,7 +52,7 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
     }
 
     @Override
-    public List<String> tabulation(String command, String[] args) {
+    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
         List<String> gameModes = new ArrayList<>();
 
         for (GameMode gameMode : GAME_MODES) {
