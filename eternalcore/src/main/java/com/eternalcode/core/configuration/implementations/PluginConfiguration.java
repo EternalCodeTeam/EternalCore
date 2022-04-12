@@ -41,6 +41,9 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     @Description({ StringUtils.EMPTY, "# Scoreboard Section" })
     public Scoreboard scoreboard = new Scoreboard();
 
+    @Description({ StringUtils.EMPTY, "# Other Sections" })
+    public OtherSettings otherSettings = new OtherSettings();
+
     public PluginConfiguration(File folder, String child) {
         super(folder, child);
     }
@@ -62,6 +65,14 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public String databaseUser = "root";
         public String databasePassword = "";
     }
+
+
+    @Contextual
+    public static class OtherSettings {
+        @Description({ StringUtils.EMPTY, "# Gamemode on join Requires permission: eternalcode.staff.gamemodejoin" })
+        public boolean gamemodeOnJoin = false;
+    }
+
 
     @Contextual
     public static class EventMessage {
