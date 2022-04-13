@@ -8,7 +8,7 @@ jobs:
         strategy:
             matrix:
                 java: [ 17 ]
-            fail-fast: true
+            fail-fast: false
         steps:
             -   name: Checkout
                 uses: actions/checkout@v3.0.0
@@ -26,9 +26,9 @@ jobs:
             -   name: Grant execute permission for gradlew
                 run: chmod +x gradlew
             -   name: Build the Jar
-                run: ./gradlew eternalcore:build
+                run: ./gradlew eternalcore:shadowJar
             -   name: Upload a Build Artifact
                 uses: actions/upload-artifact@v3.0.0
                 with:
                     name: "Successfully build EternalCore JDK${{ matrix.jdk }}"
-                    path: "build/libs/EternalCore*.jar"
+                    path: "eternalcore/build/libs/EternalCore*.jar"
