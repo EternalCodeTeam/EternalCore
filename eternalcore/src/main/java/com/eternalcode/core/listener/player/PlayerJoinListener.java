@@ -37,7 +37,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (config.otherSettings.gamemodeOnJoin) {
-            if (player.hasPermission("eternalcode.staff.gamemodejoin")) {
+            if (player.hasPermission("eternalcore.staff.gamemodejoin")) {
                 player.setGameMode(GameMode.CREATIVE);
             }
         }

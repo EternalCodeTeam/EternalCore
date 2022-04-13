@@ -69,8 +69,10 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Contextual
     public static class OtherSettings {
-        @Description({ StringUtils.EMPTY, "# Gamemode on join Requires permission: eternalcode.staff.gamemodejoin" })
+        @Description({ StringUtils.EMPTY, "# Gamemode Creative on join Requires permission: eternalcore.staff.gamemodejoin" })
         public boolean gamemodeOnJoin = false;
+        @Description({ StringUtils.EMPTY, "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
+        public boolean unsafeEnchantments = true;
     }
 
 
@@ -136,7 +138,4 @@ public class PluginConfiguration extends AbstractConfigWithResource {
                 ""
         );
     }
-
-    @Description({ StringUtils.EMPTY, "# Use unsafe enchantments?" })
-    public boolean unsafeEnchantments = true;
 }

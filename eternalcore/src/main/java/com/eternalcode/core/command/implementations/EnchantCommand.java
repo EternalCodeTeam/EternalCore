@@ -41,7 +41,7 @@ public class EnchantCommand {
             return;
         }
 
-        if (this.configuration.unsafeEnchantments) {
+        if (this.configuration.otherSettings.unsafeEnchantments) {
             handItem.addUnsafeEnchantment(enchantment, level);
         } else {
             if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(handItem)) {
