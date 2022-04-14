@@ -84,10 +84,5 @@ tasks.withType<ShadowJar> {
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
     relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
-
-    // for debug :D
-    // copy {
-    //    this.from("build/libs/" + archiveFileName.get())
-    //    this.into("C:/Users/")
-    // }
+    relocate("com.github.ben-manes.caffeine", "com.eternalcode.core.libs.com.github.ben-manes.caffeine")
 }
