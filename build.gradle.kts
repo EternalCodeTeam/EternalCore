@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "core"
-    version = "1.0.3-BETA"
+    version = "1.0.0-BETA"
 
     apply(plugin = "java-library")
     apply(plugin = "com.github.johnrengelman.shadow")

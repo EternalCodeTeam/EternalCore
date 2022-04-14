@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java-library")
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1"
@@ -65,7 +67,7 @@ tasks {
     }
 }
 
-tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+tasks.withType<ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.18x).jar")
 
     exclude("org/intellij/lang/annotations/**")
