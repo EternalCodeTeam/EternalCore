@@ -9,6 +9,7 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
 
+    // Kyori Adventure & Caffeine
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
     implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
@@ -57,7 +58,6 @@ bukkit {
     description = "Essential plugin for your server!"
     version = "${project.version}"
 }
-
 
 tasks {
     runServer {
