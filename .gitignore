@@ -4,6 +4,7 @@
 *.iws
 .idea/
 .gradle/
+run/
 out/
 build/
 

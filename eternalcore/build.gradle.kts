@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1"
+    id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
 dependencies {
@@ -57,6 +58,13 @@ bukkit {
     version = "${project.version}"
 }
 
+
+tasks {
+    runServer {
+        minecraftVersion("1.18.2")
+    }
+}
+
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.18x).jar")
 
@@ -76,8 +84,8 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
 
     // for debug :D
-/*    copy {
-        this.from("build/libs/" + archiveFileName.get())
-        this.into("C:/Users/")
-    }*/
+    // copy {
+    //    this.from("build/libs/" + archiveFileName.get())
+    //    this.into("C:/Users/")
+    // }
 }
