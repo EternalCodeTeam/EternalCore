@@ -343,10 +343,6 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatformManager().unregisterCommands();
         this.database.disconnect();
-
-        PluginConfiguration config = this.configurationManager.getPluginConfiguration();
-
-        this.configurationManager.render(config);
     }
 
     private void softwareCheck() {
