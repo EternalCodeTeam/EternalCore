@@ -32,3 +32,11 @@ jobs:
                 with:
                     name: "Successfully build EternalCore JDK${{ matrix.jdk }}"
                     path: "eternalcore/build/libs/EternalCore*.jar"
+            -   name: Create Release
+                uses: ncipollo/release-action@v1.10.0
+                with:
+                    artifacts: "eternalcore/build/libs/EternalCore*.jar"
+                    body: ${{ join(github.event.commits.*.message, '\n') }}
+                    prerelease: true
+                    name: Development Build Release of EternalCore
+                    tag: dev-build
