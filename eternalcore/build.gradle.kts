@@ -75,6 +75,9 @@ tasks.withType<ShadowJar> {
     exclude("javax/**")
     exclude("META-INF/**")
 
+    mergeServiceFiles()
+    minimize()
+
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
     relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
@@ -84,5 +87,9 @@ tasks.withType<ShadowJar> {
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
     relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
-    relocate("com.github.ben-manes.caffeine", "com.eternalcode.core.libs.com.github.ben-manes.caffeine")
+    relocate("com.github.benmanes.caffeine", "com.eternalcode.core.libs.com.github.benmanes.caffeine")
+    relocate("com.google", "com.eternalcode.core.libs.com.google")
+    relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
+    relocate("org.checkerframework", "com.eternalcode.core.libs.org.checkerframework")
+    relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
 }
