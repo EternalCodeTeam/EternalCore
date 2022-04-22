@@ -72,11 +72,16 @@ tasks.withType<ShadowJar> {
 
     exclude("org/intellij/lang/annotations/**")
     exclude("org/jetbrains/annotations/**")
+    exclude("org/checkerframework/**")
     exclude("javax/**")
     exclude("META-INF/**")
 
     mergeServiceFiles()
     minimize()
+
+    relocate("com.google", "com.eternalcode.core.libs.com.google") {
+        exclude("com.google.gson.**")
+    }
 
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
@@ -88,8 +93,6 @@ tasks.withType<ShadowJar> {
     relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
     relocate("com.github.benmanes.caffeine", "com.eternalcode.core.libs.com.github.benmanes.caffeine")
-    relocate("com.google", "com.eternalcode.core.libs.com.google")
     relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
-    relocate("org.checkerframework", "com.eternalcode.core.libs.org.checkerframework")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
 }
