@@ -7,14 +7,13 @@ plugins {
 }
 
 dependencies {
-    // paper lib, spigot api & kyori adventure
+    // paper lib, spigot api
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
 
-    // Kyori Adventure & Caffeine
+    // Kyori Adventure
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
-    implementation("com.github.ben-manes.caffeine:caffeine:3.0.6")
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:1.9.0")
@@ -53,7 +52,7 @@ tasks.withType<JavaCompile> {
 
 bukkit {
     main = "com.eternalcode.core.EternalCore"
-    apiVersion = "1.17"
+    apiVersion = "1.13"
     prefix = "EternalCore"
     author = "EternalCodeTeam"
     name = "EternalCore"
@@ -79,17 +78,19 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
     minimize()
 
-    relocate("com.google", "com.eternalcode.core.libs.com.google")
+    relocate("panda", "com.eternalcode.core.libs.org.panda")
+    relocate("org.panda_lang", "com.eternalcode.core.libs.org.panda")
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
+
     relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
-    relocate("org.panda_lang", "com.eternalcode.core.libs.org.panda_lang")
-    relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
-    relocate("panda", "com.eternalcode.core.libs.panda")
-    relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
     relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
-    relocate("com.github.benmanes.caffeine", "com.eternalcode.core.libs.com.github.benmanes.caffeine")
+
+    relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
+    relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
+
+    relocate("com.google", "com.eternalcode.core.libs.com.google")
     relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
 }

@@ -1,10 +1,10 @@
 package com.eternalcode.core.chat;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
-import java.time.Duration;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class ChatManager {
 
@@ -13,8 +13,8 @@ public class ChatManager {
 
     public ChatManager(ChatSettings chatSettings) {
         this.chatSettings = chatSettings;
-        this.slowdown = Caffeine.newBuilder()
-            .expireAfterWrite(Duration.ofMillis((long) (this.chatSettings.getChatDelay() * 1000L)))
+        this.slowdown = CacheBuilder.newBuilder()
+            .expireAfterWrite((long) (this.chatSettings.getChatDelay() + 10), TimeUnit.SECONDS)
             .build();
     }
 
@@ -27,11 +27,11 @@ public class ChatManager {
     }
 
     public boolean hasSlowedChat(UUID userUuid) {
-        return this.slowdown.get(userUuid, key -> 0L) > System.currentTimeMillis();
+        return this.slowdown.asMap().getOrDefault(userUuid, 0L) > System.currentTimeMillis();
     }
 
     public long getSlowDown(UUID userUuid) {
-        return Math.max(this.slowdown.get(userUuid, key -> 0L) - System.currentTimeMillis(), 0L);
+        return Math.max(this.slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
     }
 
 }
