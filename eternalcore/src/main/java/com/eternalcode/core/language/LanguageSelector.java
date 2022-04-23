@@ -35,10 +35,10 @@ public class LanguageSelector {
         public FillType type = FillType.BORDER;
 
         @Description({ StringUtils.EMPTY, "# Name (If you dont want name just set \"\")" })
-        public String name = "&8*";
+        public String name = "         &8*";
 
         @Description({ StringUtils.EMPTY, "# Lore (If you dont want lore just set \"\")" })
-        public List<String> lore = Collections.singletonList("&8* &7Lore :D");
+        public List<String> lore = Collections.singletonList("&7Lore :D");
 
         public enum FillType {
             TOP, BOTTOM, BORDER, ALL

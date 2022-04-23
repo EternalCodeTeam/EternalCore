@@ -36,10 +36,11 @@ public class TeleportTask implements Runnable {
                 continue;
             }
 
-            if (player.getLocation().distance(startLocation) > 0.2) {
+            if (player.getLocation().distance(startLocation) > 0.5) {
                 this.teleportManager.removeTeleport(uuid);
 
                 this.noticeService.notice()
+                    .notice(NoticeType.ACTIONBAR, messages -> "")
                     .message(messages -> messages.teleport().cancel())
                     .player(player.getUniqueId())
                     .send();
@@ -63,7 +64,7 @@ public class TeleportTask implements Runnable {
 
             this.teleportManager.removeTeleport(uuid);
 
-            noticeService.notice()
+            this.noticeService.notice()
                 .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
                 .message(messages -> messages.teleport().teleported())
                 .player(player.getUniqueId())
