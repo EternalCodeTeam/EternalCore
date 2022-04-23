@@ -13,6 +13,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     private final Language language = Language.EN;
 
     public ENArgumentSection argument = new ENArgumentSection();
+    public ENFormatSection format = new ENFormatSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
     public ENAdminChatSection adminChat = new ENAdminChatSection();
     public ENTeleportSection teleport = new ENTeleportSection();
@@ -26,6 +27,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public ENArgumentSection argument() {
         return this.argument;
+    }
+
+    public ENFormatSection format() {
+        return this.format;
     }
 
     public ENHelpOpSection helpOp() {
@@ -54,6 +59,20 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public Language getLanguage() {
         return this.language;
+    }
+
+    @Contextual
+    public static class ENFormatSection implements Messages.Format {
+        public String enable = "&aenabled";
+        public String disable = "&cdisabled";
+
+        public String formatEnable() {
+            return this.enable;
+        }
+
+        public String formatDisable() {
+            return this.disable;
+        }
     }
 
     @Contextual

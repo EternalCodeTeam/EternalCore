@@ -2,6 +2,7 @@ package com.eternalcode.core.language;
 
 import com.eternalcode.core.configuration.ConfigWithResource;
 
+import java.text.Normalizer;
 import java.util.List;
 
 public interface Messages extends ConfigWithResource {
@@ -9,6 +10,7 @@ public interface Messages extends ConfigWithResource {
     Language getLanguage();
 
     ArgumentSection argument();
+    Format format();
     HelpOpSection helpOp();
     AdminChatSection adminChat();
     ChatSection chat();
@@ -29,6 +31,11 @@ public interface Messages extends ConfigWithResource {
         String noDamagedItems();
         String noEnchantment();
         String noValidEnchantmentLevel();
+    }
+
+    interface Format {
+        String formatEnable();
+        String formatDisable();
     }
 
     interface HelpOpSection {

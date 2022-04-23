@@ -13,6 +13,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     private final Language language = Language.PL;
 
     public PLArgumentSection argument = new PLArgumentSection();
+    public PLFormatSection format = new PLFormatSection();
     public PLHelpOpSection helpOp = new PLHelpOpSection();
     public PLAdminChatSection adminChat = new PLAdminChatSection();
     public PLTeleportSection teleport = new PLTeleportSection();
@@ -26,6 +27,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public PLArgumentSection argument() {
         return this.argument;
+    }
+
+    public PLFormatSection format() {
+        return this.format;
     }
 
     public PLHelpOpSection helpOp() {
@@ -54,6 +59,21 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public Language getLanguage() {
         return this.language;
+    }
+
+    @Contextual
+    public static class PLFormatSection implements Messages.Format {
+
+        public String enable = "&awlaczone";
+        public String disable = "&cwylaczone";
+
+        public String formatEnable() {
+            return this.enable;
+        }
+
+        public String formatDisable() {
+            return this.disable;
+        }
     }
 
     @Contextual

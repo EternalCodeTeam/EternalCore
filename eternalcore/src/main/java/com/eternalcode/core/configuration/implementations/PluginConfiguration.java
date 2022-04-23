@@ -111,8 +111,6 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Contextual
     public static class Format {
-        public String enabled = "&aenabled";
-        public String disabled = "&cdisabled";
         public String separator = "&7, ";
         public List<String> amountArgumentStatement = Arrays.asList("1", "8", "16", "32", "64", "100");
     }
