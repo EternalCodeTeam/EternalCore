@@ -9,10 +9,12 @@ import java.util.UUID;
 
 public class User implements Entity {
 
+    private Settings settings = new SettingsImpl(() -> this.clientSettings);
+    private ClientSettings clientSettings = ClientSettings.NONE;
+
     private final String name;
     private final UUID uuid;
-    private ClientSettings clientSettings = ClientSettings.NONE;
-    private Settings settings = new SettingsImpl(() -> this.clientSettings);
+
 
     User(UUID uuid, String name) {
         this.name = name;

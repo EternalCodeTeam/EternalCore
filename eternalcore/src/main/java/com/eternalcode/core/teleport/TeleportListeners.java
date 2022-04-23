@@ -23,18 +23,6 @@ public class TeleportListeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onMove(PlayerMoveEvent event) {
-        if (event.getFrom().getBlockX() == event.getTo().getBlockX()
-                && event.getFrom().getBlockY() == event.getTo().getBlockY()
-                && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
-            return;
-        }
-        final Player player = event.getPlayer();
-
-        this.removeTeleport(player);
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player player) {
             this.removeTeleport(player);
