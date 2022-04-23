@@ -6,7 +6,6 @@ import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.implementations.InventoryConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.configuration.resource.ConfigResource;
 import com.eternalcode.core.language.Language;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
@@ -42,7 +41,7 @@ public class ConfigurationManager {
         this.loadAndRender(this.inventoryConfiguration);
     }
 
-    public <T extends ConfigResource> void loadAndRender(T config) {
+    public <T extends ConfigWithResource> void loadAndRender(T config) {
         cdn.load(config.getResource(), config)
             .orElseThrow(RuntimeException::new);
 
@@ -50,7 +49,7 @@ public class ConfigurationManager {
             .orElseThrow(RuntimeException::new);
     }
 
-    public <T extends ConfigResource> void render(T config) {
+    public <T extends ConfigWithResource> void render(T config) {
         cdn.render(config, config.getResource())
             .orElseThrow(RuntimeException::new);
     }

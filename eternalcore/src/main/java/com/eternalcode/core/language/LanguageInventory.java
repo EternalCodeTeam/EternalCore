@@ -1,9 +1,6 @@
-package com.eternalcode.core.inventory;
+package com.eternalcode.core.language;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.implementations.inventories.LanguageSelector;
-import com.eternalcode.core.configuration.implementations.inventories.item.LanguageItem;
-import com.eternalcode.core.language.Language;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
@@ -61,22 +58,22 @@ public class LanguageInventory {
         }
 
         for (LanguageItem languageItem : this.languageSelector.languageItemMap.values()) {
-            List<Component> lore = languageItem.getLore()
+            List<Component> lore = languageItem.lore
                 .stream()
                 .map(this.miniMessage::deserialize)
                 .collect(Collectors.toList());
 
             ItemStack item;
 
-            if (languageItem.getMaterial() == Material.PLAYER_HEAD) {
+            if (languageItem.material == Material.PLAYER_HEAD) {
                 item = ItemBuilder.skull()
-                    .name(this.miniMessage.deserialize(languageItem.getName()))
+                    .name(this.miniMessage.deserialize(languageItem.name))
                     .lore(lore)
-                    .texture(languageItem.getTexture())
+                    .texture(languageItem.texture)
                     .build();
             } else {
-                item = ItemBuilder.from(languageItem.getMaterial())
-                    .name(this.miniMessage.deserialize(languageItem.getName()))
+                item = ItemBuilder.from(languageItem.material)
+                    .name(this.miniMessage.deserialize(languageItem.name))
                     .lore(lore)
                     .build();
             }
@@ -84,19 +81,17 @@ public class LanguageInventory {
             GuiItem guiItem = new GuiItem(item);
 
             guiItem.setAction(event -> {
-                user.getSettings().setLanguage(Language.fromLocate(languageItem.getLocale()));
+                user.getSettings().setLanguage(languageItem.language);
 
                 player.closeInventory();
 
                 this.noticeService.notice()
                     .player(player.getUniqueId())
                     .message(messages -> messages.other().languageChanged())
-                    .placeholder("{LANGUAGE}", languageItem.getLocaleName())
                     .send();
-
             });
 
-            gui.setItem(languageItem.getSlot(), guiItem);
+            gui.setItem(languageItem.slot, guiItem);
         }
 
         gui.open(player);

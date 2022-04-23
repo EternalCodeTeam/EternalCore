@@ -34,8 +34,11 @@ public class PrepareUserController implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        this.userService.getUser(player.getUniqueId())
-            .peek(user -> user.setClientSettings(ClientSettings.NONE))
+        User user = this.userService.getUser(player.getUniqueId())
             .orThrow(() -> new IllegalStateException("User not found"));
+
+        if (user != null) {
+            user.setClientSettings(ClientSettings.NONE);
+        }
     }
 }

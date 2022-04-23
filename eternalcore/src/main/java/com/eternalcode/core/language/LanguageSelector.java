@@ -1,13 +1,11 @@
-package com.eternalcode.core.configuration.implementations.inventories;
+package com.eternalcode.core.language;
 
-import com.eternalcode.core.configuration.implementations.inventories.item.LanguageItem;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 
 @Contextual
@@ -30,14 +28,12 @@ public class LanguageSelector {
         public enum FillType {
             TOP, BOTTOM, BORDER, ALL
         }
-
     }
 
     public Map<Integer, LanguageItem> languageItemMap = ImmutableMap.<Integer, LanguageItem>builder()
         .put(1, new LanguageItem(
             Material.PLAYER_HEAD,
-            Locale.ENGLISH,
-            "English",
+            Language.EN,
             21,
             "&c&lEnglish",
             Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Click to change language!"),
@@ -45,8 +41,7 @@ public class LanguageSelector {
         )
         .put(2, new LanguageItem(
             Material.PLAYER_HEAD,
-            new Locale("pl"),
-            "Polski",
+            Language.PL,
             23,
             "&c&lPolish",
             Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij aby zmienić język!"),

@@ -72,7 +72,6 @@ tasks.withType<ShadowJar> {
     exclude("org/intellij/lang/annotations/**")
     exclude("org/jetbrains/annotations/**")
     exclude("org/checkerframework/**")
-    exclude("com/google/**")
     exclude("META-INF/**")
     exclude("javax/**")
 
@@ -93,4 +92,5 @@ tasks.withType<ShadowJar> {
 
     relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
+    relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
 }

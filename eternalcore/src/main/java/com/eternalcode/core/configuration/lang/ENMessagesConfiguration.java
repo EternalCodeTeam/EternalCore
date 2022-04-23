@@ -1,16 +1,15 @@
 package com.eternalcode.core.configuration.lang;
 
-import com.eternalcode.core.configuration.resource.AbstractConfigResource;
+import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
 import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class ENMessagesConfiguration extends AbstractConfigResource implements Messages {
+public class ENMessagesConfiguration extends AbstractConfigWithResource implements Messages {
     private final Language language = Language.EN;
 
     public ENArgumentSection argument = new ENArgumentSection();
@@ -293,7 +292,7 @@ public class ENMessagesConfiguration extends AbstractConfigResource implements M
         public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6New name is: &6{NAME}";
         public String enchantedMessage = "&8» &6Item in hand is enchanted!";
-        public String languageChanged = "&8» &6Language changed to: &6{LANGUAGE}";
+        public String languageChanged = "&8» &6Language changed to &cEnglish&6!";
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
                 "&8» &7Target UUID: &f{UUID}",

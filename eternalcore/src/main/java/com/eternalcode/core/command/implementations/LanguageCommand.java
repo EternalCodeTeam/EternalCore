@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementations;
 
-import com.eternalcode.core.inventory.LanguageInventory;
+import com.eternalcode.core.language.LanguageInventory;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Section;

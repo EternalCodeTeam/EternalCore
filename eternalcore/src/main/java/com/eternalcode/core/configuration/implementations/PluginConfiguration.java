@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.implementations;
 
-import com.eternalcode.core.configuration.resource.AbstractConfigResource;
+import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Sound;
@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class PluginConfiguration extends AbstractConfigResource {
+public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Description({
             "# ",

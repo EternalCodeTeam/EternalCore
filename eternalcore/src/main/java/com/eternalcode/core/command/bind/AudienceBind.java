@@ -22,17 +22,19 @@ public class AudienceBind implements Parameter {
         LiteSender sender = invocation.sender();
 
         if (sender.getSender() instanceof Player player) {
-            Language language = userManager.getUser(player.getUniqueId())
+            Language language = this.userManager.getUser(player.getUniqueId())
                 .map(user -> user.getSettings().getLanguage())
                 .orElseGet(Language.DEFAULT);
 
             return Audience.player(player.getUniqueId(), language);
         }
 
-        if (sender instanceof ConsoleCommandSender) {
-            return Audience.console();
-        }
+        return Audience.console();
 
-        throw new IllegalArgumentException("Unsupported sender type: " + sender.getClass().getName());
+//        if (sender instanceof ConsoleCommandSender) {
+//            return Audience.console();
+//        }
+//
+//        throw new IllegalArgumentException("Unsupported sender type: " + sender.getClass().getName());
     }
 }

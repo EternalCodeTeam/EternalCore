@@ -1,10 +1,10 @@
 package com.eternalcode.core.language;
 
-import com.eternalcode.core.configuration.resource.ConfigResource;
+import com.eternalcode.core.configuration.ConfigWithResource;
 
 import java.util.List;
 
-public interface Messages extends ConfigResource {
+public interface Messages extends ConfigWithResource {
 
     Language getLanguage();
 

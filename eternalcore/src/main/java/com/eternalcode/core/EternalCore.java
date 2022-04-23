@@ -71,7 +71,7 @@ import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.database.CacheWarpRepository;
 import com.eternalcode.core.database.Database;
 import com.eternalcode.core.home.HomeManager;
-import com.eternalcode.core.inventory.LanguageInventory;
+import com.eternalcode.core.language.LanguageInventory;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
