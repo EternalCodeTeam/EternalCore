@@ -72,8 +72,9 @@ tasks.withType<ShadowJar> {
     exclude("org/intellij/lang/annotations/**")
     exclude("org/jetbrains/annotations/**")
     exclude("org/checkerframework/**")
-    exclude("javax/**")
+    exclude("com/google/**")
     exclude("META-INF/**")
+    exclude("javax/**")
 
     mergeServiceFiles()
     minimize()
@@ -90,7 +91,6 @@ tasks.withType<ShadowJar> {
     relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
 
-    relocate("com.google", "com.eternalcode.core.libs.com.google")
     relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
 }

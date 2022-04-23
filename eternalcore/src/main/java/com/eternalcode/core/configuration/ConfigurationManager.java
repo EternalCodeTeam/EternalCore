@@ -3,8 +3,10 @@ package com.eternalcode.core.configuration;
 import com.eternalcode.core.configuration.composers.LanguageComposer;
 import com.eternalcode.core.configuration.composers.LocationComposer;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
+import com.eternalcode.core.configuration.implementations.InventoryConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.resource.ConfigResource;
 import com.eternalcode.core.language.Language;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
@@ -24,20 +26,23 @@ public class ConfigurationManager {
     private final PluginConfiguration pluginConfiguration;
     private final CommandsConfiguration commandsConfiguration;
     private final LocationsConfiguration locationsConfiguration;
+    private final InventoryConfiguration inventoryConfiguration;
 
     public ConfigurationManager(File dataFolder) {
         this.pluginConfiguration = new PluginConfiguration(dataFolder, "config.yml");
         this.commandsConfiguration = new CommandsConfiguration(dataFolder, "commands.yml");
         this.locationsConfiguration = new LocationsConfiguration(dataFolder, "locations.yml");
+        this.inventoryConfiguration = new InventoryConfiguration(dataFolder, "inventories.yml");
     }
 
     public void loadAndRenderConfigs() {
-        this.loadAndRender(pluginConfiguration);
-        this.loadAndRender(commandsConfiguration);
-        this.loadAndRender(locationsConfiguration);
+        this.loadAndRender(this.pluginConfiguration);
+        this.loadAndRender(this.commandsConfiguration);
+        this.loadAndRender(this.locationsConfiguration);
+        this.loadAndRender(this.inventoryConfiguration);
     }
 
-    public <T extends ConfigWithResource> void loadAndRender(T config) {
+    public <T extends ConfigResource> void loadAndRender(T config) {
         cdn.load(config.getResource(), config)
             .orElseThrow(RuntimeException::new);
 
@@ -45,7 +50,7 @@ public class ConfigurationManager {
             .orElseThrow(RuntimeException::new);
     }
 
-    public <T extends ConfigWithResource> void render(T config) {
+    public <T extends ConfigResource> void render(T config) {
         cdn.render(config, config.getResource())
             .orElseThrow(RuntimeException::new);
     }
@@ -60,5 +65,9 @@ public class ConfigurationManager {
 
     public LocationsConfiguration getLocationsConfiguration() {
         return this.locationsConfiguration;
+    }
+
+    public InventoryConfiguration getInventoryConfiguration() {
+        return inventoryConfiguration;
     }
 }

@@ -43,6 +43,7 @@ import com.eternalcode.core.command.implementations.HealCommand;
 import com.eternalcode.core.command.implementations.HelpOpCommand;
 import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
+import com.eternalcode.core.command.implementations.LanguageCommand;
 import com.eternalcode.core.command.implementations.ListCommand;
 import com.eternalcode.core.command.implementations.NameCommand;
 import com.eternalcode.core.command.implementations.OnlineCommand;
@@ -62,6 +63,7 @@ import com.eternalcode.core.command.message.PermissionMessage;
 import com.eternalcode.core.command.platform.EternalCommandsFactory;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
+import com.eternalcode.core.configuration.implementations.InventoryConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
@@ -69,6 +71,7 @@ import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.database.CacheWarpRepository;
 import com.eternalcode.core.database.Database;
 import com.eternalcode.core.home.HomeManager;
+import com.eternalcode.core.inventory.LanguageInventory;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
@@ -128,6 +131,7 @@ public class EternalCore extends JavaPlugin {
     private TeleportManager teleportManager;
     private WarpManager warpManager;
     private BukkitUserProvider userProvider;
+    private LanguageInventory languageInventory;
 
     /**
      * Configuration, Language & Chat
@@ -188,6 +192,7 @@ public class EternalCore extends JavaPlugin {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
+        InventoryConfiguration inventory = configurationManager.getInventoryConfiguration();
 
         /* Language & Chat */
 
@@ -231,6 +236,8 @@ public class EternalCore extends JavaPlugin {
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager, this.miniMessage);
         this.scoreboardManager.updateTask();
 
+        this.languageInventory = new LanguageInventory(inventory.languageSelector, noticeService, this.userManager, this.miniMessage);
+
         this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)
 
             // arguments
@@ -256,6 +263,7 @@ public class EternalCore extends JavaPlugin {
             // Static binds
             .typeBind(EternalCore.class, () -> this)
             .typeBind(ConfigurationManager.class, () -> this.configurationManager)
+            .typeBind(LanguageInventory.class, () -> this.languageInventory)
             .typeBind(LanguageManager.class, () -> languageManager)
             .typeBind(PluginConfiguration.class, () -> config)
             .typeBind(LocationsConfiguration.class, () -> locations)
@@ -307,7 +315,8 @@ public class EternalCore extends JavaPlugin {
                 TposCommand.class,
                 NameCommand.class,
                 EnchantCommand.class,
-                TeleportCommand.class
+                TeleportCommand.class,
+                LanguageCommand.class
             )
             .register();
 

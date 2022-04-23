@@ -1,10 +1,10 @@
 package com.eternalcode.core.language;
 
-import com.eternalcode.core.configuration.ConfigWithResource;
+import com.eternalcode.core.configuration.resource.ConfigResource;
 
 import java.util.List;
 
-public interface Messages extends ConfigWithResource {
+public interface Messages extends ConfigResource {
 
     Language getLanguage();
 
@@ -110,5 +110,6 @@ public interface Messages extends ConfigWithResource {
         String nameMessage();
         String enchantedMessage();
         List<String> whoisCommand();
+        String languageChanged();
     }
 }
