@@ -79,10 +79,7 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
     minimize()
 
-    relocate("com.google", "com.eternalcode.core.libs.com.google") {
-        exclude("com.google.gson.**")
-    }
-
+    relocate("com.google", "com.eternalcode.core.libs.com.google")
     relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
     relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
     relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
