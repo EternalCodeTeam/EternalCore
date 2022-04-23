@@ -3,40 +3,36 @@ name: Java CI with Gradle
 on: [ push ]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                java: [ 17 ]
-            fail-fast: false
-        steps:
-            -   name: Checkout
-                uses: actions/checkout@v3.0.0
-            -   name: Set up JDK ${{ matrix.java }}
-                uses: actions/setup-java@v2.3.1
-                with:
-                    distribution: adopt
-                    java-version: ${{ matrix.java }}
-            -   name: Cache Gradle
-                uses: actions/cache@v3.0.1
-                with:
-                    path: ~/.gradle
-                    key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-                    restore-keys: ${{ runner.os }}-gradle-
-            -   name: Grant execute permission for gradlew
-                run: chmod +x gradlew
-            -   name: Build the Jar
-                run: ./gradlew eternalcore:shadowJar
-            -   name: Upload a Build Artifact
-                uses: actions/upload-artifact@v3.0.0
-                with:
-                    name: "Successfully build EternalCore JDK${{ matrix.jdk }}"
-                    path: "eternalcore/build/libs/EternalCore*.jar"
-            -   name: Create Release
-                uses: ncipollo/release-action@v1.10.0
-                with:
-                    artifacts: "eternalcore/build/libs/EternalCore*.jar"
-                    body: ${{ join(github.event.commits.*.message, '\n') }}
-                    prerelease: true
-                    name: Development Build Release of EternalCore
-                    tag: dev-build
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java:
+          - 17
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.0
+      - name: 'Set up JDK ${{ matrix.java }}'
+        uses: actions/setup-java@v2.3.1
+        with:
+          distribution: adopt
+          java-version: '${{ matrix.java }}'
+      - name: Cache Gradle
+        uses: actions/cache@v3.0.1
+        with:
+          path: ~/.gradle
+          key: >-
+            ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*',
+            '**/gradle-wrapper.properties') }}
+          restore-keys: '${{ runner.os }}-gradle-'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build the Jar
+        run: './gradlew eternalcore:shadowJar'
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: 'Successfully build EternalCore JDK${{ matrix.jdk }}'
+          path: eternalcore/build/libs/EternalCore*.jar
+
