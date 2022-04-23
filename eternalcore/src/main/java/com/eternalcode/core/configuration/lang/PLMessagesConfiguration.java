@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.lang;
 
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.configuration.resource.AbstractConfigResource;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class PLMessagesConfiguration extends AbstractConfigWithResource implements Messages {
+public class PLMessagesConfiguration extends AbstractConfigResource implements Messages {
     private final Language language = Language.PL;
 
     public PLArgumentSection argument = new PLArgumentSection();
@@ -290,8 +290,9 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String listMessage = "&8» &6Na serwerze jest: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
         public String tposMessage = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String tposByMessage = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String nameMessage = "&8» &6Nowa nazwa itemu: &6{NAME}";
+        public String nameMessage = "&8» &6Nowa nazwa itemu: &c{NAME}";
         public String enchantedMessage = "&8» &6Item w rece zostal zenchantowany!";
+        public String languageChanged = "&8» &6Zmieniono język na: &c{LANGUAGE}";
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Gracz: &f{PLAYER}",
                 "&8» &7UUID: &f{UUID}",
@@ -465,6 +466,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String enchantedMessage() {
             return this.enchantedMessage;
+        }
+
+        public String languageChanged() {
+            return this.languageChanged;
         }
     }
 }

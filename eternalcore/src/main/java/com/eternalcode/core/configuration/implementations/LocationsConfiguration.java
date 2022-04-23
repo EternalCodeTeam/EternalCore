@@ -1,12 +1,11 @@
 package com.eternalcode.core.configuration.implementations;
 
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
-import net.dzikoysk.cdn.entity.Description;
+import com.eternalcode.core.configuration.resource.AbstractConfigResource;
 import org.bukkit.Location;
 
 import java.io.File;
 
-public class LocationsConfiguration extends AbstractConfigWithResource {
+public class LocationsConfiguration extends AbstractConfigResource {
 
     public LocationsConfiguration(File folder, String child) {
         super(folder, child);

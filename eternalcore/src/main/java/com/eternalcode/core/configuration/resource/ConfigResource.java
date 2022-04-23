@@ -1,8 +1,8 @@
-package com.eternalcode.core.configuration;
+package com.eternalcode.core.configuration.resource;
 
 import net.dzikoysk.cdn.source.Resource;
 
-public interface ConfigWithResource {
+public interface ConfigResource {
 
     Resource getResource();
 

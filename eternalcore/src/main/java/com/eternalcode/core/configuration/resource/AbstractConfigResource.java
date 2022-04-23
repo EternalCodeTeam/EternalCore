@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration;
+package com.eternalcode.core.configuration.resource;
 
 import net.dzikoysk.cdn.entity.Exclude;
 import net.dzikoysk.cdn.source.Resource;
@@ -9,19 +9,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public abstract class AbstractConfigWithResource implements ConfigWithResource {
+public abstract class AbstractConfigResource implements ConfigResource {
 
     @Exclude
     private Resource resource;
 
     @Contract("null -> fail")
-    protected AbstractConfigWithResource(Resource resource) {
+    protected AbstractConfigResource(Resource resource) {
         Validate.notNull(resource);
         this.resource = resource;
     }
 
     @Contract("null, null -> fail")
-    protected AbstractConfigWithResource(File folder, String child) {
+    protected AbstractConfigResource(File folder, String child) {
         Validate.notNull(folder);
         Validate.notNull(child);
         this.resource = Source.of(new File(folder, child));
