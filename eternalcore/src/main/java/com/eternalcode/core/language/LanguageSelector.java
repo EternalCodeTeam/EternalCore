@@ -4,32 +4,48 @@ import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
+import panda.utilities.StringUtils;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Contextual
 public class LanguageSelector {
 
+    @Description({ StringUtils.EMPTY, "# Name of inventory" })
     public String title = "&6Select a language";
 
+    @Description({ StringUtils.EMPTY, "# Size of inventory" })
     public int rows = 5;
 
+    @Description({ StringUtils.EMPTY, "# Border settings" })
     public Border border = new Border();
 
     @Contextual
     public static class Border {
+
+        @Description(StringUtils.EMPTY)
         public boolean fill = true;
+
+        @Description(StringUtils.EMPTY)
         public Material material = Material.GRAY_STAINED_GLASS_PANE;
 
-        @Description("# TOP, BOTTOM, BORDER, ALL")
+        @Description({ StringUtils.EMPTY, "# TOP, BOTTOM, BORDER, ALL" })
         public FillType type = FillType.BORDER;
+
+        @Description({ StringUtils.EMPTY, "# Name (If you dont want name just set \"\")" })
+        public String name = "&8*";
+
+        @Description({ StringUtils.EMPTY, "# Lore (If you dont want lore just set \"\")" })
+        public List<String> lore = Collections.singletonList("&8* &7Lore :D");
 
         public enum FillType {
             TOP, BOTTOM, BORDER, ALL
         }
     }
 
+    @Description({ StringUtils.EMPTY, "# List of languages" })
     public Map<Integer, LanguageItem> languageItemMap = ImmutableMap.<Integer, LanguageItem>builder()
         .put(1, new LanguageItem(
             Material.PLAYER_HEAD,
@@ -39,6 +55,7 @@ public class LanguageSelector {
             Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Click to change language!"),
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODc5ZDk5ZDljNDY0NzRlMjcxM2E3ZTg0YTk1ZTRjZTdlOGZmOGVhNGQxNjQ0MTNhNTkyZTQ0MzVkMmM2ZjlkYyJ9fX0")
         )
+
         .put(2, new LanguageItem(
             Material.PLAYER_HEAD,
             Language.PL,

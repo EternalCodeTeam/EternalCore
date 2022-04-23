@@ -46,8 +46,17 @@ public class LanguageInventory {
         User user = userOption.get();
 
         if (this.languageSelector.border.fill) {
-            ItemStack borderItem = new ItemStack(this.languageSelector.border.material);
-            GuiItem guiItem = new GuiItem(borderItem);
+            ItemBuilder borderItem = ItemBuilder.from(this.languageSelector.border.material);
+
+            if (!this.languageSelector.border.name.equals("")) {
+                borderItem.name(this.miniMessage.deserialize(this.languageSelector.border.name));
+            }
+
+            if (!this.languageSelector.border.lore.isEmpty()) {
+                borderItem.lore(this.languageSelector.border.lore.stream().map(this.miniMessage::deserialize).collect(Collectors.toList()));
+            }
+
+            GuiItem guiItem = new GuiItem(borderItem.build());
 
             switch (this.languageSelector.border.type) {
                 case BORDER -> gui.getFiller().fillBorder(guiItem);
