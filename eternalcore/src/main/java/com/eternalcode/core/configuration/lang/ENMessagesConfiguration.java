@@ -77,6 +77,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Contextual
     public static class ENWarpSection implements Messages.WarpSection {
+
         public String availableList = "&8» List available warps: {WARPS}";
         public String notExist = "&8» &cThis warp doesn't exist";
         public String noPermission = "&8» &cYou don't have permission to this warp!";

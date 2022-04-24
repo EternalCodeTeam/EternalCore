@@ -122,3 +122,4 @@ public interface Messages extends ConfigWithResource {
         String privateMessageReceiveFormat();
     }
 }
+

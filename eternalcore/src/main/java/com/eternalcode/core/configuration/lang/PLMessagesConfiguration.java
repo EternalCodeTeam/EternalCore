@@ -102,6 +102,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Contextual
     public static class PLArgumentSection implements ArgumentSection {
+
         public String permissionMessage = "&4Blad: &cNie masz uprawnien do tej komendy! &7({PERMISSIONS})";
         public String offlinePlayer = "&4Blad: &cTen gracz jest offline!";
         public String onlyPlayer = "&4Blad: &cKomenda tylko dla graczy!";

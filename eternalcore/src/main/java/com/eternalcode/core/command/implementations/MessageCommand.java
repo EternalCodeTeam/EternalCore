@@ -24,6 +24,7 @@ public final class MessageCommand {
     @Execute
     @MinArgs(2)
     public void execute(Player sender, @Arg(0) Player target, @Joiner String message) {
+
         this.noticeService
             .notice()
             .player(sender.getUniqueId())
@@ -38,5 +39,6 @@ public final class MessageCommand {
             .placeholder("{MESSAGE}", message)
             .placeholder("{SENDER}", sender.getName())
             .send();
+
     }
 }

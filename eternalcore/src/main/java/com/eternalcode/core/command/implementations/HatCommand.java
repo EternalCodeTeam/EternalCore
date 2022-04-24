@@ -23,6 +23,7 @@ public class HatCommand {
 
     @Execute
     public void execute(Player player) {
+
         PlayerInventory playerInventory = player.getInventory();
 
         ItemStack itemStack = playerInventory.getHelmet();
