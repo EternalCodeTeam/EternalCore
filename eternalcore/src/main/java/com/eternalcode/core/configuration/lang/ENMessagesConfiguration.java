@@ -312,16 +312,18 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String nameMessage = "&8» &6New name is: &6{NAME}";
         public String enchantedMessage = "&8» &6Item in hand is enchanted!";
         public String languageChanged = "&8» &6Language changed to &cEnglish&6!";
+        public String privateMessageSendFormat = "&8[&7You -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String privateMessageReceiveFormat = "&8[&7{SENDER} -> &fYou&8]&7: &f{MESSAGE}";
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
-                "&8» &7Target UUID: &f{UUID}",
-                "&8» &7Target address: &f{IP}",
-                "&8» &7Target walk speed: &f{WALK-SPEED}",
-                "&8» &7Target fly speed: &f{SPEED}",
-                "&8» &7Target ping: &f{PING}ms",
-                "&8» &7Target level: &f{LEVEL}",
-                "&8» &7Target health: &f{HEALTH}",
-                "&8» &7Target food level: &f{FOOD}");
+            "&8» &7Target UUID: &f{UUID}",
+            "&8» &7Target address: &f{IP}",
+            "&8» &7Target walk speed: &f{WALK-SPEED}",
+            "&8» &7Target fly speed: &f{SPEED}",
+            "&8» &7Target ping: &f{PING}ms",
+            "&8» &7Target level: &f{LEVEL}",
+            "&8» &7Target health: &f{HEALTH}",
+            "&8» &7Target food level: &f{FOOD}");
 
         public String successfullyReloaded() {
             return this.successfullyReloaded;
@@ -489,6 +491,16 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String languageChanged() {
             return this.languageChanged;
+        }
+
+        @Override
+        public String privateMessageSendFormat() {
+            return this.privateMessageSendFormat;
+        }
+
+        @Override
+        public String privateMessageReceiveFormat() {
+            return this.privateMessageReceiveFormat;
         }
     }
 }

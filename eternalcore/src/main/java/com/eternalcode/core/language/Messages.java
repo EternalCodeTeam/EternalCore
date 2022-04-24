@@ -118,5 +118,7 @@ public interface Messages extends ConfigWithResource {
         String enchantedMessage();
         List<String> whoisCommand();
         String languageChanged();
+        String privateMessageSendFormat();
+        String privateMessageReceiveFormat();
     }
 }
