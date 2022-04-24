@@ -28,8 +28,8 @@ public class PlayerQuitListener implements Listener {
 
         event.setQuitMessage(StringUtils.EMPTY);
 
-        noticeService.notice()
-            .notice(NoticeType.CHAT, messages -> config.eventMessage.leaveMessage) // TODO: Move to messages config
+        this.noticeService.notice()
+            .notice(NoticeType.CHAT, messages -> this.config.eventMessage.leaveMessage) // TODO: Move to messages config
             .placeholder("{PLAYER}", player.getName())
             .all()
             .send();

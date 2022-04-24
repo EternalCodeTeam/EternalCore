@@ -57,6 +57,7 @@ public class ChatCommand {
         }
 
         this.chatManager.getChatSettings().setChatEnabled(true);
+
         this.audiences.notice()
             .message(messages -> messages.chat().enabled())
             .placeholder("{NICK}", sender.getName())
@@ -72,6 +73,7 @@ public class ChatCommand {
         }
 
         this.chatManager.getChatSettings().setChatEnabled(false);
+
         this.audiences.notice()
             .message(messages -> messages.chat().disabled())
             .placeholder("{NICK}", sender.getName())

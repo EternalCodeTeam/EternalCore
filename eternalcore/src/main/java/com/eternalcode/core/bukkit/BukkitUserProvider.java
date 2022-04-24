@@ -18,7 +18,7 @@ public class BukkitUserProvider {
     }
 
     public Option<User> getUser(Player player) {
-        return userManager.getUser(player.getUniqueId());
+        return this.userManager.getUser(player.getUniqueId());
     }
 
     public Option<User> getUser(CommandSender sender) {

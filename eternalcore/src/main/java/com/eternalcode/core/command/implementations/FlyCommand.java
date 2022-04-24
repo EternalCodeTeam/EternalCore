@@ -4,6 +4,10 @@ import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.language.LanguageManager;
+import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserManager;
 import dev.rollczi.litecommands.annotations.Arg;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -12,6 +16,7 @@ import dev.rollczi.litecommands.annotations.Section;
 import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import panda.std.Option;
 
 @Section(route = "fly")
 @Permission("eternalcore.command.fly")
@@ -19,11 +24,9 @@ import org.bukkit.entity.Player;
 public class FlyCommand {
 
     private final NoticeService noticeService;
-    private final PluginConfiguration config;
 
-    public FlyCommand(NoticeService noticeService, PluginConfiguration config) {
+    public FlyCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.config = config;
     }
 
     @Execute
@@ -32,7 +35,7 @@ public class FlyCommand {
 
         this.noticeService.notice()
             .message(messages -> messages.other().flyMessage())
-            .placeholder("{STATE}", player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)
+            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().formatEnable() : messages.format().formatDisable())
             .player(player.getUniqueId())
             .send();
 
@@ -43,7 +46,7 @@ public class FlyCommand {
         this.noticeService.notice()
             .message(messages -> messages.other().flySetMessage())
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{STATE}", player.getAllowFlight() ? this.config.format.enabled : this.config.format.disabled)
+            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().formatEnable() : messages.format().formatDisable())
             .audience(audience)
             .send();
     }

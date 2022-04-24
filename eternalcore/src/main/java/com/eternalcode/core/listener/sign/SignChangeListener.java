@@ -1,5 +1,7 @@
 package com.eternalcode.core.listener.sign;
 
+import com.eternalcode.core.chat.legacy.Legacy;
+import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,10 +21,10 @@ public class SignChangeListener implements Listener {
         Player player = event.getPlayer();
         String[] lines = event.getLines();
 
-/*        if (player.hasPermission("eternalcore.sign")) {
+       if (player.hasPermission("eternalcore.sign")) {
             for (int i = 0; i < lines.length; i++) {
-                event.setLine(i, miniMessage.deserialize(event.getLine(i)));
+                event.setLine(i, Legacy.SERIALIZER.serialize(this.miniMessage.deserialize(lines[i])));
             }
-        }*/
+        }
     }
 }

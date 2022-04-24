@@ -1,7 +1,6 @@
 package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.notification.NoticeType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,33 +23,21 @@ public class TeleportListeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onMove(final PlayerMoveEvent event) {
-        if (event.getFrom().getBlockX() == event.getTo().getBlockX()
-                && event.getFrom().getBlockY() == event.getTo().getBlockY()
-                && event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
-            return;
-        }
-        final Player player = event.getPlayer();
-
-        this.removeTeleport(player);
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onDamage(final EntityDamageEvent event) {
+    public void onDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player player) {
             this.removeTeleport(player);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onKick(final PlayerKickEvent event) {
+    public void onKick(PlayerKickEvent event) {
         Player player = event.getPlayer();
 
         this.removeTeleport(player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onQuit(final PlayerQuitEvent event) {
+    public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
         this.removeTeleport(player);

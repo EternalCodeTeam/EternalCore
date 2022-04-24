@@ -13,8 +13,8 @@ public class TeleportManager {
 
    private final Map<UUID, Teleport> teleportMap = new HashMap<>();
 
-    public void createTeleport(UUID uuid, Location location, int seconds){
-        Teleport teleport = new Teleport(uuid, location, seconds);
+    public void createTeleport(UUID uuid, Location startLocation, Location destinationLocation, int seconds){
+        Teleport teleport = new Teleport(uuid, startLocation, destinationLocation, seconds);
 
         this.teleportMap.put(uuid, teleport);
     }
@@ -45,7 +45,7 @@ public class TeleportManager {
     }
 
     public Collection<Teleport> getTeleports() {
-        return Collections.unmodifiableCollection(teleportMap.values());
+        return Collections.unmodifiableCollection(this.teleportMap.values());
     }
 
 }

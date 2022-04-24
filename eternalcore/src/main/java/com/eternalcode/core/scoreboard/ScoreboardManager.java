@@ -36,7 +36,7 @@ public class ScoreboardManager {
     }
 
     public void updateTask() {
-        eternalCore.getScheduler().runTaskTimerAsynchronously(() -> {
+        this.eternalCore.getScheduler().runTaskTimerAsynchronously(() -> {
             for (FastBoard board : this.boards.values()) {
                 this.updateBoard(board);
             }
@@ -47,10 +47,10 @@ public class ScoreboardManager {
         List<String> scoreboardLines = this.config.scoreboard.style;
         List<String> colored = new ArrayList<>();
 
-        Component componentTitle = miniMessage.deserialize(this.config.scoreboard.title);
+        Component componentTitle = this.miniMessage.deserialize(this.config.scoreboard.title);
 
         for (String scoreboardLine : scoreboardLines) {
-            Component componentLine = miniMessage.deserialize(scoreboardLine);
+            Component componentLine = this.miniMessage.deserialize(scoreboardLine);
             colored.add(Legacy.SERIALIZER.serialize(componentLine));
         }
 
@@ -69,7 +69,7 @@ public class ScoreboardManager {
     public void setScoreboard(Player player) {
         FastBoard board = new FastBoard(player);
 
-        Component component = miniMessage.deserialize(this.config.scoreboard.title);
+        Component component = this.miniMessage.deserialize(this.config.scoreboard.title);
         board.updateTitle(Legacy.SERIALIZER.serialize(component));
 
         this.boards.put(player.getUniqueId(), board);

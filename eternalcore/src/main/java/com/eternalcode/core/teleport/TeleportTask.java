@@ -3,10 +3,10 @@ package com.eternalcode.core.teleport;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.utils.DateUtils;
-import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import panda.utilities.StringUtils;
 
 import java.util.UUID;
 
@@ -25,7 +25,8 @@ public class TeleportTask implements Runnable {
     @Override
     public void run() {
         for (Teleport teleport : this.teleportManager.getTeleports()){
-            Location location = teleport.getLocation();
+            Location destinationLocation = teleport.getDestinationLocation();
+            Location startLocation = teleport.getStartLocation();
             UUID uuid = teleport.getUuid();
             long time = teleport.getTime();
 
@@ -35,10 +36,22 @@ public class TeleportTask implements Runnable {
                 continue;
             }
 
+            if (player.getLocation().distance(startLocation) > 0.5) {
+                this.teleportManager.removeTeleport(uuid);
+
+                this.noticeService.notice()
+                    .notice(NoticeType.ACTIONBAR, messages -> StringUtils.EMPTY)
+                    .message(messages -> messages.teleport().cancel())
+                    .player(player.getUniqueId())
+                    .send();
+
+                continue;
+            }
+
             if (System.currentTimeMillis() < time) {
                 long actionTime = time - System.currentTimeMillis();
 
-                noticeService.notice()
+                this.noticeService.notice()
                     .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().actionBarMessage())
                     .placeholder("{TIME}", DateUtils.durationToString(actionTime))
                     .player(player.getUniqueId())
@@ -47,11 +60,11 @@ public class TeleportTask implements Runnable {
                 continue;
             }
 
-            player.teleport(location);
+            player.teleport(destinationLocation);
 
             this.teleportManager.removeTeleport(uuid);
 
-            noticeService.notice()
+            this.noticeService.notice()
                 .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
                 .message(messages -> messages.teleport().teleported())
                 .player(player.getUniqueId())

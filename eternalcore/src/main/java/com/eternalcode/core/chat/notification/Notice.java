@@ -28,7 +28,7 @@ public class Notice {
 
     private final List<Audience> audiences = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
-    private final Formatter placeholders = new Formatter();
+    private final Map<String, MessageExtractor> placeholders = new HashMap<>();
 
     Notice(LanguageManager languageManager, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
         this.languageManager = languageManager;
@@ -38,13 +38,13 @@ public class Notice {
 
     @CheckReturnValue
     public Notice user(User user) {
-        this.audiences.add(audienceProvider.user(user));
+        this.audiences.add(this.audienceProvider.user(user));
         return this;
     }
 
     @CheckReturnValue
     public Notice player(UUID uuid) {
-        this.audiences.add(audienceProvider.player(uuid));
+        this.audiences.add(this.audienceProvider.player(uuid));
         return this;
     }
 
@@ -56,19 +56,19 @@ public class Notice {
 
     @CheckReturnValue
     public Notice console() {
-        this.audiences.add(audienceProvider.console());
+        this.audiences.add(this.audienceProvider.console());
         return this;
     }
 
     @CheckReturnValue
     public Notice all() {
-        this.audiences.addAll(audienceProvider.all());
+        this.audiences.addAll(this.audienceProvider.all());
         return this;
     }
 
     @CheckReturnValue
     public Notice allPlayers() {
-        this.audiences.addAll(audienceProvider.allPlayers());
+        this.audiences.addAll(this.audienceProvider.allPlayers());
         return this;
     }
 
@@ -109,13 +109,19 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, String to) {
-        this.placeholders.register(from, () -> to);
+        this.placeholders.put(from, messages -> to);
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, Supplier<String> to) {
-        this.placeholders.register(from, to);
+        this.placeholders.put(from, messages -> to.get());
+        return this;
+    }
+
+    @CheckReturnValue
+    public Notice placeholder(String from, MessageExtractor extractor) {
+        this.placeholders.put(from, extractor);
         return this;
     }
 
@@ -133,10 +139,15 @@ public class Notice {
         for (Language language : audiencesByLang.keySet()) {
             Messages messages = languageManager.getMessages(language);
             ArrayList<Notification> notifications = new ArrayList<>();
+            Formatter translatedFormatter = new Formatter();
+
+            for (Map.Entry<String, MessageExtractor> entry : placeholders.entrySet()) {
+                translatedFormatter.register(entry.getKey(), entry.getValue().extract(messages));
+            }
 
             for (NotificationExtractor extractor : this.notifications) {
                 Notification notification = extractor.extract(messages)
-                    .edit(placeholders::format);
+                    .edit(translatedFormatter::format);
 
                 notifications.add(notification);
             }

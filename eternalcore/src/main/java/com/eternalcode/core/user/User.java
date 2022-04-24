@@ -9,10 +9,11 @@ import java.util.UUID;
 
 public class User implements Entity {
 
+    private Settings settings = new SettingsImpl(() -> this.clientSettings);
+    private ClientSettings clientSettings = ClientSettings.NONE;
+
     private final String name;
     private final UUID uuid;
-    private ClientSettings clientSettings = ClientSettings.NONE;
-    private Settings settings = new SettingsImpl(() -> this.clientSettings);
 
     User(UUID uuid, String name) {
         this.name = name;
@@ -21,16 +22,16 @@ public class User implements Entity {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
     public UUID getUniqueId() {
-        return uuid;
+        return this.uuid;
     }
 
     public ClientSettings getClientSettings() {
-        return clientSettings;
+        return this.clientSettings;
     }
 
     public void setClientSettings(ClientSettings clientSettings) {
@@ -38,7 +39,7 @@ public class User implements Entity {
     }
 
     public Settings getSettings() {
-        return settings;
+        return this.settings;
     }
 
     public void setSettings(Settings settings) {

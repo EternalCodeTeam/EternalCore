@@ -32,8 +32,8 @@ public class PlayerArgOrSender implements NotRequiredArgumentHandler<Player> {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {
-            Audience audience = userProvider.getAudience(invocation);
-            Messages messages = languageManager.getMessages(audience.getLanguage());
+            Audience audience = this.userProvider.getAudience(invocation);
+            Messages messages = this.languageManager.getMessages(audience.getLanguage());
 
             throw new ValidationCommandException(messages.argument().offlinePlayer());
         }
@@ -54,7 +54,7 @@ public class PlayerArgOrSender implements NotRequiredArgumentHandler<Player> {
             return player;
         }
 
-        Messages defaultMessages = languageManager.getDefaultMessages();
+        Messages defaultMessages = this.languageManager.getDefaultMessages();
         String onlyPlayer = defaultMessages.argument().onlyPlayer();
 
         throw new ValidationCommandException(onlyPlayer);

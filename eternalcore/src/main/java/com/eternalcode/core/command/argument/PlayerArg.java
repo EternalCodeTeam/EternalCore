@@ -31,9 +31,9 @@ public class PlayerArg implements SingleArgumentHandler<Player> {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {
-            Messages messages = userProvider.getUser(invocation)
-                .map(languageManager::getMessages)
-                .orElseGet(languageManager.getDefaultMessages());
+            Messages messages = this.userProvider.getUser(invocation)
+                .map(this.languageManager::getMessages)
+                .orElseGet(this.languageManager.getDefaultMessages());
 
             throw new ValidationCommandException(messages.argument().offlinePlayer());
         }

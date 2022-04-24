@@ -18,9 +18,9 @@ public class PermissionMessage implements LiteMessage {
 
     @Override
     public String message(MessageInfoContext context) {
-        String permissionMessage = userProvider.getUser(context.getInvocation())
-            .map(languageManager::getMessages)
-            .orElseGet(languageManager.getDefaultMessages())
+        String permissionMessage = this.userProvider.getUser(context.getInvocation())
+            .map(this.languageManager::getMessages)
+            .orElseGet(this.languageManager.getDefaultMessages())
             .argument().permissionMessage();
 
         String permissions = Joiner.on(", ")

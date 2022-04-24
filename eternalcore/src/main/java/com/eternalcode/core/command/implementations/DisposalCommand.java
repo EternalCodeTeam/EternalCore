@@ -31,12 +31,12 @@ public class DisposalCommand {
 
     @Execute
     public void execute(Player player) {
-        Language language = userManager.getUser(player.getUniqueId())
+        Language language = this.userManager.getUser(player.getUniqueId())
             .map(user -> user.getSettings().getLanguage())
             .orElseGet(Language.DEFAULT);
 
-        Messages messages = languageManager.getMessages(language);
-        Component component = miniMessage.deserialize(messages.other().disposalTitle());
+        Messages messages = this.languageManager.getMessages(language);
+        Component component = this.miniMessage.deserialize(messages.other().disposalTitle());
         String serialize = Legacy.SERIALIZER.serialize(component);
 
         player.openInventory(this.server.createInventory(null, 54, serialize));

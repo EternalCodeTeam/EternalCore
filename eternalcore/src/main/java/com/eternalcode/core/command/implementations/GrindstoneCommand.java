@@ -26,7 +26,7 @@ public class GrindstoneCommand {
 
     @Execute
     public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player playerOrSender) {
-        Inventory inventory = server.createInventory(playerOrSender, InventoryType.GRINDSTONE, StringUtils.EMPTY);
+        Inventory inventory = this.server.createInventory(playerOrSender, InventoryType.GRINDSTONE, StringUtils.EMPTY);
         playerOrSender.openInventory(inventory);
     }
 }

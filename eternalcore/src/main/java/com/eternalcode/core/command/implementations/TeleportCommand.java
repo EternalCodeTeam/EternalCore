@@ -15,8 +15,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-@Section(route = "tp", aliases = { "teleport" })
-@Permission("eternalcore.command.tp")
+@Section(route = "teleport", aliases = { "tp" })
+@Permission("eternalcore.command.teleport")
 @UsageMessage("&8» &cPoprawne użycie &7/teleport <player> [player]")
 public class TeleportCommand {
 

@@ -1,7 +1,6 @@
 package com.eternalcode.core.configuration.implementations;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
-import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Location;
 
 import java.io.File;

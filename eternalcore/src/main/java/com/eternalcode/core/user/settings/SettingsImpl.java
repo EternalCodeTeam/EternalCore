@@ -16,7 +16,7 @@ public class SettingsImpl implements Settings {
 
     @Override
     public Language getLanguage() {
-        return language != null ? language : Language.fromLocate(clientSettings.get().getLocate());
+        return this.language != null ? this.language : Language.fromLocate(this.clientSettings.get().getLocate());
     }
 
     @Override

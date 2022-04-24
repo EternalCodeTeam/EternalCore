@@ -29,9 +29,9 @@ public class AmountArgument implements SingleArgumentHandler<Integer> {
 
     @Override
     public Integer parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Messages messages = userProvider.getUser(invocation)
-                .map(languageManager::getMessages)
-                .orElseGet(languageManager.getDefaultMessages());
+        Messages messages = this.userProvider.getUser(invocation)
+                .map(this.languageManager::getMessages)
+                .orElseGet(this.languageManager.getDefaultMessages());
 
         return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
                 .orThrow(() -> new ValidationCommandException(messages.argument().notNumber()));

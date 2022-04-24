@@ -19,14 +19,14 @@ public class LanguageManager {
     }
 
     public Messages getMessages(Language language) {
-        return translatedMessages.getOrDefault(language, defaultMessages);
+        return this.translatedMessages.getOrDefault(language, this.defaultMessages);
     }
 
     public Messages getMessages(User user) {
         LanguageSettings settings = user.getSettings();
         Language language = settings.getLanguage();
 
-        return translatedMessages.getOrDefault(language, defaultMessages);
+        return this.translatedMessages.getOrDefault(language, this.defaultMessages);
     }
 
     public void setDefaultMessages(Messages defaultMessages) {
@@ -34,7 +34,7 @@ public class LanguageManager {
     }
 
     public Messages getDefaultMessages() {
-        return defaultMessages;
+        return this.defaultMessages;
     }
 
 }

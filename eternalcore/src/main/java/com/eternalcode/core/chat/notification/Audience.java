@@ -33,15 +33,15 @@ public class Audience {
     }
 
     public UUID getUuid() {
-        return uuid;
+        return this.uuid;
     }
 
     public boolean isConsole() {
-        return console;
+        return this.console;
     }
 
     public Language getLanguage() {
-        return language.get();
+        return this.language.get();
     }
 
 }

@@ -4,7 +4,6 @@ import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
 import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
 import java.io.File;
 import java.util.Arrays;
@@ -14,6 +13,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     private final Language language = Language.EN;
 
     public ENArgumentSection argument = new ENArgumentSection();
+    public ENFormatSection format = new ENFormatSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
     public ENAdminChatSection adminChat = new ENAdminChatSection();
     public ENTeleportSection teleport = new ENTeleportSection();
@@ -27,6 +27,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public ENArgumentSection argument() {
         return this.argument;
+    }
+
+    public ENFormatSection format() {
+        return this.format;
     }
 
     public ENHelpOpSection helpOp() {
@@ -55,6 +59,20 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public Language getLanguage() {
         return this.language;
+    }
+
+    @Contextual
+    public static class ENFormatSection implements Messages.Format {
+        public String enable = "&aenabled";
+        public String disable = "&cdisabled";
+
+        public String formatEnable() {
+            return this.enable;
+        }
+
+        public String formatDisable() {
+            return this.disable;
+        }
     }
 
     @Contextual
@@ -293,7 +311,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6New name is: &6{NAME}";
         public String enchantedMessage = "&8» &6Item in hand is enchanted!";
-        @Description({ "", "# Whois messsage Style" })
+        public String languageChanged = "&8» &6Language changed to &cEnglish&6!";
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Target name: &f{PLAYER}",
                 "&8» &7Target UUID: &f{UUID}",
@@ -467,6 +485,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String enchantedMessage() {
             return this.enchantedMessage;
+        }
+
+        public String languageChanged() {
+            return this.languageChanged;
         }
     }
 }

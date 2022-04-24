@@ -26,10 +26,10 @@ final class EternalSenderCreator implements LiteSenderCreator<CommandSender> {
         }
 
         Audience audience = sender instanceof Player player
-            ? audienceProvider.player(player.getUniqueId())
-            : audienceProvider.console();
+            ? this.audienceProvider.player(player.getUniqueId())
+            : this.audienceProvider.console();
 
-        return new EternalSender(sender, audience, announcer);
+        return new EternalSender(sender, audience, this.announcer);
     }
 
 }

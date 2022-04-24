@@ -26,7 +26,7 @@ public class PlayerDeathListener implements Listener {
 
         event.setDeathMessage(StringUtils.EMPTY);
 
-        noticeService.notice()
+        this.noticeService.notice()
             .notice(NoticeType.CHAT, messages -> config.eventMessage.deathMessage)
             .placeholder("{PLAYER}", player.getName())
             .all()

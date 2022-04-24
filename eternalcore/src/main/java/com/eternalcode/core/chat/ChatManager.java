@@ -19,7 +19,7 @@ public class ChatManager {
     }
 
     public ChatSettings getChatSettings() {
-        return chatSettings;
+        return this.chatSettings;
     }
 
     public void markUseChat(UUID userUuid) {

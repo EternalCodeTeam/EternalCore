@@ -22,7 +22,7 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
 
     @Override
     public void announce(Audience audience, Notification notification) {
-        Component component = miniMessage.deserialize(notification.getMessage());
+        Component component = this.miniMessage.deserialize(notification.getMessage());
 
         for (NoticeType type : notification.getTypes()) {
             this.send(this.toAdventureAudience(audience), type, component);
@@ -31,7 +31,7 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
 
     @Override
     public void announce(Iterable<Audience> audiences, Notification notification) {
-        Component component = miniMessage.deserialize(notification.getMessage());
+        Component component = this.miniMessage.deserialize(notification.getMessage());
 
         for (NoticeType type : notification.getTypes()) {
             for (Audience audience : audiences) {
@@ -60,10 +60,10 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
 
     private net.kyori.adventure.audience.Audience toAdventureAudience(Audience audience) {
         if (audience.isConsole()) {
-            return audienceProvider.console();
+            return this.audienceProvider.console();
         }
 
-        return audienceProvider.player(audience.getUuid());
+        return this.audienceProvider.player(audience.getUuid());
     }
 
 }

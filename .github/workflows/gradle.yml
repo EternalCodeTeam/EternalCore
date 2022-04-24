@@ -35,4 +35,3 @@ jobs:
         with:
           name: 'Successfully build EternalCore JDK${{ matrix.jdk }}'
           path: eternalcore/build/libs/EternalCore*.jar
-

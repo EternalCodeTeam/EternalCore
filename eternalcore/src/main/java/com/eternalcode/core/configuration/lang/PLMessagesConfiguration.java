@@ -13,6 +13,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     private final Language language = Language.PL;
 
     public PLArgumentSection argument = new PLArgumentSection();
+    public PLFormatSection format = new PLFormatSection();
     public PLHelpOpSection helpOp = new PLHelpOpSection();
     public PLAdminChatSection adminChat = new PLAdminChatSection();
     public PLTeleportSection teleport = new PLTeleportSection();
@@ -26,6 +27,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public PLArgumentSection argument() {
         return this.argument;
+    }
+
+    public PLFormatSection format() {
+        return this.format;
     }
 
     public PLHelpOpSection helpOp() {
@@ -54,6 +59,21 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public Language getLanguage() {
         return this.language;
+    }
+
+    @Contextual
+    public static class PLFormatSection implements Messages.Format {
+
+        public String enable = "&awlaczone";
+        public String disable = "&cwylaczone";
+
+        public String formatEnable() {
+            return this.enable;
+        }
+
+        public String formatDisable() {
+            return this.disable;
+        }
     }
 
     @Contextual
@@ -290,8 +310,9 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String listMessage = "&8» &6Na serwerze jest: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
         public String tposMessage = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String tposByMessage = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String nameMessage = "&8» &6Nowa nazwa itemu: &6{NAME}";
+        public String nameMessage = "&8» &6Nowa nazwa itemu: &c{NAME}";
         public String enchantedMessage = "&8» &6Item w rece zostal zenchantowany!";
+        public String languageChanged = "&8» &6Zmieniono język na &cPolski&6!";
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Gracz: &f{PLAYER}",
                 "&8» &7UUID: &f{UUID}",
@@ -465,6 +486,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String enchantedMessage() {
             return this.enchantedMessage;
+        }
+
+        public String languageChanged() {
+            return this.languageChanged;
         }
     }
 }

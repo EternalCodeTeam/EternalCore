@@ -19,7 +19,7 @@ dependencies {
     implementation("dev.rollczi.litecommands:bukkit:1.9.0")
 
     // cdn configs
-    implementation("net.dzikoysk:cdn:1.13.20")
+    implementation("net.dzikoysk:cdn:1.13.22")
 
     // expressible
     implementation("org.panda-lang:expressible:1.1.19")
@@ -72,8 +72,8 @@ tasks.withType<ShadowJar> {
     exclude("org/intellij/lang/annotations/**")
     exclude("org/jetbrains/annotations/**")
     exclude("org/checkerframework/**")
-    exclude("javax/**")
     exclude("META-INF/**")
+    exclude("javax/**")
 
     mergeServiceFiles()
     minimize()
@@ -90,7 +90,7 @@ tasks.withType<ShadowJar> {
     relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
 
-    relocate("com.google", "com.eternalcode.core.libs.com.google")
     relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
+    relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
 }

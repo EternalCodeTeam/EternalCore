@@ -30,9 +30,9 @@ public class SpawnCommand {
 
     @Execute
     public void execute(Player sender, @Arg(0) @Handler(PlayerArg.class) Option<Player> playerOption){
-        Location location = this.locations.spawn;
+        Location destinationLocation = this.locations.spawn;
 
-        if (location == null || location.getWorld() == null) {
+        if (destinationLocation == null || destinationLocation.getWorld() == null) {
             this.noticeService
                 .notice()
                 .message(messages -> messages.other().spawnNoSet())
@@ -44,7 +44,7 @@ public class SpawnCommand {
 
         if (playerOption.isEmpty()) {
             if (sender.hasPermission("eternalcore.teleport.bypass")) {
-                PaperLib.teleportAsync(sender, location);
+                PaperLib.teleportAsync(sender, destinationLocation);
 
                 this.noticeService
                     .notice()
@@ -65,7 +65,7 @@ public class SpawnCommand {
                 return;
             }
 
-            this.teleportManager.createTeleport(sender.getUniqueId(), location, 10);
+            this.teleportManager.createTeleport(sender.getUniqueId(), sender.getLocation(), destinationLocation, 10);
 
             this.noticeService
                 .notice()
@@ -77,7 +77,7 @@ public class SpawnCommand {
         }
 
         Player player = playerOption.get();
-        PaperLib.teleportAsync(player, location);
+        PaperLib.teleportAsync(player, destinationLocation);
 
         this.noticeService
             .notice()
