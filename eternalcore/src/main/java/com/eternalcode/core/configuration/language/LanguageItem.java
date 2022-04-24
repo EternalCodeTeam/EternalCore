@@ -1,5 +1,6 @@
-package com.eternalcode.core.language;
+package com.eternalcode.core.configuration.language;
 
+import com.eternalcode.core.language.Language;
 import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Material;
 

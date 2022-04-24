@@ -21,25 +21,19 @@ import panda.std.Option;
 @Permission("eternalcore.command.god")
 public class GodCommand {
 
-    private final LanguageManager languageManager;
     private final NoticeService noticeService;
-    private final UserManager userManager;
 
-    public GodCommand(LanguageManager languageManager, NoticeService noticeService, UserManager userManager) {
-        this.languageManager = languageManager;
+    public GodCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.userManager = userManager;
     }
 
     @Execute
     public void execute(CommandSender sender, Audience audience, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
         player.setInvulnerable(!player.isInvulnerable());
 
-        Messages senderMessage = this.languageManager.getMessages(audience.getLanguage());
-
         this.noticeService
             .notice()
-            .placeholder("{STATE}", player.isInvulnerable() ? senderMessage.format().formatEnable() : senderMessage.format().formatDisable())
+            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().formatEnable() : messages.format().formatDisable())
             .message(messages -> messages.other().godMessage())
             .player(player.getUniqueId())
             .send();
@@ -48,19 +42,9 @@ public class GodCommand {
             return;
         }
 
-        Option<User> userOption = this.userManager.getUser(player.getUniqueId());
-
-        if (userOption.isEmpty()) {
-            return;
-        }
-
-        User user = userOption.get();
-
-        Messages message = this.languageManager.getMessages(user);
-
         this.noticeService
             .notice()
-            .placeholder("{STATE}", player.isInvulnerable() ? message.format().formatEnable() : message.format().formatDisable())
+            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().formatEnable() : messages.format().formatDisable())
             .placeholder("{PLAYER}", player.getName())
             .message(messages -> messages.other().godSetMessage())
             .audience(audience)

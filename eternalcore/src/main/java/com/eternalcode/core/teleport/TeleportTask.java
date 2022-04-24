@@ -6,6 +6,8 @@ import com.eternalcode.core.utils.DateUtils;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
+import panda.utilities.StringUtils;
 
 import java.util.UUID;
 
@@ -39,7 +41,7 @@ public class TeleportTask implements Runnable {
                 this.teleportManager.removeTeleport(uuid);
 
                 this.noticeService.notice()
-                    .notice(NoticeType.ACTIONBAR, messages -> "")
+                    .notice(NoticeType.ACTIONBAR, messages -> StringUtils.EMPTY)
                     .message(messages -> messages.teleport().cancel())
                     .player(player.getUniqueId())
                     .send();

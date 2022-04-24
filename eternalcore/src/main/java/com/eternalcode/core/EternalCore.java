@@ -63,7 +63,7 @@ import com.eternalcode.core.command.message.PermissionMessage;
 import com.eternalcode.core.command.platform.EternalCommandsFactory;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
-import com.eternalcode.core.configuration.implementations.InventoryConfiguration;
+import com.eternalcode.core.configuration.language.LanguageConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
@@ -192,7 +192,7 @@ public class EternalCore extends JavaPlugin {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
-        InventoryConfiguration inventory = configurationManager.getInventoryConfiguration();
+        LanguageConfiguration languageConfig = configurationManager.getInventoryConfiguration();
 
         /* Language & Chat */
 
@@ -202,12 +202,12 @@ public class EternalCore extends JavaPlugin {
             .put(Language.PL, new PLMessagesConfiguration(langFolder, "pl_messages.yml"))
             .build();
 
-        List<Messages> messages = PandaStream.of(config.chat.languages)
+        List<Messages> messages = PandaStream.of(languageConfig.languages)
             .map(lang -> defaultImplementations.getOrDefault(lang, new ENMessagesConfiguration(langFolder, lang.getLang() + "_messages.yml")))
             .toList();
 
         Messages defaultMessages = PandaStream.of(messages)
-            .find(m -> m.getLanguage().equals(config.chat.defaultLanguage))
+            .find(m -> m.getLanguage().equals(languageConfig.defaultLanguage))
             .orThrow(() -> new RuntimeException("Default language not found!"));
 
         this.languageManager = new LanguageManager(defaultMessages);
@@ -236,7 +236,7 @@ public class EternalCore extends JavaPlugin {
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager, this.miniMessage);
         this.scoreboardManager.updateTask();
 
-        this.languageInventory = new LanguageInventory(inventory.languageSelector, noticeService, this.userManager, this.miniMessage);
+        this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
 
         this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)
 

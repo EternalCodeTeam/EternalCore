@@ -1,8 +1,11 @@
 package com.eternalcode.core.configuration.implementations;
 
+import com.eternalcode.core.chat.ChatSettings;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.language.Language;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
+import net.dzikoysk.cdn.entity.Exclude;
 import org.bukkit.Sound;
 import panda.utilities.StringUtils;
 
@@ -107,12 +110,44 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
         public float afterChatMessageVolume = 1.8F;
         public float afterChatMessagePitch = 1F;
+
+    }
+
+    @Contextual
+    public static class Chat implements ChatSettings {
+
+        public double helpopCooldown = 60.0;
+        public boolean commandExact = false;
+        public double chatDelay = 5.0;
+        public boolean chatEnabled = true;
+
+        @Override @Exclude
+        public boolean isChatEnabled() {
+            return this.chatEnabled;
+        }
+
+        @Override @Exclude
+        public void setChatEnabled(boolean chatEnabled) {
+            this.chatEnabled = chatEnabled;
+        }
+
+        @Override @Exclude
+        public double getChatDelay() {
+            return chatDelay;
+        }
+
+        @Override @Exclude
+        public void setChatDelay(double chatDelay) {
+            this.chatDelay = chatDelay;
+        }
+
     }
 
     @Contextual
     public static class Format {
         public String separator = "&7, ";
         public List<String> amountArgumentStatement = Arrays.asList("1", "8", "16", "32", "64", "100");
+
     }
 
     @Contextual
@@ -135,5 +170,6 @@ public class PluginConfiguration extends AbstractConfigWithResource {
                 " &awww.eternalcode.pl",
                 ""
         );
+
     }
 }
