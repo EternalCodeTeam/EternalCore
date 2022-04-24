@@ -22,20 +22,20 @@ public class Database {
         Stopwatch started = Stopwatch.createStarted();
         PluginConfiguration config = configurationManager.getPluginConfiguration();
 
-        hikari = new HikariDataSource();
+        this.hikari = new HikariDataSource();
 
-        hikari.setDataSourceClassName(String.valueOf(config.database.databaseType));
-        hikari.addDataSourceProperty("serverName", config.database.databaseHost);
-        hikari.addDataSourceProperty("port", config.database.databasePort);
-        hikari.addDataSourceProperty("databaseName", config.database.databaseName);
-        hikari.addDataSourceProperty("user", config.database.databaseUser);
-        hikari.addDataSourceProperty("password", config.database.databasePassword);
+        this.hikari.setDataSourceClassName(String.valueOf(config.database.databaseType));
+        this.hikari.addDataSourceProperty("serverName", config.database.databaseHost);
+        this.hikari.addDataSourceProperty("port", config.database.databasePort);
+        this.hikari.addDataSourceProperty("databaseName", config.database.databaseName);
+        this.hikari.addDataSourceProperty("user", config.database.databaseUser);
+        this.hikari.addDataSourceProperty("password", config.database.databasePassword);
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
-        logger.info("Connected to database in " + millis + "ms");
+        this.logger.info("Connected to database in " + millis + "ms");
     }
 
     public void disconnect() {
-        hikari.close();
+        this.hikari.close();
     }
 }

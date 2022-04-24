@@ -17,7 +17,7 @@ public class NoticeService {
     }
 
     public Notice notice() {
-        return new Notice(languageManager, audienceProvider, announcer);
+        return new Notice(this.languageManager, this.audienceProvider, this.announcer);
     }
 
     public void audience(Audience audience, MessageExtractor extractor) {

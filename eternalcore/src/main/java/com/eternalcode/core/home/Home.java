@@ -45,12 +45,12 @@ public class Home {
             return false;
         }
 
-        return uuid.equals(home.uuid) && name.equals(home.name);
+        return this.uuid.equals(home.uuid) && this.name.equals(home.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, name);
+        return Objects.hash(this.uuid, this.name);
     }
 
 }

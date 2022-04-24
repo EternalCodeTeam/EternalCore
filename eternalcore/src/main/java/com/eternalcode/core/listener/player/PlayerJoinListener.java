@@ -29,37 +29,37 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
 
         if (!player.hasPlayedBefore()) {
-            noticeService.notice()
-                .notice(NoticeType.CHAT, messages -> config.eventMessage.firstJoinMessage) // TODO: Move to messages config
+            this.noticeService.notice()
+                .notice(NoticeType.CHAT, messages -> this.config.eventMessage.firstJoinMessage) // TODO: Move to messages config
                 .placeholder("{PLAYER}", player.getName())
                 .all()
                 .send();
         }
 
-        if (config.otherSettings.gamemodeOnJoin) {
+        if (this.config.otherSettings.gamemodeOnJoin) {
             if (player.hasPermission("eternalcore.staff.gamemodejoin")) {
                 player.setGameMode(GameMode.CREATIVE);
             }
         }
 
-        if (config.sound.enabledAfterJoin) {
+        if (this.config.sound.enabledAfterJoin) {
             this.server.getOnlinePlayers()
-                .forEach(online -> online.playSound(online.getLocation(), config.sound.afterJoin, config.sound.afterJoinVolume, config.sound.afterJoinPitch));
+                .forEach(online -> online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch));
         }
 
-        if (config.eventMessage.enableWelcomeTitle) {
+        if (this.config.eventMessage.enableWelcomeTitle) {
             this.noticeService
                 .notice()
-                .notice(NoticeType.TITLE, messages -> config.eventMessage.welcomeTitle) //TODO: Move to messages config
-                .notice(NoticeType.SUBTITLE, messages -> config.eventMessage.welcomeSubTitle) //TODO: Move to messages config
+                .notice(NoticeType.TITLE, messages -> this.config.eventMessage.welcomeTitle) //TODO: Move to messages config
+                .notice(NoticeType.SUBTITLE, messages -> this.config.eventMessage.welcomeSubTitle) //TODO: Move to messages config
                 .placeholder("{PLAYER}", player.getName())
                 .player(player.getUniqueId())
                 .send();
         }
 
         event.setJoinMessage(StringUtils.EMPTY);
-        noticeService.notice()
-            .notice(NoticeType.CHAT, messages -> config.eventMessage.joinMessage) // TODO: Move to messages config
+        this.noticeService.notice()
+            .notice(NoticeType.CHAT, messages -> this.config.eventMessage.joinMessage) // TODO: Move to messages config
             .placeholder("{PLAYER}", player.getName())
             .all()
             .send();

@@ -24,7 +24,7 @@ public class AnvilCommand {
 
     @Execute
     public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player playerOrSender) {
-        Inventory inventory = server.createInventory(playerOrSender, InventoryType.ANVIL, StringUtils.EMPTY);
+        Inventory inventory = this.server.createInventory(playerOrSender, InventoryType.ANVIL, StringUtils.EMPTY);
         playerOrSender.openInventory(inventory);
     }
 }

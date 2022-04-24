@@ -38,13 +38,13 @@ public class Notice {
 
     @CheckReturnValue
     public Notice user(User user) {
-        this.audiences.add(audienceProvider.user(user));
+        this.audiences.add(this.audienceProvider.user(user));
         return this;
     }
 
     @CheckReturnValue
     public Notice player(UUID uuid) {
-        this.audiences.add(audienceProvider.player(uuid));
+        this.audiences.add(this.audienceProvider.player(uuid));
         return this;
     }
 
@@ -56,19 +56,19 @@ public class Notice {
 
     @CheckReturnValue
     public Notice console() {
-        this.audiences.add(audienceProvider.console());
+        this.audiences.add(this.audienceProvider.console());
         return this;
     }
 
     @CheckReturnValue
     public Notice all() {
-        this.audiences.addAll(audienceProvider.all());
+        this.audiences.addAll(this.audienceProvider.all());
         return this;
     }
 
     @CheckReturnValue
     public Notice allPlayers() {
-        this.audiences.addAll(audienceProvider.allPlayers());
+        this.audiences.addAll(this.audienceProvider.allPlayers());
         return this;
     }
 

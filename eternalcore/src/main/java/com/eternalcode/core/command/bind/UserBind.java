@@ -22,7 +22,7 @@ public class UserBind implements Parameter {
     @Override
     public Object apply(LiteInvocation invocation) {
         if (invocation.sender().getSender() instanceof Player player) {
-            return userManager.getUser(player.getUniqueId())
+            return this.userManager.getUser(player.getUniqueId())
                 .orThrow(() -> new IllegalStateException("Player " + player.getName() + " is not registered!"));
         }
 

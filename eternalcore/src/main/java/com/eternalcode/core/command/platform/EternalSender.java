@@ -21,17 +21,17 @@ final class EternalSender implements LiteSender {
 
     @Override
     public boolean hasPermission(String permission) {
-        return commandSender.hasPermission(permission);
+        return this.commandSender.hasPermission(permission);
     }
 
     @Override
     public void sendMessage(String message) {
-        announcer.announce(audience, Notification.of(message, NoticeType.CHAT));
+        this.announcer.announce(this.audience, Notification.of(message, NoticeType.CHAT));
     }
 
     @Override
     public CommandSender getSender() {
-        return commandSender;
+        return this.commandSender;
     }
 
 }

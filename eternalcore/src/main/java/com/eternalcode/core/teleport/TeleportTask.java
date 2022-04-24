@@ -6,7 +6,6 @@ import com.eternalcode.core.utils.DateUtils;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 import panda.utilities.StringUtils;
 
 import java.util.UUID;
@@ -52,7 +51,7 @@ public class TeleportTask implements Runnable {
             if (System.currentTimeMillis() < time) {
                 long actionTime = time - System.currentTimeMillis();
 
-                noticeService.notice()
+                this.noticeService.notice()
                     .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().actionBarMessage())
                     .placeholder("{TIME}", DateUtils.durationToString(actionTime))
                     .player(player.getUniqueId())

@@ -30,7 +30,6 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
         this.languageManager = languageManager;
     }
 
-
     @Override
     public GameMode parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
         Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
@@ -43,9 +42,9 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
             .filter(GAME_MODE_VALID::valid)
             .map(integer -> GAME_MODES[integer])
             .orThrow(() -> {
-                Messages messages = userProvider.getUser(invocation)
-                    .map(languageManager::getMessages)
-                    .orElseGet(languageManager.getDefaultMessages());
+                Messages messages = this.userProvider.getUser(invocation)
+                    .map(this.languageManager::getMessages)
+                    .orElseGet(this.languageManager.getDefaultMessages());
 
                 return new ValidationCommandException(messages.other().gameModeNotCorrect());
             });

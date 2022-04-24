@@ -242,29 +242,29 @@ public class EternalCore extends JavaPlugin {
 
             // arguments
             .argument(String.class, new PlayerNameArg(server))
-            .argument(Integer.class, new AmountArgument(languageManager, configurationManager, userProvider))
-            .argument(Player.class, new PlayerArg(userProvider, languageManager, server))
-            .argument(Player.class, new PlayerArgOrSender(languageManager, userProvider, server))
-            .argument(Material.class, new MaterialArgument(userProvider, languageManager))
-            .argument(GameMode.class, new GameModeArgument(userProvider, languageManager))
-            .argument(NoticeType.class, new NoticeTypeArgument(userProvider, languageManager))
-            .argument(Warp.class, new WarpArgument(warpManager, languageManager, userProvider))
-            .argument(Enchantment.class, new EnchantmentArgument(userProvider, languageManager))
+            .argument(Integer.class, new AmountArgument(this.languageManager, this.configurationManager, this.userProvider))
+            .argument(Player.class, new PlayerArg(this.userProvider, this.languageManager, server))
+            .argument(Player.class, new PlayerArgOrSender(this.languageManager, this.userProvider, server))
+            .argument(Material.class, new MaterialArgument(this.userProvider, this.languageManager))
+            .argument(GameMode.class, new GameModeArgument(this.userProvider, this.languageManager))
+            .argument(NoticeType.class, new NoticeTypeArgument(this.userProvider, this.languageManager))
+            .argument(Warp.class, new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
+            .argument(Enchantment.class, new EnchantmentArgument(this.userProvider, this.languageManager))
 
             // Optional arguments
-            .argument(Option.class, new PlayerArg(userProvider, languageManager, server).toOptionHandler())
-            .argument(Option.class, new PlayerArgOrSender(languageManager, userProvider, server).toOptionHandler())
+            .argument(Option.class, new PlayerArg(this.userProvider, this.languageManager, server).toOptionHandler())
+            .argument(Option.class, new PlayerArgOrSender(this.languageManager, this.userProvider, server).toOptionHandler())
 
             // Dynamic binds
-            .parameterBind(Player.class, new PlayerBind(languageManager))
-            .parameterBind(Audience.class, new AudienceBind(userManager))
-            .parameterBind(User.class, new UserBind(languageManager, userManager))
+            .parameterBind(Player.class, new PlayerBind(this.languageManager))
+            .parameterBind(Audience.class, new AudienceBind(this.userManager))
+            .parameterBind(User.class, new UserBind(this.languageManager, this.userManager))
 
             // Static binds
             .typeBind(EternalCore.class, () -> this)
             .typeBind(ConfigurationManager.class, () -> this.configurationManager)
             .typeBind(LanguageInventory.class, () -> this.languageInventory)
-            .typeBind(LanguageManager.class, () -> languageManager)
+            .typeBind(LanguageManager.class, () -> this.languageManager)
             .typeBind(PluginConfiguration.class, () -> config)
             .typeBind(LocationsConfiguration.class, () -> locations)
             .typeBind(TeleportManager.class, () -> this.teleportManager)
@@ -276,7 +276,7 @@ public class EternalCore extends JavaPlugin {
             .typeBind(Scheduler.class, () -> this.scheduler)
 
             .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
-            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(userProvider, languageManager))
+            .message(ValidationInfo.NO_PERMISSION, new PermissionMessage(this.userProvider, this.languageManager))
             .formattingUseScheme(UseSchemeFormatting.NORMAL)
 
             .command(
@@ -324,13 +324,13 @@ public class EternalCore extends JavaPlugin {
 
         PandaStream.of(
             new PlayerChatListener(this.chatManager, noticeService, this.configurationManager, server),
-            new PlayerJoinListener(this.configurationManager, noticeService, server),
-            new PlayerQuitListener(this.configurationManager, noticeService, server),
+            new PlayerJoinListener(this.configurationManager, this.noticeService, server),
+            new PlayerQuitListener(this.configurationManager, this.noticeService, server),
             new PrepareUserController(this.userManager, server),
             new ScoreboardListener(config, this.scoreboardManager),
             new PlayerCommandPreprocessListener(this.noticeService, this.configurationManager, server),
             new SignChangeListener(this.miniMessage),
-            new PlayerDeathListener(this.noticeService, configurationManager),
+            new PlayerDeathListener(this.noticeService, this.configurationManager),
             new TeleportListeners(this.noticeService, this.teleportManager)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 

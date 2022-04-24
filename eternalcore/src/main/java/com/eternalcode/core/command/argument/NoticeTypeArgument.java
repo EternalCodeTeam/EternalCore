@@ -28,9 +28,9 @@ public class NoticeTypeArgument implements SingleArgumentHandler<NoticeType> {
     public NoticeType parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
         return Option.attempt(IllegalArgumentException.class, () -> NoticeType.valueOf(argument.toUpperCase()))
             .orThrow(() -> {
-                Messages messages = userProvider.getUser(invocation)
-                    .map(languageManager::getMessages)
-                    .orElseGet(languageManager.getDefaultMessages());
+                Messages messages = this.userProvider.getUser(invocation)
+                    .map(this.languageManager::getMessages)
+                    .orElseGet(this.languageManager.getDefaultMessages());
 
                 return new ValidationCommandException(messages.argument().noArgument());
             });

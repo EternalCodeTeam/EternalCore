@@ -32,7 +32,7 @@ public class UserManager {
     }
 
     public Option<User> create(UUID uuid, String name) {
-        if (this.usersByUUID.containsKey(uuid) || usersByName.containsKey(name)) {
+        if (this.usersByUUID.containsKey(uuid) || this.usersByName.containsKey(name)) {
             return Option.none();
         }
 
@@ -44,10 +44,10 @@ public class UserManager {
     }
 
     public Collection<User> getUsersByUUID() {
-        return Collections.unmodifiableCollection(usersByUUID.values());
+        return Collections.unmodifiableCollection(this.usersByUUID.values());
     }
 
     public Collection<User> getUsersByName() {
-        return Collections.unmodifiableCollection(usersByName.values());
+        return Collections.unmodifiableCollection(this.usersByName.values());
     }
 }

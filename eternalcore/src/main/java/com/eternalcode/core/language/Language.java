@@ -29,12 +29,12 @@ public class Language {
             return false;
         }
 
-        return lang.equals(language.lang);
+        return this.lang.equals(language.lang);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(lang);
+        return Objects.hash(this.lang);
     }
 
     public static Language fromLocate(Locale locale) {

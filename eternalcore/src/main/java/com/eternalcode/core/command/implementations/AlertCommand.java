@@ -24,7 +24,7 @@ public class AlertCommand {
     @Execute
     @MinArgs(2)
     public void execute(@Arg(0) NoticeType type, @Joiner String text) {
-        noticeService.notice()
+        this.noticeService.notice()
             .notice(type, messages -> messages.other().alertMessagePrefix())
             .placeholder("{BROADCAST}", text)
             .all()

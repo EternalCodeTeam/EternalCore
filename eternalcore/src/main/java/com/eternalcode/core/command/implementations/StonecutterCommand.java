@@ -24,7 +24,7 @@ public class StonecutterCommand {
 
     @Execute
     public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player playerOrSender) {
-        Inventory inventory = server.createInventory(playerOrSender, InventoryType.STONECUTTER, StringUtils.EMPTY);
+        Inventory inventory = this.server.createInventory(playerOrSender, InventoryType.STONECUTTER, StringUtils.EMPTY);
         playerOrSender.openInventory(inventory);
     }
 }

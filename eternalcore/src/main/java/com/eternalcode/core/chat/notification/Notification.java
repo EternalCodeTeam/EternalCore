@@ -22,15 +22,15 @@ public class Notification {
     }
 
     public Notification edit(Function<String, String> edit) {
-        return new Notification(edit.apply(this.message), types);
+        return new Notification(edit.apply(this.message), this.types);
     }
 
     public Set<NoticeType> getTypes() {
-        return Collections.unmodifiableSet(types);
+        return Collections.unmodifiableSet(this.types);
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public static Notification of(String message, NoticeType... types) {

@@ -57,7 +57,7 @@ public class HelpOpCommand {
             return;
         }
 
-        Notice notice = noticeService.notice()
+        Notice notice = this.noticeService.notice()
             .console()
             .message(messages -> messages.helpOp().format())
             .placeholder("{PLAYER}", player.getName())

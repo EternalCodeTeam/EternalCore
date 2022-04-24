@@ -42,15 +42,15 @@ public class ConfigurationManager {
     }
 
     public <T extends ConfigWithResource> void loadAndRender(T config) {
-        cdn.load(config.getResource(), config)
+        this.cdn.load(config.getResource(), config)
             .orElseThrow(RuntimeException::new);
 
-        cdn.render(config, config.getResource())
+        this.cdn.render(config, config.getResource())
             .orElseThrow(RuntimeException::new);
     }
 
     public <T extends ConfigWithResource> void render(T config) {
-        cdn.render(config, config.getResource())
+        this.cdn.render(config, config.getResource())
             .orElseThrow(RuntimeException::new);
     }
 

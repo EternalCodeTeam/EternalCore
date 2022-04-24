@@ -30,9 +30,9 @@ public class WarpArgument implements SingleArgumentHandler<Warp> {
         Warp warp = this.warpManager.findWarp(argument).get();
 
         if (warp == null) {
-            Messages messages = userProvider.getUser(invocation)
-                    .map(languageManager::getMessages)
-                    .orElseGet(languageManager.getDefaultMessages());
+            Messages messages = this.userProvider.getUser(invocation)
+                    .map(this.languageManager::getMessages)
+                    .orElseGet(this.languageManager.getDefaultMessages());
 
             throw new ValidationCommandException(messages.warp().notExist());
         }

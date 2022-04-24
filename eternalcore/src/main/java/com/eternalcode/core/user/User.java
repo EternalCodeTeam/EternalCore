@@ -15,7 +15,6 @@ public class User implements Entity {
     private final String name;
     private final UUID uuid;
 
-
     User(UUID uuid, String name) {
         this.name = name;
         this.uuid = uuid;
@@ -23,16 +22,16 @@ public class User implements Entity {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
     public UUID getUniqueId() {
-        return uuid;
+        return this.uuid;
     }
 
     public ClientSettings getClientSettings() {
-        return clientSettings;
+        return this.clientSettings;
     }
 
     public void setClientSettings(ClientSettings clientSettings) {
@@ -40,7 +39,7 @@ public class User implements Entity {
     }
 
     public Settings getSettings() {
-        return settings;
+        return this.settings;
     }
 
     public void setSettings(Settings settings) {

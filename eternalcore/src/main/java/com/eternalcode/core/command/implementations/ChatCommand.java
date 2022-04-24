@@ -58,8 +58,6 @@ public class ChatCommand {
 
         this.chatManager.getChatSettings().setChatEnabled(true);
 
-
-
         this.audiences.notice()
             .message(messages -> messages.chat().enabled())
             .placeholder("{NICK}", sender.getName())
