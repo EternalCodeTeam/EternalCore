@@ -13,18 +13,18 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PrepareUserController implements Listener {
 
-    private final UserManager userService;
+    private final UserManager userManager;
     private final Server server;
 
     public PrepareUserController(UserManager userManager, Server server) {
-        this.userService = userManager;
+        this.userManager = userManager;
         this.server = server;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        User user = this.userService.getOrCreate(player.getUniqueId(), player.getName());
+        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
         ClientBukkitSettings clientSettings = new ClientBukkitSettings(server, user.getUniqueId());
 
         user.setClientSettings(clientSettings);
@@ -34,7 +34,7 @@ public class PrepareUserController implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        User user = this.userService.getUser(player.getUniqueId())
+        User user = this.userManager.getUser(player.getUniqueId())
             .orThrow(() -> new IllegalStateException("User not found"));
 
         if (user != null) {
