@@ -101,6 +101,7 @@ import dev.rollczi.litecommands.valid.messages.UseSchemeFormatting;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -343,6 +344,7 @@ public class EternalCore extends JavaPlugin {
 
         // bStats metrics
         Metrics metrics = new Metrics(this, 13964);
+        //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
@@ -370,7 +372,8 @@ public class EternalCore extends JavaPlugin {
         }
 
         switch (VERSION) {
-            case "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1" -> this.getLogger().info("EternalCore no longer supports your version, be aware that there may be bugs!");
+            case "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1": return;
+            default: this.getLogger().warning("EternalCore no longer supports your version, be aware that there may be bugs!");
         }
     }
 
