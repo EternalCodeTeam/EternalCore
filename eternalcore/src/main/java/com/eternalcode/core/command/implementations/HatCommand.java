@@ -23,10 +23,20 @@ public class HatCommand {
 
     @Execute
     public void execute(Player player) {
+
         PlayerInventory playerInventory = player.getInventory();
 
         ItemStack itemStack = playerInventory.getHelmet();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
+
+        if (handItem == null) {
+            this.noticeService
+                .notice()
+                .player(player.getUniqueId())
+                .message(messages -> messages.argument().noItem())
+                .send();
+            return;
+        }
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
             playerInventory.setHelmet(handItem);

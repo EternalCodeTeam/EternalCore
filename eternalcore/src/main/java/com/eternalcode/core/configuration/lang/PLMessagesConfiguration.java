@@ -102,6 +102,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Contextual
     public static class PLArgumentSection implements ArgumentSection {
+
         public String permissionMessage = "&4Blad: &cNie masz uprawnien do tej komendy! &7({PERMISSIONS})";
         public String offlinePlayer = "&4Blad: &cTen gracz jest offline!";
         public String onlyPlayer = "&4Blad: &cKomenda tylko dla graczy!";
@@ -313,16 +314,18 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String nameMessage = "&8» &6Nowa nazwa itemu: &c{NAME}";
         public String enchantedMessage = "&8» &6Item w rece zostal zenchantowany!";
         public String languageChanged = "&8» &6Zmieniono język na &cPolski&6!";
+        public String privateMessageSendFormat = "&8[&7Ty -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String privateMessageReceiveFormat = "&8[&7{SENDER} -> &fTy&8]&7: &f{MESSAGE}";
 
         public List<String> whoisCommand = Arrays.asList("&8» &7Gracz: &f{PLAYER}",
-                "&8» &7UUID: &f{UUID}",
-                "&8» &7IP: &f{IP}",
-                "&8» &7Szybkość chodzenia: &f{WALK-SPEED}",
-                "&8» &7Szybkość latania: &f{SPEED}",
-                "&8» &7Opóźnienie: &f{PING}ms",
-                "&8» &7Poziom: &f{LEVEL}",
-                "&8» &7Zdrowie: &f{HEALTH}",
-                "&8» &7Poziom najedzenia: &f{FOOD}");
+            "&8» &7UUID: &f{UUID}",
+            "&8» &7IP: &f{IP}",
+            "&8» &7Szybkość chodzenia: &f{WALK-SPEED}",
+            "&8» &7Szybkość latania: &f{SPEED}",
+            "&8» &7Opóźnienie: &f{PING}ms",
+            "&8» &7Poziom: &f{LEVEL}",
+            "&8» &7Zdrowie: &f{HEALTH}",
+            "&8» &7Poziom najedzenia: &f{FOOD}");
 
         public String successfullyReloaded() {
             return this.successfullyReloaded;
@@ -490,6 +493,16 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String languageChanged() {
             return this.languageChanged;
+        }
+
+        @Override
+        public String privateMessageSendFormat() {
+            return this.privateMessageSendFormat;
+        }
+
+        @Override
+        public String privateMessageReceiveFormat() {
+            return this.privateMessageReceiveFormat;
         }
     }
 }

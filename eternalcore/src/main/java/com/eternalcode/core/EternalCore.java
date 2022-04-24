@@ -45,6 +45,7 @@ import com.eternalcode.core.command.implementations.InventoryOpenCommand;
 import com.eternalcode.core.command.implementations.KillCommand;
 import com.eternalcode.core.command.implementations.LanguageCommand;
 import com.eternalcode.core.command.implementations.ListCommand;
+import com.eternalcode.core.command.implementations.MessageCommand;
 import com.eternalcode.core.command.implementations.NameCommand;
 import com.eternalcode.core.command.implementations.OnlineCommand;
 import com.eternalcode.core.command.implementations.PingCommand;
@@ -317,7 +318,8 @@ public class EternalCore extends JavaPlugin {
                 NameCommand.class,
                 EnchantCommand.class,
                 TeleportCommand.class,
-                LanguageCommand.class
+                LanguageCommand.class,
+                MessageCommand.class
             )
             .register();
 
