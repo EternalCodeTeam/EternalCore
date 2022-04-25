@@ -16,7 +16,7 @@ dependencies {
     implementation("dev.rollczi.litecommands:bukkit:1.8.4")
 
     // cdn configs
-    implementation("net.dzikoysk:cdn:1.13.20")
+    implementation("net.dzikoysk:cdn:1.13.22")
 }
 
 tasks.getByName<Test>("test") {
