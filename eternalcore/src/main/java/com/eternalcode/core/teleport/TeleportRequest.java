@@ -1,28 +1,25 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.user.User;
+import org.bukkit.Location;
+
+import java.util.UUID;
 
 public class TeleportRequest {
 
-    private final User to;
-    private final User from;
-    private final long expire;
+    private final Location destinationLocation;
+    private final UUID uuid;
 
-    public TeleportRequest(User from, User to, long expire) {
-        this.to = to;
-        this.from = from;
-        this.expire = expire;
+    public TeleportRequest(UUID uuid, Location destinationLocation) {
+        this.uuid = uuid;
+        this.destinationLocation = destinationLocation;
     }
 
-    public User getFrom() {
-        return this.from;
+
+    public Location getDestinationLocation() {
+        return destinationLocation;
     }
 
-    public User getTo() {
-        return this.to;
-    }
-
-    public long getExpire() {
-        return expire;
+    public UUID getUuid() {
+        return uuid;
     }
 }

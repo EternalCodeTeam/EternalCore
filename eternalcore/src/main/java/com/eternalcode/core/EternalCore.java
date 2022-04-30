@@ -57,6 +57,9 @@ import com.eternalcode.core.command.implementations.SpawnCommand;
 import com.eternalcode.core.command.implementations.SpeedCommand;
 import com.eternalcode.core.command.implementations.StonecutterCommand;
 import com.eternalcode.core.command.implementations.TeleportCommand;
+import com.eternalcode.core.command.implementations.TpaCommand;
+import com.eternalcode.core.command.implementations.TpaDenyCommand;
+import com.eternalcode.core.command.implementations.TpacceptCommand;
 import com.eternalcode.core.command.implementations.TposCommand;
 import com.eternalcode.core.command.implementations.WhoIsCommand;
 import com.eternalcode.core.command.implementations.WorkbenchCommand;
@@ -89,6 +92,7 @@ import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.teleport.TeleportListeners;
 import com.eternalcode.core.teleport.TeleportManager;
+import com.eternalcode.core.teleport.TeleportRequestManager;
 import com.eternalcode.core.teleport.TeleportTask;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -102,7 +106,6 @@ import dev.rollczi.litecommands.valid.messages.UseSchemeFormatting;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -131,6 +134,7 @@ public class EternalCore extends JavaPlugin {
     private UserManager userManager;
     private HomeManager homeManager;
     private TeleportManager teleportManager;
+    private TeleportRequestManager teleportRequestManager;
     private WarpManager warpManager;
     private BukkitUserProvider userProvider;
     private LanguageInventory languageInventory;
@@ -182,9 +186,9 @@ public class EternalCore extends JavaPlugin {
         this.userManager = new UserManager();
         this.homeManager = new HomeManager();
         this.teleportManager = new TeleportManager();
+        this.teleportRequestManager = new TeleportRequestManager();
         this.warpManager = WarpManager.create(new CacheWarpRepository());
         this.userProvider = new BukkitUserProvider(userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
-
         /* Configuration */
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
@@ -270,6 +274,7 @@ public class EternalCore extends JavaPlugin {
             .typeBind(PluginConfiguration.class, () -> config)
             .typeBind(LocationsConfiguration.class, () -> locations)
             .typeBind(TeleportManager.class, () -> this.teleportManager)
+            .typeBind(TeleportRequestManager.class, () -> this.teleportRequestManager)
             .typeBind(UserManager.class, () -> this.userManager)
             .typeBind(ScoreboardManager.class, () -> this.scoreboardManager)
             .typeBind(NoticeService.class, () -> this.noticeService)
@@ -319,7 +324,10 @@ public class EternalCore extends JavaPlugin {
                 EnchantCommand.class,
                 TeleportCommand.class,
                 LanguageCommand.class,
-                MessageCommand.class
+                MessageCommand.class,
+                TpaCommand.class,
+                TpacceptCommand.class,
+                TpaDenyCommand.class
             )
             .register();
 

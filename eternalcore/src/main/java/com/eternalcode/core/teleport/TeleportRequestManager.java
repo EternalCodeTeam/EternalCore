@@ -1,37 +1,36 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.user.User;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import panda.std.Option;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import java.time.Duration;
+import java.util.UUID;
 
-public class TeleportRequestManager {
+public final class TeleportRequestManager {
 
-    private List<TeleportRequest> teleportRequest = new ArrayList<>();
+    private final Cache<UUID, UUID> teleportRequests;
 
-    public void createRequest(User from, User to) {
-        long expire = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(80);
-
-        this.teleportRequest.add(new TeleportRequest(from, to, expire));
+    public TeleportRequestManager() {
+        this.teleportRequests = CacheBuilder
+            .newBuilder()
+            .expireAfterWrite(Duration.ofMinutes(1))
+            .build();
     }
 
-    public void removeRequest(TeleportRequest request) {
-        this.teleportRequest.remove(request);
+    public Option<UUID> findTeleportRequest(UUID uuid) {
+        return Option.of(this.teleportRequests.getIfPresent(uuid));
     }
 
-    public List<TeleportRequest> getRequests(User user) {
-        return this.teleportRequest.stream()
-            .filter(request -> request.getTo().equals(user))
-            .filter(request -> request.getExpire() > System.currentTimeMillis())
-            .collect(Collectors.toList());
+    public void addTeleportRequest(UUID uuid, UUID request) {
+        this.teleportRequests.put(uuid, request);
     }
 
-    public Collection<TeleportRequest> getTeleportRequests() {
-        return Collections.unmodifiableCollection(this.teleportRequest);
+    public void removeTeleportRequest(UUID uuid) {
+        this.teleportRequests.asMap().remove(uuid);
     }
 
+    public boolean contains(UUID uuid) {
+        return this.teleportRequests.asMap().containsKey(uuid);
+    }
 }

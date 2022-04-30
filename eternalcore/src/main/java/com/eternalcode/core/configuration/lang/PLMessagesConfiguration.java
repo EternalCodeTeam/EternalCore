@@ -200,6 +200,12 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String teleported = "&8» &aPrzeteleportowano!";
         public String teleporting = "&8» &aTeleportuje...";
         public String haveTeleport = "&4Blad: &cTeleportujesz się już!";
+        public String noTeleportRequestsMessage = "&7Nie masz żadnych próśb o teleportację!";
+        public String teleportAcceptMessage = "&aGracz {PLAYER} zaakceptował twoją prośbę o teleportację!";
+        public String teleportDenyMessage = "&Gracz {PLAYER} odrzucił twoją prośbę o teleportację!";
+        public String teleportRequestSendMessage = "&7Pomyślnie wysłano prośbę o teleportację do &f{TARGET}";
+        public String teleportRequestReceivedMessage = "&7{SENDER} chce się do Ciebie przeteleportować!";
+        public String teleportRequestAlreadySent = "&cJuż wysłałeś prośbę o teleportację!";
 
         public String actionBarMessage() {
             return this.actionBarMessage;
@@ -219,6 +225,36 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String haveTeleport() {
             return this.haveTeleport;
+        }
+
+        @Override
+        public String noTeleportRequestsMessage() {
+            return this.noTeleportRequestsMessage;
+        }
+
+        @Override
+        public String teleportAcceptMessage() {
+            return this.teleportAcceptMessage;
+        }
+
+        @Override
+        public String teleportDenyMessage() {
+            return this.teleportDenyMessage;
+        }
+
+        @Override
+        public String teleportRequestSendMessage() {
+            return this.teleportRequestSendMessage;
+        }
+
+        @Override
+        public String teleportRequestReceivedMessage() {
+            return this.teleportRequestReceivedMessage;
+        }
+
+        @Override
+        public String teleportRequestAlreadySent() {
+            return this.teleportRequestAlreadySent;
         }
     }
 

@@ -54,6 +54,12 @@ public interface Messages extends ConfigWithResource {
         String teleported();
         String teleporting();
         String haveTeleport();
+        String noTeleportRequestsMessage();
+        String teleportAcceptMessage();
+        String teleportDenyMessage();
+        String teleportRequestSendMessage();
+        String teleportRequestReceivedMessage();
+        String teleportRequestAlreadySent();
     }
 
     interface ChatSection {

@@ -199,6 +199,12 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String teleported = "&8» &aTeleported!";
         public String teleporting = "&8» &aTeleporting...";
         public String haveTeleport = "&8» &cYou are in teleport!";
+        public String noTeleportRequestsMessage = "&7You don't have any teleport requests!";
+        public String teleportAcceptMessage = "&aPlayer {PLAYER} has accepted your teleportation request!";
+        public String teleportDenyMessage = "&cPlayer {PLAYER} has declined your teleportation request!";
+        public String teleportRequestAlreadySent = "&cYou have already sent teleportation request!";
+        public String teleportRequestSendMessage = "&7Succesfuly sent teleportation request to &f{TARGET}";
+        public String teleportRequestReceivedMessage = "&7{SENDER} wants to teleport to you!";
 
         public String actionBarMessage() {
             return this.actionBarMessage;
@@ -218,6 +224,36 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String haveTeleport() {
             return this.haveTeleport;
+        }
+
+        @Override
+        public String noTeleportRequestsMessage() {
+            return this.noTeleportRequestsMessage;
+        }
+
+        @Override
+        public String teleportAcceptMessage() {
+            return this.teleportAcceptMessage;
+        }
+
+        @Override
+        public String teleportDenyMessage() {
+            return this.teleportDenyMessage;
+        }
+
+        @Override
+        public String teleportRequestSendMessage() {
+            return this.teleportRequestSendMessage;
+        }
+
+        @Override
+        public String teleportRequestReceivedMessage() {
+            return this.teleportRequestReceivedMessage;
+        }
+
+        @Override
+        public String teleportRequestAlreadySent() {
+            return this.teleportRequestAlreadySent;
         }
     }
 
