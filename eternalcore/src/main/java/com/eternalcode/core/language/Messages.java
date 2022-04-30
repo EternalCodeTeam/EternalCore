@@ -76,7 +76,6 @@ public interface Messages extends ConfigWithResource {
     }
 
     interface OtherMessages {
-        String successfullyReloaded();
         String successfullyTeleported();
         String successfullyTeleportedPlayer();
         String alertMessagePrefix();

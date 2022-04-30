@@ -272,7 +272,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Contextual
     public static class ENOtherMessages implements Messages.OtherMessages {
-        public String successfullyReloaded = "&8» &aThe plugin has been successfully reloaded!";
         public String successfullyTeleported = "&8» &aSuccessfully teleported to {PLAYER}!";
         public String successfullyTeleportedPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
         public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
@@ -325,10 +324,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
             "&8» &7Target level: &f{LEVEL}",
             "&8» &7Target health: &f{HEALTH}",
             "&8» &7Target food level: &f{FOOD}");
-
-        public String successfullyReloaded() {
-            return this.successfullyReloaded;
-        }
 
         public String successfullyTeleported() {
             return this.successfullyTeleported;

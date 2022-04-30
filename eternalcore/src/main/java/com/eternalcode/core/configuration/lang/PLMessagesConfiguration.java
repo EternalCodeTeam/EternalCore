@@ -273,7 +273,6 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Contextual
     public static class PLOtherMessages implements OtherMessages {
-        public String successfullyReloaded = "&8» &aPrzeładowano plugin!";
         public String successfullyTeleported = "&8» &aPrzeteleportowano do {PLAYER}!";
         public String successfullyTeleportedPlayer = "&8» &aPrzeteleportowano {PLAYER} do {ARG-PLAYER}!";
         public String alertMessagePrefix = "&c&lOGLOSZENIE: &7{BROADCAST}";
@@ -326,10 +325,6 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
             "&8» &7Poziom: &f{LEVEL}",
             "&8» &7Zdrowie: &f{HEALTH}",
             "&8» &7Poziom najedzenia: &f{FOOD}");
-
-        public String successfullyReloaded() {
-            return this.successfullyReloaded;
-        }
 
         public String successfullyTeleported() {
             return this.successfullyTeleported;

@@ -36,5 +36,4 @@ public class Notification {
     public static Notification of(String message, NoticeType... types) {
         return new Notification(message, types);
     }
-
 }

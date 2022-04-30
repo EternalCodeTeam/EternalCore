@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 @Section(route = "msg", aliases = {"message", "whisper"})
 @Permission("eternalcore.commands.message")
 @UsageMessage("&8» &cPoprawne użycie &7/msg <player> <message>")
-public final class MessageCommand {
+public class MessageCommand {
 
     private final NoticeService noticeService;
 
