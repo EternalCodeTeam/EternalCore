@@ -103,7 +103,6 @@ import com.eternalcode.core.warps.WarpManager;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
-import dev.rollczi.litecommands.valid.ValidationInfo;
 import dev.rollczi.litecommands.valid.messages.UseSchemeFormatting;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -138,8 +137,6 @@ public class EternalCore extends JavaPlugin {
     private TeleportService teleportService;
     private WarpManager warpManager;
     private BukkitUserProvider userProvider;
-    private LanguageInventory languageInventory;
-    private TeleportRequestService teleportRequestService;
 
     /**
      * Configuration, Language & Chat
@@ -147,6 +144,13 @@ public class EternalCore extends JavaPlugin {
     private ConfigurationManager configurationManager;
     private LanguageManager languageManager;
     private ChatManager chatManager;
+    private LanguageInventory languageInventory;
+
+    /**
+     * Services & Managers (dependent on configuration)
+     **/
+    private Database database;
+    private TeleportRequestService teleportRequestService;
 
     /**
      * Adventure
@@ -164,7 +168,6 @@ public class EternalCore extends JavaPlugin {
     /**
      * FrameWorks & Libs
      **/
-    private Database database;
     private ScoreboardManager scoreboardManager;
     private LiteCommands liteCommands;
     private boolean isSpigot = false;
@@ -189,12 +192,11 @@ public class EternalCore extends JavaPlugin {
         this.homeManager = new HomeManager();
         this.teleportService = new TeleportService();
         this.warpManager = WarpManager.create(new CacheWarpRepository());
-        this.userProvider = new BukkitUserProvider(userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
+        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 
         /* Configuration */
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
-        this.database = new Database(configurationManager, this.getLogger());
         this.configurationManager.loadAndRenderConfigs();
 
         PluginConfiguration config = configurationManager.getPluginConfiguration();
@@ -226,6 +228,12 @@ public class EternalCore extends JavaPlugin {
         }
 
         this.chatManager = new ChatManager(config.chat);
+        this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
+
+        /* Services & Managers (dependent on configuration) */
+
+        this.database = new Database(this.configurationManager, this.getLogger());
+        this.teleportRequestService = new TeleportRequestService(config);
 
         /* Adventure */
 
@@ -243,10 +251,6 @@ public class EternalCore extends JavaPlugin {
         /* FrameWorks & Libs */
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager, this.miniMessage);
         this.scoreboardManager.updateTask();
-
-        this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
-
-        this.teleportRequestService = new TeleportRequestService(config);
 
         this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)
 
@@ -398,12 +402,20 @@ public class EternalCore extends JavaPlugin {
         return this.scheduler;
     }
 
-    public TeleportService getTeleportManager() {
+    public UserManager getUserManager() {
+        return this.userManager;
+    }
+
+    public HomeManager getHomeManager() {
+        return this.homeManager;
+    }
+
+    public TeleportService getTeleportService() {
         return this.teleportService;
     }
 
-    public UserManager getUserManager() {
-        return this.userManager;
+    public WarpManager getWarpManager() {
+        return this.warpManager;
     }
 
     public BukkitUserProvider getUserProvider() {
@@ -420,6 +432,18 @@ public class EternalCore extends JavaPlugin {
 
     public ChatManager getChatManager() {
         return this.chatManager;
+    }
+
+    public LanguageInventory getLanguageInventory() {
+        return this.languageInventory;
+    }
+
+    public Database getDatabase() {
+        return this.database;
+    }
+
+    public TeleportRequestService getTeleportRequestService() {
+        return this.teleportRequestService;
     }
 
     public BukkitAudiences getAdventureAudiences() {
@@ -446,11 +470,12 @@ public class EternalCore extends JavaPlugin {
         return this.scoreboardManager;
     }
 
-    public WarpManager getWarpManager() {
-        return this.warpManager;
-    }
-
     public LiteCommands getLiteCommands() {
         return this.liteCommands;
     }
+
+    public boolean isSpigot() {
+        return this.isSpigot;
+    }
+
 }
