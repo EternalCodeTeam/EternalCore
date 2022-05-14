@@ -7,7 +7,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
@@ -15,11 +14,11 @@ import java.util.UUID;
 public class TeleportListeners implements Listener {
 
     private final NoticeService noticeService;
-    private final TeleportManager teleportManager;
+    private final TeleportService teleportService;
 
-    public TeleportListeners(NoticeService noticeService, TeleportManager teleportManager) {
+    public TeleportListeners(NoticeService noticeService, TeleportService teleportService) {
         this.noticeService = noticeService;
-        this.teleportManager = teleportManager;
+        this.teleportService = teleportService;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -46,8 +45,8 @@ public class TeleportListeners implements Listener {
     private void removeTeleport(Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.teleportManager.inTeleport(uuid)) {
-            this.teleportManager.removeTeleport(uuid);
+        if (this.teleportService.inTeleport(uuid)) {
+            this.teleportService.removeTeleport(uuid);
 
             this.noticeService.notice()
                     .message(messages -> messages.teleport().cancel())

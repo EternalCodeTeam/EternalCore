@@ -13,18 +13,18 @@ import java.util.UUID;
 public class TeleportTask implements Runnable {
 
     private final NoticeService noticeService;
-    private final TeleportManager teleportManager;
+    private final TeleportService teleportService;
     private final Server server;
 
-    public TeleportTask(NoticeService noticeService, TeleportManager teleportManager, Server server) {
+    public TeleportTask(NoticeService noticeService, TeleportService teleportService, Server server) {
         this.noticeService = noticeService;
-        this.teleportManager = teleportManager;
+        this.teleportService = teleportService;
         this.server = server;
     }
 
     @Override
     public void run() {
-        for (Teleport teleport : this.teleportManager.getTeleports()){
+        for (Teleport teleport : this.teleportService.getTeleports()){
             Location destinationLocation = teleport.getDestinationLocation();
             Location startLocation = teleport.getStartLocation();
             UUID uuid = teleport.getUuid();
@@ -37,7 +37,7 @@ public class TeleportTask implements Runnable {
             }
 
             if (player.getLocation().distance(startLocation) > 0.5) {
-                this.teleportManager.removeTeleport(uuid);
+                this.teleportService.removeTeleport(uuid);
 
                 this.noticeService.notice()
                     .notice(NoticeType.ACTIONBAR, messages -> StringUtils.EMPTY)
@@ -62,7 +62,7 @@ public class TeleportTask implements Runnable {
 
             player.teleport(destinationLocation);
 
-            this.teleportManager.removeTeleport(uuid);
+            this.teleportService.removeTeleport(uuid);
 
             this.noticeService.notice()
                 .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())

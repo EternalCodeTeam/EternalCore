@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.SingleArgumentHandler;
 import dev.rollczi.litecommands.valid.ValidationCommandException;
+import panda.std.Option;
 
 import java.util.List;
 
@@ -27,17 +28,17 @@ public class WarpArgument implements SingleArgumentHandler<Warp> {
 
     @Override
     public Warp parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Warp warp = this.warpManager.findWarp(argument).get();
+        Option<Warp> warpOption = this.warpManager.findWarp(argument);
 
-        if (warp == null) {
+        if (warpOption.isEmpty()) {
             Messages messages = this.userProvider.getUser(invocation)
-                    .map(this.languageManager::getMessages)
-                    .orElseGet(this.languageManager.getDefaultMessages());
+                .map(this.languageManager::getMessages)
+                .orElseGet(this.languageManager.getDefaultMessages());
 
             throw new ValidationCommandException(messages.warp().notExist());
         }
 
-        return warp;
+        return warpOption.get();
     }
 
     @Override

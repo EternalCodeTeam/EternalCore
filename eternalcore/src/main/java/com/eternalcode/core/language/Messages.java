@@ -15,11 +15,13 @@ public interface Messages extends ConfigWithResource {
     AdminChatSection adminChat();
     ChatSection chat();
     TeleportSection teleport();
+    TpaSection tpa();
     OtherMessages other();
     WarpSection warp();
 
     interface ArgumentSection {
         String permissionMessage();
+        String usageMessage();
         String offlinePlayer();
         String onlyPlayer();
         String notNumber();
@@ -73,6 +75,26 @@ public interface Messages extends ConfigWithResource {
         String notExist();
         String noPermission();
         String disabled();
+    }
+
+    interface TpaSection {
+        String tpaSelfMessage();
+        String tpaAlreadySentMessage();
+        String tpaSentMessage();
+        String tpaRecivedMessage();
+
+        String tpaDenyNoRequestMessage();
+        String tpaDenyNoRequestMessageAll();
+        String tpaDenyDoneMessage();
+        String tpaDenyRecivedMessage();
+        String tpaDenyAllDenied();
+
+        String tpaAcceptMessage();
+        String tpaAcceptNoRequestMessage();
+        String tpaAcceptNoRequestMessageAll();
+        String tpaAcceptRecivedMessage();
+        String tpaAcceptAllAccepted();
+
     }
 
     interface OtherMessages {
