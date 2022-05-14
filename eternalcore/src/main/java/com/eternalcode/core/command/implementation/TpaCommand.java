@@ -28,22 +28,14 @@ public class TpaCommand {
     public void execute(Player player, @Arg(0) @Handler(PlayerArg.class) Player target) {
         if (player.equals(target)) {
 
-            this.noticeService
-                .notice()
-                .player(player.getUniqueId())
-                .message(messages -> messages.tpa().tpaSelfMessage())
-                .send();
+            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaSelfMessage());
 
             return;
         }
 
         if (this.requestService.hasRequest(player.getUniqueId(), target.getUniqueId())) {
 
-            this.noticeService
-                .notice()
-                .player(player.getUniqueId())
-                .message(messages -> messages.tpa().tpaAlreadySentMessage())
-                .send();
+            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAlreadySentMessage());
 
             return;
         }

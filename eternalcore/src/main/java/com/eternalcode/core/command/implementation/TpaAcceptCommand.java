@@ -63,16 +63,12 @@ public class TpaAcceptCommand {
 
         if (requests.isEmpty()) {
 
-            this.noticeService
-                .notice()
-                .player(player.getUniqueId())
-                .message(messages -> messages.tpa().tpaAcceptNoRequestMessageAll())
-                .send();
+            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAcceptNoRequestMessage());
 
             return;
         }
 
-        requests.forEach(uniqueId -> {
+        for (UUID uniqueId : requests) {
             Player requester = this.server.getPlayer(uniqueId);
 
             this.requestService.removeRequest(uniqueId);
@@ -88,12 +84,8 @@ public class TpaAcceptCommand {
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }
-        });
+        }
 
-        this.noticeService
-            .notice()
-            .player(player.getUniqueId())
-            .message(messages -> messages.tpa().tpaAcceptAllAccepted())
-            .send();
+        this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAcceptAllAccepted());
     }
 }

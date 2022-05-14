@@ -131,15 +131,16 @@ public class EternalCore extends JavaPlugin {
     /**
      * Services & Managers
      **/
-    private TeleportRequestService teleportRequestService;
-    private LanguageInventory languageInventory;
-    private BukkitUserProvider userProvider;
-    private TeleportService teleportService;
     private static EternalCore instance;
+    private Scheduler scheduler;
     private UserManager userManager;
     private HomeManager homeManager;
+    private TeleportService teleportService;
     private WarpManager warpManager;
-    private Scheduler scheduler;
+    private BukkitUserProvider userProvider;
+    private LanguageInventory languageInventory;
+    private TeleportRequestService teleportRequestService;
+
     /**
      * Configuration, Language & Chat
      **/
@@ -156,17 +157,17 @@ public class EternalCore extends JavaPlugin {
     /**
      * Audiences System
      **/
-    private NotificationAnnouncer notificationAnnouncer;
     private AudienceProvider audienceProvider;
+    private NotificationAnnouncer notificationAnnouncer;
     private NoticeService noticeService;
 
     /**
      * FrameWorks & Libs
      **/
+    private Database database;
     private ScoreboardManager scoreboardManager;
     private LiteCommands liteCommands;
     private boolean isSpigot = false;
-    private Database database;
 
     public static EternalCore getInstance() {
         return instance;

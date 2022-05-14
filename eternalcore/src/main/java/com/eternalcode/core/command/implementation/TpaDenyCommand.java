@@ -55,16 +55,12 @@ public class TpaDenyCommand {
 
         if (requests.isEmpty()) {
 
-            this.noticeService
-                .notice()
-                .player(player.getUniqueId())
-                .message(messages -> messages.tpa().tpaDenyNoRequestMessageAll())
-                .send();
+            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaDenyNoRequestMessage());
 
             return;
         }
 
-        requests.forEach(uniqueId -> {
+        for (UUID uniqueId : requests) {
             Player requester = this.server.getPlayer(uniqueId);
 
             this.requestService.removeRequest(uniqueId);
@@ -78,12 +74,8 @@ public class TpaDenyCommand {
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }
-        });
+        }
 
-        this.noticeService
-            .notice()
-            .player(player.getUniqueId())
-            .message(messages -> messages.tpa().tpaDenyAllDenied())
-            .send();
+        this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaDenyAllDenied());
     }
 }
