@@ -4,6 +4,8 @@ import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.NotificationExtractor;
 
+import java.util.UUID;
+
 public class NoticeService {
 
     private final LanguageManager languageManager;
@@ -18,6 +20,13 @@ public class NoticeService {
 
     public Notice notice() {
         return new Notice(this.languageManager, this.audienceProvider, this.announcer);
+    }
+
+    public void player(UUID player, MessageExtractor extractor) {
+        this.notice()
+            .player(player)
+            .message(extractor)
+            .send();
     }
 
     public void audience(Audience audience, MessageExtractor extractor) {

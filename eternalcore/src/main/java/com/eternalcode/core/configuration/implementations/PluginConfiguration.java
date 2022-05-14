@@ -21,8 +21,8 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         "#                                                                                                                                           #",
         "#                                        ____  __                           __  _____                                                       #",
         "#                                       / __/ / /_ ___   ____  ___  ___ _  / / / ___/ ___   ____ ___                                        #",
-        "#                                      / _/  / __// -_) / __/ / _ \\/ _ `/ / / / /__  / _ \\ / __// -_)                                       #",
-        "#                                     /___/  \\__/ \\__/ /_/   /_//_/\\_,_/ /_/  \\___/  \\___//_/   \\__/                                        #",
+        "#                                      / _/  / __// -_) / __/ / _ \\/ _ `/ / / / /__  / _ \\ / __// -_)                                     #",
+        "#                                     /___/  \\__/ \\__/ /_/   /_//_/\\_,_/ /_/  \\___/  \\___//_/   \\__/                                  #",
         "#                                                                                                                                           #",
         "#                                          This is the main configuration file for EternalCore.                                             #",
         "#                                                                                                                                           #",
@@ -84,10 +84,17 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     public static class OtherSettings {
         @Description({ StringUtils.EMPTY, "# Gamemode Creative on join Requires permission: eternalcore.staff.gamemodejoin" })
         public boolean gamemodeOnJoin = false;
+
         @Description({ StringUtils.EMPTY, "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
         public boolean unsafeEnchantments = true;
-    }
 
+        @Description({ StringUtils.EMPTY, "# Time in secounds of tpa requests expire" })
+        public int tpaRequestExpire = 80;
+
+        @Description({ StringUtils.EMPTY, "# Time in secounds of teleportation time" })
+        public int tpaTimer = 10;
+
+    }
 
     @Contextual
     public static class EventMessage {

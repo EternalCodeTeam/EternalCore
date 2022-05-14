@@ -18,8 +18,9 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENAdminChatSection adminChat = new ENAdminChatSection();
     public ENTeleportSection teleport = new ENTeleportSection();
     public ENChatSection chat = new ENChatSection();
-    public ENOtherMessages other = new ENOtherMessages();
+    public ENTpaSection tpa = new ENTpaSection();
     public ENWarpSection warp = new ENWarpSection();
+    public ENOtherMessages other = new ENOtherMessages();
 
     public ENMessagesConfiguration(File folder, String child) {
         super(folder, child);
@@ -49,8 +50,8 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         return this.chat;
     }
 
-    public ENOtherMessages other() {
-        return this.other;
+    public ENTpaSection tpa() {
+        return this.tpa;
     }
 
     public ENWarpSection warp() {
@@ -59,6 +60,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public Language getLanguage() {
         return this.language;
+    }
+
+    public ENOtherMessages other() {
+        return this.other;
     }
 
     @Contextual
@@ -103,6 +108,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     @Contextual
     public static class ENArgumentSection implements Messages.ArgumentSection {
         public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
+        public String usageMessage = "&8» &eCorrect usage: &7{USAGE}";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
         public String onlyPlayer = "&8» &cCommand is only for players!";
         public String notNumber = "&8» &cArgument isnt a number!";
@@ -117,6 +123,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String permissionMessage() {
             return this.permissionMessage;
+        }
+
+        public String usageMessage() {
+            return this.usageMessage;
         }
 
         public String offlinePlayer() {
@@ -267,6 +277,99 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String noCommand() {
             return this.noCommand;
+        }
+    }
+
+    @Contextual
+    public static class ENTpaSection implements TpaSection {
+
+        public String tpaSelfMessage = "&8» &cYou can't teleport to yourself!";
+        public String tpaAlreadySentMessage = "&8» &cYou have already sent a teleportation request!";
+        public String tpaSentMessage = "&8» &aYou have sent a request for teleportation to a player: &7{PLAYER}&a!";
+        public String tpaRecivedMessage = "&8» &aYou have received a request for teleportation from a player: &7{PLAYER}&a! " +
+            "\n &8» &6/tpaccept {PLAYER} &ato accept! " +
+            "\n &8» &6/tpdeny {PLAYER} &ato deny!";
+
+        public String tpaDenyNoRequestMessage = "&8» &cYou do not have a teleport request from this player!";
+        public String tpaDenyNoRequestAllMessage = "&8» &cYou do not have a teleport requests!";
+        public String tpaDenyDoneMessage = "&8» &cYou have declined a teleport request from a player: &7{PLAYER}&c!";
+        public String tpaDenyRecivedMessage = "&8» &cPlayer: &7{PLAYER} rejected your teleport request!";
+        public String tpaDenyAllDenied = "&8» &cAll players have denied your teleport request!";
+
+        public String tpaAcceptMessage = "&8» &aYou have accepted the teleportation from the player: &7{PLAYER}&a!";
+        public String tpaAcceptNoRequestMessage = "&8» &cThis player has not sent you a teleport request!";
+        public String tpaAcceptNoRequestAllMessage = "&8» &cYou do not have a teleport requests!";
+        public String tpaAcceptRecivedMessage = "&8» &aPlayer: &7{PLAYER} &aaccepted your teleportation request!";
+        public String tpaAcceptAllAccepted = "&8» &aAll players have accepted your teleport request!";
+
+        @Override
+        public String tpaSelfMessage() {
+            return this.tpaSelfMessage;
+        }
+
+        @Override
+        public String tpaAlreadySentMessage() {
+            return this.tpaAlreadySentMessage;
+        }
+
+        @Override
+        public String tpaSentMessage() {
+            return this.tpaSentMessage;
+        }
+
+        @Override
+        public String tpaRecivedMessage() {
+            return this.tpaRecivedMessage;
+        }
+
+        @Override
+        public String tpaDenyNoRequestMessage() {
+            return this.tpaDenyNoRequestMessage;
+        }
+
+        @Override
+        public String tpaDenyNoRequestMessageAll() {
+            return this.tpaDenyNoRequestAllMessage;
+        }
+
+        @Override
+        public String tpaDenyDoneMessage() {
+            return this.tpaDenyDoneMessage;
+        }
+
+        @Override
+        public String tpaDenyRecivedMessage() {
+            return this.tpaDenyRecivedMessage;
+        }
+
+        @Override
+        public String tpaDenyAllDenied() {
+            return this.tpaDenyAllDenied;
+        }
+
+        @Override
+        public String tpaAcceptMessage() {
+            return this.tpaAcceptMessage;
+        }
+
+        @Override
+        public String tpaAcceptNoRequestMessage() {
+            return this.tpaAcceptNoRequestMessage;
+        }
+
+        @Override
+        public String tpaAcceptNoRequestMessageAll() {
+            return this.tpaAcceptNoRequestAllMessage;
+        }
+
+        @Override
+        public String tpaAcceptRecivedMessage() {
+            return this.tpaAcceptRecivedMessage;
+        }
+
+        @Override
+        public String tpaAcceptAllAccepted() {
+            return this.tpaAcceptAllAccepted;
         }
     }
 

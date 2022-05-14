@@ -18,8 +18,9 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public PLAdminChatSection adminChat = new PLAdminChatSection();
     public PLTeleportSection teleport = new PLTeleportSection();
     public PLChatSection chat = new PLChatSection();
-    public PLOtherMessages other = new PLOtherMessages();
     public PLWarpSection warp = new PLWarpSection();
+    public PLTpaSection tpa = new PLTpaSection();
+    public PLOtherMessages other = new PLOtherMessages();
 
     public PLMessagesConfiguration(File folder, String child) {
         super(folder, child);
@@ -49,8 +50,9 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         return this.chat;
     }
 
-    public PLOtherMessages other() {
-        return this.other;
+    @Override
+    public PLTpaSection tpa() {
+        return this.tpa;
     }
 
     public PLWarpSection warp() {
@@ -59,6 +61,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     public Language getLanguage() {
         return this.language;
+    }
+
+    public PLOtherMessages other() {
+        return this.other;
     }
 
     @Contextual
@@ -104,6 +110,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public static class PLArgumentSection implements ArgumentSection {
 
         public String permissionMessage = "&4Blad: &cNie masz uprawnien do tej komendy! &7({PERMISSIONS})";
+        public String usageMessage = "&8» &ePoprawne uzycie: &7{USAGE}";
         public String offlinePlayer = "&4Blad: &cTen gracz jest offline!";
         public String onlyPlayer = "&4Blad: &cKomenda tylko dla graczy!";
         public String notNumber = "&4Blad: &cArgument nie jest liczba!";
@@ -118,6 +125,10 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String permissionMessage() {
             return this.permissionMessage;
+        }
+
+        public String usageMessage() {
+            return this.usageMessage;
         }
 
         public String offlinePlayer() {
@@ -268,6 +279,99 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String noCommand() {
             return this.noCommand;
+        }
+    }
+
+    @Contextual
+    public static class PLTpaSection implements TpaSection {
+
+        public String tpaSelfMessage = "&4Blad: &cNie mozesz siebie teleportowac!";
+        public String tpaAlreadySentMessage = "&4Blad: &cWyslales juz prosbe o teleportacje!";
+        public String tpaSentMessage = "&8» &aWyslales prosbe o teleportacje do gracza: &7{PLAYER}&a!";
+        public String tpaRecivedMessage = "&8» &aOtrzymales prosbe o teleportacje od gracza: &7{PLAYER}&a! " +
+            "\n &8» &6/tpaccept {PLAYER} &aaby zaakceptowac! " +
+            "\n &8» &6/tpdeny {PLAYER} &aaby odrzucic!";
+
+        public String tpaDenyNoRequestMessage = "&4Blad: &cNie masz prosby o teleportacje od tego gracza!";
+        public String tpaDenyNoRequestMessageAll = "&4Blad: &cNie masz zadnych prosb o teleportacje!";
+        public String tpaDenyDoneMessage = "&8» &cOdrzuciles prosbe o teleportacje od gracza: &7{PLAYER}&c!";
+        public String tpaDenyRecivedMessage = "&8» &cGracz: {PLAYER} odrzucil twoja prosbe o teleportacje!";
+        public String tpaDenyAllDenied = "&8» &cWszystkie prosby o teleportacje zostaly odrzucone!";
+
+        public String tpaAcceptMessage = "&8» &aZaakceptowales teleportacje od gracza: &7{PLAYER}&a!";
+        public String tpaAcceptNoRequestMessage = "&4Blad: &cTen gracz nie wyslal ci prosby o teleportacje!";
+        public String tpaAcceptNoRequestAllMessage = "&4Blad: &cNie masz zadnych prosb o teleportacje!";
+        public String tpaAcceptRecivedMessage = "&8» &aGracz: &7{PLAYER} &azaakceptowal twoja prosbe o teleportacje!";
+        public String tpaAcceptAllAccepted = "&8» &aWszystkie prosby o teleportacje zostaly zaakceptowane!";
+
+        @Override
+        public String tpaSelfMessage() {
+            return this.tpaSelfMessage;
+        }
+
+        @Override
+        public String tpaAlreadySentMessage() {
+            return this.tpaAlreadySentMessage;
+        }
+
+        @Override
+        public String tpaSentMessage() {
+            return this.tpaSentMessage;
+        }
+
+        @Override
+        public String tpaRecivedMessage() {
+            return this.tpaRecivedMessage;
+        }
+
+        @Override
+        public String tpaDenyNoRequestMessage() {
+            return this.tpaDenyNoRequestMessage;
+        }
+
+        @Override
+        public String tpaDenyNoRequestMessageAll() {
+            return this.tpaDenyNoRequestMessageAll;
+        }
+
+        @Override
+        public String tpaDenyDoneMessage() {
+            return this.tpaDenyDoneMessage;
+        }
+
+        @Override
+        public String tpaDenyRecivedMessage() {
+            return this.tpaDenyRecivedMessage;
+        }
+
+        @Override
+        public String tpaDenyAllDenied() {
+            return this.tpaDenyAllDenied;
+        }
+
+        @Override
+        public String tpaAcceptMessage() {
+            return this.tpaAcceptMessage;
+        }
+
+        @Override
+        public String tpaAcceptNoRequestMessage() {
+            return this.tpaAcceptNoRequestAllMessage;
+        }
+
+        @Override
+        public String tpaAcceptNoRequestMessageAll() {
+            return this.tpaAcceptNoRequestMessage;
+        }
+
+        @Override
+        public String tpaAcceptRecivedMessage() {
+            return this.tpaAcceptRecivedMessage;
+        }
+
+        @Override
+        public String tpaAcceptAllAccepted() {
+            return this.tpaAcceptAllAccepted;
         }
     }
 
