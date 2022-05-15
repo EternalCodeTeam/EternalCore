@@ -12,7 +12,6 @@ import org.bukkit.inventory.PlayerInventory;
 
 @Section(route = "hat")
 @Permission("eternalcore.command.hat")
-@UsageMessage("&8» &cPoprawne użycie &7/hat")
 public class HatCommand {
 
     private final NoticeService noticeService;

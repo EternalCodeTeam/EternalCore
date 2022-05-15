@@ -1,10 +1,10 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.teleport.TeleportService;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -29,7 +29,7 @@ public class SpawnCommand {
     }
 
     @Execute
-    public void execute(Player sender, @Arg(0) @Handler(PlayerArg.class) Option<Player> playerOption){
+    public void execute(Player sender, @Arg(0) @Handler(PlayerArgument.class) Option<Player> playerOption){
         Location destinationLocation = this.locations.spawn;
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {

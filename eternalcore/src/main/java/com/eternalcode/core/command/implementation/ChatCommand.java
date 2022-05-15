@@ -16,7 +16,6 @@ import panda.std.Option;
 
 @Section(route = "chat", aliases = { "czat" })
 @Permission("eternalcore.command.chat")
-@UsageMessage("&cPoprawne użycie &7/chat <clear/on/off/slowmode [time]>")
 public class ChatCommand {
 
     private static final AdventureNotification CLEAR;
@@ -83,7 +82,7 @@ public class ChatCommand {
 
     @Execute(route = "slowmode")
     @MinArgs(1)
-    public void slowmode(Audience audience, String[] args) {
+    public void slowmode(Audience audience, String[] args) { //TODO Argument (String[] args <- legacy solution)
         String amountArg = args[1];
 
         Option.attempt(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {

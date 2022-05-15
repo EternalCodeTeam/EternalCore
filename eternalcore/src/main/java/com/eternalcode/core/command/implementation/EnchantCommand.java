@@ -2,7 +2,7 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.MinArgs;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -15,7 +15,6 @@ import org.bukkit.inventory.PlayerInventory;
 
 @Section(route = "enchant", aliases = {"ench"})
 @Permission("eternalcore.command.enchant")
-@UsageMessage("&8» &cPoprawne użycie &7/enchant <enchantment> <level>")
 public class EnchantCommand {
 
     private final PluginConfiguration configuration;

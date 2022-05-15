@@ -1,7 +1,6 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -14,7 +13,6 @@ import org.bukkit.inventory.Inventory;
 import panda.utilities.StringUtils;
 
 @Section(route = "grindstone")
-@UsageMessage("&8» &cPoprawne użycie &7/grindstone <player>")
 @Permission("eternalcore.command.grindstone")
 public class GrindstoneCommand {
 

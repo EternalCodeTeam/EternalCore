@@ -15,15 +15,17 @@ import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.MaterialArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
-import com.eternalcode.core.command.argument.PlayerArg;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.PlayerNameArg;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
-import com.eternalcode.core.command.bind.AudienceBind;
-import com.eternalcode.core.command.bind.PlayerBind;
-import com.eternalcode.core.command.bind.UserBind;
-import com.eternalcode.core.command.handler.InvalidUsageHandler;
+import com.eternalcode.core.command.bind.AudienceContextual;
+import com.eternalcode.core.command.bind.PlayerContextual;
+import com.eternalcode.core.command.bind.UserContextual;
+import com.eternalcode.core.command.handler.ComponentResultHandler;
+import com.eternalcode.core.command.handler.InvalidUsage;
+import com.eternalcode.core.command.handler.StringResultHandler;
 import com.eternalcode.core.command.implementation.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
 import com.eternalcode.core.command.implementation.AnvilCommand;
@@ -65,8 +67,6 @@ import com.eternalcode.core.command.implementation.TpaDenyCommand;
 import com.eternalcode.core.command.implementation.TposCommand;
 import com.eternalcode.core.command.implementation.WhoIsCommand;
 import com.eternalcode.core.command.implementation.WorkbenchCommand;
-import com.eternalcode.core.command.handler.PermissionHandler;
-import com.eternalcode.core.command.platform.EternalCommandsFactory;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
@@ -103,8 +103,11 @@ import com.eternalcode.core.warps.WarpManager;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
-import dev.rollczi.litecommands.valid.messages.UseSchemeFormatting;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
+import dev.rollczi.litecommands.scheme.SchemeFormat;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -114,14 +117,12 @@ import org.bukkit.Server;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import panda.std.Option;
 import panda.std.stream.PandaStream;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class EternalCore extends JavaPlugin {
 
@@ -144,7 +145,6 @@ public class EternalCore extends JavaPlugin {
     private ConfigurationManager configurationManager;
     private LanguageManager languageManager;
     private ChatManager chatManager;
-    private LanguageInventory languageInventory;
 
     /**
      * Services & Managers (dependent on configuration)
@@ -168,6 +168,7 @@ public class EternalCore extends JavaPlugin {
     /**
      * FrameWorks & Libs
      **/
+    private LanguageInventory languageInventory;
     private ScoreboardManager scoreboardManager;
     private LiteCommands liteCommands;
     private boolean isSpigot = false;
@@ -228,7 +229,6 @@ public class EternalCore extends JavaPlugin {
         }
 
         this.chatManager = new ChatManager(config.chat);
-        this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
 
         /* Services & Managers (dependent on configuration) */
 
@@ -249,16 +249,20 @@ public class EternalCore extends JavaPlugin {
         this.noticeService = new NoticeService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
 
         /* FrameWorks & Libs */
+        this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
         this.scoreboardManager = new ScoreboardManager(this, this.configurationManager, this.miniMessage);
         this.scoreboardManager.updateTask();
 
-        this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)
+        this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
 
-            // Arguments
+            // Handlers
+            .resultHandler(String.class, new StringResultHandler(this.adventureAudiences, this.miniMessage))
+            .resultHandler(Component.class, new ComponentResultHandler(this.adventureAudiences))
+
+            // Arguments (include optional)
             .argument(String.class,                 new PlayerNameArg(server))
-            .argument(Integer.class,                new AmountArgument(this.languageManager, this.configurationManager, this.userProvider))
-            .argument(Player.class,                 new PlayerArg(this.userProvider, this.languageManager, server))
-            .argument(Player.class,                 new PlayerArgOrSender(this.languageManager, this.userProvider, server))
+            .argument(Integer.class,                new AmountArgument(this.languageManager, config, this.userProvider))
+            .argument(Player.class,                 new PlayerArgument(this.userProvider, this.languageManager, server))
             .argument(Material.class,               new MaterialArgument(this.userProvider, this.languageManager))
             .argument(GameMode.class,               new GameModeArgument(this.userProvider, this.languageManager))
             .argument(NoticeType.class,             new NoticeTypeArgument(this.userProvider, this.languageManager))
@@ -266,14 +270,13 @@ public class EternalCore extends JavaPlugin {
             .argument(Enchantment.class,            new EnchantmentArgument(this.userProvider, this.languageManager))
             .argument(Player.class,                 new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
 
-            // Optional arguments
-            .argument(Option.class,                 new PlayerArg(this.userProvider, this.languageManager, server).toOptionHandler())
-            .argument(Option.class,                 new PlayerArgOrSender(this.languageManager, this.userProvider, server).toOptionHandler())
+            // Native Argument (no optional)
+            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.userProvider, server))
 
             // Dynamic binds
-            .parameterBind(Player.class,            new PlayerBind(this.languageManager))
-            .parameterBind(Audience.class,          new AudienceBind(this.userManager))
-            .parameterBind(User.class,              new UserBind(this.languageManager, this.userManager))
+            .contextualBind(Player.class,            new PlayerContextual(this.languageManager))
+            .contextualBind(Audience.class,          new AudienceContextual(this.userManager))
+            .contextualBind(User.class,              new UserContextual(this.languageManager, this.userManager))
 
             // Static binds
             .typeBind(EternalCore.class,            () -> this)
@@ -291,11 +294,9 @@ public class EternalCore extends JavaPlugin {
             .typeBind(ChatManager.class,            () -> this.chatManager)
             .typeBind(Scheduler.class,              () -> this.scheduler)
 
-            .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
-
-            .permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
-            .invalidUseMessage(new InvalidUsageHandler(this.userProvider, this.languageManager))
-            .formattingUseScheme(UseSchemeFormatting.NORMAL)
+            //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
+            .invalidUsageHandler(new InvalidUsage(miniMessage, adventureAudiences, this.userProvider, this.languageManager))
+            .schemeFormat(SchemeFormat.ARGUMENT_ANGLED_OPTIONAL_SQUARE)
 
             .command(
                 AlertCommand.class,
@@ -373,7 +374,7 @@ public class EternalCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.liteCommands.getPlatformManager().unregisterCommands();
+        this.liteCommands.getPlatform().unregisterAll();
         this.database.disconnect();
     }
 
@@ -434,10 +435,6 @@ public class EternalCore extends JavaPlugin {
         return this.chatManager;
     }
 
-    public LanguageInventory getLanguageInventory() {
-        return this.languageInventory;
-    }
-
     public Database getDatabase() {
         return this.database;
     }
@@ -464,6 +461,10 @@ public class EternalCore extends JavaPlugin {
 
     public NoticeService getNoticeService() {
         return this.noticeService;
+    }
+
+    public LanguageInventory getLanguageInventory() {
+        return this.languageInventory;
     }
 
     public ScoreboardManager getScoreboardManager() {

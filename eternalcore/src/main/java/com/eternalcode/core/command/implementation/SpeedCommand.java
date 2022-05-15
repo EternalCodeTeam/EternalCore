@@ -2,8 +2,7 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.MinArgs;
@@ -16,7 +15,6 @@ import org.bukkit.entity.Player;
 
 @Section(route = "speed")
 @Permission("eternalcore.command.speed")
-@UsageMessage("&8» &cPoprawne użycie &7/speed <liczba> [gracz]")
 public class SpeedCommand {
 
     private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(0).max(10);

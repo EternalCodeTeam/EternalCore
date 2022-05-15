@@ -5,7 +5,7 @@ import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportRequestService;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;

@@ -178,7 +178,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Contextual
     public static class Scoreboard {
-        public boolean enabled = true;
+        public boolean enabled = false;
         public int refresh = 20;
         public String title = "&a&lEternalCode.pl";
         public List<String> style = Arrays.asList(

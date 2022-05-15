@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Joiner;
 import dev.rollczi.litecommands.annotations.MinArgs;
@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 @Section(route = "msg", aliases = {"message", "whisper"})
 @Permission("eternalcore.commands.message")
-@UsageMessage("&8» &cPoprawne użycie &7/msg <player> <message>")
 public class MessageCommand {
 
     private final NoticeService noticeService;

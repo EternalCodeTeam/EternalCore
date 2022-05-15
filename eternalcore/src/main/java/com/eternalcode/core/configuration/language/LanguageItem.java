@@ -31,6 +31,14 @@ public class LanguageItem {
         this.texture = texture;
     }
 
+    public LanguageItem(Material material, Language language, int slot, String name, List<String> lore) {
+        this.material = material;
+        this.language = language;
+        this.slot = slot;
+        this.name = name;
+        this.lore = lore;
+    }
+
     public LanguageItem() {
 
     }

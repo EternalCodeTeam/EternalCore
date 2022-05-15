@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 //TODO: Refactor
 @Section(route = "helpop", aliases = { "report" })
 @Permission("eternalcore.command.helpop")
-@UsageMessage("&8» &cPoprawne użycie &7/helpop <text>")
 public class HelpOpCommand {
 
     private final NoticeService noticeService;

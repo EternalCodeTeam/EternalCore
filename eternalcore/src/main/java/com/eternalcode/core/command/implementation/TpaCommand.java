@@ -1,9 +1,9 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArg;
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.teleport.TeleportRequestService;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -25,7 +25,7 @@ public class TpaCommand {
 
     @Execute
     @Required(1)
-    public void execute(Player player, @Arg(0) @Handler(PlayerArg.class) Player target) {
+    public void execute(Player player, @Arg(0) @Handler(PlayerArgument.class) Player target) {
         if (player.equals(target)) {
 
             this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaSelfMessage());

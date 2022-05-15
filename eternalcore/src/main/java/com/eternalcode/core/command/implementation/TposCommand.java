@@ -2,8 +2,7 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Between;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -18,7 +17,6 @@ import org.bukkit.entity.Player;
 
 @Section(route = "tpos")
 @Permission("eternalcore.command.tpos")
-@UsageMessage("&8» &cPoprawne użycie &7/tpos <x> <y> <z> [gracz]")
 public class TposCommand {
 
     private final NoticeService noticeService;

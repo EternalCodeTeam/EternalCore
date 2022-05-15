@@ -16,7 +16,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
     // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:1.9.0")
+    implementation("dev.rollczi.litecommands:bukkit:2.0.0-pre8")
 
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.22")
@@ -93,4 +93,9 @@ tasks.withType<ShadowJar> {
     relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
     relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
+
+    copy {
+        this.from("build/libs/" + archiveFileName.get())
+        this.into("C:/Users/Rollczi/Desktop/testserver 1.18.1/plugins/")
+    }
 }

@@ -4,6 +4,7 @@ import com.eternalcode.core.user.User;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class LanguageManager {
 
@@ -19,14 +20,26 @@ public class LanguageManager {
     }
 
     public Messages getMessages(Language language) {
-        return this.translatedMessages.getOrDefault(language, this.defaultMessages);
+        Messages messages = translatedMessages.get(language);
+
+        if (messages != null) {
+            return messages;
+        }
+
+        for (Entry<Language, Messages> entry : translatedMessages.entrySet()) {
+            if (entry.getKey().isEquals(language)) {
+                return entry.getValue();
+            }
+        }
+
+        return this.defaultMessages;
     }
 
     public Messages getMessages(User user) {
         LanguageSettings settings = user.getSettings();
         Language language = settings.getLanguage();
 
-        return this.translatedMessages.getOrDefault(language, this.defaultMessages);
+        return this.getMessages(language);
     }
 
     public void setDefaultMessages(Messages defaultMessages) {

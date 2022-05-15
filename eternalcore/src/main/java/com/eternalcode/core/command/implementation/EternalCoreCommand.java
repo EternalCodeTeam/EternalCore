@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import java.util.concurrent.TimeUnit;
 
 @Section(route = "eternalcore", aliases = { "eternal" })
-@UsageMessage("&8» &cPoprawne użycie &7/eternalcore <reload>")
 @Permission("eternalcore.command.eternalcore")
 public class EternalCoreCommand {
 

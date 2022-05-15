@@ -4,17 +4,18 @@ import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
-import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.argument.SingleArgumentHandler;
-import dev.rollczi.litecommands.valid.ValidationCommandException;
+import dev.rollczi.litecommands.argument.simple.OneArgument;
+import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.command.sugesstion.Suggestion;
 import panda.std.Option;
+import panda.std.Result;
 
 import java.util.Arrays;
 import java.util.List;
 
 @ArgumentName("action")
-public class NoticeTypeArgument implements SingleArgumentHandler<NoticeType> {
+public class NoticeTypeArgument implements OneArgument<NoticeType> {
 
     private final BukkitUserProvider userProvider;
     private final LanguageManager languageManager;
@@ -25,21 +26,22 @@ public class NoticeTypeArgument implements SingleArgumentHandler<NoticeType> {
     }
 
     @Override
-    public NoticeType parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
+    public List<Suggestion> suggest(LiteInvocation invocation) {
+        return Arrays.stream(NoticeType.values())
+            .map(notificationType -> notificationType.name().toLowerCase())
+            .map(Suggestion::of)
+            .toList();
+    }
+
+    @Override
+    public Result<NoticeType, ?> parse(LiteInvocation invocation, String argument) {
         return Option.attempt(IllegalArgumentException.class, () -> NoticeType.valueOf(argument.toUpperCase()))
-            .orThrow(() -> {
+            .toResult(() -> {
                 Messages messages = this.userProvider.getUser(invocation)
                     .map(this.languageManager::getMessages)
                     .orElseGet(this.languageManager.getDefaultMessages());
 
-                return new ValidationCommandException(messages.argument().noArgument());
+                return messages.argument().noArgument();
             });
-    }
-
-    @Override
-    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
-        return Arrays.stream(NoticeType.values())
-            .map(notificationType -> notificationType.name().toLowerCase())
-            .toList();
     }
 }

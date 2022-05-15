@@ -16,7 +16,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 @Section(route = "name", aliases = { "rename", "itemname" })
 @Permission("eternalcore.command.itemname")
-@UsageMessage("&8» &cPoprawne użycie &7/name <nazwa>")
 public class NameCommand {
 
     private final NoticeService noticeService;

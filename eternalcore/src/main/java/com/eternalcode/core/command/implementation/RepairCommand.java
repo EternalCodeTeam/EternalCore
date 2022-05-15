@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.Repairable;
 
 @Section(route = "repair", aliases = "napraw")
 @Permission("eternalcore.command.repair")
-@UsageMessage("&8» &cPoprawne użycie &7/repair [all/armor]")
 public class RepairCommand {
 
     private final NoticeService noticeService;

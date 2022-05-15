@@ -4,7 +4,7 @@ import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.builder.ItemBuilder;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.command.argument.PlayerNameArg;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -16,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 
 @Section(route = "skull", aliases = "glowa")
 @Permission("eternalcore.command.skull")
-@UsageMessage("&8» &cPoprawne użycie &7/skull <player>")
 public class SkullCommand {
 
     private final NoticeService noticeService;

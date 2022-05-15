@@ -2,7 +2,7 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Permission;
 import dev.rollczi.litecommands.annotations.Required;
@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 @Section(route = "whois")
 @Permission("eternalcore.command.whois")
-@UsageMessage("&8» &cPoprawne użycie &7/whois <player>")
 public class WhoIsCommand {
 
     private final NoticeService noticeService;

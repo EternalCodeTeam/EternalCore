@@ -3,24 +3,23 @@ package com.eternalcode.core.command.argument;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
-import dev.rollczi.litecommands.LiteInvocation;
 import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.argument.SingleArgumentHandler;
-import dev.rollczi.litecommands.valid.AmountValidator;
-import dev.rollczi.litecommands.valid.ValidationCommandException;
+import dev.rollczi.litecommands.argument.simple.OneArgument;
+import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.command.amount.AmountValidator;
+import dev.rollczi.litecommands.command.sugesstion.Suggestion;
 import org.bukkit.GameMode;
 import panda.std.Option;
-import panda.std.stream.PandaStream;
+import panda.std.Result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @ArgumentName("gamemode")
-public class GameModeArgument implements SingleArgumentHandler<GameMode> {
+public class GameModeArgument implements OneArgument<GameMode> {
 
     private final static GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
-    private final static AmountValidator GAME_MODE_VALID = AmountValidator.NONE.min(0).max(3);
+    private final static AmountValidator GAME_MODE_VALID = AmountValidator.none().min(0).max(3);
 
     private final BukkitUserProvider userProvider;
     private final LanguageManager languageManager;
@@ -31,32 +30,33 @@ public class GameModeArgument implements SingleArgumentHandler<GameMode> {
     }
 
     @Override
-    public GameMode parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
-        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
-
-        if (gameMode.isPresent()) {
-            return gameMode.get();
-        }
-
-        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
-            .filter(GAME_MODE_VALID::valid)
-            .map(integer -> GAME_MODES[integer])
-            .orThrow(() -> {
-                Messages messages = this.userProvider.getUser(invocation)
-                    .map(this.languageManager::getMessages)
-                    .orElseGet(this.languageManager.getDefaultMessages());
-
-                return new ValidationCommandException(messages.other().gameModeNotCorrect());
-            });
-    }
-
-    @Override
-    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
+    public List<Suggestion> suggest(LiteInvocation invocation) {
         List<String> gameModes = new ArrayList<>();
 
         for (GameMode gameMode : GAME_MODES) {
             gameModes.add(gameMode.name().toLowerCase());
         }
-        return gameModes;
+
+        return Suggestion.of(gameModes);
+    }
+
+    @Override
+    public Result<GameMode, ?> parse(LiteInvocation invocation, String argument) {
+        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
+
+        if (gameMode.isPresent()) {
+            return Result.ok(gameMode.get());
+        }
+
+        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
+            .filter(GAME_MODE_VALID::valid)
+            .map(integer -> GAME_MODES[integer])
+            .toResult(() -> {
+                Messages messages = this.userProvider.getUser(invocation)
+                    .map(this.languageManager::getMessages)
+                    .orElseGet(this.languageManager.getDefaultMessages());
+
+                return messages.other().gameModeNotCorrect();
+            });
     }
 }

@@ -9,8 +9,6 @@ import dev.rollczi.litecommands.annotations.UsageMessage;
 import org.bukkit.entity.Player;
 
 @Section(route = "scoreboard")
-@UsageMessage("&8» &cPoprawne użycie &7/scoreboard")
-@Permission("eternalcore.command.scoreboard")
 public class ScoreboardCommand {
 
     private final ScoreboardManager scoreboardManager;

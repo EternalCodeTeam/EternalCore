@@ -1,11 +1,10 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -23,8 +22,8 @@ public class AnvilCommand {
     }
 
     @Execute
-    public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player playerOrSender) {
-        Inventory inventory = this.server.createInventory(playerOrSender, InventoryType.ANVIL, StringUtils.EMPTY);
-        playerOrSender.openInventory(inventory);
+    public void execute(@Arg @By("or_sender") Player player) {
+        Inventory inventory = this.server.createInventory(player, InventoryType.ANVIL, StringUtils.EMPTY);
+        player.openInventory(inventory);
     }
 }

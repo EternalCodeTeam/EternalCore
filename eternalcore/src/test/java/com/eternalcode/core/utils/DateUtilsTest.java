@@ -23,6 +23,6 @@ class DateUtilsTest {
 
     @Test
     void hours() {
-        assertEquals("5h", DateUtils.durationToString(30000000L));
+        assertEquals("8h20m", DateUtils.durationToString(30000000L));
     }
 }

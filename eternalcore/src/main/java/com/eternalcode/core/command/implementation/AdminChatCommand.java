@@ -2,19 +2,16 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.Notice;
 import com.eternalcode.core.chat.notification.NoticeService;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Joiner;
-import dev.rollczi.litecommands.annotations.MinArgs;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.argument.joiner.Joiner;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "adminchat", aliases = "ac")
 @Permission("eternalcore.command.adminchat")
-@UsageMessage("&8» &cPoprawne użycie &7/adminchat <text>")
 public class AdminChatCommand {
 
     private final NoticeService noticeService;
@@ -25,8 +22,7 @@ public class AdminChatCommand {
         this.server = server;
     }
 
-    @Execute
-    @MinArgs(1)
+    @Execute(min = 1)
     public void execute(CommandSender sender, @Joiner String text) {
         Notice notice = this.noticeService.notice()
             .console()

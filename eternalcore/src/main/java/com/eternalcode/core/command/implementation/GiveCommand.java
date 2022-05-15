@@ -3,8 +3,7 @@ package com.eternalcode.core.command.implementation;
 import com.eternalcode.core.builder.ItemBuilder;
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Between;
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.Handler;
@@ -19,7 +18,6 @@ import org.bukkit.inventory.ItemStack;
 
 @Section(route = "give", aliases = {"i", "item"})
 @Permission("eternalcore.command.give")
-@UsageMessage("&8» &cPoprawne użycie &7/give <material> [gracz]")
 public class GiveCommand {
 
     private final NoticeService noticeService;

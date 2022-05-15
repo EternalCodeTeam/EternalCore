@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.utils.ChatUtils;
-import dev.rollczi.litecommands.annotations.Arg;
+
 import dev.rollczi.litecommands.annotations.Execute;
 import dev.rollczi.litecommands.annotations.IgnoreMethod;
 import dev.rollczi.litecommands.annotations.Permission;
@@ -20,7 +20,6 @@ import panda.std.Option;
 
 @Section(route = "inventoryopen", aliases = { "io", "oi", "open", "invsee" })
 @PermissionExclude("eternalcore.command.inventoryopen")
-@UsageMessage("&8» &cPoprawne użycie &7/inventoryopen <ar/ec/inv> <player>")
 public class InventoryOpenCommand {
 
     private final Server server;

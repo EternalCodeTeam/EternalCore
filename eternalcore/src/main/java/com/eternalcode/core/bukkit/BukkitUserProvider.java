@@ -3,7 +3,7 @@ package com.eternalcode.core.bukkit;
 import com.eternalcode.core.chat.notification.Audience;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import dev.rollczi.litecommands.LiteInvocation;
+import dev.rollczi.litecommands.command.LiteInvocation;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -29,20 +29,8 @@ public class BukkitUserProvider {
         return Option.none();
     }
 
-    public Audience getAudience(CommandSender sender) {
-        Option<User> userOption = getUser(sender);
-
-        if (userOption.isEmpty()) {
-            return Audience.console();
-        }
-
-        User user = userOption.get();
-
-        return Audience.player(user.getUniqueId(), user.getSettings().getLanguage());
-    }
-
     public Option<User> getUser(LiteInvocation invocation) {
-        if (invocation.sender().getSender() instanceof Player player) {
+        if (invocation.sender().getHandle() instanceof Player player) {
             return this.getUser(player);
         }
 
