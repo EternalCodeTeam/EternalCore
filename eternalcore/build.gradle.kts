@@ -16,7 +16,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
     // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:2.0.0-pre8")
+    implementation("dev.rollczi.litecommands:bukkit:2.0.0-pre13")
 
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.22")

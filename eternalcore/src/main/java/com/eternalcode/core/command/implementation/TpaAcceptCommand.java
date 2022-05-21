@@ -6,11 +6,13 @@ import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportRequestService;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Required;
-import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.amount.Required;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -37,7 +39,7 @@ public class TpaAcceptCommand {
 
     @Execute
     @Required(1)
-    public void executeTarget(Player player, @Arg(0) @Handler(RequesterArgument.class) Player target) {
+    public void executeTarget(Player player, @Arg @By("request") Player target) {
         this.teleportService.createTeleport(target.getUniqueId(), target.getLocation(), player.getLocation(), this.config.otherSettings.tpaTimer);
 
         this.requestService.removeRequest(target.getUniqueId());

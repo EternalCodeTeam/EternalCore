@@ -2,10 +2,9 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.google.common.base.Stopwatch;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 

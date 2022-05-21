@@ -1,14 +1,14 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.MinArgs;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.permission.Permission;
 import io.papermc.lib.PaperLib;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,8 +25,8 @@ public class TeleportCommand {
     }
 
     @Execute
-    @MinArgs(1)
-    public void execute(CommandSender sender, Audience audience, @Arg(0) Player player, @Arg(1) @Handler(PlayerArgOrSender.class) Option<Player> playerOption) {
+    @Min(1)
+    public void execute(CommandSender sender, Viewer audience, @Arg Player player, @Arg @By("or_sender") Option<Player> playerOption) {
         if (playerOption.isEmpty()) {
             if (sender instanceof Player playerSender) {
                 PaperLib.teleportAsync(playerSender, player.getLocation());
@@ -35,7 +35,7 @@ public class TeleportCommand {
                     .notice()
                     .message(messages -> messages.other().successfullyTeleported())
                     .placeholder("{PLAYER}", player.getName())
-                    .audience(audience)
+                    .viewer(audience)
                     .send();
 
                 return;
@@ -53,7 +53,7 @@ public class TeleportCommand {
             .message(messages -> messages.other().successfullyTeleportedPlayer())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{PLAYER-ARG}", player.getName())
-            .audience(audience)
+            .viewer(audience)
             .send();
     }
 }

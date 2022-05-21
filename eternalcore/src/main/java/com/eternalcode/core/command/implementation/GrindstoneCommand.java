@@ -1,11 +1,11 @@
 package com.eternalcode.core.command.implementation;
 
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -23,7 +23,7 @@ public class GrindstoneCommand {
     }
 
     @Execute
-    public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player playerOrSender) {
+    public void execute(@Arg @By("or_sender") Player playerOrSender) {
         Inventory inventory = this.server.createInventory(playerOrSender, InventoryType.GRINDSTONE, StringUtils.EMPTY);
         playerOrSender.openInventory(inventory);
     }

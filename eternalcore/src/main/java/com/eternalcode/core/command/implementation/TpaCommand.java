@@ -1,14 +1,12 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.teleport.TeleportRequestService;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Required;
-import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Section(route = "tpa")
@@ -23,9 +21,8 @@ public class TpaCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
-    @Required(1)
-    public void execute(Player player, @Arg(0) @Handler(PlayerArgument.class) Player target) {
+    @Execute(required = 1)
+    public void execute(Player player, @Arg Player target) {
         if (player.equals(target)) {
 
             this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaSelfMessage());

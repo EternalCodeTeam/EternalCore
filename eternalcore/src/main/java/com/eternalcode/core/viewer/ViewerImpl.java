@@ -1,38 +1,39 @@
-package com.eternalcode.core.chat.notification;
+package com.eternalcode.core.viewer;
 
 import com.eternalcode.core.language.Language;
 
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class Audience {
+class ViewerImpl implements Viewer {
 
-    private final static Audience CONSOLE = new Audience(UUID.nameUUIDFromBytes("CONSOLE".getBytes()), true, Language.DEFAULT);
+    private final static ViewerImpl CONSOLE = new ViewerImpl(UUID.nameUUIDFromBytes("CONSOLE".getBytes()), true, Language.DEFAULT);
 
     private final UUID uuid;
     private final boolean console;
 
     private final Supplier<Language> language;
 
-    private Audience(UUID uuid, boolean console, Language language) {
+    private ViewerImpl(UUID uuid, boolean console, Language language) {
         this(uuid, console, () -> language);
     }
 
-    private Audience(UUID uuid, boolean console, Supplier<Language> language) {
+    private ViewerImpl(UUID uuid, boolean console, Supplier<Language> language) {
         this.uuid = uuid;
         this.console = console;
         this.language = language;
     }
 
-    public static Audience console() {
+    public static ViewerImpl console() {
         return CONSOLE;
     }
 
-    public static Audience player(UUID uuid, Language language) {
-        return new Audience(uuid, false, language);
+    public static ViewerImpl player(UUID uuid, Language language) {
+        return new ViewerImpl(uuid, false, language);
     }
 
-    public UUID getUuid() {
+    @Override
+    public UUID getUniqueId() {
         return this.uuid;
     }
 

@@ -1,13 +1,13 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,7 +22,7 @@ public class FlyCommand {
     }
 
     @Execute
-    public void execute(Audience audience, CommandSender sender, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+    public void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
         player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.notice()
@@ -39,7 +39,7 @@ public class FlyCommand {
             .message(messages -> messages.other().flySetMessage())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().formatEnable() : messages.format().formatDisable())
-            .audience(audience)
+            .viewer(audience)
             .send();
     }
 }

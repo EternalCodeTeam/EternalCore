@@ -1,15 +1,15 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.MinArgs;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
-import dev.rollczi.litecommands.valid.AmountValidator;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.amount.AmountValidator;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -26,12 +26,12 @@ public class SpeedCommand {
     }
 
     @Execute
-    @MinArgs(1)
-    public void execute(CommandSender sender, Audience audience, @Arg(0) Integer amount, @Arg(1) @Handler(PlayerArgOrSender.class) Player player) {
+    @Min(1)
+    public void execute(CommandSender sender, Viewer audience, @Arg Integer amount, @Arg @By("or_sender") Player player) {
         if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
             this.noticeService.notice()
                 .message(messages -> messages.other().speedBetweenZeroAndTen())
-                .audience(audience)
+                .viewer(audience)
                 .send();
 
             return;
@@ -54,7 +54,7 @@ public class SpeedCommand {
             .message(messages -> messages.other().speedSetBy())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{SPEED}", String.valueOf(amount))
-            .audience(audience)
+            .viewer(audience)
             .send();
     }
 }

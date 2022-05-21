@@ -1,11 +1,10 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.IgnoreMethod;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -125,7 +124,7 @@ public class RepairCommand {
             .send();
     }
 
-    @IgnoreMethod
+
     private void repairItem(ItemStack itemStack) {
         if (itemStack.getItemMeta() == null) {
             return;
@@ -138,4 +137,5 @@ public class RepairCommand {
         damageable.setDamage(0);
         itemStack.setItemMeta(itemMeta);
     }
+
 }

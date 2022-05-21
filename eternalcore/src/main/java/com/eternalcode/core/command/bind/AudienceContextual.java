@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.bind;
 
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.user.UserManager;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -12,29 +13,17 @@ import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Result;
 
-public class AudienceContextual implements Contextual<CommandSender, Audience> {
+public class AudienceContextual implements Contextual<CommandSender, Viewer> {
 
-    private final UserManager userManager;
+    private final BukkitViewerProvider bukkitViewerProvider;
 
-    public AudienceContextual(UserManager userManager) {
-        this.userManager = userManager;
+    public AudienceContextual(BukkitViewerProvider bukkitViewerProvider) {
+        this.bukkitViewerProvider = bukkitViewerProvider;
     }
 
     @Override
-    public Result<Audience, Object> extract(CommandSender sender, LiteInvocation invocation) {
-        if (sender instanceof Player player) {
-            Language language = this.userManager.getUser(player.getUniqueId())
-                .map(user -> user.getSettings().getLanguage())
-                .orElseGet(Language.DEFAULT);
-
-            return Result.ok(Audience.player(player.getUniqueId(), language));
-        }
-
-        if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender || sender instanceof BlockCommandSender) {
-            return Result.ok(Audience.console());
-        }
-
-        throw new IllegalArgumentException("Unsupported sender type: " + sender.getClass().getName());
+    public Result<Viewer, Object> extract(CommandSender sender, LiteInvocation invocation) {
+        return Result.ok(this.bukkitViewerProvider.sender(sender));
     }
 
 }

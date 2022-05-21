@@ -6,6 +6,8 @@ import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.user.User;
+import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.core.viewer.ViewerProvider;
 import panda.utilities.text.Formatter;
 import panda.utilities.text.Joiner;
 
@@ -23,52 +25,52 @@ import java.util.function.Supplier;
 public class Notice {
 
     private final LanguageManager languageManager;
-    private final AudienceProvider audienceProvider;
+    private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
 
-    private final List<Audience> audiences = new ArrayList<>();
+    private final List<Viewer> viewers = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
     private final Map<String, MessageExtractor> placeholders = new HashMap<>();
 
-    Notice(LanguageManager languageManager, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
+    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer) {
         this.languageManager = languageManager;
-        this.audienceProvider = audienceProvider;
+        this.viewerProvider = viewerProvider;
         this.announcer = announcer;
     }
 
     @CheckReturnValue
     public Notice user(User user) {
-        this.audiences.add(this.audienceProvider.user(user));
+        this.viewers.add(user);
         return this;
     }
 
     @CheckReturnValue
     public Notice player(UUID uuid) {
-        this.audiences.add(this.audienceProvider.player(uuid));
+        this.viewers.add(this.viewerProvider.player(uuid));
         return this;
     }
 
     @CheckReturnValue
-    public Notice audience(Audience audience) {
-        this.audiences.add(audience);
+    public Notice viewer(Viewer viewer) {
+        this.viewers.add(viewer);
         return this;
     }
 
     @CheckReturnValue
     public Notice console() {
-        this.audiences.add(this.audienceProvider.console());
+        this.viewers.add(this.viewerProvider.console());
         return this;
     }
 
     @CheckReturnValue
     public Notice all() {
-        this.audiences.addAll(this.audienceProvider.all());
+        this.viewers.addAll(this.viewerProvider.all());
         return this;
     }
 
     @CheckReturnValue
     public Notice allPlayers() {
-        this.audiences.addAll(this.audienceProvider.allPlayers());
+        this.viewers.addAll(this.viewerProvider.allPlayers());
         return this;
     }
 
@@ -126,17 +128,17 @@ public class Notice {
     }
 
     public void send() {
-        Map<Language, Set<Audience>> audiencesByLang = new HashMap<>();
+        Map<Language, Set<Viewer>> viewerByLang = new HashMap<>();
 
-        for (Audience audience : audiences) {
-            audiencesByLang
-                .computeIfAbsent(audience.getLanguage(), (key) -> new HashSet<>())
-                .add(audience);
+        for (Viewer viewer : viewers) {
+            viewerByLang
+                .computeIfAbsent(viewer.getLanguage(), (key) -> new HashSet<>())
+                .add(viewer);
         }
 
         Map<Language, List<Notification>> formattedMessages = new HashMap<>();
 
-        for (Language language : audiencesByLang.keySet()) {
+        for (Language language : viewerByLang.keySet()) {
             Messages messages = languageManager.getMessages(language);
             ArrayList<Notification> notifications = new ArrayList<>();
             Formatter translatedFormatter = new Formatter();
@@ -155,7 +157,7 @@ public class Notice {
             formattedMessages.put(language, notifications);
         }
 
-        for (Map.Entry<Language, Set<Audience>> entry : audiencesByLang.entrySet()) {
+        for (Map.Entry<Language, Set<Viewer>> entry : viewerByLang.entrySet()) {
             Language language = entry.getKey();
             List<Notification> notifications = formattedMessages.get(language);
 

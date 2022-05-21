@@ -2,14 +2,13 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.adventure.AdventureNotification;
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.MinArgs;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import panda.std.Option;
@@ -49,9 +48,9 @@ public class ChatCommand {
     }
 
     @Execute(route = "on")
-    public void enable(Audience audience, CommandSender sender) {
+    public void enable(Viewer audience, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.audience(audience, messages -> messages.chat().alreadyEnabled());
+            this.audiences.viewer(audience, messages -> messages.chat().alreadyEnabled());
             return;
         }
 
@@ -65,9 +64,9 @@ public class ChatCommand {
     }
 
     @Execute(route = "off")
-    public void disable(Audience audience, CommandSender sender) {
+    public void disable(Viewer audience, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.audience(audience, messages -> messages.chat().alreadyDisabled());
+            this.audiences.viewer(audience, messages -> messages.chat().alreadyDisabled());
             return;
         }
 
@@ -81,13 +80,13 @@ public class ChatCommand {
     }
 
     @Execute(route = "slowmode")
-    @MinArgs(1)
-    public void slowmode(Audience audience, String[] args) { //TODO Argument (String[] args <- legacy solution)
+    @Min(1)
+    public void slowmode(Viewer audience, String[] args) { //TODO Argument (String[] args <- legacy solution)
         String amountArg = args[1];
 
         Option.attempt(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {
             if (amount < 0.0D) {
-                this.audiences.audience(audience, messages -> messages.argument().numberBiggerThanOrEqualZero());
+                this.audiences.viewer(audience, messages -> messages.argument().numberBiggerThanOrEqualZero());
                 return;
             }
 
@@ -95,10 +94,10 @@ public class ChatCommand {
             this.audiences.notice()
                 .message(messages -> messages.chat().slowModeSet())
                 .placeholder("{SLOWMODE}", amountArg)
-                .audience(audience)
+                .viewer(audience)
                 .send();
 
-        }).onEmpty(() -> this.audiences.audience(audience, messages -> messages.argument().notNumber()));
+        }).onEmpty(() -> this.audiences.viewer(audience, messages -> messages.argument().notNumber()));
     }
 }
 

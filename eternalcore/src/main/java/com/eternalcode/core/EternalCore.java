@@ -2,11 +2,13 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
-import com.eternalcode.core.chat.adventure.BukkitAudienceProvider;
+import com.eternalcode.core.command.implementation.ReplyCommand;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.chat.legacy.LegacyColorProcessor;
-import com.eternalcode.core.chat.notification.Audience;
-import com.eternalcode.core.chat.notification.AudienceProvider;
+import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
@@ -25,6 +27,7 @@ import com.eternalcode.core.command.bind.PlayerContextual;
 import com.eternalcode.core.command.bind.UserContextual;
 import com.eternalcode.core.command.handler.ComponentResultHandler;
 import com.eternalcode.core.command.handler.InvalidUsage;
+import com.eternalcode.core.command.handler.PermissionMessage;
 import com.eternalcode.core.command.handler.StringResultHandler;
 import com.eternalcode.core.command.implementation.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
@@ -49,7 +52,7 @@ import com.eternalcode.core.command.implementation.InventoryOpenCommand;
 import com.eternalcode.core.command.implementation.KillCommand;
 import com.eternalcode.core.command.implementation.LanguageCommand;
 import com.eternalcode.core.command.implementation.ListCommand;
-import com.eternalcode.core.command.implementation.MessageCommand;
+import com.eternalcode.core.command.implementation.PrivateMessageCommand;
 import com.eternalcode.core.command.implementation.NameCommand;
 import com.eternalcode.core.command.implementation.OnlineCommand;
 import com.eternalcode.core.command.implementation.PingCommand;
@@ -86,12 +89,10 @@ import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
-import com.eternalcode.core.listener.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.listener.user.PrepareUserController;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
-import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.teleport.TeleportListeners;
 import com.eternalcode.core.teleport.TeleportRequestService;
 import com.eternalcode.core.teleport.TeleportService;
@@ -114,6 +115,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -161,16 +163,16 @@ public class EternalCore extends JavaPlugin {
     /**
      * Audiences System
      **/
-    private AudienceProvider audienceProvider;
+    private BukkitViewerProvider viewerProvider;
     private NotificationAnnouncer notificationAnnouncer;
     private NoticeService noticeService;
+    private PrivateChatService privateChatService;
 
     /**
      * FrameWorks & Libs
      **/
     private LanguageInventory languageInventory;
-    private ScoreboardManager scoreboardManager;
-    private LiteCommands liteCommands;
+    private LiteCommands<CommandSender> liteCommands;
     private boolean isSpigot = false;
 
     public static EternalCore getInstance() {
@@ -244,14 +246,13 @@ public class EternalCore extends JavaPlugin {
 
         /* Audiences System */
 
-        this.audienceProvider = new BukkitAudienceProvider(this.userManager, server, this.adventureAudiences);
+        this.viewerProvider = new BukkitViewerProvider(this.userManager, server, this.adventureAudiences);
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
-        this.noticeService = new NoticeService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
+        this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
+        this.privateChatService = new PrivateChatService(server, this.noticeService);
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
-        this.scoreboardManager = new ScoreboardManager(this, this.configurationManager, this.miniMessage);
-        this.scoreboardManager.updateTask();
 
         this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
 
@@ -260,22 +261,22 @@ public class EternalCore extends JavaPlugin {
             .resultHandler(Component.class, new ComponentResultHandler(this.adventureAudiences))
 
             // Arguments (include optional)
-            .argument(String.class,                 new PlayerNameArg(server))
+            .argument(String.class, "player",   new PlayerNameArg(server))
             .argument(Integer.class,                new AmountArgument(this.languageManager, config, this.userProvider))
-            .argument(Player.class,                 new PlayerArgument(this.userProvider, this.languageManager, server))
             .argument(Material.class,               new MaterialArgument(this.userProvider, this.languageManager))
             .argument(GameMode.class,               new GameModeArgument(this.userProvider, this.languageManager))
             .argument(NoticeType.class,             new NoticeTypeArgument(this.userProvider, this.languageManager))
             .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
             .argument(Enchantment.class,            new EnchantmentArgument(this.userProvider, this.languageManager))
-            .argument(Player.class,                 new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
+            .argument(Player.class,                 new PlayerArgument(this.userProvider, this.languageManager, server))
+            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
 
             // Native Argument (no optional)
             .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.userProvider, server))
 
             // Dynamic binds
             .contextualBind(Player.class,            new PlayerContextual(this.languageManager))
-            .contextualBind(Audience.class,          new AudienceContextual(this.userManager))
+            .contextualBind(Viewer.class,            new AudienceContextual(this.viewerProvider))
             .contextualBind(User.class,              new UserContextual(this.languageManager, this.userManager))
 
             // Static binds
@@ -287,16 +288,17 @@ public class EternalCore extends JavaPlugin {
             .typeBind(LocationsConfiguration.class, () -> locations)
             .typeBind(TeleportService.class,        () -> this.teleportService)
             .typeBind(UserManager.class,            () -> this.userManager)
-            .typeBind(ScoreboardManager.class,      () -> this.scoreboardManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
             .typeBind(NoticeService.class,          () -> this.noticeService)
             .typeBind(MiniMessage.class,            () -> this.miniMessage)
             .typeBind(ChatManager.class,            () -> this.chatManager)
+            .typeBind(PrivateChatService.class,     () -> this.privateChatService)
             .typeBind(Scheduler.class,              () -> this.scheduler)
 
             //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
-            .invalidUsageHandler(new InvalidUsage(miniMessage, adventureAudiences, this.userProvider, this.languageManager))
+            .invalidUsageHandler(new InvalidUsage(this.miniMessage, this.adventureAudiences, this.userProvider, this.languageManager))
             .schemeFormat(SchemeFormat.ARGUMENT_ANGLED_OPTIONAL_SQUARE)
+            .permissionHandler(new PermissionMessage(this.userProvider, this.adventureAudiences, this.languageManager, this.miniMessage))
 
             .command(
                 AlertCommand.class,
@@ -336,7 +338,8 @@ public class EternalCore extends JavaPlugin {
                 EnchantCommand.class,
                 TeleportCommand.class,
                 LanguageCommand.class,
-                MessageCommand.class,
+                PrivateMessageCommand.class,
+                ReplyCommand.class,
                 TpaCommand.class,
                 TpaAcceptCommand.class,
                 TpaDenyCommand.class
@@ -350,7 +353,6 @@ public class EternalCore extends JavaPlugin {
             new PlayerJoinListener(this.configurationManager, this.noticeService, server),
             new PlayerQuitListener(this.configurationManager, this.noticeService, server),
             new PrepareUserController(this.userManager, server),
-            new ScoreboardListener(config, this.scoreboardManager),
             new PlayerCommandPreprocessListener(this.noticeService, this.configurationManager, server),
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService, this.configurationManager),
@@ -451,8 +453,8 @@ public class EternalCore extends JavaPlugin {
         return this.miniMessage;
     }
 
-    public AudienceProvider getAudienceProvider() {
-        return this.audienceProvider;
+    public ViewerProvider getAudienceProvider() {
+        return this.viewerProvider;
     }
 
     public NotificationAnnouncer getNotificationAnnouncer() {
@@ -467,11 +469,7 @@ public class EternalCore extends JavaPlugin {
         return this.languageInventory;
     }
 
-    public ScoreboardManager getScoreboardManager() {
-        return this.scoreboardManager;
-    }
-
-    public LiteCommands getLiteCommands() {
+    public LiteCommands<CommandSender> getLiteCommands() {
         return this.liteCommands;
     }
 

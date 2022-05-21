@@ -18,6 +18,7 @@ public interface Messages extends ConfigWithResource {
     TpaSection tpa();
     OtherMessages other();
     WarpSection warp();
+    PrivateMessage privateMessage();
 
     interface ArgumentSection {
         String permissionMessage();
@@ -97,6 +98,12 @@ public interface Messages extends ConfigWithResource {
 
     }
 
+    interface PrivateMessage {
+        String noReply();
+        String sendFormat();
+        String receiveFormat();
+    }
+
     interface OtherMessages {
         String successfullyTeleported();
         String successfullyTeleportedPlayer();
@@ -139,8 +146,6 @@ public interface Messages extends ConfigWithResource {
         String enchantedMessage();
         List<String> whoisCommand();
         String languageChanged();
-        String privateMessageSendFormat();
-        String privateMessageReceiveFormat();
     }
 }
 

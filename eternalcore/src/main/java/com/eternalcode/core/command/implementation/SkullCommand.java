@@ -5,11 +5,12 @@ import com.eternalcode.core.builder.ItemBuilder;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.command.argument.PlayerNameArg;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +28,7 @@ public class SkullCommand {
     }
 
     @Execute
-    public void execute(Player player, @Arg(0) @Handler(PlayerNameArg.class) String name) {
+    public void execute(Player player, @Arg @By("player") String name) {
         this.eternalCore.getScheduler().runTaskAsynchronously(() -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(name).skullOwner(name).build();
 

@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import dev.rollczi.litecommands.argument.Arg;
@@ -56,7 +56,7 @@ public class PlayerArgOrSender implements Argument<Arg> {
             .map(server::getPlayer);
 
         if (playerOptional.isEmpty()) {
-            Audience audience = this.userProvider.getAudience(invocation);
+            Viewer audience = this.userProvider.getAudience(invocation);
             Messages messages = this.languageManager.getMessages(audience.getLanguage());
 
             return MatchResult.notMatched(messages.argument().offlinePlayer());

@@ -6,12 +6,11 @@ import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.utils.DateUtils;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Joiner;
-import dev.rollczi.litecommands.annotations.MinArgs;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.argument.joiner.Joiner;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -39,7 +38,7 @@ public class HelpOpCommand {
     }
 
     @Execute
-    @MinArgs(1)
+    @Min(1)
     public void execute(Player player, @Joiner String text) {
         UUID uuid = player.getUniqueId();
 

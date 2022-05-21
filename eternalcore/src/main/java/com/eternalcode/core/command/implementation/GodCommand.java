@@ -1,12 +1,13 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -21,7 +22,7 @@ public class GodCommand {
     }
 
     @Execute
-    public void execute(CommandSender sender, Audience audience, @Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+    public void execute(CommandSender sender, Viewer viewer, @Arg @By("or_sender") Player player) {
         player.setInvulnerable(!player.isInvulnerable());
 
         this.noticeService
@@ -40,7 +41,7 @@ public class GodCommand {
             .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().formatEnable() : messages.format().formatDisable())
             .placeholder("{PLAYER}", player.getName())
             .message(messages -> messages.other().godSetMessage())
-            .audience(audience)
+            .viewer(viewer)
             .send();
     }
 }

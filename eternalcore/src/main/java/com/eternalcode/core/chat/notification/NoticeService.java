@@ -3,23 +3,25 @@ package com.eternalcode.core.chat.notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.NotificationExtractor;
+import com.eternalcode.core.viewer.ViewerImpl;
+import com.eternalcode.core.viewer.ViewerProvider;
 
 import java.util.UUID;
 
 public class NoticeService {
 
     private final LanguageManager languageManager;
-    private final AudienceProvider audienceProvider;
+    private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
 
-    public NoticeService(LanguageManager languageManager, AudienceProvider audienceProvider, NotificationAnnouncer announcer) {
+    public NoticeService(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer) {
         this.languageManager = languageManager;
-        this.audienceProvider = audienceProvider;
+        this.viewerProvider = viewerProvider;
         this.announcer = announcer;
     }
 
     public Notice notice() {
-        return new Notice(this.languageManager, this.audienceProvider, this.announcer);
+        return new Notice(this.languageManager, this.viewerProvider, this.announcer);
     }
 
     public void player(UUID player, MessageExtractor extractor) {
@@ -29,9 +31,9 @@ public class NoticeService {
             .send();
     }
 
-    public void audience(Audience audience, MessageExtractor extractor) {
+    public void viewer(ViewerImpl viewer, MessageExtractor extractor) {
         this.notice()
-            .audience(audience)
+            .viewer(viewer)
             .message(extractor)
             .send();
     }

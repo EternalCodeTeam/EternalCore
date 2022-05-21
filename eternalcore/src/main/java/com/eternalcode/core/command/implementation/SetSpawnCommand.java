@@ -3,9 +3,10 @@ package com.eternalcode.core.command.implementation;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 
 @Section(route = "setspawn")

@@ -1,10 +1,12 @@
 package com.eternalcode.core.command.implementation;
 
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 
 @Section(route = "workbench")
@@ -12,7 +14,7 @@ import org.bukkit.entity.Player;
 public class WorkbenchCommand {
 
     @Execute
-    public void execute(@Arg(0) @Handler(PlayerArgOrSender.class) Player player) {
+    public void execute(@Arg @By("or_sender") Player player) {
         player.openWorkbench(null, true);
     }
 

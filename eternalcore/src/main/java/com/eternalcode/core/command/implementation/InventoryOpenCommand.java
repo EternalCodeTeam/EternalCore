@@ -2,12 +2,10 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.utils.ChatUtils;
 
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.IgnoreMethod;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.PermissionExclude;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;;
+import dev.rollczi.litecommands.command.permission.Permission;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import org.bukkit.Material;
@@ -19,7 +17,6 @@ import org.bukkit.inventory.PlayerInventory;
 import panda.std.Option;
 
 @Section(route = "inventoryopen", aliases = { "io", "oi", "open", "invsee" })
-@PermissionExclude("eternalcore.command.inventoryopen")
 public class InventoryOpenCommand {
 
     private final Server server;
@@ -30,23 +27,23 @@ public class InventoryOpenCommand {
 
     @Execute(route = "enderchest")
     @Permission("eternalcore.command.inventoryopen.enderchest")
-    public void enderchest(Player sender, @Arg(0) Player player) {
+    public void enderchest(Player sender, @Arg Player player) {
         sender.openInventory(player.getEnderChest());
     }
 
     @Execute(route = "armor")
     @Permission("eternalcore.command.inventoryopen.armor")
-    public void armor(Player sender, @Arg(0) Player player) {
+    public void armor(Player sender, @Arg Player player) {
         createInventory(player).open(sender);
     }
 
     @Execute(route = "inventory")
     @Permission("eternalcore.command.inventoryopen.inventory")
-    public void inventory(Player sender, @Arg(0) Player player) {
+    public void inventory(Player sender, @Arg Player player) {
         sender.openInventory(player.getInventory());
     }
 
-    @IgnoreMethod
+
     private Gui createInventory(Player player) {
         Gui gui = Gui.gui().rows(1).title(ChatUtils.component("Armor player: " + player.getName())).create();
 
