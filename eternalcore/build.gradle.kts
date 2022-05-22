@@ -34,6 +34,9 @@ dependencies {
     // HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
 
+    // ormlite jdbc
+    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
+
     // FastBoard
     implementation("fr.mrmicky:fastboard:1.2.1")
 
@@ -95,6 +98,7 @@ tasks.withType<ShadowJar> {
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
 
     relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
+    relocate("com.j256.ormlite", "com.eternalcode.core.libs.com.j256.ormlite")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
     relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
 
