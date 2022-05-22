@@ -27,9 +27,9 @@ public class LocationComposer implements SimpleComposer<Location> {
         }
 
         return Result.ok((world +
-            ";" + entity.getBlockX()) +
-            ";" + entity.getBlockY() +
-            ";" + entity.getBlockZ() +
+            ";" + entity.getX()) +
+            ";" + entity.getY() +
+            ";" + entity.getZ() +
             ";" + entity.getYaw() +
             ";" + entity.getPitch());
     }

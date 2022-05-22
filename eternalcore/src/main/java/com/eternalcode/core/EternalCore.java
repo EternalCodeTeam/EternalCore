@@ -8,6 +8,7 @@ import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.command.implementation.PermissionInvokerCommand;
 import com.eternalcode.core.command.implementation.ReplyCommand;
+import com.eternalcode.core.command.implementation.SocialSpyCommand;
 import com.eternalcode.core.command.implementation.TpHereCommand;
 import com.eternalcode.core.command.implementation.WarpCommand;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -356,7 +357,8 @@ public class EternalCore extends JavaPlugin {
                 TpaAcceptCommand.class,
                 TpaDenyCommand.class,
                 PermissionInvokerCommand.class,
-                WarpCommand.class
+                WarpCommand.class,
+                SocialSpyCommand.class
             )
 
             .register();

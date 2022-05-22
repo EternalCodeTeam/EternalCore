@@ -13,6 +13,7 @@ import panda.utilities.text.Joiner;
 
 import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,8 +46,20 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public Notice player(UUID uuid) {
-        this.viewers.add(this.viewerProvider.player(uuid));
+    public Notice player(UUID player) {
+        this.viewers.add(this.viewerProvider.player(player));
+        return this;
+    }
+
+    @CheckReturnValue
+    public Notice players(Iterable<UUID> players) {
+        Set<Viewer> viewers = new HashSet<>();
+
+        for (UUID player : players) {
+            viewers.add(this.viewerProvider.player(player));
+        }
+
+        this.viewers.addAll(viewers);
         return this;
     }
 

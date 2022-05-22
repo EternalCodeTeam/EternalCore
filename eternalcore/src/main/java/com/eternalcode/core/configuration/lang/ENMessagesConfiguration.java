@@ -134,9 +134,12 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class ENPrivateMessage implements PrivateMessage {
-        public String noReply = "&8 » &cNie masz komu odpowiedzieć";
+        public String noReply = "&8 » &cYou have no one to reply!";
         public String sendFormat = "&8[&7You -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String receiveFormat = "&8[&7{SENDER} -> &fYou&8]&7: &f{MESSAGE}";
+        public String socialSpyFormat = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String socialSpyEnable = "&8 » &aSocialSpy has been enabled!";
+        public String socialSpyDisable = "&8 » &cSocialSpy has been disabled!";
     }
 
     @Getter @Contextual

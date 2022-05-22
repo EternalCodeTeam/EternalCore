@@ -133,9 +133,12 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class PLPrivateMessage implements PrivateMessage {
-        public String noReply = "&8 » &cYou have no one to reply!";
+        public String noReply = "&8 » &cNie masz komu odpowiedzieć";
         public String sendFormat = "&8[&7Ty -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String receiveFormat = "&8[&7{SENDER} -> &fTy&8]&7: &f{MESSAGE}";
+        public String socialSpyFormat = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String socialSpyEnable = "&8 » &aSocialSpy został włączony!";
+        public String socialSpyDisable = "&8 » &cSocialSpy został wyłączony!";
     }
 
     @Getter @Contextual

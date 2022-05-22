@@ -23,7 +23,7 @@ public class PrivateMessageCommand {
     @Execute
     @Min(2)
     public void execute(Player sender, @Arg Player target, @Joiner String message) {
-        this.privateChatService.sendPrivateMessage(sender, target, message);
+        this.privateChatService.sendMessage(sender, target, message);
     }
 
 }

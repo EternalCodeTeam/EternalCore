@@ -106,6 +106,9 @@ public interface Messages extends ConfigWithResource {
         String noReply();
         String sendFormat();
         String receiveFormat();
+        String socialSpyFormat();
+        String socialSpyEnable();
+        String socialSpyDisable();
     }
 
     interface OtherMessages {
