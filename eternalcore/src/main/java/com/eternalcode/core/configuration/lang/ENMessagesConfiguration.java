@@ -77,6 +77,10 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String teleported = "&8» &aTeleported!";
         public String teleporting = "&8» &aTeleporting...";
         public String haveTeleport = "&8» &cYou are in teleport!";
+        public String successfullyTeleported = "&8» &aSuccessfully teleported to {PLAYER}!";
+        public String successfullyTeleportedPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
+        public String tposMessage = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
     }
 
     @Getter @Contextual
@@ -137,8 +141,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class ENOtherMessages implements OtherMessages {
-        public String successfullyTeleported = "&8» &aSuccessfully teleported to {PLAYER}!";
-        public String successfullyTeleportedPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
         public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
         public String clearMessage = "&8» &cYour inventory has been cleared!";
         public String clearByMessage = "&8» &cPlayer {PLAYER} inventory cleared";
@@ -179,8 +181,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String pingOtherMessage = "&8» &cPing of the &6{PLAYER} &cis: &6{PING}ms";
         public String onlineMessage = "&8» &6On server now is: &f{ONLINE} &6players!";
         public String listMessage = "&8» &6On server is: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
-        public String tposMessage = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6New name is: &6{NAME}";
         public String enchantedMessage = "&8» &6Item in hand is enchanted!";
         public String languageChanged = "&8» &6Language changed to &cEnglish&6!";

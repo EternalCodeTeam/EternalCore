@@ -6,6 +6,7 @@ import com.eternalcode.core.chat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.command.implementation.PermissionInvokerCommand;
 import com.eternalcode.core.command.implementation.ReplyCommand;
+import com.eternalcode.core.command.implementation.TpHereCommand;
 import com.eternalcode.core.command.implementation.WarpCommand;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.chat.legacy.LegacyColorProcessor;
@@ -339,6 +340,7 @@ public class EternalCore extends JavaPlugin {
                 NameCommand.class,
                 EnchantCommand.class,
                 TeleportCommand.class,
+                TpHereCommand.class,
                 LanguageCommand.class,
                 PrivateMessageCommand.class,
                 ReplyCommand.class,

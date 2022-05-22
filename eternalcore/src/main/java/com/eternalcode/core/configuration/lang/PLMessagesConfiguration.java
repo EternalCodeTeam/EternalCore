@@ -76,6 +76,11 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String teleported = "&8» &aPrzeteleportowano!";
         public String teleporting = "&8» &aTeleportuje...";
         public String haveTeleport = "&4Blad: &cTeleportujesz się już!";
+
+        public String successfullyTeleported = "&8» &aPrzeteleportowano do {PLAYER}!";
+        public String successfullyTeleportedPlayer = "&8» &aPrzeteleportowano {PLAYER} do {ARG-PLAYER}!";
+        public String tposMessage = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String tposByMessage = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
     }
 
     @Getter @Contextual
@@ -135,8 +140,6 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class PLOtherMessages implements OtherMessages {
-        public String successfullyTeleported = "&8» &aPrzeteleportowano do {PLAYER}!";
-        public String successfullyTeleportedPlayer = "&8» &aPrzeteleportowano {PLAYER} do {ARG-PLAYER}!";
         public String alertMessagePrefix = "&c&lOGLOSZENIE: &7{BROADCAST}";
         public String clearMessage = "&8» &aWyczyszczono ekwipunek!";
         public String clearByMessage = "&8» &aWyczyszczono ekwipunek gracza {PLAYER}";
@@ -170,8 +173,6 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String pingOtherMessage = "&8» &aGracz &f{PLAYER} &ama: &f{PING}ms";
         public String onlineMessage = "&8» &6Na serwerze jest: &f{ONLINE} &6graczy online!";
         public String listMessage = "&8» &6Na serwerze jest: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
-        public String tposMessage = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String tposByMessage = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
         public String nameMessage = "&8» &6Nowa nazwa itemu: &c{NAME}";
         public String enchantedMessage = "&8» &6Item w rece zostal zenchantowany!";
         public String languageChanged = "&8» &6Zmieniono język na &cPolski&6!";

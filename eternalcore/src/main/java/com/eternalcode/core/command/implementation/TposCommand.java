@@ -30,9 +30,8 @@ public class TposCommand {
             return;
         }
 
-        this.noticeService
-            .notice()
-            .message(messages -> messages.other().tposByMessage())
+        this.noticeService.notice()
+            .message(messages -> messages.teleport().tposByMessage())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))
@@ -47,9 +46,8 @@ public class TposCommand {
 
         PaperLib.teleportAsync(player, location);
 
-        this.noticeService
-            .notice()
-            .message(messages -> messages.other().tposMessage())
+        this.noticeService.notice()
+            .message(messages -> messages.teleport().tposMessage())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))

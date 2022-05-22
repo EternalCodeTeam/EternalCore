@@ -11,6 +11,8 @@ import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.permission.Permission;
 import io.papermc.lib.PaperLib;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -30,9 +32,9 @@ public class TeleportCommand {
         PaperLib.teleportAsync(player, target.getLocation());
 
         this.noticeService.notice()
-            .message(messages -> messages.other().successfullyTeleportedPlayer())
+            .message(messages -> messages.teleport().successfullyTeleportedPlayer())
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{PLAYER-ARG}", player.getName())
+            .placeholder("{ARG-PLAYER}", player.getName())
             .viewer(sender)
             .send();
     }
@@ -42,9 +44,43 @@ public class TeleportCommand {
         PaperLib.teleportAsync(sender, player.getLocation());
 
         this.noticeService.notice()
-            .message(messages -> messages.other().successfullyTeleported())
+            .message(messages -> messages.teleport().successfullyTeleported())
             .placeholder("{PLAYER}", player.getName())
             .viewer(senderViewer)
             .send();
     }
+
+    @Execute(min = 3, max = 4)
+    public void to(Player sender, @Arg Location location, @Opt Option<World> world) {
+        if (world.isPresent()) {
+            location.setWorld(world.get());
+        }
+
+        PaperLib.teleportAsync(sender, location);
+        this.noticeService.notice()
+            .message(messages -> messages.teleport().tposMessage())
+            .placeholder("{X}", String.valueOf(location.getX()))
+            .placeholder("{Y}", String.valueOf(location.getY()))
+            .placeholder("{Z}", String.valueOf(location.getZ()))
+            .player(sender.getUniqueId())
+            .send();
+    }
+
+    @Execute(min = 3, max = 5)
+    public void to(Viewer sender, @Arg Location location, @Arg Player player, @Opt Option<World> world) {
+        if (world.isPresent()) {
+            location.setWorld(world.get());
+        }
+
+        PaperLib.teleportAsync(player, location);
+        this.noticeService.notice()
+            .message(messages -> messages.teleport().tposByMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{X}", String.valueOf(location.getX()))
+            .placeholder("{Y}", String.valueOf(location.getY()))
+            .placeholder("{Z}", String.valueOf(location.getZ()))
+            .viewer(sender)
+            .send();
+    }
+
 }

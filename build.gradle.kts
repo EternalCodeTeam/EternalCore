@@ -4,8 +4,8 @@ plugins {
 }
 
 allprojects {
-    group = "core"
-    version = "1.0.0-BETA"
+    group = "com.eternalcode"
+    version = "1.0.0"
 
     apply(plugin = "java-library")
     apply(plugin = "com.github.johnrengelman.shadow")

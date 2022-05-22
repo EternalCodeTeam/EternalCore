@@ -56,6 +56,10 @@ public interface Messages extends ConfigWithResource {
         String teleported();
         String teleporting();
         String haveTeleport();
+        String successfullyTeleported();
+        String successfullyTeleportedPlayer();
+        String tposMessage();
+        String tposByMessage();
     }
 
     interface ChatSection {
@@ -105,8 +109,6 @@ public interface Messages extends ConfigWithResource {
     }
 
     interface OtherMessages {
-        String successfullyTeleported();
-        String successfullyTeleportedPlayer();
         String alertMessagePrefix();
         String clearMessage();
         String clearByMessage();
@@ -140,8 +142,6 @@ public interface Messages extends ConfigWithResource {
         String pingOtherMessage();
         String onlineMessage();
         String listMessage();
-        String tposMessage();
-        String tposByMessage();
         String nameMessage();
         String enchantedMessage();
         List<String> whoisCommand();
