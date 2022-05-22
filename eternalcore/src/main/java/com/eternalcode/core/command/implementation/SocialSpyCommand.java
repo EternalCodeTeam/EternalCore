@@ -25,7 +25,7 @@ public class SocialSpyCommand {
     void socialSpy(Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (!this.privateChatService.isSpy(uuid)) {
+        if (this.privateChatService.isSpy(uuid)) {
             this.privateChatService.disableSpy(uuid);
             this.noticeService.player(uuid, messages -> messages.privateMessage().socialSpyDisable());
             return;
