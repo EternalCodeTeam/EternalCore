@@ -4,6 +4,8 @@ import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
+import com.eternalcode.core.command.argument.LocationArgument;
+import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.command.implementation.PermissionInvokerCommand;
 import com.eternalcode.core.command.implementation.ReplyCommand;
 import com.eternalcode.core.command.implementation.TpHereCommand;
@@ -115,8 +117,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -271,8 +275,12 @@ public class EternalCore extends JavaPlugin {
             .argument(NoticeType.class,             new NoticeTypeArgument(this.userProvider, this.languageManager))
             .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
             .argument(Enchantment.class,            new EnchantmentArgument(this.userProvider, this.languageManager))
+            .argument(World.class,                  new WorldArgument(server))
             .argument(Player.class,                 new PlayerArgument(this.userProvider, this.languageManager, server))
             .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
+
+            // multilevel Arguments (include optional)
+            .argumentMultilevel(Location.class,               new LocationArgument())
 
             // Native Argument (no optional)
             .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.viewerProvider, server))
