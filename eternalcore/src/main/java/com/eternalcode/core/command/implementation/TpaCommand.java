@@ -47,7 +47,7 @@ public class TpaCommand {
         this.noticeService
             .notice()
             .player(target.getUniqueId())
-            .message(messages -> messages.tpa().tpaRecivedMessage())
+            .message(messages -> messages.tpa().tpaReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
 

@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.bukkit.BukkitUserProvider;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
@@ -22,12 +23,12 @@ import java.util.Optional;
 public class PlayerArgOrSender implements Argument<Arg> {
 
     private final LanguageManager languageManager;
-    private final BukkitUserProvider userProvider;
+    private final BukkitViewerProvider viewerProvider;
     private final Server server;
 
-    public PlayerArgOrSender(LanguageManager languageManager, BukkitUserProvider userProvider, Server server) {
+    public PlayerArgOrSender(LanguageManager languageManager, BukkitViewerProvider viewerProvider, Server server) {
         this.languageManager = languageManager;
-        this.userProvider = userProvider;
+        this.viewerProvider = viewerProvider;
         this.server = server;
     }
 
@@ -56,7 +57,7 @@ public class PlayerArgOrSender implements Argument<Arg> {
             .map(server::getPlayer);
 
         if (playerOptional.isEmpty()) {
-            Viewer audience = this.userProvider.getAudience(invocation);
+            Viewer audience = this.viewerProvider.any(invocation.sender().getHandle());
             Messages messages = this.languageManager.getMessages(audience.getLanguage());
 
             return MatchResult.notMatched(messages.argument().offlinePlayer());

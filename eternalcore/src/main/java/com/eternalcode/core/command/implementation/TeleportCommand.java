@@ -5,6 +5,7 @@ import com.eternalcode.core.chat.notification.NoticeService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.amount.Min;
@@ -24,36 +25,26 @@ public class TeleportCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
-    @Min(1)
-    public void execute(CommandSender sender, Viewer audience, @Arg Player player, @Arg @By("or_sender") Option<Player> playerOption) {
-        if (playerOption.isEmpty()) {
-            if (sender instanceof Player playerSender) {
-                PaperLib.teleportAsync(playerSender, player.getLocation());
+    @Execute(required = 2)
+    public void to(Viewer sender, @Arg Player player, @Arg Player target) {
+        PaperLib.teleportAsync(player, target.getLocation());
 
-                this.noticeService
-                    .notice()
-                    .message(messages -> messages.other().successfullyTeleported())
-                    .placeholder("{PLAYER}", player.getName())
-                    .viewer(audience)
-                    .send();
-
-                return;
-            }
-
-            this.noticeService.console(messages -> messages.argument().onlyPlayer());
-            return;
-        }
-
-        Player playerArgument = playerOption.get();
-        PaperLib.teleportAsync(player, playerArgument.getLocation());
-
-        this.noticeService
-            .notice()
+        this.noticeService.notice()
             .message(messages -> messages.other().successfullyTeleportedPlayer())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{PLAYER-ARG}", player.getName())
-            .viewer(audience)
+            .viewer(sender)
+            .send();
+    }
+
+    @Execute(required = 1)
+    public void execute(Player sender, Viewer senderViewer, @Arg Player player) {
+        PaperLib.teleportAsync(sender, player.getLocation());
+
+        this.noticeService.notice()
+            .message(messages -> messages.other().successfullyTeleported())
+            .placeholder("{PLAYER}", player.getName())
+            .viewer(senderViewer)
             .send();
     }
 }

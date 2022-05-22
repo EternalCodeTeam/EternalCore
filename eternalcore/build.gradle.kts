@@ -7,6 +7,9 @@ plugins {
 }
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
+
     // paper lib, spigot api
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
@@ -16,7 +19,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
     // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:2.0.0-pre13")
+    implementation("dev.rollczi.litecommands:bukkit:2.0.0-pre16")
 
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.22")

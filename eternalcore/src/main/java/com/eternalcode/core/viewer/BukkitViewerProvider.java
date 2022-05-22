@@ -63,8 +63,12 @@ public class BukkitViewerProvider implements ViewerProvider {
         return ViewerImpl.player(user.getUniqueId(), user.getSettings().getLanguage());
     }
 
-    public Viewer sender(CommandSender sender) {
-        if (sender instanceof Player player) {
+    public Viewer sender(CommandSender commandSender) {
+        return this.any(commandSender);
+    }
+
+    public Viewer any(Object any) {
+        if (any instanceof Player player) {
             Option<User> userOption = this.userManager.getUser(player.getUniqueId());
 
             if (userOption.isPresent()) {
@@ -74,11 +78,11 @@ public class BukkitViewerProvider implements ViewerProvider {
             return ViewerImpl.player(player.getUniqueId(), Language.DEFAULT);
         }
 
-        if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender || sender instanceof BlockCommandSender) {
+        if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender || any instanceof BlockCommandSender) {
             return ViewerImpl.console();
         }
 
-        throw new IllegalArgumentException("Unsupported sender type: " + sender.getClass().getName());
+        throw new IllegalArgumentException("Unsupported sender type: " + any.getClass().getName());
     }
 
 }

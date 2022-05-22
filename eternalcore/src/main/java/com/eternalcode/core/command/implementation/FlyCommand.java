@@ -27,7 +27,7 @@ public class FlyCommand {
 
         this.noticeService.notice()
             .message(messages -> messages.other().flyMessage())
-            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().formatEnable() : messages.format().formatDisable())
+            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
             .player(player.getUniqueId())
             .send();
 
@@ -38,7 +38,7 @@ public class FlyCommand {
         this.noticeService.notice()
             .message(messages -> messages.other().flySetMessage())
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().formatEnable() : messages.format().formatDisable())
+            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
             .viewer(audience)
             .send();
     }

@@ -66,7 +66,7 @@ public class SpawnCommand {
                 return;
             }
 
-            this.teleportService.createTeleport(sender.getUniqueId(), sender.getLocation(), destinationLocation, 10);
+            this.teleportService.createTeleport(sender.getUniqueId(), sender.getLocation(), destinationLocation, 5);
 
             this.noticeService
                 .notice()

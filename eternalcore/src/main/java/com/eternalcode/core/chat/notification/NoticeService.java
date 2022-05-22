@@ -3,7 +3,7 @@ package com.eternalcode.core.chat.notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.NotificationExtractor;
-import com.eternalcode.core.viewer.ViewerImpl;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
 
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class NoticeService {
             .send();
     }
 
-    public void viewer(ViewerImpl viewer, MessageExtractor extractor) {
+    public void viewer(Viewer viewer, MessageExtractor extractor) {
         this.notice()
             .viewer(viewer)
             .message(extractor)

@@ -2,7 +2,6 @@ package com.eternalcode.core.language;
 
 import com.eternalcode.core.configuration.ConfigWithResource;
 
-import java.text.Normalizer;
 import java.util.List;
 
 public interface Messages extends ConfigWithResource {
@@ -37,8 +36,8 @@ public interface Messages extends ConfigWithResource {
     }
 
     interface Format {
-        String formatEnable();
-        String formatDisable();
+        String enable();
+        String disable();
     }
 
     interface HelpOpSection {
@@ -74,6 +73,8 @@ public interface Messages extends ConfigWithResource {
     interface WarpSection {
         String availableList();
         String notExist();
+        String create();
+        String remove();
         String noPermission();
         String disabled();
     }
@@ -82,20 +83,19 @@ public interface Messages extends ConfigWithResource {
         String tpaSelfMessage();
         String tpaAlreadySentMessage();
         String tpaSentMessage();
-        String tpaRecivedMessage();
+        String tpaReceivedMessage();
 
         String tpaDenyNoRequestMessage();
         String tpaDenyNoRequestMessageAll();
         String tpaDenyDoneMessage();
-        String tpaDenyRecivedMessage();
+        String tpaDenyReceivedMessage();
         String tpaDenyAllDenied();
 
         String tpaAcceptMessage();
         String tpaAcceptNoRequestMessage();
         String tpaAcceptNoRequestMessageAll();
-        String tpaAcceptRecivedMessage();
+        String tpaAcceptReceivedMessage();
         String tpaAcceptAllAccepted();
-
     }
 
     interface PrivateMessage {

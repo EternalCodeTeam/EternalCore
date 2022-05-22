@@ -1,5 +1,6 @@
 package com.eternalcode.core.warps;
 
+import org.bukkit.Location;
 import panda.std.Option;
 
 import java.util.HashMap;
@@ -14,21 +15,22 @@ public class WarpManager {
         this.warpRepository = warpRepository;
     }
 
-    public void createWarp(String name) {
-        Warp warp = new Warp(name);
+    public void createWarp(String name, Location location) {
+        Warp warp = new Warp(name, location.clone());
 
         this.warpMap.put(name, warp);
         this.warpRepository.addWarp(warp);
     }
 
-    public void removeWarp(String warp) {
+    public boolean removeWarp(String warp) {
         Warp remove = this.warpMap.remove(warp);
 
         if (remove == null) {
-            return;
+            return false;
         }
 
-        this.warpRepository.removeWarp(remove);
+        this.warpRepository.removeWarp(remove.getName());
+        return true;
     }
 
     public Option<Warp> findWarp(String name) {

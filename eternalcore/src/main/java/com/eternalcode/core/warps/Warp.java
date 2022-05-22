@@ -5,39 +5,19 @@ import org.bukkit.Location;
 public class Warp {
 
     private final String name;
-    private boolean enabled;
-    private Location location;
-    private String permission;
+    private final Location location;
 
-    public Warp(String name) {
+    public Warp(String name, Location location) {
         this.name = name;
+        this.location = location;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public boolean isEnabled() {
-        return this.enabled;
-    }
-
     public Location getLocation() {
-        return this.location;
+        return this.location.clone();
     }
 
-    public String getPermission() {
-        return this.permission;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
 }

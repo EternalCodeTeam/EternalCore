@@ -4,7 +4,9 @@ import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
+import com.eternalcode.core.command.implementation.PermissionInvokerCommand;
 import com.eternalcode.core.command.implementation.ReplyCommand;
+import com.eternalcode.core.command.implementation.WarpCommand;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.chat.legacy.LegacyColorProcessor;
 import com.eternalcode.core.viewer.Viewer;
@@ -57,7 +59,6 @@ import com.eternalcode.core.command.implementation.NameCommand;
 import com.eternalcode.core.command.implementation.OnlineCommand;
 import com.eternalcode.core.command.implementation.PingCommand;
 import com.eternalcode.core.command.implementation.RepairCommand;
-import com.eternalcode.core.command.implementation.ScoreboardCommand;
 import com.eternalcode.core.command.implementation.SetSpawnCommand;
 import com.eternalcode.core.command.implementation.SkullCommand;
 import com.eternalcode.core.command.implementation.SpawnCommand;
@@ -77,7 +78,6 @@ import com.eternalcode.core.configuration.implementations.LocationsConfiguration
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
-import com.eternalcode.core.database.CacheWarpRepository;
 import com.eternalcode.core.database.Database;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.language.LanguageInventory;
@@ -100,6 +100,7 @@ import com.eternalcode.core.teleport.TeleportTask;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.warps.Warp;
+import com.eternalcode.core.warps.WarpConfigRepo;
 import com.eternalcode.core.warps.WarpManager;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableMap;
@@ -194,7 +195,6 @@ public class EternalCore extends JavaPlugin {
         this.userManager = new UserManager();
         this.homeManager = new HomeManager();
         this.teleportService = new TeleportService();
-        this.warpManager = WarpManager.create(new CacheWarpRepository());
         this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 
         /* Configuration */
@@ -234,6 +234,7 @@ public class EternalCore extends JavaPlugin {
 
         /* Services & Managers (dependent on configuration) */
 
+        this.warpManager = WarpManager.create(new WarpConfigRepo(configurationManager, locations));
         this.database = new Database(this.configurationManager, this.getLogger());
         this.teleportRequestService = new TeleportRequestService(config);
 
@@ -262,6 +263,7 @@ public class EternalCore extends JavaPlugin {
 
             // Arguments (include optional)
             .argument(String.class, "player",   new PlayerNameArg(server))
+            .argument(String.class, "permission", new PermissionInvokerCommand.Argument(() -> this.liteCommands))
             .argument(Integer.class,                new AmountArgument(this.languageManager, config, this.userProvider))
             .argument(Material.class,               new MaterialArgument(this.userProvider, this.languageManager))
             .argument(GameMode.class,               new GameModeArgument(this.userProvider, this.languageManager))
@@ -272,7 +274,7 @@ public class EternalCore extends JavaPlugin {
             .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
 
             // Native Argument (no optional)
-            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.userProvider, server))
+            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.viewerProvider, server))
 
             // Dynamic binds
             .contextualBind(Player.class,            new PlayerContextual(this.languageManager))
@@ -294,6 +296,7 @@ public class EternalCore extends JavaPlugin {
             .typeBind(ChatManager.class,            () -> this.chatManager)
             .typeBind(PrivateChatService.class,     () -> this.privateChatService)
             .typeBind(Scheduler.class,              () -> this.scheduler)
+            .typeBind(WarpManager.class,            () -> this.warpManager)
 
             //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
             .invalidUsageHandler(new InvalidUsage(this.miniMessage, this.adventureAudiences, this.userProvider, this.languageManager))
@@ -322,7 +325,6 @@ public class EternalCore extends JavaPlugin {
                 WhoIsCommand.class,
                 WorkbenchCommand.class,
                 EternalCoreCommand.class,
-                ScoreboardCommand.class,
                 AdminChatCommand.class,
                 HelpOpCommand.class,
                 InventoryOpenCommand.class,
@@ -342,8 +344,11 @@ public class EternalCore extends JavaPlugin {
                 ReplyCommand.class,
                 TpaCommand.class,
                 TpaAcceptCommand.class,
-                TpaDenyCommand.class
+                TpaDenyCommand.class,
+                PermissionInvokerCommand.class,
+                WarpCommand.class
             )
+
             .register();
 
         /* Listeners */

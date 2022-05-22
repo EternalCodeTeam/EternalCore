@@ -1,7 +1,6 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportRequestService;
@@ -12,7 +11,6 @@ import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -54,7 +52,7 @@ public class TpaAcceptCommand {
         this.noticeService
             .notice()
             .player(target.getUniqueId())
-            .message(messages -> messages.tpa().tpaAcceptRecivedMessage())
+            .message(messages -> messages.tpa().tpaAcceptReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
     }
@@ -82,7 +80,7 @@ public class TpaAcceptCommand {
                 this.noticeService
                     .notice()
                     .player(uniqueId)
-                    .message(messages -> messages.tpa().tpaAcceptRecivedMessage())
+                    .message(messages -> messages.tpa().tpaAcceptReceivedMessage())
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }

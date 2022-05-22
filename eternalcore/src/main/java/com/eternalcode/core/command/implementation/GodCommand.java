@@ -27,7 +27,7 @@ public class GodCommand {
 
         this.noticeService
             .notice()
-            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().formatEnable() : messages.format().formatDisable())
+            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().enable() : messages.format().disable())
             .message(messages -> messages.other().godMessage())
             .player(player.getUniqueId())
             .send();
@@ -38,7 +38,7 @@ public class GodCommand {
 
         this.noticeService
             .notice()
-            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().formatEnable() : messages.format().formatDisable())
+            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().enable() : messages.format().disable())
             .placeholder("{PLAYER}", player.getName())
             .message(messages -> messages.other().godSetMessage())
             .viewer(viewer)
