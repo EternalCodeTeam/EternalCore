@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Section(route = "tpaaccept", aliases = "tpaccept")
-@Permission("eternalcore.command.tpaccept")
+@Permission("eternalcore.tpaccept")
 public class TpaAcceptCommand {
 
     private final TeleportRequestService requestService;

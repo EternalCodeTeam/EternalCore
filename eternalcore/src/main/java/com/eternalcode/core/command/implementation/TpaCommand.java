@@ -10,7 +10,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Section(route = "tpa")
-@Permission("eternalcore.command.tpa")
+@Permission("eternalcore.tpa")
 public class TpaCommand {
 
     private final TeleportRequestService requestService;

@@ -11,7 +11,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Section(route = "msg", aliases = { "message", "m", "whisper", "tell", "t" })
-@Permission("eternalcore.commands.msg")
+@Permission("eternalcore.msg")
 public class PrivateMessageCommand {
 
     private final PrivateChatService privateChatService;

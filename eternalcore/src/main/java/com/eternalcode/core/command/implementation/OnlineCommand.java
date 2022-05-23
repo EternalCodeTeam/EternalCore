@@ -9,7 +9,7 @@ import org.bukkit.Server;
 
 
 @Section(route = "online")
-@Permission("eternalcore.command.online")
+@Permission("eternalcore.online")
 public class OnlineCommand {
 
     private final NoticeService noticeService;

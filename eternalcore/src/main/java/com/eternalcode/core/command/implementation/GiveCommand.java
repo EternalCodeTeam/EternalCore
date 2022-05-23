@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Section(route = "give", aliases = {"i", "item"})
-@Permission("eternalcore.command.give")
+@Permission("eternalcore.give")
 public class GiveCommand {
 
     private final NoticeService noticeService;

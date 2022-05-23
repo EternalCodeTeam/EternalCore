@@ -43,15 +43,15 @@ public class ConfigurationManager {
 
     public <T extends ConfigWithResource> void loadAndRender(T config) {
         this.cdn.load(config.getResource(), config)
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
 
         this.cdn.render(config, config.getResource())
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
     }
 
     public <T extends ConfigWithResource> void render(T config) {
         this.cdn.render(config, config.getResource())
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
     }
 
     public PluginConfiguration getPluginConfiguration() {

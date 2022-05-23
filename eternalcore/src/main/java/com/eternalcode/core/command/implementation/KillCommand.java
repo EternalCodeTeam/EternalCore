@@ -10,7 +10,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Section(route = "kill")
-@Permission("eternalcore.command.kill")
+@Permission("eternalcore.kill")
 public class KillCommand {
 
     private final NoticeService noticeService;

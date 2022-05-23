@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Section(route = "skull", aliases = "glowa")
-@Permission("eternalcore.command.skull")
+@Permission("eternalcore.skull")
 public class SkullCommand {
 
     private final NoticeService noticeService;

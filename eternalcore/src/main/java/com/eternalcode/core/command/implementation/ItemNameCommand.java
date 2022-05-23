@@ -8,19 +8,18 @@ import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-@Section(route = "name", aliases = { "rename", "itemname" })
-@Permission("eternalcore.command.itemname")
-public class NameCommand {
+@Section(route = "itemname", aliases = { "itemrename" })
+@Permission("eternalcore.itemname")
+public class ItemNameCommand {
 
     private final NoticeService noticeService;
 
-    public NameCommand(NoticeService noticeService) {
+    public ItemNameCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

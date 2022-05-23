@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @Section(route = "spawn")
-@Permission("eternalcore.command.spawn")
+@Permission("eternalcore.spawn")
 public class SpawnCommand {
 
     private final LocationsConfiguration locations;

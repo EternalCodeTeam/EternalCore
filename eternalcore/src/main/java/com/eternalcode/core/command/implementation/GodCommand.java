@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "god", aliases = "godmode" )
-@Permission("eternalcore.command.god")
+@Permission("eternalcore.god")
 public class GodCommand {
 
     private final NoticeService noticeService;

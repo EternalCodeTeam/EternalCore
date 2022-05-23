@@ -11,7 +11,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Section(route = "whois")
-@Permission("eternalcore.command.whois")
+@Permission("eternalcore.whois")
 public class WhoIsCommand {
 
     private final NoticeService noticeService;

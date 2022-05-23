@@ -1,4 +1,4 @@
-package com.eternalcode.core.listener.user;
+package com.eternalcode.core.user;
 
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -37,8 +37,6 @@ public class PrepareUserController implements Listener {
         User user = this.userManager.getUser(player.getUniqueId())
             .orThrow(() -> new IllegalStateException("User not found"));
 
-        if (user != null) {
-            user.setClientSettings(ClientSettings.NONE);
-        }
+        user.setClientSettings(ClientSettings.NONE);
     }
 }

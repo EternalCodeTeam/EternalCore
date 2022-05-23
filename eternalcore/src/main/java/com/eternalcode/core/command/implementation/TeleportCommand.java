@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @Section(route = "teleport", aliases = { "tp" })
-@Permission("eternalcore.command.teleport")
+@Permission("eternalcore.teleport")
 public class TeleportCommand {
 
     private final NoticeService noticeService;

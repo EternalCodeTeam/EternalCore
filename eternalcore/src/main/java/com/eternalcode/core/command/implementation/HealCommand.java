@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "heal")
-@Permission("eternalcore.command.heal")
+@Permission("eternalcore.heal")
 public class HealCommand {
 
     private final NoticeService noticeService;

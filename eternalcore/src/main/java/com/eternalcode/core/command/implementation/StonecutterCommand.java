@@ -14,7 +14,7 @@ import org.bukkit.inventory.Inventory;
 import panda.utilities.StringUtils;
 
 @Section(route = "stonecutter")
-@Permission("eternalcore.command.workbench")
+@Permission("eternalcore.workbench")
 public class StonecutterCommand {
 
     private final Server server;

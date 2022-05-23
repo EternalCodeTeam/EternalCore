@@ -15,7 +15,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 @Section(route = "disposal", aliases = { "smietnik" })
-@Permission("eternalcore.command.disposal")
+@Permission("eternalcore.disposal")
 public class DisposalCommand {
 
     private final MiniMessage miniMessage;

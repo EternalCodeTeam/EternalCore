@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "gamemode", aliases = { "gm" })
-@Permission("eternalcore.command.gamemode")
+@Permission("eternalcore.gamemode")
 public class GamemodeCommand {
 
     private final NoticeService noticeService;
@@ -22,26 +22,26 @@ public class GamemodeCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
-    @Between(min = 1, max = 2)
-    public void execute(Viewer audience, CommandSender sender, @Arg GameMode gameMode, @Arg @By("or_sender") Player player) {
-        player.setGameMode(gameMode);
+    @Execute(required = 1)
+    public void execute(Player sender, @Arg GameMode gameMode) {
+        sender.setGameMode(gameMode);
 
         this.noticeService.notice()
             .message(messages -> messages.other().gameModeMessage())
             .placeholder("{GAMEMODE}", gameMode.name())
-            .player(player.getUniqueId())
+            .player(sender.getUniqueId())
             .send();
+    }
 
-        if (sender.equals(player)) {
-            return;
-        }
+    @Execute(required = 2)
+    public void execute(Viewer sender, @Arg GameMode gameMode, @Arg Player player) {
+        player.setGameMode(gameMode);
 
         this.noticeService.notice()
             .message(messages -> messages.other().gameModeSetMessage())
             .placeholder("{GAMEMODE}", gameMode.name())
             .placeholder("{PLAYER}", player.getName())
-            .viewer(audience)
+            .viewer(sender)
             .send();
     }
 

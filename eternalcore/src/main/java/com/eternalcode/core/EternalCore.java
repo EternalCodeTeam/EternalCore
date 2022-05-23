@@ -6,11 +6,16 @@ import com.eternalcode.core.chat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
-import com.eternalcode.core.command.implementation.PermissionInvokerCommand;
 import com.eternalcode.core.command.implementation.ReplyCommand;
 import com.eternalcode.core.command.implementation.SocialSpyCommand;
 import com.eternalcode.core.command.implementation.TpHereCommand;
 import com.eternalcode.core.command.implementation.WarpCommand;
+import com.eternalcode.core.command.implementation.time.DayCommand;
+import com.eternalcode.core.command.implementation.time.NightCommand;
+import com.eternalcode.core.command.implementation.time.TimeCommand;
+import com.eternalcode.core.command.implementation.weather.RainCommand;
+import com.eternalcode.core.command.implementation.weather.SunCommand;
+import com.eternalcode.core.command.implementation.weather.ThunderCommand;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.chat.legacy.LegacyColorProcessor;
 import com.eternalcode.core.viewer.Viewer;
@@ -59,7 +64,7 @@ import com.eternalcode.core.command.implementation.KillCommand;
 import com.eternalcode.core.command.implementation.LanguageCommand;
 import com.eternalcode.core.command.implementation.ListCommand;
 import com.eternalcode.core.command.implementation.PrivateMessageCommand;
-import com.eternalcode.core.command.implementation.NameCommand;
+import com.eternalcode.core.command.implementation.ItemNameCommand;
 import com.eternalcode.core.command.implementation.OnlineCommand;
 import com.eternalcode.core.command.implementation.PingCommand;
 import com.eternalcode.core.command.implementation.RepairCommand;
@@ -94,7 +99,7 @@ import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
-import com.eternalcode.core.listener.user.PrepareUserController;
+import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.teleport.TeleportListeners;
@@ -270,7 +275,6 @@ public class EternalCore extends JavaPlugin {
 
             // Arguments (include optional)
             .argument(String.class, "player",   new PlayerNameArg(server))
-            .argument(String.class, "permission", new PermissionInvokerCommand.Argument(() -> this.liteCommands))
             .argument(Integer.class,                new AmountArgument(this.languageManager, config, this.userProvider))
             .argument(Material.class,               new MaterialArgument(this.userProvider, this.languageManager))
             .argument(GameMode.class,               new GameModeArgument(this.userProvider, this.languageManager))
@@ -347,7 +351,7 @@ public class EternalCore extends JavaPlugin {
                 OnlineCommand.class,
                 ListCommand.class,
                 TposCommand.class,
-                NameCommand.class,
+                ItemNameCommand.class,
                 EnchantCommand.class,
                 TeleportCommand.class,
                 TpHereCommand.class,
@@ -357,9 +361,14 @@ public class EternalCore extends JavaPlugin {
                 TpaCommand.class,
                 TpaAcceptCommand.class,
                 TpaDenyCommand.class,
-                PermissionInvokerCommand.class,
                 WarpCommand.class,
-                SocialSpyCommand.class
+                SocialSpyCommand.class,
+                DayCommand.class,
+                NightCommand.class,
+                TimeCommand.class,
+                SunCommand.class,
+                ThunderCommand.class,
+                RainCommand.class
             )
 
             .register();

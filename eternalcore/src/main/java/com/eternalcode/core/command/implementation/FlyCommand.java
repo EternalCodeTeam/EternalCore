@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "fly")
-@Permission("eternalcore.command.fly")
+@Permission("eternalcore.fly")
 public class FlyCommand {
 
     private final NoticeService noticeService;

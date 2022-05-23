@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Section(route = "clear")
-@Permission("eternalcore.command.clear")
+@Permission("eternalcore.clear")
 public class ClearCommand {
 
     private final NoticeService noticeService;

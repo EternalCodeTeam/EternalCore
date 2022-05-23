@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 //TODO: Refactor
 @Section(route = "helpop", aliases = { "report" })
-@Permission("eternalcore.command.helpop")
+@Permission("eternalcore.helpop")
 public class HelpOpCommand {
 
     private final NoticeService noticeService;

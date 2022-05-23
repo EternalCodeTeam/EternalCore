@@ -13,7 +13,7 @@ import org.bukkit.inventory.Inventory;
 import panda.utilities.StringUtils;
 
 @Section(route = "grindstone")
-@Permission("eternalcore.command.grindstone")
+@Permission("eternalcore.grindstone")
 public class GrindstoneCommand {
 
     private final Server server;

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Section(route = "tpadeny", aliases = "tpdeny")
-@Permission("eternalcore.command.tpadeny")
+@Permission("eternalcore.tpadeny")
 public class TpaDenyCommand {
 
     private final TeleportRequestService requestService;

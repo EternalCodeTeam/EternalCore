@@ -12,8 +12,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import panda.utilities.StringUtils;
 
-@Section(route = "cartopgraphytable")
-@Permission("eternalcore.command.cartopgraphytable")
+@Section(route = "cartography", aliases = "cartography-table")
+@Permission("eternalcore.cartography")
 public class CartographyTableCommand {
 
 

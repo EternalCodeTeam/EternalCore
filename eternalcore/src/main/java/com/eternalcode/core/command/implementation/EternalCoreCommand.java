@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import java.util.concurrent.TimeUnit;
 
 @Section(route = "eternalcore", aliases = { "eternal" })
-@Permission("eternalcore.command.eternalcore")
+@Permission("eternalcore.eternalcore")
 public class EternalCoreCommand {
 
     private final ConfigurationManager manager;
@@ -23,7 +23,7 @@ public class EternalCoreCommand {
     }
 
     @Execute(route = "reload")
-    @Permission("eternalcore.command.reload")
+    @Permission("eternalcore.reload")
     public void reload(Player player) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 

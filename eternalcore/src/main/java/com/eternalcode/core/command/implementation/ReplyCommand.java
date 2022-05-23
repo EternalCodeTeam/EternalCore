@@ -10,7 +10,7 @@ import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 
 @Section(route = "reply", aliases = { "r" })
-@Permission("eternalcore.commands.reply")
+@Permission("eternalcore.reply")
 public class ReplyCommand {
 
     private final PrivateChatService privateChatService;

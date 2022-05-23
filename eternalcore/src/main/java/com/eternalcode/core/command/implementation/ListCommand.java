@@ -14,7 +14,7 @@ import panda.utilities.text.Joiner;
 import java.util.Collection;
 
 @Section(route = "list")
-@Permission("eternalcore.command.list")
+@Permission("eternalcore.list")
 public class ListCommand {
 
     private final NoticeService noticeService;

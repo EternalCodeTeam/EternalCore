@@ -13,8 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-@Section(route = "enchant", aliases = {"ench"})
-@Permission("eternalcore.command.enchant")
+@Section(route = "enchant", aliases = { "ench" })
+@Permission("eternalcore.enchant")
 public class EnchantCommand {
 
     private final PluginConfiguration configuration;

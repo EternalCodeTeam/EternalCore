@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "feed")
-@Permission("eternalcore.command.fly")
+@Permission("eternalcore.feed")
 public class FeedCommand {
 
     private final NoticeService noticeService;

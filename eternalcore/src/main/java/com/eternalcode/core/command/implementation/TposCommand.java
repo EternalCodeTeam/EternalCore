@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "tpos")
-@Permission("eternalcore.command.tpos")
+@Permission("eternalcore.tpos")
 public class TposCommand {
 
     private final NoticeService noticeService;

@@ -6,10 +6,12 @@ import com.eternalcode.core.warps.Warp;
 import com.eternalcode.core.warps.WarpManager;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 
 @Section(route = "warp")
+@Permission("eternalcore.warp")
 public class WarpCommand {
 
     private final NoticeService noticeService;
@@ -28,6 +30,7 @@ public class WarpCommand {
     }
 
     @Execute(route = "add")
+    @Permission("eternalcore.warp.create")
     public void add(Player player, @Arg String warp) {
         warpManager.createWarp(warp, player.getLocation());
         noticeService.notice()
@@ -38,6 +41,7 @@ public class WarpCommand {
     }
 
     @Execute(route = "remove")
+    @Permission("eternalcore.warp.delete")
     public void remove(Player player, @Arg Warp warp) {
         warpManager.removeWarp(warp.getName());
         noticeService.notice()

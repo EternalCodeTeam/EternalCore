@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Section(route = "enderchest", aliases = {"ec"})
-@Permission("eternalcore.command.enderchest")
+@Permission("eternalcore.enderchest")
 public class EnderchestCommand {
     @Execute
     public void execute(@Arg @By("or_sender") Player player) {

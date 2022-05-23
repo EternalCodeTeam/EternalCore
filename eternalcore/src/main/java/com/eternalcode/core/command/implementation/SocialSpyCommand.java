@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 @Section(route = "spy", aliases = { "socialspy" })
-@Permission("eternalcore.command.spy")
+@Permission("eternalcore.spy")
 public class SocialSpyCommand {
 
     private final PrivateChatService privateChatService;

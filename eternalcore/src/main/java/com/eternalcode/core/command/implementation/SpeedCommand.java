@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "speed")
-@Permission("eternalcore.command.speed")
+@Permission("eternalcore.speed")
 public class SpeedCommand {
 
     private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(0).max(10);

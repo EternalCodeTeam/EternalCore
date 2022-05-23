@@ -12,8 +12,8 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-@Section(route = "repair", aliases = "napraw")
-@Permission("eternalcore.command.repair")
+@Section(route = "repair")
+@Permission("eternalcore.repair")
 public class RepairCommand {
 
     private final NoticeService noticeService;

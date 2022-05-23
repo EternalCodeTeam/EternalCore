@@ -7,8 +7,8 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 
-@Section(route = "language", aliases = "lang")
-@Permission("eternalcore.command.language")
+@Section(route = "language", aliases = { "lang" })
+@Permission("eternalcore.language")
 public class LanguageCommand {
 
     private final LanguageInventory languageInventory;

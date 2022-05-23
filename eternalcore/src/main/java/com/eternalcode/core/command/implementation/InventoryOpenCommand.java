@@ -16,7 +16,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import panda.std.Option;
 
-@Section(route = "inventoryopen", aliases = { "io", "oi", "open", "invsee" })
+@Section(route = "invsee", aliases = { "oi", "inventoryopen", "open", "invsee" })
+@Permission("eternalcore.invsee")
 public class InventoryOpenCommand {
 
     private final Server server;
@@ -26,19 +27,19 @@ public class InventoryOpenCommand {
     }
 
     @Execute(route = "enderchest")
-    @Permission("eternalcore.command.inventoryopen.enderchest")
+    @Permission("eternalcore.invsee.enderchest")
     public void enderchest(Player sender, @Arg Player player) {
         sender.openInventory(player.getEnderChest());
     }
 
     @Execute(route = "armor")
-    @Permission("eternalcore.command.inventoryopen.armor")
+    @Permission("eternalcore.invsee.armor")
     public void armor(Player sender, @Arg Player player) {
         createInventory(player).open(sender);
     }
 
     @Execute(route = "inventory")
-    @Permission("eternalcore.command.inventoryopen.inventory")
+    @Permission("eternalcore.invsee.inventory")
     public void inventory(Player sender, @Arg Player player) {
         sender.openInventory(player.getInventory());
     }

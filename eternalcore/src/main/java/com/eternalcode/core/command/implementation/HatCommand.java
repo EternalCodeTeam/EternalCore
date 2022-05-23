@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 @Section(route = "hat")
-@Permission("eternalcore.command.hat")
+@Permission("eternalcore.hat")
 public class HatCommand {
 
     private final NoticeService noticeService;

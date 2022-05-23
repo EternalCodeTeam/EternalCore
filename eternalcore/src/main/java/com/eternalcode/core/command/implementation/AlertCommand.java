@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 
 @Section(route = "alert", aliases = { "broadcast", "bc" })
-@Permission("eternalcore.command.alert")
+@Permission("eternalcore.alert")
 public class AlertCommand {
 
     private final NoticeService noticeService;

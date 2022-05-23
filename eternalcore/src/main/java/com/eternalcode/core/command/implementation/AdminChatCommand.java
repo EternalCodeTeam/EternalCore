@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "adminchat", aliases = "ac")
-@Permission("eternalcore.command.adminchat")
+@Permission("eternalcore.adminchat")
 public class AdminChatCommand {
 
     private final NoticeService noticeService;

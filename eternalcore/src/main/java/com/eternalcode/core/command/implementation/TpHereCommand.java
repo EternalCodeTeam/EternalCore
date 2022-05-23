@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @Section(route = "tphere", aliases = { "s" })
-@Permission("eternalcore.command.tphere")
+@Permission("eternalcore.tphere")
 public class TpHereCommand {
 
     private final NoticeService noticeService;

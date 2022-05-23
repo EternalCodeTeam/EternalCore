@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
 import panda.utilities.StringUtils;
 
 @Section(route = "anvil", aliases = { "kowadlo", "kowadło" })
-@Permission("eternalcore.command.anvil")
+@Permission("eternalcore.anvil")
 public class AnvilCommand {
 
     private final Server server;

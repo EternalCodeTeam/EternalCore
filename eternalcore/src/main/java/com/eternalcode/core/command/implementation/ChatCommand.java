@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import panda.std.Option;
 
 @Section(route = "chat", aliases = { "czat" })
-@Permission("eternalcore.command.chat")
+@Permission("eternalcore.chat")
 public class ChatCommand {
 
     private static final AdventureNotification CLEAR;
