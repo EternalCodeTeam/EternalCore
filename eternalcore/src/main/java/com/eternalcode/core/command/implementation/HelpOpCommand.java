@@ -57,8 +57,9 @@ public class HelpOpCommand {
 
         Notice notice = this.noticeService.notice()
             .console()
+            .player(player.getUniqueId())
             .message(messages -> messages.helpOp().format())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{NICK}", player.getName())
             .placeholder("{TEXT}", text);
 
         for (Player admin : this.server.getOnlinePlayers()) {

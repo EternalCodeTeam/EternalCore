@@ -44,7 +44,7 @@ public class SpawnCommand {
         }
 
         if (playerOption.isEmpty()) {
-            if (sender.hasPermission("eternalcore.teleport.bypass")) {
+            if (sender.hasPermission("eternalcore.teleport.bypass")) { //TODO: Move to teleport service
                 PaperLib.teleportAsync(sender, destinationLocation);
 
                 this.noticeService
