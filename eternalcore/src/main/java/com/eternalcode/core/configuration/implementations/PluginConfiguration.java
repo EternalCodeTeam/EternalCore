@@ -2,6 +2,7 @@ package com.eternalcode.core.configuration.implementations;
 
 import com.eternalcode.core.chat.ChatSettings;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.database.DatabaseType;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -63,20 +64,14 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Contextual
     public static class Database {
-        @Description({
-            "# Database types",
-            "# SQLITE: org.sqlite.SQLiteDataSource",
-            "# MYSQL: com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
-            "# POSTGRESQL: org.postgresql.ds.PGSimpleDataSource",
-            "# H2: org.h2.jdbcx.JdbcDataSource",
-            "# All drivers available at: https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names"
-        })
-        public String databaseType = "org.sqlite.SQLiteDataSource";
-        public String databaseName = "database.db";
-        public String databaseHost = "localhost";
-        public String databasePort = "3306";
-        public String databaseUser = "root";
-        public String databasePassword = "";
+        @Description({ "# SQL Drivers and ports:", "# MySQL (3306), MariaDB (3306), PostgresQL (5432)", "SQLite, H2" })
+        public DatabaseType databaseType = DatabaseType.SQLITE;
+
+        public String hostname = "127.0.0.1";
+        public String database = "database";
+        public String username = "root";
+        public String password = "U5eStr0ngP4ssw0rd";
+        public int port = 3306;
     }
 
 

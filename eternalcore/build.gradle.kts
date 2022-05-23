@@ -31,8 +31,11 @@ dependencies {
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
-    // HikariCP
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    // ormlite jdbc
+    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
+
+    // hikari
+    compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // FastBoard
     implementation("fr.mrmicky:fastboard:1.2.1")
@@ -62,7 +65,15 @@ bukkit {
     name = "EternalCore"
     description = "Essential plugin for your server!"
     version = "${project.version}"
+    libraries = listOf(
+        "org.postgresql:postgresql:42.3.5",
+        "com.h2database:h2:2.1.212",
+        "com.j256.ormlite:ormlite-jdbc:6.1",
+        "com.zaxxer:HikariCP:5.0.1",
+        "org.mariadb.jdbc:mariadb-java-client:3.0.4"
+    )
 }
+
 
 tasks {
     runServer {
@@ -94,13 +105,11 @@ tasks.withType<ShadowJar> {
     relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
 
-    relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
-    relocate("com.j256.ormlite", "com.eternalcode.core.libs.com.j256.ormlite")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
     relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
 
-    copy {
+/*    copy {
         this.from("build/libs/" + archiveFileName.get())
         this.into("C:/Users/Rollczi/Desktop/testserver 1.18.1/plugins/")
-    }
+    }*/
 }
