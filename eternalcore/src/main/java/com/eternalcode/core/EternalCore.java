@@ -87,7 +87,7 @@ import com.eternalcode.core.configuration.implementations.LocationsConfiguration
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
-import com.eternalcode.core.database.DatabaseManager;
+import com.eternalcode.core.database.Database;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.language.LanguageInventory;
 import com.eternalcode.core.language.Language;
@@ -134,7 +134,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import panda.std.stream.PandaStream;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -164,7 +163,7 @@ public class EternalCore extends JavaPlugin {
     /**
      * Services & Managers (dependent on configuration)
      **/
-    private DatabaseManager databaseManager;
+    private Database database;
     private TeleportRequestService teleportRequestService;
 
     /**
@@ -247,7 +246,7 @@ public class EternalCore extends JavaPlugin {
         /* Services & Managers (dependent on configuration) */
 
         this.warpManager = WarpManager.create(new WarpConfigRepo(configurationManager, locations));
-        this.databaseManager = new DatabaseManager(config, this.getDataFolder());
+        this.database = new Database(this.configurationManager, this.getLogger());
         this.teleportRequestService = new TeleportRequestService(config);
 
         /* Adventure */
@@ -391,11 +390,7 @@ public class EternalCore extends JavaPlugin {
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportService, server);
         this.scheduler.runTaskTimer(task, 10, 10);
 
-        try {
-            this.databaseManager.connect();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        this.database.connect();
 
         // bStats metrics
         Metrics metrics = new Metrics(this, 13964);
@@ -408,7 +403,7 @@ public class EternalCore extends JavaPlugin {
     @Override
     public void onDisable() {
         this.liteCommands.getPlatform().unregisterAll();
-        this.databaseManager.close();
+        this.database.disconnect();
     }
 
     private void softwareCheck() {
@@ -468,8 +463,8 @@ public class EternalCore extends JavaPlugin {
         return this.chatManager;
     }
 
-    public DatabaseManager getDatabase() {
-        return this.databaseManager;
+    public Database getDatabase() {
+        return this.database;
     }
 
     public TeleportRequestService getTeleportRequestService() {

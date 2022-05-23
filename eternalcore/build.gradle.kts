@@ -34,9 +34,6 @@ dependencies {
     // HikariCP
     implementation("com.zaxxer:HikariCP:5.0.1")
 
-    // ormlite jdbc
-    implementation("com.j256.ormlite:ormlite-jdbc:6.1")
-
     // FastBoard
     implementation("fr.mrmicky:fastboard:1.2.1")
 
