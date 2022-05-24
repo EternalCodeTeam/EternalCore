@@ -21,12 +21,12 @@ dependencies {
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:2.0.0-pre17")
-
+    
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.22")
 
     // expressible
-    implementation("org.panda-lang:expressible:1.1.19")
+    implementation("org.panda-lang:expressible:1.1.20")
 
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.0")
