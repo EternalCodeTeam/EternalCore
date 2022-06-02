@@ -13,7 +13,7 @@ dependencies {
 
     // Kyori Adventure
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
-    implementation("net.kyori:adventure-text-minimessage:4.10.1")
+    implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:1.9.2")
