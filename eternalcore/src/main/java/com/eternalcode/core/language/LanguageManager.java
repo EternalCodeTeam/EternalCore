@@ -1,6 +1,7 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.core.user.User;
+import com.eternalcode.core.viewer.Viewer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,4 +51,7 @@ public class LanguageManager {
         return this.defaultMessages;
     }
 
+    public Messages getMessages(Viewer viewer) {
+        return this.getMessages(viewer.getLanguage());
+    }
 }

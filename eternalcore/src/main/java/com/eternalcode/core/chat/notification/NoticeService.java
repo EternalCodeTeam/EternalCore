@@ -3,9 +3,11 @@ package com.eternalcode.core.chat.notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.NotificationExtractor;
+import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
 
+import javax.annotation.CheckReturnValue;
 import java.util.UUID;
 
 public class NoticeService {
@@ -20,6 +22,7 @@ public class NoticeService {
         this.announcer = announcer;
     }
 
+    @CheckReturnValue
     public Notice notice() {
         return new Notice(this.languageManager, this.viewerProvider, this.announcer);
     }

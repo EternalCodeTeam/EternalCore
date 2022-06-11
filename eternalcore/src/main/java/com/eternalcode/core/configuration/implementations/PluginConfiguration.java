@@ -10,6 +10,7 @@ import org.bukkit.Sound;
 import panda.utilities.StringUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -94,9 +95,9 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     @Contextual
     public static class EventMessage {
         public String deathMessage = "Player {PLAYER} death";
-        public String joinMessage = "Welcome {PLAYER}";
-        public String firstJoinMessage = "Hello {PLAYER}, for the first time on the server!!";
-        public String leaveMessage = "Goodbye {PLAYER}";
+        public List<String> joinMessage = List.of("Welcome {PLAYER}", "Hey {PLAYER}");
+        public List<String> leaveMessage = List.of("Goodbye {PLAYER}", "Bye {PLAYER}");
+        public List<String> firstJoinMessage = List.of("Hello {PLAYER}, for the first time on the server!!");
 
         @Description({ StringUtils.EMPTY, "# Welcome Title settings" }) // TODO: Move to language
         public boolean enableWelcomeTitle = true;

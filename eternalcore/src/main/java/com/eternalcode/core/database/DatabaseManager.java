@@ -1,6 +1,5 @@
 package com.eternalcode.core.database;
 
-import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.google.common.base.Stopwatch;
 import com.j256.ormlite.dao.Dao;
@@ -8,18 +7,18 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.DataSourceConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.zaxxer.hikari.HikariDataSource;
-import org.bukkit.Server;
 
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class DatabaseManager {
 
     private final PluginConfiguration config;
-    private final EternalCore eternalCore;
+    private final Logger logger;
 
     private final File dataFolder;
     private final Map<Class<?>, Dao<?, ?>> cachedDao = new ConcurrentHashMap<>();
@@ -27,9 +26,9 @@ public class DatabaseManager {
     private HikariDataSource dataSource;
     private ConnectionSource connectionSource;
 
-    public DatabaseManager(PluginConfiguration config, EternalCore eternalCore, File dataFolder) {
+    public DatabaseManager(PluginConfiguration config, Logger logger, File dataFolder) {
         this.config = config;
-        this.eternalCore = eternalCore;
+        this.logger = logger;
         this.dataFolder = dataFolder;
     }
 
@@ -79,10 +78,11 @@ public class DatabaseManager {
             default -> throw new SQLException("SQL type '" + databaseType + "' not found");
         }
 
-        this.connectionSource = new DataSourceConnectionSource(dataSource, dataSource.getJdbcUrl());
-        long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        this.eternalCore.getLogger().info("Loaded database " + databaseType.toString().toLowerCase() + " in " + millis + "ms");
 
+        this.connectionSource = new DataSourceConnectionSource(dataSource, dataSource.getJdbcUrl());
+
+
+        this.logger.info("Loaded database " + databaseType.toString().toLowerCase() + " in " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
     public void close() {
@@ -109,4 +109,9 @@ public class DatabaseManager {
             throw new RuntimeException(exception);
         }
     }
+
+    public ConnectionSource connectionSource() {
+        return this.connectionSource;
+    }
+
 }

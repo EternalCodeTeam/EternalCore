@@ -1,8 +1,7 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.legacy.Legacy;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.utils.ChatUtils;
+import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
@@ -40,7 +39,7 @@ public class ItemNameCommand {
 
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-        String serialize = Legacy.SERIALIZER.serialize(ChatUtils.component(name));
+        String serialize = Legacy.SECTION_SERIALIZER.serialize(Legacy.component(name));
 
         itemMeta.setDisplayName(serialize);
         itemStack.setItemMeta(itemMeta);

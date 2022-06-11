@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -27,7 +26,8 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENChatSection chat = new ENChatSection();
     public ENTpaSection tpa = new ENTpaSection();
     public ENWarpSection warp = new ENWarpSection();
-    public ENPrivateMessage privateMessage = new ENPrivateMessage();
+    public ENHomeSection home = new ENHomeSection();
+    public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
     public ENOtherMessages other = new ENOtherMessages();
 
     @Override
@@ -133,7 +133,14 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     @Getter @Contextual
-    public static class ENPrivateMessage implements PrivateMessage {
+    public static class ENHomeSection implements HomeSection {
+        public String notExist = "&8» &cThis home doesn't exist";
+        public String create = "&8 » &7Home {home} has been created.";
+        public String delete = "&8 » &7Home {home} has been deleted.";
+    }
+
+    @Getter @Contextual
+    public static class ENPrivateMessageSection implements PrivateMessageSection {
         public String noReply = "&8 » &cYou have no one to reply!";
         public String sendFormat = "&8[&7You -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String receiveFormat = "&8[&7{SENDER} -> &fYou&8]&7: &f{MESSAGE}";

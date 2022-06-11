@@ -17,7 +17,8 @@ public interface Messages extends ConfigWithResource {
     TpaSection tpa();
     OtherMessages other();
     WarpSection warp();
-    PrivateMessage privateMessage();
+    HomeSection home();
+    PrivateMessageSection privateMessage();
 
     interface ArgumentSection {
         String permissionMessage();
@@ -83,6 +84,12 @@ public interface Messages extends ConfigWithResource {
         String disabled();
     }
 
+    interface HomeSection {
+        String notExist();
+        String create();
+        String delete();
+    }
+
     interface TpaSection {
         String tpaSelfMessage();
         String tpaAlreadySentMessage();
@@ -102,7 +109,7 @@ public interface Messages extends ConfigWithResource {
         String tpaAcceptAllAccepted();
     }
 
-    interface PrivateMessage {
+    interface PrivateMessageSection {
         String noReply();
         String sendFormat();
         String receiveFormat();

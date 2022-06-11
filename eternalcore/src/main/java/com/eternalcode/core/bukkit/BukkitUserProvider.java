@@ -11,14 +11,17 @@ public class BukkitUserProvider {
 
     private final UserManager userManager;
 
+    @Deprecated
     public BukkitUserProvider(UserManager userManager) {
         this.userManager = userManager;
     }
 
+    @Deprecated
     public Option<User> getUser(Player player) {
         return this.userManager.getUser(player.getUniqueId());
     }
 
+    @Deprecated
     public Option<User> getUser(LiteInvocation invocation) {
         if (invocation.sender().getHandle() instanceof Player player) {
             return this.getUser(player);

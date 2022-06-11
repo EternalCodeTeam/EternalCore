@@ -25,7 +25,8 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public PLTeleportSection teleport = new PLTeleportSection();
     public PLChatSection chat = new PLChatSection();
     public PLWarpSection warp = new PLWarpSection();
-    public PLPrivateMessage privateMessage = new PLPrivateMessage();
+    public PLHomeSection home = new PLHomeSection();
+    public PLPrivateMessageSection privateMessage = new PLPrivateMessageSection();
     public PLTpaSection tpa = new PLTpaSection();
     public PLOtherMessages other = new PLOtherMessages();
 
@@ -132,7 +133,14 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     }
 
     @Getter @Contextual
-    public static class PLPrivateMessage implements PrivateMessage {
+    public static class PLHomeSection implements HomeSection {
+        public String notExist = "&8» &cNie ma takieg domu!";
+        public String create = "&8 » &7Stworzono home {home}!";
+        public String delete = "&8 » &7Usunięto home {home}!";
+    }
+
+    @Getter @Contextual
+    public static class PLPrivateMessageSection implements PrivateMessageSection {
         public String noReply = "&8 » &cNie masz komu odpowiedzieć";
         public String sendFormat = "&8[&7Ty -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String receiveFormat = "&8[&7{SENDER} -> &fTy&8]&7: &f{MESSAGE}";

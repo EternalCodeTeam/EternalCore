@@ -2,12 +2,14 @@ package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
-import com.eternalcode.core.utils.DateUtils;
+import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import panda.utilities.StringUtils;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
 
 public class TeleportTask implements Runnable {
@@ -28,7 +30,7 @@ public class TeleportTask implements Runnable {
             Location destinationLocation = teleport.getDestinationLocation();
             Location startLocation = teleport.getStartLocation();
             UUID uuid = teleport.getUuid();
-            long time = teleport.getTime();
+            Instant teleportMoment = teleport.getTeleportMoment();
 
             Player player = this.server.getPlayer(uuid);
 
@@ -48,12 +50,14 @@ public class TeleportTask implements Runnable {
                 continue;
             }
 
-            if (System.currentTimeMillis() < time) {
-                long actionTime = time - System.currentTimeMillis();
+            Instant now = Instant.now();
+
+            if (now.isBefore(teleportMoment)) {
+                Duration duration = Duration.between(now, teleportMoment);
 
                 this.noticeService.notice()
                     .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().actionBarMessage())
-                    .placeholder("{TIME}", DateUtils.durationToString(actionTime))
+                    .placeholder("{TIME}", DurationUtil.format(duration))
                     .player(player.getUniqueId())
                     .send();
 

@@ -4,11 +4,13 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import panda.std.Option;
 import panda.utilities.StringUtils;
 
 public class PlayerQuitListener implements Listener {
@@ -27,12 +29,15 @@ public class PlayerQuitListener implements Listener {
         Player player = event.getPlayer();
 
         event.setQuitMessage(StringUtils.EMPTY);
+        Option<String> message = RandomUtil.randomElement(this.config.eventMessage.leaveMessage);
 
-        this.noticeService.notice()
-            .notice(NoticeType.CHAT, messages -> this.config.eventMessage.leaveMessage) // TODO: Move to messages config
-            .placeholder("{PLAYER}", player.getName())
-            .all()
-            .send();
+        if (message.isPresent()) {
+            this.noticeService.notice()
+                .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
+                .placeholder("{PLAYER}", player.getName())
+                .all()
+                .send();
+        }
 
         if (this.config.sound.enableAfterQuit) {
             this.server.getOnlinePlayers()

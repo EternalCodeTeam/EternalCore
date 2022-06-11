@@ -4,7 +4,7 @@ import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.DateUtils;
+import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,7 +51,7 @@ public class PlayerChatListener implements Listener {
                 .notice()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().disabledChatInfo())
-                .placeholder("{TIME}", DateUtils.durationToString(time))
+                .placeholder("{TIME}", DurationUtil.durationToString(time))
                 .send();
 
             event.setCancelled(true);

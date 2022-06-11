@@ -1,8 +1,9 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -17,12 +18,12 @@ import java.util.List;
 @ArgumentName("player")
 public class PlayerArgument implements OneArgument<Player> {
 
-    private final BukkitUserProvider userProvider;
+    private final BukkitViewerProvider viewerProvider;
     private final LanguageManager languageManager;
     private final Server server;
 
-    public PlayerArgument(BukkitUserProvider userProvider, LanguageManager languageManager, Server server) {
-        this.userProvider = userProvider;
+    public PlayerArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager, Server server) {
+        this.viewerProvider = viewerProvider;
         this.languageManager = languageManager;
         this.server = server;
     }
@@ -40,9 +41,8 @@ public class PlayerArgument implements OneArgument<Player> {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {
-            Messages messages = this.userProvider.getUser(invocation)
-                .map(this.languageManager::getMessages)
-                .orElseGet(this.languageManager.getDefaultMessages());
+            Viewer viewer = viewerProvider.any(invocation.sender().getHandle());
+            Messages messages = languageManager.getMessages(viewer.getLanguage());
 
             return Result.error(messages.argument().offlinePlayer());
         }

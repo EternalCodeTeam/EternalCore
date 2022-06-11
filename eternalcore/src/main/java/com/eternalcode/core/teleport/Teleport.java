@@ -2,6 +2,8 @@ package com.eternalcode.core.teleport;
 
 import org.bukkit.Location;
 
+import java.time.Instant;
+import java.time.temporal.TemporalAmount;
 import java.util.UUID;
 
 public class Teleport {
@@ -9,13 +11,13 @@ public class Teleport {
     private final UUID uuid;
     private final Location startLocation;
     private final Location destinationLocation;
-    private final long time;
+    private final Instant teleportMoment;
 
-    public Teleport(UUID uuid, Location startLocation, Location destinationLocation, int seconds) {
+    public Teleport(UUID uuid, Location startLocation, Location destinationLocation, TemporalAmount time) {
         this.uuid = uuid;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
-        this.time = System.currentTimeMillis() + 1000L * seconds;
+        this.teleportMoment = Instant.now().plus(time);
     }
 
     public UUID getUuid() {
@@ -30,8 +32,8 @@ public class Teleport {
         return this.destinationLocation;
     }
 
-    public long getTime() {
-        return this.time;
+    public Instant getTeleportMoment() {
+        return this.teleportMoment;
     }
 
 }

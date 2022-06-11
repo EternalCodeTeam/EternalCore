@@ -1,9 +1,10 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -19,24 +20,22 @@ public class AmountArgument implements OneArgument<Integer> {
 
     private final LanguageManager languageManager;
     private final PluginConfiguration config;
-    private final BukkitUserProvider userProvider;
+    private final BukkitViewerProvider viewerProvider;
 
-    public AmountArgument(LanguageManager languageManager, PluginConfiguration config, BukkitUserProvider userProvider) {
+    public AmountArgument(LanguageManager languageManager, PluginConfiguration config, BukkitViewerProvider viewerProvider) {
         this.config = config;
-        this.userProvider = userProvider;
         this.languageManager = languageManager;
+        this.viewerProvider = viewerProvider;
     }
 
     @Override
     public Result<Integer, ?> parse(LiteInvocation invocation, String argument) {
-        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
-            .toResult(() -> {
-                Messages messages = this.userProvider.getUser(invocation)
-                    .map(this.languageManager::getMessages)
-                    .orElseGet(this.languageManager.getDefaultMessages());
+        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument)).toResult(() -> {
+            Viewer viewer = viewerProvider.any(invocation.sender().getHandle());
+            Messages messages = languageManager.getMessages(viewer.getLanguage());
 
-                return messages.argument().notNumber();
-            });
+            return messages.argument().notNumber();
+        });
     }
 
     @Override
@@ -45,11 +44,5 @@ public class AmountArgument implements OneArgument<Integer> {
             .map(Suggestion::of)
             .collect(Collectors.toList());
     }
-
-//    @Override
-//    public boolean isValid(LiteComponent.ContextOfResolving context, String argument) {
-//        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
-//                .isPresent();
-//    }
 
 }

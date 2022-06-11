@@ -7,6 +7,7 @@ import com.eternalcode.core.user.settings.Settings;
 import com.eternalcode.core.user.settings.SettingsImpl;
 import com.eternalcode.core.viewer.Viewer;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class User implements Entity, Viewer {
@@ -58,5 +59,16 @@ public class User implements Entity, Viewer {
         this.settings = settings;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return name.equals(user.name) && uuid.equals(user.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, uuid);
+    }
 }
 
