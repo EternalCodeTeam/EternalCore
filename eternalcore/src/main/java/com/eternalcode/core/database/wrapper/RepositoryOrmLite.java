@@ -1,7 +1,6 @@
-package com.eternalcode.core.database.warpper;
+package com.eternalcode.core.database.wrapper;
 
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.warpper.HomeWrapper;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeRepository;
 import com.eternalcode.core.scheduler.Scheduler;

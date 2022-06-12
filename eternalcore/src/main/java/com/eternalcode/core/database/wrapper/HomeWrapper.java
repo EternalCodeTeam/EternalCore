@@ -1,4 +1,4 @@
-package com.eternalcode.core.database.warpper;
+package com.eternalcode.core.database.wrapper;
 
 import com.eternalcode.core.database.persister.LocationPersister;
 import com.eternalcode.core.home.Home;

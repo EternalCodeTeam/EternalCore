@@ -17,7 +17,7 @@ import com.eternalcode.core.command.implementation.weather.RainCommand;
 import com.eternalcode.core.command.implementation.weather.SunCommand;
 import com.eternalcode.core.command.implementation.weather.ThunderCommand;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.warpper.RepositoryOrmLite;
+import com.eternalcode.core.database.wrapper.RepositoryOrmLite;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.home.command.ArgHome;
