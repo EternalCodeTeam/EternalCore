@@ -52,7 +52,7 @@ import com.eternalcode.core.command.handler.StringResultHandler;
 import com.eternalcode.core.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
 import com.eternalcode.core.command.implementation.inventory.AnvilCommand;
-import com.eternalcode.core.command.implementation.CartographyTableCommand;
+import com.eternalcode.core.command.implementation.inventory.CartographyTableCommand;
 import com.eternalcode.core.chat.ChatCommand;
 import com.eternalcode.core.command.implementation.inventory.ClearCommand;
 import com.eternalcode.core.command.implementation.inventory.DisposalCommand;

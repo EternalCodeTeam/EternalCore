@@ -12,19 +12,18 @@ import java.util.concurrent.TimeUnit;
 
 @Section(route = "eternalcore", aliases = { "eternal" })
 @Permission("eternalcore.eternalcore")
-public class EternalCoreCommand {
+class EternalCoreCommand {
 
     private final ConfigurationManager manager;
     private final Server server;
 
-    public EternalCoreCommand(ConfigurationManager manager, Server server) {
+    EternalCoreCommand(ConfigurationManager manager, Server server) {
         this.manager = manager;
         this.server = server;
     }
-
     @Execute(route = "reload")
     @Permission("eternalcore.reload")
-    public void reload(Player player) {
+    void reload(Player player) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         this.manager.loadAndRenderConfigs();

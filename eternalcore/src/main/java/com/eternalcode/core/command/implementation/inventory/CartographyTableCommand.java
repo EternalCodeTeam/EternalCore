@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.implementation;
+package com.eternalcode.core.command.implementation.inventory;
 
 
 import dev.rollczi.litecommands.argument.Arg;
