@@ -1,6 +1,7 @@
 package com.eternalcode.core.database.wrapper;
 
 import com.eternalcode.core.database.DatabaseManager;
+import com.eternalcode.core.database.GlobalRepository;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeRepository;
 import com.eternalcode.core.scheduler.Scheduler;
@@ -19,7 +20,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RepositoryOrmLite implements HomeRepository {
+public class RepositoryOrmLite implements GlobalRepository {
 
     private final DatabaseManager databaseManager;
     private final Scheduler scheduler;

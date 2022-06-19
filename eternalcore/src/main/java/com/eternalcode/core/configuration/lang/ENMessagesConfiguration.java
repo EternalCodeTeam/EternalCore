@@ -28,6 +28,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENWarpSection warp = new ENWarpSection();
     public ENHomeSection home = new ENHomeSection();
     public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
+    public ENAfkSection afk = new ENAfkSection();
     public ENOtherMessages other = new ENOtherMessages();
 
     @Override
@@ -147,6 +148,12 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String socialSpyFormat = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String socialSpyEnable = "&8 » &aSocialSpy has been enabled!";
         public String socialSpyDisable = "&8 » &cSocialSpy has been disabled!";
+    }
+
+    @Getter @Contextual
+    public static class ENAfkSection implements AfkSection {
+        public String afkOn = "&8 » &7{player} is AFK!";
+        public String afkOff = "&8 » &7{player} is not AFK!";
     }
 
     @Getter @Contextual

@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration.implementations;
 
+import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.chat.ChatSettings;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.database.DatabaseType;
@@ -53,8 +54,8 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     @Description({ StringUtils.EMPTY, "# Formating on/off" })
     public Format format = new Format();
 
-    @Description({ StringUtils.EMPTY, "# Scoreboard Section" })
-    public Scoreboard scoreboard = new Scoreboard();
+    @Description({ StringUtils.EMPTY, "# AFK Section" })
+    public Afk afk = new Afk();
 
     @Description({ StringUtils.EMPTY, "# Other Sections" })
     public OtherSettings otherSettings = new OtherSettings();
@@ -173,24 +174,13 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     }
 
     @Contextual
-    public static class Scoreboard {
-        public boolean enabled = false;
-        public int refresh = 20;
-        public String title = "&a&lEternalCode.pl";
-        public List<String> style = Arrays.asList(
-            "",
-            " &aProfile:",
-            " &f▪ <gradient:#66ff99:#00ffff>Nickname:</gradient> &f%player_name%",
-            " &f▪ <gradient:#66ff99:#00ffff>Rank:</gradient> &f%vault_rank%",
-            " &f▪ <gradient:#66ff99:#00ffff>Ping:</gradient> &f%player_ping%ms",
-            "",
-            " &aStatistics:",
-            " &f▪ <gradient:#66ff99:#00ffff>Balance:</gradient> &f%vault_eco_balance_fixed%$",
-            " &f▪ <gradient:#66ff99:#00ffff>Kills:</gradient> &f%statistic_player_kills%",
-            " &f▪ <gradient:#66ff99:#00ffff>Deaths:</gradient> &f%statistic_deaths%",
-            "",
-            " &awww.eternalcode.pl",
-            ""
-        );
+    public static class Afk implements AfkSettings {
+        public int interactionsCountDisableAfk = 20;
+
+        @Override
+        public int interactionsCountDisableAfk() {
+            return interactionsCountDisableAfk;
+        }
     }
+
 }

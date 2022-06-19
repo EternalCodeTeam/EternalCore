@@ -1,4 +1,4 @@
-package com.eternalcode.core.privatechat;
+package com.eternalcode.core.chat.feature.privatechat;
 
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;

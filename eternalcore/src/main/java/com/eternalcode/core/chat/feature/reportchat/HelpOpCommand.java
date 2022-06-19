@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.reportchat;
+package com.eternalcode.core.chat.feature.reportchat;
 
 import com.eternalcode.core.chat.notification.Notice;
 import com.eternalcode.core.chat.notification.NoticeService;

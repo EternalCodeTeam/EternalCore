@@ -19,6 +19,7 @@ public interface Messages extends ConfigWithResource {
     WarpSection warp();
     HomeSection home();
     PrivateMessageSection privateMessage();
+    AfkSection afk();
 
     interface ArgumentSection {
         String permissionMessage();
@@ -116,6 +117,11 @@ public interface Messages extends ConfigWithResource {
         String socialSpyFormat();
         String socialSpyEnable();
         String socialSpyDisable();
+    }
+
+    interface AfkSection {
+        String afkOn();
+        String afkOff();
     }
 
     interface OtherMessages {

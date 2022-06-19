@@ -52,11 +52,6 @@ public final class DurationUtil {
     }
 
     public static String format(Duration duration) {
-        Instant now = Instant.now();
-        String data = now.toString();
-
-        Instant instant = Instant.parse(data);
-
         return format(duration, true);
     }
 

@@ -8,6 +8,7 @@ import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
+import panda.std.Option;
 import panda.utilities.text.Formatter;
 import panda.utilities.text.Joiner;
 
@@ -125,6 +126,15 @@ public class Notice {
     @CheckReturnValue
     public Notice placeholder(String from, String to) {
         this.placeholders.put(from, messages -> to);
+        return this;
+    }
+
+    @CheckReturnValue
+    public Notice placeholder(String from, Option<String> to) {
+        if (to.isPresent()) {
+            this.placeholders.put(from, messages -> to.get());
+        }
+
         return this;
     }
 

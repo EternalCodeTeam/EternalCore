@@ -1,4 +1,4 @@
-package com.eternalcode.core.privatechat;
+package com.eternalcode.core.chat.feature.privatechat;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.google.common.cache.Cache;

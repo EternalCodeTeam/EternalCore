@@ -1,13 +1,18 @@
 package com.eternalcode.core;
 
+import com.eternalcode.core.afk.AfkCommand;
+import com.eternalcode.core.afk.AfkController;
+import com.eternalcode.core.afk.AfkService;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.privatechat.PrivateChatService;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
-import com.eternalcode.core.privatechat.ReplyCommand;
-import com.eternalcode.core.privatechat.SocialSpyCommand;
+import com.eternalcode.core.chat.feature.privatechat.ReplyCommand;
+import com.eternalcode.core.chat.feature.privatechat.SocialSpyCommand;
+import com.eternalcode.core.database.CacheRepository;
+import com.eternalcode.core.database.GlobalRepository;
 import com.eternalcode.core.teleport.command.TpHereCommand;
 import com.eternalcode.core.warp.WarpCommand;
 import com.eternalcode.core.command.implementation.time.DayCommand;
@@ -49,7 +54,7 @@ import com.eternalcode.core.command.handler.ComponentResultHandler;
 import com.eternalcode.core.command.handler.InvalidUsage;
 import com.eternalcode.core.command.handler.PermissionMessage;
 import com.eternalcode.core.command.handler.StringResultHandler;
-import com.eternalcode.core.feature.adminchat.AdminChatCommand;
+import com.eternalcode.core.chat.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
 import com.eternalcode.core.command.implementation.inventory.AnvilCommand;
 import com.eternalcode.core.command.implementation.CartographyTableCommand;
@@ -66,12 +71,12 @@ import com.eternalcode.core.command.implementation.GodCommand;
 import com.eternalcode.core.command.implementation.inventory.GrindstoneCommand;
 import com.eternalcode.core.command.implementation.HatCommand;
 import com.eternalcode.core.command.implementation.HealCommand;
-import com.eternalcode.core.feature.reportchat.HelpOpCommand;
+import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
 import com.eternalcode.core.command.implementation.inventory.InventoryOpenCommand;
 import com.eternalcode.core.command.implementation.KillCommand;
 import com.eternalcode.core.language.LanguageCommand;
 import com.eternalcode.core.command.implementation.info.ListCommand;
-import com.eternalcode.core.privatechat.PrivateMessageCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateMessageCommand;
 import com.eternalcode.core.command.implementation.ItemNameCommand;
 import com.eternalcode.core.command.implementation.info.OnlineCommand;
 import com.eternalcode.core.command.implementation.info.PingCommand;
@@ -150,15 +155,7 @@ public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
 
-    /**
-     * Services & Managers
-     **/
     private static EternalCore instance;
-    private Scheduler scheduler;
-    private UserManager userManager;
-    private TeleportService teleportService;
-    private WarpManager warpManager;
-    private BukkitUserProvider userProvider;
 
     /**
      * Configuration, Language & Chat
@@ -168,11 +165,17 @@ public class EternalCore extends JavaPlugin {
     private ChatManager chatManager;
 
     /**
-     * Services & Managers (dependent on configuration)
+     * Services & Managers
      **/
-    private DatabaseManager databaseManager;
-    private RepositoryOrmLite repositoryOrmLite;
+    private Scheduler scheduler;
+    private UserManager userManager;
+    private TeleportService teleportService;
+    private WarpManager warpManager;
+    private AfkService afkService;
     private TeleportRequestService teleportRequestService;
+    private BukkitUserProvider userProvider;
+    private DatabaseManager databaseManager;
+    private GlobalRepository globalRepository;
     private HomeManager homeManager;
 
     /**
@@ -209,13 +212,6 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
-        /* Services */
-
-        this.scheduler = new BukkitSchedulerImpl(this);
-        this.userManager = new UserManager();
-        this.teleportService = new TeleportService();
-        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
-
         /* Configuration */
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
@@ -251,13 +247,27 @@ public class EternalCore extends JavaPlugin {
 
         this.chatManager = new ChatManager(config.chat);
 
-        /* Services & Managers (dependent on configuration) */
+        /* Services & Managers  */
 
+        this.scheduler = new BukkitSchedulerImpl(this);
+        this.userManager = new UserManager();
+        this.teleportService = new TeleportService();
+        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
         this.warpManager = WarpManager.create(new WarpConfigRepo(this.configurationManager, locations));
-        this.databaseManager = new DatabaseManager(config, this.getLogger(), this.getDataFolder());
-        this.repositoryOrmLite = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
         this.teleportRequestService = new TeleportRequestService(config);
-        this.homeManager = HomeManager.create(this.repositoryOrmLite);
+
+        try {
+            this.databaseManager = new DatabaseManager(config, this.getLogger(), this.getDataFolder());
+            this.databaseManager.connect();
+            this.globalRepository = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            this.getLogger().severe("Can not connect to database! Some functions may not work!");
+
+            this.globalRepository = new CacheRepository();
+        }
+
+        this.homeManager = HomeManager.create(this.globalRepository);
 
         /* Adventure */
 
@@ -272,6 +282,7 @@ public class EternalCore extends JavaPlugin {
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
         this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
         this.privateChatService = new PrivateChatService(server, this.noticeService);
+        this.afkService = new AfkService(config.afk, noticeService, userManager);
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
@@ -329,6 +340,7 @@ public class EternalCore extends JavaPlugin {
             .schemeFormat(SchemeFormat.ARGUMENT_ANGLED_OPTIONAL_SQUARE)
             .permissionHandler(new PermissionMessage(this.userProvider, this.adventureAudiences, this.languageManager, this.miniMessage))
 
+            .commandInstance(new AfkCommand(this.afkService))
             .command(
                 AlertCommand.class,
                 AnvilCommand.class,
@@ -397,19 +409,14 @@ public class EternalCore extends JavaPlugin {
             new PlayerCommandPreprocessListener(this.noticeService, this.configurationManager, server),
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService, this.configurationManager),
-            new TeleportListeners(this.noticeService, this.teleportService)
+            new TeleportListeners(this.noticeService, this.teleportService),
+            new AfkController(this.afkService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         /* Tasks */
 
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportService, server);
         this.scheduler.runTaskTimer(task, 4, 4);
-
-        try {
-            this.databaseManager.connect();
-        } catch (SQLException exception) {
-            throw new RuntimeException(exception);
-        }
 
         // bStats metrics
         Metrics metrics = new Metrics(this, 13964);

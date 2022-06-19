@@ -29,6 +29,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public PLPrivateMessageSection privateMessage = new PLPrivateMessageSection();
     public PLTpaSection tpa = new PLTpaSection();
     public PLOtherMessages other = new PLOtherMessages();
+    public PLAfkSection afk = new PLAfkSection();
 
     @Override
     public Language getLanguage() {
@@ -147,6 +148,12 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String socialSpyFormat = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String socialSpyEnable = "&8 » &aSocialSpy został włączony!";
         public String socialSpyDisable = "&8 » &cSocialSpy został wyłączony!";
+    }
+
+    @Getter @Contextual
+    public static class PLAfkSection implements AfkSection {
+        public String afkOn = "&8 » &7{player} jest AFK!";
+        public String afkOff = "&8 » &7{player} nie jest już AFK!";
     }
 
     @Getter @Contextual
