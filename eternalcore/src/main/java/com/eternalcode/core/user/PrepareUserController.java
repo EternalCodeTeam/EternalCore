@@ -1,7 +1,5 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.user.client.ClientBukkitSettings;
 import com.eternalcode.core.user.client.ClientSettings;
 import org.bukkit.Server;
@@ -10,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
 public class PrepareUserController implements Listener {
 
     private final UserManager userManager;

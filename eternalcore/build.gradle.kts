@@ -17,13 +17,13 @@ dependencies {
 
     // Kyori Adventure
     implementation("net.kyori:adventure-platform-bukkit:4.1.0")
-    implementation("net.kyori:adventure-text-minimessage:4.10.1")
+    implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit:2.0.6")
     
     // cdn configs
-    implementation("net.dzikoysk:cdn:1.13.22")
+    implementation("net.dzikoysk:cdn:1.13.23")
 
     // expressible
     implementation("org.panda-lang:expressible:1.1.20")
@@ -37,15 +37,12 @@ dependencies {
     // hikari
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
-    // FastBoard
-    implementation("fr.mrmicky:fastboard:1.2.1")
-
     // TriumphGui
     implementation("dev.triumphteam:triumph-gui:3.1.2")
 
     // tests
     testImplementation("org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT")
-    testImplementation("org.codehaus.groovy:groovy-all:3.0.10")
+    testImplementation("org.codehaus.groovy:groovy-all:3.0.11")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
 }
 
@@ -102,7 +99,6 @@ tasks.withType<ShadowJar> {
     relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
 
-    relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
 
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
