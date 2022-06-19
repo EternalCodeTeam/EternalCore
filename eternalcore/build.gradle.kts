@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("java-library")
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.1"
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
     id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
@@ -16,7 +16,7 @@ dependencies {
     api("io.papermc:paperlib:1.0.7")
 
     // Kyori Adventure
-    implementation("net.kyori:adventure-platform-bukkit:4.1.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.1.1")
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
