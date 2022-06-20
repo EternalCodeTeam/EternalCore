@@ -4,6 +4,9 @@ import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.chat.ChatSettings;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.database.DatabaseType;
+import com.eternalcode.core.teleport.request.TeleportRequestSettings;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -11,7 +14,7 @@ import org.bukkit.Sound;
 import panda.utilities.StringUtils;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,7 +81,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
 
     @Contextual
-    public static class OtherSettings {
+    public static class OtherSettings implements TeleportRequestSettings {
         @Description({ StringUtils.EMPTY, "# Gamemode Creative on join Requires permission: eternalcore.staff.gamemodejoin" })
         public boolean gamemodeOnJoin = false;
 
@@ -91,6 +94,15 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         @Description({ StringUtils.EMPTY, "# Time in secounds of teleportation time" })
         public int tpaTimer = 10;
 
+        @Override
+        public Duration teleportExpire() {
+            return Duration.ofSeconds(tpaRequestExpire);
+        }
+
+        @Override
+        public Duration teleportTime() {
+            return Duration.ofSeconds(tpaTimer);
+        }
     }
 
     @Contextual

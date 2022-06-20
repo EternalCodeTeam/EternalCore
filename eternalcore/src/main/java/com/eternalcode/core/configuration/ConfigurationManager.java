@@ -1,5 +1,7 @@
 package com.eternalcode.core.configuration;
 
+import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.configuration.composers.NotificationComposer;
 import com.eternalcode.core.configuration.language.LanguageComposer;
 import com.eternalcode.core.configuration.composers.LocationComposer;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
@@ -20,6 +22,7 @@ public class ConfigurationManager {
         .getSettings()
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Location.class, new LocationComposer())
+        .withComposer(Notification.class, new NotificationComposer())
         .build();
 
     private final PluginConfiguration pluginConfiguration;
@@ -66,7 +69,8 @@ public class ConfigurationManager {
         return this.locationsConfiguration;
     }
 
-    public LanguageConfiguration getInventoryConfiguration() {
+    public LanguageConfiguration getLanguageConfiguration() {
         return languageConfiguration;
     }
+
 }

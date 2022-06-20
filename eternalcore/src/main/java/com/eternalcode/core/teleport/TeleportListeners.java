@@ -14,11 +14,11 @@ import java.util.UUID;
 public class TeleportListeners implements Listener {
 
     private final NoticeService noticeService;
-    private final TeleportService teleportService;
+    private final TeleportTaskService teleportTaskService;
 
-    public TeleportListeners(NoticeService noticeService, TeleportService teleportService) {
+    public TeleportListeners(NoticeService noticeService, TeleportTaskService teleportTaskService) {
         this.noticeService = noticeService;
-        this.teleportService = teleportService;
+        this.teleportTaskService = teleportTaskService;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -45,11 +45,11 @@ public class TeleportListeners implements Listener {
     private void removeTeleport(Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.teleportService.inTeleport(uuid)) {
-            this.teleportService.removeTeleport(uuid);
+        if (this.teleportTaskService.inTeleport(uuid)) {
+            this.teleportTaskService.removeTeleport(uuid);
 
             this.noticeService.notice()
-                    .message(messages -> messages.teleport().cancel())
+                    .message(messages -> messages.teleport().taskCanceled())
                     .send();
         }
     }

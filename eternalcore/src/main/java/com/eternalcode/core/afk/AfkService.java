@@ -1,41 +1,30 @@
 package com.eternalcode.core.afk;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.user.UserManager;
+import com.eternalcode.core.publish.Publisher;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 public class AfkService {
 
     private final AfkSettings afkSettings;
-    private final NoticeService noticeService;
-    private final UserManager userManager;
+    private final Publisher publisher;
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
     private final Map<UUID, Integer> interactions = new HashMap<>();
 
-    public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager) {
+    public AfkService(AfkSettings afkSettings, Publisher publisher) {
         this.afkSettings = afkSettings;
-        this.noticeService = noticeService;
-        this.userManager = userManager;
+        this.publisher = publisher;
     }
 
     public Afk markAfk(UUID player, AfkReason reason) {
         Afk afk = new Afk(player, reason, Instant.now());
 
         this.afkByPlayer.put(player, afk);
-        this.noticeService.notice()
-            .all()
-            .player(player)
-            .message(messages -> messages.afk().afkOn())
-            .placeholder("{player}", userManager.getUser(player).map(User::getName))
-            .send();
-
+        this.publisher.call(new AfkChangeEvent(player, true));
         return afk;
     }
 
@@ -63,12 +52,7 @@ public class AfkService {
     public void clearAfk(UUID player) {
         this.interactions.remove(player);
         this.afkByPlayer.remove(player);
-        this.noticeService.notice()
-            .all()
-            .player(player)
-            .message(messages -> messages.afk().afkOff())
-            .placeholder("{player}", userManager.getUser(player).map(User::getName))
-            .send();
+        this.publisher.call(new AfkChangeEvent(player, false));
     }
 
 }

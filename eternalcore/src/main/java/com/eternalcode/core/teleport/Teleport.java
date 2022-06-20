@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport;
 
+import com.eternalcode.core.shared.Position;
 import org.bukkit.Location;
 
 import java.time.Instant;
@@ -9,11 +10,11 @@ import java.util.UUID;
 public class Teleport {
 
     private final UUID uuid;
-    private final Location startLocation;
-    private final Location destinationLocation;
+    private final Position startLocation;
+    private final Position destinationLocation;
     private final Instant teleportMoment;
 
-    public Teleport(UUID uuid, Location startLocation, Location destinationLocation, TemporalAmount time) {
+    Teleport(UUID uuid, Position startLocation, Position destinationLocation, TemporalAmount time) {
         this.uuid = uuid;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
@@ -24,11 +25,11 @@ public class Teleport {
         return this.uuid;
     }
 
-    public Location getStartLocation() {
+    public Position getStartLocation() {
         return this.startLocation;
     }
 
-    public Location getDestinationLocation() {
+    public Position getDestinationLocation() {
         return this.destinationLocation;
     }
 

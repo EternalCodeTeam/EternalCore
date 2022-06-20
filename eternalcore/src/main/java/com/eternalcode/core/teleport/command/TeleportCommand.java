@@ -1,19 +1,16 @@
 package com.eternalcode.core.teleport.command;
 
+import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
-import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.permission.Permission;
-import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
@@ -22,17 +19,19 @@ import panda.std.Option;
 public class TeleportCommand {
 
     private final NoticeService noticeService;
+    private final TeleportService teleportService;
 
-    public TeleportCommand(NoticeService noticeService) {
+    public TeleportCommand(NoticeService noticeService, TeleportService teleportService) {
         this.noticeService = noticeService;
+        this.teleportService = teleportService;
     }
 
     @Execute(required = 2)
     public void to(Viewer sender, @Arg Player player, @Arg Player target) {
-        PaperLib.teleportAsync(player, target.getLocation());
+        this.teleportService.teleport(player, target.getLocation());
 
         this.noticeService.notice()
-            .message(messages -> messages.teleport().successfullyTeleportedPlayer())
+            .message(messages -> messages.teleport().teleportedPlayerToPlayer())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{ARG-PLAYER}", player.getName())
             .viewer(sender)
@@ -41,10 +40,10 @@ public class TeleportCommand {
 
     @Execute(required = 1)
     public void execute(Player sender, Viewer senderViewer, @Arg Player player) {
-        PaperLib.teleportAsync(sender, player.getLocation());
+        this.teleportService.teleport(sender, player.getLocation());
 
         this.noticeService.notice()
-            .message(messages -> messages.teleport().successfullyTeleported())
+            .message(messages -> messages.teleport().teleportedToPlayer())
             .placeholder("{PLAYER}", player.getName())
             .viewer(senderViewer)
             .send();
@@ -52,13 +51,11 @@ public class TeleportCommand {
 
     @Execute(min = 3, max = 4)
     public void to(Player sender, @Arg Location location, @Opt Option<World> world) {
-        if (world.isPresent()) {
-            location.setWorld(world.get());
-        }
+        location.setWorld(world.orElseGet(sender.getWorld()));
 
-        PaperLib.teleportAsync(sender, location);
+        this.teleportService.teleport(sender, location);
         this.noticeService.notice()
-            .message(messages -> messages.teleport().tposMessage())
+            .message(messages -> messages.teleport().teleportedToCoordinates())
             .placeholder("{X}", String.valueOf(location.getX()))
             .placeholder("{Y}", String.valueOf(location.getY()))
             .placeholder("{Z}", String.valueOf(location.getZ()))
@@ -72,9 +69,9 @@ public class TeleportCommand {
             location.setWorld(world.get());
         }
 
-        PaperLib.teleportAsync(player, location);
+        this.teleportService.teleport(player, location);
         this.noticeService.notice()
-            .message(messages -> messages.teleport().tposByMessage())
+            .message(messages -> messages.teleport().teleportedPlayerToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(location.getX()))
             .placeholder("{Y}", String.valueOf(location.getY()))

@@ -12,12 +12,12 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class WarpConfigRepo implements WarpRepository {
+public class WarpConfigRepository implements WarpRepository {
 
     private final LocationsConfiguration locationsConfiguration;
     private final ConfigurationManager configurationManager;
 
-    public WarpConfigRepo(ConfigurationManager configurationManager, LocationsConfiguration locationsConfiguration) {
+    public WarpConfigRepository(ConfigurationManager configurationManager, LocationsConfiguration locationsConfiguration) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
     }

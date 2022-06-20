@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration.lang;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
@@ -73,15 +74,25 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class ENTeleportSection implements TeleportSection {
-        public String actionBarMessage = "&aTeleporting in &f{TIME}";
-        public String cancel = "&8» &cYou've moved, teleportation canceled!";
-        public String teleported = "&8» &aTeleported!";
-        public String teleporting = "&8» &aTeleporting...";
-        public String haveTeleport = "&8» &cYou are in teleport!";
-        public String successfullyTeleported = "&8» &aSuccessfully teleported to {PLAYER}!";
-        public String successfullyTeleportedPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
-        public String tposMessage = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String tposByMessage = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        // teleport
+        public String teleportedToPlayer = "&8» &aSuccessfully teleported to {PLAYER}!";
+        public String teleportedPlayerToPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
+
+        // Task
+        public Notification taskTimer = Notification.actionbar("&aTeleporting in &f{TIME}");
+        public String taskCanceled = "&8» &cYou've moved, teleportation canceled!";
+        public String taskTeleported = "&8» &aTeleported!";
+        public String taskTeleporting = "&8» &aTeleporting...";
+        public String taskTeleportAlreadyExist = "&8» &cYou are in teleport!";
+
+        // Coordinates XYZ
+        public String teleportedToCoordinates = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String teleportedPlayerToCoordinates = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+
+        // Back
+        public String teleportedToBack = "&8 » &7Teleported to the last location!";
+        public String teleportedPlayerToBack = "&8 » &7Teleported {PLAYER} to the last location!";
+        public String backNoExist = "&8 » &cLast location is not exist!";
     }
 
     @Getter @Contextual

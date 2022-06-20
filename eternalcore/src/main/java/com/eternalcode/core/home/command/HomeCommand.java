@@ -1,7 +1,7 @@
 package com.eternalcode.core.home.command;
 
 import com.eternalcode.core.home.Home;
-import com.eternalcode.core.teleport.TeleportService;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
@@ -11,15 +11,15 @@ import java.time.Duration;
 @Section(route = "home")
 public class HomeCommand {
 
-    private final TeleportService teleportService;
+    private final TeleportTaskService teleportTaskService;
 
-    public HomeCommand(TeleportService teleportService) {
-        this.teleportService = teleportService;
+    public HomeCommand(TeleportTaskService teleportTaskService) {
+        this.teleportTaskService = teleportTaskService;
     }
 
     @Execute
     private void execute(Player player, @ArgHome Home home) {
-        this.teleportService.createTeleport(player.getUniqueId(), player.getLocation(), home.getLocation(), Duration.ofSeconds(5));
+        this.teleportTaskService.createTeleport(player.getUniqueId(), player.getLocation(), home.getLocation(), Duration.ofSeconds(5));
     }
 
 }

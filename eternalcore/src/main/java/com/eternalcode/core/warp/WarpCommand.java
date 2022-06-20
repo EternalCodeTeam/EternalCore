@@ -1,9 +1,7 @@
 package com.eternalcode.core.warp;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.teleport.TeleportService;
-import com.eternalcode.core.warp.Warp;
-import com.eternalcode.core.warp.WarpManager;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -16,17 +14,17 @@ public class WarpCommand {
 
     private final NoticeService noticeService;
     private final WarpManager warpManager;
-    private final TeleportService teleportService;
+    private final TeleportTaskService teleportTaskService;
 
-    public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportService teleportService) {
+    public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService) {
         this.noticeService = noticeService;
         this.warpManager = warpManager;
-        this.teleportService = teleportService;
+        this.teleportTaskService = teleportTaskService;
     }
 
     @Execute
     public void warp(Player player, @Arg Warp warp) {
-        teleportService.createTeleport(player.getUniqueId(), player.getLocation(), warp.getLocation(), 5);
+        teleportTaskService.createTeleport(player.getUniqueId(), player.getLocation(), warp.getLocation(), 5);
     }
 
     @Execute(route = "add")

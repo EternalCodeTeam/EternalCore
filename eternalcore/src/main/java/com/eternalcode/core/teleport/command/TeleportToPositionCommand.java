@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
+import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
@@ -8,19 +9,20 @@ import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;;
 import dev.rollczi.litecommands.command.permission.Permission;
-import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "tpos")
 @Permission("eternalcore.tpos")
-public class TposCommand {
+public class TeleportToPositionCommand {
 
     private final NoticeService noticeService;
+    private final TeleportService teleportService;
 
-    public TposCommand(NoticeService noticeService) {
+    public TeleportToPositionCommand(NoticeService noticeService, TeleportService teleportService) {
         this.noticeService = noticeService;
+        this.teleportService = teleportService;
     }
 
     @Execute(min = 3, max = 4)
@@ -31,7 +33,7 @@ public class TposCommand {
         }
 
         this.noticeService.notice()
-            .message(messages -> messages.teleport().tposByMessage())
+            .message(messages -> messages.teleport().teleportedPlayerToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))
@@ -44,10 +46,9 @@ public class TposCommand {
     private void teleport(Player player, int x, int y, int z) {
         Location location = new Location(player.getWorld(), x, y, z);
 
-        PaperLib.teleportAsync(player, location);
-
+        this.teleportService.teleport(player, location);
         this.noticeService.notice()
-            .message(messages -> messages.teleport().tposMessage())
+            .message(messages -> messages.teleport().teleportedToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))

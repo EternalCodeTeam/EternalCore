@@ -1,34 +1,30 @@
 package com.eternalcode.core.teleport.command;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.core.teleport.TeleportService;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
-import io.papermc.lib.PaperLib;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 @Section(route = "tphere", aliases = { "s" })
 @Permission("eternalcore.tphere")
-public class TpHereCommand {
+public class TeleportHereCommand {
 
     private final NoticeService noticeService;
+    private final TeleportService teleportService;
 
-    public TpHereCommand(NoticeService noticeService) {
+    public TeleportHereCommand(NoticeService noticeService, TeleportService teleportService) {
         this.noticeService = noticeService;
+        this.teleportService = teleportService;
     }
 
     @Execute(required = 1)
     public void tpHere(Player sender, @Arg Player target) {
-        PaperLib.teleportAsync(target, sender.getLocation());
-
+        this.teleportService.teleport(target, sender.getLocation());
         this.noticeService.notice()
-            .message(messages -> messages.teleport().successfullyTeleportedPlayer())
+            .message(messages -> messages.teleport().teleportedPlayerToPlayer())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{ARG-PLAYER}", sender.getName())
             .player(sender.getUniqueId())

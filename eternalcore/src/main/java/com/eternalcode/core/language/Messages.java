@@ -1,5 +1,6 @@
 package com.eternalcode.core.language;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.ConfigWithResource;
 
 import java.util.List;
@@ -53,15 +54,25 @@ public interface Messages extends ConfigWithResource {
     }
 
     interface TeleportSection {
-        String actionBarMessage();
-        String cancel();
-        String teleported();
-        String teleporting();
-        String haveTeleport();
-        String successfullyTeleported();
-        String successfullyTeleportedPlayer();
-        String tposMessage();
-        String tposByMessage();
+        // teleport
+        String teleportedToPlayer();
+        String teleportedPlayerToPlayer();
+
+        // Task
+        Notification taskTimer();
+        String taskCanceled();
+        String taskTeleported();
+        String taskTeleporting();
+        String taskTeleportAlreadyExist();
+
+        // Coordinates XYZ
+        String teleportedToCoordinates();
+        String teleportedPlayerToCoordinates();
+
+        // Back
+        String teleportedToBack();
+        String teleportedPlayerToBack();
+        String backNoExist();
     }
 
     interface ChatSection {

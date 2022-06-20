@@ -1,33 +1,25 @@
 package com.eternalcode.core.database.wrapper;
 
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.GlobalRepository;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeRepository;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.user.User;
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.table.TableUtils;
 import panda.std.Blank;
 import panda.std.Option;
-import panda.std.function.ThrowingFunction;
 import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RepositoryOrmLite implements GlobalRepository {
-
-    private final DatabaseManager databaseManager;
-    private final Scheduler scheduler;
+public class RepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRepository {
 
     private RepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) {
-        this.databaseManager = databaseManager;
-        this.scheduler = scheduler;
+        super(databaseManager, scheduler);
     }
 
     @Override
@@ -55,7 +47,7 @@ public class RepositoryOrmLite implements GlobalRepository {
 
     @Override
     public Completable<Blank> deleteHome(UUID uuid) {
-        return this.removeById(HomeWrapper.class, uuid).thenApply(ignore -> Blank.BLANK);
+        return this.deleteById(HomeWrapper.class, uuid).thenApply(ignore -> Blank.BLANK);
     }
 
     @Override
@@ -89,48 +81,7 @@ public class RepositoryOrmLite implements GlobalRepository {
             ).orElseGet(new HashSet<>()));
     }
 
-    private <T> Completable<Dao.CreateOrUpdateStatus> save(Class<T> type, T warp) {
-        return this.action(type, dao -> dao.createOrUpdate(warp));
-    }
-
-    private <T> Completable<T> saveIfNotExist(Class<T> type, T warp) {
-        return this.action(type, dao -> dao.createIfNotExists(warp));
-    }
-
-    private <T, ID> Completable<T> select(Class<T> type, ID id) {
-        return this.action(type, dao -> dao.queryForId(id));
-    }
-
-    private <T> Completable<Integer> remove(Class<T> type, T warp) {
-        return this.action(type, dao -> dao.delete(warp));
-    }
-
-    private <T, ID> Completable<Integer> removeById(Class<T> type, ID id) {
-        return this.action(type, dao -> dao.deleteById(id));
-    }
-
-    private <T> Completable<List<T>> selectAll(Class<T> type) {
-        return this.action(type, Dao::queryForAll);
-    }
-
-    private <T, ID, R> Completable<R> action(Class<T> type, ThrowingFunction<Dao<T, ID>, R, SQLException> action) {
-        Completable<R> completableFuture = new Completable<>();
-
-        this.scheduler.runTaskAsynchronously(() -> {
-            Dao<T, ID> dao = this.databaseManager.getDao(type);
-
-            try {
-                completableFuture.complete(action.apply(dao));
-            }
-            catch (SQLException sqlException) {
-                sqlException.printStackTrace();
-            }
-        });
-
-        return completableFuture;
-    }
-
-    public static RepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
+    public static HomeRepository create(DatabaseManager databaseManager, Scheduler scheduler) {
         try {
             TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeWrapper.class);
         }

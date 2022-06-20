@@ -1,4 +1,8 @@
 ### 1.0.0
+- Add Position wrapper for location 
+- Add /back command
+- Add Publish system
+- Add /ignore and unignore
 - Handle database critical error
 - Add Afk domain and /afk command
 - Add /socialspy command

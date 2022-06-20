@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration.lang;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
@@ -73,16 +74,25 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class PLTeleportSection implements TeleportSection {
-        public String actionBarMessage = "&aTeleportacja za &f{TIME}";
-        public String cancel = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";
-        public String teleported = "&8» &aPrzeteleportowano!";
-        public String teleporting = "&8» &aTeleportuje...";
-        public String haveTeleport = "&4Blad: &cTeleportujesz się już!";
+        // teleport
+        public String teleportedToPlayer = "&8» &aPrzeteleportowano do {PLAYER}!";
+        public String teleportedPlayerToPlayer = "&8» &aPrzeteleportowano {PLAYER} do {ARG-PLAYER}!";
 
-        public String successfullyTeleported = "&8» &aPrzeteleportowano do {PLAYER}!";
-        public String successfullyTeleportedPlayer = "&8» &aPrzeteleportowano {PLAYER} do {ARG-PLAYER}!";
-        public String tposMessage = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String tposByMessage = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        // Task
+        public Notification taskTimer = Notification.actionbar("&aTeleportacja za &f{TIME}");
+        public String taskCanceled = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";
+        public String taskTeleported = "&8» &aPrzeteleportowano!";
+        public String taskTeleporting = "&8» &aTeleportuje...";
+        public String taskTeleportAlreadyExist = "&4Blad: &cTeleportujesz się już!";
+
+        // Coordinates XYZ
+        public String teleportedToCoordinates = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String teleportedPlayerToCoordinates = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+
+        // Back
+        public String teleportedToBack = "&8 » &7Przeteleportowano do poprzedniej lokalizacji!";
+        public String teleportedPlayerToBack = "&8 » &7Przeteleportowano {PLAYER} do poprzedniej lokalizacji!";
+        public String backNoExist = "&8 » &cNie ma zapisanej poprzedniej lokalizacji!";
     }
 
     @Getter @Contextual

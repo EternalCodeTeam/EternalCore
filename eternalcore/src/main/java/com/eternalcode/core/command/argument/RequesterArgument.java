@@ -3,7 +3,7 @@ package com.eternalcode.core.command.argument;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
-import com.eternalcode.core.teleport.TeleportRequestService;
+import com.eternalcode.core.teleport.request.TeleportRequestService;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;

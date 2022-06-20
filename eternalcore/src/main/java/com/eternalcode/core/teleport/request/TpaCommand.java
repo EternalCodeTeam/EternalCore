@@ -1,7 +1,7 @@
-package com.eternalcode.core.teleport.command;
+package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.teleport.TeleportRequestService;
+import com.eternalcode.core.teleport.request.TeleportRequestService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;

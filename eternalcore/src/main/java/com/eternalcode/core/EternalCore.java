@@ -2,18 +2,29 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.afk.AfkCommand;
 import com.eternalcode.core.afk.AfkController;
+import com.eternalcode.core.afk.AfkMessagesController;
 import com.eternalcode.core.afk.AfkService;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.feature.ingore.IgnoreCommand;
+import com.eternalcode.core.chat.feature.ingore.IgnoreRepository;
+import com.eternalcode.core.chat.feature.ingore.UnIgnoreCommand;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.command.argument.LocationArgument;
+import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.chat.feature.privatechat.ReplyCommand;
 import com.eternalcode.core.chat.feature.privatechat.SocialSpyCommand;
-import com.eternalcode.core.database.CacheRepository;
-import com.eternalcode.core.database.GlobalRepository;
-import com.eternalcode.core.teleport.command.TpHereCommand;
+import com.eternalcode.core.database.NoneRepository;
+import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
+import com.eternalcode.core.home.HomeRepository;
+import com.eternalcode.core.publish.LocalPublisher;
+import com.eternalcode.core.publish.Publisher;
+import com.eternalcode.core.teleport.TeleportDeathController;
+import com.eternalcode.core.teleport.TeleportService;
+import com.eternalcode.core.teleport.command.BackCommand;
+import com.eternalcode.core.teleport.command.TeleportHereCommand;
 import com.eternalcode.core.warp.WarpCommand;
 import com.eternalcode.core.command.implementation.time.DayCommand;
 import com.eternalcode.core.command.implementation.time.NightCommand;
@@ -33,7 +44,6 @@ import com.eternalcode.core.home.command.SetHomeCommand;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.util.legacy.LegacyColorProcessor;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
@@ -87,10 +97,10 @@ import com.eternalcode.core.spawn.SpawnCommand;
 import com.eternalcode.core.command.implementation.SpeedCommand;
 import com.eternalcode.core.command.implementation.inventory.StonecutterCommand;
 import com.eternalcode.core.teleport.command.TeleportCommand;
-import com.eternalcode.core.teleport.command.TpaAcceptCommand;
-import com.eternalcode.core.teleport.command.TpaCommand;
-import com.eternalcode.core.teleport.command.TpaDenyCommand;
-import com.eternalcode.core.teleport.command.TposCommand;
+import com.eternalcode.core.teleport.request.TpaAcceptCommand;
+import com.eternalcode.core.teleport.request.TpaCommand;
+import com.eternalcode.core.teleport.request.TpaDenyCommand;
+import com.eternalcode.core.teleport.command.TeleportToPositionCommand;
 import com.eternalcode.core.command.implementation.info.WhoIsCommand;
 import com.eternalcode.core.command.implementation.inventory.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
@@ -98,12 +108,8 @@ import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
-import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.language.LanguageInventory;
-import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.listener.player.PlayerChatListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
@@ -114,16 +120,16 @@ import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.teleport.TeleportListeners;
-import com.eternalcode.core.teleport.TeleportRequestService;
-import com.eternalcode.core.teleport.TeleportService;
+import com.eternalcode.core.teleport.request.TeleportRequestService;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.teleport.TeleportTask;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.warp.Warp;
-import com.eternalcode.core.warp.WarpConfigRepo;
+import com.eternalcode.core.warp.WarpConfigRepository;
 import com.eternalcode.core.warp.WarpManager;
+import com.eternalcode.core.warp.WarpRepository;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
@@ -142,41 +148,43 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import panda.std.stream.PandaStream;
 
-import java.io.File;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
-
     private static EternalCore instance;
 
     /**
-     * Configuration, Language & Chat
+     * Scheduler & Publisher
+     **/
+    private Scheduler scheduler;
+    private Publisher publisher;
+
+    /**
+     * Configuration & Database
      **/
     private ConfigurationManager configurationManager;
-    private LanguageManager languageManager;
-    private ChatManager chatManager;
+    private DatabaseManager databaseManager;
 
     /**
      * Services & Managers
      **/
-    private Scheduler scheduler;
     private UserManager userManager;
+
     private TeleportService teleportService;
+    private TeleportTaskService teleportTaskService;
+
     private WarpManager warpManager;
+    private HomeManager homeManager;
     private AfkService afkService;
     private TeleportRequestService teleportRequestService;
-    private BukkitUserProvider userProvider;
-    private DatabaseManager databaseManager;
-    private GlobalRepository globalRepository;
-    private HomeManager homeManager;
+
+    private LanguageManager languageManager;
+    private ChatManager chatManager;
+    private PrivateChatService privateChatService;
 
     /**
      * Adventure
@@ -185,12 +193,13 @@ public class EternalCore extends JavaPlugin {
     private MiniMessage miniMessage;
 
     /**
-     * Audiences System
+     * Viewer & Notice
      **/
     private BukkitViewerProvider viewerProvider;
+    private BukkitUserProvider userProvider;
+
     private NotificationAnnouncer notificationAnnouncer;
     private NoticeService noticeService;
-    private PrivateChatService privateChatService;
 
     /**
      * FrameWorks & Libs
@@ -212,6 +221,9 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
+        this.scheduler = new BukkitSchedulerImpl(this);
+        this.publisher = new LocalPublisher();
+
         /* Configuration */
 
         this.configurationManager = new ConfigurationManager(this.getDataFolder());
@@ -219,55 +231,46 @@ public class EternalCore extends JavaPlugin {
 
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
-        CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
-        LanguageConfiguration languageConfig = configurationManager.getInventoryConfiguration();
+        LanguageConfiguration languageConfig = configurationManager.getLanguageConfiguration();
 
-        /* Language & Chat */
+        /* Database */
 
-        File langFolder = new File(this.getDataFolder(), "lang");
-        Map<Language, Messages> defaultImplementations = new ImmutableMap.Builder<Language, Messages>()
-            .put(Language.EN, new ENMessagesConfiguration(langFolder, "en_messages.yml"))
-            .put(Language.PL, new PLMessagesConfiguration(langFolder, "pl_messages.yml"))
-            .build();
-
-        List<Messages> messages = PandaStream.of(languageConfig.languages)
-            .map(lang -> defaultImplementations.getOrDefault(lang, new ENMessagesConfiguration(langFolder, lang.getLang() + "_messages.yml")))
-            .toList();
-
-        Messages defaultMessages = PandaStream.of(messages)
-            .find(m -> m.getLanguage().equals(languageConfig.defaultLanguage))
-            .orThrow(() -> new RuntimeException("Default language not found!"));
-
-        this.languageManager = new LanguageManager(defaultMessages);
-
-        for (Messages message : messages) {
-            this.configurationManager.loadAndRender(message);
-            this.languageManager.loadLanguage(message.getLanguage(), message);
-        }
-
-        this.chatManager = new ChatManager(config.chat);
-
-        /* Services & Managers  */
-
-        this.scheduler = new BukkitSchedulerImpl(this);
-        this.userManager = new UserManager();
-        this.teleportService = new TeleportService();
-        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
-        this.warpManager = WarpManager.create(new WarpConfigRepo(this.configurationManager, locations));
-        this.teleportRequestService = new TeleportRequestService(config);
+        WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locations);
+        HomeRepository homeRepository;
+        IgnoreRepository ignoreRepository;
 
         try {
             this.databaseManager = new DatabaseManager(config, this.getLogger(), this.getDataFolder());
             this.databaseManager.connect();
-            this.globalRepository = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
-        } catch (SQLException exception) {
+
+            homeRepository = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
+
+        } catch (Exception exception) {
             exception.printStackTrace();
             this.getLogger().severe("Can not connect to database! Some functions may not work!");
 
-            this.globalRepository = new CacheRepository();
+            NoneRepository noneRepository = new NoneRepository();
+
+            homeRepository = noneRepository;
+            ignoreRepository = noneRepository;
         }
 
-        this.homeManager = HomeManager.create(this.globalRepository);
+        /* Services & Managers  */
+
+        this.userManager = new UserManager();
+
+        this.teleportService = new TeleportService();
+        this.teleportTaskService = new TeleportTaskService();
+
+        this.afkService = new AfkService(config.afk, this.publisher);
+        this.warpManager = WarpManager.create(warpRepository);
+        this.homeManager = HomeManager.create(homeRepository);
+        this.teleportRequestService = new TeleportRequestService(config.otherSettings);
+
+        this.languageManager = LanguageManager.create(this.configurationManager, this.getDataFolder());
+        this.chatManager = new ChatManager(config.chat);
+        this.privateChatService = new PrivateChatService(server, this.noticeService);
 
         /* Adventure */
 
@@ -279,10 +282,10 @@ public class EternalCore extends JavaPlugin {
         /* Audiences System */
 
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server, this.adventureAudiences);
+        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
+
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
         this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
-        this.privateChatService = new PrivateChatService(server, this.noticeService);
-        this.afkService = new AfkService(config.afk, noticeService, userManager);
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
@@ -302,6 +305,7 @@ public class EternalCore extends JavaPlugin {
             .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
             .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.languageManager))
             .argument(World.class,                  new WorldArgument(server))
+            .argument(User.class,                   new UserArgument(this.viewerProvider, this.languageManager, server, this.userManager))
             .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.languageManager, server))
             .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
 
@@ -324,7 +328,7 @@ public class EternalCore extends JavaPlugin {
             .typeBind(LanguageManager.class,        () -> this.languageManager)
             .typeBind(PluginConfiguration.class,    () -> config)
             .typeBind(LocationsConfiguration.class, () -> locations)
-            .typeBind(TeleportService.class,        () -> this.teleportService)
+            .typeBind(TeleportTaskService.class,    () -> this.teleportTaskService)
             .typeBind(UserManager.class,            () -> this.userManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
             .typeBind(NoticeService.class,          () -> this.noticeService)
@@ -340,8 +344,14 @@ public class EternalCore extends JavaPlugin {
             .schemeFormat(SchemeFormat.ARGUMENT_ANGLED_OPTIONAL_SQUARE)
             .permissionHandler(new PermissionMessage(this.userProvider, this.adventureAudiences, this.languageManager, this.miniMessage))
 
-            .commandInstance(new AfkCommand(this.afkService))
+            .commandInstance(
+                new AfkCommand(this.afkService),
+                new IgnoreCommand(ignoreRepository, noticeService),
+                new UnIgnoreCommand(ignoreRepository, noticeService),
+                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, config.otherSettings, server)
+            )
             .command(
+                BackCommand.class,
                 AlertCommand.class,
                 AnvilCommand.class,
                 CartographyTableCommand.class,
@@ -373,16 +383,15 @@ public class EternalCore extends JavaPlugin {
                 PingCommand.class,
                 OnlineCommand.class,
                 ListCommand.class,
-                TposCommand.class,
+                TeleportToPositionCommand.class,
                 ItemNameCommand.class,
                 EnchantCommand.class,
                 TeleportCommand.class,
-                TpHereCommand.class,
+                TeleportHereCommand.class,
                 LanguageCommand.class,
                 PrivateMessageCommand.class,
                 ReplyCommand.class,
                 TpaCommand.class,
-                TpaAcceptCommand.class,
                 TpaDenyCommand.class,
                 WarpCommand.class,
                 SocialSpyCommand.class,
@@ -402,6 +411,7 @@ public class EternalCore extends JavaPlugin {
         /* Listeners */
 
         Stream.of(
+            new TeleportDeathController(this.teleportService),
             new PlayerChatListener(this.chatManager, noticeService, this.configurationManager, server),
             new PlayerJoinListener(this.configurationManager, this.noticeService, server),
             new PlayerQuitListener(this.configurationManager, this.noticeService, server),
@@ -409,13 +419,17 @@ public class EternalCore extends JavaPlugin {
             new PlayerCommandPreprocessListener(this.noticeService, this.configurationManager, server),
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService, this.configurationManager),
-            new TeleportListeners(this.noticeService, this.teleportService),
+            new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
+        /* Subscribers */
+
+        this.publisher.subscribe(new AfkMessagesController(this.noticeService, this.userManager));
+
         /* Tasks */
 
-        TeleportTask task = new TeleportTask(this.noticeService, this.teleportService, server);
+        TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, teleportService, server);
         this.scheduler.runTaskTimer(task, 4, 4);
 
         // bStats metrics
@@ -453,76 +467,95 @@ public class EternalCore extends JavaPlugin {
         }
     }
 
-    public Scheduler getScheduler() {
-        return this.scheduler;
-    }
-
-    public UserManager getUserManager() {
-        return this.userManager;
-    }
-
-    public HomeManager getHomeManager() {
-        return this.homeManager;
-    }
-
-    public TeleportService getTeleportService() {
-        return this.teleportService;
-    }
-
-    public WarpManager getWarpManager() {
-        return this.warpManager;
-    }
-
-    public BukkitUserProvider getUserProvider() {
-        return this.userProvider;
-    }
-
     public ConfigurationManager getConfigurationManager() {
-        return this.configurationManager;
+        return configurationManager;
     }
 
     public LanguageManager getLanguageManager() {
-        return this.languageManager;
+        return languageManager;
     }
 
     public ChatManager getChatManager() {
-        return this.chatManager;
+        return chatManager;
+    }
+
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
+    }
+
+    public Scheduler getScheduler() {
+        return scheduler;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public WarpManager getWarpManager() {
+        return warpManager;
+    }
+
+    public HomeManager getHomeManager() {
+        return homeManager;
+    }
+
+    public AfkService getAfkService() {
+        return afkService;
+    }
+
+    public TeleportService getTeleportService() {
+        return teleportService;
+    }
+
+    public TeleportTaskService getTeleportTaskService() {
+        return teleportTaskService;
     }
 
     public TeleportRequestService getTeleportRequestService() {
-        return this.teleportRequestService;
+        return teleportRequestService;
     }
 
     public BukkitAudiences getAdventureAudiences() {
-        return this.adventureAudiences;
+        return adventureAudiences;
     }
 
     public MiniMessage getMiniMessage() {
-        return this.miniMessage;
+        return miniMessage;
     }
 
-    public ViewerProvider getAudienceProvider() {
-        return this.viewerProvider;
+    public BukkitViewerProvider getViewerProvider() {
+        return viewerProvider;
+    }
+
+    public BukkitUserProvider getUserProvider() {
+        return userProvider;
     }
 
     public NotificationAnnouncer getNotificationAnnouncer() {
-        return this.notificationAnnouncer;
+        return notificationAnnouncer;
     }
 
     public NoticeService getNoticeService() {
-        return this.noticeService;
+        return noticeService;
+    }
+
+    public PrivateChatService getPrivateChatService() {
+        return privateChatService;
     }
 
     public LanguageInventory getLanguageInventory() {
-        return this.languageInventory;
+        return languageInventory;
     }
 
     public LiteCommands<CommandSender> getLiteCommands() {
-        return this.liteCommands;
+        return liteCommands;
     }
 
     public boolean isSpigot() {
-        return this.isSpigot;
+        return isSpigot;
     }
-
 }

@@ -1,35 +1,32 @@
 package com.eternalcode.core.spawn;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.teleport.TeleportService;
+import com.eternalcode.core.teleport.TeleportTaskService;
 
 import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
-import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import panda.std.Option;
-
-import java.time.Duration;
-import java.time.Instant;
 
 @Section(route = "spawn")
 @Permission("eternalcore.spawn")
 public class SpawnCommand {
 
     private final LocationsConfiguration locations;
+    private final TeleportTaskService teleportTaskService;
     private final TeleportService teleportService;
     private final NoticeService noticeService;
 
-    public SpawnCommand(LocationsConfiguration locations, NoticeService noticeService, TeleportService teleportService) {
-        this.teleportService = teleportService;
+    public SpawnCommand(LocationsConfiguration locations, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
+        this.teleportTaskService = teleportTaskService;
         this.locations = locations;
         this.noticeService = noticeService;
+        this.teleportService = teleportService;
     }
 
     @Execute
@@ -37,8 +34,7 @@ public class SpawnCommand {
         Location destinationLocation = this.locations.spawn;
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {
-            this.noticeService
-                .notice()
+            this.noticeService.notice()
                 .message(messages -> messages.other().spawnNoSet())
                 .player(sender.getUniqueId())
                 .send();
@@ -48,32 +44,29 @@ public class SpawnCommand {
 
         if (playerOption.isEmpty()) {
             if (sender.hasPermission("eternalcore.teleport.bypass")) { //TODO: Move to teleport service
-                PaperLib.teleportAsync(sender, destinationLocation);
+                this.teleportService.teleport(sender, destinationLocation);
 
-                this.noticeService
-                    .notice()
-                    .message(messages -> messages.teleport().teleported())
+                this.noticeService.notice()
+                    .message(messages -> messages.teleport().taskTeleported())
                     .player(sender.getUniqueId())
                     .send();
 
                 return;
             }
 
-            if (this.teleportService.inTeleport(sender.getUniqueId())) {
-                this.noticeService
-                    .notice()
-                    .message(messages -> messages.teleport().haveTeleport())
+            if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
+                this.noticeService.notice()
+                    .message(messages -> messages.teleport().taskTeleportAlreadyExist())
                     .player(sender.getUniqueId())
                     .send();
 
                 return;
             }
 
-            this.teleportService.createTeleport(sender.getUniqueId(), sender.getLocation(), destinationLocation, 5);
+            this.teleportTaskService.createTeleport(sender.getUniqueId(), sender.getLocation(), destinationLocation, 5);
 
-            this.noticeService
-                .notice()
-                .message(messages -> messages.teleport().teleporting())
+            this.noticeService.notice()
+                .message(messages -> messages.teleport().taskTeleporting())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -81,17 +74,16 @@ public class SpawnCommand {
         }
 
         Player player = playerOption.get();
-        PaperLib.teleportAsync(player, destinationLocation);
 
-        this.noticeService
-            .notice()
+        this.teleportService.teleport(player, destinationLocation);
+
+        this.noticeService.notice()
             .message(messages -> messages.other().spawnTeleportedBy())
             .placeholder("{PLAYER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
-        this.noticeService
-            .notice()
+        this.noticeService.notice()
             .message(messages -> messages.other().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
             .player(sender.getUniqueId())
