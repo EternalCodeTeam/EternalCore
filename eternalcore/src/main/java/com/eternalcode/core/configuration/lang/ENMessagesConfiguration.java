@@ -79,20 +79,20 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String teleportedPlayerToPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
 
         // Task
-        public Notification taskTimer = Notification.actionbar("&aTeleporting in &f{TIME}");
-        public String taskCanceled = "&8» &cYou've moved, teleportation canceled!";
-        public String taskTeleported = "&8» &aTeleported!";
-        public String taskTeleporting = "&8» &aTeleporting...";
-        public String taskTeleportAlreadyExist = "&8» &cYou are in teleport!";
+        public Notification teleportTimerFormat = Notification.actionbar("&aTeleporting in &f{TIME}");
+        public String teleported = "&8» &aTeleported!";
+        public String teleporting = "&8» &aTeleporting...";
+        public String teleportTaskCanceled = "&8» &cYou've moved, teleportation canceled!";
+        public String teleportTaskAlreadyExist = "&8» &cYou are in teleport!";
 
         // Coordinates XYZ
         public String teleportedToCoordinates = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String teleportedPlayerToCoordinates = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String teleportedSpecifiedPlayerToCoordinates = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
 
         // Back
-        public String teleportedToBack = "&8 » &7Teleported to the last location!";
-        public String teleportedPlayerToBack = "&8 » &7Teleported {PLAYER} to the last location!";
-        public String backNoExist = "&8 » &cLast location is not exist!";
+        public String teleportedToLastLocation = "&8 » &7Teleported to the last location!";
+        public String teleportedSpecifiedPlayerLastLocation = "&8 » &7Teleported {PLAYER} to the last location!";
+        public String lastLocationNoExist = "&8 » &cLast location is not exist!";
     }
 
     @Getter @Contextual
@@ -154,11 +154,15 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     @Getter @Contextual
     public static class ENPrivateMessageSection implements PrivateMessageSection {
         public String noReply = "&8 » &cYou have no one to reply!";
-        public String sendFormat = "&8[&7You -> &f{TARGET}&8]&7: &f{MESSAGE}";
-        public String receiveFormat = "&8[&7{SENDER} -> &fYou&8]&7: &f{MESSAGE}";
-        public String socialSpyFormat = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String privateMessageYouToTarget = "&8[&7You -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String privateMessageTargetToYou = "&8[&7{SENDER} -> &fYou&8]&7: &f{MESSAGE}";
+
+        public String socialSpyMessage = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String socialSpyEnable = "&8 » &aSocialSpy has been enabled!";
         public String socialSpyDisable = "&8 » &cSocialSpy has been disabled!";
+
+        public String ignorePlayer = "&8 » &c{PLAYER} &7player has been ingored!";
+        public String unIgnorePlayer = "&8 » &c{PLAYER} &7player has been uningored!";
     }
 
     @Getter @Contextual
@@ -199,8 +203,8 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
 
         public String spawnSet = "&8» &aSpawn set!";
         public String spawnNoSet = "&8» &cSpawn is not set!";
-        public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {NICK}!";
-        public String spawnTeleportedOther = "&8» &cYou teleported player {NICK} to spawn!";
+        public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {PLAYER}!";
+        public String spawnTeleportedOther = "&8» &cYou teleported player {PLAYER} to spawn!";
 
         public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
         public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";

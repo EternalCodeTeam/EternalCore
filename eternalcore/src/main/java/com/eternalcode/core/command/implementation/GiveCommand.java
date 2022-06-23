@@ -32,7 +32,7 @@ public class GiveCommand {
 
         this.giveItem(player, material);
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .message(messages -> messages.other().giveReceived())
             .player(player.getUniqueId())
@@ -42,7 +42,7 @@ public class GiveCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", player.getName())
             .message(messages -> messages.other().giveGiven())

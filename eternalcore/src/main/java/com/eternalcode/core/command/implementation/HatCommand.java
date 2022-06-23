@@ -4,7 +4,6 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +29,7 @@ public class HatCommand {
 
         if (handItem == null) {
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.argument().noItem())
                 .send();
@@ -44,7 +43,7 @@ public class HatCommand {
         }
 
         this.noticeService
-            .notice()
+            .create()
             .player(player.getUniqueId())
             .message(messages -> messages.other().nullHatMessage())
             .send();

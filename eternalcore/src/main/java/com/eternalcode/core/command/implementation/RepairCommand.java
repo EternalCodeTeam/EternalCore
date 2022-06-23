@@ -4,7 +4,6 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -29,7 +28,7 @@ public class RepairCommand {
 
         if (handItem == null || !(handItem.getItemMeta() instanceof Repairable)) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noItem())
                 .player(player.getUniqueId())
                 .send();
@@ -39,7 +38,7 @@ public class RepairCommand {
 
         if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noDamaged())
                 .player(player.getUniqueId())
                 .send();
@@ -50,7 +49,7 @@ public class RepairCommand {
         repairItem(handItem);
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
@@ -75,7 +74,7 @@ public class RepairCommand {
 
         if (!exists) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
@@ -84,7 +83,7 @@ public class RepairCommand {
         }
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
@@ -109,7 +108,7 @@ public class RepairCommand {
 
         if (!exists) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
@@ -118,7 +117,7 @@ public class RepairCommand {
         }
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();

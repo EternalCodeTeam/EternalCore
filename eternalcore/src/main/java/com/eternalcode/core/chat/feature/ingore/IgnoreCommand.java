@@ -7,10 +7,9 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.injector.Inject;
-import org.bukkit.entity.Player;
 
 @Section(route = "ignore")
-@Permission("") //TODO
+@Permission("eternalcore.ignore")
 public class IgnoreCommand {
 
     private final IgnoreRepository repository;
@@ -23,9 +22,13 @@ public class IgnoreCommand {
     }
 
     @Execute
-    void ignore(Player sender, @Arg User target) {
+    void ignore(User sender, @Arg User target) {
         this.repository.ignore(sender.getUniqueId(), target.getUniqueId());
-        this.noticeService.notice(); //TODO
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .placeholder("{PLAYER}", target.getName())
+            .message(messages -> messages.privateMessage().ignorePlayer())
+            .send();
     }
 
 }

@@ -44,9 +44,9 @@ public class TeleportTask implements Runnable {
             if (player.getLocation().distance(startLocation) > 0.5) {
                 this.teleportTaskService.removeTeleport(uuid);
 
-                this.noticeService.notice()
+                this.noticeService.create()
                     .notice(NoticeType.ACTIONBAR, messages -> StringUtils.EMPTY)
-                    .message(messages -> messages.teleport().taskCanceled())
+                    .message(messages -> messages.teleport().teleportTaskCanceled())
                     .player(player.getUniqueId())
                     .send();
 
@@ -58,8 +58,8 @@ public class TeleportTask implements Runnable {
             if (now.isBefore(teleportMoment)) {
                 Duration duration = Duration.between(now, teleportMoment);
 
-                this.noticeService.notice()
-                    .notice(messages -> messages.teleport().taskTimer())
+                this.noticeService.create()
+                    .notice(messages -> messages.teleport().teleportTimerFormat())
                     .placeholder("{TIME}", DurationUtil.format(duration))
                     .player(player.getUniqueId())
                     .send();
@@ -70,9 +70,9 @@ public class TeleportTask implements Runnable {
             this.teleportService.teleport(player, destinationLocation);
             this.teleportTaskService.removeTeleport(uuid);
 
-            this.noticeService.notice()
-                .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().taskTeleported())
-                .message(messages -> messages.teleport().taskTeleported())
+            this.noticeService.create()
+                .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
+                .message(messages -> messages.teleport().teleported())
                 .player(player.getUniqueId())
                 .send();
         }

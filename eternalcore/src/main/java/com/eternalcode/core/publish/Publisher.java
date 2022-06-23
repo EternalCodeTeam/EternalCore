@@ -4,6 +4,6 @@ public interface Publisher {
 
     void subscribe(Subscriber subscriber);
 
-    void call(Content content);
+    void publish(Content content);
 
 }

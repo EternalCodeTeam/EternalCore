@@ -25,7 +25,7 @@ public class FlyCommand {
     public void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
         player.setAllowFlight(!player.getAllowFlight());
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().flyMessage())
             .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
             .player(player.getUniqueId())
@@ -35,7 +35,7 @@ public class FlyCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().flySetMessage())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())

@@ -23,7 +23,7 @@ public class WhoIsCommand {
     @Execute
     @Required(1)
     public void execute(Viewer audience, @Arg Player player) {
-        this.noticeService.notice()
+        this.noticeService.create()
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{UUID}", String.valueOf(player.getUniqueId()))
             .placeholder("{IP}", player.getAddress().getHostString())

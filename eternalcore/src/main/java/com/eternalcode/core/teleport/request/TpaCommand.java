@@ -1,7 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.teleport.request.TeleportRequestService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -38,14 +37,14 @@ public class TpaCommand {
         }
 
         this.noticeService
-            .notice()
+            .create()
             .player(player.getUniqueId())
             .message(messages -> messages.tpa().tpaSentMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
-            .notice()
+            .create()
             .player(target.getUniqueId())
             .message(messages -> messages.tpa().tpaReceivedMessage())
             .placeholder("{PLAYER}", player.getName())

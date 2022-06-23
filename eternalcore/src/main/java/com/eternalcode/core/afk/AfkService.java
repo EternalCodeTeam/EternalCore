@@ -24,7 +24,7 @@ public class AfkService {
         Afk afk = new Afk(player, reason, Instant.now());
 
         this.afkByPlayer.put(player, afk);
-        this.publisher.call(new AfkChangeEvent(player, true));
+        this.publisher.publish(new AfkChangeEvent(player, true));
         return afk;
     }
 
@@ -52,7 +52,7 @@ public class AfkService {
     public void clearAfk(UUID player) {
         this.interactions.remove(player);
         this.afkByPlayer.remove(player);
-        this.publisher.call(new AfkChangeEvent(player, false));
+        this.publisher.publish(new AfkChangeEvent(player, false));
     }
 
 }

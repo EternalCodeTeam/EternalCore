@@ -32,7 +32,7 @@ public class EnchantCommand {
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
         if (handItem == null) {
-            this.noticeService.notice()
+            this.noticeService.create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.argument().noItem())
                 .send();
@@ -44,7 +44,7 @@ public class EnchantCommand {
             handItem.addUnsafeEnchantment(enchantment, level);
         } else {
             if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(handItem)) {
-                this.noticeService.notice()
+                this.noticeService.create()
                     .player(player.getUniqueId())
                     .message(messages -> messages.argument().noValidEnchantmentLevel())
                     .send();
@@ -55,7 +55,7 @@ public class EnchantCommand {
             handItem.addEnchantment(enchantment, level);
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .player(player.getUniqueId())
             .message(messages -> messages.other().enchantedMessage())
             .send();

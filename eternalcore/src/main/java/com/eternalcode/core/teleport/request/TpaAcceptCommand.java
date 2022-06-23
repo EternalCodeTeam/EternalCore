@@ -48,14 +48,14 @@ public class TpaAcceptCommand {
         this.requestService.removeRequest(target.getUniqueId());
 
         this.noticeService
-            .notice()
+            .create()
             .player(player.getUniqueId())
             .message(messages -> messages.tpa().tpaAcceptMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
-            .notice()
+            .create()
             .player(target.getUniqueId())
             .message(messages -> messages.tpa().tpaAcceptReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
@@ -88,7 +88,7 @@ public class TpaAcceptCommand {
                 );
 
                 this.noticeService
-                    .notice()
+                    .create()
                     .player(uniqueId)
                     .message(messages -> messages.tpa().tpaAcceptReceivedMessage())
                     .placeholder("{PLAYER}", player.getName())

@@ -30,7 +30,7 @@ public class PlayerDeathListener implements Listener {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .notice(NoticeType.CHAT, messages -> config.eventMessage.deathMessage)
             .placeholder("{PLAYER}", player.getName())
             .all()

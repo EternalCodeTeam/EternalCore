@@ -36,7 +36,7 @@ public class ListCommand {
             .join(online, HumanEntity::getName)
             .toString();
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().listMessage())
             .placeholder("{ONLINE}", onlineCount)
             .placeholder("{PLAYERS}", players)

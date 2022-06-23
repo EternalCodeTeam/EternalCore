@@ -33,7 +33,7 @@ public class PlayerChatListener implements Listener {
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().disabledChatInfo())
                 .send();
@@ -48,7 +48,7 @@ public class PlayerChatListener implements Listener {
             long time = this.chatManager.getSlowDown(uuid);
 
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().disabledChatInfo())
                 .placeholder("{TIME}", DurationUtil.durationToString(time))

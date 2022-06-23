@@ -18,7 +18,7 @@ public class AfkMessagesController implements Subscriber {
 
     @Subscribe
     void onAfkChange(AfkChangeEvent event) {
-        this.noticeService.notice()
+        this.noticeService.create()
             .all()
             .player(event.getPlayer())
             .message(messages -> event.isAfk() ? messages.afk().afkOn() : messages.afk().afkOff())

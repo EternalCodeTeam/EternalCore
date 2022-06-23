@@ -1,5 +1,6 @@
 package com.eternalcode.core.chat.feature.privatechat;
 
+import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -19,7 +20,7 @@ public class ReplyCommand {
 
     @Execute
     @Min(1)
-    public void execute(Player sender, @Joiner String message) {
+    public void execute(User sender, @Joiner String message) {
         this.privateChatService.reply(sender, message);
     }
 

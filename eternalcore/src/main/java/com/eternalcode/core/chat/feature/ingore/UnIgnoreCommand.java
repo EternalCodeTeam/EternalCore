@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 
 @Section(route = "unignore")
-@Permission("") //TODO
+@Permission("eternalcore.ignore")
 public class UnIgnoreCommand {
 
     private final IgnoreRepository repository;
@@ -23,7 +23,11 @@ public class UnIgnoreCommand {
     @Execute
     void ignore(Player sender, @Arg User target) {
         this.repository.unIgnore(sender.getUniqueId(), target.getUniqueId());
-        this.noticeService.notice(); // TODO
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .placeholder("{PLAYER}", target.getName())
+            .message(messages -> messages.privateMessage().unIgnorePlayer())
+            .send();
     }
 
 }

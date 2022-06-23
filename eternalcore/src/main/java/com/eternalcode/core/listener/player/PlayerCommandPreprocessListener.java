@@ -41,7 +41,7 @@ public class PlayerCommandPreprocessListener implements Listener {
             event.setCancelled(true);
 
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().noCommand())
                 .placeholder("{COMMAND}", command)

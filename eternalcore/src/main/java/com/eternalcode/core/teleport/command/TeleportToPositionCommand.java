@@ -32,8 +32,8 @@ public class TeleportToPositionCommand {
             return;
         }
 
-        this.noticeService.notice()
-            .message(messages -> messages.teleport().teleportedPlayerToCoordinates())
+        this.noticeService.create()
+            .message(messages -> messages.teleport().teleportedSpecifiedPlayerToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))
@@ -47,7 +47,7 @@ public class TeleportToPositionCommand {
         Location location = new Location(player.getWorld(), x, y, z);
 
         this.teleportService.teleport(player, location);
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.teleport().teleportedToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))

@@ -29,7 +29,7 @@ public class ItemNameCommand {
 
         if (itemStack.getType() == Material.AIR) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noItem())
                 .player(player.getUniqueId())
                 .send();
@@ -45,7 +45,7 @@ public class ItemNameCommand {
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().nameMessage())
             .placeholder("{NAME}", name)
             .player(player.getUniqueId())

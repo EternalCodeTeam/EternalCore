@@ -43,7 +43,7 @@ public final class LocalPublisher implements Publisher {
     }
 
     @Override
-    public void call(Content content) {
+    public void publish(Content content) {
         Set<NativeSubscriber<?>> nativeSubscribers = this.subscribersByType.get(content.getClass());
 
         if (nativeSubscribers == null) {

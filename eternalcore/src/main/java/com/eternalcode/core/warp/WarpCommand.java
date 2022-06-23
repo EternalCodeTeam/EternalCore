@@ -34,8 +34,7 @@ public class WarpCommand {
     @Permission("eternalcore.warp.create")
     public void add(Player player, @Arg String warp) {
         this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
-
-        this.noticeService.notice()
+        this.noticeService.create()
             .player(player.getUniqueId())
             .message(messages -> messages.warp().create())
             .placeholder("{name}", warp)
@@ -47,7 +46,7 @@ public class WarpCommand {
     public void remove(Player player, @Arg Warp warp) {
         this.warpManager.removeWarp(warp.getName());
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .player(player.getUniqueId())
             .message(messages -> messages.warp().remove())
             .placeholder("{name}", warp.getName())

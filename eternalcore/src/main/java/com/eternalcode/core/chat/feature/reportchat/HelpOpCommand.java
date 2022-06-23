@@ -46,7 +46,7 @@ public class HelpOpCommand {
             long time = Math.max(this.cooldowns.asMap().getOrDefault(uuid, 0L) - System.currentTimeMillis(), 0L);
 
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.helpOp().coolDown())
                 .placeholder("{TIME}", DurationUtil.durationToString(time))
                 .player(player.getUniqueId())
@@ -55,7 +55,7 @@ public class HelpOpCommand {
             return;
         }
 
-        Notice notice = this.noticeService.notice()
+        Notice notice = this.noticeService.create()
             .console()
             .player(player.getUniqueId())
             .message(messages -> messages.helpOp().format())
@@ -73,7 +73,7 @@ public class HelpOpCommand {
         notice.send();
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.helpOp().send())
             .send();
 

@@ -48,8 +48,8 @@ public class TeleportListeners implements Listener {
         if (this.teleportTaskService.inTeleport(uuid)) {
             this.teleportTaskService.removeTeleport(uuid);
 
-            this.noticeService.notice()
-                    .message(messages -> messages.teleport().taskCanceled())
+            this.noticeService.create()
+                    .message(messages -> messages.teleport().teleportTaskCanceled())
                     .send();
         }
     }

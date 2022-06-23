@@ -23,7 +23,7 @@ public class KillCommand {
     public void execute(Viewer audience, @Arg Player player) {
         player.setHealth(0);
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().killedMessage())
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)

@@ -22,7 +22,7 @@ public class PingCommand {
     @Execute
     public void execute(CommandSender sender, Viewer audience, @Arg @By("or_sender") Player player) {
         if (sender.equals(player)) {
-            this.noticeService.notice()
+            this.noticeService.create()
                 .message(messages -> messages.other().pingMessage())
                 .placeholder("{PING}", String.valueOf(player.getPing()))
                 .viewer(audience)
@@ -31,7 +31,7 @@ public class PingCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().pingOtherMessage())
             .placeholder("{PING}", String.valueOf(player.getPing()))
             .placeholder("{PLAYER}", player.getName())

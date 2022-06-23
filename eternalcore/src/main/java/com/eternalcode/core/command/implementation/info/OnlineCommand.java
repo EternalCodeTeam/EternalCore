@@ -23,7 +23,7 @@ public class OnlineCommand {
     @Execute
     public void execute(Viewer audience) {
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().onlineMessage())
             .viewer(audience)
             .placeholder("{ONLINE}", String.valueOf(this.server.getOnlinePlayers().size()))

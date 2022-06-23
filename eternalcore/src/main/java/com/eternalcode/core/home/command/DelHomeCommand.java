@@ -4,7 +4,6 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.user.User;
-import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 
@@ -22,7 +21,7 @@ public class DelHomeCommand {
     @Execute
     private void execute(User user, @ArgHome Home home) {
         this.homeManager.deleteHome(user, home.getName());
-        this.noticeService.notice()
+        this.noticeService.create()
             .user(user)
             .message(messages -> messages.home().delete())
             .placeholder("{home}", home.getName())

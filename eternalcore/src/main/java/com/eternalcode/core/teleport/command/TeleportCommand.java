@@ -30,7 +30,7 @@ public class TeleportCommand {
     public void to(Viewer sender, @Arg Player player, @Arg Player target) {
         this.teleportService.teleport(player, target.getLocation());
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.teleport().teleportedPlayerToPlayer())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{ARG-PLAYER}", player.getName())
@@ -42,7 +42,7 @@ public class TeleportCommand {
     public void execute(Player sender, Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.teleport().teleportedToPlayer())
             .placeholder("{PLAYER}", player.getName())
             .viewer(senderViewer)
@@ -54,7 +54,7 @@ public class TeleportCommand {
         location.setWorld(world.orElseGet(sender.getWorld()));
 
         this.teleportService.teleport(sender, location);
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.teleport().teleportedToCoordinates())
             .placeholder("{X}", String.valueOf(location.getX()))
             .placeholder("{Y}", String.valueOf(location.getY()))
@@ -70,8 +70,8 @@ public class TeleportCommand {
         }
 
         this.teleportService.teleport(player, location);
-        this.noticeService.notice()
-            .message(messages -> messages.teleport().teleportedPlayerToCoordinates())
+        this.noticeService.create()
+            .message(messages -> messages.teleport().teleportedSpecifiedPlayerLastLocation())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(location.getX()))
             .placeholder("{Y}", String.valueOf(location.getY()))

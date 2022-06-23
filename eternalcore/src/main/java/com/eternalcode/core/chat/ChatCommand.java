@@ -1,6 +1,5 @@
 package com.eternalcode.core.chat;
 
-import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.adventure.AdventureNotification;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
@@ -39,7 +38,7 @@ public class ChatCommand {
 
     @Execute(route = "clear", aliases = "cc")
     public void clear(CommandSender sender) {
-        this.audiences.notice()
+        this.audiences.create()
             .staticNotice(CLEAR)
             .message(messages -> messages.chat().cleared())
             .placeholder("{NICK}", sender.getName())
@@ -56,7 +55,7 @@ public class ChatCommand {
 
         this.chatManager.getChatSettings().setChatEnabled(true);
 
-        this.audiences.notice()
+        this.audiences.create()
             .message(messages -> messages.chat().enabled())
             .placeholder("{NICK}", sender.getName())
             .all()
@@ -72,7 +71,7 @@ public class ChatCommand {
 
         this.chatManager.getChatSettings().setChatEnabled(false);
 
-        this.audiences.notice()
+        this.audiences.create()
             .message(messages -> messages.chat().disabled())
             .placeholder("{NICK}", sender.getName())
             .all()
@@ -91,7 +90,7 @@ public class ChatCommand {
             }
 
             this.chatManager.getChatSettings().setChatDelay(amount);
-            this.audiences.notice()
+            this.audiences.create()
                 .message(messages -> messages.chat().slowModeSet())
                 .placeholder("{SLOWMODE}", amountArg)
                 .viewer(audience)

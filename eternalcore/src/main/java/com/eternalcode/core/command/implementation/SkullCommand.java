@@ -3,14 +3,12 @@ package com.eternalcode.core.command.implementation;
 import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.builder.ItemBuilder;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerNameArg;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +33,7 @@ public class SkullCommand {
             player.getInventory().addItem(item);
 
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.other().skullMessage())
                 .placeholder("{NICK}", name)
                 .player(player.getUniqueId())

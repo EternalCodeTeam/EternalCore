@@ -32,7 +32,7 @@ public class PlayerQuitListener implements Listener {
         Option<String> message = RandomUtil.randomElement(this.config.eventMessage.leaveMessage);
 
         if (message.isPresent()) {
-            this.noticeService.notice()
+            this.noticeService.create()
                 .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
                 .placeholder("{PLAYER}", player.getName())
                 .all()

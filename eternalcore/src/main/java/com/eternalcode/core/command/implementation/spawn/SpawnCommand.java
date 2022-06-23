@@ -38,7 +38,7 @@ public class SpawnCommand {
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {
-            this.noticeService.notice()
+            this.noticeService.create()
                 .message(messages -> messages.other().spawnNoSet())
                 .player(sender.getUniqueId())
                 .send();
@@ -50,8 +50,8 @@ public class SpawnCommand {
             if (sender.hasPermission("eternalcore.teleport.bypass")) { //TODO: Move to teleport service
                 this.teleportService.teleport(sender, destinationLocation);
 
-                this.noticeService.notice()
-                    .message(messages -> messages.teleport().taskTeleported())
+                this.noticeService.create()
+                    .message(messages -> messages.teleport().teleported())
                     .player(sender.getUniqueId())
                     .send();
 
@@ -59,8 +59,8 @@ public class SpawnCommand {
             }
 
             if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
-                this.noticeService.notice()
-                    .message(messages -> messages.teleport().taskTeleportAlreadyExist())
+                this.noticeService.create()
+                    .message(messages -> messages.teleport().teleportTaskAlreadyExist())
                     .player(sender.getUniqueId())
                     .send();
 
@@ -69,8 +69,8 @@ public class SpawnCommand {
 
             this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), Duration.ofSeconds(5));
 
-            this.noticeService.notice()
-                .message(messages -> messages.teleport().taskTeleporting())
+            this.noticeService.create()
+                .message(messages -> messages.teleport().teleporting())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -81,13 +81,13 @@ public class SpawnCommand {
 
         this.teleportService.teleport(player, destinationLocation);
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().spawnTeleportedBy())
             .placeholder("{PLAYER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
             .player(sender.getUniqueId())

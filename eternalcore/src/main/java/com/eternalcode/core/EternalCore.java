@@ -9,6 +9,7 @@ import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.feature.ingore.IgnoreCommand;
 import com.eternalcode.core.chat.feature.ingore.IgnoreRepository;
 import com.eternalcode.core.chat.feature.ingore.UnIgnoreCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatMessagesController;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.command.argument.LocationArgument;
@@ -16,6 +17,7 @@ import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.chat.feature.privatechat.ReplyCommand;
 import com.eternalcode.core.chat.feature.privatechat.SocialSpyCommand;
+import com.eternalcode.core.command.implementation.GameModeCommand;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
 import com.eternalcode.core.home.HomeRepository;
@@ -75,7 +77,6 @@ import com.eternalcode.core.command.implementation.EnchantCommand;
 import com.eternalcode.core.command.implementation.inventory.EnderchestCommand;
 import com.eternalcode.core.command.implementation.FeedCommand;
 import com.eternalcode.core.command.implementation.FlyCommand;
-import com.eternalcode.core.command.implementation.GamemodeCommand;
 import com.eternalcode.core.command.implementation.GiveCommand;
 import com.eternalcode.core.command.implementation.GodCommand;
 import com.eternalcode.core.command.implementation.inventory.GrindstoneCommand;
@@ -269,7 +270,6 @@ public class EternalCore extends JavaPlugin {
 
         this.languageManager = LanguageManager.create(this.configurationManager, this.getDataFolder());
         this.chatManager = new ChatManager(config.chat);
-        this.privateChatService = new PrivateChatService(server, this.noticeService);
 
         /* Adventure */
 
@@ -285,6 +285,7 @@ public class EternalCore extends JavaPlugin {
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
         this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
+        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, publisher, userManager);
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
@@ -360,7 +361,7 @@ public class EternalCore extends JavaPlugin {
                 EnderchestCommand.class,
                 FeedCommand.class,
                 FlyCommand.class,
-                GamemodeCommand.class,
+                GameModeCommand.class,
                 GodCommand.class,
                 GrindstoneCommand.class,
                 HatCommand.class,
@@ -425,6 +426,7 @@ public class EternalCore extends JavaPlugin {
         /* Subscribers */
 
         this.publisher.subscribe(new AfkMessagesController(this.noticeService, this.userManager));
+        this.publisher.subscribe(new PrivateChatMessagesController(this.noticeService));
 
         /* Tasks */
 

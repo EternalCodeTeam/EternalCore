@@ -35,7 +35,7 @@ public class PlayerJoinListener implements Listener {
             Option<String> message = RandomUtil.randomElement(this.config.eventMessage.firstJoinMessage);
 
             if (message.isPresent()) {
-                this.noticeService.notice()
+                this.noticeService.create()
                     .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
                     .placeholder("{PLAYER}", player.getName())
                     .all()
@@ -58,7 +58,7 @@ public class PlayerJoinListener implements Listener {
 
         if (this.config.eventMessage.enableWelcomeTitle) {
             this.noticeService
-                .notice()
+                .create()
                 .notice(NoticeType.TITLE, messages -> this.config.eventMessage.welcomeTitle) //TODO: Move to messages config
                 .notice(NoticeType.SUBTITLE, messages -> this.config.eventMessage.welcomeSubTitle) //TODO: Move to messages config
                 .placeholder("{PLAYER}", player.getName())
@@ -71,7 +71,7 @@ public class PlayerJoinListener implements Listener {
         Option<String> message = RandomUtil.randomElement(eventMessage.joinMessage);
 
         if (message.isPresent()) {
-            this.noticeService.notice()
+            this.noticeService.create()
                 .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
                 .placeholder("{PLAYER}", player.getName())
                 .all()

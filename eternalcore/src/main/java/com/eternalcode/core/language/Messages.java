@@ -59,20 +59,20 @@ public interface Messages extends ConfigWithResource {
         String teleportedPlayerToPlayer();
 
         // Task
-        Notification taskTimer();
-        String taskCanceled();
-        String taskTeleported();
-        String taskTeleporting();
-        String taskTeleportAlreadyExist();
+        Notification teleportTimerFormat();
+        String teleported();
+        String teleporting();
+        String teleportTaskCanceled();
+        String teleportTaskAlreadyExist();
 
         // Coordinates XYZ
         String teleportedToCoordinates();
-        String teleportedPlayerToCoordinates();
+        String teleportedSpecifiedPlayerToCoordinates();
 
         // Back
-        String teleportedToBack();
-        String teleportedPlayerToBack();
-        String backNoExist();
+        String teleportedToLastLocation();
+        String teleportedSpecifiedPlayerLastLocation();
+        String lastLocationNoExist();
     }
 
     interface ChatSection {
@@ -123,11 +123,15 @@ public interface Messages extends ConfigWithResource {
 
     interface PrivateMessageSection {
         String noReply();
-        String sendFormat();
-        String receiveFormat();
-        String socialSpyFormat();
+        String privateMessageYouToTarget();
+        String privateMessageTargetToYou();
+
+        String socialSpyMessage();
         String socialSpyEnable();
         String socialSpyDisable();
+
+        String ignorePlayer();
+        String unIgnorePlayer();
     }
 
     interface AfkSection {

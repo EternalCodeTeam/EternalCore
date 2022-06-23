@@ -79,20 +79,20 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String teleportedPlayerToPlayer = "&8» &aPrzeteleportowano {PLAYER} do {ARG-PLAYER}!";
 
         // Task
-        public Notification taskTimer = Notification.actionbar("&aTeleportacja za &f{TIME}");
-        public String taskCanceled = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";
-        public String taskTeleported = "&8» &aPrzeteleportowano!";
-        public String taskTeleporting = "&8» &aTeleportuje...";
-        public String taskTeleportAlreadyExist = "&4Blad: &cTeleportujesz się już!";
+        public Notification teleportTimerFormat = Notification.actionbar("&aTeleportacja za &f{TIME}");
+        public String teleported = "&8» &aPrzeteleportowano!";
+        public String teleporting = "&8» &aTeleportuje...";
+        public String teleportTaskCanceled = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";
+        public String teleportTaskAlreadyExist = "&4Blad: &cTeleportujesz się już!";
 
         // Coordinates XYZ
         public String teleportedToCoordinates = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String teleportedPlayerToCoordinates = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String teleportedSpecifiedPlayerToCoordinates = "&8» &6Przeteleportowano &c{PLAYER} &6na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
 
         // Back
-        public String teleportedToBack = "&8 » &7Przeteleportowano do poprzedniej lokalizacji!";
-        public String teleportedPlayerToBack = "&8 » &7Przeteleportowano {PLAYER} do poprzedniej lokalizacji!";
-        public String backNoExist = "&8 » &cNie ma zapisanej poprzedniej lokalizacji!";
+        public String teleportedToLastLocation = "&8 » &7Przeteleportowano do poprzedniej lokalizacji!";
+        public String teleportedSpecifiedPlayerLastLocation = "&8 » &7Przeteleportowano {PLAYER} do poprzedniej lokalizacji!";
+        public String lastLocationNoExist = "&8 » &cNie ma zapisanej poprzedniej lokalizacji!";
     }
 
     @Getter @Contextual
@@ -153,11 +153,15 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     @Getter @Contextual
     public static class PLPrivateMessageSection implements PrivateMessageSection {
         public String noReply = "&8 » &cNie masz komu odpowiedzieć";
-        public String sendFormat = "&8[&7Ty -> &f{TARGET}&8]&7: &f{MESSAGE}";
-        public String receiveFormat = "&8[&7{SENDER} -> &fTy&8]&7: &f{MESSAGE}";
-        public String socialSpyFormat = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String privateMessageYouToTarget = "&8[&7Ty -> &f{TARGET}&8]&7: &f{MESSAGE}";
+        public String privateMessageTargetToYou = "&8[&7{SENDER} -> &fTy&8]&7: &f{MESSAGE}";
+
+        public String socialSpyMessage = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
         public String socialSpyEnable = "&8 » &aSocialSpy został włączony!";
         public String socialSpyDisable = "&8 » &cSocialSpy został wyłączony!";
+
+        public String ignorePlayer = "&8 » &7Zignorowano gracza &c{PLAYER}&7!";
+        public String unIgnorePlayer = "&8 » &7Odignorowano gracza &a{PLAYER}&7!";
     }
 
     @Getter @Contextual
@@ -179,21 +183,28 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String nullHatMessage = "&4Blad: &cNie możesz użyć /hat!";
         public String repairMessage = "&8» &aNaprawiono!";
         public String skullMessage = "&8» &aOtrzymałeś głowę gracza {PLAYER}";
+
         public String killSelf = "&8» &cPopełniłeś samobójstwo!";
         public String killedMessage = "&8» &cZabito gracza {PLAYER}";
+
         public String speedBetweenZeroAndTen = "&4Blad: &cUstaw speed w przedziale 0-10!";
         public String speedSet = "&8» &aUstawiono speed na {SPEED}";
         public String speedSetBy = "&8» &cUstawiono {PLAYER} speeda na {SPEED}";
+
         public String godMessage = "&8» &aGod został {STATE}";
         public String godSetMessage = "&8» &aGod dla gracza &f{PLAYER} &azostał {STATE}";
+
         public String flyMessage = "&8» &aLatanie zostało {STATE}";
         public String flySetMessage = "&8» &aLatanie dla gracza &f{PLAYER} &azostało {STATE}";
+
         public String giveReceived = "&8» &aOtrzymałeś &6{ITEM}";
         public String giveGiven = "&8» &aGracz &f{PLAYER} &aotrzymał: &6{ITEM}";
+
         public String spawnSet = "&8» &aUstawiono spawn!";
         public String spawnNoSet = "&4Blad: &cSpawn nie jest ustawiony!";
-        public String spawnTeleportedBy = "&8» &aZostałeś przeteleportowany na spawn przez {NICK}!";
-        public String spawnTeleportedOther = "&8» &aGracz &f{NICK} &azostał przeteleportowany na spawn!";
+        public String spawnTeleportedBy = "&8» &aZostałeś przeteleportowany na spawn przez {PLAYER}!";
+        public String spawnTeleportedOther = "&8» &aGracz &f{PLAYER} &azostał przeteleportowany na spawn!";
+
         public String gameModeNotCorrect = "&4Blad: &cNie prawidłowy typ!";
         public String gameModeMessage = "&8» &aUstawiono tryb gry na: {GAMEMODE}";
         public String gameModeSetMessage = "&8» &aUstawiono tryb gry graczowi &f{PLAYER} &ana: &f{GAMEMODE}";

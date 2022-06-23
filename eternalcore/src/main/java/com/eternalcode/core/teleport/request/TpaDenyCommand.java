@@ -1,7 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.teleport.request.TeleportRequestService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
@@ -35,14 +34,14 @@ public class TpaDenyCommand {
         this.requestService.removeRequest(target.getUniqueId());
 
         this.noticeService
-            .notice()
+            .create()
             .player(player.getUniqueId())
             .message(messages -> messages.tpa().tpaDenyDoneMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
-            .notice()
+            .create()
             .player(target.getUniqueId())
             .message(messages -> messages.tpa().tpaDenyReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
@@ -68,7 +67,7 @@ public class TpaDenyCommand {
             if (requester != null) {
 
                 this.noticeService
-                    .notice()
+                    .create()
                     .player(uniqueId)
                     .message(messages -> messages.tpa().tpaDenyReceivedMessage())
                     .placeholder("{PLAYER}", player.getName())

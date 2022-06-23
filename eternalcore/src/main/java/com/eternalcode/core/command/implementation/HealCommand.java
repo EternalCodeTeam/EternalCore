@@ -36,7 +36,7 @@ public class HealCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().healedMessage())
             .placeholder("{PLAYER}", player.getName())
             .viewer(viewer)

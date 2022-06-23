@@ -23,7 +23,7 @@ public class TeleportHereCommand {
     @Execute(required = 1)
     public void tpHere(Player sender, @Arg Player target) {
         this.teleportService.teleport(target, sender.getLocation());
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.teleport().teleportedPlayerToPlayer())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{ARG-PLAYER}", sender.getName())

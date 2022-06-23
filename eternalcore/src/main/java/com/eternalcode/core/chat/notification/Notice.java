@@ -1,5 +1,6 @@
 package com.eternalcode.core.chat.notification;
 
+import com.eternalcode.core.chat.placeholder.Placeholder;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
@@ -14,7 +15,7 @@ import panda.utilities.text.Joiner;
 
 import javax.annotation.CheckReturnValue;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +33,10 @@ public class Notice {
 
     private final List<Viewer> viewers = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
-    private final Map<String, MessageExtractor> placeholders = new HashMap<>();
+    private final Map<String, String> placeholders = new HashMap<>();
+    private final Map<String, MessageExtractor> langPlaceholders = new HashMap<>();
+    private final List<Formatter> formatters = new ArrayList<>();
+
 
     Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer) {
         this.languageManager = languageManager;
@@ -125,14 +129,14 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, String to) {
-        this.placeholders.put(from, messages -> to);
+        this.placeholders.put(from, to);
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, Option<String> to) {
         if (to.isPresent()) {
-            this.placeholders.put(from, messages -> to.get());
+            this.placeholders.put(from, to.get());
         }
 
         return this;
@@ -140,13 +144,31 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, Supplier<String> to) {
-        this.placeholders.put(from, messages -> to.get());
+        this.placeholders.put(from, to.get());
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, MessageExtractor extractor) {
-        this.placeholders.put(from, extractor);
+        this.langPlaceholders.put(from, extractor);
+        return this;
+    }
+
+    @CheckReturnValue
+    public <T> Notice placeholder(Placeholder<T> placeholder, T context) {
+        this.formatters.add(placeholder.toFormatter(context));
+        return this;
+    }
+
+    @CheckReturnValue
+    public Notice formatter(Formatter formatter) {
+        this.formatters.add(formatter);
+        return this;
+    }
+
+    @CheckReturnValue
+    public Notice formatter(Formatter... formatters) {
+        this.formatters.addAll(Arrays.asList(formatters));
         return this;
     }
 
@@ -162,17 +184,29 @@ public class Notice {
         Map<Language, List<Notification>> formattedMessages = new HashMap<>();
 
         for (Language language : viewerByLang.keySet()) {
-            Messages messages = languageManager.getMessages(language);
+            Messages messages = this.languageManager.getMessages(language);
             ArrayList<Notification> notifications = new ArrayList<>();
             Formatter translatedFormatter = new Formatter();
 
-            for (Map.Entry<String, MessageExtractor> entry : placeholders.entrySet()) {
-                translatedFormatter.register(entry.getKey(), entry.getValue().extract(messages));
+            for (Map.Entry<String, MessageExtractor> entry : this.langPlaceholders.entrySet()) {
+                translatedFormatter.register(entry.getKey(), () -> entry.getValue().extract(messages));
             }
 
             for (NotificationExtractor extractor : this.notifications) {
                 Notification notification = extractor.extract(messages)
                     .edit(translatedFormatter::format);
+
+                for (Formatter formatter : this.formatters) {
+                    notification.edit(formatter::format);
+                }
+
+                notification.edit(text -> {
+                    for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+                        text = text.replace(entry.getKey(), entry.getValue());
+                    }
+
+                    return text;
+                });
 
                 notifications.add(notification);
             }

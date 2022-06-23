@@ -30,7 +30,7 @@ public class ClearCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().clearByMessage())
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)
@@ -41,7 +41,7 @@ public class ClearCommand {
         player.getInventory().setArmorContents(new ItemStack[0]);
         player.getInventory().clear();
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().clearMessage())
             .player(player.getUniqueId())
             .send();

@@ -26,12 +26,12 @@ public class BackCommand {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().backNoExist());
+            this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().lastLocationNoExist());
             return;
         }
 
         this.teleportService.teleport(player, location.get());
-        this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().teleportedToBack());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().teleportedToLastLocation());
     }
 
     @Execute(required = 1)
@@ -39,13 +39,17 @@ public class BackCommand {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
-            this.noticeService.viewer(viewer, messages -> messages.teleport().backNoExist());
+            this.noticeService.viewer(viewer, messages -> messages.teleport().lastLocationNoExist());
             return;
         }
 
         this.teleportService.teleport(player, location.get());
-        this.noticeService.viewer(viewer, messages -> messages.teleport().teleportedToBack());
-        this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().teleportedPlayerToPlayer());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().teleportedToLastLocation());
+        this.noticeService.create()
+            .viewer(viewer)
+            .message(messages -> messages.teleport().teleportedSpecifiedPlayerLastLocation())
+            .placeholder("{PLAYER}", player.getName())
+            .send();
     }
 
 }

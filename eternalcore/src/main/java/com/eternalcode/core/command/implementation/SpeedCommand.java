@@ -29,7 +29,7 @@ public class SpeedCommand {
     @Min(1)
     public void execute(CommandSender sender, Viewer audience, @Arg Integer amount, @Arg @By("or_sender") Player player) {
         if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
-            this.noticeService.notice()
+            this.noticeService.create()
                 .message(messages -> messages.other().speedBetweenZeroAndTen())
                 .viewer(audience)
                 .send();
@@ -40,7 +40,7 @@ public class SpeedCommand {
         player.setFlySpeed(amount / 10.0f);
         player.setWalkSpeed(amount / 10.0f);
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().speedSet())
             .placeholder("{SPEED}", String.valueOf(amount))
             .player(player.getUniqueId())
@@ -50,7 +50,7 @@ public class SpeedCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().speedSetBy())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{SPEED}", String.valueOf(amount))

@@ -29,8 +29,7 @@ public class SetSpawnCommand {
 
         this.configurationManager.render(this.locations);
 
-        this.noticeService
-            .notice()
+        this.noticeService.create()
             .message(messages -> messages.other().spawnSet())
             .player(player.getUniqueId())
             .send();
