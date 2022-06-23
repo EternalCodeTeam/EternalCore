@@ -2,6 +2,7 @@ package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 
 import dev.rollczi.litecommands.argument.Arg;
@@ -37,7 +38,12 @@ public class TpaAcceptCommand {
     @Execute
     @Required(1)
     public void executeTarget(Player player, @Arg @By("request") Player target) {
-        this.teleportTaskService.createTeleport(target.getUniqueId(), target.getLocation(), player.getLocation(), this.settings.teleportTime());
+        this.teleportTaskService.createTeleport(
+            target.getUniqueId(),
+            PositionAdapter.convert(target.getLocation()),
+            PositionAdapter.convert(player.getLocation()),
+            this.settings.teleportTime()
+        );
 
         this.requestService.removeRequest(target.getUniqueId());
 
@@ -74,7 +80,12 @@ public class TpaAcceptCommand {
 
             if (requester != null) {
 
-                this.teleportTaskService.createTeleport(requester.getUniqueId(), requester.getLocation(), player.getLocation(), this.settings.teleportTime());
+                this.teleportTaskService.createTeleport(
+                    requester.getUniqueId(),
+                    PositionAdapter.convert(requester.getLocation()),
+                    PositionAdapter.convert(player.getLocation()),
+                    this.settings.teleportTime()
+                );
 
                 this.noticeService
                     .notice()

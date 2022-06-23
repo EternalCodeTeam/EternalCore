@@ -1,8 +1,9 @@
-package com.eternalcode.core.spawn;
+package com.eternalcode.core.command.implementation.spawn;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
+import com.eternalcode.core.shared.PositionAdapter;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -24,8 +25,9 @@ public class SetSpawnCommand {
 
     @Execute
     public void execute(Player player){
-        this.locations.spawn = player.getLocation().clone();
-        this.configurationManager.render(locations);
+        this.locations.spawn = PositionAdapter.convert(player.getLocation());
+
+        this.configurationManager.render(this.locations);
 
         this.noticeService
             .notice()

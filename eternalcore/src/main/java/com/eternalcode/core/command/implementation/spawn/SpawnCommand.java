@@ -1,7 +1,9 @@
-package com.eternalcode.core.spawn;
+package com.eternalcode.core.command.implementation.spawn;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
+import com.eternalcode.core.shared.Position;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
 
@@ -12,6 +14,8 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import panda.std.Option;
+
+import java.time.Duration;
 
 @Section(route = "spawn")
 @Permission("eternalcore.spawn")
@@ -31,7 +35,7 @@ public class SpawnCommand {
 
     @Execute
     public void execute(Player sender, @Opt Option<Player> playerOption) {
-        Location destinationLocation = this.locations.spawn;
+        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {
             this.noticeService.notice()
@@ -63,7 +67,7 @@ public class SpawnCommand {
                 return;
             }
 
-            this.teleportTaskService.createTeleport(sender.getUniqueId(), sender.getLocation(), destinationLocation, 5);
+            this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), Duration.ofSeconds(5));
 
             this.noticeService.notice()
                 .message(messages -> messages.teleport().taskTeleporting())

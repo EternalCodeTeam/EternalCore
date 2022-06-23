@@ -2,7 +2,7 @@ package com.eternalcode.core.warp;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import org.bukkit.Location;
+import com.eternalcode.core.shared.Position;
 import panda.std.Option;
 
 import java.util.HashMap;
@@ -24,31 +24,32 @@ public class WarpConfigRepository implements WarpRepository {
 
     @Override
     public void addWarp(Warp warp) {
-        this.edit(warps -> warps.put(warp.getName(), warp.getLocation()));
-        this.configurationManager.render(locationsConfiguration);
+        this.edit(warps -> warps.put(warp.getName(), warp.getPostion()));
     }
 
     @Override
     public void removeWarp(String warp) {
         this.edit(warps -> warps.remove(warp));
-        this.configurationManager.render(locationsConfiguration);
     }
 
-    private void edit(Consumer<Map<String, Location>> editor) {
-        HashMap<String, Location> warps = new HashMap<>(this.locationsConfiguration.warps);
+    private void edit(Consumer<Map<String, Position>> editor) {
+        HashMap<String, Position> warps = new HashMap<>(this.locationsConfiguration.warps);
 
         editor.accept(warps);
+
         this.locationsConfiguration.warps = warps;
+
+        this.configurationManager.render(this.locationsConfiguration);
     }
 
     @Override
     public CompletableFuture<Option<Warp>> getWarp(String name) {
-        return CompletableFuture.completedFuture(Option.of(locationsConfiguration.warps.get(name)).map(location -> new Warp(name, location)));
+        return CompletableFuture.completedFuture(Option.of(this.locationsConfiguration.warps.get(name)).map(location -> new Warp(name, location)));
     }
 
     @Override
     public CompletableFuture<List<Warp>> getWarps() {
-        return CompletableFuture.completedFuture(locationsConfiguration.warps.entrySet().stream()
+        return CompletableFuture.completedFuture(this.locationsConfiguration.warps.entrySet().stream()
             .map(entry -> new Warp(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList()));
     }

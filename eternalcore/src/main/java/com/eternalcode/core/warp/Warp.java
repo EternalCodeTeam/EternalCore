@@ -1,23 +1,23 @@
 package com.eternalcode.core.warp;
 
-import org.bukkit.Location;
+import com.eternalcode.core.shared.Position;
 
 public class Warp {
 
     private final String name;
-    private final Location location;
+    private final Position position;
 
-    public Warp(String name, Location location) {
+    public Warp(String name, Position position) {
         this.name = name;
-        this.location = location;
+        this.position = position;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public Location getLocation() {
-        return this.location.clone();
+    public Position getPostion() {
+        return this.position;
     }
 
 }

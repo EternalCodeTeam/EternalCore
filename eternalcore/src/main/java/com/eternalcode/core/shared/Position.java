@@ -3,7 +3,7 @@ package com.eternalcode.core.shared;
 /**
  * Disclaimer - Bukkit {@link org.bukkit.Location} storage may cause a memory leak, because it is a wrapper for
  * coordinates and {@link org.bukkit.World} reference. If you need to store location use {@link Position} and
- * {@link Adapter}.
+ * {@link PositionAdapter}.
  * */
 public final class Position {
 

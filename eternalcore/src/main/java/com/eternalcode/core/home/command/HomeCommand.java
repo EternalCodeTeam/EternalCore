@@ -1,6 +1,7 @@
 package com.eternalcode.core.home.command;
 
 import com.eternalcode.core.home.Home;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
@@ -19,7 +20,7 @@ public class HomeCommand {
 
     @Execute
     private void execute(Player player, @ArgHome Home home) {
-        this.teleportTaskService.createTeleport(player.getUniqueId(), player.getLocation(), home.getLocation(), Duration.ofSeconds(5));
+        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), home.getPosition(), Duration.ofSeconds(5));
     }
 
 }

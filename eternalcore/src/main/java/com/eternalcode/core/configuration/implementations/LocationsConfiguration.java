@@ -1,6 +1,7 @@
 package com.eternalcode.core.configuration.implementations;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.shared.Position;
 import org.bukkit.Location;
 
 import java.io.File;
@@ -13,7 +14,8 @@ public class LocationsConfiguration extends AbstractConfigWithResource {
         super(folder, child);
     }
 
-    public Location spawn = new Location(null, 0, 0, 0, 0.0f, 0.0f);
-    public Map<String, Location> warps = new HashMap<>();
+    public Position spawn = new Position(0, 0, 0, 0.0f, 0.0f, "world");
+
+    public Map<String, Position> warps = new HashMap<>();
 
 }

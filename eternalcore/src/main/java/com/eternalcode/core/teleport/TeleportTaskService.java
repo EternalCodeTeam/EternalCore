@@ -1,8 +1,9 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.shared.Adapter;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.shared.Position;
 import org.bukkit.Location;
+import org.jetbrains.annotations.ApiStatus;
 import panda.std.Option;
 
 import java.time.Duration;
@@ -23,8 +24,15 @@ public class TeleportTaskService {
         this.createTeleport(uuid, startLocation, destinationLocation, Duration.ofSeconds(seconds));
     }
 
+    @Deprecated
     public void createTeleport(UUID uuid, Location startLocation, Location destinationLocation, TemporalAmount time) {
-        Teleport teleport = new Teleport(uuid, Adapter.convert(startLocation), Adapter.convert(destinationLocation), time);
+        Teleport teleport = new Teleport(uuid, PositionAdapter.convert(startLocation), PositionAdapter.convert(destinationLocation), time);
+
+        this.teleportMap.put(uuid, teleport);
+    }
+
+    public void createTeleport(UUID uuid, Position startLocation, Position destinationLocation, TemporalAmount time) {
+        Teleport teleport = new Teleport(uuid, startLocation, destinationLocation, time);
 
         this.teleportMap.put(uuid, teleport);
     }

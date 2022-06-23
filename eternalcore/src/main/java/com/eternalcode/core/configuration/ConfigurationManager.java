@@ -3,7 +3,7 @@ package com.eternalcode.core.configuration;
 import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.composers.NotificationComposer;
 import com.eternalcode.core.configuration.language.LanguageComposer;
-import com.eternalcode.core.configuration.composers.LocationComposer;
+import com.eternalcode.core.configuration.composers.PositionComposer;
 import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
@@ -21,7 +21,7 @@ public class ConfigurationManager {
         .createYamlLike()
         .getSettings()
         .withComposer(Language.class, new LanguageComposer())
-        .withComposer(Location.class, new LocationComposer())
+        .withComposer(Location.class, new PositionComposer())
         .withComposer(Notification.class, new NotificationComposer())
         .build();
 

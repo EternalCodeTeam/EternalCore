@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.shared.Adapter;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.shared.Position;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
@@ -23,11 +23,11 @@ public class TeleportService {
     }
 
     public Option<Location> getLastLocation(UUID player) {
-        return Option.of(this.lastPosition.get(player)).map(Adapter::convert);
+        return Option.of(this.lastPosition.get(player)).map(PositionAdapter::convert);
     }
 
     public void markLastLocation(UUID player, Location location) {
-        this.lastPosition.put(player, Adapter.convert(location));
+        this.lastPosition.put(player, PositionAdapter.convert(location));
     }
 
 }

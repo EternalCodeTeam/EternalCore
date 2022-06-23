@@ -21,6 +21,7 @@ class EternalCoreCommand {
         this.manager = manager;
         this.server = server;
     }
+
     @Execute(route = "reload")
     @Permission("eternalcore.reload")
     void reload(Player player) {

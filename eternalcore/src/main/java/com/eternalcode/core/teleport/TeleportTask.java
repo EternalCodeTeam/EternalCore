@@ -2,7 +2,7 @@ package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
-import com.eternalcode.core.shared.Adapter;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -30,8 +30,8 @@ public class TeleportTask implements Runnable {
     @Override
     public void run() {
         for (Teleport teleport : this.teleportTaskService.getTeleports()) {
-            Location destinationLocation = Adapter.convert(teleport.getDestinationLocation());
-            Location startLocation = Adapter.convert(teleport.getStartLocation());
+            Location destinationLocation = PositionAdapter.convert(teleport.getDestinationLocation());
+            Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
             UUID uuid = teleport.getUuid();
             Instant teleportMoment = teleport.getTeleportMoment();
 

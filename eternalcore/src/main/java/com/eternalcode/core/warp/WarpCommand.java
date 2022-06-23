@@ -1,12 +1,15 @@
 package com.eternalcode.core.warp;
 
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
 
 @Section(route = "warp")
 @Permission("eternalcore.warp")
@@ -24,14 +27,15 @@ public class WarpCommand {
 
     @Execute
     public void warp(Player player, @Arg Warp warp) {
-        teleportTaskService.createTeleport(player.getUniqueId(), player.getLocation(), warp.getLocation(), 5);
+        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPostion(), Duration.ofSeconds(5));
     }
 
     @Execute(route = "add")
     @Permission("eternalcore.warp.create")
     public void add(Player player, @Arg String warp) {
-        warpManager.createWarp(warp, player.getLocation());
-        noticeService.notice()
+        this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
+
+        this.noticeService.notice()
             .player(player.getUniqueId())
             .message(messages -> messages.warp().create())
             .placeholder("{name}", warp)
@@ -41,8 +45,9 @@ public class WarpCommand {
     @Execute(route = "remove")
     @Permission("eternalcore.warp.delete")
     public void remove(Player player, @Arg Warp warp) {
-        warpManager.removeWarp(warp.getName());
-        noticeService.notice()
+        this.warpManager.removeWarp(warp.getName());
+
+        this.noticeService.notice()
             .player(player.getUniqueId())
             .message(messages -> messages.warp().remove())
             .placeholder("{name}", warp.getName())
