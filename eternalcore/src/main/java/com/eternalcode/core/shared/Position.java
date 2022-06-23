@@ -1,5 +1,7 @@
 package com.eternalcode.core.shared;
 
+import java.util.Objects;
+
 /**
  * Disclaimer - Bukkit {@link org.bukkit.Location} storage may cause a memory leak, because it is a wrapper for
  * coordinates and {@link org.bukkit.World} reference. If you need to store location use {@link Position} and
@@ -24,27 +26,51 @@ public final class Position {
     }
 
     public String getWorld() {
-        return world;
+        return this.world;
     }
 
     public double getX() {
-        return x;
+        return this.x;
     }
 
     public double getY() {
-        return y;
+        return this.y;
     }
 
     public double getZ() {
-        return z;
+        return this.z;
     }
 
     public float getYaw() {
-        return yaw;
+        return this.yaw;
     }
 
     public float getPitch() {
-        return pitch;
+        return this.pitch;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Position position = (Position) o;
+
+        return Double.compare(position.x, this.x) == 0
+            && Double.compare(position.y, this.y) == 0
+            && Double.compare(position.z, this.z) == 0
+            && Float.compare(position.yaw, this.yaw) == 0
+            && Float.compare(position.pitch, this.pitch) == 0
+            && this.world.equals(position.world);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.x, this.y, this.z, this.yaw, this.pitch, this.world);
+    }
 }
