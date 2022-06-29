@@ -213,7 +213,12 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String pingOtherMessage = "&8» &cPing of the &6{PLAYER} &cis: &6{PING}ms";
         public String onlineMessage = "&8» &6On server now is: &f{ONLINE} &6players!";
         public String listMessage = "&8» &6On server is: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
-        public String nameMessage = "&8» &6New name is: &6{NAME}";
+
+        public String itemChangeNameMessage = "&8 » &7Name has been changed to: &c{ITEM_NAME}";
+        public String itemClearNameMessage = "&8 » &7Name has been cleared!";
+        public String itemChangeLoreMessage = "&8 » &7Lore has been changed to: &c{ITEM_LORE}";
+        public String itemClearLoreMessage = "&8 » &7Lore has been cleared!";
+
         public String enchantedMessage = "&8» &6Item in hand is enchanted!";
         public String languageChanged = "&8» &6Language changed to &cEnglish&6!";
 

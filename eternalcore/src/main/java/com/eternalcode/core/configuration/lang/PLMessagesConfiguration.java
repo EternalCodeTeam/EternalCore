@@ -212,7 +212,12 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String pingOtherMessage = "&8» &aGracz &f{PLAYER} &ama: &f{PING}ms";
         public String onlineMessage = "&8» &6Na serwerze jest: &f{ONLINE} &6graczy online!";
         public String listMessage = "&8» &6Na serwerze jest: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
-        public String nameMessage = "&8» &6Nowa nazwa itemu: &c{NAME}";
+
+        public String itemChangeNameMessage = "&8 » &7Nowa nazwa itemu: &c{ITEM_NAME}";
+        public String itemClearNameMessage = "&8 » &7Wyczyszczono nazwę itemu!";
+        public String itemChangeLoreMessage = "&8 » &7Nowa linia lore: &c{ITEM_LORE}";
+        public String itemClearLoreMessage = "&8 » &7Wyczyszczono linie lore!";
+
         public String enchantedMessage = "&8» &6Item w rece zostal zenchantowany!";
         public String languageChanged = "&8» &6Zmieniono język na &cPolski&6!";
 

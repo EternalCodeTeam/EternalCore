@@ -1,4 +1,7 @@
 ### 1.0.0
+- Add /itemname clear command
+- Add /itemlore clear command
+- Add /itemlore command
 - Add Position wrapper for location 
 - Add /back command
 - Add Publish system

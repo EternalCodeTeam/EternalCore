@@ -9,6 +9,7 @@ import com.eternalcode.core.configuration.language.LanguageConfiguration;
 import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.language.Language;
+import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import org.bukkit.Location;
@@ -21,7 +22,7 @@ public class ConfigurationManager {
         .createYamlLike()
         .getSettings()
         .withComposer(Language.class, new LanguageComposer())
-        .withComposer(Location.class, new PositionComposer())
+        .withComposer(Position.class, new PositionComposer())
         .withComposer(Notification.class, new NotificationComposer())
         .build();
 

@@ -173,7 +173,10 @@ public interface Messages extends ConfigWithResource {
         String pingOtherMessage();
         String onlineMessage();
         String listMessage();
-        String nameMessage();
+        String itemChangeNameMessage();
+        String itemClearNameMessage();
+        String itemChangeLoreMessage();
+        String itemClearLoreMessage();
         String enchantedMessage();
         List<String> whoisCommand();
         String languageChanged();

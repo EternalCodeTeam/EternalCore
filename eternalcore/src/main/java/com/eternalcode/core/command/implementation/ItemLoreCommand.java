@@ -2,34 +2,36 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Section(route = "itemname", aliases = { "itemrename" })
-@Permission("eternalcore.itemname")
-public class ItemNameCommand {
+@Section(route = "itemlore")
+@Permission("eternalcore.itemlore")
+public class ItemLoreCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
 
-    public ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    public ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
     }
 
     @Execute
-    @Min(1)
-    public void execute(Player player, @Joiner String name) {
+    @Min(2)
+    public void execute(Player player, @Arg Integer line, @Joiner String name) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
 
@@ -38,14 +40,28 @@ public class ItemNameCommand {
             return;
         }
 
-        String serialized = Legacy.SECTION_SERIALIZER.serialize(miniMessage.deserialize(name));
+        List<String> lore = itemMeta.getLore();
 
-        itemMeta.setDisplayName(serialized);
+        lore = lore == null ? new ArrayList<>() : new ArrayList<>(lore);
+
+        if (name.equals("none")) {
+            lore.remove((int) line);
+        }
+        else {
+            // fill list
+            while (lore.size() <= line) {
+                lore.add("");
+            }
+
+            lore.set(line, Legacy.SECTION_SERIALIZER.serialize(miniMessage.deserialize(name)));
+        }
+
+        itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .message(messages -> messages.other().itemChangeNameMessage())
-            .placeholder("{ITEM_NAME}", name)
+            .message(messages -> messages.other().itemChangeLoreMessage())
+            .placeholder("{ITEM_LORE}", name)
             .player(player.getUniqueId())
             .send();
     }
@@ -60,10 +76,10 @@ public class ItemNameCommand {
             return;
         }
 
-        itemMeta.setDisplayName(null);
+        itemMeta.setLore(List.of());
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemClearNameMessage());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemClearLoreMessage());
     }
 
 }

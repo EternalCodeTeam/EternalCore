@@ -33,8 +33,8 @@ public class Notice {
 
     private final List<Viewer> viewers = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
-    private final Map<String, String> placeholders = new HashMap<>();
     private final Map<String, MessageExtractor> langPlaceholders = new HashMap<>();
+    private final Map<String, String> placeholders = new HashMap<>();
     private final List<Formatter> formatters = new ArrayList<>();
 
 
@@ -197,10 +197,10 @@ public class Notice {
                     .edit(translatedFormatter::format);
 
                 for (Formatter formatter : this.formatters) {
-                    notification.edit(formatter::format);
+                    notification = notification.edit(formatter::format);
                 }
 
-                notification.edit(text -> {
+                notification = notification.edit(text -> {
                     for (Map.Entry<String, String> entry : placeholders.entrySet()) {
                         text = text.replace(entry.getKey(), entry.getValue());
                     }

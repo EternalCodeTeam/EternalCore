@@ -1,6 +1,8 @@
 package com.eternalcode.core.shared;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Disclaimer - Bukkit {@link org.bukkit.Location} storage may cause a memory leak, because it is a wrapper for
@@ -9,12 +11,15 @@ import java.util.Objects;
  * */
 public final class Position {
 
+    private final static Pattern PARSE_FORMAT = Pattern.compile("Position\\{x=(?<x>-?[\\d.]+), y=(?<y>-?[\\d.]+), z=(?<z>-?[\\d.]+), yaw=(?<yaw>-?[\\d.]+), pitch=(?<pitch>-?[\\d.]+), world='(?<world>.+)'}");
+
     private final double x;
     private final double y;
     private final double z;
     private final float yaw;
     private final float pitch;
     private final String world;
+
 
     public Position(double x, double y, double z, float yaw, float pitch, String world) {
         this.x = x;
@@ -73,4 +78,34 @@ public final class Position {
     public int hashCode() {
         return Objects.hash(this.x, this.y, this.z, this.yaw, this.pitch, this.world);
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+            "x=" + x +
+            ", y=" + y +
+            ", z=" + z +
+            ", yaw=" + yaw +
+            ", pitch=" + pitch +
+            ", world='" + world + '\'' +
+            '}';
+    }
+
+    public static Position parse(String parse) {
+        Matcher matcher = PARSE_FORMAT.matcher(parse);
+
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("Invalid position format: " + parse);
+        }
+
+        return new Position(
+            Double.parseDouble(matcher.group("x")),
+            Double.parseDouble(matcher.group("y")),
+            Double.parseDouble(matcher.group("z")),
+            Float.parseFloat(matcher.group("yaw")),
+            Float.parseFloat(matcher.group("pitch")),
+            matcher.group("world")
+        );
+    }
+
 }

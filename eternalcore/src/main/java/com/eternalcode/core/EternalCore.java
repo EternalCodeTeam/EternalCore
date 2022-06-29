@@ -9,7 +9,7 @@ import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.feature.ingore.IgnoreCommand;
 import com.eternalcode.core.chat.feature.ingore.IgnoreRepository;
 import com.eternalcode.core.chat.feature.ingore.UnIgnoreCommand;
-import com.eternalcode.core.chat.feature.privatechat.PrivateChatMessagesController;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatPresenter;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.command.argument.LocationArgument;
@@ -18,6 +18,7 @@ import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.chat.feature.privatechat.ReplyCommand;
 import com.eternalcode.core.chat.feature.privatechat.SocialSpyCommand;
 import com.eternalcode.core.command.implementation.GameModeCommand;
+import com.eternalcode.core.command.implementation.ItemLoreCommand;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
 import com.eternalcode.core.home.HomeRepository;
@@ -385,6 +386,7 @@ public class EternalCore extends JavaPlugin {
                 ListCommand.class,
                 TeleportToPositionCommand.class,
                 ItemNameCommand.class,
+                ItemLoreCommand.class,
                 EnchantCommand.class,
                 TeleportCommand.class,
                 TeleportHereCommand.class,
@@ -426,7 +428,7 @@ public class EternalCore extends JavaPlugin {
         /* Subscribers */
 
         this.publisher.subscribe(new AfkMessagesController(this.noticeService, this.userManager));
-        this.publisher.subscribe(new PrivateChatMessagesController(this.noticeService));
+        this.publisher.subscribe(new PrivateChatPresenter(this.noticeService));
 
         /* Tasks */
 

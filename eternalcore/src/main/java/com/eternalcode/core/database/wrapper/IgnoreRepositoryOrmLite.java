@@ -47,12 +47,14 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
 
     @Override
     public void ignore(UUID by, UUID target) {
-        this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target));
+        this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target))
+            .then(integer -> this.ignores.refresh(by));
     }
 
     @Override
     public void unIgnore(UUID by, UUID target) {
-        this.delete(IgnoreWrapper.class, new IgnoreWrapper(by, target));
+        this.action(IgnoreWrapper.class, dao -> dao.deleteBuilder().where().eq("player_id", by).and().eq("ignored_id", target).query())
+            .then(integer -> this.ignores.refresh(by));
     }
 
     public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
@@ -79,12 +81,15 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
     }
 
     @DatabaseTable(tableName = "eternal_core_ignores")
-    private static class IgnoreWrapper { // TODO: Fix and use unique or ID
+    private static class IgnoreWrapper {
 
-        @DatabaseField(columnName = "player_id", unique = true)
+        @DatabaseField(generatedId = true)
+        Long id;
+
+        @DatabaseField(columnName = "player_id", uniqueCombo = true)
         UUID playerUuid;
 
-        @DatabaseField(columnName = "ignored_id", unique = true)
+        @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
         UUID ignoredUuid;
 
         IgnoreWrapper() {}

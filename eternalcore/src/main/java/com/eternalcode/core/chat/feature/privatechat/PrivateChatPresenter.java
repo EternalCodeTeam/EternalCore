@@ -8,7 +8,7 @@ import panda.utilities.text.Formatter;
 
 import java.util.UUID;
 
-public class PrivateChatMessagesController implements Subscriber {
+public class PrivateChatPresenter implements Subscriber {
 
     private final static Placeholder<PrivateMessage> PLACEHOLDERS = Placeholder.<PrivateMessage>builder()
         .with("{MESSAGE}", PrivateMessage::getMessage)
@@ -18,7 +18,7 @@ public class PrivateChatMessagesController implements Subscriber {
 
     private final NoticeService notice;
 
-    public PrivateChatMessagesController(NoticeService noticeService) {
+    public PrivateChatPresenter(NoticeService noticeService) {
         this.notice = noticeService;
     }
 
