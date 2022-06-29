@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.composers;
+package com.eternalcode.core.configuration.composer;
 
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.Notification;

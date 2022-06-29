@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.language;
 
-import com.eternalcode.core.configuration.composers.SimpleComposer;
+import com.eternalcode.core.configuration.composer.SimpleComposer;
 import com.eternalcode.core.language.Language;
 import panda.std.Result;
 import panda.utilities.text.Joiner;

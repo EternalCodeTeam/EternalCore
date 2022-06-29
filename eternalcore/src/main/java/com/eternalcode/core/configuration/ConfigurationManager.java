@@ -1,18 +1,17 @@
 package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.composers.NotificationComposer;
+import com.eternalcode.core.configuration.composer.NotificationComposer;
 import com.eternalcode.core.configuration.language.LanguageComposer;
-import com.eternalcode.core.configuration.composers.PositionComposer;
-import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
+import com.eternalcode.core.configuration.composer.PositionComposer;
+import com.eternalcode.core.configuration.implementation.CommandsConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
-import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
-import org.bukkit.Location;
 
 import java.io.File;
 
