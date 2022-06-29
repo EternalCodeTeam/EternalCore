@@ -2,7 +2,7 @@ package com.eternalcode.core.command.implementation.info;
 
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;

@@ -1,12 +1,10 @@
-package com.eternalcode.core.configuration.implementations;
+package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.chat.ChatSettings;
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;

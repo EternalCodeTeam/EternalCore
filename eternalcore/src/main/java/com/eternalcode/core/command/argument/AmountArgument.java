@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.viewer.BukkitViewerProvider;

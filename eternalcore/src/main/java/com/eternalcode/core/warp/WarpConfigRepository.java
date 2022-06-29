@@ -1,7 +1,7 @@
 package com.eternalcode.core.warp;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.shared.Position;
 import panda.std.Option;
 

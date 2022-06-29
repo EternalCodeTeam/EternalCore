@@ -3,7 +3,7 @@ package com.eternalcode.core.listener.player;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;

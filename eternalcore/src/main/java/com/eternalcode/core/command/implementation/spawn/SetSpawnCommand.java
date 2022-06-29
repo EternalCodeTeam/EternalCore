@@ -2,7 +2,7 @@ package com.eternalcode.core.command.implementation.spawn;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.shared.PositionAdapter;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;

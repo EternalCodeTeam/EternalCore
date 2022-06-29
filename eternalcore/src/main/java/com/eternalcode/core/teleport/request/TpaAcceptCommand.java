@@ -1,7 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 

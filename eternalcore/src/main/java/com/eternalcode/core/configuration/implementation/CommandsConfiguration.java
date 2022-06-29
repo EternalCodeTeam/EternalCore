@@ -1,11 +1,9 @@
-package com.eternalcode.core.configuration.implementations;
+package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
-import panda.utilities.StringUtils;
 
 import java.io.File;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package com.eternalcode.core.database;
 
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.google.common.base.Stopwatch;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;

@@ -2,7 +2,7 @@ package com.eternalcode.core.chat.feature.reportchat;
 
 import com.eternalcode.core.chat.notification.Notice;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.util.DurationUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

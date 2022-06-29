@@ -1,8 +1,7 @@
 package com.eternalcode.core.command.implementation.spawn;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import com.eternalcode.core.shared.Position;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;

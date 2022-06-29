@@ -1,8 +1,7 @@
-package com.eternalcode.core.configuration.implementations;
+package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.shared.Position;
-import org.bukkit.Location;
 
 import java.io.File;
 import java.util.HashMap;
