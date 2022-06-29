@@ -58,8 +58,14 @@ See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master
 - Trademarks appearing in this project and this document belong to their rightful owners and are used for informational purposes only.
 
 # Other Dependencies usages
-- [LiteCommands by Rollczi ❤️](https://github.com/Rollczi/LiteCommands)
-- [CDN Configs](https://github.com/dzikoysk/cdn)
+- [LiteCommands (by Rollczi ❤️)](https://github.com/Rollczi/LiteCommands)
+- [Lombok (Only for Configs)](https://projectlombok.org/)
+- [PaperLib](https://github.com/PaperMC/PaperLib)
+- [Spigot-API](https://www.spigotmc.org/wiki/spigot-gradle/)
+- [Kyori Adventure](https://docs.adventure.kyori.net/)
+- [Cdn Configs](https://github.com/dzikoysk/cdn)
 - [Expressible](https://github.com/panda-lang/expressible)
+- [bStats](https://bstats.org/)
 - [HikariCP](https://github.com/brettwooldridge/HikariCP)
-- [FastBoard](https://github.com/MrMicky-FR/FastBoard)
+- [Ormlite jdbc](https://github.com/j256/ormlite-jdbc)
+- [TriumphGui](https://github.com/TriumphTeam/triumph-gui)
