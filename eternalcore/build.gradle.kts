@@ -103,9 +103,4 @@ tasks.withType<ShadowJar> {
 
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
     relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
-
-//    copy {
-//        this.from("build/libs/" + archiveFileName.get())
-//        this.into("C:/Users/Rollczi/Desktop/testserver 1.18.1/plugins/")
-//    }
 }
