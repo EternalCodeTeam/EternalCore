@@ -57,14 +57,4 @@ class DurationUtilTest {
         assertEquals("8h 20m", DurationUtil.format(Duration.ofHours(8L).plus(20, ChronoUnit.MINUTES)));
     }
 
-    @Test
-    void test() {
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        System.out.println(OffsetTime.now());
-        System.out.println(LocalDate.now());
-        System.out.println(LocalTime.now());
-        System.out.println(LocalDateTime.now());
-        System.out.println(Instant.now());
-    }
-
 }
