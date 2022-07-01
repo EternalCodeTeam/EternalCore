@@ -49,10 +49,16 @@ public class AfkService {
         this.interactions.put(player, interactions);
     }
 
-    public void clearAfk(UUID player) {
+    public boolean clearAfk(UUID player) {
+        Afk afk = this.afkByPlayer.remove(player);
+
+        if (afk == null) {
+            return false;
+        }
+
         this.interactions.remove(player);
-        this.afkByPlayer.remove(player);
         this.publisher.publish(new AfkChangeEvent(player, false));
+        return true;
     }
 
 }
