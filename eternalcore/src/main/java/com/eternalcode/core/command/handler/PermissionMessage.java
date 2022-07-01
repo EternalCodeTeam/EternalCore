@@ -42,12 +42,12 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
         String replaced = permissionMessage.replace("{PERMISSIONS}", perms);
 
         if (sender instanceof Player player) {
-            this.audienceProvider.player(player.getUniqueId()).sendMessage(miniMessage.deserialize(replaced));
+            this.audienceProvider.player(player.getUniqueId()).sendMessage(this.miniMessage.deserialize(replaced));
             return;
         }
 
         if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender || sender instanceof BlockCommandSender) {
-            this.audienceProvider.console().sendMessage(miniMessage.deserialize(replaced));
+            this.audienceProvider.console().sendMessage(this.miniMessage.deserialize(replaced));
         }
     }
 

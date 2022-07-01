@@ -47,7 +47,7 @@ public class PlayerArgOrSender implements Argument<CommandSender, Arg> {
         }
 
         Optional<Player> playerOptional = invocation.argument(context.currentArgument())
-            .map(server::getPlayer);
+            .map(this.server::getPlayer);
 
         if (playerOptional.isEmpty()) {
             Viewer audience = this.viewerProvider.any(invocation.sender().getHandle());

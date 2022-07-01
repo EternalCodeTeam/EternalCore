@@ -16,7 +16,7 @@ public class Warp {
         return this.name;
     }
 
-    public Position getPostion() {
+    public Position getPosition() {
         return this.position;
     }
 

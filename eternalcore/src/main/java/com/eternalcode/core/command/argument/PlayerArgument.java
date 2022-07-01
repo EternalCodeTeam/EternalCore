@@ -41,8 +41,8 @@ public class PlayerArgument implements OneArgument<Player> {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {
-            Viewer viewer = viewerProvider.any(invocation.sender().getHandle());
-            Messages messages = languageManager.getMessages(viewer.getLanguage());
+            Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
+            Messages messages = this.languageManager.getMessages(viewer.getLanguage());
 
             return Result.error(messages.argument().offlinePlayer());
         }

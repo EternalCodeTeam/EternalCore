@@ -23,7 +23,7 @@ public class StringResultHandler implements Handler<CommandSender, String> {
 
     @Override
     public void handle(CommandSender sender, LiteInvocation invocation, String value) {
-        Component deserialized = miniMessage.deserialize(value);
+        Component deserialized = this.miniMessage.deserialize(value);
 
         if (sender instanceof Player player) {
             this.audienceProvider.player(player.getUniqueId()).sendMessage(deserialized);

@@ -36,7 +36,7 @@ public final class LocalPublisher implements Publisher {
                 throw new IllegalStateException("Parameter in the method must be an content!");
             }
 
-            Set<NativeSubscriber<?>> nativeSubscribers = subscribersByType.computeIfAbsent(type, key -> new HashSet<>());
+            Set<NativeSubscriber<?>> nativeSubscribers = this.subscribersByType.computeIfAbsent(type, key -> new HashSet<>());
 
             nativeSubscribers.add(new NativeSubscriber<>(subscriber, method));
         }

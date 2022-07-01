@@ -30,7 +30,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
         "#                                                                                                                                           #",
         "#                                          This is the main configuration file for EternalCore.                                             #",
         "#                                                                                                                                           #",
-        "#                      if you need help with the configuration or have any questions related to EternalCore, join us in our Discord         #",
+        "#                      If you need help with the configuration or have any questions related to EternalCore, join us in our Discord         #",
         "#                                                                                                                                           #",
         "#                                                 Discord: https://dc.eternalcode.pl/                                                       #",
         "#                                                  Website: https://eternalcode.pl/                                                         #",

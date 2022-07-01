@@ -29,13 +29,13 @@ public class LanguageManager {
     }
 
     public Messages getMessages(Language language) {
-        Messages messages = translatedMessages.get(language);
+        Messages messages = this.translatedMessages.get(language);
 
         if (messages != null) {
             return messages;
         }
 
-        for (Entry<Language, Messages> entry : translatedMessages.entrySet()) {
+        for (Entry<Language, Messages> entry : this.translatedMessages.entrySet()) {
             if (entry.getKey().isEquals(language)) {
                 return entry.getValue();
             }

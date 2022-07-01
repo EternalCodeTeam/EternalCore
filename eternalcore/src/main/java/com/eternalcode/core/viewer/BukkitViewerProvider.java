@@ -39,7 +39,7 @@ public class BukkitViewerProvider implements ViewerProvider {
 
         Set<Viewer> audiences = new HashSet<>();
 
-        for (Player player : server.getOnlinePlayers()) {
+        for (Player player : this.server.getOnlinePlayers()) {
             audiences.add(this.player(player.getUniqueId()));
         }
 

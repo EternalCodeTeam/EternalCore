@@ -44,8 +44,8 @@ public class UserArgument implements OneArgument<User> {
     @Override
     public Result<User, ?> parse(LiteInvocation invocation, String argument) {
         return this.userManager.getUser(argument).toResult(() -> {
-            Viewer viewer = viewerProvider.any(invocation.sender().getHandle());
-            Messages messages = languageManager.getMessages(viewer.getLanguage());
+            Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
+            Messages messages = this.languageManager.getMessages(viewer.getLanguage());
 
             return messages.argument().offlinePlayer();
         });

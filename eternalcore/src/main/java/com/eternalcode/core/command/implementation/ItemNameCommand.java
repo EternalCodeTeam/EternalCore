@@ -38,7 +38,7 @@ public class ItemNameCommand {
             return;
         }
 
-        String serialized = Legacy.SECTION_SERIALIZER.serialize(miniMessage.deserialize(name));
+        String serialized = Legacy.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(name));
 
         itemMeta.setDisplayName(serialized);
         itemStack.setItemMeta(itemMeta);

@@ -15,7 +15,7 @@ public class Placeholder<CONTEXT> {
     }
 
     public String format(String text, CONTEXT context) {
-        for (Map.Entry<String, Function<CONTEXT, String>> entry : placeholders.entrySet()) {
+        for (Map.Entry<String, Function<CONTEXT, String>> entry : this.placeholders.entrySet()) {
             text = text.replace(entry.getKey(), entry.getValue().apply(context));
         }
 
@@ -25,7 +25,7 @@ public class Placeholder<CONTEXT> {
     public Formatter toFormatter(CONTEXT context) {
         Formatter formatter = new Formatter();
 
-        for (Map.Entry<String, Function<CONTEXT, String>> entry : placeholders.entrySet()) {
+        for (Map.Entry<String, Function<CONTEXT, String>> entry : this.placeholders.entrySet()) {
             formatter.register(entry.getKey(), entry.getValue().apply(context));
         }
 

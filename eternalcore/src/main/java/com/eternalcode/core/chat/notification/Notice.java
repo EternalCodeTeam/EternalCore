@@ -175,7 +175,7 @@ public class Notice {
     public void send() {
         Map<Language, Set<Viewer>> viewerByLang = new HashMap<>();
 
-        for (Viewer viewer : viewers) {
+        for (Viewer viewer : this.viewers) {
             viewerByLang
                 .computeIfAbsent(viewer.getLanguage(), (key) -> new HashSet<>())
                 .add(viewer);
@@ -201,7 +201,7 @@ public class Notice {
                 }
 
                 notification = notification.edit(text -> {
-                    for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+                    for (Map.Entry<String, String> entry : this.placeholders.entrySet()) {
                         text = text.replace(entry.getKey(), entry.getValue());
                     }
 
@@ -223,7 +223,7 @@ public class Notice {
             }
 
             for (Notification notification : notifications) {
-                announcer.announce(entry.getValue(), notification);
+                this.announcer.announce(entry.getValue(), notification);
             }
         }
     }

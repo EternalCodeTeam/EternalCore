@@ -33,8 +33,8 @@ public class EnchantmentArgument implements OneArgument<Enchantment> {
         Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument));
 
         if (enchantment == null) {
-            Viewer viewer = viewerProvider.any(invocation.sender().getHandle());
-            Messages messages = languageManager.getMessages(viewer);
+            Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
+            Messages messages = this.languageManager.getMessages(viewer);
 
             return Result.error(messages.argument().noEnchantment());
         }

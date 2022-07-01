@@ -63,12 +63,12 @@ public class User implements Entity, Viewer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return name.equals(user.name) && uuid.equals(user.uuid);
+        return this.name.equals(user.name) && this.uuid.equals(user.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, uuid);
+        return Objects.hash(this.name, this.uuid);
     }
 }
 

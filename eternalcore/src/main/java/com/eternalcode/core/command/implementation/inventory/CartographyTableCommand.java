@@ -25,7 +25,7 @@ public class CartographyTableCommand {
 
     @Execute
     public void execute(@Arg @By("or_sender") Player player) {
-        Inventory inventory =this.server.createInventory(player, InventoryType.CARTOGRAPHY, StringUtils.EMPTY);
+        Inventory inventory = this.server.createInventory(player, InventoryType.CARTOGRAPHY, StringUtils.EMPTY);
         player.openInventory(inventory);
     }
 

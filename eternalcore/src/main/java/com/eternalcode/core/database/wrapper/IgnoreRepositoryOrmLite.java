@@ -36,7 +36,7 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
 
     @Override
     public Completable<Boolean> isIgnored(UUID by, UUID target) {
-        return scheduler.completeAsync(() -> {
+        return this.scheduler.completeAsync(() -> {
             try {
                 return ignores.get(by).contains(target);
             } catch (ExecutionException exception) {

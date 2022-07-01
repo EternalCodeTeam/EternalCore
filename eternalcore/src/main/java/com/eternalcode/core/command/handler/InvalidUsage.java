@@ -42,7 +42,7 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
         }
 
         if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender || sender instanceof BlockCommandSender) {
-            this.audienceProvider.console().sendMessage(miniMessage.deserialize(replace));
+            this.audienceProvider.console().sendMessage(this.miniMessage.deserialize(replace));
         }
     }
 

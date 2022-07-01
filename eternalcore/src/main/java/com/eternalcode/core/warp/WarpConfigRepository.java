@@ -24,7 +24,7 @@ public class WarpConfigRepository implements WarpRepository {
 
     @Override
     public void addWarp(Warp warp) {
-        this.edit(warps -> warps.put(warp.getName(), warp.getPostion()));
+        this.edit(warps -> warps.put(warp.getName(), warp.getPosition()));
     }
 
     @Override

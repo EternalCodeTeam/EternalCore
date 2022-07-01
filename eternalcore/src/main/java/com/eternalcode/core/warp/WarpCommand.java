@@ -27,7 +27,7 @@ public class WarpCommand {
 
     @Execute
     public void warp(Player player, @Arg Warp warp) {
-        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPostion(), Duration.ofSeconds(5));
+        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ofSeconds(5));
     }
 
     @Execute(route = "add")

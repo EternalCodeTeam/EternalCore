@@ -79,7 +79,7 @@ public class DatabaseManager {
         }
 
 
-        this.connectionSource = new DataSourceConnectionSource(dataSource, dataSource.getJdbcUrl());
+        this.connectionSource = new DataSourceConnectionSource(this.dataSource, this.dataSource.getJdbcUrl());
 
 
         this.logger.info("Loaded database " + databaseType.toString().toLowerCase() + " in " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
@@ -97,7 +97,7 @@ public class DatabaseManager {
     @SuppressWarnings("unchecked")
     public <T, ID> Dao<T, ID> getDao(Class<T> type) {
         try {
-            Dao<?, ?> dao = cachedDao.get(type);
+            Dao<?, ?> dao = this.cachedDao.get(type);
 
             if (dao == null) {
                 dao = DaoManager.createDao(this.connectionSource, type);

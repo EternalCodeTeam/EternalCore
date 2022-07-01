@@ -24,7 +24,7 @@ public class HomeManager {
         Map<String, Home> homes = this.homes.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
 
         homes.put(name, home);
-        repository.saveHome(home);
+        this.repository.saveHome(home);
     }
 
     public void deleteHome(User user, String name) {
@@ -34,7 +34,7 @@ public class HomeManager {
             homes.remove(name);
         }
 
-        repository.deleteHome(user, name);
+        this.repository.deleteHome(user, name);
     }
 
     public Option<Home> getHome(User user, String name) {
@@ -62,7 +62,7 @@ public class HomeManager {
     }
 
     public Collection<Home> getHomes(UUID user) {
-        return Collections.unmodifiableCollection(homes.getOrDefault(user, new HashMap<>()).values());
+        return Collections.unmodifiableCollection(this.homes.getOrDefault(user, new HashMap<>()).values());
     }
 
 }
