@@ -43,7 +43,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String usageMessage = "&8» &eCorrect usage: &7{USAGE}";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
         public String onlyPlayer = "&8» &cCommand is only for players!";
-        public String notNumber = "&8» &cArgument isnt a number!";
+        public String notNumber = "&8» &cArgument isn't a number!";
         public String numberBiggerThanOrEqualZero = "&8» &cThe number must be greater than or equal to 0!";
         public String noItem = "&8» &cYou need item to use this command!";
         public String noMaterial = "&8» &cThis item doesn't exist";
@@ -161,7 +161,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String socialSpyEnable = "&8 » &aSocialSpy has been enabled!";
         public String socialSpyDisable = "&8 » &cSocialSpy has been disabled!";
 
-        public String ignorePlayer = "&8 » &c{PLAYER} &7player has been ingored!";
+        public String ignorePlayer = "&8 » &c{PLAYER} &7player has been ignored!";
         public String unIgnorePlayer = "&8 » &c{PLAYER} &7player has been uningored!";
     }
 

@@ -39,25 +39,25 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class PLArgumentSection implements ArgumentSection {
-        public String permissionMessage = "&4Blad: &cNie masz uprawnien do tej komendy! &7({PERMISSIONS})";
-        public String usageMessage = "&8» &ePoprawne uzycie: &7{USAGE}";
-        public String offlinePlayer = "&4Blad: &cTen gracz jest offline!";
-        public String onlyPlayer = "&4Blad: &cKomenda tylko dla graczy!";
-        public String notNumber = "&4Blad: &cArgument nie jest liczba!";
-        public String numberBiggerThanOrEqualZero = "&4Blad: &cLiczba musi byc rowna lub wieksza 0!";
-        public String noItem = "&4Blad: &cMusisz miec item w rece!";
-        public String noMaterial = "&4Blad: &cTaki material nie istnieje!";
-        public String noArgument = "&4Blad: &cTaki argument nie istnieje!";
-        public String noDamaged = "&4Blad: &cTen przedmiot nie moze być naprawiony!";
-        public String noDamagedItems = "&4Blad: &cMusisz miec uszkodzone przedmioty!";
-        public String noEnchantment = "&4Blad: &cTaki enchant nie istnieje!";
-        public String noValidEnchantmentLevel = "&4Blad: &cTen poziom enchantu nie jest wspierany!";
+        public String permissionMessage = "&4Błąd: &cNie masz uprawnień do tej komendy! &7({PERMISSIONS})";
+        public String usageMessage = "&8» &ePoprawne użycie: &7{USAGE}";
+        public String offlinePlayer = "&4Błąd: &cTen gracz jest offline!";
+        public String onlyPlayer = "&4Błąd: &cKomenda tylko dla graczy!";
+        public String notNumber = "&4Błąd: &cArgument nie jest liczba!";
+        public String numberBiggerThanOrEqualZero = "&4Błąd: &cLiczba musi byc równa lub większa 0!";
+        public String noItem = "&4Błąd: &cMusisz mieć item w ręce!";
+        public String noMaterial = "&4Błąd: &cTaki material nie istnieje!";
+        public String noArgument = "&4Błąd: &cTaki argument nie istnieje!";
+        public String noDamaged = "&4Błąd: &cTen przedmiot nie może być naprawiony!";
+        public String noDamagedItems = "&4Błąd: &cMusisz mieć uszkodzone przedmioty!";
+        public String noEnchantment = "&4Błąd: &cTaki enchant nie istnieje!";
+        public String noValidEnchantmentLevel = "&4Błąd: &cTen poziom zaklęcia nie jest wspierany!";
     }
 
     @Getter @Contextual
     public static class PLFormatSection implements Format {
-        public String enable = "&awlaczone";
-        public String disable = "&cwylaczone";
+        public String enable = "&awłączona";
+        public String disable = "&cwyłączona";
     }
 
     @Getter @Contextual
@@ -82,8 +82,8 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public Notification teleportTimerFormat = Notification.actionbar("&aTeleportacja za &f{TIME}");
         public String teleported = "&8» &aPrzeteleportowano!";
         public String teleporting = "&8» &aTeleportuje...";
-        public String teleportTaskCanceled = "&4Blad: &cRuszyłeś się, teleportacja przerwana!";
-        public String teleportTaskAlreadyExist = "&4Blad: &cTeleportujesz się już!";
+        public String teleportTaskCanceled = "&4Błąd: &cRuszyłeś się, teleportacja przerwana!";
+        public String teleportTaskAlreadyExist = "&4Błąd: &cTeleportujesz się już!";
 
         // Coordinates XYZ
         public String teleportedToCoordinates = "&8» &6Przeteleportowano na x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
@@ -99,45 +99,45 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public static class PLChatSection implements ChatSection {
         public String disabled = "&8» &cCzat został wyłączony przez &6{NICK}&c!";
         public String enabled = "&8» &aCzat został włączony przez &f{NICK}&a!";
-        public String cleared = "&8» &6Czat zotał wyczyszczony przez &c{NICK}&6!";
-        public String alreadyDisabled = "&4Blad: &cCzat jest juz wylaczony!";
-        public String alreadyEnabled = "&4Blad: &cCzat jest juz wlaczony!";
+        public String cleared = "&8» &6Czat został wyczyszczony przez &c{NICK}&6!";
+        public String alreadyDisabled = "&4Błąd: &cCzat jest juz wyłączony!";
+        public String alreadyEnabled = "&4Błąd: &cCzat jest juz włączony!";
         public String slowModeSet = "&8» &aSlowmode został ustawiony na {SLOWMODE}";
         public String slowMode = "&8» &cNastępną wiadomość możesz wysłać za: &6{TIME}&c!";
-        public String disabledChatInfo = "&8» &cCzat jest aktualnie wyłaczony!";
+        public String disabledChatInfo = "&8» &cCzat jest aktualnie wyłączony!";
         public String noCommand = "&8» &cKomenda &e{COMMAND} &cnie istnieje!";
     }
 
     @Getter @Contextual
     public static class PLTpaSection implements TpaSection {
-        public String tpaSelfMessage = "&4Blad: &cNie mozesz siebie teleportowac!";
-        public String tpaAlreadySentMessage = "&4Blad: &cWyslales juz prosbe o teleportacje!";
-        public String tpaSentMessage = "&8» &aWyslales prosbe o teleportacje do gracza: &7{PLAYER}&a!";
+        public String tpaSelfMessage = "&4Błąd: &cNie możesz siebie teleportować!";
+        public String tpaAlreadySentMessage = "&4Błąd: &cWysłałeś już prose o teleportacje!";
+        public String tpaSentMessage = "&8» &aWysłałeś prośbę o teleportacje do gracza: &7{PLAYER}&a!";
         public String tpaReceivedMessage =
             """
-             &8» &aOtrzymales prosbe o teleportacje od gracza: &7{PLAYER}&a!
-             &8» &6/tpaccept {PLAYER} &aaby zaakceptowac!
-             &8» &6/tpdeny {PLAYER} &aaby odrzucic!
+             &8» &aOtrzymałeś prośbę o teleportacje od gracza: &7{PLAYER}&a!
+             &8» &6/tpaccept {PLAYER} &aaby zaakceptować!
+             &8» &6/tpdeny {PLAYER} &aaby odrzucić!
              """;
 
-        public String tpaDenyNoRequestMessage = "&4Blad: &cNie masz prosby o teleportacje od tego gracza!";
-        public String tpaDenyNoRequestMessageAll = "&4Blad: &cNie masz zadnych prosb o teleportacje!";
-        public String tpaDenyDoneMessage = "&8» &cOdrzuciles prosbe o teleportacje od gracza: &7{PLAYER}&c!";
-        public String tpaDenyReceivedMessage = "&8» &cGracz: {PLAYER} odrzucil twoja prosbe o teleportacje!";
-        public String tpaDenyAllDenied = "&8» &cWszystkie prosby o teleportacje zostaly odrzucone!";
+        public String tpaDenyNoRequestMessage = "&4Błąd: &cNie masz prośby o teleportacje od tego gracza!";
+        public String tpaDenyNoRequestMessageAll = "&4Błąd: &cNie masz żadnych próśb o teleportacje!";
+        public String tpaDenyDoneMessage = "&8» &cOdrzuciłeś próśb o teleportacje od gracza: &7{PLAYER}&c!";
+        public String tpaDenyReceivedMessage = "&8» &cGracz: {PLAYER} odrzucił twoją prośbę o teleportacje!";
+        public String tpaDenyAllDenied = "&8» &cWszystkie prośby o teleportacje zostały odrzucone!";
 
-        public String tpaAcceptMessage = "&8» &aZaakceptowales teleportacje od gracza: &7{PLAYER}&a!";
-        public String tpaAcceptNoRequestMessage = "&4Blad: &cTen gracz nie wyslal ci prosby o teleportacje!";
-        public String tpaAcceptNoRequestMessageAll = "&4Blad: &cNie masz zadnych prosb o teleportacje!";
-        public String tpaAcceptReceivedMessage = "&8» &aGracz: &7{PLAYER} &azaakceptowal twoja prosbe o teleportacje!";
-        public String tpaAcceptAllAccepted = "&8» &aWszystkie prosby o teleportacje zostaly zaakceptowane!";
+        public String tpaAcceptMessage = "&8» &aZaakceptowałeś teleportacje od gracza: &7{PLAYER}&a!";
+        public String tpaAcceptNoRequestMessage = "&4Błąd: &cTen gracz nie wysłał ci prośby o teleportacje!";
+        public String tpaAcceptNoRequestMessageAll = "&4Błąd: &cNie masz żadnych próśb o teleportacje!";
+        public String tpaAcceptReceivedMessage = "&8» &aGracz: &7{PLAYER} &azaakceptował twoją prośbę o teleportacje!";
+        public String tpaAcceptAllAccepted = "&8» &aWszystkie prośby o teleportacje zostały zaakceptowane!";
     }
 
     @Getter @Contextual
     public static class PLWarpSection implements WarpSection {
         public String availableList = "&8» Lista warpów: {WARPS}";
         public String notExist = "&8» &cNie odnaleziono takiego warpa!";
-        public String noPermission = "&8» &cNie masz uprawnien do tego warpa!";
+        public String noPermission = "&8» &cNie masz uprawnień do tego warpa!";
         public String disabled = "&8» &cTen warp jest aktualnie wyłączony!";
         public String create = "&8 » &7Stworzono warpa {name}!";
         public String remove = "&8 » &7Usunięto warpa {name}!";
@@ -145,7 +145,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class PLHomeSection implements HomeSection {
-        public String notExist = "&8» &cNie ma takieg domu!";
+        public String notExist = "&8» &cNie ma takiego domu!";
         public String create = "&8 » &7Stworzono home {home}!";
         public String delete = "&8 » &7Usunięto home {home}!";
     }
@@ -172,7 +172,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
 
     @Getter @Contextual
     public static class PLOtherMessages implements OtherMessages {
-        public String alertMessagePrefix = "&c&lOGLOSZENIE: &7{BROADCAST}";
+        public String alertMessagePrefix = "&c&lOGŁOSZENIE: &7{BROADCAST}";
         public String clearMessage = "&8» &aWyczyszczono ekwipunek!";
         public String clearByMessage = "&8» &aWyczyszczono ekwipunek gracza {PLAYER}";
         public String disposalTitle = "&f&lKosz";
@@ -180,14 +180,14 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String foodOtherMessage = "&8» &aNajadłeś gracza {PLAYER}";
         public String healMessage = "&8» &aZostałeś uleczony!";
         public String healedMessage = "&8» &aUleczyłeś gracza {PLAYER}";
-        public String nullHatMessage = "&4Blad: &cNie możesz użyć /hat!";
+        public String nullHatMessage = "&4Błąd: &cNie możesz użyć /hat!";
         public String repairMessage = "&8» &aNaprawiono!";
         public String skullMessage = "&8» &aOtrzymałeś głowę gracza {PLAYER}";
 
         public String killSelf = "&8» &cPopełniłeś samobójstwo!";
         public String killedMessage = "&8» &cZabito gracza {PLAYER}";
 
-        public String speedBetweenZeroAndTen = "&4Blad: &cUstaw speed w przedziale 0-10!";
+        public String speedBetweenZeroAndTen = "&4Błąd: &cUstaw speed w przedziale 0-10!";
         public String speedSet = "&8» &aUstawiono speed na {SPEED}";
         public String speedSetBy = "&8» &cUstawiono {PLAYER} speeda na {SPEED}";
 
@@ -201,11 +201,11 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String giveGiven = "&8» &aGracz &f{PLAYER} &aotrzymał: &6{ITEM}";
 
         public String spawnSet = "&8» &aUstawiono spawn!";
-        public String spawnNoSet = "&4Blad: &cSpawn nie jest ustawiony!";
+        public String spawnNoSet = "&4Błąd: &cSpawn nie jest ustawiony!";
         public String spawnTeleportedBy = "&8» &aZostałeś przeteleportowany na spawn przez {PLAYER}!";
         public String spawnTeleportedOther = "&8» &aGracz &f{PLAYER} &azostał przeteleportowany na spawn!";
 
-        public String gameModeNotCorrect = "&4Blad: &cNie prawidłowy typ!";
+        public String gameModeNotCorrect = "&4Błąd: &cNie prawidłowy typ!";
         public String gameModeMessage = "&8» &aUstawiono tryb gry na: {GAMEMODE}";
         public String gameModeSetMessage = "&8» &aUstawiono tryb gry graczowi &f{PLAYER} &ana: &f{GAMEMODE}";
         public String pingMessage = "&8» &aTwój ping: &f{PING}ms";
@@ -218,7 +218,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String itemChangeLoreMessage = "&8 » &7Nowa linia lore: &c{ITEM_LORE}";
         public String itemClearLoreMessage = "&8 » &7Wyczyszczono linie lore!";
 
-        public String enchantedMessage = "&8» &6Item w rece zostal zenchantowany!";
+        public String enchantedMessage = "&8» &6Item w ręce został zaklęty!";
         public String languageChanged = "&8» &6Zmieniono język na &cPolski&6!";
 
         public List<String> whoisCommand = List.of("&8» &7Gracz: &f{PLAYER}",
