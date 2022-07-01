@@ -10,11 +10,11 @@ import dev.rollczi.litecommands.command.permission.Permission;
 
 @Section(route = "msg", aliases = { "message", "m", "whisper", "tell", "t" })
 @Permission("eternalcore.msg")
-public class PrivateMessageCommand {
+public class PrivateChatCommand {
 
     private final PrivateChatService privateChatService;
 
-    public PrivateMessageCommand(PrivateChatService privateChatService) {
+    public PrivateChatCommand(PrivateChatService privateChatService) {
         this.privateChatService = privateChatService;
     }
 

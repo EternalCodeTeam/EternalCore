@@ -1,0 +1,61 @@
+package com.eternalcode.core.command.implementation.item;
+
+import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.chat.placeholder.Placeholder;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import panda.utilities.text.Formatter;
+
+@Section(route = "itemflag")
+public class ItemFlagCommand {
+
+    private final static Placeholder<ItemFlag> ITEM_FLAG_PLACEHOLDER = Placeholder.of("{ITEM_FLAG}", Enum::name);
+
+    private final NoticeService noticeService;
+
+    public ItemFlagCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
+
+    @Execute
+    void execute(Player player, @Arg ItemFlag flag) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        ItemMeta meta = hand.getItemMeta();
+
+        if (meta == null) {
+            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+            return;
+        }
+
+        Formatter formatter = ITEM_FLAG_PLACEHOLDER.toFormatter(flag);
+
+        if (meta.hasItemFlag(flag)) {
+            meta.removeItemFlags(flag);
+            this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagRemovedMessage(), formatter);
+            return;
+        }
+
+        meta.addItemFlags(flag);
+        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagAddedMessage(), formatter);
+    }
+
+    @Execute(route = "clear")
+    void clear(Player player) {
+        ItemStack hand = player.getInventory().getItemInMainHand();
+        ItemMeta meta = hand.getItemMeta();
+
+        if (meta == null) {
+            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+            return;
+        }
+
+        meta.removeItemFlags(ItemFlag.values());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagClearedMessage());
+    }
+
+}

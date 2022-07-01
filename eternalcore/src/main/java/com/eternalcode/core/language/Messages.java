@@ -141,8 +141,8 @@ public interface Messages extends ConfigWithResource {
 
     interface OtherMessages {
         String alertMessagePrefix();
-        String clearMessage();
-        String clearByMessage();
+        String clearMessage(); // ?
+        String clearByMessage(); // ?
         String disposalTitle();
         String foodMessage();
         String foodOtherMessage();
@@ -151,7 +151,6 @@ public interface Messages extends ConfigWithResource {
         String nullHatMessage();
         String repairMessage();
         String skullMessage();
-        String killSelf();
         String killedMessage();
         String speedBetweenZeroAndTen();
         String speedSet();
@@ -173,13 +172,19 @@ public interface Messages extends ConfigWithResource {
         String pingOtherMessage();
         String onlineMessage();
         String listMessage();
+
         String itemChangeNameMessage();
         String itemClearNameMessage();
         String itemChangeLoreMessage();
         String itemClearLoreMessage();
+        String itemFlagRemovedMessage();
+        String itemFlagAddedMessage();
+        String itemFlagClearedMessage();
+
         String enchantedMessage();
         List<String> whoisCommand();
         String languageChanged();
+
     }
 }
 

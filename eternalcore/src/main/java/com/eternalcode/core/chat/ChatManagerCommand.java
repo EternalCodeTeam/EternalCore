@@ -14,7 +14,7 @@ import panda.std.Option;
 
 @Section(route = "chat", aliases = { "czat" })
 @Permission("eternalcore.chat")
-public class ChatCommand {
+public class ChatManagerCommand {
 
     private static final AdventureNotification CLEAR;
 
@@ -31,7 +31,7 @@ public class ChatCommand {
     private final NoticeService audiences;
     private final ChatManager chatManager;
 
-    public ChatCommand(ChatManager chatManager, NoticeService audiences) {
+    public ChatManagerCommand(ChatManager chatManager, NoticeService audiences) {
         this.audiences = audiences;
         this.chatManager = chatManager;
     }

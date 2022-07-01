@@ -36,17 +36,23 @@ public class Placeholder<CONTEXT> {
         return new Builder<>();
     }
 
+    public static <CONTEXT> Placeholder<CONTEXT> of(String key, Function<CONTEXT, String> replacement) {
+        return Placeholder.<CONTEXT>builder()
+            .with(key, replacement)
+            .build();
+    }
+
     public static class Builder<CONTEXT> {
 
         private final Map<String, Function<CONTEXT, String>> placeholders = new HashMap<>();
 
-        public Builder<CONTEXT> with(String from, Function<CONTEXT, String> placeholder) {
-            this.placeholders.put(from, placeholder);
+        public Builder<CONTEXT> with(String from, Function<CONTEXT, String> replacement) {
+            this.placeholders.put(from, replacement);
             return this;
         }
 
         public Placeholder<CONTEXT> build() {
-            return new Placeholder<>(placeholders);
+            return new Placeholder<>(this.placeholders);
         }
 
     }

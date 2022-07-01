@@ -14,11 +14,11 @@ import org.bukkit.inventory.ItemStack;
 
 @Section(route = "clear")
 @Permission("eternalcore.clear")
-public class ClearCommand {
+public class InventoryClearCommand {
 
     private final NoticeService noticeService;
 
-    public ClearCommand(NoticeService noticeService) {
+    public InventoryClearCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

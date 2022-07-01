@@ -218,6 +218,9 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String itemClearNameMessage = "&8 » &7Name has been cleared!";
         public String itemChangeLoreMessage = "&8 » &7Lore has been changed to: &c{ITEM_LORE}";
         public String itemClearLoreMessage = "&8 » &7Lore has been cleared!";
+        public String itemFlagRemovedMessage = "&8 » &7Flag {ITEM_FLAG} has been removed!";
+        public String itemFlagAddedMessage = "&8 » &7Flag {ITEM_FLAG} has been added!";
+        public String itemFlagClearedMessage = "&8 » &7Flags have been cleared!";
 
         public String enchantedMessage = "&8» &6Item in hand is enchanted!";
         public String languageChanged = "&8» &6Language changed to &cEnglish&6!";

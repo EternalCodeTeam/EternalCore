@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @Section(route = "back")
-public class BackCommand {
+public class TeleportBackCommand {
 
     private final TeleportService teleportService;
     private final NoticeService noticeService;
 
-    public BackCommand(TeleportService teleportService, NoticeService noticeService) {
+    public TeleportBackCommand(TeleportService teleportService, NoticeService noticeService) {
         this.teleportService = teleportService;
         this.noticeService = noticeService;
     }

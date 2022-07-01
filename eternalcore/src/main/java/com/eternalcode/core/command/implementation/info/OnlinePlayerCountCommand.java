@@ -10,12 +10,12 @@ import org.bukkit.Server;
 
 @Section(route = "online")
 @Permission("eternalcore.online")
-public class OnlineCommand {
+public class OnlinePlayerCountCommand {
 
     private final NoticeService noticeService;
     private final Server server;
 
-    public OnlineCommand(NoticeService noticeService, Server server) {
+    public OnlinePlayerCountCommand(NoticeService noticeService, Server server) {
         this.noticeService = noticeService;
         this.server = server;
     }

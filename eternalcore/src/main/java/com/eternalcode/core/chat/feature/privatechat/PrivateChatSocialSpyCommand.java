@@ -10,12 +10,12 @@ import java.util.UUID;
 
 @Section(route = "spy", aliases = { "socialspy" })
 @Permission("eternalcore.spy")
-public class SocialSpyCommand {
+public class PrivateChatSocialSpyCommand {
 
     private final PrivateChatService privateChatService;
     private final NoticeService noticeService;
 
-    public SocialSpyCommand(PrivateChatService privateChatService, NoticeService noticeService) {
+    public PrivateChatSocialSpyCommand(PrivateChatService privateChatService, NoticeService noticeService) {
         this.privateChatService = privateChatService;
         this.noticeService = noticeService;
     }

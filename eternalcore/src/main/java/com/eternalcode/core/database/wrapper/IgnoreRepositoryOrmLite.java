@@ -8,6 +8,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 import org.jetbrains.annotations.NotNull;
@@ -53,8 +54,16 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
 
     @Override
     public void unIgnore(UUID by, UUID target) {
-        this.action(IgnoreWrapper.class, dao -> dao.deleteBuilder().where().eq("player_id", by).and().eq("ignored_id", target).query())
-            .then(integer -> this.ignores.refresh(by));
+        this.action(IgnoreWrapper.class, dao -> {
+                DeleteBuilder<IgnoreWrapper, Object> builder = dao.deleteBuilder();
+
+                builder.where()
+                    .eq("player_id", by)
+                    .and()
+                    .eq("ignored_id", target);
+
+                return builder.delete();
+            }).then(integer -> this.ignores.refresh(by));
     }
 
     public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {

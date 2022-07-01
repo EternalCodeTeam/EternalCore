@@ -15,13 +15,13 @@ import java.util.Collection;
 
 @Section(route = "list")
 @Permission("eternalcore.list")
-public class ListCommand {
+public class OnlinePlayersListCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
     private final Server server;
 
-    public ListCommand(PluginConfiguration config, NoticeService noticeService, Server server) {
+    public OnlinePlayersListCommand(PluginConfiguration config, NoticeService noticeService, Server server) {
         this.config = config;
         this.noticeService = noticeService;
         this.server = server;

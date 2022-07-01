@@ -15,10 +15,10 @@ import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
-import com.eternalcode.core.chat.feature.privatechat.ReplyCommand;
-import com.eternalcode.core.chat.feature.privatechat.SocialSpyCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatReplyCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand;
 import com.eternalcode.core.command.implementation.GameModeCommand;
-import com.eternalcode.core.command.implementation.ItemLoreCommand;
+import com.eternalcode.core.command.implementation.item.ItemLoreCommand;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
 import com.eternalcode.core.home.HomeRepository;
@@ -26,7 +26,7 @@ import com.eternalcode.core.publish.LocalPublisher;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.teleport.TeleportDeathController;
 import com.eternalcode.core.teleport.TeleportService;
-import com.eternalcode.core.teleport.command.BackCommand;
+import com.eternalcode.core.teleport.command.TeleportBackCommand;
 import com.eternalcode.core.teleport.command.TeleportHereCommand;
 import com.eternalcode.core.warp.WarpCommand;
 import com.eternalcode.core.command.implementation.time.DayCommand;
@@ -71,8 +71,8 @@ import com.eternalcode.core.chat.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
 import com.eternalcode.core.command.implementation.inventory.AnvilCommand;
 import com.eternalcode.core.command.implementation.inventory.CartographyTableCommand;
-import com.eternalcode.core.chat.ChatCommand;
-import com.eternalcode.core.command.implementation.inventory.ClearCommand;
+import com.eternalcode.core.chat.ChatManagerCommand;
+import com.eternalcode.core.command.implementation.inventory.InventoryClearCommand;
 import com.eternalcode.core.command.implementation.inventory.DisposalCommand;
 import com.eternalcode.core.command.implementation.EnchantCommand;
 import com.eternalcode.core.command.implementation.inventory.EnderchestCommand;
@@ -87,10 +87,10 @@ import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
 import com.eternalcode.core.command.implementation.inventory.InventoryOpenCommand;
 import com.eternalcode.core.command.implementation.KillCommand;
 import com.eternalcode.core.language.LanguageCommand;
-import com.eternalcode.core.command.implementation.info.ListCommand;
-import com.eternalcode.core.chat.feature.privatechat.PrivateMessageCommand;
-import com.eternalcode.core.command.implementation.ItemNameCommand;
-import com.eternalcode.core.command.implementation.info.OnlineCommand;
+import com.eternalcode.core.command.implementation.info.OnlinePlayersListCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatCommand;
+import com.eternalcode.core.command.implementation.item.ItemNameCommand;
+import com.eternalcode.core.command.implementation.info.OnlinePlayerCountCommand;
 import com.eternalcode.core.command.implementation.info.PingCommand;
 import com.eternalcode.core.command.implementation.RepairCommand;
 import com.eternalcode.core.command.implementation.spawn.SetSpawnCommand;
@@ -327,8 +327,6 @@ public class EternalCore extends JavaPlugin {
             .typeBind(ConfigurationManager.class,   () -> this.configurationManager)
             .typeBind(LanguageInventory.class,      () -> this.languageInventory)
             .typeBind(LanguageManager.class,        () -> this.languageManager)
-            .typeBind(PluginConfiguration.class,    () -> config)
-            .typeBind(LocationsConfiguration.class, () -> locations)
             .typeBind(TeleportTaskService.class,    () -> this.teleportTaskService)
             .typeBind(UserManager.class,            () -> this.userManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
@@ -339,6 +337,11 @@ public class EternalCore extends JavaPlugin {
             .typeBind(Scheduler.class,              () -> this.scheduler)
             .typeBind(WarpManager.class,            () -> this.warpManager)
             .typeBind(HomeManager.class,            () -> this.homeManager)
+            .typeBind(AfkService.class,             () -> this.afkService)
+
+            .typeBind(PluginConfiguration.class,    () -> config)
+            .typeBind(LocationsConfiguration.class, () -> locations)
+            .typeBind(PluginConfiguration.OtherSettings.class, () -> config.otherSettings)
 
             //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
             .invalidUsageHandler(new InvalidUsage(this.miniMessage, this.adventureAudiences, this.userProvider, this.languageManager))
@@ -346,66 +349,93 @@ public class EternalCore extends JavaPlugin {
             .permissionHandler(new PermissionMessage(this.userProvider, this.adventureAudiences, this.languageManager, this.miniMessage))
 
             .commandInstance(
-                new AfkCommand(this.afkService),
                 new IgnoreCommand(ignoreRepository, noticeService),
-                new UnIgnoreCommand(ignoreRepository, noticeService),
-                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, config.otherSettings, server)
+                new UnIgnoreCommand(ignoreRepository, noticeService)
             )
             .command(
-                BackCommand.class,
-                AlertCommand.class,
-                AnvilCommand.class,
-                CartographyTableCommand.class,
-                ChatCommand.class,
-                ClearCommand.class,
-                DisposalCommand.class,
-                EnderchestCommand.class,
-                FeedCommand.class,
-                FlyCommand.class,
-                GameModeCommand.class,
-                GodCommand.class,
-                GrindstoneCommand.class,
-                HatCommand.class,
-                HealCommand.class,
-                KillCommand.class,
-                SkullCommand.class,
-                SpeedCommand.class,
-                StonecutterCommand.class,
-                WhoIsCommand.class,
-                WorkbenchCommand.class,
                 EternalCoreCommand.class,
-                AdminChatCommand.class,
-                HelpOpCommand.class,
-                InventoryOpenCommand.class,
-                RepairCommand.class,
-                GiveCommand.class,
-                SetSpawnCommand.class,
-                SpawnCommand.class,
-                PingCommand.class,
-                OnlineCommand.class,
-                ListCommand.class,
-                TeleportToPositionCommand.class,
+
+                // Home Commands
+                HomeCommand.class,
+                SetHomeCommand.class,
+                DelHomeCommand.class,
+
+                // Item Commands
                 ItemNameCommand.class,
                 ItemLoreCommand.class,
-                EnchantCommand.class,
-                TeleportCommand.class,
-                TeleportHereCommand.class,
-                LanguageCommand.class,
-                PrivateMessageCommand.class,
-                ReplyCommand.class,
-                TpaCommand.class,
-                TpaDenyCommand.class,
-                WarpCommand.class,
-                SocialSpyCommand.class,
-                DayCommand.class,
-                NightCommand.class,
-                TimeCommand.class,
+                ItemLoreCommand.class,
+
+                // Weather Commands
                 SunCommand.class,
                 ThunderCommand.class,
                 RainCommand.class,
-                HomeCommand.class,
-                SetHomeCommand.class,
-                DelHomeCommand.class
+
+                // Time Commands
+                TimeCommand.class,
+                DayCommand.class,
+                NightCommand.class,
+
+                // Teleport Commands
+                TeleportCommand.class,
+                TeleportToPositionCommand.class,
+                TeleportHereCommand.class,
+                TeleportBackCommand.class,
+
+                // Tpa Commands
+                TpaCommand.class,
+                TpaDenyCommand.class,
+                TpaAcceptCommand.class,
+
+                // Spawn & Warp Command
+                SetSpawnCommand.class,
+                SpawnCommand.class,
+                WarpCommand.class,
+
+                // Inventory Commands
+                EnderchestCommand.class,
+                WorkbenchCommand.class,
+                AnvilCommand.class,
+                CartographyTableCommand.class,
+                GrindstoneCommand.class,
+                StonecutterCommand.class,
+                DisposalCommand.class,
+
+                // Private Chat Commands
+                PrivateChatCommand.class,
+                PrivateChatReplyCommand.class,
+                PrivateChatSocialSpyCommand.class,
+
+                // Admin Chat Commands
+                AdminChatCommand.class,
+                HelpOpCommand.class,
+                AlertCommand.class,
+                ChatManagerCommand.class,
+
+                // Moderation Commands
+                FlyCommand.class,
+                GodCommand.class,
+                GameModeCommand.class,
+                SpeedCommand.class,
+                GiveCommand.class,
+                EnchantCommand.class,
+                RepairCommand.class,
+                HealCommand.class,
+                FeedCommand.class,
+                KillCommand.class,
+                InventoryClearCommand.class,
+                InventoryOpenCommand.class,
+
+                // Info Commands
+                OnlinePlayerCountCommand.class,
+                OnlinePlayersListCommand.class,
+                WhoIsCommand.class,
+                PingCommand.class,
+
+                // Misc Commands
+                HatCommand.class,
+                AfkCommand.class,
+                SkullCommand.class,
+                LanguageCommand.class
             )
 
             .register();

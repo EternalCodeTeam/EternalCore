@@ -6,15 +6,14 @@ import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
-import org.bukkit.entity.Player;
 
 @Section(route = "reply", aliases = { "r" })
 @Permission("eternalcore.reply")
-public class ReplyCommand {
+public class PrivateChatReplyCommand {
 
     private final PrivateChatService privateChatService;
 
-    public ReplyCommand(PrivateChatService privateChatService) {
+    public PrivateChatReplyCommand(PrivateChatService privateChatService) {
         this.privateChatService = privateChatService;
     }
 

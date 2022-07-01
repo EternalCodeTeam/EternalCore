@@ -217,6 +217,9 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String itemClearNameMessage = "&8 » &7Wyczyszczono nazwę itemu!";
         public String itemChangeLoreMessage = "&8 » &7Nowa linia lore: &c{ITEM_LORE}";
         public String itemClearLoreMessage = "&8 » &7Wyczyszczono linie lore!";
+        public String itemFlagRemovedMessage = "&8 » &7Usunięto flagę: &c{ITEM_FLAG}";
+        public String itemFlagAddedMessage = "&8 » &7Dodano flagę: &c{ITEM_FLAG}";
+        public String itemFlagClearedMessage = "&8 » &7Wyczyszczono flagi!";
 
         public String enchantedMessage = "&8» &6Item w ręce został zaklęty!";
         public String languageChanged = "&8» &6Zmieniono język na &cPolski&6!";
