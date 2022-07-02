@@ -4,6 +4,7 @@ import com.eternalcode.core.EternalCore;
 import com.eternalcode.core.builder.ItemBuilder;
 import com.eternalcode.core.chat.notification.NoticeService;
 
+import com.eternalcode.core.scheduler.Scheduler;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -18,16 +19,16 @@ import org.bukkit.inventory.ItemStack;
 public class SkullCommand {
 
     private final NoticeService noticeService;
-    private final EternalCore eternalCore;
+    private final Scheduler scheduler;
 
-    public SkullCommand(NoticeService noticeService, EternalCore eternalCore) {
-        this.eternalCore = eternalCore;
+    public SkullCommand(NoticeService noticeService, Scheduler scheduler) {
+        this.scheduler = scheduler;
         this.noticeService = noticeService;
     }
 
     @Execute
     public void execute(Player player, @Arg @By("player") String name) {
-        this.eternalCore.getScheduler().runTaskAsynchronously(() -> {
+        this.scheduler.async(() -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(name).skullOwner(name).build();
 
             player.getInventory().addItem(item);

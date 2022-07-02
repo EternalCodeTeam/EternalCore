@@ -8,9 +8,6 @@ import java.util.function.Supplier;
 public interface Scheduler {
 
     @Deprecated
-    void runTaskAsynchronously(Runnable task);
-
-    @Deprecated
     void runTaskTimer(Runnable task, long delay, long period);
 
     Task sync(Runnable task);

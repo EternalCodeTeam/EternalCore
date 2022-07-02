@@ -30,7 +30,7 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
         super(databaseManager, scheduler);
         this.dao = databaseManager.getDao(IgnoreWrapper.class);
         this.ignores = CacheBuilder.newBuilder()
-            .expireAfterAccess(Duration.ofMinutes(30))
+            .expireAfterAccess(Duration.ofMinutes(15))
             .refreshAfterWrite(Duration.ofMinutes(3))
             .build(new IgnoreLoader());
     }
@@ -48,8 +48,20 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
 
     @Override
     public void ignore(UUID by, UUID target) {
-        this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target))
-            .then(integer -> this.ignores.refresh(by));
+        this.scheduler.async(() -> {
+            try {
+                Set<UUID> uuids = this.ignores.get(by);
+
+                if (uuids.contains(target)) {
+                    return;
+                }
+
+                this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target))
+                    .then(integer -> this.ignores.refresh(by));
+            } catch (ExecutionException exception) {
+                throw new RuntimeException(exception);
+            }
+        });
     }
 
     @Override

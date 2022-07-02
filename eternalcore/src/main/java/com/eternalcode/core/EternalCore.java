@@ -18,6 +18,7 @@ import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatReplyCommand;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand;
 import com.eternalcode.core.command.implementation.GameModeCommand;
+import com.eternalcode.core.command.implementation.item.ItemFlagCommand;
 import com.eternalcode.core.command.implementation.item.ItemLoreCommand;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
@@ -363,7 +364,7 @@ public class EternalCore extends JavaPlugin {
                 // Item Commands
                 ItemNameCommand.class,
                 ItemLoreCommand.class,
-                ItemLoreCommand.class,
+                ItemFlagCommand.class,
 
                 // Weather Commands
                 SunCommand.class,
