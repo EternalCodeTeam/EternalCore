@@ -22,7 +22,7 @@ public class AnvilCommand {
     }
 
     @Execute
-    public void execute(@Arg @By("or_sender") Player player) {
+    void execute(@Arg @By("or_sender") Player player) {
         Inventory inventory = this.server.createInventory(player, InventoryType.ANVIL, StringUtils.EMPTY);
         player.openInventory(inventory);
     }

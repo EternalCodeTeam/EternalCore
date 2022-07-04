@@ -23,7 +23,7 @@ public class GrindstoneCommand {
     }
 
     @Execute
-    public void execute(@Arg @By("or_sender") Player playerOrSender) {
+    void execute(@Arg @By("or_sender") Player playerOrSender) {
         Inventory inventory = this.server.createInventory(playerOrSender, InventoryType.GRINDSTONE, StringUtils.EMPTY);
         playerOrSender.openInventory(inventory);
     }

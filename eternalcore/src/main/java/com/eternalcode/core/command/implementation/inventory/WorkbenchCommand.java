@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class WorkbenchCommand {
 
     @Execute
-    public void execute(@Arg @By("or_sender") Player player) {
+    void execute(@Arg @By("or_sender") Player player) {
         player.openWorkbench(null, true);
     }
 

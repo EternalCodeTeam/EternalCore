@@ -1,6 +1,6 @@
 package com.eternalcode.core.database.wrapper;
 
-import com.eternalcode.core.chat.feature.ingore.IgnoreRepository;
+import com.eternalcode.core.chat.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.google.common.cache.CacheBuilder;

@@ -31,7 +31,7 @@ public class ItemLoreCommand {
 
     @Execute
     @Min(2)
-    public void execute(Player player, @Arg Integer line, @Joiner String name) {
+    void execute(Player player, @Arg Integer line, @Joiner String name) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
 
@@ -67,7 +67,7 @@ public class ItemLoreCommand {
     }
 
     @Execute(route = "clear")
-    public void clear(Player player) {
+    void clear(Player player) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
         ItemMeta itemMeta = itemStack.getItemMeta();
 

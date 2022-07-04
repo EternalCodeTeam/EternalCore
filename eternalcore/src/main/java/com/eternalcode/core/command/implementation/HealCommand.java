@@ -24,7 +24,7 @@ public class HealCommand {
 
     @Execute
     @Max(1)
-    public void execute(CommandSender sender, Viewer viewer, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer viewer, @Arg @By("or_sender") Player player) {
         player.setFoodLevel(20);
         player.setHealth(20);
         player.setFireTicks(0);

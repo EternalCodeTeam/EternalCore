@@ -28,7 +28,7 @@ public class OnlinePlayersListCommand {
     }
 
     @Execute
-    public void execute(Viewer audience) {
+    void execute(Viewer viewer) {
         Collection<? extends Player> online = this.server.getOnlinePlayers();
 
         String onlineCount = String.valueOf(online.size());
@@ -40,7 +40,7 @@ public class OnlinePlayersListCommand {
             .message(messages -> messages.other().listMessage())
             .placeholder("{ONLINE}", onlineCount)
             .placeholder("{PLAYERS}", players)
-            .viewer(audience)
+            .viewer(viewer)
             .send();
     }
 }

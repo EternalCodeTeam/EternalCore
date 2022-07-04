@@ -22,7 +22,7 @@ public class TeleportBackCommand {
     }
 
     @Execute(required = 0)
-    public void execute(Player player) {
+    void execute(Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
@@ -35,7 +35,7 @@ public class TeleportBackCommand {
     }
 
     @Execute(required = 1)
-    public void execute(Viewer viewer, @Arg Player player) {
+    void execute(Viewer viewer, @Arg Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {

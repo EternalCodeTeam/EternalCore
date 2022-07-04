@@ -22,7 +22,7 @@ public class WhoIsCommand {
 
     @Execute
     @Required(1)
-    public void execute(Viewer audience, @Arg Player player) {
+    void execute(Viewer viewer, @Arg Player player) {
         this.noticeService.create()
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{UUID}", String.valueOf(player.getUniqueId()))
@@ -34,7 +34,7 @@ public class WhoIsCommand {
             .placeholder("{HEALTH}", String.valueOf(Math.round(player.getHealthScale())))
             .placeholder("{FOOD}", String.valueOf(player.getFoodLevel()))
             .messages(messages -> messages.other().whoisCommand())
-            .viewer(audience)
+            .viewer(viewer)
             .send();
     }
 }

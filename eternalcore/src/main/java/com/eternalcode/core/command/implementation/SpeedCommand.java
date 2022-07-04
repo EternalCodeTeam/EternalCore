@@ -27,7 +27,7 @@ public class SpeedCommand {
 
     @Execute
     @Min(1)
-    public void execute(CommandSender sender, Viewer audience, @Arg Integer amount, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer audience, @Arg Integer amount, @Arg @By("or_sender") Player player) {
         if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
             this.noticeService.create()
                 .message(messages -> messages.other().speedBetweenZeroAndTen())

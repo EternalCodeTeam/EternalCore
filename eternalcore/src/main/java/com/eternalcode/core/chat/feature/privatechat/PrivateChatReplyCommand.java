@@ -19,7 +19,7 @@ public class PrivateChatReplyCommand {
 
     @Execute
     @Min(1)
-    public void execute(User sender, @Joiner String message) {
+    void execute(User sender, @Joiner String message) {
         this.privateChatService.reply(sender, message);
     }
 

@@ -20,7 +20,7 @@ public class PrivateChatCommand {
 
     @Execute
     @Min(2)
-    public void execute(User sender, @Arg User target, @Joiner String message) {
+    void execute(User sender, @Arg User target, @Joiner String message) {
         this.privateChatService.privateMessage(sender, target, message);
     }
 

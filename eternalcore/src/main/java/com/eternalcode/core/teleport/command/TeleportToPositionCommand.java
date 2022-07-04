@@ -26,7 +26,7 @@ public class TeleportToPositionCommand {
     }
 
     @Execute(min = 3, max = 4)
-    public void execute(CommandSender sender, Viewer audience, @Arg Integer x, @Arg Integer y, @Arg Integer z, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer audience, @Arg Integer x, @Arg Integer y, @Arg Integer z, @Arg @By("or_sender") Player player) {
         if (sender.equals(player)) {
             this.teleport(player, x, y, z);
             return;

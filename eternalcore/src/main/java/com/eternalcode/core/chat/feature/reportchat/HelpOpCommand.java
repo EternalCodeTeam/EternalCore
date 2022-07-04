@@ -39,7 +39,7 @@ public class HelpOpCommand {
 
     @Execute
     @Min(1)
-    public void execute(Player player, @Joiner String text) {
+    void execute(Player player, @Joiner String text) {
         UUID uuid = player.getUniqueId();
 
         if (this.cooldowns.asMap().getOrDefault(uuid, 0L) > System.currentTimeMillis()) {

@@ -27,7 +27,7 @@ public class TeleportCommand {
     }
 
     @Execute(required = 2)
-    public void to(Viewer sender, @Arg Player player, @Arg Player target) {
+    void to(Viewer sender, @Arg Player player, @Arg Player target) {
         this.teleportService.teleport(player, target.getLocation());
 
         this.noticeService.create()
@@ -39,7 +39,7 @@ public class TeleportCommand {
     }
 
     @Execute(required = 1)
-    public void execute(Player sender, Viewer senderViewer, @Arg Player player) {
+    void execute(Player sender, Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
 
         this.noticeService.create()
@@ -50,7 +50,7 @@ public class TeleportCommand {
     }
 
     @Execute(min = 3, max = 4)
-    public void to(Player sender, @Arg Location location, @Opt Option<World> world) {
+    void to(Player sender, @Arg Location location, @Opt Option<World> world) {
         location.setWorld(world.orElseGet(sender.getWorld()));
 
         this.teleportService.teleport(sender, location);
@@ -64,7 +64,7 @@ public class TeleportCommand {
     }
 
     @Execute(min = 3, max = 5)
-    public void to(Viewer sender, @Arg Location location, @Arg Player player, @Opt Option<World> world) {
+    void to(Viewer sender, @Arg Location location, @Arg Player player, @Opt Option<World> world) {
         if (world.isPresent()) {
             location.setWorld(world.get());
         }

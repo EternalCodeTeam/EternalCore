@@ -20,7 +20,7 @@ public class GameModeCommand {
     }
 
     @Execute(required = 1)
-    public void execute(Player sender, @Arg GameMode gameMode) {
+    void execute(Player sender, @Arg GameMode gameMode) {
         sender.setGameMode(gameMode);
 
         this.noticeService.create()
@@ -31,7 +31,7 @@ public class GameModeCommand {
     }
 
     @Execute(required = 2)
-    public void execute(Viewer sender, @Arg GameMode gameMode, @Arg Player player) {
+    void execute(Viewer sender, @Arg GameMode gameMode, @Arg Player player) {
         player.setGameMode(gameMode);
 
         this.noticeService.create()

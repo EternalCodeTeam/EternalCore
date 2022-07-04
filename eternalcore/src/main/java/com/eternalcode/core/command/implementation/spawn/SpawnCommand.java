@@ -33,7 +33,7 @@ public class SpawnCommand {
     }
 
     @Execute
-    public void execute(Player sender, @Opt Option<Player> playerOption) {
+    void execute(Player sender, @Opt Option<Player> playerOption) {
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {
@@ -46,7 +46,7 @@ public class SpawnCommand {
         }
 
         if (playerOption.isEmpty()) {
-            if (sender.hasPermission("eternalcore.teleport.bypass")) { //TODO: Move to teleport service
+            if (sender.hasPermission("eternalcore.teleport.bypass")) {
                 this.teleportService.teleport(sender, destinationLocation);
 
                 this.noticeService.create()

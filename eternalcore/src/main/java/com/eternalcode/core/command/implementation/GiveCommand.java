@@ -27,7 +27,7 @@ public class GiveCommand {
 
     @Execute
     @Between(min = 1, max = 2)
-    public void execute(Viewer audience, CommandSender sender, @Arg Material material, @Arg @By("or_sender") Player player) {
+    void execute(Viewer audience, CommandSender sender, @Arg Material material, @Arg @By("or_sender") Player player) {
         String formattedMaterial = material.name().replaceAll("_", " "); // TODO: Add formatter to Material
 
         this.giveItem(player, material);

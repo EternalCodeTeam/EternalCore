@@ -47,9 +47,9 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "on")
-    public void enable(Viewer audience, CommandSender sender) {
+    public void enable(Viewer viewer, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.viewer(audience, messages -> messages.chat().alreadyEnabled());
+            this.audiences.viewer(viewer, messages -> messages.chat().alreadyEnabled());
             return;
         }
 
@@ -63,9 +63,9 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "off")
-    public void disable(Viewer audience, CommandSender sender) {
+    public void disable(Viewer viewer, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.viewer(audience, messages -> messages.chat().alreadyDisabled());
+            this.audiences.viewer(viewer, messages -> messages.chat().alreadyDisabled());
             return;
         }
 
@@ -80,12 +80,12 @@ public class ChatManagerCommand {
 
     @Execute(route = "slowmode")
     @Min(1)
-    public void slowmode(Viewer audience, String[] args) { //TODO Argument (String[] args <- legacy solution)
+    public void slowmode(Viewer viewer, String[] args) { // TODO: Argument (String[] args <- legacy solution)
         String amountArg = args[1];
 
         Option.attempt(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {
             if (amount < 0.0D) {
-                this.audiences.viewer(audience, messages -> messages.argument().numberBiggerThanOrEqualZero());
+                this.audiences.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
                 return;
             }
 
@@ -93,10 +93,10 @@ public class ChatManagerCommand {
             this.audiences.create()
                 .message(messages -> messages.chat().slowModeSet())
                 .placeholder("{SLOWMODE}", amountArg)
-                .viewer(audience)
+                .viewer(viewer)
                 .send();
 
-        }).onEmpty(() -> this.audiences.viewer(audience, messages -> messages.argument().notNumber()));
+        }).onEmpty(() -> this.audiences.viewer(viewer, messages -> messages.argument().notNumber()));
     }
 }
 

@@ -1,6 +1,6 @@
 package com.eternalcode.core.chat.feature.privatechat;
 
-import com.eternalcode.core.chat.feature.ingore.IgnoreRepository;
+import com.eternalcode.core.chat.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.user.User;

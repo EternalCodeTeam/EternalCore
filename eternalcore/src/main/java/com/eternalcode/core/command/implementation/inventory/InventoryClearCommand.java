@@ -23,7 +23,7 @@ public class InventoryClearCommand {
     }
 
     @Execute
-    public void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
+    void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
         this.clear(player);
 
         if (sender.equals(player)) {

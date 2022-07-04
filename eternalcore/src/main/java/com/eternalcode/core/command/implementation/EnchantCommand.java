@@ -27,7 +27,7 @@ public class EnchantCommand {
 
     @Execute
     @Min(2)
-    public void execute(Player player, @Arg Enchantment enchantment, @Arg Integer level) {
+    void execute(Player player, @Arg Enchantment enchantment, @Arg Integer level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 

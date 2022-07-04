@@ -22,7 +22,7 @@ public class RepairCommand {
     }
 
     @Execute
-    public void repair(Player player) {
+    void repair(Player player) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
@@ -56,7 +56,7 @@ public class RepairCommand {
     }
 
     @Execute(route = "all")
-    public void repairAll(Player player) {
+    void repairAll(Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getContents()) {
 
@@ -90,7 +90,7 @@ public class RepairCommand {
     }
 
     @Execute(route = "armor")
-    public void repairArmor(Player player) {
+    void repairArmor(Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
 

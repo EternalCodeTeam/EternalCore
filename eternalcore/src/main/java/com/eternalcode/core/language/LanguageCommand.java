@@ -18,7 +18,7 @@ public class LanguageCommand {
     }
 
     @Execute
-    public void execute(Player player) {
+    void execute(Player player) {
         this.languageInventory.open(player);
     }
 

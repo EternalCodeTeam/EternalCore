@@ -19,7 +19,7 @@ public class DelHomeCommand {
     }
 
     @Execute
-    private void execute(User user, @ArgHome Home home) {
+    void execute(User user, @ArgHome Home home) {
         this.homeManager.deleteHome(user, home.getName());
         this.noticeService.create()
             .user(user)

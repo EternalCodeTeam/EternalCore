@@ -22,7 +22,7 @@ public class GodCommand {
     }
 
     @Execute
-    public void execute(CommandSender sender, Viewer viewer, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer viewer, @Arg @By("or_sender") Player player) {
         player.setInvulnerable(!player.isInvulnerable());
 
         this.noticeService

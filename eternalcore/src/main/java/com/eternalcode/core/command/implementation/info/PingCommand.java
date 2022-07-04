@@ -20,7 +20,7 @@ public class PingCommand {
     }
 
     @Execute
-    public void execute(CommandSender sender, Viewer audience, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer audience, @Arg @By("or_sender") Player player) {
         if (sender.equals(player)) {
             this.noticeService.create()
                 .message(messages -> messages.other().pingMessage())

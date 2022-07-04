@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.feature.ingore;
+package com.eternalcode.core.chat.feature.ignore;
 
 import panda.std.reactive.Completable;
 

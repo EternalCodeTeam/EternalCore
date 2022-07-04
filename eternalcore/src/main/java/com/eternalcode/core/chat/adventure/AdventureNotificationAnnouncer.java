@@ -34,8 +34,8 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
         Component component = this.miniMessage.deserialize(notification.getMessage());
 
         for (NoticeType type : notification.getTypes()) {
-            for (Viewer audience : viewers) {
-                this.send(this.toAdventureAudience(audience), type, component);
+            for (Viewer viewer : viewers) {
+                this.send(this.toAdventureAudience(viewer), type, component);
             }
         }
     }
@@ -58,12 +58,12 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
         }
     }
 
-    private net.kyori.adventure.audience.Audience toAdventureAudience(Viewer audience) {
-        if (audience.isConsole()) {
+    private net.kyori.adventure.audience.Audience toAdventureAudience(Viewer viewer) {
+        if (viewer.isConsole()) {
             return this.audienceProvider.console();
         }
 
-        return this.audienceProvider.player(audience.getUniqueId());
+        return this.audienceProvider.player(viewer.getUniqueId());
     }
 
 }

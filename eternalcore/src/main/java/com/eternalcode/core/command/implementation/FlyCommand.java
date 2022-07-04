@@ -22,7 +22,7 @@ public class FlyCommand {
     }
 
     @Execute
-    public void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
+    void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
         player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.create()

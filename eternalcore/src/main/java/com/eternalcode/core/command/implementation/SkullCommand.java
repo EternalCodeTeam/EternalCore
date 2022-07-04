@@ -27,7 +27,7 @@ public class SkullCommand {
     }
 
     @Execute
-    public void execute(Player player, @Arg @By("player") String name) {
+    void execute(Player player, @Arg @By("player") String name) {
         this.scheduler.async(() -> {
             ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(name).skullOwner(name).build();
 

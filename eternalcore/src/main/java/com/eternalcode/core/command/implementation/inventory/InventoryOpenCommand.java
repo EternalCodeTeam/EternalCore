@@ -28,19 +28,19 @@ public class InventoryOpenCommand {
 
     @Execute(route = "enderchest")
     @Permission("eternalcore.invsee.enderchest")
-    public void enderchest(Player sender, @Arg Player player) {
+    void enderchest(Player sender, @Arg Player player) {
         sender.openInventory(player.getEnderChest());
     }
 
     @Execute(route = "armor")
     @Permission("eternalcore.invsee.armor")
-    public void armor(Player sender, @Arg Player player) {
+    void armor(Player sender, @Arg Player player) {
         createInventory(player).open(sender);
     }
 
     @Execute(route = "inventory")
     @Permission("eternalcore.invsee.inventory")
-    public void inventory(Player sender, @Arg Player player) {
+    void inventory(Player sender, @Arg Player player) {
         sender.openInventory(player.getInventory());
     }
 

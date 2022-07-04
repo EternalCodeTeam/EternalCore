@@ -30,7 +30,7 @@ public class DisposalCommand {
     }
 
     @Execute
-    public void execute(Player player) {
+    void execute(Player player) {
         Language language = this.userManager.getUser(player.getUniqueId())
             .map(user -> user.getSettings().getLanguage())
             .orElseGet(Language.DEFAULT);

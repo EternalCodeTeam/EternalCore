@@ -20,7 +20,7 @@ public class HatCommand {
     }
 
     @Execute
-    public void execute(Player player) {
+    void execute(Player player) {
 
         PlayerInventory playerInventory = player.getInventory();
 

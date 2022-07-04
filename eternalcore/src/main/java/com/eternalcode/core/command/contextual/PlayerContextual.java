@@ -27,5 +27,4 @@ public class PlayerContextual implements Contextual<CommandSender, Player> {
 
         return Result.error(onlyPlayer);
     }
-
 }

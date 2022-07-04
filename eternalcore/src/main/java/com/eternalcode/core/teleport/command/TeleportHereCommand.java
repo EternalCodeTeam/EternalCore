@@ -21,7 +21,7 @@ public class TeleportHereCommand {
     }
 
     @Execute(required = 1)
-    public void tpHere(Player sender, @Arg Player target) {
+    void tpHere(Player sender, @Arg Player target) {
         this.teleportService.teleport(target, sender.getLocation());
         this.noticeService.create()
             .message(messages -> messages.teleport().teleportedPlayerToPlayer())

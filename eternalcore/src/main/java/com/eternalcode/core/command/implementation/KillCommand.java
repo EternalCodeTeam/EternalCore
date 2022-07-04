@@ -20,7 +20,7 @@ public class KillCommand {
     }
 
     @Execute
-    public void execute(Viewer audience, @Arg Player player) {
+    void execute(Viewer audience, @Arg Player player) {
         player.setHealth(0);
 
         this.noticeService.create()

@@ -22,7 +22,7 @@ public class FeedCommand {
     }
 
     @Execute
-    public void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
+    void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
         player.setFoodLevel(20);
 
         this.noticeService.create()

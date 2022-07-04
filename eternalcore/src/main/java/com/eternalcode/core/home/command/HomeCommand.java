@@ -19,7 +19,7 @@ public class HomeCommand {
     }
 
     @Execute
-    private void execute(Player player, @ArgHome Home home) {
+    void execute(Player player, @ArgHome Home home) {
         this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()),  PositionAdapter.convert(home.getLocation()), Duration.ofSeconds(5));
     }
 
