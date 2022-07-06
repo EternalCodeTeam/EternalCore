@@ -41,6 +41,7 @@ public class ItemFlagCommand {
         }
 
         meta.addItemFlags(flag);
+        hand.setItemMeta(meta);
         this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagAddedMessage(), formatter);
     }
 
@@ -55,6 +56,7 @@ public class ItemFlagCommand {
         }
 
         meta.removeItemFlags(ItemFlag.values());
+        hand.setItemMeta(meta);
         this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagClearedMessage());
     }
 

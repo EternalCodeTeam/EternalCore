@@ -1,6 +1,5 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -8,7 +7,7 @@ import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.command.sugesstion.Suggestion;
+import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import panda.std.Result;

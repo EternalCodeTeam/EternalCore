@@ -7,7 +7,7 @@ import com.eternalcode.core.language.Messages;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.command.sugesstion.Suggestion;
+import dev.rollczi.litecommands.suggestion.Suggestion;
 import panda.std.Option;
 import panda.std.Result;
 

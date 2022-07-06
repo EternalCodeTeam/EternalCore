@@ -24,16 +24,15 @@ public class PrivateChatPresenter implements Subscriber {
 
     @Subscribe
     void onPrivate(PrivateMessage event) {
-        if (event.isIgnored()) {
-            return;
-        }
-
         Formatter formatter = PLACEHOLDERS.toFormatter(event);
         UUID sender = event.getSender().getUniqueId();
         UUID target = event.getTarget().getUniqueId();
 
+        if (!event.isIgnored()) {
+            this.notice.player(target, messages -> messages.privateMessage().privateMessageTargetToYou(), formatter);
+        }
+
         this.notice.player(sender, messages -> messages.privateMessage().privateMessageYouToTarget(), formatter);
-        this.notice.player(target, messages -> messages.privateMessage().privateMessageTargetToYou(), formatter);
         this.notice.players(event.getSpy(), messages -> messages.privateMessage().socialSpyMessage(), formatter);
     }
 

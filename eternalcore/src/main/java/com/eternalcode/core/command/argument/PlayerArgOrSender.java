@@ -10,7 +10,7 @@ import dev.rollczi.litecommands.argument.ArgumentContext;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.command.MatchResult;
-import dev.rollczi.litecommands.command.sugesstion.Suggestion;
+import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
