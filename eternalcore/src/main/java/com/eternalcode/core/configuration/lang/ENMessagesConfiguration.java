@@ -75,19 +75,19 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     @Getter @Contextual
     public static class ENTeleportSection implements TeleportSection {
         // teleport
-        public String teleportedToPlayer = "&8» &aSuccessfully teleported to {PLAYER}!";
-        public String teleportedPlayerToPlayer = "&8» &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
+        public String teleportedToPlayer = "&8 » &aSuccessfully teleported to {PLAYER}!";
+        public String teleportedPlayerToPlayer = "&8 » &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
 
         // Task
         public Notification teleportTimerFormat = Notification.actionbar("&aTeleporting in &f{TIME}");
-        public String teleported = "&8» &aTeleported!";
-        public String teleporting = "&8» &aTeleporting...";
-        public String teleportTaskCanceled = "&8» &cYou've moved, teleportation canceled!";
-        public String teleportTaskAlreadyExist = "&8» &cYou are in teleport!";
+        public String teleported = "&8 » &aTeleported!";
+        public String teleporting = "&8 » &aTeleporting...";
+        public String teleportTaskCanceled = "&8 » &cYou've moved, teleportation canceled!";
+        public String teleportTaskAlreadyExist = "&8 » &cYou are in teleport!";
 
         // Coordinates XYZ
-        public String teleportedToCoordinates = "&8» &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String teleportedSpecifiedPlayerToCoordinates = "&8» &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String teleportedToCoordinates = "&8 » &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String teleportedSpecifiedPlayerToCoordinates = "&8 » &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
 
         // Back
         public String teleportedToLastLocation = "&8 » &7Teleported to the last location!";

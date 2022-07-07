@@ -25,12 +25,12 @@ public class WarpCommand {
         this.teleportTaskService = teleportTaskService;
     }
 
-    @Execute
+    @Execute(required = 1)
     void warp(Player player, @Arg Warp warp) {
         this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ofSeconds(5));
     }
 
-    @Execute(route = "add")
+    @Execute(route = "add", required = 1)
     @Permission("eternalcore.warp.create")
     void add(Player player, @Arg String warp) {
         this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
@@ -41,7 +41,7 @@ public class WarpCommand {
             .send();
     }
 
-    @Execute(route = "remove")
+    @Execute(route = "remove", required = 1)
     @Permission("eternalcore.warp.delete")
     void remove(Player player, @Arg Warp warp) {
         this.warpManager.removeWarp(warp.getName());
