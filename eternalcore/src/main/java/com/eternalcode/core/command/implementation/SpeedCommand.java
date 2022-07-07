@@ -1,22 +1,20 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.MinArgs;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
-import dev.rollczi.litecommands.valid.AmountValidator;
+
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.amount.AmountValidator;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Section(route = "speed")
-@Permission("eternalcore.command.speed")
-@UsageMessage("&8» &cPoprawne użycie &7/speed <liczba> [gracz]")
+@Permission("eternalcore.speed")
 public class SpeedCommand {
 
     private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(0).max(10);
@@ -28,12 +26,12 @@ public class SpeedCommand {
     }
 
     @Execute
-    @MinArgs(1)
-    public void execute(CommandSender sender, Audience audience, @Arg(0) Integer amount, @Arg(1) @Handler(PlayerArgOrSender.class) Player player) {
+    @Min(1)
+    void execute(CommandSender sender, Viewer audience, @Arg Integer amount, @Arg @By("or_sender") Player player) {
         if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
-            this.noticeService.notice()
+            this.noticeService.create()
                 .message(messages -> messages.other().speedBetweenZeroAndTen())
-                .audience(audience)
+                .viewer(audience)
                 .send();
 
             return;
@@ -42,7 +40,7 @@ public class SpeedCommand {
         player.setFlySpeed(amount / 10.0f);
         player.setWalkSpeed(amount / 10.0f);
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().speedSet())
             .placeholder("{SPEED}", String.valueOf(amount))
             .player(player.getUniqueId())
@@ -52,11 +50,11 @@ public class SpeedCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .message(messages -> messages.other().speedSetBy())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{SPEED}", String.valueOf(amount))
-            .audience(audience)
+            .viewer(audience)
             .send();
     }
 }

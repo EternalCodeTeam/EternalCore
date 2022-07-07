@@ -1,11 +1,9 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.IgnoreMethod;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -13,9 +11,8 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-@Section(route = "repair", aliases = "napraw")
-@Permission("eternalcore.command.repair")
-@UsageMessage("&8» &cPoprawne użycie &7/repair [all/armor]")
+@Section(route = "repair")
+@Permission("eternalcore.repair")
 public class RepairCommand {
 
     private final NoticeService noticeService;
@@ -25,13 +22,13 @@ public class RepairCommand {
     }
 
     @Execute
-    public void repair(Player player) {
+    void repair(Player player) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
         if (handItem == null || !(handItem.getItemMeta() instanceof Repairable)) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noItem())
                 .player(player.getUniqueId())
                 .send();
@@ -41,7 +38,7 @@ public class RepairCommand {
 
         if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noDamaged())
                 .player(player.getUniqueId())
                 .send();
@@ -52,14 +49,14 @@ public class RepairCommand {
         repairItem(handItem);
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
 
     @Execute(route = "all")
-    public void repairAll(Player player) {
+    void repairAll(Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getContents()) {
 
@@ -77,7 +74,7 @@ public class RepairCommand {
 
         if (!exists) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
@@ -86,14 +83,14 @@ public class RepairCommand {
         }
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
 
     @Execute(route = "armor")
-    public void repairArmor(Player player) {
+    void repairArmor(Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
 
@@ -111,7 +108,7 @@ public class RepairCommand {
 
         if (!exists) {
             this.noticeService
-                .notice()
+                .create()
                 .message(messages -> messages.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
@@ -120,13 +117,13 @@ public class RepairCommand {
         }
 
         this.noticeService
-            .notice()
+            .create()
             .message(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
 
-    @IgnoreMethod
+
     private void repairItem(ItemStack itemStack) {
         if (itemStack.getItemMeta() == null) {
             return;
@@ -139,4 +136,5 @@ public class RepairCommand {
         damageable.setDamage(0);
         itemStack.setItemMeta(itemMeta);
     }
+
 }

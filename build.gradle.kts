@@ -4,8 +4,8 @@ plugins {
 }
 
 allprojects {
-    group = "core"
-    version = "1.0.0-BETA"
+    group = "com.eternalcode"
+    version = "1.0.0"
 
     apply(plugin = "java-library")
     apply(plugin = "com.github.johnrengelman.shadow")
@@ -19,9 +19,11 @@ subprojects {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        mavenLocal()
         maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
         maven { url = uri("https://repo.panda-lang.org/releases") }
         maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
+       // maven { url = uri("https://repo.eternalcode.pl/releases") }
     }
 
     java {

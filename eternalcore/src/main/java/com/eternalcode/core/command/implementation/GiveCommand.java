@@ -1,25 +1,22 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.builder.ItemBuilder;
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
-import dev.rollczi.litecommands.annotations.Arg;
-import dev.rollczi.litecommands.annotations.Between;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Handler;
-import dev.rollczi.litecommands.annotations.IgnoreMethod;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.amount.Between;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Section(route = "give", aliases = {"i", "item"})
-@Permission("eternalcore.command.give")
-@UsageMessage("&8» &cPoprawne użycie &7/give <material> [gracz]")
+@Permission("eternalcore.give")
 public class GiveCommand {
 
     private final NoticeService noticeService;
@@ -30,12 +27,12 @@ public class GiveCommand {
 
     @Execute
     @Between(min = 1, max = 2)
-    public void execute(Audience audience, CommandSender sender, @Arg(0) Material material, @Arg(1) @Handler(PlayerArgOrSender.class) Player player) {
+    void execute(Viewer audience, CommandSender sender, @Arg Material material, @Arg @By("or_sender") Player player) {
         String formattedMaterial = material.name().replaceAll("_", " "); // TODO: Add formatter to Material
 
         this.giveItem(player, material);
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .message(messages -> messages.other().giveReceived())
             .player(player.getUniqueId())
@@ -45,15 +42,14 @@ public class GiveCommand {
             return;
         }
 
-        this.noticeService.notice()
+        this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", player.getName())
             .message(messages -> messages.other().giveGiven())
-            .audience(audience)
+            .viewer(audience)
             .send();
     }
 
-    @IgnoreMethod
     private void giveItem(Player player, Material material) {
         int amount = 64;
 

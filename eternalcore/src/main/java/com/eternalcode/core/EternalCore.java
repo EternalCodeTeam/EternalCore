@@ -1,12 +1,53 @@
 package com.eternalcode.core;
 
+import com.eternalcode.core.afk.AfkCommand;
+import com.eternalcode.core.afk.AfkController;
+import com.eternalcode.core.afk.AfkMessagesController;
+import com.eternalcode.core.afk.AfkService;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
+import com.eternalcode.core.chat.feature.ignore.IgnoreCommand;
+import com.eternalcode.core.chat.feature.ignore.IgnoreRepository;
+import com.eternalcode.core.chat.feature.ignore.UnIgnoreCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatPresenter;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
-import com.eternalcode.core.chat.adventure.BukkitAudienceProvider;
-import com.eternalcode.core.chat.legacy.LegacyColorProcessor;
-import com.eternalcode.core.chat.notification.Audience;
-import com.eternalcode.core.chat.notification.AudienceProvider;
+import com.eternalcode.core.command.argument.LocationArgument;
+import com.eternalcode.core.command.argument.UserArgument;
+import com.eternalcode.core.command.argument.WorldArgument;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatReplyCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand;
+import com.eternalcode.core.command.implementation.GameModeCommand;
+import com.eternalcode.core.command.implementation.item.ItemFlagCommand;
+import com.eternalcode.core.command.implementation.item.ItemLoreCommand;
+import com.eternalcode.core.database.NoneRepository;
+import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
+import com.eternalcode.core.home.HomeRepository;
+import com.eternalcode.core.publish.LocalPublisher;
+import com.eternalcode.core.publish.Publisher;
+import com.eternalcode.core.teleport.TeleportDeathController;
+import com.eternalcode.core.teleport.TeleportService;
+import com.eternalcode.core.teleport.command.TeleportBackCommand;
+import com.eternalcode.core.teleport.command.TeleportHereCommand;
+import com.eternalcode.core.warp.WarpCommand;
+import com.eternalcode.core.command.implementation.time.DayCommand;
+import com.eternalcode.core.command.implementation.time.NightCommand;
+import com.eternalcode.core.command.implementation.time.TimeCommand;
+import com.eternalcode.core.command.implementation.weather.RainCommand;
+import com.eternalcode.core.command.implementation.weather.SunCommand;
+import com.eternalcode.core.command.implementation.weather.ThunderCommand;
+import com.eternalcode.core.database.DatabaseManager;
+import com.eternalcode.core.database.wrapper.RepositoryOrmLite;
+import com.eternalcode.core.home.Home;
+import com.eternalcode.core.home.HomeManager;
+import com.eternalcode.core.home.command.ArgHome;
+import com.eternalcode.core.home.command.DelHomeCommand;
+import com.eternalcode.core.home.command.HomeArgument;
+import com.eternalcode.core.home.command.HomeCommand;
+import com.eternalcode.core.home.command.SetHomeCommand;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.util.legacy.LegacyColorProcessor;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
@@ -15,142 +56,137 @@ import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.MaterialArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
-import com.eternalcode.core.command.argument.PlayerArg;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
+import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.PlayerNameArg;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
-import com.eternalcode.core.command.bind.AudienceBind;
-import com.eternalcode.core.command.bind.PlayerBind;
-import com.eternalcode.core.command.bind.UserBind;
-import com.eternalcode.core.command.handler.InvalidUsageHandler;
-import com.eternalcode.core.command.implementation.AdminChatCommand;
+import com.eternalcode.core.command.contextual.AudienceContextual;
+import com.eternalcode.core.command.contextual.PlayerContextual;
+import com.eternalcode.core.command.contextual.UserContextual;
+import com.eternalcode.core.command.handler.ComponentResultHandler;
+import com.eternalcode.core.command.handler.InvalidUsage;
+import com.eternalcode.core.command.handler.PermissionMessage;
+import com.eternalcode.core.command.handler.StringResultHandler;
+import com.eternalcode.core.chat.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
-import com.eternalcode.core.command.implementation.AnvilCommand;
-import com.eternalcode.core.command.implementation.CartographyTableCommand;
-import com.eternalcode.core.command.implementation.ChatCommand;
-import com.eternalcode.core.command.implementation.ClearCommand;
-import com.eternalcode.core.command.implementation.DisposalCommand;
+import com.eternalcode.core.command.implementation.inventory.AnvilCommand;
+import com.eternalcode.core.command.implementation.inventory.CartographyTableCommand;
+import com.eternalcode.core.chat.ChatManagerCommand;
+import com.eternalcode.core.command.implementation.inventory.InventoryClearCommand;
+import com.eternalcode.core.command.implementation.inventory.DisposalCommand;
 import com.eternalcode.core.command.implementation.EnchantCommand;
-import com.eternalcode.core.command.implementation.EnderchestCommand;
-import com.eternalcode.core.command.implementation.EternalCoreCommand;
+import com.eternalcode.core.command.implementation.inventory.EnderchestCommand;
 import com.eternalcode.core.command.implementation.FeedCommand;
 import com.eternalcode.core.command.implementation.FlyCommand;
-import com.eternalcode.core.command.implementation.GamemodeCommand;
 import com.eternalcode.core.command.implementation.GiveCommand;
 import com.eternalcode.core.command.implementation.GodCommand;
-import com.eternalcode.core.command.implementation.GrindstoneCommand;
+import com.eternalcode.core.command.implementation.inventory.GrindstoneCommand;
 import com.eternalcode.core.command.implementation.HatCommand;
 import com.eternalcode.core.command.implementation.HealCommand;
-import com.eternalcode.core.command.implementation.HelpOpCommand;
-import com.eternalcode.core.command.implementation.InventoryOpenCommand;
+import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
+import com.eternalcode.core.command.implementation.inventory.InventoryOpenCommand;
 import com.eternalcode.core.command.implementation.KillCommand;
-import com.eternalcode.core.command.implementation.LanguageCommand;
-import com.eternalcode.core.command.implementation.ListCommand;
-import com.eternalcode.core.command.implementation.MessageCommand;
-import com.eternalcode.core.command.implementation.NameCommand;
-import com.eternalcode.core.command.implementation.OnlineCommand;
-import com.eternalcode.core.command.implementation.PingCommand;
+import com.eternalcode.core.language.LanguageCommand;
+import com.eternalcode.core.command.implementation.info.OnlinePlayersListCommand;
+import com.eternalcode.core.chat.feature.privatechat.PrivateChatCommand;
+import com.eternalcode.core.command.implementation.item.ItemNameCommand;
+import com.eternalcode.core.command.implementation.info.OnlinePlayerCountCommand;
+import com.eternalcode.core.command.implementation.info.PingCommand;
 import com.eternalcode.core.command.implementation.RepairCommand;
-import com.eternalcode.core.command.implementation.ScoreboardCommand;
-import com.eternalcode.core.command.implementation.SetSpawnCommand;
+import com.eternalcode.core.command.implementation.spawn.SetSpawnCommand;
 import com.eternalcode.core.command.implementation.SkullCommand;
-import com.eternalcode.core.command.implementation.SpawnCommand;
+import com.eternalcode.core.command.implementation.spawn.SpawnCommand;
 import com.eternalcode.core.command.implementation.SpeedCommand;
-import com.eternalcode.core.command.implementation.StonecutterCommand;
-import com.eternalcode.core.command.implementation.TeleportCommand;
-import com.eternalcode.core.command.implementation.TpaAcceptCommand;
-import com.eternalcode.core.command.implementation.TpaCommand;
-import com.eternalcode.core.command.implementation.TpaDenyCommand;
-import com.eternalcode.core.command.implementation.TposCommand;
-import com.eternalcode.core.command.implementation.WhoIsCommand;
-import com.eternalcode.core.command.implementation.WorkbenchCommand;
-import com.eternalcode.core.command.handler.PermissionHandler;
-import com.eternalcode.core.command.platform.EternalCommandsFactory;
+import com.eternalcode.core.command.implementation.inventory.StonecutterCommand;
+import com.eternalcode.core.teleport.command.TeleportCommand;
+import com.eternalcode.core.teleport.request.TpaAcceptCommand;
+import com.eternalcode.core.teleport.request.TpaCommand;
+import com.eternalcode.core.teleport.request.TpaDenyCommand;
+import com.eternalcode.core.teleport.command.TeleportToPositionCommand;
+import com.eternalcode.core.command.implementation.info.WhoIsCommand;
+import com.eternalcode.core.command.implementation.inventory.WorkbenchCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
-import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
-import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
-import com.eternalcode.core.database.CacheWarpRepository;
-import com.eternalcode.core.database.Database;
-import com.eternalcode.core.home.HomeManager;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.language.LanguageInventory;
-import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.listener.player.PlayerChatListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
-import com.eternalcode.core.listener.scoreboard.ScoreboardListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
-import com.eternalcode.core.listener.user.PrepareUserController;
+import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
-import com.eternalcode.core.scoreboard.ScoreboardManager;
 import com.eternalcode.core.teleport.TeleportListeners;
-import com.eternalcode.core.teleport.TeleportRequestService;
-import com.eternalcode.core.teleport.TeleportService;
+import com.eternalcode.core.teleport.request.TeleportRequestService;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.teleport.TeleportTask;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.warps.Warp;
-import com.eternalcode.core.warps.WarpManager;
+import com.eternalcode.core.warp.Warp;
+import com.eternalcode.core.warp.WarpConfigRepository;
+import com.eternalcode.core.warp.WarpManager;
+import com.eternalcode.core.warp.WarpRepository;
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.ImmutableMap;
 import dev.rollczi.litecommands.LiteCommands;
-import dev.rollczi.litecommands.valid.messages.UseSchemeFormatting;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
+import dev.rollczi.litecommands.scheme.SchemeFormat;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import panda.std.Option;
-import panda.std.stream.PandaStream;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EternalCore extends JavaPlugin {
 
     private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
+    private static EternalCore instance;
+
+    /**
+     * Scheduler & Publisher
+     **/
+    private Scheduler scheduler;
+    private Publisher publisher;
+
+    /**
+     * Configuration & Database
+     **/
+    private ConfigurationManager configurationManager;
+    private DatabaseManager databaseManager;
 
     /**
      * Services & Managers
      **/
-    private static EternalCore instance;
-    private Scheduler scheduler;
     private UserManager userManager;
-    private HomeManager homeManager;
-    private TeleportService teleportService;
-    private WarpManager warpManager;
-    private BukkitUserProvider userProvider;
 
-    /**
-     * Configuration, Language & Chat
-     **/
-    private ConfigurationManager configurationManager;
+    private TeleportService teleportService;
+    private TeleportTaskService teleportTaskService;
+
+    private WarpManager warpManager;
+    private HomeManager homeManager;
+    private AfkService afkService;
+    private TeleportRequestService teleportRequestService;
+
     private LanguageManager languageManager;
     private ChatManager chatManager;
-    private LanguageInventory languageInventory;
-
-    /**
-     * Services & Managers (dependent on configuration)
-     **/
-    private Database database;
-    private TeleportRequestService teleportRequestService;
+    private PrivateChatService privateChatService;
 
     /**
      * Adventure
@@ -159,17 +195,19 @@ public class EternalCore extends JavaPlugin {
     private MiniMessage miniMessage;
 
     /**
-     * Audiences System
+     * Viewer & Notice
      **/
-    private AudienceProvider audienceProvider;
+    private BukkitViewerProvider viewerProvider;
+    private BukkitUserProvider userProvider;
+
     private NotificationAnnouncer notificationAnnouncer;
     private NoticeService noticeService;
 
     /**
      * FrameWorks & Libs
      **/
-    private ScoreboardManager scoreboardManager;
-    private LiteCommands liteCommands;
+    private LanguageInventory languageInventory;
+    private LiteCommands<CommandSender> liteCommands;
     private boolean isSpigot = false;
 
     public static EternalCore getInstance() {
@@ -185,14 +223,8 @@ public class EternalCore extends JavaPlugin {
 
         this.softwareCheck();
 
-        /* Services */
-
         this.scheduler = new BukkitSchedulerImpl(this);
-        this.userManager = new UserManager();
-        this.homeManager = new HomeManager();
-        this.teleportService = new TeleportService();
-        this.warpManager = WarpManager.create(new CacheWarpRepository());
-        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
+        this.publisher = new LocalPublisher();
 
         /* Configuration */
 
@@ -201,39 +233,45 @@ public class EternalCore extends JavaPlugin {
 
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
-        CommandsConfiguration commands = configurationManager.getCommandsConfiguration();
-        LanguageConfiguration languageConfig = configurationManager.getInventoryConfiguration();
+        LanguageConfiguration languageConfig = configurationManager.getLanguageConfiguration();
 
-        /* Language & Chat */
+        /* Database */
 
-        File langFolder = new File(this.getDataFolder(), "lang");
-        Map<Language, Messages> defaultImplementations = new ImmutableMap.Builder<Language, Messages>()
-            .put(Language.EN, new ENMessagesConfiguration(langFolder, "en_messages.yml"))
-            .put(Language.PL, new PLMessagesConfiguration(langFolder, "pl_messages.yml"))
-            .build();
+        WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locations);
+        HomeRepository homeRepository;
+        IgnoreRepository ignoreRepository;
 
-        List<Messages> messages = PandaStream.of(languageConfig.languages)
-            .map(lang -> defaultImplementations.getOrDefault(lang, new ENMessagesConfiguration(langFolder, lang.getLang() + "_messages.yml")))
-            .toList();
+        try {
+            this.databaseManager = new DatabaseManager(config, this.getLogger(), this.getDataFolder());
+            this.databaseManager.connect();
 
-        Messages defaultMessages = PandaStream.of(messages)
-            .find(m -> m.getLanguage().equals(languageConfig.defaultLanguage))
-            .orThrow(() -> new RuntimeException("Default language not found!"));
+            homeRepository = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
-        this.languageManager = new LanguageManager(defaultMessages);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            this.getLogger().severe("Can not connect to database! Some functions may not work!");
 
-        for (Messages message : messages) {
-            this.configurationManager.loadAndRender(message);
-            this.languageManager.loadLanguage(message.getLanguage(), message);
+            NoneRepository noneRepository = new NoneRepository();
+
+            homeRepository = noneRepository;
+            ignoreRepository = noneRepository;
         }
 
+        /* Services & Managers  */
+
+        this.userManager = new UserManager();
+
+        this.teleportService = new TeleportService();
+        this.teleportTaskService = new TeleportTaskService();
+
+        this.afkService = new AfkService(config.afk, this.publisher);
+        this.warpManager = WarpManager.create(warpRepository);
+        this.homeManager = HomeManager.create(homeRepository);
+        this.teleportRequestService = new TeleportRequestService(config.otherSettings);
+
+        this.languageManager = LanguageManager.create(this.configurationManager, this.getDataFolder());
         this.chatManager = new ChatManager(config.chat);
-        this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
-
-        /* Services & Managers (dependent on configuration) */
-
-        this.database = new Database(this.configurationManager, this.getLogger());
-        this.teleportRequestService = new TeleportRequestService(config);
 
         /* Adventure */
 
@@ -244,124 +282,189 @@ public class EternalCore extends JavaPlugin {
 
         /* Audiences System */
 
-        this.audienceProvider = new BukkitAudienceProvider(this.userManager, server, this.adventureAudiences);
+        this.viewerProvider = new BukkitViewerProvider(this.userManager, server, this.adventureAudiences);
+        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
+
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
-        this.noticeService = new NoticeService(this.languageManager, this.audienceProvider, this.notificationAnnouncer);
+        this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
+        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
-        this.scoreboardManager = new ScoreboardManager(this, this.configurationManager, this.miniMessage);
-        this.scoreboardManager.updateTask();
+        this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
 
-        this.liteCommands = EternalCommandsFactory.builder(server, "EternalCore", this.audienceProvider, this.notificationAnnouncer)
+        this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
 
-            // Arguments
-            .argument(String.class,                 new PlayerNameArg(server))
-            .argument(Integer.class,                new AmountArgument(this.languageManager, this.configurationManager, this.userProvider))
-            .argument(Player.class,                 new PlayerArg(this.userProvider, this.languageManager, server))
-            .argument(Player.class,                 new PlayerArgOrSender(this.languageManager, this.userProvider, server))
+            // Handlers
+            .resultHandler(String.class, new StringResultHandler(this.adventureAudiences, this.miniMessage))
+            .resultHandler(Component.class, new ComponentResultHandler(this.adventureAudiences))
+
+            // Arguments (include optional)
+            .argument(String.class, "player",   new PlayerNameArg(server))
+            .argument(Integer.class,                new AmountArgument(this.languageManager, config, viewerProvider))
             .argument(Material.class,               new MaterialArgument(this.userProvider, this.languageManager))
             .argument(GameMode.class,               new GameModeArgument(this.userProvider, this.languageManager))
             .argument(NoticeType.class,             new NoticeTypeArgument(this.userProvider, this.languageManager))
             .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
-            .argument(Enchantment.class,            new EnchantmentArgument(this.userProvider, this.languageManager))
-            .argument(Player.class,                 new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
+            .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.languageManager))
+            .argument(World.class,                  new WorldArgument(server))
+            .argument(User.class,                   new UserArgument(this.viewerProvider, this.languageManager, server, this.userManager))
+            .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.languageManager, server))
+            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
 
-            // Optional arguments
-            .argument(Option.class,                 new PlayerArg(this.userProvider, this.languageManager, server).toOptionHandler())
-            .argument(Option.class,                 new PlayerArgOrSender(this.languageManager, this.userProvider, server).toOptionHandler())
+            // multilevel Arguments (include optional)
+            .argumentMultilevel(Location.class,               new LocationArgument())
+
+            // Native Argument (no optional)
+            .argument(ArgHome.class, Home.class,                new HomeArgument(homeManager, userProvider, languageManager))
+            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.viewerProvider, server))
 
             // Dynamic binds
-            .parameterBind(Player.class,            new PlayerBind(this.languageManager))
-            .parameterBind(Audience.class,          new AudienceBind(this.userManager))
-            .parameterBind(User.class,              new UserBind(this.languageManager, this.userManager))
+            .contextualBind(Player.class,            new PlayerContextual(this.languageManager))
+            .contextualBind(Viewer.class,            new AudienceContextual(this.viewerProvider))
+            .contextualBind(User.class,              new UserContextual(this.languageManager, this.userManager))
 
             // Static binds
             .typeBind(EternalCore.class,            () -> this)
             .typeBind(ConfigurationManager.class,   () -> this.configurationManager)
             .typeBind(LanguageInventory.class,      () -> this.languageInventory)
             .typeBind(LanguageManager.class,        () -> this.languageManager)
-            .typeBind(PluginConfiguration.class,    () -> config)
-            .typeBind(LocationsConfiguration.class, () -> locations)
-            .typeBind(TeleportService.class,        () -> this.teleportService)
+            .typeBind(TeleportTaskService.class,    () -> this.teleportTaskService)
             .typeBind(UserManager.class,            () -> this.userManager)
-            .typeBind(ScoreboardManager.class,      () -> this.scoreboardManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
             .typeBind(NoticeService.class,          () -> this.noticeService)
             .typeBind(MiniMessage.class,            () -> this.miniMessage)
             .typeBind(ChatManager.class,            () -> this.chatManager)
+            .typeBind(PrivateChatService.class,     () -> this.privateChatService)
             .typeBind(Scheduler.class,              () -> this.scheduler)
+            .typeBind(WarpManager.class,            () -> this.warpManager)
+            .typeBind(HomeManager.class,            () -> this.homeManager)
+            .typeBind(AfkService.class,             () -> this.afkService)
 
-            .placeholders(commands.commandsSection.commands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> v::getValue)))
+            .typeBind(PluginConfiguration.class,    () -> config)
+            .typeBind(LocationsConfiguration.class, () -> locations)
+            .typeBind(PluginConfiguration.OtherSettings.class, () -> config.otherSettings)
 
-            .permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
-            .invalidUseMessage(new InvalidUsageHandler(this.userProvider, this.languageManager))
-            .formattingUseScheme(UseSchemeFormatting.NORMAL)
+            //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
+            .invalidUsageHandler(new InvalidUsage(this.miniMessage, this.adventureAudiences, this.userProvider, this.languageManager))
+            .schemeFormat(SchemeFormat.ARGUMENT_ANGLED_OPTIONAL_SQUARE)
+            .permissionHandler(new PermissionMessage(this.userProvider, this.adventureAudiences, this.languageManager, this.miniMessage))
 
+            .commandInstance(
+                new IgnoreCommand(ignoreRepository, noticeService),
+                new UnIgnoreCommand(ignoreRepository, noticeService)
+            )
             .command(
-                AlertCommand.class,
-                AnvilCommand.class,
-                CartographyTableCommand.class,
-                ChatCommand.class,
-                ClearCommand.class,
-                DisposalCommand.class,
-                EnderchestCommand.class,
-                FeedCommand.class,
-                FlyCommand.class,
-                GamemodeCommand.class,
-                GodCommand.class,
-                GrindstoneCommand.class,
-                HatCommand.class,
-                HealCommand.class,
-                KillCommand.class,
-                SkullCommand.class,
-                SpeedCommand.class,
-                StonecutterCommand.class,
-                WhoIsCommand.class,
-                WorkbenchCommand.class,
                 EternalCoreCommand.class,
-                ScoreboardCommand.class,
-                AdminChatCommand.class,
-                HelpOpCommand.class,
-                InventoryOpenCommand.class,
-                RepairCommand.class,
-                GiveCommand.class,
+
+                // Home Commands
+                HomeCommand.class,
+                SetHomeCommand.class,
+                DelHomeCommand.class,
+
+                // Item Commands
+                ItemNameCommand.class,
+                ItemLoreCommand.class,
+                ItemFlagCommand.class,
+
+                // Weather Commands
+                SunCommand.class,
+                ThunderCommand.class,
+                RainCommand.class,
+
+                // Time Commands
+                TimeCommand.class,
+                DayCommand.class,
+                NightCommand.class,
+
+                // Teleport Commands
+                TeleportCommand.class,
+                TeleportToPositionCommand.class,
+                TeleportHereCommand.class,
+                TeleportBackCommand.class,
+
+                // Tpa Commands
+                TpaCommand.class,
+                TpaDenyCommand.class,
+                TpaAcceptCommand.class,
+
+                // Spawn & Warp Command
                 SetSpawnCommand.class,
                 SpawnCommand.class,
-                PingCommand.class,
-                OnlineCommand.class,
-                ListCommand.class,
-                TposCommand.class,
-                NameCommand.class,
+                WarpCommand.class,
+
+                // Inventory Commands
+                EnderchestCommand.class,
+                WorkbenchCommand.class,
+                AnvilCommand.class,
+                CartographyTableCommand.class,
+                GrindstoneCommand.class,
+                StonecutterCommand.class,
+                DisposalCommand.class,
+
+                // Private Chat Commands
+                PrivateChatCommand.class,
+                PrivateChatReplyCommand.class,
+                PrivateChatSocialSpyCommand.class,
+
+                // Admin Chat Commands
+                AdminChatCommand.class,
+                HelpOpCommand.class,
+                AlertCommand.class,
+                ChatManagerCommand.class,
+
+                // Moderation Commands
+                FlyCommand.class,
+                GodCommand.class,
+                GameModeCommand.class,
+                SpeedCommand.class,
+                GiveCommand.class,
                 EnchantCommand.class,
-                TeleportCommand.class,
-                LanguageCommand.class,
-                MessageCommand.class,
-                TpaCommand.class,
-                TpaAcceptCommand.class,
-                TpaDenyCommand.class
+                RepairCommand.class,
+                HealCommand.class,
+                FeedCommand.class,
+                KillCommand.class,
+                InventoryClearCommand.class,
+                InventoryOpenCommand.class,
+
+                // Info Commands
+                OnlinePlayerCountCommand.class,
+                OnlinePlayersListCommand.class,
+                WhoIsCommand.class,
+                PingCommand.class,
+
+                // Misc Commands
+                HatCommand.class,
+                AfkCommand.class,
+                SkullCommand.class,
+                LanguageCommand.class
             )
+
             .register();
 
         /* Listeners */
 
-        PandaStream.of(
+        Stream.of(
+            new TeleportDeathController(this.teleportService),
             new PlayerChatListener(this.chatManager, noticeService, this.configurationManager, server),
             new PlayerJoinListener(this.configurationManager, this.noticeService, server),
             new PlayerQuitListener(this.configurationManager, this.noticeService, server),
             new PrepareUserController(this.userManager, server),
-            new ScoreboardListener(config, this.scoreboardManager),
             new PlayerCommandPreprocessListener(this.noticeService, this.configurationManager, server),
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService, this.configurationManager),
-            new TeleportListeners(this.noticeService, this.teleportService)
+            new TeleportListeners(this.noticeService, this.teleportTaskService),
+            new AfkController(this.afkService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
+
+        /* Subscribers */
+
+        this.publisher.subscribe(new AfkMessagesController(this.noticeService, this.userManager));
+        this.publisher.subscribe(new PrivateChatPresenter(this.noticeService));
 
         /* Tasks */
 
-        TeleportTask task = new TeleportTask(this.noticeService, this.teleportService, server);
-        this.scheduler.runTaskTimer(task, 10, 10);
-
-        this.database.connect();
+        TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, teleportService, server);
+        this.scheduler.runTaskTimer(task, 4, 4);
 
         // bStats metrics
         Metrics metrics = new Metrics(this, 13964);
@@ -373,8 +476,8 @@ public class EternalCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.liteCommands.getPlatformManager().unregisterCommands();
-        this.database.disconnect();
+        this.liteCommands.getPlatform().unregisterAll();
+        this.databaseManager.close();
     }
 
     private void softwareCheck() {
@@ -398,84 +501,95 @@ public class EternalCore extends JavaPlugin {
         }
     }
 
-    public Scheduler getScheduler() {
-        return this.scheduler;
-    }
-
-    public UserManager getUserManager() {
-        return this.userManager;
-    }
-
-    public HomeManager getHomeManager() {
-        return this.homeManager;
-    }
-
-    public TeleportService getTeleportService() {
-        return this.teleportService;
-    }
-
-    public WarpManager getWarpManager() {
-        return this.warpManager;
-    }
-
-    public BukkitUserProvider getUserProvider() {
-        return this.userProvider;
-    }
-
     public ConfigurationManager getConfigurationManager() {
-        return this.configurationManager;
+        return configurationManager;
     }
 
     public LanguageManager getLanguageManager() {
-        return this.languageManager;
+        return languageManager;
     }
 
     public ChatManager getChatManager() {
-        return this.chatManager;
+        return chatManager;
     }
 
-    public LanguageInventory getLanguageInventory() {
-        return this.languageInventory;
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
     }
 
-    public Database getDatabase() {
-        return this.database;
+    public Scheduler getScheduler() {
+        return scheduler;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public WarpManager getWarpManager() {
+        return warpManager;
+    }
+
+    public HomeManager getHomeManager() {
+        return homeManager;
+    }
+
+    public AfkService getAfkService() {
+        return afkService;
+    }
+
+    public TeleportService getTeleportService() {
+        return teleportService;
+    }
+
+    public TeleportTaskService getTeleportTaskService() {
+        return teleportTaskService;
     }
 
     public TeleportRequestService getTeleportRequestService() {
-        return this.teleportRequestService;
+        return teleportRequestService;
     }
 
     public BukkitAudiences getAdventureAudiences() {
-        return this.adventureAudiences;
+        return adventureAudiences;
     }
 
     public MiniMessage getMiniMessage() {
-        return this.miniMessage;
+        return miniMessage;
     }
 
-    public AudienceProvider getAudienceProvider() {
-        return this.audienceProvider;
+    public BukkitViewerProvider getViewerProvider() {
+        return viewerProvider;
+    }
+
+    public BukkitUserProvider getUserProvider() {
+        return userProvider;
     }
 
     public NotificationAnnouncer getNotificationAnnouncer() {
-        return this.notificationAnnouncer;
+        return notificationAnnouncer;
     }
 
     public NoticeService getNoticeService() {
-        return this.noticeService;
+        return noticeService;
     }
 
-    public ScoreboardManager getScoreboardManager() {
-        return this.scoreboardManager;
+    public PrivateChatService getPrivateChatService() {
+        return privateChatService;
     }
 
-    public LiteCommands getLiteCommands() {
-        return this.liteCommands;
+    public LanguageInventory getLanguageInventory() {
+        return languageInventory;
+    }
+
+    public LiteCommands<CommandSender> getLiteCommands() {
+        return liteCommands;
     }
 
     public boolean isSpigot() {
-        return this.isSpigot;
+        return isSpigot;
     }
-
 }

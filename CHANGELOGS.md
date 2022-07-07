@@ -1,0 +1,17 @@
+### 1.0.0
+- Add /itemflag and /itemfalg clear
+- Add /itemname clear
+- Add /itemlore clear
+- Add /itemlore
+- Add Position wrapper for location 
+- Add command /back
+- Add Publish system
+- Add /ignore and unignore
+- Handle database critical error
+- Add Afk domain and /afk command
+- Add command /socialspy
+- Add command /tphere
+- Improve `/tp` command `/tp <x y z> [world]`, `/tp <x y z> <player> [world]`
+- Fix. Changes. This.
+- Add home system (/home, /sethome, /delhome)
+- Add warp system (/warp)

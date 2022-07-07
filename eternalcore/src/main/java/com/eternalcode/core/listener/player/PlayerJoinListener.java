@@ -3,13 +3,15 @@ package com.eternalcode.core.listener.player;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import panda.std.Option;
 import panda.utilities.StringUtils;
 
 public class PlayerJoinListener implements Listener {
@@ -28,12 +30,17 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+
         if (!player.hasPlayedBefore()) {
-            this.noticeService.notice()
-                .notice(NoticeType.CHAT, messages -> this.config.eventMessage.firstJoinMessage) // TODO: Move to messages config
-                .placeholder("{PLAYER}", player.getName())
-                .all()
-                .send();
+            Option<String> message = RandomUtil.randomElement(this.config.eventMessage.firstJoinMessage);
+
+            if (message.isPresent()) {
+                this.noticeService.create()
+                    .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
+                    .placeholder("{PLAYER}", player.getName())
+                    .all()
+                    .send();
+            }
         }
 
         if (this.config.otherSettings.gamemodeOnJoin) {
@@ -47,9 +54,11 @@ public class PlayerJoinListener implements Listener {
                 .forEach(online -> online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch));
         }
 
+        PluginConfiguration.EventMessage eventMessage = config.eventMessage;
+
         if (this.config.eventMessage.enableWelcomeTitle) {
             this.noticeService
-                .notice()
+                .create()
                 .notice(NoticeType.TITLE, messages -> this.config.eventMessage.welcomeTitle) //TODO: Move to messages config
                 .notice(NoticeType.SUBTITLE, messages -> this.config.eventMessage.welcomeSubTitle) //TODO: Move to messages config
                 .placeholder("{PLAYER}", player.getName())
@@ -58,10 +67,15 @@ public class PlayerJoinListener implements Listener {
         }
 
         event.setJoinMessage(StringUtils.EMPTY);
-        this.noticeService.notice()
-            .notice(NoticeType.CHAT, messages -> this.config.eventMessage.joinMessage) // TODO: Move to messages config
-            .placeholder("{PLAYER}", player.getName())
-            .all()
-            .send();
+
+        Option<String> message = RandomUtil.randomElement(eventMessage.joinMessage);
+
+        if (message.isPresent()) {
+            this.noticeService.create()
+                .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
+                .placeholder("{PLAYER}", player.getName())
+                .all()
+                .send();
+        }
     }
 }

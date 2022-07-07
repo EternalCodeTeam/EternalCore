@@ -7,6 +7,10 @@ plugins {
 }
 
 dependencies {
+    // lombok
+    compileOnly("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
+
     // paper lib, spigot api
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
@@ -16,8 +20,8 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit:1.9.2")
-
+    implementation("dev.rollczi.litecommands:bukkit:2.3.2")
+    
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.23")
 
@@ -27,11 +31,11 @@ dependencies {
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
-    // HikariCP
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    // ormlite jdbc
+    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
 
-    // FastBoard
-    implementation("fr.mrmicky:fastboard:1.2.1")
+    // hikari
+    compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // TriumphGui
     implementation("dev.triumphteam:triumph-gui:3.1.2")
@@ -58,7 +62,15 @@ bukkit {
     name = "EternalCore"
     description = "Essential plugin for your server!"
     version = "${project.version}"
+    libraries = listOf(
+        "org.postgresql:postgresql:42.3.5",
+        "com.h2database:h2:2.1.212",
+        "com.j256.ormlite:ormlite-jdbc:6.1",
+        "com.zaxxer:HikariCP:5.0.1",
+        "org.mariadb.jdbc:mariadb-java-client:3.0.4"
+    )
 }
+
 
 tasks {
     runServer {
@@ -87,10 +99,8 @@ tasks.withType<ShadowJar> {
     relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
     relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
 
-    relocate("fr.mrmicky.fastboard", "com.eternalcode.core.libs.fr.mrmicky.fastboard")
     relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
 
-    relocate("com.zaxxer", "com.eternalcode.core.libs.com.zaxxer")
     relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
     relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
 }

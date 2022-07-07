@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 public class SettingsImpl implements Settings {
 
     private final Supplier<ClientSettings> clientSettings;
-    private Language language;
+    private Language language = Language.DEFAULT;
 
     public SettingsImpl(Supplier<ClientSettings> clientSettings) {
         this.clientSettings = clientSettings;
@@ -16,7 +16,9 @@ public class SettingsImpl implements Settings {
 
     @Override
     public Language getLanguage() {
-        return this.language != null ? this.language : Language.fromLocate(this.clientSettings.get().getLocate());
+        return this.language != Language.DEFAULT
+            ? this.language
+            : Language.fromLocate(this.clientSettings.get().getLocate());
     }
 
     @Override

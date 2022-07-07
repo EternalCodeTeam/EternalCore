@@ -2,33 +2,38 @@ package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
-import com.eternalcode.core.utils.DateUtils;
+import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import panda.utilities.StringUtils;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
 
 public class TeleportTask implements Runnable {
 
     private final NoticeService noticeService;
+    private final TeleportTaskService teleportTaskService;
     private final TeleportService teleportService;
     private final Server server;
 
-    public TeleportTask(NoticeService noticeService, TeleportService teleportService, Server server) {
+    public TeleportTask(NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService, Server server) {
         this.noticeService = noticeService;
+        this.teleportTaskService = teleportTaskService;
         this.teleportService = teleportService;
         this.server = server;
     }
 
     @Override
     public void run() {
-        for (Teleport teleport : this.teleportService.getTeleports()){
-            Location destinationLocation = teleport.getDestinationLocation();
-            Location startLocation = teleport.getStartLocation();
+        for (Teleport teleport : this.teleportTaskService.getTeleports()) {
+            Location destinationLocation = PositionAdapter.convert(teleport.getDestinationLocation());
+            Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
             UUID uuid = teleport.getUuid();
-            long time = teleport.getTime();
+            Instant teleportMoment = teleport.getTeleportMoment();
 
             Player player = this.server.getPlayer(uuid);
 
@@ -37,34 +42,35 @@ public class TeleportTask implements Runnable {
             }
 
             if (player.getLocation().distance(startLocation) > 0.5) {
-                this.teleportService.removeTeleport(uuid);
+                this.teleportTaskService.removeTeleport(uuid);
 
-                this.noticeService.notice()
+                this.noticeService.create()
                     .notice(NoticeType.ACTIONBAR, messages -> StringUtils.EMPTY)
-                    .message(messages -> messages.teleport().cancel())
+                    .message(messages -> messages.teleport().teleportTaskCanceled())
                     .player(player.getUniqueId())
                     .send();
 
                 continue;
             }
 
-            if (System.currentTimeMillis() < time) {
-                long actionTime = time - System.currentTimeMillis();
+            Instant now = Instant.now();
 
-                this.noticeService.notice()
-                    .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().actionBarMessage())
-                    .placeholder("{TIME}", DateUtils.durationToString(actionTime))
+            if (now.isBefore(teleportMoment)) {
+                Duration duration = Duration.between(now, teleportMoment);
+
+                this.noticeService.create()
+                    .notice(messages -> messages.teleport().teleportTimerFormat())
+                    .placeholder("{TIME}", DurationUtil.format(duration))
                     .player(player.getUniqueId())
                     .send();
 
                 continue;
             }
 
-            player.teleport(destinationLocation);
+            this.teleportService.teleport(player, destinationLocation);
+            this.teleportTaskService.removeTeleport(uuid);
 
-            this.teleportService.removeTeleport(uuid);
-
-            this.noticeService.notice()
+            this.noticeService.create()
                 .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
                 .message(messages -> messages.teleport().teleported())
                 .player(player.getUniqueId())

@@ -1,15 +1,17 @@
 package com.eternalcode.core.configuration;
 
+import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.configuration.composer.NotificationComposer;
 import com.eternalcode.core.configuration.language.LanguageComposer;
-import com.eternalcode.core.configuration.composers.LocationComposer;
-import com.eternalcode.core.configuration.implementations.CommandsConfiguration;
+import com.eternalcode.core.configuration.composer.PositionComposer;
+import com.eternalcode.core.configuration.implementation.CommandsConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
-import com.eternalcode.core.configuration.implementations.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.language.Language;
+import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
-import org.bukkit.Location;
 
 import java.io.File;
 
@@ -19,7 +21,8 @@ public class ConfigurationManager {
         .createYamlLike()
         .getSettings()
         .withComposer(Language.class, new LanguageComposer())
-        .withComposer(Location.class, new LocationComposer())
+        .withComposer(Position.class, new PositionComposer())
+        .withComposer(Notification.class, new NotificationComposer())
         .build();
 
     private final PluginConfiguration pluginConfiguration;
@@ -43,15 +46,15 @@ public class ConfigurationManager {
 
     public <T extends ConfigWithResource> void loadAndRender(T config) {
         this.cdn.load(config.getResource(), config)
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
 
         this.cdn.render(config, config.getResource())
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
     }
 
     public <T extends ConfigWithResource> void render(T config) {
         this.cdn.render(config, config.getResource())
-            .orElseThrow(RuntimeException::new);
+            .orThrow(RuntimeException::new);
     }
 
     public PluginConfiguration getPluginConfiguration() {
@@ -66,7 +69,8 @@ public class ConfigurationManager {
         return this.locationsConfiguration;
     }
 
-    public LanguageConfiguration getInventoryConfiguration() {
+    public LanguageConfiguration getLanguageConfiguration() {
         return languageConfiguration;
     }
+
 }

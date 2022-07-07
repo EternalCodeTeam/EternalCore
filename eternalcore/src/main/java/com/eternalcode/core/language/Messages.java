@@ -1,8 +1,8 @@
 package com.eternalcode.core.language;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.ConfigWithResource;
 
-import java.text.Normalizer;
 import java.util.List;
 
 public interface Messages extends ConfigWithResource {
@@ -18,6 +18,9 @@ public interface Messages extends ConfigWithResource {
     TpaSection tpa();
     OtherMessages other();
     WarpSection warp();
+    HomeSection home();
+    PrivateMessageSection privateMessage();
+    AfkSection afk();
 
     interface ArgumentSection {
         String permissionMessage();
@@ -36,8 +39,8 @@ public interface Messages extends ConfigWithResource {
     }
 
     interface Format {
-        String formatEnable();
-        String formatDisable();
+        String enable();
+        String disable();
     }
 
     interface HelpOpSection {
@@ -51,11 +54,25 @@ public interface Messages extends ConfigWithResource {
     }
 
     interface TeleportSection {
-        String actionBarMessage();
-        String cancel();
+        // teleport
+        String teleportedToPlayer();
+        String teleportedPlayerToPlayer();
+
+        // Task
+        Notification teleportTimerFormat();
         String teleported();
         String teleporting();
-        String haveTeleport();
+        String teleportTaskCanceled();
+        String teleportTaskAlreadyExist();
+
+        // Coordinates XYZ
+        String teleportedToCoordinates();
+        String teleportedSpecifiedPlayerToCoordinates();
+
+        // Back
+        String teleportedToLastLocation();
+        String teleportedSpecifiedPlayerLastLocation();
+        String lastLocationNoExist();
     }
 
     interface ChatSection {
@@ -73,36 +90,59 @@ public interface Messages extends ConfigWithResource {
     interface WarpSection {
         String availableList();
         String notExist();
+        String create();
+        String remove();
         String noPermission();
         String disabled();
+    }
+
+    interface HomeSection {
+        String notExist();
+        String create();
+        String delete();
     }
 
     interface TpaSection {
         String tpaSelfMessage();
         String tpaAlreadySentMessage();
         String tpaSentMessage();
-        String tpaRecivedMessage();
+        String tpaReceivedMessage();
 
         String tpaDenyNoRequestMessage();
         String tpaDenyNoRequestMessageAll();
         String tpaDenyDoneMessage();
-        String tpaDenyRecivedMessage();
+        String tpaDenyReceivedMessage();
         String tpaDenyAllDenied();
 
         String tpaAcceptMessage();
         String tpaAcceptNoRequestMessage();
         String tpaAcceptNoRequestMessageAll();
-        String tpaAcceptRecivedMessage();
+        String tpaAcceptReceivedMessage();
         String tpaAcceptAllAccepted();
+    }
 
+    interface PrivateMessageSection {
+        String noReply();
+        String privateMessageYouToTarget();
+        String privateMessageTargetToYou();
+
+        String socialSpyMessage();
+        String socialSpyEnable();
+        String socialSpyDisable();
+
+        String ignorePlayer();
+        String unIgnorePlayer();
+    }
+
+    interface AfkSection {
+        String afkOn();
+        String afkOff();
     }
 
     interface OtherMessages {
-        String successfullyTeleported();
-        String successfullyTeleportedPlayer();
         String alertMessagePrefix();
-        String clearMessage();
-        String clearByMessage();
+        String clearMessage(); // ?
+        String clearByMessage(); // ?
         String disposalTitle();
         String foodMessage();
         String foodOtherMessage();
@@ -111,7 +151,6 @@ public interface Messages extends ConfigWithResource {
         String nullHatMessage();
         String repairMessage();
         String skullMessage();
-        String killSelf();
         String killedMessage();
         String speedBetweenZeroAndTen();
         String speedSet();
@@ -133,14 +172,19 @@ public interface Messages extends ConfigWithResource {
         String pingOtherMessage();
         String onlineMessage();
         String listMessage();
-        String tposMessage();
-        String tposByMessage();
-        String nameMessage();
+
+        String itemChangeNameMessage();
+        String itemClearNameMessage();
+        String itemChangeLoreMessage();
+        String itemClearLoreMessage();
+        String itemFlagRemovedMessage();
+        String itemFlagAddedMessage();
+        String itemFlagClearedMessage();
+
         String enchantedMessage();
         List<String> whoisCommand();
         String languageChanged();
-        String privateMessageSendFormat();
-        String privateMessageReceiveFormat();
+
     }
 }
 

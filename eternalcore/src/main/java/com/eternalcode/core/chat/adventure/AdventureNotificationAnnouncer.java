@@ -1,6 +1,6 @@
 package com.eternalcode.core.chat.adventure;
 
-import com.eternalcode.core.chat.notification.Audience;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
@@ -21,21 +21,21 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
     }
 
     @Override
-    public void announce(Audience audience, Notification notification) {
+    public void announce(Viewer viewer, Notification notification) {
         Component component = this.miniMessage.deserialize(notification.getMessage());
 
         for (NoticeType type : notification.getTypes()) {
-            this.send(this.toAdventureAudience(audience), type, component);
+            this.send(this.toAdventureAudience(viewer), type, component);
         }
     }
 
     @Override
-    public void announce(Iterable<Audience> audiences, Notification notification) {
+    public void announce(Iterable<Viewer> viewers, Notification notification) {
         Component component = this.miniMessage.deserialize(notification.getMessage());
 
         for (NoticeType type : notification.getTypes()) {
-            for (Audience audience : audiences) {
-                this.send(this.toAdventureAudience(audience), type, component);
+            for (Viewer viewer : viewers) {
+                this.send(this.toAdventureAudience(viewer), type, component);
             }
         }
     }
@@ -58,12 +58,12 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
         }
     }
 
-    private net.kyori.adventure.audience.Audience toAdventureAudience(Audience audience) {
-        if (audience.isConsole()) {
+    private net.kyori.adventure.audience.Audience toAdventureAudience(Viewer viewer) {
+        if (viewer.isConsole()) {
             return this.audienceProvider.console();
         }
 
-        return this.audienceProvider.player(audience.getUuid());
+        return this.audienceProvider.player(viewer.getUniqueId());
     }
 
 }

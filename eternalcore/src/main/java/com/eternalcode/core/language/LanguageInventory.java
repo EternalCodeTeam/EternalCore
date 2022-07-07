@@ -68,7 +68,7 @@ public class LanguageInventory {
             }
         }
 
-        for (LanguageItem languageItem : this.languageSelector.languageItemMap.values()) {
+        for (LanguageItem languageItem : this.languageSelector.languageItemMap) {
             List<Component> lore = languageItem.lore
                 .stream()
                 .map(this.miniMessage::deserialize)
@@ -96,7 +96,7 @@ public class LanguageInventory {
 
                 player.closeInventory();
 
-                this.noticeService.notice()
+                this.noticeService.create()
                     .player(player.getUniqueId())
                     .message(messages -> messages.other().languageChanged())
                     .send();

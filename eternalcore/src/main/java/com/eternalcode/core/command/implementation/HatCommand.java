@@ -1,18 +1,16 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import dev.rollczi.litecommands.annotations.Execute;
-import dev.rollczi.litecommands.annotations.Permission;
-import dev.rollczi.litecommands.annotations.Section;
-import dev.rollczi.litecommands.annotations.UsageMessage;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 @Section(route = "hat")
-@Permission("eternalcore.command.hat")
-@UsageMessage("&8» &cPoprawne użycie &7/hat")
+@Permission("eternalcore.hat")
 public class HatCommand {
 
     private final NoticeService noticeService;
@@ -22,7 +20,7 @@ public class HatCommand {
     }
 
     @Execute
-    public void execute(Player player) {
+    void execute(Player player) {
 
         PlayerInventory playerInventory = player.getInventory();
 
@@ -31,7 +29,7 @@ public class HatCommand {
 
         if (handItem == null) {
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.argument().noItem())
                 .send();
@@ -45,7 +43,7 @@ public class HatCommand {
         }
 
         this.noticeService
-            .notice()
+            .create()
             .player(player.getUniqueId())
             .message(messages -> messages.other().nullHatMessage())
             .send();

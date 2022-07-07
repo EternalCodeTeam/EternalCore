@@ -3,8 +3,8 @@ package com.eternalcode.core.listener.player;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
-import com.eternalcode.core.utils.DateUtils;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ public class PlayerChatListener implements Listener {
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().disabledChatInfo())
                 .send();
@@ -48,10 +48,10 @@ public class PlayerChatListener implements Listener {
             long time = this.chatManager.getSlowDown(uuid);
 
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().disabledChatInfo())
-                .placeholder("{TIME}", DateUtils.durationToString(time))
+                .placeholder("{TIME}", DurationUtil.durationToString(time))
                 .send();
 
             event.setCancelled(true);

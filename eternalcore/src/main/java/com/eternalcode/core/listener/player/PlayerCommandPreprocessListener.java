@@ -1,7 +1,7 @@
 package com.eternalcode.core.listener.player;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.chat.notification.NoticeService;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -41,7 +41,7 @@ public class PlayerCommandPreprocessListener implements Listener {
             event.setCancelled(true);
 
             this.noticeService
-                .notice()
+                .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().noCommand())
                 .placeholder("{COMMAND}", command)

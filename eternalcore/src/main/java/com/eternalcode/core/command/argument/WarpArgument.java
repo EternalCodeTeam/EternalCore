@@ -3,18 +3,19 @@ package com.eternalcode.core.command.argument;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
-import com.eternalcode.core.warps.Warp;
-import com.eternalcode.core.warps.WarpManager;
-import dev.rollczi.litecommands.LiteInvocation;
+import com.eternalcode.core.warp.Warp;
+import com.eternalcode.core.warp.WarpManager;
 import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.argument.SingleArgumentHandler;
-import dev.rollczi.litecommands.valid.ValidationCommandException;
+import dev.rollczi.litecommands.argument.simple.OneArgument;
+import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.suggestion.Suggestion;
 import panda.std.Option;
+import panda.std.Result;
 
 import java.util.List;
 
 @ArgumentName("warp")
-public class WarpArgument implements SingleArgumentHandler<Warp> {
+public class WarpArgument implements OneArgument<Warp> {
 
     private final WarpManager warpManager;
     private final LanguageManager languageManager;
@@ -27,7 +28,7 @@ public class WarpArgument implements SingleArgumentHandler<Warp> {
     }
 
     @Override
-    public Warp parse(LiteInvocation invocation, String argument) throws ValidationCommandException {
+    public Result<Warp, ?> parse(LiteInvocation invocation, String argument) {
         Option<Warp> warpOption = this.warpManager.findWarp(argument);
 
         if (warpOption.isEmpty()) {
@@ -35,18 +36,18 @@ public class WarpArgument implements SingleArgumentHandler<Warp> {
                 .map(this.languageManager::getMessages)
                 .orElseGet(this.languageManager.getDefaultMessages());
 
-            throw new ValidationCommandException(messages.warp().notExist());
+            return Result.error(messages.warp().notExist());
         }
 
-        return warpOption.get();
+        return Result.ok(warpOption.get());
     }
 
     @Override
-    public List<String> tabulation(LiteInvocation invocation, String command, String[] args) {
-        return this.warpManager.getWarpMap()
-                .keySet()
-                .stream()
-                .toList();
+    public List<Suggestion> suggest(LiteInvocation invocation) {
+        return this.warpManager.getWarpMap().keySet().stream()
+            .map(Suggestion::of)
+            .toList();
     }
+
 }
 

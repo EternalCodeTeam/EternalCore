@@ -3,7 +3,7 @@ package com.eternalcode.core.listener.player;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.implementations.PluginConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,8 +26,12 @@ public class PlayerDeathListener implements Listener {
 
         event.setDeathMessage(StringUtils.EMPTY);
 
-        this.noticeService.notice()
-            .notice(NoticeType.CHAT, messages -> config.eventMessage.deathMessage)
+        if (this.config.eventMessage.deathMessage.isEmpty()) {
+            return;
+        }
+
+        this.noticeService.create()
+            .notice(NoticeType.CHAT, messages -> this.config.eventMessage.deathMessage)
             .placeholder("{PLAYER}", player.getName())
             .all()
             .send();

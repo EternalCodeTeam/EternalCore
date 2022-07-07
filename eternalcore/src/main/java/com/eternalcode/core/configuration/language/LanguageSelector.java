@@ -1,6 +1,7 @@
 package com.eternalcode.core.configuration.language;
 
 import com.eternalcode.core.language.Language;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -47,20 +48,28 @@ public class LanguageSelector {
     }
 
     @Description({ StringUtils.EMPTY, "# List of languages" })
-    public Map<Integer, LanguageItem> languageItemMap = ImmutableMap.<Integer, LanguageItem>builder()
-        .put(1, new LanguageItem(
+    public List<LanguageItem> languageItemMap = new ImmutableList.Builder<LanguageItem>()
+        .add(new LanguageItem(
             Material.PLAYER_HEAD,
             Language.EN,
-            21,
+            20,
             "&c&lEnglish",
             Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Click to change language!"),
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODc5ZDk5ZDljNDY0NzRlMjcxM2E3ZTg0YTk1ZTRjZTdlOGZmOGVhNGQxNjQ0MTNhNTkyZTQ0MzVkMmM2ZjlkYyJ9fX0")
         )
 
-        .put(2, new LanguageItem(
+        .add(new LanguageItem(
+            Material.REPEATER,
+            Language.DEFAULT,
+            22,
+            "&c&lAutomatyczny",
+            Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klineta!"))
+        )
+
+        .add(new LanguageItem(
             Material.PLAYER_HEAD,
             Language.PL,
-            23,
+            24,
             "&c&lPolish",
             Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij aby zmienić język!"),
             "ewogICJ0aW1lc3RhbXAiIDogMTYyNzMxOTA4NjYyOCwKICAicHJvZmlsZUlkIiA6ICJiNTM5NTkyMjMwY2I0MmE0OWY5YTRlYmYxNmRlOTYwYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJtYXJpYW5hZmFnIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2IxZDFlZmVkNjIyZTEzMTJlOTg0NGU4OTgzNjQzMzM5MGEyMTFjN2E1NTVhMzQzMWI0OTk2NWMzZTNiMzhiYjYiCiAgICB9CiAgfQp9")
