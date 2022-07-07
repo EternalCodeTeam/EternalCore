@@ -136,6 +136,8 @@ import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.scheme.SchemeFormat;
+import dev.rollczi.liteskull.LiteSkullFactory;
+import dev.rollczi.liteskull.api.SkullAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -208,6 +210,7 @@ public class EternalCore extends JavaPlugin {
      **/
     private LanguageInventory languageInventory;
     private LiteCommands<CommandSender> liteCommands;
+    private SkullAPI skullAPI;
     private boolean isSpigot = false;
 
     public static EternalCore getInstance() {
@@ -291,6 +294,10 @@ public class EternalCore extends JavaPlugin {
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
+
+        this.skullAPI = LiteSkullFactory.builder()
+            .bukkitScheduler(this)
+            .build();
 
         this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
 

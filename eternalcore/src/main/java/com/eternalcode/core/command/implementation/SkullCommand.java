@@ -1,16 +1,14 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.EternalCore;
-import com.eternalcode.core.builder.ItemBuilder;
 import com.eternalcode.core.chat.notification.NoticeService;
-
-import com.eternalcode.core.scheduler.Scheduler;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
-import org.bukkit.Material;
+import dev.rollczi.liteskull.api.SkullAPI;
+import dev.triumphteam.gui.builder.item.ItemBuilder;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,22 +17,23 @@ import org.bukkit.inventory.ItemStack;
 public class SkullCommand {
 
     private final NoticeService noticeService;
-    private final Scheduler scheduler;
+    private final SkullAPI skullAPI;
 
-    public SkullCommand(NoticeService noticeService, Scheduler scheduler) {
-        this.scheduler = scheduler;
+    public SkullCommand(NoticeService noticeService, SkullAPI skullAPI) {
+        this.skullAPI = skullAPI;
         this.noticeService = noticeService;
     }
 
     @Execute
     void execute(Player player, @Arg @By("player") String name) {
-        this.scheduler.async(() -> {
-            ItemStack item = new ItemBuilder(Material.PLAYER_HEAD).displayName(name).skullOwner(name).build();
+        this.skullAPI.acceptSyncSkull(name, skull -> {
+            ItemStack namedSkull = ItemBuilder.from(skull)
+                .name(Component.text(name))
+                .build();
 
-            player.getInventory().addItem(item);
+            player.getInventory().addItem(namedSkull);
 
-            this.noticeService
-                .create()
+            this.noticeService.create()
                 .message(messages -> messages.other().skullMessage())
                 .placeholder("{NICK}", name)
                 .player(player.getUniqueId())

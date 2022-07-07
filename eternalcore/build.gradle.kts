@@ -12,7 +12,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
     // paper lib, spigot api
-    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
 
     // Kyori Adventure
@@ -20,6 +20,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
+    implementation("dev.rollczi:liteskullapi:1.1.0")
     implementation("dev.rollczi.litecommands:bukkit:2.3.3")
     
     // cdn configs
@@ -41,7 +42,7 @@ dependencies {
     implementation("dev.triumphteam:triumph-gui:3.1.2")
 
     // tests
-    testImplementation("org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT")
+    testImplementation("org.spigotmc:spigot:1.19-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.11")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
 }
