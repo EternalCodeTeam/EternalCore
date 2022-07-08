@@ -251,7 +251,8 @@ public class EternalCore extends JavaPlugin {
             homeRepository = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
             ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             exception.printStackTrace();
             this.getLogger().severe("Can not connect to database! Some functions may not work!");
 
@@ -290,7 +291,7 @@ public class EternalCore extends JavaPlugin {
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
         this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
-        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
+        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager, server);
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
@@ -351,7 +352,6 @@ public class EternalCore extends JavaPlugin {
             .typeBind(LocationsConfiguration.class, () -> locations)
             .typeBind(PluginConfiguration.OtherSettings.class, () -> config.otherSettings)
 
-            //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
             .invalidUsageHandler(new InvalidUsage(this.miniMessage, this.adventureAudiences, this.userProvider, this.languageManager))
             .schemeFormat(SchemeFormat.ARGUMENT_ANGLED_OPTIONAL_SQUARE)
             .permissionHandler(new PermissionMessage(this.userProvider, this.adventureAudiences, this.languageManager, this.miniMessage))

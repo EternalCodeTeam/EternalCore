@@ -52,6 +52,7 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noDamagedItems = "&8» &cYou need damaged items to use this command!";
         public String noEnchantment = "&8» &cThis enchantment doesn't exist";
         public String noValidEnchantmentLevel = "&8» &cThis enchantment level is not supported!";
+        public String userNotFound = "&8» &cUser not found!";
     }
 
     @Getter @Contextual

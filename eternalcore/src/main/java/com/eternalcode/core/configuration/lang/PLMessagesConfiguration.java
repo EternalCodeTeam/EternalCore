@@ -52,6 +52,7 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noDamagedItems = "&4Błąd: &cMusisz mieć uszkodzone przedmioty!";
         public String noEnchantment = "&4Błąd: &cTaki enchant nie istnieje!";
         public String noValidEnchantmentLevel = "&4Błąd: &cTen poziom zaklęcia nie jest wspierany!";
+        public String userNotFound = "&4Błąd: &cNie znaleziono użytkownika!";
     }
 
     @Getter @Contextual

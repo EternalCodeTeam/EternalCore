@@ -36,6 +36,7 @@ public interface Messages extends ConfigWithResource {
         String noDamagedItems();
         String noEnchantment();
         String noValidEnchantmentLevel();
+        String userNotFound();
     }
 
     interface Format {
