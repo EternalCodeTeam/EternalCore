@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.command.amount.Between;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;;
 import dev.rollczi.litecommands.command.permission.Permission;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

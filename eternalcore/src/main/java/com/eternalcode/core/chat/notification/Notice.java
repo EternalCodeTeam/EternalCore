@@ -1,6 +1,7 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.placeholder.Placeholder;
+import com.eternalcode.core.chat.placeholder.PlaceholderRegistry;
+import com.eternalcode.core.chat.placeholder.Placeholders;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
@@ -30,6 +31,7 @@ public class Notice {
     private final LanguageManager languageManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
+    private final PlaceholderRegistry placeholderRegistry;
 
     private final List<Viewer> viewers = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
@@ -38,10 +40,11 @@ public class Notice {
     private final List<Formatter> formatters = new ArrayList<>();
 
 
-    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer) {
+    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
         this.languageManager = languageManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
+        this.placeholderRegistry = placeholderRegistry;
     }
 
     @CheckReturnValue
@@ -155,7 +158,7 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public <T> Notice placeholder(Placeholder<T> placeholder, T context) {
+    public <T> Notice placeholder(Placeholders<T> placeholder, T context) {
         this.formatters.add(placeholder.toFormatter(context));
         return this;
     }
@@ -177,7 +180,7 @@ public class Notice {
 
         for (Viewer viewer : this.viewers) {
             viewerByLang
-                .computeIfAbsent(viewer.getLanguage(), (key) -> new HashSet<>())
+                .computeIfAbsent(viewer.getLanguage(), key -> new HashSet<>())
                 .add(viewer);
         }
 
@@ -185,7 +188,7 @@ public class Notice {
 
         for (Language language : viewerByLang.keySet()) {
             Messages messages = this.languageManager.getMessages(language);
-            ArrayList<Notification> notifications = new ArrayList<>();
+            ArrayList<Notification> translatedNotifications = new ArrayList<>();
             Formatter translatedFormatter = new Formatter();
 
             for (Map.Entry<String, MessageExtractor> entry : this.langPlaceholders.entrySet()) {
@@ -193,36 +196,37 @@ public class Notice {
             }
 
             for (NotificationExtractor extractor : this.notifications) {
-                Notification notification = extractor.extract(messages)
-                    .edit(translatedFormatter::format);
+                Notification notification = extractor.extract(messages).edit(text -> {
+                    text = translatedFormatter.format(text);
 
-                for (Formatter formatter : this.formatters) {
-                    notification = notification.edit(formatter::format);
-                }
+                    for (Formatter formatter : this.formatters) {
+                        text = formatter.format(text);
+                    }
 
-                notification = notification.edit(text -> {
                     for (Map.Entry<String, String> entry : this.placeholders.entrySet()) {
                         text = text.replace(entry.getKey(), entry.getValue());
                     }
 
+                    text = this.placeholderRegistry.format(text);
+
                     return text;
                 });
 
-                notifications.add(notification);
+                translatedNotifications.add(notification);
             }
 
-            formattedMessages.put(language, notifications);
+            formattedMessages.put(language, translatedNotifications);
         }
 
         for (Map.Entry<Language, Set<Viewer>> entry : viewerByLang.entrySet()) {
             Language language = entry.getKey();
-            List<Notification> notifications = formattedMessages.get(language);
+            List<Notification> translatedNotifications = formattedMessages.get(language);
 
-            if (notifications == null) {
+            if (translatedNotifications == null) {
                 continue;
             }
 
-            for (Notification notification : notifications) {
+            for (Notification notification : translatedNotifications) {
                 this.announcer.announce(entry.getValue(), notification);
             }
         }

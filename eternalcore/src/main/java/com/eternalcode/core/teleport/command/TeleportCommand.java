@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
-import com.eternalcode.core.chat.placeholder.Placeholder;
+import com.eternalcode.core.chat.placeholder.Placeholders;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
@@ -20,7 +20,7 @@ import panda.utilities.text.Formatter;
 @Permission("eternalcore.teleport")
 public class TeleportCommand {
 
-    private static final Placeholder<TeleportContext> CONTEXT = Placeholder.<TeleportContext>builder()
+    private static final Placeholders<TeleportContext> CONTEXT = Placeholders.<TeleportContext>builder()
         .with("{PLAYER}", context -> context.player.getName())
         .with("{X}", context -> String.valueOf(context.location.getX()))
         .with("{Y}", context -> String.valueOf(context.location.getY()))
@@ -28,7 +28,7 @@ public class TeleportCommand {
         .with("{WORLD}", context -> context.location.getWorld() != null ? context.location.getWorld().getName() : "null")
         .build();
 
-    private static final Placeholder<Player> OTHER_PLAYER = Placeholder.<Player>builder()
+    private static final Placeholders<Player> OTHER_PLAYER = Placeholders.<Player>builder()
         .with("{ARG-PLAYER}", Player::getName)
         .build();
 

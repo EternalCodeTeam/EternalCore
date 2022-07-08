@@ -12,6 +12,7 @@ import com.eternalcode.core.chat.feature.ignore.UnIgnoreCommand;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatPresenter;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
+import com.eternalcode.core.chat.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
@@ -20,6 +21,7 @@ import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand
 import com.eternalcode.core.command.implementation.GameModeCommand;
 import com.eternalcode.core.command.implementation.item.ItemFlagCommand;
 import com.eternalcode.core.command.implementation.item.ItemLoreCommand;
+import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
 import com.eternalcode.core.home.HomeRepository;
@@ -61,13 +63,11 @@ import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.PlayerNameArg;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
-import com.eternalcode.core.command.contextual.AudienceContextual;
+import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
-import com.eternalcode.core.command.handler.ComponentResultHandler;
 import com.eternalcode.core.command.handler.InvalidUsage;
 import com.eternalcode.core.command.handler.PermissionMessage;
-import com.eternalcode.core.command.handler.StringResultHandler;
 import com.eternalcode.core.chat.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
 import com.eternalcode.core.command.implementation.inventory.AnvilCommand;
@@ -134,13 +134,12 @@ import com.eternalcode.core.warp.WarpRepository;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
-import dev.rollczi.litecommands.scheme.SchemeFormat;
+import dev.rollczi.litecommands.bukkit.adventure.platform.LiteBukkitAdventurePlatformFactory;
+import io.papermc.lib.PaperLib;
+import io.papermc.lib.environments.Environment;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -151,12 +150,13 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class EternalCore extends JavaPlugin {
 
-    private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
     private static EternalCore instance;
 
     /**
@@ -175,6 +175,7 @@ public class EternalCore extends JavaPlugin {
      * Services & Managers
      **/
     private UserManager userManager;
+    private PlaceholderRegistry placeholderRegistry;
 
     private TeleportService teleportService;
     private TeleportTaskService teleportTaskService;
@@ -191,7 +192,7 @@ public class EternalCore extends JavaPlugin {
     /**
      * Adventure
      **/
-    private BukkitAudiences adventureAudiences;
+    private BukkitAudiences audiencesProvider;
     private MiniMessage miniMessage;
 
     /**
@@ -208,7 +209,6 @@ public class EternalCore extends JavaPlugin {
      **/
     private LanguageInventory languageInventory;
     private LiteCommands<CommandSender> liteCommands;
-    private boolean isSpigot = false;
 
     public static EternalCore getInstance() {
         return instance;
@@ -234,6 +234,7 @@ public class EternalCore extends JavaPlugin {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         LanguageConfiguration languageConfig = configurationManager.getLanguageConfiguration();
+        PlaceholdersConfiguration placeholdersConfig = configurationManager.getPlaceholdersConfiguration();
 
         /* Database */
 
@@ -261,6 +262,14 @@ public class EternalCore extends JavaPlugin {
         /* Services & Managers  */
 
         this.userManager = new UserManager();
+        this.placeholderRegistry = new PlaceholderRegistry();
+        this.placeholderRegistry.stack(text -> {
+            for (Map.Entry<String, String> entry : placeholdersConfig.placeholders.entrySet()) {
+                text = text.replace(entry.getKey(), entry.getValue());
+            }
+
+            return text;
+        });
 
         this.teleportService = new TeleportService();
         this.teleportTaskService = new TeleportTaskService();
@@ -275,28 +284,24 @@ public class EternalCore extends JavaPlugin {
 
         /* Adventure */
 
-        this.adventureAudiences = BukkitAudiences.create(this);
+        this.audiencesProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
             .postProcessor(new LegacyColorProcessor())
             .build();
 
         /* Audiences System */
 
-        this.viewerProvider = new BukkitViewerProvider(this.userManager, server, this.adventureAudiences);
+        this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
         this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 
-        this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
-        this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
+        this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
+        this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer, placeholderRegistry);
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
 
-        this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
-
-            // Handlers
-            .resultHandler(String.class, new StringResultHandler(this.adventureAudiences, this.miniMessage))
-            .resultHandler(Component.class, new ComponentResultHandler(this.adventureAudiences))
+        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider)
 
             // Arguments (include optional)
             .argument(String.class, "player",   new PlayerNameArg(server))
@@ -320,7 +325,7 @@ public class EternalCore extends JavaPlugin {
 
             // Dynamic binds
             .contextualBind(Player.class,            new PlayerContextual(this.languageManager))
-            .contextualBind(Viewer.class,            new AudienceContextual(this.viewerProvider))
+            .contextualBind(Viewer.class,            new ViewerContextual(this.viewerProvider))
             .contextualBind(User.class,              new UserContextual(this.languageManager, this.userManager))
 
             // Static binds
@@ -345,9 +350,8 @@ public class EternalCore extends JavaPlugin {
             .typeBind(PluginConfiguration.OtherSettings.class, () -> config.otherSettings)
 
             //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
-            .invalidUsageHandler(new InvalidUsage(this.miniMessage, this.adventureAudiences, this.userProvider, this.languageManager))
-            .schemeFormat(SchemeFormat.ARGUMENT_ANGLED_OPTIONAL_SQUARE)
-            .permissionHandler(new PermissionMessage(this.userProvider, this.adventureAudiences, this.languageManager, this.miniMessage))
+            .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
+            .permissionHandler(new PermissionMessage(this.userProvider, this.audiencesProvider, this.languageManager, this.miniMessage))
 
             .commandInstance(
                 new IgnoreCommand(ignoreRepository, noticeService),
@@ -481,24 +485,23 @@ public class EternalCore extends JavaPlugin {
     }
 
     private void softwareCheck() {
-        try {
-            Class.forName("org.spigotmc.SpigotConfig");
-            this.isSpigot = true;
-        } catch (ClassNotFoundException exception) {
-            this.getLogger().warning("Your server running on unsupported software, use spigot/paper minecraft software and other spigot/paper 1.17x forks");
-            this.getLogger().warning("We recommend using paper, download paper from https://papermc.io/downloads");
-            this.getLogger().warning("WARRING: Supported minecraft version is 1.17-1.18x");
+        Logger logger = this.getLogger();
+        Environment environment = PaperLib.getEnvironment();
+
+        if (!environment.isSpigot()) {
+            logger.warning("Your server running on unsupported software, use spigot/paper minecraft software and other spigot/paper 1.19x forks");
+            logger.warning("We recommend using paper, download paper from https://papermc.io/downloads");
+            logger.warning("WARRING: Supported minecraft version is 1.17-1.19x");
+            return;
         }
 
-        if (this.isSpigot) {
-            this.getLogger().info("Your server running on supported software, congratulations!");
-            this.getLogger().info("Server version: " + this.getServer().getVersion());
+        if (environment.isVersion(17)) {
+            logger.warning("EternalCore no longer supports your version, be aware that there may be bugs!");
+            return;
         }
 
-        switch (VERSION) {
-            case "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1": return;
-            default: this.getLogger().warning("EternalCore no longer supports your version, be aware that there may be bugs!");
-        }
+        logger.info("Your server running on supported software, congratulations!");
+        logger.info("Server version: " + this.getServer().getVersion());
     }
 
     public ConfigurationManager getConfigurationManager() {
@@ -553,8 +556,8 @@ public class EternalCore extends JavaPlugin {
         return teleportRequestService;
     }
 
-    public BukkitAudiences getAdventureAudiences() {
-        return adventureAudiences;
+    public BukkitAudiences getAudiencesProvider() {
+        return audiencesProvider;
     }
 
     public MiniMessage getMiniMessage() {
@@ -589,7 +592,4 @@ public class EternalCore extends JavaPlugin {
         return liteCommands;
     }
 
-    public boolean isSpigot() {
-        return isSpigot;
-    }
 }

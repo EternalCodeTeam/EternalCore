@@ -11,7 +11,6 @@ import panda.std.Option;
 import panda.std.Result;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ArgumentName("world")
 public class WorldArgument implements OneArgument<World> {
@@ -32,6 +31,6 @@ public class WorldArgument implements OneArgument<World> {
         return this.server.getWorlds().stream()
                 .map(WorldInfo::getName)
                 .map(Suggestion::of)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

@@ -41,6 +41,8 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
     public static class PLArgumentSection implements ArgumentSection {
         public String permissionMessage = "&4Błąd: &cNie masz uprawnień do tej komendy! &7({PERMISSIONS})";
         public String usageMessage = "&8» &ePoprawne użycie: &7{USAGE}";
+        public String usageMessageHead = "&8» &ePoprawne użycie:";
+        public String usageMessageEntry = "&8» &7{USAGE}";
         public String offlinePlayer = "&4Błąd: &cTen gracz jest offline!";
         public String onlyPlayer = "&4Błąd: &cKomenda tylko dla graczy!";
         public String notNumber = "&4Błąd: &cArgument nie jest liczba!";
