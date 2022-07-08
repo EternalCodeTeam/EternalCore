@@ -134,9 +134,10 @@ import com.eternalcode.core.warp.WarpRepository;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.bukkit.adventure.platform.LiteBukkitAdventurePlatformFactory;
-import io.papermc.lib.PaperLib;
-import io.papermc.lib.environments.Environment;
+import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
+import dev.rollczi.litecommands.scheme.SchemeFormat;
+import dev.rollczi.liteskull.LiteSkullFactory;
+import dev.rollczi.liteskull.api.SkullAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
@@ -150,13 +151,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class EternalCore extends JavaPlugin {
 
+    private static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
     private static EternalCore instance;
 
     /**
@@ -175,7 +175,6 @@ public class EternalCore extends JavaPlugin {
      * Services & Managers
      **/
     private UserManager userManager;
-    private PlaceholderRegistry placeholderRegistry;
 
     private TeleportService teleportService;
     private TeleportTaskService teleportTaskService;
@@ -209,6 +208,7 @@ public class EternalCore extends JavaPlugin {
      **/
     private LanguageInventory languageInventory;
     private LiteCommands<CommandSender> liteCommands;
+    private SkullAPI skullAPI;
 
     public static EternalCore getInstance() {
         return instance;
@@ -234,7 +234,6 @@ public class EternalCore extends JavaPlugin {
         PluginConfiguration config = configurationManager.getPluginConfiguration();
         LocationsConfiguration locations = configurationManager.getLocationsConfiguration();
         LanguageConfiguration languageConfig = configurationManager.getLanguageConfiguration();
-        PlaceholdersConfiguration placeholdersConfig = configurationManager.getPlaceholdersConfiguration();
 
         /* Database */
 
@@ -301,8 +300,11 @@ public class EternalCore extends JavaPlugin {
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
 
-        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider)
+        this.skullAPI = LiteSkullFactory.builder()
+            .bukkitScheduler(this)
+            .build();
 
+        this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
             // Arguments (include optional)
             .argument(String.class, "player",   new PlayerNameArg(server))
             .argument(Integer.class,                new AmountArgument(this.languageManager, config, viewerProvider))

@@ -1,6 +1,5 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.builder.ItemBuilder;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
@@ -10,7 +9,7 @@ import dev.rollczi.litecommands.command.amount.Between;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;;
 import dev.rollczi.litecommands.command.permission.Permission;
-import io.papermc.lib.PaperLib;
+import dev.triumphteam.gui.builder.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -58,7 +57,7 @@ public class GiveCommand {
             amount = 1;
         }
 
-        ItemStack item = new ItemBuilder(material)
+        ItemStack item = ItemBuilder.from(material)
             .amount(amount)
             .build();
 

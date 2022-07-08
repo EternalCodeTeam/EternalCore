@@ -12,7 +12,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
     // paper lib, spigot api
-    compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
 
     // Kyori Adventure
@@ -21,7 +21,8 @@ dependencies {
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit-adventure:2.3.4")
-    
+    implementation("dev.rollczi:liteskullapi:1.1.0")
+
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.23")
 
@@ -41,7 +42,7 @@ dependencies {
     implementation("dev.triumphteam:triumph-gui:3.1.2")
 
     // tests
-    testImplementation("org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT")
+    testImplementation("org.spigotmc:spigot:1.19-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.11")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
 }
@@ -63,11 +64,11 @@ bukkit {
     description = "Essential plugin for your server!"
     version = "${project.version}"
     libraries = listOf(
-        "org.postgresql:postgresql:42.3.5",
-        "com.h2database:h2:2.1.212",
+        "org.postgresql:postgresql:42.4.0",
+        "com.h2database:h2:2.1.214",
         "com.j256.ormlite:ormlite-jdbc:6.1",
         "com.zaxxer:HikariCP:5.0.1",
-        "org.mariadb.jdbc:mariadb-java-client:3.0.4"
+        "org.mariadb.jdbc:mariadb-java-client:3.0.6"
     )
 }
 
