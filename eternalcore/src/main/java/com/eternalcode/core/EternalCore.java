@@ -291,7 +291,7 @@ public class EternalCore extends JavaPlugin {
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.adventureAudiences, this.miniMessage);
         this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer);
-        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager, server);
+        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(languageConfig.languageSelector, this.noticeService, this.userManager, this.miniMessage);
