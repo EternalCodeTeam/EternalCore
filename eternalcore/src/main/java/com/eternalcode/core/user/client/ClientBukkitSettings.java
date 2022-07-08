@@ -45,4 +45,9 @@ public class ClientBukkitSettings implements ClientSettings {
     public Locale getLocate() {
         return new Locale(this.getPlayerOrThrow().getLocale());
     }
+
+    @Override
+    public boolean isOnline() {
+        return this.getPlayerOrThrow() != null;
+    }
 }

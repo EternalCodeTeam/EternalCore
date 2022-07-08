@@ -22,7 +22,6 @@ public class PrivateChatService {
     private final IgnoreRepository ignoreRepository;
     private final Publisher publisher;
     private final UserManager userManager;
-    private final Server server;
 
     private final Cache<UUID, UUID> replies = CacheBuilder.newBuilder()
         .expireAfterWrite(Duration.ofHours(1))
@@ -30,19 +29,16 @@ public class PrivateChatService {
 
     private final Set<UUID> socialSpy = new HashSet<>();
 
-    public PrivateChatService(NoticeService noticeService, IgnoreRepository ignoreRepository, Publisher publisher, UserManager userManager, Server server) {
+    public PrivateChatService(NoticeService noticeService, IgnoreRepository ignoreRepository, Publisher publisher, UserManager userManager) {
         this.noticeService = noticeService;
         this.ignoreRepository = ignoreRepository;
         this.publisher = publisher;
         this.userManager = userManager;
-        this.server = server;
     }
 
     public void privateMessage(User sender, User target, String message) {
-        Player targetPlayer = this.server.getPlayer(target.getUniqueId());
-
-        if (targetPlayer == null) {
-            this.noticeService.player(target.getUniqueId(), messages -> messages.argument().userNotFound());
+        if (!target.getClientSettings().isOnline()) {
+            this.noticeService.player(target.getUniqueId(), messages -> messages.argument().offlinePlayer());
 
             return;
         }
@@ -69,7 +65,7 @@ public class PrivateChatService {
         Option<User> targetOption = this.userManager.getUser(uuid);
 
         if (targetOption.isEmpty()) {
-            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().userNotFound());
+            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
 
             return;
         }
