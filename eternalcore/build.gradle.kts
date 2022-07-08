@@ -64,7 +64,7 @@ bukkit {
     description = "Essential plugin for your server!"
     version = "${project.version}"
     libraries = listOf(
-        "org.postgresql:postgresql:42.3.5",
+        "org.postgresql:postgresql:42.4.0",
         "com.h2database:h2:2.1.212",
         "com.j256.ormlite:ormlite-jdbc:6.1",
         "com.zaxxer:HikariCP:5.0.1",
