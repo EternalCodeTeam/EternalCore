@@ -1,4 +1,5 @@
 ### 1.0.0
+- Fix /skull for offline players
 - Add /itemflag and /itemfalg clear
 - Add /itemname clear
 - Add /itemlore clear
