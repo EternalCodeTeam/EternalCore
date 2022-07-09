@@ -1,13 +1,13 @@
 package com.eternalcode.core.configuration.language;
 
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.language.Language;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class LanguageConfiguration extends AbstractConfigWithResource {
+public class LanguageConfiguration extends ReloadableConfig {
 
     public LanguageConfiguration(File folder, String child) {
         super(folder, child);

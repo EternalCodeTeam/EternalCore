@@ -1,6 +1,5 @@
 package com.eternalcode.core.configuration.implementation;
 
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -8,7 +7,7 @@ import net.dzikoysk.cdn.entity.Exclude;
 import java.io.File;
 import java.util.Map;
 
-public class CommandsConfiguration extends AbstractConfigWithResource {
+public class CommandsConfiguration extends AbstractReloadableConfig {
 
     public CommandsConfiguration(File folder, String child) {
         super(folder, child);

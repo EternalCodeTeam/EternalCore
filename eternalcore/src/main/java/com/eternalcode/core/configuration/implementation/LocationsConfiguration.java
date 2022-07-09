@@ -1,13 +1,12 @@
 package com.eternalcode.core.configuration.implementation;
 
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.shared.Position;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LocationsConfiguration extends AbstractConfigWithResource {
+public class LocationsConfiguration extends AbstractReloadableConfig {
 
     public LocationsConfiguration(File folder, String child) {
         super(folder, child);

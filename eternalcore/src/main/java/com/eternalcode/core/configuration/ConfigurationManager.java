@@ -44,7 +44,7 @@ public class ConfigurationManager {
         this.loadAndRender(this.languageConfiguration);
     }
 
-    public <T extends ConfigWithResource> void loadAndRender(T config) {
+    public <T extends ReloadableConfig> void loadAndRender(T config) {
         this.cdn.load(config.getResource(), config)
             .orThrow(RuntimeException::new);
 
@@ -52,7 +52,7 @@ public class ConfigurationManager {
             .orThrow(RuntimeException::new);
     }
 
-    public <T extends ConfigWithResource> void render(T config) {
+    public <T extends ReloadableConfig> void render(T config) {
         this.cdn.render(config, config.getResource())
             .orThrow(RuntimeException::new);
     }

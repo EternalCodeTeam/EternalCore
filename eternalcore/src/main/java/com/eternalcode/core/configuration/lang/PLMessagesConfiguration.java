@@ -1,7 +1,6 @@
 package com.eternalcode.core.configuration.lang;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
-public class PLMessagesConfiguration extends AbstractConfigWithResource implements Messages {
+public class PLMessagesConfiguration extends AbstractReloadableConfig implements Messages {
 
     public PLMessagesConfiguration(File folder, String child) {
         super(folder, child);

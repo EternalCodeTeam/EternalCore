@@ -2,7 +2,6 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.chat.ChatSettings;
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -16,7 +15,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
-public class PluginConfiguration extends AbstractConfigWithResource {
+public class PluginConfiguration extends AbstractReloadableConfig {
 
 
     @Description({
