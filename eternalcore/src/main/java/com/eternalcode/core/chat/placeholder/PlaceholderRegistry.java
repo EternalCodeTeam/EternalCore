@@ -32,11 +32,11 @@ public class PlaceholderRegistry {
     }
 
     public String format(String text) {
-        for (PlaceholderStack stack : stacks) {
+        for (PlaceholderStack stack : this.stacks) {
             text = stack.apply(text);
         }
 
-        for (Map.Entry<String, Placeholder> entry : placeholders.entrySet()) {
+        for (Map.Entry<String, Placeholder> entry : this.placeholders.entrySet()) {
             text = text.replace(entry.getKey(), entry.getValue().extract());
         }
 
@@ -44,11 +44,11 @@ public class PlaceholderRegistry {
     }
 
     public String format(String text, Player target) {
-        for (PlayerPlaceholderStack stack : playerStacks) {
+        for (PlayerPlaceholderStack stack : this.playerStacks) {
             text = stack.apply(text, target);
         }
 
-        for (Map.Entry<String, PlayerPlaceholder> entry : playerPlaceholders.entrySet()) {
+        for (Map.Entry<String, PlayerPlaceholder> entry : this.playerPlaceholders.entrySet()) {
             text = text.replace(entry.getKey(), entry.getValue().extract(target));
         }
 
