@@ -39,7 +39,7 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // TriumphGui
-    implementation("dev.triumphteam:triumph-gui:3.1.2")
+    implementation("dev.triumphteam:triumph-gui:3.1.3")
 
     // tests
     testImplementation("org.spigotmc:spigot:1.19-R0.1-SNAPSHOT")
