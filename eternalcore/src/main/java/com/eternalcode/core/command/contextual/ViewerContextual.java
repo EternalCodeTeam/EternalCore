@@ -7,11 +7,11 @@ import dev.rollczi.litecommands.contextual.Contextual;
 import org.bukkit.command.CommandSender;
 import panda.std.Result;
 
-public class AudienceContextual implements Contextual<CommandSender, Viewer> {
+public class ViewerContextual implements Contextual<CommandSender, Viewer> {
 
     private final BukkitViewerProvider bukkitViewerProvider;
 
-    public AudienceContextual(BukkitViewerProvider bukkitViewerProvider) {
+    public ViewerContextual(BukkitViewerProvider bukkitViewerProvider) {
         this.bukkitViewerProvider = bukkitViewerProvider;
     }
 

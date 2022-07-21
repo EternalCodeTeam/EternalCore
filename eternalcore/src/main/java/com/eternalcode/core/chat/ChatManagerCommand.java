@@ -12,6 +12,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import panda.std.Option;
 
+import java.time.Duration;
+
 @Section(route = "chat", aliases = { "czat" })
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
@@ -89,7 +91,7 @@ public class ChatManagerCommand {
                 return;
             }
 
-            this.chatManager.getChatSettings().setChatDelay(amount);
+            this.chatManager.getChatSettings().setChatDelay(Duration.ofSeconds(amount.intValue()));
             this.audiences.create()
                 .message(messages -> messages.chat().slowModeSet())
                 .placeholder("{SLOWMODE}", amountArg)

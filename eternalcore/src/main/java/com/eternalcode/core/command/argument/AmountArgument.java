@@ -13,10 +13,12 @@ import panda.std.Option;
 import panda.std.Result;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 @ArgumentName("amount")
 public class AmountArgument implements OneArgument<Integer> {
+
+    private static final Pattern AMOUNT_PATTERN = Pattern.compile("^-?[0-9.]+$");
 
     private final LanguageManager languageManager;
     private final PluginConfiguration config;
@@ -42,7 +44,17 @@ public class AmountArgument implements OneArgument<Integer> {
     public List<Suggestion> suggest(LiteInvocation invocation) {
         return this.config.format.amountArgumentStatement.stream()
             .map(Suggestion::of)
-            .collect(Collectors.toList());
+            .toList();
     }
 
+    @Override
+    public boolean validate(LiteInvocation invocation, Suggestion suggestion) {
+        for (String suggest : suggestion.multilevelList()) {
+            if (AMOUNT_PATTERN.matcher(suggest).matches()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -1,7 +1,9 @@
 package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.NotificationComposer;
+import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.configuration.language.LanguageComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.configuration.implementation.CommandsConfiguration;
@@ -14,12 +16,14 @@ import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 
 import java.io.File;
+import java.time.Duration;
 
 public class ConfigurationManager {
 
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
+        .withComposer(Duration.class, new DurationComposer())
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Position.class, new PositionComposer())
         .withComposer(Notification.class, new NotificationComposer())
@@ -29,12 +33,14 @@ public class ConfigurationManager {
     private final CommandsConfiguration commandsConfiguration;
     private final LocationsConfiguration locationsConfiguration;
     private final LanguageConfiguration languageConfiguration;
+    private final PlaceholdersConfiguration placeholdersConfiguration;
 
     public ConfigurationManager(File dataFolder) {
         this.pluginConfiguration = new PluginConfiguration(dataFolder, "config.yml");
         this.commandsConfiguration = new CommandsConfiguration(dataFolder, "commands.yml");
         this.locationsConfiguration = new LocationsConfiguration(dataFolder, "locations.yml");
         this.languageConfiguration = new LanguageConfiguration(dataFolder, "language.yml");
+        this.placeholdersConfiguration = new PlaceholdersConfiguration(dataFolder, "placeholders.yml");
     }
 
     public void loadAndRenderConfigs() {
@@ -71,6 +77,10 @@ public class ConfigurationManager {
 
     public LanguageConfiguration getLanguageConfiguration() {
         return languageConfiguration;
+    }
+
+    public PlaceholdersConfiguration getPlaceholdersConfiguration() {
+        return placeholdersConfiguration;
     }
 
 }

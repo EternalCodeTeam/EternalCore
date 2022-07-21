@@ -14,8 +14,9 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 //TODO: Refactor
 @Section(route = "helpop", aliases = { "report" })
@@ -24,7 +25,7 @@ public class HelpOpCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
-    private final Cache<UUID, Long> cooldowns; // TODO: <- nie trzymać tego w takim miejsu
+    private final Cache<UUID, Instant> cooldowns; // TODO: <- nie trzymać tego w takim miejsu
     private final Server server;
 
     public HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {
@@ -33,7 +34,7 @@ public class HelpOpCommand {
         this.server = server;
 
         this.cooldowns = CacheBuilder.newBuilder()
-            .expireAfterWrite((long) (this.config.chat.helpopCooldown + 10), TimeUnit.SECONDS)
+            .expireAfterWrite(this.config.chat.helpOpDelay.plus(Duration.ofSeconds(1)))
             .build();
     }
 
@@ -41,14 +42,15 @@ public class HelpOpCommand {
     @Min(1)
     void execute(Player player, @Joiner String text) {
         UUID uuid = player.getUniqueId();
+        Instant unblockMoment = this.cooldowns.asMap().getOrDefault(uuid, Instant.MIN);
 
-        if (this.cooldowns.asMap().getOrDefault(uuid, 0L) > System.currentTimeMillis()) {
-            long time = Math.max(this.cooldowns.asMap().getOrDefault(uuid, 0L) - System.currentTimeMillis(), 0L);
+        if (Instant.now().isBefore(unblockMoment)) {
+            Duration time = Duration.between(Instant.now(), unblockMoment);
 
             this.noticeService
                 .create()
                 .message(messages -> messages.helpOp().coolDown())
-                .placeholder("{TIME}", DurationUtil.durationToString(time))
+                .placeholder("{TIME}", DurationUtil.format(time))
                 .player(player.getUniqueId())
                 .send();
 
@@ -77,6 +79,6 @@ public class HelpOpCommand {
             .message(messages -> messages.helpOp().send())
             .send();
 
-        this.cooldowns.put(uuid, (long) (System.currentTimeMillis() + this.config.chat.helpopCooldown * 1000L));
+        this.cooldowns.put(uuid, Instant.now().plus(this.config.chat.helpOpDelay));
     }
 }
