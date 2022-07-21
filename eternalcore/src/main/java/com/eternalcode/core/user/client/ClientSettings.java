@@ -10,4 +10,8 @@ public interface ClientSettings {
 
     boolean isOnline();
 
+    default boolean isOffline() {
+        return !isOnline();
+    }
+
 }

@@ -37,8 +37,8 @@ public class PrivateChatService {
     }
 
     public void privateMessage(User sender, User target, String message) {
-        if (!target.getClientSettings().isOnline()) {
-            this.noticeService.player(target.getUniqueId(), messages -> messages.argument().offlinePlayer());
+        if (target.getClientSettings().isOffline()) {
+            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
 
             return;
         }
