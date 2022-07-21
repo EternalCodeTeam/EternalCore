@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.time.Duration;
 import java.util.UUID;
 
 public class PlayerChatListener implements Listener {
@@ -45,13 +46,13 @@ public class PlayerChatListener implements Listener {
         UUID uuid = player.getUniqueId();
 
         if (this.chatManager.hasSlowedChat(uuid) && !player.hasPermission("enernalcore.chat.noslowmode")) {
-            long time = this.chatManager.getSlowDown(uuid);
+            Duration time = this.chatManager.getSlowDown(uuid);
 
             this.noticeService
                 .create()
                 .player(player.getUniqueId())
                 .message(messages -> messages.chat().disabledChatInfo())
-                .placeholder("{TIME}", DurationUtil.durationToString(time))
+                .placeholder("{TIME}", DurationUtil.format(time))
                 .send();
 
             event.setCancelled(true);

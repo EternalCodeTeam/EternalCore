@@ -5,8 +5,10 @@ import dev.rollczi.litecommands.argument.simple.MultilevelArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import panda.std.Result;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,11 +28,20 @@ public class LocationArgument implements MultilevelArgument<Location> {
 
     @Override
     public List<Suggestion> suggest(LiteInvocation invocation) {
-        return Arrays.asList(
-                Suggestion.multilevel("100", "100", "100"),
-                Suggestion.multilevel("5", "5", "5"),
-                Suggestion.multilevel("10", "35", "-10")
+        List<Suggestion> suggestions = Arrays.asList(
+            Suggestion.multilevel("100", "100", "100"),
+            Suggestion.multilevel("5", "5", "5"),
+            Suggestion.multilevel("10", "35", "-10")
         );
+
+        if (invocation.sender().getHandle() instanceof Player player) {
+            Location location = player.getLocation();
+
+            suggestions = new ArrayList<>(suggestions);
+            suggestions.add(Suggestion.multilevel(String.valueOf(location.getBlockX()), String.valueOf(location.getBlockY()), String.valueOf(location.getBlockZ())));
+        }
+
+        return suggestions;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class BukkitViewerProvider implements ViewerProvider {
     private final UserManager userManager;
     private final Server server;
 
-    public BukkitViewerProvider(UserManager userManager, Server server, net.kyori.adventure.platform.AudienceProvider audienceProvider) {
+    public BukkitViewerProvider(UserManager userManager, Server server) {
         this.userManager = userManager;
         this.server = server;
     }
@@ -54,7 +54,7 @@ public class BukkitViewerProvider implements ViewerProvider {
     @Override
     public Viewer player(UUID uuid) {
         return this.userManager.getUser(uuid)
-            .map(user -> (Viewer) user)
+            .map(Viewer.class::cast)
             .orElseGet(() -> ViewerImpl.player(uuid, Language.DEFAULT));
     }
 

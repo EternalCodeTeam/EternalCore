@@ -41,6 +41,8 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public static class ENArgumentSection implements ArgumentSection {
         public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
         public String usageMessage = "&8» &eCorrect usage: &7{USAGE}";
+        public String usageMessageHead = "&8» &eCorrect usage:";
+        public String usageMessageEntry = "&8» &7{USAGE}";
         public String offlinePlayer = "&8» &cThis player is currently offline!";
         public String onlyPlayer = "&8» &cCommand is only for players!";
         public String notNumber = "&8» &cArgument isn't a number!";

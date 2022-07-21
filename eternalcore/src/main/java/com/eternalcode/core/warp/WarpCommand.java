@@ -4,6 +4,7 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
@@ -32,7 +33,7 @@ public class WarpCommand {
 
     @Execute(route = "add", required = 1)
     @Permission("eternalcore.warp.create")
-    void add(Player player, @Arg String warp) {
+    void add(Player player, @Arg @Name("warp") String warp) {
         this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
         this.noticeService.create()
             .player(player.getUniqueId())

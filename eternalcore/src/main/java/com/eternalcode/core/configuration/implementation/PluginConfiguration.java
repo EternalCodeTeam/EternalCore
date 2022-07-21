@@ -141,14 +141,14 @@ public class PluginConfiguration extends AbstractConfigWithResource {
     @Contextual
     public static class Chat implements ChatSettings {
 
-        @Description({ StringUtils.EMPTY, "# Cooldown time for helpop message in secconds" })
-        public double helpopCooldown = 60.0;
+        @Description({ StringUtils.EMPTY, "# Cooldown time for helpop message" })
+        public Duration helpOpDelay = Duration.ofSeconds(60);
 
         @Description({ StringUtils.EMPTY, "# Custom message for unknow command" })
         public boolean commandExact = false;
 
-        @Description({ StringUtils.EMPTY, "# Cooldowon time for chat in secconds" })
-        public double chatDelay = 5.0;
+        @Description({ StringUtils.EMPTY, "# Cooldowon time for chat" })
+        public Duration chatDelay = Duration.ofSeconds(5);
         public boolean chatEnabled = true;
 
         @Override
@@ -165,13 +165,13 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
         @Override
         @Exclude
-        public double getChatDelay() {
+        public Duration getChatDelay() {
             return chatDelay;
         }
 
         @Override
         @Exclude
-        public void setChatDelay(double chatDelay) {
+        public void setChatDelay(Duration chatDelay) {
             this.chatDelay = chatDelay;
         }
 

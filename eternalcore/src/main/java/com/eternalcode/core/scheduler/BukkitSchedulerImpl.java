@@ -19,11 +19,6 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
-    public void runTaskTimer(Runnable task, long delay, long period) {
-        this.rootScheduler.runTaskTimer(this.plugin, task, delay, period);
-    }
-
-    @Override
     public Task sync(Runnable task) {
         return new BukkitTaskImpl(this.rootScheduler.runTask(this.plugin, task));
     }

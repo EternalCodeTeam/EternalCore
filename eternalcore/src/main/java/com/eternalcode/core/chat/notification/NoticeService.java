@@ -1,16 +1,14 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.placeholder.Placeholder;
+import com.eternalcode.core.chat.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
-import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
 import panda.utilities.text.Formatter;
 
 import javax.annotation.CheckReturnValue;
-import java.util.Collection;
 import java.util.UUID;
 
 public class NoticeService {
@@ -18,16 +16,18 @@ public class NoticeService {
     private final LanguageManager languageManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
+    private final PlaceholderRegistry placeholderRegistry;
 
-    public NoticeService(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer) {
+    public NoticeService(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
         this.languageManager = languageManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
+        this.placeholderRegistry = placeholderRegistry;
     }
 
     @CheckReturnValue
     public Notice create() {
-        return new Notice(this.languageManager, this.viewerProvider, this.announcer);
+        return new Notice(this.languageManager, this.viewerProvider, this.announcer, placeholderRegistry);
     }
 
     public void player(UUID player, MessageExtractor extractor, Formatter... formatters) {

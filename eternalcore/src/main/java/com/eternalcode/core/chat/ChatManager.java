@@ -3,18 +3,19 @@ package com.eternalcode.core.chat;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class ChatManager {
 
-    private final Cache<UUID, Long> slowdown;
+    private final Cache<UUID, Instant> slowdown;
     private final ChatSettings chatSettings;
 
     public ChatManager(ChatSettings chatSettings) {
         this.chatSettings = chatSettings;
         this.slowdown = CacheBuilder.newBuilder()
-            .expireAfterWrite((long) (this.chatSettings.getChatDelay() + 10), TimeUnit.SECONDS)
+            .expireAfterWrite(this.chatSettings.getChatDelay().plus(Duration.ofSeconds(10)))
             .build();
     }
 
@@ -23,15 +24,15 @@ public class ChatManager {
     }
 
     public void markUseChat(UUID userUuid) {
-        this.slowdown.put(userUuid, (long) (System.currentTimeMillis() + this.chatSettings.getChatDelay() * 1000L));
+        this.slowdown.put(userUuid, Instant.now().plus(this.chatSettings.getChatDelay()));
     }
 
     public boolean hasSlowedChat(UUID userUuid) {
-        return this.slowdown.asMap().getOrDefault(userUuid, 0L) > System.currentTimeMillis();
+        return Instant.now().isBefore(this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
     }
 
-    public long getSlowDown(UUID userUuid) {
-        return Math.max(this.slowdown.asMap().getOrDefault(userUuid, 0L) - System.currentTimeMillis(), 0L);
+    public Duration getSlowDown(UUID userUuid) {
+        return Duration.between(Instant.now(), this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
     }
 
 }

@@ -25,6 +25,8 @@ public interface Messages extends ConfigWithResource {
     interface ArgumentSection {
         String permissionMessage();
         String usageMessage();
+        String usageMessageHead();
+        String usageMessageEntry();
         String offlinePlayer();
         String onlyPlayer();
         String notNumber();

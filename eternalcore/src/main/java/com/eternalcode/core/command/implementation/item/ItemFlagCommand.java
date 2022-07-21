@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.implementation.item;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.placeholder.Placeholder;
+import com.eternalcode.core.chat.placeholder.Placeholders;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
@@ -14,7 +14,7 @@ import panda.utilities.text.Formatter;
 @Section(route = "itemflag")
 public class ItemFlagCommand {
 
-    private final static Placeholder<ItemFlag> ITEM_FLAG_PLACEHOLDER = Placeholder.of("{ITEM_FLAG}", Enum::name);
+    private final static Placeholders<ItemFlag> ITEM_FLAG_PLACEHOLDER = Placeholders.of("{ITEM_FLAG}", Enum::name);
 
     private final NoticeService noticeService;
 

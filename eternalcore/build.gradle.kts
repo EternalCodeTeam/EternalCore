@@ -20,9 +20,9 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
+    implementation("dev.rollczi.litecommands:bukkit-adventure:2.3.4")
     implementation("dev.rollczi:liteskullapi:1.1.0")
-    implementation("dev.rollczi.litecommands:bukkit:2.3.3")
-    
+
     // cdn configs
     implementation("net.dzikoysk:cdn:1.13.23")
 
@@ -64,11 +64,11 @@ bukkit {
     description = "Essential plugin for your server!"
     version = "${project.version}"
     libraries = listOf(
-        "org.postgresql:postgresql:42.3.5",
-        "com.h2database:h2:2.1.212",
+        "org.postgresql:postgresql:42.4.0",
+        "com.h2database:h2:2.1.214",
         "com.j256.ormlite:ormlite-jdbc:6.1",
         "com.zaxxer:HikariCP:5.0.1",
-        "org.mariadb.jdbc:mariadb-java-client:3.0.4"
+        "org.mariadb.jdbc:mariadb-java-client:3.0.6"
     )
 }
 
