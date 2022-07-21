@@ -18,6 +18,7 @@ import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatReplyCommand;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand;
+import com.eternalcode.core.command.handler.InvalidUsage;
 import com.eternalcode.core.command.implementation.GameModeCommand;
 import com.eternalcode.core.command.implementation.item.ItemFlagCommand;
 import com.eternalcode.core.command.implementation.item.ItemLoreCommand;
@@ -66,7 +67,6 @@ import com.eternalcode.core.command.argument.WarpArgument;
 import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
-import com.eternalcode.core.command.handler.InvalidUsage;
 import com.eternalcode.core.command.handler.PermissionMessage;
 import com.eternalcode.core.chat.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.command.implementation.AlertCommand;
@@ -253,7 +253,8 @@ public class EternalCore extends JavaPlugin {
             homeRepository = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
             ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             exception.printStackTrace();
             this.getLogger().severe("Can not connect to database! Some functions may not work!");
 
@@ -357,7 +358,6 @@ public class EternalCore extends JavaPlugin {
             .typeBind(LocationsConfiguration.class, () -> locations)
             .typeBind(PluginConfiguration.OtherSettings.class, () -> config.otherSettings)
 
-            //.permissionMessage(new PermissionHandler(this.userProvider, this.languageManager))
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
             .permissionHandler(new PermissionMessage(this.userProvider, this.audiencesProvider, this.languageManager, this.miniMessage))
 

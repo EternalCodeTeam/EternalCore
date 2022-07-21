@@ -9,4 +9,10 @@ class ClientNoneSettings implements ClientSettings {
         return Locale.ENGLISH;
     }
 
+    @Override
+    public boolean isOnline() {
+        return false;
+    }
+
+
 }

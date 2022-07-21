@@ -7,6 +7,8 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import panda.std.Option;
 
 import java.time.Duration;
@@ -35,6 +37,12 @@ public class PrivateChatService {
     }
 
     public void privateMessage(User sender, User target, String message) {
+        if (target.getClientSettings().isOffline()) {
+            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
+
+            return;
+        }
+
         this.ignoreRepository.isIgnored(target.getUniqueId(), sender.getUniqueId()).then(isIgnored -> {
             if (!isIgnored) {
                 this.replies.put(target.getUniqueId(), sender.getUniqueId());
@@ -50,17 +58,21 @@ public class PrivateChatService {
 
         if (uuid == null) {
             this.noticeService.player(sender.getUniqueId(), messages -> messages.privateMessage().noReply());
+
             return;
         }
 
-        Option<User> target = this.userManager.getUser(uuid);
+        Option<User> targetOption = this.userManager.getUser(uuid);
 
-        if (target.isEmpty()) {
+        if (targetOption.isEmpty()) {
             this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
+
             return;
         }
 
-        this.privateMessage(sender, target.get(), message);
+        User target = targetOption.get();
+
+        this.privateMessage(sender, target, message);
     }
 
     public void enableSpy(UUID player) {

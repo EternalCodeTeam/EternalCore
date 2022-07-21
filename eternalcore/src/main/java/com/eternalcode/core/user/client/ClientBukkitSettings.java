@@ -12,16 +12,16 @@ public class ClientBukkitSettings implements ClientSettings {
 
     private final Server server;
     private final UUID uuid;
-    private WeakReference<Player> player;
+    private WeakReference<Player> playerReference;
 
     public ClientBukkitSettings(Server server, UUID uuid) {
         this.server = server;
         this.uuid = uuid;
-        this.player = new WeakReference<>(server.getPlayer(uuid));
+        this.playerReference = new WeakReference<>(server.getPlayer(uuid));
     }
 
     private Option<Player> getPlayer() {
-        Player player = this.player.get();
+        Player player = this.playerReference.get();
 
         if (player == null) {
             Player playerFromServer = this.server.getPlayer(uuid);
@@ -30,7 +30,7 @@ public class ClientBukkitSettings implements ClientSettings {
                 return Option.none();
             }
 
-            this.player = new WeakReference<>(playerFromServer);
+            this.playerReference = new WeakReference<>(playerFromServer);
             return Option.of(playerFromServer);
         }
 
@@ -44,5 +44,10 @@ public class ClientBukkitSettings implements ClientSettings {
     @Override
     public Locale getLocate() {
         return new Locale(this.getPlayerOrThrow().getLocale());
+    }
+
+    @Override
+    public boolean isOnline() {
+        return this.getPlayer().isPresent();
     }
 }

@@ -8,4 +8,10 @@ public interface ClientSettings {
 
     ClientSettings NONE = new ClientNoneSettings();
 
+    boolean isOnline();
+
+    default boolean isOffline() {
+        return !isOnline();
+    }
+
 }
