@@ -51,7 +51,7 @@ public class PlayerChatListener implements Listener {
             this.noticeService
                 .create()
                 .player(player.getUniqueId())
-                .message(messages -> messages.chat().disabledChatInfo())
+                .message(messages -> messages.chat().slowMode())
                 .placeholder("{TIME}", DurationUtil.format(time))
                 .send();
 
