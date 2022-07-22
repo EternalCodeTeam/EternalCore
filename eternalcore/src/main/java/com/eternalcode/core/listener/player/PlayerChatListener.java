@@ -8,6 +8,7 @@ import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -28,17 +29,12 @@ public class PlayerChatListener implements Listener {
         this.server = server;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onChatSlowmode(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
-            this.noticeService
-                .create()
-                .player(player.getUniqueId())
-                .message(messages -> messages.chat().disabledChatInfo())
-                .send();
-
+            this.noticeService.player(player.getUniqueId(), messages -> messages.chat().disabledChatInfo());
             event.setCancelled(true);
             return;
         }
@@ -56,18 +52,20 @@ public class PlayerChatListener implements Listener {
                 .send();
 
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void onChat(AsyncPlayerChatEvent event) {
+        PluginConfiguration.Sounds sound = this.config.sound;
+
+        if (!sound.enableAfterChatMessage) {
             return;
         }
 
-        if (this.config.sound.enableAfterChatMessage){
-            this.server.getOnlinePlayers()
-                .forEach(online -> online.playSound(online.getLocation(),
-                    this.config.sound.afterChatMessage,
-                    this.config.sound.afterChatMessageVolume,
-                    this.config.sound.afterChatMessagePitch)
-                );
+        for (Player online : this.server.getOnlinePlayers()) {
+            online.playSound(online.getLocation(), sound.afterChatMessage, sound.afterChatMessageVolume, sound.afterChatMessagePitch);
         }
-
-        this.chatManager.markUseChat(uuid);
     }
+
 }
