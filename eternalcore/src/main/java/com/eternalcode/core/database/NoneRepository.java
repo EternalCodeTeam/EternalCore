@@ -30,13 +30,13 @@ public final class NoneRepository implements HomeRepository, IgnoreRepository {
     }
 
     @Override
-    public Completable<Blank> deleteHome(UUID uuid) {
-        return Completable.completed(Blank.BLANK);
+    public Completable<Integer> deleteHome(UUID uuid) {
+        return Completable.completed(0);
     }
 
     @Override
-    public Completable<Blank> deleteHome(User user, String name) {
-        return Completable.completed(Blank.BLANK);
+    public Completable<Integer> deleteHome(User user, String name) {
+        return Completable.completed(0);
     }
 
     @Override

@@ -40,7 +40,7 @@ import com.eternalcode.core.command.implementation.weather.RainCommand;
 import com.eternalcode.core.command.implementation.weather.SunCommand;
 import com.eternalcode.core.command.implementation.weather.ThunderCommand;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.wrapper.RepositoryOrmLite;
+import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.home.command.ArgHome;
@@ -250,7 +250,7 @@ public class EternalCore extends JavaPlugin {
             this.databaseManager = new DatabaseManager(config, this.getLogger(), this.getDataFolder());
             this.databaseManager.connect();
 
-            homeRepository = RepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            homeRepository = HomeRepositoryOrmLite.create(this.databaseManager, this.scheduler);
             ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
         }
@@ -503,7 +503,7 @@ public class EternalCore extends JavaPlugin {
             return;
         }
 
-        if (environment.isVersion(17)) {
+        if (!environment.isVersion(17)) {
             logger.warning("EternalCore no longer supports your version, be aware that there may be bugs!");
             return;
         }

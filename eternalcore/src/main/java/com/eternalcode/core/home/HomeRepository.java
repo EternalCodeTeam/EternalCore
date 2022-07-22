@@ -1,7 +1,6 @@
 package com.eternalcode.core.home;
 
 import com.eternalcode.core.user.User;
-import org.bukkit.Location;
 import panda.std.Blank;
 import panda.std.Option;
 import panda.std.reactive.Completable;
@@ -17,9 +16,9 @@ public interface HomeRepository {
 
     Completable<Blank> saveHome(Home home);
 
-    Completable<Blank> deleteHome(UUID uuid);
+    Completable<Integer> deleteHome(UUID uuid);
 
-    Completable<Blank> deleteHome(User user, String name);
+    Completable<Integer> deleteHome(User user, String name);
 
     Completable<Set<Home>> getHomes();
 

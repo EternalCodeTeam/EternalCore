@@ -23,12 +23,12 @@ import java.util.stream.Collectors;
 
 public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
 
-    private final Dao<IgnoreWrapper, Long> dao;
+    private final Dao<IgnoreWrapper, Long> cachedDao;
     private final LoadingCache<UUID, Set<UUID>> ignores;
 
     private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) {
         super(databaseManager, scheduler);
-        this.dao = databaseManager.getDao(IgnoreWrapper.class);
+        this.cachedDao = databaseManager.getDao(IgnoreWrapper.class);
         this.ignores = CacheBuilder.newBuilder()
             .expireAfterAccess(Duration.ofMinutes(15))
             .refreshAfterWrite(Duration.ofMinutes(3))
@@ -92,7 +92,7 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
     private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
         @Override
         public @NotNull Set<UUID> load(@NotNull UUID key) throws SQLException {
-            return dao.queryBuilder()
+            return cachedDao.queryBuilder()
                 .where().eq("player_id", key)
                 .query()
                 .stream()
