@@ -30,7 +30,7 @@ public class PlayerChatListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public void onChatSlowmode(AsyncPlayerChatEvent event) {
+    public void onChatSlowMode(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
@@ -56,7 +56,12 @@ public class PlayerChatListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void onChat(AsyncPlayerChatEvent event) {
+    public void markUseChat(AsyncPlayerChatEvent event) {
+        this.chatManager.markUseChat(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void playSound(AsyncPlayerChatEvent event) {
         PluginConfiguration.Sounds sound = this.config.sound;
 
         if (!sound.enableAfterChatMessage) {
