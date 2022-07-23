@@ -87,7 +87,7 @@ tasks.withType<ShadowJar> {
     mergeServiceFiles()
     minimize()
 
-    val prefix = "com.eternalcode.core"
+    val prefix = "com.eternalcode.core.libs"
     listOf(
         "panda",
         "org.panda_lang",
