@@ -61,7 +61,7 @@ bukkit {
     prefix = "EternalCore"
     author = "EternalCodeTeam"
     name = "EternalCore"
-    description = "Essential plugin for your server!"
+    description = "All the most important server functions in one!"
     version = "${project.version}"
     libraries = listOf(
         "org.postgresql:postgresql:42.4.0",
@@ -82,26 +82,25 @@ tasks {
 tasks.withType<ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.18x).jar")
 
-    exclude("org/intellij/lang/annotations/**")
-    exclude("org/jetbrains/annotations/**")
-    exclude("org/checkerframework/**")
-    exclude("META-INF/**")
-    exclude("javax/**")
+    exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","org/checkerframework/**","META-INF/**","javax/**")
 
     mergeServiceFiles()
     minimize()
 
-    relocate("panda", "com.eternalcode.core.libs.org.panda")
-    relocate("org.panda_lang", "com.eternalcode.core.libs.org.panda")
-    relocate("net.dzikoysk", "com.eternalcode.core.libs.net.dzikoysk")
-    relocate("dev.rollczi", "com.eternalcode.core.libs.dev.rollczi")
-
-    relocate("org.bstats", "com.eternalcode.core.libs.org.bstats")
-    relocate("io.papermc.lib", "com.eternalcode.core.libs.io.papermc.lib")
-    relocate("net.kyori", "com.eternalcode.core.libs.net.kyori")
-
-    relocate("dev.triumphteam.gui", "com.eternalcode.core.libs.dev.triumphteam.gui")
-
-    relocate("org.slf4j", "com.eternalcode.core.libs.org.slf4j")
-    relocate("com.google.gson", "com.eternalcode.core.libs.com.google.gson")
+    val prefix = "com.eternalcode.core"
+    listOf(
+        "panda",
+        "org.panda_lang",
+        "org.bstats",
+        "net.dzikoysk",
+        "dev.rollczi",
+        "net.kyori",
+        "io.papermc.lib",
+        "dev.triumphteam",
+        "org.slf4j",
+        "com.google.gson"
+    ).forEach { pack ->
+        relocate(pack, "$prefix.$pack")
+    }
 }
+
