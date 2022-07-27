@@ -20,7 +20,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
-    implementation("dev.rollczi.litecommands:bukkit-adventure:2.4.0")
+    implementation("dev.rollczi.litecommands:bukkit-adventure:2.4.1")
     implementation("dev.rollczi:liteskullapi:1.1.0")
 
     // cdn configs
