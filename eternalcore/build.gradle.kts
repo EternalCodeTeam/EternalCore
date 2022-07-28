@@ -12,7 +12,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
     // paper lib, spigot api
-    compileOnly("org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
 
     // Kyori Adventure
