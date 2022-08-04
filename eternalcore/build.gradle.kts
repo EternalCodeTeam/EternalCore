@@ -16,7 +16,7 @@ dependencies {
     api("io.papermc:paperlib:1.0.7")
 
     // Kyori Adventure
-    implementation("net.kyori:adventure-platform-bukkit:4.1.1")
+    implementation("net.kyori:adventure-platform-bukkit:4.1.2")
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
 
     // LiteCommands
