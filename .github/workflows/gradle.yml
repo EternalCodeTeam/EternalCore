@@ -31,7 +31,7 @@ jobs:
       - name: Build the Jar
         run: './gradlew eternalcore:shadowJar'
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: 'Successfully build EternalCore JDK${{ matrix.jdk }}'
           path: eternalcore/build/libs/EternalCore*.jar
