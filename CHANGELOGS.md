@@ -16,3 +16,6 @@
 - Fix. Changes. This.
 - Add home system (/home, /sethome, /delhome)
 - Add warp system (/warp)
+- Fix TeleportService Bind
+- Fix typo in Reload Command and some configs
+- Fix multiple header generation in config.yml

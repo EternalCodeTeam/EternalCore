@@ -214,10 +214,6 @@ public class EternalCore extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
-    public static EternalCore getInstance() {
-        return instance;
-    }
-
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
@@ -311,6 +307,9 @@ public class EternalCore extends JavaPlugin {
             .build();
 
         this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
+
+            // TODO: Recreate for commandInstance?
+
             // Arguments (include optional)
             .argument(String.class, "player",   new PlayerNameArg(server))
             .argument(Integer.class,                new AmountArgument(this.languageManager, config, viewerProvider))
@@ -345,6 +344,7 @@ public class EternalCore extends JavaPlugin {
             .typeBind(UserManager.class,            () -> this.userManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
             .typeBind(NoticeService.class,          () -> this.noticeService)
+            .typeBind(TeleportService.class,        () -> this.teleportService)
             .typeBind(MiniMessage.class,            () -> this.miniMessage)
             .typeBind(ChatManager.class,            () -> this.chatManager)
             .typeBind(PrivateChatService.class,     () -> this.privateChatService)
@@ -511,6 +511,11 @@ public class EternalCore extends JavaPlugin {
         logger.info("Your server running on supported software, congratulations!");
         logger.info("Server version: " + this.getServer().getVersion());
     }
+
+    public static EternalCore getInstance() {
+        return instance;
+    }
+
 
     public ConfigurationManager getConfigurationManager() {
         return configurationManager;

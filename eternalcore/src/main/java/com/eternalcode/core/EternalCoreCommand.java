@@ -30,7 +30,7 @@ class EternalCoreCommand {
         this.manager.loadAndRenderConfigs();
 
         long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        player.sendMessage("&aEternalCore configs has ben successfully reloaded in " + millis + "ms");
-        this.server.getLogger().info("EternalCore configs has ben successfully reloaded in " + millis + "ms");
+        player.sendMessage("&aEternalCore configs has been successfully reloaded in " + millis + "ms");
+        this.server.getLogger().info("EternalCore configs has been successfully reloaded in " + millis + "ms");
     }
 }

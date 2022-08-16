@@ -7,7 +7,7 @@ plugins {
 }
 
 dependencies {
-    // lombok
+    // lombok (Only for configs.)
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
@@ -75,12 +75,12 @@ bukkit {
 
 tasks {
     runServer {
-        minecraftVersion("1.18.2")
+        minecraftVersion("1.19.1")
     }
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.18x).jar")
+    archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
 
     exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","org/checkerframework/**","META-INF/**","javax/**")
 
