@@ -21,7 +21,7 @@ dependencies {
 
     // LiteCommands
     implementation("dev.rollczi.litecommands:bukkit-adventure:2.5.0")
-    implementation("dev.rollczi:liteskullapi:1.1.0")
+    implementation("dev.rollczi:liteskullapi:1.3.0")
 
     // cdn configs
     implementation("net.dzikoysk:cdn:1.14.0")
