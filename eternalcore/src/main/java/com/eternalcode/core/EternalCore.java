@@ -516,7 +516,6 @@ public class EternalCore extends JavaPlugin {
         return instance;
     }
 
-
     public ConfigurationManager getConfigurationManager() {
         return configurationManager;
     }
@@ -569,14 +568,6 @@ public class EternalCore extends JavaPlugin {
         return teleportRequestService;
     }
 
-    public BukkitAudiences getAudiencesProvider() {
-        return audiencesProvider;
-    }
-
-    public MiniMessage getMiniMessage() {
-        return miniMessage;
-    }
-
     public BukkitViewerProvider getViewerProvider() {
         return viewerProvider;
     }
@@ -596,13 +587,4 @@ public class EternalCore extends JavaPlugin {
     public PrivateChatService getPrivateChatService() {
         return privateChatService;
     }
-
-    public LanguageInventory getLanguageInventory() {
-        return languageInventory;
-    }
-
-    public LiteCommands<CommandSender> getLiteCommands() {
-        return liteCommands;
-    }
-
 }

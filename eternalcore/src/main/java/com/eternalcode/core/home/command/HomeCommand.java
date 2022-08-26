@@ -5,12 +5,14 @@ import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
 @Section(route = "home")
+@Permission("eternalcore.home")
 public class HomeCommand {
 
     private final TeleportTaskService teleportTaskService;
