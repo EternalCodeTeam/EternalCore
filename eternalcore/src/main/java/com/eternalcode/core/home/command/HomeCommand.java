@@ -2,6 +2,7 @@ package com.eternalcode.core.home.command;
 
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
@@ -13,14 +14,21 @@ import java.time.Duration;
 public class HomeCommand {
 
     private final TeleportTaskService teleportTaskService;
+    private final TeleportService teleportService;
 
-    public HomeCommand(TeleportTaskService teleportTaskService) {
+    public HomeCommand(TeleportTaskService teleportTaskService, TeleportService teleportService) {
         this.teleportTaskService = teleportTaskService;
+        this.teleportService = teleportService;
     }
 
     @Execute
     void execute(Player player, @ArgHome Home home) {
-        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()),  PositionAdapter.convert(home.getLocation()), Duration.ofSeconds(5));
-    }
+        if (player.hasPermission("eternalcore.teleport.bypass")) {
+            this.teleportService.teleport(player, home.getLocation());
 
+            return;
+        }
+
+        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(home.getLocation()), Duration.ofSeconds(5));
+    }
 }
