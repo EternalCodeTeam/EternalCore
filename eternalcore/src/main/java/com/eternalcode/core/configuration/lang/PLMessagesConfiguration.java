@@ -1,23 +1,22 @@
 package com.eternalcode.core.configuration.lang;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.configuration.ReloadableConfig;
+import com.eternalcode.core.configuration.ReloadableMessages;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
+import net.dzikoysk.cdn.source.Resource;
+import net.dzikoysk.cdn.source.Source;
 
 import java.io.File;
 import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
-public class PLMessagesConfiguration extends AbstractConfigWithResource implements Messages {
-
-    public PLMessagesConfiguration(File folder, String child) {
-        super(folder, child);
-    }
+public class PLMessagesConfiguration implements ReloadableMessages {
 
     public PLArgumentSection argument = new PLArgumentSection();
     public PLFormatSection format = new PLFormatSection();
@@ -37,7 +36,13 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         return Language.PL;
     }
 
-    @Getter @Contextual
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "lang" + File.separator + "pl_messages.yml");
+    }
+
+    @Getter
+    @Contextual
     public static class PLArgumentSection implements ArgumentSection {
         public String permissionMessage = "&4Błąd: &cNie masz uprawnień do tej komendy! &7({PERMISSIONS})";
         public String usageMessage = "&8» &ePoprawne użycie: &7{USAGE}";
@@ -56,25 +61,29 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noValidEnchantmentLevel = "&4Błąd: &cTen poziom zaklęcia nie jest wspierany!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLFormatSection implements Format {
         public String enable = "&awłączona";
         public String disable = "&cwyłączona";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLHelpOpSection implements HelpOpSection {
         public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
         public String send = "&8» &aWiadomość została wysłana do administracji";
         public String coolDown = "&8» &cMożesz użyć tej komendy dopiero za &6{TIME}!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLAdminChatSection implements AdminChatSection {
         public String format = "&8[&4Administracja&8] &c{NICK}&8: &f{TEXT}";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLTeleportSection implements TeleportSection {
         // teleport
         public String teleportedToPlayer = "&8» &aPrzeteleportowano do {PLAYER}!";
@@ -97,7 +106,8 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String lastLocationNoExist = "&8 » &cNie ma zapisanej poprzedniej lokalizacji!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLChatSection implements ChatSection {
         public String disabled = "&8» &cCzat został wyłączony przez &6{NICK}&c!";
         public String enabled = "&8» &aCzat został włączony przez &f{NICK}&a!";
@@ -110,17 +120,18 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String noCommand = "&8» &cKomenda &e{COMMAND} &cnie istnieje!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLTpaSection implements TpaSection {
         public String tpaSelfMessage = "&4Błąd: &cNie możesz siebie teleportować!";
         public String tpaAlreadySentMessage = "&4Błąd: &cWysłałeś już prose o teleportacje!";
         public String tpaSentMessage = "&8» &aWysłałeś prośbę o teleportacje do gracza: &7{PLAYER}&a!";
         public String tpaReceivedMessage =
             """
-             &8» &aOtrzymałeś prośbę o teleportacje od gracza: &7{PLAYER}&a!
-             &8» &6/tpaccept {PLAYER} &aaby zaakceptować!
-             &8» &6/tpdeny {PLAYER} &aaby odrzucić!
-             """;
+                &8» &aOtrzymałeś prośbę o teleportacje od gracza: &7{PLAYER}&a!
+                &8» &6/tpaccept {PLAYER} &aaby zaakceptować!
+                &8» &6/tpdeny {PLAYER} &aaby odrzucić!
+                """;
 
         public String tpaDenyNoRequestMessage = "&4Błąd: &cNie masz prośby o teleportacje od tego gracza!";
         public String tpaDenyNoRequestMessageAll = "&4Błąd: &cNie masz żadnych próśb o teleportacje!";
@@ -135,7 +146,8 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String tpaAcceptAllAccepted = "&8» &aWszystkie prośby o teleportacje zostały zaakceptowane!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLWarpSection implements WarpSection {
         public String availableList = "&8» Lista warpów: {WARPS}";
         public String notExist = "&8» &cNie odnaleziono takiego warpa!";
@@ -145,14 +157,16 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String remove = "&8 » &7Usunięto warpa {name}!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLHomeSection implements HomeSection {
         public String notExist = "&8» &cNie ma takiego domu!";
         public String create = "&8 » &7Stworzono home {home}!";
         public String delete = "&8 » &7Usunięto home {home}!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLPrivateMessageSection implements PrivateMessageSection {
         public String noReply = "&8 » &cNie masz komu odpowiedzieć";
         public String privateMessageYouToTarget = "&8[&7Ty -> &f{TARGET}&8]&7: &f{MESSAGE}";
@@ -166,13 +180,15 @@ public class PLMessagesConfiguration extends AbstractConfigWithResource implemen
         public String unIgnorePlayer = "&8 » &7Odignorowano gracza &a{PLAYER}&7!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLAfkSection implements AfkSection {
         public String afkOn = "&8 » &7{player} jest AFK!";
         public String afkOff = "&8 » &7{player} nie jest już AFK!";
     }
 
-    @Getter @Contextual
+    @Getter
+    @Contextual
     public static class PLOtherMessages implements OtherMessages {
         public String alertMessagePrefix = "&c&lOGŁOSZENIE: &7{BROADCAST}";
         public String clearMessage = "&8» &aWyczyszczono ekwipunek!";

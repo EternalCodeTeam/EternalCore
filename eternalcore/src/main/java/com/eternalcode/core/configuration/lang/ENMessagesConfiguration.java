@@ -1,23 +1,22 @@
 package com.eternalcode.core.configuration.lang;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.configuration.ReloadableConfig;
+import com.eternalcode.core.configuration.ReloadableMessages;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
+import net.dzikoysk.cdn.source.Resource;
+import net.dzikoysk.cdn.source.Source;
 
 import java.io.File;
 import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
-public class ENMessagesConfiguration extends AbstractConfigWithResource implements Messages {
-
-    public ENMessagesConfiguration(File folder, String child) {
-        super(folder, child);
-    }
+public class ENMessagesConfiguration implements ReloadableMessages {
 
     public ENArgumentSection argument = new ENArgumentSection();
     public ENFormatSection format = new ENFormatSection();
@@ -35,6 +34,11 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     @Override
     public Language getLanguage() {
         return Language.EN;
+    }
+
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "lang" + File.separator + "en_messages.yml");
     }
 
     @Getter @Contextual

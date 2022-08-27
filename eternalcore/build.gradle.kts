@@ -52,6 +52,7 @@ tasks.getByName<Test>("test") {
 }
 
 tasks.withType<JavaCompile> {
+    options.compilerArgs = listOf("-Xlint:deprecation")
     options.encoding = "UTF-8"
 }
 

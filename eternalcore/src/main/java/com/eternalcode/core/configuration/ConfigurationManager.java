@@ -3,13 +3,8 @@ package com.eternalcode.core.configuration;
 import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.NotificationComposer;
-import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.configuration.language.LanguageComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
-import com.eternalcode.core.configuration.implementation.CommandsConfiguration;
-import com.eternalcode.core.configuration.language.LanguageConfiguration;
-import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
@@ -17,6 +12,8 @@ import net.dzikoysk.cdn.CdnFactory;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ConfigurationManager {
 
@@ -29,58 +26,34 @@ public class ConfigurationManager {
         .withComposer(Notification.class, new NotificationComposer())
         .build();
 
-    private final PluginConfiguration pluginConfiguration;
-    private final CommandsConfiguration commandsConfiguration;
-    private final LocationsConfiguration locationsConfiguration;
-    private final LanguageConfiguration languageConfiguration;
-    private final PlaceholdersConfiguration placeholdersConfiguration;
+    private final Set<ReloadableConfig> configs = new HashSet<>();
+    private final File dataFolder;
 
     public ConfigurationManager(File dataFolder) {
-        this.pluginConfiguration = new PluginConfiguration(dataFolder, "config.yml");
-        this.commandsConfiguration = new CommandsConfiguration(dataFolder, "commands.yml");
-        this.locationsConfiguration = new LocationsConfiguration(dataFolder, "locations.yml");
-        this.languageConfiguration = new LanguageConfiguration(dataFolder, "language.yml");
-        this.placeholdersConfiguration = new PlaceholdersConfiguration(dataFolder, "placeholders.yml");
+        this.dataFolder = dataFolder;
     }
 
-    public void loadAndRenderConfigs() {
-        this.loadAndRender(this.pluginConfiguration);
-        this.loadAndRender(this.commandsConfiguration);
-        this.loadAndRender(this.locationsConfiguration);
-        this.loadAndRender(this.languageConfiguration);
-    }
-
-    public <T extends ConfigWithResource> void loadAndRender(T config) {
-        this.cdn.load(config.getResource(), config)
+    public <T extends ReloadableConfig> T load(T config) {
+        cdn.load(config.resource(this.dataFolder), config)
             .orThrow(RuntimeException::new);
 
-        this.cdn.render(config, config.getResource())
+        cdn.render(config, config.resource(this.dataFolder))
+            .orThrow(RuntimeException::new);
+
+        this.configs.add(config);
+
+        return config;
+    }
+
+    public <T extends ReloadableConfig> void save(T config) {
+        cdn.render(config, config.resource(this.dataFolder))
             .orThrow(RuntimeException::new);
     }
 
-    public <T extends ConfigWithResource> void render(T config) {
-        this.cdn.render(config, config.getResource())
-            .orThrow(RuntimeException::new);
-    }
-
-    public PluginConfiguration getPluginConfiguration() {
-        return this.pluginConfiguration;
-    }
-
-    public CommandsConfiguration getCommandsConfiguration() {
-        return this.commandsConfiguration;
-    }
-
-    public LocationsConfiguration getLocationsConfiguration() {
-        return this.locationsConfiguration;
-    }
-
-    public LanguageConfiguration getLanguageConfiguration() {
-        return languageConfiguration;
-    }
-
-    public PlaceholdersConfiguration getPlaceholdersConfiguration() {
-        return placeholdersConfiguration;
+    public void reload() {
+        for (ReloadableConfig config : this.configs) {
+            load(config);
+        }
     }
 
 }

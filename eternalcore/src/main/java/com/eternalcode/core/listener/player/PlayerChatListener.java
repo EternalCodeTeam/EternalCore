@@ -2,7 +2,6 @@ package com.eternalcode.core.listener.player;
 
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Server;
@@ -22,12 +21,13 @@ public class PlayerChatListener implements Listener {
     private final PluginConfiguration config;
     private final Server server;
 
-    public PlayerChatListener(ChatManager chatManager, NoticeService noticeService, ConfigurationManager configurationManager, Server server) {
+    public PlayerChatListener(ChatManager chatManager, NoticeService noticeService, PluginConfiguration config, Server server) {
         this.chatManager = chatManager;
         this.noticeService = noticeService;
-        this.config = configurationManager.getPluginConfiguration();
+        this.config = config;
         this.server = server;
     }
+
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onChatSlowMode(AsyncPlayerChatEvent event) {

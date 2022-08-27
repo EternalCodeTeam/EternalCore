@@ -1,10 +1,13 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.util.legacy.Legacy;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -14,11 +17,13 @@ import java.util.concurrent.TimeUnit;
 @Permission("eternalcore.eternalcore")
 class EternalCoreCommand {
 
-    private final ConfigurationManager manager;
+    private final ConfigurationManager configurationManager;
+    private final MiniMessage miniMessage;
     private final Server server;
 
-    EternalCoreCommand(ConfigurationManager manager, Server server) {
-        this.manager = manager;
+    EternalCoreCommand(ConfigurationManager configurationManager, MiniMessage miniMessage, Server server) {
+        this.configurationManager = configurationManager;
+        this.miniMessage = miniMessage;
         this.server = server;
     }
 
@@ -27,10 +32,11 @@ class EternalCoreCommand {
     void reload(Player player) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        this.manager.loadAndRenderConfigs();
+        this.configurationManager.reload();
 
         long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        player.sendMessage("&aEternalCore configs has been successfully reloaded in " + millis + "ms");
+        Component deserialize = this.miniMessage.deserialize("<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Lobby configs has ben successfully reloaded in " + millis + "ms");
+        player.sendMessage(Legacy.SECTION_SERIALIZER.serialize(deserialize));
         this.server.getLogger().info("EternalCore configs has been successfully reloaded in " + millis + "ms");
     }
 }

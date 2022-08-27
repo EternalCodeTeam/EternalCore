@@ -1,11 +1,10 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.ConfigWithResource;
 
 import java.util.List;
 
-public interface Messages extends ConfigWithResource {
+public interface Messages {
 
     Language getLanguage();
 

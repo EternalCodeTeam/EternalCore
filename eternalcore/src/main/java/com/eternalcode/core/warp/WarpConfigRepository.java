@@ -39,7 +39,7 @@ public class WarpConfigRepository implements WarpRepository {
 
         this.locationsConfiguration.warps = warps;
 
-        this.configurationManager.render(this.locationsConfiguration);
+        this.configurationManager.save(this.locationsConfiguration);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.eternalcode.core.listener.player;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
@@ -18,8 +17,8 @@ public class PlayerQuitListener implements Listener {
     private final NoticeService noticeService;
     private final Server server;
 
-    public PlayerQuitListener(ConfigurationManager configurationManager, NoticeService noticeService, Server server) {
-        this.config = configurationManager.getPluginConfiguration();
+    public PlayerQuitListener(PluginConfiguration config, NoticeService noticeService, Server server) {
+        this.config = config;
         this.noticeService = noticeService;
         this.server = server;
     }
