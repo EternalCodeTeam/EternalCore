@@ -316,7 +316,7 @@ public class EternalCore extends JavaPlugin {
             .bukkitScheduler(this)
             .build();
 
-        this.liteCommands = LiteBukkitFactory.builder(server, "EternalCore")
+        this.liteCommands = LiteBukkitFactory.builder(server, "eternalcore")
 
             // TODO: Recreate for commandInstance?
 
