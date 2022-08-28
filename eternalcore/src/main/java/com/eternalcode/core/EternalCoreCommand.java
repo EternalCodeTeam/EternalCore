@@ -35,7 +35,7 @@ class EternalCoreCommand {
         this.configurationManager.reload();
 
         long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        Component deserialize = this.miniMessage.deserialize("<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Lobby configs has ben successfully reloaded in " + millis + "ms");
+        Component deserialize = this.miniMessage.deserialize("<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Configuration has ben successfully reloaded in " + millis + "ms");
         player.sendMessage(Legacy.SECTION_SERIALIZER.serialize(deserialize));
         this.server.getLogger().info("EternalCore configs has been successfully reloaded in " + millis + "ms");
     }
