@@ -6,7 +6,7 @@ import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.liteskull.api.SkullAPI;
+import dev.rollczi.liteskullapi.SkullAPI;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
