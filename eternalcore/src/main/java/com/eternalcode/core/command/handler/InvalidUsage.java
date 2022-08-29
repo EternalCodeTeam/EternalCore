@@ -25,8 +25,8 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
     }
 
     @Override
-    public void handle(CommandSender commandSender, LiteInvocation invocation, Schematic schematic) {
-        Viewer viewer = this.viewerProvider.sender(commandSender);
+    public void handle(CommandSender sender, LiteInvocation invocation, Schematic schematic) {
+        Viewer viewer = this.viewerProvider.sender(sender);
 
         List<String> schematics = schematic.getSchematics();
 

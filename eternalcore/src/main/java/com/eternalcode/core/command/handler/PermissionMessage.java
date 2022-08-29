@@ -29,7 +29,7 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
     }
 
     @Override
-    public void handle(CommandSender commandSender, LiteInvocation invocation, RequiredPermissions requiredPermissions) {
+    public void handle(CommandSender sender, LiteInvocation invocation, RequiredPermissions requiredPermissions) {
         String permissionMessage = this.userProvider.getUser(invocation)
             .map(this.languageManager::getMessages)
             .orElseGet(this.languageManager.getDefaultMessages())
@@ -41,12 +41,12 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
 
         String replaced = permissionMessage.replace("{PERMISSIONS}", perms);
 
-        if (commandSender instanceof Player player) {
+        if (sender instanceof Player player) {
             this.audienceProvider.player(player.getUniqueId()).sendMessage(this.miniMessage.deserialize(replaced));
             return;
         }
 
-        if (commandSender instanceof ConsoleCommandSender || commandSender instanceof RemoteConsoleCommandSender || commandSender instanceof BlockCommandSender) {
+        if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender || sender instanceof BlockCommandSender) {
             this.audienceProvider.console().sendMessage(this.miniMessage.deserialize(replaced));
         }
     }
