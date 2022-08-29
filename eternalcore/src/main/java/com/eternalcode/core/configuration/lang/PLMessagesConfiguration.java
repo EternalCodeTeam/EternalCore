@@ -18,6 +18,16 @@ import java.util.List;
 @Accessors(fluent = true)
 public class PLMessagesConfiguration implements ReloadableMessages {
 
+    @Override
+    public Language getLanguage() {
+        return Language.PL;
+    }
+
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "lang" + File.separator + "pl_messages.yml");
+    }
+
     public PLArgumentSection argument = new PLArgumentSection();
     public PLFormatSection format = new PLFormatSection();
     public PLHelpOpSection helpOp = new PLHelpOpSection();
@@ -30,16 +40,6 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLTpaSection tpa = new PLTpaSection();
     public PLOtherMessages other = new PLOtherMessages();
     public PLAfkSection afk = new PLAfkSection();
-
-    @Override
-    public Language getLanguage() {
-        return Language.PL;
-    }
-
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "lang" + File.separator + "pl_messages.yml");
-    }
 
     @Getter
     @Contextual

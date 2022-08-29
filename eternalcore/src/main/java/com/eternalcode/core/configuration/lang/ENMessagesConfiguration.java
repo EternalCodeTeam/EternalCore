@@ -18,6 +18,16 @@ import java.util.List;
 @Accessors(fluent = true)
 public class ENMessagesConfiguration implements ReloadableMessages {
 
+    @Override
+    public Language getLanguage() {
+        return Language.EN;
+    }
+
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "lang" + File.separator + "en_messages.yml");
+    }
+
     public ENArgumentSection argument = new ENArgumentSection();
     public ENFormatSection format = new ENFormatSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
@@ -30,16 +40,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
     public ENAfkSection afk = new ENAfkSection();
     public ENOtherMessages other = new ENOtherMessages();
-
-    @Override
-    public Language getLanguage() {
-        return Language.EN;
-    }
-
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "lang" + File.separator + "en_messages.yml");
-    }
 
     @Getter @Contextual
     public static class ENArgumentSection implements ArgumentSection {

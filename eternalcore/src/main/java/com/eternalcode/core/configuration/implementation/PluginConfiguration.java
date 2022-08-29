@@ -19,6 +19,11 @@ import java.util.List;
 
 public class PluginConfiguration implements ReloadableConfig {
 
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "config.yml");
+    }
+
     @Description({
         "#",
         "# This is the main configuration file for EternalCore.",
@@ -45,11 +50,6 @@ public class PluginConfiguration implements ReloadableConfig {
     public Afk afk = new Afk();
     @Description({ " ", "# Other Sections" })
     public OtherSettings otherSettings = new OtherSettings();
-
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "config.yml");
-    }
 
     @Contextual
     public static class Database {
