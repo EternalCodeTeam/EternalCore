@@ -6,8 +6,10 @@ import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.handle.InvalidUsageHandler;
-import dev.rollczi.litecommands.scheme.Scheme;
+import dev.rollczi.litecommands.schematic.Schematic;
 import org.bukkit.command.CommandSender;
+
+import java.util.List;
 
 public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
 
@@ -23,18 +25,21 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
     }
 
     @Override
-    public void handle(CommandSender sender, LiteInvocation invocation, Scheme scheme) {
-        Viewer viewer = this.viewerProvider.sender(sender);
+    public void handle(CommandSender commandSender, LiteInvocation invocation, Schematic schematic) {
+        Viewer viewer = this.viewerProvider.sender(commandSender);
 
-        if (scheme.getSchemes().size() == 1) {
-            this.noticeService.viewer(viewer, messages -> messages.argument().usageMessage(), SCHEME.toFormatter(scheme.getSchemes().get(0)));
+        List<String> schematics = schematic.getSchematics();
+
+        if (schematics.size() == 1) {
+            this.noticeService.viewer(viewer, messages -> messages.argument().usageMessage(), SCHEME.toFormatter(schematics.get(0)));
             return;
         }
 
         this.noticeService.viewer(viewer, messages -> messages.argument().usageMessageHead());
-        for (String schematic : scheme.getSchemes()) {
-            this.noticeService.viewer(viewer, messages -> messages.argument().usageMessageEntry(), SCHEME.toFormatter(schematic));
-        }
-    }
 
+        for (String schema : schematics) {
+            this.noticeService.viewer(viewer, messages -> messages.argument().usageMessageEntry(), SCHEME.toFormatter(schema));
+        }
+
+    }
 }

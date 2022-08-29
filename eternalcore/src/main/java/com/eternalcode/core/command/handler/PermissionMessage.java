@@ -3,7 +3,7 @@ package com.eternalcode.core.command.handler;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.command.permission.LitePermissions;
+import dev.rollczi.litecommands.command.permission.RequiredPermissions;
 import dev.rollczi.litecommands.handle.PermissionHandler;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -29,26 +29,25 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
     }
 
     @Override
-    public void handle(CommandSender sender, LiteInvocation invocation, LitePermissions litePermissions) {
+    public void handle(CommandSender commandSender, LiteInvocation invocation, RequiredPermissions requiredPermissions) {
         String permissionMessage = this.userProvider.getUser(invocation)
             .map(this.languageManager::getMessages)
             .orElseGet(this.languageManager.getDefaultMessages())
             .argument().permissionMessage();
 
         String perms = Joiner.on(", ")
-            .join(litePermissions.getPermissions())
+            .join(requiredPermissions.getPermissions())
             .toString();
 
         String replaced = permissionMessage.replace("{PERMISSIONS}", perms);
 
-        if (sender instanceof Player player) {
+        if (commandSender instanceof Player player) {
             this.audienceProvider.player(player.getUniqueId()).sendMessage(this.miniMessage.deserialize(replaced));
             return;
         }
 
-        if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender || sender instanceof BlockCommandSender) {
+        if (commandSender instanceof ConsoleCommandSender || commandSender instanceof RemoteConsoleCommandSender || commandSender instanceof BlockCommandSender) {
             this.audienceProvider.console().sendMessage(this.miniMessage.deserialize(replaced));
         }
     }
-
 }
