@@ -10,7 +10,7 @@ public final class PositionAdapter {
 
     public static Position convert(Location location) {
         if (location.getWorld() == null) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("World is not defined");
         }
 
         return new Position(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch(), location.getWorld().getName());
@@ -20,7 +20,7 @@ public final class PositionAdapter {
         World world = Bukkit.getWorld(position.getWorld());
 
         if (world == null) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("World is not defined");
         }
 
         return new Location(world, position.getX(), position.getY(), position.getZ(), position.getYaw(), position.getPitch());
