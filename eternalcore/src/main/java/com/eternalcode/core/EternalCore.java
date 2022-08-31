@@ -137,8 +137,8 @@ import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
-import dev.rollczi.liteskull.LiteSkullFactory;
-import dev.rollczi.liteskull.api.SkullAPI;
+import dev.rollczi.liteskullapi.LiteSkullFactory;
+import dev.rollczi.liteskullapi.SkullAPI;
 import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -347,26 +347,26 @@ public class EternalCore extends JavaPlugin {
             .contextualBind(User.class, new UserContextual(this.languageManager, this.userManager))
 
             // Static binds
-            .typeBind(EternalCore.class, () -> this)
-            .typeBind(ConfigurationManager.class, () -> this.configurationManager)
-            .typeBind(LanguageInventory.class, () -> this.languageInventory)
-            .typeBind(LanguageManager.class, () -> this.languageManager)
-            .typeBind(TeleportTaskService.class, () -> this.teleportTaskService)
-            .typeBind(UserManager.class, () -> this.userManager)
+            .typeBind(EternalCore.class,            () -> this)
+            .typeBind(ConfigurationManager.class,   () -> this.configurationManager)
+            .typeBind(LanguageInventory.class,      () -> this.languageInventory)
+            .typeBind(LanguageManager.class,        () -> this.languageManager)
+            .typeBind(TeleportTaskService.class,    () -> this.teleportTaskService)
+            .typeBind(UserManager.class,            () -> this.userManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
-            .typeBind(NoticeService.class, () -> this.noticeService)
-            .typeBind(TeleportService.class, () -> this.teleportService)
-            .typeBind(MiniMessage.class, () -> this.miniMessage)
-            .typeBind(ChatManager.class, () -> this.chatManager)
-            .typeBind(PrivateChatService.class, () -> this.privateChatService)
-            .typeBind(Scheduler.class, () -> this.scheduler)
-            .typeBind(WarpManager.class, () -> this.warpManager)
-            .typeBind(HomeManager.class, () -> this.homeManager)
-            .typeBind(AfkService.class, () -> this.afkService)
-            .typeBind(SkullAPI.class, () -> this.skullAPI)
+            .typeBind(NoticeService.class,          () -> this.noticeService)
+            .typeBind(TeleportService.class,        () -> this.teleportService)
+            .typeBind(MiniMessage.class,            () -> this.miniMessage)
+            .typeBind(ChatManager.class,            () -> this.chatManager)
+            .typeBind(PrivateChatService.class,     () -> this.privateChatService)
+            .typeBind(Scheduler.class,              () -> this.scheduler)
+            .typeBind(WarpManager.class,            () -> this.warpManager)
+            .typeBind(HomeManager.class,            () -> this.homeManager)
+            .typeBind(AfkService.class,             () -> this.afkService)
+            .typeBind(SkullAPI.class,               () -> this.skullAPI)
 
-            .typeBind(PluginConfiguration.class, () -> this.pluginConfiguration)
-            .typeBind(LocationsConfiguration.class, () -> this.locationsConfiguration)
+            .typeBind(PluginConfiguration.class,               () -> this.pluginConfiguration)
+            .typeBind(LocationsConfiguration.class,            () -> this.locationsConfiguration)
             .typeBind(PluginConfiguration.OtherSettings.class, () -> this.pluginConfiguration.otherSettings)
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
