@@ -128,10 +128,10 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public String tpaSentMessage = "&8» &aWysłałeś prośbę o teleportacje do gracza: &7{PLAYER}&a!";
         public String tpaReceivedMessage =
             """
-                &8» &aOtrzymałeś prośbę o teleportacje od gracza: &7{PLAYER}&a!
-                &8» &6/tpaccept {PLAYER} &aaby zaakceptować!
-                &8» &6/tpdeny {PLAYER} &aaby odrzucić!
-                """;
+             &8» &aOtrzymałeś prośbę o teleportacje od gracza: &7{PLAYER}&a!
+             &8» &6/tpaccept {PLAYER} &aaby zaakceptować!
+             &8» &6/tpdeny {PLAYER} &aaby odrzucić!
+             """;
 
         public String tpaDenyNoRequestMessage = "&4Błąd: &cNie masz prośby o teleportacje od tego gracza!";
         public String tpaDenyNoRequestMessageAll = "&4Błąd: &cNie masz żadnych próśb o teleportacje!";
