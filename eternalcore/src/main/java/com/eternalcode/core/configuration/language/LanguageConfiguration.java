@@ -1,16 +1,19 @@
 package com.eternalcode.core.configuration.language;
 
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.language.Language;
+import net.dzikoysk.cdn.source.Resource;
+import net.dzikoysk.cdn.source.Source;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class LanguageConfiguration extends AbstractConfigWithResource {
+public class LanguageConfiguration implements ReloadableConfig {
 
-    public LanguageConfiguration(File folder, String child) {
-        super(folder, child);
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "language.yml");
     }
 
     public Language defaultLanguage = Language.EN;

@@ -1,6 +1,8 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.ReloadableMessages;
+import com.eternalcode.core.configuration.lang.CustomMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
 import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
@@ -17,11 +19,36 @@ import java.util.Map.Entry;
 
 public class LanguageManager {
 
-    private Messages defaultMessages;
     private final Map<Language, Messages> translatedMessages = new HashMap<>();
+    private Messages defaultMessages;
 
     public LanguageManager(Messages defaultMessages) {
         this.defaultMessages = defaultMessages;
+    }
+
+    public static LanguageManager create(ConfigurationManager configurationManager, LanguageConfiguration languageConfiguration, File dataFolder) {
+        File langFolder = new File(dataFolder, "lang");
+        Map<Language, ReloadableMessages> defaultImplementations = new ImmutableMap.Builder<Language, ReloadableMessages>()
+            .put(Language.EN, new ENMessagesConfiguration())
+            .put(Language.PL, new PLMessagesConfiguration())
+            .build();
+
+        List<ReloadableMessages> messages = PandaStream.of(languageConfiguration.languages)
+            .map(lang -> defaultImplementations.getOrDefault(lang, new CustomMessagesConfiguration(lang.getLang())))
+            .toList();
+
+        Messages defaultMessages = PandaStream.of(messages)
+            .find(m -> m.getLanguage().equals(languageConfiguration.defaultLanguage))
+            .orThrow(() -> new RuntimeException("Default language not found!"));
+
+        LanguageManager languageManager = new LanguageManager(defaultMessages);
+
+        for (ReloadableMessages message : messages) {
+            configurationManager.load(message);
+            languageManager.loadLanguage(message.getLanguage(), message);
+        }
+
+        return languageManager;
     }
 
     public void loadLanguage(Language language, Messages translated) {
@@ -51,43 +78,16 @@ public class LanguageManager {
         return this.getMessages(language);
     }
 
-    public void setDefaultMessages(Messages defaultMessages) {
-        this.defaultMessages = defaultMessages;
-    }
-
     public Messages getDefaultMessages() {
         return this.defaultMessages;
     }
 
-    public Messages getMessages(Viewer viewer) {
-        return this.getMessages(viewer.getLanguage());
+    public void setDefaultMessages(Messages defaultMessages) {
+        this.defaultMessages = defaultMessages;
     }
 
-    public static LanguageManager create(ConfigurationManager configurationManager, File dataFolder) {
-        LanguageConfiguration languageConfiguration = configurationManager.getLanguageConfiguration();
-
-        File langFolder = new File(dataFolder, "lang");
-        Map<Language, Messages> defaultImplementations = new ImmutableMap.Builder<Language, Messages>()
-            .put(Language.EN, new ENMessagesConfiguration(langFolder, "en_messages.yml"))
-            .put(Language.PL, new PLMessagesConfiguration(langFolder, "pl_messages.yml"))
-            .build();
-
-        List<Messages> messages = PandaStream.of(languageConfiguration.languages)
-            .map(lang -> defaultImplementations.getOrDefault(lang, new ENMessagesConfiguration(langFolder, lang.getLang() + "_messages.yml")))
-            .toList();
-
-        Messages defaultMessages = PandaStream.of(messages)
-            .find(m -> m.getLanguage().equals(languageConfiguration.defaultLanguage))
-            .orThrow(() -> new RuntimeException("Default language not found!"));
-
-        LanguageManager languageManager = new LanguageManager(defaultMessages);
-
-        for (Messages message : messages) {
-            configurationManager.loadAndRender(message);
-            languageManager.loadLanguage(message.getLanguage(), message);
-        }
-
-        return languageManager;
+    public Messages getMessages(Viewer viewer) {
+        return this.getMessages(viewer.getLanguage());
     }
 
 }

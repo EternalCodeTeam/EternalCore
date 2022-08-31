@@ -27,7 +27,7 @@ public class SetSpawnCommand {
     void execute(Player player){
         this.locations.spawn = PositionAdapter.convert(player.getLocation());
 
-        this.configurationManager.render(this.locations);
+        this.configurationManager.save(this.locations);
 
         this.noticeService.create()
             .message(messages -> messages.other().spawnSet())

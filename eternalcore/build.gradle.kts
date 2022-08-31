@@ -12,7 +12,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
     // paper lib, spigot api
-    compileOnly("org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     api("io.papermc:paperlib:1.0.7")
 
     // Kyori Adventure
@@ -52,6 +52,7 @@ tasks.getByName<Test>("test") {
 }
 
 tasks.withType<JavaCompile> {
+    options.compilerArgs = listOf("-Xlint:deprecation")
     options.encoding = "UTF-8"
 }
 
@@ -82,7 +83,13 @@ tasks {
 tasks.withType<ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
 
-    exclude("org/intellij/lang/annotations/**","org/jetbrains/annotations/**","org/checkerframework/**","META-INF/**","javax/**")
+    exclude(
+        "org/intellij/lang/annotations/**",
+        "org/jetbrains/annotations/**",
+        "org/checkerframework/**",
+        "META-INF/**",
+        "javax/**"
+    )
 
     mergeServiceFiles()
     minimize()

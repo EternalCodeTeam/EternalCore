@@ -2,24 +2,26 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.chat.ChatSettings;
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
+import net.dzikoysk.cdn.source.Resource;
+import net.dzikoysk.cdn.source.Source;
 import org.bukkit.Sound;
-import panda.utilities.StringUtils;
 
 import java.io.File;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
-public class PluginConfiguration extends AbstractConfigWithResource {
+public class PluginConfiguration implements ReloadableConfig {
 
-    public PluginConfiguration(File folder, String child) {
-        super(folder, child);
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "config.yml");
     }
 
     @Description({
@@ -36,25 +38,18 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Description({ " ", "# Database Section" })
     public Database database = new Database();
-
     @Description({ " ", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
     public EventMessage eventMessage = new EventMessage();
-
     @Description({ " ", "# Awesome sounds" })
     public Sounds sound = new Sounds();
-
     @Description({ " ", "# Chat Section" })
     public Chat chat = new Chat();
-
     @Description({ " ", "# Formating on/off" })
     public Format format = new Format();
-
     @Description({ " ", "# AFK Section" })
     public Afk afk = new Afk();
-
     @Description({ " ", "# Other Sections" })
     public OtherSettings otherSettings = new OtherSettings();
-
 
     @Contextual
     public static class Database {
@@ -71,7 +66,7 @@ public class PluginConfiguration extends AbstractConfigWithResource {
 
     @Contextual
     public static class OtherSettings implements TeleportRequestSettings {
-        @Description({ " ", "# Gamemode Creative on join Requires permission: eternalcore.staff.gamemodejoin" })
+        @Description({ "# Gamemode Creative on join Requires permission: eternalcore.staff.gamemodejoin" })
         public boolean gamemodeOnJoin = false;
 
         @Description({ " ", "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })

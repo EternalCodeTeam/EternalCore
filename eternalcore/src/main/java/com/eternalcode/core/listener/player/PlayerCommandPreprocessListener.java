@@ -1,6 +1,5 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.chat.notification.NoticeService;
 import org.bukkit.Server;
@@ -17,11 +16,12 @@ public class PlayerCommandPreprocessListener implements Listener {
     private final PluginConfiguration config;
     private final Server server;
 
-    public PlayerCommandPreprocessListener(NoticeService noticeService, ConfigurationManager configurationManager, Server server) {
+    public PlayerCommandPreprocessListener(NoticeService noticeService, PluginConfiguration config, Server server) {
         this.noticeService = noticeService;
-        this.config = configurationManager.getPluginConfiguration();
+        this.config = config;
         this.server = server;
     }
+
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {

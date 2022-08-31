@@ -85,7 +85,7 @@ public class ChatManagerCommand {
     public void slowmode(Viewer viewer, String[] args) { // TODO: Argument (String[] args <- legacy solution)
         String amountArg = args[1];
 
-        Option.attempt(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {
+        Option.supplyThrowing(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {
             if (amount < 0.0D) {
                 this.audiences.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
                 return;

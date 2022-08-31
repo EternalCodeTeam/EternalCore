@@ -32,9 +32,9 @@ public class AmountArgument implements OneArgument<Integer> {
 
     @Override
     public Result<Integer, ?> parse(LiteInvocation invocation, String argument) {
-        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument)).toResult(() -> {
+        return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument)).toResult(() -> {
             Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
-            Messages messages = languageManager.getMessages(viewer.getLanguage());
+            Messages messages = this.languageManager.getMessages(viewer.getLanguage());
 
             return messages.argument().notNumber();
         });

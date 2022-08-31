@@ -1,22 +1,31 @@
 package com.eternalcode.core.configuration.lang;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.AbstractConfigWithResource;
+import com.eternalcode.core.configuration.ReloadableConfig;
+import com.eternalcode.core.configuration.ReloadableMessages;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
+import net.dzikoysk.cdn.source.Resource;
+import net.dzikoysk.cdn.source.Source;
 
 import java.io.File;
 import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
-public class ENMessagesConfiguration extends AbstractConfigWithResource implements Messages {
+public class ENMessagesConfiguration implements ReloadableMessages {
 
-    public ENMessagesConfiguration(File folder, String child) {
-        super(folder, child);
+    @Override
+    public Language getLanguage() {
+        return Language.EN;
+    }
+
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "lang" + File.separator + "en_messages.yml");
     }
 
     public ENArgumentSection argument = new ENArgumentSection();
@@ -31,11 +40,6 @@ public class ENMessagesConfiguration extends AbstractConfigWithResource implemen
     public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
     public ENAfkSection afk = new ENAfkSection();
     public ENOtherMessages other = new ENOtherMessages();
-
-    @Override
-    public Language getLanguage() {
-        return Language.EN;
-    }
 
     @Getter @Contextual
     public static class ENArgumentSection implements ArgumentSection {
