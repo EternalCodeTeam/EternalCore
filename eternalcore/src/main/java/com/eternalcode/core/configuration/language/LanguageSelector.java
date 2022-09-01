@@ -2,7 +2,6 @@ package com.eternalcode.core.configuration.language;
 
 import com.eternalcode.core.language.Language;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
@@ -10,7 +9,6 @@ import panda.utilities.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Contextual
 public class LanguageSelector {

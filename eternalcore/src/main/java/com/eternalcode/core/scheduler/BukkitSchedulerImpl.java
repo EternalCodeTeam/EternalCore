@@ -2,7 +2,6 @@ package com.eternalcode.core.scheduler;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 import panda.std.reactive.Completable;
 
 import java.time.Duration;

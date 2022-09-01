@@ -7,7 +7,6 @@ import com.eternalcode.core.home.HomeRepository;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.user.User;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.logger.Level;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
@@ -38,7 +37,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
 
     @Override
     public Completable<Option<Home>> getHome(User user, String name) {
-        return this.action(HomeWrapper.class, dao -> Option.attempt(Throwable.class, () -> dao.queryBuilder()
+        return this.action(HomeWrapper.class, dao -> Option.supplyThrowing(Throwable.class, () -> dao.queryBuilder()
                 .where()
                 .eq("owner", user.getUniqueId())
                 .and()
@@ -59,7 +58,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
 
     @Override
     public Completable<Integer> deleteHome(User user, String name) {
-        return this.action(HomeWrapper.class, dao -> Result.attempt(Throwable.class, () -> {
+        return this.action(HomeWrapper.class, dao -> Result.supplyThrowing(Throwable.class, () -> {
             DeleteBuilder<HomeWrapper, Object> builder = dao.deleteBuilder();
             builder.where()
                     .eq("owner", user.getUniqueId())
@@ -78,7 +77,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
 
     @Override
     public Completable<Set<Home>> getHomes(User user) {
-        return this.action(HomeWrapper.class, dao -> Option.attempt(Throwable.class, () -> dao.queryBuilder()
+        return this.action(HomeWrapper.class, dao -> Option.supplyThrowing(Throwable.class, () -> dao.queryBuilder()
             .where()
             .eq("owner", user.getUniqueId())
             .and()

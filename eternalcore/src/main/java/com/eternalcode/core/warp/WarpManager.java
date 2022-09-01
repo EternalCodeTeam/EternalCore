@@ -1,7 +1,6 @@
 package com.eternalcode.core.warp;
 
 import com.eternalcode.core.shared.Position;
-import org.bukkit.Location;
 import panda.std.Option;
 
 import java.util.HashMap;

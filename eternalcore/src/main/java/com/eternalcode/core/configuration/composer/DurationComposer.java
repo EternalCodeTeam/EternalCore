@@ -10,7 +10,7 @@ public class DurationComposer implements SimpleComposer<Duration> {
 
     @Override
     public Result<Duration, Exception> deserialize(String source) {
-        return Result.attempt(DateTimeParseException.class, () -> Duration.parse("PT" + source.toUpperCase(Locale.ROOT)));
+        return Result.supplyThrowing(DateTimeParseException.class, () -> Duration.parse("PT" + source.toUpperCase(Locale.ROOT)));
     }
 
     @Override
