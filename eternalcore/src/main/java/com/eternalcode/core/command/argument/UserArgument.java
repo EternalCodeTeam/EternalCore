@@ -12,8 +12,6 @@ import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.Server;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
-import panda.std.Option;
 import panda.std.Result;
 
 import java.util.List;

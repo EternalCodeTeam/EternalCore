@@ -4,7 +4,7 @@ import com.eternalcode.core.util.legacy.Legacy;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;;
+import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;

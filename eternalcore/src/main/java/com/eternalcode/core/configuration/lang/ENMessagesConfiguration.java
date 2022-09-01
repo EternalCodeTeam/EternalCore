@@ -1,10 +1,8 @@
 package com.eternalcode.core.configuration.lang;
 
 import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.configuration.ReloadableMessages;
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.language.Messages;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -43,203 +41,203 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENArgumentSection implements ArgumentSection {
-        public String permissionMessage = "&8» &cYou don't have permission to perform this command! &7({PERMISSIONS})";
-        public String usageMessage = "&8» &eCorrect usage: &7{USAGE}";
-        public String usageMessageHead = "&8» &eCorrect usage:";
-        public String usageMessageEntry = "&8» &7{USAGE}";
-        public String offlinePlayer = "&8» &cThis player is currently offline!";
-        public String onlyPlayer = "&8» &cCommand is only for players!";
-        public String notNumber = "&8» &cArgument isn't a number!";
-        public String numberBiggerThanOrEqualZero = "&8» &cThe number must be greater than or equal to 0!";
-        public String noItem = "&8» &cYou need item to use this command!";
-        public String noMaterial = "&8» &cThis item doesn't exist";
-        public String noArgument = "&8» &cThis argument doesn't exist";
-        public String noDamaged = "&8» &cThis item can't be repaired";
-        public String noDamagedItems = "&8» &cYou need damaged items to use this command!";
-        public String noEnchantment = "&8» &cThis enchantment doesn't exist";
-        public String noValidEnchantmentLevel = "&8» &cThis enchantment level is not supported!";
+        public String permissionMessage = "<dark_gray>» <red>You don't have permission to perform this command! <gray>({PERMISSIONS})";
+        public String usageMessage = "<dark_gray>» <yellow>Correct usage: <gray>{USAGE}";
+        public String usageMessageHead = "<dark_gray>» <yellow>Correct usage:";
+        public String usageMessageEntry = "<dark_gray>» <gray>{USAGE}";
+        public String offlinePlayer = "<dark_gray>» <red>This player is currently offline!";
+        public String onlyPlayer = "<dark_gray>» <red>Command is only for players!";
+        public String notNumber = "<dark_gray>» <red>Argument isn't a number!";
+        public String numberBiggerThanOrEqualZero = "<dark_gray>» <red>The number must be greater than or equal to 0!";
+        public String noItem = "<dark_gray>» <red>You need item to use this command!";
+        public String noMaterial = "<dark_gray>» <red>This item doesn't exist";
+        public String noArgument = "<dark_gray>» <red>This argument doesn't exist";
+        public String noDamaged = "<dark_gray>» <red>This item can't be repaired";
+        public String noDamagedItems = "<dark_gray>» <red>You need damaged items to use this command!";
+        public String noEnchantment = "<dark_gray>» <red>This enchantment doesn't exist";
+        public String noValidEnchantmentLevel = "<dark_gray>» <red>This enchantment level is not supported!";
     }
 
     @Getter @Contextual
     public static class ENFormatSection implements Format {
-        public String enable = "&aenabled";
-        public String disable = "&cdisabled";
+        public String enable = "<green>enabled";
+        public String disable = "<red>disabled";
     }
 
     @Getter @Contextual
     public static class ENHelpOpSection implements HelpOpSection {
-        public String format = "&8[&4HelpOp&8] &e{NICK}&8: &f{TEXT}";
-        public String send = "&8» &aThis message has been successfully sent to administration";
-        public String coolDown = "&8» &cYou can use this command for: &6{TIME}";
+        public String format = "<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{NICK}<dark_gray>: <white>{TEXT}";
+        public String send = "<dark_gray>» <green>This message has been successfully sent to administration";
+        public String coolDown = "<dark_gray>» <red>You can use this command for: <gold>{TIME}";
     }
 
     @Getter @Contextual
     public static class ENAdminChatSection implements AdminChatSection {
-        public String format = "&8[&4AdminChat&8] &c{NICK}&8: &f{TEXT}";
+        public String format = "<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{NICK}<dark_gray>: <white>{TEXT}";
     }
 
     @Getter @Contextual
     public static class ENTeleportSection implements TeleportSection {
         // teleport
-        public String teleportedToPlayer = "&8 » &aSuccessfully teleported to {PLAYER}!";
-        public String teleportedPlayerToPlayer = "&8 » &aSuccessfully teleported {PLAYER} to {ARG-PLAYER}!";
+        public String teleportedToPlayer = "<dark_gray>» <green>Successfully teleported to {PLAYER}!";
+        public String teleportedPlayerToPlayer = "<dark_gray>» <green>Successfully teleported {PLAYER} to {ARG-PLAYER}!";
 
         // Task
-        public Notification teleportTimerFormat = Notification.actionbar("&aTeleporting in &f{TIME}");
-        public String teleported = "&8 » &aTeleported!";
-        public String teleporting = "&8 » &aTeleporting...";
-        public String teleportTaskCanceled = "&8 » &cYou've moved, teleportation canceled!";
-        public String teleportTaskAlreadyExist = "&8 » &cYou are in teleport!";
+        public Notification teleportTimerFormat = Notification.actionbar("<green>Teleporting in <white>{TIME}");
+        public String teleported = "<dark_gray>» <green>Teleported!";
+        public String teleporting = "<dark_gray>» <green>Teleporting...";
+        public String teleportTaskCanceled = "<dark_gray>» <red>You've moved, teleportation canceled!";
+        public String teleportTaskAlreadyExist = "<dark_gray>» <red>You are in teleport!";
 
         // Coordinates XYZ
-        public String teleportedToCoordinates = "&8 » &6Teleported to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
-        public String teleportedSpecifiedPlayerToCoordinates = "&8 » &6Teleported &c{PLAYER} &6to location x: &c{X}&6, y: &c{Y}&6, z: &c{Z}";
+        public String teleportedToCoordinates = "<dark_gray>» <gold>Teleported to location x: <red>{X}<gold>, y: <red>{Y}<gold>, z: <red>{Z}";
+        public String teleportedSpecifiedPlayerToCoordinates = "<dark_gray>» <gold>Teleported <red>{PLAYER} <gold>to location x: <red>{X}<gold>, y: <red>{Y}<gold>, z: <red>{Z}";
 
         // Back
-        public String teleportedToLastLocation = "&8 » &7Teleported to the last location!";
-        public String teleportedSpecifiedPlayerLastLocation = "&8 » &7Teleported {PLAYER} to the last location!";
-        public String lastLocationNoExist = "&8 » &cLast location is not exist!";
+        public String teleportedToLastLocation = "<dark_gray>» <gray>Teleported to the last location!";
+        public String teleportedSpecifiedPlayerLastLocation = "<dark_gray>» <gray>Teleported {PLAYER} to the last location!";
+        public String lastLocationNoExist = "<dark_gray>» <red>Last location is not exist!";
     }
 
     @Getter @Contextual
     public static class ENChatSection implements ChatSection {
-        public String disabled = "&8» &cChat has been disabled by {NICK}!";
-        public String enabled = "&8» &aThe chat has been enabled by {NICK}!";
-        public String cleared = "&8» &6Chat has been cleared by {NICK}!";
-        public String alreadyDisabled = "&8» &aChat already off!";
-        public String alreadyEnabled = "&8» &aChat already on!";
-        public String slowModeSet = "&8» &aSlowmode set to: {SLOWMODE}";
-        public String slowMode = "&8» &cYou can write the next message for: &6{TIME}";
-        public String disabledChatInfo = "&8» &cChat is currently disabled!";
-        public String noCommand = "&8» &cCommand &e{COMMAND} &cdoesn't exists!";
+        public String disabled = "<dark_gray>» <red>Chat has been disabled by {NICK}!";
+        public String enabled = "<dark_gray>» <green>The chat has been enabled by {NICK}!";
+        public String cleared = "<dark_gray>» <gold>Chat has been cleared by {NICK}!";
+        public String alreadyDisabled = "<dark_gray>» <green>Chat already off!";
+        public String alreadyEnabled = "<dark_gray>» <green>Chat already on!";
+        public String slowModeSet = "<dark_gray>» <green>Slowmode set to: {SLOWMODE}";
+        public String slowMode = "<dark_gray>» <red>You can write the next message for: <gold>{TIME}";
+        public String disabledChatInfo = "<dark_gray>» <red>Chat is currently disabled!";
+        public String noCommand = "<dark_gray>» <red>Command <yellow>{COMMAND} <red>doesn't exists!";
     }
 
     @Getter @Contextual
     public static class ENTpaSection implements TpaSection {
 
-        public String tpaSelfMessage = "&8» &cYou can't teleport to yourself!";
-        public String tpaAlreadySentMessage = "&8» &cYou have already sent a teleportation request!";
-        public String tpaSentMessage = "&8» &aYou have sent a request for teleportation to a player: &7{PLAYER}&a!";
+        public String tpaSelfMessage = "<dark_gray>» <red>You can't teleport to yourself!";
+        public String tpaAlreadySentMessage = "<dark_gray>» <red>You have already sent a teleportation request!";
+        public String tpaSentMessage = "<dark_gray>» <green>You have sent a request for teleportation to a player: <gray>{PLAYER}<green>!";
         public String tpaReceivedMessage =
             """
-             &8» &aYou have received a request for teleportation from a player: &7{PLAYER}&a!
-             &8» &6/tpaccept {PLAYER} &ato accept!
-             &8» &6/tpdeny {PLAYER} &ato deny!
+             <dark_gray>» <green>You have received a request for teleportation from a player: <gray>{PLAYER}<green>!
+             <dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept!
+             <dark_gray>» <gold>/tpdeny {PLAYER} <green>to deny!
             """;
 
-        public String tpaDenyNoRequestMessage = "&8» &cYou do not have a teleport request from this player!";
-        public String tpaDenyNoRequestMessageAll = "&8» &cYou do not have a teleport requests!";
-        public String tpaDenyDoneMessage = "&8» &cYou have declined a teleport request from a player: &7{PLAYER}&c!";
-        public String tpaDenyReceivedMessage = "&8» &cPlayer: &7{PLAYER} rejected your teleport request!";
-        public String tpaDenyAllDenied = "&8» &cAll players have denied your teleport request!";
+        public String tpaDenyNoRequestMessage = "<dark_gray>» <red>You do not have a teleport request from this player!";
+        public String tpaDenyNoRequestMessageAll = "<dark_gray>» <red>You do not have a teleport requests!";
+        public String tpaDenyDoneMessage = "<dark_gray>» <red>You have declined a teleport request from a player: <gray>{PLAYER}<red>!";
+        public String tpaDenyReceivedMessage = "<dark_gray>» <red>Player: <gray>{PLAYER} rejected your teleport request!";
+        public String tpaDenyAllDenied = "<dark_gray>» <red>All players have denied your teleport request!";
 
-        public String tpaAcceptMessage = "&8» &aYou have accepted the teleportation from the player: &7{PLAYER}&a!";
-        public String tpaAcceptNoRequestMessage = "&8» &cThis player has not sent you a teleport request!";
-        public String tpaAcceptNoRequestMessageAll = "&8» &cYou do not have a teleport requests!";
-        public String tpaAcceptReceivedMessage = "&8» &aPlayer: &7{PLAYER} &aaccepted your teleportation request!";
-        public String tpaAcceptAllAccepted = "&8» &aAll players have accepted your teleport request!";
+        public String tpaAcceptMessage = "<dark_gray>» <green>You have accepted the teleportation from the player: <gray>{PLAYER}<green>!";
+        public String tpaAcceptNoRequestMessage = "<dark_gray>» <red>This player has not sent you a teleport request!";
+        public String tpaAcceptNoRequestMessageAll = "<dark_gray>» <red>You do not have a teleport requests!";
+        public String tpaAcceptReceivedMessage = "<dark_gray>» <green>Player: <gray>{PLAYER} <green>accepted your teleportation request!";
+        public String tpaAcceptAllAccepted = "<dark_gray>» <green>All players have accepted your teleport request!";
     }
 
     @Getter @Contextual
     public static class ENWarpSection implements WarpSection {
-        public String availableList = "&8» List available warps: {WARPS}";
-        public String notExist = "&8» &cThis warp doesn't exist";
-        public String noPermission = "&8» &cYou don't have permission to this warp!";
-        public String disabled = "&8» &cThis warp is currently disabled!";
-        public String create = "&8 » &7Warp {name} has been created.";
-        public String remove = "&8 » &7Warp {name} has been deleted.";
+        public String availableList = "<dark_gray>» List available warps: {WARPS}";
+        public String notExist = "<dark_gray>» <red>This warp doesn't exist";
+        public String noPermission = "<dark_gray>» <red>You don't have permission to this warp!";
+        public String disabled = "<dark_gray>» <red>This warp is currently disabled!";
+        public String create = "<dark_gray>» <gray>Warp {name} has been created.";
+        public String remove = "<dark_gray>» <gray>Warp {name} has been deleted.";
     }
 
     @Getter @Contextual
     public static class ENHomeSection implements HomeSection {
-        public String notExist = "&8» &cThis home doesn't exist";
-        public String create = "&8 » &7Home {home} has been created.";
-        public String delete = "&8 » &7Home {home} has been deleted.";
+        public String notExist = "<dark_gray>» <red>This home doesn't exist";
+        public String create = "<dark_gray>» <gray>Home {home} has been created.";
+        public String delete = "<dark_gray>» <gray>Home {home} has been deleted.";
     }
 
     @Getter @Contextual
     public static class ENPrivateMessageSection implements PrivateMessageSection {
-        public String noReply = "&8 » &cYou have no one to reply!";
-        public String privateMessageYouToTarget = "&8[&7You -> &f{TARGET}&8]&7: &f{MESSAGE}";
-        public String privateMessageTargetToYou = "&8[&7{SENDER} -> &fYou&8]&7: &f{MESSAGE}";
+        public String noReply = "<dark_gray>» <red>You have no one to reply!";
+        public String privateMessageYouToTarget = "<dark_gray>[<gray>You -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}";
+        public String privateMessageTargetToYou = "<dark_gray>[<gray>{SENDER} -> <white>You<dark_gray>]<gray>: <white>{MESSAGE}";
 
-        public String socialSpyMessage = "&8[&css&8] &8[&7{SENDER} -> &f{TARGET}&8]&7: &f{MESSAGE}";
-        public String socialSpyEnable = "&8 » &aSocialSpy has been enabled!";
-        public String socialSpyDisable = "&8 » &cSocialSpy has been disabled!";
+        public String socialSpyMessage = "<dark_gray>[<red>ss<dark_gray>] <dark_gray>[<gray>{SENDER} -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}";
+        public String socialSpyEnable = "<dark_gray>» <green>SocialSpy has been enabled!";
+        public String socialSpyDisable = "<dark_gray>» <red>SocialSpy has been disabled!";
 
-        public String ignorePlayer = "&8 » &c{PLAYER} &7player has been ignored!";
-        public String unIgnorePlayer = "&8 » &c{PLAYER} &7player has been uningored!";
+        public String ignorePlayer = "<dark_gray>» <red>{PLAYER} <gray>player has been ignored!";
+        public String unIgnorePlayer = "<dark_gray>» <red>{PLAYER} <gray>player has been uningored!";
     }
 
     @Getter @Contextual
     public static class ENAfkSection implements AfkSection {
-        public String afkOn = "&8 » &7{player} is AFK!";
-        public String afkOff = "&8 » &7{player} is not AFK!";
+        public String afkOn = "<dark_gray>» <gray>{player} is AFK!";
+        public String afkOff = "<dark_gray>» <gray>{player} is not AFK!";
     }
 
     @Getter @Contextual
     public static class ENOtherMessages implements OtherMessages {
-        public String alertMessagePrefix = "&c&lBROADCAST: &7{BROADCAST}";
-        public String clearMessage = "&8» &cYour inventory has been cleared!";
-        public String clearByMessage = "&8» &cPlayer {PLAYER} inventory cleared";
-        public String disposalTitle = "&f&lTrash";
-        public String foodMessage = "&8» &aYou've been feed!";
-        public String foodOtherMessage = "&8» &aYou've fed the {PLAYER}";
-        public String healMessage = "&8» &aYou've been heal!";
-        public String healedMessage = "&8» &cHealed &6{PLAYER}";
-        public String nullHatMessage = "&8» &cYou cannot use the /hat command.";
-        public String repairMessage = "&8» &aRepaired!";
-        public String skullMessage = "&8» &aPlayer {NICK} heads received";
+        public String alertMessagePrefix = "<red><bold>BROADCAST: <gray>{BROADCAST}";
+        public String clearMessage = "<dark_gray>» <red>Your inventory has been cleared!";
+        public String clearByMessage = "<dark_gray>» <red>Player {PLAYER} inventory cleared";
+        public String disposalTitle = "<white><bold>Trash";
+        public String foodMessage = "<dark_gray>» <green>You've been feed!";
+        public String foodOtherMessage = "<dark_gray>» <green>You've fed the {PLAYER}";
+        public String healMessage = "<dark_gray>» <green>You've been heal!";
+        public String healedMessage = "<dark_gray>» <red>Healed <gold>{PLAYER}";
+        public String nullHatMessage = "<dark_gray>» <red>You cannot use the /hat command.";
+        public String repairMessage = "<dark_gray>» <green>Repaired!";
+        public String skullMessage = "<dark_gray>» <green>Player {NICK} heads received";
 
-        public String killSelf = "&8» &cYou kill yourself!";
-        public String killedMessage = "&8» &cKilled {PLAYER}";
+        public String killSelf = "<dark_gray>» <red>You kill yourself!";
+        public String killedMessage = "<dark_gray>» <red>Killed {PLAYER}";
 
-        public String speedBetweenZeroAndTen = "&8» &cEnter speed from 0 to 10!";
-        public String speedSet = "&8» &cSpeed is set to {SPEED}";
-        public String speedSetBy = "&8» &cSpeed for {PLAYER} is set to {SPEED}";
+        public String speedBetweenZeroAndTen = "<dark_gray>» <red>Enter speed from 0 to 10!";
+        public String speedSet = "<dark_gray>» <red>Speed is set to {SPEED}";
+        public String speedSetBy = "<dark_gray>» <red>Speed for {PLAYER} is set to {SPEED}";
 
-        public String godMessage = "&8» &cGod is now {STATE}";
-        public String godSetMessage = "&8» &cPlayer &6{PLAYER} god is now: {STATE}";
+        public String godMessage = "<dark_gray>» <red>God is now {STATE}";
+        public String godSetMessage = "<dark_gray>» <red>Player <gold>{PLAYER} god is now: {STATE}";
 
-        public String flyMessage = "&8» &cFly is now {STATE}";
-        public String flySetMessage = "&8» &cFly for &6{PLAYER} &cis now {STATE}";
+        public String flyMessage = "<dark_gray>» <red>Fly is now {STATE}";
+        public String flySetMessage = "<dark_gray>» <red>Fly for <gold>{PLAYER} <red>is now {STATE}";
 
-        public String giveReceived = "&8» &cYou have received: &6{ITEM}";
-        public String giveGiven = "&8» &cPlayer &6{PLAYER} &chas received &6{ITEM}";
+        public String giveReceived = "<dark_gray>» <red>You have received: <gold>{ITEM}";
+        public String giveGiven = "<dark_gray>» <red>Player <gold>{PLAYER} <red>has received <gold>{ITEM}";
 
-        public String spawnSet = "&8» &aSpawn set!";
-        public String spawnNoSet = "&8» &cSpawn is not set!";
-        public String spawnTeleportedBy = "&8» &cYou have been teleported to spawn by {PLAYER}!";
-        public String spawnTeleportedOther = "&8» &cYou teleported player {PLAYER} to spawn!";
+        public String spawnSet = "<dark_gray>» <green>Spawn set!";
+        public String spawnNoSet = "<dark_gray>» <red>Spawn is not set!";
+        public String spawnTeleportedBy = "<dark_gray>» <red>You have been teleported to spawn by {PLAYER}!";
+        public String spawnTeleportedOther = "<dark_gray>» <red>You teleported player {PLAYER} to spawn!";
 
-        public String gameModeNotCorrect = "&8» &cNot a valid gamemode type";
-        public String gameModeMessage = "&8» &cGamemode now is set to: {GAMEMODE}";
-        public String gameModeSetMessage = "&8» &cGamemode for &6{PLAYER} &cnow is set to: &6{GAMEMODE}";
-        public String pingMessage = "&8» &cYour ping is: &6{PING}ms";
-        public String pingOtherMessage = "&8» &cPing of the &6{PLAYER} &cis: &6{PING}ms";
-        public String onlineMessage = "&8» &6On server now is: &f{ONLINE} &6players!";
-        public String listMessage = "&8» &6On server is: &8(&7{ONLINE}&8)&7: &f{PLAYERS}";
+        public String gameModeNotCorrect = "<dark_gray>» <red>Not a valid gamemode type";
+        public String gameModeMessage = "<dark_gray>» <red>Gamemode now is set to: {GAMEMODE}";
+        public String gameModeSetMessage = "<dark_gray>» <red>Gamemode for <gold>{PLAYER} <red>now is set to: <gold>{GAMEMODE}";
+        public String pingMessage = "<dark_gray>» <red>Your ping is: <gold>{PING}ms";
+        public String pingOtherMessage = "<dark_gray>» <red>Ping of the <gold>{PLAYER} <red>is: <gold>{PING}ms";
+        public String onlineMessage = "<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!";
+        public String listMessage = "<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}";
 
-        public String itemChangeNameMessage = "&8 » &7Name has been changed to: &c{ITEM_NAME}";
-        public String itemClearNameMessage = "&8 » &7Name has been cleared!";
-        public String itemChangeLoreMessage = "&8 » &7Lore has been changed to: &c{ITEM_LORE}";
-        public String itemClearLoreMessage = "&8 » &7Lore has been cleared!";
-        public String itemFlagRemovedMessage = "&8 » &7Flag {ITEM_FLAG} has been removed!";
-        public String itemFlagAddedMessage = "&8 » &7Flag {ITEM_FLAG} has been added!";
-        public String itemFlagClearedMessage = "&8 » &7Flags have been cleared!";
+        public String itemChangeNameMessage = "<dark_gray>» <gray>Name has been changed to: <red>{ITEM_NAME}";
+        public String itemClearNameMessage = "<dark_gray>» <gray>Name has been cleared!";
+        public String itemChangeLoreMessage = "<dark_gray>» <gray>Lore has been changed to: <red>{ITEM_LORE}";
+        public String itemClearLoreMessage = "<dark_gray>» <gray>Lore has been cleared!";
+        public String itemFlagRemovedMessage = "<dark_gray>» <gray>Flag {ITEM_FLAG} has been removed!";
+        public String itemFlagAddedMessage = "<dark_gray>» <gray>Flag {ITEM_FLAG} has been added!";
+        public String itemFlagClearedMessage = "<dark_gray>» <gray>Flags have been cleared!";
 
-        public String enchantedMessage = "&8» &6Item in hand is enchanted!";
-        public String languageChanged = "&8» &6Language changed to &cEnglish&6!";
+        public String enchantedMessage = "<dark_gray>» <gold>Item in hand is enchanted!";
+        public String languageChanged = "<dark_gray>» <gold>Language changed to <red>English<gold>!";
 
-        public List<String> whoisCommand = List.of("&8» &7Target name: &f{PLAYER}",
-            "&8» &7Target UUID: &f{UUID}",
-            "&8» &7Target address: &f{IP}",
-            "&8» &7Target walk speed: &f{WALK-SPEED}",
-            "&8» &7Target fly speed: &f{SPEED}",
-            "&8» &7Target ping: &f{PING}ms",
-            "&8» &7Target level: &f{LEVEL}",
-            "&8» &7Target health: &f{HEALTH}",
-            "&8» &7Target food level: &f{FOOD}"
+        public List<String> whoisCommand = List.of("<dark_gray>» <gray>Target name: <white>{PLAYER}",
+            "<dark_gray>» <gray>Target UUID: <white>{UUID}",
+            "<dark_gray>» <gray>Target address: <white>{IP}",
+            "<dark_gray>» <gray>Target walk speed: <white>{WALK-SPEED}",
+            "<dark_gray>» <gray>Target fly speed: <white>{SPEED}",
+            "<dark_gray>» <gray>Target ping: <white>{PING}ms",
+            "<dark_gray>» <gray>Target level: <white>{LEVEL}",
+            "<dark_gray>» <gray>Target health: <white>{HEALTH}",
+            "<dark_gray>» <gray>Target food level: <white>{FOOD}"
         );
     }
 }

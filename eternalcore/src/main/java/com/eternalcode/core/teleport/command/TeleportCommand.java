@@ -32,7 +32,7 @@ public class TeleportCommand {
         .with("{ARG-PLAYER}", Player::getName)
         .build();
 
-    private record TeleportContext(Player player, Location location) {};
+    private record TeleportContext(Player player, Location location) {}
 
     private final NoticeService noticeService;
     private final TeleportService teleportService;

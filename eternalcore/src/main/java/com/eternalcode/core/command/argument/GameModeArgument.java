@@ -42,13 +42,13 @@ public class GameModeArgument implements OneArgument<GameMode> {
 
     @Override
     public Result<GameMode, ?> parse(LiteInvocation invocation, String argument) {
-        Option<GameMode> gameMode = Option.attempt(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
+        Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {
             return Result.ok(gameMode.get());
         }
 
-        return Option.attempt(NumberFormatException.class, () -> Integer.parseInt(argument))
+        return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(GAME_MODE_VALID::valid)
             .map(integer -> GAME_MODES[integer])
             .toResult(() -> {

@@ -1,7 +1,6 @@
 package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.shared.Position;
-import org.bukkit.Location;
 
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;

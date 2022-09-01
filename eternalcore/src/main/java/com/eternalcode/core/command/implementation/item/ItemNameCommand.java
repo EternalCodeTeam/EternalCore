@@ -13,8 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.List;
-
 @Section(route = "itemname", aliases = { "itemrename" })
 @Permission("eternalcore.itemname")
 public class ItemNameCommand {

@@ -7,8 +7,6 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
 import panda.std.Option;
 
 import java.time.Duration;
@@ -52,7 +50,7 @@ public class PrivateChatService {
             this.publisher.publish(new PrivateMessage(sender, target, message, socialSpy, isIgnored));
         });
     }
-    
+
     public void reply(User sender, String message) {
         UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
 
