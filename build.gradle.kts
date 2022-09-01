@@ -1,6 +1,5 @@
 plugins {
     id("java-library")
-    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 allprojects {
@@ -8,7 +7,6 @@ allprojects {
     version = "1.0.0"
 
     apply(plugin = "java-library")
-    apply(plugin = "com.github.johnrengelman.shadow")
 
     java {
         withSourcesJar()
