@@ -11,15 +11,16 @@ import java.util.Map;
 
 public class CommandConfiguration implements ReloadableConfig {
 
-    public Map<String, Command> commands = Map.of(
-        "eternalcore", new Command("eternal-core", List.of("eternal"), List.of("eternalcore.eternalcore"))
-    );
-
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "commands.yml");
     }
 
+    public Map<String, Command> commands = Map.of(
+        "eternalcore", new Command("eternal-core", List.of("eternal"), List.of("eternalcore.eternalcore"))
+    );
+
+    
     @Contextual
     public static class Command {
         public String name;

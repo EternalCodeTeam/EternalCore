@@ -12,7 +12,7 @@ public class CommandConfigurator implements CommandEditor {
 
     @Override
     public State edit(State state) {
-        CommandConfiguration.Command command = commandConfiguration.commands.get(state.getName());
+        CommandConfiguration.Command command = this.commandConfiguration.commands.get(state.getName());
 
         if (command == null) {
             return state;

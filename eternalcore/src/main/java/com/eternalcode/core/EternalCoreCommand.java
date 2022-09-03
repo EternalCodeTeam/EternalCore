@@ -1,11 +1,11 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.util.legacy.Legacy;
+import com.eternalcode.core.warp.util.legacy.Legacy;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.section.Section;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;

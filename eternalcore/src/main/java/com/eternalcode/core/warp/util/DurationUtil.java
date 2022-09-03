@@ -1,7 +1,6 @@
-package com.eternalcode.core.util;
+package com.eternalcode.core.warp.util;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
 public final class DurationUtil {

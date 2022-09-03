@@ -1,4 +1,4 @@
-package com.eternalcode.core.util.legacy;
+package com.eternalcode.core.warp.util.legacy;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
