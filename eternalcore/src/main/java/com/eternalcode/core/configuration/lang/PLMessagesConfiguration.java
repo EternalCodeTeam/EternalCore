@@ -124,12 +124,12 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public String tpaSelfMessage = "<dark_red>Błąd: <red>Nie możesz siebie teleportować!";
         public String tpaAlreadySentMessage = "<dark_red>Błąd: <red>Wysłałeś już prose o teleportacje!";
         public String tpaSentMessage = "<dark_gray>» <green>Wysłałeś prośbę o teleportacje do gracza: <gray>{PLAYER}<green>!";
-        public String tpaReceivedMessage =
-            """
-             <dark_gray>» <green>Otrzymałeś prośbę o teleportacje od gracza: <gray>{PLAYER}<green>!
-             <dark_gray>» <gold>/tpaccept {PLAYER} <green>aby zaakceptować!
-             <dark_gray>» <gold>/tpdeny {PLAYER} <green>aby odrzucić!
-             """;
+
+        public List<String> tpaReceivedMessage = List.of(
+            "<dark_gray>» <green>Otrzymałeś prośbę o teleportacje od gracza: <gray>{PLAYER}<green>!",
+            "<dark_gray>» <gold>/tpaccept {PLAYER} <green>aby zaakceptować!",
+            "<dark_gray>» <gold>/tpdeny {PLAYER} <green>aby odrzucić!"
+        );
 
         public String tpaDenyNoRequestMessage = "<dark_red>Błąd: <red>Nie masz prośby o teleportacje od tego gracza!";
         public String tpaDenyNoRequestMessageAll = "<dark_red>Błąd: <red>Nie masz żadnych próśb o teleportacje!";

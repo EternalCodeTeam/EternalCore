@@ -118,12 +118,12 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public String tpaSelfMessage = "<dark_gray>» <red>You can't teleport to yourself!";
         public String tpaAlreadySentMessage = "<dark_gray>» <red>You have already sent a teleportation request!";
         public String tpaSentMessage = "<dark_gray>» <green>You have sent a request for teleportation to a player: <gray>{PLAYER}<green>!";
-        public String tpaReceivedMessage =
-            """
-             <dark_gray>» <green>You have received a request for teleportation from a player: <gray>{PLAYER}<green>!
-             <dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept!
-             <dark_gray>» <gold>/tpdeny {PLAYER} <green>to deny!
-            """;
+
+        public List<String> tpaReceivedMessage = List.of(
+                "<dark_gray>» <green>You have received a request for teleportation from a player: <gray>{PLAYER}<green>!",
+                "<dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept!",
+                "<dark_gray>» <gold>/tpdeny {PLAYER} <green>to deny!"
+        );
 
         public String tpaDenyNoRequestMessage = "<dark_gray>» <red>You do not have a teleport request from this player!";
         public String tpaDenyNoRequestMessageAll = "<dark_gray>» <red>You do not have a teleport requests!";

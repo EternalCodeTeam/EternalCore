@@ -107,7 +107,7 @@ public interface Messages {
         String tpaSelfMessage();
         String tpaAlreadySentMessage();
         String tpaSentMessage();
-        String tpaReceivedMessage();
+        List<String> tpaReceivedMessage();
 
         String tpaDenyNoRequestMessage();
         String tpaDenyNoRequestMessageAll();
