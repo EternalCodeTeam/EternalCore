@@ -1,4 +1,4 @@
-package com.eternalcode.core.warp.util;
+package com.eternalcode.core.util;
 
 import panda.std.Option;
 import panda.std.stream.PandaStream;
