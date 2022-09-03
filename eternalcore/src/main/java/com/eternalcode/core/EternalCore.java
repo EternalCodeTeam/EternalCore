@@ -223,10 +223,6 @@ public class EternalCore extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
-    public static EternalCore getInstance() {
-        return instance;
-    }
-
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
@@ -501,6 +497,7 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatform().unregisterAll();
         this.databaseManager.close();
+        this.skullAPI.shutdown();
     }
 
     private void softwareCheck() {
@@ -521,6 +518,10 @@ public class EternalCore extends JavaPlugin {
 
         logger.info("Your server running on supported software, congratulations!");
         logger.info("Server version: " + this.getServer().getVersion());
+    }
+
+    public static EternalCore getInstance() {
+        return instance;
     }
 
     public ConfigurationManager getConfigurationManager() {
