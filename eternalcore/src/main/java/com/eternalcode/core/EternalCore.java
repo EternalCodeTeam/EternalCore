@@ -35,6 +35,7 @@ import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
+import com.eternalcode.core.command.configurator.CommandConfigurator;
 import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
 import com.eternalcode.core.command.contextual.ViewerContextual;
@@ -78,11 +79,10 @@ import com.eternalcode.core.command.implementation.weather.RainCommand;
 import com.eternalcode.core.command.implementation.weather.SunCommand;
 import com.eternalcode.core.command.implementation.weather.ThunderCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.command.configurator.CommandConfiguration;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
-import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
 import com.eternalcode.core.configuration.language.LanguageConfiguration;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
@@ -180,8 +180,6 @@ public class EternalCore extends JavaPlugin {
     private LocationsConfiguration locationsConfiguration;
     private LanguageConfiguration languageConfiguration;
     private PlaceholdersConfiguration placeholdersConfiguration;
-    private ENMessagesConfiguration enMessagesConfiguration;
-    private PLMessagesConfiguration plMessagesConfiguration;
 
     /**
      * Services & Managers
@@ -316,6 +314,8 @@ public class EternalCore extends JavaPlugin {
         this.skullAPI = LiteSkullFactory.builder()
             .bukkitScheduler(this)
             .build();
+
+        CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
         this.liteCommands = LiteBukkitFactory.builder(server, "eternalcore")
 
@@ -462,6 +462,7 @@ public class EternalCore extends JavaPlugin {
                 LanguageCommand.class
             )
 
+            .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
             .register();
 
         /* Listeners */

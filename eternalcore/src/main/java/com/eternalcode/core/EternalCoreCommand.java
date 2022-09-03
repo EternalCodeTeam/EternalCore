@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
 
-@Section(route = "eternalcore", aliases = { "eternal" })
+@Section(route = "eternalcore")
 @Permission("eternalcore.eternalcore")
 class EternalCoreCommand {
 
