@@ -9,12 +9,12 @@ import java.util.Map;
 
 public class PlaceholdersConfiguration implements ReloadableConfig {
 
+    public Map<String, String> placeholders = Map.of(
+        "{prefix}", "&7"
+    );
+
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "placeholders.yml");
     }
-
-    public Map<String, String> placeholders = Map.of(
-        "{prefix}", "&7"
-    );
 }
