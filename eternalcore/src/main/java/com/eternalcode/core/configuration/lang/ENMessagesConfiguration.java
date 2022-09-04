@@ -21,10 +21,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         return Language.EN;
     }
 
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "lang" + File.separator + "en_messages.yml");
-    }
 
     public ENArgumentSection argument = new ENArgumentSection();
     public ENFormatSection format = new ENFormatSection();
@@ -239,5 +235,10 @@ public class ENMessagesConfiguration implements ReloadableMessages {
             "<dark_gray>» <gray>Target health: <white>{HEALTH}",
             "<dark_gray>» <gray>Target food level: <white>{FOOD}"
         );
+    }
+
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "lang" + File.separator + "en_messages.yml");
     }
 }

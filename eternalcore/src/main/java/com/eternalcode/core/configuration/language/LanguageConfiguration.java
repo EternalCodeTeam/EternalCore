@@ -11,13 +11,13 @@ import java.util.List;
 
 public class LanguageConfiguration implements ReloadableConfig {
 
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "language.yml");
-    }
-
     public Language defaultLanguage = Language.EN;
     public List<Language> languages = Arrays.asList(Language.EN, Language.PL);
 
     public LanguageSelector languageSelector = new LanguageSelector();
+
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "language.yml");
+    }
 }

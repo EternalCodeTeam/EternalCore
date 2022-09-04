@@ -525,75 +525,103 @@ public class EternalCore extends JavaPlugin {
         return instance;
     }
 
-    public ConfigurationManager getConfigurationManager() {
-        return configurationManager;
-    }
-
-    public LanguageManager getLanguageManager() {
-        return languageManager;
-    }
-
-    public ChatManager getChatManager() {
-        return chatManager;
-    }
-
-    public DatabaseManager getDatabaseManager() {
-        return databaseManager;
-    }
-
     public Scheduler getScheduler() {
-        return scheduler;
+        return this.scheduler;
     }
 
     public Publisher getPublisher() {
-        return publisher;
+        return this.publisher;
+    }
+
+    public ConfigurationManager getConfigurationManager() {
+        return this.configurationManager;
+    }
+
+    public DatabaseManager getDatabaseManager() {
+        return this.databaseManager;
+    }
+
+    public PluginConfiguration getPluginConfiguration() {
+        return this.pluginConfiguration;
+    }
+
+    public LocationsConfiguration getLocationsConfiguration() {
+        return this.locationsConfiguration;
+    }
+
+    public LanguageConfiguration getLanguageConfiguration() {
+        return this.languageConfiguration;
+    }
+
+    public PlaceholdersConfiguration getPlaceholdersConfiguration() {
+        return this.placeholdersConfiguration;
     }
 
     public UserManager getUserManager() {
-        return userManager;
+        return this.userManager;
     }
 
-    public WarpManager getWarpManager() {
-        return warpManager;
-    }
-
-    public HomeManager getHomeManager() {
-        return homeManager;
-    }
-
-    public AfkService getAfkService() {
-        return afkService;
+    public PlaceholderRegistry getPlaceholderRegistry() {
+        return this.placeholderRegistry;
     }
 
     public TeleportService getTeleportService() {
-        return teleportService;
+        return this.teleportService;
     }
 
     public TeleportTaskService getTeleportTaskService() {
-        return teleportTaskService;
+        return this.teleportTaskService;
+    }
+
+    public WarpManager getWarpManager() {
+        return this.warpManager;
+    }
+
+    public HomeManager getHomeManager() {
+        return this.homeManager;
+    }
+
+    public AfkService getAfkService() {
+        return this.afkService;
     }
 
     public TeleportRequestService getTeleportRequestService() {
-        return teleportRequestService;
+        return this.teleportRequestService;
     }
 
-    public BukkitViewerProvider getViewerProvider() {
-        return viewerProvider;
+    public LanguageManager getLanguageManager() {
+        return this.languageManager;
     }
 
-    public BukkitUserProvider getUserProvider() {
-        return userProvider;
-    }
-
-    public NotificationAnnouncer getNotificationAnnouncer() {
-        return notificationAnnouncer;
-    }
-
-    public NoticeService getNoticeService() {
-        return noticeService;
+    public ChatManager getChatManager() {
+        return this.chatManager;
     }
 
     public PrivateChatService getPrivateChatService() {
-        return privateChatService;
+        return this.privateChatService;
+    }
+
+    public BukkitAudiences getAudiencesProvider() {
+        return this.audiencesProvider;
+    }
+
+    public MiniMessage getMiniMessage() {
+        return this.miniMessage;
+    }
+
+    public BukkitViewerProvider getViewerProvider() {
+        return this.viewerProvider;
+    }
+
+    public BukkitUserProvider getUserProvider() {
+        return this.userProvider;
+    }
+
+    public NotificationAnnouncer getNotificationAnnouncer() {
+        return this.notificationAnnouncer;
+    }
+
+    public NoticeService getNoticeService() {
+        return this.noticeService;
     }
 }

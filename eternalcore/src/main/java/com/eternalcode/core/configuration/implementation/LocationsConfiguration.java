@@ -11,12 +11,12 @@ import java.util.Map;
 
 public class LocationsConfiguration implements ReloadableConfig {
 
+    public Position spawn = new Position(0, 0, 0, 0.0f, 0.0f, "world");
+
+    public Map<String, Position> warps = new HashMap<>();
+
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "locations.yml");
     }
-
-    public Position spawn = new Position(0, 0, 0, 0.0f, 0.0f, "world");
-
-    public Map<String, Position> warps = new HashMap<>();
 }

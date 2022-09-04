@@ -19,11 +19,6 @@ import java.util.List;
 
 public class PluginConfiguration implements ReloadableConfig {
 
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "config.yml");
-    }
-
     @Description({
         "#",
         "# This is the main configuration file for EternalCore.",
@@ -73,19 +68,19 @@ public class PluginConfiguration implements ReloadableConfig {
         public boolean unsafeEnchantments = true;
 
         @Description({ " ", "# Time in secounds of tpa requests expire" })
-        public int tpaRequestExpire = 80;
+        public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
         @Description({ " ", "# Time in secounds of teleportation time" })
-        public int tpaTimer = 10;
+        public Duration tpaTimer = Duration.ofSeconds(10);
 
         @Override
         public Duration teleportExpire() {
-            return Duration.ofSeconds(tpaRequestExpire);
+            return tpaRequestExpire;
         }
 
         @Override
         public Duration teleportTime() {
-            return Duration.ofSeconds(tpaTimer);
+            return tpaTimer;
         }
     }
 
@@ -135,6 +130,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description({ " ", "# Cooldowon time for chat" })
         public Duration chatDelay = Duration.ofSeconds(5);
+
         public boolean chatEnabled = true;
 
         @Override
@@ -179,4 +175,8 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Override
+    public Resource resource(File folder) {
+        return Source.of(folder, "config.yml");
+    }
 }
