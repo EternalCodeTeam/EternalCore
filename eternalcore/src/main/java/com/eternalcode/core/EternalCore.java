@@ -624,16 +624,4 @@ public class EternalCore extends JavaPlugin {
     public NoticeService getNoticeService() {
         return this.noticeService;
     }
-
-    public LanguageInventory getLanguageInventory() {
-        return this.languageInventory;
-    }
-
-    public LiteCommands<CommandSender> getLiteCommands() {
-        return this.liteCommands;
-    }
-
-    public SkullAPI getSkullAPI() {
-        return this.skullAPI;
-    }
 }
