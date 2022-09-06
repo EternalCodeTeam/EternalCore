@@ -28,10 +28,9 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-
         if (!player.hasPlayedBefore()) {
             this.noticeService.create()
-                .notice(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().firstJoinMessage()).get())
+                .noticeOption(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().firstJoinMessage()))
                 .placeholder("{PLAYER}", player.getName())
                 .all()
                 .send();
@@ -59,7 +58,7 @@ public class PlayerJoinListener implements Listener {
         event.setJoinMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .notice(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().joinMessage()).get())
+            .noticeOption(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().joinMessage()))
             .placeholder("{PLAYER}", player.getName())
             .all()
             .send();

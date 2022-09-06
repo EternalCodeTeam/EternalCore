@@ -7,10 +7,12 @@ import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.NotificationExtractor;
+import com.eternalcode.core.language.OptionalMessageExtractor;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
 import panda.std.Option;
+import panda.utilities.StringUtils;
 import panda.utilities.text.Formatter;
 import panda.utilities.text.Joiner;
 
@@ -121,6 +123,20 @@ public class Notice {
     @CheckReturnValue
     public Notice notice(NoticeType type, MessageExtractor extractor) {
         this.notifications.add(messages -> new Notification(extractor.extract(messages), type));
+        return this;
+    }
+
+    @CheckReturnValue
+    public Notice noticeOption(NoticeType type, OptionalMessageExtractor extractor) {
+        this.notifications.add(messages -> {
+            Option<String> apply = extractor.extract(messages);
+
+            if (apply.isPresent()) {
+                return new Notification(apply.get(), type);
+            }
+
+            return new Notification(StringUtils.EMPTY, NoticeType.NONE);
+        });
         return this;
     }
 

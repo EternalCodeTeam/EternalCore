@@ -27,7 +27,7 @@ public class PlayerDeathListener implements Listener {
         event.setDeathMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .notice(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().deathMessage()).get())
+            .noticeOption(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().deathMessage()))
             .placeholder("{PLAYER}", player.getName())
             .all()
             .send();
