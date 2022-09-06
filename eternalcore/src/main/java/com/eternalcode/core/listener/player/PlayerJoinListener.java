@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import panda.std.Option;
 import panda.utilities.StringUtils;
 
 public class PlayerJoinListener implements Listener {
@@ -31,18 +30,14 @@ public class PlayerJoinListener implements Listener {
 
 
         if (!player.hasPlayedBefore()) {
-            Option<String> message = RandomUtil.randomElement(this.config.eventMessage.firstJoinMessage);
-
-            if (message.isPresent()) {
-                this.noticeService.create()
-                    .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
-                    .placeholder("{PLAYER}", player.getName())
-                    .all()
-                    .send();
-            }
+            this.noticeService.create()
+                .notice(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().firstJoinMessage()).get())
+                .placeholder("{PLAYER}", player.getName())
+                .all()
+                .send();
         }
 
-        if (this.config.otherSettings.gamemodeOnJoin) {
+        if (this.config.otherSettings.gameModeOnJoin) {
             if (player.hasPermission("eternalcore.staff.gamemodejoin")) {
                 player.setGameMode(GameMode.CREATIVE);
             }
@@ -53,28 +48,21 @@ public class PlayerJoinListener implements Listener {
                 .forEach(online -> online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch));
         }
 
-        PluginConfiguration.EventMessage eventMessage = config.eventMessage;
-
-        if (this.config.eventMessage.enableWelcomeTitle) {
-            this.noticeService
-                .create()
-                .notice(NoticeType.TITLE, messages -> this.config.eventMessage.welcomeTitle) //TODO: Move to messages config
-                .notice(NoticeType.SUBTITLE, messages -> this.config.eventMessage.welcomeSubTitle) //TODO: Move to messages config
-                .placeholder("{PLAYER}", player.getName())
-                .player(player.getUniqueId())
-                .send();
-        }
+        this.noticeService
+            .create()
+            .notice(NoticeType.TITLE, messages -> messages.eventMessages().welcomeTitle())
+            .notice(NoticeType.SUBTITLE, messages -> messages.eventMessages().welcomeSubtitle())
+            .placeholder("{PLAYER}", player.getName())
+            .player(player.getUniqueId())
+            .send();
 
         event.setJoinMessage(StringUtils.EMPTY);
 
-        Option<String> message = RandomUtil.randomElement(eventMessage.joinMessage);
+        this.noticeService.create()
+            .notice(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().joinMessage()).get())
+            .placeholder("{PLAYER}", player.getName())
+            .all()
+            .send();
 
-        if (message.isPresent()) {
-            this.noticeService.create()
-                .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
-                .placeholder("{PLAYER}", player.getName())
-                .all()
-                .send();
-        }
     }
 }

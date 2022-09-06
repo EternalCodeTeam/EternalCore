@@ -16,7 +16,7 @@ import java.util.List;
 @Accessors(fluent = true)
 public class PLMessagesConfiguration implements ReloadableMessages {
 
-    @Override
+
     public Language getLanguage() {
         return Language.PL;
     }
@@ -31,6 +31,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLHomeSection home = new PLHomeSection();
     public PLPrivateMessageSection privateMessage = new PLPrivateMessageSection();
     public PLTpaSection tpa = new PLTpaSection();
+    public PLEventMessageSection eventMessages = new PLEventMessageSection();
     public PLOtherMessages other = new PLOtherMessages();
     public PLAfkSection afk = new PLAfkSection();
 
@@ -176,8 +177,24 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class PLAfkSection implements AfkSection {
-        public String afkOn = "<dark_gray>» <gray>{player} jest AFK!";
-        public String afkOff = "<dark_gray>» <gray>{player} nie jest już AFK!";
+        public String afkOn = "<dark_gray>» <gray>{PLAYER} jest AFK!";
+        public String afkOff = "<dark_gray>» <gray>{PLAYER} nie jest już AFK!";
+    }
+
+    @Getter
+    @Contextual
+    public static class PLEventMessageSection implements EventMessagesSection {
+        public List<String> deathMessage = List.of("<dark_gray>» <gray>{PLAYER} <red>zginął!");
+
+        public List<String> joinMessage = List.of("<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera!", "<dark_gray>» <gray>Witaj na serwerze <green>{PLAYER}<gray>!");
+
+        public List<String> firstJoinMessage = List.of("<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera po raz pierwszy!", "<dark_gray>» <gray>{PLAYER} <green>zawitał u nas po raz pierwszy!");
+
+        public List<String> quitMessage = List.of("<dark_gray>» <gray>{PLAYER} <red>wylogował się z serwera!", "<dark_gray>» <gray>{PLAYER} <red>opuścił serwer!");
+
+        public String welcomeTitle = "<yellow>EternalCode.pl";
+
+        public String welcomeSubtitle = "<yellow>Witaj ponownie na serwerze!";
     }
 
     @Getter
@@ -246,6 +263,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
             "<dark_gray>» <gray>Poziom najedzenia: <white>{FOOD}"
         );
     }
+
 
     @Override
     public Resource resource(File folder) {

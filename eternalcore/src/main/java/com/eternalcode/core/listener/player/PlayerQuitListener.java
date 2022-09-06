@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import panda.std.Option;
 import panda.utilities.StringUtils;
 
 public class PlayerQuitListener implements Listener {
@@ -28,15 +27,12 @@ public class PlayerQuitListener implements Listener {
         Player player = event.getPlayer();
 
         event.setQuitMessage(StringUtils.EMPTY);
-        Option<String> message = RandomUtil.randomElement(this.config.eventMessage.leaveMessage);
 
-        if (message.isPresent()) {
-            this.noticeService.create()
-                .notice(NoticeType.CHAT, messages -> message.get()) // TODO: Move to messages config
-                .placeholder("{PLAYER}", player.getName())
-                .all()
-                .send();
-        }
+        this.noticeService.create()
+            .notice(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().quitMessage()).get())
+            .placeholder("{PLAYER}", player.getName())
+            .all()
+            .send();
 
         if (this.config.sound.enableAfterQuit) {
             this.server.getOnlinePlayers()

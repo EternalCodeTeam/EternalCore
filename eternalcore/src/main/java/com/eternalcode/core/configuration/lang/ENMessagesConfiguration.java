@@ -21,7 +21,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         return Language.EN;
     }
 
-
     public ENArgumentSection argument = new ENArgumentSection();
     public ENFormatSection format = new ENFormatSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
@@ -33,6 +32,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENHomeSection home = new ENHomeSection();
     public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
     public ENAfkSection afk = new ENAfkSection();
+    public ENEventMessageSection eventMessages = new ENEventMessageSection();
     public ENOtherMessages other = new ENOtherMessages();
 
     @Getter @Contextual
@@ -169,6 +169,22 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public static class ENAfkSection implements AfkSection {
         public String afkOn = "<dark_gray>» <gray>{player} is AFK!";
         public String afkOff = "<dark_gray>» <gray>{player} is not AFK!";
+    }
+
+    @Getter
+    @Contextual
+    public static class ENEventMessageSection implements EventMessagesSection {
+        public List<String> deathMessage = List.of("Player {PLAYER} death");
+
+        public List<String> joinMessage = List.of("Welcome {PLAYER}", "Hey {PLAYER}");
+
+        public List<String> firstJoinMessage = List.of("Hello {PLAYER}, for the first time on the server!");
+
+        public List<String> quitMessage = List.of("Goodbye {PLAYER}", "Bye {PLAYER}");
+
+        public String welcomeTitle = "<yellow>EternalCode.pl";
+
+        public String welcomeSubtitle = "<yellow>Witaj ponownie na serwerze!";
     }
 
     @Getter @Contextual
