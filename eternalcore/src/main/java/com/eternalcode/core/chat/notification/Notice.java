@@ -132,14 +132,14 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, String to) {
-        this.placeholders.put(from, to);
+        this.placeholders.put(from.toLowerCase(), to);
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, Option<String> to) {
         if (to.isPresent()) {
-            this.placeholders.put(from, to.get());
+            this.placeholders.put(from.toLowerCase(), to.get());
         }
 
         return this;
@@ -147,13 +147,13 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, Supplier<String> to) {
-        this.placeholders.put(from, to.get());
+        this.placeholders.put(from.toLowerCase(), to.get());
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, MessageExtractor extractor) {
-        this.langPlaceholders.put(from, extractor);
+        this.langPlaceholders.put(from.toLowerCase(), extractor);
         return this;
     }
 
