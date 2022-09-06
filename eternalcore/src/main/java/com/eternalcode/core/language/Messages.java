@@ -15,6 +15,7 @@ public interface Messages {
     ChatSection chat();
     TeleportSection teleport();
     TpaSection tpa();
+    EventMessagesSection eventMessages();
     OtherMessages other();
     WarpSection warp();
     HomeSection home();
@@ -138,6 +139,16 @@ public interface Messages {
     interface AfkSection {
         String afkOn();
         String afkOff();
+    }
+
+    interface EventMessagesSection {
+        List<String> deathMessage();
+        List<String> joinMessage();
+        List<String> quitMessage();
+        List<String> firstJoinMessage();
+
+        public String welcomeTitle();
+        public String welcomeSubtitle();
     }
 
     interface OtherMessages {

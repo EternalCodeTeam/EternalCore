@@ -21,7 +21,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         return Language.EN;
     }
 
-
     public ENArgumentSection argument = new ENArgumentSection();
     public ENFormatSection format = new ENFormatSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
@@ -33,6 +32,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENHomeSection home = new ENHomeSection();
     public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
     public ENAfkSection afk = new ENAfkSection();
+    public ENEventMessageSection eventMessages = new ENEventMessageSection();
     public ENOtherMessages other = new ENOtherMessages();
 
     @Getter @Contextual
@@ -169,6 +169,22 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public static class ENAfkSection implements AfkSection {
         public String afkOn = "<dark_gray>» <gray>{player} is AFK!";
         public String afkOff = "<dark_gray>» <gray>{player} is not AFK!";
+    }
+
+    @Getter
+    @Contextual
+    public static class ENEventMessageSection implements EventMessagesSection {
+        public List<String> deathMessage = List.of("<dark_gray>» <gray>{PLAYER} <red>died!");
+
+        public List<String> joinMessage = List.of("<dark_gray>» <gray>{PLAYER} <green>joined the server!", "<dark_gray>» <gray>Welcome to the server <green>{PLAYER}<gray>!");
+
+        public List<String> firstJoinMessage = List.of("<dark_gray>» <gray>{PLAYER} <green>joined the server for the first time!", "<dark_gray>» <gray>{PLAYER} <green>welcome to the server for the first time!");
+
+        public List<String> quitMessage = List.of("<dark_gray>» <gray>{PLAYER} <red>logged off the server!", "<dark_gray>» <gray>{PLAYER} <red>left the server!");
+
+        public String welcomeTitle = "<yellow>EternalCode.pl";
+
+        public String welcomeSubtitle = "<yellow>Welcome back to the server!";
     }
 
     @Getter @Contextual

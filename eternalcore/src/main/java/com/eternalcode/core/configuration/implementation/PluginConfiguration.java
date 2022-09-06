@@ -33,16 +33,19 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Description({ " ", "# Database Section" })
     public Database database = new Database();
-    @Description({ " ", "# Useful Event Messages", "# Set to empty, if you want to delete this message" })
-    public EventMessage eventMessage = new EventMessage();
+
     @Description({ " ", "# Awesome sounds" })
     public Sounds sound = new Sounds();
+
     @Description({ " ", "# Chat Section" })
     public Chat chat = new Chat();
+
     @Description({ " ", "# Formating on/off" })
     public Format format = new Format();
+
     @Description({ " ", "# AFK Section" })
     public Afk afk = new Afk();
+
     @Description({ " ", "# Other Sections" })
     public OtherSettings otherSettings = new OtherSettings();
 
@@ -62,7 +65,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class OtherSettings implements TeleportRequestSettings {
         @Description({ "# Gamemode Creative on join Requires permission: eternalcore.staff.gamemodejoin" })
-        public boolean gamemodeOnJoin = false;
+        public boolean gameModeOnJoin = false;
 
         @Description({ " ", "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
         public boolean unsafeEnchantments = true;
@@ -82,19 +85,6 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration teleportTime() {
             return tpaTimer;
         }
-    }
-
-    @Contextual
-    public static class EventMessage {
-        public String deathMessage = "Player {PLAYER} death";
-        public List<String> joinMessage = List.of("Welcome {PLAYER}", "Hey {PLAYER}");
-        public List<String> leaveMessage = List.of("Goodbye {PLAYER}", "Bye {PLAYER}");
-        public List<String> firstJoinMessage = List.of("Hello {PLAYER}, for the first time on the server!!");
-
-        @Description({ " ", "# Welcome Title settings" }) // TODO: Move to language
-        public boolean enableWelcomeTitle = true;
-        public String welcomeTitle = "&6EternalCode.pl";
-        public String welcomeSubTitle = "&eWelcome back {PLAYER}";
     }
 
     @Contextual
