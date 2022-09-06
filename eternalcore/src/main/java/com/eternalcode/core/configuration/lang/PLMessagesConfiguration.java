@@ -17,6 +17,7 @@ import java.util.List;
 public class PLMessagesConfiguration implements ReloadableMessages {
 
 
+    @Override
     public Language getLanguage() {
         return Language.PL;
     }
