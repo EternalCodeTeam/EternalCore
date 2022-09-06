@@ -174,17 +174,17 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class ENEventMessageSection implements EventMessagesSection {
-        public List<String> deathMessage = List.of("Player {PLAYER} death");
+        public List<String> deathMessage = List.of("<dark_gray>» <gray>{PLAYER} <red>died!");
 
-        public List<String> joinMessage = List.of("Welcome {PLAYER}", "Hey {PLAYER}");
+        public List<String> joinMessage = List.of("<dark_gray>» <gray>{PLAYER} <green>joined the server!", "<dark_gray>» <gray>Welcome to the server <green>{PLAYER}<gray>!");
 
-        public List<String> firstJoinMessage = List.of("Hello {PLAYER}, for the first time on the server!");
+        public List<String> firstJoinMessage = List.of("<dark_gray>» <gray>{PLAYER} <green>joined the server for the first time!", "<dark_gray>» <gray>{PLAYER} <green>welcome to the server for the first time!");
 
-        public List<String> quitMessage = List.of("Goodbye {PLAYER}", "Bye {PLAYER}");
+        public List<String> quitMessage = List.of("<dark_gray>» <gray>{PLAYER} <red>logged off the server!", "<dark_gray>» <gray>{PLAYER} <red>left the server!");
 
         public String welcomeTitle = "<yellow>EternalCode.pl";
 
-        public String welcomeSubtitle = "<yellow>Witaj ponownie na serwerze!";
+        public String welcomeSubtitle = "<yellow>Welcome back to the server!";
     }
 
     @Getter @Contextual
