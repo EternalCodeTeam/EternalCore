@@ -7,6 +7,7 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 import io.papermc.lib.PaperLib;
+import io.papermc.lib.environments.Environment;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -19,6 +20,7 @@ public class CartographyTableCommand {
 
 
     private final Server server;
+    private final Environment environment = PaperLib.getEnvironment();
 
     public CartographyTableCommand(Server server) {
         this.server = server;
@@ -26,7 +28,13 @@ public class CartographyTableCommand {
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        PaperLib.openPlayerCartographyTable(player);
+        if (this.environment.isPaper()) {
+            PaperLib.openPlayerCartographyTable(player);
+        } else {
+            Inventory inventory = this.server.createInventory(player, InventoryType.CARTOGRAPHY, StringUtils.EMPTY);
+            player.openInventory(inventory);
+
+        }
     }
 
 }
