@@ -5,6 +5,7 @@ import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -23,7 +24,6 @@ public class AnvilCommand {
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        Inventory inventory = this.server.createInventory(player, InventoryType.ANVIL, StringUtils.EMPTY);
-        player.openInventory(inventory);
+        PaperLib.openPlayerAnvil(player);
     }
 }

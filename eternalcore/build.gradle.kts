@@ -14,7 +14,7 @@ dependencies {
 
     // paper lib, spigot api
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
-    api("io.papermc:paperlib:1.0.7")
+    implementation("io.papermc:paperlib:1.0.9-SNAPSHOT")
 
     // Kyori Adventure
     implementation("net.kyori:adventure-platform-bukkit:4.1.2")

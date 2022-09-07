@@ -6,6 +6,7 @@ import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -23,9 +24,8 @@ public class GrindstoneCommand {
     }
 
     @Execute
-    void execute(@Arg @By("or_sender") Player playerOrSender) {
-        Inventory inventory = this.server.createInventory(playerOrSender, InventoryType.GRINDSTONE, StringUtils.EMPTY);
-        playerOrSender.openInventory(inventory);
+    void execute(@Arg @By("or_sender") Player player) {
+        PaperLib.openPlayerGrindstone(player);
     }
 }
 
