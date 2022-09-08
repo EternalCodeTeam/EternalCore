@@ -12,8 +12,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
-    // AdditionalContainers
-    implementation(project(":eternalcore-containers"))
+    // EternalCore paper features
+    implementation(project(":eternalcore-paper"))
 
     // paper lib, spigot api
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
