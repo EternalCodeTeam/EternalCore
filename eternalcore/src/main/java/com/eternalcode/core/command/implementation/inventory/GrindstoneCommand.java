@@ -9,24 +9,39 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.section.Section;
 import dev.rollczi.litecommands.command.permission.Permission;
 import io.papermc.lib.PaperLib;
+import io.papermc.lib.environments.Environment;
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 import panda.utilities.StringUtils;
+
+import java.util.logging.Logger;
 
 @Section(route = "grindstone")
 @Permission("eternalcore.grindstone")
 public class GrindstoneCommand {
 
-    private final Server server;
+    private final Plugin plugin;
 
-    public GrindstoneCommand(Server server) {
-        this.server = server;
+    public GrindstoneCommand(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
+        Logger logger = this.plugin.getLogger();
+        Environment environment = PaperLib.getEnvironment();
+
+        if (!environment.isPaper()) {
+            logger.warning("Grindstone command feature is only available on paper, use paper or other paper 1-17-1.19x forks");
+            player.sendMessage(ChatColor.RED + "Grindstone command feature is not supported on this server. Please contact the server administrator and check console!");
+
+            return;
+        }
+
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.GRINDSTONE);
     }
 }
