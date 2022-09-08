@@ -28,17 +28,7 @@ public class StonecutterCommand {
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        Logger logger = this.plugin.getLogger();
-        Environment environment = PaperLib.getEnvironment();
-
-        if (!environment.isPaper()) {
-            logger.warning("StoneCutter command feature is only available on paper, use paper or other paper 1-17-1.19x forks");
-            player.sendMessage(ChatColor.RED + "StoneCutter command feature is not supported on this server. Please contact the server administrator and check console!");
-
-            return;
-        }
-
-        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.STONECUTTER);
+        AdditionalContainerPaper.openAdditionalContainer(player, this.plugin.getLogger(), AdditionalContainerType.STONECUTTER);
     }
 }
 
