@@ -8,13 +8,8 @@ import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
-import io.papermc.lib.PaperLib;
-import io.papermc.lib.environments.Environment;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
-import java.util.logging.Logger;
 
 @Section(route = "stonecutter")
 @Permission("eternalcore.workbench")
@@ -28,7 +23,7 @@ public class StonecutterCommand {
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, this.plugin.getLogger(), AdditionalContainerType.STONECUTTER);
+        AdditionalContainerPaper.openAdditionalContainer(player, this.plugin.getLogger(), AdditionalContainerType.STONE_CUTTER);
     }
 }
 

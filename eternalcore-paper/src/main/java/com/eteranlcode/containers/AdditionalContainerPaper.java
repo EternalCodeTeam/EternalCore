@@ -23,7 +23,7 @@ public final class AdditionalContainerPaper {
 
         switch (type) {
             case ANVIL -> player.openAnvil(null, true);
-            case STONECUTTER -> player.openStonecutter(null, true);
+            case STONE_CUTTER -> player.openStonecutter(null, true);
             case CARTOGRAPHY_TABLE -> player.openCartographyTable(null, true);
             case GRINDSTONE -> player.openGrindstone(null, true);
             case LOOM -> player.openLoom(null, true);

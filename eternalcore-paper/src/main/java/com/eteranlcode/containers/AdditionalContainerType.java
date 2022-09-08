@@ -2,7 +2,7 @@ package com.eteranlcode.containers;
 
 public enum AdditionalContainerType {
     ANVIL,
-    STONECUTTER,
+    STONE_CUTTER,
     CARTOGRAPHY_TABLE,
     GRINDSTONE,
     LOOM,
