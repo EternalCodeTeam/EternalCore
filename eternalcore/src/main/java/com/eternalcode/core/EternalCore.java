@@ -505,9 +505,9 @@ public class EternalCore extends JavaPlugin {
         Logger logger = this.getLogger();
         Environment environment = PaperLib.getEnvironment();
 
-        if (!environment.isSpigot()) {
-            logger.warning("Your server running on unsupported software, use spigot/paper minecraft software and other spigot/paper 1.19x forks");
-            logger.warning("We recommend using paper, download paper from https://papermc.io/downloads");
+        if (!environment.isPaper()) {
+            logger.warning("Your server running on unsupported software, use paper minecraft software and other paper 1.19x forks");
+            logger.warning("We very recommend using paper, download paper from https://papermc.io/downloads");
             logger.warning("WARRING: Supported minecraft version is 1.17-1.19x");
             return;
         }

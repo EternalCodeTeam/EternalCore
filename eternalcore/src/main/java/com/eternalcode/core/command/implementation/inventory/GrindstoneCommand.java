@@ -1,6 +1,8 @@
 package com.eternalcode.core.command.implementation.inventory;
 
 
+import com.eteranlcode.containers.AdditionalContainerPaper;
+import com.eteranlcode.containers.AdditionalContainerType;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -25,7 +27,7 @@ public class GrindstoneCommand {
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        PaperLib.openPlayerGrindstone(player);
+        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.GRINDSTONE);
     }
 }
 

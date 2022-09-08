@@ -12,9 +12,12 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
+    // AdditionalContainers
+    implementation(project(":eternalcore-containers"))
+
     // paper lib, spigot api
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
-    implementation("io.papermc:paperlib:1.0.9-SNAPSHOT")
+    implementation("io.papermc:paperlib:1.0.8-SNAPSHOT")
 
     // Kyori Adventure
     implementation("net.kyori:adventure-platform-bukkit:4.1.2")
@@ -106,7 +109,8 @@ tasks.withType<ShadowJar> {
         "io.papermc.lib",
         "dev.triumphteam",
         "org.slf4j",
-        "com.google.gson"
+        "com.google.gson",
+        "com.eteranlcode.containers"
     ).forEach { pack ->
         relocate(pack, "$prefix.$pack")
     }
