@@ -1,8 +1,8 @@
 package com.eternalcode.core.command.implementation.inventory;
 
 
-import com.eteranlcode.containers.AdditionalContainerPaper;
-import com.eteranlcode.containers.AdditionalContainerType;
+import com.eternalcode.containers.AdditionalContainerPaper;
+import com.eternalcode.containers.AdditionalContainerType;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -24,15 +24,9 @@ import java.util.logging.Logger;
 @Permission("eternalcore.grindstone")
 public class GrindstoneCommand {
 
-    private final Logger logger;
-
-    public GrindstoneCommand(Logger logger) {
-        this.logger = logger;
-    }
-
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, this.logger, AdditionalContainerType.GRINDSTONE);
+        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.GRINDSTONE);
     }
 }
 

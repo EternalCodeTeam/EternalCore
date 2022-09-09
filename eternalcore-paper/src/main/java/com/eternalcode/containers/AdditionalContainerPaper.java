@@ -10,13 +10,14 @@ import java.util.logging.Logger;
 
 public final class AdditionalContainerPaper {
 
-    private static final Environment environment = PaperLib.getEnvironment();
+    private static final Environment ENVIRONMENT = PaperLib.getEnvironment();
+    private static final Logger LOGGER = Logger.getLogger("AdditionalContainerPaper");
 
-    public static void openAdditionalContainer(Player player, Logger logger, @NotNull AdditionalContainerType type) {
+    public static void openAdditionalContainer(Player player, @NotNull AdditionalContainerType type) {
 
-        if (!environment.isPaper()) {
+        if (!ENVIRONMENT.isPaper()) {
             player.sendMessage(ChatColor.RED + "This feature is not supported on this server. Please contact the server administrator and check console!");
-            logger.warning("This feature is only available on paper, use paper or other paper 1-17-1.19x forks");
+            LOGGER.warning("This feature is only available on paper, use paper or other paper 1-17-1.19x forks");
 
             return;
         }

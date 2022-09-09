@@ -16,15 +16,9 @@ import java.util.logging.Logger;
 @Permission("eternalcore.workbench")
 public class StonecutterCommand {
 
-    private final Logger logger;
-
-    public StonecutterCommand(Logger logger) {
-        this.logger = logger;
-    }
-
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, this.logger, AdditionalContainerType.STONE_CUTTER);
+        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.STONE_CUTTER);
     }
 }
 
