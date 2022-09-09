@@ -1,4 +1,4 @@
-package com.eteranlcode.containers;
+package com.eternalcode.containers;
 
 public enum AdditionalContainerType {
     ANVIL,

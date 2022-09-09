@@ -1,4 +1,4 @@
-package com.eteranlcode.containers;
+package com.eternalcode.containers;
 
 import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;

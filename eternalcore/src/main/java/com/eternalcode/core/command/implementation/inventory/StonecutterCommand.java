@@ -1,15 +1,14 @@
 package com.eternalcode.core.command.implementation.inventory;
 
 
-import com.eteranlcode.containers.AdditionalContainerPaper;
-import com.eteranlcode.containers.AdditionalContainerType;
+import com.eternalcode.containers.AdditionalContainerPaper;
+import com.eternalcode.containers.AdditionalContainerType;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Logger;
 
