@@ -7,6 +7,7 @@
 - Fix TeleportService Bind
 - Fix typo in Reload Command and some configs
 - Fix multiple header generation in config.yml
+- Fix containers command working on paper
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
