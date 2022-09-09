@@ -11,19 +11,21 @@ import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Logger;
+
 @Section(route = "stonecutter")
 @Permission("eternalcore.workbench")
 public class StonecutterCommand {
 
-    private final Plugin plugin;
+    private final Logger logger;
 
-    public StonecutterCommand(Plugin plugin) {
-        this.plugin = plugin;
+    public StonecutterCommand(Logger logger) {
+        this.logger = logger;
     }
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, this.plugin.getLogger(), AdditionalContainerType.STONE_CUTTER);
+        AdditionalContainerPaper.openAdditionalContainer(player, this.logger, AdditionalContainerType.STONE_CUTTER);
     }
 }
 

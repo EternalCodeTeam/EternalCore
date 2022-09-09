@@ -10,18 +10,20 @@ import dev.rollczi.litecommands.command.section.Section;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Logger;
+
 @Section(route = "anvil", aliases = { "kowadlo", "kowadło" })
 @Permission("eternalcore.anvil")
 public class AnvilCommand {
 
-    private final Plugin plugin;
+    private final Logger logger;
 
-    public AnvilCommand(Plugin plugin) {
-        this.plugin = plugin;
+    public AnvilCommand(Logger logger) {
+        this.logger = logger;
     }
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, this.plugin.getLogger(), AdditionalContainerType.ANVIL);
+        AdditionalContainerPaper.openAdditionalContainer(player, this.logger, AdditionalContainerType.ANVIL);
     }
 }

@@ -24,15 +24,15 @@ import java.util.logging.Logger;
 @Permission("eternalcore.cartography")
 public class CartographyTableCommand {
 
-    private final Plugin plugin;
+    private final Logger logger;
 
-    public CartographyTableCommand(Plugin plugin) {
-        this.plugin = plugin;
+    public CartographyTableCommand(Logger logger) {
+        this.logger = logger;
     }
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, this.plugin.getLogger(), AdditionalContainerType.CARTOGRAPHY_TABLE);
+        AdditionalContainerPaper.openAdditionalContainer(player, this.logger, AdditionalContainerType.CARTOGRAPHY_TABLE);
     }
 
 }

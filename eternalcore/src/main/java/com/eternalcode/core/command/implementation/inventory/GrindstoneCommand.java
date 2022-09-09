@@ -24,15 +24,15 @@ import java.util.logging.Logger;
 @Permission("eternalcore.grindstone")
 public class GrindstoneCommand {
 
-    private final Plugin plugin;
+    private final Logger logger;
 
-    public GrindstoneCommand(Plugin plugin) {
-        this.plugin = plugin;
+    public GrindstoneCommand(Logger logger) {
+        this.logger = logger;
     }
 
     @Execute
     void execute(@Arg @By("or_sender") Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, this.plugin.getLogger(), AdditionalContainerType.GRINDSTONE);
+        AdditionalContainerPaper.openAdditionalContainer(player, this.logger, AdditionalContainerType.GRINDSTONE);
     }
 }
 
