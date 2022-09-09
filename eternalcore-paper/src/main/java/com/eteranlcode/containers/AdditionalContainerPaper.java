@@ -15,7 +15,7 @@ public final class AdditionalContainerPaper {
     public static void openAdditionalContainer(Player player, Logger logger, @NotNull AdditionalContainerType type) {
 
         if (!environment.isPaper()) {
-            player.sendMessage(ChatColor.RED + "Anvil command feature is not supported on this server. Please contact the server administrator and check console!");
+            player.sendMessage(ChatColor.RED + "Thus feature is not supported on this server. Please contact the server administrator and check console!");
             logger.warning("This feature is only available on paper, use paper or other paper 1-17-1.19x forks");
 
             return;
