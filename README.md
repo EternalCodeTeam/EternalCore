@@ -12,7 +12,7 @@
     
 </div>
 
-# Warrning ❗ 
+# Warning ❗ 
 Remember EternalCore is at an early stage of development, you use it at your own risk!
 
 # Informations
