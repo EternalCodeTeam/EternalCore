@@ -28,7 +28,7 @@ dependencies {
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
     // cdn configs
-    implementation("net.dzikoysk:cdn:1.14.0")
+    implementation("net.dzikoysk:cdn:1.14.1")
 
     // expressible
     implementation("org.panda-lang:expressible:1.2.0")
