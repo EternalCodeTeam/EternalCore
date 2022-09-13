@@ -80,7 +80,7 @@ bukkit {
 
 tasks {
     runServer {
-        minecraftVersion("1.19.1")
+        minecraftVersion("1.19.2")
     }
 }
 
