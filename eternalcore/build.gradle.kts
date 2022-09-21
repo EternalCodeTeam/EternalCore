@@ -73,7 +73,7 @@ bukkit {
         "com.h2database:h2:2.1.214",
         "com.j256.ormlite:ormlite-jdbc:6.1",
         "com.zaxxer:HikariCP:5.0.1",
-        "org.mariadb.jdbc:mariadb-java-client:3.0.7"
+        "org.mariadb.jdbc:mariadb-java-client:3.0.8"
     )
 }
 
