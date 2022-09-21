@@ -48,7 +48,7 @@ dependencies {
     // tests
     testImplementation("org.spigotmc:spigot:1.19-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.13")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
 }
 
 tasks.getByName<Test>("test") {
