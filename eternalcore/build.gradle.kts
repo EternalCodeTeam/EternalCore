@@ -1,4 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import java.text.SimpleDateFormat
+import java.util.*
 
 plugins {
     id("java-library")
@@ -85,7 +87,9 @@ tasks {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
+    val timestamp = SimpleDateFormat("dd-MM-yyyy_hh-mm").format(Date())
+
+    archiveFileName.set("EternalCore v${project.version} $timestamp (MC 1.17-1.19x).jar")
 
     exclude(
         "org/intellij/lang/annotations/**",
