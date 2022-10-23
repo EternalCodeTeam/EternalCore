@@ -34,7 +34,7 @@ public class NoticeTypeArgument implements OneArgument<NoticeType> {
     }
 
     @Override
-    public Result<NoticeType, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<NoticeType, String> parse(LiteInvocation invocation, String argument) {
         return Option.supplyThrowing(IllegalArgumentException.class, () -> NoticeType.valueOf(argument.toUpperCase()))
             .toResult(() -> {
                 Messages messages = this.userProvider.getUser(invocation)

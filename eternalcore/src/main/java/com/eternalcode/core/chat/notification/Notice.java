@@ -1,13 +1,13 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.placeholder.PlaceholderRegistry;
-import com.eternalcode.core.chat.placeholder.Placeholders;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.language.OptionalMessageExtractor;
+import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
+import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
@@ -33,16 +33,15 @@ public class Notice {
     private final LanguageManager languageManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
-    private final PlaceholderRegistry placeholderRegistry;
+    private final PlaceholderBukkitRegistryImpl placeholderRegistry;
 
     private final List<Viewer> viewers = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
-    private final Map<String, MessageExtractor> langPlaceholders = new HashMap<>();
-    private final Map<String, String> placeholders = new HashMap<>();
+
+    private final Map<String, MessageExtractor> placeholders = new HashMap<>();
     private final List<Formatter> formatters = new ArrayList<>();
 
-
-    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderBukkitRegistryImpl placeholderRegistry) {
         this.languageManager = languageManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
@@ -92,8 +91,8 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public Notice allPlayers() {
-        this.viewers.addAll(this.viewerProvider.allPlayers());
+    public Notice onlinePlayers() {
+        this.viewers.addAll(this.viewerProvider.onlinePlayers());
         return this;
     }
 
@@ -148,14 +147,14 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, String to) {
-        this.placeholders.put(from, to);
+        this.placeholders.put(from, messages -> to);
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, Option<String> to) {
         if (to.isPresent()) {
-            this.placeholders.put(from, to.get());
+            this.placeholders.put(from, messages -> to.get());
         }
 
         return this;
@@ -163,13 +162,13 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, Supplier<String> to) {
-        this.placeholders.put(from, to.get());
+        this.placeholders.put(from, messages -> to.get());
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, MessageExtractor extractor) {
-        this.langPlaceholders.put(from, extractor);
+        this.placeholders.put(from, extractor);
         return this;
     }
 
@@ -180,71 +179,92 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public Notice formatter(Formatter formatter) {
-        this.formatters.add(formatter);
-        return this;
-    }
-
-    @CheckReturnValue
     public Notice formatter(Formatter... formatters) {
         this.formatters.addAll(Arrays.asList(formatters));
         return this;
     }
 
     public void send() {
-        Map<Language, Set<Viewer>> viewerByLang = new HashMap<>();
+        ViewersWithLanguage viewersByLanguage = ViewersWithLanguage.of(this.viewers);
+        TranslatedMessages translatedMessages = this.prepareTranslatedMessages(viewersByLanguage);
 
-        for (Viewer viewer : this.viewers) {
-            viewerByLang
-                .computeIfAbsent(viewer.getLanguage(), key -> new HashSet<>())
-                .add(viewer);
-        }
+        this.sendTranslatedMessages(viewersByLanguage, translatedMessages);
+    }
 
-        Map<Language, List<Notification>> formattedMessages = new HashMap<>();
-
-        for (Language language : viewerByLang.keySet()) {
-            Messages messages = this.languageManager.getMessages(language);
-            ArrayList<Notification> translatedNotifications = new ArrayList<>();
-            Formatter translatedFormatter = new Formatter();
-
-            for (Map.Entry<String, MessageExtractor> entry : this.langPlaceholders.entrySet()) {
-                translatedFormatter.register(entry.getKey(), () -> entry.getValue().extract(messages));
-            }
-
-            for (NotificationExtractor extractor : this.notifications) {
-                Notification notification = extractor.extract(messages).edit(text -> {
-                    text = translatedFormatter.format(text);
-
-                    for (Formatter formatter : this.formatters) {
-                        text = formatter.format(text);
-                    }
-
-                    for (Map.Entry<String, String> entry : this.placeholders.entrySet()) {
-                        text = text.replace(entry.getKey(), entry.getValue());
-                    }
-
-                    text = this.placeholderRegistry.format(text);
-
-                    return text;
-                });
-
-                translatedNotifications.add(notification);
-            }
-
-            formattedMessages.put(language, translatedNotifications);
-        }
-
-        for (Map.Entry<Language, Set<Viewer>> entry : viewerByLang.entrySet()) {
-            Language language = entry.getKey();
-            List<Notification> translatedNotifications = formattedMessages.get(language);
+    private void sendTranslatedMessages(ViewersWithLanguage viewersByLanguage, TranslatedMessages translatedMessages) {
+        for (Language language : viewersByLanguage.getLanguages()) {
+            List<Notification> translatedNotifications = translatedMessages.getNotifications(language);
 
             if (translatedNotifications == null) {
                 continue;
             }
 
+            FormatterForLanguage formatterForLanguage = this.prepareFormatterForLanguage(language);
+
             for (Notification notification : translatedNotifications) {
-                this.announcer.announce(entry.getValue(), notification);
+                Set<Viewer> languageViewers = viewersByLanguage.getViewers(language);
+
+                for (Viewer viewer : languageViewers) {
+                    notification = notification.fork(text -> formatterForLanguage.format(text, viewer));
+
+                    this.announcer.announce(viewer, notification);
+                }
             }
+        }
+    }
+
+    private TranslatedMessages prepareTranslatedMessages(ViewersWithLanguage viewersByLanguage) {
+        Map<Language, List<Notification>> translatedMessage = new HashMap<>();
+
+        for (Language language : viewersByLanguage.getLanguages()) {
+            List<Notification> translatedNotifications = this.prepareTranslatedNotificationsPerViewer(language);
+
+            translatedMessage.put(language, translatedNotifications);
+        }
+
+        return TranslatedMessages.of(translatedMessage);
+    }
+
+    private List<Notification> prepareTranslatedNotificationsPerViewer(Language language) {
+        Messages messages = this.languageManager.getMessages(language);
+        List<Notification> notificationsForLanguage = new ArrayList<>();
+
+        for (NotificationExtractor extractor : this.notifications) {
+            Notification notificationForLanguage = extractor.extract(messages);
+
+            notificationsForLanguage.add(notificationForLanguage);
+        }
+
+        return notificationsForLanguage;
+    }
+
+    private FormatterForLanguage prepareFormatterForLanguage(Language language) {
+        Messages messages = this.languageManager.getMessages(language);
+        Formatter translatedFormatter = new Formatter();
+
+        for (Map.Entry<String, MessageExtractor> entry : this.placeholders.entrySet()) {
+            translatedFormatter.register(entry.getKey(), () -> entry.getValue().extract(messages));
+        }
+
+        return new FormatterForLanguage(translatedFormatter);
+    }
+
+    private class FormatterForLanguage {
+        private final Formatter translatedPlaceholders;
+
+        private FormatterForLanguage(Formatter translatedPlaceholders) {
+            this.translatedPlaceholders = translatedPlaceholders;
+        }
+
+        public String format(String text, Viewer viewer) {
+            text = placeholderRegistry.format(text, viewer);
+            text = translatedPlaceholders.format(text);
+
+            for (Formatter formatter : formatters) {
+                text = formatter.format(text);
+            }
+
+            return text;
         }
     }
 

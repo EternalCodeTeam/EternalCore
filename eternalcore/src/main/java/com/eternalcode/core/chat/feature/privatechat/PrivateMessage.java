@@ -34,7 +34,7 @@ class PrivateMessage implements Content {
         return message;
     }
 
-    public Collection<UUID> getSpy() {
+    public Collection<UUID> getSpyUuids() {
         return spy;
     }
 

@@ -28,7 +28,7 @@ public class WarpArgument implements OneArgument<Warp> {
     }
 
     @Override
-    public Result<Warp, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<Warp, String> parse(LiteInvocation invocation, String argument) {
         Option<Warp> warpOption = this.warpManager.findWarp(argument);
 
         if (warpOption.isEmpty()) {

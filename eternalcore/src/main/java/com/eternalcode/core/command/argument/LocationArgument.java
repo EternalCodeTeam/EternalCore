@@ -16,7 +16,7 @@ import java.util.List;
 public class LocationArgument implements MultilevelArgument<Location> {
 
     @Override
-    public Result<Location, Object> parseMultilevel(LiteInvocation invocation, String... arguments) {
+    public Result<Location, String> parseMultilevel(LiteInvocation invocation, String... arguments) {
         return Result.supplyThrowing(NumberFormatException.class, () -> {
             double x = Double.parseDouble(arguments[0]);
             double y = Double.parseDouble(arguments[1]);

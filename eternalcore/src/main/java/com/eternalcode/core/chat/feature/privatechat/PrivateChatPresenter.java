@@ -1,7 +1,7 @@
 package com.eternalcode.core.chat.feature.privatechat;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.placeholder.Placeholders;
+import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
 import panda.utilities.text.Formatter;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class PrivateChatPresenter implements Subscriber {
 
-    private final static Placeholders<PrivateMessage> PLACEHOLDERS = Placeholders.<PrivateMessage>builder()
+    private static final Placeholders<PrivateMessage> PLACEHOLDERS = Placeholders.<PrivateMessage>builder()
         .with("{MESSAGE}", PrivateMessage::getMessage)
         .with("{TARGET}", privateMessage -> privateMessage.getTarget().getName())
         .with("{SENDER}", privateMessage -> privateMessage.getSender().getName())
@@ -33,7 +33,7 @@ public class PrivateChatPresenter implements Subscriber {
         }
 
         this.notice.player(sender, messages -> messages.privateMessage().privateMessageYouToTarget(), formatter);
-        this.notice.players(event.getSpy(), messages -> messages.privateMessage().socialSpyMessage(), formatter);
+        this.notice.players(event.getSpyUuids(), messages -> messages.privateMessage().socialSpyMessage(), formatter);
     }
 
 }

@@ -33,17 +33,18 @@ dependencies {
     // expressible
     implementation("org.panda-lang:expressible:1.2.1")
 
+    // TriumphGui
+    implementation("dev.triumphteam:triumph-gui:3.1.3")
+
     // bStats
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
     // ormlite jdbc
     compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
-
-    // hikari
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
-    // TriumphGui
-    implementation("dev.triumphteam:triumph-gui:3.1.3")
+    // placeholder API
+    compileOnly("me.clip:placeholderapi:2.11.1")
 
     // tests
     testImplementation("org.spigotmc:spigot:1.19-R0.1-SNAPSHOT")
@@ -68,6 +69,7 @@ bukkit {
     name = "EternalCore"
     description = "All the most important server functions in one!"
     version = "${project.version}"
+    depend = listOf("PlaceholderAPI")
     libraries = listOf(
         "org.postgresql:postgresql:42.5.0",
         "com.h2database:h2:2.1.214",

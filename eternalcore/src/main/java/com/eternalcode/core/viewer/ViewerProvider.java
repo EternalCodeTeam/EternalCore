@@ -9,7 +9,7 @@ public interface ViewerProvider {
 
     Collection<Viewer> all();
 
-    Collection<Viewer> allPlayers();
+    Collection<Viewer> onlinePlayers();
 
     Viewer console();
 

@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
-import com.eternalcode.core.chat.placeholder.Placeholders;
+import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;

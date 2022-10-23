@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.placeholder;
+package com.eternalcode.core.placeholder;
 
 import panda.utilities.text.Formatter;
 

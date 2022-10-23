@@ -18,12 +18,13 @@ import java.time.Duration;
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
 
+    private static final int CLEAR_LINE_COUNT = 64;
     private static final AdventureNotification CLEAR;
 
     static {
         Component clear = Component.empty();
 
-        for (int line = 0; line < 64; line++) {
+        for (int lineIndex = 0; lineIndex < CLEAR_LINE_COUNT; lineIndex++) {
             clear = clear.append(Component.newline());
         }
 
@@ -44,7 +45,7 @@ public class ChatManagerCommand {
             .staticNotice(CLEAR)
             .message(messages -> messages.chat().cleared())
             .placeholder("{NICK}", sender.getName())
-            .allPlayers()
+            .onlinePlayers()
             .send();
     }
 

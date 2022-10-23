@@ -4,6 +4,7 @@ import com.eternalcode.core.afk.AfkCommand;
 import com.eternalcode.core.afk.AfkController;
 import com.eternalcode.core.afk.AfkMessagesController;
 import com.eternalcode.core.afk.AfkService;
+import com.eternalcode.core.bridge.placeholderapi.PlaceholderReplacerApiReplacer;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.ChatManagerCommand;
@@ -21,7 +22,6 @@ import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
-import com.eternalcode.core.chat.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.command.argument.AmountArgument;
 import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
@@ -105,6 +105,7 @@ import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
+import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
 import com.eternalcode.core.publish.LocalPublisher;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
@@ -185,7 +186,7 @@ public class EternalCore extends JavaPlugin {
      * Services & Managers
      **/
     private UserManager userManager;
-    private PlaceholderRegistry placeholderRegistry;
+    private PlaceholderBukkitRegistryImpl placeholderRegistry;
 
     private TeleportService teleportService;
     private TeleportTaskService teleportTaskService;
@@ -268,14 +269,15 @@ public class EternalCore extends JavaPlugin {
         /* Services & Managers  */
 
         this.userManager = new UserManager();
-        this.placeholderRegistry = new PlaceholderRegistry();
-        this.placeholderRegistry.stack(text -> {
+        this.placeholderRegistry = new PlaceholderBukkitRegistryImpl(server);
+        this.placeholderRegistry.registerPlaceholderReplacer(text -> {
             for (Map.Entry<String, String> entry : this.placeholdersConfiguration.placeholders.entrySet()) {
                 text = text.replace(entry.getKey(), entry.getValue());
             }
 
             return text;
         });
+        this.placeholderRegistry.registerPlayerPlaceholderReplacer(new PlaceholderReplacerApiReplacer());
 
         this.teleportService = new TeleportService();
         this.teleportTaskService = new TeleportTaskService();
@@ -561,7 +563,7 @@ public class EternalCore extends JavaPlugin {
         return this.userManager;
     }
 
-    public PlaceholderRegistry getPlaceholderRegistry() {
+    public PlaceholderBukkitRegistryImpl getPlaceholderRegistry() {
         return this.placeholderRegistry;
     }
 

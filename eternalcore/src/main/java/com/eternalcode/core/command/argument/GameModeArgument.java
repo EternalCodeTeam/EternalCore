@@ -41,7 +41,7 @@ public class GameModeArgument implements OneArgument<GameMode> {
     }
 
     @Override
-    public Result<GameMode, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<GameMode, String> parse(LiteInvocation invocation, String argument) {
         Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {

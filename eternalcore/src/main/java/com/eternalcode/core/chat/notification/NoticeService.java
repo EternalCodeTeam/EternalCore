@@ -1,8 +1,8 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
+import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
@@ -16,9 +16,9 @@ public class NoticeService {
     private final LanguageManager languageManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
-    private final PlaceholderRegistry placeholderRegistry;
+    private final PlaceholderBukkitRegistryImpl placeholderRegistry;
 
-    public NoticeService(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+    public NoticeService(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderBukkitRegistryImpl placeholderRegistry) {
         this.languageManager = languageManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
@@ -27,7 +27,7 @@ public class NoticeService {
 
     @CheckReturnValue
     public Notice create() {
-        return new Notice(this.languageManager, this.viewerProvider, this.announcer, placeholderRegistry);
+        return new Notice(this.languageManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
     }
 
     public void player(UUID player, MessageExtractor extractor, Formatter... formatters) {

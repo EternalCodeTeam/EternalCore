@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public class Notification {
 
@@ -22,7 +23,7 @@ public class Notification {
         this.types.addAll(types);
     }
 
-    public Notification edit(Function<String, String> edit) {
+    public Notification fork(UnaryOperator<String> edit) {
         return new Notification(edit.apply(this.message), this.types);
     }
 
