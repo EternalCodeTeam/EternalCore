@@ -6,7 +6,7 @@ import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.language.OptionalMessageExtractor;
-import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
+import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
@@ -33,7 +33,7 @@ public class Notice {
     private final LanguageManager languageManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
-    private final PlaceholderBukkitRegistryImpl placeholderRegistry;
+    private final PlaceholderRegistry placeholderRegistry;
 
     private final List<Viewer> viewers = new ArrayList<>();
     private final List<NotificationExtractor> notifications = new ArrayList<>();
@@ -41,7 +41,7 @@ public class Notice {
     private final Map<String, MessageExtractor> placeholders = new HashMap<>();
     private final List<Formatter> formatters = new ArrayList<>();
 
-    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderBukkitRegistryImpl placeholderRegistry) {
+    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
         this.languageManager = languageManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
