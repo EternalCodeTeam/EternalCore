@@ -1,4 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import java.text.SimpleDateFormat
+import java.util.*
 
 plugins {
     id("java-library")
@@ -28,6 +30,8 @@ dependencies {
 
     // command framework
     implementation("dev.rollczi.litecommands:bukkit-adventure:2.5.0")
+    
+    // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
     // utility library
@@ -44,8 +48,8 @@ dependencies {
 
     // unit test
     testImplementation("org.spigotmc:spigot:1.19-R0.1-SNAPSHOT")
-    testImplementation("org.codehaus.groovy:groovy-all:3.0.12")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testImplementation("org.codehaus.groovy:groovy-all:3.0.13")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
 }
 
 tasks.getByName<Test>("test") {
@@ -71,7 +75,7 @@ bukkit {
         "com.h2database:h2:2.1.214",
         "com.j256.ormlite:ormlite-jdbc:6.1",
         "com.zaxxer:HikariCP:5.0.1",
-        "org.mariadb.jdbc:mariadb-java-client:3.0.7"
+        "org.mariadb.jdbc:mariadb-java-client:3.0.8"
     )
 }
 
@@ -83,7 +87,9 @@ tasks {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
+    val timestamp = SimpleDateFormat("dd-MM-yyyy_hh-mm").format(Date())
+
+    archiveFileName.set("EternalCore v${project.version} $timestamp (MC 1.17-1.19x).jar")
 
     exclude(
         "org/intellij/lang/annotations/**",

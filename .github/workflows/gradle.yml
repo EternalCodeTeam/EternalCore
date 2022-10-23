@@ -12,14 +12,14 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@v3.1.0
       - name: 'Set up JDK ${{ matrix.java }}'
-        uses: actions/setup-java@v3.5.0
+        uses: actions/setup-java@v3.6.0
         with:
           distribution: adopt
           java-version: '${{ matrix.java }}'
       - name: Cache Gradle
-        uses: actions/cache@v3.0.8
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.gradle
           key: >-
@@ -31,7 +31,7 @@ jobs:
       - name: Build the Jar
         run: './gradlew eternalcore:shadowJar'
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3.1.1
         with:
           name: 'Successfully build EternalCore JDK${{ matrix.jdk }}'
           path: eternalcore/build/libs/EternalCore*.jar
