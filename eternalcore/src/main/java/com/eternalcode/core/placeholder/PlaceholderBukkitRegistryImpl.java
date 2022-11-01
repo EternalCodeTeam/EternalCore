@@ -17,28 +17,32 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
         this.server = server;
     }
 
+    @Override
     public void registerPlaceholderReplacer(PlaceholderReplacer stack) {
         this.replacers.add(stack);
     }
 
+    @Override
     public void registerPlayerPlaceholderReplacer(PlayerPlaceholderReplacer stack) {
         this.replacerPlayers.add(stack);
     }
 
+    @Override
     public String format(String text) {
-        for (PlaceholderReplacer replacer : replacers) {
+        for (PlaceholderReplacer replacer : this.replacers) {
             text = replacer.apply(text);
         }
 
         return text;
     }
 
+    @Override
     public String format(String text, Viewer target) {
         if (!target.isConsole()) {
-            Player playerTarget = server.getPlayer(target.getUniqueId());
+            Player playerTarget = this.server.getPlayer(target.getUniqueId());
 
             if (playerTarget != null) {
-                for (PlayerPlaceholderReplacer replacer : replacerPlayers) {
+                for (PlayerPlaceholderReplacer replacer : this.replacerPlayers) {
                     text = replacer.apply(text, playerTarget);
                 }
             }
