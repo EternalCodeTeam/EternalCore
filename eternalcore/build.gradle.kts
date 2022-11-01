@@ -30,7 +30,7 @@ dependencies {
 
     // command framework
     implementation("dev.rollczi.litecommands:bukkit-adventure:2.5.0")
-    
+
     // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
@@ -69,7 +69,7 @@ bukkit {
     name = "EternalCore"
     description = "All the most important server functions in one!"
     version = "${project.version}"
-    depend = listOf("PlaceholderAPI")
+    softDepend = listOf("PlaceholderAPI")
     libraries = listOf(
         "org.postgresql:postgresql:42.5.0",
         "com.h2database:h2:2.1.214",

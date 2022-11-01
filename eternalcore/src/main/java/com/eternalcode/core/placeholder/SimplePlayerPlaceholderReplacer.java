@@ -16,7 +16,7 @@ class SimplePlayerPlaceholderReplacer implements PlayerPlaceholderReplacer {
 
     @Override
     public String apply(String text, Player targetPlayer) {
-        return text.replace(target, replacement.apply(targetPlayer));
+        return text.replace(this.target, this.replacement.apply(targetPlayer));
     }
 
 }

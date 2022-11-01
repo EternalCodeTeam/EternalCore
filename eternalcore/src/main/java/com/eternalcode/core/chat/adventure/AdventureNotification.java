@@ -21,7 +21,7 @@ public class AdventureNotification extends Notification {
     }
 
     @Override
-    public Notification fork(UnaryOperator<String> edit) {
+    public Notification fork(UnaryOperator<String> fork) {
         return this;
     }
 

@@ -14,7 +14,7 @@ class SimplePlaceholderReplacer implements PlaceholderReplacer {
 
     @Override
     public String apply(String text) {
-        return text.replace(target, replacement.get());
+        return text.replace(this.target, this.replacement.get());
     }
 
 }
