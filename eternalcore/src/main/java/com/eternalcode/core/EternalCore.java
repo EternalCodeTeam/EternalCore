@@ -376,7 +376,7 @@ public class EternalCore extends JavaPlugin {
             .commandInstance(
                 new IgnoreCommand(ignoreRepository, this.noticeService),
                 new UnIgnoreCommand(ignoreRepository, this.noticeService),
-                new ChatManagerCommand(this.chatManager, this.noticeService, this.pluginConfiguration.chat.clearLines)
+                ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.clearLines)
             )
             .command(
                 EternalCoreCommand.class,

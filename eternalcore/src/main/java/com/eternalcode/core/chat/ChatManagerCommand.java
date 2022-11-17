@@ -18,33 +18,20 @@ import java.time.Duration;
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
 
-    private static final AdventureNotification CLEAR;
-    private static int CLEAR_LINE_COUNT;
-
+    private final AdventureNotification clear;
     private final NoticeService audiences;
     private final ChatManager chatManager;
 
-    static {
-        Component clear = Component.empty();
-
-        for (int lineIndex = 0; lineIndex < CLEAR_LINE_COUNT; lineIndex++) {
-            clear = clear.append(Component.newline());
-        }
-
-        CLEAR = new AdventureNotification(clear, NoticeType.CHAT);
-    }
-
-    public ChatManagerCommand(ChatManager chatManager, NoticeService audiences, int linesToClear) {
+    private ChatManagerCommand(ChatManager chatManager, NoticeService audiences, AdventureNotification clear) {
         this.audiences = audiences;
         this.chatManager = chatManager;
-
-        CLEAR_LINE_COUNT = linesToClear;
+        this.clear = clear;
     }
 
     @Execute(route = "clear", aliases = "cc")
     public void clear(CommandSender sender) {
         this.audiences.create()
-            .staticNotice(CLEAR)
+            .staticNotice(clear)
             .message(messages -> messages.chat().cleared())
             .placeholder("{NICK}", sender.getName())
             .onlinePlayers()
@@ -100,6 +87,16 @@ public class ChatManagerCommand {
             .placeholder("{SLOWMODE}", value.toLowerCase())
             .viewer(viewer)
             .send();
+    }
+
+    public static ChatManagerCommand create(ChatManager chatManager, NoticeService audiences, int linesToClear) {
+        Component clear = Component.empty();
+
+        for (int lineIndex = 0; lineIndex < linesToClear; lineIndex++) {
+            clear = clear.append(Component.newline());
+        }
+
+        return new ChatManagerCommand(chatManager, audiences, new AdventureNotification(clear, NoticeType.CHAT));
     }
 }
 
