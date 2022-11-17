@@ -33,7 +33,7 @@ public class PrivateChatPresenter implements Subscriber {
         }
 
         this.notice.player(sender, messages -> messages.privateMessage().privateMessageYouToTarget(), formatter);
-        this.notice.players(event.getSpyUuids(), messages -> messages.privateMessage().socialSpyMessage(), formatter);
+        this.notice.players(event.getSpies(), messages -> messages.privateMessage().socialSpyMessage(), formatter);
     }
 
 }
