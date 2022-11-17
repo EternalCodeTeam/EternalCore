@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
@@ -80,11 +81,9 @@ public class ChatManagerCommand {
 
         this.chatManager.getChatSettings().setChatDelay(duration);
 
-        String value = duration.toString().replace("PT", "");
-
         this.audiences.create()
             .message(messages -> messages.chat().slowModeSet())
-            .placeholder("{SLOWMODE}", value.toLowerCase())
+            .placeholder("{SLOWMODE}", EstimatedTemporalAmountParser.TIME_UNITS.format(duration))
             .viewer(viewer)
             .send();
     }
