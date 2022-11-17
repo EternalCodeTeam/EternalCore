@@ -2,10 +2,10 @@ package com.eternalcode.core.command.implementation.weather;
 
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Section(route = "thunder", aliases = "storm")
+@Route(name = "thunder", aliases = "storm")
 @Permission("eternalcore.thunder")
 public class ThunderCommand {
 

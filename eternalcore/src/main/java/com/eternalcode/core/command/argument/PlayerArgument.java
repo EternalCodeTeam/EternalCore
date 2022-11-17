@@ -37,7 +37,7 @@ public class PlayerArgument implements OneArgument<Player> {
     }
 
     @Override
-    public Result<Player, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<Player, String> parse(LiteInvocation invocation, String argument) {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {

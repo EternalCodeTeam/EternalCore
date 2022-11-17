@@ -22,14 +22,14 @@ public class WorldArgument implements OneArgument<World> {
     }
 
     @Override
-    public Result<World, Object> parse(LiteInvocation invocation, String argument) {
+    public Result<World, String> parse(LiteInvocation invocation, String argument) {
         return Option.of(this.server.getWorld(argument)).toResult("&cNie ma takiego świata!");
     }
 
     @Override
     public List<Suggestion> suggest(LiteInvocation invocation) {
         return this.server.getWorlds().stream()
-                .map(WorldInfo::getName)
+                .map(World::getName)
                 .map(Suggestion::of)
                 .toList();
     }

@@ -3,7 +3,7 @@ package com.eternalcode.core.command.implementation.item;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-@Section(route = "itemname", aliases = { "itemrename" })
+@Route(name = "itemname", aliases = { "itemrename" })
 @Permission("eternalcore.itemname")
 public class ItemNameCommand {
 

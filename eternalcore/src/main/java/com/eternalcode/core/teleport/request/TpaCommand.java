@@ -4,11 +4,11 @@ import com.eternalcode.core.chat.notification.NoticeService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
-@Section(route = "tpa")
+@Route(name = "tpa")
 @Permission("eternalcore.tpa")
 public class TpaCommand {
 

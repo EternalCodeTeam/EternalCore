@@ -5,12 +5,12 @@ import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-@Section(route = "back")
+@Route(name = "back")
 public class TeleportBackCommand {
 
     private final TeleportService teleportService;

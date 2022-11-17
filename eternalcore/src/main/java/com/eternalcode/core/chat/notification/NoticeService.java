@@ -1,8 +1,8 @@
 package com.eternalcode.core.chat.notification;
 
-import com.eternalcode.core.chat.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
+import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
@@ -27,7 +27,7 @@ public class NoticeService {
 
     @CheckReturnValue
     public Notice create() {
-        return new Notice(this.languageManager, this.viewerProvider, this.announcer, placeholderRegistry);
+        return new Notice(this.languageManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
     }
 
     public void player(UUID player, MessageExtractor extractor, Formatter... formatters) {

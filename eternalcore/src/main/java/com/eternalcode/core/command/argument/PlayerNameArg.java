@@ -20,7 +20,7 @@ public class PlayerNameArg implements OneArgument<String> {
     }
 
     @Override
-    public Result<String, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<String, String> parse(LiteInvocation invocation, String argument) {
         return Result.ok(argument);
     }
 

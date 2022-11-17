@@ -5,10 +5,10 @@ import com.eternalcode.core.teleport.TeleportService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Section(route = "tphere", aliases = { "s" })
+@Route(name = "tphere", aliases = { "s" })
 @Permission("eternalcore.tphere")
 public class TeleportHereCommand {
 

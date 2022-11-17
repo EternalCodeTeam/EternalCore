@@ -6,11 +6,11 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
-@Section(route = "whois")
+@Route(name = "whois")
 @Permission("eternalcore.whois")
 public class WhoIsCommand {
 

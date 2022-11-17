@@ -4,7 +4,7 @@ import com.eternalcode.core.util.legacy.Legacy;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import panda.std.Option;
 
-@Section(route = "invsee", aliases = { "oi", "inventoryopen", "open", "invsee" })
+@Route(name = "invsee", aliases = { "oi", "inventoryopen", "open", "invsee" })
 @Permission("eternalcore.invsee")
 public class InventoryOpenCommand {
 

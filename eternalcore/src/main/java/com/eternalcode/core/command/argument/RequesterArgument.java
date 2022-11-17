@@ -32,7 +32,7 @@ public class RequesterArgument implements OneArgument<Player> {
     }
 
     @Override
-    public Result<Player, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<Player, String> parse(LiteInvocation invocation, String argument) {
         Player target = this.server.getPlayer(argument);
 
         if (!(invocation.sender().getHandle() instanceof Player player)) {

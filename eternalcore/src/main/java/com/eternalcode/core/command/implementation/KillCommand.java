@@ -5,11 +5,11 @@ import com.eternalcode.core.chat.notification.NoticeService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
-@Section(route = "kill")
+@Route(name = "kill")
 @Permission("eternalcore.kill")
 public class KillCommand {
 

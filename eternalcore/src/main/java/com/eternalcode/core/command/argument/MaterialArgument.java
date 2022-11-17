@@ -25,7 +25,7 @@ public class MaterialArgument implements OneArgument<Material> {
     }
 
     @Override
-    public Result<Material, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<Material, String> parse(LiteInvocation invocation, String argument) {
         Material material = Material.getMaterial(argument.toUpperCase());
 
         if (material == null) {

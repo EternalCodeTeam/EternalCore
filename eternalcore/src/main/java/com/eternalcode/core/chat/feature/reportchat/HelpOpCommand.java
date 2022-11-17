@@ -8,7 +8,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Server;
@@ -19,7 +19,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 //TODO: Refactor
-@Section(route = "helpop", aliases = { "report" })
+@Route(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
 public class HelpOpCommand {
 

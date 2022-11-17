@@ -6,11 +6,11 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Section(route = "ping")
+@Route(name = "ping")
 public class PingCommand {
 
     private final NoticeService noticeService;

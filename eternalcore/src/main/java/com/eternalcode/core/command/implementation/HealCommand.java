@@ -7,12 +7,12 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.amount.Max;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Section(route = "heal")
+@Route(name = "heal")
 @Permission("eternalcore.heal")
 public class HealCommand {
 

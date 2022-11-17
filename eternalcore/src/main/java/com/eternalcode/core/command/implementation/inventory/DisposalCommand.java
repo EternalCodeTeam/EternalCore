@@ -6,14 +6,14 @@ import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.user.UserManager;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Section(route = "disposal", aliases = { "smietnik" })
+@Route(name = "disposal", aliases = { "smietnik" })
 @Permission("eternalcore.disposal")
 public class DisposalCommand {
 

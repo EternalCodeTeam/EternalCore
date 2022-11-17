@@ -7,12 +7,12 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 import java.util.logging.Logger;
 
-@Section(route = "cartography", aliases = "cartography-table")
+@Route(name = "cartography", aliases = "cartography-table")
 @Permission("eternalcore.cartography")
 public class CartographyTableCommand {
 

@@ -5,9 +5,9 @@ import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 
-@Section(route = "delhome")
+@Route(name = "delhome")
 public class DelHomeCommand {
 
     private final HomeManager homeManager;

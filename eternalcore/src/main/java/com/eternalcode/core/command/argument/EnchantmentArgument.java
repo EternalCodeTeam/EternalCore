@@ -28,7 +28,7 @@ public class EnchantmentArgument implements OneArgument<Enchantment> {
     }
 
     @Override
-    public Result<Enchantment, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<Enchantment, String> parse(LiteInvocation invocation, String argument) {
         Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument));
 
         if (enchantment == null) {

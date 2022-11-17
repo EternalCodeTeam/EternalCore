@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.handler;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.placeholder.Placeholders;
+import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -31,7 +31,11 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
         List<String> schematics = schematic.getSchematics();
 
         if (schematics.size() == 1) {
-            this.noticeService.viewer(viewer, messages -> messages.argument().usageMessage(), SCHEME.toFormatter(schematics.get(0)));
+            this.noticeService.create()
+                .viewer(viewer)
+                .message(messages -> messages.argument().usageMessage())
+                .placeholder(SCHEME, schematics.get(0))
+                .send();
             return;
         }
 

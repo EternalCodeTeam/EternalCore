@@ -1,50 +1,41 @@
 package com.eternalcode.core.chat;
 
 import com.eternalcode.core.chat.adventure.AdventureNotification;
-import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
-import dev.rollczi.litecommands.command.amount.Min;
+import com.eternalcode.core.viewer.Viewer;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
-import panda.std.Option;
 
 import java.time.Duration;
 
-@Section(route = "chat", aliases = { "czat" })
+@Route(name = "chat", aliases = { "czat" })
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
 
-    private static final AdventureNotification CLEAR;
-
-    static {
-        Component clear = Component.empty();
-
-        for (int line = 0; line < 64; line++) {
-            clear = clear.append(Component.newline());
-        }
-
-        CLEAR = new AdventureNotification(clear, NoticeType.CHAT);
-    }
-
+    private final AdventureNotification clear;
     private final NoticeService audiences;
     private final ChatManager chatManager;
 
-    public ChatManagerCommand(ChatManager chatManager, NoticeService audiences) {
+    private ChatManagerCommand(ChatManager chatManager, NoticeService audiences, AdventureNotification clear) {
         this.audiences = audiences;
         this.chatManager = chatManager;
+        this.clear = clear;
     }
 
     @Execute(route = "clear", aliases = "cc")
     public void clear(CommandSender sender) {
         this.audiences.create()
-            .staticNotice(CLEAR)
+            .staticNotice(clear)
             .message(messages -> messages.chat().cleared())
             .placeholder("{NICK}", sender.getName())
-            .allPlayers()
+            .onlinePlayers()
             .send();
     }
 
@@ -80,25 +71,31 @@ public class ChatManagerCommand {
             .send();
     }
 
-    @Execute(route = "slowmode")
-    @Min(1)
-    public void slowmode(Viewer viewer, String[] args) { // TODO: Argument (String[] args <- legacy solution)
-        String amountArg = args[1];
+    @Execute(route = "slowmode", required = 1)
+    public void slowmode(Viewer viewer, @Arg @Name("time") Duration duration) {
+        if (duration.isNegative()) {
+            this.audiences.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
 
-        Option.supplyThrowing(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {
-            if (amount < 0.0D) {
-                this.audiences.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
-                return;
-            }
+            return;
+        }
 
-            this.chatManager.getChatSettings().setChatDelay(Duration.ofSeconds(amount.intValue()));
-            this.audiences.create()
-                .message(messages -> messages.chat().slowModeSet())
-                .placeholder("{SLOWMODE}", amountArg)
-                .viewer(viewer)
-                .send();
+        this.chatManager.getChatSettings().setChatDelay(duration);
 
-        }).onEmpty(() -> this.audiences.viewer(viewer, messages -> messages.argument().notNumber()));
+        this.audiences.create()
+            .message(messages -> messages.chat().slowModeSet())
+            .placeholder("{SLOWMODE}", EstimatedTemporalAmountParser.TIME_UNITS.format(duration))
+            .viewer(viewer)
+            .send();
+    }
+
+    public static ChatManagerCommand create(ChatManager chatManager, NoticeService audiences, int linesToClear) {
+        Component clear = Component.empty();
+
+        for (int lineIndex = 0; lineIndex < linesToClear; lineIndex++) {
+            clear = clear.append(Component.newline());
+        }
+
+        return new ChatManagerCommand(chatManager, audiences, new AdventureNotification(clear, NoticeType.CHAT));
     }
 }
 

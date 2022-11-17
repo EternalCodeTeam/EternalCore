@@ -6,7 +6,7 @@ import com.eternalcode.containers.AdditionalContainerType;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;
@@ -20,7 +20,7 @@ import panda.utilities.StringUtils;
 
 import java.util.logging.Logger;
 
-@Section(route = "grindstone")
+@Route(name = "grindstone")
 @Permission("eternalcore.grindstone")
 public class GrindstoneCommand {
 

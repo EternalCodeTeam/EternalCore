@@ -5,11 +5,11 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.shared.PositionAdapter;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 
-@Section(route = "setspawn")
+@Route(name = "setspawn")
 @Permission("eternalcore.setspawn")
 public class SetSpawnCommand {
 

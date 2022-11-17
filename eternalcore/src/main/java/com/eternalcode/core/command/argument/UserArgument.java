@@ -40,7 +40,7 @@ public class UserArgument implements OneArgument<User> {
     }
 
     @Override
-    public Result<User, ?> parse(LiteInvocation invocation, String argument) {
+    public Result<User, String> parse(LiteInvocation invocation, String argument) {
         return this.userManager.getUser(argument).toResult(() -> {
             Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
             Messages messages = this.languageManager.getMessages(viewer.getLanguage());

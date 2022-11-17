@@ -27,7 +27,7 @@ public class BukkitViewerProvider implements ViewerProvider {
 
     @Override
     public Collection<Viewer> all() {
-        Collection<Viewer> audiences = this.allPlayers();
+        Collection<Viewer> audiences = this.onlinePlayers();
 
         audiences.add(console());
 
@@ -35,7 +35,7 @@ public class BukkitViewerProvider implements ViewerProvider {
     }
 
     @Override
-    public Collection<Viewer> allPlayers() {
+    public Collection<Viewer> onlinePlayers() {
 
         Set<Viewer> audiences = new HashSet<>();
 
