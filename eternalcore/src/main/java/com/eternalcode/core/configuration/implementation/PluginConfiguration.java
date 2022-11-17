@@ -155,8 +155,6 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Format {
         public String separator = "&7, ";
-        public List<String> amountArgumentStatement = Arrays.asList("1", "8", "16", "32", "64", "100");
-        public List<String> doubleArgumentStatement = Arrays.asList("0.1", "0.5", "1.3", "4.2");
     }
 
     @Contextual

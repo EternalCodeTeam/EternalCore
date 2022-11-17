@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.util.ItemUtil;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -38,7 +39,8 @@ public class HatCommand {
 
         if (itemStack == null || itemStack.getType() == Material.AIR) {
             playerInventory.setHelmet(handItem);
-            playerInventory.removeItem(handItem);
+
+            ItemUtil.removeItem(player, handItem.getType(), 1);
 
             return;
         }
