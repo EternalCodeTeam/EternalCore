@@ -8,7 +8,7 @@ import com.eternalcode.core.teleport.TeleportTaskService;
 
 import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import panda.std.Option;
 
 import java.time.Duration;
 
-@Section(route = "spawn")
+@Route(name = "spawn")
 @Permission("eternalcore.spawn")
 public class SpawnCommand {
 

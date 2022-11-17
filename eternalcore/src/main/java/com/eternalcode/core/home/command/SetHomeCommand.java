@@ -6,11 +6,11 @@ import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.injector.Inject;
 import org.bukkit.entity.Player;
 
-@Section(route = "sethome")
+@Route(name = "sethome")
 public class SetHomeCommand {
 
     private final HomeManager homeManager;

@@ -2,10 +2,10 @@ package com.eternalcode.core.afk;
 
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Section(route = "afk")
+@Route(name = "afk")
 @Permission("eternalcore.afk")
 public class AfkCommand {
 

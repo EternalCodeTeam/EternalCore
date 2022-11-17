@@ -8,7 +8,7 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 import panda.utilities.text.Formatter;
 
-@Section(route = "teleport", aliases = { "tp" })
+@Route(name = "teleport", aliases = { "tp" })
 @Permission("eternalcore.teleport")
 public class TeleportCommand {
 

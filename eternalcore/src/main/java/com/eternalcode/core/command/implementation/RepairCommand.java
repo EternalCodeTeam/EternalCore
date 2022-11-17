@@ -2,7 +2,7 @@ package com.eternalcode.core.command.implementation;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-@Section(route = "repair")
+@Route(name = "repair")
 @Permission("eternalcore.repair")
 public class RepairCommand {
 

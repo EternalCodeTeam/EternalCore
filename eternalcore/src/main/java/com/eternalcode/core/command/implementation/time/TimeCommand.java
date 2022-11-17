@@ -3,11 +3,11 @@ package com.eternalcode.core.command.implementation.time;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-@Section(route = "time")
+@Route(name = "time")
 @Permission("eternalcore.time")
 public class TimeCommand {
 

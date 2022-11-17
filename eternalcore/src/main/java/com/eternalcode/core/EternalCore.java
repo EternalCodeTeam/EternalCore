@@ -4,7 +4,7 @@ import com.eternalcode.core.afk.AfkCommand;
 import com.eternalcode.core.afk.AfkController;
 import com.eternalcode.core.afk.AfkMessagesController;
 import com.eternalcode.core.afk.AfkService;
-import com.eternalcode.core.bridge.placeholderapi.PlaceholderReplacerApiReplacer;
+import com.eternalcode.core.bridge.BridgeManager;
 import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.ChatManagerCommand;
@@ -35,6 +35,7 @@ import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
+import com.eternalcode.core.command.configurator.CommandConfiguration;
 import com.eternalcode.core.command.configurator.CommandConfigurator;
 import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
@@ -79,7 +80,6 @@ import com.eternalcode.core.command.implementation.weather.RainCommand;
 import com.eternalcode.core.command.implementation.weather.SunCommand;
 import com.eternalcode.core.command.implementation.weather.ThunderCommand;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.command.configurator.CommandConfiguration;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
@@ -106,6 +106,7 @@ import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
+import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.publish.LocalPublisher;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
@@ -137,7 +138,7 @@ import com.eternalcode.core.warp.WarpRepository;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
+import dev.rollczi.litecommands.bukkit.adventure.platform.LiteBukkitAdventurePlatformFactory;
 import dev.rollczi.liteskullapi.LiteSkullFactory;
 import dev.rollczi.liteskullapi.SkullAPI;
 import io.papermc.lib.PaperLib;
@@ -185,8 +186,9 @@ public class EternalCore extends JavaPlugin {
     /**
      * Services & Managers
      **/
+    private BridgeManager bridgeManager;
     private UserManager userManager;
-    private PlaceholderBukkitRegistryImpl placeholderRegistry;
+    private PlaceholderRegistry placeholderRegistry;
 
     private TeleportService teleportService;
     private TeleportTaskService teleportTaskService;
@@ -277,7 +279,9 @@ public class EternalCore extends JavaPlugin {
 
             return text;
         });
-        this.placeholderRegistry.registerPlayerPlaceholderReplacer(new PlaceholderReplacerApiReplacer());
+
+        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, this.getLogger());
+        this.bridgeManager.init();
 
         this.teleportService = new TeleportService();
         this.teleportTaskService = new TeleportTaskService();
@@ -299,6 +303,7 @@ public class EternalCore extends JavaPlugin {
 
         /* Audiences System */
 
+
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
         this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 
@@ -315,34 +320,32 @@ public class EternalCore extends JavaPlugin {
 
         CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
-        this.liteCommands = LiteBukkitFactory.builder(server, "eternalcore")
+        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider, this.miniMessage)
 
             // TODO: Recreate for commandInstance?
 
             // Arguments (include optional)
-            .argument(String.class, "player", new PlayerNameArg(server))
-            .argument(Integer.class, new AmountArgument(this.languageManager, this.pluginConfiguration, viewerProvider))
-            .argument(Material.class, new MaterialArgument(this.userProvider, this.languageManager))
-            .argument(GameMode.class, new GameModeArgument(this.userProvider, this.languageManager))
-            .argument(NoticeType.class, new NoticeTypeArgument(this.userProvider, this.languageManager))
-            .argument(Warp.class, new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
-            .argument(Enchantment.class, new EnchantmentArgument(this.viewerProvider, this.languageManager))
-            .argument(World.class, new WorldArgument(server))
-            .argument(User.class, new UserArgument(this.viewerProvider, this.languageManager, server, this.userManager))
-            .argument(Player.class, new PlayerArgument(this.viewerProvider, this.languageManager, server))
-            .argument(Player.class, "request", new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
+            .argument(String.class, "player",   new PlayerNameArg(server))
+            .argument(GameMode.class,               new GameModeArgument(this.userProvider, this.languageManager))
+            .argument(NoticeType.class,             new NoticeTypeArgument(this.userProvider, this.languageManager))
+            .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
+            .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.languageManager))
+            .argument(World.class,                  new WorldArgument(server))
+            .argument(User.class,                   new UserArgument(this.viewerProvider, this.languageManager, server, this.userManager))
+            .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.languageManager, server))
+            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
 
             // multilevel Arguments (include optional)
-            .argumentMultilevel(Location.class, new LocationArgument())
+            .argumentMultilevel(Location.class,     new LocationArgument())
 
             // Native Argument (no optional)
-            .argument(ArgHome.class, Home.class, new HomeArgument(homeManager, userProvider, languageManager))
+            .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.userProvider, this.languageManager))
             .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.viewerProvider, server))
 
             // Dynamic binds
-            .contextualBind(Player.class, new PlayerContextual(this.languageManager))
-            .contextualBind(Viewer.class, new ViewerContextual(this.viewerProvider))
-            .contextualBind(User.class, new UserContextual(this.languageManager, this.userManager))
+            .contextualBind(Player.class,   new PlayerContextual(this.languageManager))
+            .contextualBind(Viewer.class,   new ViewerContextual(this.viewerProvider))
+            .contextualBind(User.class,     new UserContextual(this.languageManager, this.userManager))
 
             // Static binds
             .typeBind(EternalCore.class,            () -> this)
@@ -371,8 +374,9 @@ public class EternalCore extends JavaPlugin {
             .permissionHandler(new PermissionMessage(this.userProvider, this.audiencesProvider, this.languageManager, this.miniMessage))
 
             .commandInstance(
-                new IgnoreCommand(ignoreRepository, noticeService),
-                new UnIgnoreCommand(ignoreRepository, noticeService)
+                new IgnoreCommand(ignoreRepository, this.noticeService),
+                new UnIgnoreCommand(ignoreRepository, this.noticeService),
+                new ChatManagerCommand(this.chatManager, this.noticeService, this.pluginConfiguration.chat.clearLines)
             )
             .command(
                 EternalCoreCommand.class,
@@ -431,7 +435,6 @@ public class EternalCore extends JavaPlugin {
                 AdminChatCommand.class,
                 HelpOpCommand.class,
                 AlertCommand.class,
-                ChatManagerCommand.class,
 
                 // Moderation Commands
                 FlyCommand.class,
@@ -500,7 +503,6 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatform().unregisterAll();
         this.databaseManager.close();
-        this.skullAPI.shutdown();
     }
 
     private void softwareCheck() {
@@ -559,11 +561,15 @@ public class EternalCore extends JavaPlugin {
         return this.placeholdersConfiguration;
     }
 
+    public BridgeManager getBridgeManager() {
+        return this.bridgeManager;
+    }
+
     public UserManager getUserManager() {
         return this.userManager;
     }
 
-    public PlaceholderBukkitRegistryImpl getPlaceholderRegistry() {
+    public PlaceholderRegistry getPlaceholderRegistry() {
         return this.placeholderRegistry;
     }
 

@@ -4,7 +4,7 @@ import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.HumanEntity;
@@ -13,7 +13,7 @@ import panda.utilities.text.Joiner;
 
 import java.util.Collection;
 
-@Section(route = "list")
+@Route(name = "list")
 @Permission("eternalcore.list")
 public class OnlinePlayersListCommand {
 

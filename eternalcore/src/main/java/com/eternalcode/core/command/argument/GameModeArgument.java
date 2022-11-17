@@ -14,6 +14,7 @@ import panda.std.Result;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @ArgumentName("gamemode")
 public class GameModeArgument implements OneArgument<GameMode> {
@@ -29,6 +30,8 @@ public class GameModeArgument implements OneArgument<GameMode> {
         this.languageManager = languageManager;
     }
 
+    // TODO: zrobić w configu Map<GameMode, String> jako alliasy, - GAME_MODES itp
+
     @Override
     public List<Suggestion> suggest(LiteInvocation invocation) {
         List<String> gameModes = new ArrayList<>();
@@ -36,6 +39,9 @@ public class GameModeArgument implements OneArgument<GameMode> {
         for (GameMode gameMode : GAME_MODES) {
             gameModes.add(gameMode.name().toLowerCase());
         }
+
+        IntStream.range(0, GAME_MODES.length)
+            .forEach(value -> gameModes.add(String.valueOf(value)));
 
         return Suggestion.of(gameModes);
     }
@@ -50,7 +56,7 @@ public class GameModeArgument implements OneArgument<GameMode> {
 
         return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(GAME_MODE_VALID::valid)
-            .map(integer -> GAME_MODES[integer])
+            .map(value -> GAME_MODES[value])
             .toResult(() -> {
                 Messages messages = this.userProvider.getUser(invocation)
                     .map(this.languageManager::getMessages)

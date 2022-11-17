@@ -5,9 +5,9 @@ import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 
-@Section(route = "reply", aliases = { "r" })
+@Route(name = "reply", aliases = { "r" })
 @Permission("eternalcore.reply")
 public class PrivateChatReplyCommand {
 

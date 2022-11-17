@@ -5,14 +5,14 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.liteskullapi.SkullAPI;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Section(route = "skull", aliases = "glowa")
+@Route(name = "skull", aliases = "glowa")
 @Permission("eternalcore.skull")
 public class SkullCommand {
 

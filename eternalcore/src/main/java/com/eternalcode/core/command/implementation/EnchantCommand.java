@@ -5,7 +5,7 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.enchantments.Enchantment;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-@Section(route = "enchant", aliases = { "ench" })
+@Route(name = "enchant", aliases = { "ench" })
 @Permission("eternalcore.enchant")
 public class EnchantCommand {
 

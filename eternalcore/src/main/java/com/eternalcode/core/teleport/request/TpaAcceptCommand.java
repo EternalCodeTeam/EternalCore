@@ -8,7 +8,7 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
-@Section(route = "tpaaccept", aliases = "tpaccept")
+@Route(name = "tpaaccept", aliases = "tpaccept")
 @Permission("eternalcore.tpaccept")
 public class TpaAcceptCommand {
 

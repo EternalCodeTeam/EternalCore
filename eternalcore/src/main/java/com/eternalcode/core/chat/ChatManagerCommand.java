@@ -1,25 +1,28 @@
 package com.eternalcode.core.chat;
 
 import com.eternalcode.core.chat.adventure.AdventureNotification;
-import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
-import dev.rollczi.litecommands.command.amount.Min;
+import com.eternalcode.core.viewer.Viewer;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
-import panda.std.Option;
 
 import java.time.Duration;
 
-@Section(route = "chat", aliases = { "czat" })
+@Route(name = "chat", aliases = { "czat" })
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
 
-    private static final int CLEAR_LINE_COUNT = 64;
     private static final AdventureNotification CLEAR;
+    private static int CLEAR_LINE_COUNT;
+
+    private final NoticeService audiences;
+    private final ChatManager chatManager;
 
     static {
         Component clear = Component.empty();
@@ -31,12 +34,11 @@ public class ChatManagerCommand {
         CLEAR = new AdventureNotification(clear, NoticeType.CHAT);
     }
 
-    private final NoticeService audiences;
-    private final ChatManager chatManager;
-
-    public ChatManagerCommand(ChatManager chatManager, NoticeService audiences) {
+    public ChatManagerCommand(ChatManager chatManager, NoticeService audiences, int linesToClear) {
         this.audiences = audiences;
         this.chatManager = chatManager;
+
+        CLEAR_LINE_COUNT = linesToClear;
     }
 
     @Execute(route = "clear", aliases = "cc")
@@ -81,25 +83,23 @@ public class ChatManagerCommand {
             .send();
     }
 
-    @Execute(route = "slowmode")
-    @Min(1)
-    public void slowmode(Viewer viewer, String[] args) { // TODO: Argument (String[] args <- legacy solution)
-        String amountArg = args[1];
+    @Execute(route = "slowmode", required = 1)
+    public void slowmode(Viewer viewer, @Arg @Name("time") Duration duration) {
+        if (duration.isNegative()) {
+            this.audiences.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
 
-        Option.supplyThrowing(NumberFormatException.class, () -> Double.parseDouble(amountArg)).peek(amount -> {
-            if (amount < 0.0D) {
-                this.audiences.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
-                return;
-            }
+            return;
+        }
 
-            this.chatManager.getChatSettings().setChatDelay(Duration.ofSeconds(amount.intValue()));
-            this.audiences.create()
-                .message(messages -> messages.chat().slowModeSet())
-                .placeholder("{SLOWMODE}", amountArg)
-                .viewer(viewer)
-                .send();
+        this.chatManager.getChatSettings().setChatDelay(duration);
 
-        }).onEmpty(() -> this.audiences.viewer(viewer, messages -> messages.argument().notNumber()));
+        String value = duration.toString().replace("PT", "");
+
+        this.audiences.create()
+            .message(messages -> messages.chat().slowModeSet())
+            .placeholder("{SLOWMODE}", value.toLowerCase())
+            .viewer(viewer)
+            .send();
     }
 }
 

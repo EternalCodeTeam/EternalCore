@@ -5,10 +5,10 @@ import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.injector.Inject;
 
-@Section(route = "ignore")
+@Route(name = "ignore")
 @Permission("eternalcore.ignore")
 public class IgnoreCommand {
 

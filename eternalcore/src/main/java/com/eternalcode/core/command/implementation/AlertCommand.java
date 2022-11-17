@@ -6,9 +6,9 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 
-@Section(route = "alert", aliases = { "broadcast", "bc" })
+@Route(name = "alert", aliases = { "broadcast", "bc" })
 @Permission("eternalcore.alert")
 public class AlertCommand {
 

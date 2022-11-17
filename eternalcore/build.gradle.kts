@@ -1,6 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import java.text.SimpleDateFormat
-import java.util.*
 
 plugins {
     id("java-library")
@@ -29,7 +27,7 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // command framework
-    implementation("dev.rollczi.litecommands:bukkit-adventure:2.5.0")
+    implementation("dev.rollczi.litecommands:bukkit-adventure:2.6.0-SNAPSHOT")
 
     // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
@@ -87,9 +85,7 @@ tasks {
 }
 
 tasks.withType<ShadowJar> {
-    val timestamp = SimpleDateFormat("dd-MM-yyyy_hh-mm").format(Date())
-
-    archiveFileName.set("EternalCore v${project.version} $timestamp (MC 1.17-1.19x).jar")
+    archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
 
     exclude(
         "org/intellij/lang/annotations/**",

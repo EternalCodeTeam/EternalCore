@@ -115,11 +115,14 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Cooldown time for helpop message" })
         public Duration helpOpDelay = Duration.ofSeconds(60);
 
-        @Description({ " ", "# Custom message for unknow command" })
+        @Description({ " ", "# Custom message for unknown command" })
         public boolean commandExact = false;
 
         @Description({ " ", "# Cooldowon time for chat" })
         public Duration chatDelay = Duration.ofSeconds(5);
+
+        @Description({ "", "# Count of lines to clear" })
+        public int clearLines = 64;
 
         public boolean chatEnabled = true;
 
@@ -153,6 +156,7 @@ public class PluginConfiguration implements ReloadableConfig {
     public static class Format {
         public String separator = "&7, ";
         public List<String> amountArgumentStatement = Arrays.asList("1", "8", "16", "32", "64", "100");
+        public List<String> doubleArgumentStatement = Arrays.asList("0.1", "0.5", "1.3", "4.2");
     }
 
     @Contextual

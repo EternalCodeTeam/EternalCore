@@ -29,7 +29,7 @@ public class WorldArgument implements OneArgument<World> {
     @Override
     public List<Suggestion> suggest(LiteInvocation invocation) {
         return this.server.getWorlds().stream()
-                .map(WorldInfo::getName)
+                .map(World::getName)
                 .map(Suggestion::of)
                 .toList();
     }

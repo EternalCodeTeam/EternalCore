@@ -4,12 +4,12 @@ import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-@Section(route = "gamemode", aliases = { "gm" })
+@Route(name = "gamemode", aliases = { "gm" })
 @Permission("eternalcore.gamemode")
 public class GameModeCommand {
 

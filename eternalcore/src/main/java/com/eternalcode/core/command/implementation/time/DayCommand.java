@@ -2,10 +2,10 @@ package com.eternalcode.core.command.implementation.time;
 
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Section(route = "day")
+@Route(name = "day")
 @Permission("eternalcore.day")
 public class DayCommand {
     @Execute

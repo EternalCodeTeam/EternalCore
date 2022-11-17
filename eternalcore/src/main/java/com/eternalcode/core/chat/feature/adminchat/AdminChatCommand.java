@@ -5,12 +5,12 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Section(route = "adminchat", aliases = "ac")
+@Route(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
 public class AdminChatCommand {
 

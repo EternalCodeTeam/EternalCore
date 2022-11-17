@@ -3,12 +3,12 @@ package com.eternalcode.core.chat.feature.privatechat;
 import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.section.Section;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-@Section(route = "spy", aliases = { "socialspy" })
+@Route(name = "spy", aliases = { "socialspy" })
 @Permission("eternalcore.spy")
 public class PrivateChatSocialSpyCommand {
 
