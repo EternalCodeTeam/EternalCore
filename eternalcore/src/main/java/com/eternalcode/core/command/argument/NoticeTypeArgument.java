@@ -1,9 +1,10 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -17,11 +18,11 @@ import java.util.List;
 @ArgumentName("action")
 public class NoticeTypeArgument implements OneArgument<NoticeType> {
 
-    private final BukkitUserProvider userProvider;
+    private final BukkitViewerProvider viewerProvider;
     private final LanguageManager languageManager;
 
-    public NoticeTypeArgument(BukkitUserProvider userProvider, LanguageManager languageManager) {
-        this.userProvider = userProvider;
+    public NoticeTypeArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
+        this.viewerProvider = viewerProvider;
         this.languageManager = languageManager;
     }
 
@@ -37,9 +38,8 @@ public class NoticeTypeArgument implements OneArgument<NoticeType> {
     public Result<NoticeType, String> parse(LiteInvocation invocation, String argument) {
         return Option.supplyThrowing(IllegalArgumentException.class, () -> NoticeType.valueOf(argument.toUpperCase()))
             .toResult(() -> {
-                Messages messages = this.userProvider.getUser(invocation)
-                    .map(this.languageManager::getMessages)
-                    .orElseGet(this.languageManager.getDefaultMessages());
+                Viewer viewer = this.viewerProvider.any(invocation);
+                Messages messages = this.languageManager.getMessages(viewer);
 
                 return messages.argument().noArgument();
             });

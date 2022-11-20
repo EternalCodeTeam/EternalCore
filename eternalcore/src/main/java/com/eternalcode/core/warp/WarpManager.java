@@ -3,6 +3,8 @@ package com.eternalcode.core.warp;
 import com.eternalcode.core.shared.Position;
 import panda.std.Option;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +39,8 @@ public class WarpManager {
         return Option.of(this.warpMap.get(name));
     }
 
-    public Map<String, Warp> getWarpMap() {
-        return this.warpMap;
+    public Collection<String> getNamesOfWarps() {
+        return Collections.unmodifiableCollection(this.warpMap.keySet());
     }
 
     public static WarpManager create(WarpRepository warpRepository) {

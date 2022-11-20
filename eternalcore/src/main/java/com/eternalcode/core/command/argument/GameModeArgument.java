@@ -1,8 +1,9 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -22,11 +23,11 @@ public class GameModeArgument implements OneArgument<GameMode> {
     private final static GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
     private final static AmountValidator GAME_MODE_VALID = AmountValidator.none().min(0).max(3);
 
-    private final BukkitUserProvider userProvider;
+    private final BukkitViewerProvider viewerProvider;
     private final LanguageManager languageManager;
 
-    public GameModeArgument(BukkitUserProvider userProvider, LanguageManager languageManager) {
-        this.userProvider = userProvider;
+    public GameModeArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
+        this.viewerProvider = viewerProvider;
         this.languageManager = languageManager;
     }
 
@@ -58,9 +59,8 @@ public class GameModeArgument implements OneArgument<GameMode> {
             .filter(GAME_MODE_VALID::valid)
             .map(value -> GAME_MODES[value])
             .toResult(() -> {
-                Messages messages = this.userProvider.getUser(invocation)
-                    .map(this.languageManager::getMessages)
-                    .orElseGet(this.languageManager.getDefaultMessages());
+                Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
+                Messages messages = this.languageManager.getMessages(viewer.getLanguage());
 
                 return messages.other().gameModeNotCorrect();
             });

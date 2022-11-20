@@ -1,8 +1,9 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.warp.Warp;
 import com.eternalcode.core.warp.WarpManager;
 import dev.rollczi.litecommands.argument.ArgumentName;
@@ -19,12 +20,12 @@ public class WarpArgument implements OneArgument<Warp> {
 
     private final WarpManager warpManager;
     private final LanguageManager languageManager;
-    private final BukkitUserProvider userProvider;
+    private final BukkitViewerProvider viewerProvider;
 
-    public WarpArgument(WarpManager warpManager, LanguageManager languageManager, BukkitUserProvider userProvider) {
+    public WarpArgument(WarpManager warpManager, LanguageManager languageManager, BukkitViewerProvider viewerProvider) {
         this.warpManager = warpManager;
         this.languageManager = languageManager;
-        this.userProvider = userProvider;
+        this.viewerProvider = viewerProvider;
     }
 
     @Override
@@ -32,9 +33,8 @@ public class WarpArgument implements OneArgument<Warp> {
         Option<Warp> warpOption = this.warpManager.findWarp(argument);
 
         if (warpOption.isEmpty()) {
-            Messages messages = this.userProvider.getUser(invocation)
-                .map(this.languageManager::getMessages)
-                .orElseGet(this.languageManager.getDefaultMessages());
+            Viewer viewer = this.viewerProvider.any(invocation);
+            Messages messages = this.languageManager.getMessages(viewer);
 
             return Result.error(messages.warp().notExist());
         }
@@ -44,7 +44,7 @@ public class WarpArgument implements OneArgument<Warp> {
 
     @Override
     public List<Suggestion> suggest(LiteInvocation invocation) {
-        return this.warpManager.getWarpMap().keySet().stream()
+        return this.warpManager.getNamesOfWarps().stream()
             .map(Suggestion::of)
             .toList();
     }
