@@ -9,6 +9,8 @@ jobs:
       matrix:
         java:
           - 17
+          - 18
+          - 19
       fail-fast: false
     steps:
       - name: Checkout
