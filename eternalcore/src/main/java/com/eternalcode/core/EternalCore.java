@@ -316,8 +316,6 @@ public class EternalCore extends JavaPlugin {
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider, this.miniMessage)
 
-            // TODO: Recreate for commandInstance?
-
             // Arguments (include optional)
             .argument(String.class, "player",   new PlayerNameArg(server))
             .argument(GameMode.class,               new GameModeArgument(viewerProvider, this.languageManager))

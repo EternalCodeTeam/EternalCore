@@ -160,7 +160,6 @@ public interface Messages {
         String foodOtherMessage();
         String healMessage();
         String healedMessage();
-        String nullHatMessage();
         String repairMessage();
         String skullMessage();
         String killedMessage();
