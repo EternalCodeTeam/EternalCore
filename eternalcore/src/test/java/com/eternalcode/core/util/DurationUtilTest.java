@@ -10,27 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DurationUtilTest {
 
     @Test
-    void millisecondsLegacy() {
-        assertEquals("5ms", DurationUtil.durationToString(5L));
-    }
-
-    @Test
-    void secondsLegacy() {
-        assertEquals("5s", DurationUtil.durationToString(5000L));
-    }
-
-    @Test
-    void minutesLegacy() {
-        assertEquals("5m", DurationUtil.durationToString(300000L));
-    }
-
-    @Test
-    void hoursLegacy() {
-        assertEquals("8h20m", DurationUtil.durationToString(30000000L));
-    }
-
-
-    @Test
     void milliseconds() {
         assertEquals("0s", DurationUtil.format(Duration.ofMillis(5L)));
         assertEquals("0.005s", DurationUtil.format(Duration.ofMillis(5L), false));
