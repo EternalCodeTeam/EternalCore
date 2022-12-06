@@ -16,14 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @ArgumentName("action")
-public class NoticeTypeArgument implements OneArgument<NoticeType> {
-
-    private final BukkitViewerProvider viewerProvider;
-    private final LanguageManager languageManager;
+public class NoticeTypeArgument extends AbstractViewerArgument<NoticeType> {
 
     public NoticeTypeArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
-        this.viewerProvider = viewerProvider;
-        this.languageManager = languageManager;
+        super(viewerProvider, languageManager);
     }
 
     @Override
@@ -35,13 +31,9 @@ public class NoticeTypeArgument implements OneArgument<NoticeType> {
     }
 
     @Override
-    public Result<NoticeType, String> parse(LiteInvocation invocation, String argument) {
+    public Result<NoticeType, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         return Option.supplyThrowing(IllegalArgumentException.class, () -> NoticeType.valueOf(argument.toUpperCase()))
-            .toResult(() -> {
-                Viewer viewer = this.viewerProvider.any(invocation);
-                Messages messages = this.languageManager.getMessages(viewer);
-
-                return messages.argument().noArgument();
-            });
+            .toResult(() -> messages.argument().noArgument());
     }
+
 }

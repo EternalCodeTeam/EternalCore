@@ -15,12 +15,15 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
 
 @ArgumentName("player")
+@Deprecated(forRemoval = true)
+@ApiStatus.ScheduledForRemoval(inVersion = "1.1.0")
 public class PlayerArgOrSender implements Argument<CommandSender, Arg> {
 
     private final LanguageManager languageManager;

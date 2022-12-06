@@ -15,24 +15,17 @@ import java.util.Arrays;
 import java.util.List;
 
 @ArgumentName("material")
-public class MaterialArgument implements OneArgument<Material> {
-
-    private final BukkitViewerProvider viewerProvider;
-    private final LanguageManager languageManager;
+public class MaterialArgument extends AbstractViewerArgument<Material> {
 
     public MaterialArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
-        this.viewerProvider = viewerProvider;
-        this.languageManager = languageManager;
+        super(viewerProvider, languageManager);
     }
 
     @Override
-    public Result<Material, String> parse(LiteInvocation invocation, String argument) {
+    public Result<Material, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         Material material = Material.getMaterial(argument.toUpperCase());
 
         if (material == null) {
-            Viewer viewer = this.viewerProvider.any(invocation);
-            Messages messages = this.languageManager.getMessages(viewer);
-
             return Result.error(messages.argument().noMaterial());
         }
 
@@ -46,7 +39,6 @@ public class MaterialArgument implements OneArgument<Material> {
             .map(String::toLowerCase)
             .map(Suggestion::of)
             .toList();
-
     }
 
 }

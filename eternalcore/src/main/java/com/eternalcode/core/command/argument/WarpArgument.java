@@ -16,26 +16,20 @@ import panda.std.Result;
 import java.util.List;
 
 @ArgumentName("warp")
-public class WarpArgument implements OneArgument<Warp> {
+public class WarpArgument extends AbstractViewerArgument<Warp> {
 
     private final WarpManager warpManager;
-    private final LanguageManager languageManager;
-    private final BukkitViewerProvider viewerProvider;
 
     public WarpArgument(WarpManager warpManager, LanguageManager languageManager, BukkitViewerProvider viewerProvider) {
+        super(viewerProvider, languageManager);
         this.warpManager = warpManager;
-        this.languageManager = languageManager;
-        this.viewerProvider = viewerProvider;
     }
 
     @Override
-    public Result<Warp, String> parse(LiteInvocation invocation, String argument) {
+    public Result<Warp, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         Option<Warp> warpOption = this.warpManager.findWarp(argument);
 
         if (warpOption.isEmpty()) {
-            Viewer viewer = this.viewerProvider.any(invocation);
-            Messages messages = this.languageManager.getMessages(viewer);
-
             return Result.error(messages.warp().notExist());
         }
 

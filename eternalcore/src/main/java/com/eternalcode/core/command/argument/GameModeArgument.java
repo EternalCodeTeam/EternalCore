@@ -18,17 +18,13 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @ArgumentName("gamemode")
-public class GameModeArgument implements OneArgument<GameMode> {
+public class GameModeArgument extends AbstractViewerArgument<GameMode> {
 
-    private final static GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
-    private final static AmountValidator GAME_MODE_VALID = AmountValidator.none().min(0).max(3);
-
-    private final BukkitViewerProvider viewerProvider;
-    private final LanguageManager languageManager;
+    private static final GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
+    private static final AmountValidator GAME_MODE_VALID = AmountValidator.none().min(0).max(3);
 
     public GameModeArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
-        this.viewerProvider = viewerProvider;
-        this.languageManager = languageManager;
+        super(viewerProvider, languageManager);
     }
 
     // TODO: zrobić w configu Map<GameMode, String> jako alliasy, - GAME_MODES itp
@@ -48,7 +44,7 @@ public class GameModeArgument implements OneArgument<GameMode> {
     }
 
     @Override
-    public Result<GameMode, String> parse(LiteInvocation invocation, String argument) {
+    public Result<GameMode, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {
@@ -58,11 +54,7 @@ public class GameModeArgument implements OneArgument<GameMode> {
         return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(GAME_MODE_VALID::valid)
             .map(value -> GAME_MODES[value])
-            .toResult(() -> {
-                Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
-                Messages messages = this.languageManager.getMessages(viewer.getLanguage());
-
-                return messages.other().gameModeNotCorrect();
-            });
+            .toResult(() -> messages.other().gameModeNotCorrect());
     }
+
 }

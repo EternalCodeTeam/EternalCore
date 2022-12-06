@@ -19,32 +19,27 @@ import java.util.List;
 import java.util.Objects;
 
 @ArgumentName("player")
-public class RequesterArgument implements OneArgument<Player> {
+public class RequesterArgument extends AbstractViewerArgument<Player> {
 
     private final TeleportRequestService requestService;
-    private final LanguageManager languageManager;
-    private final BukkitViewerProvider viewerProvider;
+
     private final Server server;
 
     public RequesterArgument(TeleportRequestService requestService, LanguageManager languageManager, BukkitViewerProvider viewerProvider, Server server) {
+        super(viewerProvider, languageManager);
         this.requestService = requestService;
-        this.languageManager = languageManager;
-        this.viewerProvider = viewerProvider;
         this.server = server;
     }
 
     @Override
-    public Result<Player, String> parse(LiteInvocation invocation, String argument) {
+    public Result<Player, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         Player target = this.server.getPlayer(argument);
 
         if (!(invocation.sender().getHandle() instanceof Player player)) {
-            return Result.error(this.languageManager.getDefaultMessages().argument().onlyPlayer());
+            return Result.error(messages.argument().onlyPlayer());
         }
 
         if (target == null || !this.requestService.hasRequest(target.getUniqueId(), player.getUniqueId())) {
-            Viewer viewer = this.viewerProvider.any(invocation);
-            Messages messages = this.languageManager.getMessages(viewer);
-
             return Result.error(messages.tpa().tpaDenyNoRequestMessage());
         }
 
@@ -64,4 +59,5 @@ public class RequesterArgument implements OneArgument<Player> {
             .map(Suggestion::of)
             .toList();
     }
+
 }

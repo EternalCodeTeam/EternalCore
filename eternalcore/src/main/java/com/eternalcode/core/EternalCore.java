@@ -27,7 +27,7 @@ import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.command.argument.PlayerNameArg;
+import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
@@ -317,7 +317,7 @@ public class EternalCore extends JavaPlugin {
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider, this.miniMessage)
 
             // Arguments (include optional)
-            .argument(String.class, "player",   new PlayerNameArg(server))
+            .argument(String.class, "player",   new StringNicknameArgument(server))
             .argument(GameMode.class,               new GameModeArgument(viewerProvider, this.languageManager))
             .argument(NoticeType.class,             new NoticeTypeArgument(this.viewerProvider, this.languageManager))
             .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.viewerProvider))
