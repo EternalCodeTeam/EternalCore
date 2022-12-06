@@ -1,7 +1,9 @@
 package com.eternalcode.core.command.handler;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
+import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.command.permission.RequiredPermissions;
 import dev.rollczi.litecommands.handle.PermissionHandler;
@@ -16,13 +18,13 @@ import panda.utilities.text.Joiner;
 
 public class PermissionMessage implements PermissionHandler<CommandSender> {
 
-    private final BukkitUserProvider userProvider;
+    private final BukkitViewerProvider viewerProvider;
     private final AudienceProvider audienceProvider;
     private final LanguageManager languageManager;
     private final MiniMessage miniMessage;
 
-    public PermissionMessage(BukkitUserProvider userProvider, AudienceProvider audienceProvider, LanguageManager languageManager, MiniMessage miniMessage) {
-        this.userProvider = userProvider;
+    public PermissionMessage(BukkitViewerProvider viewerProvider, AudienceProvider audienceProvider, LanguageManager languageManager, MiniMessage miniMessage) {
+        this.viewerProvider = viewerProvider;
         this.audienceProvider = audienceProvider;
         this.languageManager = languageManager;
         this.miniMessage = miniMessage;
@@ -30,16 +32,14 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
 
     @Override
     public void handle(CommandSender sender, LiteInvocation invocation, RequiredPermissions requiredPermissions) {
-        String permissionMessage = this.userProvider.getUser(invocation)
-            .map(this.languageManager::getMessages)
-            .orElseGet(this.languageManager.getDefaultMessages())
-            .argument().permissionMessage();
+        Viewer viewer = this.viewerProvider.any(invocation);
+        Messages messages = this.languageManager.getMessages(viewer);
 
         String perms = Joiner.on(", ")
             .join(requiredPermissions.getPermissions())
             .toString();
 
-        String replaced = permissionMessage.replace("{PERMISSIONS}", perms);
+        String replaced = messages.argument().permissionMessage().replace("{PERMISSIONS}", perms);
 
         if (sender instanceof Player player) {
             this.audienceProvider.player(player.getUniqueId()).sendMessage(this.miniMessage.deserialize(replaced));

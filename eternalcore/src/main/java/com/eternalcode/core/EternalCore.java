@@ -5,7 +5,6 @@ import com.eternalcode.core.afk.AfkController;
 import com.eternalcode.core.afk.AfkMessagesController;
 import com.eternalcode.core.afk.AfkService;
 import com.eternalcode.core.bridge.BridgeManager;
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.ChatManagerCommand;
 import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
@@ -28,7 +27,7 @@ import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.command.argument.PlayerNameArg;
+import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
@@ -209,7 +208,6 @@ public class EternalCore extends JavaPlugin {
      * Viewer & Notice
      **/
     private BukkitViewerProvider viewerProvider;
-    private BukkitUserProvider userProvider;
 
     private NotificationAnnouncer notificationAnnouncer;
     private NoticeService noticeService;
@@ -302,7 +300,6 @@ public class EternalCore extends JavaPlugin {
 
 
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
-        this.userProvider = new BukkitUserProvider(this.userManager); // TODO: Czasowe rozwiazanie, do poprawy (do usuniecia)
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
         this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer, placeholderRegistry);
@@ -319,24 +316,22 @@ public class EternalCore extends JavaPlugin {
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider, this.miniMessage)
 
-            // TODO: Recreate for commandInstance?
-
             // Arguments (include optional)
-            .argument(String.class, "player",   new PlayerNameArg(server))
-            .argument(GameMode.class,               new GameModeArgument(this.userProvider, this.languageManager))
-            .argument(NoticeType.class,             new NoticeTypeArgument(this.userProvider, this.languageManager))
-            .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.userProvider))
+            .argument(String.class, "player",   new StringNicknameArgument(server))
+            .argument(GameMode.class,               new GameModeArgument(viewerProvider, this.languageManager))
+            .argument(NoticeType.class,             new NoticeTypeArgument(this.viewerProvider, this.languageManager))
+            .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.viewerProvider))
             .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.languageManager))
             .argument(World.class,                  new WorldArgument(server))
             .argument(User.class,                   new UserArgument(this.viewerProvider, this.languageManager, server, this.userManager))
             .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.languageManager, server))
-            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.userProvider, server))
+            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.viewerProvider, server))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class,     new LocationArgument())
 
             // Native Argument (no optional)
-            .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.userProvider, this.languageManager))
+            .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.languageManager))
             .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.viewerProvider, server))
 
             // Dynamic binds
@@ -368,7 +363,7 @@ public class EternalCore extends JavaPlugin {
             .typeBind(PluginConfiguration.OtherSettings.class, () -> this.pluginConfiguration.otherSettings)
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
-            .permissionHandler(new PermissionMessage(this.userProvider, this.audiencesProvider, this.languageManager, this.miniMessage))
+            .permissionHandler(new PermissionMessage(this.viewerProvider, this.audiencesProvider, this.languageManager, this.miniMessage))
 
             .commandInstance(
                 new IgnoreCommand(ignoreRepository, this.noticeService),
@@ -500,6 +495,7 @@ public class EternalCore extends JavaPlugin {
     public void onDisable() {
         this.liteCommands.getPlatform().unregisterAll();
         this.databaseManager.close();
+        this.skullAPI.shutdown();
     }
 
     private void softwareCheck() {
@@ -616,10 +612,6 @@ public class EternalCore extends JavaPlugin {
 
     public BukkitViewerProvider getViewerProvider() {
         return this.viewerProvider;
-    }
-
-    public BukkitUserProvider getUserProvider() {
-        return this.userProvider;
     }
 
     public NotificationAnnouncer getNotificationAnnouncer() {

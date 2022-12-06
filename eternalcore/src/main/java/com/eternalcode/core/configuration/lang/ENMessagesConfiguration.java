@@ -197,7 +197,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public String foodOtherMessage = "<dark_gray>» <green>You've fed the {PLAYER}";
         public String healMessage = "<dark_gray>» <green>You've been heal!";
         public String healedMessage = "<dark_gray>» <red>Healed <gold>{PLAYER}";
-        public String nullHatMessage = "<dark_gray>» <red>You cannot use the /hat command.";
         public String repairMessage = "<dark_gray>» <green>Repaired!";
         public String skullMessage = "<dark_gray>» <green>Player {NICK} heads received";
 

@@ -42,7 +42,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
     // bridge (hook)
-    compileOnly("me.clip:placeholderapi:2.11.1")
+    compileOnly("me.clip:placeholderapi:2.11.2")
 
     // unit test
     testImplementation("org.spigotmc:spigot:1.19-R0.1-SNAPSHOT")

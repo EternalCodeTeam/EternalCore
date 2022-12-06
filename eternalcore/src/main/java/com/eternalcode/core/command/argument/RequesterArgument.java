@@ -1,14 +1,16 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.Server;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import panda.std.Result;
 
@@ -17,34 +19,27 @@ import java.util.List;
 import java.util.Objects;
 
 @ArgumentName("player")
-public class RequesterArgument implements OneArgument<Player> {
+public class RequesterArgument extends AbstractViewerArgument<Player> {
 
     private final TeleportRequestService requestService;
-    private final LanguageManager languageManager;
-    private final BukkitUserProvider userProvider;
+
     private final Server server;
 
-    public RequesterArgument(TeleportRequestService requestService, LanguageManager languageManager, BukkitUserProvider userProvider, Server server) {
+    public RequesterArgument(TeleportRequestService requestService, LanguageManager languageManager, BukkitViewerProvider viewerProvider, Server server) {
+        super(viewerProvider, languageManager);
         this.requestService = requestService;
-        this.languageManager = languageManager;
-        this.userProvider = userProvider;
         this.server = server;
     }
 
     @Override
-    public Result<Player, String> parse(LiteInvocation invocation, String argument) {
+    public Result<Player, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         Player target = this.server.getPlayer(argument);
 
         if (!(invocation.sender().getHandle() instanceof Player player)) {
-            return Result.error(this.languageManager.getDefaultMessages().argument().onlyPlayer());
+            return Result.error(messages.argument().onlyPlayer());
         }
 
         if (target == null || !this.requestService.hasRequest(target.getUniqueId(), player.getUniqueId())) {
-
-            Messages messages = this.userProvider.getUser(invocation)
-                .map(this.languageManager::getMessages)
-                .orElseGet(this.languageManager.getDefaultMessages());
-
             return Result.error(messages.tpa().tpaDenyNoRequestMessage());
         }
 
@@ -60,8 +55,9 @@ public class RequesterArgument implements OneArgument<Player> {
         return this.requestService.findRequests(player.getUniqueId()).stream()
             .map(this.server::getPlayer)
             .filter(Objects::nonNull)
-            .map(Player::getName)
+            .map(HumanEntity::getName)
             .map(Suggestion::of)
             .toList();
     }
+
 }

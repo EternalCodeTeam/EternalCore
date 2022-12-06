@@ -6,7 +6,6 @@ import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.generator.WorldInfo;
 import panda.std.Option;
 import panda.std.Result;
 
@@ -23,7 +22,8 @@ public class WorldArgument implements OneArgument<World> {
 
     @Override
     public Result<World, String> parse(LiteInvocation invocation, String argument) {
-        return Option.of(this.server.getWorld(argument)).toResult("&cNie ma takiego świata!");
+        return Option.of(this.server.getWorld(argument))
+            .toResult("&cNie ma takiego świata!"); //TODO: language
     }
 
     @Override

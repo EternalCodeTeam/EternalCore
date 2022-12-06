@@ -1,8 +1,9 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.bukkit.BukkitUserProvider;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -17,17 +18,13 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @ArgumentName("gamemode")
-public class GameModeArgument implements OneArgument<GameMode> {
+public class GameModeArgument extends AbstractViewerArgument<GameMode> {
 
-    private final static GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
-    private final static AmountValidator GAME_MODE_VALID = AmountValidator.none().min(0).max(3);
+    private static final GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
+    private static final AmountValidator GAME_MODE_VALID = AmountValidator.none().min(0).max(3);
 
-    private final BukkitUserProvider userProvider;
-    private final LanguageManager languageManager;
-
-    public GameModeArgument(BukkitUserProvider userProvider, LanguageManager languageManager) {
-        this.userProvider = userProvider;
-        this.languageManager = languageManager;
+    public GameModeArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
+        super(viewerProvider, languageManager);
     }
 
     // TODO: zrobić w configu Map<GameMode, String> jako alliasy, - GAME_MODES itp
@@ -47,7 +44,7 @@ public class GameModeArgument implements OneArgument<GameMode> {
     }
 
     @Override
-    public Result<GameMode, String> parse(LiteInvocation invocation, String argument) {
+    public Result<GameMode, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {
@@ -57,12 +54,7 @@ public class GameModeArgument implements OneArgument<GameMode> {
         return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(GAME_MODE_VALID::valid)
             .map(value -> GAME_MODES[value])
-            .toResult(() -> {
-                Messages messages = this.userProvider.getUser(invocation)
-                    .map(this.languageManager::getMessages)
-                    .orElseGet(this.languageManager.getDefaultMessages());
-
-                return messages.other().gameModeNotCorrect();
-            });
+            .toResult(() -> messages.other().gameModeNotCorrect());
     }
+
 }

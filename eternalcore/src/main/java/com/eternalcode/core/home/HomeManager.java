@@ -37,8 +37,8 @@ public class HomeManager {
         this.repository.deleteHome(user, name);
     }
 
-    public Option<Home> getHome(User user, String name) {
-        Map<String, Home> homes = this.homes.get(user.getUniqueId());
+    public Option<Home> getHome(UUID uniqueId, String name) {
+        Map<String, Home> homes = this.homes.get(uniqueId);
 
         if (homes == null) {
             return Option.none();

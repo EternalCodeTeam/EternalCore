@@ -11,11 +11,11 @@ import panda.std.Result;
 import java.util.List;
 
 @ArgumentName("player")
-public class PlayerNameArg implements OneArgument<String> {
+public class StringNicknameArgument implements OneArgument<String> {
 
     private final Server server;
 
-    public PlayerNameArg(Server server) {
+    public StringNicknameArgument(Server server) {
         this.server = server;
     }
 

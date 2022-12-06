@@ -15,7 +15,6 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
 
     private static final Placeholders<String> SCHEME = Placeholders.of("{USAGE}", scheme -> scheme);
 
-
     private final BukkitViewerProvider viewerProvider;
     private final NoticeService noticeService;
 

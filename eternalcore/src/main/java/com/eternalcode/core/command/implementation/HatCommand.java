@@ -37,18 +37,12 @@ public class HatCommand {
             return;
         }
 
-        if (itemStack == null || itemStack.getType() == Material.AIR) {
-            playerInventory.setHelmet(handItem);
-
-            ItemUtil.removeItem(player, handItem.getType(), 1);
-
-            return;
+        if (itemStack != null) {
+            ItemUtil.giveItem(player, itemStack);
         }
 
-        this.noticeService
-            .create()
-            .player(player.getUniqueId())
-            .message(messages -> messages.other().nullHatMessage())
-            .send();
+        playerInventory.setHelmet(handItem);
+
+        ItemUtil.removeItem(player, handItem.getType(), 1);
     }
 }

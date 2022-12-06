@@ -17,16 +17,13 @@ import panda.std.Result;
 import java.util.List;
 
 @ArgumentName("player")
-public class UserArgument implements OneArgument<User> {
+public class UserArgument extends AbstractViewerArgument<User> {
 
-    private final BukkitViewerProvider viewerProvider;
-    private final LanguageManager languageManager;
     private final Server server;
     private final UserManager userManager;
 
     public UserArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager, Server server, UserManager userManager) {
-        this.viewerProvider = viewerProvider;
-        this.languageManager = languageManager;
+        super(viewerProvider, languageManager);
         this.server = server;
         this.userManager = userManager;
     }
@@ -40,13 +37,8 @@ public class UserArgument implements OneArgument<User> {
     }
 
     @Override
-    public Result<User, String> parse(LiteInvocation invocation, String argument) {
-        return this.userManager.getUser(argument).toResult(() -> {
-            Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
-            Messages messages = this.languageManager.getMessages(viewer.getLanguage());
-
-            return messages.argument().offlinePlayer();
-        });
+    public Result<User, String> parse(LiteInvocation invocation, String argument, Messages messages) {
+        return this.userManager.getUser(argument).toResult(() -> messages.argument().offlinePlayer());
     }
 
 }

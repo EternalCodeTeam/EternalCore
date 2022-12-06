@@ -17,24 +17,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ArgumentName("enchantment")
-public class EnchantmentArgument implements OneArgument<Enchantment> {
-
-    private final BukkitViewerProvider viewerProvider;
-    private final LanguageManager languageManager;
+public class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 
     public EnchantmentArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
-        this.viewerProvider = viewerProvider;
-        this.languageManager = languageManager;
+        super(viewerProvider, languageManager);
     }
 
     @Override
-    public Result<Enchantment, String> parse(LiteInvocation invocation, String argument) {
+    public Result<Enchantment, String> parse(LiteInvocation invocation, String argument, Messages messages) {
         Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument));
 
         if (enchantment == null) {
-            Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
-            Messages messages = this.languageManager.getMessages(viewer);
-
             return Result.error(messages.argument().noEnchantment());
         }
 
@@ -47,7 +40,7 @@ public class EnchantmentArgument implements OneArgument<Enchantment> {
             .map(Enchantment::getKey)
             .map(NamespacedKey::getKey)
             .map(Suggestion::of)
-            .collect(Collectors.toList());
+            .toList();
     }
 
 }
