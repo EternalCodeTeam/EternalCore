@@ -209,7 +209,6 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public String foodOtherMessage = "<dark_gray>» <green>Najadłeś gracza {PLAYER}";
         public String healMessage = "<dark_gray>» <green>Zostałeś uleczony!";
         public String healedMessage = "<dark_gray>» <green>Uleczyłeś gracza {PLAYER}";
-        public String nullHatMessage = "<dark_red>Błąd: <red>Nie możesz użyć /hat!";
         public String repairMessage = "<dark_gray>» <green>Naprawiono!";
         public String skullMessage = "<dark_gray>» <green>Otrzymałeś głowę gracza {PLAYER}";
 
