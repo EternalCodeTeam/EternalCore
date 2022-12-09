@@ -14,7 +14,7 @@ dependencies {
     // minecraft development api
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     implementation("io.papermc:paperlib:1.0.8-SNAPSHOT")
-    implementation("net.kyori:adventure-platform-bukkit:4.1.2")
+    implementation("net.kyori:adventure-platform-bukkit:4.2.0")
     implementation("net.kyori:adventure-text-minimessage:4.12.0")
 
     // configuration
