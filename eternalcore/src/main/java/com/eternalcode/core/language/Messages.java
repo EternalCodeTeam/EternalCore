@@ -29,7 +29,6 @@ public interface Messages {
         String usageMessageEntry();
         String offlinePlayer();
         String onlyPlayer();
-        String notNumber();
         String numberBiggerThanOrEqualZero();
         String noItem();
         String noMaterial();
@@ -90,12 +89,9 @@ public interface Messages {
     }
 
     interface WarpSection {
-        String availableList();
         String notExist();
         String create();
         String remove();
-        String noPermission();
-        String disabled();
     }
 
     interface HomeSection {
@@ -111,14 +107,12 @@ public interface Messages {
         List<String> tpaReceivedMessage();
 
         String tpaDenyNoRequestMessage();
-        String tpaDenyNoRequestMessageAll();
         String tpaDenyDoneMessage();
         String tpaDenyReceivedMessage();
         String tpaDenyAllDenied();
 
         String tpaAcceptMessage();
         String tpaAcceptNoRequestMessage();
-        String tpaAcceptNoRequestMessageAll();
         String tpaAcceptReceivedMessage();
         String tpaAcceptAllAccepted();
     }
@@ -147,47 +141,66 @@ public interface Messages {
         List<String> quitMessage();
         List<String> firstJoinMessage();
 
-        public String welcomeTitle();
-        public String welcomeSubtitle();
+        String welcomeTitle();
+        String welcomeSubtitle();
     }
 
     interface OtherMessages {
         String alertMessagePrefix();
-        String clearMessage(); // ?
-        String clearByMessage(); // ?
+
+        String inventoryClearMessage();
+        String inventoryClearMessageBy();
+
         String disposalTitle();
-        String foodMessage();
-        String foodOtherMessage();
+
+        String feedMessage();
+        String feedMessageBy();
+
         String healMessage();
-        String healedMessage();
+        String healMessageBy();
+
         String repairMessage();
+
         String skullMessage();
+
         String killedMessage();
+
         String speedBetweenZeroAndTen();
         String speedSet();
         String speedSetBy();
+
         String godMessage();
         String godSetMessage();
+
         String flyMessage();
         String flySetMessage();
+
         String giveReceived();
         String giveGiven();
+
         String spawnSet();
         String spawnNoSet();
+
         String spawnTeleportedBy();
         String spawnTeleportedOther();
+
         String gameModeNotCorrect();
         String gameModeMessage();
         String gameModeSetMessage();
+
         String pingMessage();
         String pingOtherMessage();
+
         String onlineMessage();
+
         String listMessage();
 
-        String itemChangeNameMessage();
         String itemClearNameMessage();
-        String itemChangeLoreMessage();
         String itemClearLoreMessage();
+
+        String itemChangeNameMessage();
+        String itemChangeLoreMessage();
+
         String itemFlagRemovedMessage();
         String itemFlagAddedMessage();
         String itemFlagClearedMessage();

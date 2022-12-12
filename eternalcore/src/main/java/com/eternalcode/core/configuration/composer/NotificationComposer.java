@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class NotificationComposer implements SimpleComposer<Notification> {
 
     private static final String SERIALIZE_FORMAT = "[%s]%s";
-    private static final Pattern DESERIALIZE_PATTERN = Pattern.compile("\\[(.*)](.*)");
+    private static final Pattern DESERIALIZE_PATTERN = Pattern.compile("\\\\[([^]]*)](.*)");
 
     @Override
     public Result<Notification, Exception> deserialize(String source) {
