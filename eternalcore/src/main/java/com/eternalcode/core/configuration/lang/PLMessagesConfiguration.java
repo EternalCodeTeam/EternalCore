@@ -16,11 +16,6 @@ import java.util.List;
 @Accessors(fluent = true)
 public class PLMessagesConfiguration implements ReloadableMessages {
 
-    @Override
-    public Language getLanguage() {
-        return Language.PL;
-    }
-
     public PLArgumentSection argument = new PLArgumentSection();
     public PLFormatSection format = new PLFormatSection();
     public PLHelpOpSection helpOp = new PLHelpOpSection();
@@ -210,14 +205,20 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Contextual
     public static class PLOtherMessages implements OtherMessages {
         public Notification alertMessagePrefix = Notification.chat("<red><bold>OGŁOSZENIE: <gray>{BROADCAST}");
-        public Notification clearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
-        public Notification clearByMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
+
+        public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
+        public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
+
         public Notification disposalTitle = Notification.chat("<white><bold>Kosz");
-        public Notification foodMessage = Notification.chat("<dark_gray>» <green>Zostałeś najedzony!");
-        public Notification foodOtherMessage = Notification.chat("<dark_gray>» <green>Najadłeś gracza {PLAYER}");
+
+        public Notification feedMessage = Notification.chat("<dark_gray>» <green>Zostałeś najedzony!");
+        public Notification feedMessageBy = Notification.chat("<dark_gray>» <green>Najadłeś gracza {PLAYER}");
+
         public Notification healMessage = Notification.chat("<dark_gray>» <green>Zostałeś uleczony!");
-        public Notification healedMessage = Notification.chat("<dark_gray>» <green>Uleczyłeś gracza {PLAYER}");
+        public Notification healMessageBy = Notification.chat("<dark_gray>» <green>Uleczyłeś gracza {PLAYER}");
+
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Naprawiono!");
+
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Otrzymałeś głowę gracza {PLAYER}");
 
         public Notification killSelf = Notification.chat("<dark_gray>» <red>Popełniłeś samobójstwo!");
@@ -244,20 +245,26 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification gameModeNotCorrect = Notification.chat("<dark_red>Błąd: <red>Nie prawidłowy typ!");
         public Notification gameModeMessage = Notification.chat("<dark_gray>» <green>Ustawiono tryb gry na: {GAMEMODE}");
         public Notification gameModeSetMessage = Notification.chat("<dark_gray>» <green>Ustawiono tryb gry graczowi <white>{PLAYER} <green>na: <white>{GAMEMODE}");
+
         public Notification pingMessage = Notification.chat("<dark_gray>» <green>Twój ping: <white>{PING}ms");
         public Notification pingOtherMessage = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>ma: <white>{PING}ms");
+
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <white>{ONLINE} <gold>graczy online!");
+
         public Notification listMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
         public Notification itemChangeNameMessage = Notification.chat("<dark_gray>» <gray>Nowa nazwa itemu: <red>{ITEM_NAME}");
         public Notification itemClearNameMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono nazwę itemu!");
+
         public Notification itemChangeLoreMessage = Notification.chat("<dark_gray>» <gray>Nowa linia lore: <red>{ITEM_LORE}");
         public Notification itemClearLoreMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono linie lore!");
+
         public Notification itemFlagRemovedMessage = Notification.chat("<dark_gray>» <gray>Usunięto flagę: <red>{ITEM_FLAG}");
         public Notification itemFlagAddedMessage = Notification.chat("<dark_gray>» <gray>Dodano flagę: <red>{ITEM_FLAG}");
         public Notification itemFlagClearedMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono flagi!");
 
         public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item w ręce został zaklęty!");
+
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
 
         public List<Notification> whoisCommand = List.of(
@@ -273,9 +280,13 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         );
     }
 
-
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "lang" + File.separator + "pl_messages.yml");
+    }
+
+    @Override
+    public Language getLanguage() {
+        return Language.PL;
     }
 }

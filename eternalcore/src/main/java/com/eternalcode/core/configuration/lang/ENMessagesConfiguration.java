@@ -16,11 +16,6 @@ import java.util.List;
 @Accessors(fluent = true)
 public class ENMessagesConfiguration implements ReloadableMessages {
 
-    @Override
-    public Language getLanguage() {
-        return Language.EN;
-    }
-
     public ENArgumentSection argument = new ENArgumentSection();
     public ENFormatSection format = new ENFormatSection();
     public ENHelpOpSection helpOp = new ENHelpOpSection();
@@ -199,13 +194,18 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Getter @Contextual
     public static class ENOtherMessages implements OtherMessages {
         public Notification alertMessagePrefix = Notification.chat("<red><bold>BROADCAST: <gray>{BROADCAST}");
-        public Notification clearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
-        public Notification clearByMessage = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
+
+        public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
+        public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
+
         public Notification disposalTitle = Notification.chat("<white><bold>Trash");
-        public Notification foodMessage = Notification.chat("<dark_gray>» <green>You've been feed!");
-        public Notification foodOtherMessage = Notification.chat("<dark_gray>» <green>You've fed the {PLAYER}");
+
+        public Notification feedMessage = Notification.chat("<dark_gray>» <green>You've been feed!");
+        public Notification feedMessageBy = Notification.chat("<dark_gray>» <green>You've fed the {PLAYER}");
+
         public Notification healMessage = Notification.chat("<dark_gray>» <green>You've been heal!");
-        public Notification healedMessage = Notification.chat("<dark_gray>» <red>Healed <gold>{PLAYER}");
+        public Notification healMessageBy = Notification.chat("<dark_gray>» <red>Healed <gold>{PLAYER}");
+
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Repaired!");
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Player {NICK} heads received");
 
@@ -233,15 +233,20 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification gameModeNotCorrect = Notification.chat("<dark_gray>» <red>Not a valid gamemode type");
         public Notification gameModeMessage = Notification.chat("<dark_gray>» <red>Gamemode now is set to: {GAMEMODE}");
         public Notification gameModeSetMessage = Notification.chat("<dark_gray>» <red>Gamemode for <gold>{PLAYER} <red>now is set to: <gold>{GAMEMODE}");
+
         public Notification pingMessage = Notification.chat("<dark_gray>» <red>Your ping is: <gold>{PING}ms");
         public Notification pingOtherMessage = Notification.chat("<dark_gray>» <red>Ping of the <gold>{PLAYER} <red>is: <gold>{PING}ms");
+
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!");
+
         public Notification listMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
         public Notification itemChangeNameMessage = Notification.chat("<dark_gray>» <gray>Name has been changed to: <red>{ITEM_NAME}");
         public Notification itemClearNameMessage = Notification.chat("<dark_gray>» <gray>Name has been cleared!");
+
         public Notification itemChangeLoreMessage = Notification.chat("<dark_gray>» <gray>Lore has been changed to: <red>{ITEM_LORE}");
         public Notification itemClearLoreMessage = Notification.chat("<dark_gray>» <gray>Lore has been cleared!");
+
         public Notification itemFlagRemovedMessage = Notification.chat("<dark_gray>» <gray>Flag {ITEM_FLAG} has been removed!");
         public Notification itemFlagAddedMessage = Notification.chat("<dark_gray>» <gray>Flag {ITEM_FLAG} has been added!");
         public Notification itemFlagClearedMessage = Notification.chat("<dark_gray>» <gray>Flags have been cleared!");
@@ -265,5 +270,10 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "lang" + File.separator + "en_messages.yml");
+    }
+
+    @Override
+    public Language getLanguage() {
+        return Language.EN;
     }
 }
