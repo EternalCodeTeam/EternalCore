@@ -38,7 +38,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification usageMessageEntry = Notification.chat("<dark_gray>» <gray>{USAGE}");
         public Notification offlinePlayer = Notification.chat("<dark_gray>» <red>This player is currently offline!");
         public Notification onlyPlayer = Notification.chat("<dark_gray>» <red>Command is only for players!");
-        public Notification notNumber = Notification.chat("<dark_gray>» <red>Argument isn't a number!");
         public Notification numberBiggerThanOrEqualZero = Notification.chat("<dark_gray>» <red>The number must be greater than or equal to 0!");
         public Notification noItem = Notification.chat("<dark_gray>» <red>You need item to use this command!");
         public Notification noMaterial = Notification.chat("<dark_gray>» <red>This item doesn't exist");
@@ -117,24 +116,19 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         );
 
         public Notification tpaDenyNoRequestMessage = Notification.chat("<dark_gray>» <red>You do not have a teleport request from this player!");
-        public Notification tpaDenyNoRequestMessageAll = Notification.chat("<dark_gray>» <red>You do not have a teleport requests!");
         public Notification tpaDenyDoneMessage = Notification.chat("<dark_gray>» <red>You have declined a teleport request from a player: <gray>{PLAYER}<red>!");
         public Notification tpaDenyReceivedMessage = Notification.chat("<dark_gray>» <red>Player: <gray>{PLAYER} rejected your teleport request!");
         public Notification tpaDenyAllDenied = Notification.chat("<dark_gray>» <red>All players have denied your teleport request!");
 
         public Notification tpaAcceptMessage = Notification.chat("<dark_gray>» <green>You have accepted the teleportation from the player: <gray>{PLAYER}<green>!");
         public Notification tpaAcceptNoRequestMessage = Notification.chat("<dark_gray>» <red>This player has not sent you a teleport request!");
-        public Notification tpaAcceptNoRequestMessageAll = Notification.chat("<dark_gray>» <red>You do not have a teleport requests!");
         public Notification tpaAcceptReceivedMessage = Notification.chat("<dark_gray>» <green>Player: <gray>{PLAYER} <green>accepted your teleportation request!");
         public Notification tpaAcceptAllAccepted = Notification.chat("<dark_gray>» <green>All players have accepted your teleport request!");
     }
 
     @Getter @Contextual
     public static class ENWarpSection implements WarpSection {
-        public Notification availableList = Notification.chat("<dark_gray>» List available warps: {WARPS}");
         public Notification notExist = Notification.chat("<dark_gray>» <red>This warp doesn't exist");
-        public Notification noPermission = Notification.chat("<dark_gray>» <red>You don't have permission to this warp!");
-        public Notification disabled = Notification.chat("<dark_gray>» <red>This warp is currently disabled!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Warp {name} has been created.");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {name} has been deleted.");
     }

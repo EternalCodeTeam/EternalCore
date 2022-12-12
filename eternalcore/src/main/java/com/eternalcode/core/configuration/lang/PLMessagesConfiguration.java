@@ -39,7 +39,6 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification usageMessageEntry = Notification.chat("<dark_gray>» <gray>{USAGE}");
         public Notification offlinePlayer = Notification.chat("<dark_red>Błąd: <red>Ten gracz jest offline!");
         public Notification onlyPlayer = Notification.chat("<dark_red>Błąd: <red>Komenda tylko dla graczy!");
-        public Notification notNumber = Notification.chat("<dark_red>Błąd: <red>Argument nie jest liczba!");
         public Notification numberBiggerThanOrEqualZero = Notification.chat("<dark_red>Błąd: <red>Liczba musi byc równa lub większa 0!");
         public Notification noItem = Notification.chat("<dark_red>Błąd: <red>Musisz mieć item w ręce!");
         public Notification noMaterial = Notification.chat("<dark_red>Błąd: <red>Taki material nie istnieje!");
@@ -123,14 +122,12 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         );
 
         public Notification tpaDenyNoRequestMessage = Notification.chat("<dark_red>Błąd: <red>Nie masz prośby o teleportacje od tego gracza!");
-        public Notification tpaDenyNoRequestMessageAll = Notification.chat("<dark_red>Błąd: <red>Nie masz żadnych próśb o teleportacje!");
         public Notification tpaDenyDoneMessage = Notification.chat("<dark_gray>» <red>Odrzuciłeś próśb o teleportacje od gracza: <gray>{PLAYER}<red>!");
         public Notification tpaDenyReceivedMessage = Notification.chat("<dark_gray>» <red>Gracz: {PLAYER} odrzucił twoją prośbę o teleportacje!");
         public Notification tpaDenyAllDenied = Notification.chat("<dark_gray>» <red>Wszystkie prośby o teleportacje zostały odrzucone!");
 
         public Notification tpaAcceptMessage = Notification.chat("<dark_gray>» <green>Zaakceptowałeś teleportacje od gracza: <gray>{PLAYER}<green>!");
         public Notification tpaAcceptNoRequestMessage = Notification.chat("<dark_red>Błąd: <red>Ten gracz nie wysłał ci prośby o teleportacje!");
-        public Notification tpaAcceptNoRequestMessageAll = Notification.chat("<dark_red>Błąd: <red>Nie masz żadnych próśb o teleportacje!");
         public Notification tpaAcceptReceivedMessage = Notification.chat("<dark_gray>» <green>Gracz: <gray>{PLAYER} <green>zaakceptował twoją prośbę o teleportacje!");
         public Notification tpaAcceptAllAccepted = Notification.chat("<dark_gray>» <green>Wszystkie prośby o teleportacje zostały zaakceptowane!");
     }
@@ -140,8 +137,6 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public static class PLWarpSection implements WarpSection {
         public Notification availableList = Notification.chat("<dark_gray>» Lista warpów: {WARPS}");
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie odnaleziono takiego warpa!");
-        public Notification noPermission = Notification.chat("<dark_gray>» <red>Nie masz uprawnień do tego warpa!");
-        public Notification disabled = Notification.chat("<dark_gray>» <red>Ten warp jest aktualnie wyłączony!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warpa {name}!");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warpa {name}!");
     }
