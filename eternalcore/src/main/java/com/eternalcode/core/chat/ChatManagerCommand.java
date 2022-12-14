@@ -20,18 +20,18 @@ import java.time.Duration;
 public class ChatManagerCommand {
 
     private final AdventureNotification clear;
-    private final NoticeService audiences;
+    private final NoticeService noticeService;
     private final ChatManager chatManager;
 
-    private ChatManagerCommand(ChatManager chatManager, NoticeService audiences, AdventureNotification clear) {
-        this.audiences = audiences;
+    private ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, AdventureNotification clear) {
+        this.noticeService = noticeService;
         this.chatManager = chatManager;
         this.clear = clear;
     }
 
     @Execute(route = "clear", aliases = "cc")
     public void clear(CommandSender sender) {
-        this.audiences.create()
+        this.noticeService.create()
             .staticNotice(clear)
             .notice(messages -> messages.chat().cleared())
             .placeholder("{NICK}", sender.getName())
@@ -42,46 +42,46 @@ public class ChatManagerCommand {
     @Execute(route = "on")
     public void enable(Viewer viewer, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.viewer(viewer, messages -> messages.chat().alreadyEnabled());
+            this.noticeService.viewer(viewer, messages -> messages.chat().alreadyEnabled());
             return;
         }
 
         this.chatManager.getChatSettings().setChatEnabled(true);
 
-        this.audiences.create()
+        this.noticeService.create()
             .notice(messages -> messages.chat().enabled())
             .placeholder("{NICK}", sender.getName())
-            .all()
+            .onlinePlayers()
             .send();
     }
 
     @Execute(route = "off")
     public void disable(Viewer viewer, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
-            this.audiences.viewer(viewer, messages -> messages.chat().alreadyDisabled());
+            this.noticeService.viewer(viewer, messages -> messages.chat().alreadyDisabled());
             return;
         }
 
         this.chatManager.getChatSettings().setChatEnabled(false);
 
-        this.audiences.create()
+        this.noticeService.create()
             .notice(messages -> messages.chat().disabled())
             .placeholder("{NICK}", sender.getName())
-            .all()
+            .onlinePlayers()
             .send();
     }
 
     @Execute(route = "slowmode", required = 1)
     public void slowmode(Viewer viewer, @Arg @Name("time") Duration duration) {
         if (duration.isNegative()) {
-            this.audiences.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
+            this.noticeService.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
 
             return;
         }
 
         this.chatManager.getChatSettings().setChatDelay(duration);
 
-        this.audiences.create()
+        this.noticeService.create()
             .notice(messages -> messages.chat().slowModeSet())
             .placeholder("{SLOWMODE}", EstimatedTemporalAmountParser.TIME_UNITS.format(duration))
             .viewer(viewer)

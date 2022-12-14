@@ -32,7 +32,7 @@ public class PlayerJoinListener implements Listener {
             this.noticeService.create()
                 .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().firstJoinMessage()))
                 .placeholder("{PLAYER}", player.getName())
-                .all()
+                .onlinePlayers()
                 .send();
         }
 
@@ -60,7 +60,7 @@ public class PlayerJoinListener implements Listener {
         this.noticeService.create()
             .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().joinMessage()))
             .placeholder("{PLAYER}", player.getName())
-            .all()
+            .onlinePlayers()
             .send();
 
     }

@@ -31,7 +31,7 @@ public class PlayerQuitListener implements Listener {
         this.noticeService.create()
             .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().quitMessage()))
             .placeholder("{PLAYER}", player.getName())
-            .all()
+            .onlinePlayers()
             .send();
 
         if (this.config.sound.enableAfterQuit) {
