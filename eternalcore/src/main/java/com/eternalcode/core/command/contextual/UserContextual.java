@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.contextual;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.user.User;
@@ -28,7 +29,7 @@ public class UserContextual implements Contextual<CommandSender, User> {
         }
 
         Messages messages = this.languageManager.getDefaultMessages();
-        String onlyPlayer = messages.argument().onlyPlayer();
+        Notification onlyPlayer = messages.argument().onlyPlayer();
 
         return Result.error(onlyPlayer);
     }

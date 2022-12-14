@@ -34,7 +34,7 @@ public class SkullCommand {
             player.getInventory().addItem(namedSkull);
 
             this.noticeService.create()
-                .message(messages -> messages.other().skullMessage())
+                .notice(messages -> messages.other().skullMessage())
                 .placeholder("{NICK}", name)
                 .player(player.getUniqueId())
                 .send();

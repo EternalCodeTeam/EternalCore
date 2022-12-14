@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration.lang;
 
+import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.ReloadableMessages;
 import com.eternalcode.core.language.Language;
@@ -52,8 +53,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class PLFormatSection implements Format {
-        public Notification enable = Notification.chat("<green>włączona");
-        public Notification disable = Notification.chat("<red>wyłączona");
+        public String enable = "<green>włączona";
+        public String disable = "<red>wyłączona";
     }
 
     @Getter
@@ -79,7 +80,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
         // Task
         public Notification teleportTimerFormat = Notification.actionbar("<green>Teleportacja za <white>{TIME}");
-        public Notification teleported = Notification.chat("<dark_gray>» <green>Przeteleportowano!");
+        public Notification teleported = Notification.of("<dark_gray>» <green>Przeteleportowano!", NoticeType.CHAT, NoticeType.ACTIONBAR);
         public Notification teleporting = Notification.chat("<dark_gray>» <green>Teleportuje...");
         public Notification teleportTaskCanceled = Notification.chat("<dark_red>Błąd: <red>Ruszyłeś się, teleportacja przerwana!");
         public Notification teleportTaskAlreadyExist = Notification.chat("<dark_red>Błąd: <red>Teleportujesz się już!");
@@ -199,12 +200,12 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class PLOtherMessages implements OtherMessages {
-        public Notification alertMessagePrefix = Notification.chat("<red><bold>OGŁOSZENIE: <gray>{BROADCAST}");
+        public String alertMessagePrefix = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
 
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
 
-        public Notification disposalTitle = Notification.chat("<white><bold>Kosz");
+        public String disposalTitle = "<white><bold>Kosz";
 
         public Notification feedMessage = Notification.chat("<dark_gray>» <green>Zostałeś najedzony!");
         public Notification feedMessageBy = Notification.chat("<dark_gray>» <green>Najadłeś gracza {PLAYER}");
@@ -262,16 +263,15 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
 
-        public List<Notification> whoisCommand = List.of(
-            Notification.chat("<dark_gray>» <gray>Gracz: <white>{PLAYER}"),
-            Notification.chat("<dark_gray>» <gray>UUID: <white>{UUID}"), 
-            Notification.chat("<dark_gray>» <gray>IP: <white>{IP}"),
-            Notification.chat("<dark_gray>» <gray>Szybkość chodzenia: <white>{WALK-SPEED}"),
-            Notification.chat("<dark_gray>» <gray>Szybkość latania: <white>{SPEED}"),
-            Notification.chat("<dark_gray>» <gray>Opóźnienie: <white>{PING}ms"),
-            Notification.chat("<dark_gray>» <gray>Poziom: <white>{LEVEL}"),
-            Notification.chat("<dark_gray>» <gray>Zdrowie: <white>{HEALTH}"),
-            Notification.chat("<dark_gray>» <gray>Poziom najedzenia: <white>{FOOD}")
+        public List<String> whoisCommand = List.of("<dark_gray>» <gray>Gracz: <white>{PLAYER}",
+            "<dark_gray>» <gray>UUID: <white>{UUID}",
+            "<dark_gray>» <gray>IP: <white>{IP}",
+            "<dark_gray>» <gray>Szybkość chodzenia: <white>{WALK-SPEED}",
+            "<dark_gray>» <gray>Szybkość latania: <white>{SPEED}",
+            "<dark_gray>» <gray>Opóźnienie: <white>{PING}ms",
+            "<dark_gray>» <gray>Poziom: <white>{LEVEL}",
+            "<dark_gray>» <gray>Zdrowie: <white>{HEALTH}",
+            "<dark_gray>» <gray>Poziom najedzenia: <white>{FOOD}"
         );
     }
 

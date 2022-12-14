@@ -29,7 +29,7 @@ public class PlayerQuitListener implements Listener {
         event.setQuitMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().quitMessage()))
+            .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().quitMessage()))
             .placeholder("{PLAYER}", player.getName())
             .all()
             .send();

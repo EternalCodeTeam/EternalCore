@@ -13,14 +13,14 @@ import java.util.regex.Pattern;
 public class NotificationComposer implements SimpleComposer<Notification> {
 
     private static final String SERIALIZE_FORMAT = "[%s]%s";
-    private static final Pattern DESERIALIZE_PATTERN = Pattern.compile("\\\\[([^]]*)](.*)");
+    private static final Pattern DESERIALIZE_PATTERN = Pattern.compile("\\[([^]]*)](.*)");
 
     @Override
     public Result<Notification, Exception> deserialize(String source) {
         Matcher matcher = DESERIALIZE_PATTERN.matcher(source);
 
         if (!matcher.matches()) {
-            return Result.error(new IllegalStateException("Can not parse \"" + source + "\" to Notification. Correct format: \"[CHAT]Text to send\""));
+            return Result.ok(Notification.chat(source));
         }
 
         String types = matcher.group(1);
@@ -43,6 +43,10 @@ public class NotificationComposer implements SimpleComposer<Notification> {
 
     @Override
     public Result<String, Exception> serialize(Notification notification) {
+        if (notification.getTypes().contains(NoticeType.CHAT) && notification.getTypes().size() == 1) {
+            return Result.ok(notification.getMessage());
+        }
+
         return Result.ok(SERIALIZE_FORMAT.formatted(Joiner.on(", ").join(notification.getTypes()), notification.getMessage()));
     }
     

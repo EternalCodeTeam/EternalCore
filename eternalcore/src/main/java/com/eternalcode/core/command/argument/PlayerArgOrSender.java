@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.language.LanguageManager;
@@ -44,7 +45,7 @@ public class PlayerArgOrSender implements Argument<CommandSender, Arg> {
             }
 
             Messages defaultMessages = this.languageManager.getDefaultMessages();
-            String onlyPlayer = defaultMessages.argument().onlyPlayer();
+            Notification onlyPlayer = defaultMessages.argument().onlyPlayer();
 
             return MatchResult.notMatched(onlyPlayer);
         }

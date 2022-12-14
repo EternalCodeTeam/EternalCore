@@ -23,7 +23,7 @@ public class DelHomeCommand {
         this.homeManager.deleteHome(user, home.getName());
         this.noticeService.create()
             .user(user)
-            .message(messages -> messages.home().delete())
+            .notice(messages -> messages.home().delete())
             .placeholder("{home}", home.getName())
             .send();
     }

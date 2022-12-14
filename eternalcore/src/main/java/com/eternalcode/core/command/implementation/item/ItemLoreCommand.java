@@ -31,21 +31,21 @@ public class ItemLoreCommand {
 
     @Execute
     @Min(2)
-    void execute(Player player, @Arg Integer line, @Joiner String name) {
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
-        ItemMeta itemMeta = itemStack.getItemMeta();
+    void execute(Player player, @Arg int line, @Joiner String name) {
+        ItemStack itemStack = this.validateItemFromMainHand(player);
 
-        if (itemStack.getType() == Material.AIR || itemMeta == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+        if (itemStack == null) {
             return;
         }
+
+        ItemMeta itemMeta = itemStack.getItemMeta();
 
         List<String> lore = itemMeta.getLore();
 
         lore = lore == null ? new ArrayList<>() : new ArrayList<>(lore);
 
         if (name.equals("none")) {
-            lore.remove((int) line);
+            lore.remove(line);
         }
         else {
             // fill list
@@ -60,7 +60,7 @@ public class ItemLoreCommand {
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .message(messages -> messages.other().itemChangeLoreMessage())
+            .notice(messages -> messages.other().itemChangeLoreMessage())
             .placeholder("{ITEM_LORE}", name)
             .player(player.getUniqueId())
             .send();
@@ -68,18 +68,36 @@ public class ItemLoreCommand {
 
     @Execute(route = "clear")
     void clear(Player player) {
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemStack itemStack = this.validateItemFromMainHand(player);
 
-        if (itemStack.getType() == Material.AIR || itemMeta == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+        if (itemStack == null) {
             return;
         }
 
-        itemMeta.setLore(List.of());
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        itemMeta.setLore(new ArrayList<>());
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemClearLoreMessage());
+        this.noticeService.create()
+            .notice(messages -> messages.other().itemClearLoreMessage())
+            .player(player.getUniqueId())
+            .send();
+    }
+
+    private ItemStack validateItemFromMainHand(Player player) {
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+
+        if (itemStack.getType() == Material.AIR || itemStack.getItemMeta() == null) {
+            this.noticeService.create()
+                .notice(messages -> messages.argument().noItem())
+                .player(player.getUniqueId())
+                .send();
+
+            return null;
+        }
+
+        return itemStack;
     }
 
 }

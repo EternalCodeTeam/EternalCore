@@ -28,13 +28,13 @@ public class ItemNameCommand {
     @Execute
     @Min(1)
     void execute(Player player, @Joiner String name) {
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemStack itemStack = this.validateItemFromMainHand(player);
 
-        if (itemStack.getType() == Material.AIR || itemMeta == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+        if (itemStack == null) {
             return;
         }
+
+        ItemMeta itemMeta = itemStack.getItemMeta();
 
         String serialized = Legacy.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(name));
 
@@ -42,7 +42,7 @@ public class ItemNameCommand {
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .message(messages -> messages.other().itemChangeNameMessage())
+            .notice(messages -> messages.other().itemChangeNameMessage())
             .placeholder("{ITEM_NAME}", name)
             .player(player.getUniqueId())
             .send();
@@ -50,18 +50,37 @@ public class ItemNameCommand {
 
     @Execute(route = "clear")
     void clear(Player player) {
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemStack itemStack = this.validateItemFromMainHand(player);
 
-        if (itemStack.getType() == Material.AIR || itemMeta == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+        if (itemStack == null) {
             return;
         }
+
+        ItemMeta itemMeta = itemStack.getItemMeta();
 
         itemMeta.setDisplayName(null);
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemClearNameMessage());
+        this.noticeService
+            .create()
+            .notice(messages -> messages.other().itemClearNameMessage())
+            .player(player.getUniqueId())
+            .send();
+    }
+
+    private ItemStack validateItemFromMainHand(Player player) {
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+
+        if (itemStack.getType() == Material.AIR || itemStack.getItemMeta() == null) {
+            this.noticeService.create()
+                .notice(messages -> messages.argument().noItem())
+                .player(player.getUniqueId())
+                .send();
+
+            return null;
+        }
+
+        return itemStack;
     }
 
 }

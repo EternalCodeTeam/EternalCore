@@ -24,7 +24,7 @@ public class KillCommand {
         player.setHealth(0);
 
         this.noticeService.create()
-            .message(messages -> messages.other().killedMessage())
+            .notice(messages -> messages.other().killedMessage())
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)
             .send();

@@ -37,7 +37,7 @@ public class WarpCommand {
         this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
         this.noticeService.create()
             .player(player.getUniqueId())
-            .message(messages -> messages.warp().create())
+            .notice(messages -> messages.warp().create())
             .placeholder("{NAME}", warp)
             .send();
     }
@@ -49,7 +49,7 @@ public class WarpCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .message(messages -> messages.warp().remove())
+            .notice(messages -> messages.warp().remove())
             .placeholder("{NAME}", warp.getName())
             .send();
     }

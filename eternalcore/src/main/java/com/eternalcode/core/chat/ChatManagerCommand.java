@@ -33,7 +33,7 @@ public class ChatManagerCommand {
     public void clear(CommandSender sender) {
         this.audiences.create()
             .staticNotice(clear)
-            .message(messages -> messages.chat().cleared())
+            .notice(messages -> messages.chat().cleared())
             .placeholder("{NICK}", sender.getName())
             .onlinePlayers()
             .send();
@@ -49,7 +49,7 @@ public class ChatManagerCommand {
         this.chatManager.getChatSettings().setChatEnabled(true);
 
         this.audiences.create()
-            .message(messages -> messages.chat().enabled())
+            .notice(messages -> messages.chat().enabled())
             .placeholder("{NICK}", sender.getName())
             .all()
             .send();
@@ -65,7 +65,7 @@ public class ChatManagerCommand {
         this.chatManager.getChatSettings().setChatEnabled(false);
 
         this.audiences.create()
-            .message(messages -> messages.chat().disabled())
+            .notice(messages -> messages.chat().disabled())
             .placeholder("{NICK}", sender.getName())
             .all()
             .send();
@@ -82,7 +82,7 @@ public class ChatManagerCommand {
         this.chatManager.getChatSettings().setChatDelay(duration);
 
         this.audiences.create()
-            .message(messages -> messages.chat().slowModeSet())
+            .notice(messages -> messages.chat().slowModeSet())
             .placeholder("{SLOWMODE}", EstimatedTemporalAmountParser.TIME_UNITS.format(duration))
             .viewer(viewer)
             .send();

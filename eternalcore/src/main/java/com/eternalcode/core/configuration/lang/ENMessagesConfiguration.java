@@ -50,8 +50,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENFormatSection implements Format {
-        public Notification enable = Notification.chat("<green>enabled");
-        public Notification disable = Notification.chat("<red>disabled");
+        public String enable = "<green>enabled";
+        public String disable = "<red>disabled";
     }
 
     @Getter @Contextual
@@ -187,12 +187,12 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENOtherMessages implements OtherMessages {
-        public Notification alertMessagePrefix = Notification.chat("<red><bold>BROADCAST: <gray>{BROADCAST}");
+        public String alertMessagePrefix = "<red><bold>BROADCAST: <gray>{BROADCAST}";
 
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
 
-        public Notification disposalTitle = Notification.chat("<white><bold>Trash");
+        public String disposalTitle = "<white><bold>Trash";
 
         public Notification feedMessage = Notification.chat("<dark_gray>» <green>You've been feed!");
         public Notification feedMessageBy = Notification.chat("<dark_gray>» <green>You've fed the {PLAYER}");
@@ -248,16 +248,15 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item in hand is enchanted!");
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Language changed to <red>English<gold>!");
 
-        public List<Notification> whoisCommand = List.of(
-            Notification.chat("<dark_gray>» <gray>Target name: <white>{PLAYER}"),
-            Notification.chat("<dark_gray>» <gray>Target UUID: <white>{UUID}"),
-            Notification.chat("<dark_gray>» <gray>Target address: <white>{IP}"),
-            Notification.chat("<dark_gray>» <gray>Target walk speed: <white>{WALK-SPEED}"),
-            Notification.chat("<dark_gray>» <gray>Target fly speed: <white>{SPEED}"),
-            Notification.chat("<dark_gray>» <gray>Target ping: <white>{PING}ms"),
-            Notification.chat("<dark_gray>» <gray>Target level: <white>{LEVEL}"),
-            Notification.chat("<dark_gray>» <gray>Target health: <white>{HEALTH}"),
-            Notification.chat("<dark_gray>» <gray>Target food level: <white>{FOOD}")
+        public List<String> whoisCommand = List.of("<dark_gray>» <gray>Target name: <white>{PLAYER}",
+            "<dark_gray>» <gray>Target UUID: <white>{UUID}",
+            "<dark_gray>» <gray>Target address: <white>{IP}",
+            "<dark_gray>» <gray>Target walk speed: <white>{WALK-SPEED}",
+            "<dark_gray>» <gray>Target fly speed: <white>{SPEED}",
+            "<dark_gray>» <gray>Target ping: <white>{PING}ms",
+            "<dark_gray>» <gray>Target level: <white>{LEVEL}",
+            "<dark_gray>» <gray>Target health: <white>{HEALTH}",
+            "<dark_gray>» <gray>Target food level: <white>{FOOD}"
         );
     }
 

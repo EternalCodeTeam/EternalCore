@@ -40,8 +40,8 @@ public interface Messages {
     }
 
     interface Format {
-        Notification enable();
-        Notification disable();
+        String enable();
+        String disable();
     }
 
     interface HelpOpSection {
@@ -146,12 +146,12 @@ public interface Messages {
     }
 
     interface OtherMessages {
-        Notification alertMessagePrefix();
+        String alertMessagePrefix();
 
         Notification inventoryClearMessage();
         Notification inventoryClearMessageBy();
 
-        Notification disposalTitle();
+        String disposalTitle();
 
         Notification feedMessage();
         Notification feedMessageBy();
@@ -206,7 +206,7 @@ public interface Messages {
         Notification itemFlagClearedMessage();
 
         Notification enchantedMessage();
-        List<Notification> whoisCommand();
+        List<String> whoisCommand();
         Notification languageChanged();
 
     }

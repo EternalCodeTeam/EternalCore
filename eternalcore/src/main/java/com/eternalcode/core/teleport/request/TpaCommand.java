@@ -39,14 +39,14 @@ public class TpaCommand {
         this.noticeService
             .create()
             .player(player.getUniqueId())
-            .message(messages -> messages.tpa().tpaSentMessage())
+            .notice(messages -> messages.tpa().tpaSentMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
             .player(target.getUniqueId())
-            .messages(messages -> messages.tpa().tpaReceivedMessage())
+            .notifications(messages -> messages.tpa().tpaReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
 

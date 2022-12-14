@@ -20,6 +20,7 @@ import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand
 import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.chat.notification.NoticeType;
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.chat.notification.NotificationAnnouncer;
 import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
@@ -38,6 +39,7 @@ import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
 import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.handler.InvalidUsage;
+import com.eternalcode.core.command.handler.NotificationHandler;
 import com.eternalcode.core.command.handler.PermissionMessage;
 import com.eternalcode.core.command.implementation.AlertCommand;
 import com.eternalcode.core.command.implementation.EnchantCommand;
@@ -364,6 +366,7 @@ public class EternalCore extends JavaPlugin {
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
             .permissionHandler(new PermissionMessage(this.viewerProvider, this.audiencesProvider, this.languageManager, this.miniMessage))
+            .resultHandler(Notification.class, new NotificationHandler(this.viewerProvider, this.noticeService))
 
             .commandInstance(
                 new IgnoreCommand(ignoreRepository, this.noticeService),
@@ -468,7 +471,7 @@ public class EternalCore extends JavaPlugin {
             new PrepareUserController(this.userManager, server),
             new PlayerCommandPreprocessListener(this.noticeService, this.pluginConfiguration, server),
             new SignChangeListener(this.miniMessage),
-            new PlayerDeathListener(this.noticeService, this.pluginConfiguration),
+            new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
