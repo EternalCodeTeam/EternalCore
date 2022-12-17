@@ -49,6 +49,9 @@ dependencies {
     testImplementation("org.codehaus.groovy:groovy-all:3.0.13")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.140.0")
+    testImplementation("net.kyori:adventure-platform-bukkit:4.1.2")
+    testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
 }
 
 tasks.getByName<Test>("test") {

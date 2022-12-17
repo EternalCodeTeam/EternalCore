@@ -150,8 +150,11 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -218,6 +221,12 @@ public class EternalCore extends JavaPlugin {
     private LanguageInventory languageInventory;
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
+
+    public EternalCore() {}
+
+    protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
+    }
 
     @Override
     public void onEnable() {
