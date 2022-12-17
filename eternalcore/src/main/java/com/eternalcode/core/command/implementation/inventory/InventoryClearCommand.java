@@ -31,7 +31,7 @@ public class InventoryClearCommand {
         }
 
         this.noticeService.create()
-            .message(messages -> messages.other().clearByMessage())
+            .notice(messages -> messages.other().inventoryClearMessageBy())
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)
             .send();
@@ -42,7 +42,7 @@ public class InventoryClearCommand {
         player.getInventory().clear();
 
         this.noticeService.create()
-            .message(messages -> messages.other().clearMessage())
+            .notice(messages -> messages.other().inventoryClearMessage())
             .player(player.getUniqueId())
             .send();
     }

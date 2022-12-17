@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -44,7 +45,7 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
     }
 
     @Override
-    public Result<GameMode, String> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<GameMode, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
         Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {

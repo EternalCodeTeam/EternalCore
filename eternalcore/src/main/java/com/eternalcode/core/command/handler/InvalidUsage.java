@@ -32,7 +32,7 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
         if (schematics.size() == 1) {
             this.noticeService.create()
                 .viewer(viewer)
-                .message(messages -> messages.argument().usageMessage())
+                .notice(messages -> messages.argument().usageMessage())
                 .placeholder(SCHEME, schematics.get(0))
                 .send();
             return;

@@ -30,9 +30,9 @@ public class PlayerJoinListener implements Listener {
 
         if (!player.hasPlayedBefore()) {
             this.noticeService.create()
-                .noticeOption(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().firstJoinMessage()))
+                .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().firstJoinMessage()))
                 .placeholder("{PLAYER}", player.getName())
-                .all()
+                .onlinePlayers()
                 .send();
         }
 
@@ -49,8 +49,8 @@ public class PlayerJoinListener implements Listener {
 
         this.noticeService
             .create()
-            .notice(NoticeType.TITLE, messages -> messages.eventMessages().welcomeTitle())
-            .notice(NoticeType.SUBTITLE, messages -> messages.eventMessages().welcomeSubtitle())
+            .notice(messages -> messages.eventMessages().welcomeTitle())
+            .notice(messages -> messages.eventMessages().welcomeSubtitle())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .send();
@@ -58,9 +58,9 @@ public class PlayerJoinListener implements Listener {
         event.setJoinMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().joinMessage()))
+            .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().joinMessage()))
             .placeholder("{PLAYER}", player.getName())
-            .all()
+            .onlinePlayers()
             .send();
 
     }

@@ -49,7 +49,7 @@ public class HelpOpCommand {
 
             this.noticeService
                 .create()
-                .message(messages -> messages.helpOp().coolDown())
+                .notice(messages -> messages.helpOp().coolDown())
                 .placeholder("{TIME}", DurationUtil.format(time))
                 .player(player.getUniqueId())
                 .send();
@@ -60,7 +60,7 @@ public class HelpOpCommand {
         Notice notice = this.noticeService.create()
             .console()
             .player(player.getUniqueId())
-            .message(messages -> messages.helpOp().format())
+            .notice(messages -> messages.helpOp().format())
             .placeholder("{NICK}", player.getName())
             .placeholder("{TEXT}", text);
 
@@ -76,7 +76,7 @@ public class HelpOpCommand {
 
         this.noticeService
             .create()
-            .message(messages -> messages.helpOp().send())
+            .notice(messages -> messages.helpOp().send())
             .send();
 
         this.cooldowns.put(uuid, Instant.now().plus(this.config.chat.helpOpDelay));

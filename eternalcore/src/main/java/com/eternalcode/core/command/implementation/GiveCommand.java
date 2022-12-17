@@ -1,10 +1,12 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.amount.Between;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
@@ -27,14 +29,14 @@ public class GiveCommand {
 
     @Execute
     @Between(min = 1, max = 2)
-    void execute(Viewer audience, CommandSender sender, @Arg Material material, @Arg @By("or_sender") Player player) {
-        String formattedMaterial = material.name().replaceAll("_", " "); // TODO: Add formatter to Material
+    void execute(Viewer audience, CommandSender sender, @Arg @Name("material") Material material, @Arg @By("or_sender") Player player) {
+        String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(player, material);
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
-            .message(messages -> messages.other().giveReceived())
+            .notice(messages -> messages.other().giveReceived())
             .player(player.getUniqueId())
             .send();
 
@@ -45,7 +47,7 @@ public class GiveCommand {
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", player.getName())
-            .message(messages -> messages.other().giveGiven())
+            .notice(messages -> messages.other().giveGiven())
             .viewer(audience)
             .send();
     }

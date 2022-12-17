@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -19,13 +20,13 @@ public abstract class AbstractViewerArgument<T> implements OneArgument<T> {
     }
 
     @Override
-    public final Result<T, String> parse(LiteInvocation invocation, String argument) {
+    public final Result<T, Notification> parse(LiteInvocation invocation, String argument) {
         Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
         Messages messages = this.languageManager.getMessages(viewer.getLanguage());
 
         return this.parse(invocation, argument, messages);
     }
 
-    public abstract Result<T, String> parse(LiteInvocation invocation, String argument, Messages messages);
+    public abstract Result<T, Notification> parse(LiteInvocation invocation, String argument, Messages messages);
 
 }

@@ -33,7 +33,7 @@ public class TeleportToPositionCommand {
         }
 
         this.noticeService.create()
-            .message(messages -> messages.teleport().teleportedSpecifiedPlayerToCoordinates())
+            .notice(messages -> messages.teleport().teleportedSpecifiedPlayerToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))
@@ -48,7 +48,7 @@ public class TeleportToPositionCommand {
 
         this.teleportService.teleport(player, location);
         this.noticeService.create()
-            .message(messages -> messages.teleport().teleportedToCoordinates())
+            .notice(messages -> messages.teleport().teleportedToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))

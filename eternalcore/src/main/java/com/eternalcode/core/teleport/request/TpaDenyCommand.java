@@ -36,14 +36,14 @@ public class TpaDenyCommand {
         this.noticeService
             .create()
             .player(player.getUniqueId())
-            .message(messages -> messages.tpa().tpaDenyDoneMessage())
+            .notice(messages -> messages.tpa().tpaDenyDoneMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
             .player(target.getUniqueId())
-            .message(messages -> messages.tpa().tpaDenyReceivedMessage())
+            .notice(messages -> messages.tpa().tpaDenyReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
     }
@@ -69,7 +69,7 @@ public class TpaDenyCommand {
                 this.noticeService
                     .create()
                     .player(uniqueId)
-                    .message(messages -> messages.tpa().tpaDenyReceivedMessage())
+                    .notice(messages -> messages.tpa().tpaDenyReceivedMessage())
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }

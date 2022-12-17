@@ -6,6 +6,8 @@ import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 
+import java.util.Collections;
+
 public class AfkMessagesController implements Subscriber {
 
     private final NoticeService noticeService;
@@ -19,9 +21,9 @@ public class AfkMessagesController implements Subscriber {
     @Subscribe
     void onAfkChange(AfkChangeEvent event) {
         this.noticeService.create()
-            .all()
+            .onlinePlayers()
             .player(event.getPlayer())
-            .message(messages -> event.isAfk() ? messages.afk().afkOn() : messages.afk().afkOff())
+            .notice(messages -> event.isAfk() ? messages.afk().afkOn() : messages.afk().afkOff())
             .placeholder("{player}", userManager.getUser(event.getPlayer()).map(User::getName))
             .send();
     }

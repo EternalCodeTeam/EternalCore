@@ -23,21 +23,20 @@ public interface Messages {
     AfkSection afk();
 
     interface ArgumentSection {
-        String permissionMessage();
-        String usageMessage();
-        String usageMessageHead();
-        String usageMessageEntry();
-        String offlinePlayer();
-        String onlyPlayer();
-        String notNumber();
-        String numberBiggerThanOrEqualZero();
-        String noItem();
-        String noMaterial();
-        String noArgument();
-        String noDamaged();
-        String noDamagedItems();
-        String noEnchantment();
-        String noValidEnchantmentLevel();
+        Notification permissionMessage();
+        Notification usageMessage();
+        Notification usageMessageHead();
+        Notification usageMessageEntry();
+        Notification offlinePlayer();
+        Notification onlyPlayer();
+        Notification numberBiggerThanOrEqualZero();
+        Notification noItem();
+        Notification noMaterial();
+        Notification noArgument();
+        Notification noDamaged();
+        Notification noDamagedItems();
+        Notification noEnchantment();
+        Notification noValidEnchantmentLevel();
     }
 
     interface Format {
@@ -46,155 +45,169 @@ public interface Messages {
     }
 
     interface HelpOpSection {
-        String format();
-        String send();
-        String coolDown();
+        Notification format();
+        Notification send();
+        Notification coolDown();
     }
 
     interface AdminChatSection {
-        String format();
+        Notification format();
     }
 
     interface TeleportSection {
         // teleport
-        String teleportedToPlayer();
-        String teleportedPlayerToPlayer();
+        Notification teleportedToPlayer();
+        Notification teleportedPlayerToPlayer();
 
         // Task
         Notification teleportTimerFormat();
-        String teleported();
-        String teleporting();
-        String teleportTaskCanceled();
-        String teleportTaskAlreadyExist();
+        Notification teleported();
+        Notification teleporting();
+        Notification teleportTaskCanceled();
+        Notification teleportTaskAlreadyExist();
 
         // Coordinates XYZ
-        String teleportedToCoordinates();
-        String teleportedSpecifiedPlayerToCoordinates();
+        Notification teleportedToCoordinates();
+        Notification teleportedSpecifiedPlayerToCoordinates();
 
         // Back
-        String teleportedToLastLocation();
-        String teleportedSpecifiedPlayerLastLocation();
-        String lastLocationNoExist();
+        Notification teleportedToLastLocation();
+        Notification teleportedSpecifiedPlayerLastLocation();
+        Notification lastLocationNoExist();
     }
 
     interface ChatSection {
-        String disabled();
-        String enabled();
-        String cleared();
-        String alreadyDisabled();
-        String alreadyEnabled();
-        String slowModeSet();
-        String slowMode();
-        String disabledChatInfo();
-        String noCommand();
+        Notification disabled();
+        Notification enabled();
+        Notification cleared();
+        Notification alreadyDisabled();
+        Notification alreadyEnabled();
+        Notification slowModeSet();
+        Notification slowMode();
+        Notification disabledChatInfo();
+        Notification noCommand();
     }
 
     interface WarpSection {
-        String availableList();
-        String notExist();
-        String create();
-        String remove();
-        String noPermission();
-        String disabled();
+        Notification notExist();
+        Notification create();
+        Notification remove();
     }
 
     interface HomeSection {
-        String notExist();
-        String create();
-        String delete();
+        Notification notExist();
+        Notification create();
+        Notification delete();
     }
 
     interface TpaSection {
-        String tpaSelfMessage();
-        String tpaAlreadySentMessage();
-        String tpaSentMessage();
-        List<String> tpaReceivedMessage();
+        Notification tpaSelfMessage();
+        Notification tpaAlreadySentMessage();
+        Notification tpaSentMessage();
+        List<Notification> tpaReceivedMessage();
 
-        String tpaDenyNoRequestMessage();
-        String tpaDenyNoRequestMessageAll();
-        String tpaDenyDoneMessage();
-        String tpaDenyReceivedMessage();
-        String tpaDenyAllDenied();
+        Notification tpaDenyNoRequestMessage();
+        Notification tpaDenyDoneMessage();
+        Notification tpaDenyReceivedMessage();
+        Notification tpaDenyAllDenied();
 
-        String tpaAcceptMessage();
-        String tpaAcceptNoRequestMessage();
-        String tpaAcceptNoRequestMessageAll();
-        String tpaAcceptReceivedMessage();
-        String tpaAcceptAllAccepted();
+        Notification tpaAcceptMessage();
+        Notification tpaAcceptNoRequestMessage();
+        Notification tpaAcceptReceivedMessage();
+        Notification tpaAcceptAllAccepted();
     }
 
     interface PrivateMessageSection {
-        String noReply();
-        String privateMessageYouToTarget();
-        String privateMessageTargetToYou();
+        Notification noReply();
+        Notification privateMessageYouToTarget();
+        Notification privateMessageTargetToYou();
 
-        String socialSpyMessage();
-        String socialSpyEnable();
-        String socialSpyDisable();
+        Notification socialSpyMessage();
+        Notification socialSpyEnable();
+        Notification socialSpyDisable();
 
-        String ignorePlayer();
-        String unIgnorePlayer();
+        Notification ignorePlayer();
+        Notification unIgnorePlayer();
     }
 
     interface AfkSection {
-        String afkOn();
-        String afkOff();
+        Notification afkOn();
+        Notification afkOff();
     }
 
     interface EventMessagesSection {
-        List<String> deathMessage();
-        List<String> joinMessage();
-        List<String> quitMessage();
-        List<String> firstJoinMessage();
+        List<Notification> deathMessage();
+        List<Notification> joinMessage();
+        List<Notification> quitMessage();
+        List<Notification> firstJoinMessage();
 
-        public String welcomeTitle();
-        public String welcomeSubtitle();
+        Notification welcomeTitle();
+        Notification welcomeSubtitle();
     }
 
     interface OtherMessages {
         String alertMessagePrefix();
-        String clearMessage(); // ?
-        String clearByMessage(); // ?
+
+        Notification inventoryClearMessage();
+        Notification inventoryClearMessageBy();
+
         String disposalTitle();
-        String foodMessage();
-        String foodOtherMessage();
-        String healMessage();
-        String healedMessage();
-        String repairMessage();
-        String skullMessage();
-        String killedMessage();
-        String speedBetweenZeroAndTen();
-        String speedSet();
-        String speedSetBy();
-        String godMessage();
-        String godSetMessage();
-        String flyMessage();
-        String flySetMessage();
-        String giveReceived();
-        String giveGiven();
-        String spawnSet();
-        String spawnNoSet();
-        String spawnTeleportedBy();
-        String spawnTeleportedOther();
-        String gameModeNotCorrect();
-        String gameModeMessage();
-        String gameModeSetMessage();
-        String pingMessage();
-        String pingOtherMessage();
-        String onlineMessage();
-        String listMessage();
 
-        String itemChangeNameMessage();
-        String itemClearNameMessage();
-        String itemChangeLoreMessage();
-        String itemClearLoreMessage();
-        String itemFlagRemovedMessage();
-        String itemFlagAddedMessage();
-        String itemFlagClearedMessage();
+        Notification feedMessage();
+        Notification feedMessageBy();
 
-        String enchantedMessage();
+        Notification healMessage();
+        Notification healMessageBy();
+
+        Notification repairMessage();
+
+        Notification skullMessage();
+
+        Notification killedMessage();
+
+        Notification speedBetweenZeroAndTen();
+        Notification speedSet();
+        Notification speedSetBy();
+
+        Notification godMessage();
+        Notification godSetMessage();
+
+        Notification flyMessage();
+        Notification flySetMessage();
+
+        Notification giveReceived();
+        Notification giveGiven();
+
+        Notification spawnSet();
+        Notification spawnNoSet();
+
+        Notification spawnTeleportedBy();
+        Notification spawnTeleportedOther();
+
+        Notification gameModeNotCorrect();
+        Notification gameModeMessage();
+        Notification gameModeSetMessage();
+
+        Notification pingMessage();
+        Notification pingOtherMessage();
+
+        Notification onlineMessage();
+
+        Notification listMessage();
+
+        Notification itemClearNameMessage();
+        Notification itemClearLoreMessage();
+
+        Notification itemChangeNameMessage();
+        Notification itemChangeLoreMessage();
+
+        Notification itemFlagRemovedMessage();
+        Notification itemFlagAddedMessage();
+        Notification itemFlagClearedMessage();
+
+        Notification enchantedMessage();
         List<String> whoisCommand();
-        String languageChanged();
+        Notification languageChanged();
 
     }
 }

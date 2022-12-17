@@ -46,7 +46,7 @@ public class TeleportTask implements Runnable {
 
                 this.noticeService.create()
                     .notice(NoticeType.ACTIONBAR, messages -> StringUtils.EMPTY)
-                    .message(messages -> messages.teleport().teleportTaskCanceled())
+                    .notice(messages -> messages.teleport().teleportTaskCanceled())
                     .player(player.getUniqueId())
                     .send();
 
@@ -71,8 +71,7 @@ public class TeleportTask implements Runnable {
             this.teleportTaskService.removeTeleport(uuid);
 
             this.noticeService.create()
-                .notice(NoticeType.ACTIONBAR, messages -> messages.teleport().teleported())
-                .message(messages -> messages.teleport().teleported())
+                .notice(messages -> messages.teleport().teleported())
                 .player(player.getUniqueId())
                 .send();
         }

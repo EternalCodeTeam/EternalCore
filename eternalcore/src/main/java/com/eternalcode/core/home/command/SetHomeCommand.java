@@ -36,7 +36,7 @@ public class SetHomeCommand {
         this.homeManager.createHome(user, home, player.getLocation());
         this.noticeService.create()
             .user(user)
-            .message(messages -> messages.home().create())
+            .notice(messages -> messages.home().create())
             .placeholder("{home}", home)
             .send();
     }
