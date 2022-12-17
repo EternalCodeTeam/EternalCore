@@ -273,7 +273,6 @@ public class EternalCore extends JavaPlugin {
         }
 
         /* Services & Managers  */
-
         this.userManager = new UserManager();
         this.placeholderRegistry = new PlaceholderBukkitRegistryImpl(server);
         this.placeholderRegistry.registerPlaceholderReplacer(text -> {
