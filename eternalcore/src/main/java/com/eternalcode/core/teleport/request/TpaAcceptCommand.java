@@ -66,11 +66,7 @@ public class TpaAcceptCommand {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {
-            this.noticeService
-                .create()
-                .player(player.getUniqueId())
-                .notice(messages -> messages.tpa().tpaAcceptNoRequestMessage())
-                .send();
+            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAcceptNoRequestMessage());
 
             return;
         }
@@ -98,10 +94,6 @@ public class TpaAcceptCommand {
             }
         }
 
-        this.noticeService
-            .create()
-            .player(player.getUniqueId())
-            .notice(messages -> messages.tpa().tpaAcceptAllAccepted())
-            .send();
+        this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAcceptAllAccepted());
     }
 }

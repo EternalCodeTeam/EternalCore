@@ -26,20 +26,14 @@ public class TeleportBackCommand {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
-            this.noticeService.create()
-                .notice(messages -> messages.teleport().lastLocationNoExist())
-                .player(player.getUniqueId())
-                .send();
+            this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().lastLocationNoExist());
 
             return;
         }
 
         this.teleportService.teleport(player, location.get());
 
-        this.noticeService.create()
-            .notice(messages -> messages.teleport().teleportedToLastLocation())
-            .player(player.getUniqueId())
-            .send();
+        this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().teleportedToLastLocation());
     }
 
     @Execute(required = 1)
@@ -47,20 +41,14 @@ public class TeleportBackCommand {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
-            this.noticeService.create()
-                .notice(messages -> messages.teleport().lastLocationNoExist())
-                .viewer(viewer)
-                .send();
+            this.noticeService.viewer(viewer, messages -> messages.teleport().lastLocationNoExist());
 
             return;
         }
 
         this.teleportService.teleport(player, location.get());
 
-        this.noticeService.create()
-            .notice(messages -> messages.teleport().teleportedToLastLocation())
-            .player(player.getUniqueId())
-            .send();
+        this.noticeService.player(player.getUniqueId(), messages -> messages.teleport().teleportedToLastLocation());
 
         this.noticeService.create()
             .viewer(viewer)

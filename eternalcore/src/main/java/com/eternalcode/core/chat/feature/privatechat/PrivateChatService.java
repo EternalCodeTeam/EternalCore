@@ -36,10 +36,7 @@ public class PrivateChatService {
 
     public void privateMessage(User sender, User target, String message) {
         if (target.getClientSettings().isOffline()) {
-            this.noticeService.create()
-                .notice(messages -> messages.argument().offlinePlayer())
-                .player(sender.getUniqueId())
-                .send();
+            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
 
             return;
         }
@@ -58,10 +55,7 @@ public class PrivateChatService {
         UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
 
         if (uuid == null) {
-            this.noticeService.create()
-                .notice(messages -> messages.privateMessage().noReply())
-                .player(sender.getUniqueId())
-                .send();
+            this.noticeService.player(sender.getUniqueId(), messages -> messages.privateMessage().noReply());
 
             return;
         }
@@ -69,10 +63,7 @@ public class PrivateChatService {
         Option<User> targetOption = this.userManager.getUser(uuid);
 
         if (targetOption.isEmpty()) {
-            this.noticeService.create()
-                .notice(messages -> messages.argument().offlinePlayer())
-                .player(sender.getUniqueId())
-                .send();
+            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
 
             return;
         }

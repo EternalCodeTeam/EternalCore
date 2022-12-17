@@ -31,6 +31,8 @@ public class ItemNameCommand {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
+            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+
             return;
         }
 
@@ -61,22 +63,13 @@ public class ItemNameCommand {
         itemMeta.setDisplayName(null);
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService
-            .create()
-            .notice(messages -> messages.other().itemClearNameMessage())
-            .player(player.getUniqueId())
-            .send();
+        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemClearNameMessage());
     }
 
     private ItemStack validateItemFromMainHand(Player player) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
         if (itemStack.getType() == Material.AIR || itemStack.getItemMeta() == null) {
-            this.noticeService.create()
-                .notice(messages -> messages.argument().noItem())
-                .player(player.getUniqueId())
-                .send();
-
             return null;
         }
 
