@@ -27,7 +27,7 @@ public class IgnoreCommand {
         this.noticeService.create()
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
-            .message(messages -> messages.privateMessage().ignorePlayer())
+            .notice(messages -> messages.privateMessage().ignorePlayer())
             .send();
     }
 

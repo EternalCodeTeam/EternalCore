@@ -32,14 +32,14 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
 
     @Override
     public void handle(CommandSender sender, LiteInvocation invocation, RequiredPermissions requiredPermissions) {
-        Viewer viewer = this.viewerProvider.any(invocation);
+        Viewer viewer = this.viewerProvider.sender(sender);
         Messages messages = this.languageManager.getMessages(viewer);
 
         String perms = Joiner.on(", ")
             .join(requiredPermissions.getPermissions())
             .toString();
 
-        String replaced = messages.argument().permissionMessage().replace("{PERMISSIONS}", perms);
+        String replaced = messages.argument().permissionMessage().getMessage().replace("{PERMISSIONS}", perms);
 
         if (sender instanceof Player player) {
             this.audienceProvider.player(player.getUniqueId()).sendMessage(this.miniMessage.deserialize(replaced));

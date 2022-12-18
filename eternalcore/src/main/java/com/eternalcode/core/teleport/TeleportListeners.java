@@ -49,7 +49,7 @@ public class TeleportListeners implements Listener {
             this.teleportTaskService.removeTeleport(uuid);
 
             this.noticeService.create()
-                    .message(messages -> messages.teleport().teleportTaskCanceled())
+                    .notice(messages -> messages.teleport().teleportTaskCanceled())
                     .send();
         }
     }

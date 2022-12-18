@@ -23,7 +23,7 @@ public class AlertCommand {
         this.noticeService.create()
             .notice(type, messages -> messages.other().alertMessagePrefix())
             .placeholder("{BROADCAST}", text)
-            .all()
+            .onlinePlayers()
             .send();
     }
 }

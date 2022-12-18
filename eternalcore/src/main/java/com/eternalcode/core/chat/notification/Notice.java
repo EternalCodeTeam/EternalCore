@@ -5,7 +5,9 @@ import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.language.NotificationExtractor;
+import com.eternalcode.core.language.NotificationsExtractor;
 import com.eternalcode.core.language.OptionalMessageExtractor;
+import com.eternalcode.core.language.OptionalNotificationExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.user.User;
@@ -36,7 +38,7 @@ public class Notice {
     private final PlaceholderRegistry placeholderRegistry;
 
     private final List<Viewer> viewers = new ArrayList<>();
-    private final List<NotificationExtractor> notifications = new ArrayList<>();
+    private final List<NotificationsExtractor> notifications = new ArrayList<>();
 
     private final Map<String, MessageExtractor> placeholders = new HashMap<>();
     private final List<Formatter> formatters = new ArrayList<>();
@@ -98,7 +100,13 @@ public class Notice {
 
     @CheckReturnValue
     public Notice message(MessageExtractor extractor) {
-        this.notifications.add(messages -> new Notification(extractor.extract(messages), NoticeType.CHAT));
+        this.notifications.add(NotificationsExtractor.of(messages -> new Notification(extractor.extract(messages), NoticeType.CHAT)));
+        return this;
+    }
+
+    public Notice message(NotificationExtractor extractor) {
+        this.notifications.add(extractor);
+
         return this;
     }
 
@@ -115,19 +123,21 @@ public class Notice {
 
     @CheckReturnValue
     public Notice staticNotice(Notification notification) {
-        this.notifications.add(messages -> notification);
+        this.notifications.add(NotificationsExtractor.of(notification));
+
         return this;
     }
 
     @CheckReturnValue
     public Notice notice(NoticeType type, MessageExtractor extractor) {
-        this.notifications.add(messages -> new Notification(extractor.extract(messages), type));
+        this.notifications.add(NotificationsExtractor.of(messages -> new Notification(extractor.extract(messages), type)));
+
         return this;
     }
 
     @CheckReturnValue
     public Notice noticeOption(NoticeType type, OptionalMessageExtractor extractor) {
-        this.notifications.add(messages -> {
+        this.notifications.add((NotificationExtractor) messages -> {
             Option<String> apply = extractor.extract(messages);
 
             if (apply.isPresent()) {
@@ -140,8 +150,31 @@ public class Notice {
     }
 
     @CheckReturnValue
+    public Notice noticeOption(OptionalNotificationExtractor extractor) {
+        this.notifications.add((NotificationExtractor) messages -> {
+            Option<Notification> apply = extractor.extract(messages);
+
+            if (apply.isPresent()) {
+                return apply.get();
+            }
+
+            return new Notification(StringUtils.EMPTY, NoticeType.NONE);
+        });
+        return this;
+    }
+
+    @CheckReturnValue
     public Notice notice(NotificationExtractor extractor) {
         this.notifications.add(extractor);
+        return this;
+    }
+
+    @CheckReturnValue
+    public Notice notifications(Function<Messages, List<Notification>> function) {
+        NotificationsExtractor notificationsExtractor = function::apply;
+
+        this.notifications.add(notificationsExtractor);
+
         return this;
     }
 
@@ -229,10 +262,10 @@ public class Notice {
         Messages messages = this.languageManager.getMessages(language);
         List<Notification> notificationsForLanguage = new ArrayList<>();
 
-        for (NotificationExtractor extractor : this.notifications) {
-            Notification notificationForLanguage = extractor.extract(messages);
+        for (NotificationsExtractor extractor : this.notifications) {
+            List<Notification> notificationForLanguage = extractor.extractNotifications(messages);
 
-            notificationsForLanguage.add(notificationForLanguage);
+            notificationsForLanguage.addAll(notificationForLanguage);
         }
 
         return notificationsForLanguage;

@@ -49,24 +49,23 @@ public class TpaAcceptCommand {
         this.noticeService
             .create()
             .player(player.getUniqueId())
-            .message(messages -> messages.tpa().tpaAcceptMessage())
+            .notice(messages -> messages.tpa().tpaAcceptMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
             .player(target.getUniqueId())
-            .message(messages -> messages.tpa().tpaAcceptReceivedMessage())
+            .notice(messages -> messages.tpa().tpaAcceptReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
     }
 
-    @Execute( route = "-all", aliases = "*")
+    @Execute(route = "-all", aliases = "*")
     public void executeAll(Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {
-
             this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAcceptNoRequestMessage());
 
             return;
@@ -89,7 +88,7 @@ public class TpaAcceptCommand {
                 this.noticeService
                     .create()
                     .player(uniqueId)
-                    .message(messages -> messages.tpa().tpaAcceptReceivedMessage())
+                    .notice(messages -> messages.tpa().tpaAcceptReceivedMessage())
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }

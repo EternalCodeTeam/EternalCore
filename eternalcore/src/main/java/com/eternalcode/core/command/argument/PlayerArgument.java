@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -26,15 +27,7 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
     }
 
     @Override
-    public List<Suggestion> suggest(LiteInvocation invocation) {
-        return this.server.getOnlinePlayers().stream()
-            .map(HumanEntity::getName)
-            .map(Suggestion::of)
-            .toList();
-    }
-
-    @Override
-    public Result<Player, String> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<Player, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
         Player player = this.server.getPlayer(argument);
 
         if (player == null) {
@@ -44,4 +37,11 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
         return Result.ok(player);
     }
 
+    @Override
+    public List<Suggestion> suggest(LiteInvocation invocation) {
+        return this.server.getOnlinePlayers().stream()
+            .map(HumanEntity::getName)
+            .map(Suggestion::of)
+            .toList();
+    }
 }

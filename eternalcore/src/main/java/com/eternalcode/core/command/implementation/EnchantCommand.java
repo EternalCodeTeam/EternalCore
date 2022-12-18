@@ -34,7 +34,7 @@ public class EnchantCommand {
         if (handItem == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .message(messages -> messages.argument().noItem())
+                .notice(messages -> messages.argument().noItem())
                 .send();
 
             return;
@@ -46,7 +46,7 @@ public class EnchantCommand {
             if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(handItem)) {
                 this.noticeService.create()
                     .player(player.getUniqueId())
-                    .message(messages -> messages.argument().noValidEnchantmentLevel())
+                    .notice(messages -> messages.argument().noValidEnchantmentLevel())
                     .send();
 
                 return;
@@ -57,7 +57,7 @@ public class EnchantCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .message(messages -> messages.other().enchantedMessage())
+            .notice(messages -> messages.other().enchantedMessage())
             .send();
     }
 }

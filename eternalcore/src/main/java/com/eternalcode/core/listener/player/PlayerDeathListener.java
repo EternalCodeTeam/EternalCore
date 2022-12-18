@@ -13,11 +13,9 @@ import panda.utilities.StringUtils;
 public class PlayerDeathListener implements Listener {
 
     private final NoticeService noticeService;
-    private final PluginConfiguration config;
 
-    public PlayerDeathListener(NoticeService noticeService, PluginConfiguration config) {
+    public PlayerDeathListener(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.config = config;
     }
 
     @EventHandler
@@ -27,9 +25,9 @@ public class PlayerDeathListener implements Listener {
         event.setDeathMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(NoticeType.CHAT, messages -> RandomUtil.randomElement(messages.eventMessages().deathMessage()))
+            .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().deathMessage()))
             .placeholder("{PLAYER}", player.getName())
-            .all()
+            .onlinePlayers()
             .send();
     }
 }

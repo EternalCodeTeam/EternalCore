@@ -29,7 +29,7 @@ public class RepairCommand {
         if (handItem == null || !(handItem.getItemMeta() instanceof Repairable)) {
             this.noticeService
                 .create()
-                .message(messages -> messages.argument().noItem())
+                .notice(messages -> messages.argument().noItem())
                 .player(player.getUniqueId())
                 .send();
 
@@ -39,7 +39,7 @@ public class RepairCommand {
         if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
             this.noticeService
                 .create()
-                .message(messages -> messages.argument().noDamaged())
+                .notice(messages -> messages.argument().noDamaged())
                 .player(player.getUniqueId())
                 .send();
 
@@ -50,7 +50,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .message(messages -> messages.other().repairMessage())
+            .notice(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
@@ -75,7 +75,7 @@ public class RepairCommand {
         if (!exists) {
             this.noticeService
                 .create()
-                .message(messages -> messages.argument().noDamagedItems())
+                .notice(messages -> messages.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
 
@@ -84,7 +84,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .message(messages -> messages.other().repairMessage())
+            .notice(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
@@ -109,7 +109,7 @@ public class RepairCommand {
         if (!exists) {
             this.noticeService
                 .create()
-                .message(messages -> messages.argument().noDamagedItems())
+                .notice(messages -> messages.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
 
@@ -118,7 +118,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .message(messages -> messages.other().repairMessage())
+            .notice(messages -> messages.other().repairMessage())
             .player(player.getUniqueId())
             .send();
     }

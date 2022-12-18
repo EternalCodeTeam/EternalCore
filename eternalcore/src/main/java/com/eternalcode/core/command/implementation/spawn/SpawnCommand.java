@@ -38,7 +38,7 @@ public class SpawnCommand {
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {
             this.noticeService.create()
-                .message(messages -> messages.other().spawnNoSet())
+                .notice(messages -> messages.other().spawnNoSet())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -50,7 +50,7 @@ public class SpawnCommand {
                 this.teleportService.teleport(sender, destinationLocation);
 
                 this.noticeService.create()
-                    .message(messages -> messages.teleport().teleported())
+                    .notice(messages -> messages.teleport().teleported())
                     .player(sender.getUniqueId())
                     .send();
 
@@ -59,7 +59,7 @@ public class SpawnCommand {
 
             if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
                 this.noticeService.create()
-                    .message(messages -> messages.teleport().teleportTaskAlreadyExist())
+                    .notice(messages -> messages.teleport().teleportTaskAlreadyExist())
                     .player(sender.getUniqueId())
                     .send();
 
@@ -69,7 +69,7 @@ public class SpawnCommand {
             this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), Duration.ofSeconds(5));
 
             this.noticeService.create()
-                .message(messages -> messages.teleport().teleporting())
+                .notice(messages -> messages.teleport().teleporting())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -81,13 +81,13 @@ public class SpawnCommand {
         this.teleportService.teleport(player, destinationLocation);
 
         this.noticeService.create()
-            .message(messages -> messages.other().spawnTeleportedBy())
+            .notice(messages -> messages.other().spawnTeleportedBy())
             .placeholder("{PLAYER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .message(messages -> messages.other().spawnTeleportedOther())
+            .notice(messages -> messages.other().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
             .player(sender.getUniqueId())
             .send();

@@ -2,6 +2,7 @@ package com.eternalcode.core.chat.notification;
 
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.MessageExtractor;
+import com.eternalcode.core.language.NotificationExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
@@ -30,7 +31,7 @@ public class NoticeService {
         return new Notice(this.languageManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
     }
 
-    public void player(UUID player, MessageExtractor extractor, Formatter... formatters) {
+    public void player(UUID player, NotificationExtractor extractor, Formatter... formatters) {
         this.create()
             .player(player)
             .message(extractor)
@@ -38,7 +39,7 @@ public class NoticeService {
             .send();
     }
 
-    public void players(Iterable<UUID> players, MessageExtractor extractor, Formatter... formatters) {
+    public void players(Iterable<UUID> players, NotificationExtractor extractor, Formatter... formatters) {
         this.create()
             .players(players)
             .message(extractor)
@@ -46,7 +47,7 @@ public class NoticeService {
             .send();
     }
 
-    public void user(User user, MessageExtractor extractor, Formatter... formatters) {
+    public void user(User user, NotificationExtractor extractor, Formatter... formatters) {
         this.create()
             .user(user)
             .message(extractor)
@@ -54,7 +55,7 @@ public class NoticeService {
             .send();
     }
 
-    public void viewer(Viewer viewer, MessageExtractor extractor, Formatter... formatters) {
+    public void viewer(Viewer viewer, NotificationExtractor extractor, Formatter... formatters) {
         this.create()
             .viewer(viewer)
             .message(extractor)
@@ -62,7 +63,8 @@ public class NoticeService {
             .send();
     }
 
-    public void console(MessageExtractor extractor, Formatter... formatters) {
+
+    public void console(NotificationExtractor extractor, Formatter... formatters) {
         this.create()
             .console()
             .message(extractor)
@@ -70,7 +72,7 @@ public class NoticeService {
             .send();
     }
 
-    public void all(MessageExtractor extractor, Formatter... formatters) {
+    public void all(NotificationExtractor extractor, Formatter... formatters) {
         this.create()
             .all()
             .message(extractor)

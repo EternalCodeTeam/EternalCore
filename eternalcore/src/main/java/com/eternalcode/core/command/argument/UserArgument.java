@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.user.User;
@@ -37,7 +38,7 @@ public class UserArgument extends AbstractViewerArgument<User> {
     }
 
     @Override
-    public Result<User, String> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<User, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
         return this.userManager.getUser(argument).toResult(() -> messages.argument().offlinePlayer());
     }
 

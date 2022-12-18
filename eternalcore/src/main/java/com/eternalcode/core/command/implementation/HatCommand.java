@@ -31,7 +31,7 @@ public class HatCommand {
             this.noticeService
                 .create()
                 .player(player.getUniqueId())
-                .message(messages -> messages.argument().noItem())
+                .notice(messages -> messages.argument().noItem())
                 .send();
 
             return;

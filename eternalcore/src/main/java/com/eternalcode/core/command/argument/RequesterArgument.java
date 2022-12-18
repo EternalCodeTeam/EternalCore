@@ -1,12 +1,11 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.language.LanguageManager;
 import com.eternalcode.core.language.Messages;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
-import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.Server;
@@ -32,7 +31,7 @@ public class RequesterArgument extends AbstractViewerArgument<Player> {
     }
 
     @Override
-    public Result<Player, String> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<Player, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
         Player target = this.server.getPlayer(argument);
 
         if (!(invocation.sender().getHandle() instanceof Player player)) {

@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     id("java-library")
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
-    id("xyz.jpenilla.run-paper") version "2.0.0"
+    id("xyz.jpenilla.run-paper") version "2.0.1"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -14,7 +14,7 @@ dependencies {
     // minecraft development api
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     implementation("io.papermc:paperlib:1.0.8-SNAPSHOT")
-    implementation("net.kyori:adventure-platform-bukkit:4.1.2")
+    implementation("net.kyori:adventure-platform-bukkit:4.2.0")
     implementation("net.kyori:adventure-text-minimessage:4.12.0")
 
     // configuration
@@ -33,7 +33,7 @@ dependencies {
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
     // utility library
-    implementation("org.panda-lang:expressible:1.2.1")
+    implementation("org.panda-lang:expressible:1.2.2")
 
     // gui library
     implementation("dev.triumphteam:triumph-gui:3.1.3")

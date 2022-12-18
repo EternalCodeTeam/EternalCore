@@ -26,7 +26,7 @@ public class FlyCommand {
         player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.create()
-            .message(messages -> messages.other().flyMessage())
+            .notice(messages -> messages.other().flyMessage())
             .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
             .player(player.getUniqueId())
             .send();
@@ -36,7 +36,7 @@ public class FlyCommand {
         }
 
         this.noticeService.create()
-            .message(messages -> messages.other().flySetMessage())
+            .notice(messages -> messages.other().flySetMessage())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
             .viewer(audience)
