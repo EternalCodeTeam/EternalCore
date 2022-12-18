@@ -504,9 +504,17 @@ public class EternalCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.liteCommands.getPlatform().unregisterAll();
-        this.databaseManager.close();
-        this.skullAPI.shutdown();
+        if (this.liteCommands != null) {
+            this.liteCommands.getPlatform().unregisterAll();
+        }
+
+        if (this.databaseManager != null) {
+            this.databaseManager.close();
+        }
+
+        if (this.skullAPI != null) {
+            this.skullAPI.shutdown();
+        }
     }
 
     private void softwareCheck() {
