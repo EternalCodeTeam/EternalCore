@@ -3,13 +3,13 @@ package com.eternalcode.core.chat.notification;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
 public class Notification {
 
-    protected final Set<NoticeType> types = new HashSet<>();
+    protected final Set<NoticeType> types = new LinkedHashSet<>();
     protected final String message;
 
     protected Notification(String message, NoticeType... types) {
