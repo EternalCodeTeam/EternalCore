@@ -42,7 +42,7 @@ class UserManagerTest {
         assertEquals(0, manager.getUsers().size());
 
         UUID uuid = UUID.randomUUID();
-        manager.getOrCreate(uuid, "Paweł");
+        manager.getOrCreate(uuid, "Adrian");
 
         assertEquals(1, manager.getUsers().size());
         assertTrue(manager.getUser(uuid).isPresent());
