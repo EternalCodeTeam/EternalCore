@@ -25,3 +25,6 @@
 - Add command /tphere
 - Add home system (/home, /sethome, /delhome)
 - Add warp system (/warp)
+- Add support to PlaceholderAPI
+- More advanced /hat command
+- Add support to multiple notification type for configs
