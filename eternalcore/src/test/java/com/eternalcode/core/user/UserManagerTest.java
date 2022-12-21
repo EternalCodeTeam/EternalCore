@@ -6,18 +6,19 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 class UserManagerTest {
+
     @Test
     void testUsersCreate() {
         UserManager manager = new UserManager();
 
         assertEquals(0, manager.getUsers().size());
 
-        manager.create(UUID.randomUUID(), "Piotr").orNull();
+        manager.create(UUID.randomUUID(), "Piotr");
         assertEquals(1, manager.getUsers().size());
 
-        manager.create(UUID.randomUUID(), "Piotr").orNull();
-        manager.create(UUID.randomUUID(), "Norbert").orNull();
-        manager.create(UUID.randomUUID(), "Martin").orNull();
+        manager.create(UUID.randomUUID(), "Igor");
+        manager.create(UUID.randomUUID(), "Norbert");
+        manager.create(UUID.randomUUID(), "Martin");
         assertEquals(3, manager.getUsers().size());
     }
 
@@ -27,7 +28,8 @@ class UserManagerTest {
 
         assertEquals(0, manager.getUsers().size());
 
-        User user = manager.create(UUID.randomUUID(), "Paweł").orNull();
+        UUID uuid = UUID.randomUUID();
+        User user = manager.getOrCreate(uuid, "Paweł");
 
         assertEquals(1, manager.getUsers().size());
         assertTrue(manager.getUsers().contains(user));
@@ -38,10 +40,10 @@ class UserManagerTest {
         UserManager manager = new UserManager();
 
         UUID uuid = UUID.randomUUID();
-        User user = manager.create(uuid, "Krzysztof").orNull();
+        User user = manager.getOrCreate(uuid, "Krzysztof");
 
-        assertEquals(user, manager.getUser(uuid).orNull());
-        assertEquals(user, manager.getUser("Krzysztof").orNull());
+        assertTrue(manager.getUsers().contains(user));
+        assertEquals(1, manager.getUsers().size());
     }
 
     @Test

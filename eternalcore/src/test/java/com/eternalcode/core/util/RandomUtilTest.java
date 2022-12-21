@@ -16,7 +16,7 @@ class RandomUtilTest {
         Collection<String> strings = Arrays.asList("a", "b", "c", "d", "e");
         Option<String> randomElement = RandomUtil.randomElement(strings);
 
-        assertNotNull(randomElement);
+        assertTrue(randomElement.isPresent());
         assertTrue(strings.contains(randomElement.get()));
     }
 
@@ -26,12 +26,5 @@ class RandomUtilTest {
         Option<String> randomElement = RandomUtil.randomElement(emptyList);
         
         assertTrue(randomElement.isEmpty());
-    }
-
-    @Test
-    void testRandomElementWithNonEmptyCollection() {
-        List<String> nonEmptyList = Arrays.asList("one", "two", "three");
-
-        assertTrue(RandomUtil.randomElement(nonEmptyList).isPresent());
     }
 }

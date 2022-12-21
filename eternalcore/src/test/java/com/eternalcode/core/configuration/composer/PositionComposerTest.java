@@ -19,27 +19,11 @@ class PositionComposerTest {
         assertTrue(result.isOk());
         Position position = result.get();
 
-        assertEquals(1.0, position.getX(), 0.001);
-        assertEquals(2.0, position.getY(), 0.001);
-        assertEquals(3.0, position.getZ(), 0.001);
-        assertEquals(4.0, position.getYaw(), 0.001);
-        assertEquals(5.0, position.getPitch(), 0.001);
-        assertEquals("world", position.getWorld());
-    }
-
-    @Test
-    void testDeserialize_invalidFormat() {
-        String source = "Position{x=1.0, y=2.0, z=3.0, yaw=4.0, pitch=5.0, world='world'}";
-        Result<Position, Exception> result = composer.deserialize(source);
-
-        assertTrue(result.isOk());
-        Position position = result.get();
-
-        assertEquals(1.0, position.getX(), 0.001);
-        assertEquals(2.0, position.getY(), 0.001);
-        assertEquals(3.0, position.getZ(), 0.001);
-        assertEquals(4.0, position.getYaw(), 0.001);
-        assertEquals(5.0, position.getPitch(), 0.001);
+        assertEquals(1.0, position.getX());
+        assertEquals(2.0, position.getY());
+        assertEquals(3.0, position.getZ());
+        assertEquals(4.0, position.getYaw());
+        assertEquals(5.0, position.getPitch());
         assertEquals("world", position.getWorld());
     }
 
