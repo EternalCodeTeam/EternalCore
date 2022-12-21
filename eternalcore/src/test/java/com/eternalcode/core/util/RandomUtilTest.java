@@ -23,7 +23,9 @@ class RandomUtilTest {
     @Test
     void testRandomElementEmptyCollection() {
         List<String> emptyList = List.of();
-        assertFalse(RandomUtil.randomElement(emptyList).isPresent());
+        Option<String> randomElement = RandomUtil.randomElement(emptyList);
+        
+        assertTrue(randomElement.isEmpty());
     }
 
     @Test
