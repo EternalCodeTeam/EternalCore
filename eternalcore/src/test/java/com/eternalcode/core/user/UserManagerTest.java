@@ -19,7 +19,7 @@ class UserManagerTest {
         manager.create(UUID.randomUUID(), "Igor");
         manager.create(UUID.randomUUID(), "Norbert");
         manager.create(UUID.randomUUID(), "Martin");
-        assertEquals(3, manager.getUsers().size());
+        assertEquals(4, manager.getUsers().size());
     }
 
     @Test
@@ -39,11 +39,13 @@ class UserManagerTest {
     void testGetUser() {
         UserManager manager = new UserManager();
 
-        UUID uuid = UUID.randomUUID();
-        User user = manager.getOrCreate(uuid, "Krzysztof");
+        assertEquals(0, manager.getUsers().size());
 
-        assertTrue(manager.getUsers().contains(user));
+        UUID uuid = UUID.randomUUID();
+        manager.getOrCreate(uuid, "Paweł");
+
         assertEquals(1, manager.getUsers().size());
+        assertTrue(manager.getUser(uuid).isPresent());
     }
 
     @Test
