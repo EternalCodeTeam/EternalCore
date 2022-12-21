@@ -7,10 +7,12 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.eternalcode.core.user.client.ClientBukkitSettings;
 import com.eternalcode.core.user.client.ClientSettings;
 import net.kyori.adventure.text.Component;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import panda.std.Option;
+import panda.utilities.StringUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +57,8 @@ class PrepareUserControllerTest {
             playerMock.kick(Component.empty());
 
             ClientSettings clientSettings = user.getClientSettings();
-            assertFalse(clientSettings.isOffline());
+            assertTrue(clientSettings.isOffline());
+            assertEquals(ClientSettings.NONE, clientSettings);
         }
     }
 
