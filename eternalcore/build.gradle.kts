@@ -36,7 +36,7 @@ dependencies {
     implementation("org.panda-lang:expressible:1.2.2")
 
     // gui library
-    implementation("dev.triumphteam:triumph-gui:3.1.3")
+    implementation("dev.triumphteam:triumph-gui:3.1.4")
 
     // metrics
     implementation("org.bstats:bstats-bukkit:3.0.0")
@@ -47,6 +47,7 @@ dependencies {
     // unit test
     testImplementation("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.13")
+    testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.140.0")
