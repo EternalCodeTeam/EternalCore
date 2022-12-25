@@ -36,7 +36,7 @@ dependencies {
     implementation("org.panda-lang:expressible:1.2.2")
 
     // gui library
-    implementation("dev.triumphteam:triumph-gui:3.1.3")
+    implementation("dev.triumphteam:triumph-gui:3.1.4")
 
     // metrics
     implementation("org.bstats:bstats-bukkit:3.0.0")
