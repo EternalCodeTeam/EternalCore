@@ -159,6 +159,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Afk implements AfkSettings {
+        @Description("# Number of interactions a player must make to have AFK status removed")
         public int interactionsCountDisableAfk = 20;
 
         @Override
