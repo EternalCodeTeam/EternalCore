@@ -8,6 +8,7 @@
 - Fix typo in Reload Command and some configs
 - Fix multiple header generation in config.yml
 - Fix containers command working on paper
+- Placeholder names to uppercase
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
