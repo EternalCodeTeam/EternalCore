@@ -8,6 +8,7 @@
 - Fix typo in Reload Command and some configs
 - Fix multiple header generation in config.yml
 - Fix containers command working on paper
+- Fix problem with possibility of creating homes with the same name
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
@@ -28,3 +29,4 @@
 - Add support to PlaceholderAPI
 - More advanced /hat command
 - Add support to multiple notification type for configs
+- Add home limit per permission

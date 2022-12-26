@@ -24,6 +24,7 @@ public class HomeManager {
         Map<String, Home> homes = this.homes.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
 
         homes.put(name, home);
+
         this.repository.saveHome(home);
     }
 
@@ -35,6 +36,16 @@ public class HomeManager {
         }
 
         this.repository.deleteHome(user, name);
+    }
+
+    public boolean hasHomeWithSpecificName(User user, String name) {
+        Map<String, Home> homes = this.homes.get(user.getUniqueId());
+
+        if (homes == null) {
+            return false;
+        }
+
+        return homes.containsKey(name);
     }
 
     public Option<Home> getHome(UUID uniqueId, String name) {

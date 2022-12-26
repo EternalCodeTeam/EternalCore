@@ -138,6 +138,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification notExist = Notification.chat("<dark_gray>» <red>This home doesn't exist");
         public Notification create = Notification.chat("<dark_gray>» <gray>Home {home} has been created.");
         public Notification delete = Notification.chat("<dark_gray>» <gray>Home {home} has been deleted.");
+        public Notification limit = Notification.chat("<dark_gray>» <red>You have reached the limit of homes! Your limit is {LIMIT}.");
+        public Notification homeWithThisNameAlreadyExists = Notification.chat("<dark_gray>» <red>You already own a house with that name!");
     }
 
     @Getter @Contextual

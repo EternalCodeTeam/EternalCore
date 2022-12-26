@@ -148,6 +148,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie ma takiego domu!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono home {home}!");
         public Notification delete = Notification.chat("<dark_gray>» <gray>Usunięto home {home}!");
+        public Notification limit = Notification.chat("<dark_gray>» <red>Osiągnąłeś limit domów! Twój limit to {LIMIT}.");
+        public Notification homeWithThisNameAlreadyExists = Notification.chat("<dark_gray>» <red>Posiadasz już dom o tej nazwie!");
     }
 
     @Getter

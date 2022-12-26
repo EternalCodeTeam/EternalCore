@@ -14,8 +14,7 @@ import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public class PluginConfiguration implements ReloadableConfig {
 
@@ -48,6 +47,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Description({ " ", "# Other Sections" })
     public OtherSettings otherSettings = new OtherSettings();
+
+    @Description({ " ", "# Homes Section" })
+    public Homes homes = new Homes();
 
     @Contextual
     public static class Database {
@@ -85,6 +87,16 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration teleportTime() {
             return tpaTimer;
         }
+    }
+
+    @Contextual
+    public static class Homes {
+        @Description({ " ", "# Max homes per permission" })
+        public Map<String, Integer> maxHomes = Map.of(
+            "eternalcore.home.default", 1,
+            "eternalcore.home.vip", 2,
+            "eternalcore.home.premium", 3
+        );
     }
 
     @Contextual
