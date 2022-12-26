@@ -9,6 +9,7 @@
 - Fix multiple header generation in config.yml
 - Fix containers command working on paper
 - Fix problem with possibility of creating homes with the same name
+- Placeholder names to uppercase
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)

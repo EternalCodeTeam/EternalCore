@@ -129,15 +129,15 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Getter @Contextual
     public static class ENWarpSection implements WarpSection {
         public Notification notExist = Notification.chat("<dark_gray>» <red>This warp doesn't exist");
-        public Notification create = Notification.chat("<dark_gray>» <gray>Warp {name} has been created.");
-        public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {name} has been deleted.");
+        public Notification create = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been created.");
+        public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been deleted.");
     }
 
     @Getter @Contextual
     public static class ENHomeSection implements HomeSection {
         public Notification notExist = Notification.chat("<dark_gray>» <red>This home doesn't exist");
-        public Notification create = Notification.chat("<dark_gray>» <gray>Home {home} has been created.");
-        public Notification delete = Notification.chat("<dark_gray>» <gray>Home {home} has been deleted.");
+        public Notification create = Notification.chat("<dark_gray>» <gray>Home {HOME} has been created.");
+        public Notification delete = Notification.chat("<dark_gray>» <gray>Home {HOME} has been deleted.");
         public Notification limit = Notification.chat("<dark_gray>» <red>You have reached the limit of homes! Your limit is {LIMIT}.");
         public Notification homeWithThisNameAlreadyExists = Notification.chat("<dark_gray>» <red>You already own a house with that name!");
     }
