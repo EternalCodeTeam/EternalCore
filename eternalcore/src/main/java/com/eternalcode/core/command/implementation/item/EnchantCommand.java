@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.implementation;
+package com.eternalcode.core.command.implementation.item;
 
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;

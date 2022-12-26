@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.implementation;
+package com.eternalcode.core.command.implementation.item;
 
 import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;

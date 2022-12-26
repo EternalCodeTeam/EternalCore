@@ -1,7 +1,6 @@
-package com.eternalcode.core.configuration.language;
+package com.eternalcode.core.language;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
-import com.eternalcode.core.language.Language;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 

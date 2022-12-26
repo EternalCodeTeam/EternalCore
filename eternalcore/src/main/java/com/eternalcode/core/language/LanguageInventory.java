@@ -1,8 +1,6 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.language.LanguageItem;
-import com.eternalcode.core.configuration.language.LanguageSelector;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import dev.triumphteam.gui.builder.item.ItemBuilder;

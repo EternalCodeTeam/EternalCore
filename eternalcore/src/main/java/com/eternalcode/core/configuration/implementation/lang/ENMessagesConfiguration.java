@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.lang;
+package com.eternalcode.core.configuration.implementation.lang;
 
 import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.ReloadableMessages;

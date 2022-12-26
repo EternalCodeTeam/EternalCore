@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.implementation;
+package com.eternalcode.core.command.implementation.player;
 
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;
@@ -11,22 +11,23 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Route(name = "feed")
-@Permission("eternalcore.feed")
-public class FeedCommand {
+@Route(name = "fly")
+@Permission("eternalcore.fly")
+public class FlyCommand {
 
     private final NoticeService noticeService;
 
-    public FeedCommand(NoticeService noticeService) {
+    public FlyCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
     @Execute
     void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
-        player.setFoodLevel(20);
+        player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.create()
-            .notice(messages -> messages.other().feedMessage())
+            .notice(messages -> messages.other().flyMessage())
+            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
             .player(player.getUniqueId())
             .send();
 
@@ -35,10 +36,10 @@ public class FeedCommand {
         }
 
         this.noticeService.create()
+            .notice(messages -> messages.other().flySetMessage())
             .placeholder("{PLAYER}", player.getName())
-            .notice(messages -> messages.other().feedMessageBy())
+            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
             .viewer(audience)
             .send();
     }
 }
-

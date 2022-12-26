@@ -2,10 +2,9 @@ package com.eternalcode.core.language;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.ReloadableMessages;
-import com.eternalcode.core.configuration.lang.CustomMessagesConfiguration;
-import com.eternalcode.core.configuration.lang.ENMessagesConfiguration;
-import com.eternalcode.core.configuration.lang.PLMessagesConfiguration;
-import com.eternalcode.core.configuration.language.LanguageConfiguration;
+import com.eternalcode.core.configuration.implementation.lang.CustomMessagesConfiguration;
+import com.eternalcode.core.configuration.implementation.lang.ENMessagesConfiguration;
+import com.eternalcode.core.configuration.implementation.lang.PLMessagesConfiguration;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.google.common.collect.ImmutableMap;

@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.implementation;
+package com.eternalcode.core.command.implementation.player;
 
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.chat.notification.NoticeService;

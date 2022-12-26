@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.lang;
+package com.eternalcode.core.configuration.implementation.lang;
 
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
