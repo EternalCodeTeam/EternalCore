@@ -111,7 +111,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
         public List<Notification> tpaReceivedMessage = List.of(
             Notification.chat("<dark_gray>» <green>You have received a request for teleportation from a player: <gray>{PLAYER}<green>!"),
-            Notification.chat("<dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept!"),
+            Notification.chat("<dark_gray>» <gold>/tpaccept {player} <green>to accept!"),
             Notification.chat("<dark_gray>» <gold>/tpdeny {PLAYER} <green>to deny!")
         );
 
@@ -156,8 +156,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENAfkSection implements AfkSection {
-        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{player} is AFK!");
-        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{player} is not AFK!");
+        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{PLAYER} is AFK!");
+        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} is not AFK!");
     }
 
     @Getter

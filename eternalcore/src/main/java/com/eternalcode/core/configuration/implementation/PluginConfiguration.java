@@ -70,10 +70,10 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
         public boolean unsafeEnchantments = true;
 
-        @Description({ " ", "# Time in secounds of tpa requests expire" })
+        @Description({ " ", "# Time in seconds of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
-        @Description({ " ", "# Time in secounds of teleportation time" })
+        @Description({ " ", "# Time in seconds of teleportation time" })
         public Duration tpaTimer = Duration.ofSeconds(10);
 
         @Override
