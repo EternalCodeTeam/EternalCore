@@ -111,7 +111,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
         public List<Notification> tpaReceivedMessage = List.of(
             Notification.chat("<dark_gray>» <green>You have received a request for teleportation from a player: <gray>{PLAYER}<green>!"),
-            Notification.chat("<dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept!"),
+            Notification.chat("<dark_gray>» <gold>/tpaccept {player} <green>to accept!"),
             Notification.chat("<dark_gray>» <gold>/tpdeny {PLAYER} <green>to deny!")
         );
 
@@ -129,15 +129,15 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Getter @Contextual
     public static class ENWarpSection implements WarpSection {
         public Notification notExist = Notification.chat("<dark_gray>» <red>This warp doesn't exist");
-        public Notification create = Notification.chat("<dark_gray>» <gray>Warp {name} has been created.");
-        public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {name} has been deleted.");
+        public Notification create = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been created.");
+        public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been deleted.");
     }
 
     @Getter @Contextual
     public static class ENHomeSection implements HomeSection {
         public Notification notExist = Notification.chat("<dark_gray>» <red>This home doesn't exist");
-        public Notification create = Notification.chat("<dark_gray>» <gray>Home {home} has been created.");
-        public Notification delete = Notification.chat("<dark_gray>» <gray>Home {home} has been deleted.");
+        public Notification create = Notification.chat("<dark_gray>» <gray>Home {HOME} has been created.");
+        public Notification delete = Notification.chat("<dark_gray>» <gray>Home {HOME} has been deleted.");
     }
 
     @Getter @Contextual
@@ -156,8 +156,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENAfkSection implements AfkSection {
-        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{player} is AFK!");
-        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{player} is not AFK!");
+        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{PLAYER} is AFK!");
+        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} is not AFK!");
     }
 
     @Getter

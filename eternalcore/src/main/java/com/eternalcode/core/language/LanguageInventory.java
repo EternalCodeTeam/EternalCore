@@ -1,8 +1,8 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.configuration.language.LanguageConfiguration;
 import com.eternalcode.core.configuration.language.LanguageItem;
-import com.eternalcode.core.configuration.language.LanguageSelector;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
@@ -20,22 +20,24 @@ import java.util.stream.Collectors;
 
 public class LanguageInventory {
 
-    private final LanguageSelector languageSelector;
+    private final LanguageConfiguration languageConfiguration;
     private final NoticeService noticeService;
     private final UserManager userManager;
     private final MiniMessage miniMessage;
 
-    public LanguageInventory(LanguageSelector languageSelector, NoticeService noticeService, UserManager userManager, MiniMessage miniMessage) {
-        this.languageSelector = languageSelector;
+    public LanguageInventory(LanguageConfiguration languageConfiguration, NoticeService noticeService, UserManager userManager, MiniMessage miniMessage) {
+        this.languageConfiguration = languageConfiguration;
         this.noticeService = noticeService;
         this.userManager = userManager;
         this.miniMessage = miniMessage;
     }
 
     public void open(Player player) {
+        LanguageConfiguration.LanguageSelector languageSelector = this.languageConfiguration.languageSelector;
+
         Gui gui = Gui.gui()
-            .title(this.miniMessage.deserialize(this.languageSelector.title))
-            .rows(this.languageSelector.rows)
+            .title(this.miniMessage.deserialize(languageSelector.title))
+            .rows(languageSelector.rows)
             .disableAllInteractions()
             .create();
 
@@ -47,20 +49,20 @@ public class LanguageInventory {
 
         User user = userOption.get();
 
-        if (this.languageSelector.border.fill) {
-            ItemBuilder borderItem = ItemBuilder.from(this.languageSelector.border.material);
+        if (languageSelector.border.fill) {
+            ItemBuilder borderItem = ItemBuilder.from(languageSelector.border.material);
 
-            if (!this.languageSelector.border.name.equals("")) {
-                borderItem.name(this.miniMessage.deserialize(this.languageSelector.border.name));
+            if (!languageSelector.border.name.equals("")) {
+                borderItem.name(this.miniMessage.deserialize(languageSelector.border.name));
             }
 
-            if (!this.languageSelector.border.lore.isEmpty()) {
-                borderItem.lore(this.languageSelector.border.lore.stream().map(this.miniMessage::deserialize).collect(Collectors.toList()));
+            if (!languageSelector.border.lore.isEmpty()) {
+                borderItem.lore(languageSelector.border.lore.stream().map(this.miniMessage::deserialize).collect(Collectors.toList()));
             }
 
             GuiItem guiItem = new GuiItem(borderItem.build());
 
-            switch (this.languageSelector.border.type) {
+            switch (languageSelector.border.type) {
                 case BORDER -> gui.getFiller().fillBorder(guiItem);
                 case ALL -> gui.getFiller().fill(guiItem);
                 case TOP -> gui.getFiller().fillTop(guiItem);
@@ -68,7 +70,7 @@ public class LanguageInventory {
             }
         }
 
-        for (LanguageItem languageItem : this.languageSelector.languageItemMap) {
+        for (LanguageItem languageItem : languageSelector.languageItemMap) {
             List<Component> lore = languageItem.lore
                 .stream()
                 .map(this.miniMessage::deserialize)
