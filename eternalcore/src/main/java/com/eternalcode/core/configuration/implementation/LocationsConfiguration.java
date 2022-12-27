@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class LocationsConfiguration implements ReloadableConfig {
 
-    @Description("Don't touch this")
+    @Description("# Don't touch this")
     public Position spawn = new Position(0, 0, 0, 0.0f, 0.0f, "world");
 
     public Map<String, Position> warps = new HashMap<>();
