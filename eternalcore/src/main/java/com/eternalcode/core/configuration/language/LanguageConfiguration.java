@@ -25,31 +25,31 @@ public class LanguageConfiguration implements ReloadableConfig {
     @Contextual
     public static class LanguageSelector  {
 
-        @Description({ StringUtils.EMPTY, "# Name of inventory" })
+        @Description({ " ", "# Name of inventory" })
         public String title = "&6Select a language";
 
-        @Description({ StringUtils.EMPTY, "# Size of inventory" })
+        @Description({ " ", "# Size of inventory" })
         public int rows = 5;
 
-        @Description({ StringUtils.EMPTY, "# Border settings" })
+        @Description({ " ", "# Border settings" })
         public Border border = new Border();
 
         @Contextual
         public static class Border {
 
-            @Description(StringUtils.EMPTY)
+            @Description(" ")
             public boolean fill = true;
 
-            @Description(StringUtils.EMPTY)
+            @Description(" ")
             public Material material = Material.GRAY_STAINED_GLASS_PANE;
 
-            @Description({ StringUtils.EMPTY, "# TOP, BOTTOM, BORDER, ALL" })
+            @Description({ " ", "# TOP, BOTTOM, BORDER, ALL" })
             public Border.FillType type = Border.FillType.BORDER;
 
-            @Description({ StringUtils.EMPTY, "# Name (If you dont want name just set \"\")" })
+            @Description({ " ", "# Name (If you dont want name just set \"\")" })
             public String name = "         &8*";
 
-            @Description({ StringUtils.EMPTY, "# Lore (If you dont want lore just set \"\")" })
+            @Description({ " ", "# Lore (If you dont want lore just set \"\")" })
             public List<String> lore = Collections.singletonList("&7Lore :D");
 
             public enum FillType {
@@ -57,7 +57,7 @@ public class LanguageConfiguration implements ReloadableConfig {
             }
         }
 
-        @Description({ StringUtils.EMPTY, "# List of languages" })
+        @Description({ " ", "# List of languages" })
         public List<LanguageItem> languageItemMap = new ImmutableList.Builder<LanguageItem>()
             .add(new LanguageItem(
                 Material.PLAYER_HEAD,
