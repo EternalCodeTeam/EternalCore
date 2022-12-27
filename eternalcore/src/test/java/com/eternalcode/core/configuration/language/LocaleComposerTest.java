@@ -14,7 +14,7 @@ class LocaleComposerTest {
     @Test
     public void testDeserialize() {
         String source = "en";
-        Result<Locale, Exception> result = composer.deserialize(source);
+        Result<Locale, Exception> result = this.composer.deserialize(source);
 
         assertTrue(result.isOk());
         assertEquals("en", result.get().getLanguage());
@@ -23,7 +23,7 @@ class LocaleComposerTest {
     @Test
     public void testSerialize() {
         Locale entity = new Locale("en");
-        Result<String, Exception> result = composer.serialize(entity);
+        Result<String, Exception> result = this.composer.serialize(entity);
 
         assertTrue(result.isOk());
         assertEquals("en", result.get());

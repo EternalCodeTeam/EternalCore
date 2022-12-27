@@ -16,7 +16,7 @@ class LanguageComposerTest {
         Language expectedLanguage = new Language("en", List.of("en_us", "en_gb"));
         String serializedLanguage = "en|en_us|en_gb";
 
-        Language actualLanguage = composer.deserialize(serializedLanguage).get();
+        Language actualLanguage = this.composer.deserialize(serializedLanguage).get();
         assertEquals(expectedLanguage, actualLanguage);
     }
 
@@ -25,7 +25,7 @@ class LanguageComposerTest {
         Language language = new Language("en", List.of("en_us", "en_gb"));
         String expectedSerializedLanguage = "en|en_us|en_gb";
 
-        String actualSerializedLanguage = composer.serialize(language).get();
+        String actualSerializedLanguage = this.composer.serialize(language).get();
         assertEquals(expectedSerializedLanguage, actualSerializedLanguage);
     }
 }

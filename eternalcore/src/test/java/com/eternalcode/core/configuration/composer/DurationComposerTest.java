@@ -26,7 +26,7 @@ class DurationComposerTest {
     })
     @ParameterizedTest
     void testDeserialize(long expected, String source) {
-        Result<Duration, Exception> deserialize = composer.deserialize(source);
+        Result<Duration, Exception> deserialize = this.composer.deserialize(source);
 
         assertTrue(deserialize.isOk());
         assertEquals(expected, deserialize.get().getSeconds());
@@ -45,7 +45,7 @@ class DurationComposerTest {
     })
     @ParameterizedTest
     void testSerialize(String expected, long source) {
-        Result<String, Exception> serialize = composer.serialize(Duration.ofSeconds(source));
+        Result<String, Exception> serialize = this.composer.serialize(Duration.ofSeconds(source));
 
         assertTrue(serialize.isOk());
         assertEquals(expected, serialize.get());
