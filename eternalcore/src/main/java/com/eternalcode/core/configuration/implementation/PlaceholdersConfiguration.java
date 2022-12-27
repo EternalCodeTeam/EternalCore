@@ -12,7 +12,7 @@ public class PlaceholdersConfiguration implements ReloadableConfig {
 
     @Description({
         "# Enables the creation of global placeholders",
-        "# An example is {prefix}, wherever you use {prefix} the specified value will be displayed",
+        "# An example is {prefix}, whenever you use {prefix} the specified value will be displayed",
         "# Remember that it only works in EternalCore!"
     })
     public Map<String, String> placeholders = Map.of(
