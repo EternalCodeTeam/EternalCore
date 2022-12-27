@@ -24,7 +24,7 @@ public class AfkMessagesController implements Subscriber {
             .onlinePlayers()
             .player(event.getPlayer())
             .notice(messages -> event.isAfk() ? messages.afk().afkOn() : messages.afk().afkOff())
-            .placeholder("{player}", userManager.getUser(event.getPlayer()).map(User::getName))
+            .placeholder("{PLAYER}", userManager.getUser(event.getPlayer()).map(User::getName))
             .send();
     }
 

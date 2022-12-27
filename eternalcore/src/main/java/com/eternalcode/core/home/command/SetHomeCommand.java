@@ -37,7 +37,7 @@ public class SetHomeCommand {
         this.noticeService.create()
             .user(user)
             .notice(messages -> messages.home().create())
-            .placeholder("{home}", home)
+            .placeholder("{HOME}", home)
             .send();
     }
 

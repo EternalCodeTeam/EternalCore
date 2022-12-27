@@ -70,10 +70,10 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
         public boolean unsafeEnchantments = true;
 
-        @Description({ " ", "# Time in secounds of tpa requests expire" })
+        @Description({ " ", "# Time in seconds of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
-        @Description({ " ", "# Time in secounds of teleportation time" })
+        @Description({ " ", "# Time in seconds of teleportation time" })
         public Duration tpaTimer = Duration.ofSeconds(10);
 
         @Override
@@ -121,7 +121,7 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Cooldowon time for chat" })
         public Duration chatDelay = Duration.ofSeconds(5);
 
-        @Description({ "", "# Count of lines to clear" })
+        @Description({ " ", "# Count of lines to clear" })
         public int clearLines = 64;
 
         public boolean chatEnabled = true;

@@ -316,7 +316,7 @@ public class EternalCore extends JavaPlugin {
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
-        this.languageInventory = new LanguageInventory(this.languageConfiguration.languageSelector, this.noticeService, this.userManager, this.miniMessage);
+        this.languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
 
         this.skullAPI = LiteSkullFactory.builder()
             .bukkitScheduler(this)

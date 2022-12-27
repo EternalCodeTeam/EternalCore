@@ -10,7 +10,7 @@
 
 #### Pull requests should be named like that:
 
-`[GH-{NUMBER}] Title of PR`
+`GH-{NUMBER} Title of PR`
 
 Please don't include troll, racist and sexual names. We are a mature project.
 
