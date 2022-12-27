@@ -24,7 +24,7 @@ public class DelHomeCommand {
         this.noticeService.create()
             .user(user)
             .notice(messages -> messages.home().delete())
-            .placeholder("{home}", home.getName())
+            .placeholder("{HOME}", home.getName())
             .send();
     }
 
