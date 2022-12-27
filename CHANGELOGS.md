@@ -8,6 +8,7 @@
 - Fix typo in Reload Command and some configs
 - Fix multiple header generation in config.yml
 - Fix containers command working on paper
+- Fix problem with reloading language.yml file
 - Placeholder names to uppercase
 
 #### Features:
