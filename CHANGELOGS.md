@@ -10,6 +10,7 @@
 - Fix containers command working on paper
 - Fix problem with reloading language.yml file
 - Placeholder names to uppercase
+- Fix a critical bug where you could copy your items by opening your inventory with /invsee command
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
