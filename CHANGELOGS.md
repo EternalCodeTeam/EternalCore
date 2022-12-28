@@ -10,6 +10,7 @@
 - Fix containers command working on paper
 - Fix problem with reloading language.yml file
 - Placeholder names to uppercase
+- Fix some argument names in correct usage
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
