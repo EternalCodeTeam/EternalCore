@@ -119,6 +119,7 @@ public interface Messages {
 
     interface PrivateMessageSection {
         Notification noReply();
+        Notification cantMessageYourself();
         Notification privateMessageYouToTarget();
         Notification privateMessageTargetToYou();
 
@@ -128,6 +129,11 @@ public interface Messages {
 
         Notification ignorePlayer();
         Notification unIgnorePlayer();
+        Notification alreadyIgnorePlayer();
+        Notification notIgnorePlayer();
+        Notification cantIgnoreYourself();
+        Notification cantUnIgnoreYourself();
+
     }
 
     interface AfkSection {

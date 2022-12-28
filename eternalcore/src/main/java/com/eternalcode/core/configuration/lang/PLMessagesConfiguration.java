@@ -154,6 +154,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Contextual
     public static class PLPrivateMessageSection implements PrivateMessageSection {
         public Notification noReply = Notification.chat("<dark_gray>» <red>Nie masz komu odpowiedzieć");
+        public Notification cantMessageYourself = Notification.chat("<dark_gray>» <red>Nie możesz wysłać wiadomości do siebie!");
         public Notification privateMessageYouToTarget = Notification.chat("<dark_gray>[<gray>Ty -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
         public Notification privateMessageTargetToYou = Notification.chat("<dark_gray>[<gray>{SENDER} -> <white>Ty<dark_gray>]<gray>: <white>{MESSAGE}");
 
@@ -163,6 +164,11 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
         public Notification ignorePlayer = Notification.chat("<dark_gray>» <gray>Zignorowano gracza <red>{PLAYER}<gray>!");
         public Notification unIgnorePlayer = Notification.chat("<dark_gray>» <gray>Odignorowano gracza <green>{PLAYER}<gray>!");
+        public Notification cantIgnoreYourself = Notification.chat("<dark_gray>» <red>Nie możesz zignorować siebie!");
+        public Notification cantUnIgnoreYourself = Notification.chat("<dark_gray>» <red>Nie możesz odignorować siebie!");
+        public Notification alreadyIgnorePlayer = Notification.chat("<dark_gray>» <red>Gracz <gray>{PLAYER} <red>jest już zignorowany!");
+        public Notification notIgnorePlayer = Notification.chat("<dark_gray>» <red>Gracz <gray>{PLAYER} <red>nie jest przez Ciebie zignorowany. Nie możesz go odignorować!");
+
     }
 
     @Getter

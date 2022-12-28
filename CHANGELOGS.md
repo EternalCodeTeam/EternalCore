@@ -10,6 +10,9 @@
 - Fix containers command working on paper
 - Fix problem with reloading language.yml file
 - Placeholder names to uppercase
+- Fix bug with possibility to send private message yourself
+- Fix bug with possibility to ignore yourself
+- Fix bug with possibility to unignore yourself
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)

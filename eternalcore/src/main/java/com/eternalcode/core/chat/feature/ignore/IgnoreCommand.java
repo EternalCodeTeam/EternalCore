@@ -7,6 +7,9 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.injector.Inject;
+import panda.std.reactive.Completable;
+
+import java.util.UUID;
 
 @Route(name = "ignore")
 @Permission("eternalcore.ignore")
@@ -23,9 +26,22 @@ public class IgnoreCommand {
 
     @Execute
     void ignore(User sender, @Arg User target) {
-        this.repository.ignore(sender.getUniqueId(), target.getUniqueId());
+        UUID senderUuid = sender.getUniqueId();
+        UUID targetUuid = target.getUniqueId();
+
+        if (sender.equals(target)) {
+            this.noticeService.create()
+                .notice(messages -> messages.privateMessage().cantIgnoreYourself())
+                .viewer(sender)
+                .send();
+
+            return;
+        }
+
+        this.repository.ignore(senderUuid, targetUuid);
+
         this.noticeService.create()
-            .player(sender.getUniqueId())
+            .player(senderUuid)
             .placeholder("{PLAYER}", target.getName())
             .notice(messages -> messages.privateMessage().ignorePlayer())
             .send();
