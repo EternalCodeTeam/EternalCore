@@ -7,7 +7,6 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.injector.Inject;
-import panda.std.reactive.Completable;
 
 import java.util.UUID;
 
@@ -29,22 +28,34 @@ public class IgnoreCommand {
         UUID senderUuid = sender.getUniqueId();
         UUID targetUuid = target.getUniqueId();
 
-        if (sender.equals(target)) {
+        this.repository.isIgnored(senderUuid, targetUuid).then(isIgnored -> {
+            if (isIgnored) {
+                this.noticeService.create()
+                    .user(sender)
+                    .notice(messages -> messages.privateMessage().alreadyIgnorePlayer())
+                    .placeholder("{PLAYER}", target.getName())
+                    .send();
+
+                return;
+            }
+
+            if (sender.equals(target)) {
+                this.noticeService.create()
+                    .notice(messages -> messages.privateMessage().cantIgnoreYourself())
+                    .viewer(sender)
+                    .send();
+
+                return;
+            }
+
+            this.repository.ignore(senderUuid, targetUuid);
+
             this.noticeService.create()
-                .notice(messages -> messages.privateMessage().cantIgnoreYourself())
-                .viewer(sender)
+                .player(senderUuid)
+                .placeholder("{PLAYER}", target.getName())
+                .notice(messages -> messages.privateMessage().ignorePlayer())
                 .send();
-
-            return;
-        }
-
-        this.repository.ignore(senderUuid, targetUuid);
-
-        this.noticeService.create()
-            .player(senderUuid)
-            .placeholder("{PLAYER}", target.getName())
-            .notice(messages -> messages.privateMessage().ignorePlayer())
-            .send();
+        });
     }
 
 }
