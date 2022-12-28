@@ -6,6 +6,7 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.util.DurationUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
@@ -18,7 +19,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
-//TODO: Refactor
+// TODO: Refactor
 @Route(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
 public class HelpOpCommand {
@@ -40,7 +41,7 @@ public class HelpOpCommand {
 
     @Execute
     @Min(1)
-    void execute(Player player, @Joiner String text) {
+    void execute(Player player, @Joiner @Name("text") String text) {
         UUID uuid = player.getUniqueId();
         Instant unblockMoment = this.cooldowns.asMap().getOrDefault(uuid, Instant.MIN);
 
