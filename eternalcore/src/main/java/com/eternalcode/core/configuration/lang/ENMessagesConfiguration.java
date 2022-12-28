@@ -192,6 +192,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
 
+        public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>You can't open your own inventory!");
+
         public String disposalTitle = "<white><bold>Trash";
 
         public Notification feedMessage = Notification.chat("<dark_gray>» <green>You've been feed!");

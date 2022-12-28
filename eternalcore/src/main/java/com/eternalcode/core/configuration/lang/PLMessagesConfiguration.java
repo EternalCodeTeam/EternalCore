@@ -205,6 +205,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
 
+        public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>Nie możesz otworzyć swojego ekwipunku!");
+
         public String disposalTitle = "<white><bold>Kosz";
 
         public Notification feedMessage = Notification.chat("<dark_gray>» <green>Zostałeś najedzony!");

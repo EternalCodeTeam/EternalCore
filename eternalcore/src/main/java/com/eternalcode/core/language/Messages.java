@@ -150,6 +150,7 @@ public interface Messages {
 
         Notification inventoryClearMessage();
         Notification inventoryClearMessageBy();
+        Notification cantOpenYourInventory();
 
         String disposalTitle();
 
