@@ -29,6 +29,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENAfkSection afk = new ENAfkSection();
     public ENEventMessageSection eventMessages = new ENEventMessageSection();
     public ENOtherMessages other = new ENOtherMessages();
+    public ENTimeAndWeatherMessageSection timeAndWeather = new ENTimeAndWeatherMessageSection();
 
     @Getter @Contextual
     public static class ENArgumentSection implements ArgumentSection {
@@ -258,6 +259,20 @@ public class ENMessagesConfiguration implements ReloadableMessages {
             "<dark_gray>» <gray>Target health: <white>{HEALTH}",
             "<dark_gray>» <gray>Target food level: <white>{FOOD}"
         );
+    }
+
+    @Getter
+    @Contextual
+    public static class ENTimeAndWeatherMessageSection implements TimeAndWeatherSection {
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <red>Time set to day!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <red>Time set to night!");
+
+        public Notification timeSet = Notification.chat("<dark_gray>» <red>Time set to {TIME}");
+        public Notification timeAdd = Notification.chat("<dark_gray>» <red>Time added {TIME}");
+
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <red>Weather set to rain!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <red>Weather set to sun!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <red>Weather set to thunder!");
     }
 
     @Override

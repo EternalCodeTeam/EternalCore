@@ -30,6 +30,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLEventMessageSection eventMessages = new PLEventMessageSection();
     public PLOtherMessages other = new PLOtherMessages();
     public PLAfkSection afk = new PLAfkSection();
+    public PlTimeAndWeatherMessageSection timeAndWeather = new PlTimeAndWeatherMessageSection();
 
     @Getter
     @Contextual
@@ -284,4 +285,20 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public Language getLanguage() {
         return Language.PL;
     }
+
+    @Getter
+    @Contextual
+    public static class PlTimeAndWeatherMessageSection implements TimeAndWeatherSection {
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <green>Ustawiono dzień!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <green>Ustawiono noc!");
+
+        public Notification timeSet = Notification.chat("<dark_gray>» <green>Ustawiono czas na <white>{TIME}");
+        public Notification timeAdd = Notification.chat("<dark_gray>» <green>Zmieniono czas o <white>{TIME}");
+
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <green>Ustawiono deszcz!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <green>Ustawiono słoneczną pogodę!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <green>Ustawiono burze!");
+
+    }
+
 }
