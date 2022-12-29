@@ -13,6 +13,7 @@ import panda.std.Result;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 @ArgumentName("action")
 public class NoticeTypeArgument extends AbstractViewerArgument<NoticeType> {
@@ -24,6 +25,7 @@ public class NoticeTypeArgument extends AbstractViewerArgument<NoticeType> {
     @Override
     public List<Suggestion> suggest(LiteInvocation invocation) {
         return Arrays.stream(NoticeType.values())
+            .filter(type -> type != NoticeType.NONE)
             .map(notificationType -> notificationType.name().toLowerCase())
             .map(Suggestion::of)
             .toList();
