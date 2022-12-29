@@ -89,6 +89,7 @@ public interface Messages {
     }
 
     interface WarpSection {
+        Notification warpAlreadyExists();
         Notification notExist();
         Notification create();
         Notification remove();
