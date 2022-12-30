@@ -8,6 +8,7 @@
 - Fix typo in Reload Command and some configs
 - Fix multiple header generation in config.yml
 - Fix containers command working on paper
+- Fix problem with possibility of creating homes with the same name
 - Fix problem with reloading language.yml file
 - Placeholder names to uppercase
 - Fix problem with possibility of creating warp with the same name
@@ -32,3 +33,4 @@
 - Add support to PlaceholderAPI
 - More advanced /hat command
 - Add support to multiple notification type for configs
+- Add home limit per permission

@@ -99,6 +99,8 @@ public interface Messages {
         Notification notExist();
         Notification create();
         Notification delete();
+        Notification limit();
+        Notification overrideHomeLocation();
     }
 
     interface TpaSection {
