@@ -28,21 +28,21 @@ public class IgnoreCommand {
         UUID senderUuid = sender.getUniqueId();
         UUID targetUuid = target.getUniqueId();
 
+        if (sender.equals(target)) {
+            this.noticeService.create()
+                .notice(messages -> messages.privateMessage().cantIgnoreYourself())
+                .viewer(sender)
+                .send();
+
+            return;
+        }
+
         this.repository.isIgnored(senderUuid, targetUuid).then(isIgnored -> {
             if (isIgnored) {
                 this.noticeService.create()
                     .user(sender)
                     .notice(messages -> messages.privateMessage().alreadyIgnorePlayer())
                     .placeholder("{PLAYER}", target.getName())
-                    .send();
-
-                return;
-            }
-
-            if (sender.equals(target)) {
-                this.noticeService.create()
-                    .notice(messages -> messages.privateMessage().cantIgnoreYourself())
-                    .viewer(sender)
                     .send();
 
                 return;
