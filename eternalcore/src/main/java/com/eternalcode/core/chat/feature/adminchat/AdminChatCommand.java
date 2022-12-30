@@ -2,6 +2,7 @@ package com.eternalcode.core.chat.feature.adminchat;
 
 import com.eternalcode.core.chat.notification.Notice;
 import com.eternalcode.core.chat.notification.NoticeService;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -23,7 +24,7 @@ public class AdminChatCommand {
     }
 
     @Execute(min = 1)
-    public void execute(CommandSender sender, @Joiner String text) {
+    public void execute(CommandSender sender, @Name("message") @Joiner String text) {
         Notice notice = this.noticeService.create()
             .console()
             .notice(messages -> messages.adminChat().format())

@@ -3,6 +3,7 @@ package com.eternalcode.core.command.implementation.item;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ public class ItemFlagCommand {
     }
 
     @Execute
-    void execute(Player player, @Arg ItemFlag flag) {
+    void execute(Player player, @Arg @Name("flag") ItemFlag flag) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
 
