@@ -9,7 +9,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Route(name = "anvil", aliases = { "kowadlo", "kowadło" })
+@Route(name = "anvil")
 @Permission("eternalcore.anvil")
 public class AnvilCommand {
 

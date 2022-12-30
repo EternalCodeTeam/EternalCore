@@ -14,8 +14,7 @@ import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 public class PluginConfiguration implements ReloadableConfig {
 
@@ -40,7 +39,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Description({ " ", "# Chat Section" })
     public Chat chat = new Chat();
 
-    @Description({ " ", "# Formating on/off" })
+    @Description({ " ", "# Additional formatting options" })
     public Format format = new Format();
 
     @Description({ " ", "# AFK Section" })
@@ -48,6 +47,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Description({ " ", "# Other Sections" })
     public OtherSettings otherSettings = new OtherSettings();
+
+    @Description({ " ", "# Homes Section" })
+    public Homes homes = new Homes();
 
     @Contextual
     public static class Database {
@@ -70,10 +72,10 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
         public boolean unsafeEnchantments = true;
 
-        @Description({ " ", "# Time in seconds of tpa requests expire" })
+        @Description({ " ", "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
-        @Description({ " ", "# Time in seconds of teleportation time" })
+        @Description({ " ", "# Time of teleportation time" })
         public Duration tpaTimer = Duration.ofSeconds(10);
 
         @Override
@@ -85,6 +87,16 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration teleportTime() {
             return tpaTimer;
         }
+    }
+
+    @Contextual
+    public static class Homes {
+        @Description({ " ", "# Max homes per permission" })
+        public Map<String, Integer> maxHomes = Map.of(
+            "eternalcore.home.default", 1,
+            "eternalcore.home.vip", 2,
+            "eternalcore.home.premium", 3
+        );
     }
 
     @Contextual
@@ -159,6 +171,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Afk implements AfkSettings {
+        @Description("# Number of interactions a player must make to have AFK status removed")
         public int interactionsCountDisableAfk = 20;
 
         @Override

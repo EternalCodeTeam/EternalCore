@@ -29,5 +29,4 @@ class DurationUtilTest {
     void hours() {
         assertEquals("8h 20m", DurationUtil.format(Duration.ofHours(8L).plus(20, ChronoUnit.MINUTES)));
     }
-
 }
