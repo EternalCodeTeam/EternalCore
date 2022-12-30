@@ -41,7 +41,7 @@ public class HelpOpCommand {
 
     @Execute
     @Min(1)
-    void execute(Player player, @Joiner @Name("text") String text) {
+    void execute(Player player, @Joiner @Name("message") String text) {
         UUID uuid = player.getUniqueId();
         Instant unblockMoment = this.cooldowns.asMap().getOrDefault(uuid, Instant.MIN);
 

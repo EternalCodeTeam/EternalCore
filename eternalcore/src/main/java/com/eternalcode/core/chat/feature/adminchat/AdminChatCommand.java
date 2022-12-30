@@ -24,7 +24,7 @@ public class AdminChatCommand {
     }
 
     @Execute(min = 1)
-    public void execute(CommandSender sender, @Name("text") @Joiner String text) {
+    public void execute(CommandSender sender, @Name("message") @Joiner String text) {
         Notice notice = this.noticeService.create()
             .console()
             .notice(messages -> messages.adminChat().format())

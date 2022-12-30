@@ -13,14 +13,14 @@ import org.bukkit.entity.Player;
 public class TimeCommand {
 
     @Execute(route = "add")
-    void add(Player player, @Arg @Name("number") Integer time) {
+    void add(Player player, @Arg Integer time) {
         World world = player.getWorld();
 
         world.setTime(world.getTime() + time);
     }
 
     @Execute(route = "set")
-    void set(Player player, @Arg @Name("number") Integer time) {
+    void set(Player player, @Arg Integer time) {
         player.getWorld().setTime(time);
     }
 
