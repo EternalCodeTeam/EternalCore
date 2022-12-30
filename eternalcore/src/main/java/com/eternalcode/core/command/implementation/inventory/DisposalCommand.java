@@ -13,7 +13,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Route(name = "disposal", aliases = { "smietnik" })
+@Route(name = "disposal")
 @Permission("eternalcore.disposal")
 public class DisposalCommand {
 

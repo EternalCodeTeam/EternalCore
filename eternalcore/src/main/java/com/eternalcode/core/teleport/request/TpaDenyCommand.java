@@ -30,7 +30,7 @@ public class TpaDenyCommand {
 
     @Execute
     @Required(1)
-    public void excecuteTarget(Player player, @Arg @By("request") Player target) {
+    public void executeTarget(Player player, @Arg @By("request") Player target) {
         this.requestService.removeRequest(target.getUniqueId());
 
         this.noticeService
