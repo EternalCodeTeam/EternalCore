@@ -46,10 +46,10 @@ public class LanguageConfiguration implements ReloadableConfig {
             @Description({ " ", "# TOP, BOTTOM, BORDER, ALL" })
             public Border.FillType type = Border.FillType.BORDER;
 
-            @Description({ " ", "# Name (If you dont want name just set \"\")" })
+            @Description({ " ", "# Name (If you don't want name just set \"\")" })
             public String name = "         &8*";
 
-            @Description({ " ", "# Lore (If you dont want lore just set \"\")" })
+            @Description({ " ", "# Lore (If you don't want lore just set \"\")" })
             public List<String> lore = Collections.singletonList("&7Lore :D");
 
             public enum FillType {
@@ -72,8 +72,8 @@ public class LanguageConfiguration implements ReloadableConfig {
                 Material.REPEATER,
                 Language.DEFAULT,
                 22,
-                "&c&lAutomatyczny",
-                Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klineta!"))
+                "&c&lAuto",
+                Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"))
             )
 
             .add(new LanguageItem(

@@ -15,7 +15,7 @@ import org.bukkit.command.CommandSender;
 
 import java.time.Duration;
 
-@Route(name = "chat", aliases = { "czat" })
+@Route(name = "chat")
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
 

@@ -152,8 +152,11 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -221,6 +224,12 @@ public class EternalCore extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
+    public EternalCore() {}
+
+    protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
+    }
+
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();
@@ -266,7 +275,6 @@ public class EternalCore extends JavaPlugin {
         }
 
         /* Services & Managers  */
-
         this.userManager = new UserManager();
         this.placeholderRegistry = new PlaceholderBukkitRegistryImpl(server);
         this.placeholderRegistry.registerPlaceholderReplacer(text -> {
@@ -496,9 +504,17 @@ public class EternalCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.liteCommands.getPlatform().unregisterAll();
-        this.databaseManager.close();
-        this.skullAPI.shutdown();
+        if (this.liteCommands != null) {
+            this.liteCommands.getPlatform().unregisterAll();
+        }
+
+        if (this.databaseManager != null) {
+            this.databaseManager.close();
+        }
+
+        if (this.skullAPI != null) {
+            this.skullAPI.shutdown();
+        }
     }
 
     private void softwareCheck() {

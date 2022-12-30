@@ -8,11 +8,14 @@
 - Fix typo in Reload Command and some configs
 - Fix multiple header generation in config.yml
 - Fix containers command working on paper
+- Fix problem with possibility of creating homes with the same name
 - Fix problem with reloading language.yml file
 - Placeholder names to uppercase
-- Fix bug with possibility to send private message yourself
 - Fix bug with possibility to ignore yourself
 - Fix bug with possibility to unignore yourself
+- Fix a critical bug where you could copy your items by opening your inventory with /invsee command
+- Fix problem with possibility of creating warp with the same name
+- Exclude NONE from NoticeType argument
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
@@ -33,3 +36,4 @@
 - Add support to PlaceholderAPI
 - More advanced /hat command
 - Add support to multiple notification type for configs
+- Add home limit per permission
