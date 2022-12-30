@@ -37,13 +37,13 @@ public class ItemFlagCommand {
 
         if (meta.hasItemFlag(flag)) {
             meta.removeItemFlags(flag);
-            this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagRemovedMessage(), formatter);
+            this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemFlagRemovedMessage(), formatter);
             return;
         }
 
         meta.addItemFlags(flag);
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagAddedMessage(), formatter);
+        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemFlagAddedMessage(), formatter);
     }
 
     @Execute(route = "clear")
@@ -58,7 +58,7 @@ public class ItemFlagCommand {
 
         meta.removeItemFlags(ItemFlag.values());
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemFlagClearedMessage());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemFlagClearedMessage());
     }
 
 }

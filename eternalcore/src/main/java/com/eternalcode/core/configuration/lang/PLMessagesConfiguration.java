@@ -29,8 +29,10 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLTpaSection tpa = new PLTpaSection();
     public PLAfkSection afk = new PLAfkSection();
     public PLEventMessageSection eventMessages = new PLEventMessageSection();
-    public PLInventorySection inventory = new PLInventorySection();
-    public PLOtherMessages other = new PLOtherMessages();
+    public PLInventoryMessagesSection inventory = new PLInventoryMessagesSection();
+    public PLPlayerMessagesSection player = new PLPlayerMessagesSection();
+    public PLSpawnMessagesSection spawn = new PLSpawnMessagesSection();
+    public PLItemMessagesSection item = new PLItemMessagesSection();
 
     @Getter
     @Contextual
@@ -108,6 +110,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification slowMode = Notification.chat("<dark_gray>» <red>Następną wiadomość możesz wysłać za: <gold>{TIME}<red>!");
         public Notification disabledChatInfo = Notification.chat("<dark_gray>» <red>Czat jest aktualnie wyłączony!");
         public Notification noCommand = Notification.chat("<dark_gray>» <red>Komenda <yellow>{COMMAND} <red>nie istnieje!");
+        public String alertMessageFormat = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
     }
 
     @Getter
@@ -202,28 +205,21 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
     @Getter
     @Contextual
-    public static class PLInventorySection implements InventorySection {
+    public static class PLInventoryMessagesSection implements InventoryMessagesSection {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
         public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>Nie możesz otworzyć swojego ekwipunku!");
+        public String disposalTitle = "<white><bold>Kosz";
     }
 
     @Getter
     @Contextual
-    public static class PLOtherMessages implements OtherMessages {
-        public String alertMessagePrefix = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
-
-        public String disposalTitle = "<white><bold>Kosz";
-
+    public static class PLPlayerMessagesSection implements PlayerMessagesSection {
         public Notification feedMessage = Notification.chat("<dark_gray>» <green>Zostałeś najedzony!");
         public Notification feedMessageBy = Notification.chat("<dark_gray>» <green>Najadłeś gracza {PLAYER}");
 
         public Notification healMessage = Notification.chat("<dark_gray>» <green>Zostałeś uleczony!");
         public Notification healMessageBy = Notification.chat("<dark_gray>» <green>Uleczyłeś gracza {PLAYER}");
-
-        public Notification repairMessage = Notification.chat("<dark_gray>» <green>Naprawiono!");
-
-        public Notification skullMessage = Notification.chat("<dark_gray>» <green>Otrzymałeś głowę gracza {PLAYER}");
 
         public Notification killSelf = Notification.chat("<dark_gray>» <red>Popełniłeś samobójstwo!");
         public Notification killedMessage = Notification.chat("<dark_gray>» <red>Zabito gracza {PLAYER}");
@@ -238,36 +234,15 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification flyMessage = Notification.chat("<dark_gray>» <green>Latanie zostało {STATE}");
         public Notification flySetMessage = Notification.chat("<dark_gray>» <green>Latanie dla gracza <white>{PLAYER} <green>zostało {STATE}");
 
-        public Notification giveReceived = Notification.chat("<dark_gray>» <green>Otrzymałeś <gold>{ITEM}");
-        public Notification giveGiven = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>otrzymał: <gold>{ITEM}");
-
-        public Notification spawnSet = Notification.chat("<dark_gray>» <green>Ustawiono spawn!");
-        public Notification spawnNoSet = Notification.chat("<dark_red>Błąd: <red>Spawn nie jest ustawiony!");
-        public Notification spawnTeleportedBy = Notification.chat("<dark_gray>» <green>Zostałeś przeteleportowany na spawn przez {PLAYER}!");
-        public Notification spawnTeleportedOther = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>został przeteleportowany na spawn!");
+        public Notification pingMessage = Notification.chat("<dark_gray>» <green>Twój ping: <white>{PING}ms");
+        public Notification pingOtherMessage = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>ma: <white>{PING}ms");
 
         public Notification gameModeNotCorrect = Notification.chat("<dark_red>Błąd: <red>Nie prawidłowy typ!");
         public Notification gameModeMessage = Notification.chat("<dark_gray>» <green>Ustawiono tryb gry na: {GAMEMODE}");
         public Notification gameModeSetMessage = Notification.chat("<dark_gray>» <green>Ustawiono tryb gry graczowi <white>{PLAYER} <green>na: <white>{GAMEMODE}");
 
-        public Notification pingMessage = Notification.chat("<dark_gray>» <green>Twój ping: <white>{PING}ms");
-        public Notification pingOtherMessage = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>ma: <white>{PING}ms");
-
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <white>{ONLINE} <gold>graczy online!");
-
         public Notification listMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
-
-        public Notification itemChangeNameMessage = Notification.chat("<dark_gray>» <gray>Nowa nazwa itemu: <red>{ITEM_NAME}");
-        public Notification itemClearNameMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono nazwę itemu!");
-
-        public Notification itemChangeLoreMessage = Notification.chat("<dark_gray>» <gray>Nowa linia lore: <red>{ITEM_LORE}");
-        public Notification itemClearLoreMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono linie lore!");
-
-        public Notification itemFlagRemovedMessage = Notification.chat("<dark_gray>» <gray>Usunięto flagę: <red>{ITEM_FLAG}");
-        public Notification itemFlagAddedMessage = Notification.chat("<dark_gray>» <gray>Dodano flagę: <red>{ITEM_FLAG}");
-        public Notification itemFlagClearedMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono flagi!");
-
-        public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item w ręce został zaklęty!");
 
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
 
@@ -281,6 +256,36 @@ public class PLMessagesConfiguration implements ReloadableMessages {
             "<dark_gray>» <gray>Zdrowie: <white>{HEALTH}",
             "<dark_gray>» <gray>Poziom najedzenia: <white>{FOOD}"
         );
+    }
+
+    @Getter
+    @Contextual
+    public static class PLSpawnMessagesSection implements SpawnMessagesSection {
+        public Notification spawnSet = Notification.chat("<dark_gray>» <green>Ustawiono spawn!");
+        public Notification spawnNoSet = Notification.chat("<dark_red>Błąd: <red>Spawn nie jest ustawiony!");
+        public Notification spawnTeleportedBy = Notification.chat("<dark_gray>» <green>Zostałeś przeteleportowany na spawn przez {PLAYER}!");
+        public Notification spawnTeleportedOther = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>został przeteleportowany na spawn!");
+    }
+
+    @Getter
+    @Contextual
+    public static class PLItemMessagesSection implements ItemMessagesSection {
+        public Notification itemChangeNameMessage = Notification.chat("<dark_gray>» <gray>Nowa nazwa itemu: <red>{ITEM_NAME}");
+        public Notification itemClearNameMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono nazwę itemu!");
+
+        public Notification itemChangeLoreMessage = Notification.chat("<dark_gray>» <gray>Nowa linia lore: <red>{ITEM_LORE}");
+        public Notification itemClearLoreMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono linie lore!");
+
+        public Notification itemFlagRemovedMessage = Notification.chat("<dark_gray>» <gray>Usunięto flagę: <red>{ITEM_FLAG}");
+        public Notification itemFlagAddedMessage = Notification.chat("<dark_gray>» <gray>Dodano flagę: <red>{ITEM_FLAG}");
+        public Notification itemFlagClearedMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono flagi!");
+
+        public Notification giveReceived = Notification.chat("<dark_gray>» <green>Otrzymałeś <gold>{ITEM}");
+        public Notification giveGiven = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>otrzymał: <gold>{ITEM}");
+
+        public Notification repairMessage = Notification.chat("<dark_gray>» <green>Naprawiono!");
+        public Notification skullMessage = Notification.chat("<dark_gray>» <green>Otrzymałeś głowę gracza {PLAYER}");
+        public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item w ręce został zaklęty!");
     }
 
     @Override

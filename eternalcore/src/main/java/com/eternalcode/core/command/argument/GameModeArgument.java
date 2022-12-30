@@ -55,7 +55,7 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
         return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(GAME_MODE_VALID::valid)
             .map(value -> GAME_MODES[value])
-            .toResult(() -> messages.other().gameModeNotCorrect());
+            .toResult(() -> messages.player().gameModeNotCorrect());
     }
 
 }

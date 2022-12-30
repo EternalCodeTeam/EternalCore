@@ -20,8 +20,10 @@ public interface Messages {
     HomeSection home();
     PrivateMessageSection privateMessage();
     AfkSection afk();
-    InventorySection inventory();
-    OtherMessages other();
+    InventoryMessagesSection inventory();
+    PlayerMessagesSection player();
+    SpawnMessagesSection spawn();
+    ItemMessagesSection item();
 
     interface ArgumentSection {
         Notification permissionMessage();
@@ -86,6 +88,7 @@ public interface Messages {
         Notification slowMode();
         Notification disabledChatInfo();
         Notification noCommand();
+        String alertMessageFormat();
     }
 
     interface WarpSection {
@@ -148,73 +151,88 @@ public interface Messages {
         Notification welcomeSubtitle();
     }
 
-    interface InventorySection {
+    interface InventoryMessagesSection {
         Notification inventoryClearMessage();
         Notification inventoryClearMessageBy();
         Notification cantOpenYourInventory();
+        String disposalTitle();
     }
 
-    interface OtherMessages {
-        String alertMessagePrefix();
-
-        String disposalTitle();
-
+    interface PlayerMessagesSection {
+        // feed
         Notification feedMessage();
         Notification feedMessageBy();
 
+        // heal
         Notification healMessage();
         Notification healMessageBy();
 
-        Notification repairMessage();
-
-        Notification skullMessage();
-
+        // kill
         Notification killedMessage();
 
+        // speed
         Notification speedBetweenZeroAndTen();
         Notification speedSet();
         Notification speedSetBy();
 
+        // godmode
         Notification godMessage();
         Notification godSetMessage();
 
+        // fly
         Notification flyMessage();
         Notification flySetMessage();
 
-        Notification giveReceived();
-        Notification giveGiven();
+        // ping
+        Notification pingMessage();
+        Notification pingOtherMessage();
 
+        // gamemode
+        Notification gameModeNotCorrect();
+        Notification gameModeMessage();
+        Notification gameModeSetMessage();
+
+        // online
+        Notification onlineMessage();
+        Notification listMessage();
+
+        // language
+        Notification languageChanged();
+
+        // whois
+        List<String> whoisCommand();
+    }
+
+    interface SpawnMessagesSection {
+        // spawn
         Notification spawnSet();
         Notification spawnNoSet();
 
         Notification spawnTeleportedBy();
         Notification spawnTeleportedOther();
+    }
 
-        Notification gameModeNotCorrect();
-        Notification gameModeMessage();
-        Notification gameModeSetMessage();
-
-        Notification pingMessage();
-        Notification pingOtherMessage();
-
-        Notification onlineMessage();
-
-        Notification listMessage();
-
+    interface ItemMessagesSection {
+        // item name & lore
         Notification itemClearNameMessage();
         Notification itemClearLoreMessage();
 
         Notification itemChangeNameMessage();
         Notification itemChangeLoreMessage();
 
+        // item flags
         Notification itemFlagRemovedMessage();
         Notification itemFlagAddedMessage();
         Notification itemFlagClearedMessage();
 
-        Notification enchantedMessage();
-        List<String> whoisCommand();
-        Notification languageChanged();
+        // give
+        Notification giveReceived();
+        Notification giveGiven();
 
+        // others
+        Notification repairMessage();
+        Notification skullMessage();
+        Notification enchantedMessage();
     }
 }
 

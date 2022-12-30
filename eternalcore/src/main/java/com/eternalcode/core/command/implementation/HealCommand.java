@@ -30,14 +30,14 @@ public class HealCommand {
         player.setFireTicks(0);
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().healMessage());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.player().healMessage());
 
         if (sender.equals(player)) {
             return;
         }
 
         this.noticeService.create()
-            .notice(messages -> messages.other().healMessageBy())
+            .notice(messages -> messages.player().healMessageBy())
             .placeholder("{PLAYER}", player.getName())
             .viewer(viewer)
             .send();

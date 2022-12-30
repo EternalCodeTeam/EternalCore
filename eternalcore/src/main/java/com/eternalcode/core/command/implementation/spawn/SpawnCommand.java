@@ -38,7 +38,7 @@ public class SpawnCommand {
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {
             this.noticeService.create()
-                .notice(messages -> messages.other().spawnNoSet())
+                .notice(messages -> messages.spawn().spawnNoSet())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -81,13 +81,13 @@ public class SpawnCommand {
         this.teleportService.teleport(player, destinationLocation);
 
         this.noticeService.create()
-            .notice(messages -> messages.other().spawnTeleportedBy())
+            .notice(messages -> messages.spawn().spawnTeleportedBy())
             .placeholder("{PLAYER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(messages -> messages.other().spawnTeleportedOther())
+            .notice(messages -> messages.spawn().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
             .player(sender.getUniqueId())
             .send();

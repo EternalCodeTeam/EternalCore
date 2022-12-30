@@ -24,7 +24,7 @@ public class GameModeCommand {
         sender.setGameMode(gameMode);
 
         this.noticeService.create()
-            .notice(messages -> messages.other().gameModeMessage())
+            .notice(messages -> messages.player().gameModeMessage())
             .placeholder("{GAMEMODE}", gameMode.name())
             .player(sender.getUniqueId())
             .send();
@@ -35,7 +35,7 @@ public class GameModeCommand {
         player.setGameMode(gameMode);
 
         this.noticeService.create()
-            .notice(messages -> messages.other().gameModeSetMessage())
+            .notice(messages -> messages.player().gameModeSetMessage())
             .placeholder("{GAMEMODE}", gameMode.name())
             .placeholder("{PLAYER}", player.getName())
             .viewer(sender)

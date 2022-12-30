@@ -58,7 +58,7 @@ public class EnchantCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(messages -> messages.other().enchantedMessage())
+            .notice(messages -> messages.item().enchantedMessage())
             .send();
     }
 }
