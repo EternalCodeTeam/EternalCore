@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.implementation.time;
 
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -18,25 +19,33 @@ public class TimeCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(route = "add")
-    void add(Player player, @Arg Integer time) {
-        World world = player.getWorld();
+    @Execute(route = "add", required = 1)
+    void add(Player player, Viewer viewer, @Arg Integer time) {
+        this.add(viewer, time, player.getWorld());
+    }
 
+    @Execute(route = "add", required = 2)
+    void add(Viewer viewer, @Arg int time,  @Arg World world) {
         world.setTime(world.getTime() + time);
 
         this.noticeService.create()
-            .player(player.getUniqueId())
+            .viewer(viewer)
             .placeholder("{TIME}", String.valueOf(time))
             .notice(messages -> messages.timeAndWeather().timeAdd())
             .send();
     }
 
-    @Execute(route = "set")
-    void set(Player player, @Arg Integer time) {
-        player.getWorld().setTime(time);
+    @Execute(route = "set", required = 1)
+    void set(Player player, Viewer viewer, @Arg Integer time) {
+        this.set(viewer, time,  player.getWorld());
+    }
+
+    @Execute(route = "set", required = 2)
+    void set(Viewer viewer, @Arg int time, @Arg World world) {
+        world.setTime(time);
 
         this.noticeService.create()
-            .player(player.getUniqueId())
+            .viewer(viewer)
             .placeholder("{TIME}", String.valueOf(time))
             .notice(messages -> messages.timeAndWeather().timeSet())
             .send();

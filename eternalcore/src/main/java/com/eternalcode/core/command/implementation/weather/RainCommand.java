@@ -1,9 +1,12 @@
 package com.eternalcode.core.command.implementation.weather;
 
 import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.viewer.Viewer;
+import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 @Route(name = "rain")
@@ -17,14 +20,16 @@ public class RainCommand {
     }
 
     @Execute
-    void sun(Player player) {
-        player.getWorld().setStorm(true);
-        player.getWorld().setThundering(false);
+    void rain(Player player, Viewer viewer) {
+        this.rain(viewer, player.getWorld());
+    }
 
-        this.noticeService.create()
-            .player(player.getUniqueId())
-            .notice(messages -> messages.timeAndWeather().weatherSetRain())
-            .send();
+    @Execute(required = 1)
+    void rain(Viewer viewer, @Arg World world) {
+        world.setStorm(true);
+        world.setThundering(false);
+
+        this.noticeService.viewer(viewer, messages -> messages.timeAndWeather().weatherSetRain());
     }
 
 }
