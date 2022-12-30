@@ -21,7 +21,7 @@ public class PrivateChatCommand {
 
     @Execute
     @Min(2)
-    void execute(User sender, @Arg User target, @Name("text") @Joiner String message) {
+    void execute(User sender, @Arg User target, @Name("message") @Joiner String message) {
         this.privateChatService.privateMessage(sender, target, message);
     }
 
