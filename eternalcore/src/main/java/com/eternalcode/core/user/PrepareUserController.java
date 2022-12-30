@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 public class PrepareUserController implements Listener {
 
@@ -29,6 +30,16 @@ public class PrepareUserController implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+
+        User user = this.userManager.getUser(player.getUniqueId())
+            .orThrow(() -> new IllegalStateException("User not found"));
+
+        user.setClientSettings(ClientSettings.NONE);
+    }
+
+    @EventHandler
+    public void onKick(PlayerKickEvent event) {
         Player player = event.getPlayer();
 
         User user = this.userManager.getUser(player.getUniqueId())

@@ -1,5 +1,5 @@
 rootProject.name = "EternalCore"
 
 include(":eternalcore")
-include("eternalcore-paper")
+include(":eternalcore-paper")
 

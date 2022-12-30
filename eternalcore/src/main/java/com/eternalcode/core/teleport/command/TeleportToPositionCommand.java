@@ -6,6 +6,7 @@ import com.eternalcode.core.chat.notification.NoticeService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -13,8 +14,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Route(name = "tpos")
-@Permission("eternalcore.tpos")
+@Route(name = "tppos")
+@Permission("eternalcore.tppos")
 public class TeleportToPositionCommand {
 
     private final NoticeService noticeService;
@@ -26,7 +27,7 @@ public class TeleportToPositionCommand {
     }
 
     @Execute(min = 3, max = 4)
-    void execute(CommandSender sender, Viewer audience, @Arg Integer x, @Arg Integer y, @Arg Integer z, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer audience, @Arg @Name("x") Integer x, @Arg @Name("y") Integer y, @Arg @Name("z") Integer z, @Arg @By("or_sender") Player player) {
         if (sender.equals(player)) {
             this.teleport(player, x, y, z);
             return;

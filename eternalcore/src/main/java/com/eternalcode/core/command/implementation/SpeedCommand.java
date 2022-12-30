@@ -5,6 +5,7 @@ import com.eternalcode.core.chat.notification.NoticeService;
 
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.amount.AmountValidator;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
@@ -27,7 +28,7 @@ public class SpeedCommand {
 
     @Execute
     @Min(1)
-    void execute(CommandSender sender, Viewer audience, @Arg Integer amount, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer audience, @Arg @Name("number") Integer amount, @Arg @By("or_sender") Player player) {
         if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
             this.noticeService.create()
                 .notice(messages -> messages.other().speedBetweenZeroAndTen())

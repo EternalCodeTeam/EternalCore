@@ -27,7 +27,9 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLHomeSection home = new PLHomeSection();
     public PLPrivateMessageSection privateMessage = new PLPrivateMessageSection();
     public PLTpaSection tpa = new PLTpaSection();
+    public PLAfkSection afk = new PLAfkSection();
     public PLEventMessageSection eventMessages = new PLEventMessageSection();
+    public PLInventorySection inventory = new PLInventorySection();
     public PLOtherMessages other = new PLOtherMessages();
     public PLAfkSection afk = new PLAfkSection();
     public PlTimeAndWeatherMessageSection timeAndWeather = new PlTimeAndWeatherMessageSection();
@@ -137,7 +139,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class PLWarpSection implements WarpSection {
-        public Notification availableList = Notification.chat("<dark_gray>» Lista warpów: {WARPS}");
+        public Notification warpAlreadyExists = Notification.chat("<dark_red>Błąd: <red>Warp o nazwie <yellow>{WARP} <dark_red>już istnieje!");
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie odnaleziono takiego warpa!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warpa {NAME}!");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warpa {NAME}!");
@@ -149,6 +151,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie ma takiego domu!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono home {HOME}!");
         public Notification delete = Notification.chat("<dark_gray>» <gray>Usunięto home {HOME}!");
+        public Notification limit = Notification.chat("<dark_gray>» <red>Osiągnąłeś limit domów! Twój limit to {LIMIT}.");
+        public Notification overrideHomeLocation = Notification.chat("<dark_gray>» <gray>Nadpisałeś lokalizację domu {HOME}!");
     }
 
     @Getter
@@ -200,11 +204,16 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
     @Getter
     @Contextual
-    public static class PLOtherMessages implements OtherMessages {
-        public String alertMessagePrefix = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
-
+    public static class PLInventorySection implements InventorySection {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
+        public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>Nie możesz otworzyć swojego ekwipunku!");
+    }
+
+    @Getter
+    @Contextual
+    public static class PLOtherMessages implements OtherMessages {
+        public String alertMessagePrefix = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
 
         public String disposalTitle = "<white><bold>Kosz";
 

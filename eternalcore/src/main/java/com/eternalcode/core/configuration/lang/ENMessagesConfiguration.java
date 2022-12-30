@@ -28,6 +28,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
     public ENAfkSection afk = new ENAfkSection();
     public ENEventMessageSection eventMessages = new ENEventMessageSection();
+    public ENInventorySection inventory = new ENInventorySection();
     public ENOtherMessages other = new ENOtherMessages();
     public ENTimeAndWeatherMessageSection timeAndWeather = new ENTimeAndWeatherMessageSection();
 
@@ -105,7 +106,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENTpaSection implements TpaSection {
-
         public Notification tpaSelfMessage = Notification.chat("<dark_gray>» <red>You can't teleport to yourself!");
         public Notification tpaAlreadySentMessage = Notification.chat("<dark_gray>» <red>You have already sent a teleportation request!");
         public Notification tpaSentMessage = Notification.chat("<dark_gray>» <green>You have sent a request for teleportation to a player: <gray>{PLAYER}<green>!");
@@ -129,6 +129,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENWarpSection implements WarpSection {
+        public Notification warpAlreadyExists = Notification.chat("<dark_gray>» <red>Warp <yellow>{WARP} <red>already exists!");
         public Notification notExist = Notification.chat("<dark_gray>» <red>This warp doesn't exist");
         public Notification create = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been created.");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been deleted.");
@@ -139,6 +140,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification notExist = Notification.chat("<dark_gray>» <red>This home doesn't exist");
         public Notification create = Notification.chat("<dark_gray>» <gray>Home {HOME} has been created.");
         public Notification delete = Notification.chat("<dark_gray>» <gray>Home {HOME} has been deleted.");
+        public Notification limit = Notification.chat("<dark_gray>» <red>You have reached the limit of homes! Your limit is {LIMIT}.");
+        public Notification overrideHomeLocation = Notification.chat("<dark_gray>» <gray>Home {HOME} has been overridden.");
     }
 
     @Getter @Contextual
@@ -187,11 +190,15 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     }
 
     @Getter @Contextual
-    public static class ENOtherMessages implements OtherMessages {
-        public String alertMessagePrefix = "<red><bold>BROADCAST: <gray>{BROADCAST}";
-
+    public static class ENInventorySection implements InventorySection {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
+        public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>You can't open your own inventory!");
+    }
+
+    @Getter @Contextual
+    public static class ENOtherMessages implements OtherMessages {
+        public String alertMessagePrefix = "<red><bold>BROADCAST: <gray>{BROADCAST}";
 
         public String disposalTitle = "<white><bold>Trash";
 

@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.implementation.inventory;
 
+import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
 
 import dev.rollczi.litecommands.argument.Arg;
@@ -21,27 +22,53 @@ import panda.std.Option;
 public class InventoryOpenCommand {
 
     private final Server server;
+    private final NoticeService noticeService;
 
-    public InventoryOpenCommand(Server server) {
+    public InventoryOpenCommand(Server server, NoticeService noticeService) {
         this.server = server;
+        this.noticeService = noticeService;
     }
 
     @Execute(route = "enderchest")
     @Permission("eternalcore.invsee.enderchest")
-    void enderchest(Player sender, @Arg Player player) {
-        sender.openInventory(player.getEnderChest());
+    void enderchest(Player sender, @Arg Player target) {
+        if (target.equals(sender)) {
+            this.noticeService.create()
+                .notice(messages -> messages.inventory().cantOpenYourInventory())
+                .player(sender.getUniqueId())
+                .send();
+            return;
+        }
+
+        sender.openInventory(target.getEnderChest());
     }
 
     @Execute(route = "armor")
     @Permission("eternalcore.invsee.armor")
-    void armor(Player sender, @Arg Player player) {
-        createInventory(player).open(sender);
+    void armor(Player sender, @Arg Player target) {
+        if (target.equals(sender)) {
+            this.noticeService.create()
+                .notice(messages -> messages.inventory().cantOpenYourInventory())
+                .player(sender.getUniqueId())
+                .send();
+            return;
+        }
+
+        createInventory(target).open(sender);
     }
 
     @Execute(route = "inventory")
     @Permission("eternalcore.invsee.inventory")
-    void inventory(Player sender, @Arg Player player) {
-        sender.openInventory(player.getInventory());
+    void inventory(Player sender, @Arg Player target) {
+        if (target.equals(sender)) {
+            this.noticeService.create()
+                .notice(messages -> messages.inventory().cantOpenYourInventory())
+                .player(sender.getUniqueId())
+                .send();
+            return;
+        }
+
+        sender.openInventory(target.getInventory());
     }
 
 
