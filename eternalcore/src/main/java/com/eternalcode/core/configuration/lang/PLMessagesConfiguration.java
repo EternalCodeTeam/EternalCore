@@ -136,7 +136,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class PLWarpSection implements WarpSection {
-        public Notification availableList = Notification.chat("<dark_gray>» Lista warpów: {WARPS}");
+        public Notification warpAlreadyExists = Notification.chat("<dark_red>Błąd: <red>Warp o nazwie <yellow>{WARP} <dark_red>już istnieje!");
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie odnaleziono takiego warpa!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warpa {NAME}!");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warpa {NAME}!");
