@@ -11,6 +11,7 @@
 - Fix problem with reloading language.yml file
 - Placeholder names to uppercase
 - Fix problem with possibility of creating warp with the same name
+- Exclude NONE from NoticeType argument
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
