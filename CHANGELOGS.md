@@ -11,8 +11,10 @@
 - Fix problem with possibility of creating homes with the same name
 - Fix problem with reloading language.yml file
 - Placeholder names to uppercase
+- Fix a critical bug where you could copy your items by opening your inventory with /invsee command
 - Fix problem with possibility of creating warp with the same name
 - Exclude NONE from NoticeType argument
+
 
 #### Features:
 - Add bypass permission for home (eternalcore.teleport.bypass)
