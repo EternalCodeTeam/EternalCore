@@ -34,7 +34,18 @@ public class WarpCommand {
     @Execute(route = "add", required = 1)
     @Permission("eternalcore.warp.create")
     void add(Player player, @Arg @Name("warp") String warp) {
+        if (this.warpManager.warpExists(warp)) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .placeholder("{WARP}", warp)
+                .notice(messages -> messages.warp().warpAlreadyExists())
+                .send();
+
+            return;
+        }
+
         this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
+
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(messages -> messages.warp().create())

@@ -34,7 +34,7 @@ public class HomeArgument implements SingleOrElseArgument<CommandSender, ArgHome
 
     @Override
     public MatchResult match(LiteInvocation invocation, ArgumentContext<ArgHome> context, String argument) {
-        Viewer viewer = this.viewerProvider.any(invocation);
+        Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
         Messages messages = this.languageManager.getMessages(viewer);
 
         Home home = this.homeManager.getHome(viewer.getUniqueId(), argument)
@@ -50,7 +50,7 @@ public class HomeArgument implements SingleOrElseArgument<CommandSender, ArgHome
 
     @Override
     public List<Suggestion> suggestion(LiteInvocation invocation, Parameter parameter, ArgHome annotation) {
-        Viewer viewer = this.viewerProvider.any(invocation);
+        Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
 
         return this.homeManager.getHomes(viewer.getUniqueId())
             .stream()

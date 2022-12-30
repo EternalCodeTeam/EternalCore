@@ -12,7 +12,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Route(name = "skull", aliases = "glowa")
+@Route(name = "skull")
 @Permission("eternalcore.skull")
 public class SkullCommand {
 

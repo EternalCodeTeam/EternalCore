@@ -24,6 +24,7 @@ public class NoticeTypeArgument extends AbstractViewerArgument<NoticeType> {
     @Override
     public List<Suggestion> suggest(LiteInvocation invocation) {
         return Arrays.stream(NoticeType.values())
+            .filter(type -> type != NoticeType.NONE)
             .map(notificationType -> notificationType.name().toLowerCase())
             .map(Suggestion::of)
             .toList();

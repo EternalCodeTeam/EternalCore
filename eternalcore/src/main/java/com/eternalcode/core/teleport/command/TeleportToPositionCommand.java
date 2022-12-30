@@ -14,8 +14,8 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Route(name = "tpos")
-@Permission("eternalcore.tpos")
+@Route(name = "tppos")
+@Permission("eternalcore.tppos")
 public class TeleportToPositionCommand {
 
     private final NoticeService noticeService;

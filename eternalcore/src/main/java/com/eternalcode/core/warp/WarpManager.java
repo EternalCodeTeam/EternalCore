@@ -35,6 +35,10 @@ public class WarpManager {
         this.warpRepository.removeWarp(remove.getName());
     }
 
+    public boolean warpExists(String name) {
+        return this.warpMap.containsKey(name);
+    }
+
     public Option<Warp> findWarp(String name) {
         return Option.of(this.warpMap.get(name));
     }
