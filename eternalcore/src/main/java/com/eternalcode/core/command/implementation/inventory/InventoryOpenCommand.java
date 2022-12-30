@@ -34,7 +34,7 @@ public class InventoryOpenCommand {
     void enderchest(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
-                .notice(messages -> messages.other().cantOpenYourInventory())
+                .notice(messages -> messages.inventory().cantOpenYourInventory())
                 .player(sender.getUniqueId())
                 .send();
             return;
@@ -48,7 +48,7 @@ public class InventoryOpenCommand {
     void armor(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
-                .notice(messages -> messages.other().cantOpenYourInventory())
+                .notice(messages -> messages.inventory().cantOpenYourInventory())
                 .player(sender.getUniqueId())
                 .send();
             return;
@@ -62,7 +62,7 @@ public class InventoryOpenCommand {
     void inventory(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
-                .notice(messages -> messages.other().cantOpenYourInventory())
+                .notice(messages -> messages.inventory().cantOpenYourInventory())
                 .player(sender.getUniqueId())
                 .send();
             return;

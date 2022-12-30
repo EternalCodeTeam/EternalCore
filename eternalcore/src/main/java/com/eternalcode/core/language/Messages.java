@@ -16,11 +16,12 @@ public interface Messages {
     TeleportSection teleport();
     TpaSection tpa();
     EventMessagesSection eventMessages();
-    OtherMessages other();
     WarpSection warp();
     HomeSection home();
     PrivateMessageSection privateMessage();
     AfkSection afk();
+    InventorySection inventory();
+    OtherMessages other();
 
     interface ArgumentSection {
         Notification permissionMessage();
@@ -31,7 +32,6 @@ public interface Messages {
         Notification onlyPlayer();
         Notification numberBiggerThanOrEqualZero();
         Notification noItem();
-        Notification noMaterial();
         Notification noArgument();
         Notification noDamaged();
         Notification noDamagedItems();
@@ -148,12 +148,14 @@ public interface Messages {
         Notification welcomeSubtitle();
     }
 
-    interface OtherMessages {
-        String alertMessagePrefix();
-
+    interface InventorySection {
         Notification inventoryClearMessage();
         Notification inventoryClearMessageBy();
         Notification cantOpenYourInventory();
+    }
+
+    interface OtherMessages {
+        String alertMessagePrefix();
 
         String disposalTitle();
 

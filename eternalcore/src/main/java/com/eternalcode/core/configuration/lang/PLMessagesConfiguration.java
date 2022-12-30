@@ -27,9 +27,10 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLHomeSection home = new PLHomeSection();
     public PLPrivateMessageSection privateMessage = new PLPrivateMessageSection();
     public PLTpaSection tpa = new PLTpaSection();
-    public PLEventMessageSection eventMessages = new PLEventMessageSection();
-    public PLOtherMessages other = new PLOtherMessages();
     public PLAfkSection afk = new PLAfkSection();
+    public PLEventMessageSection eventMessages = new PLEventMessageSection();
+    public PLInventorySection inventory = new PLInventorySection();
+    public PLOtherMessages other = new PLOtherMessages();
 
     @Getter
     @Contextual
@@ -201,13 +202,16 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
     @Getter
     @Contextual
-    public static class PLOtherMessages implements OtherMessages {
-        public String alertMessagePrefix = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
-
+    public static class PLInventorySection implements InventorySection {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
-
         public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>Nie możesz otworzyć swojego ekwipunku!");
+    }
+
+    @Getter
+    @Contextual
+    public static class PLOtherMessages implements OtherMessages {
+        public String alertMessagePrefix = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
 
         public String disposalTitle = "<white><bold>Kosz";
 

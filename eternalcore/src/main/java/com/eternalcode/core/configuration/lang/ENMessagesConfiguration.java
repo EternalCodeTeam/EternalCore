@@ -28,6 +28,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
     public ENAfkSection afk = new ENAfkSection();
     public ENEventMessageSection eventMessages = new ENEventMessageSection();
+    public ENInventorySection inventory = new ENInventorySection();
     public ENOtherMessages other = new ENOtherMessages();
 
     @Getter @Contextual
@@ -188,13 +189,15 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     }
 
     @Getter @Contextual
-    public static class ENOtherMessages implements OtherMessages {
-        public String alertMessagePrefix = "<red><bold>BROADCAST: <gray>{BROADCAST}";
-
+    public static class ENInventorySection implements InventorySection {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
-
         public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>You can't open your own inventory!");
+    }
+
+    @Getter @Contextual
+    public static class ENOtherMessages implements OtherMessages {
+        public String alertMessagePrefix = "<red><bold>BROADCAST: <gray>{BROADCAST}";
 
         public String disposalTitle = "<white><bold>Trash";
 
