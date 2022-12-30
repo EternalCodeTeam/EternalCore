@@ -89,6 +89,7 @@ public interface Messages {
     }
 
     interface WarpSection {
+        Notification warpAlreadyExists();
         Notification notExist();
         Notification create();
         Notification remove();
@@ -98,6 +99,8 @@ public interface Messages {
         Notification notExist();
         Notification create();
         Notification delete();
+        Notification limit();
+        Notification overrideHomeLocation();
     }
 
     interface TpaSection {

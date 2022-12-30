@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-@Route(name = "enchant", aliases = { "ench" })
+@Route(name = "enchant")
 @Permission("eternalcore.enchant")
 public class EnchantCommand {
 

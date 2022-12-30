@@ -136,7 +136,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class PLWarpSection implements WarpSection {
-        public Notification availableList = Notification.chat("<dark_gray>» Lista warpów: {WARPS}");
+        public Notification warpAlreadyExists = Notification.chat("<dark_red>Błąd: <red>Warp o nazwie <yellow>{WARP} <dark_red>już istnieje!");
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie odnaleziono takiego warpa!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warpa {NAME}!");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warpa {NAME}!");
@@ -148,6 +148,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie ma takiego domu!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono home {HOME}!");
         public Notification delete = Notification.chat("<dark_gray>» <gray>Usunięto home {HOME}!");
+        public Notification limit = Notification.chat("<dark_gray>» <red>Osiągnąłeś limit domów! Twój limit to {LIMIT}.");
+        public Notification overrideHomeLocation = Notification.chat("<dark_gray>» <gray>Nadpisałeś lokalizację domu {HOME}!");
     }
 
     @Getter

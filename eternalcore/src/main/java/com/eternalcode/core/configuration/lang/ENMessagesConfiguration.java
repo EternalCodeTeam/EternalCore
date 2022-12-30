@@ -104,7 +104,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENTpaSection implements TpaSection {
-
         public Notification tpaSelfMessage = Notification.chat("<dark_gray>» <red>You can't teleport to yourself!");
         public Notification tpaAlreadySentMessage = Notification.chat("<dark_gray>» <red>You have already sent a teleportation request!");
         public Notification tpaSentMessage = Notification.chat("<dark_gray>» <green>You have sent a request for teleportation to a player: <gray>{PLAYER}<green>!");
@@ -128,6 +127,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
     @Getter @Contextual
     public static class ENWarpSection implements WarpSection {
+        public Notification warpAlreadyExists = Notification.chat("<dark_gray>» <red>Warp <yellow>{WARP} <red>already exists!");
         public Notification notExist = Notification.chat("<dark_gray>» <red>This warp doesn't exist");
         public Notification create = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been created.");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been deleted.");
@@ -138,6 +138,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification notExist = Notification.chat("<dark_gray>» <red>This home doesn't exist");
         public Notification create = Notification.chat("<dark_gray>» <gray>Home {HOME} has been created.");
         public Notification delete = Notification.chat("<dark_gray>» <gray>Home {HOME} has been deleted.");
+        public Notification limit = Notification.chat("<dark_gray>» <red>You have reached the limit of homes! Your limit is {LIMIT}.");
+        public Notification overrideHomeLocation = Notification.chat("<dark_gray>» <gray>Home {HOME} has been overridden.");
     }
 
     @Getter @Contextual
