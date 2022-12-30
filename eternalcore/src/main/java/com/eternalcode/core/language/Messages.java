@@ -99,7 +99,7 @@ public interface Messages {
         Notification create();
         Notification delete();
         Notification limit();
-        Notification homeWithThisNameAlreadyExists();
+        Notification overrideHomeLocation();
     }
 
     interface TpaSection {

@@ -35,6 +35,8 @@ public class SetHomeCommand {
 
     @Execute(required = 0)
     void execute(User user, Player player) {
+
+
         this.setHome(user, player, "home");
     }
 
@@ -45,17 +47,20 @@ public class SetHomeCommand {
         if (amountOfUserHomes >= this.getMaxAmountOfHomes(player)) {
             this.noticeService.create()
                 .user(user)
-                .notice(messages -> messages.home().limit())
                 .placeholder("{LIMIT}", String.valueOf(maxAmountOfUserHomes))
+                .notice(messages -> messages.home().limit())
                 .send();
 
             return;
         }
 
         if (this.homeManager.hasHomeWithSpecificName(user, home)) {
+            this.homeManager.createHome(user, home, player.getLocation());
+
             this.noticeService.create()
                 .user(user)
-                .notice(messages -> messages.home().homeWithThisNameAlreadyExists())
+                .placeholder("{HOME}", home)
+                .notice(messages -> messages.home().overrideHomeLocation())
                 .send();
 
             return;
