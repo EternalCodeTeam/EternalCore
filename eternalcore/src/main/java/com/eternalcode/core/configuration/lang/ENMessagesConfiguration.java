@@ -146,7 +146,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Getter @Contextual
     public static class ENPrivateMessageSection implements PrivateMessageSection {
         public Notification noReply = Notification.chat("<dark_gray>» <red>You have no one to reply!");
-        public Notification cantMessageYourself = Notification.chat("<dark_gray>» <red>You can't send private message to yourself!");
+       
         public Notification privateMessageYouToTarget = Notification.chat("<dark_gray>[<gray>You -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
         public Notification privateMessageTargetToYou = Notification.chat("<dark_gray>[<gray>{SENDER} -> <white>You<dark_gray>]<gray>: <white>{MESSAGE}");
 

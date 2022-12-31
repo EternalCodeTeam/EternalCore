@@ -122,7 +122,6 @@ public interface Messages {
 
     interface PrivateMessageSection {
         Notification noReply();
-        Notification cantMessageYourself();
         Notification privateMessageYouToTarget();
         Notification privateMessageTargetToYou();
 
