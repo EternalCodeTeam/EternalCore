@@ -4,6 +4,7 @@ import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.amount.Min;
@@ -27,7 +28,7 @@ public class EnchantCommand {
 
     @Execute
     @Min(2)
-    void execute(Player player, @Arg Enchantment enchantment, @Arg Integer level) {
+    void execute(Player player, @Arg Enchantment enchantment, @Arg @Name("level") Integer level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 

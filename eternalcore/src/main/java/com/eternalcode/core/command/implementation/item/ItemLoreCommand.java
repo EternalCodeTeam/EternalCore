@@ -3,6 +3,7 @@ package com.eternalcode.core.command.implementation.item;
 import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -31,7 +32,7 @@ public class ItemLoreCommand {
 
     @Execute
     @Min(2)
-    void execute(Player player, @Arg int line, @Joiner String name) {
+    void execute(Player player, @Arg @Name("line") int line, @Name("text") @Joiner String text) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
@@ -46,7 +47,7 @@ public class ItemLoreCommand {
 
         lore = lore == null ? new ArrayList<>() : new ArrayList<>(lore);
 
-        if (name.equals("none")) {
+        if (text.equals("none")) {
             lore.remove(line);
         }
         else {
@@ -55,7 +56,7 @@ public class ItemLoreCommand {
                 lore.add("");
             }
 
-            lore.set(line, Legacy.SECTION_SERIALIZER.serialize(miniMessage.deserialize(name)));
+            lore.set(line, Legacy.SECTION_SERIALIZER.serialize(miniMessage.deserialize(text)));
         }
 
         itemMeta.setLore(lore);
@@ -63,7 +64,7 @@ public class ItemLoreCommand {
 
         this.noticeService.create()
             .notice(messages -> messages.other().itemChangeLoreMessage())
-            .placeholder("{ITEM_LORE}", name)
+            .placeholder("{ITEM_LORE}", text)
             .player(player.getUniqueId())
             .send();
     }

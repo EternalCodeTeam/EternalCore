@@ -2,6 +2,7 @@ package com.eternalcode.core.chat.feature.privatechat;
 
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -20,7 +21,7 @@ public class PrivateChatCommand {
 
     @Execute
     @Min(2)
-    void execute(User sender, @Arg User target, @Joiner String message) {
+    void execute(User sender, @Arg User target, @Name("message") @Joiner String message) {
         this.privateChatService.privateMessage(sender, target, message);
     }
 
