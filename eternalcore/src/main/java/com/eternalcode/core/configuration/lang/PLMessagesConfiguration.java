@@ -157,7 +157,6 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Contextual
     public static class PLPrivateMessageSection implements PrivateMessageSection {
         public Notification noReply = Notification.chat("<dark_gray>» <red>Nie masz komu odpowiedzieć");
-        public Notification cantMessageYourself = Notification.chat("<dark_gray>» <red>Nie możesz wysłać wiadomości do siebie!");
         public Notification privateMessageYouToTarget = Notification.chat("<dark_gray>[<gray>Ty -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
         public Notification privateMessageTargetToYou = Notification.chat("<dark_gray>[<gray>{SENDER} -> <white>Ty<dark_gray>]<gray>: <white>{MESSAGE}");
 
