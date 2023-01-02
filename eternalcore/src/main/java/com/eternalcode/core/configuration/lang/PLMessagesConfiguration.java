@@ -33,6 +33,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLPlayerMessagesSection player = new PLPlayerMessagesSection();
     public PLSpawnMessagesSection spawn = new PLSpawnMessagesSection();
     public PLItemMessagesSection item = new PLItemMessagesSection();
+    public PLLanguageSection language = new PLLanguageSection();
 
     @Getter
     @Contextual
@@ -244,8 +245,6 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <white>{ONLINE} <gold>graczy online!");
         public Notification listMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
-        public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
-
         public List<String> whoisCommand = List.of("<dark_gray>» <gray>Gracz: <white>{PLAYER}",
             "<dark_gray>» <gray>UUID: <white>{UUID}",
             "<dark_gray>» <gray>IP: <white>{IP}",
@@ -286,6 +285,12 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Naprawiono!");
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Otrzymałeś głowę gracza {PLAYER}");
         public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item w ręce został zaklęty!");
+    }
+
+    @Getter
+    @Contextual
+    public static class PLLanguageSection implements LanguageSection {
+        public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
     }
 
     @Override

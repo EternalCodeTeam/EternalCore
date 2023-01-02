@@ -24,6 +24,7 @@ public interface Messages {
     PlayerMessagesSection player();
     SpawnMessagesSection spawn();
     ItemMessagesSection item();
+    LanguageSection language();
 
     interface ArgumentSection {
         Notification permissionMessage();
@@ -196,9 +197,6 @@ public interface Messages {
         Notification onlineMessage();
         Notification listMessage();
 
-        // language
-        Notification languageChanged();
-
         // whois
         List<String> whoisCommand();
     }
@@ -234,5 +232,12 @@ public interface Messages {
         Notification skullMessage();
         Notification enchantedMessage();
     }
+
+    interface LanguageSection {
+
+        Notification languageChanged();
+
+    }
+
 }
 

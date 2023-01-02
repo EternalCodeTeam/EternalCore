@@ -32,6 +32,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENPlayerMessagesSection player = new ENPlayerMessagesSection();
     public ENSpawnMessagesSection spawn = new ENSpawnMessagesSection();
     public ENItemMessagesSection item = new ENItemMessagesSection();
+    public ENLanguageSection language = new ENLanguageSection();
 
     @Getter
     @Contextual
@@ -244,8 +245,6 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!");
         public Notification listMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
-        public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Language changed to <red>English<gold>!");
-
         public List<String> whoisCommand = List.of("<dark_gray>» <gray>Target name: <white>{PLAYER}",
             "<dark_gray>» <gray>Target UUID: <white>{UUID}",
             "<dark_gray>» <gray>Target address: <white>{IP}",
@@ -286,6 +285,12 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Repaired!");
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Player {NICK} heads received");
         public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item in hand is enchanted!");
+    }
+
+    @Getter
+    @Contextual
+    public static class ENLanguageSection implements LanguageSection {
+        public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Language changed to <red>English<gold>!");
     }
 
     @Override

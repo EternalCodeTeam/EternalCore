@@ -101,7 +101,7 @@ public class LanguageInventory {
 
                 this.noticeService.create()
                     .player(player.getUniqueId())
-                    .notice(messages -> messages.player().languageChanged())
+                    .notice(messages -> messages.language().languageChanged())
                     .send();
             });
 
