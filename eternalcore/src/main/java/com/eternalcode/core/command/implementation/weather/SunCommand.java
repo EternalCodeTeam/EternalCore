@@ -20,11 +20,6 @@ public class SunCommand {
     }
 
     @Execute
-    void sun(Player player, Viewer viewer) {
-        this.sun(viewer, player.getWorld());
-    }
-
-    @Execute(required = 1)
     void sun(Viewer viewer, @Arg World world) {
         world.setClearWeatherDuration(20 * 60 * 10);
         world.setStorm(false);

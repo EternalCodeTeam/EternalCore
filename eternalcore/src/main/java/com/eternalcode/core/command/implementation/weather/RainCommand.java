@@ -7,7 +7,6 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 @Route(name = "rain")
 @Permission("eternalcore.rain")
@@ -20,11 +19,6 @@ public class RainCommand {
     }
 
     @Execute
-    void rain(Player player, Viewer viewer) {
-        this.rain(viewer, player.getWorld());
-    }
-
-    @Execute(required = 1)
     void rain(Viewer viewer, @Arg World world) {
         world.setStorm(true);
         world.setThundering(false);

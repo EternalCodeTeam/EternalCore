@@ -7,7 +7,6 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 @Route(name = "night")
 @Permission("eternalcore.night")
@@ -20,11 +19,6 @@ public class NightCommand {
     }
 
     @Execute
-    void night(Player player, Viewer viewer) {
-        this.night(viewer, player.getWorld());
-    }
-
-    @Execute(required = 1)
     void night(Viewer viewer, @Arg World world) {
         world.setTime(13700);
 

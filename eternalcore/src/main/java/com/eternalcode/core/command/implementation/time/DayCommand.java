@@ -20,11 +20,6 @@ public class DayCommand {
     }
 
     @Execute
-    void day(Player player, Viewer viewer) {
-        this.day(viewer, player.getWorld());
-    }
-
-    @Execute(required = 1)
     void day(Viewer viewer, @Arg World world) {
         world.setTime(100);
 
