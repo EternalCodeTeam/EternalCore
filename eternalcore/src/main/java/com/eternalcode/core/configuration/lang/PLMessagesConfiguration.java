@@ -212,15 +212,15 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class PlTimeAndWeatherMessageSection implements TimeAndWeatherSection {
-        public Notification timeSetDay = Notification.chat("<dark_gray>» <green>Ustawiono dzień!");
-        public Notification timeSetNight = Notification.chat("<dark_gray>» <green>Ustawiono noc!");
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <green>Ustawiono dzień w świecie {WORLD}!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <green>Ustawiono noc w świecie {WORLD}!");
 
         public Notification timeSet = Notification.chat("<dark_gray>» <green>Ustawiono czas na <white>{TIME}");
         public Notification timeAdd = Notification.chat("<dark_gray>» <green>Zmieniono czas o <white>{TIME}");
 
-        public Notification weatherSetRain = Notification.chat("<dark_gray>» <green>Ustawiono deszcz!");
-        public Notification weatherSetSun = Notification.chat("<dark_gray>» <green>Ustawiono słoneczną pogodę!");
-        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <green>Ustawiono burze!");
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <green>Ustawiono deszcz w świecie {WORLD}!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <green>Ustawiono słoneczną pogodę w świecie {WORLD}!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <green>Ustawiono burze w świecie {WORLD}!");
 
     }
 

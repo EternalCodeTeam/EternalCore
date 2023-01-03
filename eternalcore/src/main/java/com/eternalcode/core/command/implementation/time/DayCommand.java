@@ -28,7 +28,11 @@ public class DayCommand {
     void day(Viewer viewer, @Arg World world) {
         world.setTime(100);
 
-        this.noticeService.viewer(viewer, messages -> messages.timeAndWeather().timeSetDay());
+        this.noticeService.create()
+            .viewer(viewer)
+            .placeholder("{WORLD}", world.getName())
+            .notice(messages -> messages.timeAndWeather().timeSetDay())
+            .send();
     }
 
 }

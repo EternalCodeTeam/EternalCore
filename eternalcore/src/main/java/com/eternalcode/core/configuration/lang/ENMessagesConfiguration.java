@@ -199,15 +199,15 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Getter
     @Contextual
     public static class ENTimeAndWeatherMessageSection implements TimeAndWeatherSection {
-        public Notification timeSetDay = Notification.chat("<dark_gray>» <red>Time set to day!");
-        public Notification timeSetNight = Notification.chat("<dark_gray>» <red>Time set to night!");
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <gray>Time set to day in the world {WORLD}!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <red>Time set to night in the world {WORLD}!");
 
         public Notification timeSet = Notification.chat("<dark_gray>» <red>Time set to {TIME}");
         public Notification timeAdd = Notification.chat("<dark_gray>» <red>Time added {TIME}");
 
-        public Notification weatherSetRain = Notification.chat("<dark_gray>» <red>Weather set to rain!");
-        public Notification weatherSetSun = Notification.chat("<dark_gray>» <red>Weather set to sun!");
-        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <red>Weather set to thunder!");
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <red>Weather set to rain in the world {WORLD}!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <red>Weather set to sun in the world {WORLD}!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <red>Weather set to thunder in the world {WORLD}!");
     }
 
     @Getter @Contextual

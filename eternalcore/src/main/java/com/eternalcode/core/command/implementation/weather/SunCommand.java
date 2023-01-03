@@ -30,7 +30,11 @@ public class SunCommand {
         world.setStorm(false);
         world.setThundering(false);
 
-        this.noticeService.viewer(viewer, messages -> messages.timeAndWeather().weatherSetSun());
+        this.noticeService.create()
+            .viewer(viewer)
+            .placeholder("{WORLD}", world.getName())
+            .notice(messages -> messages.timeAndWeather().weatherSetSun())
+            .send();
     }
 
 }

@@ -28,7 +28,11 @@ public class NightCommand {
     void night(Viewer viewer, @Arg World world) {
         world.setTime(13700);
 
-        this.noticeService.viewer(viewer, messages -> messages.timeAndWeather().timeSetNight());
+        this.noticeService.create()
+            .viewer(viewer)
+            .placeholder("{WORLD}", world.getName())
+            .notice(messages -> messages.timeAndWeather().timeSetNight())
+            .send();
     }
 
 }

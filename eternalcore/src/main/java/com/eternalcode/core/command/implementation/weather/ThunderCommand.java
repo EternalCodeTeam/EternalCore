@@ -29,7 +29,11 @@ public class ThunderCommand {
         world.setStorm(true);
         world.setThundering(true);
 
-        this.noticeService.viewer(viewer, messages -> messages.timeAndWeather().weatherSetThunder());
+        this.noticeService.create()
+            .viewer(viewer)
+            .placeholder("{WORLD}", world.getName())
+            .notice(messages -> messages.timeAndWeather().weatherSetThunder())
+            .send();
     }
 
 }

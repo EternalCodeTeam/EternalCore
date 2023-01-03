@@ -29,7 +29,11 @@ public class RainCommand {
         world.setStorm(true);
         world.setThundering(false);
 
-        this.noticeService.viewer(viewer, messages -> messages.timeAndWeather().weatherSetRain());
+        this.noticeService.create()
+            .viewer(viewer)
+            .placeholder("{WORLD}", world.getName())
+            .notice(messages -> messages.timeAndWeather().weatherSetRain())
+            .send();
     }
 
 }
