@@ -146,6 +146,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Getter @Contextual
     public static class ENPrivateMessageSection implements PrivateMessageSection {
         public Notification noReply = Notification.chat("<dark_gray>» <red>You have no one to reply!");
+       
         public Notification privateMessageYouToTarget = Notification.chat("<dark_gray>[<gray>You -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
         public Notification privateMessageTargetToYou = Notification.chat("<dark_gray>[<gray>{SENDER} -> <white>You<dark_gray>]<gray>: <white>{MESSAGE}");
 
@@ -155,6 +156,11 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
         public Notification ignorePlayer = Notification.chat("<dark_gray>» <red>{PLAYER} <gray>player has been ignored!");
         public Notification unIgnorePlayer = Notification.chat("<dark_gray>» <red>{PLAYER} <gray>player has been uningored!");
+        public Notification cantIgnoreYourself = Notification.chat("<dark_gray>» <red>You can't ignore yourself!");
+        public Notification cantUnIgnoreYourself = Notification.chat("<dark_gray>» <red>You can't unignore yourself!");
+        public Notification alreadyIgnorePlayer = Notification.chat("<dark_gray>» <red>You already ignore this player!");
+        public Notification notIgnorePlayer = Notification.chat("<dark_gray>» <red>You don't ignore this player, so you can unignore him!");
+
     }
 
     @Getter @Contextual

@@ -131,6 +131,11 @@ public interface Messages {
 
         Notification ignorePlayer();
         Notification unIgnorePlayer();
+        Notification alreadyIgnorePlayer();
+        Notification notIgnorePlayer();
+        Notification cantIgnoreYourself();
+        Notification cantUnIgnoreYourself();
+
     }
 
     interface AfkSection {
