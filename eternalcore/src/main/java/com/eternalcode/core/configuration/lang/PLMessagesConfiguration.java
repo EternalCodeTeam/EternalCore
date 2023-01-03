@@ -31,6 +31,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public PLEventMessageSection eventMessages = new PLEventMessageSection();
     public PLInventorySection inventory = new PLInventorySection();
     public PLOtherMessages other = new PLOtherMessages();
+    public PlTimeAndWeatherMessageSection timeAndWeather = new PlTimeAndWeatherMessageSection();
 
     @Getter
     @Contextual
@@ -215,6 +216,21 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
     @Getter
     @Contextual
+    public static class PlTimeAndWeatherMessageSection implements TimeAndWeatherSection {
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <green>Ustawiono dzień w świecie <yellow>{WORLD}!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <green>Ustawiono noc w świecie <yellow>{WORLD}!");
+
+        public Notification timeSet = Notification.chat("<dark_gray>» <green>Ustawiono czas na <yellow>{TIME}");
+        public Notification timeAdd = Notification.chat("<dark_gray>» <green>Zmieniono czas o <yellow>{TIME}");
+
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <green>Ustawiono deszcz w świecie <yellow>{WORLD}!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <green>Ustawiono słoneczną pogodę w świecie <yellow>{WORLD}!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <green>Ustawiono burze w świecie <yellow>{WORLD}!");
+
+    }
+
+    @Getter
+    @Contextual
     public static class PLOtherMessages implements OtherMessages {
         public String alertMessagePrefix = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
 
@@ -297,4 +313,5 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     public Language getLanguage() {
         return Language.PL;
     }
+
 }

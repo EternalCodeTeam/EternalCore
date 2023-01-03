@@ -20,6 +20,7 @@ public interface Messages {
     HomeSection home();
     PrivateMessageSection privateMessage();
     AfkSection afk();
+    TimeAndWeatherSection timeAndWeather();
     InventorySection inventory();
     OtherMessages other();
 
@@ -221,5 +222,18 @@ public interface Messages {
         Notification languageChanged();
 
     }
+
+    interface TimeAndWeatherSection {
+        Notification timeSetDay();
+        Notification timeSetNight();
+
+        Notification timeSet();
+        Notification timeAdd();
+
+        Notification weatherSetRain();
+        Notification weatherSetSun();
+        Notification weatherSetThunder();
+    }
+
 }
 

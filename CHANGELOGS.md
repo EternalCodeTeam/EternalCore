@@ -37,4 +37,6 @@
 - Add support to PlaceholderAPI
 - More advanced /hat command
 - Add support to multiple notification type for configs
+- Add replay messages for all time-related commands
+- Add replay messages for all weather-related commands
 - Add home limit per permission

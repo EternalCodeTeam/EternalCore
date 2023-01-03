@@ -30,6 +30,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public ENEventMessageSection eventMessages = new ENEventMessageSection();
     public ENInventorySection inventory = new ENInventorySection();
     public ENOtherMessages other = new ENOtherMessages();
+    public ENTimeAndWeatherMessageSection timeAndWeather = new ENTimeAndWeatherMessageSection();
 
     @Getter @Contextual
     public static class ENArgumentSection implements ArgumentSection {
@@ -199,6 +200,20 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
         public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>You can't open your own inventory!");
+    }
+
+    @Getter
+    @Contextual
+    public static class ENTimeAndWeatherMessageSection implements TimeAndWeatherSection {
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <green>Time set to day in the <yellow>{WORLD}!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <green>Time set to night in the <yellow>{WORLD}!");
+
+        public Notification timeSet = Notification.chat("<dark_gray>» <green>Time set to <yellow>{TIME}");
+        public Notification timeAdd = Notification.chat("<dark_gray>» <green>Time added <yellow>{TIME}");
+
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <green>Weather set to rain in the <yellow>{WORLD}!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <green>Weather set to sun in the <yellow>{WORLD}!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <green>Weather set to thunder in the <yellow>{WORLD}!");
     }
 
     @Getter @Contextual
