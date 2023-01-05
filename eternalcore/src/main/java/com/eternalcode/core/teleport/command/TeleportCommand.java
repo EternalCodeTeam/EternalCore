@@ -62,8 +62,9 @@ public class TeleportCommand {
     }
 
     @Execute(min = 3, max = 4)
-    void to(Player sender, @Arg Location location, @Opt Option<World> world) {
-        location.setWorld(world.orElseGet(sender.getWorld()));
+    void to(Player sender, @Arg Location location, @Arg World world) {
+        location.setWorld(world);
+
         this.teleportService.teleport(sender, location);
 
         Formatter formatter = this.formatter(sender, location);
@@ -72,10 +73,8 @@ public class TeleportCommand {
     }
 
     @Execute(min = 4, max = 5)
-    void to(Viewer sender, @Arg Location location, @Arg Player player, @Opt Option<World> world) {
-        if (world.isPresent()) {
-            location.setWorld(world.get());
-        }
+    void to(Viewer sender, @Arg Location location, @Arg Player player, @Arg World world) {
+        location.setWorld(world);
 
         Formatter formatter = this.formatter(player, location);
 

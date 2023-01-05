@@ -332,7 +332,6 @@ public class EternalCore extends JavaPlugin {
             .argument(NoticeType.class,             new NoticeTypeArgument(this.viewerProvider, this.languageManager))
             .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.viewerProvider))
             .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.languageManager))
-            .argument(World.class,                  new WorldArgument(server))
             .argument(User.class,                   new UserArgument(this.viewerProvider, this.languageManager, server, this.userManager))
             .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.languageManager, server))
             .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.viewerProvider, server))
@@ -343,6 +342,7 @@ public class EternalCore extends JavaPlugin {
             // Native Argument (no optional)
             .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.languageManager))
             .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.viewerProvider, server))
+            .argument(Arg.class, World.class,                   new WorldArgument(server))
 
             // Dynamic binds
             .contextualBind(Player.class,   new PlayerContextual(this.languageManager))

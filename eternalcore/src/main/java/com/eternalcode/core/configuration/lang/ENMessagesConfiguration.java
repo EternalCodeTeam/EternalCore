@@ -17,22 +17,6 @@ import java.util.List;
 public class ENMessagesConfiguration implements ReloadableMessages {
 
     public ENArgumentSection argument = new ENArgumentSection();
-    public ENFormatSection format = new ENFormatSection();
-    public ENHelpOpSection helpOp = new ENHelpOpSection();
-    public ENAdminChatSection adminChat = new ENAdminChatSection();
-    public ENTeleportSection teleport = new ENTeleportSection();
-    public ENChatSection chat = new ENChatSection();
-    public ENTpaSection tpa = new ENTpaSection();
-    public ENWarpSection warp = new ENWarpSection();
-    public ENHomeSection home = new ENHomeSection();
-    public ENPrivateMessageSection privateMessage = new ENPrivateMessageSection();
-    public ENAfkSection afk = new ENAfkSection();
-    public ENEventMessageSection eventMessages = new ENEventMessageSection();
-    public ENInventoryMessagesSection inventory = new ENInventoryMessagesSection();
-    public ENPlayerMessagesSection player = new ENPlayerMessagesSection();
-    public ENSpawnMessagesSection spawn = new ENSpawnMessagesSection();
-    public ENItemMessagesSection item = new ENItemMessagesSection();
-    public ENLanguageSection language = new ENLanguageSection();
 
     @Getter
     @Contextual
@@ -53,12 +37,16 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification noValidEnchantmentLevel = Notification.chat("<dark_gray>» <red>This enchantment level is not supported!");
     }
 
+    public ENFormatSection format = new ENFormatSection();
+
     @Getter
     @Contextual
     public static class ENFormatSection implements Format {
         public String enable = "<green>enabled";
         public String disable = "<red>disabled";
     }
+
+    public ENHelpOpSection helpOp = new ENHelpOpSection();
 
     @Getter
     @Contextual
@@ -68,11 +56,15 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification coolDown = Notification.chat("<dark_gray>» <red>You can use this command for: <gold>{TIME}");
     }
 
+    public ENAdminChatSection adminChat = new ENAdminChatSection();
+
     @Getter
     @Contextual
     public static class ENAdminChatSection implements AdminChatSection {
         public Notification format = Notification.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{NICK}<dark_gray>: <white>{TEXT}");
     }
+
+    public ENTeleportSection teleport = new ENTeleportSection();
 
     @Getter
     @Contextual
@@ -98,6 +90,9 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification lastLocationNoExist = Notification.chat("<dark_gray>» <red>Last location is not exist!");
     }
 
+
+    public ENChatSection chat = new ENChatSection();
+
     @Getter
     @Contextual
     public static class ENChatSection implements ChatSection {
@@ -112,6 +107,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification noCommand = Notification.chat("<dark_gray>» <red>Command <yellow>{COMMAND} <red>doesn't exists!");
         public String alertMessageFormat = "<red><bold>BROADCAST: <gray>{BROADCAST}";
     }
+
+    public ENTpaSection tpa = new ENTpaSection();
 
     @Getter
     @Contextual
@@ -137,6 +134,8 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification tpaAcceptAllAccepted = Notification.chat("<dark_gray>» <green>All players have accepted your teleport request!");
     }
 
+    public ENWarpSection warp = new ENWarpSection();
+
     @Getter
     @Contextual
     public static class ENWarpSection implements WarpSection {
@@ -145,6 +144,9 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification create = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been created.");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been deleted.");
     }
+
+
+    public ENHomeSection home = new ENHomeSection();
 
     @Getter
     @Contextual
@@ -156,10 +158,13 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification overrideHomeLocation = Notification.chat("<dark_gray>» <gray>Home {HOME} has been overridden.");
     }
 
+    public ENPrivateSection privateChat = new ENPrivateSection();
+
     @Getter
     @Contextual
-    public static class ENPrivateMessageSection implements PrivateMessageSection {
+    public static class ENPrivateSection implements PrivateChatSection {
         public Notification noReply = Notification.chat("<dark_gray>» <red>You have no one to reply!");
+
         public Notification privateMessageYouToTarget = Notification.chat("<dark_gray>[<gray>You -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
         public Notification privateMessageTargetToYou = Notification.chat("<dark_gray>[<gray>{SENDER} -> <white>You<dark_gray>]<gray>: <white>{MESSAGE}");
 
@@ -169,18 +174,27 @@ public class ENMessagesConfiguration implements ReloadableMessages {
 
         public Notification ignorePlayer = Notification.chat("<dark_gray>» <red>{PLAYER} <gray>player has been ignored!");
         public Notification unIgnorePlayer = Notification.chat("<dark_gray>» <red>{PLAYER} <gray>player has been uningored!");
+        public Notification cantIgnoreYourself = Notification.chat("<dark_gray>» <red>You can't ignore yourself!");
+        public Notification cantUnIgnoreYourself = Notification.chat("<dark_gray>» <red>You can't unignore yourself!");
+        public Notification alreadyIgnorePlayer = Notification.chat("<dark_gray>» <red>You already ignore this player!");
+        public Notification notIgnorePlayer = Notification.chat("<dark_gray>» <red>You don't ignore this player, so you can unignore him!");
+
     }
+
+    public ENAfkSection afk = new ENAfkSection();
 
     @Getter
     @Contextual
     public static class ENAfkSection implements AfkSection {
-        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{PLAYER} is AFK!");
-        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} is not AFK!");
+        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{PLAYER} jest AFK!");
+        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} nie jest już AFK!");
     }
+
+    public ENEventSection event = new ENEventSection();
 
     @Getter
     @Contextual
-    public static class ENEventMessageSection implements EventMessagesSection {
+    public static class ENEventSection implements EventSection {
         public List<Notification> deathMessage = List.of(Notification.chat("<dark_gray>» <gray>{PLAYER} <red>died!"));
 
         public List<Notification> joinMessage = List.of(
@@ -203,18 +217,23 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification welcomeSubtitle = Notification.chat("<yellow>Welcome back to the server!");
     }
 
+
+    public ENInventorySection inventory = new ENInventorySection();
+
     @Getter
     @Contextual
-    public static class ENInventoryMessagesSection implements InventoryMessagesSection {
+    public static class ENInventorySection implements InventorySection {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <red>Your inventory has been cleared!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <red>Player {PLAYER} inventory cleared");
         public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>You can't open your own inventory!");
         public String disposalTitle = "<white><bold>Trash";
     }
 
+    public ENPlayerSection player = new ENPlayerSection();
+
     @Getter
     @Contextual
-    public static class ENPlayerMessagesSection implements PlayerMessagesSection {
+    public static class ENPlayerSection implements PlayerSection {
         public Notification feedMessage = Notification.chat("<dark_gray>» <green>You've been feed!");
         public Notification feedMessageBy = Notification.chat("<dark_gray>» <green>You've fed the {PLAYER}");
 
@@ -257,18 +276,22 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         );
     }
 
+    public ENSpawnSection spawn = new ENSpawnSection();
+
     @Getter
     @Contextual
-    public static class ENSpawnMessagesSection implements SpawnMessagesSection {
+    public static class ENSpawnSection implements SpawnSection {
         public Notification spawnSet = Notification.chat("<dark_gray>» <green>Spawn set!");
         public Notification spawnNoSet = Notification.chat("<dark_gray>» <red>Spawn is not set!");
         public Notification spawnTeleportedBy = Notification.chat("<dark_gray>» <red>You have been teleported to spawn by {PLAYER}!");
         public Notification spawnTeleportedOther = Notification.chat("<dark_gray>» <red>You teleported player {PLAYER} to spawn!");
     }
 
+    public ENItemSection item = new ENItemSection();
+
     @Getter
     @Contextual
-    public static class ENItemMessagesSection implements ItemMessagesSection {
+    public static class ENItemSection implements ItemSection {
         public Notification itemChangeNameMessage = Notification.chat("<dark_gray>» <gray>Name has been changed to: <red>{ITEM_NAME}");
         public Notification itemClearNameMessage = Notification.chat("<dark_gray>» <gray>Name has been cleared!");
 
@@ -287,6 +310,24 @@ public class ENMessagesConfiguration implements ReloadableMessages {
         public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item in hand is enchanted!");
     }
 
+    public ENTimeAndWeatherMessageSection timeAndWeather = new ENTimeAndWeatherMessageSection();
+
+    @Getter
+    @Contextual
+    public static class ENTimeAndWeatherMessageSection implements TimeAndWeatherSection {
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <green>Time set to day in the <yellow>{WORLD}!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <green>Time set to night in the <yellow>{WORLD}!");
+
+        public Notification timeSet = Notification.chat("<dark_gray>» <green>Time set to <yellow>{TIME}");
+        public Notification timeAdd = Notification.chat("<dark_gray>» <green>Time added <yellow>{TIME}");
+
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <green>Weather set to rain in the <yellow>{WORLD}!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <green>Weather set to sun in the <yellow>{WORLD}!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <green>Weather set to thunder in the <yellow>{WORLD}!");
+    }
+
+    public ENLanguageSection language = new ENLanguageSection();
+
     @Getter
     @Contextual
     public static class ENLanguageSection implements LanguageSection {
@@ -302,5 +343,4 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     public Language getLanguage() {
         return Language.EN;
     }
-
 }

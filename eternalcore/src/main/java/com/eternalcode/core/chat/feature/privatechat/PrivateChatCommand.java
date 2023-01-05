@@ -3,11 +3,11 @@ package com.eternalcode.core.chat.feature.privatechat;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 
 @Route(name = "msg", aliases = { "message", "m", "whisper", "tell", "t" })
 @Permission("eternalcore.msg")

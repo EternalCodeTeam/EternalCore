@@ -18,22 +18,6 @@ import java.util.List;
 public class PLMessagesConfiguration implements ReloadableMessages {
 
     public PLArgumentSection argument = new PLArgumentSection();
-    public PLFormatSection format = new PLFormatSection();
-    public PLHelpOpSection helpOp = new PLHelpOpSection();
-    public PLAdminChatSection adminChat = new PLAdminChatSection();
-    public PLTeleportSection teleport = new PLTeleportSection();
-    public PLChatSection chat = new PLChatSection();
-    public PLWarpSection warp = new PLWarpSection();
-    public PLHomeSection home = new PLHomeSection();
-    public PLPrivateMessageSection privateMessage = new PLPrivateMessageSection();
-    public PLTpaSection tpa = new PLTpaSection();
-    public PLAfkSection afk = new PLAfkSection();
-    public PLEventMessageSection eventMessages = new PLEventMessageSection();
-    public PLInventoryMessagesSection inventory = new PLInventoryMessagesSection();
-    public PLPlayerMessagesSection player = new PLPlayerMessagesSection();
-    public PLSpawnMessagesSection spawn = new PLSpawnMessagesSection();
-    public PLItemMessagesSection item = new PLItemMessagesSection();
-    public PLLanguageSection language = new PLLanguageSection();
 
     @Getter
     @Contextual
@@ -54,12 +38,17 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification noValidEnchantmentLevel = Notification.chat("<dark_red>Błąd: <red>Ten poziom zaklęcia nie jest wspierany!");
     }
 
+    public PLFormatSection format = new PLFormatSection();
+
     @Getter
     @Contextual
     public static class PLFormatSection implements Format {
         public String enable = "<green>włączona";
         public String disable = "<red>wyłączona";
     }
+
+
+    public PLHelpOpSection helpOp = new PLHelpOpSection();
 
     @Getter
     @Contextual
@@ -69,11 +58,15 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification coolDown = Notification.chat("<dark_gray>» <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
     }
 
+    public PLAdminChatSection adminChat = new PLAdminChatSection();
+
     @Getter
     @Contextual
     public static class PLAdminChatSection implements AdminChatSection {
         public Notification format = Notification.chat("<dark_gray>[<dark_red>Administracja<dark_gray>] <red>{NICK}<dark_gray>: <white>{TEXT}");
     }
+
+    public PLTeleportSection teleport = new PLTeleportSection();
 
     @Getter
     @Contextual
@@ -99,6 +92,9 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification lastLocationNoExist = Notification.chat("<dark_gray>» <red>Nie ma zapisanej poprzedniej lokalizacji!");
     }
 
+
+    public PLChatSection chat = new PLChatSection();
+
     @Getter
     @Contextual
     public static class PLChatSection implements ChatSection {
@@ -114,6 +110,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public String alertMessageFormat = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
     }
 
+    public PLTpaSection tpa = new PLTpaSection();
+
     @Getter
     @Contextual
     public static class PLTpaSection implements TpaSection {
@@ -122,8 +120,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification tpaSentMessage = Notification.chat("<dark_gray>» <green>Wysłałeś prośbę o teleportacje do gracza: <gray>{PLAYER}<green>!");
 
         public List<Notification> tpaReceivedMessage = List.of(
-            Notification.chat("<dark_gray>» <green>Otrzymałeś prośbę o teleportacje od gracza: <gray>{PLAYER}<green>!"), 
-            Notification.chat("<dark_gray>» <gold>/tpaccept {PLAYER} <green>aby zaakceptować!"), 
+            Notification.chat("<dark_gray>» <green>Otrzymałeś prośbę o teleportacje od gracza: <gray>{PLAYER}<green>!"),
+            Notification.chat("<dark_gray>» <gold>/tpaccept {PLAYER} <green>aby zaakceptować!"),
             Notification.chat("<dark_gray>» <gold>/tpdeny {PLAYER} <green>aby odrzucić!")
         );
 
@@ -138,6 +136,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification tpaAcceptAllAccepted = Notification.chat("<dark_gray>» <green>Wszystkie prośby o teleportacje zostały zaakceptowane!");
     }
 
+    public PLWarpSection warp = new PLWarpSection();
+
     @Getter
     @Contextual
     public static class PLWarpSection implements WarpSection {
@@ -146,6 +146,8 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warpa {NAME}!");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warpa {NAME}!");
     }
+
+    public PLHomeSection home = new PLHomeSection();
 
     @Getter
     @Contextual
@@ -157,9 +159,11 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification overrideHomeLocation = Notification.chat("<dark_gray>» <gray>Nadpisałeś lokalizację domu {HOME}!");
     }
 
+    public PLPrivateChatSection privateChat = new PLPrivateChatSection();
+
     @Getter
     @Contextual
-    public static class PLPrivateMessageSection implements PrivateMessageSection {
+    public static class PLPrivateChatSection implements PrivateChatSection {
         public Notification noReply = Notification.chat("<dark_gray>» <red>Nie masz komu odpowiedzieć");
         public Notification privateMessageYouToTarget = Notification.chat("<dark_gray>[<gray>Ty -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
         public Notification privateMessageTargetToYou = Notification.chat("<dark_gray>[<gray>{SENDER} -> <white>Ty<dark_gray>]<gray>: <white>{MESSAGE}");
@@ -170,7 +174,14 @@ public class PLMessagesConfiguration implements ReloadableMessages {
 
         public Notification ignorePlayer = Notification.chat("<dark_gray>» <gray>Zignorowano gracza <red>{PLAYER}<gray>!");
         public Notification unIgnorePlayer = Notification.chat("<dark_gray>» <gray>Odignorowano gracza <green>{PLAYER}<gray>!");
+        public Notification cantIgnoreYourself = Notification.chat("<dark_gray>» <red>Nie możesz zignorować siebie!");
+        public Notification cantUnIgnoreYourself = Notification.chat("<dark_gray>» <red>Nie możesz odignorować siebie!");
+        public Notification alreadyIgnorePlayer = Notification.chat("<dark_gray>» <red>Gracz <gray>{PLAYER} <red>jest już zignorowany!");
+        public Notification notIgnorePlayer = Notification.chat("<dark_gray>» <red>Gracz <gray>{PLAYER} <red>nie jest przez Ciebie zignorowany. Nie możesz go odignorować!");
+
     }
+
+    public PLAfkSection afk = new PLAfkSection();
 
     @Getter
     @Contextual
@@ -179,9 +190,11 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} nie jest już AFK!");
     }
 
+    public PLEventSection event = new PLEventSection();
+
     @Getter
     @Contextual
-    public static class PLEventMessageSection implements EventMessagesSection {
+    public static class PLEventSection implements EventSection {
         public List<Notification> deathMessage = List.of(Notification.chat("<dark_gray>» <gray>{PLAYER} <red>zginął!"));
 
         public List<Notification> joinMessage = List.of(
@@ -204,18 +217,23 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification welcomeSubtitle = Notification.chat("<yellow>Witaj ponownie na serwerze!");
     }
 
+
+    public PLInventorySection inventory = new PLInventorySection();
+
     @Getter
     @Contextual
-    public static class PLInventoryMessagesSection implements InventoryMessagesSection {
+    public static class PLInventorySection implements InventorySection {
         public Notification inventoryClearMessage = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek!");
         public Notification inventoryClearMessageBy = Notification.chat("<dark_gray>» <green>Wyczyszczono ekwipunek gracza {PLAYER}");
         public Notification cantOpenYourInventory = Notification.chat("<dark_gray>» <red>Nie możesz otworzyć swojego ekwipunku!");
         public String disposalTitle = "<white><bold>Kosz";
     }
 
+    public PLPlayerSection player = new PLPlayerSection();
+
     @Getter
     @Contextual
-    public static class PLPlayerMessagesSection implements PlayerMessagesSection {
+    public static class PLPlayerSection implements PlayerSection {
         public Notification feedMessage = Notification.chat("<dark_gray>» <green>Zostałeś najedzony!");
         public Notification feedMessageBy = Notification.chat("<dark_gray>» <green>Najadłeś gracza {PLAYER}");
 
@@ -257,18 +275,22 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         );
     }
 
+    public PLSpawnSection spawn = new PLSpawnSection();
+
     @Getter
     @Contextual
-    public static class PLSpawnMessagesSection implements SpawnMessagesSection {
+    public static class PLSpawnSection implements SpawnSection {
         public Notification spawnSet = Notification.chat("<dark_gray>» <green>Ustawiono spawn!");
         public Notification spawnNoSet = Notification.chat("<dark_red>Błąd: <red>Spawn nie jest ustawiony!");
         public Notification spawnTeleportedBy = Notification.chat("<dark_gray>» <green>Zostałeś przeteleportowany na spawn przez {PLAYER}!");
         public Notification spawnTeleportedOther = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>został przeteleportowany na spawn!");
     }
 
+    public PLItemSection item = new PLItemSection();
+
     @Getter
     @Contextual
-    public static class PLItemMessagesSection implements ItemMessagesSection {
+    public static class PLItemSection implements ItemSection {
         public Notification itemChangeNameMessage = Notification.chat("<dark_gray>» <gray>Nowa nazwa itemu: <red>{ITEM_NAME}");
         public Notification itemClearNameMessage = Notification.chat("<dark_gray>» <gray>Wyczyszczono nazwę itemu!");
 
@@ -286,6 +308,25 @@ public class PLMessagesConfiguration implements ReloadableMessages {
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Otrzymałeś głowę gracza {PLAYER}");
         public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item w ręce został zaklęty!");
     }
+
+    public PLTimeAndWeatherMessageSection timeAndWeather = new PLTimeAndWeatherMessageSection();
+
+    @Getter
+    @Contextual
+    public static class PLTimeAndWeatherMessageSection implements TimeAndWeatherSection {
+        public Notification timeSetDay = Notification.chat("<dark_gray>» <green>Ustawiono dzień w świecie <yellow>{WORLD}!");
+        public Notification timeSetNight = Notification.chat("<dark_gray>» <green>Ustawiono noc w świecie <yellow>{WORLD}!");
+
+        public Notification timeSet = Notification.chat("<dark_gray>» <green>Ustawiono czas na <yellow>{TIME}");
+        public Notification timeAdd = Notification.chat("<dark_gray>» <green>Zmieniono czas o <yellow>{TIME}");
+
+        public Notification weatherSetRain = Notification.chat("<dark_gray>» <green>Ustawiono deszcz w świecie <yellow>{WORLD}!");
+        public Notification weatherSetSun = Notification.chat("<dark_gray>» <green>Ustawiono słoneczną pogodę w świecie <yellow>{WORLD}!");
+        public Notification weatherSetThunder = Notification.chat("<dark_gray>» <green>Ustawiono burze w świecie <yellow>{WORLD}!");
+
+    }
+
+    public PLLanguageSection language = new PLLanguageSection();
 
     @Getter
     @Contextual

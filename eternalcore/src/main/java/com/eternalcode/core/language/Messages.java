@@ -8,23 +8,8 @@ public interface Messages {
 
     Language getLanguage();
 
+    // argument section
     ArgumentSection argument();
-    Format format();
-    HelpOpSection helpOp();
-    AdminChatSection adminChat();
-    ChatSection chat();
-    TeleportSection teleport();
-    TpaSection tpa();
-    EventMessagesSection eventMessages();
-    WarpSection warp();
-    HomeSection home();
-    PrivateMessageSection privateMessage();
-    AfkSection afk();
-    InventoryMessagesSection inventory();
-    PlayerMessagesSection player();
-    SpawnMessagesSection spawn();
-    ItemMessagesSection item();
-    LanguageSection language();
 
     interface ArgumentSection {
         Notification permissionMessage();
@@ -42,10 +27,16 @@ public interface Messages {
         Notification noValidEnchantmentLevel();
     }
 
+    // format section
+    Format format();
+
     interface Format {
         String enable();
         String disable();
     }
+
+    // HelpOp Section
+    HelpOpSection helpOp();
 
     interface HelpOpSection {
         Notification format();
@@ -53,9 +44,15 @@ public interface Messages {
         Notification coolDown();
     }
 
+    // AdminChat Section
+    AdminChatSection adminChat();
+
     interface AdminChatSection {
         Notification format();
     }
+
+    // Teleport Section
+    TeleportSection teleport();
 
     interface TeleportSection {
         // teleport
@@ -79,6 +76,9 @@ public interface Messages {
         Notification lastLocationNoExist();
     }
 
+    // Chat Section
+    ChatSection chat();
+
     interface ChatSection {
         Notification disabled();
         Notification enabled();
@@ -92,12 +92,18 @@ public interface Messages {
         String alertMessageFormat();
     }
 
+    // Warp Section
+    WarpSection warp();
+
     interface WarpSection {
         Notification warpAlreadyExists();
         Notification notExist();
         Notification create();
         Notification remove();
     }
+
+    // Home section
+    HomeSection home();
 
     interface HomeSection {
         Notification notExist();
@@ -106,6 +112,9 @@ public interface Messages {
         Notification limit();
         Notification overrideHomeLocation();
     }
+
+    // tpa section
+    TpaSection tpa();
 
     interface TpaSection {
         Notification tpaSelfMessage();
@@ -124,7 +133,10 @@ public interface Messages {
         Notification tpaAcceptAllAccepted();
     }
 
-    interface PrivateMessageSection {
+    // private section
+    PrivateChatSection privateChat();
+
+    interface PrivateChatSection {
         Notification noReply();
         Notification privateMessageYouToTarget();
         Notification privateMessageTargetToYou();
@@ -135,14 +147,25 @@ public interface Messages {
 
         Notification ignorePlayer();
         Notification unIgnorePlayer();
+        Notification alreadyIgnorePlayer();
+        Notification notIgnorePlayer();
+        Notification cantIgnoreYourself();
+        Notification cantUnIgnoreYourself();
+
     }
+
+    // afk section
+    AfkSection afk();
 
     interface AfkSection {
         Notification afkOn();
         Notification afkOff();
     }
 
-    interface EventMessagesSection {
+    // event section
+    EventSection event();
+
+    interface EventSection {
         List<Notification> deathMessage();
         List<Notification> joinMessage();
         List<Notification> quitMessage();
@@ -152,14 +175,20 @@ public interface Messages {
         Notification welcomeSubtitle();
     }
 
-    interface InventoryMessagesSection {
+    // inventory section
+    InventorySection inventory();
+
+    interface InventorySection {
         Notification inventoryClearMessage();
         Notification inventoryClearMessageBy();
         Notification cantOpenYourInventory();
         String disposalTitle();
     }
 
-    interface PlayerMessagesSection {
+    // player section
+    PlayerSection player();
+
+    interface PlayerSection {
         // feed
         Notification feedMessage();
         Notification feedMessageBy();
@@ -201,7 +230,10 @@ public interface Messages {
         List<String> whoisCommand();
     }
 
-    interface SpawnMessagesSection {
+    // spawn section
+    SpawnSection spawn();
+
+    interface SpawnSection {
         // spawn
         Notification spawnSet();
         Notification spawnNoSet();
@@ -210,7 +242,10 @@ public interface Messages {
         Notification spawnTeleportedOther();
     }
 
-    interface ItemMessagesSection {
+    // item section
+    ItemSection item();
+
+    interface ItemSection {
         // item name & lore
         Notification itemClearNameMessage();
         Notification itemClearLoreMessage();
@@ -233,11 +268,27 @@ public interface Messages {
         Notification enchantedMessage();
     }
 
-    interface LanguageSection {
+    // time and weather
+    TimeAndWeatherSection timeAndWeather();
 
-        Notification languageChanged();
+    interface TimeAndWeatherSection {
+        Notification timeSetDay();
+        Notification timeSetNight();
 
+        Notification timeSet();
+        Notification timeAdd();
+
+        Notification weatherSetRain();
+        Notification weatherSetSun();
+        Notification weatherSetThunder();
     }
 
+
+    // language section
+    LanguageSection language();
+
+    interface LanguageSection {
+        Notification languageChanged();
+    }
 }
 

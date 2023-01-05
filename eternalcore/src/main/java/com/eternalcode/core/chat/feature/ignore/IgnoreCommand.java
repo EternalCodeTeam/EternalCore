@@ -8,6 +8,8 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.injector.Inject;
 
+import java.util.UUID;
+
 @Route(name = "ignore")
 @Permission("eternalcore.ignore")
 public class IgnoreCommand {
@@ -23,12 +25,37 @@ public class IgnoreCommand {
 
     @Execute
     void ignore(User sender, @Arg User target) {
-        this.repository.ignore(sender.getUniqueId(), target.getUniqueId());
-        this.noticeService.create()
-            .player(sender.getUniqueId())
-            .placeholder("{PLAYER}", target.getName())
-            .notice(messages -> messages.privateMessage().ignorePlayer())
-            .send();
+        UUID senderUuid = sender.getUniqueId();
+        UUID targetUuid = target.getUniqueId();
+
+        if (sender.equals(target)) {
+            this.noticeService.create()
+                .notice(messages -> messages.privateChat().cantIgnoreYourself())
+                .viewer(sender)
+                .send();
+
+            return;
+        }
+
+        this.repository.isIgnored(senderUuid, targetUuid).then(isIgnored -> {
+            if (isIgnored) {
+                this.noticeService.create()
+                    .user(sender)
+                    .notice(messages -> messages.privateChat().alreadyIgnorePlayer())
+                    .placeholder("{PLAYER}", target.getName())
+                    .send();
+
+                return;
+            }
+
+            this.repository.ignore(senderUuid, targetUuid);
+
+            this.noticeService.create()
+                .player(senderUuid)
+                .placeholder("{PLAYER}", target.getName())
+                .notice(messages -> messages.privateChat().ignorePlayer())
+                .send();
+        });
     }
 
 }
