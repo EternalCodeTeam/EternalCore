@@ -18,7 +18,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.12.0")
 
     // configuration
-    implementation("net.dzikoysk:cdn:1.14.1")
+    implementation("net.dzikoysk:cdn:1.14.2")
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
