@@ -21,12 +21,12 @@ public class TimeCommand {
     }
 
     @Execute(route = "add", required = 1)
-    void add(Player player, Viewer viewer, @Arg Integer time) {
+    void add(Player player, Viewer viewer, @Arg @Name("time") int time) {
         this.add(viewer, time, player.getWorld());
     }
 
     @Execute(route = "add", required = 2)
-    void add(Viewer viewer, @Arg int time,  @Arg World world) {
+    void add(Viewer viewer, @Arg @Name("time") int time, @Arg World world) {
         world.setTime(world.getTime() + time);
 
         this.noticeService.create()
@@ -37,12 +37,12 @@ public class TimeCommand {
     }
 
     @Execute(route = "set", required = 1)
-    void set(Player player, Viewer viewer, @Arg Integer time) {
-        this.set(viewer, time,  player.getWorld());
+    void set(Player player, Viewer viewer, @Arg @Name("time") int time) {
+        this.set(viewer, time, player.getWorld());
     }
 
     @Execute(route = "set", required = 2)
-    void set(Viewer viewer, @Arg int time, @Arg World world) {
+    void set(Viewer viewer, @Arg @Name("time") int time, @Arg World world) {
         world.setTime(time);
 
         this.noticeService.create()
