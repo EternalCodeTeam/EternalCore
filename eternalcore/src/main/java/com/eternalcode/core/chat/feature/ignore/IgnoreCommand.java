@@ -42,6 +42,7 @@ public class IgnoreCommand {
                 this.noticeService.create()
                     .user(sender)
                     .notice(messages -> messages.privateChat().alreadyIgnorePlayer())
+
                     .placeholder("{PLAYER}", target.getName())
                     .send();
 
