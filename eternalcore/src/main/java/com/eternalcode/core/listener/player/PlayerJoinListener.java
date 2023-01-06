@@ -30,7 +30,7 @@ public class PlayerJoinListener implements Listener {
 
         if (!player.hasPlayedBefore()) {
             this.noticeService.create()
-                .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().firstJoinMessage()))
+                .noticeOption(messages -> RandomUtil.randomElement(messages.event().firstJoinMessage()))
                 .placeholder("{PLAYER}", player.getName())
                 .onlinePlayers()
                 .send();
@@ -49,8 +49,8 @@ public class PlayerJoinListener implements Listener {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.eventMessages().welcomeTitle())
-            .notice(messages -> messages.eventMessages().welcomeSubtitle())
+            .notice(messages -> messages.event().welcomeTitle())
+            .notice(messages -> messages.event().welcomeSubtitle())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .send();
@@ -58,7 +58,7 @@ public class PlayerJoinListener implements Listener {
         event.setJoinMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(messages -> RandomUtil.randomElement(messages.eventMessages().joinMessage()))
+            .noticeOption(messages -> RandomUtil.randomElement(messages.event().joinMessage()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();

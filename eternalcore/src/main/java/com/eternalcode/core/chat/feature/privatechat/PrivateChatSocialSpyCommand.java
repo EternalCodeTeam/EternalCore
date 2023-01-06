@@ -26,11 +26,11 @@ public class PrivateChatSocialSpyCommand {
 
         if (this.privateChatService.isSpy(uuid)) {
             this.privateChatService.disableSpy(uuid);
-            this.noticeService.player(uuid, messages -> messages.privateMessage().socialSpyDisable());
+            this.noticeService.player(uuid, messages -> messages.privateChat().socialSpyDisable());
             return;
         }
 
-        this.noticeService.player(uuid, messages -> messages.privateMessage().socialSpyEnable());
+        this.noticeService.player(uuid, messages -> messages.privateChat().socialSpyEnable());
         this.privateChatService.enableSpy(uuid);
     }
 

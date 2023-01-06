@@ -33,7 +33,7 @@ public class WhoIsCommand {
             .placeholder("{LEVEL}", String.valueOf(player.getLevel()))
             .placeholder("{HEALTH}", String.valueOf(Math.round(player.getHealthScale())))
             .placeholder("{FOOD}", String.valueOf(player.getFoodLevel()))
-            .messages(messages -> messages.other().whoisCommand())
+            .messages(messages -> messages.player().whoisCommand())
             .viewer(viewer)
             .send();
     }

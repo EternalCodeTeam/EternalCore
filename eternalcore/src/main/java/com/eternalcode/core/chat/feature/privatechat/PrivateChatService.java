@@ -55,7 +55,7 @@ public class PrivateChatService {
         UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
 
         if (uuid == null) {
-            this.noticeService.player(sender.getUniqueId(), messages -> messages.privateMessage().noReply());
+            this.noticeService.player(sender.getUniqueId(), messages -> messages.privateChat().noReply());
 
             return;
         }

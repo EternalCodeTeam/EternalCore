@@ -29,11 +29,11 @@ public class PrivateChatPresenter implements Subscriber {
         UUID target = event.getTarget().getUniqueId();
 
         if (!event.isIgnored()) {
-            this.notice.player(target, messages -> messages.privateMessage().privateMessageTargetToYou(), formatter);
+            this.notice.player(target, messages -> messages.privateChat().privateMessageTargetToYou(), formatter);
         }
 
-        this.notice.player(sender, messages -> messages.privateMessage().privateMessageYouToTarget(), formatter);
-        this.notice.players(event.getSpies(), messages -> messages.privateMessage().socialSpyMessage(), formatter);
+        this.notice.player(sender, messages -> messages.privateChat().privateMessageYouToTarget(), formatter);
+        this.notice.players(event.getSpies(), messages -> messages.privateChat().socialSpyMessage(), formatter);
     }
 
 }

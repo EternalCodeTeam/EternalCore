@@ -30,7 +30,7 @@ public class UnIgnoreCommand {
 
         if (sender.equals(target)) {
             this.noticeService.create()
-                .notice(messages -> messages.privateMessage().cantUnIgnoreYourself())
+                .notice(messages -> messages.privateChat().cantUnIgnoreYourself())
                 .viewer(sender)
                 .send();
 
@@ -41,7 +41,7 @@ public class UnIgnoreCommand {
             if (!isIgnored) {
                 this.noticeService.create()
                     .user(sender)
-                    .notice(messages -> messages.privateMessage().notIgnorePlayer())
+                    .notice(messages -> messages.privateChat().notIgnorePlayer())
                     .placeholder("{PLAYER}", target.getName())
                     .send();
 
@@ -53,7 +53,7 @@ public class UnIgnoreCommand {
             this.noticeService.create()
                 .player(senderUuid)
                 .placeholder("{PLAYER}", target.getName())
-                .notice(messages -> messages.privateMessage().unIgnorePlayer())
+                .notice(messages -> messages.privateChat().unIgnorePlayer())
                 .send();
         });
     }

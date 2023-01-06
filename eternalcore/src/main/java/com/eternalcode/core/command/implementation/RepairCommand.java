@@ -50,7 +50,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.other().repairMessage())
+            .notice(messages -> messages.item().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
@@ -84,7 +84,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.other().repairMessage())
+            .notice(messages -> messages.item().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
@@ -118,7 +118,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.other().repairMessage())
+            .notice(messages -> messages.item().repairMessage())
             .player(player.getUniqueId())
             .send();
     }

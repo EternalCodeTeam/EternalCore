@@ -36,7 +36,7 @@ public class GiveCommand {
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
-            .notice(messages -> messages.other().giveReceived())
+            .notice(messages -> messages.item().giveReceived())
             .player(player.getUniqueId())
             .send();
 
@@ -47,7 +47,7 @@ public class GiveCommand {
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", player.getName())
-            .notice(messages -> messages.other().giveGiven())
+            .notice(messages -> messages.item().giveGiven())
             .viewer(audience)
             .send();
     }

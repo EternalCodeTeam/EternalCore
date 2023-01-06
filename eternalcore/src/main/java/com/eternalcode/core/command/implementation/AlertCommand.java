@@ -21,7 +21,7 @@ public class AlertCommand {
     @Execute(min = 2)
     void execute(@Arg NoticeType type, @Joiner String text) {
         this.noticeService.create()
-            .notice(type, messages -> messages.other().alertMessagePrefix())
+            .notice(type, messages -> messages.chat().alertMessageFormat())
             .placeholder("{BROADCAST}", text)
             .onlinePlayers()
             .send();

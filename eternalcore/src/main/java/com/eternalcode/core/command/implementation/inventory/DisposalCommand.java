@@ -36,7 +36,7 @@ public class DisposalCommand {
             .orElseGet(Language.DEFAULT);
 
         Messages messages = this.languageManager.getMessages(language);
-        Component component = this.miniMessage.deserialize(messages.other().disposalTitle());
+        Component component = this.miniMessage.deserialize(messages.inventory().disposalTitle());
         String serialize = Legacy.SECTION_SERIALIZER.serialize(component);
 
         player.openInventory(this.server.createInventory(null, 54, serialize));

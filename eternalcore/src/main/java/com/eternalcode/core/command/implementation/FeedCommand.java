@@ -26,7 +26,7 @@ public class FeedCommand {
         player.setFoodLevel(20);
 
         this.noticeService.create()
-            .notice(messages -> messages.other().feedMessage())
+            .notice(messages -> messages.player().feedMessage())
             .player(player.getUniqueId())
             .send();
 
@@ -36,7 +36,7 @@ public class FeedCommand {
 
         this.noticeService.create()
             .placeholder("{PLAYER}", player.getName())
-            .notice(messages -> messages.other().feedMessageBy())
+            .notice(messages -> messages.player().feedMessageBy())
             .viewer(audience)
             .send();
     }

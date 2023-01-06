@@ -30,7 +30,7 @@ public class IgnoreCommand {
 
         if (sender.equals(target)) {
             this.noticeService.create()
-                .notice(messages -> messages.privateMessage().cantIgnoreYourself())
+                .notice(messages -> messages.privateChat().cantIgnoreYourself())
                 .viewer(sender)
                 .send();
 
@@ -41,7 +41,8 @@ public class IgnoreCommand {
             if (isIgnored) {
                 this.noticeService.create()
                     .user(sender)
-                    .notice(messages -> messages.privateMessage().alreadyIgnorePlayer())
+                    .notice(messages -> messages.privateChat().alreadyIgnorePlayer())
+
                     .placeholder("{PLAYER}", target.getName())
                     .send();
 
@@ -53,7 +54,7 @@ public class IgnoreCommand {
             this.noticeService.create()
                 .player(senderUuid)
                 .placeholder("{PLAYER}", target.getName())
-                .notice(messages -> messages.privateMessage().ignorePlayer())
+                .notice(messages -> messages.privateChat().ignorePlayer())
                 .send();
         });
     }

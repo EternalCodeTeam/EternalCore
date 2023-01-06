@@ -45,7 +45,7 @@ public class ItemNameCommand {
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .notice(messages -> messages.other().itemChangeNameMessage())
+            .notice(messages -> messages.item().itemChangeNameMessage())
             .placeholder("{ITEM_NAME}", name)
             .player(player.getUniqueId())
             .send();
@@ -64,7 +64,7 @@ public class ItemNameCommand {
         itemMeta.setDisplayName(null);
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemClearNameMessage());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemClearNameMessage());
     }
 
     private ItemStack validateItemFromMainHand(Player player) {

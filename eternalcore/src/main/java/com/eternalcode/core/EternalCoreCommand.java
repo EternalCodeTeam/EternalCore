@@ -31,7 +31,6 @@ class EternalCoreCommand {
     @Permission("eternalcore.reload")
     void reload(Player player) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-
         this.configurationManager.reload();
 
         long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);

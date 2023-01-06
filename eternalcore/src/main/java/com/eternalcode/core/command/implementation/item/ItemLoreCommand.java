@@ -63,7 +63,7 @@ public class ItemLoreCommand {
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .notice(messages -> messages.other().itemChangeLoreMessage())
+            .notice(messages -> messages.item().itemChangeLoreMessage())
             .placeholder("{ITEM_LORE}", text)
             .player(player.getUniqueId())
             .send();
@@ -82,7 +82,7 @@ public class ItemLoreCommand {
         itemMeta.setLore(new ArrayList<>());
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.other().itemClearLoreMessage());
+        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemClearLoreMessage());
     }
 
     private ItemStack validateItemFromMainHand(Player player) {
