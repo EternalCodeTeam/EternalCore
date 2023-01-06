@@ -1,5 +1,7 @@
 ### 1.0.0
-#### Fixes: 
+
+#### Fixes:
+
 - Fix /skull for offline players
 - Handle database critical error
 - Improve `/tp` command `/tp <x y z> [world]`, `/tp <x y z> <player> [world]`
@@ -19,13 +21,14 @@
 - Exclude NONE from NoticeType argument
 
 #### Features:
+
 - Add bypass permission for home (eternalcore.teleport.bypass)
 - Add permission for /home (eternalcore.home)
 - Add /itemflag and /itemfalg clear
 - Add /itemname clear
 - Add /itemlore clear
 - Add /itemlore
-- Add Position wrapper for location 
+- Add Position wrapper for location
 - Add command /back
 - Add Publish system
 - Add /ignore and unignore

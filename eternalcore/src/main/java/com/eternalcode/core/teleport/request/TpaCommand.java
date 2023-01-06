@@ -1,11 +1,10 @@
 package com.eternalcode.core.teleport.request;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "tpa")
@@ -24,14 +23,14 @@ public class TpaCommand {
     public void execute(Player player, @Arg Player target) {
         if (player.equals(target)) {
 
-            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaSelfMessage());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaSelfMessage());
 
             return;
         }
 
         if (this.requestService.hasRequest(player.getUniqueId(), target.getUniqueId())) {
 
-            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAlreadySentMessage());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAlreadySentMessage());
 
             return;
         }
@@ -39,14 +38,14 @@ public class TpaCommand {
         this.noticeService
             .create()
             .player(player.getUniqueId())
-            .notice(messages -> messages.tpa().tpaSentMessage())
+            .notice(translation -> translation.tpa().tpaSentMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
             .player(target.getUniqueId())
-            .notifications(messages -> messages.tpa().tpaReceivedMessage())
+            .notifications(translation -> translation.tpa().tpaReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
 

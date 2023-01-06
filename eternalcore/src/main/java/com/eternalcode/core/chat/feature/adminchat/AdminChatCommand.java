@@ -1,7 +1,7 @@
 package com.eternalcode.core.chat.feature.adminchat;
 
-import com.eternalcode.core.chat.notification.Notice;
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.Notice;
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -27,7 +27,7 @@ public class AdminChatCommand {
     public void execute(CommandSender sender, @Name("message") @Joiner String text) {
         Notice notice = this.noticeService.create()
             .console()
-            .notice(messages -> messages.adminChat().format())
+            .notice(translation -> translation.adminChat().format())
             .placeholder("{NICK}", sender.getName())
             .placeholder("{TEXT}", text);
 

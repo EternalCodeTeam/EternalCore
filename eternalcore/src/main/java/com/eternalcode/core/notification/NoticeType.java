@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.notification;
+package com.eternalcode.core.notification;
 
 public enum NoticeType {
 

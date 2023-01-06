@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.teleport.TeleportService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -24,7 +24,7 @@ public class TeleportHereCommand {
     void tpHere(Player sender, @Arg Player target) {
         this.teleportService.teleport(target, sender.getLocation());
         this.noticeService.create()
-            .notice(messages -> messages.teleport().teleportedPlayerToPlayer())
+            .notice(translation -> translation.teleport().teleportedPlayerToPlayer())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{ARG-PLAYER}", sender.getName())
             .player(sender.getUniqueId())

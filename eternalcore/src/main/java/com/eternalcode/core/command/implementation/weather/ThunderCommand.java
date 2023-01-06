@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementation.weather;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -26,7 +26,7 @@ public class ThunderCommand {
         this.noticeService.create()
             .viewer(viewer)
             .placeholder("{WORLD}", world.getName())
-            .notice(messages -> messages.timeAndWeather().weatherSetThunder())
+            .notice(translation -> translation.timeAndWeather().weatherSetThunder())
             .send();
     }
 

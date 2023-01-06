@@ -1,13 +1,12 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -26,7 +25,7 @@ public class FeedCommand {
         player.setFoodLevel(20);
 
         this.noticeService.create()
-            .notice(messages -> messages.player().feedMessage())
+            .notice(translation -> translation.player().feedMessage())
             .player(player.getUniqueId())
             .send();
 
@@ -36,7 +35,7 @@ public class FeedCommand {
 
         this.noticeService.create()
             .placeholder("{PLAYER}", player.getName())
-            .notice(messages -> messages.player().feedMessageBy())
+            .notice(translation -> translation.player().feedMessageBy())
             .viewer(audience)
             .send();
     }

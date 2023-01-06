@@ -1,8 +1,8 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -17,16 +17,16 @@ import java.util.List;
 @ArgumentName("enchantment")
 public class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 
-    public EnchantmentArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
-        super(viewerProvider, languageManager);
+    public EnchantmentArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
+        super(viewerProvider, translationManager);
     }
 
     @Override
-    public Result<Enchantment, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<Enchantment, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
         Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument));
 
         if (enchantment == null) {
-            return Result.error(messages.argument().noEnchantment());
+            return Result.error(translation.argument().noEnchantment());
         }
 
         return Result.ok(enchantment);

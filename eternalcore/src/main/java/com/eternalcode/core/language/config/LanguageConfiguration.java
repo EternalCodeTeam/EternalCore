@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.language;
+package com.eternalcode.core.language.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.language.Language;
@@ -8,7 +8,6 @@ import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 import org.bukkit.Material;
-import panda.utilities.StringUtils;
 
 import java.io.File;
 import java.util.Arrays;
@@ -58,8 +57,8 @@ public class LanguageConfiguration implements ReloadableConfig {
         }
 
         @Description({ " ", "# List of languages" })
-        public List<LanguageItem> languageItemMap = new ImmutableList.Builder<LanguageItem>()
-            .add(new LanguageItem(
+        public List<LanguageConfigItem> languageConfigItemMap = new ImmutableList.Builder<LanguageConfigItem>()
+            .add(new LanguageConfigItem(
                 Material.PLAYER_HEAD,
                 Language.EN,
                 20,
@@ -68,7 +67,7 @@ public class LanguageConfiguration implements ReloadableConfig {
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODc5ZDk5ZDljNDY0NzRlMjcxM2E3ZTg0YTk1ZTRjZTdlOGZmOGVhNGQxNjQ0MTNhNTkyZTQ0MzVkMmM2ZjlkYyJ9fX0")
             )
 
-            .add(new LanguageItem(
+            .add(new LanguageConfigItem(
                 Material.REPEATER,
                 Language.DEFAULT,
                 22,
@@ -76,7 +75,7 @@ public class LanguageConfiguration implements ReloadableConfig {
                 Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"))
             )
 
-            .add(new LanguageItem(
+            .add(new LanguageConfigItem(
                 Material.PLAYER_HEAD,
                 Language.PL,
                 24,

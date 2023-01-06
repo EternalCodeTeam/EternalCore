@@ -1,8 +1,7 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.notification.NoticeType;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Server;
@@ -30,7 +29,7 @@ public class PlayerJoinListener implements Listener {
 
         if (!player.hasPlayedBefore()) {
             this.noticeService.create()
-                .noticeOption(messages -> RandomUtil.randomElement(messages.event().firstJoinMessage()))
+                .noticeOption(translation -> RandomUtil.randomElement(translation.event().firstJoinMessage()))
                 .placeholder("{PLAYER}", player.getName())
                 .onlinePlayers()
                 .send();
@@ -49,8 +48,8 @@ public class PlayerJoinListener implements Listener {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.event().welcomeTitle())
-            .notice(messages -> messages.event().welcomeSubtitle())
+            .notice(translation -> translation.event().welcomeTitle())
+            .notice(translation -> translation.event().welcomeSubtitle())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .send();
@@ -58,7 +57,7 @@ public class PlayerJoinListener implements Listener {
         event.setJoinMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(messages -> RandomUtil.randomElement(messages.event().joinMessage()))
+            .noticeOption(translation -> RandomUtil.randomElement(translation.event().joinMessage()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();

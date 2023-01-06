@@ -80,12 +80,12 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Override
         public Duration teleportExpire() {
-            return tpaRequestExpire;
+            return this.tpaRequestExpire;
         }
 
         @Override
         public Duration teleportTime() {
-            return tpaTimer;
+            return this.tpaTimer;
         }
     }
 
@@ -153,7 +153,7 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         @Exclude
         public Duration getChatDelay() {
-            return chatDelay;
+            return this.chatDelay;
         }
 
         @Override
@@ -176,7 +176,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Override
         public int interactionsCountDisableAfk() {
-            return interactionsCountDisableAfk;
+            return this.interactionsCountDisableAfk;
         }
     }
 

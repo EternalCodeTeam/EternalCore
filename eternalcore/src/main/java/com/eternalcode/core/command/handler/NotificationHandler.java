@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.handler;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.LiteInvocation;

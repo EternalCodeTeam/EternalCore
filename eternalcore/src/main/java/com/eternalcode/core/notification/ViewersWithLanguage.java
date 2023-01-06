@@ -1,4 +1,4 @@
-package com.eternalcode.core.chat.notification;
+package com.eternalcode.core.notification;
 
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.viewer.Viewer;

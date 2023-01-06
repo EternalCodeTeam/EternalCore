@@ -1,14 +1,13 @@
 package com.eternalcode.core.language;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.configuration.language.LanguageConfiguration;
-import com.eternalcode.core.configuration.language.LanguageItem;
+import com.eternalcode.core.language.config.LanguageConfigItem;
+import com.eternalcode.core.language.config.LanguageConfiguration;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import dev.triumphteam.gui.guis.PaginatedGui;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
@@ -71,23 +70,23 @@ public class LanguageInventory {
             }
         }
 
-        for (LanguageItem languageItem : languageSelector.languageItemMap) {
-            List<Component> lore = languageItem.lore
+        for (LanguageConfigItem languageConfigItem : languageSelector.languageConfigItemMap) {
+            List<Component> lore = languageConfigItem.lore
                 .stream()
                 .map(this.miniMessage::deserialize)
                 .collect(Collectors.toList());
 
             ItemStack item;
 
-            if (languageItem.material == Material.PLAYER_HEAD) {
+            if (languageConfigItem.material == Material.PLAYER_HEAD) {
                 item = ItemBuilder.skull()
-                    .name(this.miniMessage.deserialize(languageItem.name))
+                    .name(this.miniMessage.deserialize(languageConfigItem.name))
                     .lore(lore)
-                    .texture(languageItem.texture)
+                    .texture(languageConfigItem.texture)
                     .build();
             } else {
-                item = ItemBuilder.from(languageItem.material)
-                    .name(this.miniMessage.deserialize(languageItem.name))
+                item = ItemBuilder.from(languageConfigItem.material)
+                    .name(this.miniMessage.deserialize(languageConfigItem.name))
                     .lore(lore)
                     .build();
             }
@@ -95,17 +94,17 @@ public class LanguageInventory {
             GuiItem guiItem = new GuiItem(item);
 
             guiItem.setAction(event -> {
-                user.getSettings().setLanguage(languageItem.language);
+                user.getSettings().setLanguage(languageConfigItem.language);
 
                 player.closeInventory();
 
                 this.noticeService.create()
                     .player(player.getUniqueId())
-                    .notice(messages -> messages.language().languageChanged())
+                    .notice(translation -> translation.language().languageChanged())
                     .send();
             });
 
-            gui.setItem(languageItem.slot, guiItem);
+            gui.setItem(languageConfigItem.slot, guiItem);
         }
 
         gui.open(player);

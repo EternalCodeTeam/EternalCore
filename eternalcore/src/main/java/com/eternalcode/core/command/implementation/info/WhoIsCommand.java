@@ -1,13 +1,12 @@
 package com.eternalcode.core.command.implementation.info;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "whois")
@@ -33,7 +32,7 @@ public class WhoIsCommand {
             .placeholder("{LEVEL}", String.valueOf(player.getLevel()))
             .placeholder("{HEALTH}", String.valueOf(Math.round(player.getHealthScale())))
             .placeholder("{FOOD}", String.valueOf(player.getFoodLevel()))
-            .messages(messages -> messages.player().whoisCommand())
+            .messages(translation -> translation.player().whoisCommand())
             .viewer(viewer)
             .send();
     }

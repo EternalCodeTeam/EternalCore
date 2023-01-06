@@ -1,15 +1,14 @@
 package com.eternalcode.core.teleport.command;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,7 +33,7 @@ public class TeleportToPositionCommand {
         }
 
         this.noticeService.create()
-            .notice(messages -> messages.teleport().teleportedSpecifiedPlayerToCoordinates())
+            .notice(translation -> translation.teleport().teleportedSpecifiedPlayerToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))
@@ -49,7 +48,7 @@ public class TeleportToPositionCommand {
 
         this.teleportService.teleport(player, location);
         this.noticeService.create()
-            .notice(messages -> messages.teleport().teleportedToCoordinates())
+            .notice(translation -> translation.teleport().teleportedToCoordinates())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{X}", String.valueOf(x))
             .placeholder("{Y}", String.valueOf(y))

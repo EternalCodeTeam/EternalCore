@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.language;
+package com.eternalcode.core.language.config;
 
 import com.eternalcode.core.language.Language;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Contextual
-public class LanguageItem {
+public class LanguageConfigItem {
 
     public Material material = Material.DIRT;
 
@@ -22,7 +22,7 @@ public class LanguageItem {
 
     public String texture = "none";
 
-    public LanguageItem(Material material, Language language, int slot, String name, List<String> lore, String texture) {
+    public LanguageConfigItem(Material material, Language language, int slot, String name, List<String> lore, String texture) {
         this.material = material;
         this.language = language;
         this.slot = slot;
@@ -31,7 +31,7 @@ public class LanguageItem {
         this.texture = texture;
     }
 
-    public LanguageItem(Material material, Language language, int slot, String name, List<String> lore) {
+    public LanguageConfigItem(Material material, Language language, int slot, String name, List<String> lore) {
         this.material = material;
         this.language = language;
         this.slot = slot;
@@ -39,7 +39,7 @@ public class LanguageItem {
         this.lore = lore;
     }
 
-    public LanguageItem() {
+    public LanguageConfigItem() {
 
     }
 }

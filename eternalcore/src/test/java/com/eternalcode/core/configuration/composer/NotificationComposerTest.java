@@ -1,7 +1,7 @@
 package com.eternalcode.core.configuration.composer;
 
-import com.eternalcode.core.chat.notification.NoticeType;
-import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.notification.NoticeType;
+import com.eternalcode.core.notification.Notification;
 import org.junit.jupiter.api.Test;
 import panda.std.Result;
 

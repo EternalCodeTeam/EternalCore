@@ -1,6 +1,6 @@
 package com.eternalcode.core.chat.feature.privatechat;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -26,11 +26,11 @@ public class PrivateChatSocialSpyCommand {
 
         if (this.privateChatService.isSpy(uuid)) {
             this.privateChatService.disableSpy(uuid);
-            this.noticeService.player(uuid, messages -> messages.privateChat().socialSpyDisable());
+            this.noticeService.player(uuid, translation -> translation.privateChat().socialSpyDisable());
             return;
         }
 
-        this.noticeService.player(uuid, messages -> messages.privateChat().socialSpyEnable());
+        this.noticeService.player(uuid, translation -> translation.privateChat().socialSpyEnable());
         this.privateChatService.enableSpy(uuid);
     }
 

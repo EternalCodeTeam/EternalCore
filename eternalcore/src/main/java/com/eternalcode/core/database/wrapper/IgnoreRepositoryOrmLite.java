@@ -39,7 +39,7 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
     public Completable<Boolean> isIgnored(UUID by, UUID target) {
         return this.scheduler.completeAsync(() -> {
             try {
-                return ignores.get(by).contains(target);
+                return this.ignores.get(by).contains(target);
             } catch (ExecutionException exception) {
                 throw new RuntimeException(exception);
             }
@@ -92,7 +92,7 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
     private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
         @Override
         public @NotNull Set<UUID> load(@NotNull UUID key) throws SQLException {
-            return cachedDao.queryBuilder()
+            return IgnoreRepositoryOrmLite.this.cachedDao.queryBuilder()
                 .where().eq("player_id", key)
                 .query()
                 .stream()

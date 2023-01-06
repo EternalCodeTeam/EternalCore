@@ -1,7 +1,7 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -28,7 +28,7 @@ public class PlayerQuitListener implements Listener {
         event.setQuitMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(messages -> RandomUtil.randomElement(messages.event().quitMessage()))
+            .noticeOption(translation -> RandomUtil.randomElement(translation.event().quitMessage()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();

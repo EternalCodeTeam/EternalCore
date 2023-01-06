@@ -1,6 +1,6 @@
 package com.eternalcode.core.chat.feature.ignore;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -30,7 +30,7 @@ public class IgnoreCommand {
 
         if (sender.equals(target)) {
             this.noticeService.create()
-                .notice(messages -> messages.privateChat().cantIgnoreYourself())
+                .notice(translation -> translation.privateChat().cantIgnoreYourself())
                 .viewer(sender)
                 .send();
 
@@ -41,7 +41,7 @@ public class IgnoreCommand {
             if (isIgnored) {
                 this.noticeService.create()
                     .user(sender)
-                    .notice(messages -> messages.privateChat().alreadyIgnorePlayer())
+                    .notice(translation -> translation.privateChat().alreadyIgnorePlayer())
 
                     .placeholder("{PLAYER}", target.getName())
                     .send();
@@ -54,7 +54,7 @@ public class IgnoreCommand {
             this.noticeService.create()
                 .player(senderUuid)
                 .placeholder("{PLAYER}", target.getName())
-                .notice(messages -> messages.privateChat().ignorePlayer())
+                .notice(translation -> translation.privateChat().ignorePlayer())
                 .send();
         });
     }

@@ -1,8 +1,8 @@
 package com.eternalcode.core.command.contextual;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import dev.rollczi.litecommands.command.Invocation;
 import dev.rollczi.litecommands.contextual.Contextual;
 import org.bukkit.command.CommandSender;
@@ -11,10 +11,10 @@ import panda.std.Result;
 
 public class PlayerContextual implements Contextual<CommandSender, Player> {
 
-    private final LanguageManager languageManager;
+    private final TranslationManager translationManager;
 
-    public PlayerContextual(LanguageManager languageManager) {
-        this.languageManager = languageManager;
+    public PlayerContextual(TranslationManager translationManager) {
+        this.translationManager = translationManager;
     }
 
     @Override
@@ -23,9 +23,10 @@ public class PlayerContextual implements Contextual<CommandSender, Player> {
             return Result.ok(player);
         }
 
-        Messages messages = this.languageManager.getDefaultMessages();
-        Notification onlyPlayer = messages.argument().onlyPlayer();
+        Translation translation = this.translationManager.getDefaultMessages();
+        Notification onlyPlayer = translation.argument().onlyPlayer();
 
         return Result.error(onlyPlayer);
     }
+
 }

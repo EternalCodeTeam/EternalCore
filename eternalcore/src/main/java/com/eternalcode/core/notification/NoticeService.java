@@ -1,9 +1,8 @@
-package com.eternalcode.core.chat.notification;
+package com.eternalcode.core.notification;
 
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.MessageExtractor;
-import com.eternalcode.core.language.NotificationExtractor;
+import com.eternalcode.core.notification.extractor.NotificationExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
@@ -14,13 +13,13 @@ import java.util.UUID;
 
 public class NoticeService {
 
-    private final LanguageManager languageManager;
+    private final TranslationManager translationManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
     private final PlaceholderRegistry placeholderRegistry;
 
-    public NoticeService(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
-        this.languageManager = languageManager;
+    public NoticeService(TranslationManager translationManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+        this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
         this.placeholderRegistry = placeholderRegistry;
@@ -28,7 +27,7 @@ public class NoticeService {
 
     @CheckReturnValue
     public Notice create() {
-        return new Notice(this.languageManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
+        return new Notice(this.translationManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
     }
 
     public void player(UUID player, NotificationExtractor extractor, Formatter... formatters) {

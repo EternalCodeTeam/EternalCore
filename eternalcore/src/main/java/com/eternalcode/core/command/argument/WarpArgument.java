@@ -1,8 +1,8 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.warp.Warp;
 import com.eternalcode.core.warp.WarpManager;
@@ -19,17 +19,17 @@ public class WarpArgument extends AbstractViewerArgument<Warp> {
 
     private final WarpManager warpManager;
 
-    public WarpArgument(WarpManager warpManager, LanguageManager languageManager, BukkitViewerProvider viewerProvider) {
-        super(viewerProvider, languageManager);
+    public WarpArgument(WarpManager warpManager, TranslationManager translationManager, BukkitViewerProvider viewerProvider) {
+        super(viewerProvider, translationManager);
         this.warpManager = warpManager;
     }
 
     @Override
-    public Result<Warp, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<Warp, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
         Option<Warp> warpOption = this.warpManager.findWarp(argument);
 
         if (warpOption.isEmpty()) {
-            return Result.error(messages.warp().notExist());
+            return Result.error(translation.warp().notExist());
         }
 
         return Result.ok(warpOption.get());

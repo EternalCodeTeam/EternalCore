@@ -29,7 +29,7 @@ public class BukkitViewerProvider implements ViewerProvider {
     public Collection<Viewer> all() {
         Collection<Viewer> audiences = this.onlinePlayers();
 
-        audiences.add(console());
+        audiences.add(this.console());
 
         return audiences;
     }

@@ -1,12 +1,11 @@
 package com.eternalcode.core.command.implementation.inventory;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import org.bukkit.Material;
@@ -34,7 +33,7 @@ public class InventoryOpenCommand {
     void enderchest(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
-                .notice(messages -> messages.inventory().cantOpenYourInventory())
+                .notice(translation -> translation.inventory().cantOpenYourInventory())
                 .player(sender.getUniqueId())
                 .send();
             return;
@@ -48,13 +47,13 @@ public class InventoryOpenCommand {
     void armor(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
-                .notice(messages -> messages.inventory().cantOpenYourInventory())
+                .notice(translation -> translation.inventory().cantOpenYourInventory())
                 .player(sender.getUniqueId())
                 .send();
             return;
         }
 
-        createInventory(target).open(sender);
+        this.createInventory(target).open(sender);
     }
 
     @Execute(route = "inventory")
@@ -62,7 +61,7 @@ public class InventoryOpenCommand {
     void inventory(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
-                .notice(messages -> messages.inventory().cantOpenYourInventory())
+                .notice(translation -> translation.inventory().cantOpenYourInventory())
                 .player(sender.getUniqueId())
                 .send();
             return;

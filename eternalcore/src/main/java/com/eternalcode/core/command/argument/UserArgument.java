@@ -1,14 +1,12 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
-import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.Server;
@@ -23,8 +21,8 @@ public class UserArgument extends AbstractViewerArgument<User> {
     private final Server server;
     private final UserManager userManager;
 
-    public UserArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager, Server server, UserManager userManager) {
-        super(viewerProvider, languageManager);
+    public UserArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager, Server server, UserManager userManager) {
+        super(viewerProvider, translationManager);
         this.server = server;
         this.userManager = userManager;
     }
@@ -38,8 +36,8 @@ public class UserArgument extends AbstractViewerArgument<User> {
     }
 
     @Override
-    public Result<User, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
-        return this.userManager.getUser(argument).toResult(() -> messages.argument().offlinePlayer());
+    public Result<User, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+        return this.userManager.getUser(argument).toResult(() -> translation.argument().offlinePlayer());
     }
 
 }

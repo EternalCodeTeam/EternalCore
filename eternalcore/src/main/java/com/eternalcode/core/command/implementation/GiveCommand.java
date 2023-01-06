@@ -1,16 +1,15 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.amount.Between;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -36,7 +35,7 @@ public class GiveCommand {
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
-            .notice(messages -> messages.item().giveReceived())
+            .notice(translation -> translation.item().giveReceived())
             .player(player.getUniqueId())
             .send();
 
@@ -47,7 +46,7 @@ public class GiveCommand {
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", player.getName())
-            .notice(messages -> messages.item().giveGiven())
+            .notice(translation -> translation.item().giveGiven())
             .viewer(audience)
             .send();
     }

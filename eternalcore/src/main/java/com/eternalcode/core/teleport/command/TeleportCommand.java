@@ -1,19 +1,16 @@
 package com.eternalcode.core.teleport.command;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 import panda.utilities.text.Formatter;
 
 @Route(name = "teleport", aliases = { "tp" })
@@ -49,7 +46,7 @@ public class TeleportCommand {
         Formatter formatter = this.formatter(player, target.getLocation());
         Formatter otherFormatter = OTHER_PLAYER.toFormatter(target);
 
-        this.noticeService.viewer(sender, messages -> messages.teleport().teleportedPlayerToPlayer(), formatter, otherFormatter);
+        this.noticeService.viewer(sender, translation -> translation.teleport().teleportedPlayerToPlayer(), formatter, otherFormatter);
     }
 
     @Execute(required = 1)
@@ -58,7 +55,7 @@ public class TeleportCommand {
 
         Formatter formatter = this.formatter(sender, player.getLocation());
 
-        this.noticeService.viewer(senderViewer, messages -> messages.teleport().teleportedToPlayer(), formatter);
+        this.noticeService.viewer(senderViewer, translation -> translation.teleport().teleportedToPlayer(), formatter);
     }
 
     @Execute(min = 3, max = 4)
@@ -69,7 +66,7 @@ public class TeleportCommand {
 
         Formatter formatter = this.formatter(sender, location);
 
-        this.noticeService.player(sender.getUniqueId(), messages -> messages.teleport().teleportedToCoordinates(), formatter);
+        this.noticeService.player(sender.getUniqueId(), translation -> translation.teleport().teleportedToCoordinates(), formatter);
     }
 
     @Execute(min = 4, max = 5)
@@ -79,7 +76,7 @@ public class TeleportCommand {
         Formatter formatter = this.formatter(player, location);
 
         this.teleportService.teleport(player, location);
-        this.noticeService.viewer(sender, messages -> messages.teleport().teleportedSpecifiedPlayerToCoordinates(), formatter);
+        this.noticeService.viewer(sender, translation -> translation.teleport().teleportedSpecifiedPlayerToCoordinates(), formatter);
     }
 
     private Formatter formatter(Player player, Location location) {

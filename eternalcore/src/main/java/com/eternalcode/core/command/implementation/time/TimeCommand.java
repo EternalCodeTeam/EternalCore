@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementation.time;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
@@ -32,7 +32,7 @@ public class TimeCommand {
         this.noticeService.create()
             .viewer(viewer)
             .placeholder("{TIME}", String.valueOf(time))
-            .notice(messages -> messages.timeAndWeather().timeAdd())
+            .notice(translation -> translation.timeAndWeather().timeAdd())
             .send();
     }
 
@@ -48,7 +48,7 @@ public class TimeCommand {
         this.noticeService.create()
             .viewer(viewer)
             .placeholder("{TIME}", String.valueOf(time))
-            .notice(messages -> messages.timeAndWeather().timeSet())
+            .notice(translation -> translation.timeAndWeather().timeSet())
             .send();
     }
 

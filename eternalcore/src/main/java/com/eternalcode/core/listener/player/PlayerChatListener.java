@@ -1,8 +1,8 @@
 package com.eternalcode.core.listener.player;
 
 import com.eternalcode.core.chat.ChatManager;
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -35,7 +35,7 @@ public class PlayerChatListener implements Listener {
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
             this.noticeService.create()
-                .notice(messages -> messages.chat().disabledChatInfo())
+                .notice(translation -> translation.chat().disabledChatInfo())
                 .player(player.getUniqueId())
                 .send();
 
@@ -51,7 +51,7 @@ public class PlayerChatListener implements Listener {
             this.noticeService
                 .create()
                 .player(player.getUniqueId())
-                .notice(messages -> messages.chat().slowMode())
+                .notice(translation -> translation.chat().slowMode())
                 .placeholder("{TIME}", DurationUtil.format(time))
                 .send();
 

@@ -1,9 +1,9 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -24,22 +24,22 @@ public class RequesterArgument extends AbstractViewerArgument<Player> {
 
     private final Server server;
 
-    public RequesterArgument(TeleportRequestService requestService, LanguageManager languageManager, BukkitViewerProvider viewerProvider, Server server) {
-        super(viewerProvider, languageManager);
+    public RequesterArgument(TeleportRequestService requestService, TranslationManager translationManager, BukkitViewerProvider viewerProvider, Server server) {
+        super(viewerProvider, translationManager);
         this.requestService = requestService;
         this.server = server;
     }
 
     @Override
-    public Result<Player, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<Player, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
         Player target = this.server.getPlayer(argument);
 
         if (!(invocation.sender().getHandle() instanceof Player player)) {
-            return Result.error(messages.argument().onlyPlayer());
+            return Result.error(translation.argument().onlyPlayer());
         }
 
         if (target == null || !this.requestService.hasRequest(target.getUniqueId(), player.getUniqueId())) {
-            return Result.error(messages.tpa().tpaDenyNoRequestMessage());
+            return Result.error(translation.tpa().tpaDenyNoRequestMessage());
         }
 
         return Result.ok(target);

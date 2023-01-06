@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.notification.NoticeType;
+import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Location;
@@ -45,8 +45,8 @@ public class TeleportTask implements Runnable {
                 this.teleportTaskService.removeTeleport(uuid);
 
                 this.noticeService.create()
-                    .notice(NoticeType.ACTIONBAR, messages -> StringUtils.EMPTY)
-                    .notice(messages -> messages.teleport().teleportTaskCanceled())
+                    .notice(NoticeType.ACTIONBAR, translation -> StringUtils.EMPTY)
+                    .notice(translation -> translation.teleport().teleportTaskCanceled())
                     .player(player.getUniqueId())
                     .send();
 
@@ -59,7 +59,7 @@ public class TeleportTask implements Runnable {
                 Duration duration = Duration.between(now, teleportMoment);
 
                 this.noticeService.create()
-                    .notice(messages -> messages.teleport().teleportTimerFormat())
+                    .notice(translation -> translation.teleport().teleportTimerFormat())
                     .placeholder("{TIME}", DurationUtil.format(duration))
                     .player(player.getUniqueId())
                     .send();
@@ -71,7 +71,7 @@ public class TeleportTask implements Runnable {
             this.teleportTaskService.removeTeleport(uuid);
 
             this.noticeService.create()
-                .notice(messages -> messages.teleport().teleported())
+                .notice(translation -> translation.teleport().teleported())
                 .player(player.getUniqueId())
                 .send();
         }

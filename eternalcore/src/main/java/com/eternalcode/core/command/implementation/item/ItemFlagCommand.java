@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementation.item;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
@@ -29,7 +29,7 @@ public class ItemFlagCommand {
         ItemMeta meta = hand.getItemMeta();
 
         if (meta == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
             return;
         }
 
@@ -37,13 +37,13 @@ public class ItemFlagCommand {
 
         if (meta.hasItemFlag(flag)) {
             meta.removeItemFlags(flag);
-            this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemFlagRemovedMessage(), formatter);
+            this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagRemovedMessage(), formatter);
             return;
         }
 
         meta.addItemFlags(flag);
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemFlagAddedMessage(), formatter);
+        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagAddedMessage(), formatter);
     }
 
     @Execute(route = "clear")
@@ -52,13 +52,13 @@ public class ItemFlagCommand {
         ItemMeta meta = hand.getItemMeta();
 
         if (meta == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
             return;
         }
 
         meta.removeItemFlags(ItemFlag.values());
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemFlagClearedMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagClearedMessage());
     }
 
 }

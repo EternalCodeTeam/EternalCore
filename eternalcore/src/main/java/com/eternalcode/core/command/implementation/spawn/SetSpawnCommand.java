@@ -1,12 +1,12 @@
 package com.eternalcode.core.command.implementation.spawn;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "setspawn")
@@ -30,7 +30,7 @@ public class SetSpawnCommand {
         this.configurationManager.save(this.locations);
 
         this.noticeService.create()
-            .notice(messages -> messages.spawn().spawnSet())
+            .notice(translation -> translation.spawn().spawnSet())
             .player(player.getUniqueId())
             .send();
     }

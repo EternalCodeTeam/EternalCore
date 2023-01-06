@@ -1,8 +1,8 @@
 package com.eternalcode.core.command.contextual;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import dev.rollczi.litecommands.command.Invocation;
@@ -13,11 +13,11 @@ import panda.std.Result;
 
 public class UserContextual implements Contextual<CommandSender, User> {
 
-    private final LanguageManager languageManager;
+    private final TranslationManager translationManager;
     private final UserManager userManager;
 
-    public UserContextual(LanguageManager languageManager, UserManager userManager) {
-        this.languageManager = languageManager;
+    public UserContextual(TranslationManager translationManager, UserManager userManager) {
+        this.translationManager = translationManager;
         this.userManager = userManager;
     }
 
@@ -28,8 +28,8 @@ public class UserContextual implements Contextual<CommandSender, User> {
                 .orThrow(() -> new IllegalStateException("Player " + player.getName() + " is not registered!")));
         }
 
-        Messages messages = this.languageManager.getDefaultMessages();
-        Notification onlyPlayer = messages.argument().onlyPlayer();
+        Translation translation = this.translationManager.getDefaultMessages();
+        Notification onlyPlayer = translation.argument().onlyPlayer();
 
         return Result.error(onlyPlayer);
     }

@@ -1,13 +1,12 @@
 package com.eternalcode.core.teleport.request;
 
-import com.eternalcode.core.chat.notification.NoticeService;
-
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -36,14 +35,14 @@ public class TpaDenyCommand {
         this.noticeService
             .create()
             .player(player.getUniqueId())
-            .notice(messages -> messages.tpa().tpaDenyDoneMessage())
+            .notice(translation -> translation.tpa().tpaDenyDoneMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
             .player(target.getUniqueId())
-            .notice(messages -> messages.tpa().tpaDenyReceivedMessage())
+            .notice(translation -> translation.tpa().tpaDenyReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
     }
@@ -54,7 +53,7 @@ public class TpaDenyCommand {
 
         if (requests.isEmpty()) {
 
-            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaDenyNoRequestMessage());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaDenyNoRequestMessage());
 
             return;
         }
@@ -69,12 +68,12 @@ public class TpaDenyCommand {
                 this.noticeService
                     .create()
                     .player(uniqueId)
-                    .notice(messages -> messages.tpa().tpaDenyReceivedMessage())
+                    .notice(translation -> translation.tpa().tpaDenyReceivedMessage())
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }
         }
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaDenyAllDenied());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaDenyAllDenied());
     }
 }

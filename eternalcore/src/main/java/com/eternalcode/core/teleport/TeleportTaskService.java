@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.shared.Position;
+import com.eternalcode.core.shared.PositionAdapter;
 import org.bukkit.Location;
 import panda.std.Option;
 

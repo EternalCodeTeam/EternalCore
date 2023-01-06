@@ -1,13 +1,11 @@
 package com.eternalcode.core.chat.feature.ignore;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
-import org.bukkit.entity.Player;
-import panda.std.reactive.Completable;
 
 import java.util.UUID;
 
@@ -30,7 +28,7 @@ public class UnIgnoreCommand {
 
         if (sender.equals(target)) {
             this.noticeService.create()
-                .notice(messages -> messages.privateChat().cantUnIgnoreYourself())
+                .notice(translation -> translation.privateChat().cantUnIgnoreYourself())
                 .viewer(sender)
                 .send();
 
@@ -41,7 +39,7 @@ public class UnIgnoreCommand {
             if (!isIgnored) {
                 this.noticeService.create()
                     .user(sender)
-                    .notice(messages -> messages.privateChat().notIgnorePlayer())
+                    .notice(translation -> translation.privateChat().notIgnorePlayer())
                     .placeholder("{PLAYER}", target.getName())
                     .send();
 
@@ -53,7 +51,7 @@ public class UnIgnoreCommand {
             this.noticeService.create()
                 .player(senderUuid)
                 .placeholder("{PLAYER}", target.getName())
-                .notice(messages -> messages.privateChat().unIgnorePlayer())
+                .notice(translation -> translation.privateChat().unIgnorePlayer())
                 .send();
         });
     }
