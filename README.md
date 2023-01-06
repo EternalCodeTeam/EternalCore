@@ -69,3 +69,8 @@ See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master
 - [HikariCP](https://github.com/brettwooldridge/HikariCP)
 - [Ormlite jdbc](https://github.com/j256/ormlite-jdbc)
 - [TriumphGui](https://github.com/TriumphTeam/triumph-gui)
+
+# Special thanks
+[<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="" width="150">](https://www.jetbrains.com)
+
+We thank Jetbrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for high quality tools. We recommend using [Intellij IDE](https://www.jetbrains.com/idea/) to work with our projects!
