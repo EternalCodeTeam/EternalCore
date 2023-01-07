@@ -1,10 +1,10 @@
 package com.eternalcode.core.command.implementation.info;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Server;
 
 
@@ -24,7 +24,7 @@ public class OnlinePlayerCountCommand {
     void execute(Viewer viewer) {
         this.noticeService
             .create()
-            .notice(messages -> messages.player().onlineMessage())
+            .notice(translation -> translation.player().onlineMessage())
             .viewer(viewer)
             .placeholder("{ONLINE}", String.valueOf(this.server.getOnlinePlayers().size()))
             .send();

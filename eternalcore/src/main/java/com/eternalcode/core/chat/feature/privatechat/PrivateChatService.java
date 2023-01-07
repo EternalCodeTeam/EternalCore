@@ -1,7 +1,7 @@
 package com.eternalcode.core.chat.feature.privatechat;
 
 import com.eternalcode.core.chat.feature.ignore.IgnoreRepository;
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -36,7 +36,7 @@ public class PrivateChatService {
 
     public void privateMessage(User sender, User target, String message) {
         if (target.getClientSettings().isOffline()) {
-            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
 
             return;
         }
@@ -47,7 +47,7 @@ public class PrivateChatService {
                 this.replies.put(sender.getUniqueId(), target.getUniqueId());
             }
 
-            this.publisher.publish(new PrivateMessage(sender, target, message, socialSpy, isIgnored));
+            this.publisher.publish(new PrivateMessage(sender, target, message, this.socialSpy, isIgnored));
         });
     }
 
@@ -55,7 +55,7 @@ public class PrivateChatService {
         UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
 
         if (uuid == null) {
-            this.noticeService.player(sender.getUniqueId(), messages -> messages.privateChat().noReply());
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().noReply());
 
             return;
         }
@@ -63,7 +63,7 @@ public class PrivateChatService {
         Option<User> targetOption = this.userManager.getUser(uuid);
 
         if (targetOption.isEmpty()) {
-            this.noticeService.player(sender.getUniqueId(), messages -> messages.argument().offlinePlayer());
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
 
             return;
         }

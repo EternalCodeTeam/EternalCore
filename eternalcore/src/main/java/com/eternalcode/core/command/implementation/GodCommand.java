@@ -1,13 +1,12 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -27,8 +26,8 @@ public class GodCommand {
 
         this.noticeService
             .create()
-            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().enable() : messages.format().disable())
-            .notice(messages -> messages.player().godMessage())
+            .placeholder("{STATE}", translation -> player.isInvulnerable() ? translation.format().enable() : translation.format().disable())
+            .notice(translation -> translation.player().godMessage())
             .player(player.getUniqueId())
             .send();
 
@@ -38,9 +37,9 @@ public class GodCommand {
 
         this.noticeService
             .create()
-            .placeholder("{STATE}", messages -> player.isInvulnerable() ? messages.format().enable() : messages.format().disable())
+            .placeholder("{STATE}", translation -> player.isInvulnerable() ? translation.format().enable() : translation.format().disable())
             .placeholder("{PLAYER}", player.getName())
-            .notice(messages -> messages.player().godSetMessage())
+            .notice(translation -> translation.player().godSetMessage())
             .viewer(viewer)
             .send();
     }

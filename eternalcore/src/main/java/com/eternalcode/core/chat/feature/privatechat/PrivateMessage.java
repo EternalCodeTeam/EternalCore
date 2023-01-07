@@ -1,13 +1,13 @@
 package com.eternalcode.core.chat.feature.privatechat;
 
-import com.eternalcode.core.publish.Content;
+import com.eternalcode.core.publish.PublishContent;
 import com.eternalcode.core.user.User;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
-class PrivateMessage implements Content {
+class PrivateMessage implements PublishContent {
 
     private final User sender;
     private final User target;

@@ -1,8 +1,8 @@
 package com.eternalcode.core.home.command;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeManager;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
@@ -23,7 +23,7 @@ public class DelHomeCommand {
         this.homeManager.deleteHome(user, home.getName());
         this.noticeService.create()
             .user(user)
-            .notice(messages -> messages.home().delete())
+            .notice(translation -> translation.home().delete())
             .placeholder("{HOME}", home.getName())
             .send();
     }

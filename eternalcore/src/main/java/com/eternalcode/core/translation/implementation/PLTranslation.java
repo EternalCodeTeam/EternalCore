@@ -1,21 +1,22 @@
-package com.eternalcode.core.configuration.lang;
+package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.chat.notification.NoticeType;
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.ReloadableMessages;
 import com.eternalcode.core.language.Language;
+import com.eternalcode.core.notification.NoticeType;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.AbstractTranslation;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.source.Resource;
-import net.dzikoysk.cdn.source.Source;
 
-import java.io.File;
 import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
-public class PLMessagesConfiguration implements ReloadableMessages {
+public class PLTranslation extends AbstractTranslation {
+
+    PLTranslation() {
+        super(Language.PL);
+    }
 
     public PLArgumentSection argument = new PLArgumentSection();
 
@@ -332,15 +333,7 @@ public class PLMessagesConfiguration implements ReloadableMessages {
     @Contextual
     public static class PLLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
-    }
 
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "lang" + File.separator + "pl_messages.yml");
     }
-
-    @Override
-    public Language getLanguage() {
-        return Language.PL;
-    }
+    
 }

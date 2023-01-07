@@ -1,6 +1,6 @@
 package com.eternalcode.core.warp;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.argument.Arg;
@@ -38,7 +38,7 @@ public class WarpCommand {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .placeholder("{WARP}", warp)
-                .notice(messages -> messages.warp().warpAlreadyExists())
+                .notice(translation -> translation.warp().warpAlreadyExists())
                 .send();
 
             return;
@@ -48,7 +48,7 @@ public class WarpCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(messages -> messages.warp().create())
+            .notice(translation -> translation.warp().create())
             .placeholder("{NAME}", warp)
             .send();
     }
@@ -60,7 +60,7 @@ public class WarpCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(messages -> messages.warp().remove())
+            .notice(translation -> translation.warp().remove())
             .placeholder("{NAME}", warp.getName())
             .send();
     }

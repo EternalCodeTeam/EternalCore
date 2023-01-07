@@ -1,11 +1,11 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -24,7 +24,7 @@ public class GameModeCommand {
         sender.setGameMode(gameMode);
 
         this.noticeService.create()
-            .notice(messages -> messages.player().gameModeMessage())
+            .notice(translation -> translation.player().gameModeMessage())
             .placeholder("{GAMEMODE}", gameMode.name())
             .player(sender.getUniqueId())
             .send();
@@ -35,7 +35,7 @@ public class GameModeCommand {
         player.setGameMode(gameMode);
 
         this.noticeService.create()
-            .notice(messages -> messages.player().gameModeSetMessage())
+            .notice(translation -> translation.player().gameModeSetMessage())
             .placeholder("{GAMEMODE}", gameMode.name())
             .placeholder("{PLAYER}", player.getName())
             .viewer(sender)

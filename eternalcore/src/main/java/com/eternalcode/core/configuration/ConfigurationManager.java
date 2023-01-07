@@ -1,11 +1,11 @@
 package com.eternalcode.core.configuration;
 
-import com.eternalcode.core.chat.notification.Notification;
 import com.eternalcode.core.configuration.composer.DurationComposer;
+import com.eternalcode.core.configuration.composer.LanguageComposer;
 import com.eternalcode.core.configuration.composer.NotificationComposer;
-import com.eternalcode.core.configuration.language.LanguageComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.language.Language;
+import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
@@ -34,10 +34,10 @@ public class ConfigurationManager {
     }
 
     public <T extends ReloadableConfig> T load(T config) {
-        cdn.load(config.resource(this.dataFolder), config)
+        this.cdn.load(config.resource(this.dataFolder), config)
             .orThrow(RuntimeException::new);
 
-        cdn.render(config, config.resource(this.dataFolder))
+        this.cdn.render(config, config.resource(this.dataFolder))
             .orThrow(RuntimeException::new);
 
         this.configs.add(config);
@@ -46,13 +46,13 @@ public class ConfigurationManager {
     }
 
     public <T extends ReloadableConfig> void save(T config) {
-        cdn.render(config, config.resource(this.dataFolder))
+        this.cdn.render(config, config.resource(this.dataFolder))
             .orThrow(RuntimeException::new);
     }
 
     public void reload() {
         for (ReloadableConfig config : this.configs) {
-            load(config);
+            this.load(config);
         }
     }
 

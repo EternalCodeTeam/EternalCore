@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -34,7 +34,7 @@ public class SkullCommand {
             player.getInventory().addItem(namedSkull);
 
             this.noticeService.create()
-                .notice(messages -> messages.item().skullMessage())
+                .notice(translation -> translation.item().skullMessage())
                 .placeholder("{NICK}", name)
                 .player(player.getUniqueId())
                 .send();

@@ -1,11 +1,10 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.ItemUtil;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
-import org.bukkit.Material;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -31,7 +30,7 @@ public class HatCommand {
             this.noticeService
                 .create()
                 .player(player.getUniqueId())
-                .notice(messages -> messages.argument().noItem())
+                .notice(translation -> translation.argument().noItem())
                 .send();
 
             return;

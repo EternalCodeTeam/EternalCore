@@ -1,10 +1,10 @@
 package com.eternalcode.core.afk;
 
-import com.eternalcode.core.publish.Content;
+import com.eternalcode.core.publish.PublishContent;
 
 import java.util.UUID;
 
-class AfkChangeEvent implements Content {
+class AfkChangeEvent implements PublishContent {
 
     private final UUID player;
     private final boolean afk;
@@ -15,11 +15,11 @@ class AfkChangeEvent implements Content {
     }
 
     public UUID getPlayer() {
-        return player;
+        return this.player;
     }
 
     public boolean isAfk() {
-        return afk;
+        return this.afk;
     }
 
 }

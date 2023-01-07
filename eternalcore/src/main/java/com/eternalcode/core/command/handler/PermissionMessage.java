@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.handler;
 
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -20,26 +20,26 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
 
     private final BukkitViewerProvider viewerProvider;
     private final AudienceProvider audienceProvider;
-    private final LanguageManager languageManager;
+    private final TranslationManager translationManager;
     private final MiniMessage miniMessage;
 
-    public PermissionMessage(BukkitViewerProvider viewerProvider, AudienceProvider audienceProvider, LanguageManager languageManager, MiniMessage miniMessage) {
+    public PermissionMessage(BukkitViewerProvider viewerProvider, AudienceProvider audienceProvider, TranslationManager translationManager, MiniMessage miniMessage) {
         this.viewerProvider = viewerProvider;
         this.audienceProvider = audienceProvider;
-        this.languageManager = languageManager;
+        this.translationManager = translationManager;
         this.miniMessage = miniMessage;
     }
 
     @Override
     public void handle(CommandSender sender, LiteInvocation invocation, RequiredPermissions requiredPermissions) {
         Viewer viewer = this.viewerProvider.sender(sender);
-        Messages messages = this.languageManager.getMessages(viewer);
+        Translation translation = this.translationManager.getMessages(viewer);
 
         String perms = Joiner.on(", ")
             .join(requiredPermissions.getPermissions())
             .toString();
 
-        String replaced = messages.argument().permissionMessage().getMessage().replace("{PERMISSIONS}", perms);
+        String replaced = translation.argument().permissionMessage().getMessage().replace("{PERMISSIONS}", perms);
 
         if (sender instanceof Player player) {
             this.audienceProvider.player(player.getUniqueId()).sendMessage(this.miniMessage.deserialize(replaced));
@@ -50,4 +50,5 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
             this.audienceProvider.console().sendMessage(this.miniMessage.deserialize(replaced));
         }
     }
+
 }

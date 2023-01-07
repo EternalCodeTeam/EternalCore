@@ -1,9 +1,9 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -29,7 +29,7 @@ public class RepairCommand {
         if (handItem == null || !(handItem.getItemMeta() instanceof Repairable)) {
             this.noticeService
                 .create()
-                .notice(messages -> messages.argument().noItem())
+                .notice(translation -> translation.argument().noItem())
                 .player(player.getUniqueId())
                 .send();
 
@@ -39,18 +39,18 @@ public class RepairCommand {
         if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
             this.noticeService
                 .create()
-                .notice(messages -> messages.argument().noDamaged())
+                .notice(translation -> translation.argument().noDamaged())
                 .player(player.getUniqueId())
                 .send();
 
             return;
         }
 
-        repairItem(handItem);
+        this.repairItem(handItem);
 
         this.noticeService
             .create()
-            .notice(messages -> messages.item().repairMessage())
+            .notice(translation -> translation.item().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
@@ -69,13 +69,13 @@ public class RepairCommand {
             }
 
             exists = true;
-            repairItem(itemStack);
+            this.repairItem(itemStack);
         }
 
         if (!exists) {
             this.noticeService
                 .create()
-                .notice(messages -> messages.argument().noDamagedItems())
+                .notice(translation -> translation.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
 
@@ -84,7 +84,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.item().repairMessage())
+            .notice(translation -> translation.item().repairMessage())
             .player(player.getUniqueId())
             .send();
     }
@@ -103,13 +103,13 @@ public class RepairCommand {
             }
 
             exists = true;
-            repairItem(itemStack);
+            this.repairItem(itemStack);
         }
 
         if (!exists) {
             this.noticeService
                 .create()
-                .notice(messages -> messages.argument().noDamagedItems())
+                .notice(translation -> translation.argument().noDamagedItems())
                 .player(player.getUniqueId())
                 .send();
 
@@ -118,7 +118,7 @@ public class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.item().repairMessage())
+            .notice(translation -> translation.item().repairMessage())
             .player(player.getUniqueId())
             .send();
     }

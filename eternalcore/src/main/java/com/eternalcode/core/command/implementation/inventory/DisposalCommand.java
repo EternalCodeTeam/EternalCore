@@ -1,13 +1,13 @@
 package com.eternalcode.core.command.implementation.inventory;
 
-import com.eternalcode.core.util.legacy.Legacy;
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.UserManager;
+import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
@@ -18,13 +18,13 @@ import org.bukkit.entity.Player;
 public class DisposalCommand {
 
     private final MiniMessage miniMessage;
-    private final LanguageManager languageManager;
+    private final TranslationManager translationManager;
     private final UserManager userManager;
     private final Server server;
 
-    public DisposalCommand(MiniMessage miniMessage, LanguageManager languageManager, UserManager userManager, Server server) {
+    public DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server) {
         this.miniMessage = miniMessage;
-        this.languageManager = languageManager;
+        this.translationManager = translationManager;
         this.userManager = userManager;
         this.server = server;
     }
@@ -35,8 +35,8 @@ public class DisposalCommand {
             .map(user -> user.getSettings().getLanguage())
             .orElseGet(Language.DEFAULT);
 
-        Messages messages = this.languageManager.getMessages(language);
-        Component component = this.miniMessage.deserialize(messages.inventory().disposalTitle());
+        Translation translation = this.translationManager.getMessages(language);
+        Component component = this.miniMessage.deserialize(translation.inventory().disposalTitle());
         String serialize = Legacy.SECTION_SERIALIZER.serialize(component);
 
         player.openInventory(this.server.createInventory(null, 54, serialize));

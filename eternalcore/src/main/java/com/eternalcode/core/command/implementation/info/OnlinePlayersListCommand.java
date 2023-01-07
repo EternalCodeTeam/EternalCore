@@ -1,11 +1,11 @@
 package com.eternalcode.core.command.implementation.info;
 
-import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Server;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class OnlinePlayersListCommand {
             .toString();
 
         this.noticeService.create()
-            .notice(messages -> messages.player().listMessage())
+            .notice(translation -> translation.player().listMessage())
             .placeholder("{ONLINE}", onlineCount)
             .placeholder("{PLAYERS}", players)
             .viewer(viewer)

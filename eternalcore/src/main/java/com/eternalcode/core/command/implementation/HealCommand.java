@@ -1,14 +1,13 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.amount.Max;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -30,14 +29,14 @@ public class HealCommand {
         player.setFireTicks(0);
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.player().healMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.player().healMessage());
 
         if (sender.equals(player)) {
             return;
         }
 
         this.noticeService.create()
-            .notice(messages -> messages.player().healMessageBy())
+            .notice(translation -> translation.player().healMessageBy())
             .placeholder("{PLAYER}", player.getName())
             .viewer(viewer)
             .send();

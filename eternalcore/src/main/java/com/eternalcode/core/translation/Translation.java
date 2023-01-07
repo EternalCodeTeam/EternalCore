@@ -1,10 +1,11 @@
-package com.eternalcode.core.language;
+package com.eternalcode.core.translation;
 
-import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.language.Language;
+import com.eternalcode.core.notification.Notification;
 
 import java.util.List;
 
-public interface Messages {
+public interface Translation {
 
     Language getLanguage();
 

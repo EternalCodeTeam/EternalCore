@@ -1,10 +1,10 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.chat.notification.Notification;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.ArgumentContext;
@@ -27,12 +27,12 @@ import java.util.Optional;
 @ApiStatus.ScheduledForRemoval(inVersion = "1.1.0")
 public class PlayerArgOrSender implements Argument<CommandSender, Arg> {
 
-    private final LanguageManager languageManager;
+    private final TranslationManager translationManager;
     private final BukkitViewerProvider viewerProvider;
     private final Server server;
 
-    public PlayerArgOrSender(LanguageManager languageManager, BukkitViewerProvider viewerProvider, Server server) {
-        this.languageManager = languageManager;
+    public PlayerArgOrSender(TranslationManager translationManager, BukkitViewerProvider viewerProvider, Server server) {
+        this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
         this.server = server;
     }
@@ -44,8 +44,8 @@ public class PlayerArgOrSender implements Argument<CommandSender, Arg> {
                 return MatchResult.matched(player, 0);
             }
 
-            Messages defaultMessages = this.languageManager.getDefaultMessages();
-            Notification onlyPlayer = defaultMessages.argument().onlyPlayer();
+            Translation defaultTranslation = this.translationManager.getDefaultMessages();
+            Notification onlyPlayer = defaultTranslation.argument().onlyPlayer();
 
             return MatchResult.notMatched(onlyPlayer);
         }
@@ -55,9 +55,9 @@ public class PlayerArgOrSender implements Argument<CommandSender, Arg> {
 
         if (playerOptional.isEmpty()) {
             Viewer audience = this.viewerProvider.any(invocation.sender().getHandle());
-            Messages messages = this.languageManager.getMessages(audience.getLanguage());
+            Translation translation = this.translationManager.getMessages(audience.getLanguage());
 
-            return MatchResult.notMatched(messages.argument().offlinePlayer());
+            return MatchResult.notMatched(translation.argument().offlinePlayer());
         }
 
         return MatchResult.matched(playerOptional.get(), 1);

@@ -1,8 +1,8 @@
 package com.eternalcode.core.home.command;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.home.HomeManager;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
@@ -48,7 +48,7 @@ public class SetHomeCommand {
             this.noticeService.create()
                 .user(user)
                 .placeholder("{LIMIT}", String.valueOf(maxAmountOfUserHomes))
-                .notice(messages -> messages.home().limit())
+                .notice(translation -> translation.home().limit())
                 .send();
 
             return;
@@ -60,7 +60,7 @@ public class SetHomeCommand {
             this.noticeService.create()
                 .user(user)
                 .placeholder("{HOME}", home)
-                .notice(messages -> messages.home().overrideHomeLocation())
+                .notice(translation -> translation.home().overrideHomeLocation())
                 .send();
 
             return;
@@ -70,7 +70,7 @@ public class SetHomeCommand {
 
         this.noticeService.create()
             .user(user)
-            .notice(messages -> messages.home().create())
+            .notice(translation -> translation.home().create())
             .placeholder("{HOME}", home)
             .send();
     }

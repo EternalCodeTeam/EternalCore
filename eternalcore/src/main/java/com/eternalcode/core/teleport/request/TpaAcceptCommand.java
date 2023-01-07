@@ -1,15 +1,14 @@
 package com.eternalcode.core.teleport.request;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -49,14 +48,14 @@ public class TpaAcceptCommand {
         this.noticeService
             .create()
             .player(player.getUniqueId())
-            .notice(messages -> messages.tpa().tpaAcceptMessage())
+            .notice(translation -> translation.tpa().tpaAcceptMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
             .player(target.getUniqueId())
-            .notice(messages -> messages.tpa().tpaAcceptReceivedMessage())
+            .notice(translation -> translation.tpa().tpaAcceptReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
     }
@@ -66,7 +65,7 @@ public class TpaAcceptCommand {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAcceptNoRequestMessage());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptNoRequestMessage());
 
             return;
         }
@@ -88,12 +87,12 @@ public class TpaAcceptCommand {
                 this.noticeService
                     .create()
                     .player(uniqueId)
-                    .notice(messages -> messages.tpa().tpaAcceptReceivedMessage())
+                    .notice(translation -> translation.tpa().tpaAcceptReceivedMessage())
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }
         }
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.tpa().tpaAcceptAllAccepted());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptAllAccepted());
     }
 }

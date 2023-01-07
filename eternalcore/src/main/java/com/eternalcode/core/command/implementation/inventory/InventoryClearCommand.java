@@ -1,13 +1,12 @@
 package com.eternalcode.core.command.implementation.inventory;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +30,7 @@ public class InventoryClearCommand {
         }
 
         this.noticeService.create()
-            .notice(messages -> messages.inventory().inventoryClearMessageBy())
+            .notice(translation -> translation.inventory().inventoryClearMessageBy())
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)
             .send();
@@ -42,7 +41,7 @@ public class InventoryClearCommand {
         player.getInventory().clear();
 
         this.noticeService.create()
-            .notice(messages -> messages.inventory().inventoryClearMessage())
+            .notice(translation -> translation.inventory().inventoryClearMessage())
             .player(player.getUniqueId())
             .send();
     }

@@ -37,10 +37,12 @@ class ViewerImpl implements Viewer {
         return this.uuid;
     }
 
+    @Override
     public boolean isConsole() {
         return this.console;
     }
 
+    @Override
     public Language getLanguage() {
         return this.language.get();
     }

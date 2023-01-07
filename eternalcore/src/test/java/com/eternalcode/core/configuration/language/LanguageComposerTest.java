@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration.language;
 
+import com.eternalcode.core.configuration.composer.LanguageComposer;
 import com.eternalcode.core.language.Language;
 import org.junit.jupiter.api.Test;
 

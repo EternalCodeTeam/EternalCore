@@ -1,13 +1,13 @@
 package com.eternalcode.core.command.implementation.item;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.argument.Name;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,7 +32,7 @@ public class ItemNameCommand {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
 
             return;
         }
@@ -45,7 +45,7 @@ public class ItemNameCommand {
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .notice(messages -> messages.item().itemChangeNameMessage())
+            .notice(translation -> translation.item().itemChangeNameMessage())
             .placeholder("{ITEM_NAME}", name)
             .player(player.getUniqueId())
             .send();
@@ -64,7 +64,7 @@ public class ItemNameCommand {
         itemMeta.setDisplayName(null);
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemClearNameMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemClearNameMessage());
     }
 
     private ItemStack validateItemFromMainHand(Player player) {

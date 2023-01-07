@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -49,7 +49,7 @@ public class TeleportListeners implements Listener {
             this.teleportTaskService.removeTeleport(uuid);
 
             this.noticeService.create()
-                    .notice(messages -> messages.teleport().teleportTaskCanceled())
+                    .notice(translation -> translation.teleport().teleportTaskCanceled())
                     .send();
         }
     }

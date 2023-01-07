@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementation.item;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
@@ -36,7 +36,7 @@ public class ItemLoreCommand {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
-            this.noticeService.player(player.getUniqueId(), messages -> messages.argument().noItem());
+            this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
 
             return;
         }
@@ -56,14 +56,14 @@ public class ItemLoreCommand {
                 lore.add("");
             }
 
-            lore.set(line, Legacy.SECTION_SERIALIZER.serialize(miniMessage.deserialize(text)));
+            lore.set(line, Legacy.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(text)));
         }
 
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .notice(messages -> messages.item().itemChangeLoreMessage())
+            .notice(translation -> translation.item().itemChangeLoreMessage())
             .placeholder("{ITEM_LORE}", text)
             .player(player.getUniqueId())
             .send();
@@ -82,7 +82,7 @@ public class ItemLoreCommand {
         itemMeta.setLore(new ArrayList<>());
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), messages -> messages.item().itemClearLoreMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemClearLoreMessage());
     }
 
     private ItemStack validateItemFromMainHand(Player player) {

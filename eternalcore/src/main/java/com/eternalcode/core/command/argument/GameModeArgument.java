@@ -1,12 +1,10 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.Messages;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
-import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.command.amount.AmountValidator;
 import dev.rollczi.litecommands.suggestion.Suggestion;
@@ -24,8 +22,8 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
     private static final GameMode[] GAME_MODES = { GameMode.SURVIVAL, GameMode.CREATIVE, GameMode.ADVENTURE, GameMode.SPECTATOR };
     private static final AmountValidator GAME_MODE_VALID = AmountValidator.none().min(0).max(3);
 
-    public GameModeArgument(BukkitViewerProvider viewerProvider, LanguageManager languageManager) {
-        super(viewerProvider, languageManager);
+    public GameModeArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
+        super(viewerProvider, translationManager);
     }
 
     // TODO: zrobić w configu Map<GameMode, String> jako alliasy, - GAME_MODES itp
@@ -45,7 +43,7 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
     }
 
     @Override
-    public Result<GameMode, Notification> parse(LiteInvocation invocation, String argument, Messages messages) {
+    public Result<GameMode, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
         Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {
@@ -55,7 +53,7 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
         return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(GAME_MODE_VALID::valid)
             .map(value -> GAME_MODES[value])
-            .toResult(() -> messages.player().gameModeNotCorrect());
+            .toResult(() -> translation.player().gameModeNotCorrect());
     }
 
 }

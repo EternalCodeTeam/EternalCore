@@ -1,16 +1,15 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.amount.AmountValidator;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -31,7 +30,7 @@ public class SpeedCommand {
     void execute(CommandSender sender, Viewer audience, @Arg @Name("number") Integer amount, @Arg @By("or_sender") Player player) {
         if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
             this.noticeService.create()
-                .notice(messages -> messages.player().speedBetweenZeroAndTen())
+                .notice(translation -> translation.player().speedBetweenZeroAndTen())
                 .viewer(audience)
                 .send();
 
@@ -42,7 +41,7 @@ public class SpeedCommand {
         player.setWalkSpeed(amount / 10.0f);
 
         this.noticeService.create()
-            .notice(messages -> messages.player().speedSet())
+            .notice(translation -> translation.player().speedSet())
             .placeholder("{SPEED}", String.valueOf(amount))
             .player(player.getUniqueId())
             .send();
@@ -52,7 +51,7 @@ public class SpeedCommand {
         }
 
         this.noticeService.create()
-            .notice(messages -> messages.player().speedSetBy())
+            .notice(translation -> translation.player().speedSetBy())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{SPEED}", String.valueOf(amount))
             .viewer(audience)

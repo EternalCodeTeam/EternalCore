@@ -1,4 +1,4 @@
 package com.eternalcode.core.publish;
 
-public interface Content {
+public interface PublishContent {
 }

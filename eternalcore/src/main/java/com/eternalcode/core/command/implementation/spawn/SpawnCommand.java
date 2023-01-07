@@ -1,15 +1,14 @@
 package com.eternalcode.core.command.implementation.spawn;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
-
 import dev.rollczi.litecommands.argument.option.Opt;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -38,7 +37,7 @@ public class SpawnCommand {
 
         if (destinationLocation == null || destinationLocation.getWorld() == null) {
             this.noticeService.create()
-                .notice(messages -> messages.spawn().spawnNoSet())
+                .notice(translation -> translation.spawn().spawnNoSet())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -50,7 +49,7 @@ public class SpawnCommand {
                 this.teleportService.teleport(sender, destinationLocation);
 
                 this.noticeService.create()
-                    .notice(messages -> messages.teleport().teleported())
+                    .notice(translation -> translation.teleport().teleported())
                     .player(sender.getUniqueId())
                     .send();
 
@@ -59,7 +58,7 @@ public class SpawnCommand {
 
             if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
                 this.noticeService.create()
-                    .notice(messages -> messages.teleport().teleportTaskAlreadyExist())
+                    .notice(translation -> translation.teleport().teleportTaskAlreadyExist())
                     .player(sender.getUniqueId())
                     .send();
 
@@ -69,7 +68,7 @@ public class SpawnCommand {
             this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), Duration.ofSeconds(5));
 
             this.noticeService.create()
-                .notice(messages -> messages.teleport().teleporting())
+                .notice(translation -> translation.teleport().teleporting())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -81,13 +80,13 @@ public class SpawnCommand {
         this.teleportService.teleport(player, destinationLocation);
 
         this.noticeService.create()
-            .notice(messages -> messages.spawn().spawnTeleportedBy())
+            .notice(translation -> translation.spawn().spawnTeleportedBy())
             .placeholder("{PLAYER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(messages -> messages.spawn().spawnTeleportedOther())
+            .notice(translation -> translation.spawn().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
             .player(sender.getUniqueId())
             .send();

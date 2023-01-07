@@ -1,6 +1,6 @@
 package com.eternalcode.core.chat.feature.privatechat;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
@@ -29,11 +29,11 @@ public class PrivateChatPresenter implements Subscriber {
         UUID target = event.getTarget().getUniqueId();
 
         if (!event.isIgnored()) {
-            this.notice.player(target, messages -> messages.privateChat().privateMessageTargetToYou(), formatter);
+            this.notice.player(target, translation -> translation.privateChat().privateMessageTargetToYou(), formatter);
         }
 
-        this.notice.player(sender, messages -> messages.privateChat().privateMessageYouToTarget(), formatter);
-        this.notice.players(event.getSpies(), messages -> messages.privateChat().socialSpyMessage(), formatter);
+        this.notice.player(sender, translation -> translation.privateChat().privateMessageYouToTarget(), formatter);
+        this.notice.players(event.getSpies(), translation -> translation.privateChat().socialSpyMessage(), formatter);
     }
 
 }

@@ -1,8 +1,7 @@
 package com.eternalcode.core.command.implementation.info;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -23,7 +22,7 @@ public class PingCommand {
     void execute(CommandSender sender, Viewer audience, @Arg @By("or_sender") Player player) {
         if (sender.equals(player)) {
             this.noticeService.create()
-                .notice(messages -> messages.player().pingMessage())
+                .notice(translation -> translation.player().pingMessage())
                 .placeholder("{PING}", String.valueOf(player.getPing()))
                 .viewer(audience)
                 .send();
@@ -32,7 +31,7 @@ public class PingCommand {
         }
 
         this.noticeService.create()
-            .notice(messages -> messages.player().pingOtherMessage())
+            .notice(translation -> translation.player().pingOtherMessage())
             .placeholder("{PING}", String.valueOf(player.getPing()))
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)

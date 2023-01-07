@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.implementation.time;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -25,7 +25,7 @@ public class NightCommand {
         this.noticeService.create()
             .viewer(viewer)
             .placeholder("{WORLD}", world.getName())
-            .notice(messages -> messages.timeAndWeather().timeSetNight())
+            .notice(translation -> translation.timeAndWeather().timeSetNight())
             .send();
     }
 

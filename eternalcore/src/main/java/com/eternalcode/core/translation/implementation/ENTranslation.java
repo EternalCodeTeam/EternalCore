@@ -1,20 +1,25 @@
-package com.eternalcode.core.configuration.lang;
+package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.configuration.ReloadableMessages;
 import com.eternalcode.core.language.Language;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.translation.AbstractTranslation;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.source.Resource;
-import net.dzikoysk.cdn.source.Source;
 
-import java.io.File;
 import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
-public class ENMessagesConfiguration implements ReloadableMessages {
+public class ENTranslation extends AbstractTranslation {
+
+    ENTranslation(Language language) {
+        super(language);
+    }
+
+    ENTranslation() {
+        this(Language.EN);
+    }
 
     public ENArgumentSection argument = new ENArgumentSection();
 
@@ -332,15 +337,7 @@ public class ENMessagesConfiguration implements ReloadableMessages {
     @Contextual
     public static class ENLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Language changed to <red>English<gold>!");
+
     }
 
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "lang" + File.separator + "en_messages.yml");
-    }
-
-    @Override
-    public Language getLanguage() {
-        return Language.EN;
-    }
 }

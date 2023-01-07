@@ -1,15 +1,14 @@
-package com.eternalcode.core.chat.notification;
+package com.eternalcode.core.notification;
 
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.language.LanguageManager;
-import com.eternalcode.core.language.MessageExtractor;
-import com.eternalcode.core.language.Messages;
-import com.eternalcode.core.language.NotificationExtractor;
-import com.eternalcode.core.language.NotificationsExtractor;
-import com.eternalcode.core.language.OptionalMessageExtractor;
-import com.eternalcode.core.language.OptionalNotificationExtractor;
+import com.eternalcode.core.notification.extractor.NotificationExtractor;
+import com.eternalcode.core.notification.extractor.NotificationsExtractor;
+import com.eternalcode.core.notification.extractor.OptionalNotificationExtractor;
+import com.eternalcode.core.notification.extractor.TranslatedMessageExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.Placeholders;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
@@ -32,7 +31,7 @@ import java.util.function.Supplier;
 
 public class Notice {
 
-    private final LanguageManager languageManager;
+    private final TranslationManager translationManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
     private final PlaceholderRegistry placeholderRegistry;
@@ -40,11 +39,11 @@ public class Notice {
     private final List<Viewer> viewers = new ArrayList<>();
     private final List<NotificationsExtractor> notifications = new ArrayList<>();
 
-    private final Map<String, MessageExtractor> placeholders = new HashMap<>();
+    private final Map<String, TranslatedMessageExtractor> placeholders = new HashMap<>();
     private final List<Formatter> formatters = new ArrayList<>();
 
-    Notice(LanguageManager languageManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
-        this.languageManager = languageManager;
+    Notice(TranslationManager translationManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+        this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
         this.placeholderRegistry = placeholderRegistry;
@@ -99,8 +98,8 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public Notice message(MessageExtractor extractor) {
-        this.notifications.add(NotificationsExtractor.of(messages -> new Notification(extractor.extract(messages), NoticeType.CHAT)));
+    public Notice message(TranslatedMessageExtractor extractor) {
+        this.notifications.add(NotificationsExtractor.of(translation -> new Notification(extractor.extract(translation), NoticeType.CHAT)));
         return this;
     }
 
@@ -111,14 +110,14 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public Notice messages(Function<Messages, List<String>> function) {
-        MessageExtractor messageExtractor = (messages) -> {
-            List<String> apply = function.apply(messages);
+    public Notice messages(Function<Translation, List<String>> function) {
+        TranslatedMessageExtractor translatedMessageExtractor = translation -> {
+            List<String> apply = function.apply(translation);
 
             return Joiner.on("\n").join(apply).toString();
         };
 
-        return this.message(messageExtractor);
+        return this.message(translatedMessageExtractor);
     }
 
     @CheckReturnValue
@@ -129,30 +128,16 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public Notice notice(NoticeType type, MessageExtractor extractor) {
-        this.notifications.add(NotificationsExtractor.of(messages -> new Notification(extractor.extract(messages), type)));
+    public Notice notice(NoticeType type, TranslatedMessageExtractor extractor) {
+        this.notifications.add(NotificationsExtractor.of(translation -> new Notification(extractor.extract(translation), type)));
 
-        return this;
-    }
-
-    @CheckReturnValue
-    public Notice noticeOption(NoticeType type, OptionalMessageExtractor extractor) {
-        this.notifications.add((NotificationExtractor) messages -> {
-            Option<String> apply = extractor.extract(messages);
-
-            if (apply.isPresent()) {
-                return new Notification(apply.get(), type);
-            }
-
-            return new Notification(StringUtils.EMPTY, NoticeType.NONE);
-        });
         return this;
     }
 
     @CheckReturnValue
     public Notice noticeOption(OptionalNotificationExtractor extractor) {
-        this.notifications.add((NotificationExtractor) messages -> {
-            Option<Notification> apply = extractor.extract(messages);
+        this.notifications.add((NotificationExtractor) translation -> {
+            Option<Notification> apply = extractor.extract(translation);
 
             if (apply.isPresent()) {
                 return apply.get();
@@ -170,7 +155,7 @@ public class Notice {
     }
 
     @CheckReturnValue
-    public Notice notifications(Function<Messages, List<Notification>> function) {
+    public Notice notifications(Function<Translation, List<Notification>> function) {
         NotificationsExtractor notificationsExtractor = function::apply;
 
         this.notifications.add(notificationsExtractor);
@@ -180,14 +165,14 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, String to) {
-        this.placeholders.put(from, messages -> to);
+        this.placeholders.put(from, translation -> to);
         return this;
     }
 
     @CheckReturnValue
     public Notice placeholder(String from, Option<String> to) {
         if (to.isPresent()) {
-            this.placeholders.put(from, messages -> to.get());
+            this.placeholders.put(from, translation -> to.get());
         }
 
         return this;
@@ -195,12 +180,12 @@ public class Notice {
 
     @CheckReturnValue
     public Notice placeholder(String from, Supplier<String> to) {
-        this.placeholders.put(from, messages -> to.get());
+        this.placeholders.put(from, translation -> to.get());
         return this;
     }
 
     @CheckReturnValue
-    public Notice placeholder(String from, MessageExtractor extractor) {
+    public Notice placeholder(String from, TranslatedMessageExtractor extractor) {
         this.placeholders.put(from, extractor);
         return this;
     }
@@ -219,22 +204,22 @@ public class Notice {
 
     public void send() {
         ViewersWithLanguage viewersByLanguage = ViewersWithLanguage.of(this.viewers);
-        TranslatedMessages translatedMessages = this.prepareTranslatedMessages(viewersByLanguage);
+        TranslatedNotifications translatedNotifications = this.prepareTranslatedMessagesSet(viewersByLanguage);
 
-        this.sendTranslatedMessages(viewersByLanguage, translatedMessages);
+        this.sendTranslatedMessages(viewersByLanguage, translatedNotifications);
     }
 
-    private void sendTranslatedMessages(ViewersWithLanguage viewersByLanguage, TranslatedMessages translatedMessages) {
+    private void sendTranslatedMessages(ViewersWithLanguage viewersByLanguage, TranslatedNotifications translatedNotifications) {
         for (Language language : viewersByLanguage.getLanguages()) {
-            List<Notification> translatedNotifications = translatedMessages.getNotifications(language);
+            List<Notification> notificationsForLang = translatedNotifications.forLanguage(language);
 
-            if (translatedNotifications == null) {
+            if (notificationsForLang == null) {
                 continue;
             }
 
             FormatterForLanguage formatterForLanguage = this.prepareFormatterForLanguage(language);
 
-            for (Notification notification : translatedNotifications) {
+            for (Notification notification : notificationsForLang) {
                 Set<Viewer> languageViewers = viewersByLanguage.getViewers(language);
 
                 for (Viewer viewer : languageViewers) {
@@ -246,7 +231,7 @@ public class Notice {
         }
     }
 
-    private TranslatedMessages prepareTranslatedMessages(ViewersWithLanguage viewersByLanguage) {
+    private TranslatedNotifications prepareTranslatedMessagesSet(ViewersWithLanguage viewersByLanguage) {
         Map<Language, List<Notification>> translatedMessage = new HashMap<>();
 
         for (Language language : viewersByLanguage.getLanguages()) {
@@ -255,15 +240,15 @@ public class Notice {
             translatedMessage.put(language, translatedNotifications);
         }
 
-        return TranslatedMessages.of(translatedMessage);
+        return TranslatedNotifications.of(translatedMessage);
     }
 
     private List<Notification> prepareTranslatedNotificationsPerViewer(Language language) {
-        Messages messages = this.languageManager.getMessages(language);
+        Translation translation = this.translationManager.getMessages(language);
         List<Notification> notificationsForLanguage = new ArrayList<>();
 
         for (NotificationsExtractor extractor : this.notifications) {
-            List<Notification> notificationForLanguage = extractor.extractNotifications(messages);
+            List<Notification> notificationForLanguage = extractor.extractNotifications(translation);
 
             notificationsForLanguage.addAll(notificationForLanguage);
         }
@@ -272,17 +257,18 @@ public class Notice {
     }
 
     private FormatterForLanguage prepareFormatterForLanguage(Language language) {
-        Messages messages = this.languageManager.getMessages(language);
+        Translation translation = this.translationManager.getMessages(language);
         Formatter translatedFormatter = new Formatter();
 
-        for (Map.Entry<String, MessageExtractor> entry : this.placeholders.entrySet()) {
-            translatedFormatter.register(entry.getKey(), () -> entry.getValue().extract(messages));
+        for (Map.Entry<String, TranslatedMessageExtractor> entry : this.placeholders.entrySet()) {
+            translatedFormatter.register(entry.getKey(), () -> entry.getValue().extract(translation));
         }
 
         return new FormatterForLanguage(translatedFormatter);
     }
 
     private class FormatterForLanguage {
+
         private final Formatter translatedPlaceholders;
 
         private FormatterForLanguage(Formatter translatedPlaceholders) {
@@ -290,15 +276,16 @@ public class Notice {
         }
 
         public String format(String text, Viewer viewer) {
-            text = placeholderRegistry.format(text, viewer);
-            text = translatedPlaceholders.format(text);
+            text = Notice.this.placeholderRegistry.format(text, viewer);
+            text = this.translatedPlaceholders.format(text);
 
-            for (Formatter formatter : formatters) {
+            for (Formatter formatter : Notice.this.formatters) {
                 text = formatter.format(text);
             }
 
             return text;
         }
+
     }
 
 }

@@ -61,8 +61,12 @@ public class User implements Entity, Viewer {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User user)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User user)) {
+            return false;
+        }
         return this.name.equals(user.name) && this.uuid.equals(user.uuid);
     }
 

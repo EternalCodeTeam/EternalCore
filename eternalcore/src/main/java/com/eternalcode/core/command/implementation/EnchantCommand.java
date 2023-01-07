@@ -1,14 +1,13 @@
 package com.eternalcode.core.command.implementation;
 
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +34,7 @@ public class EnchantCommand {
         if (handItem == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .notice(messages -> messages.argument().noItem())
+                .notice(translation -> translation.argument().noItem())
                 .send();
 
             return;
@@ -47,7 +46,7 @@ public class EnchantCommand {
             if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(handItem)) {
                 this.noticeService.create()
                     .player(player.getUniqueId())
-                    .notice(messages -> messages.argument().noValidEnchantmentLevel())
+                    .notice(translation -> translation.argument().noValidEnchantmentLevel())
                     .send();
 
                 return;
@@ -58,7 +57,7 @@ public class EnchantCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(messages -> messages.item().enchantedMessage())
+            .notice(translation -> translation.item().enchantedMessage())
             .send();
     }
 }

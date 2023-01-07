@@ -1,13 +1,12 @@
 package com.eternalcode.core.command.implementation;
 
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.chat.notification.NoticeService;
-
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -26,8 +25,8 @@ public class FlyCommand {
         player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.create()
-            .notice(messages -> messages.player().flyMessage())
-            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
+            .notice(translation -> translation.player().flyMessage())
+            .placeholder("{STATE}", translation -> player.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .player(player.getUniqueId())
             .send();
 
@@ -36,9 +35,9 @@ public class FlyCommand {
         }
 
         this.noticeService.create()
-            .notice(messages -> messages.player().flySetMessage())
+            .notice(translation -> translation.player().flySetMessage())
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{STATE}", messages -> player.getAllowFlight() ? messages.format().enable() : messages.format().disable())
+            .placeholder("{STATE}", translation -> player.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .viewer(audience)
             .send();
     }

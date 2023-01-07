@@ -32,7 +32,7 @@ public final class LocalPublisher implements Publisher {
             Parameter parameter = parameters[0];
             Class<?> type = parameter.getType();
 
-            if (!Content.class.isAssignableFrom(type)) {
+            if (!PublishContent.class.isAssignableFrom(type)) {
                 throw new IllegalStateException("Parameter in the method must be an content!");
             }
 
@@ -43,8 +43,8 @@ public final class LocalPublisher implements Publisher {
     }
 
     @Override
-    public void publish(Content content) {
-        Set<NativeSubscriber<?>> nativeSubscribers = this.subscribersByType.get(content.getClass());
+    public void publish(PublishContent publishContent) {
+        Set<NativeSubscriber<?>> nativeSubscribers = this.subscribersByType.get(publishContent.getClass());
 
         if (nativeSubscribers == null) {
             return;
@@ -57,7 +57,7 @@ public final class LocalPublisher implements Publisher {
                 Method method = nativeSubscriber.method;
 
                 method.setAccessible(true);
-                method.invoke(instance, content);
+                method.invoke(instance, publishContent);
             } catch (IllegalAccessException | InvocationTargetException exception) {
                 exception.printStackTrace();
             }

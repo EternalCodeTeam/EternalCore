@@ -1,17 +1,17 @@
 package com.eternalcode.core.chat.feature.reportchat;
 
-import com.eternalcode.core.chat.notification.Notice;
-import com.eternalcode.core.chat.notification.NoticeService;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.notification.Notice;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.command.amount.Min;
+import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -50,7 +50,7 @@ public class HelpOpCommand {
 
             this.noticeService
                 .create()
-                .notice(messages -> messages.helpOp().coolDown())
+                .notice(translation -> translation.helpOp().coolDown())
                 .placeholder("{TIME}", DurationUtil.format(time))
                 .player(player.getUniqueId())
                 .send();
@@ -61,7 +61,7 @@ public class HelpOpCommand {
         Notice notice = this.noticeService.create()
             .console()
             .player(player.getUniqueId())
-            .notice(messages -> messages.helpOp().format())
+            .notice(translation -> translation.helpOp().format())
             .placeholder("{NICK}", player.getName())
             .placeholder("{TEXT}", text);
 
@@ -77,7 +77,7 @@ public class HelpOpCommand {
 
         this.noticeService
             .create()
-            .notice(messages -> messages.helpOp().send())
+            .notice(translation -> translation.helpOp().send())
             .send();
 
         this.cooldowns.put(uuid, Instant.now().plus(this.config.chat.helpOpDelay));

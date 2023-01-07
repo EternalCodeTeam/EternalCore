@@ -7,7 +7,6 @@ import com.eternalcode.core.afk.AfkService;
 import com.eternalcode.core.bridge.BridgeManager;
 import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.chat.ChatManagerCommand;
-import com.eternalcode.core.chat.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.chat.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.chat.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.chat.feature.ignore.IgnoreRepository;
@@ -18,10 +17,6 @@ import com.eternalcode.core.chat.feature.privatechat.PrivateChatReplyCommand;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand;
 import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.notification.NoticeType;
-import com.eternalcode.core.chat.notification.Notification;
-import com.eternalcode.core.chat.notification.NotificationAnnouncer;
 import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
@@ -82,7 +77,6 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.configuration.language.LanguageConfiguration;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
@@ -97,13 +91,18 @@ import com.eternalcode.core.home.command.HomeCommand;
 import com.eternalcode.core.home.command.SetHomeCommand;
 import com.eternalcode.core.language.LanguageCommand;
 import com.eternalcode.core.language.LanguageInventory;
-import com.eternalcode.core.language.LanguageManager;
+import com.eternalcode.core.language.config.LanguageConfiguration;
 import com.eternalcode.core.listener.player.PlayerChatListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
+import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeType;
+import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notification.NotificationAnnouncer;
+import com.eternalcode.core.notification.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.publish.LocalPublisher;
@@ -123,6 +122,7 @@ import com.eternalcode.core.teleport.request.TeleportRequestService;
 import com.eternalcode.core.teleport.request.TpaAcceptCommand;
 import com.eternalcode.core.teleport.request.TpaCommand;
 import com.eternalcode.core.teleport.request.TpaDenyCommand;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -199,7 +199,7 @@ public class EternalCore extends JavaPlugin {
     private AfkService afkService;
     private TeleportRequestService teleportRequestService;
 
-    private LanguageManager languageManager;
+    private TranslationManager translationManager;
     private ChatManager chatManager;
     private PrivateChatService privateChatService;
 
@@ -296,7 +296,7 @@ public class EternalCore extends JavaPlugin {
         this.homeManager = HomeManager.create(homeRepository);
         this.teleportRequestService = new TeleportRequestService(this.pluginConfiguration.otherSettings);
 
-        this.languageManager = LanguageManager.create(this.configurationManager, this.languageConfiguration, this.getDataFolder());
+        this.translationManager = TranslationManager.create(this.configurationManager, this.languageConfiguration);
         this.chatManager = new ChatManager(this.pluginConfiguration.chat);
 
         /* Adventure */
@@ -312,7 +312,7 @@ public class EternalCore extends JavaPlugin {
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
-        this.noticeService = new NoticeService(this.languageManager, this.viewerProvider, this.notificationAnnouncer, placeholderRegistry);
+        this.noticeService = new NoticeService(this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
@@ -328,32 +328,32 @@ public class EternalCore extends JavaPlugin {
 
             // Arguments (include optional)
             .argument(String.class, "player",   new StringNicknameArgument(server))
-            .argument(GameMode.class,               new GameModeArgument(viewerProvider, this.languageManager))
-            .argument(NoticeType.class,             new NoticeTypeArgument(this.viewerProvider, this.languageManager))
-            .argument(Warp.class,                   new WarpArgument(this.warpManager, this.languageManager, this.viewerProvider))
-            .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.languageManager))
-            .argument(User.class,                   new UserArgument(this.viewerProvider, this.languageManager, server, this.userManager))
-            .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.languageManager, server))
-            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.languageManager, this.viewerProvider, server))
+            .argument(GameMode.class,               new GameModeArgument(this.viewerProvider, this.translationManager))
+            .argument(NoticeType.class,             new NoticeTypeArgument(this.viewerProvider, this.translationManager))
+            .argument(Warp.class,                   new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
+            .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.translationManager))
+            .argument(User.class,                   new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
+            .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.translationManager, server))
+            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class,     new LocationArgument())
 
             // Native Argument (no optional)
-            .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.languageManager))
-            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.languageManager, this.viewerProvider, server))
+            .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.translationManager))
+            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.translationManager, this.viewerProvider, server))
             .argument(Arg.class, World.class,                   new WorldArgument(server))
 
             // Dynamic binds
-            .contextualBind(Player.class,   new PlayerContextual(this.languageManager))
+            .contextualBind(Player.class,   new PlayerContextual(this.translationManager))
             .contextualBind(Viewer.class,   new ViewerContextual(this.viewerProvider))
-            .contextualBind(User.class,     new UserContextual(this.languageManager, this.userManager))
+            .contextualBind(User.class,     new UserContextual(this.translationManager, this.userManager))
 
             // Static binds
             .typeBind(EternalCore.class,            () -> this)
             .typeBind(ConfigurationManager.class,   () -> this.configurationManager)
             .typeBind(LanguageInventory.class,      () -> this.languageInventory)
-            .typeBind(LanguageManager.class,        () -> this.languageManager)
+            .typeBind(TranslationManager.class,     () -> this.translationManager)
             .typeBind(TeleportTaskService.class,    () -> this.teleportTaskService)
             .typeBind(UserManager.class,            () -> this.userManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
@@ -373,7 +373,7 @@ public class EternalCore extends JavaPlugin {
             .typeBind(PluginConfiguration.OtherSettings.class, () -> this.pluginConfiguration.otherSettings)
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
-            .permissionHandler(new PermissionMessage(this.viewerProvider, this.audiencesProvider, this.languageManager, this.miniMessage))
+            .permissionHandler(new PermissionMessage(this.viewerProvider, this.audiencesProvider, this.translationManager, this.miniMessage))
             .resultHandler(Notification.class, new NotificationHandler(this.viewerProvider, this.noticeService))
 
             .commandInstance(
@@ -491,7 +491,7 @@ public class EternalCore extends JavaPlugin {
 
         /* Tasks */
 
-        TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, teleportService, server);
+        TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, this.teleportService, server);
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
 
         // bStats metrics
@@ -609,8 +609,8 @@ public class EternalCore extends JavaPlugin {
         return this.teleportRequestService;
     }
 
-    public LanguageManager getLanguageManager() {
-        return this.languageManager;
+    public TranslationManager getTranslationManager() {
+        return this.translationManager;
     }
 
     public ChatManager getChatManager() {

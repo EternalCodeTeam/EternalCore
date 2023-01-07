@@ -1,8 +1,8 @@
 package com.eternalcode.core.chat;
 
-import com.eternalcode.core.chat.adventure.AdventureNotification;
-import com.eternalcode.core.chat.notification.NoticeService;
-import com.eternalcode.core.chat.notification.NoticeType;
+import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeType;
+import com.eternalcode.core.notification.adventure.AdventureNotification;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
@@ -32,8 +32,8 @@ public class ChatManagerCommand {
     @Execute(route = "clear", aliases = "cc")
     public void clear(CommandSender sender) {
         this.noticeService.create()
-            .staticNotice(clear)
-            .notice(messages -> messages.chat().cleared())
+            .staticNotice(this.clear)
+            .notice(translation -> translation.chat().cleared())
             .placeholder("{NICK}", sender.getName())
             .onlinePlayers()
             .send();
@@ -42,14 +42,14 @@ public class ChatManagerCommand {
     @Execute(route = "on")
     public void enable(Viewer viewer, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
-            this.noticeService.viewer(viewer, messages -> messages.chat().alreadyEnabled());
+            this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
         }
 
         this.chatManager.getChatSettings().setChatEnabled(true);
 
         this.noticeService.create()
-            .notice(messages -> messages.chat().enabled())
+            .notice(translation -> translation.chat().enabled())
             .placeholder("{NICK}", sender.getName())
             .onlinePlayers()
             .send();
@@ -58,14 +58,14 @@ public class ChatManagerCommand {
     @Execute(route = "off")
     public void disable(Viewer viewer, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
-            this.noticeService.viewer(viewer, messages -> messages.chat().alreadyDisabled());
+            this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
         }
 
         this.chatManager.getChatSettings().setChatEnabled(false);
 
         this.noticeService.create()
-            .notice(messages -> messages.chat().disabled())
+            .notice(translation -> translation.chat().disabled())
             .placeholder("{NICK}", sender.getName())
             .onlinePlayers()
             .send();
@@ -74,7 +74,7 @@ public class ChatManagerCommand {
     @Execute(route = "slowmode", required = 1)
     public void slowmode(Viewer viewer, @Arg @Name("time") Duration duration) {
         if (duration.isNegative()) {
-            this.noticeService.viewer(viewer, messages -> messages.argument().numberBiggerThanOrEqualZero());
+            this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 
             return;
         }
@@ -82,7 +82,7 @@ public class ChatManagerCommand {
         this.chatManager.getChatSettings().setChatDelay(duration);
 
         this.noticeService.create()
-            .notice(messages -> messages.chat().slowModeSet())
+            .notice(translation -> translation.chat().slowModeSet())
             .placeholder("{SLOWMODE}", EstimatedTemporalAmountParser.TIME_UNITS.format(duration))
             .viewer(viewer)
             .send();

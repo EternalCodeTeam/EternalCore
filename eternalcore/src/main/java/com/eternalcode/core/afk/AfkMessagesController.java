@@ -1,12 +1,10 @@
 package com.eternalcode.core.afk;
 
-import com.eternalcode.core.chat.notification.NoticeService;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-
-import java.util.Collections;
 
 public class AfkMessagesController implements Subscriber {
 
@@ -23,8 +21,8 @@ public class AfkMessagesController implements Subscriber {
         this.noticeService.create()
             .onlinePlayers()
             .player(event.getPlayer())
-            .notice(messages -> event.isAfk() ? messages.afk().afkOn() : messages.afk().afkOff())
-            .placeholder("{PLAYER}", userManager.getUser(event.getPlayer()).map(User::getName))
+            .notice(translation -> event.isAfk() ? translation.afk().afkOn() : translation.afk().afkOff())
+            .placeholder("{PLAYER}", this.userManager.getUser(event.getPlayer()).map(User::getName))
             .send();
     }
 
