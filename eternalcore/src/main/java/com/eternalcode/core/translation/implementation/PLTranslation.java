@@ -56,7 +56,7 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLHelpOpSection implements HelpOpSection {
         public Notification format = Notification.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{NICK}<dark_gray>: <white>{TEXT}");
         public Notification send = Notification.chat("<dark_gray>» <green>Wiadomość została wysłana do administracji");
-        public Notification coolDown = Notification.chat("<dark_gray>» <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
+        public Notification helpOpDelay = Notification.chat("<dark_gray>» <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
     }
 
     public PLAdminChatSection adminChat = new PLAdminChatSection();

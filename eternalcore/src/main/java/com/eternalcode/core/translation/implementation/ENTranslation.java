@@ -58,7 +58,7 @@ public class ENTranslation extends AbstractTranslation {
     public static class ENHelpOpSection implements HelpOpSection {
         public Notification format = Notification.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{NICK}<dark_gray>: <white>{TEXT}");
         public Notification send = Notification.chat("<dark_gray>» <green>This message has been successfully sent to administration");
-        public Notification coolDown = Notification.chat("<dark_gray>» <red>You can use this command for: <gold>{TIME}");
+        public Notification helpOpDelay = Notification.chat("<dark_gray>» <red>You can use this command for: <gold>{TIME}");
     }
 
     public ENAdminChatSection adminChat = new ENAdminChatSection();
