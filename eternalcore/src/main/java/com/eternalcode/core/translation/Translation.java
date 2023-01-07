@@ -42,7 +42,7 @@ public interface Translation {
     interface HelpOpSection {
         Notification format();
         Notification send();
-        Notification coolDown();
+        Notification helpOpDelay();
     }
 
     // AdminChat Section

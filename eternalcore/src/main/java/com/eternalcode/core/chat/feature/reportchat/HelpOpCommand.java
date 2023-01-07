@@ -50,7 +50,7 @@ public class HelpOpCommand {
 
             this.noticeService
                 .create()
-                .notice(translation -> translation.helpOp().coolDown())
+                .notice(translation -> translation.helpOp().helpOpDelay())
                 .placeholder("{TIME}", DurationUtil.format(time))
                 .player(player.getUniqueId())
                 .send();

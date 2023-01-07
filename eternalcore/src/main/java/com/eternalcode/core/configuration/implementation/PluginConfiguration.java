@@ -124,13 +124,13 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Chat implements ChatSettings {
 
-        @Description({ " ", "# Cooldown time for helpop message" })
+        @Description({ " ", "# Delay to send the next message under /helpop" })
         public Duration helpOpDelay = Duration.ofSeconds(60);
 
         @Description({ " ", "# Custom message for unknown command" })
         public boolean commandExact = false;
 
-        @Description({ " ", "# Cooldowon time for chat" })
+        @Description({ " ", "# Chat delay to send next message in chat" })
         public Duration chatDelay = Duration.ofSeconds(5);
 
         @Description({ " ", "# Count of lines to clear" })
