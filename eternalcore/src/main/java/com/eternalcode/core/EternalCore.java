@@ -224,8 +224,7 @@ public class EternalCore extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
-    public EternalCore() {
-    }
+    public EternalCore() {}
 
     protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
@@ -264,7 +263,8 @@ public class EternalCore extends JavaPlugin {
             homeRepository = HomeRepositoryOrmLite.create(this.databaseManager, this.scheduler);
             ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             exception.printStackTrace();
             this.getLogger().severe("Can not connect to database! Some functions may not work!");
 
@@ -327,49 +327,49 @@ public class EternalCore extends JavaPlugin {
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider, this.miniMessage)
 
             // Arguments (include optional)
-            .argument(String.class, "player", new StringNicknameArgument(server))
-            .argument(GameMode.class, new GameModeArgument(this.viewerProvider, this.translationManager))
-            .argument(NoticeType.class, new NoticeTypeArgument(this.viewerProvider, this.translationManager))
-            .argument(Warp.class, new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
-            .argument(Enchantment.class, new EnchantmentArgument(this.viewerProvider, this.translationManager))
-            .argument(User.class, new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
-            .argument(Player.class, new PlayerArgument(this.viewerProvider, this.translationManager, server))
-            .argument(Player.class, "request", new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
+            .argument(String.class, "player",   new StringNicknameArgument(server))
+            .argument(GameMode.class,               new GameModeArgument(this.viewerProvider, this.translationManager))
+            .argument(NoticeType.class,             new NoticeTypeArgument(this.viewerProvider, this.translationManager))
+            .argument(Warp.class,                   new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
+            .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.translationManager))
+            .argument(User.class,                   new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
+            .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.translationManager, server))
+            .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
 
             // multilevel Arguments (include optional)
-            .argumentMultilevel(Location.class, new LocationArgument())
+            .argumentMultilevel(Location.class,     new LocationArgument())
 
             // Native Argument (no optional)
-            .argument(ArgHome.class, Home.class, new HomeArgument(this.homeManager, this.viewerProvider, this.translationManager))
+            .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.translationManager))
             .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.translationManager, this.viewerProvider, server))
-            .argument(Arg.class, World.class, new WorldArgument(server))
+            .argument(Arg.class, World.class,                   new WorldArgument(server))
 
             // Dynamic binds
-            .contextualBind(Player.class, new PlayerContextual(this.translationManager))
-            .contextualBind(Viewer.class, new ViewerContextual(this.viewerProvider))
-            .contextualBind(User.class, new UserContextual(this.translationManager, this.userManager))
+            .contextualBind(Player.class,   new PlayerContextual(this.translationManager))
+            .contextualBind(Viewer.class,   new ViewerContextual(this.viewerProvider))
+            .contextualBind(User.class,     new UserContextual(this.translationManager, this.userManager))
 
             // Static binds
-            .typeBind(EternalCore.class, () -> this)
-            .typeBind(ConfigurationManager.class, () -> this.configurationManager)
-            .typeBind(LanguageInventory.class, () -> this.languageInventory)
-            .typeBind(TranslationManager.class, () -> this.translationManager)
-            .typeBind(TeleportTaskService.class, () -> this.teleportTaskService)
-            .typeBind(UserManager.class, () -> this.userManager)
+            .typeBind(EternalCore.class,            () -> this)
+            .typeBind(ConfigurationManager.class,   () -> this.configurationManager)
+            .typeBind(LanguageInventory.class,      () -> this.languageInventory)
+            .typeBind(TranslationManager.class,     () -> this.translationManager)
+            .typeBind(TeleportTaskService.class,    () -> this.teleportTaskService)
+            .typeBind(UserManager.class,            () -> this.userManager)
             .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
-            .typeBind(NoticeService.class, () -> this.noticeService)
-            .typeBind(TeleportService.class, () -> this.teleportService)
-            .typeBind(MiniMessage.class, () -> this.miniMessage)
-            .typeBind(ChatManager.class, () -> this.chatManager)
-            .typeBind(PrivateChatService.class, () -> this.privateChatService)
-            .typeBind(Scheduler.class, () -> this.scheduler)
-            .typeBind(WarpManager.class, () -> this.warpManager)
-            .typeBind(HomeManager.class, () -> this.homeManager)
-            .typeBind(AfkService.class, () -> this.afkService)
-            .typeBind(SkullAPI.class, () -> this.skullAPI)
+            .typeBind(NoticeService.class,          () -> this.noticeService)
+            .typeBind(TeleportService.class,        () -> this.teleportService)
+            .typeBind(MiniMessage.class,            () -> this.miniMessage)
+            .typeBind(ChatManager.class,            () -> this.chatManager)
+            .typeBind(PrivateChatService.class,     () -> this.privateChatService)
+            .typeBind(Scheduler.class,              () -> this.scheduler)
+            .typeBind(WarpManager.class,            () -> this.warpManager)
+            .typeBind(HomeManager.class,            () -> this.homeManager)
+            .typeBind(AfkService.class,             () -> this.afkService)
+            .typeBind(SkullAPI.class,               () -> this.skullAPI)
 
-            .typeBind(PluginConfiguration.class, () -> this.pluginConfiguration)
-            .typeBind(LocationsConfiguration.class, () -> this.locationsConfiguration)
+            .typeBind(PluginConfiguration.class,               () -> this.pluginConfiguration)
+            .typeBind(LocationsConfiguration.class,            () -> this.locationsConfiguration)
             .typeBind(PluginConfiguration.OtherSettings.class, () -> this.pluginConfiguration.otherSettings)
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
@@ -609,7 +609,7 @@ public class EternalCore extends JavaPlugin {
         return this.teleportRequestService;
     }
 
-    public TranslationManager getLanguageManager() {
+    public TranslationManager getTranslationManager() {
         return this.translationManager;
     }
 
@@ -640,5 +640,4 @@ public class EternalCore extends JavaPlugin {
     public NoticeService getNoticeService() {
         return this.noticeService;
     }
-
 }
