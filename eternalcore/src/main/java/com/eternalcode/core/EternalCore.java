@@ -24,6 +24,7 @@ import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
+import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
@@ -335,6 +336,7 @@ public class EternalCore extends JavaPlugin {
             .argument(User.class,                   new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
             .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.translationManager, server))
             .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
+            .argument(Integer.class, "speed",    new SpeedArgument())
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class,     new LocationArgument())
