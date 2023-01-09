@@ -336,7 +336,7 @@ public class EternalCore extends JavaPlugin {
             .argument(User.class,                   new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
             .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.translationManager, server))
             .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
-            .argument(Integer.class,"speed",    new SpeedArgument())
+            .argument(Integer.class, "speed",    new SpeedArgument())
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class,     new LocationArgument())
