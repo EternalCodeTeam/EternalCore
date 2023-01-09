@@ -60,4 +60,7 @@ public final class NoneRepository implements HomeRepository, IgnoreRepository {
     @Override
     public void unIgnore(UUID by, UUID target) {}
 
+    @Override
+    public void unIgnoreAll(UUID by) {}
+
 }

@@ -174,7 +174,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notification socialSpyDisable = Notification.chat("<dark_gray>» <red>SocialSpy został wyłączony!");
 
         public Notification ignorePlayer = Notification.chat("<dark_gray>» <gray>Zignorowano gracza <red>{PLAYER}<gray>!");
+        public Notification ignoreAll = Notification.chat("<dark_gray>» <gray>Zignorowano wszystkich graczy!");
         public Notification unIgnorePlayer = Notification.chat("<dark_gray>» <gray>Odignorowano gracza <green>{PLAYER}<gray>!");
+        public Notification unIgnoreAll = Notification.chat("<dark_gray>» <gray>Odignorowano wszystkich graczy!");
         public Notification cantIgnoreYourself = Notification.chat("<dark_gray>» <red>Nie możesz zignorować siebie!");
         public Notification cantUnIgnoreYourself = Notification.chat("<dark_gray>» <red>Nie możesz odignorować siebie!");
         public Notification alreadyIgnorePlayer = Notification.chat("<dark_gray>» <red>Gracz <gray>{PLAYER} <red>jest już zignorowany!");

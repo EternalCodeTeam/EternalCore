@@ -178,12 +178,13 @@ public class ENTranslation extends AbstractTranslation {
         public Notification socialSpyDisable = Notification.chat("<dark_gray>» <red>SocialSpy has been disabled!");
 
         public Notification ignorePlayer = Notification.chat("<dark_gray>» <red>{PLAYER} <gray>player has been ignored!");
+        public Notification ignoreAll = Notification.chat("<dark_gray>» <red>All players have been ignored!");
         public Notification unIgnorePlayer = Notification.chat("<dark_gray>» <red>{PLAYER} <gray>player has been uningored!");
+        public Notification unIgnoreAll = Notification.chat("<dark_gray>» <red>All players have been uningored!");
         public Notification cantIgnoreYourself = Notification.chat("<dark_gray>» <red>You can't ignore yourself!");
         public Notification cantUnIgnoreYourself = Notification.chat("<dark_gray>» <red>You can't unignore yourself!");
         public Notification alreadyIgnorePlayer = Notification.chat("<dark_gray>» <red>You already ignore this player!");
         public Notification notIgnorePlayer = Notification.chat("<dark_gray>» <red>You don't ignore this player, so you can unignore him!");
-
     }
 
     public ENAfkSection afk = new ENAfkSection();

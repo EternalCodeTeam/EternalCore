@@ -12,6 +12,7 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 import org.jetbrains.annotations.NotNull;
+import panda.std.Blank;
 import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
@@ -22,6 +23,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
+
+    private static final UUID IGNORE_ALL = UUID.fromString("*");
 
     private final Dao<IgnoreWrapper, Long> cachedDao;
     private final LoadingCache<UUID, Set<UUID>> ignores;
@@ -39,7 +42,9 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
     public Completable<Boolean> isIgnored(UUID by, UUID target) {
         return this.scheduler.completeAsync(() -> {
             try {
-                return this.ignores.get(by).contains(target);
+                Set<UUID> uuids = this.ignores.get(by);
+
+                return uuids.contains(target) || uuids.contains(IGNORE_ALL);
             } catch (ExecutionException exception) {
                 throw new RuntimeException(exception);
             }
@@ -47,13 +52,13 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
     }
 
     @Override
-    public void ignore(UUID by, UUID target) {
-        this.scheduler.async(() -> {
+    public Completable<Blank> ignore(UUID by, UUID target) {
+        return this.scheduler.completeAsync(() -> {
             try {
                 Set<UUID> uuids = this.ignores.get(by);
 
                 if (uuids.contains(target)) {
-                    return;
+                    return Blank.BLANK;
                 }
 
                 this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target))
@@ -61,12 +66,19 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
             } catch (ExecutionException exception) {
                 throw new RuntimeException(exception);
             }
+
+            return Blank.BLANK;
         });
     }
 
     @Override
-    public void unIgnore(UUID by, UUID target) {
-        this.action(IgnoreWrapper.class, dao -> {
+    public Completable<Blank> ignoreAll(UUID by) {
+        return this.ignore(by, IGNORE_ALL);
+    }
+
+    @Override
+    public Completable<Blank> unIgnore(UUID by, UUID target) {
+        return this.action(IgnoreWrapper.class, dao -> {
                 DeleteBuilder<IgnoreWrapper, Object> builder = dao.deleteBuilder();
 
                 builder.where()
@@ -75,7 +87,23 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
                     .eq("ignored_id", target);
 
                 return builder.delete();
-            }).then(integer -> this.ignores.refresh(by));
+            })
+            .then(integer -> this.ignores.refresh(by))
+            .thenApply(integer -> Blank.BLANK);
+    }
+
+    @Override
+    public Completable<Blank> unIgnoreAll(UUID by) {
+        return this.action(IgnoreWrapper.class, dao -> {
+                DeleteBuilder<IgnoreWrapper, Object> builder = dao.deleteBuilder();
+
+                builder.where()
+                    .eq("player_id", by);
+
+                return builder.delete();
+            })
+            .then(integer -> this.ignores.refresh(by))
+            .thenApply(integer -> Blank.BLANK);
     }
 
     public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
