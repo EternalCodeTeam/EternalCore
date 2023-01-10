@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
 
-    private static final UUID IGNORE_ALL = UUID.fromString("*");
+    private static final UUID IGNORE_ALL = UUID.nameUUIDFromBytes("*".getBytes());
 
     private final Dao<IgnoreWrapper, Long> cachedDao;
     private final LoadingCache<UUID, Set<UUID>> ignores;
