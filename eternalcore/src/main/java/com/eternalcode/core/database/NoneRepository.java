@@ -55,9 +55,23 @@ public final class NoneRepository implements HomeRepository, IgnoreRepository {
     }
 
     @Override
-    public void ignore(UUID by, UUID target) {}
+    public Completable<Blank> ignore(UUID by, UUID target) {
+        return Completable.completed(Blank.BLANK);
+    }
 
     @Override
-    public void unIgnore(UUID by, UUID target) {}
+    public Completable<Blank> ignoreAll(UUID by) {
+        return Completable.completed(Blank.BLANK);
+    }
+
+    @Override
+    public Completable<Blank> unIgnore(UUID by, UUID target) {
+        return Completable.completed(Blank.BLANK);
+    }
+
+    @Override
+    public Completable<Blank> unIgnoreAll(UUID by) {
+        return Completable.completed(Blank.BLANK);
+    }
 
 }

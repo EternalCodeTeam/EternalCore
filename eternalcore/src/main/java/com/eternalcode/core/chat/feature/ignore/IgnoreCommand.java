@@ -29,11 +29,7 @@ public class IgnoreCommand {
         UUID targetUuid = target.getUniqueId();
 
         if (sender.equals(target)) {
-            this.noticeService.create()
-                .notice(translation -> translation.privateChat().cantIgnoreYourself())
-                .viewer(sender)
-                .send();
-
+            this.noticeService.viewer(sender, translation -> translation.privateChat().cantIgnoreYourself());
             return;
         }
 
@@ -41,22 +37,29 @@ public class IgnoreCommand {
             if (isIgnored) {
                 this.noticeService.create()
                     .user(sender)
-                    .notice(translation -> translation.privateChat().alreadyIgnorePlayer())
-
                     .placeholder("{PLAYER}", target.getName())
+                    .notice(translation -> translation.privateChat().alreadyIgnorePlayer())
                     .send();
 
                 return;
             }
 
-            this.repository.ignore(senderUuid, targetUuid);
-
-            this.noticeService.create()
+            this.repository.ignore(senderUuid, targetUuid).then(unused -> this.noticeService.create()
                 .player(senderUuid)
                 .placeholder("{PLAYER}", target.getName())
                 .notice(translation -> translation.privateChat().ignorePlayer())
-                .send();
+                .send());
         });
+    }
+
+    @Execute(route = "*")
+    void ignoreAll(User sender) {
+        UUID senderUuid = sender.getUniqueId();
+
+        this.repository.ignoreAll(senderUuid).then(blank -> this.noticeService.create()
+            .player(senderUuid)
+            .notice(translation -> translation.privateChat().ignoreAll())
+            .send());
     }
 
 }

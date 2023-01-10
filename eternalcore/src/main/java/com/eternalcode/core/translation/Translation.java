@@ -147,12 +147,13 @@ public interface Translation {
         Notification socialSpyDisable();
 
         Notification ignorePlayer();
+        Notification ignoreAll();
         Notification unIgnorePlayer();
+        Notification unIgnoreAll();
         Notification alreadyIgnorePlayer();
         Notification notIgnorePlayer();
         Notification cantIgnoreYourself();
         Notification cantUnIgnoreYourself();
-
     }
 
     // afk section
