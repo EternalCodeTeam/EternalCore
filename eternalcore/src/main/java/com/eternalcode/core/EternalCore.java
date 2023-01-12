@@ -225,6 +225,11 @@ public class EternalCore extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
+    /*
+     * Dependency manager
+     */
+    private EternalCoreDependency dependencyManager;
+
     public EternalCore() {}
 
     protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
@@ -237,6 +242,9 @@ public class EternalCore extends JavaPlugin {
         Server server = this.getServer();
 
         instance = this;
+
+        this.dependencyManager = new EternalCoreDependency();
+        this.dependencyManager.loadLibraries(this);
 
         this.softwareCheck();
 
@@ -497,7 +505,7 @@ public class EternalCore extends JavaPlugin {
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
 
         // bStats metrics
-        Metrics metrics = new Metrics(this, 13964);
+        new Metrics(this, 13964);
         //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);

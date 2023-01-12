@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class LocationPersister extends BaseDataType {
 
-    private static final LocationPersister instance = new LocationPersister();
+    private static final LocationPersister LOCATION_PERSISTER = new LocationPersister();
 
     private LocationPersister() {
         super(SqlType.LONG_STRING, new Class<?>[] { LocationPersister.class });
@@ -64,7 +64,7 @@ public class LocationPersister extends BaseDataType {
     }
 
     public static LocationPersister getSingleton() {
-        return instance;
+        return LOCATION_PERSISTER;
     }
 
 }

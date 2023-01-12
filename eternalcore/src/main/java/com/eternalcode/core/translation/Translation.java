@@ -284,7 +284,6 @@ public interface Translation {
         Notification weatherSetThunder();
     }
 
-
     // language section
     LanguageSection language();
 

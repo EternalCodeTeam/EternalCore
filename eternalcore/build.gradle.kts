@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("java-library")
+    `java-library`
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
     id("xyz.jpenilla.run-paper") version "2.0.1"
     id("com.github.johnrengelman.shadow") version "7.1.2"
@@ -39,7 +39,10 @@ dependencies {
     implementation("dev.triumphteam:triumph-gui:3.1.4")
 
     // metrics
-    implementation("org.bstats:bstats-bukkit:3.0.0")
+    compileOnly("org.bstats:bstats-bukkit:3.0.0")
+
+    // dependency management (libby)
+    implementation("net.byteflux:libby-bukkit:1.1.5")
 
     // bridge (hook)
     compileOnly("me.clip:placeholderapi:2.11.2")
@@ -47,8 +50,8 @@ dependencies {
     // unit test
     testImplementation("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.144.3")
     testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
     testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
@@ -73,19 +76,12 @@ bukkit {
     website = "www.eternalcode.pl"
     version = "${project.version}"
     softDepend = listOf("PlaceholderAPI")
-    libraries = listOf(
-        "org.postgresql:postgresql:42.5.1",
-        "com.h2database:h2:2.1.214",
-        "com.j256.ormlite:ormlite-jdbc:6.1",
-        "com.zaxxer:HikariCP:5.0.1",
-        "org.mariadb.jdbc:mariadb-java-client:3.1.0"
-    )
 }
 
 
 tasks {
     runServer {
-        minecraftVersion("1.19.2")
+        minecraftVersion("1.19.3")
     }
 }
 
@@ -97,7 +93,7 @@ tasks.withType<ShadowJar> {
         "org/jetbrains/annotations/**",
         "org/checkerframework/**",
         "META-INF/**",
-        "javax/**"
+        "javax/**",
     )
 
     mergeServiceFiles()
@@ -107,7 +103,6 @@ tasks.withType<ShadowJar> {
     listOf(
         "panda",
         "org.panda_lang",
-        "org.bstats",
         "net.dzikoysk",
         "dev.rollczi",
         "net.kyori",
@@ -115,7 +110,8 @@ tasks.withType<ShadowJar> {
         "dev.triumphteam",
         "org.slf4j",
         "com.google.gson",
-        "com.eternalcode.containers"
+        "com.eternalcode.containers",
+        "net.byteflux"
     ).forEach { pack ->
         relocate(pack, "$prefix.$pack")
     }

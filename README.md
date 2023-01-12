@@ -15,7 +15,7 @@
 # Warning ❗ 
 Remember EternalCore is at an early stage of development, you use it at your own risk!
 
-# Informations
+# Information's
 - EternalCore supports Minecraft version 1.17.1, 1.18.2, 1.19.2+ 
 - EternalCore requires Java 17 or higher. On older versions, the plugin may not work properly.
 

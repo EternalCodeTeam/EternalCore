@@ -23,7 +23,7 @@ public class LocationArgument implements MultilevelArgument<Location> {
             double z = Double.parseDouble(arguments[2]);
 
             return new Location(null, x, y, z);
-        }).mapErr(ex -> "&cNie poprawna lokalizacja!"); //TODO: language
+        }).mapErr(ex -> "&cNie poprawna lokalizacja!"); // TODO: language
     }
 
     @Override
