@@ -13,11 +13,9 @@ public class EternalCoreDependency {
         libraryManager.addMavenCentral();
 
         // custom repositories
-        libraryManager.addRepository("https://repository.minecodes.pl/releases");
-        libraryManager.addRepository("https://repository.minecodes.pl/snapshots");
         libraryManager.addRepository("https://repo.panda-lang.org/releases");
         libraryManager.addRepository("https://hub.spigotmc.org/nexus/content/repositories/snapshots/");
-
+        libraryManager.addRepository("https://papermc.io/repo/repository/maven-public/");
 
         Library ormLite = Library.builder()
             // com.j256.ormlite:ormlite-jdbc:6.1
@@ -33,41 +31,6 @@ public class EternalCoreDependency {
             .version("1.0.8")
             .build();
 
-        Library adventurePlatform = Library.builder()
-            // net.kyori:adventure-platform-bukkit:4.2.0
-            .groupId("net.kyori")
-            .artifactId("adventure-platform-bukkit")
-            .version("4.2.0")
-            .build();
-
-        Library miniMessages = Library.builder()
-            // net.kyori:adventure-text-minimessage:4.12.0
-            .groupId("net.kyori")
-            .artifactId("adventure-text-minimessage")
-            .version("4.2.0")
-            .build();
-
-        Library cdnConfigs = Library.builder()
-            // net.dzikoysk:cdn:1.14.2
-            .groupId("net.dzikoysk")
-            .artifactId("cdn")
-            .version("1.14.2")
-            .build();
-
-        Library liteCommands = Library.builder()
-            // dev.rollczi.litecommands:bukkit-adventure:2.7.0
-            .groupId("dev.rollczi.litecommands")
-            .artifactId("bukkit-adventure")
-            .version("2.7.0")
-            .build();
-
-        Library skullApi = Library.builder()
-            // dev.rollczi:liteskullapi:1.3.0
-            .groupId("dev.rollczi")
-            .artifactId("liteskullapi")
-            .version("1.3.0")
-            .build();
-
         Library expressible = Library.builder()
             // org.panda-lang:expressible:1.2.2
             .groupId("org.panda-lang")
@@ -80,13 +43,6 @@ public class EternalCoreDependency {
             .groupId("dev.triumphteam")
             .artifactId("triumph-gui")
             .version("3.1.4")
-            .build();
-
-        Library bStats = Library.builder()
-            // org.bstats:bstats-bukkit:3.0.0
-            .groupId("org.bstats")
-            .artifactId("bstats-bukkit")
-            .version("3.0.0")
             .build();
 
         Library postgreSql = Library.builder()
@@ -117,18 +73,9 @@ public class EternalCoreDependency {
             .version("3.1.0")
             .build();
 
-/*
-        libraryManager.loadLibrary(paperLib);
-        libraryManager.loadLibrary(adventurePlatform);
-        libraryManager.loadLibrary(miniMessages);
-        libraryManager.loadLibrary(cdnConfigs);
-        libraryManager.loadLibrary(liteCommands);
-        libraryManager.loadLibrary(skullApi);
         libraryManager.loadLibrary(expressible);
+        libraryManager.loadLibrary(paperLib);
         libraryManager.loadLibrary(triumphGui);
-  */
-
-        libraryManager.loadLibrary(bStats);
         libraryManager.loadLibrary(ormLite);
         libraryManager.loadLibrary(postgreSql);
         libraryManager.loadLibrary(h2Database);

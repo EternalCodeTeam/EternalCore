@@ -11,9 +11,7 @@ dependencies {
     // modules
     implementation(project(":eternalcore-paper"))
 
-    // minecraft development api
-    compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    implementation("io.papermc:paperlib:1.0.8")
+    // adventure & minimessages
     implementation("net.kyori:adventure-platform-bukkit:4.2.0")
     implementation("net.kyori:adventure-text-minimessage:4.12.0")
 
@@ -22,27 +20,31 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 
-    // database
-    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
-    compileOnly("com.zaxxer:HikariCP:5.0.1")
-
     // command framework
     implementation("dev.rollczi.litecommands:bukkit-adventure:2.7.0")
 
     // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
-    // utility library
-    implementation("org.panda-lang:expressible:1.2.2")
-
-    // gui library
-    implementation("dev.triumphteam:triumph-gui:3.1.4")
-
     // metrics
-    compileOnly("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-bukkit:3.0.0")
 
     // dependency management (libby)
     implementation("net.byteflux:libby-bukkit:1.1.5")
+
+    // minecraft development api
+    compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc:paperlib:1.0.8")
+
+    // utility library
+    compileOnly("org.panda-lang:expressible:1.2.2")
+
+    // database
+    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
+    compileOnly("com.zaxxer:HikariCP:5.0.1")
+
+    // gui library
+    compileOnly("dev.triumphteam:triumph-gui:3.1.4")
 
     // bridge (hook)
     compileOnly("me.clip:placeholderapi:2.11.2")
@@ -101,15 +103,11 @@ tasks.withType<ShadowJar> {
 
     val prefix = "com.eternalcode.core.libs"
     listOf(
-        "panda",
-        "org.panda_lang",
         "net.dzikoysk",
         "dev.rollczi",
         "net.kyori",
-        "io.papermc.lib",
-        "dev.triumphteam",
         "org.slf4j",
-        "com.google.gson",
+        "org.bstats",
         "com.eternalcode.containers",
         "net.byteflux"
     ).forEach { pack ->
