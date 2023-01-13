@@ -12,8 +12,9 @@ public class DependencyRegistry {
     private static final Dependency H2_DATABASE = new Dependency("com.h2database", "h2", "2.1.214");
     private static final Dependency HIKARI_CP = new Dependency("com.zaxxer", "HikariCP", "5.0.1");
     private static final Dependency MARIADB = new Dependency("org.mariadb.jdbc", "mariadb-java-client", "3.1.0");
+    private static final Dependency LITE_SKULL_API = new Dependency("dev.rollczi", "liteskullapi", "1.3.0");
 
-    private static final Dependency[] DEPENDENCIES = { ORMLITE, PAPER_LIB, EXPRESSIBLE, TRIUMPH_GUI, POSTGRESQL, H2_DATABASE, HIKARI_CP, MARIADB };
+    private static final Dependency[] DEPENDENCIES = { ORMLITE, PAPER_LIB, EXPRESSIBLE, TRIUMPH_GUI, POSTGRESQL, H2_DATABASE, HIKARI_CP, MARIADB, LITE_SKULL_API };
 
     public void loadLibraries(Plugin plugin) {
         DependencyManager dependencyManager = new DependencyManager(plugin);

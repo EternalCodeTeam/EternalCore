@@ -23,9 +23,6 @@ dependencies {
     // command framework
     implementation("dev.rollczi.litecommands:bukkit-adventure:2.7.0")
 
-    // skull api
-    implementation("dev.rollczi:liteskullapi:1.3.0")
-
     // metrics
     implementation("org.bstats:bstats-bukkit:3.0.0")
 
@@ -35,6 +32,9 @@ dependencies {
     // minecraft development api
     compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
     compileOnly("io.papermc:paperlib:1.0.8")
+
+    // skull api
+    compileOnly("dev.rollczi:liteskullapi:1.3.0")
 
     // utility library
     compileOnly("org.panda-lang:expressible:1.2.2")
@@ -105,8 +105,8 @@ tasks.withType<ShadowJar> {
     listOf(
         "panda",
         "net.dzikoysk",
-/*        "net.kyori",*/
-        "dev.rollczi",
+        "net.kyori",
+        "dev.rollczi.litecommands",
         "org.slf4j",
         "org.bstats",
         "com.eternalcode.containers",

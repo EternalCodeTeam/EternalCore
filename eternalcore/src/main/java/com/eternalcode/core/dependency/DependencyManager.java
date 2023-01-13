@@ -15,9 +15,11 @@ public class DependencyManager {
 
         // repositories
         this.libraryManager.addMavenCentral();
-        this.libraryManager.addRepository("https://repo.panda-lang.org/releases");
+        this.libraryManager.addRepository("https://repo.panda-lang.org/releases/");
         this.libraryManager.addRepository("https://hub.spigotmc.org/nexus/content/repositories/snapshots/");
         this.libraryManager.addRepository("https://papermc.io/repo/repository/maven-public/");
+        this.libraryManager.addRepository("https://repository.minecodes.pl/releases/");
+        this.libraryManager.addRepository("https://repository.minecodes.pl/snapshots/");
     }
 
     public void registerDependency(Dependency dependency) {
