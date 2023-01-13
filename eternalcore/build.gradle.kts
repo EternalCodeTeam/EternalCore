@@ -103,9 +103,10 @@ tasks.withType<ShadowJar> {
 
     val prefix = "com.eternalcode.core.libs"
     listOf(
+        "panda",
         "net.dzikoysk",
-        "dev.rollczi",
         "net.kyori",
+        "dev.rollczi",
         "org.slf4j",
         "org.bstats",
         "com.eternalcode.containers",

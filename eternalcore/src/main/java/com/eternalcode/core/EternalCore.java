@@ -82,6 +82,7 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
+import com.eternalcode.core.dependency.DependencyRegistry;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.home.HomeRepository;
@@ -228,7 +229,7 @@ public class EternalCore extends JavaPlugin {
     /*
      * Dependency manager
      */
-    private EternalCoreDependency dependencyManager;
+    private DependencyRegistry dependencyRegistry;
 
     public EternalCore() {}
 
@@ -243,8 +244,8 @@ public class EternalCore extends JavaPlugin {
 
         instance = this;
 
-        this.dependencyManager = new EternalCoreDependency();
-        this.dependencyManager.loadLibraries(this);
+        this.dependencyRegistry = new DependencyRegistry();
+        this.dependencyRegistry.loadLibraries(this);
 
         this.softwareCheck();
 
