@@ -105,7 +105,7 @@ tasks.withType<ShadowJar> {
     listOf(
         "panda",
         "net.dzikoysk",
-        "net.kyori",
+/*        "net.kyori",*/
         "dev.rollczi",
         "org.slf4j",
         "org.bstats",

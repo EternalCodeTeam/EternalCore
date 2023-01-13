@@ -1,6 +1,5 @@
 package com.eternalcode.core.dependency;
 
-import net.byteflux.libby.BukkitLibraryManager;
 import org.bukkit.plugin.Plugin;
 
 public class DependencyRegistry {
@@ -18,13 +17,6 @@ public class DependencyRegistry {
 
     public void loadLibraries(Plugin plugin) {
         DependencyManager dependencyManager = new DependencyManager(plugin);
-        BukkitLibraryManager libraryManager = new BukkitLibraryManager(plugin);
-
-        // repositories
-        libraryManager.addMavenCentral();
-        libraryManager.addRepository("https://repo.panda-lang.org/releases");
-        libraryManager.addRepository("https://hub.spigotmc.org/nexus/content/repositories/snapshots/");
-        libraryManager.addRepository("https://papermc.io/repo/repository/maven-public/");
 
         for (Dependency dependency : DEPENDENCIES) {
             dependencyManager.registerDependency(dependency);

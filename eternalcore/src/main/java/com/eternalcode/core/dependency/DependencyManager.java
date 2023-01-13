@@ -11,16 +11,22 @@ public class DependencyManager {
     private final BukkitLibraryManager libraryManager;
 
     public DependencyManager(Plugin plugin) {
-        this.libraryManager = new BukkitLibraryManager(plugin);
+        this.libraryManager = new BukkitLibraryManager(plugin, "dependencies");
+
+        // repositories
+        this.libraryManager.addMavenCentral();
+        this.libraryManager.addRepository("https://repo.panda-lang.org/releases");
+        this.libraryManager.addRepository("https://hub.spigotmc.org/nexus/content/repositories/snapshots/");
+        this.libraryManager.addRepository("https://papermc.io/repo/repository/maven-public/");
     }
 
     public void registerDependency(Dependency dependency) {
-        dependencies.add(dependency);
+        this.dependencies.add(dependency);
     }
 
     public void loadDependencies() {
-        for (Dependency dependency : dependencies) {
-            libraryManager.loadLibrary(dependency.createLibrary());
+        for (Dependency dependency : this.dependencies) {
+            this.libraryManager.loadLibrary(dependency.createLibrary());
         }
     }
 }
