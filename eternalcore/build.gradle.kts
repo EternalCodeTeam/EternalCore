@@ -5,58 +5,86 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
     id("xyz.jpenilla.run-paper") version "2.0.1"
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("net.kyori.blossom") version "1.2.0"
 }
+
+val adventurePlatformVersion = "4.2.0"
+val minimessageVersion = "4.12.0"
+val cdnVersion = "1.14.2"
+val lombokVersion = "1.18.24"
+val litecommandsVersion = "2.7.0"
+val bstatsVersion = "3.0.0"
+val libbyVersion = "1.1.5"
+val spigotApiVersion = "1.19.3-R0.1-SNAPSHOT"
+val paperlibVersion = "1.0.8"
+val liteskullapiVersion = "1.3.0"
+val expressibleVersion = "1.2.2"
+val ormliteJdbcVersion = "6.1"
+val hikariCPVersion = "5.0.1"
+val triumphGuiVersion = "3.1.4"
+val placeholderapiVersion = "2.11.2"
+
+// tests
+val mockBukkitVersion = "2.144.3"
+val groovyAllVersion = "3.0.14"
+val junitJupiterApiVersion = "5.9.2"
+val junitJupiterParamsVersion = "5.9.2"
+
+// drivers
+val postgresqlVersion = "42.3.1"
+val h2Database = "1.4.200"
+val mariaDbVersion = "2.7.3"
 
 dependencies {
     // modules
     implementation(project(":eternalcore-paper"))
 
     // adventure & minimessages
-    implementation("net.kyori:adventure-platform-bukkit:4.2.0")
-    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    implementation("net.kyori:adventure-platform-bukkit:$adventurePlatformVersion")
+    implementation("net.kyori:adventure-text-minimessage:$minimessageVersion")
 
     // configuration
-    implementation("net.dzikoysk:cdn:1.14.2")
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    implementation("net.dzikoysk:cdn:$cdnVersion")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     // command framework
-    implementation("dev.rollczi.litecommands:bukkit-adventure:2.7.0")
+    implementation("dev.rollczi.litecommands:bukkit-adventure:$litecommandsVersion")
 
     // metrics
-    implementation("org.bstats:bstats-bukkit:3.0.0")
+    implementation("org.bstats:bstats-bukkit:$bstatsVersion")
 
     // dependency management (libby)
-    implementation("net.byteflux:libby-bukkit:1.1.5")
+    implementation("net.byteflux:libby-bukkit:$libbyVersion")
 
     // minecraft development api
-    compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    compileOnly("io.papermc:paperlib:1.0.8")
+    compileOnly("org.spigotmc:spigot-api:$spigotApiVersion")
+    compileOnly("io.papermc:paperlib:$paperlibVersion")
 
     // skull api
-    compileOnly("dev.rollczi:liteskullapi:1.3.0")
+    compileOnly("dev.rollczi:liteskullapi:$liteskullapiVersion")
 
     // utility library
-    compileOnly("org.panda-lang:expressible:1.2.2")
+    compileOnly("org.panda-lang:expressible:$expressibleVersion")
 
     // database
-    compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
-    compileOnly("com.zaxxer:HikariCP:5.0.1")
+    compileOnly("com.j256.ormlite:ormlite-jdbc:$ormliteJdbcVersion")
+    compileOnly("com.zaxxer:HikariCP:$hikariCPVersion")
 
     // gui library
-    compileOnly("dev.triumphteam:triumph-gui:3.1.4")
+    compileOnly("dev.triumphteam:triumph-gui:$triumphGuiVersion")
 
     // bridge (hook)
-    compileOnly("me.clip:placeholderapi:2.11.2")
+    compileOnly("me.clip:placeholderapi:$placeholderapiVersion")
 
     // unit test
-    testImplementation("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.144.3")
-    testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
-    testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
+    testImplementation("org.spigotmc:spigot-api:$spigotApiVersion")
+    testImplementation("org.codehaus.groovy:groovy-all:$groovyAllVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterApiVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterParamsVersion")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:$mockBukkitVersion")
+    testImplementation("net.kyori:adventure-platform-bukkit:$adventurePlatformVersion")
+    testImplementation("net.kyori:adventure-text-minimessage:$minimessageVersion")
 }
 
 tasks.getByName<Test>("test") {
@@ -85,6 +113,20 @@ tasks {
     runServer {
         minecraftVersion("1.19.3")
     }
+}
+
+blossom {
+    val dependencyConstants = "src/main/java/com/eternalcode/core/dependency/DependencyConstants.java"
+
+    replaceToken("{ormlite_version}", ormliteJdbcVersion, dependencyConstants)
+    replaceToken("{paper_lib_version}", paperlibVersion, dependencyConstants)
+    replaceToken("{expressible_version}", expressibleVersion, dependencyConstants)
+    replaceToken("{triumph_gui_version}", triumphGuiVersion, dependencyConstants)
+    replaceToken("{postgresql_version}", postgresqlVersion, dependencyConstants)
+    replaceToken("{h2_version}", h2Database, dependencyConstants)
+    replaceToken("{hikari_cp_version}", hikariCPVersion, dependencyConstants)
+    replaceToken("{mariadb_version}", mariaDbVersion, dependencyConstants)
+    replaceToken("{liteskullapi_version}", liteskullapiVersion, dependencyConstants)
 }
 
 tasks.withType<ShadowJar> {

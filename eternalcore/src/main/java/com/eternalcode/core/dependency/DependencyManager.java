@@ -11,7 +11,7 @@ public class DependencyManager {
     private final BukkitLibraryManager libraryManager;
 
     public DependencyManager(Plugin plugin) {
-        this.libraryManager = new BukkitLibraryManager(plugin, "dependencies");
+        this.libraryManager = new BukkitLibraryManager(plugin);
 
         // repositories
         this.libraryManager.addMavenCentral();
