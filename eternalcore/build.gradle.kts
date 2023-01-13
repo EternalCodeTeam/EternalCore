@@ -107,7 +107,6 @@ tasks.withType<ShadowJar> {
         "net.dzikoysk",
         "net.kyori",
         "dev.rollczi.litecommands",
-        "org.slf4j",
         "org.bstats",
         "com.eternalcode.containers",
         "net.byteflux"
