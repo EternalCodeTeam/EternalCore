@@ -225,7 +225,8 @@ public class EternalCore extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
-    public EternalCore() {}
+    public EternalCore() {
+    }
 
     protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
@@ -264,8 +265,7 @@ public class EternalCore extends JavaPlugin {
             homeRepository = HomeRepositoryOrmLite.create(this.databaseManager, this.scheduler);
             ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
             this.getLogger().severe("Can not connect to database! Some functions may not work!");
 
@@ -325,7 +325,7 @@ public class EternalCore extends JavaPlugin {
 
         CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
-        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider, this.miniMessage)
+        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
 
             // Arguments (include optional)
             .argument(String.class, "player",   new StringNicknameArgument(server))
@@ -642,4 +642,5 @@ public class EternalCore extends JavaPlugin {
     public NoticeService getNoticeService() {
         return this.noticeService;
     }
+
 }
