@@ -17,7 +17,6 @@ subprojects {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        mavenLocal()
         maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
         maven { url = uri("https://repo.panda-lang.org/releases") }
         maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
