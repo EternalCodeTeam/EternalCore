@@ -14,7 +14,6 @@ val cdnVersion = "1.14.2"
 val lombokVersion = "1.18.24"
 val litecommandsVersion = "2.7.0"
 val bstatsVersion = "3.0.0"
-val libbyVersion = "1.1.5"
 val spigotApiVersion = "1.19.3-R0.1-SNAPSHOT"
 val paperlibVersion = "1.0.8"
 val liteskullapiVersion = "1.3.0"
@@ -44,7 +43,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:$minimessageVersion")
 
     // configuration
-    implementation("net.dzikoysk:cdn:$cdnVersion")
+    compileOnly("net.dzikoysk:cdn:$cdnVersion")
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
@@ -55,7 +54,8 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:$bstatsVersion")
 
     // dependency management (libby)
-    implementation("net.byteflux:libby-bukkit:$libbyVersion")
+    implementation("net.byteflux:libby-bukkit:1.1.6")
+    implementation("net.byteflux:libby-core:1.1.6")
 
     // minecraft development api
     compileOnly("org.spigotmc:spigot-api:$spigotApiVersion")
@@ -85,6 +85,7 @@ dependencies {
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:$mockBukkitVersion")
     testImplementation("net.kyori:adventure-platform-bukkit:$adventurePlatformVersion")
     testImplementation("net.kyori:adventure-text-minimessage:$minimessageVersion")
+    testImplementation("net.dzikoysk:cdn:$cdnVersion")
 }
 
 tasks.getByName<Test>("test") {
@@ -146,8 +147,8 @@ tasks.withType<ShadowJar> {
     val prefix = "com.eternalcode.core.libs"
     listOf(
         "panda",
-        "net.dzikoysk",
         "net.kyori",
+        "net.dzikoysk",
         "dev.rollczi.litecommands",
         "org.bstats",
         "com.eternalcode.containers",
