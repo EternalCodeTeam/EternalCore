@@ -26,6 +26,9 @@ public interface Translation {
         Notification noDamagedItems();
         Notification noEnchantment();
         Notification noValidEnchantmentLevel();
+        Notification worldDoesntExist();
+        Notification youMustGiveWorldName();
+        Notification incorrectLocation();
     }
 
     // format section

@@ -4,6 +4,7 @@ import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.j256.ormlite.stmt.query.Not;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -37,6 +38,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notification noDamagedItems = Notification.chat("<dark_red>Błąd: <red>Musisz mieć uszkodzone przedmioty!");
         public Notification noEnchantment = Notification.chat("<dark_red>Błąd: <red>Taki enchant nie istnieje!");
         public Notification noValidEnchantmentLevel = Notification.chat("<dark_red>Błąd: <red>Ten poziom zaklęcia nie jest wspierany!");
+        public Notification worldDoesntExist = Notification.chat("<dark_red>Błąd: <red>Ten świat nie istnieje!");
+        public Notification youMustGiveWorldName = Notification.chat("<dark_red>Błąd: <red>Musisz podać nazwę świata!");
+        public Notification incorrectLocation = Notification.chat("<dark_red>Błąd: <red>Niepoprawna lokalizacja!");
     }
 
     public PLFormatSection format = new PLFormatSection();
