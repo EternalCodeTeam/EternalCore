@@ -4,7 +4,6 @@ import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.AbstractTranslation;
-import com.j256.ormlite.stmt.query.Not;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
