@@ -6,6 +6,7 @@ import com.eternalcode.core.translation.Translation;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("FunctionalInterfaceMethodChanged")
 @FunctionalInterface
 public interface NotificationExtractor extends NotificationsExtractor {
 
