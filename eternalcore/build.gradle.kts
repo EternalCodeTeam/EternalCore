@@ -47,8 +47,7 @@ dependencies {
 
     // errorprone compiler
     errorprone("com.google.errorprone:error_prone_core:2.18.0")
-
-
+    
     // unit test
     testImplementation("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
