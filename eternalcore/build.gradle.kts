@@ -1,10 +1,11 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("java-library")
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
-    id("xyz.jpenilla.run-paper") version "2.0.1"
+    `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
+    id("net.ltgt.errorprone") version "3.0.1"
+    id("xyz.jpenilla.run-paper") version "2.0.1"
 }
 
 dependencies {
@@ -43,6 +44,10 @@ dependencies {
 
     // bridge (hook)
     compileOnly("me.clip:placeholderapi:2.11.2")
+
+    // errorprone compiler
+    errorprone("com.google.errorprone:error_prone_core:2.18.0")
+
 
     // unit test
     testImplementation("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
