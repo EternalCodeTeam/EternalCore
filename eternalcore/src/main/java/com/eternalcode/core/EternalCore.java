@@ -224,10 +224,6 @@ public class EternalCore {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
-    /*
-     * Dependency manager
-     */
-    private DependencyRegistry dependencyRegistry;
 
     public EternalCore(Plugin plugin) {
         this.plugin = plugin;
@@ -238,9 +234,6 @@ public class EternalCore {
         Server server = this.plugin.getServer();
 
         instance = this;
-
-        this.dependencyRegistry = new DependencyRegistry();
-        this.dependencyRegistry.loadLibraries(this.plugin);
 
         this.softwareCheck();
 
