@@ -30,7 +30,7 @@ public class HelpOpCommand {
         this.noticeService = noticeService;
         this.config = config;
         this.server = server;
-        this.delay = new Delay<>(this.config, this.config.chat);
+        this.delay = new Delay<>(this.config.chat);
     }
 
     @Execute

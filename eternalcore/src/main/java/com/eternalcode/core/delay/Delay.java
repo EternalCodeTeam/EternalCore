@@ -13,11 +13,11 @@ public class Delay<T> {
 
     private final DelaySettings delaySettings;
 
-    public Delay(PluginConfiguration pluginConfiguration, DelaySettings delaySettings) {
+    public Delay(DelaySettings delaySettings) {
         this.delaySettings = delaySettings;
 
         this.delays = CacheBuilder.newBuilder()
-            .expireAfterWrite(pluginConfiguration.chat.helpOpDelay.plus(Duration.ofSeconds(1)))
+            .expireAfterWrite(delaySettings.delay())
             .build();
     }
 
