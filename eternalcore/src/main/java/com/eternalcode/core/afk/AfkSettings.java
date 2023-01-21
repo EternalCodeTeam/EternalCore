@@ -8,11 +8,11 @@ public interface AfkSettings extends DelaySettings {
 
     int interactionsCountDisableAfk();
 
-    Duration getChatDelay();
+    Duration getAfkDelay();
 
     @Override
     default Duration delay() {
-        return getChatDelay();
+        return getAfkDelay();
     }
 
 }

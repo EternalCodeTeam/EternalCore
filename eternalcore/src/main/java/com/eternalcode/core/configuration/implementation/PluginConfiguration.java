@@ -183,7 +183,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
 
         @Override
-        public Duration getChatDelay() {
+        public Duration getAfkDelay() {
             return this.afkCommandDelay;
         }
 
