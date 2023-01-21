@@ -41,7 +41,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification noEnchantment = Notification.chat("<dark_gray>» <red>This enchantment doesn't exist");
         public Notification noValidEnchantmentLevel = Notification.chat("<dark_gray>» <red>This enchantment level is not supported!");
         public Notification worldDoesntExist = Notification.chat("<dark_gray>» <red>This world doesn't exist!");
-        public Notification youMustGiveWorldName = Notification.chat("<dark_gray>» <red>You must give world name!");
+        public Notification youMustGiveWorldName = Notification.chat("<dark_gray>» <red>You must provide a world name!");
         public Notification incorrectLocation = Notification.chat("<dark_gray>» <red>Incorrect location!");
     }
 
