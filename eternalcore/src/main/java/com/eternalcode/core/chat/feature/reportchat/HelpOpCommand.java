@@ -17,7 +17,6 @@ import org.bukkit.entity.Player;
 import java.time.Duration;
 import java.util.UUID;
 
-// TODO: Refactor
 @Route(name = "helpop", aliases = {"report"})
 @Permission("eternalcore.helpop")
 public class HelpOpCommand {

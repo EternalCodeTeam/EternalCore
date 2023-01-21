@@ -17,11 +17,6 @@ public class AfkCommand {
 
     @Execute
     void execute(Player player) {
-        if (this.afkService.isAfk(player.getUniqueId())) {
-
-            return;
-        }
-
         this.afkService.markAfk(player.getUniqueId(), AfkReason.COMMAND);
     }
 
