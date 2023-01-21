@@ -12,7 +12,7 @@ val adventurePlatformVersion = "4.2.0"
 val minimessageVersion = "4.12.0"
 val cdnVersion = "1.14.2"
 val lombokVersion = "1.18.24"
-val litecommandsVersion = "2.7.0"
+val litecommandsVersion = "2.7.2"
 val bstatsVersion = "3.0.0"
 val spigotApiVersion = "1.19.3-R0.1-SNAPSHOT"
 val paperlibVersion = "1.0.8"
@@ -39,23 +39,22 @@ dependencies {
     implementation(project(":eternalcore-paper"))
 
     // adventure & minimessages
-    implementation("net.kyori:adventure-platform-bukkit:$adventurePlatformVersion")
-    implementation("net.kyori:adventure-text-minimessage:$minimessageVersion")
+    compileOnly("net.kyori:adventure-platform-bukkit:$adventurePlatformVersion")
+    compileOnly("net.kyori:adventure-text-minimessage:$minimessageVersion")
 
     // configuration
-    compileOnly("net.dzikoysk:cdn:$cdnVersion")
+    implementation("net.dzikoysk:cdn:$cdnVersion")
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     // command framework
-    implementation("dev.rollczi.litecommands:bukkit-adventure:$litecommandsVersion")
+    compileOnly("dev.rollczi.litecommands:bukkit-adventure:$litecommandsVersion")
 
     // metrics
     implementation("org.bstats:bstats-bukkit:$bstatsVersion")
 
     // dependency management (libby)
-    implementation("net.byteflux:libby-bukkit:1.1.6")
-    implementation("net.byteflux:libby-core:1.1.6")
+    implementation("net.byteflux:libby-bukkit:1.1.5")
 
     // minecraft development api
     compileOnly("org.spigotmc:spigot-api:$spigotApiVersion")
@@ -72,7 +71,7 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:$hikariCPVersion")
 
     // gui library
-    compileOnly("dev.triumphteam:triumph-gui:$triumphGuiVersion")
+    implementation("dev.triumphteam:triumph-gui:$triumphGuiVersion")
 
     // bridge (hook)
     compileOnly("me.clip:placeholderapi:$placeholderapiVersion")
@@ -98,7 +97,7 @@ tasks.withType<JavaCompile> {
 }
 
 bukkit {
-    main = "com.eternalcode.core.EternalCore"
+    main = "com.eternalcode.core.EternalCoreBootstrap"
     apiVersion = "1.13"
     prefix = "EternalCore"
     author = "EternalCodeTeam"
@@ -128,6 +127,7 @@ blossom {
     replaceToken("{hikari_cp_version}", hikariCPVersion, dependencyConstants)
     replaceToken("{mariadb_version}", mariaDbVersion, dependencyConstants)
     replaceToken("{liteskullapi_version}", liteskullapiVersion, dependencyConstants)
+    replaceToken("{lite_commands_version}", litecommandsVersion, dependencyConstants)
 }
 
 tasks.withType<ShadowJar> {
@@ -147,12 +147,16 @@ tasks.withType<ShadowJar> {
     val prefix = "com.eternalcode.core.libs"
     listOf(
         "panda",
-        "net.kyori",
-        "net.dzikoysk",
-        "dev.rollczi.litecommands",
+        "org.panda_lang",
         "org.bstats",
+        "net.dzikoysk",
+        "dev.rollczi",
+        "net.kyori",
+        "io.papermc.lib",
+        "dev.triumphteam",
+        "com.google.gson",
         "com.eternalcode.containers",
-        "net.byteflux"
+        "net.byteflux",
     ).forEach { pack ->
         relocate(pack, "$prefix.$pack")
     }

@@ -146,7 +146,6 @@ import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -154,20 +153,19 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
+import org.bukkit.plugin.Plugin;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class EternalCore extends JavaPlugin {
+public class EternalCore {
 
     private static EternalCore instance;
+
+    private final Plugin plugin;
 
     /**
      * Scheduler & Publisher
@@ -231,30 +229,27 @@ public class EternalCore extends JavaPlugin {
      */
     private DependencyRegistry dependencyRegistry;
 
-    public EternalCore() {}
-
-    protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-        super(loader, description, dataFolder, file);
+    public EternalCore(Plugin plugin) {
+        this.plugin = plugin;
     }
 
-    @Override
-    public void onEnable() {
+    public void enable() {
         Stopwatch started = Stopwatch.createStarted();
-        Server server = this.getServer();
+        Server server = this.plugin.getServer();
 
         instance = this;
 
         this.dependencyRegistry = new DependencyRegistry();
-        this.dependencyRegistry.loadLibraries(this);
+        this.dependencyRegistry.loadLibraries(this.plugin);
 
         this.softwareCheck();
 
-        this.scheduler = new BukkitSchedulerImpl(this);
+        this.scheduler = new BukkitSchedulerImpl(this.plugin);
         this.publisher = new LocalPublisher();
 
         /* Configuration */
 
-        this.configurationManager = new ConfigurationManager(this.getDataFolder());
+        this.configurationManager = new ConfigurationManager(this.plugin.getDataFolder());
 
         this.pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
@@ -267,7 +262,7 @@ public class EternalCore extends JavaPlugin {
         IgnoreRepository ignoreRepository;
 
         try {
-            this.databaseManager = new DatabaseManager(this.pluginConfiguration, this.getLogger(), this.getDataFolder());
+            this.databaseManager = new DatabaseManager(this.pluginConfiguration, this.plugin.getLogger(), this.plugin.getDataFolder());
             this.databaseManager.connect();
 
             homeRepository = HomeRepositoryOrmLite.create(this.databaseManager, this.scheduler);
@@ -276,7 +271,7 @@ public class EternalCore extends JavaPlugin {
         }
         catch (Exception exception) {
             exception.printStackTrace();
-            this.getLogger().severe("Can not connect to database! Some functions may not work!");
+            this.plugin.getLogger().severe("Can not connect to database! Some functions may not work!");
 
             NoneRepository noneRepository = new NoneRepository();
 
@@ -295,7 +290,7 @@ public class EternalCore extends JavaPlugin {
             return text;
         });
 
-        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, this.getLogger());
+        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, this.plugin.getLogger());
         this.bridgeManager.init();
 
         this.teleportService = new TeleportService();
@@ -311,7 +306,7 @@ public class EternalCore extends JavaPlugin {
 
         /* Adventure */
 
-        this.audiencesProvider = BukkitAudiences.create(this);
+        this.audiencesProvider = BukkitAudiences.create(this.plugin);
         this.miniMessage = MiniMessage.builder()
             .postProcessor(new LegacyColorProcessor())
             .build();
@@ -329,12 +324,12 @@ public class EternalCore extends JavaPlugin {
         this.languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
 
         this.skullAPI = LiteSkullFactory.builder()
-            .bukkitScheduler(this)
+            .bukkitScheduler(this.plugin)
             .build();
 
         CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
-        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider, this.miniMessage)
+        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider)
 
             // Arguments (include optional)
             .argument(String.class, "player",   new StringNicknameArgument(server))
@@ -493,7 +488,7 @@ public class EternalCore extends JavaPlugin {
             new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService)
-        ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
+        ).forEach(listener -> this.plugin.getServer().getPluginManager().registerEvents(listener, this.plugin));
 
         /* Subscribers */
 
@@ -505,16 +500,11 @@ public class EternalCore extends JavaPlugin {
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, this.teleportService, server);
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
 
-        // bStats metrics
-        new Metrics(this, 13964);
-        //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
-
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
-        this.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
+        this.plugin.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
     }
 
-    @Override
-    public void onDisable() {
+    public void disable() {
         if (this.liteCommands != null) {
             this.liteCommands.getPlatform().unregisterAll();
         }
@@ -529,7 +519,7 @@ public class EternalCore extends JavaPlugin {
     }
 
     private void softwareCheck() {
-        Logger logger = this.getLogger();
+        Logger logger = this.plugin.getLogger();
         Environment environment = PaperLib.getEnvironment();
 
         if (!environment.isSpigot()) {
@@ -545,7 +535,7 @@ public class EternalCore extends JavaPlugin {
         }
 
         logger.info("Your server running on supported software, congratulations!");
-        logger.info("Server version: " + this.getServer().getVersion());
+        logger.info("Server version: " + this.plugin.getServer().getVersion());
     }
 
     public static EternalCore getInstance() {
