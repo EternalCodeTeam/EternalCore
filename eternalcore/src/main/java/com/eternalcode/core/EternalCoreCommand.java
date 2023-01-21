@@ -1,15 +1,15 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.util.legacy.Legacy;
 import com.google.common.base.Stopwatch;
+import dev.rollczi.litecommands.command.async.Async;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.injector.Inject;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,25 +17,32 @@ import java.util.concurrent.TimeUnit;
 @Permission("eternalcore.eternalcore")
 class EternalCoreCommand {
 
+    private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Configuration has ben successfully reloaded in %d ms.</green>";
+
     private final ConfigurationManager configurationManager;
     private final MiniMessage miniMessage;
-    private final Server server;
 
-    EternalCoreCommand(ConfigurationManager configurationManager, MiniMessage miniMessage, Server server) {
+    @Inject
+    EternalCoreCommand(ConfigurationManager configurationManager, MiniMessage miniMessage) {
         this.configurationManager = configurationManager;
         this.miniMessage = miniMessage;
-        this.server = server;
     }
 
+    @Async
     @Execute(route = "reload")
     @Permission("eternalcore.reload")
-    void reload(Player player) {
+    void reload(Audience audience) {
+        long millis = this.reload();
+        Component message = this.miniMessage.deserialize(RELOAD_MESSAGE.formatted(millis));
+
+        audience.sendMessage(message);
+    }
+
+    private long reload() {
         Stopwatch stopwatch = Stopwatch.createStarted();
         this.configurationManager.reload();
 
-        long millis = stopwatch.elapsed(TimeUnit.MILLISECONDS);
-        Component deserialize = this.miniMessage.deserialize("<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Configuration has ben successfully reloaded in " + millis + "ms");
-        player.sendMessage(Legacy.SECTION_SERIALIZER.serialize(deserialize));
-        this.server.getLogger().info("EternalCore configs has been successfully reloaded in " + millis + "ms");
+        return stopwatch.elapsed(TimeUnit.MILLISECONDS);
     }
+
 }

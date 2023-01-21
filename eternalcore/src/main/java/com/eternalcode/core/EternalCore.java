@@ -268,8 +268,7 @@ public class EternalCore {
             homeRepository = HomeRepositoryOrmLite.create(this.databaseManager, this.scheduler);
             ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
             this.plugin.getLogger().severe("Can not connect to database! Some functions may not work!");
 
@@ -329,8 +328,8 @@ public class EternalCore {
 
         CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
-        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", this.audiencesProvider)
 
+        this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
             // Arguments (include optional)
             .argument(String.class, "player",   new StringNicknameArgument(server))
             .argument(GameMode.class,               new GameModeArgument(this.viewerProvider, this.translationManager))
@@ -641,4 +640,5 @@ public class EternalCore {
     public NoticeService getNoticeService() {
         return this.noticeService;
     }
+
 }
