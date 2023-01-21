@@ -4,7 +4,6 @@ import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
-import dev.rollczi.litecommands.command.amount.AmountValidator;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -16,8 +15,6 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.speed")
 public class SpeedCommand {
 
-    private static final AmountValidator SPEED_AMOUNT_VALIDATOR = AmountValidator.NONE.min(0).max(10);
-
     private final NoticeService noticeService;
 
     public SpeedCommand(NoticeService noticeService) {
@@ -27,15 +24,6 @@ public class SpeedCommand {
     @Execute
     @Min(1)
     void execute(CommandSender sender, Viewer audience, @Arg @By("speed") Integer amount, @Arg @By("or_sender") Player player) {
-        if (!SPEED_AMOUNT_VALIDATOR.valid(amount)) {
-            this.noticeService.create()
-                .notice(translation -> translation.player().speedBetweenZeroAndTen())
-                .viewer(audience)
-                .send();
-
-            return;
-        }
-
         player.setFlySpeed(amount / 10.0f);
         player.setWalkSpeed(amount / 10.0f);
 

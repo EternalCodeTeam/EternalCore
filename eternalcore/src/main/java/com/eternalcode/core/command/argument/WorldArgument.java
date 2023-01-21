@@ -1,5 +1,9 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.ArgumentContext;
 import dev.rollczi.litecommands.argument.ArgumentName;
@@ -22,9 +26,13 @@ import java.util.List;
 public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
 
     private final Server server;
+    private final TranslationManager translationManager;
+    private final BukkitViewerProvider viewerProvider;
 
-    public WorldArgument(Server server) {
+    public WorldArgument(Server server, TranslationManager translationManager, BukkitViewerProvider viewerProvider) {
         this.server = server;
+        this.translationManager = translationManager;
+        this.viewerProvider = viewerProvider;
     }
 
     @Override
@@ -32,7 +40,10 @@ public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
         World world = server.getWorld(argument);
 
         if (world == null) {
-            return MatchResult.notMatched("&cNie ma takiego świata!"); //TODO: language
+            Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
+            Translation translation = this.translationManager.getMessages(viewer);
+
+            return MatchResult.notMatched(translation.argument().worldDoesntExist());
         }
 
         return MatchResult.matched(world, 1);
@@ -44,7 +55,10 @@ public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
             return MatchResult.matched(player.getWorld(), 0);
         }
 
-        return MatchResult.notMatched("&cMusisz podać nazwę świata!"); //TODO: language
+        Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
+        Translation translation = this.translationManager.getMessages(viewer);
+
+        return MatchResult.notMatched(translation.argument().youMustGiveWorldName());
     }
 
     @Override
