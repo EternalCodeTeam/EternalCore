@@ -45,7 +45,7 @@ public class HelpOpCommand {
                 .create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
                 .placeholder("{TIME}", DurationUtil.format(time))
-                .player(player.getUniqueId())
+                .player(uuid)
                 .send();
 
             return;
@@ -53,7 +53,7 @@ public class HelpOpCommand {
 
         Notice notice = this.noticeService.create()
             .console()
-            .player(player.getUniqueId())
+            .player(uuid)
             .notice(translation -> translation.helpOp().format())
             .placeholder("{NICK}", player.getName())
             .placeholder("{TEXT}", text);

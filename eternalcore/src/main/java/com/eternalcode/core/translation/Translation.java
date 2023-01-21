@@ -166,6 +166,7 @@ public interface Translation {
     interface AfkSection {
         Notification afkOn();
         Notification afkOff();
+        Notification afkDelay();
     }
 
     // event section
