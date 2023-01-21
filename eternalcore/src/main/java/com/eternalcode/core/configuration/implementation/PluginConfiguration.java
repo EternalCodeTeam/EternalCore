@@ -174,10 +174,19 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Number of interactions a player must make to have AFK status removed")
         public int interactionsCountDisableAfk = 20;
 
+        @Description("# Number of seconds a player must be idle to be considered AFK")
+        public Duration afkCommandDelay = Duration.ofSeconds(60);
+
         @Override
         public int interactionsCountDisableAfk() {
             return this.interactionsCountDisableAfk;
         }
+
+        @Override
+        public Duration getAfkDelay() {
+            return this.afkCommandDelay;
+        }
+
     }
 
     @Override
