@@ -12,7 +12,7 @@ We welcome contributions to EternalCore! Whether you're fixing a bug, adding a n
 We ask that all contributors adhere to our [code of conduct](./CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
 
 ## Reporting Issues
-If you find an issue with the plugin, please report it in the [Issues tab](https://github.com/EternalCodeTeam/EternalCore/issues/new/choose). Please provide as much information as possible, including the version of Minecraft and the plugin you are using, as well as any error messages or logs.
+If you find an issue with the plugin, please report it in the [Issues tab](https://github.com/EternalCodeTeam/EternalCore/issues/new/choose). Please provide as much information as possible, including the version of server software that you are using and the plugin you are using, as well as any error messages or logs.
 
 ## Submitting a Pull Request
 When submitting a pull request, please make sure to follow these guidelines:
