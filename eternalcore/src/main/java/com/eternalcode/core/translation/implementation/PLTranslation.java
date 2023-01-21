@@ -37,6 +37,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notification noDamagedItems = Notification.chat("<dark_red>Błąd: <red>Musisz mieć uszkodzone przedmioty!");
         public Notification noEnchantment = Notification.chat("<dark_red>Błąd: <red>Taki enchant nie istnieje!");
         public Notification noValidEnchantmentLevel = Notification.chat("<dark_red>Błąd: <red>Ten poziom zaklęcia nie jest wspierany!");
+        public Notification worldDoesntExist = Notification.chat("<dark_red>Błąd: <red>Ten świat nie istnieje!");
+        public Notification youMustGiveWorldName = Notification.chat("<dark_red>Błąd: <red>Musisz podać nazwę świata!");
+        public Notification incorrectLocation = Notification.chat("<dark_red>Błąd: <red>Niepoprawna lokalizacja!");
     }
 
     public PLFormatSection format = new PLFormatSection();

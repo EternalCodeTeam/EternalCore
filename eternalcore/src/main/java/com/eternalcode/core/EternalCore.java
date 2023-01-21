@@ -338,12 +338,12 @@ public class EternalCore extends JavaPlugin {
             .argument(Integer.class, "speed",    new SpeedArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
-            .argumentMultilevel(Location.class,     new LocationArgument())
+            .argumentMultilevel(Location.class,     new LocationArgument(this.translationManager, this.viewerProvider))
 
             // Native Argument (no optional)
             .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.translationManager))
             .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.translationManager, this.viewerProvider, server))
-            .argument(Arg.class, World.class,                   new WorldArgument(server))
+            .argument(Arg.class, World.class,                   new WorldArgument(server, this.translationManager, this.viewerProvider))
 
             // Dynamic binds
             .contextualBind(Player.class,   new PlayerContextual(this.translationManager))
