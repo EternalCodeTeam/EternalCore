@@ -195,6 +195,7 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLAfkSection implements AfkSection {
         public Notification afkOn = Notification.chat("<dark_gray>» <gray>{PLAYER} jest AFK!");
         public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} nie jest już AFK!");
+        public Notification afkDelay = Notification.chat("<dark_gray>» <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
     }
 
     public PLEventSection event = new PLEventSection();

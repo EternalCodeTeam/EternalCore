@@ -196,8 +196,9 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENAfkSection implements AfkSection {
-        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{PLAYER} jest AFK!");
-        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} nie jest już AFK!");
+        public Notification afkOn = Notification.chat("<dark_gray>» <gray>{PLAYER} is AFK!");
+        public Notification afkOff = Notification.chat("<dark_gray>» <gray>{PLAYER} is no more AFK!");
+        public Notification afkDelay = Notification.chat("<dark_gray>» <red>You can use this command only after <gold>{TIME}!");
     }
 
     public ENEventSection event = new ENEventSection();
