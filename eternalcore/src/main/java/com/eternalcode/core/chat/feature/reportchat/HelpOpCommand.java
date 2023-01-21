@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 import java.time.Duration;
 import java.util.UUID;
 
-@Route(name = "helpop", aliases = {"report"})
+@Route(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
 public class HelpOpCommand {
 
