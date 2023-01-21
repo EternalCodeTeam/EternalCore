@@ -1,8 +1,10 @@
 package com.eternalcode.core.chat;
 
+import com.eternalcode.core.delay.DelaySettings;
+
 import java.time.Duration;
 
-public interface ChatSettings {
+public interface ChatSettings extends DelaySettings {
 
     boolean isChatEnabled();
 
@@ -11,5 +13,10 @@ public interface ChatSettings {
     Duration getChatDelay();
 
     void setChatDelay(Duration chatDelay);
+
+    @Override
+    default Duration delay() {
+        return getChatDelay();
+    }
 
 }

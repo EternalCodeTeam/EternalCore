@@ -1,11 +1,10 @@
 package com.eternalcode.core.chat.feature.reportchat;
 
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.notification.Notice;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
@@ -16,37 +15,32 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.util.UUID;
 
 // TODO: Refactor
-@Route(name = "helpop", aliases = { "report" })
+@Route(name = "helpop", aliases = {"report"})
 @Permission("eternalcore.helpop")
 public class HelpOpCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
-    private final Cache<UUID, Instant> cooldowns; // TODO: <- nie trzymać tego w takim miejsu
     private final Server server;
+    private final Delay<UUID> delay;
 
     public HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {
         this.noticeService = noticeService;
         this.config = config;
         this.server = server;
-
-        this.cooldowns = CacheBuilder.newBuilder()
-            .expireAfterWrite(this.config.chat.helpOpDelay.plus(Duration.ofSeconds(1)))
-            .build();
+        this.delay = new Delay<>(this.config, this.config.chat);
     }
 
     @Execute
     @Min(1)
     void execute(Player player, @Joiner @Name("message") String text) {
         UUID uuid = player.getUniqueId();
-        Instant unblockMoment = this.cooldowns.asMap().getOrDefault(uuid, Instant.MIN);
 
-        if (Instant.now().isBefore(unblockMoment)) {
-            Duration time = Duration.between(Instant.now(), unblockMoment);
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
 
             this.noticeService
                 .create()
@@ -80,6 +74,7 @@ public class HelpOpCommand {
             .notice(translation -> translation.helpOp().send())
             .send();
 
-        this.cooldowns.put(uuid, Instant.now().plus(this.config.chat.helpOpDelay));
+        this.delay.markDelay(uuid, this.config.chat.helpOpDelay);
     }
+
 }
