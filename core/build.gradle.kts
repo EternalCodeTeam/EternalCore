@@ -121,3 +121,4 @@ tasks.withType<ShadowJar> {
     }
 }
 
+description = "core"
