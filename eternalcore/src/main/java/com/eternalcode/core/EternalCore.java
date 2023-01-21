@@ -17,6 +17,7 @@ import com.eternalcode.core.chat.feature.privatechat.PrivateChatReplyCommand;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand;
 import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
+import com.eternalcode.core.command.argument.DurationArgument;
 import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
@@ -336,6 +337,7 @@ public class EternalCore extends JavaPlugin {
             .argument(Player.class,                 new PlayerArgument(this.viewerProvider, this.translationManager, server))
             .argument(Player.class, "request",  new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
             .argument(Integer.class, "speed",    new SpeedArgument())
+            .argument(Duration.class, "duration", new DurationArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class,     new LocationArgument())

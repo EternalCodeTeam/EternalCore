@@ -40,6 +40,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification noDamagedItems = Notification.chat("<dark_gray>» <red>You need damaged items to use this command!");
         public Notification noEnchantment = Notification.chat("<dark_gray>» <red>This enchantment doesn't exist");
         public Notification noValidEnchantmentLevel = Notification.chat("<dark_gray>» <red>This enchantment level is not supported!");
+        public Notification invalidTimeFormat = Notification.chat("<dark_gray>» <red>Invalid time format!");
     }
 
     public ENFormatSection format = new ENFormatSection();
