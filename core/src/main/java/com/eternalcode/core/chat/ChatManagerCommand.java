@@ -5,6 +5,7 @@ import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.adventure.AdventureNotification;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -72,7 +73,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "slowmode", required = 1)
-    public void slowmode(Viewer viewer, @Arg @Name("time") Duration duration) {
+    public void slowmode(Viewer viewer, @Arg @By("duration") Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 
