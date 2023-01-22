@@ -19,7 +19,6 @@ import com.eternalcode.core.chat.feature.privatechat.PrivateChatSocialSpyCommand
 import com.eternalcode.core.chat.feature.reportchat.HelpOpCommand;
 import com.eternalcode.core.command.argument.DurationArgument;
 import com.eternalcode.core.command.argument.EnchantmentArgument;
-import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgOrSender;
@@ -42,7 +41,6 @@ import com.eternalcode.core.command.implementation.AlertCommand;
 import com.eternalcode.core.command.implementation.EnchantCommand;
 import com.eternalcode.core.command.implementation.FeedCommand;
 import com.eternalcode.core.command.implementation.FlyCommand;
-import com.eternalcode.core.command.implementation.GameModeCommand;
 import com.eternalcode.core.command.implementation.GiveCommand;
 import com.eternalcode.core.command.implementation.GodCommand;
 import com.eternalcode.core.command.implementation.HatCommand;
@@ -83,6 +81,8 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
+import com.eternalcode.core.feature.gamemode.GameModeArgument;
+import com.eternalcode.core.feature.gamemode.GameModeCommand;
 import com.eternalcode.core.home.Home;
 import com.eternalcode.core.home.HomeManager;
 import com.eternalcode.core.home.HomeRepository;
@@ -329,7 +329,7 @@ public class EternalCore extends JavaPlugin {
 
             // Arguments (include optional)
             .argument(String.class, "player",   new StringNicknameArgument(server))
-            .argument(GameMode.class,               new GameModeArgument(this.viewerProvider, this.translationManager))
+            .argument(GameMode.class,               new GameModeArgument(this.viewerProvider, this.translationManager, commandConfiguration.argument))
             .argument(NoticeType.class,             new NoticeTypeArgument(this.viewerProvider, this.translationManager))
             .argument(Warp.class,                   new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
             .argument(Enchantment.class,            new EnchantmentArgument(this.viewerProvider, this.translationManager))
