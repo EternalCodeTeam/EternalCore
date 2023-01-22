@@ -1,5 +1,8 @@
 rootProject.name = "EternalCore"
 
-include(":eternalcore")
-include(":eternalcore-paper")
+include(":core")
+include(":paper")
 
+
+project(":core").projectDir = file("core")
+project(":paper").projectDir = file("paper")
