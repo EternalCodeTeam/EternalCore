@@ -12,7 +12,7 @@ repositories {
     maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
     maven { url = uri("https://repository.minecodes.pl/releases") }
     maven { url = uri("https://repository.minecodes.pl/snapshots") }
-    maven { url = uri("https://repo.eternalcode.pl/releases") }
+    maven { url = uri("https://repo.alessiodp.com/releases/") }
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
 }
 
