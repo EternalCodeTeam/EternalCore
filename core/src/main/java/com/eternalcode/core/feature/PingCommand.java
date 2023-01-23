@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.info;
+package com.eternalcode.core.feature;
 
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;

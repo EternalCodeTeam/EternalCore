@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.info;
+package com.eternalcode.core.feature.essentials.playerinfo;
 
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
