@@ -27,7 +27,7 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // command framework
-    implementation("dev.rollczi.litecommands:bukkit-adventure:2.7.2")
+    implementation("dev.rollczi.litecommands:bukkit-adventure:2.8.0")
 
     // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
