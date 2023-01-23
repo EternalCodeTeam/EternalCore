@@ -1,8 +1,8 @@
 package com.eternalcode.core.database;
 
-import com.eternalcode.core.chat.feature.ignore.IgnoreRepository;
-import com.eternalcode.core.home.Home;
-import com.eternalcode.core.home.HomeRepository;
+import com.eternalcode.core.feature.home.Home;
+import com.eternalcode.core.feature.home.HomeRepository;
+import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.user.User;
 import panda.std.Blank;
 import panda.std.Option;

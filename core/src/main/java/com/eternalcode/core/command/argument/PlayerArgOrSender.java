@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @ArgumentName("player")
 @Deprecated(forRemoval = true)
-@ApiStatus.ScheduledForRemoval(inVersion = "1.1.0")
+@ApiStatus.ScheduledForRemoval(inVersion = "1.0.1")
 public class PlayerArgOrSender implements Argument<CommandSender, Arg> {
 
     private final TranslationManager translationManager;
