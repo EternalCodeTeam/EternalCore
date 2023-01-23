@@ -19,20 +19,6 @@ public class HomeManager {
         this.repository = repository;
     }
 
-    public static HomeManager create(HomeRepository repository) {
-        HomeManager manager = new HomeManager(repository);
-
-        repository.getHomes().then(homes -> {
-            for (Home home : homes) {
-                Map<String, Home> homesByUuid = manager.homes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
-
-                homesByUuid.put(home.getName(), home);
-            }
-        });
-
-        return manager;
-    }
-
     public void createHome(User user, String name, Location location) {
         Home home = new Home(user.getUniqueId(), name, location);
         Map<String, Home> userHomes = this.homes.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
@@ -76,4 +62,17 @@ public class HomeManager {
         return Collections.unmodifiableCollection(this.homes.getOrDefault(user, new HashMap<>()).values());
     }
 
+    public static HomeManager create(HomeRepository repository) {
+        HomeManager manager = new HomeManager(repository);
+
+        repository.getHomes().then(homes -> {
+            for (Home home : homes) {
+                Map<String, Home> homesByUuid = manager.homes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
+
+                homesByUuid.put(home.getName(), home);
+            }
+        });
+
+        return manager;
+    }
 }

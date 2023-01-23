@@ -17,18 +17,6 @@ public class WarpManager {
         this.warpRepository = warpRepository;
     }
 
-    public static WarpManager create(WarpRepository warpRepository) {
-        WarpManager warpManager = new WarpManager(warpRepository);
-
-        warpRepository.getWarps().thenAcceptAsync(warps -> {
-            for (Warp warp : warps) {
-                warpManager.warpMap.put(warp.getName(), warp);
-            }
-        });
-
-        return warpManager;
-    }
-
     public void createWarp(String name, Position position) {
         Warp warp = new Warp(name, position);
 
@@ -58,4 +46,17 @@ public class WarpManager {
     public Collection<String> getNamesOfWarps() {
         return Collections.unmodifiableCollection(this.warpMap.keySet());
     }
+
+    public static WarpManager create(WarpRepository warpRepository) {
+        WarpManager warpManager = new WarpManager(warpRepository);
+
+        warpRepository.getWarps().thenAcceptAsync(warps -> {
+            for (Warp warp : warps) {
+                warpManager.warpMap.put(warp.getName(), warp);
+            }
+        });
+
+        return warpManager;
+    }
+
 }

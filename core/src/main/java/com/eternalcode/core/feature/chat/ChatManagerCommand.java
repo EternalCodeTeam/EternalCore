@@ -29,16 +29,6 @@ public class ChatManagerCommand {
         this.clear = clear;
     }
 
-    public static ChatManagerCommand create(ChatManager chatManager, NoticeService audiences, int linesToClear) {
-        Component clear = Component.empty();
-
-        for (int lineIndex = 0; lineIndex < linesToClear; lineIndex++) {
-            clear = clear.append(Component.newline());
-        }
-
-        return new ChatManagerCommand(chatManager, audiences, new AdventureNotification(clear, NoticeType.CHAT));
-    }
-
     @Execute(route = "clear", aliases = "cc")
     public void clear(CommandSender sender) {
         this.noticeService.create()
@@ -96,6 +86,16 @@ public class ChatManagerCommand {
             .placeholder("{SLOWMODE}", EstimatedTemporalAmountParser.TIME_UNITS.format(duration))
             .viewer(viewer)
             .send();
+    }
+
+    public static ChatManagerCommand create(ChatManager chatManager, NoticeService audiences, int linesToClear) {
+        Component clear = Component.empty();
+
+        for (int lineIndex = 0; lineIndex < linesToClear; lineIndex++) {
+            clear = clear.append(Component.newline());
+        }
+
+        return new ChatManagerCommand(chatManager, audiences, new AdventureNotification(clear, NoticeType.CHAT));
     }
 }
 
