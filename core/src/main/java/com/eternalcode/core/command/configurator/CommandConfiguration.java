@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.configurator;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
-import com.eternalcode.core.feature.gamemode.GameModeArgumentSettings;
+import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;

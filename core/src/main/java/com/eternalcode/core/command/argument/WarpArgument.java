@@ -1,11 +1,11 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.feature.warp.Warp;
+import com.eternalcode.core.feature.warp.WarpManager;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
-import com.eternalcode.core.warp.Warp;
-import com.eternalcode.core.warp.WarpManager;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;

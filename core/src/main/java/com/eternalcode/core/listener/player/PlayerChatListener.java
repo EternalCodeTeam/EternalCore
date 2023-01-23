@@ -1,7 +1,7 @@
 package com.eternalcode.core.listener.player;
 
-import com.eternalcode.core.chat.ChatManager;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Server;
