@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a bug report to help us improve EternalCode <3
+about: Create a bug report to help us improve EternalCore <3
 title: ''
 labels: ''
 assignees: ''
@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Platform (please complete the following information):**
  - Java Version: [e.g. JDK Temurin 17]
- - Server software, ex. PaperMC 1.18.1 build #194
+ - Server software: PaperMC#111 1.19.3
 
 **Additional notes**
 Add any other context about the problem here.

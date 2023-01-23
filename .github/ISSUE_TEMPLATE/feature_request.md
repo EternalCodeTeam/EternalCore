@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for EternalCode <3
+about: Suggest an idea for EternalCore <3
 title: ''
 labels: ''
 assignees: ''
