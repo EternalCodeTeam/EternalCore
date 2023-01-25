@@ -23,6 +23,25 @@ public class TranslationManager {
         this.defaultTranslation = defaultTranslation;
     }
 
+    public static TranslationManager create(ConfigurationManager configurationManager, LanguageConfiguration languageConfiguration) {
+        List<AbstractTranslation> usedMessagesList = PandaStream.of(languageConfiguration.languages)
+            .map(TranslationFactory::create)
+            .toList();
+
+        Translation defaultTranslation = PandaStream.of(usedMessagesList)
+            .find(usedMessages -> usedMessages.getLanguage().equals(languageConfiguration.defaultLanguage))
+            .orThrow(() -> new RuntimeException("Default language not found!"));
+
+        TranslationManager translationManager = new TranslationManager(defaultTranslation);
+
+        for (ReloadableTranslation message : usedMessagesList) {
+            configurationManager.load(message);
+            translationManager.loadLanguage(message.getLanguage(), message);
+        }
+
+        return translationManager;
+    }
+
     public void loadLanguage(Language language, Translation translated) {
         this.translatedMessages.put(language, translated);
     }
@@ -60,25 +79,6 @@ public class TranslationManager {
 
     public Translation getMessages(Viewer viewer) {
         return this.getMessages(viewer.getLanguage());
-    }
-
-    public static TranslationManager create(ConfigurationManager configurationManager, LanguageConfiguration languageConfiguration) {
-        List<AbstractTranslation> usedMessagesList = PandaStream.of(languageConfiguration.languages)
-            .map(TranslationFactory::create)
-            .toList();
-
-        Translation defaultTranslation = PandaStream.of(usedMessagesList)
-            .find(usedMessages -> usedMessages.getLanguage().equals(languageConfiguration.defaultLanguage))
-            .orThrow(() -> new RuntimeException("Default language not found!"));
-
-        TranslationManager translationManager = new TranslationManager(defaultTranslation);
-
-        for (ReloadableTranslation message : usedMessagesList) {
-            configurationManager.load(message);
-            translationManager.loadLanguage(message.getLanguage(), message);
-        }
-
-        return translationManager;
     }
 
 }

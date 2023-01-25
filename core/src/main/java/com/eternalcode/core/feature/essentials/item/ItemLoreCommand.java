@@ -49,7 +49,8 @@ public class ItemLoreCommand {
 
         if (text.equals("none")) {
             lore.remove(line);
-        } else {
+        }
+        else {
             // fill list
             while (lore.size() <= line) {
                 lore.add("");

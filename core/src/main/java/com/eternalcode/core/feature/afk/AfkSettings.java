@@ -12,7 +12,7 @@ public interface AfkSettings extends DelaySettings {
 
     @Override
     default Duration delay() {
-        return getAfkDelay();
+        return this.getAfkDelay();
     }
 
 }

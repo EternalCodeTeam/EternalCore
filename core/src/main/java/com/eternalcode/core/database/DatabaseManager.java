@@ -35,7 +35,7 @@ public class DatabaseManager {
     public void connect() throws SQLException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        DatabaseType databaseType = config.database.databaseType;
+        DatabaseType databaseType = this.config.database.databaseType;
 
         this.dataSource = new HikariDataSource();
 
@@ -88,7 +88,8 @@ public class DatabaseManager {
         try {
             this.dataSource.close();
             this.connectionSource.close();
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             exception.printStackTrace();
         }
     }
@@ -104,7 +105,8 @@ public class DatabaseManager {
             }
 
             return (Dao<T, ID>) dao;
-        } catch (SQLException exception) {
+        }
+        catch (SQLException exception) {
             throw new RuntimeException(exception);
         }
     }

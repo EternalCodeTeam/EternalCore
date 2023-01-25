@@ -29,22 +29,22 @@ public class BukkitSchedulerImpl implements Scheduler {
 
     @Override
     public Task laterSync(Runnable task, Duration delay) {
-        return new BukkitTaskImpl(this.rootScheduler.runTaskLater(this.plugin, task, toTick(delay)));
+        return new BukkitTaskImpl(this.rootScheduler.runTaskLater(this.plugin, task, this.toTick(delay)));
     }
 
     @Override
     public Task laterAsync(Runnable task, Duration delay) {
-        return new BukkitTaskImpl(this.rootScheduler.runTaskLaterAsynchronously(this.plugin, task, toTick(delay)));
+        return new BukkitTaskImpl(this.rootScheduler.runTaskLaterAsynchronously(this.plugin, task, this.toTick(delay)));
     }
 
     @Override
     public Task timerSync(Runnable task, Duration delay, Duration period) {
-        return new BukkitTaskImpl(this.rootScheduler.runTaskTimer(this.plugin, task, toTick(delay), toTick(period)));
+        return new BukkitTaskImpl(this.rootScheduler.runTaskTimer(this.plugin, task, this.toTick(delay), this.toTick(period)));
     }
 
     @Override
     public Task timerAsync(Runnable task, Duration delay, Duration period) {
-        return new BukkitTaskImpl(this.rootScheduler.runTaskTimerAsynchronously(this.plugin, task, toTick(delay), toTick(period)));
+        return new BukkitTaskImpl(this.rootScheduler.runTaskTimerAsynchronously(this.plugin, task, this.toTick(delay), this.toTick(period)));
     }
 
     @Override

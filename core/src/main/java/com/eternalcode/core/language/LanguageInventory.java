@@ -67,6 +67,7 @@ public class LanguageInventory {
                 case ALL -> gui.getFiller().fill(guiItem);
                 case TOP -> gui.getFiller().fillTop(guiItem);
                 case BOTTOM -> gui.getFiller().fillBottom(guiItem);
+                default -> throw new IllegalStateException("Unexpected value: " + languageSelector.border.type);
             }
         }
 
@@ -84,7 +85,8 @@ public class LanguageInventory {
                     .lore(lore)
                     .texture(languageConfigItem.texture)
                     .build();
-            } else {
+            }
+            else {
                 item = ItemBuilder.from(languageConfigItem.material)
                     .name(this.miniMessage.deserialize(languageConfigItem.name))
                     .lore(lore)

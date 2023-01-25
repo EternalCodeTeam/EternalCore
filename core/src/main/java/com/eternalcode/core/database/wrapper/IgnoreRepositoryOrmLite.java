@@ -38,6 +38,17 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
             .build(new IgnoreLoader());
     }
 
+    public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
+        try {
+            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
+        }
+        catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
+
+        return new IgnoreRepositoryOrmLite(databaseManager, scheduler);
+    }
+
     @Override
     public Completable<Boolean> isIgnored(UUID by, UUID target) {
         return this.scheduler.completeAsync(() -> {
@@ -45,7 +56,8 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
                 Set<UUID> uuids = this.ignores.get(by);
 
                 return uuids.contains(target) || uuids.contains(IGNORE_ALL);
-            } catch (ExecutionException exception) {
+            }
+            catch (ExecutionException exception) {
                 throw new RuntimeException(exception);
             }
         });
@@ -63,7 +75,8 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
 
                 this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target))
                     .then(integer -> this.ignores.refresh(by));
-            } catch (ExecutionException exception) {
+            }
+            catch (ExecutionException exception) {
                 throw new RuntimeException(exception);
             }
 
@@ -106,29 +119,6 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
             .thenApply(integer -> Blank.BLANK);
     }
 
-    public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
-        try {
-            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
-        }
-        catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException);
-        }
-
-        return new IgnoreRepositoryOrmLite(databaseManager, scheduler);
-    }
-
-    private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
-        @Override
-        public @NotNull Set<UUID> load(@NotNull UUID key) throws SQLException {
-            return IgnoreRepositoryOrmLite.this.cachedDao.queryBuilder()
-                .where().eq("player_id", key)
-                .query()
-                .stream()
-                .map(ignoreWrapper -> ignoreWrapper.ignoredUuid)
-                .collect(Collectors.toSet());
-        }
-    }
-
     @DatabaseTable(tableName = "eternal_core_ignores")
     private static class IgnoreWrapper {
 
@@ -141,13 +131,26 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
         @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
         UUID ignoredUuid;
 
-        IgnoreWrapper() {}
+        IgnoreWrapper() {
+        }
 
         IgnoreWrapper(UUID playerUuid, UUID ignoredUuid) {
             this.playerUuid = playerUuid;
             this.ignoredUuid = ignoredUuid;
         }
 
+    }
+
+    private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
+        @Override
+        public @NotNull Set<UUID> load(@NotNull UUID key) throws SQLException {
+            return IgnoreRepositoryOrmLite.this.cachedDao.queryBuilder()
+                .where().eq("player_id", key)
+                .query()
+                .stream()
+                .map(ignoreWrapper -> ignoreWrapper.ignoredUuid)
+                .collect(Collectors.toSet());
+        }
     }
 
 }

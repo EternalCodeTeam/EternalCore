@@ -82,12 +82,12 @@ public final class Position {
     @Override
     public String toString() {
         return "Position{" +
-            "x=" + x +
-            ", y=" + y +
-            ", z=" + z +
-            ", yaw=" + yaw +
-            ", pitch=" + pitch +
-            ", world='" + world + '\'' +
+            "x=" + this.x +
+            ", y=" + this.y +
+            ", z=" + this.z +
+            ", yaw=" + this.yaw +
+            ", pitch=" + this.pitch +
+            ", world='" + this.world + '\'' +
             '}';
     }
 
@@ -107,5 +107,4 @@ public final class Position {
             matcher.group("world")
         );
     }
-
 }

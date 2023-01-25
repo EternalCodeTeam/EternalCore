@@ -54,7 +54,9 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
             case SUBTITLE:
                 audience.showTitle(Title.title(Component.text(StringUtils.EMPTY), component));
                 return;
-            case NONE:
+            case NONE: return;
+
+            default: audience.sendMessage(component);
         }
     }
 

@@ -21,7 +21,7 @@ public class Language {
     }
 
     public String getLang() {
-        return lang;
+        return this.lang;
     }
 
     public List<String> getAliases() {

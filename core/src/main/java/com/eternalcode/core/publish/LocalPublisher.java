@@ -58,7 +58,8 @@ public final class LocalPublisher implements Publisher {
 
                 method.setAccessible(true);
                 method.invoke(instance, publishContent);
-            } catch (IllegalAccessException | InvocationTargetException exception) {
+            }
+            catch (IllegalAccessException | InvocationTargetException exception) {
                 exception.printStackTrace();
             }
         }

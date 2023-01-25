@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
 public class PrepareUserController implements Listener {
 
     private final UserManager userManager;
@@ -20,7 +21,7 @@ public class PrepareUserController implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
+    void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
         ClientBukkitSettings clientSettings = new ClientBukkitSettings(this.server, user.getUniqueId());
@@ -29,7 +30,7 @@ public class PrepareUserController implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
+    void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
         User user = this.userManager.getUser(player.getUniqueId())
@@ -39,7 +40,7 @@ public class PrepareUserController implements Listener {
     }
 
     @EventHandler
-    public void onKick(PlayerKickEvent event) {
+    void onKick(PlayerKickEvent event) {
         Player player = event.getPlayer();
 
         User user = this.userManager.getUser(player.getUniqueId())

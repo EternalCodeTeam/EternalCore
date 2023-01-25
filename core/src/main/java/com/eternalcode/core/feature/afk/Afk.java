@@ -16,15 +16,15 @@ public class Afk {
     }
 
     public AfkReason getAfkReason() {
-        return afkReason;
+        return this.afkReason;
     }
 
     public Instant getStart() {
-        return start;
+        return this.start;
     }
 
     public UUID getPlayer() {
-        return player;
+        return this.player;
     }
 
 }
