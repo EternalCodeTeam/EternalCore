@@ -125,12 +125,12 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             this.location = location;
         }
 
-        static HomeWrapper from(Home home) {
-            return new HomeWrapper(home.getUuid(), home.getOwner(), home.getName(), home.getLocation());
-        }
-
         Home toHome() {
             return new Home(this.uuid, this.owner, this.name, this.location);
+        }
+
+        static HomeWrapper from(Home home) {
+            return new HomeWrapper(home.getUuid(), home.getOwner(), home.getName(), home.getLocation());
         }
 
     }
