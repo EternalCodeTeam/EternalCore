@@ -92,6 +92,8 @@ tasks {
 tasks.withType<ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
 
+    dependsOn("checkstyleMain")
+
     exclude(
         "org/intellij/lang/annotations/**",
         "org/jetbrains/annotations/**",
