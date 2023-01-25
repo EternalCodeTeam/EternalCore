@@ -14,37 +14,21 @@ public interface Translation {
 
     interface ArgumentSection {
         Notification permissionMessage();
-
         Notification usageMessage();
-
         Notification usageMessageHead();
-
         Notification usageMessageEntry();
-
         Notification offlinePlayer();
-
         Notification onlyPlayer();
-
         Notification numberBiggerThanOrEqualZero();
-
         Notification noItem();
-
         Notification noArgument();
-
         Notification noDamaged();
-
         Notification noDamagedItems();
-
         Notification noEnchantment();
-
         Notification noValidEnchantmentLevel();
-
         Notification invalidTimeFormat();
-
         Notification worldDoesntExist();
-
         Notification youMustGiveWorldName();
-
         Notification incorrectLocation();
     }
 
@@ -53,7 +37,6 @@ public interface Translation {
 
     interface Format {
         String enable();
-
         String disable();
     }
 
@@ -62,12 +45,9 @@ public interface Translation {
 
     interface HelpOpSection {
         Notification format();
-
         Notification send();
-
         Notification helpOpDelay();
     }
-
 
     // AdminChat Section
     AdminChatSection adminChat();
@@ -82,30 +62,22 @@ public interface Translation {
     interface TeleportSection {
         // teleport
         Notification teleportedToPlayer();
-
         Notification teleportedPlayerToPlayer();
 
         // Task
         Notification teleportTimerFormat();
-
         Notification teleported();
-
         Notification teleporting();
-
         Notification teleportTaskCanceled();
-
         Notification teleportTaskAlreadyExist();
 
         // Coordinates XYZ
         Notification teleportedToCoordinates();
-
         Notification teleportedSpecifiedPlayerToCoordinates();
 
         // Back
         Notification teleportedToLastLocation();
-
         Notification teleportedSpecifiedPlayerLastLocation();
-
         Notification lastLocationNoExist();
     }
 
@@ -114,23 +86,14 @@ public interface Translation {
 
     interface ChatSection {
         Notification disabled();
-
         Notification enabled();
-
         Notification cleared();
-
         Notification alreadyDisabled();
-
         Notification alreadyEnabled();
-
         Notification slowModeSet();
-
         Notification slowMode();
-
         Notification disabledChatInfo();
-
         Notification noCommand();
-
         String alertMessageFormat();
     }
 
@@ -139,11 +102,8 @@ public interface Translation {
 
     interface WarpSection {
         Notification warpAlreadyExists();
-
         Notification notExist();
-
         Notification create();
-
         Notification remove();
     }
 
@@ -152,13 +112,9 @@ public interface Translation {
 
     interface HomeSection {
         Notification notExist();
-
         Notification create();
-
         Notification delete();
-
         Notification limit();
-
         Notification overrideHomeLocation();
     }
 
@@ -167,27 +123,18 @@ public interface Translation {
 
     interface TpaSection {
         Notification tpaSelfMessage();
-
         Notification tpaAlreadySentMessage();
-
         Notification tpaSentMessage();
-
         List<Notification> tpaReceivedMessage();
 
         Notification tpaDenyNoRequestMessage();
-
         Notification tpaDenyDoneMessage();
-
         Notification tpaDenyReceivedMessage();
-
         Notification tpaDenyAllDenied();
 
         Notification tpaAcceptMessage();
-
         Notification tpaAcceptNoRequestMessage();
-
         Notification tpaAcceptReceivedMessage();
-
         Notification tpaAcceptAllAccepted();
     }
 
@@ -196,31 +143,20 @@ public interface Translation {
 
     interface PrivateChatSection {
         Notification noReply();
-
         Notification privateMessageYouToTarget();
-
         Notification privateMessageTargetToYou();
 
         Notification socialSpyMessage();
-
         Notification socialSpyEnable();
-
         Notification socialSpyDisable();
 
         Notification ignorePlayer();
-
         Notification ignoreAll();
-
         Notification unIgnorePlayer();
-
         Notification unIgnoreAll();
-
         Notification alreadyIgnorePlayer();
-
         Notification notIgnorePlayer();
-
         Notification cantIgnoreYourself();
-
         Notification cantUnIgnoreYourself();
     }
 
@@ -229,9 +165,7 @@ public interface Translation {
 
     interface AfkSection {
         Notification afkOn();
-
         Notification afkOff();
-
         Notification afkDelay();
     }
 
@@ -240,15 +174,11 @@ public interface Translation {
 
     interface EventSection {
         List<Notification> deathMessage();
-
         List<Notification> joinMessage();
-
         List<Notification> quitMessage();
-
         List<Notification> firstJoinMessage();
 
         Notification welcomeTitle();
-
         Notification welcomeSubtitle();
     }
 
@@ -257,11 +187,8 @@ public interface Translation {
 
     interface InventorySection {
         Notification inventoryClearMessage();
-
         Notification inventoryClearMessageBy();
-
         Notification cantOpenYourInventory();
-
         String disposalTitle();
     }
 
@@ -271,12 +198,10 @@ public interface Translation {
     interface PlayerSection {
         // feed
         Notification feedMessage();
-
         Notification feedMessageBy();
 
         // heal
         Notification healMessage();
-
         Notification healMessageBy();
 
         // kill
@@ -284,36 +209,28 @@ public interface Translation {
 
         // speed
         Notification speedBetweenZeroAndTen();
-
         Notification speedSet();
-
         Notification speedSetBy();
 
         // godmode
         Notification godMessage();
-
         Notification godSetMessage();
 
         // fly
         Notification flyMessage();
-
         Notification flySetMessage();
 
         // ping
         Notification pingMessage();
-
         Notification pingOtherMessage();
 
         // gamemode
         Notification gameModeNotCorrect();
-
         Notification gameModeMessage();
-
         Notification gameModeSetMessage();
 
         // online
         Notification onlineMessage();
-
         Notification listMessage();
 
         // whois
@@ -326,11 +243,9 @@ public interface Translation {
     interface SpawnSection {
         // spawn
         Notification spawnSet();
-
         Notification spawnNoSet();
 
         Notification spawnTeleportedBy();
-
         Notification spawnTeleportedOther();
     }
 
@@ -340,30 +255,23 @@ public interface Translation {
     interface ItemSection {
         // item name & lore
         Notification itemClearNameMessage();
-
         Notification itemClearLoreMessage();
 
         Notification itemChangeNameMessage();
-
         Notification itemChangeLoreMessage();
 
         // item flags
         Notification itemFlagRemovedMessage();
-
         Notification itemFlagAddedMessage();
-
         Notification itemFlagClearedMessage();
 
         // give
         Notification giveReceived();
-
         Notification giveGiven();
 
         // others
         Notification repairMessage();
-
         Notification skullMessage();
-
         Notification enchantedMessage();
     }
 
@@ -372,19 +280,16 @@ public interface Translation {
 
     interface TimeAndWeatherSection {
         Notification timeSetDay();
-
         Notification timeSetNight();
 
         Notification timeSet();
-
         Notification timeAdd();
 
         Notification weatherSetRain();
-
         Notification weatherSetSun();
-
         Notification weatherSetThunder();
     }
+
 
     // language section
     LanguageSection language();

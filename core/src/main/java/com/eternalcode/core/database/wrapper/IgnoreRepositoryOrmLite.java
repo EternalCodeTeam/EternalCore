@@ -38,17 +38,6 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
             .build(new IgnoreLoader());
     }
 
-    public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
-        try {
-            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
-        }
-        catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException);
-        }
-
-        return new IgnoreRepositoryOrmLite(databaseManager, scheduler);
-    }
-
     @Override
     public Completable<Boolean> isIgnored(UUID by, UUID target) {
         return this.scheduler.completeAsync(() -> {
@@ -139,6 +128,17 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
             this.ignoredUuid = ignoredUuid;
         }
 
+    }
+
+    public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
+        try {
+            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
+        }
+        catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
+
+        return new IgnoreRepositoryOrmLite(databaseManager, scheduler);
     }
 
     private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
