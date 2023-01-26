@@ -1,6 +1,6 @@
 plugins {
     `java-library`
-    checkstyle
+    `checkstyle`
 }
 
 group = "com.eternalcode"
