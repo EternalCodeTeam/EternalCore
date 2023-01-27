@@ -11,6 +11,7 @@
 
 [![Gradle](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/gradle_vector.svg)](https://gradle.org/)
 [![Java](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/java17_vector.svg)](https://www.java.com/)
+
 </div>
 
 # Warning ❗
@@ -45,7 +46,8 @@ To build EternalCore do the following (Make sure you have JDK 17 or higher)
 
 # Contributing
 
-Create a public EternalCore fork, make changes and then create a Pull Request with your appropriate changes.
+Create a public fork of EternalCore, make changes and then create
+a [Pull Request](https://github.com/EternalCodeTeam/EternalCore/pulls) with your appropriate changes.
 See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master/.github/CONTRIBUTING.md) to find out
 more.
 
@@ -68,20 +70,21 @@ more.
 # Other Dependencies usages
 
 - [LiteCommands (by Rollczi ❤️)](https://github.com/Rollczi/LiteCommands)
-- [Lombok (Only for Configs)](https://projectlombok.org/)
+- [Lombok](https://projectlombok.org/)
 - [PaperLib](https://github.com/PaperMC/PaperLib)
-- [Spigot-API](https://www.spigotmc.org/wiki/spigot-gradle/)
+- [Spigot API](https://www.spigotmc.org/wiki/spigot-gradle/)
 - [Kyori Adventure](https://docs.adventure.kyori.net/)
-- [CDN](https://github.com/dzikoysk/cdn)
+- [cdn](https://github.com/dzikoysk/cdn)
 - [Expressible](https://github.com/panda-lang/expressible)
 - [bStats](https://bstats.org/)
 - [HikariCP](https://github.com/brettwooldridge/HikariCP)
-- [Ormlite jdbc](https://github.com/j256/ormlite-jdbc)
-- [TriumphGui](https://github.com/TriumphTeam/triumph-gui)
+- [Ormlite JDBC](https://github.com/j256/ormlite-jdbc)
+- [TriumphGUI](https://github.com/TriumphTeam/triumph-gui)
 
 # Special thanks
 
 [<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="" width="150">](https://www.jetbrains.com)
 
 We thank JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for high quality tools.
-We recommend using [Intellij IDEA](https://www.jetbrains.com/idea/) to work with our projects!
+We recommend using [Intellij IDEA](https://www.jetbrains.com/idea/) to work with our projects and accelerate your
+productivity!
