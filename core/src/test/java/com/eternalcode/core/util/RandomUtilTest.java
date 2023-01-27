@@ -1,11 +1,11 @@
 package com.eternalcode.core.util;
 
+import org.junit.jupiter.api.Test;
+import panda.std.Option;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import panda.std.Option;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,7 +24,7 @@ class RandomUtilTest {
     void testRandomElementEmptyCollection() {
         List<String> emptyList = List.of();
         Option<String> randomElement = RandomUtil.randomElement(emptyList);
-        
+
         assertTrue(randomElement.isEmpty());
     }
 }

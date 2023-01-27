@@ -4,6 +4,7 @@ import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginManager;
+
 import java.util.logging.Logger;
 
 public class BridgeManager {

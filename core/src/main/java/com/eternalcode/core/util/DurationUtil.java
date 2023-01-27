@@ -1,7 +1,6 @@
 package com.eternalcode.core.util;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public final class DurationUtil {
 
