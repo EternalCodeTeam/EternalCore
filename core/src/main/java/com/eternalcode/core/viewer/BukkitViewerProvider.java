@@ -1,4 +1,5 @@
 package com.eternalcode.core.viewer;
+
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;

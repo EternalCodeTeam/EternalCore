@@ -45,7 +45,8 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
                 Set<UUID> uuids = this.ignores.get(by);
 
                 return uuids.contains(target) || uuids.contains(IGNORE_ALL);
-            } catch (ExecutionException exception) {
+            }
+            catch (ExecutionException exception) {
                 throw new RuntimeException(exception);
             }
         });
@@ -63,7 +64,8 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
 
                 this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target))
                     .then(integer -> this.ignores.refresh(by));
-            } catch (ExecutionException exception) {
+            }
+            catch (ExecutionException exception) {
                 throw new RuntimeException(exception);
             }
 
@@ -106,6 +108,27 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
             .thenApply(integer -> Blank.BLANK);
     }
 
+    @DatabaseTable(tableName = "eternal_core_ignores")
+    private static class IgnoreWrapper {
+
+        @DatabaseField(generatedId = true)
+        Long id;
+
+        @DatabaseField(columnName = "player_id", uniqueCombo = true)
+        UUID playerUuid;
+
+        @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
+        UUID ignoredUuid;
+
+        IgnoreWrapper() {}
+
+        IgnoreWrapper(UUID playerUuid, UUID ignoredUuid) {
+            this.playerUuid = playerUuid;
+            this.ignoredUuid = ignoredUuid;
+        }
+
+    }
+
     public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
         try {
             TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
@@ -127,27 +150,6 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
                 .map(ignoreWrapper -> ignoreWrapper.ignoredUuid)
                 .collect(Collectors.toSet());
         }
-    }
-
-    @DatabaseTable(tableName = "eternal_core_ignores")
-    private static class IgnoreWrapper {
-
-        @DatabaseField(generatedId = true)
-        Long id;
-
-        @DatabaseField(columnName = "player_id", uniqueCombo = true)
-        UUID playerUuid;
-
-        @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
-        UUID ignoredUuid;
-
-        IgnoreWrapper() {}
-
-        IgnoreWrapper(UUID playerUuid, UUID ignoredUuid) {
-            this.playerUuid = playerUuid;
-            this.ignoredUuid = ignoredUuid;
-        }
-
     }
 
 }

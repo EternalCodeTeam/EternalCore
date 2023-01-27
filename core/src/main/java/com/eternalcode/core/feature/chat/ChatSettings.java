@@ -16,7 +16,7 @@ public interface ChatSettings extends DelaySettings {
 
     @Override
     default Duration delay() {
-        return getChatDelay();
+        return this.getChatDelay();
     }
 
 }

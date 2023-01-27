@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("com.eternalcode.java-conventions")
+    id("eternalcode.java-conventions")
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
     id("xyz.jpenilla.run-paper") version "2.0.1"
@@ -91,6 +91,8 @@ tasks {
 
 tasks.withType<ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
+
+    dependsOn("checkstyleMain")
 
     exclude(
         "org/intellij/lang/annotations/**",

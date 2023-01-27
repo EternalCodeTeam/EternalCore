@@ -29,6 +29,7 @@ public final class AdditionalContainerPaper {
             case GRINDSTONE -> player.openGrindstone(null, true);
             case LOOM -> player.openLoom(null, true);
             case SMITHING_TABLE -> player.openSmithingTable(null, true);
+            default -> throw new IllegalStateException("Unexpected value: " + type);
         }
     }
 }

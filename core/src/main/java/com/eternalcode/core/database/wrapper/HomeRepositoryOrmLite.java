@@ -38,12 +38,12 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     @Override
     public Completable<Option<Home>> getHome(User user, String name) {
         return this.action(HomeWrapper.class, dao -> Option.supplyThrowing(Throwable.class, () -> dao.queryBuilder()
-                .where()
-                .eq("owner", user.getUniqueId())
-                .and()
-                .eq("name", user.getName())
-                .queryForFirst()
-            ).map(HomeWrapper::toHome));
+            .where()
+            .eq("owner", user.getUniqueId())
+            .and()
+            .eq("name", user.getName())
+            .queryForFirst()
+        ).map(HomeWrapper::toHome));
     }
 
     @Override
@@ -61,9 +61,9 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
         return this.action(HomeWrapper.class, dao -> Result.supplyThrowing(Throwable.class, () -> {
             DeleteBuilder<HomeWrapper, Object> builder = dao.deleteBuilder();
             builder.where()
-                    .eq("owner", user.getUniqueId())
-                    .and()
-                    .eq("name", user.getName());
+                .eq("owner", user.getUniqueId())
+                .and()
+                .eq("name", user.getName());
 
             return builder.delete();
         }).onError(Throwable::printStackTrace).orElseGet(throwable -> 0));
@@ -84,9 +84,9 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             .eq("name", user.getName())
             .query()
         )).thenApply(option -> option.map(homes -> homes.stream()
-                .map(HomeWrapper::toHome)
-                .collect(Collectors.toSet())
-            ).orElseGet(new HashSet<>()));
+            .map(HomeWrapper::toHome)
+            .collect(Collectors.toSet())
+        ).orElseGet(new HashSet<>()));
     }
 
     public static HomeRepository create(DatabaseManager databaseManager, Scheduler scheduler) {
@@ -115,7 +115,8 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
         @DatabaseField(columnName = "location", persisterClass = LocationPersister.class)
         private Location location;
 
-        HomeWrapper() {}
+        HomeWrapper() {
+        }
 
         HomeWrapper(UUID uuid, UUID owner, String name, Location location) {
             this.uuid = uuid;
@@ -125,7 +126,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
         }
 
         Home toHome() {
-            return new Home(uuid, owner, name, location);
+            return new Home(this.uuid, this.owner, this.name, this.location);
         }
 
         static HomeWrapper from(Home home) {

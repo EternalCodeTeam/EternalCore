@@ -34,7 +34,7 @@ public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
 
     @Override
     public MatchResult match(LiteInvocation invocation, ArgumentContext<Arg> context, String argument) {
-        World world = server.getWorld(argument);
+        World world = this.server.getWorld(argument);
 
         if (world == null) {
             Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());

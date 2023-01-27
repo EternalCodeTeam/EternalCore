@@ -1,5 +1,5 @@
 plugins {
-    id("com.eternalcode.java-conventions")
+    id("eternalcode.java-conventions")
 }
 
 dependencies {

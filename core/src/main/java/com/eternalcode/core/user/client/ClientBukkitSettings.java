@@ -24,7 +24,7 @@ public class ClientBukkitSettings implements ClientSettings {
         Player player = this.playerReference.get();
 
         if (player == null) {
-            Player playerFromServer = this.server.getPlayer(uuid);
+            Player playerFromServer = this.server.getPlayer(this.uuid);
 
             if (playerFromServer == null) {
                 return Option.none();

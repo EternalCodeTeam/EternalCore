@@ -1,9 +1,19 @@
 plugins {
     `java-library`
+    `checkstyle`
 }
 
 group = "com.eternalcode"
 version = "1.0.0"
+
+checkstyle {
+    toolVersion = "10.6.0"
+
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+
+    maxErrors = 0
+    maxWarnings = 0
+}
 
 repositories {
     mavenLocal()

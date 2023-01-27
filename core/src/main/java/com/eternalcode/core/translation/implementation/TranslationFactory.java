@@ -12,8 +12,8 @@ public final class TranslationFactory {
     private static final Function<Language, AbstractTranslation> OTHER_LANG_TRANSLATION = ENTranslation::new;
 
     private static final Map<Language, Supplier<AbstractTranslation>> DEFAULT_TRANSLATIONS = Map.of(
-            Language.EN, ENTranslation::new,
-            Language.PL, PLTranslation::new
+        Language.EN, ENTranslation::new,
+        Language.PL, PLTranslation::new
     );
 
     private TranslationFactory() {

@@ -31,7 +31,7 @@ public class Home {
     }
 
     public UUID getOwner() {
-        return owner;
+        return this.owner;
     }
 
     public String getName() {
