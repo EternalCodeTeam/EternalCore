@@ -33,7 +33,7 @@ dependencies {
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
     // utility library
-    implementation("org.panda-lang:expressible:1.2.2")
+    implementation("org.panda-lang:expressible:1.2.6")
 
     // gui library
     implementation("dev.triumphteam:triumph-gui:3.1.4")
