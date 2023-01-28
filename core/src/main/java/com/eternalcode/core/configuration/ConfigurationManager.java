@@ -9,6 +9,7 @@ import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
+import net.dzikoysk.cdn.reflect.Visibility;
 
 import java.io.File;
 import java.time.Duration;
@@ -24,6 +25,7 @@ public class ConfigurationManager {
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Position.class, new PositionComposer())
         .withComposer(Notification.class, new NotificationComposer())
+        .withMemberResolver(Visibility.PRIVATE)
         .build();
 
     private final Set<ReloadableConfig> configs = new HashSet<>();
