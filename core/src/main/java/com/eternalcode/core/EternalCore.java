@@ -434,7 +434,6 @@ public class EternalCore extends JavaPlugin {
 
                 // Private Chat Commands
                 PrivateChatCommands.class,
-                PrivateChatSocialSpyCommand.class,
 
                 // Admin Chat Commands
                 AdminChatCommand.class,
