@@ -33,7 +33,7 @@ dependencies {
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
     // utility library
-    implementation("org.panda-lang:expressible:1.2.2")
+    implementation("org.panda-lang:expressible:1.2.9")
 
     // gui library
     implementation("dev.triumphteam:triumph-gui:3.1.4")
@@ -78,7 +78,7 @@ bukkit {
         "com.h2database:h2:2.1.214",
         "com.j256.ormlite:ormlite-jdbc:6.1",
         "com.zaxxer:HikariCP:5.0.1",
-        "org.mariadb.jdbc:mariadb-java-client:3.1.1"
+        "org.mariadb.jdbc:mariadb-java-client:3.1.2"
     )
 }
 
