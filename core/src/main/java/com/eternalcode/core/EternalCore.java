@@ -83,11 +83,9 @@ import com.eternalcode.core.feature.home.command.SetHomeCommand;
 import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
-import com.eternalcode.core.feature.privatechat.PrivateChatCommand;
+import com.eternalcode.core.feature.privatechat.PrivateChatCommands;
 import com.eternalcode.core.feature.privatechat.PrivateChatPresenter;
-import com.eternalcode.core.feature.privatechat.PrivateChatReplyCommand;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
-import com.eternalcode.core.feature.privatechat.PrivateChatSocialSpyCommand;
 import com.eternalcode.core.feature.reportchat.HelpOpCommand;
 import com.eternalcode.core.feature.spawn.SetSpawnCommand;
 import com.eternalcode.core.feature.spawn.SpawnCommand;
@@ -435,8 +433,7 @@ public class EternalCore extends JavaPlugin {
                 DisposalCommand.class,
 
                 // Private Chat Commands
-                PrivateChatCommand.class,
-                PrivateChatReplyCommand.class,
+                PrivateChatCommands.class,
                 PrivateChatSocialSpyCommand.class,
 
                 // Admin Chat Commands
