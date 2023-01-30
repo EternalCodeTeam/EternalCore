@@ -74,7 +74,7 @@ more.
 - [PaperLib](https://github.com/PaperMC/PaperLib)
 - [Spigot API](https://www.spigotmc.org/wiki/spigot-gradle/)
 - [Kyori Adventure](https://docs.adventure.kyori.net/)
-- [CDN](https://github.com/dzikoysk/cdn)
+- [CDN Configs](https://github.com/dzikoysk/cdn)
 - [Expressible](https://github.com/panda-lang/expressible)
 - [bStats](https://bstats.org/)
 - [HikariCP](https://github.com/brettwooldridge/HikariCP)
