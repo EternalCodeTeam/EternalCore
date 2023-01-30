@@ -1,6 +1,5 @@
 package com.eternalcode.core.delay;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
