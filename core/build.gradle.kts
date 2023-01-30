@@ -27,13 +27,13 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // command framework
-    implementation("dev.rollczi.litecommands:bukkit-adventure:2.8.1")
+    implementation("dev.rollczi.litecommands:bukkit-adventure:2.8.2")
 
     // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
 
     // utility library
-    implementation("org.panda-lang:expressible:1.3.0")
+    implementation("org.panda-lang:expressible:1.3.1")
 
     // gui library
     implementation("dev.triumphteam:triumph-gui:3.1.4")
