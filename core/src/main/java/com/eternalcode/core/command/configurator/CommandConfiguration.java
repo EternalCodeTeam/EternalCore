@@ -19,10 +19,10 @@ public class CommandConfiguration implements ReloadableConfig {
     public Argument argument = new Argument();
 
     @Contextual
-    static class Argument implements GameModeArgumentSettings {
+    public static class Argument implements GameModeArgumentSettings {
 
         @Description("# List of aliases for gamemode argument")
-        Map<GameMode, List<String>> gameModeAliases = Map.of(
+        public Map<GameMode, List<String>> gameModeAliases = Map.of(
                 GameMode.SURVIVAL, List.of("survival", "0"),
                 GameMode.CREATIVE, List.of("creative", "1"),
                 GameMode.ADVENTURE, List.of("adventure", "2"),
