@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
-import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -28,7 +27,7 @@ public class ItemNameCommand {
 
     @Execute
     @Min(1)
-    void execute(Player player, @Name("name") @Joiner String name) {
+    void execute(Player player, @Joiner String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {

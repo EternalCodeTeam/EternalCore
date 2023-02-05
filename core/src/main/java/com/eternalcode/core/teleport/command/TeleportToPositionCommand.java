@@ -5,7 +5,6 @@ import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
-import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -26,7 +25,7 @@ public class TeleportToPositionCommand {
     }
 
     @Execute(min = 3, max = 4)
-    void execute(CommandSender sender, Viewer audience, @Arg @Name("x") Integer x, @Arg @Name("y") Integer y, @Arg @Name("z") Integer z, @Arg @By("or_sender") Player player) {
+    void execute(CommandSender sender, Viewer audience, @Arg int x, @Arg int y, @Arg int z, @Arg @By("or_sender") Player player) {
         if (sender.equals(player)) {
             this.teleport(player, x, y, z);
             return;

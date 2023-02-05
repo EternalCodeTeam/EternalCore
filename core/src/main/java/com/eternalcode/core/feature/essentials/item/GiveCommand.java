@@ -5,7 +5,6 @@ import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
-import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.amount.Between;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -28,7 +27,7 @@ public class GiveCommand {
 
     @Execute
     @Between(min = 1, max = 2)
-    void execute(Viewer audience, CommandSender sender, @Arg @Name("material") Material material, @Arg @By("or_sender") Player player) {
+    void execute(Viewer audience, CommandSender sender, @Arg Material material, @Arg @By("or_sender") Player player) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(player, material);

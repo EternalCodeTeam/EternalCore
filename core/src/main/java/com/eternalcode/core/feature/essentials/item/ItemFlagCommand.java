@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.essentials.item;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -17,7 +16,7 @@ import panda.utilities.text.Formatter;
 @Permission("eternalcore.itemflag")
 public class ItemFlagCommand {
 
-    private final static Placeholders<ItemFlag> ITEM_FLAG_PLACEHOLDER = Placeholders.of("{ITEM_FLAG}", Enum::name);
+    private static final Placeholders<ItemFlag> ITEM_FLAG_PLACEHOLDER = Placeholders.of("{ITEM_FLAG}", Enum::name);
 
     private final NoticeService noticeService;
 
@@ -26,7 +25,7 @@ public class ItemFlagCommand {
     }
 
     @Execute
-    void execute(Player player, @Arg @Name("flag") ItemFlag flag) {
+    void execute(Player player, @Arg ItemFlag flag) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
 

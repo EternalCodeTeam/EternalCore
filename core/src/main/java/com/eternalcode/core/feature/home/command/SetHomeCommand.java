@@ -5,7 +5,6 @@ import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.injector.Inject;
@@ -29,7 +28,7 @@ public class SetHomeCommand {
     }
 
     @Execute(required = 1)
-    void execute(User user, Player player, @Arg @Name("home") String home) {
+    void execute(User user, Player player, @Arg String home) {
         this.setHome(user, player, home);
     }
 
