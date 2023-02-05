@@ -19,8 +19,8 @@ dependencies {
 
     // configuration
     implementation("net.dzikoysk:cdn:1.14.3")
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    compileOnly("org.projectlombok:lombok:1.18.26")
+    annotationProcessor("org.projectlombok:lombok:1.18.26")
 
     // database
     compileOnly("com.j256.ormlite:ormlite-jdbc:6.1")
@@ -74,7 +74,7 @@ bukkit {
     version = "${project.version}"
     softDepend = listOf("PlaceholderAPI")
     libraries = listOf(
-        "org.postgresql:postgresql:42.5.1",
+        "org.postgresql:postgresql:42.5.3",
         "com.h2database:h2:2.1.214",
         "com.j256.ormlite:ormlite-jdbc:6.1",
         "com.zaxxer:HikariCP:5.0.1",
