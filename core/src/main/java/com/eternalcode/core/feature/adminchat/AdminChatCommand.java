@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.adminchat;
 
 import com.eternalcode.core.notification.Notice;
 import com.eternalcode.core.notification.NoticeService;
-import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -24,12 +23,12 @@ public class AdminChatCommand {
     }
 
     @Execute(min = 1)
-    public void execute(CommandSender sender, @Name("message") @Joiner String text) {
+    public void execute(CommandSender sender, @Joiner String message) {
         Notice notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())
             .placeholder("{NICK}", sender.getName())
-            .placeholder("{TEXT}", text);
+            .placeholder("{TEXT}", message);
 
         for (Player player : this.server.getOnlinePlayers()) {
             if (!player.hasPermission("eternalcore.adminchat.spy")) {

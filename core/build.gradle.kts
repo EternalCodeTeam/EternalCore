@@ -27,7 +27,7 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // command framework
-    implementation("dev.rollczi.litecommands:bukkit-adventure:2.8.2")
+    implementation("dev.rollczi.litecommands:bukkit-adventure:2.8.3")
 
     // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
@@ -59,7 +59,7 @@ tasks.getByName<Test>("test") {
 }
 
 tasks.withType<JavaCompile> {
-    options.compilerArgs = listOf("-Xlint:deprecation")
+    options.compilerArgs = listOf("-Xlint:deprecation", "-parameters")
     options.encoding = "UTF-8"
 }
 

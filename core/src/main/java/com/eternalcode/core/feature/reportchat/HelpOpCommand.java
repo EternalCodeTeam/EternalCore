@@ -5,7 +5,6 @@ import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.notification.Notice;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
-import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -35,7 +34,7 @@ public class HelpOpCommand {
 
     @Execute
     @Min(1)
-    void execute(Player player, @Joiner @Name("message") String text) {
+    void execute(Player player, @Joiner String message) {
         UUID uuid = player.getUniqueId();
 
         if (this.delay.hasDelay(uuid)) {
@@ -56,7 +55,7 @@ public class HelpOpCommand {
             .player(uuid)
             .notice(translation -> translation.helpOp().format())
             .placeholder("{NICK}", player.getName())
-            .placeholder("{TEXT}", text);
+            .placeholder("{TEXT}", message);
 
         for (Player admin : this.server.getOnlinePlayers()) {
             if (!admin.hasPermission("eternalcore.helpop.spy")) {
