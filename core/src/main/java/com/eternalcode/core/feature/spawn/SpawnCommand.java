@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
@@ -38,7 +39,7 @@ public class SpawnCommand {
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
         World world = destinationLocation.getWorld();
 
-        if (world == null || world.getName().equals("__NONE__")) {
+        if (world == null || world.getName().equals(Position.NONE)) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
                 .player(sender.getUniqueId())
