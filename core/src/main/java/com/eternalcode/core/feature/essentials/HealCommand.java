@@ -22,22 +22,25 @@ public class HealCommand {
     }
 
     @Execute
-    @Max(1)
-    void execute(CommandSender sender, Viewer viewer, @Arg @By("or_sender") Player player) {
+    void execute(Player player) {
         player.setFoodLevel(20);
         player.setHealth(20);
         player.setFireTicks(0);
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.player().healMessage());
+    }
 
-        if (sender.equals(player)) {
-            return;
-        }
+    @Execute(required = 1)
+    void execute(Viewer viewer, @Arg Player target) {
+        target.setFoodLevel(20);
+        target.setHealth(20);
+        target.setFireTicks(0);
+        target.getActivePotionEffects().forEach(potionEffect -> target.removePotionEffect(potionEffect.getType()));
 
         this.noticeService.create()
             .notice(translation -> translation.player().healMessageBy())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER}", target.getName())
             .viewer(viewer)
             .send();
     }

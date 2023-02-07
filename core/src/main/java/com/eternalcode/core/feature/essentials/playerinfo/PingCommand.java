@@ -1,13 +1,11 @@
-package com.eternalcode.core.feature;
+package com.eternalcode.core.feature.essentials.playerinfo;
 
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Route(name = "ping")
@@ -21,22 +19,23 @@ public class PingCommand {
     }
 
     @Execute
-    void execute(CommandSender sender, Viewer audience, @Arg @By("or_sender") Player player) {
-        if (sender.equals(player)) {
-            this.noticeService.create()
-                .notice(translation -> translation.player().pingMessage())
-                .placeholder("{PING}", String.valueOf(player.getPing()))
-                .viewer(audience)
-                .send();
-
-            return;
-        }
-
+    void execute(Player sender) {
         this.noticeService.create()
-            .notice(translation -> translation.player().pingOtherMessage())
-            .placeholder("{PING}", String.valueOf(player.getPing()))
-            .placeholder("{PLAYER}", player.getName())
-            .viewer(audience)
+            .notice(translation -> translation.player().pingMessage())
+            .placeholder("{PING}", String.valueOf(sender.getPing()))
+            .player(sender.getUniqueId())
             .send();
     }
+
+
+    @Execute(required = 1)
+    void execute(Viewer viewer, @Arg Player target) {
+        this.noticeService.create()
+            .notice(translation -> translation.player().pingOtherMessage())
+            .placeholder("{PING}", String.valueOf(target.getPing()))
+            .placeholder("{PLAYER}", target.getName())
+            .viewer(viewer)
+            .send();
+    }
+
 }

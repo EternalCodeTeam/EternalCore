@@ -21,7 +21,7 @@ public class FlyCommand {
     }
 
     @Execute
-    void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
+    void execute(Player player) {
         player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.create()
@@ -29,16 +29,17 @@ public class FlyCommand {
             .placeholder("{STATE}", translation -> player.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .player(player.getUniqueId())
             .send();
+    }
 
-        if (sender.equals(player)) {
-            return;
-        }
+    @Execute(required = 1)
+    void execute(Viewer viewer, @Arg Player target) {
+        target.setAllowFlight(!target.getAllowFlight());
 
         this.noticeService.create()
             .notice(translation -> translation.player().flySetMessage())
-            .placeholder("{PLAYER}", player.getName())
-            .placeholder("{STATE}", translation -> player.getAllowFlight() ? translation.format().enable() : translation.format().disable())
-            .viewer(audience)
+            .placeholder("{PLAYER}", target.getName())
+            .placeholder("{STATE}", translation -> target.getAllowFlight() ? translation.format().enable() : translation.format().disable())
+            .viewer(viewer)
             .send();
     }
 }

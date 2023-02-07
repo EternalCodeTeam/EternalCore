@@ -30,18 +30,18 @@ public class GodCommand {
     }
 
     @Execute(required = 1)
-    void execute(Viewer viewer, @Arg Player player) {
-        player.setInvulnerable(!player.isInvulnerable());
+    void execute(Viewer viewer, @Arg Player target) {
+        target.setInvulnerable(!target.isInvulnerable());
 
         this.noticeService.create()
-            .placeholder("{STATE}", translation -> player.isInvulnerable() ? translation.format().enable() : translation.format().disable())
+            .placeholder("{STATE}", translation -> target.isInvulnerable() ? translation.format().enable() : translation.format().disable())
             .notice(translation -> translation.player().godMessage())
-            .player(player.getUniqueId())
+            .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .placeholder("{STATE}", translation -> player.isInvulnerable() ? translation.format().enable() : translation.format().disable())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{STATE}", translation -> target.isInvulnerable() ? translation.format().enable() : translation.format().disable())
+            .placeholder("{PLAYER}", target.getName())
             .notice(translation -> translation.player().godSetMessage())
             .viewer(viewer)
             .send();

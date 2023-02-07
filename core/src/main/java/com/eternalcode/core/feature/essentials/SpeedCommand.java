@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.speed;
+package com.eternalcode.core.feature.essentials;
 
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -21,9 +21,8 @@ public class SpeedCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
-    @Min(1)
-    void execute(CommandSender sender, Viewer audience, @Arg @By("speed") Integer amount, @Arg @By("or_sender") Player player) {
+    @Execute(required = 1)
+    void execute(Player player, @Arg @By("speed") Integer amount) {
         player.setFlySpeed(amount / 10.0f);
         player.setWalkSpeed(amount / 10.0f);
 
@@ -32,16 +31,24 @@ public class SpeedCommand {
             .placeholder("{SPEED}", String.valueOf(amount))
             .player(player.getUniqueId())
             .send();
+    }
 
-        if (sender.equals(player)) {
-            return;
-        }
+    @Execute(required = 2)
+    void execute(Viewer viewer, @Arg Player target, @Arg @By("speed") Integer amount) {
+        target.setFlySpeed(amount / 10.0f);
+        target.setWalkSpeed(amount / 10.0f);
+
+        this.noticeService.create()
+            .notice(translation -> translation.player().speedSet())
+            .placeholder("{SPEED}", String.valueOf(amount))
+            .player(target.getUniqueId())
+            .send();
 
         this.noticeService.create()
             .notice(translation -> translation.player().speedSetBy())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER}", target.getName())
             .placeholder("{SPEED}", String.valueOf(amount))
-            .viewer(audience)
+            .viewer(viewer)
             .send();
     }
 }
