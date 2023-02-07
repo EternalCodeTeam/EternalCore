@@ -41,7 +41,7 @@ public class GiveCommand {
 
     @Execute(required = 2)
     // /give <item> <player>
-    void execute(Player player, @Arg Material material, @Arg Player target) {
+    void execute(Viewer viewer, @Arg Material material, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(target, material);
@@ -56,7 +56,7 @@ public class GiveCommand {
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", target.getName())
             .notice(translation -> translation.item().giveGiven())
-            .player(player.getUniqueId())
+            .viewer(viewer)
             .send();
     }
 
@@ -76,7 +76,7 @@ public class GiveCommand {
 
     @Execute(required = 3)
     // /give <item> <amount> <player>
-    void execute(Player player, @Arg Material material, @Arg Integer amount, @Arg Player target) {
+    void execute(Viewer viewer, @Arg Material material, @Arg Integer amount, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(target, material, amount);
@@ -91,7 +91,7 @@ public class GiveCommand {
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", target.getName())
             .notice(translation -> translation.item().giveGiven())
-            .player(player.getUniqueId())
+            .viewer(viewer)
             .send();
     }
 
