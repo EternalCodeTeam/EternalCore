@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import panda.std.Option;
@@ -35,8 +36,9 @@ public class SpawnCommand {
     @Execute
     void execute(Player sender, @Opt Option<Player> playerOption) {
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
+        World world = destinationLocation.getWorld();
 
-        if (destinationLocation.getWorld() == null) {
+        if (world == null || world.getName().equals("__NONE__")) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
                 .player(sender.getUniqueId())
