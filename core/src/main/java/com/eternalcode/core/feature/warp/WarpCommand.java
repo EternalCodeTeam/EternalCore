@@ -27,6 +27,11 @@ public class WarpCommand {
 
     @Execute(required = 1)
     void warp(Player player, @Arg Warp warp) {
+        if (player.hasPermission("eternalcore.warp.bypass")) {
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
+            return;
+        }
+
         this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ofSeconds(5));
     }
 
