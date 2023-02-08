@@ -6,7 +6,6 @@ import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
@@ -344,7 +343,6 @@ public class EternalCore extends JavaPlugin {
 
             // Native Argument (no optional)
             .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.translationManager))
-            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.translationManager, this.viewerProvider, server))
             .argument(Arg.class, World.class,                   new WorldArgument(server, this.translationManager, this.viewerProvider))
 
             // Dynamic binds
