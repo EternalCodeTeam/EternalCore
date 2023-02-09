@@ -23,7 +23,6 @@ public class GiveCommand {
     }
 
     @Execute(required = 1)
-    // /give <item>
     void execute(Player player, @Arg Material material) {
         String formattedMaterial = MaterialUtil.format(material);
 
@@ -37,7 +36,6 @@ public class GiveCommand {
     }
 
     @Execute(required = 2)
-    // /give <item> <player>
     void execute(Viewer viewer, @Arg Material material, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
@@ -58,7 +56,6 @@ public class GiveCommand {
     }
 
     @Execute(required = 2)
-    // /give <item> <amount>
     void execute(Player player, @Arg Material material, @Arg Integer amount) {
         String formattedMaterial = MaterialUtil.format(material);
 
@@ -72,7 +69,6 @@ public class GiveCommand {
     }
 
     @Execute(required = 3)
-    // /give <item> <amount> <player>
     void execute(Viewer viewer, @Arg Material material, @Arg Integer amount, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 

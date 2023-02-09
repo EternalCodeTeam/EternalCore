@@ -20,7 +20,7 @@ public class FeedCommand {
 
     @Execute
     void execute(Player player) {
-        player.setFoodLevel(20);
+        this.feed(player);
 
         this.noticeService.create()
             .notice(translation -> translation.player().feedMessage())
@@ -30,13 +30,18 @@ public class FeedCommand {
 
     @Execute
     void execute(Viewer viewer, @Arg Player target) {
-        target.setFoodLevel(20);
+        this.feed(target);
 
         this.noticeService.create()
             .notice(translation -> translation.player().feedMessageBy())
             .placeholder("{PLAYER}", target.getName())
             .viewer(viewer)
             .send();
+    }
+
+
+    void feed(Player player) {
+        player.setFoodLevel(20);
     }
 }
 
