@@ -7,6 +7,7 @@ import com.eternalcode.core.notification.extractor.OptionalNotificationExtractor
 import com.eternalcode.core.notification.extractor.TranslatedMessageExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.Placeholders;
+import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
@@ -31,6 +32,7 @@ import java.util.function.Supplier;
 
 public class Notice {
 
+    private final Scheduler scheduler;
     private final TranslationManager translationManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
@@ -42,7 +44,8 @@ public class Notice {
     private final Map<String, TranslatedMessageExtractor> placeholders = new HashMap<>();
     private final List<Formatter> formatters = new ArrayList<>();
 
-    Notice(TranslationManager translationManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+    Notice(Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+        this.scheduler = scheduler;
         this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
@@ -200,6 +203,10 @@ public class Notice {
     public Notice formatter(Formatter... formatters) {
         this.formatters.addAll(Arrays.asList(formatters));
         return this;
+    }
+
+    public void sendAsync() {
+        this.scheduler.async(this::send);
     }
 
     public void send() {

@@ -23,7 +23,7 @@ public class AfkMessagesController implements Subscriber {
             .player(event.getPlayer())
             .notice(translation -> event.isAfk() ? translation.afk().afkOn() : translation.afk().afkOff())
             .placeholder("{PLAYER}", this.userManager.getUser(event.getPlayer()).map(User::getName))
-            .send();
+            .sendAsync();
     }
 
 }
