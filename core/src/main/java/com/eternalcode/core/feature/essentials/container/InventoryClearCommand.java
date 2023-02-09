@@ -26,7 +26,7 @@ public class InventoryClearCommand {
         this.clear(player);
     }
 
-    @Execute(required = 1)
+    @Execute
     void execute(Viewer audience, @Arg Player target) {
         this.clear(target);
 

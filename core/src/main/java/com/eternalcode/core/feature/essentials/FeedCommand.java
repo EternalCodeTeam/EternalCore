@@ -28,7 +28,7 @@ public class FeedCommand {
             .send();
     }
 
-    @Execute(required = 1)
+    @Execute
     void execute(Viewer viewer, @Arg Player target) {
         target.setFoodLevel(20);
 

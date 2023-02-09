@@ -31,7 +31,7 @@ public class HealCommand {
         this.noticeService.player(player.getUniqueId(), translation -> translation.player().healMessage());
     }
 
-    @Execute(required = 1)
+    @Execute
     void execute(Viewer viewer, @Arg Player target) {
         target.setFoodLevel(20);
         target.setHealth(20);

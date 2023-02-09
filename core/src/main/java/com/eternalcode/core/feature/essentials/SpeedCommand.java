@@ -34,7 +34,7 @@ public class SpeedCommand {
     }
 
     @Execute(required = 2)
-    void execute(Viewer viewer, @Arg Player target, @Arg @By("speed") Integer amount) {
+    void execute(Viewer viewer, @Arg @By("speed") Integer amount, @Arg Player target) {
         target.setFlySpeed(amount / 10.0f);
         target.setWalkSpeed(amount / 10.0f);
 
