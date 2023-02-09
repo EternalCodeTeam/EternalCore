@@ -15,8 +15,13 @@ import org.bukkit.entity.Player;
 public class CartographyTableCommand {
 
     @Execute
-    void execute(@Arg @By("or_sender") Player player) {
+    void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.CARTOGRAPHY_TABLE);
+    }
+
+    @Execute
+    void execute(@Arg Player target) {
+        AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.CARTOGRAPHY_TABLE);
     }
 
 }

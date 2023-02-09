@@ -6,7 +6,6 @@ import com.eternalcode.core.command.argument.EnchantmentArgument;
 import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
-import com.eternalcode.core.command.argument.PlayerArgOrSender;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
@@ -32,7 +31,7 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
-import com.eternalcode.core.feature.PingCommand;
+import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
 import com.eternalcode.core.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.feature.afk.AfkCommand;
 import com.eternalcode.core.feature.afk.AfkController;
@@ -67,7 +66,7 @@ import com.eternalcode.core.feature.essentials.item.SkullCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayerCountCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayersListCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.WhoIsCommand;
-import com.eternalcode.core.feature.essentials.speed.SpeedCommand;
+import com.eternalcode.core.feature.essentials.SpeedCommand;
 import com.eternalcode.core.feature.essentials.time.DayCommand;
 import com.eternalcode.core.feature.essentials.time.NightCommand;
 import com.eternalcode.core.feature.essentials.time.TimeCommand;
@@ -344,7 +343,6 @@ public class EternalCore extends JavaPlugin {
 
             // Native Argument (no optional)
             .argument(ArgHome.class, Home.class,                new HomeArgument(this.homeManager, this.viewerProvider, this.translationManager))
-            .argument(Arg.class, Player.class, "or_sender", new PlayerArgOrSender(this.translationManager, this.viewerProvider, server))
             .argument(Arg.class, World.class,                   new WorldArgument(server, this.translationManager, this.viewerProvider))
 
             // Dynamic binds

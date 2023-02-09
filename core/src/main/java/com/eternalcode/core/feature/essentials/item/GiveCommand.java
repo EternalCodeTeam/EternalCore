@@ -4,14 +4,11 @@ import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.By;
-import dev.rollczi.litecommands.command.amount.Between;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,9 +22,8 @@ public class GiveCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
-    @Between(min = 1, max = 2)
-    void execute(Viewer audience, CommandSender sender, @Arg Material material, @Arg @By("or_sender") Player player) {
+    @Execute(required = 1)
+    void execute(Player player, @Arg Material material) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(player, material);
@@ -37,16 +33,58 @@ public class GiveCommand {
             .notice(translation -> translation.item().giveReceived())
             .player(player.getUniqueId())
             .send();
+    }
 
-        if (sender.equals(player)) {
-            return;
-        }
+    @Execute(required = 2)
+    void execute(Viewer viewer, @Arg Material material, @Arg Player target) {
+        String formattedMaterial = MaterialUtil.format(material);
+
+        this.giveItem(target, material);
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
-            .placeholder("{PLAYER}", player.getName())
+            .notice(translation -> translation.item().giveReceived())
+            .player(target.getUniqueId())
+            .send();
+
+        this.noticeService.create()
+            .placeholder("{ITEM}", formattedMaterial)
+            .placeholder("{PLAYER}", target.getName())
             .notice(translation -> translation.item().giveGiven())
-            .viewer(audience)
+            .viewer(viewer)
+            .send();
+    }
+
+    @Execute(required = 2)
+    void execute(Player player, @Arg Material material, @Arg Integer amount) {
+        String formattedMaterial = MaterialUtil.format(material);
+
+        this.giveItem(player, material, amount);
+
+        this.noticeService.create()
+            .placeholder("{ITEM}", formattedMaterial)
+            .notice(translation -> translation.item().giveReceived())
+            .player(player.getUniqueId())
+            .send();
+    }
+
+    @Execute(required = 3)
+    void execute(Viewer viewer, @Arg Material material, @Arg Integer amount, @Arg Player target) {
+        String formattedMaterial = MaterialUtil.format(material);
+
+        this.giveItem(target, material, amount);
+
+        this.noticeService.create()
+            .placeholder("{ITEM}", formattedMaterial)
+            .notice(translation -> translation.item().giveReceived())
+            .player(target.getUniqueId())
+            .send();
+
+        this.noticeService.create()
+            .placeholder("{ITEM}", formattedMaterial)
+            .placeholder("{PLAYER}", target.getName())
+            .notice(translation -> translation.item().giveGiven())
+            .viewer(viewer)
             .send();
     }
 
@@ -57,6 +95,14 @@ public class GiveCommand {
             amount = 1;
         }
 
+        ItemStack item = ItemBuilder.from(material)
+            .amount(amount)
+            .build();
+
+        player.getInventory().addItem(item);
+    }
+
+    private void giveItem(Player player, Material material, int amount) {
         ItemStack item = ItemBuilder.from(material)
             .amount(amount)
             .build();

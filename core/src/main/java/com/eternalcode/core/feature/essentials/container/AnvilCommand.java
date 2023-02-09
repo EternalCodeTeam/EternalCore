@@ -14,7 +14,13 @@ import org.bukkit.entity.Player;
 public class AnvilCommand {
 
     @Execute
-    void execute(@Arg @By("or_sender") Player player) {
+    void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.ANVIL);
     }
+
+    @Execute
+    void execute(@Arg Player target) {
+        AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.ANVIL);
+    }
+
 }
