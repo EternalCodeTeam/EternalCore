@@ -46,7 +46,7 @@ dependencies {
 
     // unit test
     testImplementation("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
+    testImplementation("org.codehaus.groovy:groovy-all:3.0.15")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.144.5")

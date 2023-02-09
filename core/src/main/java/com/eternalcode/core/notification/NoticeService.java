@@ -2,6 +2,7 @@ package com.eternalcode.core.notification;
 
 import com.eternalcode.core.notification.extractor.NotificationExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
+import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
@@ -13,12 +14,14 @@ import java.util.UUID;
 
 public class NoticeService {
 
+    private final Scheduler scheduler;
     private final TranslationManager translationManager;
     private final ViewerProvider viewerProvider;
     private final NotificationAnnouncer announcer;
     private final PlaceholderRegistry placeholderRegistry;
 
-    public NoticeService(TranslationManager translationManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+    public NoticeService(Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
+        this.scheduler = scheduler;
         this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
         this.announcer = announcer;
@@ -27,7 +30,7 @@ public class NoticeService {
 
     @CheckReturnValue
     public Notice create() {
-        return new Notice(this.translationManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
+        return new Notice(this.scheduler, this.translationManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
     }
 
     public void player(UUID player, NotificationExtractor extractor, Formatter... formatters) {
