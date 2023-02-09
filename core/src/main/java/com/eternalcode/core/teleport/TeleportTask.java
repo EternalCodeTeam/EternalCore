@@ -11,6 +11,8 @@ import panda.utilities.StringUtils;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class TeleportTask implements Runnable {
@@ -29,7 +31,9 @@ public class TeleportTask implements Runnable {
 
     @Override
     public void run() {
-        for (Teleport teleport : this.teleportTaskService.getTeleports()) {
+        List<Teleport> teleportsCopy = new ArrayList<>(this.teleportTaskService.getTeleports());
+
+        for (Teleport teleport : teleportsCopy) {
             Location destinationLocation = PositionAdapter.convert(teleport.getDestinationLocation());
             Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
             UUID uuid = teleport.getUuid();

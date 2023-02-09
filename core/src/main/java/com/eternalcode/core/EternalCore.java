@@ -312,7 +312,7 @@ public class EternalCore extends JavaPlugin {
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
-        this.noticeService = new NoticeService(this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
+        this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
