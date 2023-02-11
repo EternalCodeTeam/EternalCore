@@ -38,7 +38,7 @@ public class SpawnCommand {
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
         World world = destinationLocation.getWorld();
 
-        if (world == null || world.getName().equals(Position.NONE_WORLD)) {
+        if (world == null) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
                 .player(sender.getUniqueId())

@@ -56,6 +56,10 @@ public final class Position {
         return this.pitch;
     }
 
+    public boolean isNoneWorld() {
+        return this.world.equals(NONE_WORLD);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

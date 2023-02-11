@@ -17,10 +17,14 @@ public final class PositionAdapter {
     }
 
     public static Location convert(Position position) {
-        World world = Bukkit.getWorld(position.getWorld());
+        World world = null;
 
-        if (world == null) {
-            throw new IllegalStateException("World is not defined");
+        if (!position.isNoneWorld()) {
+            world = Bukkit.getWorld(position.getWorld());
+
+            if (world == null) {
+                throw new IllegalStateException("World " + position.getWorld() + " not found");
+            }
         }
 
         return new Location(world, position.getX(), position.getY(), position.getZ(), position.getYaw(), position.getPitch());
