@@ -11,8 +11,15 @@ import org.bukkit.entity.Player;
 @Route(name = "enderchest", aliases = { "ec" })
 @Permission("eternalcore.enderchest")
 public class EnderchestCommand {
+
     @Execute
-    void execute(@Arg @By("or_sender") Player player) {
+    void execute(Player player) {
         player.openInventory(player.getEnderChest());
     }
+
+    @Execute(required = 1)
+    void execute(Player player, @Arg Player target) {
+        player.openInventory(target.getEnderChest());
+    }
+
 }

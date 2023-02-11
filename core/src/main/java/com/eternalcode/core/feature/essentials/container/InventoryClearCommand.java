@@ -22,16 +22,17 @@ public class InventoryClearCommand {
     }
 
     @Execute
-    void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
+    void execute(Player player) {
         this.clear(player);
+    }
 
-        if (sender.equals(player)) {
-            return;
-        }
+    @Execute
+    void execute(Viewer audience, @Arg Player target) {
+        this.clear(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.inventory().inventoryClearMessageBy())
-            .placeholder("{PLAYER}", player.getName())
+            .notice(translation -> translation.inventory().inventoryClearMessage())
+            .placeholder("{PLAYER}", target.getName())
             .viewer(audience)
             .send();
     }

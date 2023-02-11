@@ -3,11 +3,9 @@ package com.eternalcode.core.feature.essentials;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Route(name = "feed")
@@ -21,23 +19,29 @@ public class FeedCommand {
     }
 
     @Execute
-    void execute(Viewer audience, CommandSender sender, @Arg @By("or_sender") Player player) {
-        player.setFoodLevel(20);
+    void execute(Player player) {
+        this.feed(player);
 
         this.noticeService.create()
             .notice(translation -> translation.player().feedMessage())
             .player(player.getUniqueId())
             .send();
+    }
 
-        if (sender.equals(player)) {
-            return;
-        }
+    @Execute
+    void execute(Viewer viewer, @Arg Player target) {
+        this.feed(target);
 
         this.noticeService.create()
-            .placeholder("{PLAYER}", player.getName())
             .notice(translation -> translation.player().feedMessageBy())
-            .viewer(audience)
+            .placeholder("{PLAYER}", target.getName())
+            .viewer(viewer)
             .send();
+    }
+
+
+    void feed(Player player) {
+        player.setFoodLevel(20);
     }
 }
 

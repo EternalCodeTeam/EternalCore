@@ -15,8 +15,14 @@ import org.bukkit.entity.Player;
 public class GrindstoneCommand {
 
     @Execute
-    void execute(@Arg @By("or_sender") Player player) {
+    void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.GRINDSTONE);
     }
+
+    @Execute
+    void execute(@Arg Player target) {
+        AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.GRINDSTONE);
+    }
+
 }
 
