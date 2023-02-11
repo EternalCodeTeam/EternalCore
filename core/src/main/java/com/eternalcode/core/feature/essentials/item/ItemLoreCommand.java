@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
+import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -30,7 +31,7 @@ public class ItemLoreCommand {
 
     @Execute
     @Min(2)
-    void execute(Player player, int line, @Joiner String text) {
+    void execute(Player player, @Arg int line, @Joiner String text) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
