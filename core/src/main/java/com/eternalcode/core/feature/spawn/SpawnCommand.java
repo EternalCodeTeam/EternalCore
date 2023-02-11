@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
@@ -10,8 +11,8 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import panda.std.Option;
 
 import java.time.Duration;
@@ -34,9 +35,9 @@ public class SpawnCommand {
 
     @Execute
     void execute(Player sender, @Opt Option<Player> playerOption) {
-        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
+        Position position = this.locations.spawn;
 
-        if (destinationLocation.getWorld() == null) {
+        if (position.isNoneWorld()) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
                 .player(sender.getUniqueId())
@@ -44,6 +45,8 @@ public class SpawnCommand {
 
             return;
         }
+
+        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
         if (playerOption.isEmpty()) {
             if (sender.hasPermission("eternalcore.teleport.bypass")) {
