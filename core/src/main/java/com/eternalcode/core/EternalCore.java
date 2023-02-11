@@ -337,7 +337,6 @@ public class EternalCore extends JavaPlugin {
             .argument(Duration.class, "duration", new DurationArgument(this.viewerProvider, this.translationManager))
             .argument(Integer.class, "speed",    new SpeedArgument(this.viewerProvider, this.translationManager))
 
-
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class,     new LocationArgument(this.translationManager, this.viewerProvider))
 
@@ -350,25 +349,6 @@ public class EternalCore extends JavaPlugin {
             .contextualBind(Viewer.class,   new ViewerContextual(this.viewerProvider))
             .contextualBind(User.class,     new UserContextual(this.translationManager, this.userManager))
 
-            // Static binds
-            .typeBind(EternalCore.class,            () -> this)
-            .typeBind(ConfigurationManager.class,   () -> this.configurationManager)
-            .typeBind(LanguageInventory.class,      () -> this.languageInventory)
-            .typeBind(TranslationManager.class,     () -> this.translationManager)
-            .typeBind(TeleportTaskService.class,    () -> this.teleportTaskService)
-            .typeBind(UserManager.class,            () -> this.userManager)
-            .typeBind(TeleportRequestService.class, () -> this.teleportRequestService)
-            .typeBind(NoticeService.class,          () -> this.noticeService)
-            .typeBind(TeleportService.class,        () -> this.teleportService)
-            .typeBind(MiniMessage.class,            () -> this.miniMessage)
-            .typeBind(ChatManager.class,            () -> this.chatManager)
-            .typeBind(PrivateChatService.class,     () -> this.privateChatService)
-            .typeBind(Scheduler.class,              () -> this.scheduler)
-            .typeBind(WarpManager.class,            () -> this.warpManager)
-            .typeBind(HomeManager.class,            () -> this.homeManager)
-            .typeBind(AfkService.class,             () -> this.afkService)
-            .typeBind(SkullAPI.class,               () -> this.skullAPI)
-
             .typeBind(PluginConfiguration.class,               () -> this.pluginConfiguration)
             .typeBind(LocationsConfiguration.class,            () -> this.locationsConfiguration)
             .typeBind(PluginConfiguration.OtherSettings.class, () -> this.pluginConfiguration.otherSettings)
@@ -378,91 +358,87 @@ public class EternalCore extends JavaPlugin {
             .resultHandler(Notification.class, new NotificationHandler(this.viewerProvider, this.noticeService))
 
             .commandInstance(
+                new EternalCoreCommand(this.configurationManager, this.miniMessage),
+
+                // Home Commands
+                new HomeCommand(this.teleportTaskService, this.teleportService),
+                new SetHomeCommand(this.homeManager, this.noticeService, this.pluginConfiguration),
+                new DelHomeCommand(this.homeManager, this.noticeService),
+
+                // Item Commands
+                new ItemNameCommand(this.noticeService, this.miniMessage),
+                new ItemLoreCommand(this.noticeService, this.miniMessage),
+                new ItemFlagCommand(this.noticeService),
+
+                // Weather Commands
+                new SunCommand(this.noticeService),
+                new ThunderCommand(this.noticeService),
+                new RainCommand(this.noticeService),
+
+                // Time Commands
+                new TimeCommand(this.noticeService),
+                new DayCommand(this.noticeService),
+                new NightCommand(this.noticeService),
+
+                new TeleportCommand(this.noticeService, this.teleportService),
+                new TeleportToPositionCommand(this.noticeService, this.teleportService),
+                new TeleportHereCommand(this.noticeService, this.teleportService),
+                new TeleportBackCommand(this.teleportService, this.noticeService),
+
+                // Tpa Commands
+                new TpaCommand(this.teleportRequestService, this.noticeService),
+                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, this.pluginConfiguration.otherSettings, server),
+                new TpaDenyCommand(this.teleportRequestService, this.noticeService, server),
+
+                // Spawn & Warp Command
+                new SetSpawnCommand(this.configurationManager, this.locationsConfiguration, this.noticeService),
+                new SpawnCommand(this.locationsConfiguration, this.noticeService, this.teleportTaskService, this.teleportService),
+                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService),
+
+                // Inventory Commands
+                new EnderchestCommand(),
+                new WorkbenchCommand(),
+                new AnvilCommand(),
+                new CartographyTableCommand(),
+                new GrindstoneCommand(),
+                new StonecutterCommand(),
+                new DisposalCommand(this.miniMessage, this.translationManager, this.userManager, server),
+
+                // Private Chat Commands
+                new PrivateChatCommands(this.privateChatService, this.noticeService),
+
+                new AdminChatCommand(this.noticeService, server),
+                new HelpOpCommand(this.noticeService, this.pluginConfiguration, server),
+                new AlertCommand(this.noticeService),
+
+                // Moderation Commands
+                new FlyCommand(this.noticeService),
+                new GodCommand(this.noticeService),
+                new GameModeCommand(this.noticeService),
+                new SpeedCommand(this.noticeService),
+                new GiveCommand(this.noticeService),
+                new EnchantCommand(this.pluginConfiguration, this.noticeService),
+                new RepairCommand(this.noticeService),
+                new HealCommand(this.noticeService),
+                new FeedCommand(this.noticeService),
+                new KillCommand(this.noticeService),
+                new InventoryClearCommand(this.noticeService),
+                new InventoryOpenCommand(server, this.noticeService),
+
+                // Info Commands
+                new OnlinePlayerCountCommand(this.noticeService, server),
+                new OnlinePlayersListCommand(this.pluginConfiguration, this.noticeService, server),
+                new WhoIsCommand(this.noticeService),
+                new PingCommand(this.noticeService),
+
+                // Misc Commands
+                new HatCommand(this.noticeService),
+                new AfkCommand(this.noticeService, this.pluginConfiguration, this.afkService),
+                new SkullCommand(this.noticeService, this.skullAPI),
+                new LanguageCommand(this.languageInventory),
                 new IgnoreCommand(ignoreRepository, this.noticeService),
                 new UnIgnoreCommand(ignoreRepository, this.noticeService),
                 ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.clearLines)
-            )
-            .command(
-                EternalCoreCommand.class,
-
-                // Home Commands
-                HomeCommand.class,
-                SetHomeCommand.class,
-                DelHomeCommand.class,
-
-                // Item Commands
-                ItemNameCommand.class,
-                ItemLoreCommand.class,
-                ItemFlagCommand.class,
-
-                // Weather Commands
-                SunCommand.class,
-                ThunderCommand.class,
-                RainCommand.class,
-
-                // Time Commands
-                TimeCommand.class,
-                DayCommand.class,
-                NightCommand.class,
-
-                // Teleport Commands
-                TeleportCommand.class,
-                TeleportToPositionCommand.class,
-                TeleportHereCommand.class,
-                TeleportBackCommand.class,
-
-                // Tpa Commands
-                TpaCommand.class,
-                TpaDenyCommand.class,
-                TpaAcceptCommand.class,
-
-                // Spawn & Warp Command
-                SetSpawnCommand.class,
-                SpawnCommand.class,
-                WarpCommand.class,
-
-                // Inventory Commands
-                EnderchestCommand.class,
-                WorkbenchCommand.class,
-                AnvilCommand.class,
-                CartographyTableCommand.class,
-                GrindstoneCommand.class,
-                StonecutterCommand.class,
-                DisposalCommand.class,
-
-                // Private Chat Commands
-                PrivateChatCommands.class,
-
-                // Admin Chat Commands
-                AdminChatCommand.class,
-                HelpOpCommand.class,
-                AlertCommand.class,
-
-                // Moderation Commands
-                FlyCommand.class,
-                GodCommand.class,
-                GameModeCommand.class,
-                SpeedCommand.class,
-                GiveCommand.class,
-                EnchantCommand.class,
-                RepairCommand.class,
-                HealCommand.class,
-                FeedCommand.class,
-                KillCommand.class,
-                InventoryClearCommand.class,
-                InventoryOpenCommand.class,
-
-                // Info Commands
-                OnlinePlayerCountCommand.class,
-                OnlinePlayersListCommand.class,
-                WhoIsCommand.class,
-                PingCommand.class,
-
-                // Misc Commands
-                HatCommand.class,
-                AfkCommand.class,
-                SkullCommand.class,
-                LanguageCommand.class
             )
 
             .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
