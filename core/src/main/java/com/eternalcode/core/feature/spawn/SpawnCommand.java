@@ -35,10 +35,9 @@ public class SpawnCommand {
 
     @Execute
     void execute(Player sender, @Opt Option<Player> playerOption) {
-        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
-        World world = destinationLocation.getWorld();
+        Position position = this.locations.spawn;
 
-        if (world == null) {
+        if (position.isNoneWorld()) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
                 .player(sender.getUniqueId())
@@ -46,6 +45,8 @@ public class SpawnCommand {
 
             return;
         }
+
+        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
         if (playerOption.isEmpty()) {
             if (sender.hasPermission("eternalcore.teleport.bypass")) {
