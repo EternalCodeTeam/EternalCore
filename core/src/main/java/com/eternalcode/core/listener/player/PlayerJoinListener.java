@@ -42,8 +42,9 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (this.config.sound.enabledAfterJoin) {
-            this.server.getOnlinePlayers()
-                .forEach(online -> online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch));
+            for (Player online : this.server.getOnlinePlayers()) {
+                online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch);
+            }
         }
 
         this.noticeService
@@ -52,7 +53,7 @@ public class PlayerJoinListener implements Listener {
             .notice(translation -> translation.event().welcomeSubtitle())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
-            .send();
+            .sendAsync();
 
         event.setJoinMessage(StringUtils.EMPTY);
 
@@ -60,7 +61,7 @@ public class PlayerJoinListener implements Listener {
             .noticeOption(translation -> RandomUtil.randomElement(translation.event().joinMessage()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
-            .send();
+            .sendAsync();
 
     }
 }

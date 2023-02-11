@@ -134,7 +134,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration chatDelay = Duration.ofSeconds(5);
 
         @Description({ " ", "# Count of lines to clear" })
-        public int clearLines = 64;
+        public int clearLines = 128;
 
         public boolean chatEnabled = true;
 
