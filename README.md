@@ -34,6 +34,30 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
 
 </details>
 
+# Features
+
+- Admin chat
+- AFK system
+- Chat manager, including:
+    - Chat on/off switch
+    - Chat slowmode
+    - /ignore command
+    - /msg command
+    - /helpop command
+- Open utility blocks with a simple commands, such as `/workbench`
+- View player inventories with ease
+- Switch gamemodes easily
+- Heal, feed, teleport and view/modify player's attributes, e.g. godmode
+- Ping command to ensure that client <-> server connection is working
+- Player information command (`/whois`)
+- Home and warp system
+- PlaceholderAPI support
+- Customizable and **translatable** messages and an advanced configuration system, allowing to customize almost every
+  aspect of the plugin.
+- Database integration: (PostGreSQL, SQLite, MySQL, MariaDB, H2)
+- Adventure and MiniMessage integration
+- And much more!
+
 # Building
 
 To build EternalCore do the following (Make sure you have JDK 17 or higher)
