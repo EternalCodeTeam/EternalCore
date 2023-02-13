@@ -1,19 +1,11 @@
 plugins {
     `java-library`
-    `checkstyle`
 }
 
 group = "com.eternalcode"
 version = "1.0.0"
 
-checkstyle {
-    toolVersion = "10.7.0"
-
-    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-
-    maxErrors = 0
-    maxWarnings = 0
-}
+val repositoriesContainer by extra(mutableListOf<String>())
 
 repositories {
     mavenLocal()
@@ -33,5 +25,6 @@ java {
 }
 
 tasks.withType<JavaCompile>() {
+    options.compilerArgs = listOf("-Xlint:deprecation", "-parameters")
     options.encoding = "UTF-8"
 }

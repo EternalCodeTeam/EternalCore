@@ -31,7 +31,6 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
-import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
 import com.eternalcode.core.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.feature.afk.AfkCommand;
 import com.eternalcode.core.feature.afk.AfkController;
@@ -45,6 +44,7 @@ import com.eternalcode.core.feature.essentials.FlyCommand;
 import com.eternalcode.core.feature.essentials.GodCommand;
 import com.eternalcode.core.feature.essentials.HealCommand;
 import com.eternalcode.core.feature.essentials.KillCommand;
+import com.eternalcode.core.feature.essentials.SpeedCommand;
 import com.eternalcode.core.feature.essentials.container.AnvilCommand;
 import com.eternalcode.core.feature.essentials.container.CartographyTableCommand;
 import com.eternalcode.core.feature.essentials.container.DisposalCommand;
@@ -65,8 +65,8 @@ import com.eternalcode.core.feature.essentials.item.RepairCommand;
 import com.eternalcode.core.feature.essentials.item.SkullCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayerCountCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayersListCommand;
+import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.WhoIsCommand;
-import com.eternalcode.core.feature.essentials.SpeedCommand;
 import com.eternalcode.core.feature.essentials.time.DayCommand;
 import com.eternalcode.core.feature.essentials.time.NightCommand;
 import com.eternalcode.core.feature.essentials.time.TimeCommand;
@@ -151,99 +151,83 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 
-import java.io.File;
+import java.io.Closeable;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class EternalCore extends JavaPlugin {
-
-    private static EternalCore instance;
+class EternalCore implements Closeable {
 
     /**
      * Scheduler & Publisher
      **/
-    private Scheduler scheduler;
-    private Publisher publisher;
+    private final Scheduler scheduler;
+    private final Publisher publisher;
 
     /**
      * Configuration & Database
      **/
-    private ConfigurationManager configurationManager;
+    private final ConfigurationManager configurationManager;
     private DatabaseManager databaseManager;
 
-    private PluginConfiguration pluginConfiguration;
-    private LocationsConfiguration locationsConfiguration;
-    private LanguageConfiguration languageConfiguration;
-    private PlaceholdersConfiguration placeholdersConfiguration;
+    private final PluginConfiguration pluginConfiguration;
+    private final LocationsConfiguration locationsConfiguration;
+    private final LanguageConfiguration languageConfiguration;
+    private final PlaceholdersConfiguration placeholdersConfiguration;
 
     /**
      * Services & Managers
      **/
-    private BridgeManager bridgeManager;
-    private UserManager userManager;
-    private PlaceholderRegistry placeholderRegistry;
+    private final BridgeManager bridgeManager;
+    private final UserManager userManager;
+    private final PlaceholderRegistry placeholderRegistry;
 
-    private TeleportService teleportService;
-    private TeleportTaskService teleportTaskService;
+    private final TeleportService teleportService;
+    private final TeleportTaskService teleportTaskService;
 
-    private WarpManager warpManager;
-    private HomeManager homeManager;
-    private AfkService afkService;
-    private TeleportRequestService teleportRequestService;
+    private final WarpManager warpManager;
+    private final HomeManager homeManager;
+    private final AfkService afkService;
+    private final TeleportRequestService teleportRequestService;
 
-    private TranslationManager translationManager;
-    private ChatManager chatManager;
-    private PrivateChatService privateChatService;
+    private final TranslationManager translationManager;
+    private final ChatManager chatManager;
+    private final PrivateChatService privateChatService;
 
     /**
      * Adventure
      **/
-    private BukkitAudiences audiencesProvider;
-    private MiniMessage miniMessage;
+    private final BukkitAudiences audiencesProvider;
+    private final MiniMessage miniMessage;
 
     /**
      * Viewer & Notice
      **/
-    private BukkitViewerProvider viewerProvider;
+    private final BukkitViewerProvider viewerProvider;
 
-    private NotificationAnnouncer notificationAnnouncer;
-    private NoticeService noticeService;
+    private final NotificationAnnouncer notificationAnnouncer;
+    private final NoticeService noticeService;
 
-    /**
-     * FrameWorks & Libs
-     **/
-    private LanguageInventory languageInventory;
-    private LiteCommands<CommandSender> liteCommands;
-    private SkullAPI skullAPI;
+    private final LiteCommands<CommandSender> liteCommands;
+    private final SkullAPI skullAPI;
 
-    public EternalCore() {}
-
-    protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-        super(loader, description, dataFolder, file);
-    }
-
-    @Override
-    public void onEnable() {
+    public EternalCore(Plugin plugin) {
         Stopwatch started = Stopwatch.createStarted();
-        Server server = this.getServer();
+        Server server = plugin.getServer();
 
-        instance = this;
+        this.softwareCheck(plugin.getLogger());
 
-        this.softwareCheck();
-
-        this.scheduler = new BukkitSchedulerImpl(this);
+        this.scheduler = new BukkitSchedulerImpl(plugin);
         this.publisher = new LocalPublisher();
 
         /* Configuration */
 
-        this.configurationManager = new ConfigurationManager(this.getDataFolder());
+        this.configurationManager = new ConfigurationManager(plugin.getDataFolder());
 
         this.pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
@@ -256,7 +240,7 @@ public class EternalCore extends JavaPlugin {
         IgnoreRepository ignoreRepository;
 
         try {
-            this.databaseManager = new DatabaseManager(this.pluginConfiguration, this.getLogger(), this.getDataFolder());
+            this.databaseManager = new DatabaseManager(this.pluginConfiguration, plugin.getLogger(), plugin.getDataFolder());
             this.databaseManager.connect();
 
             homeRepository = HomeRepositoryOrmLite.create(this.databaseManager, this.scheduler);
@@ -265,7 +249,7 @@ public class EternalCore extends JavaPlugin {
         }
         catch (Exception exception) {
             exception.printStackTrace();
-            this.getLogger().severe("Can not connect to database! Some functions may not work!");
+            plugin.getLogger().severe("Can not connect to database! Some functions may not work!");
 
             NoneRepository noneRepository = new NoneRepository();
 
@@ -284,7 +268,7 @@ public class EternalCore extends JavaPlugin {
             return text;
         });
 
-        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, this.getLogger());
+        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, plugin.getLogger());
         this.bridgeManager.init();
 
         this.teleportService = new TeleportService();
@@ -300,7 +284,7 @@ public class EternalCore extends JavaPlugin {
 
         /* Adventure */
 
-        this.audiencesProvider = BukkitAudiences.create(this);
+        this.audiencesProvider = BukkitAudiences.create(plugin);
         this.miniMessage = MiniMessage.builder()
             .postProcessor(new LegacyColorProcessor())
             .build();
@@ -315,10 +299,13 @@ public class EternalCore extends JavaPlugin {
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
-        this.languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
+        /**
+         * FrameWorks & Libs
+         **/
+        LanguageInventory languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
 
         this.skullAPI = LiteSkullFactory.builder()
-            .bukkitScheduler(this)
+            .bukkitScheduler(plugin)
             .build();
 
         CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
@@ -435,7 +422,7 @@ public class EternalCore extends JavaPlugin {
                 new HatCommand(this.noticeService),
                 new AfkCommand(this.noticeService, this.pluginConfiguration, this.afkService),
                 new SkullCommand(this.noticeService, this.skullAPI),
-                new LanguageCommand(this.languageInventory),
+                new LanguageCommand(languageInventory),
                 new IgnoreCommand(ignoreRepository, this.noticeService),
                 new UnIgnoreCommand(ignoreRepository, this.noticeService),
                 ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.clearLines)
@@ -457,7 +444,7 @@ public class EternalCore extends JavaPlugin {
             new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService)
-        ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
+        ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Subscribers */
 
@@ -470,15 +457,14 @@ public class EternalCore extends JavaPlugin {
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
 
         // bStats metrics
-        Metrics metrics = new Metrics(this, 13964);
+        Metrics metrics = new Metrics((JavaPlugin) plugin, 13964);
         //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
-        this.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
+        plugin.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
     }
 
-    @Override
-    public void onDisable() {
+    public void close() {
         if (this.liteCommands != null) {
             this.liteCommands.getPlatform().unregisterAll();
         }
@@ -492,8 +478,7 @@ public class EternalCore extends JavaPlugin {
         }
     }
 
-    private void softwareCheck() {
-        Logger logger = this.getLogger();
+    private void softwareCheck(Logger logger) {
         Environment environment = PaperLib.getEnvironment();
 
         if (!environment.isSpigot()) {
@@ -509,11 +494,7 @@ public class EternalCore extends JavaPlugin {
         }
 
         logger.info("Your server running on supported software, congratulations!");
-        logger.info("Server version: " + this.getServer().getVersion());
-    }
-
-    public static EternalCore getInstance() {
-        return instance;
+        logger.info("Server version: " + environment.getMinecraftVersion());
     }
 
     public Scheduler getScheduler() {
