@@ -39,7 +39,7 @@ public class EnchantCommand {
             return;
         }
 
-        if (this.configuration.otherSettings.unsafeEnchantments) {
+        if (this.configuration.items.unsafeEnchantments) {
             handItem.addUnsafeEnchantment(enchantment, level);
         }
         else {

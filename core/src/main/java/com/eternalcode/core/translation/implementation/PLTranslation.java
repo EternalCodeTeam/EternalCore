@@ -7,6 +7,7 @@ import com.eternalcode.core.translation.AbstractTranslation;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
+import net.dzikoysk.cdn.entity.Description;
 
 import java.util.List;
 
@@ -17,6 +18,42 @@ public class PLTranslation extends AbstractTranslation {
     PLTranslation() {
         super(Language.PL);
     }
+
+    @Description({
+        "#",
+        "# Ten plik odpowiada za polskie tłumaczenie w eternalcore.",
+        "#",
+        "# Jeśli potrzebujesz pomocy z konfiguracją lub masz jakieś pytania dotyczące EternalCore, dołącz do naszego discorda",
+        "# bądź napisz zgłoszenie w zakładce \"Issues\" na GitHubie.",
+        "#",
+        "# Discord: https://dc.eternalcode.pl/",
+        "# Strona internetowa: https://eternalcode.pl/",
+        "# Kod źródłowy: https://github.com/EternalCodeTeam/EternalCore",
+    })
+
+    @Description({
+        " ",
+        "# Wszędzie możesz użyć formatowania MiniMessages, bądź standardowego &7, &e itd.",
+        "# Więcej informacji na: https://docs.adventure.kyori.net/minimessage/format.html",
+        "# Możesz użyć wirtualnego generatora do generowania i podglądu wiadomości: https://webui.adventure.kyori.net/",
+        "#",
+        "# Możesz bez żadnych ograniczeń edytować to czy wiadomość ma się wysłać na czacie, actionbarze, bądź na jednym i drugim w następujący sposób",
+        "# dodaj przed wiadomością następujące prefixy:",
+        "# [CHAT] - Wiadomość będzie wysyłana na czacie",
+        "# [ACTIONBAR] - Wiadomość będzie wysyłana na actionbarze",
+        "# [TITLE] - Wiadomość będzie wysyłana jako tytuł",
+        "# [SUBTITLE] - Wiadomość będzie wysyłana jako podtytuł",
+        "# [NONE] - Wiadomość nie będzie wysyłana",
+        "#",
+        "# Możesz również łączyć prefixy w następujący sposób:",
+        "# [CHAT, ACTIONBAR] - Wiadomość będzie wysyłana na czacie i actionbarze",
+        "# [CHAT, ACTIONBAR, TITLE] - Wiadomość będzie wysyłana na czacie, actionbarze, title",
+        "#",
+        "# Jeśli nie podasz żadnego prefixu, wiadomość będzie wysyłana po prostu na czacie",
+        "#",
+        "# Wszystkie opcje po za wiadomościami EternalCore są opisane w pliku config.yml",
+        " "
+    })
 
     public PLArgumentSection argument = new PLArgumentSection();
 
@@ -48,10 +85,9 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLFormatSection implements Format {
-        public String enable = "<green>włączona";
-        public String disable = "<red>wyłączona";
+        public String enable = "<green>włączony/a";
+        public String disable = "<red>wyłączony/a";
     }
-
 
     public PLHelpOpSection helpOp = new PLHelpOpSection();
 
@@ -124,10 +160,15 @@ public class PLTranslation extends AbstractTranslation {
         public Notification tpaAlreadySentMessage = Notification.chat("<dark_red>Błąd: <red>Już wysłałeś prośbę o teleportację!");
         public Notification tpaSentMessage = Notification.chat("<dark_gray>» <green>Wysłałeś prośbę o teleportację do gracza: <gray>{PLAYER}<green>!");
 
+        @Description({
+            "# W tych wiadomościach użyliśmy formatowania MiniMessages",
+            "# Obecna wiadomość od akceptacji prośby umożliwia graczowi kliknięcie w nią, aby zaakceptować prośbę o teleportację dzięki MiniMessages!",
+            "# Więcej informacji znajdziesz na stronie: https://docs.adventure.kyori.net/minimessage/format.html"
+        })
         public List<Notification> tpaReceivedMessage = List.of(
             Notification.chat("<dark_gray>» <green>Otrzymałeś prośbę o teleportację od gracza: <gray>{PLAYER}<green>!"),
-            Notification.chat("<dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować!"),
-            Notification.chat("<dark_gray>» <gold>/tpdeny {PLAYER} <green>by ją odrzucić!")
+            Notification.chat("<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><b><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować!</click></b></gold></hover>"),
+            Notification.chat("<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><b><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować!</click></b></gold></hover>")
         );
 
         public Notification tpaDenyNoRequestMessage = Notification.chat("<dark_red>Błąd: <red>Nie otrzymałeś prośby o teleportację od tego gracza!");
@@ -202,26 +243,49 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLEventSection implements EventSection {
-        public List<Notification> deathMessage = List.of(Notification.chat("<dark_gray>» <gray>{PLAYER} <red>zginął!"));
+        @Description({
+            "# EternalCore będzie losować losową wiadomość z poniższej listy, za każdym razem gdy gracz zginie.",
+            "# Wykaż się kreatywnością i stwórz swoje własne losowe wiadomości!",
+        })
+        public List<Notification> deathMessage = List.of(
+            Notification.chat("<dark_gray>» <gray>{PLAYER} <red>zginął!"),
+            Notification.chat("<dark_gray>» <gray>{PLAYER} <red>zginął tragiczne podczas cieżkiej walki!")
+        );
 
+        @Description({
+            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
+            "# za każdym razem gdy gracz dołączy do serwera.",
+        })
         public List<Notification> joinMessage = List.of(
             Notification.chat("<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera!"),
             Notification.chat("<dark_gray>» <gray>Witaj na serwerze <green>{PLAYER}<gray>!")
         );
 
+        @Description({
+            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
+            "# za każdym razem gdy gracz dołączy do serwera po raz pierwszy.",
+        })
         public List<Notification> firstJoinMessage = List.of(
             Notification.chat("<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera po raz pierwszy!"),
             Notification.chat("<dark_gray>» <gray>{PLAYER} <green>zawitał u nas po raz pierwszy!")
         );
 
+        @Description({
+            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
+            "# za każdym razem gdy gracz opuści serwer.",
+        })
         public List<Notification> quitMessage = List.of(
             Notification.chat("<dark_gray>» <gray>{PLAYER} <red>wylogował się z serwera!"),
             Notification.chat("<dark_gray>» <gray>{PLAYER} <red>opuścił serwer!")
         );
 
-        public Notification welcomeTitle = Notification.chat("<yellow>EternalCode.pl");
-
-        public Notification welcomeSubtitle = Notification.chat("<yellow>Witaj ponownie na serwerze!");
+        @Description({
+            "# Te dwie opcje są odpowiedzialne za wiadomości podczas wejścia które zostaną wyświetlone tylko graczowi który wszedł na serwer.",
+            "# Możesz zmienić te wiadomości bez ograniczeń dodając przed wiadomością prefix [CHAT], [TITLE], [SUBTITLE], [ACTIONBAR], bądź [NONE].",
+            "# Możesz także to łączyć w następujący sposób: [TITLE, ACTIONBAR]"
+        })
+        public Notification welcomeTitle = Notification.title("<yellow>EternalCode.pl");
+        public Notification welcomeSubtitle = Notification.subtitle("<yellow>Witaj ponownie na serwerze!");
     }
 
 
@@ -339,5 +403,5 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
     }
-    
+
 }

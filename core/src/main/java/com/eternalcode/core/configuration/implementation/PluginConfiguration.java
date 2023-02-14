@@ -5,6 +5,8 @@ import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -16,14 +18,17 @@ import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 
+@Getter
+@Accessors(fluent = true)
 public class PluginConfiguration implements ReloadableConfig {
 
     @Description({
         "#",
         "# This is the main configuration file for EternalCore.",
         "#",
-        "# If you need help with the configuration or have any questions related to EternalCore, join us in our Discord",
+        "# If you need help with the configuration or have any questions related to EternalCore, join us in our discord, or create an issue on our GitHub.",
         "#",
+        "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
         "# Discord: https://dc.eternalcode.pl/",
         "# Website: https://eternalcode.pl/",
         "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
@@ -33,27 +38,13 @@ public class PluginConfiguration implements ReloadableConfig {
     @Description({ " ", "# Database Section" })
     public Database database = new Database();
 
-    @Description({ " ", "# Awesome sounds" })
-    public Sounds sound = new Sounds();
-
-    @Description({ " ", "# Chat Section" })
-    public Chat chat = new Chat();
-
-    @Description({ " ", "# Additional formatting options" })
-    public Format format = new Format();
-
-    @Description({ " ", "# AFK Section" })
-    public Afk afk = new Afk();
-
-    @Description({ " ", "# Other Sections" })
-    public OtherSettings otherSettings = new OtherSettings();
-
-    @Description({ " ", "# Homes Section" })
-    public Homes homes = new Homes();
-
     @Contextual
     public static class Database {
-        @Description({ "# SQL Drivers and ports:", "# MySQL (3306), MariaDB (3306), PostgresQL (5432)", "# SQLite, H2" })
+        @Description({
+            "# SQL Drivers and ports:",
+            "# MySQL (3306), MariaDB (3306), PostgresQL (5432)",
+            "# SQLite, H2"
+        })
         public DatabaseType databaseType = DatabaseType.SQLITE;
 
         public String hostname = "127.0.0.1";
@@ -63,19 +54,15 @@ public class PluginConfiguration implements ReloadableConfig {
         public int port = 3306;
     }
 
+    @Description({ " ", "# Teleport request section" })
+    public Tpa tpa = new Tpa();
 
     @Contextual
-    public static class OtherSettings implements TeleportRequestSettings {
-        @Description({ "# Gamemode Creative on join Requires permission: eternalcore.staff.gamemodejoin" })
-        public boolean gameModeOnJoin = false;
-
-        @Description({ " ", "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
-        public boolean unsafeEnchantments = true;
-
-        @Description({ " ", "# Time of tpa requests expire" })
+    public static class Tpa implements TeleportRequestSettings {
+        @Description("# Time of tpa requests expire")
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
-        @Description({ " ", "# Time of teleportation time" })
+        @Description({ " ", "# Time of teleportation time in /tpa commands" })
         public Duration tpaTimer = Duration.ofSeconds(10);
 
         @Override
@@ -89,15 +76,21 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Description({ " ", "# Homes Section" })
+    public Homes homes = new Homes();
+
     @Contextual
     public static class Homes {
-        @Description({ " ", "# Max homes per permission" })
+        @Description("# Max homes per permission")
         public Map<String, Integer> maxHomes = Map.of(
             "eternalcore.home.default", 1,
             "eternalcore.home.vip", 2,
             "eternalcore.home.premium", 3
         );
     }
+
+    @Description({ " ", "# Awesome sounds" })
+    public Sounds sound = new Sounds();
 
     @Contextual
     public static class Sounds {
@@ -121,10 +114,13 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
+    @Description({ " ", "# Chat Section" })
+    public Chat chat = new Chat();
+
     @Contextual
     public static class Chat implements ChatSettings {
 
-        @Description({ " ", "# Delay to send the next message under /helpop" })
+        @Description("# Delay to send the next message under /helpop")
         public Duration helpOpDelay = Duration.ofSeconds(60);
 
         @Description({ " ", "# Custom message for unknown command" })
@@ -164,17 +160,26 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
+    @Description({ " ", "# Additional formatting options" })
+    public Format format = new Format();
+
     @Contextual
     public static class Format {
         public String separator = "&7, ";
     }
 
+    @Description({ " ", "# AFK Section" })
+    public Afk afk = new Afk();
+
     @Contextual
     public static class Afk implements AfkSettings {
-        @Description("# Number of interactions a player must make to have AFK status removed")
+        @Description({
+            "# Number of interactions a player must make to have AFK status removed",
+            "# This is for so that stupid miss-click doesn't disable AFK status"
+        })
         public int interactionsCountDisableAfk = 20;
 
-        @Description("# Number of seconds a player must be idle to be considered AFK")
+        @Description({ " ", "# Number of seconds a player must be idle to be considered AFK" })
         public Duration afkCommandDelay = Duration.ofSeconds(60);
 
         @Override
@@ -186,7 +191,15 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration getAfkDelay() {
             return this.afkCommandDelay;
         }
+    }
 
+    @Description({ " ", "# Items" })
+    public Items items = new Items();
+
+    @Contextual
+    public static class Items {
+        @Description("# Use unsafe enchantments? Allows you to apply custom enchants to various items")
+        public boolean unsafeEnchantments = true;
     }
 
     @Override
