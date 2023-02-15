@@ -29,7 +29,7 @@ public class PluginConfiguration implements ReloadableConfig {
         "# If you need help with the configuration or have any questions related to EternalCore, join us in our discord, or create an issue on our GitHub.",
         "#",
         "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
-        "# Discord: https://dc.eternalcode.pl/",
+        "# Discord: https://discord.gg/FQ7jmGBd6c",
         "# Website: https://eternalcode.pl/",
         "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
         "#",
@@ -119,7 +119,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Chat implements ChatSettings {
-
         @Description("# Delay to send the next message under /helpop")
         public Duration helpOpDelay = Duration.ofSeconds(60);
 
@@ -129,7 +128,7 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Chat delay to send next message in chat" })
         public Duration chatDelay = Duration.ofSeconds(5);
 
-        @Description({ " ", "# Count of lines to clear" })
+        @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
         public int clearLines = 128;
 
         public boolean chatEnabled = true;
