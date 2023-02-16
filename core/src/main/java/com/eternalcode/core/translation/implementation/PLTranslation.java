@@ -201,8 +201,8 @@ public class PLTranslation extends AbstractTranslation {
         })
         public List<Notification> tpaReceivedMessage = List.of(
             Notification.chat("<dark_gray>» <green>Otrzymałeś prośbę o teleportację od gracza: <gray>{PLAYER}<green>!"),
-            Notification.chat("<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><b><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować!</click></b></gold></hover>"),
-            Notification.chat("<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><b><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować!</click></b></gold></hover>")
+            Notification.chat("<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>"),
+            Notification.chat("<hover:show_text:'<red>Odrzucić prośbę o teleportacje?</red>'><gold><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpdeny {PLAYER} <red>by ją odrzucić! <gray>(Kliknij)</gray></click></gold></hover>")
         );
 
         @Description({ " ", "# Dostępne zmienne: {PLAYER}", "# Zmiennych używaj zgodnie z przykładowym zastosowaniem!" })
