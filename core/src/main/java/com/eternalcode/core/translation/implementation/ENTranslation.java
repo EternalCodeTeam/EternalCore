@@ -315,6 +315,7 @@ public class ENTranslation extends AbstractTranslation {
 
         public Notification giveReceived = Notification.chat("<dark_gray>» <red>You have received: <gold>{ITEM}");
         public Notification giveGiven = Notification.chat("<dark_gray>» <red>Player <gold>{PLAYER} <red>has received <gold>{ITEM}");
+        public Notification giveNotItem = Notification.chat("<dark_gray>» <red>Not a valid obtainable item!");
 
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Repaired!");
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Player {NICK} heads received");

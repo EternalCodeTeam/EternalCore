@@ -310,6 +310,7 @@ public class PLTranslation extends AbstractTranslation {
 
         public Notification giveReceived = Notification.chat("<dark_gray>» <green>Otrzymałeś: <gold>{ITEM}");
         public Notification giveGiven = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>otrzymał: <gold>{ITEM}");
+        public Notification giveNotItem = Notification.chat("<dark_red>Błąd: <red>Podany przedmiot nie istnieje!");
 
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Naprawiono!");
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Otrzymałeś głowę gracza: {PLAYER}");

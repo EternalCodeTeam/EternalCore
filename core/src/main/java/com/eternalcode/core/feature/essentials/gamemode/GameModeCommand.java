@@ -35,6 +35,12 @@ public class GameModeCommand {
         player.setGameMode(gameMode);
 
         this.noticeService.create()
+            .notice(translation -> translation.player().gameModeMessage())
+            .placeholder("{GAMEMODE}", gameMode.name())
+            .player(player.getUniqueId())
+            .send();
+
+        this.noticeService.create()
             .notice(translation -> translation.player().gameModeSetMessage())
             .placeholder("{GAMEMODE}", gameMode.name())
             .placeholder("{PLAYER}", player.getName())
