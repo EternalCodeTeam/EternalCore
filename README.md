@@ -54,7 +54,7 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
 - Customizable and **translatable** messages and an advanced configuration system, allowing to customize almost every
   aspect of the plugin.
 - Database integration: (PostGreSQL, SQLite, MySQL, MariaDB, H2)
-- Adventure and MiniMessage integration
+- Adventure and MiniMessage integration, including legacy color processing and specifying where the message can be sent!
 - And much more!
 
 # Building
