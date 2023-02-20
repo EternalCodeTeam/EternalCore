@@ -71,11 +71,11 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description({ " ", "# Use unsafe enchantments? Allows you to apply custom enchants to various items" })
         public boolean unsafeEnchantments = true;
-
-        @Description({ " ", "# Time of tpa requests expire" })
+        
         @Description({" ", "# The default item give amount, when no amount is specified in the command."})
         public int defaultGiveAmount = 1;
 
+        @Description({ " ", "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
         @Description({ " ", "# Time of teleportation time" })
