@@ -347,4 +347,14 @@ public class ENTranslation extends AbstractTranslation {
 
     }
 
+    public ENContainerSection container = new ENContainerSection();
+
+    @Getter
+    @Contextual
+    public static class ENContainerSection implements ContainerSection {
+        public Notification genericContainerOpened = Notification.disabled("");
+        public Notification genericContainerOpenedBy = Notification.chat("<dark_gray>» <green>The specified container has been opened by {PLAYER}!");
+        public Notification genericContainerOpenedFor = Notification.chat("<dark_gray>» <green>The specified container has been opened for {PLAYER}!");
+    }
+
 }

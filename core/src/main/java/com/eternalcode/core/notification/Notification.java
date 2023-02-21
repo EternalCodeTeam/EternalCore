@@ -58,4 +58,8 @@ public class Notification {
         return new Notification(message, NoticeType.SUBTITLE);
     }
 
+    public static Notification disabled(String message) {
+        return new Notification(message, NoticeType.DISABLED);
+    }
+
 }

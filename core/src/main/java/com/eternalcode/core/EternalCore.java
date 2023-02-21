@@ -396,13 +396,13 @@ public class EternalCore extends JavaPlugin {
                 new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService),
 
                 // Inventory Commands
-                new EnderchestCommand(),
-                new WorkbenchCommand(),
-                new AnvilCommand(),
-                new CartographyTableCommand(),
-                new GrindstoneCommand(),
-                new StonecutterCommand(),
-                new DisposalCommand(this.miniMessage, this.translationManager, this.userManager, server),
+                new EnderchestCommand(this.noticeService),
+                new WorkbenchCommand(this.noticeService),
+                new AnvilCommand(this.noticeService),
+                new CartographyTableCommand(this.noticeService),
+                new GrindstoneCommand(this.noticeService),
+                new StonecutterCommand(this.noticeService),
+                new DisposalCommand(this.miniMessage, this.translationManager, this.userManager, server, this.noticeService),
 
                 // Private Chat Commands
                 new PrivateChatCommands(this.privateChatService, this.noticeService),

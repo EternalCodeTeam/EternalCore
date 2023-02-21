@@ -340,5 +340,15 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
     }
+
+    public PLContainerSection container = new PLContainerSection();
+
+    @Getter
+    @Contextual
+    public static class PLContainerSection implements ContainerSection {
+        public Notification genericContainerOpened = Notification.disabled("");
+        public Notification genericContainerOpenedBy = Notification.chat("<dark_gray>» <green>Otwarto kontener przez gracza {PLAYER}!");
+        public Notification genericContainerOpenedFor = Notification.chat("<dark_gray>» <green>Otwarto kontener dla gracza {PLAYER}!");
+    }
     
 }

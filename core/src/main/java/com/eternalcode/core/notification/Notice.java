@@ -146,7 +146,7 @@ public class Notice {
                 return apply.get();
             }
 
-            return new Notification(StringUtils.EMPTY, NoticeType.NONE);
+            return new Notification(StringUtils.EMPTY, NoticeType.DISABLED);
         });
         return this;
     }

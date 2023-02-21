@@ -299,4 +299,13 @@ public interface Translation {
     interface LanguageSection {
         Notification languageChanged();
     }
+
+    // container section
+    ContainerSection container();
+
+    interface ContainerSection {
+        Notification genericContainerOpened();
+        Notification genericContainerOpenedBy();
+        Notification genericContainerOpenedFor();
+    }
 }

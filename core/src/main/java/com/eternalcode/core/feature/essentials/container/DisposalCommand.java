@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.core.language.Language;
+import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.UserManager;
@@ -17,16 +18,18 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.disposal")
 public class DisposalCommand {
 
+    private final NoticeService announcer;
     private final MiniMessage miniMessage;
     private final TranslationManager translationManager;
     private final UserManager userManager;
     private final Server server;
 
-    public DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server) {
+    public DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server, NoticeService announcer) {
         this.miniMessage = miniMessage;
         this.translationManager = translationManager;
         this.userManager = userManager;
         this.server = server;
+        this.announcer = announcer;
     }
 
     @Execute
@@ -40,6 +43,11 @@ public class DisposalCommand {
         String serialize = Legacy.SECTION_SERIALIZER.serialize(component);
 
         player.openInventory(this.server.createInventory(null, 54, serialize));
+
+        this.announcer.create()
+            .player(player.getUniqueId())
+            .notice(message -> message.container().genericContainerOpened())
+            .send();
     }
 
 }

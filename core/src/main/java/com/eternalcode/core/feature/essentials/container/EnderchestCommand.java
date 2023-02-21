@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -12,14 +12,37 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.enderchest")
 public class EnderchestCommand {
 
+    private final NoticeService announcer;
+
+    public EnderchestCommand(NoticeService announcer) {
+        this.announcer = announcer;
+    }
+
     @Execute
     void execute(Player player) {
         player.openInventory(player.getEnderChest());
+
+        this.announcer.create()
+            .notice(translation -> translation.container().genericContainerOpened())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(required = 1)
     void execute(Player player, @Arg Player target) {
         player.openInventory(target.getEnderChest());
+
+        this.announcer.create()
+            .notice(translation -> translation.container().genericContainerOpenedFor())
+            .placeholder("{PLAYER}", target.getName())
+            .player(player.getUniqueId())
+            .send();
+
+        this.announcer.create()
+            .notice(translation -> translation.container().genericContainerOpenedBy())
+            .player(target.getUniqueId())
+            .placeholder("{PLAYER}", player.getName())
+            .send();
     }
 
 }

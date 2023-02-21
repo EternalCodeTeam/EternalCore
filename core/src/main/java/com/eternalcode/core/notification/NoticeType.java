@@ -6,6 +6,6 @@ public enum NoticeType {
     ACTIONBAR,
     TITLE,
     SUBTITLE,
-    NONE
+    DISABLED
 
 }
