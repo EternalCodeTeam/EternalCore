@@ -202,7 +202,12 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLEventSection implements EventSection {
-        public List<Notification> deathMessage = List.of(Notification.chat("<dark_gray>» <gray>{PLAYER} <red>zginął!"));
+        public String unknownPlayerDeath = "niezidyentyfikowany obiekt bojowy";
+
+        public List<Notification> deathMessage = List.of(
+            Notification.actionbar("<dark_gray>» <gray>{PLAYER} <red>zginął przez {KILLER}!"),
+            Notification.actionbar("<dark_gray>» <gray>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!")
+        );
 
         public List<Notification> joinMessage = List.of(
             Notification.chat("<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera!"),
