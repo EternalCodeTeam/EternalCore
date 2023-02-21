@@ -14,13 +14,9 @@ import panda.utilities.StringUtils;
 public class PlayerDeathListener implements Listener {
 
     private final NoticeService noticeService;
-    private final TranslationManager translationManager;
-    private final ViewerProvider viewerProvider;
 
-    public PlayerDeathListener(NoticeService noticeService, TranslationManager translationManager, ViewerProvider viewerProvider) {
+    public PlayerDeathListener(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.translationManager = translationManager;
-        this.viewerProvider = viewerProvider;
     }
 
     @EventHandler
@@ -29,13 +25,10 @@ public class PlayerDeathListener implements Listener {
 
         event.setDeathMessage(StringUtils.EMPTY);
 
-        Viewer viewer = this.viewerProvider.player(player.getUniqueId());
-        String killer = player.getKiller() != null ? player.getKiller().getName() : this.translationManager.getMessages(viewer).event().unknownPlayerDeath();
-
         this.noticeService.create()
             .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{KILLER}", killer)
+            .placeholder("{KILLER}", translation -> translation.event().unknownPlayerDeath())
             .onlinePlayers()
             .send();
     }

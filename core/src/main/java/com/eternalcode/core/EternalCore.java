@@ -454,7 +454,7 @@ public class EternalCore extends JavaPlugin {
             new PrepareUserController(this.userManager, server),
             new PlayerCommandPreprocessListener(this.noticeService, this.pluginConfiguration, server),
             new SignChangeListener(this.miniMessage),
-            new PlayerDeathListener(this.noticeService, this.translationManager, this.viewerProvider),
+            new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
