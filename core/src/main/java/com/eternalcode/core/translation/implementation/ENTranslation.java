@@ -206,7 +206,12 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENEventSection implements EventSection {
-        public List<Notification> deathMessage = List.of(Notification.chat("<dark_gray>» <gray>{PLAYER} <red>died!"));
+        public String unknownPlayerDeath = "unknown";
+
+        public List<Notification> deathMessage = List.of(
+            Notification.chat("<dark_gray>» <gray>{PLAYER} <red>died!"),
+            Notification.chat("<dark_gray>» <gray>{PLAYER} <red>was killed by <gray>{KILLER}!")
+        );
 
         public List<Notification> joinMessage = List.of(
             Notification.chat("<dark_gray>» <gray>{PLAYER} <green>joined the server!"),

@@ -173,6 +173,7 @@ public interface Translation {
     EventSection event();
 
     interface EventSection {
+        String unknownPlayerDeath();
         List<Notification> deathMessage();
         List<Notification> joinMessage();
         List<Notification> quitMessage();

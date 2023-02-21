@@ -1,7 +1,10 @@
 package com.eternalcode.core.listener.player;
 
 import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.RandomUtil;
+import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.core.viewer.ViewerProvider;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +28,7 @@ public class PlayerDeathListener implements Listener {
         this.noticeService.create()
             .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
             .placeholder("{PLAYER}", player.getName())
+            .placeholder("{KILLER}", translation -> player.getKiller() != null ? player.getKiller().getName() : translation.event().unknownPlayerDeath())
             .onlinePlayers()
             .send();
     }
