@@ -28,7 +28,7 @@ public class PlayerDeathListener implements Listener {
         this.noticeService.create()
             .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{KILLER}", translation -> translation.event().unknownPlayerDeath())
+            .placeholder("{KILLER}", translation -> player.getKiller() != null ? player.getKiller().getName() : translation.event().unknownPlayerDeath())
             .onlinePlayers()
             .send();
     }
