@@ -14,35 +14,35 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.workbench")
 public class StonecutterCommand {
 
-    private final NoticeService announcer;
+    private final NoticeService noticeService;
 
-    public StonecutterCommand(NoticeService announcer) {
-        this.announcer = announcer;
+    public StonecutterCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.STONE_CUTTER);
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
             .player(player.getUniqueId())
             .send();
     }
 
     @Execute
-    void execute(Player invoker, @Arg Player target) {
+    void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.STONE_CUTTER);
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())
             .player(target.getUniqueId())
-            .placeholder("{PLAYER}", invoker.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .send();
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())
-            .player(invoker.getUniqueId())
+            .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
             .send();
     }

@@ -14,34 +14,34 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.cartography")
 public class CartographyTableCommand {
 
-    private final NoticeService announcer;
+    private final NoticeService noticeService;
 
-    public CartographyTableCommand(NoticeService announcer) {
-        this.announcer = announcer;
+    public CartographyTableCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.CARTOGRAPHY_TABLE);
 
-        this.announcer.create()
+        this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.container().genericContainerOpened())
             .send();
     }
 
     @Execute
-    void execute(Player invoker, @Arg Player target) {
+    void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.CARTOGRAPHY_TABLE);
 
-        this.announcer.create()
+        this.noticeService.create()
             .player(target.getUniqueId())
             .notice(translation -> translation.container().genericContainerOpenedBy())
-            .placeholder("{PLAYER}", invoker.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .send();
 
-        this.announcer.create()
-            .player(invoker.getUniqueId())
+        this.noticeService.create()
+            .player(sender.getUniqueId())
             .notice(translation -> translation.container().genericContainerOpenedFor())
             .placeholder("{PLAYER}", target.getName())
             .send();

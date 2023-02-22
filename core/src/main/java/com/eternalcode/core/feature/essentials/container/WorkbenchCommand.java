@@ -12,25 +12,25 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.workbench")
 public class WorkbenchCommand {
 
-    private final NoticeService announcer;
+    private final NoticeService noticeService;
 
-    public WorkbenchCommand(NoticeService announcer) {
-        this.announcer = announcer;
+    public WorkbenchCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
-    void execute(Player invoker, @Arg Player target) {
+    void execute(Player sender, @Arg Player target) {
         target.openWorkbench(null, true);
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())
             .player(target.getUniqueId())
-            .placeholder("{PLAYER}", invoker.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .send();
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())
-            .player(invoker.getUniqueId())
+            .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
             .send();
     }
@@ -39,7 +39,7 @@ public class WorkbenchCommand {
     void executeSelf(Player sender) {
         sender.openWorkbench(null, true);
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
             .player(sender.getUniqueId())
             .send();

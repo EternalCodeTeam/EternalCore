@@ -31,19 +31,19 @@ public class GrindstoneCommand {
     }
 
     @Execute
-    void execute(Player invoker, @Arg Player target) {
+    void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.GRINDSTONE);
 
         this.announcer.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())
             .placeholder("{PLAYER}", target.getName())
-            .player(invoker.getUniqueId())
+            .player(sender.getUniqueId())
             .send();
 
         this.announcer.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())
             .player(target.getUniqueId())
-            .placeholder("{PLAYER}", invoker.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .send();
     }
 

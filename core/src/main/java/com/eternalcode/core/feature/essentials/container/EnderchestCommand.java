@@ -12,17 +12,17 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.enderchest")
 public class EnderchestCommand {
 
-    private final NoticeService announcer;
+    private final NoticeService noticeService;
 
-    public EnderchestCommand(NoticeService announcer) {
-        this.announcer = announcer;
+    public EnderchestCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
     @Execute
     void execute(Player player) {
         player.openInventory(player.getEnderChest());
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
             .player(player.getUniqueId())
             .send();
@@ -32,13 +32,13 @@ public class EnderchestCommand {
     void execute(Player player, @Arg Player target) {
         player.openInventory(target.getEnderChest());
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())
             .placeholder("{PLAYER}", target.getName())
             .player(player.getUniqueId())
             .send();
 
-        this.announcer.create()
+        this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())
             .player(target.getUniqueId())
             .placeholder("{PLAYER}", player.getName())

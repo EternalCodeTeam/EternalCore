@@ -18,18 +18,18 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.disposal")
 public class DisposalCommand {
 
-    private final NoticeService announcer;
+    private final NoticeService noticeService;
     private final MiniMessage miniMessage;
     private final TranslationManager translationManager;
     private final UserManager userManager;
     private final Server server;
 
-    public DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server, NoticeService announcer) {
+    public DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server, NoticeService noticeService) {
         this.miniMessage = miniMessage;
         this.translationManager = translationManager;
         this.userManager = userManager;
         this.server = server;
-        this.announcer = announcer;
+        this.noticeService = noticeService;
     }
 
     @Execute
@@ -44,7 +44,7 @@ public class DisposalCommand {
 
         player.openInventory(this.server.createInventory(null, 54, serialize));
 
-        this.announcer.create()
+        this.noticeService.create()
             .player(player.getUniqueId())
             .notice(message -> message.container().genericContainerOpened())
             .send();
