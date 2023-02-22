@@ -331,10 +331,10 @@ public class PLTranslation extends AbstractTranslation {
             "# EternalCore będzie losować losową wiadomość z poniższej listy, za każdym razem gdy gracz zginie.",
             "# Wykaż się kreatywnością i stwórz swoje własne losowe wiadomości!",
             "# Dostępne zmienne: {PLAYER}, {KILLER}",
-            "# Jeżeli {KILLER} będzie np. konsolą, albo przyczyną naturalną (upadek, lava itd.) zwróci w tym placeholderze zwróci wiadomość z unknownPlayerDeath",
+            "# Jeżeli {KILLER} będzie np. konsolą, albo przyczyną naturalną (upadek, lava itd.) zwróci w tym placeholderze wiadomość z unknownPlayerDeath",
             "# Zmiennych używaj zgodnie z przykładowym zastosowaniem!"
         })
-        public String unknownPlayerDeath = "niezidyentyfikowany obiekt bojowy";
+        public String unknownPlayerDeath = "niezidentyfikowany obiekt bojowy";
 
         public List<Notification> deathMessage = List.of(
             Notification.actionbar("<dark_gray>» <gray>{PLAYER} <red>zginął przez {KILLER}!"),
