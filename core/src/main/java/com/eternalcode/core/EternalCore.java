@@ -31,7 +31,6 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
-import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
 import com.eternalcode.core.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.feature.afk.AfkCommand;
 import com.eternalcode.core.feature.afk.AfkController;
@@ -45,6 +44,7 @@ import com.eternalcode.core.feature.essentials.FlyCommand;
 import com.eternalcode.core.feature.essentials.GodCommand;
 import com.eternalcode.core.feature.essentials.HealCommand;
 import com.eternalcode.core.feature.essentials.KillCommand;
+import com.eternalcode.core.feature.essentials.SpeedCommand;
 import com.eternalcode.core.feature.essentials.container.AnvilCommand;
 import com.eternalcode.core.feature.essentials.container.CartographyTableCommand;
 import com.eternalcode.core.feature.essentials.container.DisposalCommand;
@@ -65,8 +65,8 @@ import com.eternalcode.core.feature.essentials.item.RepairCommand;
 import com.eternalcode.core.feature.essentials.item.SkullCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayerCountCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayersListCommand;
+import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.WhoIsCommand;
-import com.eternalcode.core.feature.essentials.SpeedCommand;
 import com.eternalcode.core.feature.essentials.time.DayCommand;
 import com.eternalcode.core.feature.essentials.time.NightCommand;
 import com.eternalcode.core.feature.essentials.time.TimeCommand;
@@ -396,13 +396,13 @@ public class EternalCore extends JavaPlugin {
                 new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService),
 
                 // Inventory Commands
-                new EnderchestCommand(),
-                new WorkbenchCommand(),
-                new AnvilCommand(),
-                new CartographyTableCommand(),
-                new GrindstoneCommand(),
-                new StonecutterCommand(),
-                new DisposalCommand(this.miniMessage, this.translationManager, this.userManager, server),
+                new EnderchestCommand(this.noticeService),
+                new WorkbenchCommand(this.noticeService),
+                new AnvilCommand(this.noticeService),
+                new CartographyTableCommand(this.noticeService),
+                new GrindstoneCommand(this.noticeService),
+                new StonecutterCommand(this.noticeService),
+                new DisposalCommand(this.miniMessage, this.translationManager, this.userManager, server, this.noticeService),
 
                 // Private Chat Commands
                 new PrivateChatCommands(this.privateChatService, this.noticeService),
@@ -416,7 +416,7 @@ public class EternalCore extends JavaPlugin {
                 new GodCommand(this.noticeService),
                 new GameModeCommand(this.noticeService),
                 new SpeedCommand(this.noticeService),
-                new GiveCommand(this.noticeService),
+                new GiveCommand(this.noticeService, this.pluginConfiguration),
                 new EnchantCommand(this.pluginConfiguration, this.noticeService),
                 new RepairCommand(this.noticeService),
                 new HealCommand(this.noticeService),

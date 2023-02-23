@@ -31,6 +31,12 @@ public class HealCommand {
         this.heal(target);
 
         this.noticeService.create()
+            .notice(translation -> translation.player().healMessage())
+            .player(target.getUniqueId())
+            .send();
+
+
+        this.noticeService.create()
             .notice(translation -> translation.player().healMessageBy())
             .placeholder("{PLAYER}", target.getName())
             .viewer(viewer)

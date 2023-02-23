@@ -320,6 +320,7 @@ public class ENTranslation extends AbstractTranslation {
 
         public Notification giveReceived = Notification.chat("<dark_gray>» <red>You have received: <gold>{ITEM}");
         public Notification giveGiven = Notification.chat("<dark_gray>» <red>Player <gold>{PLAYER} <red>has received <gold>{ITEM}");
+        public Notification giveNotItem = Notification.chat("<dark_gray>» <red>Not a valid obtainable item!");
 
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Repaired!");
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Player {NICK} heads received");
@@ -349,6 +350,16 @@ public class ENTranslation extends AbstractTranslation {
     public static class ENLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Language changed to <red>English<gold>!");
 
+    }
+
+    public ENContainerSection container = new ENContainerSection();
+
+    @Getter
+    @Contextual
+    public static class ENContainerSection implements ContainerSection {
+        public Notification genericContainerOpened = Notification.disabled("");
+        public Notification genericContainerOpenedBy = Notification.disabled("<dark_gray>» <green>The specified container has been opened by {PLAYER}!");
+        public Notification genericContainerOpenedFor = Notification.disabled("<dark_gray>» <green>The specified container has been opened for {PLAYER}!");
     }
 
 }

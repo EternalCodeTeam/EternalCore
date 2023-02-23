@@ -270,6 +270,8 @@ public interface Translation {
         Notification giveReceived();
         Notification giveGiven();
 
+        Notification giveNotItem();
+
         // others
         Notification repairMessage();
         Notification skullMessage();
@@ -297,5 +299,14 @@ public interface Translation {
 
     interface LanguageSection {
         Notification languageChanged();
+    }
+
+    // container section
+    ContainerSection container();
+
+    interface ContainerSection {
+        Notification genericContainerOpened();
+        Notification genericContainerOpenedBy();
+        Notification genericContainerOpenedFor();
     }
 }
