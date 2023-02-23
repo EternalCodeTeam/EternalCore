@@ -20,7 +20,7 @@ public class StonecutterCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.STONE_CUTTER);
 
@@ -30,7 +30,7 @@ public class StonecutterCommand {
             .send();
     }
 
-    @Execute
+    @Execute(required = 1)
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.STONE_CUTTER);
 

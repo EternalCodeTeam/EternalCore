@@ -19,7 +19,7 @@ public class AnvilCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.ANVIL);
 
@@ -29,7 +29,7 @@ public class AnvilCommand {
             .send();
     }
 
-    @Execute
+    @Execute(required = 1)
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.ANVIL);
         this.noticeService.create()

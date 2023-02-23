@@ -18,7 +18,17 @@ public class WorkbenchCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
+    void executeSelf(Player sender) {
+        sender.openWorkbench(null, true);
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().genericContainerOpened())
+            .player(sender.getUniqueId())
+            .send();
+    }
+
+    @Execute(required = 1)
     void execute(Player sender, @Arg Player target) {
         target.openWorkbench(null, true);
 
@@ -32,16 +42,6 @@ public class WorkbenchCommand {
             .notice(translation -> translation.container().genericContainerOpenedFor())
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
-            .send();
-    }
-
-    @Execute
-    void executeSelf(Player sender) {
-        sender.openWorkbench(null, true);
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(sender.getUniqueId())
             .send();
     }
 

@@ -20,7 +20,7 @@ public class GrindstoneCommand {
         this.announcer = announcer;
     }
 
-    @Execute
+    @Execute(required = 0)
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.GRINDSTONE);
 
@@ -30,7 +30,7 @@ public class GrindstoneCommand {
             .send();
     }
 
-    @Execute
+    @Execute(required = 1)
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.GRINDSTONE);
 

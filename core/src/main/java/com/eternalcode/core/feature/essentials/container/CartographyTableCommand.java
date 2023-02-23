@@ -20,29 +20,29 @@ public class CartographyTableCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.CARTOGRAPHY_TABLE);
 
         this.noticeService.create()
-            .player(player.getUniqueId())
             .notice(translation -> translation.container().genericContainerOpened())
+            .player(player.getUniqueId())
             .send();
     }
 
-    @Execute
+    @Execute(required = 1)
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.CARTOGRAPHY_TABLE);
 
         this.noticeService.create()
-            .player(target.getUniqueId())
             .notice(translation -> translation.container().genericContainerOpenedBy())
             .placeholder("{PLAYER}", sender.getName())
+            .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .player(sender.getUniqueId())
             .notice(translation -> translation.container().genericContainerOpenedFor())
+            .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
             .send();
     }

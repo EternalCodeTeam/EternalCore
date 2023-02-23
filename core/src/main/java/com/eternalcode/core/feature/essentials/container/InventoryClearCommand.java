@@ -19,30 +19,36 @@ public class InventoryClearCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     void execute(Player player) {
         this.clear(player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.inventory().inventoryClearMessage())
+            .player(player.getUniqueId())
+            .send();
+
     }
 
-    @Execute
+    @Execute(required = 1)
     void execute(Viewer audience, @Arg Player target) {
         this.clear(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.inventory().inventoryClearMessage())
+            .notice(translation -> translation.inventory().inventoryClearMessageBy())
             .placeholder("{PLAYER}", target.getName())
             .viewer(audience)
+            .send();
+
+        this.noticeService.create()
+            .notice(translation -> translation.inventory().inventoryClearMessage())
+            .player(target.getUniqueId())
             .send();
     }
 
     private void clear(Player player) {
         player.getInventory().setArmorContents(new ItemStack[0]);
         player.getInventory().clear();
-
-        this.noticeService.create()
-            .notice(translation -> translation.inventory().inventoryClearMessage())
-            .player(player.getUniqueId())
-            .send();
     }
 
 }

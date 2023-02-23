@@ -18,7 +18,7 @@ public class EnderchestCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     void execute(Player player) {
         player.openInventory(player.getEnderChest());
 
