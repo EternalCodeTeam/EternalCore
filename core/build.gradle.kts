@@ -2,7 +2,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("eternalcode.java-conventions")
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.0.0"
     id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
     id("xyz.jpenilla.run-paper") version "2.0.1"
 }
@@ -27,7 +27,7 @@ dependencies {
     compileOnly("com.zaxxer:HikariCP:5.0.1")
 
     // command framework
-    implementation("dev.rollczi.litecommands:bukkit-adventure:2.8.3")
+    implementation("dev.rollczi.litecommands:bukkit-adventure:2.8.4")
 
     // skull api
     implementation("dev.rollczi:liteskullapi:1.3.0")
