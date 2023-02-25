@@ -177,7 +177,7 @@ public class DependencyManager {
             createDirectoriesIfNotExists(cacheDirectory);
         }
         catch (IOException e) {
-            throw new RuntimeException("Unable to create libs directory", e);
+            throw new RuntimeException("Unable to create libs/ directory", e);
         }
 
         return cacheDirectory;
@@ -191,7 +191,7 @@ public class DependencyManager {
         try {
             Files.createDirectories(path);
         }
-        catch (FileAlreadyExistsException exception) {
+        catch (FileAlreadyExistsException ignored) {
         }
     }
 

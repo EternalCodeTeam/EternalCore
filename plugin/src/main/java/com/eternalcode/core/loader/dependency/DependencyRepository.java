@@ -43,7 +43,6 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class DependencyRepository {
@@ -103,7 +102,7 @@ public class DependencyRepository {
 
         Relocation[] relocations = DependencyRegistry.getRelocations().toArray(new Relocation[0]);
 
-        try(InputStream inputStream = this.openConnectionForPomXml(dependency).getInputStream()) { //TODO: Fix this
+        try (InputStream inputStream = this.openConnectionForPomXml(dependency).getInputStream()) { //TODO: Fix this
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setValidating(true);
             factory.setIgnoringElementContentWhitespace(true);

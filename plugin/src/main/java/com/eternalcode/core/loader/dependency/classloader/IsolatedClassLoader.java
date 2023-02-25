@@ -33,6 +33,7 @@ import java.nio.file.Path;
 import static java.util.Objects.requireNonNull;
 
 public class IsolatedClassLoader extends URLClassLoader {
+
     static {
         ClassLoader.registerAsParallelCapable();
     }
