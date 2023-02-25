@@ -173,6 +173,7 @@ public interface Translation {
     EventSection event();
 
     interface EventSection {
+        String unknownPlayerDeath();
         List<Notification> deathMessage();
         List<Notification> joinMessage();
         List<Notification> quitMessage();
@@ -269,6 +270,8 @@ public interface Translation {
         Notification giveReceived();
         Notification giveGiven();
 
+        Notification giveNotItem();
+
         // others
         Notification repairMessage();
         Notification skullMessage();
@@ -296,5 +299,14 @@ public interface Translation {
 
     interface LanguageSection {
         Notification languageChanged();
+    }
+
+    // container section
+    ContainerSection container();
+
+    interface ContainerSection {
+        Notification genericContainerOpened();
+        Notification genericContainerOpenedBy();
+        Notification genericContainerOpenedFor();
     }
 }

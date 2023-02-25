@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
@@ -17,9 +18,11 @@ import org.bukkit.inventory.ItemStack;
 public class GiveCommand {
 
     private final NoticeService noticeService;
+    private final PluginConfiguration pluginConfig;
 
-    public GiveCommand(NoticeService noticeService) {
+    public GiveCommand(NoticeService noticeService, PluginConfiguration pluginConfig) {
         this.noticeService = noticeService;
+        this.pluginConfig = pluginConfig;
     }
 
     @Execute(required = 1)
@@ -89,10 +92,14 @@ public class GiveCommand {
     }
 
     private void giveItem(Player player, Material material) {
-        int amount = 64;
+        int amount = this.pluginConfig.otherSettings.defaultGiveAmount;
 
-        if (material.isItem()) {
-            amount = 1;
+        if (!material.isItem()) {
+            this.noticeService.create()
+                .notice(translation -> translation.item().giveNotItem())
+                .player(player.getUniqueId())
+                .send();
+            return;
         }
 
         ItemStack item = ItemBuilder.from(material)

@@ -1,43 +1,12 @@
 [*]
 charset = utf-8
-end_of_line = crlf
-indent_size = 4
+end_of_line = lf
+insert_final_newline = true
 indent_style = space
-insert_final_newline = false
-max_line_length = 120
-tab_width = 4
-ij_formatter_off_tag = @formatter:off
-ij_formatter_on_tag = @formatter:on
-ij_formatter_tags_enabled = false
-ij_smart_tabs = false
-ij_visual_guides = none
-ij_wrap_on_typing = false
+indent_size = 4
 
-[.editorconfig]
-ij_editorconfig_align_group_field_declarations = false
-ij_editorconfig_space_after_colon = false
-ij_editorconfig_space_after_comma = true
-ij_editorconfig_space_before_colon = false
-ij_editorconfig_space_before_comma = false
-ij_editorconfig_spaces_around_assignment_operators = true
-
-[{*.markdown,*.md}]
-ij_markdown_force_one_space_after_blockquote_symbol = true
-ij_markdown_force_one_space_after_header_symbol = true
-ij_markdown_force_one_space_after_list_bullet = true
-ij_markdown_force_one_space_between_words = true
-ij_markdown_format_tables = true
-ij_markdown_insert_quote_arrows_on_wrap = true
-ij_markdown_keep_indents_on_empty_lines = false
-ij_markdown_keep_line_breaks_inside_text_blocks = true
-ij_markdown_max_lines_around_block_elements = 1
-ij_markdown_max_lines_around_header = 1
-ij_markdown_max_lines_between_paragraphs = 1
-ij_markdown_min_lines_around_block_elements = 1
-ij_markdown_min_lines_around_header = 1
-ij_markdown_min_lines_between_paragraphs = 1
-ij_markdown_wrap_text_if_long = true
-ij_markdown_wrap_text_inside_blockquotes = true
+[*.bat]
+end_of_line = crlf
 
 [{*.yaml,*.yml}]
 indent_size = 2

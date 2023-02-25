@@ -33,6 +33,11 @@ public class FeedCommand {
         this.feed(target);
 
         this.noticeService.create()
+            .notice(translation -> translation.player().feedMessage())
+            .player(target.getUniqueId())
+            .send();
+
+        this.noticeService.create()
             .notice(translation -> translation.player().feedMessageBy())
             .placeholder("{PLAYER}", target.getName())
             .viewer(viewer)

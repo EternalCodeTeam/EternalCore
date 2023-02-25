@@ -202,7 +202,12 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLEventSection implements EventSection {
-        public List<Notification> deathMessage = List.of(Notification.chat("<dark_gray>» <gray>{PLAYER} <red>zginął!"));
+        public String unknownPlayerDeath = "niezidyentyfikowany obiekt bojowy";
+
+        public List<Notification> deathMessage = List.of(
+            Notification.actionbar("<dark_gray>» <gray>{PLAYER} <red>zginął przez {KILLER}!"),
+            Notification.actionbar("<dark_gray>» <gray>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!")
+        );
 
         public List<Notification> joinMessage = List.of(
             Notification.chat("<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera!"),
@@ -310,6 +315,7 @@ public class PLTranslation extends AbstractTranslation {
 
         public Notification giveReceived = Notification.chat("<dark_gray>» <green>Otrzymałeś: <gold>{ITEM}");
         public Notification giveGiven = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>otrzymał: <gold>{ITEM}");
+        public Notification giveNotItem = Notification.chat("<dark_red>Błąd: <red>Podany przedmiot nie istnieje!");
 
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Naprawiono!");
         public Notification skullMessage = Notification.chat("<dark_gray>» <green>Otrzymałeś głowę gracza: {PLAYER}");
@@ -338,6 +344,16 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
+    }
+
+    public PLContainerSection container = new PLContainerSection();
+
+    @Getter
+    @Contextual
+    public static class PLContainerSection implements ContainerSection {
+        public Notification genericContainerOpened = Notification.disabled("");
+        public Notification genericContainerOpenedBy = Notification.chat("<dark_gray>» <green>Otwarto kontener przez gracza {PLAYER}!");
+        public Notification genericContainerOpenedFor = Notification.chat("<dark_gray>» <green>Otwarto kontener dla gracza {PLAYER}!");
     }
     
 }

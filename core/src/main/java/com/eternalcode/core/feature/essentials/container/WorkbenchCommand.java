@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
+import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -11,14 +12,37 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.workbench")
 public class WorkbenchCommand {
 
-    @Execute
-    void execute(@Arg Player player) {
-        player.openWorkbench(null, true);
+    private final NoticeService noticeService;
+
+    public WorkbenchCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     void executeSelf(Player sender) {
         sender.openWorkbench(null, true);
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().genericContainerOpened())
+            .player(sender.getUniqueId())
+            .send();
+    }
+
+    @Execute(required = 1)
+    void execute(Player sender, @Arg Player target) {
+        target.openWorkbench(null, true);
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().genericContainerOpenedBy())
+            .player(target.getUniqueId())
+            .placeholder("{PLAYER}", sender.getName())
+            .send();
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().genericContainerOpenedFor())
+            .player(sender.getUniqueId())
+            .placeholder("{PLAYER}", target.getName())
+            .send();
     }
 
 }
