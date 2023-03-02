@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.chat;
 
+import com.eternalcode.core.command.argument.DurationArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.adventure.AdventureNotification;
@@ -72,7 +73,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "slowmode", required = 1)
-    public void slowmode(Viewer viewer, @Arg @By("duration") Duration duration) {
+    public void slowmode(Viewer viewer, @Arg @By(DurationArgument.KEY) Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 

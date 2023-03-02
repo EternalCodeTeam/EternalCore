@@ -13,6 +13,7 @@ import java.util.List;
 @ArgumentName("player")
 public class StringNicknameArgument implements OneArgument<String> {
 
+    public static final String KEY = "player";
     private final Server server;
 
     public StringNicknameArgument(Server server) {

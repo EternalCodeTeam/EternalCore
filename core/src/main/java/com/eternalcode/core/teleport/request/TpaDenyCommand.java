@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
+import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
@@ -29,7 +30,7 @@ public class TpaDenyCommand {
 
     @Execute
     @Required(1)
-    public void executeTarget(Player player, @Arg @By("request") Player target) {
+    public void executeTarget(Player player, @Arg @By(RequesterArgument.KEY) Player target) {
         this.requestService.removeRequest(target.getUniqueId());
 
         this.noticeService
