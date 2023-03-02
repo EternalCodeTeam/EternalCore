@@ -1,65 +1,88 @@
 package com.eternalcode.core.user;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.MockPlugin;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import com.eternalcode.core.user.client.ClientBukkitSettings;
 import com.eternalcode.core.user.client.ClientSettings;
-import net.kyori.adventure.text.Component;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import panda.std.Option;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.UUID;
 
-class PrepareUserControllerTest {
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-    private static ServerMock server;
-    private static MockPlugin plugin;
+public class PrepareUserControllerTest {
 
-    @BeforeAll
-    public static void load() {
-        server = MockBukkit.mock();
-        plugin = MockBukkit.createMockPlugin();
-    }
+    private static final UUID FAKE_UUID = UUID.randomUUID();
+    private static final String FAKE_NAME = "Martin";
 
-    @AfterAll
-    public static void unload() {
-        MockBukkit.unmock();
+    private PrepareUserController prepareUserController;
+
+    @Mock
+    private UserManager userManager;
+
+    @Mock
+    private Server server;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        this.prepareUserController = new PrepareUserController(userManager, server);
     }
 
     @Test
-    void testOnJoinAndQuit() {
-        UserManager userManager = new UserManager();
-        PrepareUserController prepareUserController = new PrepareUserController(userManager, server);
+    void createUserAndSetClientSettings() {
+        Player player = mock(Player.class);
 
-        server.getPluginManager().registerEvents(prepareUserController, plugin);
-        PlayerMock playerMock = server.addPlayer("vLucky");
+        when(player.getUniqueId()).thenReturn(FAKE_UUID);
+        when(player.getName()).thenReturn(FAKE_NAME);
 
-        Option<User> userOption = userManager.getUser("vLucky");
-        assertTrue(userOption.isPresent());
+        PlayerJoinEvent event = new PlayerJoinEvent(player, "fake join message");
 
-        User user = userOption.get();
-        assertEquals("vLucky", user.getName());
+        User user = mock(User.class);
+        when(this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME)).thenReturn(user);
 
-        {
-            ClientSettings clientSettings = user.getClientSettings();
-            assertTrue(clientSettings.isOnline());
+        this.prepareUserController.onJoin(event);
 
-            assertInstanceOf(ClientBukkitSettings.class, clientSettings);
-        }
-
-        {
-            playerMock.kick(Component.empty());
-
-            ClientSettings clientSettings = user.getClientSettings();
-            assertTrue(clientSettings.isOffline());
-            assertEquals(ClientSettings.NONE, clientSettings);
-        }
+        verify(user).setClientSettings(any(ClientBukkitSettings.class));
     }
 
+    @Test
+    void removeClientSettingIfPlayerQuit() {
+        Player player = mock(Player.class);
+
+        when(player.getUniqueId()).thenReturn(FAKE_UUID);
+        PlayerQuitEvent event = new PlayerQuitEvent(player, "fake quit message");
+
+        User user = mock(User.class);
+        when(this.userManager.getUser(FAKE_UUID)).thenReturn(Option.of(user));
+
+        this.prepareUserController.onQuit(event);
+
+        verify(user).setClientSettings(ClientSettings.NONE);
+    }
+
+    @Test
+    void removeClientSettingIfPlayerKick() {
+        Player player = mock(Player.class);
+
+        when(player.getUniqueId()).thenReturn(FAKE_UUID);
+        PlayerKickEvent event = new PlayerKickEvent(player, "fake kick message", "fake kicker");
+
+        User user = mock(User.class);
+        when(this.userManager.getUser(FAKE_UUID)).thenReturn(Option.of(user));
+
+        this.prepareUserController.onKick(event);
+
+        verify(user).setClientSettings(ClientSettings.NONE);
+    }
 }
