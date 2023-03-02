@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
+import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
@@ -35,7 +36,7 @@ public class TpaAcceptCommand {
 
     @Execute
     @Required(1)
-    public void executeTarget(Player player, @Arg @By("request") Player target) {
+    public void executeTarget(Player player, @Arg @By(RequesterArgument.KEY) Player target) {
         this.teleportTaskService.createTeleport(
             target.getUniqueId(),
             PositionAdapter.convert(target.getLocation()),
