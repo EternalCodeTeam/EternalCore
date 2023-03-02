@@ -20,6 +20,7 @@ import java.util.List;
 public class DurationArgument extends AbstractViewerArgument<Duration> {
 
     public static final String KEY = "duration";
+
     private static final List<Duration> SUGGESTED_DURATIONS = Arrays.asList(
         Duration.ofSeconds(1),
         Duration.ofSeconds(5),

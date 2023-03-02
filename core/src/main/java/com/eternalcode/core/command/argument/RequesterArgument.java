@@ -21,6 +21,7 @@ import java.util.Objects;
 public class RequesterArgument extends AbstractViewerArgument<Player> {
 
     public static final String KEY = "requester";
+
     private final TeleportRequestService requestService;
     private final Server server;
 

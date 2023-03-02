@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 public class SpeedArgument extends AbstractViewerArgument<Integer> {
 
     public static final String KEY = "speed";
+
     private static final AmountValidator SPEED_VALID = AmountValidator.none().min(0).max(10);
 
     public SpeedArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
