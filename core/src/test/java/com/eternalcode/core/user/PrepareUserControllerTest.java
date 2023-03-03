@@ -59,8 +59,8 @@ class PrepareUserControllerTest {
 
         this.prepareUserController.onJoin(event);
 
-        assertEquals(FAKE_UUID, user.getUniqueId());
-        assertEquals(FAKE_NAME, user.getName());
+        ClientSettings clientSettings = user.getClientSettings();
+        assertTrue(clientSettings.isOnline());
     }
 
     @Test
