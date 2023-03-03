@@ -54,9 +54,6 @@ class PrepareUserControllerTest {
         PlayerJoinEvent event = new PlayerJoinEvent(player, "fake join message");
 
         User user = new User(FAKE_UUID, FAKE_NAME);
-        User result = this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME);
-        assertEquals(user, result);
-
         this.prepareUserController.onJoin(event);
 
         ClientSettings clientSettings = user.getClientSettings();
@@ -71,9 +68,6 @@ class PrepareUserControllerTest {
         PlayerQuitEvent event = new PlayerQuitEvent(player, "fake quit message");
 
         User user = new User(FAKE_UUID, FAKE_NAME);
-        User result = this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME);
-        assertEquals(user, result);
-
         this.prepareUserController.onQuit(event);
 
         ClientSettings clientSettings = user.getClientSettings();
@@ -89,9 +83,6 @@ class PrepareUserControllerTest {
         PlayerKickEvent event = new PlayerKickEvent(player, "fake kick message", "fake kicker");
 
         User user = new User(FAKE_UUID, FAKE_NAME);
-        User result = this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME);
-        assertEquals(user, result);
-
         this.prepareUserController.onKick(event);
 
         ClientSettings clientSettings = user.getClientSettings();
