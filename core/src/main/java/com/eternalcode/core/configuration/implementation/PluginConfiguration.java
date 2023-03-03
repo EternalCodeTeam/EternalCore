@@ -58,6 +58,8 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Tpa implements TeleportRequestSettings {
         @Description("# Time of tpa requests expire")
+
+        @Description({ " ", "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
         @Description({ " ", "# Time of teleportation time in /tpa commands" })

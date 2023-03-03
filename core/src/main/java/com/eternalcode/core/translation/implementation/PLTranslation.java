@@ -580,5 +580,4 @@ public class PLTranslation extends AbstractTranslation {
         public Notification genericContainerOpenedBy = Notification.chat("<dark_gray>» <green>Otwarto kontener przez gracza {PLAYER}!");
         public Notification genericContainerOpenedFor = Notification.chat("<dark_gray>» <green>Otwarto kontener dla gracza {PLAYER}!");
     }
-
 }
