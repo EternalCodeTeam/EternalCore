@@ -1,6 +1,5 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.user.client.ClientBukkitSettings;
 import com.eternalcode.core.user.client.ClientSettings;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -11,24 +10,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import panda.std.Option;
 
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class PrepareUserControllerTest {
+class PrepareUserControllerTest {
 
     private static final UUID FAKE_UUID = UUID.randomUUID();
     private static final String FAKE_NAME = "Martin";
 
-    private PrepareUserController prepareUserController;
-
-    @Mock
     private UserManager userManager;
+    private PrepareUserController prepareUserController;
 
     @Mock
     private Server server;
@@ -36,7 +32,8 @@ public class PrepareUserControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        this.prepareUserController = new PrepareUserController(userManager, server);
+        this.userManager = new UserManager();
+        this.prepareUserController = new PrepareUserController(this.userManager, this.server);
     }
 
     @Test
@@ -48,12 +45,14 @@ public class PrepareUserControllerTest {
 
         PlayerJoinEvent event = new PlayerJoinEvent(player, "fake join message");
 
-        User user = mock(User.class);
-        when(this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME)).thenReturn(user);
+        User user = new User(FAKE_UUID, FAKE_NAME);
+        User result = this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME);
+        assertEquals(user, result);
 
         this.prepareUserController.onJoin(event);
 
-        verify(user).setClientSettings(any(ClientBukkitSettings.class));
+        assertEquals(FAKE_UUID, user.getUniqueId());
+        assertEquals(FAKE_NAME, user.getName());
     }
 
     @Test
@@ -63,12 +62,15 @@ public class PrepareUserControllerTest {
         when(player.getUniqueId()).thenReturn(FAKE_UUID);
         PlayerQuitEvent event = new PlayerQuitEvent(player, "fake quit message");
 
-        User user = mock(User.class);
-        when(this.userManager.getUser(FAKE_UUID)).thenReturn(Option.of(user));
+        User user = new User(FAKE_UUID, FAKE_NAME);
+        User result = this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME);
+        assertEquals(user, result);
 
         this.prepareUserController.onQuit(event);
 
-        verify(user).setClientSettings(ClientSettings.NONE);
+        ClientSettings clientSettings = user.getClientSettings();
+        assertTrue(clientSettings.isOffline());
+        assertEquals(ClientSettings.NONE, clientSettings);
     }
 
     @Test
@@ -78,11 +80,14 @@ public class PrepareUserControllerTest {
         when(player.getUniqueId()).thenReturn(FAKE_UUID);
         PlayerKickEvent event = new PlayerKickEvent(player, "fake kick message", "fake kicker");
 
-        User user = mock(User.class);
-        when(this.userManager.getUser(FAKE_UUID)).thenReturn(Option.of(user));
+        User user = new User(FAKE_UUID, FAKE_NAME);
+        User result = this.userManager.getOrCreate(FAKE_UUID, FAKE_NAME);
+        assertEquals(user, result);
 
         this.prepareUserController.onKick(event);
 
-        verify(user).setClientSettings(ClientSettings.NONE);
+        ClientSettings clientSettings = user.getClientSettings();
+        assertTrue(clientSettings.isOffline());
+        assertEquals(ClientSettings.NONE, clientSettings);
     }
 }
