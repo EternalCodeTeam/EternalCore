@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -26,14 +27,21 @@ class PrepareUserControllerTest {
     private UserManager userManager;
     private PrepareUserController prepareUserController;
 
+    private AutoCloseable mocks;
+
     @Mock
     private Server server;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        this.mocks = MockitoAnnotations.openMocks(this);
         this.userManager = new UserManager();
         this.prepareUserController = new PrepareUserController(this.userManager, this.server);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        this.mocks.close();
     }
 
     @Test
