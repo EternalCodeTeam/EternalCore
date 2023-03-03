@@ -570,7 +570,7 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLContainerSection implements ContainerSection {
         @Description({
             "# Wiadomości z tej sekcji służą do konfiguracji wiadomości z kontenerów",
-            "# Kontenery to inaczej skrzynie, workbenche itp.",
+            "# Kontenery to inaczej skrzynie, workbench itp.",
             "# W tym przypadku, wykorzystujemy to do informowania graczy o otwarciu kontenera np. przy komendzie /anvil",
             "# Dostępne zmienne: {PLAYER}",
             "# Zmiennych używaj zgodnie z przykładowym zastosowaniem!"
