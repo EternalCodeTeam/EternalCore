@@ -20,8 +20,9 @@ import java.util.Objects;
 @ArgumentName("player")
 public class RequesterArgument extends AbstractViewerArgument<Player> {
 
-    private final TeleportRequestService requestService;
+    public static final String KEY = "requester";
 
+    private final TeleportRequestService requestService;
     private final Server server;
 
     public RequesterArgument(TeleportRequestService requestService, TranslationManager translationManager, BukkitViewerProvider viewerProvider, Server server) {

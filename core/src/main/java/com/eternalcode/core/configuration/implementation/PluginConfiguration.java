@@ -18,8 +18,6 @@ import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 
-@Getter
-@Accessors(fluent = true)
 public class PluginConfiguration implements ReloadableConfig {
 
     @Description({
@@ -199,6 +197,9 @@ public class PluginConfiguration implements ReloadableConfig {
     public static class Items {
         @Description("# Use unsafe enchantments? Allows you to apply custom enchants to various items")
         public boolean unsafeEnchantments = true;
+
+        @Description({ " ", "# The default item give amount, when no amount is specified in the command." })
+        public int defaultGiveAmount = 1;
     }
 
     @Override

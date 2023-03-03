@@ -519,6 +519,7 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " ", "# Dostępne zmienne: {PLAYER}, {ITEM}", "# Zmiennych używaj zgodnie z przykładowym zastosowaniem!" })
         public Notification giveGiven = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green>otrzymał: <gold>{ITEM}");
+        public Notification giveNotItem = Notification.chat("<dark_red>Błąd: <red>Podany przedmiot nie istnieje!");
 
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Naprawiono!");
 
@@ -560,6 +561,24 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
+    }
+
+    public PLContainerSection container = new PLContainerSection();
+
+    @Getter
+    @Contextual
+    public static class PLContainerSection implements ContainerSection {
+        @Description({
+            "# Wiadomości z tej sekcji służą do konfiguracji wiadomości z kontenerów",
+            "# Kontenery to inaczej skrzynie, workbenche itp.",
+            "# W tym przypadku, wykorzystujemy to do informowania graczy o otwarciu kontenera np. przy komendzie /anvil",
+            "# Dostępne zmienne: {PLAYER}",
+            "# Zmiennych używaj zgodnie z przykładowym zastosowaniem!"
+        })
+
+        public Notification genericContainerOpened = Notification.disabled("");
+        public Notification genericContainerOpenedBy = Notification.chat("<dark_gray>» <green>Otwarto kontener przez gracza {PLAYER}!");
+        public Notification genericContainerOpenedFor = Notification.chat("<dark_gray>» <green>Otwarto kontener dla gracza {PLAYER}!");
     }
 
 }

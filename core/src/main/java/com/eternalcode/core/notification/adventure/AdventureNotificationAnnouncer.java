@@ -4,6 +4,7 @@ import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.notification.NotificationAnnouncer;
 import com.eternalcode.core.viewer.Viewer;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -40,7 +41,7 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
         }
     }
 
-    private void send(net.kyori.adventure.audience.Audience audience, NoticeType type, Component component) {
+    private void send(Audience audience, NoticeType type, Component component) {
         switch (type) {
             case CHAT:
                 audience.sendMessage(component);
@@ -54,13 +55,13 @@ public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
             case SUBTITLE:
                 audience.showTitle(Title.title(Component.text(StringUtils.EMPTY), component));
                 return;
-            case NONE: return;
+            case DISABLED: return;
 
             default: audience.sendMessage(component);
         }
     }
 
-    private net.kyori.adventure.audience.Audience toAdventureAudience(Viewer viewer) {
+    private Audience toAdventureAudience(Viewer viewer) {
         if (viewer.isConsole()) {
             return this.audienceProvider.console();
         }

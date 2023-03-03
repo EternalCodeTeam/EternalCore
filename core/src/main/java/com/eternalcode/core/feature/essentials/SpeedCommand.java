@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
+import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -20,7 +21,7 @@ public class SpeedCommand {
     }
 
     @Execute(required = 1)
-    void execute(Player player, @Arg @By("speed") Integer amount) {
+    void execute(Player player, @Arg @By(SpeedArgument.KEY) Integer amount) {
         this.setSpeed(player, amount);
 
         this.noticeService.create()
@@ -31,7 +32,7 @@ public class SpeedCommand {
     }
 
     @Execute(required = 2)
-    void execute(Viewer viewer, @Arg @By("speed") Integer amount, @Arg Player target) {
+    void execute(Viewer viewer, @Arg @By(SpeedArgument.KEY) Integer amount, @Arg Player target) {
         this.setSpeed(target, amount);
 
         this.noticeService.create()

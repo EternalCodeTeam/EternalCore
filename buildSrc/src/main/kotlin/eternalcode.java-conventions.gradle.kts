@@ -7,7 +7,7 @@ group = "com.eternalcode"
 version = "1.0.0"
 
 checkstyle {
-    toolVersion = "10.7.0"
+    toolVersion = "10.8.0"
 
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 
@@ -19,7 +19,7 @@ repositories {
     mavenLocal()
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     maven { url = uri("https://repo.panda-lang.org/releases") }
-    maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
+    maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
     maven { url = uri("https://repository.minecodes.pl/releases") }
     maven { url = uri("https://repository.minecodes.pl/snapshots") }
     maven { url = uri("https://repo.eternalcode.pl/snapshots") }
