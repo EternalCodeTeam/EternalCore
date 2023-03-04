@@ -223,12 +223,6 @@ public class EternalCore extends JavaPlugin {
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
-    public EternalCore() {}
-
-    protected EternalCore(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
-        super(loader, description, dataFolder, file);
-    }
-
     @Override
     public void onEnable() {
         Stopwatch started = Stopwatch.createStarted();

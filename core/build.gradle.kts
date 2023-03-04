@@ -49,7 +49,7 @@ dependencies {
     testImplementation("org.codehaus.groovy:groovy-all:3.0.15")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.145.0")
+    testImplementation("org.mockito:mockito-core:5.1.1")
     testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
     testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
 }
@@ -93,6 +93,8 @@ tasks.withType<ShadowJar> {
     archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
 
     dependsOn("checkstyleMain")
+    dependsOn("checkstyleTest")
+    dependsOn("test")
 
     exclude(
         "org/intellij/lang/annotations/**",
