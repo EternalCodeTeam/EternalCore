@@ -5,8 +5,6 @@ import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
-import lombok.Getter;
-import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -129,7 +127,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration chatDelay = Duration.ofSeconds(5);
 
         @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
-        public int clearLines = 128;
+        public int linesToClear = 128;
 
         public boolean chatEnabled = true;
 
