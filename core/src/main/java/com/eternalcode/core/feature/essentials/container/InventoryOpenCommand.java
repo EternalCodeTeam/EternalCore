@@ -8,6 +8,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -67,12 +68,12 @@ public class InventoryOpenCommand {
             return;
         }
 
-        sender.openInventory(target.getInventory());
+        Bukkit.createInventory(target, target.getInventory().getSize(), target.getName()).addItem(target.getInventory().getContents());
     }
 
 
     private Gui createInventory(Player player) {
-        Gui gui = Gui.gui().rows(1).title(Legacy.component("Armor player: " + player.getName())).create();
+        Gui gui = Gui.gui().rows(1).title(Legacy.component(player.getName() + "'s armor")).create();
 
         if (player.getInventory().getHelmet() != null) {
             gui.setItem(0, new GuiItem(player.getInventory().getHelmet()));
