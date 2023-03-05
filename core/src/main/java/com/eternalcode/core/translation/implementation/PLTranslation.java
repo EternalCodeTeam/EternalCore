@@ -38,7 +38,7 @@ public class PLTranslation extends AbstractTranslation {
         "# Więcej informacji na: https://docs.adventure.kyori.net/minimessage/format.html",
         "# Możesz użyć wirtualnego generatora do generowania i podglądu wiadomości: https://webui.adventure.kyori.net/",
         "#",
-        "# Możesz bez żadnych ograniczeń edytować to czy wiadomość ma się wysłać na czacie, actionbarze, bądź na jednym i drugim w następujący sposób",
+        "# Możesz bez żadnych ograniczeń edytować to, czy wiadomość ma się wysłać na czacie, actionbarze, bądź na jednym i drugim w następujący sposób",
         "# dodaj przed wiadomością następujące prefixy:",
         "# [CHAT] - Wiadomość będzie wysyłana na czacie",
         "# [ACTIONBAR] - Wiadomość będzie wysyłana na actionbarze",
@@ -52,7 +52,7 @@ public class PLTranslation extends AbstractTranslation {
         "#",
         "# Jeśli nie podasz żadnego prefixu, wiadomość będzie wysyłana po prostu na czacie",
         "#",
-        "# Wszystkie opcje po za wiadomościami EternalCore są opisane w pliku config.yml",
+        "# Wszystkie opcje poza wiadomościami EternalCore są opisane w pliku config.yml",
         " "
     })
 
@@ -62,11 +62,14 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLArgumentSection implements ArgumentSection {
-        // TODO: Add comments
+        @Description("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
         public Notification permissionMessage = Notification.chat("<dark_red>Błąd: <red>Nie masz uprawnień do tej komendy! <gray>({PERMISSIONS})");
+
+        @Description("# {USAGE} - Wyświetla poprawne użycie komendy")
         public Notification usageMessage = Notification.chat("<dark_gray>» <yellow>Poprawne użycie: <gray>{USAGE}");
         public Notification usageMessageHead = Notification.chat("<dark_gray>» <yellow>Poprawne użycie:");
         public Notification usageMessageEntry = Notification.chat("<dark_gray>» <gray>{USAGE}");
+
         public Notification offlinePlayer = Notification.chat("<dark_red>Błąd: <red>Ten gracz jest obecnie offline!");
         public Notification onlyPlayer = Notification.chat("<dark_red>Błąd: <red>Ta komenda jest dostępna tylko dla graczy!");
         public Notification numberBiggerThanOrEqualZero = Notification.chat("<dark_red>Błąd: <red>Liczba musi być równa lub większa od 0!");
@@ -524,7 +527,7 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLSpawnSection implements SpawnSection {
         public Notification spawnSet = Notification.chat("<dark_gray>» <green>Ustawiono spawn!");
         public Notification spawnNoSet = Notification.chat("<dark_red>Błąd: <red>Spawn nie został ustawiony!");
-        @Description({ " ", "# {PLAYER} - Osoba która teleportowała cię na spawn" })
+        @Description({ " ", "# {PLAYER} - Gracz który teleportował cię na spawn" })
         public Notification spawnTeleportedBy = Notification.chat("<dark_gray>» <green>Zostałeś przeteleportowany na spawn przez gracza {PLAYER}!");
         @Description("# {PLAYER} - Gracz który został przeteleportowany na spawn")
         public Notification spawnTeleportedOther = Notification.chat("<dark_gray>» <green>Gracz <white>{PLAYER} <green> został przeteleportowany na spawn!");
@@ -609,7 +612,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({
             "# Wiadomości z tej sekcji służą do konfiguracji wiadomości z kontenerów",
             "# Kontenery to inaczej skrzynie, workbench itp.",
-            "# W tym przypadku, wykorzystujemy to do informowania graczy o otwarciu kontenera np. przy komendzie /anvil",
+            "# W tym przypadku wykorzystujemy to do informowania graczy o otwarciu kontenera np. przy komendzie /anvil",
             "# {PLAYER} - Gracz który otworzył kontener"
         })
 
@@ -618,7 +621,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notification genericContainerOpenedFor = Notification.chat("<dark_gray>» <green>Otwarto kontener dla gracza {PLAYER}!");
     }
 
-    @Description({ " ", "# Informacja zwrotna gdy zmienia język pluginu na polski" })
+    @Description({ " ", "# Informacja zwrotna, gdy gracz zmienia język pluginu na polski" })
     public PLLanguageSection language = new PLLanguageSection();
 
     @Getter

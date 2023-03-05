@@ -53,7 +53,7 @@ public class WarpCommand {
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.warp().create())
-            .placeholder("{NAME}", warp)
+            .placeholder("{WARP}", warp)
             .send();
     }
 
@@ -65,7 +65,7 @@ public class WarpCommand {
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.warp().remove())
-            .placeholder("{NAME}", warp.getName())
+            .placeholder("{WARP}", warp.getName())
             .send();
     }
 
