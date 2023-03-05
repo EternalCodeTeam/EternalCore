@@ -44,7 +44,7 @@ public class PLTranslation extends AbstractTranslation {
         "# [ACTIONBAR] - Wiadomość będzie wysyłana na actionbarze",
         "# [TITLE] - Wiadomość będzie wysyłana jako tytuł",
         "# [SUBTITLE] - Wiadomość będzie wysyłana jako podtytuł",
-        "# [NONE] - Wiadomość nie będzie wysyłana",
+        "# [DISABLED] - Wiadomość nie będzie wysyłana",
         "#",
         "# Możesz również łączyć prefixy w następujący sposób:",
         "# [CHAT, ACTIONBAR] - Wiadomość będzie wysyłana na czacie i actionbarze",
