@@ -26,6 +26,7 @@ public class PLTranslation extends AbstractTranslation {
         "# Jeśli potrzebujesz pomocy z konfiguracją lub masz jakieś pytania dotyczące EternalCore, dołącz do naszego discorda",
         "# bądź napisz zgłoszenie w zakładce \"Issues\" na GitHubie.",
         "#",
+        "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
         "# Discord: https://discord.gg/FQ7jmGBd6c",
         "# Strona internetowa: https://eternalcode.pl/",
         "# Kod źródłowy: https://github.com/EternalCodeTeam/EternalCore",
