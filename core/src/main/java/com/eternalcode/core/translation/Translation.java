@@ -232,7 +232,7 @@ public interface Translation {
 
         // online
         Notification onlineMessage();
-        Notification listMessage();
+        Notification onlineListMessage();
 
         // whois
         List<String> whoisCommand();

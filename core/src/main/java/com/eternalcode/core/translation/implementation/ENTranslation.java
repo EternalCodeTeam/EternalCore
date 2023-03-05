@@ -60,7 +60,7 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENHelpOpSection implements HelpOpSection {
-        public Notification format = Notification.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{NICK}<dark_gray>: <white>{TEXT}");
+        public Notification format = Notification.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{PLAYER}<dark_gray>: <white>{TEXT}");
         public Notification send = Notification.chat("<dark_gray>» <green>This message has been successfully sent to administration");
         public Notification helpOpDelay = Notification.chat("<dark_gray>» <red>You can use this command for: <gold>{TIME}");
     }
@@ -70,7 +70,7 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENAdminChatSection implements AdminChatSection {
-        public Notification format = Notification.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{NICK}<dark_gray>: <white>{TEXT}");
+        public Notification format = Notification.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
     }
 
     public ENTeleportSection teleport = new ENTeleportSection();
@@ -105,9 +105,9 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENChatSection implements ChatSection {
-        public Notification disabled = Notification.chat("<dark_gray>» <red>Chat has been disabled by {NICK}!");
-        public Notification enabled = Notification.chat("<dark_gray>» <green>The chat has been enabled by {NICK}!");
-        public Notification cleared = Notification.chat("<dark_gray>» <gold>Chat has been cleared by {NICK}!");
+        public Notification disabled = Notification.chat("<dark_gray>» <red>Chat has been disabled by {PLAYER}!");
+        public Notification enabled = Notification.chat("<dark_gray>» <green>The chat has been enabled by {PLAYER}!");
+        public Notification cleared = Notification.chat("<dark_gray>» <gold>Chat has been cleared by {PLAYER}!");
         public Notification alreadyDisabled = Notification.chat("<dark_gray>» <green>Chat already off!");
         public Notification alreadyEnabled = Notification.chat("<dark_gray>» <green>Chat already on!");
         public Notification slowModeSet = Notification.chat("<dark_gray>» <green>Slowmode set to: {SLOWMODE}");
@@ -150,8 +150,8 @@ public class ENTranslation extends AbstractTranslation {
     public static class ENWarpSection implements WarpSection {
         public Notification warpAlreadyExists = Notification.chat("<dark_gray>» <red>Warp <yellow>{WARP} <red>already exists!");
         public Notification notExist = Notification.chat("<dark_gray>» <red>This warp doesn't exist");
-        public Notification create = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been created.");
-        public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {NAME} has been deleted.");
+        public Notification create = Notification.chat("<dark_gray>» <gray>Warp {WARP} has been created.");
+        public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {WARP} has been deleted.");
     }
 
 
@@ -278,7 +278,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification gameModeSetMessage = Notification.chat("<dark_gray>» <red>Gamemode for <gold>{PLAYER} <red>now is set to: <gold>{GAMEMODE}");
 
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!");
-        public Notification listMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
+        public Notification onlineListMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
         public List<String> whoisCommand = List.of("<dark_gray>» <gray>Target name: <white>{PLAYER}",
             "<dark_gray>» <gray>Target UUID: <white>{UUID}",
@@ -323,7 +323,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification giveNotItem = Notification.chat("<dark_gray>» <red>Not a valid obtainable item!");
 
         public Notification repairMessage = Notification.chat("<dark_gray>» <green>Repaired!");
-        public Notification skullMessage = Notification.chat("<dark_gray>» <green>Player {NICK} heads received");
+        public Notification skullMessage = Notification.chat("<dark_gray>» <green>Player {SKULL} heads received");
         public Notification enchantedMessage = Notification.chat("<dark_gray>» <gold>Item in hand is enchanted!");
     }
 
