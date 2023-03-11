@@ -9,8 +9,6 @@ jobs:
       matrix:
         java:
           - 17
-          - 18
-          - 19
       fail-fast: false
     steps:
       - name: Checkout
@@ -31,7 +29,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build the Jar
-        run: './gradlew core:shadowJar'
+        run: './gradlew clean core:test core:shadowJar'
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
