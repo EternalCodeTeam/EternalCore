@@ -65,10 +65,10 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENArgumentSection implements ArgumentSection {
-        @Description("# {PERMISSIONS} - required permission")
+        @Description("# {PERMISSIONS} - Required permission")
         public Notification permissionMessage = Notification.chat("<dark_gray>» <red>You don't have permission to perform this command! <gray>({PERMISSIONS})");
 
-        @Description({ " ", "# {USAGE} - correct usage" })
+        @Description({ " ", "# {USAGE} - Correct usage" })
         public Notification usageMessage = Notification.chat("<dark_gray>» <yellow>Correct usage: <gray>{USAGE}");
         public Notification usageMessageHead = Notification.chat("<dark_gray>» <yellow>Correct usage:");
         public Notification usageMessageEntry = Notification.chat("<dark_gray>» <gray>{USAGE}");
@@ -117,7 +117,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification format = Notification.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{PLAYER}<dark_gray>: <white>{TEXT}");
         @Description(" ")
         public Notification send = Notification.chat("<dark_gray>» <green>This message has been successfully sent to administration");
-        @Description("# {TIME} - time to next use (cooldown)")
+        @Description("# {TIME} - Time to next use (cooldown)")
         public Notification helpOpDelay = Notification.chat("<dark_gray>» <red>You can use this command for: <gold>{TIME}");
     }
 
@@ -144,10 +144,10 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENTeleportSection implements TeleportSection {
         // teleport
-        @Description({ "# {PLAYER} - teleported players" })
+        @Description({ "# {PLAYER} - Teleported players" })
         public Notification teleportedToPlayer = Notification.chat("<dark_gray>» <green>Successfully teleported to {PLAYER}!");
 
-        @Description({ "# {PLAYER} - teleported player, {ARG-PLAYER} - Player to whom another player has been transferred" })
+        @Description({ "# {PLAYER} - Teleported player, {ARG-PLAYER} - Player to whom another player has been transferred" })
         public Notification teleportedPlayerToPlayer = Notification.chat("<dark_gray>» <green>Successfully teleported {PLAYER} to {ARG-PLAYER}!");
 
         // Task
@@ -192,13 +192,13 @@ public class ENTranslation extends AbstractTranslation {
         @Description({ " ", "# {SLOWMODE} - Time for next message" })
         public Notification slowModeSet = Notification.chat("<dark_gray>» <green>Slowmode set to: {SLOWMODE}");
 
-        @Description({ " ", "# {TIME} - time to next use (cooldown)" })
+        @Description({ " ", "# {TIME} - Time to next use (cooldown)" })
         public Notification slowMode = Notification.chat("<dark_gray>» <red>You can write the next message for: <gold>{TIME}");
 
         @Description(" ")
         public Notification disabledChatInfo = Notification.chat("<dark_gray>» <red>Chat is currently disabled!");
 
-        @Description({ " ", "# {BROADCAST} - broadcast" })
+        @Description({ " ", "# {BROADCAST} - Broadcast" })
         public String alertMessageFormat = "<red><bold>BROADCAST: <gray>{BROADCAST}";
 
         @Description(" ")
@@ -228,8 +228,8 @@ public class ENTranslation extends AbstractTranslation {
         @Description({ " ", "# {PLAYER} - Player who sent the request to another player" })
         public List<Notification> tpaReceivedMessage = List.of(
             Notification.chat("<dark_gray>» <green>You have received a request for teleportation from a player: <gray>{PLAYER}<green>!"),
-            Notification.chat("<dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept!"),
-            Notification.chat("<dark_gray>» <gold>/tpdeny {PLAYER} <green>to deny!")
+            Notification.chat("<hover:show_text:'<green>Accept request for teleports?</green>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept! <gray>(Click)</gray></click></gold></hover>"),
+            Notification.chat("<hover:show_text:'<red>Decline a teleportation request?</red>'><gold><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpdeny {PLAYER} <red><green>to deny! <gray>(Click)</gray></click></gold></hover>")
         );
 
         @Description(" ")

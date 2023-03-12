@@ -65,7 +65,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
         public Notification permissionMessage = Notification.chat("<dark_red>Błąd: <red>Nie masz uprawnień do tej komendy! <gray>({PERMISSIONS})");
 
-        @Description({ "", "# {USAGE} - Wyświetla poprawne użycie komendy" })
+        @Description({ " ", "# {USAGE} - Wyświetla poprawne użycie komendy" })
         public Notification usageMessage = Notification.chat("<dark_gray>» <yellow>Poprawne użycie: <gray>{USAGE}");
         public Notification usageMessageHead = Notification.chat("<dark_gray>» <yellow>Poprawne użycie:");
         public Notification usageMessageEntry = Notification.chat("<dark_gray>» <gray>{USAGE}");
