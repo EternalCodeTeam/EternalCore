@@ -1,11 +1,21 @@
 plugins {
     `java-library`
+    `checkstyle`
 }
 
 group = "com.eternalcode"
 version = "1.0.0"
 
 val repositoriesContainer by extra(mutableListOf<String>())
+
+checkstyle {
+    toolVersion = "10.8.1"
+
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+
+    maxErrors = 0
+    maxWarnings = 0
+}
 
 repositories {
     mavenLocal()

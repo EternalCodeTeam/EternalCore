@@ -17,7 +17,7 @@ dependencies {
     library("net.kyori:adventure-text-minimessage:4.12.0")
 
     // configuration
-    library("net.dzikoysk:cdn:1.14.3")
+    library("net.dzikoysk:cdn:1.14.4")
     compileOnly("org.projectlombok:lombok:1.18.26")
     annotationProcessor("org.projectlombok:lombok:1.18.26")
 
@@ -26,7 +26,7 @@ dependencies {
     library("com.zaxxer:HikariCP:5.0.1")
 
     // command framework
-    library("dev.rollczi.litecommands:bukkit-adventure:2.8.3")
+    library("dev.rollczi.litecommands:bukkit-adventure:2.8.6")
 
     // skull api
     library("dev.rollczi:liteskullapi:1.3.0")
@@ -61,7 +61,7 @@ dependencies {
     testImplementation("org.codehaus.groovy:groovy-all:3.0.15")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.144.5")
+    testImplementation("org.mockito:mockito-core:5.2.0")
     testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
     testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
 }
