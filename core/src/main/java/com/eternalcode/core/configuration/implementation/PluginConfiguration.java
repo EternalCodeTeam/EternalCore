@@ -3,6 +3,7 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
+import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -190,6 +191,31 @@ public class PluginConfiguration implements ReloadableConfig {
             return this.afkCommandDelay;
         }
 
+    }
+
+    public AutoMessageSection autoMessage = new AutoMessageSection();
+
+    @Contextual
+    public static class AutoMessageSection implements AutoMessageSettings {
+
+        @Description("# Auto message interval")
+        public Duration interval = Duration.ofMinutes(2);
+
+        @Description({
+            "",
+            "# Choose draw mode for auto message",
+            "# Avaiable modes: RANDOM, SEQUENTIAL" })
+        public DrawMode drawMode = DrawMode.RANDOM;
+
+        @Override
+        public int interval() {
+            return this.interval.toSecondsPart();
+        }
+
+        @Override
+        public DrawMode drawMode() {
+            return this.drawMode;
+        }
     }
 
     @Override

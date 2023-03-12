@@ -1,11 +1,13 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.automessage.AutoMessageStack;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.AbstractTranslation;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
+import org.bukkit.Sound;
 
 import java.util.List;
 
@@ -360,6 +362,28 @@ public class ENTranslation extends AbstractTranslation {
         public Notification genericContainerOpened = Notification.disabled("");
         public Notification genericContainerOpenedBy = Notification.disabled("<dark_gray>» <green>The specified container has been opened by {PLAYER}!");
         public Notification genericContainerOpenedFor = Notification.disabled("<dark_gray>» <green>The specified container has been opened for {PLAYER}!");
+    }
+
+    public ENAutoMessageSection autoMessage = new ENAutoMessageSection();
+
+    @Getter
+    @Contextual
+    public static class ENAutoMessageSection implements AutoMessageSection {
+
+        @Override
+        public List<AutoMessageStack> messages() {
+            return List.of(
+                AutoMessageStack.withNotification(
+                    Notification.actionbar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
+                ).withSound(Sound.ITEM_ARMOR_EQUIP_IRON),
+
+                AutoMessageStack.withNotification(
+                    Notification.chat("<dark_gray>» <gold>You need help from an admin?"),
+                    Notification.chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!"),
+                    Notification.chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Click to execute</green>")
+                ).withSound(Sound.BLOCK_ANVIL_BREAK)
+            );
+        }
     }
 
 }

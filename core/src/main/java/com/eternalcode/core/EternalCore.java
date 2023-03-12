@@ -36,6 +36,8 @@ import com.eternalcode.core.feature.afk.AfkCommand;
 import com.eternalcode.core.feature.afk.AfkController;
 import com.eternalcode.core.feature.afk.AfkMessagesController;
 import com.eternalcode.core.feature.afk.AfkService;
+import com.eternalcode.core.feature.automessage.AutoMessage;
+import com.eternalcode.core.feature.automessage.AutoMessageTask;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
 import com.eternalcode.core.feature.essentials.AlertCommand;
@@ -292,6 +294,8 @@ public class EternalCore extends JavaPlugin {
         this.translationManager = TranslationManager.create(this.configurationManager, this.languageConfiguration);
         this.chatManager = new ChatManager(this.pluginConfiguration.chat);
 
+        AutoMessage autoMessage = new AutoMessage(this.pluginConfiguration.autoMessage, this.translationManager.getDefaultMessages().autoMessage().messages());
+
         /* Adventure */
 
         this.audiencesProvider = BukkitAudiences.create(this);
@@ -462,6 +466,9 @@ public class EternalCore extends JavaPlugin {
 
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, this.teleportService, server);
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
+
+        AutoMessageTask autoMessageTask = new AutoMessageTask(this.translationManager, this.noticeService, this.userManager, autoMessage, server);
+        this.scheduler.timerAsync(autoMessageTask, this.pluginConfiguration.autoMessage.interval, this.pluginConfiguration.autoMessage.interval);
 
         // bStats metrics
         Metrics metrics = new Metrics(this, 13964);

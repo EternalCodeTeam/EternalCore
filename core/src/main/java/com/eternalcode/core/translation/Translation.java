@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.automessage.AutoMessageStack;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
 
@@ -308,5 +309,12 @@ public interface Translation {
         Notification genericContainerOpened();
         Notification genericContainerOpenedBy();
         Notification genericContainerOpenedFor();
+    }
+
+    // auto message section
+    AutoMessageSection autoMessage();
+
+    interface AutoMessageSection {
+        List<AutoMessageStack> messages();
     }
 }

@@ -4,12 +4,14 @@ import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
 import com.eternalcode.core.configuration.composer.NotificationComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
+import com.eternalcode.core.configuration.composer.SoundComposer;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.reflect.Visibility;
+import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
@@ -21,6 +23,7 @@ public class ConfigurationManager {
     private final Cdn cdn = CdnFactory
         .createYamlLike()
         .getSettings()
+        .withComposer(Sound.class, new SoundComposer())
         .withComposer(Duration.class, new DurationComposer())
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Position.class, new PositionComposer())
