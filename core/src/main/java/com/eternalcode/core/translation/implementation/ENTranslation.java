@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.automessage.AutoMessageStack;
+import com.eternalcode.core.feature.automessage.AutoMessage;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.AbstractTranslation;
@@ -370,20 +370,17 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENAutoMessageSection implements AutoMessageSection {
 
-        @Override
-        public List<AutoMessageStack> messages() {
-            return List.of(
-                AutoMessageStack.withNotification(
-                    Notification.actionbar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
-                ).withSound(Sound.ITEM_ARMOR_EQUIP_IRON),
+        public List<AutoMessage> messages = List.of(
+            AutoMessage.withNotification(
+                Notification.actionbar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
+            ).withSound(Sound.ITEM_ARMOR_EQUIP_IRON),
 
-                AutoMessageStack.withNotification(
-                    Notification.chat("<dark_gray>» <gold>You need help from an admin?"),
-                    Notification.chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!"),
-                    Notification.chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Click to execute</green>")
-                ).withSound(Sound.BLOCK_ANVIL_BREAK)
-            );
-        }
+            AutoMessage.withNotification(
+                Notification.chat("<dark_gray>» <gold>You need help from an admin?"),
+                Notification.chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!"),
+                Notification.chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Click to execute</green>")
+            ).withSound(Sound.BLOCK_ANVIL_BREAK)
+        );
     }
 
 }

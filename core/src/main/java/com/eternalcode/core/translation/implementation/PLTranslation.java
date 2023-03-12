@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.automessage.AutoMessageStack;
+import com.eternalcode.core.feature.automessage.AutoMessage;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.Notification;
@@ -364,20 +364,17 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLAutoMessageSection implements AutoMessageSection {
 
-        @Override
-        public List<AutoMessageStack> messages() {
-            return List.of(
-                AutoMessageStack.withNotification(
-                    Notification.actionbar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
-                ).withSound(Sound.ITEM_ARMOR_EQUIP_IRON),
+        public List<AutoMessage> messages = List.of(
+            AutoMessage.withNotification(
+                Notification.actionbar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
+            ).withSound(Sound.ITEM_ARMOR_EQUIP_IRON),
 
-                AutoMessageStack.withNotification(
-                    Notification.chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?"),
-                    Notification.chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!"),
-                    Notification.chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Kliknij aby wykonać</green>")
-                ).withSound(Sound.BLOCK_ANVIL_BREAK)
-            );
-        }
+            AutoMessage.withNotification(
+                Notification.chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?"),
+                Notification.chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!"),
+                Notification.chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Kliknij aby wykonać</green>")
+            ).withSound(Sound.BLOCK_ANVIL_BREAK)
+        );
     }
     
 }

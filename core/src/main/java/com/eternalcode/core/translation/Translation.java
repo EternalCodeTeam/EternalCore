@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.feature.automessage.AutoMessageStack;
+import com.eternalcode.core.feature.automessage.AutoMessage;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
 
@@ -315,6 +315,6 @@ public interface Translation {
     AutoMessageSection autoMessage();
 
     interface AutoMessageSection {
-        List<AutoMessageStack> messages();
+        List<AutoMessage> messages();
     }
 }

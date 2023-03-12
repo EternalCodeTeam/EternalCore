@@ -36,7 +36,7 @@ import com.eternalcode.core.feature.afk.AfkCommand;
 import com.eternalcode.core.feature.afk.AfkController;
 import com.eternalcode.core.feature.afk.AfkMessagesController;
 import com.eternalcode.core.feature.afk.AfkService;
-import com.eternalcode.core.feature.automessage.AutoMessage;
+import com.eternalcode.core.feature.automessage.AutoMessageService;
 import com.eternalcode.core.feature.automessage.AutoMessageTask;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
@@ -153,11 +153,8 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -294,7 +291,7 @@ public class EternalCore extends JavaPlugin {
         this.translationManager = TranslationManager.create(this.configurationManager, this.languageConfiguration);
         this.chatManager = new ChatManager(this.pluginConfiguration.chat);
 
-        AutoMessage autoMessage = new AutoMessage(this.pluginConfiguration.autoMessage, this.translationManager.getDefaultMessages().autoMessage().messages());
+        AutoMessageService autoMessageService = new AutoMessageService(this.pluginConfiguration.autoMessage, this.translationManager.getDefaultMessages().autoMessage().messages());
 
         /* Adventure */
 
@@ -467,7 +464,7 @@ public class EternalCore extends JavaPlugin {
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, this.teleportService, server);
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
 
-        AutoMessageTask autoMessageTask = new AutoMessageTask(this.translationManager, this.noticeService, this.userManager, autoMessage, server);
+        AutoMessageTask autoMessageTask = new AutoMessageTask(this.translationManager, this.noticeService, this.userManager, autoMessageService, server);
         this.scheduler.timerAsync(autoMessageTask, this.pluginConfiguration.autoMessage.interval, this.pluginConfiguration.autoMessage.interval);
 
         // bStats metrics

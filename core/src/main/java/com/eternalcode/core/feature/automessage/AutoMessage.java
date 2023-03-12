@@ -1,35 +1,44 @@
 package com.eternalcode.core.feature.automessage;
 
+import com.eternalcode.core.notification.Notification;
+import net.dzikoysk.cdn.entity.Contextual;
+import org.bukkit.Sound;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Contextual
 public class AutoMessage {
 
-    private final AutoMessageSettings settings;
-    private final List<AutoMessageStack> stacks;
+    private List<Notification> notifications = new ArrayList<>();
+    private Sound sound;
 
-    private int lastMessageIndex;
-
-    public AutoMessage(AutoMessageSettings settings, List<AutoMessageStack> stacks) {
-        this.settings = settings;
-        this.stacks = stacks;
+    public AutoMessage(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
-    public AutoMessageStack draw() {
-        if (this.settings.drawMode() == AutoMessageSettings.DrawMode.RANDOM) {
-            int randomStackIndex = (int) (Math.random() * this.stacks.size());
-
-            return this.stacks.get(randomStackIndex);
-        }
-
-        if (this.lastMessageIndex >= this.stacks.size()) {
-            this.lastMessageIndex = 0;
-        }
-
-        return this.stacks.get(this.lastMessageIndex++);
+    public AutoMessage() {
     }
 
-    public AutoMessageStack extractStack(AutoMessageStack drawedStack, List<AutoMessageStack> stacks) {
-        return stacks.stream().filter(stack -> stack.equals(drawedStack)).findFirst().orElse(stacks.get(0));
+    public List<Notification> notifications() {
+        return this.notifications;
     }
 
+    public Sound sound() {
+        return this.sound;
+    }
+
+    public static AutoMessage withNotification(Notification... notifications) {
+        return new AutoMessage(List.of(notifications));
+    }
+
+    public static AutoMessage withNotification(List<Notification> notifications) {
+        return new AutoMessage(notifications);
+    }
+
+    public AutoMessage withSound(Sound sound) {
+        this.sound = sound;
+
+        return this;
+    }
 }

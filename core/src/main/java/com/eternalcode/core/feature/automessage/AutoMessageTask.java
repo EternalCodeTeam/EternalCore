@@ -16,20 +16,20 @@ public class AutoMessageTask implements Runnable {
     private final TranslationManager translationManager;
     private final NoticeService noticeService;
     private final UserManager userManager;
-    private final AutoMessage autoMessage;
+    private final AutoMessageService autoMessageService;
     private final Server server;
 
-    public AutoMessageTask(TranslationManager translationManager, NoticeService noticeService, UserManager userManager, AutoMessage autoMessage, Server server) {
+    public AutoMessageTask(TranslationManager translationManager, NoticeService noticeService, UserManager userManager, AutoMessageService autoMessageService, Server server) {
         this.translationManager = translationManager;
         this.noticeService = noticeService;
         this.userManager = userManager;
-        this.autoMessage = autoMessage;
+        this.autoMessageService = autoMessageService;
         this.server = server;
     }
 
     @Override
     public void run() {
-        AutoMessageStack stack = this.autoMessage.draw();
+        AutoMessage stack = this.autoMessageService.draw();
 
         for (Player player : this.server.getOnlinePlayers()) {
             if (player == null) {
@@ -44,11 +44,11 @@ public class AutoMessageTask implements Runnable {
 
             User user = userOption.get();
 
-            List<AutoMessageStack> userStacks = this.translationManager.getMessages(user)
+            List<AutoMessage> userStacks = this.translationManager.getMessages(user)
                 .autoMessage()
                 .messages();
 
-            AutoMessageStack userStack = this.autoMessage.extractStack(stack, userStacks);
+            AutoMessage userStack = this.autoMessageService.extractStack(stack, userStacks);
 
             Notice notice = this.noticeService.create().user(user);
             userStack.notifications().forEach(notice::staticNotice);
