@@ -280,6 +280,12 @@ public class ENTranslation extends AbstractTranslation {
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!");
         public Notification listMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
+        public List<String> fullServerSlots = List.of(
+            " ",
+            "<dark_gray>» <red>Server is full!",
+            "<dark_gray>» <red>Buy rank on our site!"
+        );
+
         public List<String> whoisCommand = List.of("<dark_gray>» <gray>Target name: <white>{PLAYER}",
             "<dark_gray>» <gray>Target UUID: <white>{UUID}",
             "<dark_gray>» <gray>Target address: <white>{IP}",
