@@ -100,6 +100,7 @@ import com.eternalcode.core.listener.player.PlayerChatListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
+import com.eternalcode.core.listener.player.PlayerLoginListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.notification.NoticeService;
@@ -450,7 +451,8 @@ public class EternalCore extends JavaPlugin {
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
-            new AfkController(this.afkService)
+            new AfkController(this.afkService),
+            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)
         ).forEach(listener -> this.getServer().getPluginManager().registerEvents(listener, this));
 
         /* Subscribers */

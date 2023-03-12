@@ -275,6 +275,12 @@ public class PLTranslation extends AbstractTranslation {
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <white>{ONLINE} <gold>graczy online!");
         public Notification listMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
+        public List<String> fullServerSlots = List.of(
+            " ",
+            "<dark_gray>» <red>Serwer jest pełen!",
+            "<dark_gray>» <red>Zakup rangę na naszej stronie!"
+        );
+
         public List<String> whoisCommand = List.of("<dark_gray>» <gray>Gracz: <white>{PLAYER}",
             "<dark_gray>» <gray>UUID: <white>{UUID}",
             "<dark_gray>» <gray>IP: <white>{IP}",
