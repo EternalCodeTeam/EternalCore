@@ -493,6 +493,12 @@ public class PLTranslation extends AbstractTranslation {
         @Description("# {ONLINE} - Aktualna ilość graczy online, {PLAYERS} - Lista graczy online")
         public Notification onlineListMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS} ");
 
+        public List<String> fullServerSlots = List.of(
+            " ",
+            "<dark_gray>» <red>Serwer jest pełen!",
+            "<dark_gray>» <red>Zakup rangę na naszej stronie!"
+        );
+
         @Description({
             " ",
             "# {PLAYER} - nazwa gracza",
@@ -505,8 +511,7 @@ public class PLTranslation extends AbstractTranslation {
             "# {HEALTH} - zdrowie gracza",
             "# {FOOD} - poziom najedzenia gracza"
         })
-        public List<String> whoisCommand = List.of(
-            "<dark_gray>» <gray>Gracz: <white>{PLAYER}",
+        public List<String> whoisCommand = List.of("<dark_gray>» <gray>Gracz: <white>{PLAYER}",
             "<dark_gray>» <gray>UUID: <white>{UUID}",
             "<dark_gray>» <gray>IP: <white>{IP}",
             "<dark_gray>» <gray>Szybkość chodzenia: <white>{WALK-SPEED}",

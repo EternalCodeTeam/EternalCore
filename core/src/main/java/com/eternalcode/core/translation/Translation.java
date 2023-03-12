@@ -234,6 +234,9 @@ public interface Translation {
         Notification onlineMessage();
         Notification onlineListMessage();
 
+        // slot-bypass
+        List<String> fullServerSlots();
+
         // whois
         List<String> whoisCommand();
     }

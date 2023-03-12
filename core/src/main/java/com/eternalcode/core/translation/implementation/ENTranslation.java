@@ -483,8 +483,15 @@ public class ENTranslation extends AbstractTranslation {
         @Description({ " ", "# {ONLINE} - Number of online players" })
         public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!");
 
+
         @Description("# {ONLINE} - Current online players, {PLAYERS} - Player list")
         public Notification onlineListMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
+
+        public List<String> fullServerSlots = List.of(
+            " ",
+            "<dark_gray>» <red>Server is full!",
+            "<dark_gray>» <red>Buy rank on our site!"
+        );
 
         @Description({
             " ",
