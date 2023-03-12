@@ -65,11 +65,11 @@ public class PLTranslation extends AbstractTranslation {
         @Description("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
         public Notification permissionMessage = Notification.chat("<dark_red>Błąd: <red>Nie masz uprawnień do tej komendy! <gray>({PERMISSIONS})");
 
-        @Description("# {USAGE} - Wyświetla poprawne użycie komendy")
+        @Description({ "", "# {USAGE} - Wyświetla poprawne użycie komendy" })
         public Notification usageMessage = Notification.chat("<dark_gray>» <yellow>Poprawne użycie: <gray>{USAGE}");
         public Notification usageMessageHead = Notification.chat("<dark_gray>» <yellow>Poprawne użycie:");
         public Notification usageMessageEntry = Notification.chat("<dark_gray>» <gray>{USAGE}");
-
+        @Description(" ")
         public Notification offlinePlayer = Notification.chat("<dark_red>Błąd: <red>Ten gracz jest obecnie offline!");
         public Notification onlyPlayer = Notification.chat("<dark_red>Błąd: <red>Ta komenda jest dostępna tylko dla graczy!");
         public Notification numberBiggerThanOrEqualZero = Notification.chat("<dark_red>Błąd: <red>Liczba musi być równa lub większa od 0!");
@@ -89,7 +89,7 @@ public class PLTranslation extends AbstractTranslation {
     @Description({
         " ",
         "# Ta sekcja odpowiada za ogólne formatowanie niektórych wartości",
-        "# Jego celem jest ograniczenie powtarzania się niektórych wiadomości."
+        "# Celem sekcji jest ograniczenie powtarzania się niektórych wiadomości."
     })
     public PLFormatSection format = new PLFormatSection();
 
@@ -201,7 +201,6 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ " ", "# {BROADCAST} - Ogłoszenie" })
         public String alertMessageFormat = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
 
-        // TODO: Zmienić, usunąć?
         @Description(" ")
         public Notification noCommand = Notification.chat("<dark_gray>» <red>Komenda <yellow>{COMMAND} <red>nie istnieje!");
     }
