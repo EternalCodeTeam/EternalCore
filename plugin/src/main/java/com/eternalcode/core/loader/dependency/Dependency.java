@@ -52,13 +52,11 @@ public class Dependency {
     );
 
     private static final String MAVEN_FORMAT = "%s/%s/%s/%s-%s.jar";
-    private static final String POM_FORMAT = "%s/%s/%s/%s-%s.pom";
 
     private final String groupId;
     private final String artifactId;
     private final String version;
     private final String mavenJarPath;
-    private final String mavenPomXmlPath;
     private final List<Relocation> relocations;
 
     Dependency(String groupId, String artifactId, String version, Relocation... relocations) {
@@ -74,13 +72,7 @@ public class Dependency {
                 this.artifactId,
                 this.version
         );
-        this.mavenPomXmlPath = String.format(POM_FORMAT,
-                this.groupId.replace(".", "/"),
-                this.artifactId,
-                this.version,
-                this.artifactId,
-                this.version
-        );
+
     }
 
     private static String rewriteEscaping(String s) {
@@ -97,10 +89,6 @@ public class Dependency {
 
     String getMavenJarPath() {
         return this.mavenJarPath;
-    }
-
-    String getMavenPomXmlPath() {
-        return this.mavenPomXmlPath;
     }
 
     public String getGroupId() {

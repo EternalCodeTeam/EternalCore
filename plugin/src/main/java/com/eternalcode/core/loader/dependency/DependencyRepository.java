@@ -25,25 +25,13 @@
 
 package com.eternalcode.core.loader.dependency;
 
-import com.eternalcode.core.loader.dependency.relocation.Relocation;
 import com.google.common.io.ByteStreams;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DependencyRepository {
 
@@ -55,11 +43,6 @@ public class DependencyRepository {
 
     protected URLConnection openConnectionForJar(Dependency dependency) throws IOException {
         URL dependencyUrl = new URL(this.url + dependency.getMavenJarPath());
-        return dependencyUrl.openConnection();
-    }
-
-    protected URLConnection openConnectionForPomXml(Dependency dependency) throws IOException {
-        URL dependencyUrl = new URL(this.url + dependency.getMavenPomXmlPath());
         return dependencyUrl.openConnection();
     }
 
@@ -97,62 +80,8 @@ public class DependencyRepository {
         return new DependencyRepository(url);
     }
 
-    public List<Dependency> getDependencies(Dependency dependency) {
-        List<Dependency> childDependencies = new ArrayList<>();
-
-        Relocation[] relocations = DependencyRegistry.getRelocations().toArray(new Relocation[0]);
-
-        try (InputStream inputStream = this.openConnectionForPomXml(dependency).getInputStream()) { //TODO: Fix this
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setValidating(true);
-            factory.setIgnoringElementContentWhitespace(true);
-
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document document = builder.parse(inputStream);
-
-            NamedNodeMap attributes = document.getAttributes();
-
-            if (attributes == null) {
-                return childDependencies;
-            }
-
-            Node project = attributes.getNamedItem("project");
-
-            if (project == null) {
-                return childDependencies;
-            }
-
-            Node dependenciesNode = project.getAttributes().getNamedItem("dependencies");
-
-            if (dependenciesNode == null) {
-                return childDependencies;
-            }
-
-            NodeList childNodes = dependenciesNode.getChildNodes();
-
-            for (int i = 0; i < childNodes.getLength(); i++) {
-                Node node = childNodes.item(i);
-
-                if (node.getNodeName().equals("dependency")) {
-                    Node groupId = node.getAttributes().getNamedItem("groupId");
-                    Node artifactId = node.getAttributes().getNamedItem("artifactId");
-                    Node version = node.getAttributes().getNamedItem("version");
-
-                    Dependency childDependency = Dependency.of(groupId.getNodeValue(), artifactId.getNodeValue(), version.getNodeValue(), relocations);
-
-                    childDependencies.add(childDependency);
-                }
-            }
-        }
-        catch (ParserConfigurationException | IOException | SAXException exception) {
-            throw new RuntimeException(exception);
-        }
-
-        for (Dependency childDependency : childDependencies) {
-            childDependencies.addAll(this.getDependencies(childDependency));
-        }
-
-        return childDependencies;
+    public String getUrl() {
+        return url;
     }
 
     interface ThrowingSupplier<T> {

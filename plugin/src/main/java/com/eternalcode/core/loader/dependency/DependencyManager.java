@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class DependencyManager {
 
@@ -83,19 +84,14 @@ public class DependencyManager {
 
         for (Dependency dependency : dependencies) {
             for (DependencyRepository repository : REPOSITORIES) {
-                try {
-                    allDependencies.addAll(repository.getDependencies(dependency));
-                    break;
-                }
-                catch (RuntimeException runtimeException) {
-                    Throwable cause = runtimeException.getCause();
+                Optional<List<Dependency>> dependencyList = XmlScanner.findAll(repository, dependency);
 
-                    if (cause instanceof MalformedURLException || cause instanceof FileNotFoundException) {
-                        continue;
-                    }
-
-                    throw runtimeException;
+                if (dependencyList.isEmpty()) {
+                    continue;
                 }
+
+                allDependencies.addAll(dependencyList.get());
+                break;
             }
         }
 
@@ -120,7 +116,8 @@ public class DependencyManager {
             return;
         }
 
-        Path file = this.remapDependency(dependency, this.downloadDependency(dependency));
+        Path downloadedDependency = this.downloadDependency(dependency);
+        Path file = this.remapDependency(dependency, downloadedDependency);
 
         this.loaded.put(dependency, file);
 
