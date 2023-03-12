@@ -10,6 +10,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
@@ -79,12 +80,13 @@ public class DependencyManager {
         }
     }
 
-    public void loadDependencies(List<Dependency> dependencies) {
+    public void loadDependencies(List<Dependency> dependencies, List<Relocation> relocations) {
         List<Dependency> allDependencies = new ArrayList<>();
 
         for (Dependency dependency : dependencies) {
             for (DependencyRepository repository : REPOSITORIES) {
-                Optional<List<Dependency>> dependencyList = XmlScanner.findAll(repository, dependency);
+                XmlScanner scanner = new XmlScanner(relocations);
+                Optional<List<Dependency>> dependencyList = scanner.findAll(repository, dependency);
 
                 if (dependencyList.isEmpty()) {
                     continue;
@@ -105,13 +107,13 @@ public class DependencyManager {
             try {
                 this.loadDependency(dependency);
             }
-            catch (Throwable exception) {
-                new RuntimeException("Unable to load dependency " + dependency.getGroupArtifactId(), exception).printStackTrace();
+            catch (DependencyDownloadException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
-    private void loadDependency(Dependency dependency) throws Exception {
+    private void loadDependency(Dependency dependency) throws DependencyDownloadException, InvocationTargetException, InstantiationException, IllegalAccessException {
         if (this.loaded.containsKey(dependency)) {
             return;
         }
@@ -120,6 +122,7 @@ public class DependencyManager {
         Path file = this.remapDependency(dependency, downloadedDependency);
 
         this.loaded.put(dependency, file);
+        System.out.println("Loaded dependency: " + dependency);
 
         if (this.classPathAppender != null) {
             this.classPathAppender.addJarToClasspath(file);
@@ -150,7 +153,7 @@ public class DependencyManager {
         throw Objects.requireNonNull(lastError);
     }
 
-    private Path remapDependency(Dependency dependency, Path normalFile) throws Exception {
+    private Path remapDependency(Dependency dependency, Path normalFile) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         List<Relocation> rules = new ArrayList<>(dependency.getRelocations());
 
         if (rules.isEmpty()) {
@@ -162,6 +165,10 @@ public class DependencyManager {
         // if the remapped source exists already, just use that.
         if (Files.exists(remappedFile)) {
             return remappedFile;
+        }
+
+        if (!dependency.toRelocate()) {
+            return normalFile;
         }
 
         this.getRelocationHandler().remap(normalFile, remappedFile, rules);

@@ -41,7 +41,8 @@ dependencies {
     library("org.bstats:bstats-bukkit:3.0.0")
 
     relocate(
-        "panda",
+        "panda.std",
+        "panda.utilities",
         "org.panda_lang",
         "org.bstats",
         "net.dzikoysk",

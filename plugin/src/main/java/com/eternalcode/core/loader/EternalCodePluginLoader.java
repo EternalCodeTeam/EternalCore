@@ -9,13 +9,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.function.Supplier;
 
 public class EternalCodePluginLoader extends JavaPlugin {
 
     private static final String LOADER_CORE_CLASS = "com.eternalcode.core.EternalCore";
 
-    private final Class<?> eternalCoreClass;
-    private final Object eternalCore;
+    private Class<?> eternalCoreClass;
+    private Object eternalCore;
 
     public EternalCodePluginLoader() {
         URL urlOfPlugin = this.getClass().getProtectionDomain().getCodeSource().getLocation();
@@ -26,17 +27,25 @@ public class EternalCodePluginLoader extends JavaPlugin {
                 new ReflectionClassPathAppender(loader)
         );
 
-        dependencyManager.loadDependencies(DependencyRegistry.getDependencies());
+        dependencyManager.loadDependencies(DependencyRegistry.getDependencies(), DependencyRegistry.getRelocations());
 
         try {
             this.eternalCoreClass = Class.forName(LOADER_CORE_CLASS, true, loader);
+        }
+        catch (ClassNotFoundException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 
+    @Override
+    public void onEnable() {
+        try {
             Constructor<?> eternalCoreConstructor = eternalCoreClass.getConstructor(Plugin.class);
             eternalCoreConstructor.setAccessible(true);
 
             this.eternalCore = eternalCoreConstructor.newInstance(this);
         }
-        catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException exception) {
+        catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | InstantiationException exception) {
             throw new RuntimeException(exception);
         }
     }
@@ -44,7 +53,7 @@ public class EternalCodePluginLoader extends JavaPlugin {
     @Override
     public void onDisable() {
         try {
-            this.eternalCoreClass.getMethod("close").invoke(this.eternalCore);
+            this.eternalCoreClass.getMethod("disable").invoke(this.eternalCore);
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exception) {
             throw new RuntimeException(exception);

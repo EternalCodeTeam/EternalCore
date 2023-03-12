@@ -60,6 +60,10 @@ public class Dependency {
     private final List<Relocation> relocations;
 
     Dependency(String groupId, String artifactId, String version, Relocation... relocations) {
+        if (version.contains("${")) {
+            throw new IllegalArgumentException("Version contains a property placeholder: " + version);
+        }
+
         this.groupId = rewriteEscaping(groupId);
         this.artifactId = rewriteEscaping(artifactId);
         this.version = rewriteEscaping(version);
@@ -128,6 +132,15 @@ public class Dependency {
 
     public static Dependency of(String groupId, String artifactId, String version, Relocation... relocations) {
         return new Dependency(groupId, artifactId, version, relocations);
+    }
+
+    @Override
+    public String toString() {
+        return this.getGroupArtifactId() + ":" + this.version;
+    }
+
+    public boolean toRelocate() {
+        return !this.relocations.isEmpty();
     }
 
 }

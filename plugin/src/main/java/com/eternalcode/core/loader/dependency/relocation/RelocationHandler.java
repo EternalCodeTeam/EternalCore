@@ -32,6 +32,7 @@ import com.eternalcode.core.loader.dependency.classloader.IsolatedClassLoader;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class RelocationHandler {
     public RelocationHandler(DependencyManager dependencyManager) {
         try {
             // download the required dependencies for remapping
-            dependencyManager.loadDependencies(DEPENDENCIES);
+            dependencyManager.loadDependencies(DEPENDENCIES, List.of());
             // get a classloader containing the required dependencies as sources
             IsolatedClassLoader classLoader = dependencyManager.obtainClassLoaderWith(DEPENDENCIES);
 
@@ -72,7 +73,7 @@ public class RelocationHandler {
         }
     }
 
-    public void remap(Path input, Path output, List<Relocation> relocations) throws Exception {
+    public void remap(Path input, Path output, List<Relocation> relocations) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         Map<String, String> mappings = new HashMap<>();
         for (Relocation relocation : relocations) {
             mappings.put(relocation.getPattern(), relocation.getRelocatedPattern());

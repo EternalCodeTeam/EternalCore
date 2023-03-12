@@ -11,6 +11,8 @@ public final class DependencyRegistry {
     private static final String DEPENDENCIES_HOLDER = "{eternalcore-dependencies}";
     private static final String REPOSITORIES_HOLDER = "{eternalcore-repositories}";
     private static final String RELOCATIONS_HOLDER = "{eternalcore-relocations}";
+    private static final List<Relocation> RELOCATIONS = createRelocations();
+
     private static final String RELOCATION_PREFIX = "com{}eternalcode{}core{}libs{}";
 
     private DependencyRegistry() {
@@ -46,6 +48,10 @@ public final class DependencyRegistry {
     }
 
     public static List<Relocation> getRelocations() {
+        return RELOCATIONS;
+    }
+
+    private static List<Relocation> createRelocations() {
         return Arrays.stream(RELOCATIONS_HOLDER.split("\\|"))
             .map(rawRelocation -> Relocation.builder()
                     .pattern(rawRelocation)
