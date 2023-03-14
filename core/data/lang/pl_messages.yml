@@ -1,0 +1,413 @@
+#
+# Ten plik odpowiada za polskie tłumaczenie w eternalcore.
+#
+# Jeśli potrzebujesz pomocy z konfiguracją lub masz jakieś pytania dotyczące EternalCore, dołącz do naszego discorda
+# bądź napisz zgłoszenie w zakładce "Issues" na GitHubie.
+#
+# Issues: https://github.com/EternalCodeTeam/EternalCore/issues
+# Discord: https://discord.gg/FQ7jmGBd6c
+# Strona internetowa: https://eternalcode.pl/
+# Kod źródłowy: https://github.com/EternalCodeTeam/EternalCore
+
+# Wszędzie możesz użyć formatowania MiniMessages, bądź standardowego &7, &e itd.
+# Więcej informacji na: https://docs.adventure.kyori.net/minimessage/format.html
+# Możesz użyć wirtualnego generatora do generowania i podglądu wiadomości: https://webui.adventure.kyori.net/
+#
+# Możesz bez żadnych ograniczeń edytować to, czy wiadomość ma się wysłać na czacie, actionbarze, bądź na jednym i drugim w następujący sposób
+# dodaj przed wiadomością następujące prefixy:
+# [CHAT] - Wiadomość będzie wysyłana na czacie
+# [ACTIONBAR] - Wiadomość będzie wysyłana na actionbarze
+# [TITLE] - Wiadomość będzie wysyłana jako tytuł
+# [SUBTITLE] - Wiadomość będzie wysyłana jako podtytuł
+# [DISABLED] - Wiadomość nie będzie wysyłana
+#
+# Możesz również łączyć prefixy w następujący sposób:
+# [CHAT, ACTIONBAR] - Wiadomość będzie wysyłana na czacie i actionbarze
+# [CHAT, ACTIONBAR, TITLE] - Wiadomość będzie wysyłana na czacie, actionbarze, title
+#
+# Jeśli nie podasz żadnego prefixu, wiadomość będzie wysyłana po prostu na czacie
+#
+# Wszystkie opcje poza wiadomościami EternalCore są opisane w pliku config.yml
+
+# Ta sekcja odpowiada za wszystkie wiadomości wykorzystywane podczas złego użycia argumentu komendy
+argument:
+  # {PERMISSIONS} - Wyświetla wymagane uprawnienia
+  permissionMessage: "<dark_red>Błąd: <red>Nie masz uprawnień do tej komendy! <gray>({PERMISSIONS})"
+  
+  # {USAGE} - Wyświetla poprawne użycie komendy
+  usageMessage: "<dark_gray>» <yellow>Poprawne użycie: <gray>{USAGE}"
+  usageMessageHead: "<dark_gray>» <yellow>Poprawne użycie:"
+  usageMessageEntry: "<dark_gray>» <gray>{USAGE}"
+  
+  offlinePlayer: "<dark_red>Błąd: <red>Ten gracz jest obecnie offline!"
+  onlyPlayer: "<dark_red>Błąd: <red>Ta komenda jest dostępna tylko dla graczy!"
+  numberBiggerThanOrEqualZero: "<dark_red>Błąd: <red>Liczba musi być równa lub większa od 0!"
+  noItem: "<dark_red>Błąd: <red>Musisz trzymać przedmiot w dłoni!"
+  noMaterial: "<dark_red>Błąd: <red>Taki materiał nie istnieje!"
+  noArgument: "<dark_red>Błąd: <red>Taki argument nie istnieje!"
+  noDamaged: "<dark_red>Błąd: <red>Ten przedmiot nie może być naprawiony!"
+  noDamagedItems: "<dark_red>Błąd: <red>Musisz posiadać uszkodzone przedmioty!"
+  noEnchantment: "<dark_red>Błąd: <red>Takie zaklęcie nie istnieje!"
+  noValidEnchantmentLevel: "<dark_red>Błąd: <red>Ten poziom zaklęcia nie jest wspierany!"
+  invalidTimeFormat: "<dark_red>Błąd: <red>Nieprawidłowy format czasu!"
+  worldDoesntExist: "<dark_red>Błąd: <red>Taki świat nie istnieje!"
+  youMustGiveWorldName: "<dark_red>Błąd: <red>Musisz podać nazwę świata!"
+  incorrectLocation: "<dark_red>Błąd: <red>Nieprawidłowa lokalizacja!"
+
+# Ta sekcja odpowiada za ogólne formatowanie niektórych wartości
+# Celem sekcji jest ograniczenie powtarzania się niektórych wiadomości.
+format:
+  enable: "<green>włączony/a"
+  disable: "<red>wyłączony/a"
+
+# Ta sekcja odpowiada za czat pomocy dla graczy, który jest widoczny dla administracji
+helpOp:
+  # {PLAYER} - Gracz który wysłał wiadomość na helpop, {TEXT} - Treść wysłanej wiadomości
+  format: "<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{PLAYER}<dark_gray>: <white>{TEXT}"
+  
+  send: "<dark_gray>» <green>Wiadomość została wysłana do administracji"
+  # {TIME} - Czas do końca blokady (cooldown)
+  helpOpDelay: "<dark_gray>» <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!"
+
+# Ta sekcja odpowiada za czat komunikacji między administracją
+adminChat:
+  # {PLAYER} - Gracz który wysłał wiadomość na czacie administracji, {TEXT} - Treść wysłanej wiadomości
+  format: "<dark_gray>[<dark_red>Administracja<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}"
+
+# Ta sekcja odpowiada za komunikaty związane z teleportacją
+teleport:
+  # {PLAYER} - Gracz który został teleportowany
+  teleportedToPlayer: "<dark_gray>» <green>Przeteleportowano do gracza {PLAYER}!"
+  # {PLAYER} - Gracz który został teleportowany, {ARG-PLAYER} - Gracz do którego został teleportowany inny gracz
+  teleportedPlayerToPlayer: "<dark_gray>» <green>Przeteleportowano gracza {PLAYER} do gracza {ARG-PLAYER}!"
+  # {TIME} - Czas teleportacji
+  teleportTimerFormat: "[ACTIONBAR]<green>Teleportacja za <white>{TIME}"
+  
+  teleported: "[CHAT, ACTIONBAR]<dark_gray>» <green>Przeteleportowano!"
+  teleporting: "<dark_gray>» <green>Teleportowanie..."
+  teleportTaskCanceled: "<dark_red>Błąd: <red>Ruszyłeś się, teleportacja została przerwana!"
+  teleportTaskAlreadyExist: "<dark_red>Błąd: <red>Teleportujesz się już!"
+  
+  # {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z
+  teleportedToCoordinates: "<dark_gray>» <gold>Przeteleportowano na współrzędne x: <red>{X}<gold>, y: <red>{Y}<gold>, z: <red>{Z}"
+  
+  # {PLAYER} - Gracz który został teleportowany, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z
+  teleportedSpecifiedPlayerToCoordinates: "<dark_gray>» <gold>Przeteleportowano gracza <red>{PLAYER} <gold>na współrzędne x: <red>{X}<gold>, y: <red>{Y}<gold>, z: <red>{Z}"
+  
+  teleportedToLastLocation: "<dark_gray>» <gray>Przeteleportowano do ostatniej lokalizacji!"
+  
+  # {PLAYER} - Gracz który został teleportowany
+  teleportedSpecifiedPlayerLastLocation: "<dark_gray>» <gray>Przeteleportowano gracza {PLAYER} do ostatniej lokalizacji!"
+  
+  lastLocationNoExist: "<dark_gray>» <red>Nie ma zapisanej ostatniej lokalizacji!"
+
+# Ta sekcja odpowiada za edycję ustawień czatu
+chat:
+  # {PLAYER} - Gracz który wykonał akcje dla czatu
+  disabled: "<dark_gray>» <red>Czat został wyłączony przez <gold>{PLAYER}<red>!"
+  enabled: "<dark_gray>» <green>Czat został włączony przez <white>{PLAYER}<green>!"
+  cleared: "<dark_gray>» <gold>Czat został wyczyszczony przez <red>{PLAYER}<gold>!"
+  
+  alreadyDisabled: "<dark_red>Błąd: <red>Czat jest już wyłączony!"
+  alreadyEnabled: "<dark_red>Błąd: <red>Czat jest już włączony!"
+  
+  # {SLOWMODE} - Czas powolnego wysyłania wiadomości
+  slowModeSet: "<dark_gray>» <green>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}"
+  
+  # {TIME} - Czas powolnego wysyłania wiadomości
+  slowMode: "<dark_gray>» <red>Następną wiadomość możesz wysłać za: <gold>{TIME}<red>!"
+  
+  disabledChatInfo: "<dark_gray>» <red>Czat jest obecnie wyłączony!"
+  
+  # {BROADCAST} - Ogłoszenie
+  alertMessageFormat: "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}"
+  
+  commandNotFound: "<dark_gray>» <red>Komenda <yellow>{COMMAND} <red>nie istnieje!"
+
+# Ta sekcja odpowiada za obsługę zapytań tpa,
+# Daje możliwość edycji dotyczących tego typu zapytań 
+tpa:
+  tpaSelfMessage: "<dark_red>Błąd: <red>Nie możesz teleportować się samodzielnie!"
+  tpaAlreadySentMessage: "<dark_red>Błąd: <red>Już wysłałeś prośbę o teleportację!"
+  
+  # {PLAYER} - Gracz który wysłał prośbę o teleportację
+  tpaSentMessage: "<dark_gray>» <green>Wysłałeś prośbę o teleportację do gracza: <gray>{PLAYER}<green>!"
+  
+  # W tych wiadomościach użyliśmy formatowania MiniMessages
+  # Obecna wiadomość od akceptacji prośby umożliwia graczowi kliknięcie w nią, aby zaakceptować prośbę o teleportację dzięki MiniMessages!
+  # Więcej informacji znajdziesz na stronie: https://docs.adventure.kyori.net/minimessage/format.html
+  
+  # {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza
+  tpaReceivedMessage:
+    - "<dark_gray>» <green>Otrzymałeś prośbę o teleportację od gracza: <gray>{PLAYER}<green>!"
+    - "<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>"
+    - "<hover:show_text:'<red>Odrzucić prośbę o teleportacje?</red>'><gold><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpdeny {PLAYER} <red>by ją odrzucić! <gray>(Kliknij)</gray></click></gold></hover>"
+  
+  tpaDenyNoRequestMessage: "<dark_red>Błąd: <red>Nie otrzymałeś prośby o teleportację od tego gracza!"
+  
+  # {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza
+  tpaDenyDoneMessage: "<dark_gray>» <red>Odrzuciłeś prośbę o teleportację od gracza: <gray>{PLAYER}<red>!"
+  
+  # {PLAYER} - Gracz który odrzucił prośbę o teleportacje
+  tpaDenyReceivedMessage: "<dark_gray>» <red>Gracz: {PLAYER} odrzucił twoją prośbę o teleportację!"
+  
+  tpaDenyAllDenied: "<dark_gray>» <red>Odrzucono wszystkie prośby o teleportację!"
+  
+  # {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza
+  tpaAcceptMessage: "<dark_gray>» <green>Zaakceptowałeś prośbę o teleportację od gracza: <gray>{PLAYER}<green>!"
+  
+  tpaAcceptNoRequestMessage: "<dark_red>Błąd: <red>Ten gracz nie wysłał do ciebie prośby o teleportację!"
+  
+  # {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza
+  tpaAcceptReceivedMessage: "<dark_gray>» <green>Gracz: <gray>{PLAYER} <green>zaakceptował twoją prośbę o teleportację!"
+  
+  tpaAcceptAllAccepted: "<dark_gray>» <green>Zaakceptowano wszystkie prośby o teleportację!"
+
+# Ta sekcja odpowiada za ustawianie i edycję punktów szybkiej podróży - warp
+warp:
+  # {WARP} - Nazwa warpu
+  warpAlreadyExists: "<dark_red>Błąd: <red>Warp o nazwie <yellow>{WARP}</yellow> <dark_red>już istnieje!"
+  create: "<dark_gray>» <gray>Stworzono warp <yellow>{WARP}</yellow>!"
+  remove: "<dark_gray>» <gray>Usunięto warp <yellow>{WARP}</yellow>!"
+  
+  notExist: "<dark_gray>» <red>Nie odnaleziono takiego warpu!"
+
+# Poniższa sekcja odpowiada za ustawianie i edycję osobistych punktów szybkiej podróży - home
+home:
+  notExist: "<dark_gray>» <red>Nie ma takiego domu!"
+  
+  # {HOME} - Nazwa domu
+  create: "<dark_gray>» <gray>Stworzono home {HOME}!"
+  delete: "<dark_gray>» <gray>Usunięto home {HOME}!"
+  overrideHomeLocation: "<dark_gray>» <gray>Nadpisałeś lokalizację domu {HOME}!"
+  
+  # {LIMIT} - Limit domów
+  limit: "<dark_gray>» <red>Osiągnąłeś limit domów! Twój limit to {LIMIT}."
+
+# Ta sekcja odpowiada za ustawianie i edycję wiadomości prywatnych
+privateChat:
+  noReply: "<dark_gray>» <red>Nie możesz nikomu odpowiadać, ponieważ nie otrzymałeś żadnej wiadomości prywatnej!"
+  # {TARGET} - Gracz do którego chcesz wysłać wiadomość, {MESSAGE} - Treść wiadomości
+  privateMessageYouToTarget: "<dark_gray>[<gray>Ty -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}"
+  
+  # {SENDER} - Gracz który wysłał wiadomość, {MESSAGE} - Treść wiadomości
+  privateMessageTargetToYou: "<dark_gray>[<gray>{SENDER} -> <white>Ty<dark_gray>]<gray>: <white>{MESSAGE}"
+  # {SENDER} - Gracz który wysłał wiadomość, {TARGET} - Gracz do którego wysłał wiadomość, {MESSAGE} - Treść wiadomości
+  socialSpyMessage: "<dark_gray>[<red>ss<dark_gray>] <dark_gray>[<gray>{SENDER} -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}"
+  
+  socialSpyEnable: "<dark_gray>» <green>SocialSpy został włączony!"
+  socialSpyDisable: "<dark_gray>» <red>SocialSpy został wyłączony!"
+  
+  # {PLAYER} - Gracz który jest zignorowany
+  ignorePlayer: "<dark_gray>» <gray>Zignorowano gracza <red>{PLAYER}<gray>!"
+  
+  ignoreAll: "<dark_gray>» <gray>Zignorowano wszystkich graczy!"
+  cantIgnoreYourself: "<dark_gray>» <red>Nie możesz zignorować samego siebie!"
+  
+  # {PLAYER} - Gracz który jest zignorowany
+  alreadyIgnorePlayer: "<dark_gray>» <red>Gracz <gray>{PLAYER} <red>jest już zignorowany!"
+  
+  # {PLAYER} - Gracz który jest zignorowany
+  unIgnorePlayer: "<dark_gray>» <gray>Od ignorowano gracza <green>{PLAYER}<gray>!"
+  
+  unIgnoreAll: "<dark_gray>» <gray>Od ignorowano wszystkich graczy!"
+  cantUnIgnoreYourself: "<dark_gray>» <red>Nie możesz od ignorować samego siebie!"
+  
+  # {PLAYER} - Gracz który jest zignorowany
+  notIgnorePlayer: "<dark_gray>» <red>Gracz <gray>{PLAYER} <red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!"
+
+# Ta sekcja odpowiada za ustawianie i edycję wiadomości AFK
+afk:
+  # {PLAYER} - Gracz 
+  afkOn: "<dark_gray>» <gray>{PLAYER} jest AFK!"
+  afkOff: "<dark_gray>» <gray>{PLAYER} już nie jest AFK!"
+  
+  # {TIME} - Czas po którym gracz może użyć komendy
+  afkDelay: "<dark_gray>» <red>Możesz użyć tej komendy dopiero po <gold>{TIME}!"
+
+# Ta sekcja odpowiada za ustawianie i edycję wiadomości o zdarzeniach gracza
+event:
+  # EternalCore będzie losować losową wiadomość z poniższej listy, za każdym razem gdy gracz zginie.
+  # Jeżeli {KILLER} będzie np. konsolą, albo przyczyną naturalną (upadek, lava itd.) zwróci w tym placeholderze wiadomość z unknownPlayerDeath
+  unknownPlayerDeath: "niezidentyfikowany obiekt bojowy"
+  # {PLAYER} - Gracz który został uśmiercony, {KILLER} - Gracz który zabił gracza
+  deathMessage:
+    - "[ACTIONBAR]<dark_gray>» <gray>{PLAYER} <red>zginął przez {KILLER}!"
+    - "[ACTIONBAR]<dark_gray>» <gray>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!"
+  
+  # Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy
+  # za każdym razem gdy gracz dołączy do serwera
+  # {PLAYER} - Gracz który dołączył do serwera
+  joinMessage:
+    - "[ACTIONBAR]<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera!"
+    - "[ACTIONBAR]<dark_gray>» <gray>Witaj na serwerze <green>{PLAYER}<gray>!"
+  
+  # Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy
+  # za każdym razem gdy gracz dołączy do serwera po raz pierwszy
+  # {PLAYER} - Gracz który dołączył do serwera po raz pierwszy
+  firstJoinMessage:
+    - "[ACTIONBAR]<dark_gray>» <gray>{PLAYER} <green>dołączył do serwera po raz pierwszy!"
+    - "[ACTIONBAR]<dark_gray>» <gray>{PLAYER} <green>zawitał u nas po raz pierwszy!"
+  
+  # Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy
+  # za każdym razem gdy gracz opuści serwer
+  # {PLAYER} - Gracz który opuścił serwer
+  quitMessage:
+    - "[ACTIONBAR]<dark_gray>» <gray>{PLAYER} <red>wylogował się z serwera!"
+    - "[ACTIONBAR]<dark_gray>» <gray>{PLAYER} <red>opuścił serwer!"
+  
+  # {PLAYER} - Gracz który dołączył do serwera
+  welcomeTitle: "[TITLE]<yellow>{PLAYER}"
+  welcomeSubtitle: "[SUBTITLE]<yellow>Witaj ponownie na serwerze!"
+
+# Ta sekcja odpowiada za przeglądanie ekwipunku gracza
+inventory:
+  inventoryClearMessage: "<dark_gray>» <green>Wyczyszczono ekwipunek!"
+  
+  # {PLAYER} - Gracz którego ekwipunek został wyczyszczony
+  inventoryClearMessageBy: "<dark_gray>» <green>Ekwipunek gracza {PLAYER} został wyczyszczony"
+  
+  cantOpenYourInventory: "<dark_gray>» <red>Nie możesz otworzyć swojego ekwipunku!"
+  disposalTitle: "<white><bold>Kosz"
+
+# Ta sekcja odpowiada za interakcję z graczami za pomocą komend
+player:
+  feedMessage: "<dark_gray>» <green>Zostałeś nakarmiony!"
+  # {PLAYER} - Gracz który został nakarmiony
+  feedMessageBy: "<dark_gray>» <green>Nakarmiłeś gracza {PLAYER}"
+  
+  healMessage: "<dark_gray>» <green>Zostałeś uleczony!"
+  # {PLAYER} - Gracz który został uleczony
+  healMessageBy: "<dark_gray>» <green>Uleczyłeś gracza {PLAYER}"
+  
+  killSelf: "<dark_gray>» <red>Popełniłeś samobójstwo!"
+  # {PLAYER} - Gracz który został zabity
+  killedMessage: "<dark_gray>» <red>Zabito gracza {PLAYER}"
+  
+  speedBetweenZeroAndTen: "<dark_red>Błąd: <red>Ustaw prędkość w zakresie 0-10!"
+  # {SPEED} - Ustawiona prędkość
+  speedSet: "<dark_gray>» <green>Ustawiono prędkość na {SPEED}"
+  # {PLAYER} - Gracz któremu została ustawiona prędkość, {SPEED} - Ustawiona prędkość
+  speedSetBy: "<dark_gray>» <red>Ustawiono prędkość gracza {PLAYER} na {SPEED}"
+  
+  # {STATE} - Status nieśmiertelności
+  godMessage: "<dark_gray>» <green>Tryb nieśmiertelności został {STATE}"
+  # {PLAYER} - Gracz któremu został ustawiony tryb nieśmiertelności, {STATE} - Status nieśmiertelności
+  godSetMessage: "<dark_gray>» <green>Tryb nieśmiertelności dla gracza <white>{PLAYER} <green>został {STATE}"
+  
+  # {STATE} - Status latania
+  flyMessage: "<dark_gray>» <green>Latanie zostało {STATE}"
+  # {PLAYER} - Gracz któremu zostało ustawione latanie, {STATE} - Status latania
+  flySetMessage: "<dark_gray>» <green>Latanie dla gracza <white>{PLAYER} <green>zostało {STATE}"
+  
+  # {PING} - Aktualna ilość pingu.
+  pingMessage: "<dark_gray>» <green>Twój ping: <white>{PING}ms"
+  # {PLAYER} - Gracz któremu został ustawiony tryb nieśmiertelności, {PING} - Aktualna ilość pingu dla gracza.
+  pingOtherMessage: "<dark_gray>» <green>Gracz <white>{PLAYER} <green>ma ping: <white>{PING}ms"
+  
+  gameModeNotCorrect: "<dark_red>Błąd: <red>Niepoprawny typ!"
+  # {GAMEMODE} - Ustawiony tryb gry
+  gameModeMessage: "<dark_gray>» <green>Ustawiono tryb gry na: {GAMEMODE}"
+  # {PLAYER} - Gracz któremu został ustawiony tryb gry, {GAMEMODE} - Ustawiony tryb gry dla gracza
+  gameModeSetMessage: "<dark_gray>» <green>Ustawiono tryb gry graczowi <white>{PLAYER} <green>na: <white>{GAMEMODE}"
+  
+  # {ONLINE} - Aktualna ilość graczy online
+  onlinePlayersCountMessage: "<dark_gray>» <gold>Na serwerze jest: <white>{ONLINE} <gold>graczy online!"
+  # {ONLINE} - Aktualna ilość graczy online, {PLAYERS} - Lista graczy online
+  onlinePlayersMessage: "<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS} "
+  fullServerSlots:
+    - " "
+    - "<dark_gray>» <red>Serwer jest pełen!"
+    - "<dark_gray>» <red>Zakup rangę na naszej stronie!"
+  
+  # {PLAYER} - nazwa gracza
+  # {UUID} - UUID gracza
+  # {IP} - IP gracza
+  # {WALK-SPEED} - prędkość chodzenia gracza
+  # {SPEED} - prędkość latania gracza
+  # {PING} - ping gracza
+  # {LEVEL} - poziom gracza
+  # {HEALTH} - zdrowie gracza
+  # {FOOD} - poziom najedzenia gracza
+  whoisCommand:
+    - "<dark_gray>» <gray>Gracz: <white>{PLAYER}"
+    - "<dark_gray>» <gray>UUID: <white>{UUID}"
+    - "<dark_gray>» <gray>IP: <white>{IP}"
+    - "<dark_gray>» <gray>Szybkość chodzenia: <white>{WALK-SPEED}"
+    - "<dark_gray>» <gray>Szybkość latania: <white>{SPEED}"
+    - "<dark_gray>» <gray>Opóźnienie: <white>{PING}ms"
+    - "<dark_gray>» <gray>Poziom: <white>{LEVEL}"
+    - "<dark_gray>» <gray>Zdrowie: <white>{HEALTH}"
+    - "<dark_gray>» <gray>Poziom najedzenia: <white>{FOOD}"
+
+# Ta sekcja odpowiada za zmianę punktu spawn oraz teleportację graczy na spawn
+spawn:
+  spawnSet: "<dark_gray>» <green>Ustawiono spawn!"
+  spawnNoSet: "<dark_red>Błąd: <red>Spawn nie został ustawiony!"
+  
+  # {PLAYER} - Gracz który teleportował cię na spawn
+  spawnTeleportedBy: "<dark_gray>» <green>Zostałeś przeteleportowany na spawn przez gracza {PLAYER}!"
+  # {PLAYER} - Gracz który został przeteleportowany na spawn
+  spawnTeleportedOther: "<dark_gray>» <green>Gracz <white>{PLAYER} <green> został przeteleportowany na spawn!"
+
+# Ta sekcja odpowiada za zmianę nazwy oraz opisu itemu
+# Wszystkie zmienne są opcjonalne, możesz je wyłączyć w ustawieniach
+item:
+  # {ITEM_NAME} - Nowa nazwa itemu
+  itemChangeNameMessage: "<dark_gray>» <gray>Nowa nazwa itemu: <red>{ITEM_NAME}"
+  
+  itemClearNameMessage: "<dark_gray>» <gray>Wyczyszczono nazwę itemu!"
+  
+  # {ITEM_LORE} - Nowe linia opisu
+  itemChangeLoreMessage: "<dark_gray>» <gray>Nowa linia opisu: <red>{ITEM_LORE}"
+  
+  itemClearLoreMessage: "<dark_gray>» <gray>Wyczyszczono linie opisu!"
+  
+  # {ITEM_FLAG} - Nowa flaga itemu
+  itemFlagRemovedMessage: "<dark_gray>» <gray>Usunięto flagę: <red>{ITEM_FLAG}"
+  itemFlagAddedMessage: "<dark_gray>» <gray>Dodano flagę: <red>{ITEM_FLAG}"
+  
+  itemFlagClearedMessage: "<dark_gray>» <gray>Wyczyszczono flagi!"
+  
+  # {ITEM} - Nazwa otrzymanego itemu
+  giveReceived: "<dark_gray>» <green>Otrzymałeś: <gold>{ITEM}"
+  
+  # {PLAYER} - Osoba której został przydzielony przedmiot, {ITEM} - Nazwa otrzymanego przedmiotu
+  giveGiven: "<dark_gray>» <green>Gracz <white>{PLAYER} <green>otrzymał: <gold>{ITEM}"
+  
+  giveNotItem: "<dark_red>Błąd: <red>Podany przedmiot nie istnieje!"
+  repairMessage: "<dark_gray>» <green>Naprawiono!"
+  
+  # {SKULL} - Nazwa gracza do którego należy głowa
+  skullMessage: "<dark_gray>» <green>Otrzymałeś głowę gracza: {SKULL}"
+  
+  enchantedMessage: "<dark_gray>» <gold>Item w twojej ręce został zaklęty!"
+
+# Komunikaty odpowiedzialne za ustawianie czasu i pogody
+timeAndWeather:
+  # {WORLD} - Nazwa świata w którym zmieniono czas
+  timeSetDay: "<dark_gray>» <green>Ustawiono dzień w świecie <yellow>{WORLD}!"
+  timeSetNight: "<dark_gray>» <green>Ustawiono noc w świecie <yellow>{WORLD}!"
+  
+  # {TIME} - Czas
+  timeSet: "<dark_gray>» <green>Ustawiono czas na <yellow>{TIME}!"
+  timeAdd: "<dark_gray>» <green>Zmieniono czas o <yellow>{TIME}!"
+  
+  # {WORLD} - Świat w którym ustawiono pogode
+  weatherSetRain: "<dark_gray>» <green>Ustawiono deszcz w świecie <yellow>{WORLD}!"
+  weatherSetSun: "<dark_gray>» <green>Ustawiono słoneczną pogodę w świecie <yellow>{WORLD}!"
+  weatherSetThunder: "<dark_gray>» <green>Ustawiono burze w świecie <yellow>{WORLD}!>"
+
+# Komunikaty odpowiedzialne za kontenery
+container:
+  # Wiadomości z tej sekcji służą do konfiguracji wiadomości z kontenerów
+  # Kontenery to inaczej skrzynie, workbench itp.
+  # W tym przypadku wykorzystujemy to do informowania graczy o otwarciu kontenera np. przy komendzie /anvil
+  # {PLAYER} - Gracz który otworzył kontener
+  genericContainerOpened: "[DISABLED]"
+  genericContainerOpenedBy: "<dark_gray>» <green>Otwarto kontener przez gracza {PLAYER}!"
+  genericContainerOpenedFor: "<dark_gray>» <green>Otwarto kontener dla gracza {PLAYER}!"
+
+# Informacja zwrotna, gdy gracz zmienia język pluginu na polski
+language:
+  languageChanged: "<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!"

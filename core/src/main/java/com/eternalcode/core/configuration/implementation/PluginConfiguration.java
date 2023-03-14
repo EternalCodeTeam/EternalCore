@@ -121,7 +121,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration helpOpDelay = Duration.ofSeconds(60);
 
         @Description({ " ", "# Custom message for unknown command" })
-        public boolean commandExact = false;
+        public boolean replaceStandardHelpMessage = false;
 
         @Description({ " ", "# Chat delay to send next message in chat" })
         public Duration chatDelay = Duration.ofSeconds(5);

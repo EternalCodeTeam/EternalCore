@@ -24,7 +24,7 @@ public class OnlinePlayerCountCommand {
     void execute(Viewer viewer) {
         this.noticeService
             .create()
-            .notice(translation -> translation.player().onlineMessage())
+            .notice(translation -> translation.player().onlinePlayersCountMessage())
             .viewer(viewer)
             .placeholder("{ONLINE}", String.valueOf(this.server.getOnlinePlayers().size()))
             .send();

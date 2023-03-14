@@ -202,7 +202,7 @@ public class ENTranslation extends AbstractTranslation {
         public String alertMessageFormat = "<red><bold>BROADCAST: <gray>{BROADCAST}";
 
         @Description(" ")
-        public Notification noCommand = Notification.chat("<dark_gray>» <red>Command <yellow>{COMMAND} <red>doesn't exists!");
+        public Notification commandNotFound = Notification.chat("<dark_gray>» <red>Command <yellow>{COMMAND} <red>doesn't exists!");
     }
 
     @Description({
@@ -481,11 +481,10 @@ public class ENTranslation extends AbstractTranslation {
         public Notification gameModeSetMessage = Notification.chat("<dark_gray>» <red>Gamemode for <gold>{PLAYER} <red>now is set to: <gold>{GAMEMODE}");
 
         @Description({ " ", "# {ONLINE} - Number of online players" })
-        public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!");
-
+        public Notification onlinePlayersCountMessage = Notification.chat("<dark_gray>» <gold>On server now is: <white>{ONLINE} <gold>players!");
 
         @Description("# {ONLINE} - Current online players, {PLAYERS} - Player list")
-        public Notification onlineListMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
+        public Notification onlinePlayersMessage = Notification.chat("<dark_gray>» <gold>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS}");
 
         public List<String> fullServerSlots = List.of(
             " ",

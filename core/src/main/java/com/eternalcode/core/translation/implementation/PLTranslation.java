@@ -202,7 +202,7 @@ public class PLTranslation extends AbstractTranslation {
         public String alertMessageFormat = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
 
         @Description(" ")
-        public Notification noCommand = Notification.chat("<dark_gray>» <red>Komenda <yellow>{COMMAND} <red>nie istnieje!");
+        public Notification commandNotFound = Notification.chat("<dark_gray>» <red>Komenda <yellow>{COMMAND} <red>nie istnieje!");
     }
 
     @Description({
@@ -489,9 +489,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notification gameModeSetMessage = Notification.chat("<dark_gray>» <green>Ustawiono tryb gry graczowi <white>{PLAYER} <green>na: <white>{GAMEMODE}");
 
         @Description({ " ", "# {ONLINE} - Aktualna ilość graczy online" })
-        public Notification onlineMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <white>{ONLINE} <gold>graczy online!");
+        public Notification onlinePlayersCountMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <white>{ONLINE} <gold>graczy online!");
         @Description("# {ONLINE} - Aktualna ilość graczy online, {PLAYERS} - Lista graczy online")
-        public Notification onlineListMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS} ");
+        public Notification onlinePlayersMessage = Notification.chat("<dark_gray>» <gold>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <white>{PLAYERS} ");
 
         public List<String> fullServerSlots = List.of(
             " ",
