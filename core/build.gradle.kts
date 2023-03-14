@@ -122,7 +122,8 @@ tasks.withType<ShadowJar> {
         "dev.triumphteam",
         "org.slf4j",
         "com.google.gson",
-        "com.eternalcode.containers"
+        "com.eternalcode.containers",
+        "commons-io",
     ).forEach { pack ->
         relocate(pack, "$prefix.$pack")
     }
