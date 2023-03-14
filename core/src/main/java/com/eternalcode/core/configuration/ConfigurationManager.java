@@ -26,6 +26,8 @@ import java.util.Set;
 public class ConfigurationManager {
 
     private static final String BACKUP_FOLDER_NAME = "backup";
+    private static final String BACKUP_FILE_EXTENSION = ".bak";
+    private static final LocalDate BACKUP_DATE_FORMAT = LocalDate.now();
 
     private final Cdn cdn = CdnFactory
         .createYamlLike()
@@ -76,14 +78,12 @@ public class ConfigurationManager {
             backupFolder.mkdirs();
         }
 
-        LocalDate currentDate = LocalDate.now();
-        File currentBackupFolder = new File(backupFolder, currentDate.toString());
+        File currentBackupFolder = new File(backupFolder, BACKUP_DATE_FORMAT.toString());
         if (!currentBackupFolder.exists()) {
             currentBackupFolder.mkdirs();
         }
 
         this.copyFolderContents(this.dataFolder, currentBackupFolder);
-
         this.deleteIfOlderDirectory(backupFolder);
     }
 
@@ -93,11 +93,15 @@ public class ConfigurationManager {
         }
 
         if (!targetFolder.exists()) {
-            targetFolder.mkdirs();
+            boolean targetFolderCreated = targetFolder.mkdirs();
+
+            if (!targetFolderCreated) {
+                return;
+            }
+
         }
 
         File[] filesToBackup = sourceFolder.listFiles();
-
         if (filesToBackup == null) {
             return;
         }
@@ -106,9 +110,12 @@ public class ConfigurationManager {
             if (file.isDirectory() && !file.getName().equals(BACKUP_FOLDER_NAME)) {
                 File subFolder = new File(targetFolder, file.getName());
                 this.copyFolderContents(file, subFolder);
+
+                continue;
             }
-            else if (file.isFile() && !file.getName().endsWith(".bak")) {
-                File backupFile = new File(targetFolder, file.getName() + ".bak");
+
+            if (file.isFile() && !file.getName().endsWith(BACKUP_FILE_EXTENSION)) {
+                File backupFile = new File(targetFolder, file.getName() + BACKUP_FILE_EXTENSION);
 
                 try {
                     Files.copy(file.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -134,9 +141,8 @@ public class ConfigurationManager {
 
             try {
                 LocalDate folderDate = LocalDate.parse(folder.getName());
-                LocalDate currentDate = LocalDate.now();
 
-                long days = ChronoUnit.DAYS.between(folderDate, currentDate);
+                long days = ChronoUnit.DAYS.between(folderDate, BACKUP_DATE_FORMAT);
 
                 if (days > 3) {
                     FileUtils.deleteDirectory(folder);
