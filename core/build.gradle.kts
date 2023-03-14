@@ -15,7 +15,7 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
     implementation("io.papermc:paperlib:1.0.8")
     implementation("net.kyori:adventure-platform-bukkit:4.2.0")
-    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    implementation("net.kyori:adventure-text-minimessage:4.13.0")
 
     // configuration
     implementation("net.dzikoysk:cdn:1.14.4")
@@ -46,12 +46,12 @@ dependencies {
 
     // unit test
     testImplementation("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    testImplementation("org.codehaus.groovy:groovy-all:3.0.15")
+    testImplementation("org.codehaus.groovy:groovy-all:3.0.16")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
     testImplementation("org.mockito:mockito-core:5.2.0")
     testImplementation("net.kyori:adventure-platform-bukkit:4.2.0")
-    testImplementation("net.kyori:adventure-text-minimessage:4.12.0")
+    testImplementation("net.kyori:adventure-text-minimessage:4.13.0")
 }
 
 tasks.getByName<Test>("test") {
