@@ -82,44 +82,68 @@ public class ConfigurationManager {
             currentBackupFolder.mkdirs();
         }
 
-        File[] filesToBackup = this.dataFolder.listFiles((dir, name) -> !name.equals(BACKUP_FOLDER_NAME));
+        this.copyFolderContents(this.dataFolder, currentBackupFolder);
+
+        this.deleteIfOlderDirectory(backupFolder);
+    }
+
+    void copyFolderContents(File sourceFolder, File targetFolder) {
+        if (!sourceFolder.exists() || !sourceFolder.isDirectory()) {
+            return;
+        }
+
+        if (!targetFolder.exists()) {
+            targetFolder.mkdirs();
+        }
+
+        File[] filesToBackup = sourceFolder.listFiles();
 
         if (filesToBackup == null) {
             return;
         }
 
         for (File file : filesToBackup) {
-            File backupFile = new File(currentBackupFolder, file.getName() + ".bak");
-
-            try {
-                Files.copy(file.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            if (file.isDirectory() && !file.getName().equals(BACKUP_FOLDER_NAME)) {
+                File subFolder = new File(targetFolder, file.getName());
+                this.copyFolderContents(file, subFolder);
             }
-            catch (IOException exception) {
-                exception.printStackTrace();
+            else if (file.isFile() && !file.getName().endsWith(".bak")) {
+                File backupFile = new File(targetFolder, file.getName() + ".bak");
+
+                try {
+                    Files.copy(file.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+                catch (IOException exception) {
+                    exception.printStackTrace();
+                }
             }
         }
-
-        this.deleteIfOlderDirectory(backupFolder);
     }
 
     void deleteIfOlderDirectory(File backupFolder) {
         File[] backupFolders = backupFolder.listFiles(File::isDirectory);
 
-        if (backupFolders != null) {
-            for (File folder : backupFolders) {
-                try {
-                    LocalDate folderDate = LocalDate.parse(folder.getName());
-                    LocalDate currentDate = LocalDate.now();
+        if (backupFolders == null) {
+            return;
+        }
 
-                    long days = ChronoUnit.DAYS.between(folderDate, currentDate);
+        for (File folder : backupFolders) {
+            if (folder.getName().equals(BACKUP_FOLDER_NAME)) {
+                return;
+            }
 
-                    if (days > 3) {
-                        FileUtils.deleteDirectory(folder);
-                    }
+            try {
+                LocalDate folderDate = LocalDate.parse(folder.getName());
+                LocalDate currentDate = LocalDate.now();
+
+                long days = ChronoUnit.DAYS.between(folderDate, currentDate);
+
+                if (days > 3) {
+                    FileUtils.deleteDirectory(folder);
                 }
-                catch (DateTimeParseException | IOException exception) {
-                    exception.printStackTrace();
-                }
+            }
+            catch (DateTimeParseException | IOException exception) {
+                exception.printStackTrace();
             }
         }
     }
