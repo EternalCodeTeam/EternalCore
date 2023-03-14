@@ -44,6 +44,9 @@ dependencies {
     // bridge (hook)
     compileOnly("me.clip:placeholderapi:2.11.2")
 
+    // commons
+    implementation("commons-io:commons-io:2.11.0")
+
     // unit test
     testImplementation("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
     testImplementation("org.codehaus.groovy:groovy-all:3.0.15")
