@@ -23,7 +23,7 @@ import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.handler.InvalidUsage;
 import com.eternalcode.core.command.handler.NotificationHandler;
 import com.eternalcode.core.command.handler.PermissionMessage;
-import com.eternalcode.core.configuration.BackupService;
+import com.eternalcode.core.configuration.ConfigurationBackupService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
@@ -175,7 +175,6 @@ public class EternalCore extends JavaPlugin {
      * Configuration & Database
      **/
     private ConfigurationManager configurationManager;
-    private BackupService backupService;
     private DatabaseManager databaseManager;
 
     private PluginConfiguration pluginConfiguration;
@@ -236,9 +235,9 @@ public class EternalCore extends JavaPlugin {
         this.publisher = new LocalPublisher();
 
         /* Configuration */
-        this.backupService = new BackupService(this.getDataFolder());
+        ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(this.getDataFolder());
 
-        this.configurationManager = new ConfigurationManager(this.backupService, this.getDataFolder());
+        this.configurationManager = new ConfigurationManager(configurationBackupService, this.getDataFolder());
 
         this.pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());

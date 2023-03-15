@@ -10,14 +10,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
-public class BackupService {
+public class ConfigurationBackupService {
 
     private static final String BACKUP_FOLDER_NAME = "backup";
     private static final String BACKUP_FILE_EXTENSION = ".bak";
-    private static final LocalDate BACKUP_DATE_FORMAT = LocalDate.now();
+    private static final LocalDate BACKUP_DATE = LocalDate.now();
     private final File dataFolder;
 
-    public BackupService(File dataFolder) {
+    public ConfigurationBackupService(File dataFolder) {
         this.dataFolder = dataFolder;
     }
 
@@ -28,7 +28,7 @@ public class BackupService {
             backupFolder.mkdirs();
         }
 
-        File currentBackupFolder = new File(backupFolder, BACKUP_DATE_FORMAT.toString());
+        File currentBackupFolder = new File(backupFolder, BACKUP_DATE.toString());
         if (!currentBackupFolder.exists()) {
             currentBackupFolder.mkdirs();
         }
@@ -94,7 +94,7 @@ public class BackupService {
             try {
                 LocalDate folderDate = LocalDate.parse(folder.getName());
 
-                long days = ChronoUnit.DAYS.between(folderDate, BACKUP_DATE_FORMAT);
+                long days = ChronoUnit.DAYS.between(folderDate, BACKUP_DATE);
 
                 if (days > 3) {
                     FileUtils.deleteDirectory(folder);
