@@ -35,7 +35,7 @@ public class ChatManagerCommand {
         this.noticeService.create()
             .staticNotice(this.clear)
             .notice(translation -> translation.chat().cleared())
-            .placeholder("{NICK}", sender.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
     }
@@ -51,7 +51,7 @@ public class ChatManagerCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.chat().enabled())
-            .placeholder("{NICK}", sender.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
     }
@@ -67,7 +67,7 @@ public class ChatManagerCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.chat().disabled())
-            .placeholder("{NICK}", sender.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
     }

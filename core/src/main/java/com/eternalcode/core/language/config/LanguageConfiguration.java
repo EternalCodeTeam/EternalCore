@@ -23,8 +23,7 @@ public class LanguageConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class LanguageSelector  {
-
-        @Description({ " ", "# Name of inventory" })
+        @Description("# Name of inventory")
         public String title = "&6Select a language";
 
         @Description({ " ", "# Size of inventory" })
@@ -35,8 +34,6 @@ public class LanguageConfiguration implements ReloadableConfig {
 
         @Contextual
         public static class Border {
-
-            @Description(" ")
             public boolean fill = true;
 
             @Description(" ")
