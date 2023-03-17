@@ -28,7 +28,8 @@ public class ConfigurationBackupService {
             backupFolder.mkdirs();
         }
 
-        File currentBackupFolder = new File(backupFolder, BACKUP_DATE.toString());
+        LocalDate currentDate = LocalDate.now();
+        File currentBackupFolder = new File(backupFolder, currentDate.toString());
         if (!currentBackupFolder.exists()) {
             currentBackupFolder.mkdirs();
         }
@@ -67,14 +68,17 @@ public class ConfigurationBackupService {
             if (file.isFile() && !file.getName().endsWith(BACKUP_FILE_EXTENSION)) {
                 File backupFile = new File(targetFolder, file.getName() + BACKUP_FILE_EXTENSION);
 
-                // copy file to backup and replace if exists
-                try {
-                    Files.copy(file.toPath(), backupFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                }
-                catch (IOException exception) {
-                    exception.printStackTrace();
-                }
+                this.copyToBackupFile(file, backupFile);
             }
+        }
+    }
+
+    private void copyToBackupFile(File targetFolder, File path) {
+        try {
+            Files.copy(targetFolder.toPath(), path.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -93,8 +97,9 @@ public class ConfigurationBackupService {
 
             try {
                 LocalDate folderDate = LocalDate.parse(folder.getName());
+                LocalDate currentDate = LocalDate.now();
 
-                long days = ChronoUnit.DAYS.between(folderDate, BACKUP_DATE);
+                long days = ChronoUnit.DAYS.between(folderDate, currentDate);
 
                 if (days > 3) {
                     FileUtils.deleteDirectory(folder);
