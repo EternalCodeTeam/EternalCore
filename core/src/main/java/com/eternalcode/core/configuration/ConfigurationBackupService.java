@@ -14,7 +14,6 @@ public class ConfigurationBackupService {
 
     private static final String BACKUP_FOLDER_NAME = "backup";
     private static final String BACKUP_FILE_EXTENSION = ".bak";
-    private static final LocalDate BACKUP_DATE = LocalDate.now();
     private final File dataFolder;
 
     public ConfigurationBackupService(File dataFolder) {
