@@ -30,7 +30,7 @@ public class PlayerCommandPreprocessListener implements Listener {
         Option<HelpTopic> helpTopic = Option.of(this.server.getHelpMap().getHelpTopic(command));
 
         helpTopic.onEmpty(() -> {
-            if (!this.config.chat.commandExact) {
+            if (!this.config.chat.replaceStandardHelpMessage) {
                 return;
             }
 
@@ -43,7 +43,7 @@ public class PlayerCommandPreprocessListener implements Listener {
             this.noticeService
                 .create()
                 .player(player.getUniqueId())
-                .notice(translation -> translation.chat().noCommand())
+                .notice(translation -> translation.chat().commandNotFound())
                 .placeholder("{COMMAND}", command)
                 .send();
         });

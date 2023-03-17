@@ -92,7 +92,7 @@ public class GiveCommand {
     }
 
     private void giveItem(Player player, Material material) {
-        int amount = this.pluginConfig.otherSettings.defaultGiveAmount;
+        int amount = this.pluginConfig.items.defaultGiveAmount;
 
         if (!material.isItem()) {
             this.noticeService.create()

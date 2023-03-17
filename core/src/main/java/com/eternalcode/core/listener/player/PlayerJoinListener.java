@@ -35,12 +35,6 @@ public class PlayerJoinListener implements Listener {
                 .send();
         }
 
-        if (this.config.otherSettings.gameModeOnJoin) {
-            if (player.hasPermission("eternalcore.staff.gamemodejoin")) {
-                player.setGameMode(GameMode.CREATIVE);
-            }
-        }
-
         if (this.config.sound.enabledAfterJoin) {
             for (Player online : this.server.getOnlinePlayers()) {
                 online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch);

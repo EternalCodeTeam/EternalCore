@@ -54,7 +54,7 @@ public class HelpOpCommand {
             .console()
             .player(uuid)
             .notice(translation -> translation.helpOp().format())
-            .placeholder("{NICK}", player.getName())
+            .placeholder("{PLAYER}", player.getName())
             .placeholder("{TEXT}", message);
 
         for (Player admin : this.server.getOnlinePlayers()) {

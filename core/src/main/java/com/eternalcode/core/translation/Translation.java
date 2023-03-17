@@ -93,7 +93,7 @@ public interface Translation {
         Notification slowModeSet();
         Notification slowMode();
         Notification disabledChatInfo();
-        Notification noCommand();
+        Notification commandNotFound();
         String alertMessageFormat();
     }
 
@@ -231,8 +231,8 @@ public interface Translation {
         Notification gameModeSetMessage();
 
         // online
-        Notification onlineMessage();
-        Notification listMessage();
+        Notification onlinePlayersCountMessage();
+        Notification onlinePlayersMessage();
 
         // slot-bypass
         List<String> fullServerSlots();

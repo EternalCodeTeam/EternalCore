@@ -236,7 +236,6 @@ public class EternalCore extends JavaPlugin {
 
         /* Configuration */
         ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(this.getDataFolder());
-
         this.configurationManager = new ConfigurationManager(configurationBackupService, this.getDataFolder());
 
         this.pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
@@ -287,21 +286,18 @@ public class EternalCore extends JavaPlugin {
         this.afkService = new AfkService(this.pluginConfiguration.afk, this.publisher);
         this.warpManager = WarpManager.create(warpRepository);
         this.homeManager = HomeManager.create(homeRepository);
-        this.teleportRequestService = new TeleportRequestService(this.pluginConfiguration.otherSettings);
+        this.teleportRequestService = new TeleportRequestService(this.pluginConfiguration.tpa);
 
         this.translationManager = TranslationManager.create(this.configurationManager, this.languageConfiguration);
         this.chatManager = new ChatManager(this.pluginConfiguration.chat);
 
         /* Adventure */
-
         this.audiencesProvider = BukkitAudiences.create(this);
         this.miniMessage = MiniMessage.builder()
             .postProcessor(new LegacyColorProcessor())
             .build();
 
         /* Audiences System */
-
-
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
@@ -343,10 +339,6 @@ public class EternalCore extends JavaPlugin {
             .contextualBind(Viewer.class,   new ViewerContextual(this.viewerProvider))
             .contextualBind(User.class,     new UserContextual(this.translationManager, this.userManager))
 
-            .typeBind(PluginConfiguration.class,               () -> this.pluginConfiguration)
-            .typeBind(LocationsConfiguration.class,            () -> this.locationsConfiguration)
-            .typeBind(PluginConfiguration.OtherSettings.class, () -> this.pluginConfiguration.otherSettings)
-
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
             .permissionHandler(new PermissionMessage(this.viewerProvider, this.audiencesProvider, this.translationManager, this.miniMessage))
             .resultHandler(Notification.class, new NotificationHandler(this.viewerProvider, this.noticeService))
@@ -381,7 +373,7 @@ public class EternalCore extends JavaPlugin {
 
                 // Tpa Commands
                 new TpaCommand(this.teleportRequestService, this.noticeService),
-                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, this.pluginConfiguration.otherSettings, server),
+                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, this.pluginConfiguration.tpa, server),
                 new TpaDenyCommand(this.teleportRequestService, this.noticeService, server),
 
                 // Spawn & Warp Command
@@ -432,7 +424,8 @@ public class EternalCore extends JavaPlugin {
                 new LanguageCommand(this.languageInventory),
                 new IgnoreCommand(ignoreRepository, this.noticeService),
                 new UnIgnoreCommand(ignoreRepository, this.noticeService),
-                ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.clearLines)
+
+                ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.linesToClear)
             )
 
             .commandGlobalEditor(new CommandConfigurator(commandConfiguration))

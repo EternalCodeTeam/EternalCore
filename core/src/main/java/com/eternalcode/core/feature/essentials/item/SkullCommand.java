@@ -36,7 +36,7 @@ public class SkullCommand {
 
             this.noticeService.create()
                 .notice(translation -> translation.item().skullMessage())
-                .placeholder("{NICK}", name)
+                .placeholder("{SKULL}", name)
                 .player(player.getUniqueId())
                 .send();
         });
