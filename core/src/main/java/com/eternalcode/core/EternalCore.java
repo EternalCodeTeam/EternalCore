@@ -23,6 +23,7 @@ import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.handler.InvalidUsage;
 import com.eternalcode.core.command.handler.NotificationHandler;
 import com.eternalcode.core.command.handler.PermissionMessage;
+import com.eternalcode.core.configuration.ConfigurationBackupService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
@@ -152,11 +153,8 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -237,7 +235,8 @@ public class EternalCore extends JavaPlugin {
         this.publisher = new LocalPublisher();
 
         /* Configuration */
-        this.configurationManager = new ConfigurationManager(this.getDataFolder());
+        ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(this.getDataFolder());
+        this.configurationManager = new ConfigurationManager(configurationBackupService, this.getDataFolder());
 
         this.pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
