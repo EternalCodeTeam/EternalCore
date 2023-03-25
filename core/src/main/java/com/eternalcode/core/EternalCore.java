@@ -544,6 +544,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
         return this.bridgeManager;
     }
 
+    @Override
     public UserManager getUserManager() {
         return this.userManager;
     }
@@ -596,6 +597,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
         return this.miniMessage;
     }
 
+    @Override
     public BukkitViewerProvider getViewerProvider() {
         return this.viewerProvider;
     }
