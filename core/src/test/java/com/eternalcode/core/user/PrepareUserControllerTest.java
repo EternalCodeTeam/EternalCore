@@ -1,7 +1,6 @@
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.test.MockServer;
-import com.eternalcode.core.user.client.ClientBukkitSettings;
 import com.eternalcode.core.user.client.ClientSettings;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.BeforeEach;

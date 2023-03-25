@@ -1,5 +1,6 @@
-package com.eternalcode.core.user.client;
+package com.eternalcode.core.user;
 
+import com.eternalcode.core.user.client.ClientSettings;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import panda.std.Option;
@@ -8,13 +9,13 @@ import java.lang.ref.WeakReference;
 import java.util.Locale;
 import java.util.UUID;
 
-public class ClientBukkitSettings implements ClientSettings {
+class ClientBukkitSettings implements ClientSettings {
 
     private final Server server;
     private final UUID uuid;
     private WeakReference<Player> playerReference;
 
-    public ClientBukkitSettings(Server server, UUID uuid) {
+    ClientBukkitSettings(Server server, UUID uuid) {
         this.server = server;
         this.uuid = uuid;
         this.playerReference = new WeakReference<>(server.getPlayer(uuid));
