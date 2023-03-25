@@ -1,6 +1,6 @@
 rootProject.name = "EternalCore"
 
-include("api")
+include(":api")
 include(":core")
 include(":paper")
 
