@@ -9,7 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-@Route(name = "tpup")
+@Route(name = "tpup", aliases = { "up", "teleportup" })
 @Permission("eternalcore.tpup")
 public class TeleportUpCommand {
 
