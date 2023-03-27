@@ -150,6 +150,9 @@ public class ENTranslation extends AbstractTranslation {
         @Description({ "# {PLAYER} - Teleported player, {ARG-PLAYER} - Player to whom another player has been transferred" })
         public Notification teleportedPlayerToPlayer = Notification.chat("<dark_gray>» <green>Successfully teleported {PLAYER} to {ARG-PLAYER}!");
 
+        @Description({ "# {Y} - Y coordinate of the highest block" })
+        public Notification teleportedToHighestBlock = Notification.chat("<dark_gray>» <green>Teleported successfully to the highest block! (Y: {Y})");
+
         // Task
         @Description({ "# {TIME} - Teleportation time" })
         public Notification teleportTimerFormat = Notification.actionbar("<green>Teleporting in <white>{TIME}");
