@@ -26,7 +26,7 @@ public class TeleportUpCommand {
         this.teleportPlayerToHighestBlock(player);
     }
 
-    void teleportPlayerToHighestBlock(Player player) {
+    private void teleportPlayerToHighestBlock(Player player) {
         Location playerLocation = player.getLocation();
         World world = player.getWorld();
         int highestBlockYAt = world.getHighestBlockYAt(playerLocation);
