@@ -125,6 +125,7 @@ import com.eternalcode.core.teleport.command.TeleportCommand;
 import com.eternalcode.core.teleport.command.TeleportHereCommand;
 import com.eternalcode.core.teleport.command.TeleportToPositionCommand;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
+import com.eternalcode.core.teleport.command.TeleportUpCommand;
 import com.eternalcode.core.teleport.request.TpaAcceptCommand;
 import com.eternalcode.core.teleport.request.TpaCommand;
 import com.eternalcode.core.teleport.request.TpaDenyCommand;
@@ -366,10 +367,12 @@ public class EternalCore extends JavaPlugin {
                 new DayCommand(this.noticeService),
                 new NightCommand(this.noticeService),
 
+                // Tp Commands
                 new TeleportCommand(this.noticeService, this.teleportService),
                 new TeleportToPositionCommand(this.noticeService, this.teleportService),
                 new TeleportHereCommand(this.noticeService, this.teleportService),
                 new TeleportBackCommand(this.teleportService, this.noticeService),
+                new TeleportUpCommand(this.teleportService, this.noticeService),
 
                 // Tpa Commands
                 new TpaCommand(this.teleportRequestService, this.noticeService),

@@ -63,6 +63,7 @@ public interface Translation {
         // teleport
         Notification teleportedToPlayer();
         Notification teleportedPlayerToPlayer();
+        Notification teleportedToHighestBlock();
 
         // Task
         Notification teleportTimerFormat();

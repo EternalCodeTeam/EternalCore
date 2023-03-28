@@ -146,6 +146,9 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ "# {PLAYER} - Gracz który został teleportowany, {ARG-PLAYER} - Gracz do którego został teleportowany inny gracz" })
         public Notification teleportedPlayerToPlayer = Notification.chat("<dark_gray>» <green>Przeteleportowano gracza {PLAYER} do gracza {ARG-PLAYER}!");
 
+        @Description({ "# {Y} - Koordynat Y najwyżej położonego bloku" })
+        public Notification teleportedToHighestBlock = Notification.chat("<dark_gray>» <green>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
+
         // Task
         @Description({ "# {TIME} - Czas teleportacji" })
         public Notification teleportTimerFormat = Notification.actionbar("<green>Teleportacja za <white>{TIME}");
