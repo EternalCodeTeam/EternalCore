@@ -367,7 +367,7 @@ public class EternalCore extends JavaPlugin {
                 new DayCommand(this.noticeService),
                 new NightCommand(this.noticeService),
 
-                /// Tp Commands
+                // Tp Commands
                 new TeleportCommand(this.noticeService, this.teleportService),
                 new TeleportToPositionCommand(this.noticeService, this.teleportService),
                 new TeleportHereCommand(this.noticeService, this.teleportService),
