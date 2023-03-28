@@ -162,7 +162,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class EternalCore extends JavaPlugin {
+public class EternalCore extends JavaPlugin implements EternalCoreApi {
 
     private static EternalCore instance;
 
@@ -225,6 +225,8 @@ public class EternalCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        EternalCoreApiProvider.initialize(this);
+
         Stopwatch started = Stopwatch.createStarted();
         Server server = this.getServer();
 
@@ -470,6 +472,8 @@ public class EternalCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        EternalCoreApiProvider.deinitialize();
+
         if (this.liteCommands != null) {
             this.liteCommands.getPlatform().unregisterAll();
         }
@@ -543,6 +547,7 @@ public class EternalCore extends JavaPlugin {
         return this.bridgeManager;
     }
 
+    @Override
     public UserManager getUserManager() {
         return this.userManager;
     }
@@ -595,6 +600,7 @@ public class EternalCore extends JavaPlugin {
         return this.miniMessage;
     }
 
+    @Override
     public BukkitViewerProvider getViewerProvider() {
         return this.viewerProvider;
     }

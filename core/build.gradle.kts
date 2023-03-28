@@ -9,6 +9,7 @@ plugins {
 
 dependencies {
     // modules
+    implementation(project(":api"))
     implementation(project(":paper"))
 
     // minecraft development api

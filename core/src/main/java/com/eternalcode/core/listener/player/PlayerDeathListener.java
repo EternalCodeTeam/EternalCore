@@ -1,10 +1,7 @@
 package com.eternalcode.core.listener.player;
 
 import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.RandomUtil;
-import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.viewer.ViewerProvider;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
