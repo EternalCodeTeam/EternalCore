@@ -32,7 +32,6 @@ public class ButcherCommand {
         this.safeChunksNumber = pluginConfiguration.butcher.safeChunkNumber;
     }
 
-    @Async
     @Execute(required = 0)
     void execute(Player player) {
         this.execute(player, 2, MobType.ALL);
