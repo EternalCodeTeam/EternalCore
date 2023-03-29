@@ -1,7 +1,5 @@
 package com.eternalcode.core.feature.essentials.mob;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -16,24 +14,36 @@ public enum MobType {
     UNDEFINED(false, false),
     ALL(true, true);
 
-    @Getter @Setter
     private Class<? extends Entity> mobClass;
 
-    @Getter
-    private final boolean parseable;
+    private final boolean isParseable;
+    private final boolean isSuggeestable;
 
-    @Getter
-    private final boolean suggeestable;
-
-    MobType(@Nullable Class<? extends Entity> mobClass, boolean parseable, boolean suggeestable) {
+    MobType(@Nullable Class<? extends Entity> mobClass, boolean isParseable, boolean isSuggeestable) {
         this.mobClass = mobClass;
-        this.parseable = parseable;
-        this.suggeestable = suggeestable;
+        this.isParseable = isParseable;
+        this.isSuggeestable = isSuggeestable;
     }
 
-    MobType(boolean parseable, boolean suggeestable) {
-        this.parseable = parseable;
-        this.suggeestable = suggeestable;
+    MobType(boolean parseable, boolean isSuggeestable) {
+        this.isParseable = parseable;
+        this.isSuggeestable = isSuggeestable;
+    }
+
+    public Class<? extends Entity> getMobClass() {
+        return this.mobClass;
+    }
+
+    public void setMobClass(Class<? extends Entity> mobClass) {
+        this.mobClass = mobClass;
+    }
+
+    public boolean isParseable() {
+        return this.isParseable;
+    }
+
+    public boolean isSuggeestable() {
+        return this.isSuggeestable;
     }
 
     public static boolean is(Entity entity, Class<? extends Entity> entityClass) {
