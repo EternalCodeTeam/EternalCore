@@ -13,7 +13,7 @@ import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
-import com.eternalcode.core.command.argument.MobTypeArgument;
+import com.eternalcode.core.command.argument.MobEntityArgument;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.command.argument.home.HomeArgument;
 import com.eternalcode.core.command.configurator.CommandConfiguration;
@@ -66,7 +66,7 @@ import com.eternalcode.core.feature.essentials.item.ItemLoreCommand;
 import com.eternalcode.core.feature.essentials.item.ItemNameCommand;
 import com.eternalcode.core.feature.essentials.item.RepairCommand;
 import com.eternalcode.core.feature.essentials.item.SkullCommand;
-import com.eternalcode.core.feature.essentials.mob.MobType;
+import com.eternalcode.core.feature.essentials.mob.MobEntity;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayerCountCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayersListCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
@@ -332,7 +332,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
             .argument(Player.class, RequesterArgument.KEY,      new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
             .argument(Duration.class, DurationArgument.KEY,     new DurationArgument(this.viewerProvider, this.translationManager))
             .argument(Integer.class, SpeedArgument.KEY,         new SpeedArgument(this.viewerProvider, this.translationManager))
-            .argument(MobType.class,                            new MobTypeArgument(this.viewerProvider, this.translationManager))
+            .argument(MobEntity.class,                          new MobEntityArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class, new LocationArgument(this.translationManager, this.viewerProvider))

@@ -2,8 +2,8 @@ package com.eternalcode.core.feature.essentials.mob;
 
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.util.EntityUtil;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.async.Async;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -34,12 +34,13 @@ public class ButcherCommand {
 
     @Execute(required = 0)
     void execute(Player player) {
-        this.execute(player, 2, MobType.ALL);
+        this.execute(player, 2, new MobEntity(MobType.ALL));
     }
 
     @Execute(required = 2)
     @SuppressWarnings("SameParameterValue")
-    void execute(Player player, @Arg int chunks, @Arg MobType mobType) {
+    void execute(Player player, @Arg int chunks, @Arg MobEntity mobEntity) {
+        MobType mobType = mobEntity.getMobType();
 
         if (mobType == MobType.UNDEFINED) {
             this.noticeService.create()
@@ -50,10 +51,10 @@ public class ButcherCommand {
         }
 
         this.killMobs(player, chunks, (entity -> switch (mobType) {
-            case PASSIVE -> MobType.is(entity, Animals.class);
-            case AGGRESSIVE -> MobType.is(entity, Monster.class);
-            case OTHER -> MobType.is(entity, mobType.getMobClass());
-            case ALL -> MobType.isMob(entity);
+            case PASSIVE -> EntityUtil.is(entity, Animals.class);
+            case AGGRESSIVE -> EntityUtil.is(entity, Monster.class);
+            case OTHER -> EntityUtil.is(entity, mobEntity.getEntityClass());
+            case ALL -> EntityUtil.isMob(entity);
 
             default -> throw new IllegalStateException("MobType cannot be UNDEFINED!");
         }));
