@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.EntityUtil;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings("SameParameterValue")
 @Route(name = "butcher", aliases = { "killmob" })
 @Permission("eternalcore.butcher")
 public class ButcherCommand {
@@ -32,13 +34,17 @@ public class ButcherCommand {
         this.safeChunksNumber = pluginConfiguration.butcher.safeChunkNumber;
     }
 
-    @Execute(required = 0)
+    @Execute
     void execute(Player player) {
-        this.execute(player, 2, new MobEntity(MobType.ALL));
+        this.execute(player, 2);
+    }
+
+    @Execute(required = 1)
+    void execute(Player player, @Arg int chunks) {
+        this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
     @Execute(required = 2)
-    @SuppressWarnings("SameParameterValue")
     void execute(Player player, @Arg int chunks, @Arg MobEntity mobEntity) {
         MobType mobType = mobEntity.getMobType();
 
