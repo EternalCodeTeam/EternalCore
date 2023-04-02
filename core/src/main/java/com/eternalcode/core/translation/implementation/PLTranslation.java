@@ -112,7 +112,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ "# {PLAYER} - Gracz który wysłał wiadomość na helpop, {TEXT} - Treść wysłanej wiadomości" })
         public Notification format = Notification.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{PLAYER}<white>: <white>{TEXT}");
         @Description(" ")
-        public Notification send = Notification.chat("<white>▶ <green>Wiadomość została wysłana do administracji");
+        public Notification send = Notification.chat("<green>▶ <white>Wiadomość została wysłana do administracji");
         @Description("# {TIME} - Czas do końca blokady (cooldown)")
         public Notification helpOpDelay = Notification.chat("<white>▶ <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
     }
@@ -141,36 +141,36 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLTeleportSection implements TeleportSection {
         // teleport
         @Description({ "# {PLAYER} - Gracz który został teleportowany" })
-        public Notification teleportedToPlayer = Notification.chat("<dark_gray>» <green>Przeteleportowano do gracza {PLAYER}!");
+        public Notification teleportedToPlayer = Notification.chat("<green>▶ <white>Przeteleportowano do gracza <green>{PLAYER}!");
 
         @Description({ "# {PLAYER} - Gracz który został teleportowany, {ARG-PLAYER} - Gracz do którego został teleportowany inny gracz" })
-        public Notification teleportedPlayerToPlayer = Notification.chat("<dark_gray>» <green>Przeteleportowano gracza {PLAYER} do gracza {ARG-PLAYER}!");
+        public Notification teleportedPlayerToPlayer = Notification.chat("<green>▶ <white>Przeteleportowano gracza <green>{PLAYER} <white>do gracza <green>{ARG-PLAYER}<white>!");
 
         @Description({ "# {Y} - Koordynat Y najwyżej położonego bloku" })
-        public Notification teleportedToHighestBlock = Notification.chat("<dark_gray>» <green>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
+        public Notification teleportedToHighestBlock = Notification.chat("<green>▶ <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
 
         // Task
         @Description({ "# {TIME} - Czas teleportacji" })
-        public Notification teleportTimerFormat = Notification.actionbar("<green>Teleportacja za <white>{TIME}");
+        public Notification teleportTimerFormat = Notification.actionbar("<green>▶ <white>Teleportacja za <green>{TIME}");
         @Description(" ")
-        public Notification teleported = Notification.of("<dark_gray>» <green>Przeteleportowano!", NoticeType.CHAT, NoticeType.ACTIONBAR);
-        public Notification teleporting = Notification.chat("<dark_gray>» <green>Teleportowanie...");
+        public Notification teleported = Notification.of("<green>▶ <white>Przeteleportowano!", NoticeType.CHAT, NoticeType.ACTIONBAR);
+        public Notification teleporting = Notification.chat("<green>▶ <white>Teleportowanie...");
         public Notification teleportTaskCanceled = Notification.chat("<dark_red>Błąd: <red>Ruszyłeś się, teleportacja została przerwana!");
         public Notification teleportTaskAlreadyExist = Notification.chat("<dark_red>Błąd: <red>Teleportujesz się już!");
 
         // Coordinates XYZ
         @Description({ " ", "# {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
-        public Notification teleportedToCoordinates = Notification.chat("<dark_gray>» <gold>Przeteleportowano na współrzędne x: <red>{X}<gold>, y: <red>{Y}<gold>, z: <red>{Z}");
+        public Notification teleportedToCoordinates = Notification.chat("<green>▶ <white>Przeteleportowano na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
         @Description({ " ", "# {PLAYER} - Gracz który został teleportowany, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
-        public Notification teleportedSpecifiedPlayerToCoordinates = Notification.chat("<dark_gray>» <gold>Przeteleportowano gracza <red>{PLAYER} <gold>na współrzędne x: <red>{X}<gold>, y: <red>{Y}<gold>, z: <red>{Z}");
+        public Notification teleportedSpecifiedPlayerToCoordinates = Notification.chat("<green>▶ <white>Przeteleportowano gracza <green>{PLAYER} <white>na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
 
         // Back
         @Description(" ")
-        public Notification teleportedToLastLocation = Notification.chat("<dark_gray>» <gray>Przeteleportowano do ostatniej lokalizacji!");
+        public Notification teleportedToLastLocation = Notification.chat("<green>▶ <white>Przeteleportowano do ostatniej lokalizacji!");
         @Description({ " ", "# {PLAYER} - Gracz który został teleportowany" })
-        public Notification teleportedSpecifiedPlayerLastLocation = Notification.chat("<dark_gray>» <gray>Przeteleportowano gracza {PLAYER} do ostatniej lokalizacji!");
+        public Notification teleportedSpecifiedPlayerLastLocation = Notification.chat("<green>▶ <white>Przeteleportowano gracza {PLAYER} do ostatniej lokalizacji!");
         @Description(" ")
-        public Notification lastLocationNoExist = Notification.chat("<dark_gray>» <red>Nie ma zapisanej ostatniej lokalizacji!");
+        public Notification lastLocationNoExist = Notification.chat("<green>▶ <white>Nie ma zapisanej ostatniej lokalizacji!");
     }
 
     @Description({
@@ -183,29 +183,29 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLChatSection implements ChatSection {
         @Description({ "# {PLAYER} - Gracz który wykonał akcje dla czatu" })
-        public Notification disabled = Notification.chat("<dark_gray>» <red>Czat został wyłączony przez <gold>{PLAYER}<red>!");
-        public Notification enabled = Notification.chat("<dark_gray>» <green>Czat został włączony przez <white>{PLAYER}<green>!");
-        public Notification cleared = Notification.chat("<dark_gray>» <gold>Czat został wyczyszczony przez <red>{PLAYER}<gold>!");
+        public Notification disabled = Notification.chat("<green>▶ <white>Czat został wyłączony przez <green>{PLAYER}<white>!");
+        public Notification enabled = Notification.chat("<green>▶ <white>Czat został włączony przez <green>{PLAYER}<white>!");
+        public Notification cleared = Notification.chat("<green>▶ <white>Czat został wyczyszczony przez <green>{PLAYER}<white>!");
 
         @Description(" ")
         public Notification alreadyDisabled = Notification.chat("<dark_red>Błąd: <red>Czat jest już wyłączony!");
         public Notification alreadyEnabled = Notification.chat("<dark_red>Błąd: <red>Czat jest już włączony!");
 
         @Description({ " ", "# {SLOWMODE} - Czas powolnego wysyłania wiadomości" })
-        public Notification slowModeSet = Notification.chat("<dark_gray>» <green>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
+        public Notification slowModeSet = Notification.chat("<green>▶ <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
 
         @Description({ " ", "# {TIME} - Czas powolnego wysyłania wiadomości" })
-        public Notification slowMode = Notification.chat("<dark_gray>» <red>Następną wiadomość możesz wysłać za: <gold>{TIME}<red>!");
+        public Notification slowMode = Notification.chat("<red>▶ <dark_red>Następną wiadomość możesz wysłać za: <gold>{TIME}<dark_red>!");
 
         @Description(" ")
-        public Notification disabledChatInfo = Notification.chat("<dark_gray>» <red>Czat jest obecnie wyłączony!");
+        public Notification disabledChatInfo = Notification.chat("<red>▶ <dark_red>Czat jest obecnie wyłączony!");
 
 
         @Description({ " ", "# {BROADCAST} - Ogłoszenie" })
         public String alertMessageFormat = "<red><bold>OGŁOSZENIE: <gray>{BROADCAST}";
 
         @Description(" ")
-        public Notification commandNotFound = Notification.chat("<dark_gray>» <red>Komenda <yellow>{COMMAND} <red>nie istnieje!");
+        public Notification commandNotFound = Notification.chat("<red>▶ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
     }
 
     @Description({
@@ -221,7 +221,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notification tpaSelfMessage = Notification.chat("<dark_red>Błąd: <red>Nie możesz teleportować się samodzielnie!");
         public Notification tpaAlreadySentMessage = Notification.chat("<dark_red>Błąd: <red>Już wysłałeś prośbę o teleportację!");
         @Description({ " ", "# {PLAYER} - Gracz który wysłał prośbę o teleportację" })
-        public Notification tpaSentMessage = Notification.chat("<dark_gray>» <green>Wysłałeś prośbę o teleportację do gracza: <gray>{PLAYER}<green>!");
+        public Notification tpaSentMessage = Notification.chat("<green>▶ <white>Wysłałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!");
 
         @Description({
             " ",
@@ -231,7 +231,7 @@ public class PLTranslation extends AbstractTranslation {
         })
         @Description({ " ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza" })
         public List<Notification> tpaReceivedMessage = List.of(
-            Notification.chat("<dark_gray>» <green>Otrzymałeś prośbę o teleportację od gracza: <gray>{PLAYER}<green>!"),
+            Notification.chat("<green>▶ <white>Otrzymałeś prośbę o teleportację od gracza: <green>{PLAYER}<white>!"),
             Notification.chat("<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>"),
             Notification.chat("<hover:show_text:'<red>Odrzucić prośbę o teleportacje?</red>'><gold><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpdeny {PLAYER} <red>by ją odrzucić! <gray>(Kliknij)</gray></click></gold></hover>")
         );
@@ -240,25 +240,25 @@ public class PLTranslation extends AbstractTranslation {
         public Notification tpaDenyNoRequestMessage = Notification.chat("<dark_red>Błąd: <red>Nie otrzymałeś prośby o teleportację od tego gracza!");
 
         @Description({ " ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza" })
-        public Notification tpaDenyDoneMessage = Notification.chat("<dark_gray>» <red>Odrzuciłeś prośbę o teleportację od gracza: <gray>{PLAYER}<red>!");
+        public Notification tpaDenyDoneMessage = Notification.chat("<red>▶ <dark_red>Odrzuciłeś prośbę o teleportację od gracza: <red>{PLAYER}<dark_red>!");
 
         @Description({ " ", "# {PLAYER} - Gracz który odrzucił prośbę o teleportacje" })
-        public Notification tpaDenyReceivedMessage = Notification.chat("<dark_gray>» <red>Gracz: {PLAYER} odrzucił twoją prośbę o teleportację!");
+        public Notification tpaDenyReceivedMessage = Notification.chat("<red>▶ <dark_red>Gracz: <red>{PLAYER} <dark_red>odrzucił twoją prośbę o teleportację!");
 
         @Description(" ")
-        public Notification tpaDenyAllDenied = Notification.chat("<dark_gray>» <red>Odrzucono wszystkie prośby o teleportację!");
+        public Notification tpaDenyAllDenied = Notification.chat("<red>▶ <dark_red>Odrzucono wszystkie prośby o teleportację!");
 
         @Description({ " ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza" })
-        public Notification tpaAcceptMessage = Notification.chat("<dark_gray>» <green>Zaakceptowałeś prośbę o teleportację od gracza: <gray>{PLAYER}<green>!");
+        public Notification tpaAcceptMessage = Notification.chat("<green>▶ <white>Zaakceptowałeś prośbę o teleportację od gracza: <green>{PLAYER}<white>!");
 
         @Description(" ")
         public Notification tpaAcceptNoRequestMessage = Notification.chat("<dark_red>Błąd: <red>Ten gracz nie wysłał do ciebie prośby o teleportację!");
 
         @Description({ " ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza" })
-        public Notification tpaAcceptReceivedMessage = Notification.chat("<dark_gray>» <green>Gracz: <gray>{PLAYER} <green>zaakceptował twoją prośbę o teleportację!");
+        public Notification tpaAcceptReceivedMessage = Notification.chat("<green>▶ <white>Gracz: <green>{PLAYER} <white>zaakceptował twoją prośbę o teleportację!");
 
         @Description(" ")
-        public Notification tpaAcceptAllAccepted = Notification.chat("<dark_gray>» <green>Zaakceptowano wszystkie prośby o teleportację!");
+        public Notification tpaAcceptAllAccepted = Notification.chat("<green>▶ <white>Zaakceptowano wszystkie prośby o teleportację!");
     }
 
     @Description({
@@ -271,12 +271,12 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLWarpSection implements WarpSection {
         @Description("# {WARP} - Nazwa warpu")
-        public Notification warpAlreadyExists = Notification.chat("<dark_red>Błąd: <red>Warp o nazwie <yellow>{WARP}</yellow> <dark_red>już istnieje!");
-        public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warp <yellow>{WARP}</yellow>!");
-        public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warp <yellow>{WARP}</yellow>!");
+        public Notification warpAlreadyExists = Notification.chat("<dark_red>Błąd: <red>Warp o nazwie <dark_red>{WARP} <red>już istnieje!");
+        public Notification create = Notification.chat("<green>▶ <white>Stworzono warp <green>{WARP}<white>!");
+        public Notification remove = Notification.chat("<green>▶ <white>Usunięto warp <green>{WARP}<white>!");
 
         @Description(" ")
-        public Notification notExist = Notification.chat("<dark_gray>» <red>Nie odnaleziono takiego warpu!");
+        public Notification notExist = Notification.chat("<red>▶ <dark_red>Nie odnaleziono takiego warpu!");
     }
 
     @Description({
@@ -288,15 +288,15 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLHomeSection implements HomeSection {
-        public Notification notExist = Notification.chat("<dark_gray>» <red>Nie ma takiego domu!");
+        public Notification notExist = Notification.chat("<red>▶ <dark_red>Nie ma takiego domu!");
 
         @Description({ " ", "# {HOME} - Nazwa domu" })
-        public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono home {HOME}!");
-        public Notification delete = Notification.chat("<dark_gray>» <gray>Usunięto home {HOME}!");
-        public Notification overrideHomeLocation = Notification.chat("<dark_gray>» <gray>Nadpisałeś lokalizację domu {HOME}!");
+        public Notification create = Notification.chat("<green>▶ <white>Stworzono home {HOME}!");
+        public Notification delete = Notification.chat("<green>▶ <white>Usunięto home {HOME}!");
+        public Notification overrideHomeLocation = Notification.chat("<green>▶ <white>Nadpisałeś lokalizację domu {HOME}!");
 
         @Description({ " ", "# {LIMIT} - Limit domów" })
-        public Notification limit = Notification.chat("<dark_gray>» <red>Osiągnąłeś limit domów! Twój limit to {LIMIT}.");
+        public Notification limit = Notification.chat("<green>▶ <white>Osiągnąłeś limit domów! Twój limit to {LIMIT}.");
     }
 
     @Description({
@@ -328,21 +328,21 @@ public class PLTranslation extends AbstractTranslation {
         public Notification ignorePlayer = Notification.chat("<green>▶ <white>Zignorowano gracza <red>{PLAYER}<white>!");
 
         @Description(" ")
-        public Notification ignoreAll = Notification.chat("<green>▶ <white>Zignorowano wszystkich graczy!");
-        public Notification cantIgnoreYourself = Notification.chat("<dark_red>▶ <red>Nie możesz zignorować samego siebie!");
+        public Notification ignoreAll = Notification.chat("<red>▶  <dark_red>Zignorowano wszystkich graczy!");
+        public Notification cantIgnoreYourself = Notification.chat("<red>▶  <dark_red>Nie możesz zignorować samego siebie!");
 
         @Description({ " ", "# {PLAYER} - Gracz który jest zignorowany" })
-        public Notification alreadyIgnorePlayer = Notification.chat("<dark_gray>» <red>Gracz <gray>{PLAYER} <red>jest już zignorowany!");
+        public Notification alreadyIgnorePlayer = Notification.chat("<red>▶  <dark_red>Gracz <red>{PLAYER} jest już zignorowany!");
 
         @Description({ " ", "# {PLAYER} - Gracz który jest zignorowany" })
-        public Notification unIgnorePlayer = Notification.chat("<green>▶ <white>Od ignorowano gracza <green>{PLAYER}<white>!");
+        public Notification unIgnorePlayer = Notification.chat("<red>▶  <dark_red>Od ignorowano gracza <red>{PLAYER}<dark_red>!");
 
         @Description(" ")
-        public Notification unIgnoreAll = Notification.chat("<green>▶ <white>>Od ignorowano wszystkich graczy!");
+        public Notification unIgnoreAll = Notification.chat("<red>▶  <dark_red>Od ignorowano wszystkich graczy!");
         public Notification cantUnIgnoreYourself = Notification.chat("<red>▶  <dark_red>Nie możesz od ignorować samego siebie!");
 
         @Description({ " ", "# {PLAYER} - Gracz który jest zignorowany" })
-        public Notification notIgnorePlayer = Notification.chat("<green>▶ <red>Gracz <gray>{PLAYER} <red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!");
+        public Notification notIgnorePlayer = Notification.chat("<red>▶  <dark_red>Gracz <red>{PLAYER} <dark_red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!");
     }
 
     @Description({
