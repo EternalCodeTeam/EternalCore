@@ -26,34 +26,25 @@ public class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
 
     @Override
     public Result<MobEntity, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
-        MobEntity mob = new MobEntity(MobType.UNDEFINED);
-
-        Option.runThrowing(() -> {
+        try {
             MobType mobType = MobType.valueOf(argument.toUpperCase());
 
-            if (!mobType.isParseable()) {
-                return;
+            if (mobType.isParseable()) {
+                return Result.ok(new MobEntity(mobType));
             }
-
-            mob.setMobType(mobType);
-        });
-
-        if (mob.getMobType() == MobType.UNDEFINED) {
-
-            Option.runThrowing(() -> {
-                EntityType entityType = EntityType.valueOf(argument.toUpperCase());
-
-                if (!EntityUtil.isMob(entityType)) {
-                    return;
-                }
-
-                mob.setMobType(MobType.OTHER);
-                mob.setMobClass(entityType.getEntityClass());
-            });
-
         }
+        catch (IllegalArgumentException ignore) {}
 
-        return Result.when(mob.getMobType() != MobType.UNDEFINED, mob, translation.argument().noArgument());
+        try {
+            EntityType entityType = EntityType.valueOf(argument.toUpperCase());
+
+            if (EntityUtil.isMob(entityType)) {
+                return new MobEntity(MobType.OTHER, entityType.getEntityClass());
+            }
+        }
+        catch (IllegalArgumentException ignore) {}
+
+        return Result.error(translation.argument().noArgument());
     }
 
     @Override
