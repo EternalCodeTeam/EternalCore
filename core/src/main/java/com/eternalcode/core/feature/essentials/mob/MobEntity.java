@@ -1,29 +1,30 @@
 package com.eternalcode.core.feature.essentials.mob;
 
+import com.eternalcode.core.util.EntityUtil;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 
 public class MobEntity {
 
-    private MobType mobType;
+    private final MobType mobType;
     private Class<? extends Entity> entityClass;
 
     public MobEntity(MobType mobType) {
         this.mobType = mobType;
     }
 
-    public Class<? extends Entity> getEntityClass() {
-        return this.entityClass;
-    }
-
-    public void setMobClass(Class<? extends Entity> entityClass) {
+    public MobEntity(MobType mobType, Class<? extends Entity> entityClass) {
+        this.mobType = mobType;
         this.entityClass = entityClass;
     }
 
-    public MobType getMobType() {
-        return this.mobType;
-    }
-
-    public void setMobType(MobType mobType) {
-        this.mobType = mobType;
+    public boolean isMatch(Entity entity) {
+        return switch (this.mobType) {
+            case PASSIVE -> EntityUtil.is(entity, Animals.class);
+            case AGGRESSIVE -> EntityUtil.is(entity, Monster.class);
+            case OTHER -> EntityUtil.is(entity, this.entityClass);
+            case ALL -> EntityUtil.isMob(entity);
+        };
     }
 }

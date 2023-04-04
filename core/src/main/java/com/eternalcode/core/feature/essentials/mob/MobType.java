@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.essentials.mob;
 
 public enum MobType {
+
     PASSIVE(true, true),
     AGGRESSIVE(true, true),
     OTHER(false, false),
-    UNDEFINED(false, false),
     ALL(true, true);
 
     private final boolean isParseable;

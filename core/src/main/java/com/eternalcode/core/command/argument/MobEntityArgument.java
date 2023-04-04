@@ -11,7 +11,6 @@ import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.entity.EntityType;
-import panda.std.Option;
 import panda.std.Result;
 
 import java.util.List;
@@ -33,16 +32,20 @@ public class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
                 return Result.ok(new MobEntity(mobType));
             }
         }
-        catch (IllegalArgumentException ignore) {}
+        catch (IllegalArgumentException ignore) {
+            /* ignore */
+        }
 
         try {
             EntityType entityType = EntityType.valueOf(argument.toUpperCase());
 
             if (EntityUtil.isMob(entityType)) {
-                return new MobEntity(MobType.OTHER, entityType.getEntityClass());
+                return Result.ok(new MobEntity(MobType.OTHER, entityType.getEntityClass()));
             }
         }
-        catch (IllegalArgumentException ignore) {}
+        catch (IllegalArgumentException ignore) {
+            /* ignore */
+        }
 
         return Result.error(translation.argument().noArgument());
     }
