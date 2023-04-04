@@ -60,6 +60,8 @@ public class ButcherCommand {
                 .player(player.getUniqueId())
                 .placeholder("{SAFE_CHUNKS}", String.valueOf(this.safeChunksNumber))
                 .send();
+
+            return;
         }
 
         Collection<Chunk> chunks = this.getChunksNearPlayer(player, chunksNumber);
