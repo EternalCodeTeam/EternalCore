@@ -6,6 +6,10 @@ import org.bukkit.entity.Mob;
 
 public final class EntityUtil {
 
+    private EntityUtil() {
+
+    }
+
     public static boolean is(Entity entity, Class<? extends Entity> entityClass) {
         return is(entity.getClass(), entityClass);
     }
@@ -25,10 +29,6 @@ public final class EntityUtil {
 
     public static boolean isMob(Class<? extends Entity> entityClass) {
         return is(entityClass, Mob.class);
-    }
-
-    private EntityUtil() {
-
     }
 
 }
