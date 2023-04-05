@@ -243,7 +243,7 @@ public interface Translation {
         List<String> whoisCommand();
 
         // butcher
-        Notification butcherCommad();
+        Notification butcherCommand();
         Notification safeChunksMessage();
     }
 

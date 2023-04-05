@@ -527,10 +527,10 @@ public class PLTranslation extends AbstractTranslation {
         );
 
         @Description({ " ", "{KILLED} - Liczba zabitych mobów" })
-        public Notification butcherCommad = Notification.chat("<dark_gray>» <green>Zabiłeś '{KILLED}' mobów!");
+        public Notification butcherCommand = Notification.chat("<green>► <white>Zabiłeś <gren>{KILLED} <white>mobów!");
 
         @Description({ " ", "{SAFE_CHUNKS} - Liczba bezpiecznych chunków" })
-        public Notification safeChunksMessage = Notification.chat("<dark_gray>» <red>Przekroczyłeś liczbę bezpiecznych chunków '{SAFE_CHUNKS}'");
+        public Notification safeChunksMessage = Notification.chat("<red>✘ <dark_red>Błąd: <red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
     }
 
     @Description({ " ", "# Ta sekcja odpowiada za zmianę punktu spawn oraz teleportację graczy na spawn" })
