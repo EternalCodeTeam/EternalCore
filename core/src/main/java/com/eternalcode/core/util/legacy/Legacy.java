@@ -1,6 +1,7 @@
 package com.eternalcode.core.util.legacy;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import panda.std.stream.PandaStream;
@@ -14,6 +15,9 @@ public final class Legacy {
         .character('§')
         .hexColors()
         .useUnusualXRepeatedCharacterHexFormat()
+        .build();
+    public final static Component RESET_ITEM = Component.text()
+        .decoration(TextDecoration.ITALIC, false)
         .build();
 
     private static final LegacyComponentSerializer AMPERSAND_SERIALIZER = LegacyComponentSerializer.builder()

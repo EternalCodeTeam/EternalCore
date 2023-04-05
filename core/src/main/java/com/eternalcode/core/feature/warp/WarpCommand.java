@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -18,11 +19,18 @@ public class WarpCommand {
     private final NoticeService noticeService;
     private final WarpManager warpManager;
     private final TeleportTaskService teleportTaskService;
+    private final WarpInventory warpInventory;
 
-    public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService) {
+    public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, WarpInventory warpInventory) {
         this.noticeService = noticeService;
         this.warpManager = warpManager;
         this.teleportTaskService = teleportTaskService;
+        this.warpInventory = warpInventory;
+    }
+
+    @Execute(required = 0)
+    void warp(Player player, User user) {
+        this.warpInventory.openInventory(player, user.getLanguage());
     }
 
     @Execute(required = 1)

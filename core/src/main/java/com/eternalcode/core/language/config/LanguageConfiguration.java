@@ -29,7 +29,7 @@ public class LanguageConfiguration implements ReloadableConfig {
         @Description({ " ", "# Size of inventory" })
         public int rows = 5;
 
-        @Description({ " ", "# Border settings" })
+        @Description({ " ", "# BorderSection settings" })
         public Border border = new Border();
 
         @Contextual
