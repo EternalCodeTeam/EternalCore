@@ -16,9 +16,6 @@ public final class Legacy {
         .hexColors()
         .useUnusualXRepeatedCharacterHexFormat()
         .build();
-    public final static Component RESET_ITEM = Component.text()
-        .decoration(TextDecoration.ITALIC, false)
-        .build();
 
     private static final LegacyComponentSerializer AMPERSAND_SERIALIZER = LegacyComponentSerializer.builder()
         .character('&')

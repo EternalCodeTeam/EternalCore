@@ -6,12 +6,12 @@ import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.util.legacy.Legacy;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WarpInventory {
+
+    private final static Component RESET_ITEM = Component.text()
+        .decoration(TextDecoration.ITALIC, false)
+        .build();
 
     private final TeleportTaskService teleportTaskService;
     private final TranslationManager translationManager;
@@ -80,11 +84,14 @@ public class WarpInventory {
             ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
 
             if (!borderSection.name().equals("")) {
-                borderItem.name(this.miniMessage.deserialize(borderSection.name()));
+                borderItem.name(RESET_ITEM.append(this.miniMessage.deserialize(borderSection.name())));
             }
 
             if (!borderSection.lore().isEmpty()) {
-                borderItem.lore(borderSection.lore().stream().map(this.miniMessage::deserialize).collect(Collectors.toList()));
+                borderItem.lore(borderSection.lore()
+                    .stream()
+                    .map(entry -> RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+                    .collect(Collectors.toList()));
             }
 
             GuiItem guiItem = new GuiItem(borderItem.build());
@@ -102,10 +109,10 @@ public class WarpInventory {
     }
 
     private BaseItemBuilder createItem(WarpConfigItem warpItem) {
-        Component name = Legacy.RESET_ITEM.append(this.miniMessage.deserialize(warpItem.name()));
+        Component name = RESET_ITEM.append(this.miniMessage.deserialize(warpItem.name()));
         List<Component> lore = warpItem.lore()
             .stream()
-            .map(entry -> Legacy.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+            .map(entry -> RESET_ITEM.append(this.miniMessage.deserialize(entry)))
             .toList();
 
         if (warpItem.material() == Material.PLAYER_HEAD && !warpItem.texture().isEmpty()) {
