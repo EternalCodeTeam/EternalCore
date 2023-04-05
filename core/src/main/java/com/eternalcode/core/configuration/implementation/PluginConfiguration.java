@@ -207,10 +207,17 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Warp {
-
         @Description("# Warp inventory should be enabled?")
         public boolean inventoryEnabled = true;
+    }
 
+    @Description({ " ", "# Butcher" })
+    public Butcher butcher = new Butcher();
+
+    @Contextual
+    public static class Butcher {
+        @Description("# Safe number of chunks for command execution (above this number it will not be possible to execute the command)")
+        public int safeChunkNumber = 5;
     }
 
     @Override

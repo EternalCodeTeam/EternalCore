@@ -13,6 +13,7 @@ import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
+import com.eternalcode.core.command.argument.MobEntityArgument;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.command.argument.home.HomeArgument;
 import com.eternalcode.core.command.configurator.CommandConfiguration;
@@ -45,6 +46,7 @@ import com.eternalcode.core.feature.essentials.FlyCommand;
 import com.eternalcode.core.feature.essentials.GodCommand;
 import com.eternalcode.core.feature.essentials.HealCommand;
 import com.eternalcode.core.feature.essentials.KillCommand;
+import com.eternalcode.core.feature.essentials.mob.ButcherCommand;
 import com.eternalcode.core.feature.essentials.SpeedCommand;
 import com.eternalcode.core.feature.essentials.container.AnvilCommand;
 import com.eternalcode.core.feature.essentials.container.CartographyTableCommand;
@@ -64,6 +66,7 @@ import com.eternalcode.core.feature.essentials.item.ItemLoreCommand;
 import com.eternalcode.core.feature.essentials.item.ItemNameCommand;
 import com.eternalcode.core.feature.essentials.item.RepairCommand;
 import com.eternalcode.core.feature.essentials.item.SkullCommand;
+import com.eternalcode.core.feature.essentials.mob.MobEntity;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayerCountCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayersListCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
@@ -333,6 +336,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
             .argument(Player.class, RequesterArgument.KEY,      new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
             .argument(Duration.class, DurationArgument.KEY,     new DurationArgument(this.viewerProvider, this.translationManager))
             .argument(Integer.class, SpeedArgument.KEY,         new SpeedArgument(this.viewerProvider, this.translationManager))
+            .argument(MobEntity.class,                          new MobEntityArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class, new LocationArgument(this.translationManager, this.viewerProvider))
@@ -419,6 +423,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
                 new KillCommand(this.noticeService),
                 new InventoryClearCommand(this.noticeService),
                 new InventoryOpenCommand(server, this.noticeService),
+                new ButcherCommand(this.noticeService, this.pluginConfiguration),
 
                 // Info Commands
                 new OnlinePlayerCountCommand(this.noticeService, server),

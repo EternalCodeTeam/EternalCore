@@ -32,6 +32,7 @@ public interface Translation {
         Notification invalidTimeFormat();
         Notification worldDoesntExist();
         Notification youMustGiveWorldName();
+        Notification incorrectNumberOfChunks();
         Notification incorrectLocation();
     }
 
@@ -272,6 +273,10 @@ public interface Translation {
 
         // whois
         List<String> whoisCommand();
+
+        // butcher
+        Notification butcherCommad();
+        Notification safeChunksMessage();
     }
 
     // spawn section
@@ -328,7 +333,6 @@ public interface Translation {
         Notification weatherSetSun();
         Notification weatherSetThunder();
     }
-
 
     // language section
     LanguageSection language();
