@@ -84,6 +84,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notification worldDoesntExist = Notification.chat("<red>✘ <dark_red>Błąd: <red>Taki świat nie istnieje!");
         public Notification youMustGiveWorldName = Notification.chat("<red>✘ <dark_red>Błąd: <red>Musisz podać nazwę świata!");
         public Notification incorrectLocation = Notification.chat("<red>✘ <dark_red>Błąd: <red>Nieprawidłowa lokalizacja!");
+        public Notification incorrectNumberOfChunks = Notification.chat("<red>✘ <dark_red>Błąd: <red>Niepoprawna liczba chunków!");
     }
 
     @Description({
@@ -524,6 +525,12 @@ public class PLTranslation extends AbstractTranslation {
             "<green>► <white>Zdrowie: <green>{HEALTH}",
             "<green>► <white>Poziom najedzenia: <green>{FOOD}"
         );
+
+        @Description({ " ", "{KILLED} - Liczba zabitych mobów" })
+        public Notification butcherCommad = Notification.chat("<dark_gray>» <green>Zabiłeś '{KILLED}' mobów!");
+
+        @Description({ " ", "{SAFE_CHUNKS} - Liczba bezpiecznych chunków" })
+        public Notification safeChunksMessage = Notification.chat("<dark_gray>» <red>Przekroczyłeś liczbę bezpiecznych chunków '{SAFE_CHUNKS}'");
     }
 
     @Description({ " ", "# Ta sekcja odpowiada za zmianę punktu spawn oraz teleportację graczy na spawn" })
