@@ -95,6 +95,7 @@ import com.eternalcode.core.feature.spawn.SpawnCommand;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpCommand;
 import com.eternalcode.core.feature.warp.WarpConfigRepository;
+import com.eternalcode.core.feature.warp.WarpInventory;
 import com.eternalcode.core.feature.warp.WarpManager;
 import com.eternalcode.core.feature.warp.WarpRepository;
 import com.eternalcode.core.language.LanguageCommand;
@@ -223,6 +224,8 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
      * FrameWorks & Libs
      **/
     private LanguageInventory languageInventory;
+    private WarpInventory warpInventory;
+
     private LiteCommands<CommandSender> liteCommands;
     private SkullAPI skullAPI;
 
@@ -312,6 +315,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
 
         /* FrameWorks & Libs */
         this.languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
+        this.warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
         this.skullAPI = LiteSkullFactory.builder()
             .bukkitScheduler(this)
@@ -388,7 +392,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
                 // Spawn & Warp Command
                 new SetSpawnCommand(this.configurationManager, this.locationsConfiguration, this.noticeService),
                 new SpawnCommand(this.locationsConfiguration, this.noticeService, this.teleportTaskService, this.teleportService),
-                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService),
+                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, this.pluginConfiguration, this.warpInventory),
 
                 // Inventory Commands
                 new EnderchestCommand(this.noticeService),

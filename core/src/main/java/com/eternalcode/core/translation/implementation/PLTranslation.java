@@ -1,5 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.warp.config.WarpConfigItem;
+import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.Notification;
@@ -8,8 +10,11 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
+import org.bukkit.Material;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Accessors(fluent = true)
@@ -275,9 +280,47 @@ public class PLTranslation extends AbstractTranslation {
         public Notification warpAlreadyExists = Notification.chat("<dark_red>Błąd: <red>Warp o nazwie <yellow>{WARP}</yellow> <dark_red>już istnieje!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warp <yellow>{WARP}</yellow>!");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warp <yellow>{WARP}</yellow>!");
+        public Notification available = Notification.chat("<dark_gray>» <gray>Dostepne warpy: {WARPS}!");
 
         @Description(" ")
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie odnaleziono takiego warpu!");
+
+        @Description("# Ustawienia gui listy dostępnych warpów")
+        public PLWarpInventory warpInventory = new PLWarpInventory();
+
+        @Getter
+        @Contextual
+        public static class PLWarpInventory implements WarpInventorySection {
+            public String title = "<dark_gray>» <green>Lista dostępnych warpów";
+            public int rows = 3;
+
+            public Map<String, WarpInventoryItem> items = Map.of("default", WarpInventoryItem.builder()
+                .withWarpName("default")
+                .withWarpItem(WarpConfigItem.builder()
+                    .withName("&8» &6Warp: &fdomyślny")
+                    .withLore(Collections.singletonList("<gray>Kliknij aby się teleportować!"))
+                    .withMaterial(Material.PLAYER_HEAD)
+                    .withTexture("ewogICJ0aW1lc3RhbXAiIDogMTYyMzI3Mjc5NDQ5MSwKICAicHJvZmlsZUlkIiA6ICJiYzRlZGZiNWYzNmM0OGE3YWM5ZjFhMzlkYzIzZjRmOCIsCiAgInByb2ZpbGVOYW1lIiA6ICI4YWNhNjgwYjIyNDYxMzQwIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzEyYzMxODE1N2Y1YzlkYWY4YTc2NzdhMzY2OWY5Nzk4OTQwYWZmMDE0YTY3NGVlMGFmMmE1NzRjYmIyMWI4YzMiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==")
+                    .withSlot(10)
+                    .build())
+                .build());
+
+            public PLBorderSection border = new PLBorderSection();
+
+            @Getter
+            @Contextual
+            public static class PLBorderSection implements BorderSection {
+                public boolean enabled = true;
+
+                public Material material = Material.GRAY_STAINED_GLASS_PANE;
+
+                public BorderSection.FillType fillType = BorderSection.FillType.BORDER;
+
+                public String name = "";
+
+                public List<String> lore = Collections.emptyList();
+            }
+        }
     }
 
     @Description({
@@ -643,5 +686,4 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<dark_gray>» <gold>Zmieniono język na <red>Polski<gold>!");
     }
-
 }
