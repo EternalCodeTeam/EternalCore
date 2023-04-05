@@ -10,7 +10,6 @@ import java.util.List;
 
 public final class Legacy {
 
-    public static final GsonComponentSerializer GSON_SERIALIZER = GsonComponentSerializer.gson();
     public static final LegacyComponentSerializer SECTION_SERIALIZER = LegacyComponentSerializer.builder()
         .character('§')
         .hexColors()
