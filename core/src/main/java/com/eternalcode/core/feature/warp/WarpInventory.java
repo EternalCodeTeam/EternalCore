@@ -6,6 +6,7 @@ import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.core.util.AdventureUtil;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -22,10 +23,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WarpInventory {
-
-    private final static Component RESET_ITEM = Component.text()
-        .decoration(TextDecoration.ITALIC, false)
-        .build();
 
     private final TeleportTaskService teleportTaskService;
     private final TranslationManager translationManager;
@@ -84,13 +81,13 @@ public class WarpInventory {
             ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
 
             if (!borderSection.name().equals("")) {
-                borderItem.name(RESET_ITEM.append(this.miniMessage.deserialize(borderSection.name())));
+                borderItem.name(AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(borderSection.name())));
             }
 
             if (!borderSection.lore().isEmpty()) {
                 borderItem.lore(borderSection.lore()
                     .stream()
-                    .map(entry -> RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+                    .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
                     .collect(Collectors.toList()));
             }
 
@@ -109,10 +106,10 @@ public class WarpInventory {
     }
 
     private BaseItemBuilder createItem(WarpConfigItem warpItem) {
-        Component name = RESET_ITEM.append(this.miniMessage.deserialize(warpItem.name()));
+        Component name = AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(warpItem.name()));
         List<Component> lore = warpItem.lore()
             .stream()
-            .map(entry -> RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+            .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
             .toList();
 
         if (warpItem.material() == Material.PLAYER_HEAD && !warpItem.texture().isEmpty()) {
