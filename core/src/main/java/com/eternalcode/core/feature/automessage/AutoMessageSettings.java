@@ -1,8 +1,10 @@
 package com.eternalcode.core.feature.automessage;
 
+import java.time.Duration;
+
 public interface AutoMessageSettings {
 
-    int interval();
+    Duration interval();
 
     DrawMode drawMode();
 
@@ -10,4 +12,5 @@ public interface AutoMessageSettings {
         RANDOM,
         SEQUENTIAL
     }
+
 }

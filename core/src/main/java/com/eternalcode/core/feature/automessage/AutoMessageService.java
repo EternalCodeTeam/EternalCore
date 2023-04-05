@@ -20,12 +20,12 @@ public class AutoMessageService {
     }
 
     public void broadcastNextMessage() {
-        noticeService.create()
+        this.noticeService.create()
             .onlinePlayers()
             .noticeOption(translation -> nextAutoMessage(translation.autoMessage()))
             .send();
 
-        broadcastCount++;
+        this.broadcastCount++;
     }
 
     private Option<AutoMessage> nextAutoMessage(Translation.AutoMessageSection messageSection) {
