@@ -88,6 +88,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification worldDoesntExist = Notification.chat("<dark_gray>» <red>This world doesn't exist!");
         public Notification youMustGiveWorldName = Notification.chat("<dark_gray>» <red>You must provide a world name!");
         public Notification incorrectLocation = Notification.chat("<dark_gray>» <red>Incorrect location!");
+        public Notification incorrectNumberOfChunks = Notification.chat("<dark_gray>» <red>Incorrect number of chunks!");
     }
 
     @Description({
@@ -517,6 +518,12 @@ public class ENTranslation extends AbstractTranslation {
             "<dark_gray>» <gray>Target health: <white>{HEALTH}",
             "<dark_gray>» <gray>Target food level: <white>{FOOD}"
         );
+
+        @Description({ " ", "{KILLED} - Number of killed mobs" })
+        public Notification butcherCommad = Notification.chat("<dark_gray>» <green>You killed '{KILLED}' mobs!");
+
+        @Description({ " ", "{SAFE_CHUNKS} - The number of safe chunks" })
+        public Notification safeChunksMessage = Notification.chat("<dark_gray>» <red>You have exceeded the number of safe chunks '{SAFE_CHUNKS}'");
     }
 
     @Description({ " ", "# This section is responsible for spawn-related stuff." })

@@ -202,6 +202,15 @@ public class PluginConfiguration implements ReloadableConfig {
         public int defaultGiveAmount = 1;
     }
 
+    @Description({ " ", "# Butcher" })
+    public Butcher butcher = new Butcher();
+
+    @Contextual
+    public static class Butcher {
+        @Description("# Safe number of chunks for command execution (above this number it will not be possible to execute the command)")
+        public int safeChunkNumber = 5;
+    }
+
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "config.yml");
