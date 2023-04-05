@@ -278,6 +278,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification warpAlreadyExists = Notification.chat("<dark_gray>» <red>Warp <yellow>{WARP} <red>already exists!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Warp {WARP} has been created.");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Warp {WARP} has been deleted.");
+        public Notification available = Notification.chat("<dark_gray>» <green>Available warps: <gray>{WARPS}");
 
         @Description(" ")
         public Notification notExist = Notification.chat("<dark_gray>» <red>This warp doesn't exist");

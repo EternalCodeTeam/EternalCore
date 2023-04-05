@@ -109,6 +109,7 @@ public interface Translation {
         Notification notExist();
         Notification create();
         Notification remove();
+        Notification available();
 
         WarpInventorySection warpInventory();
 

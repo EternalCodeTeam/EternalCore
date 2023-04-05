@@ -388,7 +388,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
                 // Spawn & Warp Command
                 new SetSpawnCommand(this.configurationManager, this.locationsConfiguration, this.noticeService),
                 new SpawnCommand(this.locationsConfiguration, this.noticeService, this.teleportTaskService, this.teleportService),
-                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, this.warpInventory),
+                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, this.pluginConfiguration, this.warpInventory),
 
                 // Inventory Commands
                 new EnderchestCommand(this.noticeService),

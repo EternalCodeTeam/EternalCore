@@ -202,6 +202,17 @@ public class PluginConfiguration implements ReloadableConfig {
         public int defaultGiveAmount = 1;
     }
 
+    @Description({ " ", "# Warp Section" })
+    public Warp warp = new Warp();
+
+    @Contextual
+    public static class Warp {
+
+        @Description("# Warp inventory should be enabled?")
+        public boolean inventoryEnabled = true;
+
+    }
+
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "config.yml");

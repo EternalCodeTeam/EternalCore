@@ -279,6 +279,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notification warpAlreadyExists = Notification.chat("<dark_red>Błąd: <red>Warp o nazwie <yellow>{WARP}</yellow> <dark_red>już istnieje!");
         public Notification create = Notification.chat("<dark_gray>» <gray>Stworzono warp <yellow>{WARP}</yellow>!");
         public Notification remove = Notification.chat("<dark_gray>» <gray>Usunięto warp <yellow>{WARP}</yellow>!");
+        public Notification available = Notification.chat("<dark_gray>» <gray>Dostepne warpy: {WARPS}!");
 
         @Description(" ")
         public Notification notExist = Notification.chat("<dark_gray>» <red>Nie odnaleziono takiego warpu!");

@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
@@ -16,20 +17,32 @@ import java.time.Duration;
 @Permission("eternalcore.warp")
 public class WarpCommand {
 
+    private final TeleportTaskService teleportTaskService;
+    private final PluginConfiguration config;
+    private final WarpInventory warpInventory;
     private final NoticeService noticeService;
     private final WarpManager warpManager;
-    private final TeleportTaskService teleportTaskService;
-    private final WarpInventory warpInventory;
 
-    public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, WarpInventory warpInventory) {
+    public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, PluginConfiguration config, WarpInventory warpInventory) {
         this.noticeService = noticeService;
         this.warpManager = warpManager;
         this.teleportTaskService = teleportTaskService;
+        this.config = config;
         this.warpInventory = warpInventory;
     }
 
     @Execute(required = 0)
     void warp(Player player, User user) {
+        if (!this.config.warp.inventoryEnabled) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.warp().available())
+                .placeholder("{WARPS}", String.join(", ", this.warpManager.getNamesOfWarps()))
+                .send();
+
+            return;
+        }
+
         this.warpInventory.openInventory(player, user.getLanguage());
     }
 
