@@ -1,5 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.warp.config.WarpConfigItem;
+import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.AbstractTranslation;
@@ -7,8 +9,11 @@ import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
+import org.bukkit.Material;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Accessors(fluent = true)
@@ -274,11 +279,48 @@ public class ENTranslation extends AbstractTranslation {
         public Notification warpAlreadyExists = Notification.chat("<red>✘ <dark_red>Warp <red>{WARP} <dark_red>already exists!");
         public Notification create = Notification.chat("<green>► <white>Warp <green>{WARP} <white>has been created.");
         public Notification remove = Notification.chat("<red>► <white>Warp <red>{WARP} <white>has been deleted.");
-
-        @Description(" ")
         public Notification notExist = Notification.chat("<red>► <dark_red>This warp doesn't exist");
-    }
+        @Description({ " ", "# {WARPS} - List of warps (separated by commas)" })
+        public Notification available = Notification.chat("<green>► <white>Available warps: <green>{WARPS}");
 
+
+        @Description({ " ", "# Settings for warp inventory" })
+        public ENWarpInventory warpInventory = new ENWarpInventory();
+
+        @Getter
+        @Contextual
+        public static class ENWarpInventory implements WarpInventorySection {
+            public String title = "<dark_gray>» <green>Available warps:";
+            public int rows = 3;
+
+            public Map<String, WarpInventoryItem> items = Map.of("default", WarpInventoryItem.builder()
+                .withWarpName("default")
+                .withWarpItem(WarpConfigItem.builder()
+                    .withName("&8» &6Warp: &fdefault")
+                    .withLore(Collections.singletonList("<gray>Click to teleport!"))
+                    .withMaterial(Material.ENDER_PEARL)
+                    .withSlot(10)
+                    .withGlow(true)
+                    .build())
+                .build());
+
+            public ENBorderSection border = new ENBorderSection();
+
+            @Getter
+            @Contextual
+            public static class ENBorderSection implements BorderSection {
+                public boolean enabled = true;
+
+                public Material material = Material.GRAY_STAINED_GLASS_PANE;
+
+                public BorderSection.FillType fillType = BorderSection.FillType.BORDER;
+
+                public String name = "";
+
+                public List<String> lore = Collections.emptyList();
+            }
+        }
+    }
 
     @Description({
         " ",
@@ -633,5 +675,4 @@ public class ENTranslation extends AbstractTranslation {
         public Notification languageChanged = Notification.chat("<green>► <white>Language changed to <green>English<white>!");
 
     }
-
 }

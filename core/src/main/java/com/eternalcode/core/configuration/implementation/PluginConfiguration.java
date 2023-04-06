@@ -202,6 +202,15 @@ public class PluginConfiguration implements ReloadableConfig {
         public int defaultGiveAmount = 1;
     }
 
+    @Description({ " ", "# Warp Section" })
+    public Warp warp = new Warp();
+
+    @Contextual
+    public static class Warp {
+        @Description("# Warp inventory should be enabled?")
+        public boolean inventoryEnabled = true;
+    }
+
     @Description({ " ", "# Butcher" })
     public Butcher butcher = new Butcher();
 

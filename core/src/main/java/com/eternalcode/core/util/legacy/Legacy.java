@@ -1,6 +1,7 @@
 package com.eternalcode.core.util.legacy;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import panda.std.stream.PandaStream;
@@ -9,7 +10,6 @@ import java.util.List;
 
 public final class Legacy {
 
-    public static final GsonComponentSerializer GSON_SERIALIZER = GsonComponentSerializer.gson();
     public static final LegacyComponentSerializer SECTION_SERIALIZER = LegacyComponentSerializer.builder()
         .character('§')
         .hexColors()

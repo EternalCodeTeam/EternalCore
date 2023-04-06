@@ -1,9 +1,12 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
+import org.bukkit.Material;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Translation {
 
@@ -107,6 +110,35 @@ public interface Translation {
         Notification notExist();
         Notification create();
         Notification remove();
+        Notification available();
+
+        WarpInventorySection warpInventory();
+
+        interface WarpInventorySection {
+
+            String title();
+            int rows();
+
+            Map<String, WarpInventoryItem> items();
+
+            BorderSection border();
+
+            interface BorderSection {
+                boolean enabled();
+
+                Material material();
+
+                FillType fillType();
+
+                String name();
+
+                List<String> lore();
+
+                enum FillType {
+                    TOP, BOTTOM, BORDER, ALL
+                }
+            }
+        }
     }
 
     // Home section
@@ -317,4 +349,5 @@ public interface Translation {
         Notification genericContainerOpenedBy();
         Notification genericContainerOpenedFor();
     }
+
 }
