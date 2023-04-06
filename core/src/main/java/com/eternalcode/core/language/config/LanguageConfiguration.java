@@ -16,9 +16,14 @@ import java.util.List;
 
 public class LanguageConfiguration implements ReloadableConfig {
 
+    @Description("# Should language selector gui be enabled?")
+    public boolean enabled = true;
+
+    @Description(" ")
     public Language defaultLanguage = Language.EN;
     public List<Language> languages = Arrays.asList(Language.EN, Language.PL);
 
+    @Description(" ")
     public LanguageSelector languageSelector = new LanguageSelector();
 
     @Contextual
