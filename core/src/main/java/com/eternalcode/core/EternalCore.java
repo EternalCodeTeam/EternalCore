@@ -161,7 +161,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.Closeable;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -169,8 +168,6 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 class EternalCore implements EternalCoreApi {
-
-    private static EternalCore instance;
 
     /**
      * Scheduler & Publisher
@@ -241,7 +238,7 @@ class EternalCore implements EternalCoreApi {
 
         /* Configuration */
         ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(plugin.getDataFolder());
-        this.configurationManager = new ConfigurationManager(plugin.getDataFolder());
+        this.configurationManager = new ConfigurationManager(configurationBackupService, plugin.getDataFolder());
 
         this.pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
@@ -480,6 +477,7 @@ class EternalCore implements EternalCoreApi {
 
     public void disable() {
         EternalCoreApiProvider.deinitialize();
+
         if (this.liteCommands != null) {
             this.liteCommands.getPlatform().unregisterAll();
         }
