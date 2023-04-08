@@ -27,7 +27,7 @@ public class AdminChatCommand {
         Notice notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())
-            .placeholder("{NICK}", sender.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .placeholder("{TEXT}", message);
 
         for (Player player : this.server.getOnlinePlayers()) {

@@ -13,6 +13,7 @@ import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
 import com.eternalcode.core.command.argument.WorldArgument;
+import com.eternalcode.core.command.argument.MobEntityArgument;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.command.argument.home.HomeArgument;
 import com.eternalcode.core.command.configurator.CommandConfiguration;
@@ -23,6 +24,7 @@ import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.handler.InvalidUsage;
 import com.eternalcode.core.command.handler.NotificationHandler;
 import com.eternalcode.core.command.handler.PermissionMessage;
+import com.eternalcode.core.configuration.ConfigurationBackupService;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
@@ -44,6 +46,7 @@ import com.eternalcode.core.feature.essentials.FlyCommand;
 import com.eternalcode.core.feature.essentials.GodCommand;
 import com.eternalcode.core.feature.essentials.HealCommand;
 import com.eternalcode.core.feature.essentials.KillCommand;
+import com.eternalcode.core.feature.essentials.mob.ButcherCommand;
 import com.eternalcode.core.feature.essentials.SpeedCommand;
 import com.eternalcode.core.feature.essentials.container.AnvilCommand;
 import com.eternalcode.core.feature.essentials.container.CartographyTableCommand;
@@ -63,6 +66,7 @@ import com.eternalcode.core.feature.essentials.item.ItemLoreCommand;
 import com.eternalcode.core.feature.essentials.item.ItemNameCommand;
 import com.eternalcode.core.feature.essentials.item.RepairCommand;
 import com.eternalcode.core.feature.essentials.item.SkullCommand;
+import com.eternalcode.core.feature.essentials.mob.MobEntity;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayerCountCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayersListCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
@@ -91,6 +95,7 @@ import com.eternalcode.core.feature.spawn.SpawnCommand;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpCommand;
 import com.eternalcode.core.feature.warp.WarpConfigRepository;
+import com.eternalcode.core.feature.warp.WarpInventory;
 import com.eternalcode.core.feature.warp.WarpManager;
 import com.eternalcode.core.feature.warp.WarpRepository;
 import com.eternalcode.core.language.LanguageCommand;
@@ -100,6 +105,7 @@ import com.eternalcode.core.listener.player.PlayerChatListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
+import com.eternalcode.core.listener.player.PlayerLoginListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.notification.NoticeService;
@@ -123,6 +129,7 @@ import com.eternalcode.core.teleport.command.TeleportCommand;
 import com.eternalcode.core.teleport.command.TeleportHereCommand;
 import com.eternalcode.core.teleport.command.TeleportToPositionCommand;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
+import com.eternalcode.core.teleport.command.TeleportUpCommand;
 import com.eternalcode.core.teleport.request.TpaAcceptCommand;
 import com.eternalcode.core.teleport.request.TpaCommand;
 import com.eternalcode.core.teleport.request.TpaDenyCommand;
@@ -161,7 +168,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-class EternalCore {
+class EternalCore implements EternalCoreApi {
+
+    private static EternalCore instance;
 
     /**
      * Scheduler & Publisher
@@ -213,10 +222,15 @@ class EternalCore {
     private final NotificationAnnouncer notificationAnnouncer;
     private final NoticeService noticeService;
 
+    private final LanguageInventory languageInventory;
+    private final WarpInventory warpInventory;
+
     private final LiteCommands<CommandSender> liteCommands;
     private final SkullAPI skullAPI;
 
     public EternalCore(Plugin plugin) {
+        EternalCoreApiProvider.initialize(this);
+
         Stopwatch started = Stopwatch.createStarted();
         Server server = plugin.getServer();
 
@@ -226,7 +240,7 @@ class EternalCore {
         this.publisher = new LocalPublisher();
 
         /* Configuration */
-
+        ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(plugin.getDataFolder());
         this.configurationManager = new ConfigurationManager(plugin.getDataFolder());
 
         this.pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
@@ -277,21 +291,18 @@ class EternalCore {
         this.afkService = new AfkService(this.pluginConfiguration.afk, this.publisher);
         this.warpManager = WarpManager.create(warpRepository);
         this.homeManager = HomeManager.create(homeRepository);
-        this.teleportRequestService = new TeleportRequestService(this.pluginConfiguration.otherSettings);
+        this.teleportRequestService = new TeleportRequestService(this.pluginConfiguration.tpa);
 
         this.translationManager = TranslationManager.create(this.configurationManager, this.languageConfiguration);
         this.chatManager = new ChatManager(this.pluginConfiguration.chat);
 
         /* Adventure */
-
         this.audiencesProvider = BukkitAudiences.create(plugin);
         this.miniMessage = MiniMessage.builder()
             .postProcessor(new LegacyColorProcessor())
             .build();
 
         /* Audiences System */
-
-
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
 
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
@@ -302,7 +313,8 @@ class EternalCore {
         /**
          * FrameWorks & Libs
          **/
-        LanguageInventory languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
+        this.languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
+        this.warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
         this.skullAPI = LiteSkullFactory.builder()
             .bukkitScheduler(plugin)
@@ -323,6 +335,7 @@ class EternalCore {
             .argument(Player.class, RequesterArgument.KEY,      new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
             .argument(Duration.class, DurationArgument.KEY,     new DurationArgument(this.viewerProvider, this.translationManager))
             .argument(Integer.class, SpeedArgument.KEY,         new SpeedArgument(this.viewerProvider, this.translationManager))
+            .argument(MobEntity.class,                          new MobEntityArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class, new LocationArgument(this.translationManager, this.viewerProvider))
@@ -335,10 +348,6 @@ class EternalCore {
             .contextualBind(Player.class,   new PlayerContextual(this.translationManager))
             .contextualBind(Viewer.class,   new ViewerContextual(this.viewerProvider))
             .contextualBind(User.class,     new UserContextual(this.translationManager, this.userManager))
-
-            .typeBind(PluginConfiguration.class,               () -> this.pluginConfiguration)
-            .typeBind(LocationsConfiguration.class,            () -> this.locationsConfiguration)
-            .typeBind(PluginConfiguration.OtherSettings.class, () -> this.pluginConfiguration.otherSettings)
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
             .permissionHandler(new PermissionMessage(this.viewerProvider, this.audiencesProvider, this.translationManager, this.miniMessage))
@@ -367,20 +376,22 @@ class EternalCore {
                 new DayCommand(this.noticeService),
                 new NightCommand(this.noticeService),
 
+                // Tp Commands
                 new TeleportCommand(this.noticeService, this.teleportService),
                 new TeleportToPositionCommand(this.noticeService, this.teleportService),
                 new TeleportHereCommand(this.noticeService, this.teleportService),
                 new TeleportBackCommand(this.teleportService, this.noticeService),
+                new TeleportUpCommand(this.teleportService, this.noticeService),
 
                 // Tpa Commands
                 new TpaCommand(this.teleportRequestService, this.noticeService),
-                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, this.pluginConfiguration.otherSettings, server),
+                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, this.pluginConfiguration.tpa, server),
                 new TpaDenyCommand(this.teleportRequestService, this.noticeService, server),
 
                 // Spawn & Warp Command
                 new SetSpawnCommand(this.configurationManager, this.locationsConfiguration, this.noticeService),
                 new SpawnCommand(this.locationsConfiguration, this.noticeService, this.teleportTaskService, this.teleportService),
-                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService),
+                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, this.pluginConfiguration, this.warpInventory),
 
                 // Inventory Commands
                 new EnderchestCommand(this.noticeService),
@@ -411,6 +422,7 @@ class EternalCore {
                 new KillCommand(this.noticeService),
                 new InventoryClearCommand(this.noticeService),
                 new InventoryOpenCommand(server, this.noticeService),
+                new ButcherCommand(this.noticeService, this.pluginConfiguration),
 
                 // Info Commands
                 new OnlinePlayerCountCommand(this.noticeService, server),
@@ -425,7 +437,8 @@ class EternalCore {
                 new LanguageCommand(languageInventory),
                 new IgnoreCommand(ignoreRepository, this.noticeService),
                 new UnIgnoreCommand(ignoreRepository, this.noticeService),
-                ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.clearLines)
+
+                ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.linesToClear)
             )
 
             .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
@@ -443,7 +456,8 @@ class EternalCore {
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
-            new AfkController(this.afkService)
+            new AfkController(this.afkService),
+            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Subscribers */
@@ -465,6 +479,7 @@ class EternalCore {
     }
 
     public void disable() {
+        EternalCoreApiProvider.deinitialize();
         if (this.liteCommands != null) {
             this.liteCommands.getPlatform().unregisterAll();
         }
@@ -533,6 +548,7 @@ class EternalCore {
         return this.bridgeManager;
     }
 
+    @Override
     public UserManager getUserManager() {
         return this.userManager;
     }
@@ -585,6 +601,7 @@ class EternalCore {
         return this.miniMessage;
     }
 
+    @Override
     public BukkitViewerProvider getViewerProvider() {
         return this.viewerProvider;
     }

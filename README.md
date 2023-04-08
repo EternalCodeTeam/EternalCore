@@ -36,6 +36,7 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
 
 # Features
 
+- Slot Bypass (eternalcore.bypass.slot)
 - AFK system
 - Chat features, including:
     - Admin chat

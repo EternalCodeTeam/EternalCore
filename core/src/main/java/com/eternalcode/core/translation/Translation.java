@@ -1,9 +1,12 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
+import org.bukkit.Material;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Translation {
 
@@ -29,6 +32,7 @@ public interface Translation {
         Notification invalidTimeFormat();
         Notification worldDoesntExist();
         Notification youMustGiveWorldName();
+        Notification incorrectNumberOfChunks();
         Notification incorrectLocation();
     }
 
@@ -63,6 +67,7 @@ public interface Translation {
         // teleport
         Notification teleportedToPlayer();
         Notification teleportedPlayerToPlayer();
+        Notification teleportedToHighestBlock();
 
         // Task
         Notification teleportTimerFormat();
@@ -93,7 +98,7 @@ public interface Translation {
         Notification slowModeSet();
         Notification slowMode();
         Notification disabledChatInfo();
-        Notification noCommand();
+        Notification commandNotFound();
         String alertMessageFormat();
     }
 
@@ -105,6 +110,35 @@ public interface Translation {
         Notification notExist();
         Notification create();
         Notification remove();
+        Notification available();
+
+        WarpInventorySection warpInventory();
+
+        interface WarpInventorySection {
+
+            String title();
+            int rows();
+
+            Map<String, WarpInventoryItem> items();
+
+            BorderSection border();
+
+            interface BorderSection {
+                boolean enabled();
+
+                Material material();
+
+                FillType fillType();
+
+                String name();
+
+                List<String> lore();
+
+                enum FillType {
+                    TOP, BOTTOM, BORDER, ALL
+                }
+            }
+        }
     }
 
     // Home section
@@ -231,11 +265,18 @@ public interface Translation {
         Notification gameModeSetMessage();
 
         // online
-        Notification onlineMessage();
-        Notification listMessage();
+        Notification onlinePlayersCountMessage();
+        Notification onlinePlayersMessage();
+
+        // slot-bypass
+        List<String> fullServerSlots();
 
         // whois
         List<String> whoisCommand();
+
+        // butcher
+        Notification butcherCommand();
+        Notification safeChunksMessage();
     }
 
     // spawn section
@@ -293,7 +334,6 @@ public interface Translation {
         Notification weatherSetThunder();
     }
 
-
     // language section
     LanguageSection language();
 
@@ -309,4 +349,5 @@ public interface Translation {
         Notification genericContainerOpenedBy();
         Notification genericContainerOpenedFor();
     }
+
 }
