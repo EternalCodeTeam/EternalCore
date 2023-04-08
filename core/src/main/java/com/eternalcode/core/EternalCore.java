@@ -475,7 +475,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
         Metrics metrics = new Metrics(this, 13964);
         //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
-        long millis = started.elapsed(TimeUnit.MILLISECONDS);
+        long millis = started.stop().elapsed(TimeUnit.MILLISECONDS);
         this.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
     }
 
