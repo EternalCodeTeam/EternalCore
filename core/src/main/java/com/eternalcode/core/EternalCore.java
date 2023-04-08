@@ -219,9 +219,6 @@ class EternalCore implements EternalCoreApi {
     private final NotificationAnnouncer notificationAnnouncer;
     private final NoticeService noticeService;
 
-    private final LanguageInventory languageInventory;
-    private final WarpInventory warpInventory;
-
     private final LiteCommands<CommandSender> liteCommands;
     private final SkullAPI skullAPI;
 
@@ -310,8 +307,8 @@ class EternalCore implements EternalCoreApi {
         /**
          * FrameWorks & Libs
          **/
-        this.languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
-        this.warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
+        LanguageInventory languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
+        WarpInventory warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
         this.skullAPI = LiteSkullFactory.builder()
             .bukkitScheduler(plugin)
@@ -388,7 +385,7 @@ class EternalCore implements EternalCoreApi {
                 // Spawn & Warp Command
                 new SetSpawnCommand(this.configurationManager, this.locationsConfiguration, this.noticeService),
                 new SpawnCommand(this.locationsConfiguration, this.noticeService, this.teleportTaskService, this.teleportService),
-                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, this.pluginConfiguration, this.warpInventory),
+                new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, this.pluginConfiguration, warpInventory),
 
                 // Inventory Commands
                 new EnderchestCommand(this.noticeService),
