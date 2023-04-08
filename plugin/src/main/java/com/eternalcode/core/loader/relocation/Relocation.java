@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package com.eternalcode.core.loader.dependency.relocation;
+package com.eternalcode.core.loader.relocation;
 
 import java.util.Collection;
 import java.util.Collections;

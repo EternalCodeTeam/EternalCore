@@ -17,7 +17,7 @@ tasks.getByName<Test>("test") {
 }
 
 bukkit {
-    main = "com.eternalcode.core.loader.EternalCodePluginLoader"
+    main = "com.eternalcode.core.loader.EternalCoreLoader"
     apiVersion = "1.13"
     prefix = "EternalCore"
     author = "EternalCodeTeam"
@@ -66,7 +66,7 @@ tasks.withType<ShadowJar> {
 }
 
 blossom {
-    val dependencyConstants = "src/main/java/com/eternalcode/core/loader/dependency/DependencyRegistry.java"
+    val dependencyConstants = "src/main/java/com/eternalcode/core/loader/EternalCoreLoaderConstants.java"
 
     val dependencyToLoad: MutableList<String> by project(":core").extra
     val relocateLibraries: MutableList<String> by project(":core").extra

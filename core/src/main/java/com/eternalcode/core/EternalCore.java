@@ -161,7 +161,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-class EternalCore implements Closeable {
+class EternalCore {
 
     /**
      * Scheduler & Publisher
@@ -464,7 +464,7 @@ class EternalCore implements Closeable {
         plugin.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
     }
 
-    public void close() {
+    public void disable() {
         if (this.liteCommands != null) {
             this.liteCommands.getPlatform().unregisterAll();
         }

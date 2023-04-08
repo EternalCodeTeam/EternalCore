@@ -23,25 +23,27 @@
  *  SOFTWARE.
  */
 
-package com.eternalcode.core.loader.dependency.classpath;
+package com.eternalcode.core.loader.classpath;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Path;
 import java.util.Collection;
 
-public abstract class URLClassLoaderAccess {
+public abstract class URLClassLoaderAccessor {
 
-    public static URLClassLoaderAccess create(URLClassLoader classLoader) {
-        if (Reflection.isSupported()) {
-            return new Reflection(classLoader);
+    public static URLClassLoaderAccessor create(URLClassLoader classLoader) {
+        if (ReflectionURLClassLoaderAccessor.isSupported()) {
+            return new ReflectionURLClassLoaderAccessor(classLoader);
         }
 
-        if (Unsafe.isSupported()) {
-            return new Unsafe(classLoader);
+        if (UnsafeURLClassLoaderAccessor.isSupported()) {
+            return new UnsafeURLClassLoaderAccessor(classLoader);
         }
 
         return Noop.INSTANCE;
@@ -49,11 +51,20 @@ public abstract class URLClassLoaderAccess {
 
     private final URLClassLoader classLoader;
 
-    protected URLClassLoaderAccess(URLClassLoader classLoader) {
+    protected URLClassLoaderAccessor(URLClassLoader classLoader) {
         this.classLoader = classLoader;
     }
 
-    public abstract void addURL(@NonNull URL url);
+    public abstract void addURL(URL url);
+
+    public void addJarToClasspath(Path file) {
+        try {
+            this.addURL(file.toUri().toURL());
+        }
+        catch (MalformedURLException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 
     private static void throwError(Throwable cause) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("EternalCore is unable to inject into the plugin URLClassLoader.\n" +
@@ -61,7 +72,7 @@ public abstract class URLClassLoaderAccess {
                 "directly after the 'java' command in your start script: \n'--add-opens java.base/java.lang=ALL-UNNAMED'", cause);
     }
 
-    private static class Reflection extends URLClassLoaderAccess {
+    private static class ReflectionURLClassLoaderAccessor extends URLClassLoaderAccessor {
 
         private static final Method ADD_URL_METHOD;
 
@@ -81,7 +92,7 @@ public abstract class URLClassLoaderAccess {
             return ADD_URL_METHOD != null;
         }
 
-        Reflection(URLClassLoader classLoader) {
+        ReflectionURLClassLoaderAccessor(URLClassLoader classLoader) {
             super(classLoader);
         }
 
@@ -91,7 +102,7 @@ public abstract class URLClassLoaderAccess {
                 ADD_URL_METHOD.invoke(super.classLoader, url);
             }
             catch (ReflectiveOperationException e) {
-                URLClassLoaderAccess.throwError(e);
+                URLClassLoaderAccessor.throwError(e);
             }
         }
 
@@ -102,7 +113,7 @@ public abstract class URLClassLoaderAccess {
      *
      * @author Vaishnav Anil (https://github.com/slimjar/slimjar)
      */
-    private static class Unsafe extends URLClassLoaderAccess {
+    private static class UnsafeURLClassLoaderAccessor extends URLClassLoaderAccessor {
 
         private static final sun.misc.Unsafe UNSAFE;
 
@@ -127,7 +138,7 @@ public abstract class URLClassLoaderAccess {
         private final Collection<URL> pathURLs;
 
         @SuppressWarnings("unchecked")
-        Unsafe(URLClassLoader classLoader) {
+        UnsafeURLClassLoaderAccessor(URLClassLoader classLoader) {
             super(classLoader);
 
             Collection<URL> unopenedURLs;
@@ -155,7 +166,7 @@ public abstract class URLClassLoaderAccess {
         @Override
         public void addURL(@NonNull URL url) {
             if (this.unopenedURLs == null || this.pathURLs == null) {
-                URLClassLoaderAccess.throwError(new NullPointerException("unopenedURLs or pathURLs"));
+                URLClassLoaderAccessor.throwError(new NullPointerException("unopenedURLs or pathURLs"));
             }
 
             synchronized (this.unopenedURLs) {
@@ -166,7 +177,7 @@ public abstract class URLClassLoaderAccess {
 
     }
 
-    private static class Noop extends URLClassLoaderAccess {
+    private static class Noop extends URLClassLoaderAccessor {
 
         private static final Noop INSTANCE = new Noop();
 
@@ -176,7 +187,7 @@ public abstract class URLClassLoaderAccess {
 
         @Override
         public void addURL(@NonNull URL url) {
-            URLClassLoaderAccess.throwError(null);
+            URLClassLoaderAccessor.throwError(null);
         }
 
     }

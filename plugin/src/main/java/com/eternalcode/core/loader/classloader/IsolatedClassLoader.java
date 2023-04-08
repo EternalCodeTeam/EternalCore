@@ -23,16 +23,52 @@
  *  SOFTWARE.
  */
 
-package com.eternalcode.core.loader.dependency.classpath;
+package com.eternalcode.core.loader.classloader;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.file.Path;
 
-public interface ClassPathAppender extends AutoCloseable {
+import static java.util.Objects.requireNonNull;
 
-    void addJarToClasspath(Path file);
+public class IsolatedClassLoader extends URLClassLoader {
+
+    static {
+        ClassLoader.registerAsParallelCapable();
+    }
+
+    public IsolatedClassLoader(URL... urls) {
+        super(requireNonNull(urls, "urls"), ClassLoader.getSystemClassLoader().getParent());
+    }
+
+    public IsolatedClassLoader(ClassLoader parent, URL... urls) {
+        super(requireNonNull(urls, "urls"), parent);
+    }
 
     @Override
-    default void close() {
-
+    public void addURL(URL url) {
+        super.addURL(url);
     }
+
+    public void addPath(Path path) {
+        try {
+            this.addURL(requireNonNull(path, "path").toUri().toURL());
+        }
+        catch (MalformedURLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            super.close();
+        }
+        catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
+    }
+
 }
