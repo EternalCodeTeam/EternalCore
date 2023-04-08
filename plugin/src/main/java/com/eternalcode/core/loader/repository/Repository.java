@@ -9,11 +9,11 @@ public class Repository {
     }
 
     public String url() {
-        return url;
+        return this.url;
     }
 
     public String urlSlash() {
-        return url + "/";
+        return this.url + "/";
     }
 
     public static Repository of(String url) {

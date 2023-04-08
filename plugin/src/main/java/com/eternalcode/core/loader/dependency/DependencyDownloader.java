@@ -21,7 +21,7 @@ public class DependencyDownloader {
 
     public DependencyDownloader(File dataFolder, List<Repository> repositories) {
         this.repositories = repositories;
-        this.cacheDirectory = setupCacheDirectory(dataFolder);
+        this.cacheDirectory = this.setupCacheDirectory(dataFolder);
     }
 
     public Path downloadDependency(Dependency dependency) {
@@ -33,7 +33,7 @@ public class DependencyDownloader {
 
         List<DependencyException> exceptions = new ArrayList<>();
 
-        for (Repository repository : repositories) {
+        for (Repository repository : this.repositories) {
             try {
                 return this.downloadJarAndSave(repository, dependency, file);
             }

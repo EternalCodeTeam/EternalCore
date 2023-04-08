@@ -8,19 +8,19 @@ public class DependencyCollector {
     private final LinkedHashSet<Dependency> fullScannedDependencies = new LinkedHashSet<>();
 
     public boolean hasScannedDependency(Dependency dependency) {
-        return fullScannedDependencies.contains(dependency);
+        return this.fullScannedDependencies.contains(dependency);
     }
 
     public void scannedDependency(Dependency dependency) {
-        fullScannedDependencies.add(dependency);
+        this.fullScannedDependencies.add(dependency);
     }
 
     public void scannedDependencies(Collection<Dependency> dependencies) {
-        fullScannedDependencies.addAll(dependencies);
+        this.fullScannedDependencies.addAll(dependencies);
     }
 
     public LinkedHashSet<Dependency> scannedDependencies() {
-        return fullScannedDependencies;
+        return this.fullScannedDependencies;
     }
 
 }

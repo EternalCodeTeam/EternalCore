@@ -74,14 +74,20 @@ public class Dependency {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Dependency that)) return false;
-        return Objects.equals(groupId, that.groupId) && Objects.equals(artifactId, that.artifactId);
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Dependency that)) {
+            return false;
+        }
+
+        return Objects.equals(this.groupId, that.groupId) && Objects.equals(this.artifactId, that.artifactId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupId, artifactId);
+        return Objects.hash(this.groupId, this.artifactId);
     }
 
     public static Dependency of(String groupId, String artifactId, String version) {

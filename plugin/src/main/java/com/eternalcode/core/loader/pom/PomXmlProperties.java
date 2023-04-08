@@ -62,7 +62,7 @@ class PomXmlProperties {
         if (value.startsWith("${") && value.endsWith("}")) {
             String key = value.substring(2, value.length() - 1);
 
-            return properties.getProperty(key);
+            return this.properties.getProperty(key);
         }
 
         return value;

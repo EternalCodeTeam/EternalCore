@@ -18,7 +18,7 @@ class EternalCoreWrapper {
 
     public void enable(Plugin plugin) {
         try {
-            Constructor<?> eternalCoreConstructor = eternalCoreClass.getConstructor(Plugin.class);
+            Constructor<?> eternalCoreConstructor = this.eternalCoreClass.getConstructor(Plugin.class);
             eternalCoreConstructor.setAccessible(true);
 
             this.eternalCore = eternalCoreConstructor.newInstance(plugin);

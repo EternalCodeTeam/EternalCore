@@ -47,8 +47,8 @@ public class PomXmlScanner {
 
     public DependencyCollector findAllChildren(DependencyCollector collector, Dependency dependency) {
 
-        for (Repository repository : repositories) {
-            Optional<List<Dependency>> optionalFirstChildren = tryReadDependency(dependency, repository);
+        for (Repository repository : this.repositories) {
+            Optional<List<Dependency>> optionalFirstChildren = this.tryReadDependency(dependency, repository);
 
             if (optionalFirstChildren.isEmpty()) {
                 continue;
@@ -78,7 +78,7 @@ public class PomXmlScanner {
             URL url = new URL(pomXmlPath);
 
             try (InputStream inputStream = url.openStream()) {
-                List<Dependency> dependencies = readDependency(inputStream);
+                List<Dependency> dependencies = this.readDependency(inputStream);
 
                 return Optional.of(dependencies);
             }

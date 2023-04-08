@@ -83,7 +83,7 @@ public class Relocation {
      * @return pattern to search
      */
     public String getPattern() {
-        return pattern;
+        return this.pattern;
     }
 
     /**
@@ -92,7 +92,7 @@ public class Relocation {
      * @return pattern to replace with
      */
     public String getRelocatedPattern() {
-        return relocatedPattern;
+        return this.relocatedPattern;
     }
 
     /**
@@ -101,7 +101,7 @@ public class Relocation {
      * @return classes and resources to include
      */
     public Collection<String> getIncludes() {
-        return includes;
+        return this.includes;
     }
 
     /**
@@ -110,7 +110,7 @@ public class Relocation {
      * @return classes and resources to exclude
      */
     public Collection<String> getExcludes() {
-        return excludes;
+        return this.excludes;
     }
 
     /**
@@ -177,7 +177,7 @@ public class Relocation {
          * @return this builder
          */
         public Builder include(String include) {
-            includes.add(requireNonNull(include, "include"));
+            this.includes.add(requireNonNull(include, "include"));
             return this;
         }
 
@@ -188,7 +188,7 @@ public class Relocation {
          * @return this builder
          */
         public Builder exclude(String exclude) {
-            excludes.add(requireNonNull(exclude, "exclude"));
+            this.excludes.add(requireNonNull(exclude, "exclude"));
             return this;
         }
 
@@ -198,7 +198,7 @@ public class Relocation {
          * @return new relocation
          */
         public Relocation build() {
-            return new Relocation(pattern, relocatedPattern, includes, excludes);
+            return new Relocation(this.pattern, this.relocatedPattern, this.includes, this.excludes);
         }
     }
 }
