@@ -16,9 +16,6 @@ import java.util.List;
 
 public class LanguageConfiguration implements ReloadableConfig {
 
-    @Description("# Should language selector gui be enabled?")
-    public boolean enabled = true;
-
     @Description(" ")
     public Language defaultLanguage = Language.EN;
     public List<Language> languages = Arrays.asList(Language.EN, Language.PL);
@@ -48,10 +45,10 @@ public class LanguageConfiguration implements ReloadableConfig {
             public Border.FillType type = Border.FillType.BORDER;
 
             @Description({ " ", "# Name (If you don't want name just set \"\")" })
-            public String name = "         &8*";
+            public String name = " ";
 
-            @Description({ " ", "# Lore (If you don't want lore just set \"\")" })
-            public List<String> lore = Collections.singletonList("&7Lore :D");
+            @Description({ " ", "# Lore (If you don't want lore just set [])" })
+            public List<String> lore = Collections.emptyList();
 
             public enum FillType {
                 TOP, BOTTOM, BORDER, ALL

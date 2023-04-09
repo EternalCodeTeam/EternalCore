@@ -442,7 +442,6 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
                 ChatManagerCommand.create(this.chatManager, this.noticeService, this.pluginConfiguration.chat.linesToClear)
             )
             .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
-            .commandEditor(LanguageCommand.class, editor -> editor.cancel(!this.languageConfiguration.enabled))
             .register();
 
         /* Listeners */
