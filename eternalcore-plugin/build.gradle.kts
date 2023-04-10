@@ -10,8 +10,6 @@ eternalShadowCompiler {
         archiveFileName.set("EternalCore v${project.version} (MC 1.17.x-1.19.x).jar")
 
         exclude(
-            "org/intellij/lang/annotations/**",
-            "org/jetbrains/annotations/**",
             "META-INF/**",
         )
     }
