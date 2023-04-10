@@ -5,6 +5,7 @@ import com.eternalcode.core.language.config.LanguageConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import com.eternalcode.core.util.AdventureUtil;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -53,11 +54,13 @@ public class LanguageInventory {
             ItemBuilder borderItem = ItemBuilder.from(languageSelector.border.material);
 
             if (!languageSelector.border.name.equals("")) {
-                borderItem.name(this.miniMessage.deserialize(languageSelector.border.name));
+                borderItem.name(AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(languageSelector.border.name)));
             }
 
             if (!languageSelector.border.lore.isEmpty()) {
-                borderItem.lore(languageSelector.border.lore.stream().map(this.miniMessage::deserialize).collect(Collectors.toList()));
+                borderItem.lore(languageSelector.border.lore.stream()
+                    .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+                    .collect(Collectors.toList()));
             }
 
             GuiItem guiItem = new GuiItem(borderItem.build());
@@ -72,23 +75,25 @@ public class LanguageInventory {
         }
 
         for (LanguageConfigItem languageConfigItem : languageSelector.languageConfigItemMap) {
+            Component name = AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(languageConfigItem.name));
+
             List<Component> lore = languageConfigItem.lore
                 .stream()
-                .map(this.miniMessage::deserialize)
+                .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
                 .collect(Collectors.toList());
 
             ItemStack item;
 
             if (languageConfigItem.material == Material.PLAYER_HEAD) {
                 item = ItemBuilder.skull()
-                    .name(this.miniMessage.deserialize(languageConfigItem.name))
+                    .name(name)
                     .lore(lore)
                     .texture(languageConfigItem.texture)
                     .build();
             }
             else {
                 item = ItemBuilder.from(languageConfigItem.material)
-                    .name(this.miniMessage.deserialize(languageConfigItem.name))
+                    .name(name)
                     .lore(lore)
                     .build();
             }
