@@ -2,6 +2,7 @@ package com.eternalcode.core.command.configurator.config;
 
 import net.dzikoysk.cdn.entity.Contextual;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +11,11 @@ import java.util.Map;
 @Contextual
 public class Command {
 
-    private String name;
-    private boolean disabled;
-    private List<String> aliases;
-    private List<String> permissions;
-    private Map<String, SubCommand> subCommands = new HashMap<>();
+    public String name;
+    public boolean disabled;
+    public List<String> aliases = new ArrayList<>();
+    public List<String> permissions = new ArrayList<>();
+    public Map<String, SubCommand> subCommands = new HashMap<>();
 
     public Command() {
     }

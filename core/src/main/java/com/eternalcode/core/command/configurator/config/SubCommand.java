@@ -1,13 +1,17 @@
 package com.eternalcode.core.command.configurator.config;
 
+import net.dzikoysk.cdn.entity.Contextual;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Contextual
 public class SubCommand {
 
-    private String name;
-    private boolean disabled;
-    private List<String> aliases;
-    private List<String> permissions;
+    public String name;
+    public boolean disabled;
+    public List<String> aliases = new ArrayList<>();
+    public List<String> permissions = new ArrayList<>();
 
     public SubCommand() {
     }
