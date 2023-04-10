@@ -12,7 +12,7 @@ import java.util.Map;
 public class Command {
 
     public String name;
-    public boolean disabled;
+    public boolean enabled;
     public List<String> aliases = new ArrayList<>();
     public List<String> permissions = new ArrayList<>();
     public Map<String, SubCommand> subCommands = new HashMap<>();
@@ -52,6 +52,6 @@ public class Command {
     }
 
     public boolean isDisabled() {
-        return this.disabled;
+        return !this.enabled;
     }
 }
