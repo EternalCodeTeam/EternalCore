@@ -47,7 +47,7 @@ public class Command {
     }
 
     public Map<String, SubCommand> subCommands() {
-        return Collections.unmodifiableMap(this.subCommands);
+        return this.subCommands;
     }
 
     public boolean isDisabled() {
