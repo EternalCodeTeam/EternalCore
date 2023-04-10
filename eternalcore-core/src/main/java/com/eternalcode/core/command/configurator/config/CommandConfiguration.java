@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.configurator;
+package com.eternalcode.core.command.configurator.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
@@ -59,27 +59,24 @@ public class CommandConfiguration implements ReloadableConfig {
         "#       - \"<new_command_aliases>\"",
         "#     permissions:",
         "#       - \"<new_command_permission>\"",
+        "#     subCommands:",
+        "#       <default_sub_command_name>:",
+        "#         name: <new_sub_command_name>",
+        "#         disabled: false/true",
+        "#         aliases:",
+        "#           - \"<new_sub_command_aliases>\"",
+        "#         permissions:",
+        "#           - \"<new_sub_command_permission>\"",
     })
 
     public Map<String, Command> commands = Map.of(
-        "eternalcore", new Command("eternal-core", List.of("eternal"), List.of("eternalcore.eternalcore"))
+        "eternalcore", new Command(
+            "eternal-core",
+            List.of("eternal"),
+            List.of("eternalcore.eternalcore"),
+            Map.of("reload", new SubCommand("reload", true, List.of("rl"), List.of("eternalcore.reload"))),
+            true)
     );
-
-    @Contextual
-    public static class Command {
-        public String name;
-        public List<String> aliases;
-        public List<String> permissions;
-
-        public Command() {
-        }
-
-        public Command(String name, List<String> aliases, List<String> permissions) {
-            this.name = name;
-            this.aliases = aliases;
-            this.permissions = permissions;
-        }
-    }
 
     @Override
     public Resource resource(File folder) {

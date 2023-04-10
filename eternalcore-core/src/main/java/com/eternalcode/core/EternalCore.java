@@ -16,7 +16,7 @@ import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.command.argument.MobEntityArgument;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.command.argument.home.HomeArgument;
-import com.eternalcode.core.command.configurator.CommandConfiguration;
+import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.command.configurator.CommandConfigurator;
 import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
@@ -185,6 +185,7 @@ class EternalCore implements EternalCoreApi {
     private final LocationsConfiguration locationsConfiguration;
     private final LanguageConfiguration languageConfiguration;
     private final PlaceholdersConfiguration placeholdersConfiguration;
+    private final CommandConfiguration commandConfiguration;
 
     /**
      * Services & Managers
@@ -241,6 +242,7 @@ class EternalCore implements EternalCoreApi {
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
         this.languageConfiguration = this.configurationManager.load(new LanguageConfiguration());
         this.placeholdersConfiguration = this.configurationManager.load(new PlaceholdersConfiguration());
+        this.commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, this.locationsConfiguration);
