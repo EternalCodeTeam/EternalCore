@@ -10,12 +10,15 @@ eternalShadow {
     module(":eternalcore-api")
     module(":eternalcore-paper")
 
-    api("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    api("me.clip:placeholderapi:2.11.3")
-    api("org.projectlombok:lombok:1.18.26")
-    api("org.jetbrains:annotations:22.0.0")
-    useAnnotationProcessor("org.projectlombok:lombok:1.18.26")
+    // Minecraft API
+    onlyCompile("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
 
+    onlyCompile("me.clip:placeholderapi:2.11.3")
+    onlyCompile("org.projectlombok:lombok:1.18.26")
+    onlyCompile("org.jetbrains:annotations:22.0.0")
+    annotationProcessors("org.projectlombok:lombok:1.18.26")
+
+    // Paper and Adventure libraries
     library("io.papermc:paperlib:1.0.8")
     library("net.kyori:adventure-platform-bukkit:4.3.0")
     library("net.kyori:adventure-text-minimessage:4.13.1")

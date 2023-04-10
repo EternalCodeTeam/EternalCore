@@ -25,11 +25,11 @@ open class EternalShadowExtension {
         this.modules.add(module)
     }
 
-    fun api(dependency: String) {
+    fun onlyCompile(dependency: String) {
         this.compileOnlyDependencies.add(dependency)
     }
 
-    fun useAnnotationProcessor(dependency: String) {
+    fun annotationProcessors(dependency: String) {
         this.annotationProcessorDependencies.add(dependency)
     }
 
