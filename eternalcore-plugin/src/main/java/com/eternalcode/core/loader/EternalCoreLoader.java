@@ -1,7 +1,6 @@
 package com.eternalcode.core.loader;
 
 import com.eternalcode.core.loader.classloader.IsolatedClassLoader;
-import com.eternalcode.core.loader.classpath.URLClassLoaderAccessor;
 import com.eternalcode.core.loader.dependency.DependencyLoadResult;
 import com.eternalcode.core.loader.dependency.DependencyLoader;
 import com.eternalcode.core.loader.dependency.DependencyLoaderImpl;

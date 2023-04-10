@@ -8,7 +8,6 @@ repositories {
 
 dependencies {
     implementation("net.kyori:blossom:1.2.0")
-    implementation("xyz.jpenilla:run-task:2.0.1")
     implementation("com.github.johnrengelman:shadow:8.1.0")
 }
 
