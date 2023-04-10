@@ -62,7 +62,7 @@ public class CommandConfiguration implements ReloadableConfig {
     })
 
     public Map<String, Command> commands = Map.of(
-        "eternalcore", new Command("eternal-core", List.of("eternal"), List.of("eternalcore.eternalcore"))
+        "eternalcore", new Command("eternal-core", List.of("eternal"), List.of("eternalcore.eternalcore"), false)
     );
 
     @Contextual
@@ -70,14 +70,16 @@ public class CommandConfiguration implements ReloadableConfig {
         public String name;
         public List<String> aliases;
         public List<String> permissions;
+        public boolean disable;
 
         public Command() {
         }
 
-        public Command(String name, List<String> aliases, List<String> permissions) {
+        public Command(String name, List<String> aliases, List<String> permissions, boolean disable) {
             this.name = name;
             this.aliases = aliases;
             this.permissions = permissions;
+            this.disable = disable;
         }
     }
 

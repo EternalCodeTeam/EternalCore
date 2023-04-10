@@ -186,6 +186,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
     private LocationsConfiguration locationsConfiguration;
     private LanguageConfiguration languageConfiguration;
     private PlaceholdersConfiguration placeholdersConfiguration;
+    private CommandConfiguration commandConfiguration;
 
     /**
      * Services & Managers
@@ -251,6 +252,7 @@ public class EternalCore extends JavaPlugin implements EternalCoreApi {
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
         this.languageConfiguration = this.configurationManager.load(new LanguageConfiguration());
         this.placeholdersConfiguration = this.configurationManager.load(new PlaceholdersConfiguration());
+        this.commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, this.locationsConfiguration);

@@ -21,7 +21,8 @@ public class CommandConfigurator implements CommandEditor {
         return state
             .name(command.name)
             .aliases(command.aliases, true)
-            .permission(command.permissions, true);
+            .permission(command.permissions, true)
+            .cancel(command.disable);
     }
 
 }
