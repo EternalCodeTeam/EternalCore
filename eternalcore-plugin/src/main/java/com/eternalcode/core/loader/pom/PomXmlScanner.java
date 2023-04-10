@@ -63,7 +63,6 @@ public class PomXmlScanner {
 
                 collector = this.findAllChildren(collector, firstChild);
                 collector.scannedDependency(firstChild);
-                System.out.println("Scanned dependency: " + firstChild);
             }
 
             break;

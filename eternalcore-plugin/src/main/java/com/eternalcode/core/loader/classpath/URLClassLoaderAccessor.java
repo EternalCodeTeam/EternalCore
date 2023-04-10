@@ -24,9 +24,6 @@
  */
 
 package com.eternalcode.core.loader.classpath;
-
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -97,7 +94,7 @@ public abstract class URLClassLoaderAccessor {
         }
 
         @Override
-        public void addURL(@NonNull URL url) {
+        public void addURL(URL url) {
             try {
                 ADD_URL_METHOD.invoke(super.classLoader, url);
             }
@@ -164,7 +161,7 @@ public abstract class URLClassLoaderAccessor {
         }
 
         @Override
-        public void addURL(@NonNull URL url) {
+        public void addURL(URL url) {
             if (this.unopenedURLs == null || this.pathURLs == null) {
                 URLClassLoaderAccessor.throwError(new NullPointerException("unopenedURLs or pathURLs"));
             }
@@ -186,7 +183,7 @@ public abstract class URLClassLoaderAccessor {
         }
 
         @Override
-        public void addURL(@NonNull URL url) {
+        public void addURL(URL url) {
             URLClassLoaderAccessor.throwError(null);
         }
 

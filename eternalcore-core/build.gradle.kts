@@ -3,40 +3,18 @@ plugins {
     `eternalcode-java-test`
     `eternalcore-repositories`
     `eternalcore-shadow`
-
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.3"
-}
-
-bukkit {
-    main = "com.eternalcode.core.loader.EternalCoreLoader"
-    apiVersion = "1.13"
-    prefix = "EternalCore"
-    author = "EternalCodeTeam"
-    name = "EternalCore"
-    description = "All the most important server functions in one!"
-    website = "www.eternalcode.pl"
-    version = "${project.version}"
-    softDepend = listOf("PlaceholderAPI")
-}
-
-dependencies {
-    // modules
-    api(project(":eternalcore-api"))
-    api(project(":eternalcore-paper"))
-
-    // Spigot API
-    compileOnlyApi("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-
-    // lombok
-    compileOnlyApi("org.projectlombok:lombok:1.18.26")
-    annotationProcessor("org.projectlombok:lombok:1.18.26")
-
-    // hooks
-    compileOnly("me.clip:placeholderapi:2.11.3")
 }
 
 eternalShadow {
-    jarName = "EternalCore v${project.version} (MC 1.17-1.19x).jar"
+    // modules
+    module(":eternalcore-api")
+    module(":eternalcore-paper")
+
+    api("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
+    api("me.clip:placeholderapi:2.11.3")
+    api("org.projectlombok:lombok:1.18.26")
+    api("org.jetbrains:annotations:22.0.0")
+    useAnnotationProcessor("org.projectlombok:lombok:1.18.26")
 
     library("io.papermc:paperlib:1.0.8")
     library("net.kyori:adventure-platform-bukkit:4.3.0")
@@ -57,25 +35,25 @@ eternalShadow {
     library("com.j256.ormlite:ormlite-jdbc:6.1")
     library("com.zaxxer:HikariCP:5.0.1")
     libraryRelocate(
-        "com.j256.ormlite",
-        "com.zaxxer.hikari",
         "org.slf4j"
     )
 
-    // command framework
+    // command framework & skull library
     library("dev.rollczi.litecommands:bukkit-adventure:2.8.7")
-    libraryRelocate("dev.rollczi.litecommands")
-
-    // skull api
     library("dev.rollczi:liteskullapi:1.3.0")
-    libraryRelocate("dev.rollczi.liteskullapi")
+    libraryRelocate(
+        "dev.rollczi.litecommands",
+        "dev.rollczi.liteskullapi"
+    )
 
-    // utility library
+    // common libraries
     library("org.panda-lang:expressible:1.3.1")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
+    library("commons-io:commons-io:2.11.0")
     libraryRelocate(
         "panda.std",
         "panda.utilities",
+        "org.apache.commons.io",
     )
 
     // gui library
@@ -85,8 +63,4 @@ eternalShadow {
     // metrics
     library("org.bstats:bstats-bukkit:3.0.2")
     libraryRelocate("org.bstats")
-
-    // commons
-    library("commons-io:commons-io:2.11.0")
-    libraryRelocate("org.apache.commons.io")
 }

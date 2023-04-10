@@ -1,16 +1,26 @@
 plugins {
     `eternalcode-java`
     `eternalcore-repositories`
-    `eternalcore-shadow`
-    id("xyz.jpenilla.run-paper") version "2.0.1"
+    `eternalcore-shadow-compiler`
+    `eternalcode-paper-run`
 }
 
-dependencies {
-    implementation(project(":eternalcore-core"))
-}
-
-tasks {
-    runServer {
-        minecraftVersion("1.19.3")
+eternalShadowCompiler {
+    shadowJar {
+        archiveFileName.set("EternalCore v${project.version} (MC 1.17-1.19x).jar")
     }
+
+    pluginYml {
+        main = "com.eternalcode.core.loader.EternalCoreLoader"
+        apiVersion = "1.13"
+        prefix = "EternalCore"
+        author = "EternalCodeTeam"
+        name = "EternalCore"
+        description = "All the most important server functions in one!"
+        website = "www.eternalcode.pl"
+        version = "${project.version}"
+        softDepend = listOf("PlaceholderAPI")
+    }
+
+    module(":eternalcore-core")
 }

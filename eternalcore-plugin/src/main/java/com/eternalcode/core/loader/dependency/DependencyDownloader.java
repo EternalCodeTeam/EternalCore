@@ -13,13 +13,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class DependencyDownloader {
 
+    private final Logger logger;
     private final Path cacheDirectory;
     private final List<Repository> repositories;
 
-    public DependencyDownloader(File dataFolder, List<Repository> repositories) {
+    public DependencyDownloader(Logger logger, File dataFolder, List<Repository> repositories) {
+        this.logger = logger;
         this.repositories = repositories;
         this.cacheDirectory = this.setupCacheDirectory(dataFolder);
     }
@@ -35,7 +38,9 @@ public class DependencyDownloader {
 
         for (Repository repository : this.repositories) {
             try {
-                return this.downloadJarAndSave(repository, dependency, file);
+                Path path = this.downloadJarAndSave(repository, dependency, file);
+                this.logger.info("Downloaded " + dependency + " from " + repository);
+                return path;
             }
             catch (DependencyException exception) {
                 exceptions.add(exception);

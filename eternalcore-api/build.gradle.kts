@@ -1,7 +1,6 @@
 plugins {
     `eternalcode-java`
     `eternalcore-repositories`
-    `eternalcore-shadow`
 }
 
 dependencies {

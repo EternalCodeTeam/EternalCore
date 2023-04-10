@@ -13,18 +13,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class DependencyLoaderImpl implements DependencyLoader {
 
+    private final Logger logger;
     private final DependencyDownloader downloadDependency;
     private final RelocationHandler relocationHandler;
 
     private final List<Repository> repositories = new ArrayList<>();
     private final Map<Dependency, Path> loaded = new HashMap<>();
 
-    public DependencyLoaderImpl(File dataFolder, List<Repository> repositories) {
+    public DependencyLoaderImpl(Logger logger, File dataFolder, List<Repository> repositories) {
+        this.logger = logger;
         this.repositories.addAll(repositories);
-        this.downloadDependency = new DependencyDownloader(dataFolder, repositories);
+        this.downloadDependency = new DependencyDownloader(logger, dataFolder, repositories);
         this.relocationHandler = RelocationHandler.create(this);
     }
 
@@ -42,11 +45,13 @@ public class DependencyLoaderImpl implements DependencyLoader {
         PomXmlScanner scanner = new PomXmlScanner(this.repositories);
         DependencyCollector collector = new DependencyCollector();
 
+        this.logger.info("Searching for dependencies");
         for (Dependency dependency : dependencies) {
             collector = scanner.findAllChildren(collector, dependency);
         }
 
         collector.scannedDependencies(dependencies);
+        this.logger.info("Found " + collector.scannedDependencies().size() + " dependencies");
 
         List<Path> paths = new ArrayList<>();
 
