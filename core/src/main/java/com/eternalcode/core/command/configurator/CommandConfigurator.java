@@ -31,17 +31,10 @@ public class CommandConfigurator implements CommandEditor {
         }
 
         return state
-<<<<<<< Updated upstream
-            .name(command.name)
-            .aliases(command.aliases, true)
-            .permission(command.permissions, true)
-            .cancel(command.disable);
-=======
             .name(command.name())
             .aliases(command.aliases(), true)
             .permission(command.permissions(), true)
             .cancel(command.isDisabled());
->>>>>>> Stashed changes
     }
 
 }
