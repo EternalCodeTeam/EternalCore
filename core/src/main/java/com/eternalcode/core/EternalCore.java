@@ -16,7 +16,7 @@ import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.command.argument.MobEntityArgument;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.command.argument.home.HomeArgument;
-import com.eternalcode.core.command.configurator.CommandConfiguration;
+import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.command.configurator.CommandConfigurator;
 import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;

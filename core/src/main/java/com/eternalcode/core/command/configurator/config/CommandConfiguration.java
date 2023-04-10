@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.configurator;
+package com.eternalcode.core.command.configurator.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
@@ -59,9 +59,18 @@ public class CommandConfiguration implements ReloadableConfig {
         "#       - \"<new_command_aliases>\"",
         "#     permissions:",
         "#       - \"<new_command_permission>\"",
+        "#     subCommands:",
+        "#       <default_sub_command_name>:",
+        "#         name: <new_sub_command_name>",
+        "#         disabled: false/true",
+        "#         aliases:",
+        "#           - \"<new_sub_command_aliases>\"",
+        "#         permissions:",
+        "#           - \"<new_sub_command_permission>\"",
     })
 
     public Map<String, Command> commands = Map.of(
+<<<<<<< Updated upstream:core/src/main/java/com/eternalcode/core/command/configurator/CommandConfiguration.java
         "eternalcore", new Command("eternal-core", List.of("eternal"), List.of("eternalcore.eternalcore"), false)
     );
 
@@ -83,6 +92,18 @@ public class CommandConfiguration implements ReloadableConfig {
         }
     }
 
+=======
+        "eternalcore",
+
+        new Command(
+            "eternal-core",
+            List.of("eternal"),
+            List.of("eternalcore.eternalcore"),
+            Map.of("reload", new SubCommand("reload", false, List.of("rl"), List.of("eternalcore.reload"))),
+            false)
+    );
+
+>>>>>>> Stashed changes:core/src/main/java/com/eternalcode/core/command/configurator/config/CommandConfiguration.java
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "commands.yml");
