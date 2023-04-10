@@ -70,32 +70,7 @@ public class CommandConfiguration implements ReloadableConfig {
     })
 
     public Map<String, Command> commands = Map.of(
-<<<<<<< Updated upstream:core/src/main/java/com/eternalcode/core/command/configurator/CommandConfiguration.java
-        "eternalcore", new Command("eternal-core", List.of("eternal"), List.of("eternalcore.eternalcore"), false)
-    );
-
-    @Contextual
-    public static class Command {
-        public String name;
-        public List<String> aliases;
-        public List<String> permissions;
-        public boolean disable;
-
-        public Command() {
-        }
-
-        public Command(String name, List<String> aliases, List<String> permissions, boolean disable) {
-            this.name = name;
-            this.aliases = aliases;
-            this.permissions = permissions;
-            this.disable = disable;
-        }
-    }
-
-=======
-        "eternalcore",
-
-        new Command(
+        "eternalcore", new Command(
             "eternal-core",
             List.of("eternal"),
             List.of("eternalcore.eternalcore"),
@@ -103,7 +78,6 @@ public class CommandConfiguration implements ReloadableConfig {
             false)
     );
 
->>>>>>> Stashed changes:core/src/main/java/com/eternalcode/core/command/configurator/config/CommandConfiguration.java
     @Override
     public Resource resource(File folder) {
         return Source.of(folder, "commands.yml");
