@@ -15,7 +15,7 @@ eternalShadow {
 
     onlyCompile("me.clip:placeholderapi:2.11.3")
     onlyCompile("org.projectlombok:lombok:1.18.26")
-    onlyCompile("org.jetbrains:annotations:22.0.0")
+    onlyCompile("org.jetbrains:annotations:24.0.1")
     annotationProcessors("org.projectlombok:lombok:1.18.26")
 
     // Paper and Adventure libraries
@@ -50,7 +50,7 @@ eternalShadow {
     )
 
     // common libraries
-    library("org.panda-lang:expressible:1.3.1")
+    library("org.panda-lang:expressible:1.3.2")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
     library("commons-io:commons-io:2.11.0")
     libraryRelocate(
