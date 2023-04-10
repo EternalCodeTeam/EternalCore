@@ -4,6 +4,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 class EternalCoreWrapper {
 
@@ -30,7 +31,10 @@ class EternalCoreWrapper {
 
     public void disable() {
         try {
-            this.eternalCoreClass.getMethod("disable").invoke(this.eternalCore);
+            Method disableMethod = this.eternalCoreClass.getMethod("disable");
+
+            disableMethod.setAccessible(true);
+            disableMethod.invoke(this.eternalCore);
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exception) {
             throw new RuntimeException(exception);
