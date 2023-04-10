@@ -9,16 +9,15 @@ import java.util.List;
 public class SubCommand {
 
     public String name;
-    public boolean disabled;
+    public boolean enabled;
     public List<String> aliases = new ArrayList<>();
     public List<String> permissions = new ArrayList<>();
 
-    public SubCommand() {
-    }
+    public SubCommand() {}
 
-    public SubCommand(String name, boolean disabled, List<String> aliases, List<String> permissions) {
+    public SubCommand(String name, boolean enabled, List<String> aliases, List<String> permissions) {
         this.name = name;
-        this.disabled = disabled;
+        this.enabled = enabled;
         this.aliases = aliases;
         this.permissions = permissions;
     }
@@ -27,8 +26,8 @@ public class SubCommand {
         return this.name;
     }
 
-    public boolean isDisabled() {
-        return this.disabled;
+    public boolean isCancel() {
+        return !this.enabled;
     }
 
     public List<String> aliases() {

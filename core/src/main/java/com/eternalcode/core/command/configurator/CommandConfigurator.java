@@ -27,14 +27,14 @@ public class CommandConfigurator implements CommandEditor {
             state = state.editChild(child, editor -> editor.name(subCommand.name())
                 .aliases(subCommand.aliases(), true)
                 .permission(subCommand.permissions(), true)
-                .cancel(subCommand.isDisabled()));
+                .cancel(subCommand.isCancel()));
         }
 
         return state
             .name(command.name())
             .aliases(command.aliases(), true)
             .permission(command.permissions(), true)
-            .cancel(command.isDisabled());
+            .cancel(command.isCancel());
     }
 
 }

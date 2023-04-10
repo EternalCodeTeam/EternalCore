@@ -3,7 +3,6 @@ package com.eternalcode.core.command.configurator.config;
 import net.dzikoysk.cdn.entity.Contextual;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,22 +16,21 @@ public class Command {
     public List<String> permissions = new ArrayList<>();
     public Map<String, SubCommand> subCommands = new HashMap<>();
 
-    public Command() {
-    }
+    public Command() {}
 
-    public Command(String name, List<String> aliases, List<String> permissions, boolean disabled) {
+    public Command(String name, List<String> aliases, List<String> permissions, boolean enabled) {
         this.name = name;
-        this.disabled = disabled;
+        this.enabled = enabled;
         this.aliases = aliases;
         this.permissions = permissions;
     }
 
-    public Command(String name, List<String> aliases, List<String> permissions, Map<String, SubCommand> subCommands, boolean disabled) {
+    public Command(String name, List<String> aliases, List<String> permissions, Map<String, SubCommand> subCommands, boolean enabled) {
         this.name = name;
         this.aliases = aliases;
         this.permissions = permissions;
         this.subCommands = subCommands;
-        this.disabled = disabled;
+        this.enabled = enabled;
     }
 
     public String name() {
@@ -51,7 +49,7 @@ public class Command {
         return this.subCommands;
     }
 
-    public boolean isDisabled() {
+    public boolean isCancel() {
         return !this.enabled;
     }
 }

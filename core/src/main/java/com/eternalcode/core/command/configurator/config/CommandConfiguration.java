@@ -74,8 +74,8 @@ public class CommandConfiguration implements ReloadableConfig {
             "eternal-core",
             List.of("eternal"),
             List.of("eternalcore.eternalcore"),
-            Map.of("reload", new SubCommand("reload", false, List.of("rl"), List.of("eternalcore.reload"))),
-            false)
+            Map.of("reload", new SubCommand("reload", true, List.of("rl"), List.of("eternalcore.reload"))),
+            true)
     );
 
     @Override

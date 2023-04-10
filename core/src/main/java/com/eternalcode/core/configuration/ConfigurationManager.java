@@ -28,6 +28,7 @@ public class ConfigurationManager {
         .withComposer(Position.class, new PositionComposer())
         .withComposer(Notification.class, new NotificationComposer())
         .withMemberResolver(Visibility.PACKAGE_PRIVATE)
+        .withMemberResolver(Visibility.PRIVATE)
         .build();
 
     private final Set<ReloadableConfig> configs = new HashSet<>();
