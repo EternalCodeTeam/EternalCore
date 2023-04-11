@@ -32,25 +32,25 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
 
 # Features
 
-- Slot Bypass (eternalcore.bypass.slot)
+- Slot Bypass `(eternalcore.bypass.slot)`
 - AFK system
 - Chat features, including:
     - Admin chat
     - Chat on/off switch
     - Chat slow mode
-    - /ignore /unignore (with `-all` option) command
+    - /ignore /unignore `(with -all option)` command
     - /msg, /socialspy /reply command
     - /helpop command
 - Open utility blocks with simple commands, such as `/workbench`
 - Player inventory viewer
 - Player attribute management, including heal, feed, teleportation, and godmode modification
 - Ping command to ensure client <-> server connection
-- Player information command (/whois)
+- Player information command `(/whois)`
 - Home, warp, and spawn system
 - PlaceholderAPI support
 - Customizable and translatable messages `(Optional player language selection)`
 - Advanced configuration system for customizing almost every aspect of the plugin
-- Database integration: (PostGreSQL, SQLite, MySQL, MariaDB, H2)
+- Database integration: `(PostGreSQL, SQLite, MySQL, MariaDB, H2)`
 - Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color
   processing `(e.g &7, &e)` and message destination specification
 - And much more!
