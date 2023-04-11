@@ -48,7 +48,7 @@ public class TpaDenyCommand {
             .send();
     }
 
-    @Execute(route = "-all", aliases = "*")
+    @Execute(route = "-all")
     public void executeAll(Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
