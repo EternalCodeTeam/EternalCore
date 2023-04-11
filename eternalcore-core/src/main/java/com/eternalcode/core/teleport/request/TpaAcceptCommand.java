@@ -61,7 +61,7 @@ public class TpaAcceptCommand {
             .send();
     }
 
-    @Execute(route = "-all")
+    @Execute(route = "-all", aliases = "*")
     public void executeAll(Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 

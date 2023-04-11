@@ -52,7 +52,7 @@ public class IgnoreCommand {
         });
     }
 
-    @Execute(route = "-all")
+    @Execute(route = "-all", aliases = "*")
     void ignoreAll(User sender) {
         UUID senderUuid = sender.getUniqueId();
 
