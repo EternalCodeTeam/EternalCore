@@ -1,0 +1,59 @@
+[
+  {
+    "name": "test-root other",
+    "aliases": [],
+    "permissions": [
+      "permissions.root.execute.other",
+      "permissions.root2",
+      "permissions.root"
+    ],
+    "descriptions": [
+      "This is descriptions other"
+    ]
+  },
+  {
+    "name": "test-root",
+    "aliases": [],
+    "permissions": [
+      "permissions.root2",
+      "permissions.root.execute",
+      "permissions.root"
+    ],
+    "descriptions": [
+      "This is descriptions"
+    ]
+  },
+  {
+    "name": "tpa deny",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpa.deny",
+      "eternalcore.tpa"
+    ],
+    "descriptions": [
+      "Denies tpa request"
+    ]
+  },
+  {
+    "name": "tpa ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpa",
+      "eternalcore.tpa.send"
+    ],
+    "descriptions": [
+      "Sends tpa request"
+    ]
+  },
+  {
+    "name": "tpa accept",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpa",
+      "eternalcore.tpa.accept"
+    ],
+    "descriptions": [
+      "Accepts tpa request"
+    ]
+  }
+]
