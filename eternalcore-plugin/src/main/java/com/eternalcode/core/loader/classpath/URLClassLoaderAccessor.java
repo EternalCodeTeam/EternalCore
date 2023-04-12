@@ -24,6 +24,7 @@
  */
 
 package com.eternalcode.core.loader.classpath;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
