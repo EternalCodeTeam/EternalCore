@@ -57,7 +57,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
             results.add(this.handleExecutor(record, method, name, aliases));
         }
 
-        return results;
+        return removeDuplicates(results);
     }
 
     private List<CommandResult> handleRootRoute(EternalScanRecord record, RootRoute rootRoute) {
@@ -76,7 +76,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
             results.add(this.handleExecutor(record, method, name, aliases));
         }
 
-        return results;
+        return removeDuplicates(results);
     }
 
     private CommandResult handleExecutor(EternalScanRecord record, Method method, String name, List<String> aliases) {
@@ -120,6 +120,10 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
         }
 
         return results;
+    }
+
+    public static <T> List<T> removeDuplicates(List<T> list) {
+        return new ArrayList<>(new HashSet<>(list));
     }
 
 }

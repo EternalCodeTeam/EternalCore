@@ -29,6 +29,16 @@
     "descriptions": []
   },
   {
+    "name": "chat clear",
+    "aliases": [
+      "chat cc"
+    ],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": []
+  },
+  {
     "name": "chat off",
     "aliases": [],
     "permissions": [
@@ -39,16 +49,6 @@
   {
     "name": "chat slowmode",
     "aliases": [],
-    "permissions": [
-      "eternalcore.chat"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "chat clear",
-    "aliases": [
-      "chat cc"
-    ],
     "permissions": [
       "eternalcore.chat"
     ],
@@ -67,22 +67,6 @@
     "aliases": [],
     "permissions": [
       "eternalcore.anvil"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "anvil ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.anvil"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "cartography ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.cartography"
     ],
     "descriptions": []
   },
@@ -111,34 +95,10 @@
     "descriptions": []
   },
   {
-    "name": "enderchest ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.enderchest"
-    ],
-    "descriptions": []
-  },
-  {
     "name": "grindstone ",
     "aliases": [],
     "permissions": [
       "eternalcore.grindstone"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "grindstone ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.grindstone"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "clear ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.clear"
     ],
     "descriptions": []
   },
@@ -186,34 +146,10 @@
     "descriptions": []
   },
   {
-    "name": "stonecutter ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.workbench"
-    ],
-    "descriptions": []
-  },
-  {
     "name": "workbench ",
     "aliases": [],
     "permissions": [
       "eternalcore.workbench"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "workbench ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.workbench"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "gamemode ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.gamemode"
     ],
     "descriptions": []
   },
@@ -242,42 +178,10 @@
     "descriptions": []
   },
   {
-    "name": "give ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.give"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "give ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.give"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "give ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.give"
-    ],
-    "descriptions": []
-  },
-  {
     "name": "hat ",
     "aliases": [],
     "permissions": [
       "eternalcore.hat"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "itemflag clear",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemflag"
     ],
     "descriptions": []
   },
@@ -290,7 +194,15 @@
     "descriptions": []
   },
   {
-    "name": "itemlore clear",
+    "name": "itemflag clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemflag"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "itemlore ",
     "aliases": [],
     "permissions": [
       "eternalcore.itemlore"
@@ -298,7 +210,7 @@
     "descriptions": []
   },
   {
-    "name": "itemlore ",
+    "name": "itemlore clear",
     "aliases": [],
     "permissions": [
       "eternalcore.itemlore"
@@ -330,7 +242,7 @@
     "descriptions": []
   },
   {
-    "name": "repair all",
+    "name": "repair armor",
     "aliases": [],
     "permissions": [
       "eternalcore.repair"
@@ -338,7 +250,7 @@
     "descriptions": []
   },
   {
-    "name": "repair armor",
+    "name": "repair all",
     "aliases": [],
     "permissions": [
       "eternalcore.repair"
@@ -350,22 +262,6 @@
     "aliases": [],
     "permissions": [
       "eternalcore.skull"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "butcher ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.butcher"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "butcher ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.butcher"
     ],
     "descriptions": []
   },
@@ -390,14 +286,6 @@
     "aliases": [],
     "permissions": [
       "eternalcore.list"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "ping ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.ping"
     ],
     "descriptions": []
   },
@@ -435,22 +323,6 @@
   },
   {
     "name": "time add",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.time"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "time add",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.time"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "time set",
     "aliases": [],
     "permissions": [
       "eternalcore.time"
@@ -510,13 +382,7 @@
     "descriptions": []
   },
   {
-    "name": "sethome ",
-    "aliases": [],
-    "permissions": [],
-    "descriptions": []
-  },
-  {
-    "name": "ignore *",
+    "name": "ignore ",
     "aliases": [],
     "permissions": [
       "eternalcore.ignore"
@@ -524,7 +390,7 @@
     "descriptions": []
   },
   {
-    "name": "ignore ",
+    "name": "ignore *",
     "aliases": [],
     "permissions": [
       "eternalcore.ignore"
@@ -614,38 +480,6 @@
     "descriptions": []
   },
   {
-    "name": "back ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.back"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "teleport ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.teleport"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "teleport ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.teleport"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "teleport ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.teleport"
-    ],
-    "descriptions": []
-  },
-  {
     "name": "teleport ",
     "aliases": [],
     "permissions": [
@@ -670,26 +504,10 @@
     "descriptions": []
   },
   {
-    "name": "tppos ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tppos"
-    ],
-    "descriptions": []
-  },
-  {
     "name": "tpup ",
     "aliases": [],
     "permissions": [
       "eternalcore.tpup"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "tpaaccept ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tpaccept"
     ],
     "descriptions": []
   },
@@ -704,6 +522,14 @@
     "descriptions": []
   },
   {
+    "name": "tpaaccept ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": []
+  },
+  {
     "name": "tpa ",
     "aliases": [],
     "permissions": [
@@ -712,18 +538,18 @@
     "descriptions": []
   },
   {
-    "name": "tpadeny ",
-    "aliases": [],
+    "name": "tpadeny -all",
+    "aliases": [
+      "tpadeny *"
+    ],
     "permissions": [
       "eternalcore.tpadeny"
     ],
     "descriptions": []
   },
   {
-    "name": "tpadeny -all",
-    "aliases": [
-      "tpadeny *"
-    ],
+    "name": "tpadeny ",
+    "aliases": [],
     "permissions": [
       "eternalcore.tpadeny"
     ],
