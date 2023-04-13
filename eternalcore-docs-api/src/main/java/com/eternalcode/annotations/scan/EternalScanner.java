@@ -22,8 +22,10 @@ public class EternalScanner {
         return scan(packageStack, resolver);
     }
 
-    private  <RESULT, RESOLVER extends EternalScanResolver<RESULT>> List<RESULT> scan(PackageStack packageStack, RESOLVER resolver) {
+    private <RESULT, RESOLVER extends EternalScanResolver<RESULT>> List<RESULT> scan(PackageStack packageStack, RESOLVER resolver) {
         List<RESULT> results = new ArrayList<>();
+
+        System.out.println("Scanning package " + packageStack.getName());
 
         for (Class<?> classToScan : packageStack.getClasses()) {
             EternalScanRecord record = new EternalScanRecord(classToScan, List.of(classToScan.getDeclaredMethods()));

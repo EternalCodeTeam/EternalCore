@@ -1,12 +1,1 @@
-[
-  {
-    "name": "createPackageStack",
-    "permissions": [
-      "com.eternalcode.annotations.createPackageStack"
-    ],
-    "descriptions": [
-      "Creates a PackageStack from a package.",
-      "Returns a PackageStack."
-    ]
-  }
-]
+[]

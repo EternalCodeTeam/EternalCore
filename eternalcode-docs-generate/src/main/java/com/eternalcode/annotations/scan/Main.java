@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
-        EternalScanner scanner = new EternalScanner(Main.class.getClassLoader(), Main.class.getPackage());
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class<?> aClass = Class.forName("com.eternalcode.core.EternalCore");
+        EternalScanner scanner = new EternalScanner(aClass.getClassLoader(), aClass.getPackage());
 
         List<FeatureResult> featureResults = scanner.scan(new FeatureScanResolver());
         List<CommandResult> commandResults = scanner.scan(new CommandScanResolver());
@@ -35,5 +37,7 @@ public class Main {
         catch (IOException exception) {
             exception.printStackTrace();
         }
+
     }
+
 }

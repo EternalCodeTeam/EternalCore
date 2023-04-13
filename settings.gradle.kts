@@ -4,6 +4,8 @@ include(":eternalcore-api")
 include(":eternalcore-core")
 include(":eternalcore-paper")
 include(":eternalcore-plugin")
+include(":eternalcore-docs-api")
+include(":eternalcode-docs-generate")
 
 pluginManagement {
     repositories {
@@ -19,4 +21,3 @@ pluginManagement {
         maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
     }
 }
-include("eternalcore-docs")

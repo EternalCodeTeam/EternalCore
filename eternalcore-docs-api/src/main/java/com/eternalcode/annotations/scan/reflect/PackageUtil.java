@@ -10,14 +10,6 @@ import java.util.Set;
 
 public final class PackageUtil {
 
-    @FeatureDocs(
-        name = "createPackageStack",
-        permission = "com.eternalcode.annotations.createPackageStack",
-        description = {
-            "Creates a PackageStack from a package.",
-            "Returns a PackageStack."
-        }
-    )
     public static PackageStack createPackageStack(Package packageToSearch, ClassLoader classLoader) {
         String packageName = packageToSearch.getName();
 

@@ -17,6 +17,14 @@ public final class PackageStack {
         this.subPackages = subPackages;
     }
 
+    static PackageStack empty(Package pack) {
+        return new PackageStack(pack, Collections.emptyList(), Collections.emptyList());
+    }
+
+    static PackageStack of(Package pack, Collection<Class<?>> classes, Collection<PackageStack> subPackages) {
+        return new PackageStack(pack, new ArrayList<>(classes), new ArrayList<>(subPackages));
+    }
+
     public Package getOriginal() {
         return original;
     }
@@ -45,14 +53,6 @@ public final class PackageStack {
         classes.add(clazz);
 
         return new PackageStack(this.original, classes, this.subPackages);
-    }
-
-    static PackageStack empty(Package pack) {
-        return new PackageStack(pack, Collections.emptyList(), Collections.emptyList());
-    }
-
-    static PackageStack of(Package pack, Collection<Class<?>> classes, Collection<PackageStack> subPackages) {
-        return new PackageStack(pack, new ArrayList<>(classes), new ArrayList<>(subPackages));
     }
 
 }

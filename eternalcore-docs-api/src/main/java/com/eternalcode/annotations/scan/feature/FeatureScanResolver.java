@@ -3,8 +3,6 @@ package com.eternalcode.annotations.scan.feature;
 import com.eternalcode.annotations.scan.EternalScanRecord;
 import com.eternalcode.annotations.scan.SingleAnnotationScanResolver;
 
-;
-
 public class FeatureScanResolver extends SingleAnnotationScanResolver<FeatureDocs, FeatureResult> {
 
     public FeatureScanResolver() {
@@ -12,11 +10,11 @@ public class FeatureScanResolver extends SingleAnnotationScanResolver<FeatureDoc
     }
 
     @Override
-    protected FeatureResult resolve(EternalScanRecord record, FeatureDocs annotation) {
+    public FeatureResult resolve(EternalScanRecord record, FeatureDocs annotation) {
         return new FeatureResult(
-                annotation.name(),
-                annotation.permission(),
-                annotation.description()
+            annotation.name(),
+            annotation.permission(),
+            annotation.description()
         );
     }
 

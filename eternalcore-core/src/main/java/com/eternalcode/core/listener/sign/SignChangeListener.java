@@ -1,5 +1,6 @@
 package com.eternalcode.core.listener.sign;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.util.legacy.Legacy;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
@@ -15,6 +16,11 @@ public class SignChangeListener implements Listener {
         this.miniMessage = miniMessage;
     }
 
+    @FeatureDocs(
+        name = "Colored sign",
+        description = "Allows you to use color codes in signs",
+        permission = "eternalcore.sign"
+    )
     @EventHandler
     public void onSign(SignChangeEvent event) {
         Player player = event.getPlayer();

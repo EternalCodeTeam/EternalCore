@@ -7,4 +7,5 @@ public record CommandResult(
     List<String> aliases,
     List<String> permissions,
     List<String> descriptions
-) { }
+) {
+}

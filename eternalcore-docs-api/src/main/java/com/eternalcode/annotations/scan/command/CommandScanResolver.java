@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-;
-
 public class CommandScanResolver implements EternalScanResolver<CommandResult> {
 
     @Override
@@ -53,8 +51,8 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
 
             String name = route.name() + " " + execute.route();
             List<String> aliases = Arrays.stream(execute.aliases())
-                    .map(alias -> route.name() + " " + alias)
-                    .toList();
+                .map(alias -> route.name() + " " + alias)
+                .toList();
 
             results.add(handleExecutor(record, method, name, aliases));
         }

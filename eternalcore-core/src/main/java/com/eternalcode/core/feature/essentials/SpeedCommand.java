@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
+import com.eternalcode.annotations.scan.command.Description;
 import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 
 @Route(name = "speed")
 @Permission("eternalcore.speed")
+@Description("Allows you to change speed you or specified player")
 public class SpeedCommand {
 
     private final NoticeService noticeService;

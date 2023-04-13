@@ -1,59 +1,866 @@
 [
   {
-    "name": "test-root other",
+    "name": "eternalcore reload",
     "aliases": [],
     "permissions": [
-      "permissions.root.execute.other",
-      "permissions.root2",
-      "permissions.root"
+      "eternalcore.reload",
+      "eternalcore.eternalcore"
     ],
-    "descriptions": [
-      "This is descriptions other"
-    ]
+    "descriptions": []
   },
   {
-    "name": "test-root",
+    "name": "adminchat ",
     "aliases": [],
     "permissions": [
-      "permissions.root2",
-      "permissions.root.execute",
-      "permissions.root"
+      "eternalcore.adminchat"
     ],
-    "descriptions": [
-      "This is descriptions"
-    ]
+    "descriptions": []
   },
   {
-    "name": "tpa deny",
+    "name": "afk ",
     "aliases": [],
     "permissions": [
-      "eternalcore.tpa.deny",
-      "eternalcore.tpa"
+      "eternalcore.afk"
     ],
-    "descriptions": [
-      "Denies tpa request"
-    ]
+    "descriptions": []
+  },
+  {
+    "name": "chat off",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "chat slowmode",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "chat clear",
+    "aliases": [
+      "chat cc"
+    ],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "chat on",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "alert ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.alert"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "feed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.feed"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "feed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.feed"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "fly ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.fly"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "fly ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.fly"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "god ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.god"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "god ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.god"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "heal ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.heal"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "heal ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.heal"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "kill ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.kill"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "speed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.speed"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "speed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.speed"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "anvil ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.anvil"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "anvil ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.anvil"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "cartography ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.cartography"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "cartography ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.cartography"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "disposal ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.disposal"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "enderchest ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enderchest"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "enderchest ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enderchest"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "grindstone ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.grindstone"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "grindstone ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.grindstone"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "clear ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.clear"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "clear ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.clear"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "invsee armor",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.armor"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "invsee inventory",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.inventory"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "invsee enderchest",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.enderchest"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "stonecutter ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.workbench"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "stonecutter ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.workbench"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "workbench ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.workbench"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "workbench ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.workbench"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "gamemode ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.gamemode"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "gamemode ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.gamemode"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "enchant ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enchant"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "hat ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.hat"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "itemflag clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemflag"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "itemflag ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemflag"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "itemlore clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemlore"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "itemlore ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemlore"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "itemname clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemname"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "itemname ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemname"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "repair armor",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "repair ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "repair all",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "skull ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.skull"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "online ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.online"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "list ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.list"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "ping ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ping"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "ping ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ping"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "whois ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.whois"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "day ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.day"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "night ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.night"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "time add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "time add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "time set",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "time set",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "rain ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.rain"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "sun ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sun"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "thunder ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.thunder"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "delhome ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": []
+  },
+  {
+    "name": "home ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.home"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "sethome ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": []
+  },
+  {
+    "name": "sethome ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": []
+  },
+  {
+    "name": "ignore *",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ignore"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "ignore ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ignore"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "unignore *",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ignore"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "unignore ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ignore"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "spy",
+    "aliases": [
+      "socialspy"
+    ],
+    "permissions": [
+      "eternalcore.spy"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "msg",
+    "aliases": [
+      "message",
+      "m",
+      "whisper",
+      "tell",
+      "t"
+    ],
+    "permissions": [
+      "eternalcore.msg"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "reply",
+    "aliases": [
+      "r"
+    ],
+    "permissions": [
+      "eternalcore.reply"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "helpop ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.helpop"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "setspawn ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.setspawn"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "spawn ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.spawn"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "warp ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "warp ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "warp add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp",
+      "eternalcore.warp.create"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "warp remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp.delete",
+      "eternalcore.warp"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "language ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.language"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "back ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.back"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "back ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.back"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "tphere ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tphere"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "tppos ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tppos"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "tppos ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tppos"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "tpup ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpup"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "tpaaccept -all",
+    "aliases": [
+      "tpaaccept *"
+    ],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "tpaaccept ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": []
   },
   {
     "name": "tpa ",
     "aliases": [],
     "permissions": [
-      "eternalcore.tpa",
-      "eternalcore.tpa.send"
+      "eternalcore.tpa"
     ],
-    "descriptions": [
-      "Sends tpa request"
-    ]
+    "descriptions": []
   },
   {
-    "name": "tpa accept",
+    "name": "tpadeny -all",
+    "aliases": [
+      "tpadeny *"
+    ],
+    "permissions": [
+      "eternalcore.tpadeny"
+    ],
+    "descriptions": []
+  },
+  {
+    "name": "tpadeny ",
     "aliases": [],
     "permissions": [
-      "eternalcore.tpa",
-      "eternalcore.tpa.accept"
+      "eternalcore.tpadeny"
     ],
-    "descriptions": [
-      "Accepts tpa request"
-    ]
+    "descriptions": []
   }
 ]
