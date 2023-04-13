@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.chat;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.command.argument.DurationArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;

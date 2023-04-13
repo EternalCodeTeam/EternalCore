@@ -38,6 +38,37 @@
     ]
   },
   {
+    "name": "Afk",
+    "permissions": [
+      "eternalcore.afk",
+      "eternalcore.afk.bypass"
+    ],
+    "descriptions": [
+      "It allows you to mark yourself as AFK, or if you are AFK, eternalcore will mark you as AFK after some time"
+    ]
+  },
+  {
+    "name": "ChatManager",
+    "permissions": [],
+    "descriptions": [
+      "It allows you to manage chat"
+    ]
+  },
+  {
+    "name": "Player Join Sound",
+    "permissions": [],
+    "descriptions": [
+      "Play a sound after a player joins the server"
+    ]
+  },
+  {
+    "name": "Player Join Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a welcome message to a player when they join the server"
+    ]
+  },
+  {
     "name": "Colored sign",
     "permissions": [
       "eternalcore.sign"

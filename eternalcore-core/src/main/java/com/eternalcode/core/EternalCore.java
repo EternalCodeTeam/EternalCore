@@ -40,6 +40,7 @@ import com.eternalcode.core.feature.afk.AfkMessagesController;
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
+import com.eternalcode.core.feature.chat.ChatManagerController;
 import com.eternalcode.core.feature.essentials.AlertCommand;
 import com.eternalcode.core.feature.essentials.FeedCommand;
 import com.eternalcode.core.feature.essentials.FlyCommand;
@@ -101,7 +102,7 @@ import com.eternalcode.core.feature.warp.WarpRepository;
 import com.eternalcode.core.language.LanguageCommand;
 import com.eternalcode.core.language.LanguageInventory;
 import com.eternalcode.core.language.config.LanguageConfiguration;
-import com.eternalcode.core.listener.player.PlayerChatListener;
+import com.eternalcode.core.listener.player.PlayerChatSoundListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
@@ -306,9 +307,6 @@ class EternalCore implements EternalCoreApi {
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
 
         /* FrameWorks & Libs */
-        /**
-         * FrameWorks & Libs
-         **/
         LanguageInventory languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
         WarpInventory warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
@@ -443,7 +441,7 @@ class EternalCore implements EternalCoreApi {
 
         Stream.of(
             new TeleportDeathController(this.teleportService),
-            new PlayerChatListener(this.chatManager, this.noticeService, this.pluginConfiguration, server),
+            new PlayerChatSoundListener(this.pluginConfiguration, server),
             new PlayerJoinListener(this.pluginConfiguration, this.noticeService, server),
             new PlayerQuitListener(this.pluginConfiguration, this.noticeService, server),
             new PrepareUserController(this.userManager, server),
@@ -452,7 +450,8 @@ class EternalCore implements EternalCoreApi {
             new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
-            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)
+            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage),
+            new ChatManagerController(this.chatManager, this.noticeService)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Subscribers */

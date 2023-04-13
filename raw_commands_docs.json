@@ -418,7 +418,7 @@
     "descriptions": []
   },
   {
-    "name": "repair ",
+    "name": "repair all",
     "aliases": [],
     "permissions": [
       "eternalcore.repair"
@@ -426,7 +426,7 @@
     "descriptions": []
   },
   {
-    "name": "repair all",
+    "name": "repair ",
     "aliases": [],
     "permissions": [
       "eternalcore.repair"
@@ -845,7 +845,7 @@
     "descriptions": []
   },
   {
-    "name": "repair ",
+    "name": "repair all",
     "aliases": [],
     "permissions": [
       "eternalcore.repair"
@@ -853,7 +853,7 @@
     "descriptions": []
   },
   {
-    "name": "repair all",
+    "name": "repair ",
     "aliases": [],
     "permissions": [
       "eternalcore.repair"
@@ -1277,18 +1277,18 @@
     "descriptions": []
   },
   {
-    "name": "tpaaccept ",
-    "aliases": [],
+    "name": "tpaaccept -all",
+    "aliases": [
+      "tpaaccept *"
+    ],
     "permissions": [
       "eternalcore.tpaccept"
     ],
     "descriptions": []
   },
   {
-    "name": "tpaaccept -all",
-    "aliases": [
-      "tpaaccept *"
-    ],
+    "name": "tpaaccept ",
+    "aliases": [],
     "permissions": [
       "eternalcore.tpaccept"
     ],
@@ -1303,18 +1303,18 @@
     "descriptions": []
   },
   {
-    "name": "tpadeny ",
-    "aliases": [],
+    "name": "tpadeny -all",
+    "aliases": [
+      "tpadeny *"
+    ],
     "permissions": [
       "eternalcore.tpadeny"
     ],
     "descriptions": []
   },
   {
-    "name": "tpadeny -all",
-    "aliases": [
-      "tpadeny *"
-    ],
+    "name": "tpadeny ",
+    "aliases": [],
     "permissions": [
       "eternalcore.tpadeny"
     ],
@@ -1401,18 +1401,18 @@
     "descriptions": []
   },
   {
-    "name": "tpaaccept ",
-    "aliases": [],
+    "name": "tpaaccept -all",
+    "aliases": [
+      "tpaaccept *"
+    ],
     "permissions": [
       "eternalcore.tpaccept"
     ],
     "descriptions": []
   },
   {
-    "name": "tpaaccept -all",
-    "aliases": [
-      "tpaaccept *"
-    ],
+    "name": "tpaaccept ",
+    "aliases": [],
     "permissions": [
       "eternalcore.tpaccept"
     ],
@@ -1427,18 +1427,18 @@
     "descriptions": []
   },
   {
-    "name": "tpadeny ",
-    "aliases": [],
+    "name": "tpadeny -all",
+    "aliases": [
+      "tpadeny *"
+    ],
     "permissions": [
       "eternalcore.tpadeny"
     ],
     "descriptions": []
   },
   {
-    "name": "tpadeny -all",
-    "aliases": [
-      "tpadeny *"
-    ],
+    "name": "tpadeny ",
+    "aliases": [],
     "permissions": [
       "eternalcore.tpadeny"
     ],
