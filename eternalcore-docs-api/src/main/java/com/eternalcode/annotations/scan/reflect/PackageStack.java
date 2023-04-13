@@ -26,19 +26,19 @@ public final class PackageStack {
     }
 
     public Package getOriginal() {
-        return original;
+        return this.original;
     }
 
     public String getName() {
-        return original.getName();
+        return this.original.getName();
     }
 
     public List<Class<?>> getClasses() {
-        return Collections.unmodifiableList(classes);
+        return Collections.unmodifiableList(this.classes);
     }
 
     public List<PackageStack> getSubPackages() {
-        return Collections.unmodifiableList(subPackages);
+        return Collections.unmodifiableList(this.subPackages);
     }
 
     PackageStack withSubPackage(PackageStack subPackage) {

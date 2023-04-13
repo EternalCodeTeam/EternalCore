@@ -27,13 +27,13 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
         Route annotation = type.getAnnotation(Route.class);
 
         if (annotation != null) {
-            return handleRoute(record, annotation);
+            return this.handleRoute(record, annotation);
         }
 
         RootRoute rootRoute = type.getAnnotation(RootRoute.class);
 
         if (rootRoute != null) {
-            return handleRootRoute(record, rootRoute);
+            return this.handleRootRoute(record, rootRoute);
         }
 
         return List.of();
@@ -54,7 +54,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
                 .map(alias -> route.name() + " " + alias)
                 .toList();
 
-            results.add(handleExecutor(record, method, name, aliases));
+            results.add(this.handleExecutor(record, method, name, aliases));
         }
 
         return results;
@@ -73,7 +73,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
             String name = execute.route();
             List<String> aliases = Arrays.asList(execute.aliases());
 
-            results.add(handleExecutor(record, method, name, aliases));
+            results.add(this.handleExecutor(record, method, name, aliases));
         }
 
         return results;
@@ -83,8 +83,8 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
         Class<?> clazz = record.clazz();
         Set<String> permissions = new HashSet<>();
 
-        permissions.addAll(scan(Permission.class, clazz, method, (Permission::value)));
-        permissions.addAll(scan(Permissions.class, clazz, method, (permissionsAnnotation -> {
+        permissions.addAll(this.scan(Permission.class, clazz, method, (Permission::value)));
+        permissions.addAll(this.scan(Permissions.class, clazz, method, (permissionsAnnotation -> {
             List<String> permissionsList = new ArrayList<>();
 
             for (Permission permission : permissionsAnnotation.value()) {
@@ -94,7 +94,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
             return permissionsList.toArray(new String[0]);
         })));
 
-        List<String> description = scan(Description.class, Blank.class, method, (Description::value));
+        List<String> description = this.scan(Description.class, Blank.class, method, (Description::value));
 
         return new CommandResult(
             name,

@@ -7,27 +7,6 @@
     ]
   },
   {
-    "name": "PlaceholderAPI",
-    "permissions": [],
-    "descriptions": [
-      "Adds support for PlaceholderAPI"
-    ]
-  },
-  {
-    "name": "CommandConfigurator",
-    "permissions": [],
-    "descriptions": [
-      "Adds support for command configuration, which allows you to change the name, aliases, permissions and disable the command"
-    ]
-  },
-  {
-    "name": "DatabaseManager",
-    "permissions": [],
-    "descriptions": [
-      "Add support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
-    ]
-  },
-  {
     "name": "AdminChat",
     "permissions": [
       "eternalcore.adminchat",

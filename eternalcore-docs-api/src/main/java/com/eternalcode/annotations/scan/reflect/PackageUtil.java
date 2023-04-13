@@ -37,7 +37,7 @@ public final class PackageUtil {
                 Package subPackage = classLoader.getDefinedPackage(subPackageName);
                 PackageStack subPackageStack = createPackageStack(subPackage, classLoader);
 
-                if (!subPackageStack.getClasses().isEmpty()) {
+                if (!subPackageStack.getClasses().isEmpty() && subPackageStack.getSubPackages().isEmpty()) {
                     packageStack = packageStack.withSubPackage(subPackageStack);
                 }
 
@@ -50,4 +50,5 @@ public final class PackageUtil {
             throw new RuntimeException(exception);
         }
     }
+
 }

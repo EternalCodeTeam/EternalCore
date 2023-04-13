@@ -17,6 +17,12 @@ public class PlayerJoinListener implements Listener {
     private final NoticeService noticeService;
     private final Server server;
 
+    public PlayerJoinListener(PluginConfiguration config, NoticeService noticeService, Server server) {
+        this.config = config;
+        this.noticeService = noticeService;
+        this.server = server;
+    }
+
     @FeatureDocs(
         description = "Send a welcome message to a player when they join the server",
         name = "Player Join Message"

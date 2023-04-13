@@ -17,9 +17,9 @@ public class EternalScanner {
     }
 
     public <RESULT, RESOLVER extends EternalScanResolver<RESULT>> List<RESULT> scan(RESOLVER resolver) {
-        PackageStack packageStack = PackageUtil.createPackageStack(packageToScan, classLoader);
+        PackageStack packageStack = PackageUtil.createPackageStack(this.packageToScan, this.classLoader);
 
-        return scan(packageStack, resolver);
+        return this.scan(packageStack, resolver);
     }
 
     private <RESULT, RESOLVER extends EternalScanResolver<RESULT>> List<RESULT> scan(PackageStack packageStack, RESOLVER resolver) {
@@ -34,7 +34,7 @@ public class EternalScanner {
         }
 
         for (PackageStack subPackageStack : packageStack.getSubPackages()) {
-            results.addAll(scan(subPackageStack, resolver));
+            results.addAll(this.scan(subPackageStack, resolver));
         }
 
         return results;

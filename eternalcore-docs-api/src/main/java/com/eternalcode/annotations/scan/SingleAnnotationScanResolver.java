@@ -16,10 +16,10 @@ public abstract class SingleAnnotationScanResolver<A extends Annotation, RESULT>
     @Override
     public final List<RESULT> resolve(EternalScanRecord record) {
         List<RESULT> results = new ArrayList<>();
-        List<A> annotations = scanForAnnotations(record.clazz(), annotationClass);
+        List<A> annotations = this.scanForAnnotations(record.clazz(), this.annotationClass);
 
         for (A annotation : annotations) {
-            results.add(resolve(record, annotation));
+            results.add(this.resolve(record, annotation));
         }
 
         return results;
