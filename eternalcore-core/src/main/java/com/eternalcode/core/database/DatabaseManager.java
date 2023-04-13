@@ -17,8 +17,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 @FeatureDocs(
-    name = "DatabaseManager",
-    description = "Add support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
+    name = "Database",
+    description = "Adds support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
 )
 public class DatabaseManager {
 

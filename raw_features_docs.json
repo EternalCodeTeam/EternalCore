@@ -30,14 +30,7 @@
     "name": "ChatManager",
     "permissions": [],
     "descriptions": [
-      "It allows you to manage chat"
-    ]
-  },
-  {
-    "name": "Player Join Sound",
-    "permissions": [],
-    "descriptions": [
-      "Play a sound after a player joins the server"
+      "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
     ]
   },
   {
@@ -45,6 +38,13 @@
     "permissions": [],
     "descriptions": [
       "Send a welcome message to a player when they join the server"
+    ]
+  },
+  {
+    "name": "Player Join Sound",
+    "permissions": [],
+    "descriptions": [
+      "Play a sound after a player joins the server"
     ]
   },
   {

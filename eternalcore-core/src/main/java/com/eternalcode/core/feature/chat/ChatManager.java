@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @FeatureDocs(
     name = "ChatManager",
-    description = "It allows you to manage chat"
+    description = "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
 )
 public class ChatManager {
 
