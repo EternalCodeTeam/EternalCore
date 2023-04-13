@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
+import com.eternalcode.annotations.scan.command.CommandDescription;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -19,6 +20,7 @@ public class EnderchestCommand {
     }
 
     @Execute(required = 0)
+    @CommandDescription("Opens your enderchest")
     void execute(Player player) {
         player.openInventory(player.getEnderChest());
 
@@ -29,6 +31,7 @@ public class EnderchestCommand {
     }
 
     @Execute(required = 1)
+    @CommandDescription("Opens another player his enderchest")
     void execute(Player player, @Arg Player target) {
         player.openInventory(target.getEnderChest());
 

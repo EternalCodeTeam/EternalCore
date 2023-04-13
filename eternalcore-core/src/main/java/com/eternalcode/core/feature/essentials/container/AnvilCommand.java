@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.container;
 
-import com.eternalcode.annotations.scan.command.Description;
+import com.eternalcode.annotations.scan.command.CommandDescription;
 import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.containers.AdditionalContainerType;
 import com.eternalcode.core.notification.NoticeService;
@@ -21,7 +21,7 @@ public class AnvilCommand {
     }
 
     @Execute(required = 0)
-    @Description("Opens an anvil for you")
+    @CommandDescription("Opens an anvil for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.ANVIL);
 
@@ -32,7 +32,7 @@ public class AnvilCommand {
     }
 
     @Execute(required = 1)
-    @Description("Opens an anvil for another player")
+    @CommandDescription("Opens an anvil for another player")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.ANVIL);
         this.noticeService.create()

@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
+import com.eternalcode.annotations.scan.command.CommandDescription;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
@@ -26,6 +27,7 @@ public class EnchantCommand {
 
     @Execute
     @Min(2)
+    @CommandDescription("Enchants item in your hand")
     void execute(Player player, @Arg Enchantment enchantment, @Arg int level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());

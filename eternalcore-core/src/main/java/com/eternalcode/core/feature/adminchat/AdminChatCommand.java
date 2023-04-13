@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.adminchat;
 
-import com.eternalcode.annotations.scan.command.Description;
+import com.eternalcode.annotations.scan.command.CommandDescription;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.notification.Notice;
 import com.eternalcode.core.notification.NoticeService;
@@ -30,7 +30,7 @@ public class AdminChatCommand {
     }
 
     @Execute(min = 1)
-    @Description("Allows you to send a message to all staff members")
+    @CommandDescription("Allows you to send a message to all staff members")
     public void execute(CommandSender sender, @Joiner String message) {
         Notice notice = this.noticeService.create()
             .console()

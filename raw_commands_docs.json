@@ -73,7 +73,7 @@
     ]
   },
   {
-    "name": "anvil ",
+    "name": "anvil anvil",
     "aliases": [],
     "permissions": [
       "eternalcore.anvil"
@@ -83,7 +83,7 @@
     ]
   },
   {
-    "name": "anvil ",
+    "name": "anvil anvil \u003cplayer\u003e",
     "aliases": [],
     "permissions": [
       "eternalcore.anvil"
@@ -98,7 +98,19 @@
     "permissions": [
       "eternalcore.cartography"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens a cartography table for you"
+    ]
+  },
+  {
+    "name": "cartography ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.cartography"
+    ],
+    "descriptions": [
+      "Opens a cartography table for another player"
+    ]
   },
   {
     "name": "disposal ",
@@ -106,7 +118,9 @@
     "permissions": [
       "eternalcore.disposal"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens a disposal"
+    ]
   },
   {
     "name": "enderchest ",
@@ -114,7 +128,19 @@
     "permissions": [
       "eternalcore.enderchest"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens another player his enderchest"
+    ]
+  },
+  {
+    "name": "enderchest ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enderchest"
+    ],
+    "descriptions": [
+      "Opens your enderchest"
+    ]
   },
   {
     "name": "grindstone ",
@@ -122,7 +148,19 @@
     "permissions": [
       "eternalcore.grindstone"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens a grindstone for another player"
+    ]
+  },
+  {
+    "name": "grindstone ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.grindstone"
+    ],
+    "descriptions": [
+      "Opens a grindstone for you"
+    ]
   },
   {
     "name": "clear ",
@@ -130,7 +168,19 @@
     "permissions": [
       "eternalcore.clear"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Clears your inventory"
+    ]
+  },
+  {
+    "name": "clear ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.clear"
+    ],
+    "descriptions": [
+      "Clears inventory of another player"
+    ]
   },
   {
     "name": "invsee inventory",
@@ -139,7 +189,9 @@
       "eternalcore.invsee",
       "eternalcore.invsee.inventory"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens inventory of another player"
+    ]
   },
   {
     "name": "invsee enderchest",
@@ -148,7 +200,9 @@
       "eternalcore.invsee",
       "eternalcore.invsee.enderchest"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens enderchest of another player"
+    ]
   },
   {
     "name": "invsee armor",
@@ -157,7 +211,9 @@
       "eternalcore.invsee",
       "eternalcore.invsee.armor"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens armor of another player"
+    ]
   },
   {
     "name": "stonecutter ",
@@ -165,7 +221,19 @@
     "permissions": [
       "eternalcore.workbench"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens a stonecutter for another player"
+    ]
+  },
+  {
+    "name": "stonecutter ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.workbench"
+    ],
+    "descriptions": [
+      "Opens a stonecutter for you"
+    ]
   },
   {
     "name": "workbench ",
@@ -173,7 +241,19 @@
     "permissions": [
       "eternalcore.workbench"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens a workbench for you"
+    ]
+  },
+  {
+    "name": "workbench ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.workbench"
+    ],
+    "descriptions": [
+      "Opens a workbench for another player"
+    ]
   },
   {
     "name": "gamemode ",
@@ -181,7 +261,19 @@
     "permissions": [
       "eternalcore.gamemode"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Sets your gamemode"
+    ]
+  },
+  {
+    "name": "gamemode ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.gamemode"
+    ],
+    "descriptions": [
+      "Sets gamemode of another player"
+    ]
   },
   {
     "name": "enchant ",
@@ -189,7 +281,9 @@
     "permissions": [
       "eternalcore.enchant"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Enchants item in your hand"
+    ]
   },
   {
     "name": "give ",

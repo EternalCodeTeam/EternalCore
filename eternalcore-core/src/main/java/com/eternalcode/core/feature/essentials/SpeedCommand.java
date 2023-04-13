@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.essentials;
 
-import com.eternalcode.annotations.scan.command.Description;
 import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
