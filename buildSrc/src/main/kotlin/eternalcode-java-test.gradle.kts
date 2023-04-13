@@ -9,7 +9,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
-    testImplementation("org.mockito:mockito-core:5.2.0")
+    testImplementation("org.mockito:mockito-core:5.3.0")
     testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
     testImplementation("net.kyori:adventure-text-minimessage:4.13.1")
 }
