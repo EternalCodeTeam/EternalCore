@@ -26,7 +26,39 @@
     "permissions": [
       "eternalcore.afk"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Mark yourself as AFK"
+    ]
+  },
+  {
+    "name": "chat on",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Enables chat"
+    ]
+  },
+  {
+    "name": "chat off",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Disables chat"
+    ]
+  },
+  {
+    "name": "chat slowmode",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Sets slowmode"
+    ]
   },
   {
     "name": "chat clear",
@@ -36,31 +68,9 @@
     "permissions": [
       "eternalcore.chat"
     ],
-    "descriptions": []
-  },
-  {
-    "name": "chat off",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.chat"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "chat slowmode",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.chat"
-    ],
-    "descriptions": []
-  },
-  {
-    "name": "chat on",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.chat"
-    ],
-    "descriptions": []
+    "descriptions": [
+      "Clears chat"
+    ]
   },
   {
     "name": "anvil ",
@@ -68,7 +78,19 @@
     "permissions": [
       "eternalcore.anvil"
     ],
-    "descriptions": []
+    "descriptions": [
+      "Opens an anvil for you"
+    ]
+  },
+  {
+    "name": "anvil ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.anvil"
+    ],
+    "descriptions": [
+      "Opens an anvil for another player"
+    ]
   },
   {
     "name": "cartography ",
