@@ -1,5 +1,6 @@
 package com.eternalcode.core.user;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.user.client.ClientSettings;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;

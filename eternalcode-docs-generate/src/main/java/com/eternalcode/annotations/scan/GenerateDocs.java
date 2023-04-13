@@ -11,7 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class Main {
+public class GenerateDocs {
 
     public static void main(String[] args) throws ClassNotFoundException {
         Class<?> aClass = Class.forName("com.eternalcode.core.EternalCore");

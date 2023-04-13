@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 
 @Route(name = "speed")
 @Permission("eternalcore.speed")
-@Description("Allows you to change speed you or specified player")
 public class SpeedCommand {
 
     private final NoticeService noticeService;

@@ -1,6 +1,5 @@
 package com.eternalcode.annotations.scan.reflect;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.google.common.reflect.ClassPath;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ public final class PackageUtil {
 
             ClassPath classPath = ClassPath.from(classLoader);
             Set<ClassPath.ClassInfo> classes = classPath.getTopLevelClassesRecursive(packageName);
-            int packageNameLength = packageName.length();
             List<String> loadedPackages = new ArrayList<>();
 
             for (ClassPath.ClassInfo info : classes) {
@@ -35,15 +33,14 @@ public final class PackageUtil {
                     continue;
                 }
 
-                if (subPackageName.substring(packageNameLength + 1).contains(".")) {
-                    continue;
-                }
-
                 Class.forName(info.getName());
                 Package subPackage = classLoader.getDefinedPackage(subPackageName);
                 PackageStack subPackageStack = createPackageStack(subPackage, classLoader);
 
-                packageStack = packageStack.withSubPackage(subPackageStack);
+                if (!subPackageStack.getClasses().isEmpty()) {
+                    packageStack = packageStack.withSubPackage(subPackageStack);
+                }
+
                 loadedPackages.add(subPackageName);
             }
 
@@ -53,5 +50,4 @@ public final class PackageUtil {
             throw new RuntimeException(exception);
         }
     }
-
 }

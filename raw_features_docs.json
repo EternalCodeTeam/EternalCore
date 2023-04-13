@@ -1,1 +1,49 @@
-[]
+[
+  {
+    "name": "PlaceholderAPI",
+    "permissions": [],
+    "descriptions": [
+      "Adds support for PlaceholderAPI"
+    ]
+  },
+  {
+    "name": "PlaceholderAPI",
+    "permissions": [],
+    "descriptions": [
+      "Adds support for PlaceholderAPI"
+    ]
+  },
+  {
+    "name": "CommandConfigurator",
+    "permissions": [],
+    "descriptions": [
+      "Adds support for command configuration, which allows you to change the name, aliases, permissions and disable the command"
+    ]
+  },
+  {
+    "name": "DatabaseManager",
+    "permissions": [],
+    "descriptions": [
+      "Add support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
+    ]
+  },
+  {
+    "name": "AdminChat",
+    "permissions": [
+      "eternalcore.adminchat",
+      "eternalcore.adminchat.spy"
+    ],
+    "descriptions": [
+      "Allows you to send a message to all staff members"
+    ]
+  },
+  {
+    "name": "Colored sign",
+    "permissions": [
+      "eternalcore.sign"
+    ],
+    "descriptions": [
+      "Allows you to use color codes in signs"
+    ]
+  }
+]
