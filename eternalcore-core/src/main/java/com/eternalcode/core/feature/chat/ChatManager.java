@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.chat;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -8,10 +7,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
-@FeatureDocs(
-    name = "ChatManager",
-    description = "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
-)
 public class ChatManager {
 
     private final Cache<UUID, Instant> slowdown;

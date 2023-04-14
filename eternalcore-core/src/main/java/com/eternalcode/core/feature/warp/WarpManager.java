@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.shared.Position;
 import panda.std.Option;
 
@@ -8,6 +9,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@FeatureDocs(
+    name = "Warp System",
+    description = "Allows you to create warps, optionally you can enable warp inventory"
+)
 public class WarpManager {
 
     private final Map<String, Warp> warpMap = new HashMap<>();

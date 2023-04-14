@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.chat;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.entity.Player;
@@ -11,6 +12,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import java.time.Duration;
 import java.util.UUID;
 
+@FeatureDocs(
+    name = "ChatManager",
+    description = "It allows you to manage chat, with slowmode, chat clear, chat on/off etc.",
+    permission = { "eternalcore.chat.noslowmode", "eternalcore.chat.bypass" }
+)
 public class ChatManagerController implements Listener {
 
     private final ChatManager chatManager;

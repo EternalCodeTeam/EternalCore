@@ -24,7 +24,7 @@ public class PlayerJoinListener implements Listener {
     }
 
     @FeatureDocs(
-        description = "Send a welcome message to a player when they join the server",
+        description = "Send a random welcome message from config to a player when they join the server",
         name = "Player Join Message"
     )
     @EventHandler

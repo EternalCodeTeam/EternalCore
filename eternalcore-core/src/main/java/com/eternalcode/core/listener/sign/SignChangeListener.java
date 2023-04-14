@@ -8,6 +8,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
+@FeatureDocs(
+    name = "Colored sign",
+    description = "Allows you to use color codes in signs",
+    permission = "eternalcore.sign"
+)
 public class SignChangeListener implements Listener {
 
     private final MiniMessage miniMessage;
@@ -16,11 +21,6 @@ public class SignChangeListener implements Listener {
         this.miniMessage = miniMessage;
     }
 
-    @FeatureDocs(
-        name = "Colored sign",
-        description = "Allows you to use color codes in signs",
-        permission = "eternalcore.sign"
-    )
     @EventHandler
     public void onSign(SignChangeEvent event) {
         Player player = event.getPlayer();

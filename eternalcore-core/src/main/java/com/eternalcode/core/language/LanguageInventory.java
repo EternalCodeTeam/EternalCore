@@ -1,5 +1,6 @@
 package com.eternalcode.core.language;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.language.config.LanguageConfigItem;
 import com.eternalcode.core.language.config.LanguageConfiguration;
 import com.eternalcode.core.notification.NoticeService;
@@ -19,6 +20,10 @@ import panda.std.Option;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@FeatureDocs(
+    name = "Language Inventory",
+    description = "This feature allows you to create a language selector inventory"
+)
 public class LanguageInventory {
 
     private final LanguageConfiguration languageConfiguration;

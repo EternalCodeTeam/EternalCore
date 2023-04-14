@@ -14,11 +14,6 @@ import org.bukkit.entity.Player;
 
 @Route(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
-@FeatureDocs(
-    name = "AdminChat",
-    description = "Allows you to send a message to all staff members",
-    permission = { "eternalcore.adminchat", "eternalcore.adminchat.spy" }
-)
 public class AdminChatCommand {
 
     private final NoticeService noticeService;

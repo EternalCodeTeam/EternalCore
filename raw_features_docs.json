@@ -7,16 +7,6 @@
     ]
   },
   {
-    "name": "AdminChat",
-    "permissions": [
-      "eternalcore.adminchat",
-      "eternalcore.adminchat.spy"
-    ],
-    "descriptions": [
-      "Allows you to send a message to all staff members"
-    ]
-  },
-  {
     "name": "Afk",
     "permissions": [
       "eternalcore.afk",
@@ -28,16 +18,35 @@
   },
   {
     "name": "ChatManager",
-    "permissions": [],
+    "permissions": [
+      "eternalcore.chat.noslowmode",
+      "eternalcore.chat.bypass"
+    ],
     "descriptions": [
       "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
     ]
   },
   {
-    "name": "Player Join Message",
+    "name": "Sound after message in chat",
     "permissions": [],
     "descriptions": [
-      "Send a welcome message to a player when they join the server"
+      "It allows you to play sound after message in chat"
+    ]
+  },
+  {
+    "name": "CommandBlocker",
+    "permissions": [
+      "eternalcode.commandblocker.bypass"
+    ],
+    "descriptions": [
+      "It allows you to block commands with custom message"
+    ]
+  },
+  {
+    "name": "Player Death Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a message to all players when a player dies"
     ]
   },
   {
@@ -45,6 +54,36 @@
     "permissions": [],
     "descriptions": [
       "Play a sound after a player joins the server"
+    ]
+  },
+  {
+    "name": "Player Join Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a random welcome message from config to a player when they join the server"
+    ]
+  },
+  {
+    "name": "Bypass Full Server",
+    "permissions": [
+      "eternalcore.slot.bypass"
+    ],
+    "descriptions": [
+      "This feature allows you to bypass the full server, example for vip rank."
+    ]
+  },
+  {
+    "name": "Player Quit Sound",
+    "permissions": [],
+    "descriptions": [
+      "Play a sound after a player quits the server"
+    ]
+  },
+  {
+    "name": "Player Quit Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a random goodbye message from config to a player when they quit the server"
     ]
   },
   {
