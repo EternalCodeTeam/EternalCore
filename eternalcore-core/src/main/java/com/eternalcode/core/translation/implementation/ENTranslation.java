@@ -561,10 +561,10 @@ public class ENTranslation extends AbstractTranslation {
             "<green>► <white>Target food level: <green>{FOOD}"
         );
 
-        @Description({ " ", "{KILLED} - Number of killed mobs" })
+        @Description({ " ", "# {KILLED} - Number of killed mobs" })
         public Notification butcherCommand = Notification.chat("<green>► <white>You killed <green>{KILLED} <white>mobs!");
 
-        @Description({ " ", "{SAFE_CHUNKS} - The number of safe chunks" })
+        @Description({ " ", "# {SAFE_CHUNKS} - The number of safe chunks" })
         public Notification safeChunksMessage = Notification.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
     }
 
