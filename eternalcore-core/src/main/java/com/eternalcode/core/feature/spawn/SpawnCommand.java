@@ -6,6 +6,7 @@ import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -75,13 +76,13 @@ public class SpawnCommand {
     }
 
     @Execute
-    void execute(Player sender, @Arg Player player) {
+    void execute(Viewer viewer, @Arg Player player) {
         Position position = this.locations.spawn;
 
         if (position.isNoneWorld()) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
-                .player(sender.getUniqueId())
+                .viewer(viewer)
                 .send();
 
             return;
@@ -93,14 +94,14 @@ public class SpawnCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedBy())
-            .placeholder("{PLAYER}", sender.getName())
+            .placeholder("{PLAYER}", viewer.getName())
             .player(player.getUniqueId())
             .send();
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
-            .player(sender.getUniqueId())
+            .viewer(viewer)
             .send();
     }
 }

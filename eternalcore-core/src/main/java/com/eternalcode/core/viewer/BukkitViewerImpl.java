@@ -1,6 +1,7 @@
 package com.eternalcode.core.viewer;
 
 import com.eternalcode.core.language.Language;
+import org.bukkit.Bukkit;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -40,6 +41,15 @@ class BukkitViewerImpl implements Viewer {
     @Override
     public boolean isConsole() {
         return this.console;
+    }
+
+    @Override
+    public String getName() {
+        if (console) {
+            return "CONSOLE";
+        }
+
+        return Bukkit.getServer().getOfflinePlayer(uuid).getName();
     }
 
     @Override
