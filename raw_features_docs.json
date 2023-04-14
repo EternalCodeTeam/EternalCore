@@ -34,17 +34,17 @@
     ]
   },
   {
-    "name": "Player Join Sound",
-    "permissions": [],
-    "descriptions": [
-      "Play a sound after a player joins the server"
-    ]
-  },
-  {
     "name": "Player Join Message",
     "permissions": [],
     "descriptions": [
       "Send a welcome message to a player when they join the server"
+    ]
+  },
+  {
+    "name": "Player Join Sound",
+    "permissions": [],
+    "descriptions": [
+      "Play a sound after a player joins the server"
     ]
   },
   {

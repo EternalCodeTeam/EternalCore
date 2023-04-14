@@ -73,7 +73,7 @@
     ]
   },
   {
-    "name": "anvil anvil",
+    "name": "anvil ",
     "aliases": [],
     "permissions": [
       "eternalcore.anvil"
@@ -83,7 +83,7 @@
     ]
   },
   {
-    "name": "anvil anvil \u003cplayer\u003e",
+    "name": "anvil ",
     "aliases": [],
     "permissions": [
       "eternalcore.anvil"
