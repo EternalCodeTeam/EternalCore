@@ -237,20 +237,6 @@
     ]
   },
   {
-    "name": "invsee inventory",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.inventory"
-    ],
-    "descriptions": [
-      "Opens inventory of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
     "name": "invsee enderchest",
     "aliases": [],
     "permissions": [
@@ -259,6 +245,20 @@
     ],
     "descriptions": [
       "Opens enderchest of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "invsee inventory",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.inventory"
+    ],
+    "descriptions": [
+      "Opens inventory of another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
