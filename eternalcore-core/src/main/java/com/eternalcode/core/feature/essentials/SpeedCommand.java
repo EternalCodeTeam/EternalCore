@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -21,6 +22,7 @@ public class SpeedCommand {
     }
 
     @Execute(required = 1)
+    @DocsDescription(description = "Set speed of walking and flying to specified amount", arguments = "<amount>")
     void execute(Player player, @Arg @By(SpeedArgument.KEY) Integer amount) {
         this.setSpeed(player, amount);
 
@@ -32,6 +34,7 @@ public class SpeedCommand {
     }
 
     @Execute(required = 2)
+    @DocsDescription(description = "Set speed of walking and flying to specified amount and player", arguments = "<amount> <player>")
     void execute(Viewer viewer, @Arg @By(SpeedArgument.KEY) Integer amount, @Arg Player target) {
         this.setSpeed(target, amount);
 

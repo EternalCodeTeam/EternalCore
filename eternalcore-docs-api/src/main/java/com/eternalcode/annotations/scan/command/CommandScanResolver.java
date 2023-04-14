@@ -51,7 +51,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
 
             String name = route.name() + " " + execute.route();
             List<String> aliases = Arrays.stream(execute.aliases())
-                .map(alias -> route.name() + " " + alias)
+                .map(alias -> route.name() + ", " + alias)
                 .toList();
 
             results.add(this.handleExecutor(record, method, name, aliases));

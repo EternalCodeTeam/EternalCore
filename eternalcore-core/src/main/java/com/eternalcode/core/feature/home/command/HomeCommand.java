@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home.command;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -25,6 +26,7 @@ public class HomeCommand {
     }
 
     @Execute
+    @DocsDescription(description = "Teleport to home", arguments = "<home>")
     void execute(Player player, @ArgHome Home home) {
         if (player.hasPermission("eternalcore.teleport.bypass")) {
             this.teleportService.teleport(player, home.getLocation());

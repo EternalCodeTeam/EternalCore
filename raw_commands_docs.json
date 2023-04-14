@@ -53,21 +53,6 @@
     ]
   },
   {
-    "name": "chat clear",
-    "aliases": [
-      "chat cc"
-    ],
-    "permissions": [
-      "eternalcore.chat"
-    ],
-    "descriptions": [
-      "Clears chat"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
     "name": "chat on",
     "aliases": [],
     "permissions": [
@@ -88,6 +73,21 @@
     ],
     "descriptions": [
       "Disables chat"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "chat clear",
+    "aliases": [
+      "chat, cc"
+    ],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Clears chat"
     ],
     "arguments": [
       ""
@@ -789,8 +789,12 @@
     "name": "delhome ",
     "aliases": [],
     "permissions": [],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Delete home"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
+    ]
   },
   {
     "name": "home ",
@@ -798,20 +802,39 @@
     "permissions": [
       "eternalcore.home"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Teleport to home"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
+    ]
   },
   {
     "name": "sethome ",
     "aliases": [],
     "permissions": [],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Set home location"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "sethome ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": [
+      "Set home location with specified name"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
+    ]
   },
   {
     "name": "ignore -all",
     "aliases": [
-      "ignore *"
+      "ignore, *"
     ],
     "permissions": [
       "eternalcore.ignore"
@@ -956,8 +979,10 @@
     "arguments": []
   },
   {
-    "name": "tpaaccept ",
-    "aliases": [],
+    "name": "tpaaccept -all",
+    "aliases": [
+      "tpaaccept, *"
+    ],
     "permissions": [
       "eternalcore.tpaccept"
     ],
@@ -965,10 +990,8 @@
     "arguments": []
   },
   {
-    "name": "tpaaccept -all",
-    "aliases": [
-      "tpaaccept *"
-    ],
+    "name": "tpaaccept ",
+    "aliases": [],
     "permissions": [
       "eternalcore.tpaccept"
     ],
@@ -985,10 +1008,8 @@
     "arguments": []
   },
   {
-    "name": "tpadeny -all",
-    "aliases": [
-      "tpadeny *"
-    ],
+    "name": "tpadeny ",
+    "aliases": [],
     "permissions": [
       "eternalcore.tpadeny"
     ],
@@ -996,8 +1017,10 @@
     "arguments": []
   },
   {
-    "name": "tpadeny ",
-    "aliases": [],
+    "name": "tpadeny -all",
+    "aliases": [
+      "tpadeny, *"
+    ],
     "permissions": [
       "eternalcore.tpadeny"
     ],
