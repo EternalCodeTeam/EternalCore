@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
@@ -23,11 +24,13 @@ public class TeleportToPositionCommand {
     }
 
     @Execute(min = 3)
+    @DocsDescription(description = "Teleport to specified coordinates", arguments = "<x> <y> <z>")
     void execute(Player player, @Arg int x, @Arg int y, @Arg int z) {
         this.teleport(player, x, y, z);
     }
 
     @Execute(min = 4)
+    @DocsDescription(description = "Teleport specified player to specified coordinates", arguments = "<player> <x> <y> <z>")
     void execute(Viewer viewer, @Arg int x, @Arg int y, @Arg int z, @Arg Player target) {
         this.teleport(target, x, y, z);
 

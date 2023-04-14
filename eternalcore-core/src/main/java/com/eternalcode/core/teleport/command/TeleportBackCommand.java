@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
@@ -24,6 +25,7 @@ public class TeleportBackCommand {
     }
 
     @Execute(required = 0)
+    @DocsDescription(description = "Teleport to last location")
     void execute(Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
@@ -34,11 +36,11 @@ public class TeleportBackCommand {
         }
 
         this.teleportService.teleport(player, location.get());
-
         this.noticeService.player(player.getUniqueId(), translation -> translation.teleport().teleportedToLastLocation());
     }
 
     @Execute(required = 1)
+    @DocsDescription(description = "Teleport specified player to last location", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
