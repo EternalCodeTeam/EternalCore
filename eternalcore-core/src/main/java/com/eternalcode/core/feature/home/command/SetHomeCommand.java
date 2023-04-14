@@ -6,6 +6,7 @@ import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.injector.Inject;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Route(name = "sethome")
+@Permission("eternalcore.sethome")
 public class SetHomeCommand {
 
     private final HomeManager homeManager;
@@ -34,8 +36,6 @@ public class SetHomeCommand {
 
     @Execute(required = 0)
     void execute(User user, Player player) {
-
-
         this.setHome(user, player, "home");
     }
 
