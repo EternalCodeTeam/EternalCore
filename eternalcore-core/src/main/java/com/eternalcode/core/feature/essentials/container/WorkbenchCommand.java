@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
-import com.eternalcode.annotations.scan.command.CommandDescription;
+import com.eternalcode.annotations.scan.command.Description;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -20,7 +20,7 @@ public class WorkbenchCommand {
     }
 
     @Execute(required = 0)
-    @CommandDescription("Opens a workbench for you")
+    @Description("Opens a workbench for you")
     void executeSelf(Player sender) {
         sender.openWorkbench(null, true);
 
@@ -31,7 +31,7 @@ public class WorkbenchCommand {
     }
 
     @Execute(required = 1)
-    @CommandDescription("Opens a workbench for another player")
+    @Description("Opens a workbench for another player")
     void execute(Player sender, @Arg Player target) {
         target.openWorkbench(null, true);
 

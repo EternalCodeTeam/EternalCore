@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
-import com.eternalcode.annotations.scan.command.CommandDescription;
+import com.eternalcode.annotations.scan.command.Description;
 import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.containers.AdditionalContainerType;
 import com.eternalcode.core.notification.NoticeService;
@@ -22,7 +22,7 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 0)
-    @CommandDescription("Opens a stonecutter for you")
+    @Description("Opens a stonecutter for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.STONE_CUTTER);
 
@@ -33,7 +33,7 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 1)
-    @CommandDescription("Opens a stonecutter for another player")
+    @Description("Opens a stonecutter for another player")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.STONE_CUTTER);
 
