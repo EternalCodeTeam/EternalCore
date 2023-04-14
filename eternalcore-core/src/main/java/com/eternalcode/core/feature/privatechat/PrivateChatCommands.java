@@ -37,7 +37,7 @@ public class PrivateChatCommands {
         this.privateChatService.reply(sender, message);
     }
 
-    @Execute(route = "spy", aliases = { "socialspy" })
+    @Execute(route = "socialspy", aliases = { "spy" })
     @Permission("eternalcore.spy")
     void socialSpy(Player player) {
         UUID uuid = player.getUniqueId();

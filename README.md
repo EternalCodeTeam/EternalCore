@@ -14,11 +14,7 @@
 
 </div>
 
-# Warning ❗
-
-Remember that EternalCore is at an early stage of development, you use it at your own risk!
-
-# Informations
+# Information's
 
 - EternalCore supports Minecraft latest minor version of each major version starting from 1.17+, eg. 1.17, 1.18, 1.19,
   etc.
@@ -36,26 +32,27 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
 
 # Features
 
-- Slot Bypass (eternalcore.bypass.slot)
+- Slot Bypass `(eternalcore.bypass.slot)`
 - AFK system
 - Chat features, including:
     - Admin chat
     - Chat on/off switch
-    - Chat slowmode
-    - /ignore command
-    - /msg command
+    - Chat slow mode
+    - /ignore /unignore `(with -all option)` command
+    - /msg, /socialspy /reply command
     - /helpop command
-- Open utility blocks with a simple commands, such as `/workbench`
-- View player inventories with ease
-- Heal, feed, teleport and view/modify player's attributes, e.g. godmode
-- Ping command to ensure that client <-> server connection is working
-- Player information command (`/whois`)
-- Home, warp and spawn system
+- Open utility blocks with simple commands, such as `/workbench`
+- Player inventory viewer
+- Player attribute management, including heal, feed, teleportation, and godmode modification
+- Ping command to ensure client <-> server connection
+- Player information command `(/whois)`
+- Home, warp, and spawn system
 - PlaceholderAPI support
-- Customizable and **translatable** messages and an advanced configuration system, allowing to customize almost every
-  aspect of the plugin.
-- Database integration: (PostGreSQL, SQLite, MySQL, MariaDB, H2)
-- Adventure and MiniMessage integration, including legacy color processing and specifying where the message can be sent!
+- Customizable and translatable messages `(Optional player language selection)`
+- Advanced configuration system for customizing almost every aspect of the plugin
+- Database integration: `(PostGreSQL, SQLite, MySQL, MariaDB, H2)`
+- Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color
+  processing `(e.g &7, &e)` and message destination specification
 - And much more!
 
 # Building
@@ -81,7 +78,7 @@ more.
 
 - Is freely allowed to modify and improve the code
 - Can distribute production versions
-- He must publish any changes made, ie. the public fork of this repository
+- Must publish any changes made, i.e. the public fork of this repository
 - Cannot change the license or copyright
 
 #### Additionally:
@@ -110,5 +107,5 @@ more.
 [<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="" width="150">](https://www.jetbrains.com)
 
 We thank JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for high quality tools.
-We recommend using [Intellij IDEA](https://www.jetbrains.com/idea/) to work with our projects and accelerate your
+We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) to work with our projects and accelerate your
 productivity!
