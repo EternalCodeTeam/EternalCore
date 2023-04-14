@@ -832,6 +832,19 @@
     ]
   },
   {
+    "name": "ignore ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ignore"
+    ],
+    "descriptions": [
+      "Ignore specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
     "name": "ignore -all",
     "aliases": [
       "ignore, *"
@@ -839,17 +852,12 @@
     "permissions": [
       "eternalcore.ignore"
     ],
-    "descriptions": [],
-    "arguments": []
-  },
-  {
-    "name": "ignore ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.ignore"
+    "descriptions": [
+      "Ignore all players"
     ],
-    "descriptions": [],
-    "arguments": []
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "unignore ",
@@ -857,17 +865,42 @@
     "permissions": [
       "eternalcore.ignore"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Unignore specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
   },
   {
-    "name": "unignore *",
-    "aliases": [],
+    "name": "unignore -all",
+    "aliases": [
+      "unignore, *"
+    ],
     "permissions": [
       "eternalcore.ignore"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Unignore all players"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "socialspy",
+    "aliases": [
+      "spy"
+    ],
+    "permissions": [
+      "eternalcore.spy"
+    ],
+    "descriptions": [
+      "Enable or disable social spy"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "msg",
@@ -881,8 +914,12 @@
     "permissions": [
       "eternalcore.msg"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Send private message to specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003cmessage\u003e"
+    ]
   },
   {
     "name": "reply",
@@ -892,19 +929,12 @@
     "permissions": [
       "eternalcore.reply"
     ],
-    "descriptions": [],
-    "arguments": []
-  },
-  {
-    "name": "socialspy",
-    "aliases": [
-      "spy"
+    "descriptions": [
+      "Reply to last private message"
     ],
-    "permissions": [
-      "eternalcore.spy"
-    ],
-    "descriptions": [],
-    "arguments": []
+    "arguments": [
+      "\u003cmessage\u003e"
+    ]
   },
   {
     "name": "helpop ",
@@ -912,8 +942,12 @@
     "permissions": [
       "eternalcore.helpop"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Send helpop message"
+    ],
+    "arguments": [
+      "\u003cmessage\u003e"
+    ]
   },
   {
     "name": "setspawn ",
@@ -921,8 +955,12 @@
     "permissions": [
       "eternalcore.setspawn"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Set spawn location"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "spawn ",

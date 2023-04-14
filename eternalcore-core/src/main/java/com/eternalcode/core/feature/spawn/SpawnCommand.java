@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.spawn;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.Position;

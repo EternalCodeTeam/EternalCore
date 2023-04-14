@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.spawn;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.notification.NoticeService;
@@ -24,6 +25,7 @@ public class SetSpawnCommand {
     }
 
     @Execute
+    @DocsDescription(description = "Set spawn location")
     void execute(Player player) {
         this.locations.spawn = PositionAdapter.convert(player.getLocation());
 
