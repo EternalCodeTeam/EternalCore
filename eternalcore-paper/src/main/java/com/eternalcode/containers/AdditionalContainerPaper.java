@@ -13,6 +13,7 @@ public final class AdditionalContainerPaper {
     private static final Environment ENVIRONMENT = PaperLib.getEnvironment();
     private static final Logger LOGGER = Logger.getLogger("AdditionalContainerPaper");
 
+    @SuppressWarnings("deprecation")
     public static void openAdditionalContainer(Player player, @NotNull AdditionalContainerType type) {
 
         if (!ENVIRONMENT.isPaper()) {
