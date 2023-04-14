@@ -31,7 +31,7 @@ public class InventoryOpenCommand {
 
     @Execute(route = "enderchest")
     @Permission("eternalcore.invsee.enderchest")
-    @Description("Opens enderchest of another player")
+    @Description(description = "Opens enderchest of another player", arguments = "<player>")
     void enderchest(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
@@ -46,7 +46,7 @@ public class InventoryOpenCommand {
 
     @Execute(route = "armor")
     @Permission("eternalcore.invsee.armor")
-    @Description("Opens armor of another player")
+    @Description(description = "Opens armor of another player", arguments = "<player>")
     void armor(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
@@ -61,7 +61,7 @@ public class InventoryOpenCommand {
 
     @Execute(route = "inventory")
     @Permission("eternalcore.invsee.inventory")
-    @Description("Opens inventory of another player")
+    @Description(description = "Opens inventory of another player", arguments = "<player>")
     void inventory(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()

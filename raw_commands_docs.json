@@ -8,6 +8,9 @@
     ],
     "descriptions": [
       "Reloads EternalCore configuration"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -17,7 +20,10 @@
       "eternalcore.adminchat"
     ],
     "descriptions": [
-      "Allows you to send a message to all staff members"
+      "Sends a message to all staff members"
+    ],
+    "arguments": [
+      "\u003cmessage\u003e"
     ]
   },
   {
@@ -27,27 +33,10 @@
       "eternalcore.afk"
     ],
     "descriptions": [
-      "Mark yourself as AFK"
-    ]
-  },
-  {
-    "name": "chat on",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.chat"
+      "Marks you as AFK"
     ],
-    "descriptions": [
-      "Enables chat"
-    ]
-  },
-  {
-    "name": "chat off",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.chat"
-    ],
-    "descriptions": [
-      "Disables chat"
+    "arguments": [
+      ""
     ]
   },
   {
@@ -57,7 +46,10 @@
       "eternalcore.chat"
     ],
     "descriptions": [
-      "Sets slowmode"
+      "Sets slowmode for chat"
+    ],
+    "arguments": [
+      "\u003ctime\u003e"
     ]
   },
   {
@@ -70,6 +62,35 @@
     ],
     "descriptions": [
       "Clears chat"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "chat on",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Enables chat"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "chat off",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Disables chat"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -80,6 +101,9 @@
     ],
     "descriptions": [
       "Opens an anvil for you"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -90,16 +114,9 @@
     ],
     "descriptions": [
       "Opens an anvil for another player"
-    ]
-  },
-  {
-    "name": "cartography ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.cartography"
     ],
-    "descriptions": [
-      "Opens a cartography table for you"
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -110,6 +127,22 @@
     ],
     "descriptions": [
       "Opens a cartography table for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "cartography ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.cartography"
+    ],
+    "descriptions": [
+      "Opens a cartography table for you"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -120,16 +153,9 @@
     ],
     "descriptions": [
       "Opens a disposal"
-    ]
-  },
-  {
-    "name": "enderchest ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.enderchest"
     ],
-    "descriptions": [
-      "Opens another player his enderchest"
+    "arguments": [
+      ""
     ]
   },
   {
@@ -140,16 +166,22 @@
     ],
     "descriptions": [
       "Opens your enderchest"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
-    "name": "grindstone ",
+    "name": "enderchest ",
     "aliases": [],
     "permissions": [
-      "eternalcore.grindstone"
+      "eternalcore.enderchest"
     ],
     "descriptions": [
-      "Opens a grindstone for another player"
+      "Opens another player his enderchest"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -160,6 +192,22 @@
     ],
     "descriptions": [
       "Opens a grindstone for you"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "grindstone ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.grindstone"
+    ],
+    "descriptions": [
+      "Opens a grindstone for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -170,6 +218,9 @@
     ],
     "descriptions": [
       "Clears your inventory"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -179,7 +230,10 @@
       "eternalcore.clear"
     ],
     "descriptions": [
-      "Clears inventory of another player"
+      "Clears inventory of player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -191,6 +245,9 @@
     ],
     "descriptions": [
       "Opens inventory of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -202,6 +259,9 @@
     ],
     "descriptions": [
       "Opens enderchest of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -213,6 +273,9 @@
     ],
     "descriptions": [
       "Opens armor of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -223,6 +286,9 @@
     ],
     "descriptions": [
       "Opens a stonecutter for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -233,6 +299,9 @@
     ],
     "descriptions": [
       "Opens a stonecutter for you"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -243,6 +312,9 @@
     ],
     "descriptions": [
       "Opens a workbench for you"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -253,16 +325,9 @@
     ],
     "descriptions": [
       "Opens a workbench for another player"
-    ]
-  },
-  {
-    "name": "gamemode ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.gamemode"
     ],
-    "descriptions": [
-      "Sets your gamemode"
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -273,6 +338,22 @@
     ],
     "descriptions": [
       "Sets gamemode of another player"
+    ],
+    "arguments": [
+      "\u003cgamemode\u003e \u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "gamemode ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.gamemode"
+    ],
+    "descriptions": [
+      "Sets your gamemode"
+    ],
+    "arguments": [
+      "\u003cgamemode\u003e"
     ]
   },
   {
@@ -282,7 +363,10 @@
       "eternalcore.enchant"
     ],
     "descriptions": [
-      "Enchants item in your hand"
+      "Enchants item in hand"
+    ],
+    "arguments": [
+      "\u003cenchantment\u003e \u003clevel\u003e"
     ]
   },
   {
@@ -291,7 +375,8 @@
     "permissions": [
       "eternalcore.give"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "hat ",
@@ -299,15 +384,8 @@
     "permissions": [
       "eternalcore.hat"
     ],
-    "descriptions": []
-  },
-  {
-    "name": "itemflag ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemflag"
-    ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "itemflag clear",
@@ -315,15 +393,17 @@
     "permissions": [
       "eternalcore.itemflag"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
-    "name": "itemlore ",
+    "name": "itemflag ",
     "aliases": [],
     "permissions": [
-      "eternalcore.itemlore"
+      "eternalcore.itemflag"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "itemlore clear",
@@ -331,7 +411,17 @@
     "permissions": [
       "eternalcore.itemlore"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
+  },
+  {
+    "name": "itemlore ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemlore"
+    ],
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "itemname clear",
@@ -339,7 +429,8 @@
     "permissions": [
       "eternalcore.itemname"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "itemname ",
@@ -347,7 +438,8 @@
     "permissions": [
       "eternalcore.itemname"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "repair ",
@@ -355,15 +447,8 @@
     "permissions": [
       "eternalcore.repair"
     ],
-    "descriptions": []
-  },
-  {
-    "name": "repair armor",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.repair"
-    ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "repair all",
@@ -371,7 +456,17 @@
     "permissions": [
       "eternalcore.repair"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
+  },
+  {
+    "name": "repair armor",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "skull ",
@@ -379,7 +474,8 @@
     "permissions": [
       "eternalcore.skull"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "butcher ",
@@ -387,7 +483,8 @@
     "permissions": [
       "eternalcore.butcher"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "online ",
@@ -395,7 +492,8 @@
     "permissions": [
       "eternalcore.online"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "list ",
@@ -403,7 +501,8 @@
     "permissions": [
       "eternalcore.list"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "ping ",
@@ -411,7 +510,8 @@
     "permissions": [
       "eternalcore.ping"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "whois ",
@@ -419,7 +519,8 @@
     "permissions": [
       "eternalcore.whois"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "day ",
@@ -427,7 +528,8 @@
     "permissions": [
       "eternalcore.day"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "night ",
@@ -435,7 +537,8 @@
     "permissions": [
       "eternalcore.night"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "time add",
@@ -443,7 +546,8 @@
     "permissions": [
       "eternalcore.time"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "time set",
@@ -451,7 +555,8 @@
     "permissions": [
       "eternalcore.time"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "rain ",
@@ -459,7 +564,8 @@
     "permissions": [
       "eternalcore.rain"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "sun ",
@@ -467,7 +573,8 @@
     "permissions": [
       "eternalcore.sun"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "thunder ",
@@ -475,13 +582,15 @@
     "permissions": [
       "eternalcore.thunder"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "delhome ",
     "aliases": [],
     "permissions": [],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "home ",
@@ -489,21 +598,15 @@
     "permissions": [
       "eternalcore.home"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "sethome ",
     "aliases": [],
     "permissions": [],
-    "descriptions": []
-  },
-  {
-    "name": "ignore ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.ignore"
-    ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "ignore *",
@@ -511,15 +614,17 @@
     "permissions": [
       "eternalcore.ignore"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
-    "name": "unignore *",
+    "name": "ignore ",
     "aliases": [],
     "permissions": [
       "eternalcore.ignore"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "unignore ",
@@ -527,17 +632,17 @@
     "permissions": [
       "eternalcore.ignore"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
-    "name": "spy",
-    "aliases": [
-      "socialspy"
-    ],
+    "name": "unignore *",
+    "aliases": [],
     "permissions": [
-      "eternalcore.spy"
+      "eternalcore.ignore"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "msg",
@@ -551,7 +656,19 @@
     "permissions": [
       "eternalcore.msg"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
+  },
+  {
+    "name": "spy",
+    "aliases": [
+      "socialspy"
+    ],
+    "permissions": [
+      "eternalcore.spy"
+    ],
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "reply",
@@ -561,7 +678,8 @@
     "permissions": [
       "eternalcore.reply"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "helpop ",
@@ -569,7 +687,8 @@
     "permissions": [
       "eternalcore.helpop"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "setspawn ",
@@ -577,7 +696,8 @@
     "permissions": [
       "eternalcore.setspawn"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "spawn ",
@@ -585,7 +705,8 @@
     "permissions": [
       "eternalcore.spawn"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "back ",
@@ -593,7 +714,8 @@
     "permissions": [
       "eternalcore.back"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "teleport ",
@@ -601,7 +723,8 @@
     "permissions": [
       "eternalcore.teleport"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "tphere ",
@@ -609,7 +732,8 @@
     "permissions": [
       "eternalcore.tphere"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "tppos ",
@@ -617,7 +741,8 @@
     "permissions": [
       "eternalcore.tppos"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "tpup ",
@@ -625,7 +750,17 @@
     "permissions": [
       "eternalcore.tpup"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
+  },
+  {
+    "name": "tpaaccept ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "tpaaccept -all",
@@ -635,15 +770,8 @@
     "permissions": [
       "eternalcore.tpaccept"
     ],
-    "descriptions": []
-  },
-  {
-    "name": "tpaaccept ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tpaccept"
-    ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "tpa ",
@@ -651,7 +779,8 @@
     "permissions": [
       "eternalcore.tpa"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "tpadeny -all",
@@ -661,7 +790,8 @@
     "permissions": [
       "eternalcore.tpadeny"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "tpadeny ",
@@ -669,6 +799,7 @@
     "permissions": [
       "eternalcore.tpadeny"
     ],
-    "descriptions": []
+    "descriptions": [],
+    "arguments": []
   }
 ]

@@ -34,7 +34,7 @@ public class DisposalCommand {
     }
 
     @Execute
-    @Description("Opens a disposal")
+    @Description(description = "Opens a disposal")
     void execute(Player player) {
         Language language = this.userManager.getUser(player.getUniqueId())
             .map(user -> user.getSettings().getLanguage())

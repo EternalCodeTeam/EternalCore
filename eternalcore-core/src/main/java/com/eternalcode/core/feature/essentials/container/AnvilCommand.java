@@ -16,12 +16,8 @@ public class AnvilCommand {
 
     private final NoticeService noticeService;
 
-    public AnvilCommand(NoticeService noticeService) {
-        this.noticeService = noticeService;
-    }
-
     @Execute(required = 0)
-    @Description("Opens an anvil for you")
+    @Description(description = "Opens an anvil for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.ANVIL);
 
@@ -31,8 +27,12 @@ public class AnvilCommand {
             .send();
     }
 
+    public AnvilCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
+
     @Execute(required = 1)
-    @Description("Opens an anvil for another player")
+    @Description(description = "Opens an anvil for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.ANVIL);
         this.noticeService.create()

@@ -6,6 +6,7 @@ public record CommandResult(
     String name,
     List<String> aliases,
     List<String> permissions,
-    List<String> descriptions
+    List<String> descriptions,
+    List<String> arguments
 ) {
 }

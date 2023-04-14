@@ -20,7 +20,7 @@ public class EnderchestCommand {
     }
 
     @Execute(required = 0)
-    @Description("Opens your enderchest")
+    @Description(description = "Opens your enderchest")
     void execute(Player player) {
         player.openInventory(player.getEnderChest());
 
@@ -31,7 +31,7 @@ public class EnderchestCommand {
     }
 
     @Execute(required = 1)
-    @Description("Opens another player his enderchest")
+    @Description(description = "Opens another player his enderchest", arguments = "<player>")
     void execute(Player player, @Arg Player target) {
         player.openInventory(target.getEnderChest());
 

@@ -36,7 +36,7 @@ public class AfkCommand {
     }
 
     @Execute
-    @Description("Mark yourself as AFK")
+    @Description(description = "Marks you as AFK")
     void execute(Player player) {
         UUID uuid = player.getUniqueId();
 

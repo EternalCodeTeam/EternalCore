@@ -21,7 +21,7 @@ public class InventoryClearCommand {
     }
 
     @Execute(required = 0)
-    @Description("Clears your inventory")
+    @Description(description = "Clears your inventory")
     void execute(Player player) {
         this.clear(player);
 
@@ -33,7 +33,7 @@ public class InventoryClearCommand {
     }
 
     @Execute(required = 1)
-    @Description("Clears inventory of another player")
+    @Description(description = "Clears inventory of player", arguments = "<player>")
     void execute(Viewer audience, @Arg Player target) {
         this.clear(target);
 

@@ -22,7 +22,7 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 0)
-    @Description("Opens a cartography table for you")
+    @Description(description = "Opens a cartography table for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.CARTOGRAPHY_TABLE);
 
@@ -33,7 +33,7 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 1)
-    @Description("Opens a cartography table for another player")
+    @Description(description = "Opens a cartography table for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.CARTOGRAPHY_TABLE);
 

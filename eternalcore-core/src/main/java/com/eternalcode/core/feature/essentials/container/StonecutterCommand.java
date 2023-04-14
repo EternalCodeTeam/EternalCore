@@ -22,7 +22,7 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 0)
-    @Description("Opens a stonecutter for you")
+    @Description(description = "Opens a stonecutter for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.STONE_CUTTER);
 
@@ -33,7 +33,7 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 1)
-    @Description("Opens a stonecutter for another player")
+    @Description(description = "Opens a stonecutter for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.STONE_CUTTER);
 

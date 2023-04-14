@@ -21,7 +21,7 @@ public class GameModeCommand {
     }
 
     @Execute(required = 1)
-    @Description("Sets your gamemode")
+    @Description(description = "Sets your gamemode", arguments = "<gamemode>")
     void execute(Player sender, @Arg GameMode gameMode) {
         sender.setGameMode(gameMode);
 
@@ -33,7 +33,7 @@ public class GameModeCommand {
     }
 
     @Execute(required = 2)
-    @Description("Sets gamemode of another player")
+    @Description(description = "Sets gamemode of another player", arguments = "<gamemode> <player>")
     void execute(Viewer sender, @Arg GameMode gameMode, @Arg Player player) {
         player.setGameMode(gameMode);
 
