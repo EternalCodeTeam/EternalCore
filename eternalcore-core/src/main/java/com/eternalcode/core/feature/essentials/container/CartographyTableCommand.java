@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
-import com.eternalcode.annotations.scan.command.Description;
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.containers.AdditionalContainerType;
 import com.eternalcode.core.notification.NoticeService;
@@ -22,7 +22,7 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 0)
-    @Description(description = "Opens a cartography table for you")
+    @DocsDescription(description = "Opens a cartography table for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.CARTOGRAPHY_TABLE);
 
@@ -33,7 +33,7 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 1)
-    @Description(description = "Opens a cartography table for another player", arguments = "<player>")
+    @DocsDescription(description = "Opens a cartography table for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.CARTOGRAPHY_TABLE);
 

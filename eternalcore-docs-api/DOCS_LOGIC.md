@@ -46,18 +46,18 @@ public class TpaCommand {
 
     @Execute
     @Permission("eternalcore.tpa.send")
-    @Description("Sends tpa request")
+    @DocsDescription(description = "Sends tpa request", arguments = "<player>") // Description of command
     public void send(@Arg String player) {}
 
     @Execute(route = "accept")
     @Permission("eternalcore.tpa.accept")
-    @Description("Accepts tpa request")
+    @Description(description = "Accepts tpa request")
     public void accept() {}
 
 
     @Execute(route = "deny")
     @Permission("eternalcore.tpa.deny")
-    @Description("Denies tpa request")
+    @Description(description = "Denies tpa request")
     public void deny() {}
 
 }
@@ -72,14 +72,14 @@ public class RootTestCommand {
 
     @Execute(route = "test-root")
     @Permission("permissions.root.execute")
-    @Description("This is descriptions")
+    @DocsDescription(description = "This is descriptions")
     public void execute() {}
 
 
     @Execute(route = "test-root other")
     @Permission("permissions.root.execute.other")
-    @Description("This is descriptions other")
-    public void executeOther() {}
+    @DocsDescription(description = "This is descriptions", arguments = "<player>")
+    public void executeOther(@Arg Player player) {}
 
 }
 ```

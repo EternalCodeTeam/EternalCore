@@ -94,8 +94,8 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
             return permissionsList.toArray(new String[0]);
         })));
 
-        List<String> description = this.scan(Description.class, Blank.class, method, (Description::description));
-        List<String> arguments = this.scan(Description.class, Blank.class, method, (Description::arguments));
+        List<String> description = this.scan(DocsDescription.class, Blank.class, method, (DocsDescription::description));
+        List<String> arguments = this.scan(DocsDescription.class, Blank.class, method, (DocsDescription::arguments));
 
         return new CommandResult(
             name,

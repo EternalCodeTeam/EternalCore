@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.chat;
 
-import com.eternalcode.annotations.scan.command.Description;
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.command.argument.DurationArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;
@@ -32,7 +32,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "clear", aliases = "cc")
-    @Description(description = "Clears chat")
+    @DocsDescription(description = "Clears chat")
     public void clear(CommandSender sender) {
         this.noticeService.create()
             .staticNotice(this.clear)
@@ -43,7 +43,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "on")
-    @Description(description = "Enables chat")
+    @DocsDescription(description = "Enables chat")
     public void enable(Viewer viewer, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
@@ -60,7 +60,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "off")
-    @Description(description = "Disables chat")
+    @DocsDescription(description = "Disables chat")
     public void disable(Viewer viewer, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
@@ -77,7 +77,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "slowmode", required = 1)
-    @Description(description = "Sets slowmode for chat", arguments = "<time>")
+    @DocsDescription(description = "Sets slowmode for chat", arguments = "<time>")
     public void slowmode(Viewer viewer, @Arg @By(DurationArgument.KEY) Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
