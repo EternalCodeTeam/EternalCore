@@ -10,6 +10,10 @@ import java.util.Set;
 public final class PackageUtil {
 
     public static PackageStack createPackageStack(Package packageToSearch, ClassLoader classLoader) {
+        return resolvePackageStack(packageToSearch, classLoader).packageStack();
+    }
+
+    private static Result resolvePackageStack(Package packageToSearch, ClassLoader classLoader) {
         String packageName = packageToSearch.getName();
 
         try {
@@ -35,20 +39,26 @@ public final class PackageUtil {
 
                 Class.forName(info.getName());
                 Package subPackage = classLoader.getDefinedPackage(subPackageName);
-                PackageStack subPackageStack = createPackageStack(subPackage, classLoader);
+                Result result = resolvePackageStack(subPackage, classLoader);
+                PackageStack subPackageStack = result.packageStack();
 
-                if (!subPackageStack.getClasses().isEmpty() && subPackageStack.getSubPackages().isEmpty()) {
+                loadedPackages.addAll(result.loadedPackages());
+
+                if (!subPackageStack.getClasses().isEmpty() || !subPackageStack.getSubPackages().isEmpty()) {
                     packageStack = packageStack.withSubPackage(subPackageStack);
                 }
 
                 loadedPackages.add(subPackageName);
             }
 
-            return packageStack;
+            return new Result(packageStack, loadedPackages);
         }
         catch (IOException | ClassNotFoundException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    private record Result(PackageStack packageStack, List<String> loadedPackages) {
     }
 
 }

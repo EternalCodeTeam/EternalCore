@@ -94,6 +94,162 @@
     ]
   },
   {
+    "name": "alert ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.alert"
+    ],
+    "descriptions": [
+      "Sends alert to all players with specified notice type and text"
+    ],
+    "arguments": [
+      "\u003ctype\u003e \u003cmessage\u003e"
+    ]
+  },
+  {
+    "name": "feed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.feed"
+    ],
+    "descriptions": [
+      "Feed other player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "feed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.feed"
+    ],
+    "descriptions": [
+      "Feed yourself"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "fly ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.fly"
+    ],
+    "descriptions": [
+      "Toggle fly mode"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "fly ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.fly"
+    ],
+    "descriptions": [
+      "Toggle fly mode for specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "god ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.god"
+    ],
+    "descriptions": [
+      "Toggle god mode for specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "god ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.god"
+    ],
+    "descriptions": [
+      "Toggle god mode"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "heal ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.heal"
+    ],
+    "descriptions": [
+      "Heal other player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "heal ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.heal"
+    ],
+    "descriptions": [
+      "Heal yourself"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "kill ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.kill"
+    ],
+    "descriptions": [
+      "Kill specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "speed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.speed"
+    ],
+    "descriptions": [
+      "Set speed of walking and flying to specified amount and player"
+    ],
+    "arguments": [
+      "\u003camount\u003e \u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "speed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.speed"
+    ],
+    "descriptions": [
+      "Set speed of walking and flying to specified amount"
+    ],
+    "arguments": [
+      "\u003camount\u003e"
+    ]
+  },
+  {
     "name": "anvil ",
     "aliases": [],
     "permissions": [
@@ -237,20 +393,6 @@
     ]
   },
   {
-    "name": "invsee inventory",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.inventory"
-    ],
-    "descriptions": [
-      "Opens inventory of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
     "name": "invsee enderchest",
     "aliases": [],
     "permissions": [
@@ -259,6 +401,20 @@
     ],
     "descriptions": [
       "Opens enderchest of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "invsee inventory",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.inventory"
+    ],
+    "descriptions": [
+      "Opens inventory of another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
@@ -832,6 +988,52 @@
     ]
   },
   {
+    "name": "delhome ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": [
+      "Delete home"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
+    ]
+  },
+  {
+    "name": "home ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.home"
+    ],
+    "descriptions": [
+      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
+    ]
+  },
+  {
+    "name": "sethome ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": [
+      "Set home location"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "sethome ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": [
+      "Set home location with specified name"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
+    ]
+  },
+  {
     "name": "ignore ",
     "aliases": [],
     "permissions": [
@@ -970,6 +1172,272 @@
     ],
     "descriptions": [],
     "arguments": []
+  },
+  {
+    "name": "warp ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp"
+    ],
+    "descriptions": [
+      "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp",
+      "eternalcore.warp.create"
+    ],
+    "descriptions": [
+      "Create warp"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp.delete",
+      "eternalcore.warp"
+    ],
+    "descriptions": [
+      "Remove warp"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp"
+    ],
+    "descriptions": [
+      "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "language ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.language"
+    ],
+    "descriptions": [
+      "Open language inventory"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "back ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.back"
+    ],
+    "descriptions": [
+      "Teleport to last location"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "back ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.back"
+    ],
+    "descriptions": [
+      "Teleport specified player to last location"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": [
+      "Teleport player to specified player, location and world"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003cx\u003e \u003cy\u003e \u003cz\u003e \u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": [
+      "Teleport to specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": [
+      "Teleport to specified location and world"
+    ],
+    "arguments": [
+      "\u003cx\u003e \u003cy\u003e \u003cz\u003e \u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": [
+      "Teleport player to player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003ctarget-player\u003e"
+    ]
+  },
+  {
+    "name": "tphere ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tphere"
+    ],
+    "descriptions": [
+      "Teleport player to you"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tppos ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tppos"
+    ],
+    "descriptions": [
+      "Teleport specified player to specified coordinates"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003cx\u003e \u003cy\u003e \u003cz\u003e"
+    ]
+  },
+  {
+    "name": "tppos ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tppos"
+    ],
+    "descriptions": [
+      "Teleport to specified coordinates"
+    ],
+    "arguments": [
+      "\u003cx\u003e \u003cy\u003e \u003cz\u003e"
+    ]
+  },
+  {
+    "name": "tpup ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpup"
+    ],
+    "descriptions": [
+      "Teleport you to the highest block"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "tpaaccept ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": [
+      "Accept teleport request"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tpaaccept -all",
+    "aliases": [
+      "tpaaccept, *"
+    ],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": [
+      "Accept all teleport requests"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "tpa ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpa"
+    ],
+    "descriptions": [
+      "Send teleport request to player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tpadeny -all",
+    "aliases": [
+      "tpadeny, *"
+    ],
+    "permissions": [
+      "eternalcore.tpadeny"
+    ],
+    "descriptions": [
+      "Deny all teleport requests"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "tpadeny ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpadeny"
+    ],
+    "descriptions": [
+      "Deny teleport request"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
   },
   {
     "name": "back ",

@@ -12,8 +12,8 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 @FeatureDocs(
-        name = "Configuration Backup",
-        description = "Backs up the full configuration to prevent config destruction, backup is only 3 days back"
+    name = "Configuration Backup",
+    description = "Backs up the full configuration to prevent config destruction, backup is only 3 days back"
 )
 public class ConfigurationBackupService {
 

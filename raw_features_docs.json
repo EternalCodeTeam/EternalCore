@@ -7,10 +7,24 @@
     ]
   },
   {
-    "name": "",
+    "name": "CommandConfigurator",
     "permissions": [],
     "descriptions": [
-      "Allows you to send a message to all staff members"
+      "Adds support for command configuration, which allows you to change the name, aliases, permissions and disable the command"
+    ]
+  },
+  {
+    "name": "Configuration Backup",
+    "permissions": [],
+    "descriptions": [
+      "Backs up the full configuration to prevent config destruction, backup is only 3 days back"
+    ]
+  },
+  {
+    "name": "Database",
+    "permissions": [],
+    "descriptions": [
+      "Adds support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
     ]
   },
   {
@@ -31,6 +45,20 @@
     ],
     "descriptions": [
       "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
+    ]
+  },
+  {
+    "name": "Warp System",
+    "permissions": [],
+    "descriptions": [
+      "Allows you to create warps, optionally you can enable warp inventory"
+    ]
+  },
+  {
+    "name": "Language Inventory",
+    "permissions": [],
+    "descriptions": [
+      "This feature allows you to create a language selector inventory"
     ]
   },
   {
@@ -57,17 +85,17 @@
     ]
   },
   {
-    "name": "Player Join Message",
-    "permissions": [],
-    "descriptions": [
-      "Send a random welcome message from config to a player when they join the server"
-    ]
-  },
-  {
     "name": "Player Join Sound",
     "permissions": [],
     "descriptions": [
       "Play a sound after a player joins the server"
+    ]
+  },
+  {
+    "name": "Player Join Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a random welcome message from config to a player when they join the server"
     ]
   },
   {
@@ -80,17 +108,17 @@
     ]
   },
   {
-    "name": "Player Quit Message",
-    "permissions": [],
-    "descriptions": [
-      "Send a random goodbye message from config to a player when they quit the server"
-    ]
-  },
-  {
     "name": "Player Quit Sound",
     "permissions": [],
     "descriptions": [
       "Play a sound after a player quits the server"
+    ]
+  },
+  {
+    "name": "Player Quit Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a random goodbye message from config to a player when they quit the server"
     ]
   },
   {
@@ -100,6 +128,13 @@
     ],
     "descriptions": [
       "Allows you to use color codes in signs"
+    ]
+  },
+  {
+    "name": "Translations",
+    "permissions": [],
+    "descriptions": [
+      "EternalCore can use multiple languages at once, the player can determine which EternalCore language I want to use, or you can determine from above what language all players want to use"
     ]
   }
 ]
