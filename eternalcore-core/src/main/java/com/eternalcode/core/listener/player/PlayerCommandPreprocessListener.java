@@ -40,7 +40,7 @@ public class PlayerCommandPreprocessListener implements Listener {
                 return;
             }
 
-            if (player.hasPermission("eternalcode.commandblocker.bypass")) {
+            if (player.hasPermission("eternalcore.commandblocker.bypass")) {
                 return;
             }
 

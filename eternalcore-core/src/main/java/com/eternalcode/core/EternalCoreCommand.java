@@ -31,7 +31,6 @@ class EternalCoreCommand {
 
     @Async
     @Execute(route = "reload")
-    @Permission("eternalcore.reload")
     @DescriptionDocs(description = "Reloads EternalCore configuration")
     void reload(Audience audience) {
         long millis = this.reload();
