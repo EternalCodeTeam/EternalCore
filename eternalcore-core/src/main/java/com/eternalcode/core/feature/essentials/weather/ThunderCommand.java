@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.weather;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -19,6 +20,7 @@ public class ThunderCommand {
     }
 
     @Execute
+    @DocsDescription(description = "Sets weather to thunder in specified world", arguments = "<world>")
     void thunder(Viewer viewer, @Arg World world) {
         world.setStorm(true);
         world.setThundering(true);

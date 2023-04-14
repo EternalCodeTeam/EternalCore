@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -19,6 +20,7 @@ public class FeedCommand {
     }
 
     @Execute
+    @DocsDescription(description = "Feed yourself")
     void execute(Player player) {
         this.feed(player);
 
@@ -29,6 +31,7 @@ public class FeedCommand {
     }
 
     @Execute
+    @DocsDescription(description = "Feed other player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         this.feed(target);
 

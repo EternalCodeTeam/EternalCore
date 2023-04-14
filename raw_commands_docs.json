@@ -375,8 +375,51 @@
     "permissions": [
       "eternalcore.give"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Gives an item to another player"
+    ],
+    "arguments": [
+      "\u003citem\u003e \u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": [
+      "Gives you an item"
+    ],
+    "arguments": [
+      "\u003citem\u003e"
+    ]
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": [
+      "Gives an item with a custom amount to another player"
+    ],
+    "arguments": [
+      "\u003citem\u003e \u003camount\u003e \u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": [
+      "Gives you an item with a custom amount"
+    ],
+    "arguments": [
+      "\u003citem\u003e \u003camount\u003e"
+    ]
   },
   {
     "name": "hat ",
@@ -384,17 +427,12 @@
     "permissions": [
       "eternalcore.hat"
     ],
-    "descriptions": [],
-    "arguments": []
-  },
-  {
-    "name": "itemflag clear",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemflag"
+    "descriptions": [
+      "Puts item in hand on head"
     ],
-    "descriptions": [],
-    "arguments": []
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "itemflag ",
@@ -402,8 +440,25 @@
     "permissions": [
       "eternalcore.itemflag"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Adds or removes item flag from item in hand"
+    ],
+    "arguments": [
+      "\u003citem-flag\u003e"
+    ]
+  },
+  {
+    "name": "itemflag clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemflag"
+    ],
+    "descriptions": [
+      "Clears all item flags from item in hand"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "itemlore clear",
@@ -411,8 +466,12 @@
     "permissions": [
       "eternalcore.itemlore"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Clears lore of item in hand"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "itemlore ",
@@ -420,8 +479,12 @@
     "permissions": [
       "eternalcore.itemlore"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Sets lore of item in hand"
+    ],
+    "arguments": [
+      "\u003cline\u003e \u003ctext\u003e"
+    ]
   },
   {
     "name": "itemname clear",
@@ -429,8 +492,12 @@
     "permissions": [
       "eternalcore.itemname"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Clears name of item in hand"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "itemname ",
@@ -438,17 +505,12 @@
     "permissions": [
       "eternalcore.itemname"
     ],
-    "descriptions": [],
-    "arguments": []
-  },
-  {
-    "name": "repair ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.repair"
+    "descriptions": [
+      "Sets name of item in hand"
     ],
-    "descriptions": [],
-    "arguments": []
+    "arguments": [
+      "\u003cname\u003e"
+    ]
   },
   {
     "name": "repair all",
@@ -456,8 +518,25 @@
     "permissions": [
       "eternalcore.repair"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Repairs all items in inventory"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "repair ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": [
+      "Repairs item in hand"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "repair armor",
@@ -465,8 +544,12 @@
     "permissions": [
       "eternalcore.repair"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Repairs all items in armor"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "skull ",
@@ -474,8 +557,12 @@
     "permissions": [
       "eternalcore.skull"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Gives you a skull of player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
   },
   {
     "name": "butcher ",
@@ -483,8 +570,38 @@
     "permissions": [
       "eternalcore.butcher"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Kills all mobs in 2 chunks around you"
+    ],
+    "arguments": [
+      "\u003cchunks\u003e \u003cmobType\u003e"
+    ]
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": [
+      "Kills all mobs in specified chunks around you"
+    ],
+    "arguments": [
+      "\u003cchunks\u003e"
+    ]
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": [
+      "Kills specified mob in specified chunks around you"
+    ],
+    "arguments": [
+      "\u003cchunks\u003e \u003cmobType\u003e"
+    ]
   },
   {
     "name": "online ",
@@ -492,8 +609,12 @@
     "permissions": [
       "eternalcore.online"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Shows online players count"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "list ",
@@ -501,8 +622,12 @@
     "permissions": [
       "eternalcore.list"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Shows online players list"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "ping ",
@@ -510,8 +635,25 @@
     "permissions": [
       "eternalcore.ping"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Shows ping of other player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "ping ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ping"
+    ],
+    "descriptions": [
+      "Shows your ping"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "whois ",
@@ -519,8 +661,12 @@
     "permissions": [
       "eternalcore.whois"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Shows information about player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
   },
   {
     "name": "day ",
@@ -528,8 +674,12 @@
     "permissions": [
       "eternalcore.day"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Sets time to day in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
   },
   {
     "name": "night ",
@@ -537,8 +687,12 @@
     "permissions": [
       "eternalcore.night"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Sets time to night in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
   },
   {
     "name": "time add",
@@ -546,8 +700,12 @@
     "permissions": [
       "eternalcore.time"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Adds specified amount of time to specified world"
+    ],
+    "arguments": [
+      "\u003ctime\u003e"
+    ]
   },
   {
     "name": "time set",
@@ -555,8 +713,38 @@
     "permissions": [
       "eternalcore.time"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Sets specified time"
+    ],
+    "arguments": [
+      "\u003ctime\u003e"
+    ]
+  },
+  {
+    "name": "time add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Add specified amount of time to specified world"
+    ],
+    "arguments": [
+      "\u003ctime\u003e \u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "time set",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets specified time to specified world"
+    ],
+    "arguments": [
+      "\u003ctime\u003e \u003cworld\u003e"
+    ]
   },
   {
     "name": "rain ",
@@ -564,8 +752,12 @@
     "permissions": [
       "eternalcore.rain"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Sets weather to rain in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
   },
   {
     "name": "sun ",
@@ -573,8 +765,12 @@
     "permissions": [
       "eternalcore.sun"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Sets weather to sun in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
   },
   {
     "name": "thunder ",
@@ -582,8 +778,12 @@
     "permissions": [
       "eternalcore.thunder"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Sets weather to thunder in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
   },
   {
     "name": "delhome ",
@@ -609,8 +809,10 @@
     "arguments": []
   },
   {
-    "name": "ignore *",
-    "aliases": [],
+    "name": "ignore -all",
+    "aliases": [
+      "ignore *"
+    ],
     "permissions": [
       "eternalcore.ignore"
     ],
@@ -660,23 +862,23 @@
     "arguments": []
   },
   {
-    "name": "spy",
-    "aliases": [
-      "socialspy"
-    ],
-    "permissions": [
-      "eternalcore.spy"
-    ],
-    "descriptions": [],
-    "arguments": []
-  },
-  {
     "name": "reply",
     "aliases": [
       "r"
     ],
     "permissions": [
       "eternalcore.reply"
+    ],
+    "descriptions": [],
+    "arguments": []
+  },
+  {
+    "name": "socialspy",
+    "aliases": [
+      "spy"
+    ],
+    "permissions": [
+      "eternalcore.spy"
     ],
     "descriptions": [],
     "arguments": []

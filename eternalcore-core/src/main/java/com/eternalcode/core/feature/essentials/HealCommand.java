@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -20,6 +21,7 @@ public class HealCommand {
     }
 
     @Execute
+    @DocsDescription(description = "Heal yourself")
     void execute(Player player) {
         this.heal(player);
 
@@ -27,6 +29,7 @@ public class HealCommand {
     }
 
     @Execute
+    @DocsDescription(description = "Heal other player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         this.heal(target);
 

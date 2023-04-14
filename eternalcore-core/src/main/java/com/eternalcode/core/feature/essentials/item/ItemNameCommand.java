@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
+import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
@@ -27,6 +28,7 @@ public class ItemNameCommand {
 
     @Execute
     @Min(1)
+    @DocsDescription(description = "Sets name of item in hand", arguments = "<name>")
     void execute(Player player, @Joiner String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
@@ -51,6 +53,7 @@ public class ItemNameCommand {
     }
 
     @Execute(route = "clear")
+    @DocsDescription(description = "Clears name of item in hand")
     void clear(Player player) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
