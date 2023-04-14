@@ -71,7 +71,7 @@
   {
     "name": "CommandBlocker",
     "permissions": [
-      "eternalcode.commandblocker.bypass"
+      "eternalcore.commandblocker.bypass"
     ],
     "descriptions": [
       "It allows you to block commands with custom message"
@@ -85,17 +85,17 @@
     ]
   },
   {
-    "name": "Player Join Sound",
-    "permissions": [],
-    "descriptions": [
-      "Play a sound after a player joins the server"
-    ]
-  },
-  {
     "name": "Player Join Message",
     "permissions": [],
     "descriptions": [
       "Send a random welcome message from config to a player when they join the server"
+    ]
+  },
+  {
+    "name": "Player Join Sound",
+    "permissions": [],
+    "descriptions": [
+      "Play a sound after a player joins the server"
     ]
   },
   {

@@ -14,7 +14,7 @@ import panda.std.Option;
 @FeatureDocs(
     name = "CommandBlocker",
     description = "It allows you to block commands with custom message",
-    permission = "eternalcode.commandblocker.bypass"
+    permission = "eternalcore.commandblocker.bypass"
 )
 public class PlayerCommandPreprocessListener implements Listener {
 
