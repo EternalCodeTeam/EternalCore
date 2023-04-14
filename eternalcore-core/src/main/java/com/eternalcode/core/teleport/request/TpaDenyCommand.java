@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
@@ -31,7 +31,7 @@ public class TpaDenyCommand {
 
     @Execute
     @Required(1)
-    @DocsDescription(description = "Deny teleport request", arguments = "<player>")
+    @DescriptionDocs(description = "Deny teleport request", arguments = "<player>")
     public void executeTarget(Player player, @Arg @By(RequesterArgument.KEY) Player target) {
         this.requestService.removeRequest(target.getUniqueId());
 
@@ -51,7 +51,7 @@ public class TpaDenyCommand {
     }
 
     @Execute(route = "-all", aliases = "*")
-    @DocsDescription(description = "Deny all teleport requests")
+    @DescriptionDocs(description = "Deny all teleport requests")
     public void executeAll(Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 

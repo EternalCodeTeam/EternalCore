@@ -1,6 +1,6 @@
 package com.eternalcode.core.language;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -17,7 +17,7 @@ public class LanguageCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Open language inventory")
+    @DescriptionDocs(description = "Open language inventory")
     void execute(Player player) {
         this.languageInventory.open(player);
     }

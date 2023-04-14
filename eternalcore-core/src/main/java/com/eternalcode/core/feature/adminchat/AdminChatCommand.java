@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.adminchat;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.notification.Notice;
 import com.eternalcode.core.notification.NoticeService;
@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 @Route(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
+@FeatureDocs(description = "Allows you to send a message to all staff members")
 public class AdminChatCommand {
 
     private final NoticeService noticeService;
@@ -25,7 +26,7 @@ public class AdminChatCommand {
     }
 
     @Execute(min = 1)
-    @DocsDescription(description = "Sends a message to all staff members", arguments = "<message>")
+    @DescriptionDocs(description = "Sends a message to all staff members", arguments = "<message>")
     public void execute(CommandSender sender, @Joiner String message) {
         Notice notice = this.noticeService.create()
             .console()

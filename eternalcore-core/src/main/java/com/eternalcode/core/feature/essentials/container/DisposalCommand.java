@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.container;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.translation.Translation;
@@ -34,7 +34,7 @@ public class DisposalCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Opens a disposal")
+    @DescriptionDocs(description = "Opens a disposal")
     void execute(Player player) {
         Language language = this.userManager.getUser(player.getUniqueId())
             .map(user -> user.getSettings().getLanguage())

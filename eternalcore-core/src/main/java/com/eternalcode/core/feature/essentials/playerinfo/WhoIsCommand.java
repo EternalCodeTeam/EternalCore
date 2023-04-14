@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.playerinfo;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -22,7 +22,7 @@ public class WhoIsCommand {
 
     @Execute
     @Required(1)
-    @DocsDescription(description = "Shows information about player", arguments = "<player>")
+    @DescriptionDocs(description = "Shows information about player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player player) {
         this.noticeService.create()
             .placeholder("{PLAYER}", player.getName())

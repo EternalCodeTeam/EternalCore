@@ -7,9 +7,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD })
-public @interface DocsDescription {
+public @interface DescriptionDocs {
 
     String[] description();
 
     String[] arguments() default "";
+
 }

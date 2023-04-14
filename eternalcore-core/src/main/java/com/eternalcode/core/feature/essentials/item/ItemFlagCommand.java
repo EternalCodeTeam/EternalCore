@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import dev.rollczi.litecommands.argument.Arg;
@@ -26,7 +26,7 @@ public class ItemFlagCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Adds or removes item flag from item in hand", arguments = "<item-flag>")
+    @DescriptionDocs(description = "Adds or removes item flag from item in hand", arguments = "<item-flag>")
     void execute(Player player, @Arg ItemFlag flag) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
@@ -50,7 +50,7 @@ public class ItemFlagCommand {
     }
 
     @Execute(route = "clear")
-    @DocsDescription(description = "Clears all item flags from item in hand")
+    @DescriptionDocs(description = "Clears all item flags from item in hand")
     void clear(Player player) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();

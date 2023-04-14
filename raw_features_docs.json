@@ -7,6 +7,13 @@
     ]
   },
   {
+    "name": "",
+    "permissions": [],
+    "descriptions": [
+      "Allows you to send a message to all staff members"
+    ]
+  },
+  {
     "name": "Afk",
     "permissions": [
       "eternalcore.afk",
@@ -50,17 +57,17 @@
     ]
   },
   {
-    "name": "Player Join Message",
-    "permissions": [],
-    "descriptions": [
-      "Send a random welcome message from config to a player when they join the server"
-    ]
-  },
-  {
     "name": "Player Join Sound",
     "permissions": [],
     "descriptions": [
       "Play a sound after a player joins the server"
+    ]
+  },
+  {
+    "name": "Player Join Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a random welcome message from config to a player when they join the server"
     ]
   },
   {

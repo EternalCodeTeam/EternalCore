@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.gamemode;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -21,7 +21,7 @@ public class GameModeCommand {
     }
 
     @Execute(required = 1)
-    @DocsDescription(description = "Sets your gamemode", arguments = "<gamemode>")
+    @DescriptionDocs(description = "Sets your gamemode", arguments = "<gamemode>")
     void execute(Player sender, @Arg GameMode gameMode) {
         sender.setGameMode(gameMode);
 
@@ -33,7 +33,7 @@ public class GameModeCommand {
     }
 
     @Execute(required = 2)
-    @DocsDescription(description = "Sets gamemode of another player", arguments = "<gamemode> <player>")
+    @DescriptionDocs(description = "Sets gamemode of another player", arguments = "<gamemode> <player>")
     void execute(Viewer sender, @Arg GameMode gameMode, @Arg Player player) {
         player.setGameMode(gameMode);
 

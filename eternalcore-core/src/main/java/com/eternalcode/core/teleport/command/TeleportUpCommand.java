@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.teleport.TeleportService;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -23,7 +23,7 @@ public class TeleportUpCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Teleport you to the highest block")
+    @DescriptionDocs(description = "Teleport you to the highest block")
     void tpUp(Player player) {
         this.teleportPlayerToHighestBlock(player);
     }

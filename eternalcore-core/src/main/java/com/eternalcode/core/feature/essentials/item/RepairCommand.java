@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -23,7 +23,7 @@ public class RepairCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Repairs item in hand")
+    @DescriptionDocs(description = "Repairs item in hand")
     void repair(Player player) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
@@ -58,7 +58,7 @@ public class RepairCommand {
     }
 
     @Execute(route = "all")
-    @DocsDescription(description = "Repairs all items in inventory")
+    @DescriptionDocs(description = "Repairs all items in inventory")
     void repairAll(Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getContents()) {
@@ -93,7 +93,7 @@ public class RepairCommand {
     }
 
     @Execute(route = "armor")
-    @DocsDescription(description = "Repairs all items in armor")
+    @DescriptionDocs(description = "Repairs all items in armor")
     void repairArmor(Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {

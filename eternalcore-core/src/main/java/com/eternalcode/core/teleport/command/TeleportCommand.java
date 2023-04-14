@@ -1,6 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.teleport.TeleportService;
@@ -41,7 +41,7 @@ public class TeleportCommand {
     }
 
     @Execute(required = 2)
-    @DocsDescription(description = "Teleport player to player", arguments = "<player> <target-player>")
+    @DescriptionDocs(description = "Teleport player to player", arguments = "<player> <target-player>")
     void other(Viewer sender, @Arg Player player, @Arg Player target) {
         this.teleportService.teleport(player, target.getLocation());
 
@@ -52,7 +52,7 @@ public class TeleportCommand {
     }
 
     @Execute(required = 1)
-    @DocsDescription(description = "Teleport to specified player", arguments = "<player>")
+    @DescriptionDocs(description = "Teleport to specified player", arguments = "<player>")
     void execute(Player sender, Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
 
@@ -62,7 +62,7 @@ public class TeleportCommand {
     }
 
     @Execute(min = 3, max = 4)
-    @DocsDescription(description = "Teleport to specified location and world", arguments = "<x> <y> <z> <world>")
+    @DescriptionDocs(description = "Teleport to specified location and world", arguments = "<x> <y> <z> <world>")
     void to(Player sender, @Arg Location location, @Arg World world) {
         location.setWorld(world);
 
@@ -74,7 +74,7 @@ public class TeleportCommand {
     }
 
     @Execute(min = 4, max = 5)
-    @DocsDescription(description = "Teleport player to specified player, location and world", arguments = "<player> <x> <y> <z> <world>")
+    @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<player> <x> <y> <z> <world>")
     void to(Viewer sender, @Arg Location location, @Arg Player player, @Arg World world) {
         location.setWorld(world);
 

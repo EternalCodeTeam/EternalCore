@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.time;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -21,13 +21,13 @@ public class TimeCommand {
     }
 
     @Execute(route = "add", required = 1)
-    @DocsDescription(description = "Adds specified amount of time to specified world", arguments = "<time>")
+    @DescriptionDocs(description = "Adds specified amount of time to specified world", arguments = "<time>")
     void add(Player player, Viewer viewer, @Arg int time) {
         this.add(viewer, time, player.getWorld());
     }
 
     @Execute(route = "add", required = 2)
-    @DocsDescription(description = "Add specified amount of time to specified world", arguments = "<time> <world>")
+    @DescriptionDocs(description = "Add specified amount of time to specified world", arguments = "<time> <world>")
     void add(Viewer viewer, @Arg int time, @Arg World world) {
         world.setTime(world.getTime() + time);
 
@@ -39,13 +39,13 @@ public class TimeCommand {
     }
 
     @Execute(route = "set", required = 1)
-    @DocsDescription(description = "Sets specified time", arguments = "<time>")
+    @DescriptionDocs(description = "Sets specified time", arguments = "<time>")
     void set(Player player, Viewer viewer, @Arg int time) {
         this.set(viewer, time, player.getWorld());
     }
 
     @Execute(route = "set", required = 2)
-    @DocsDescription(description = "Sets specified time to specified world", arguments = "<time> <world>")
+    @DescriptionDocs(description = "Sets specified time to specified world", arguments = "<time> <world>")
     void set(Viewer viewer, @Arg int time, @Arg World world) {
         world.setTime(time);
 

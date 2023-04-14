@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -20,7 +20,7 @@ public class FlyCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Toggle fly mode")
+    @DescriptionDocs(description = "Toggle fly mode")
     void execute(Player player) {
         player.setAllowFlight(!player.getAllowFlight());
 
@@ -32,7 +32,7 @@ public class FlyCommand {
     }
 
     @Execute(required = 1)
-    @DocsDescription(description = "Toggle fly mode for specified player", arguments = "<player>")
+    @DescriptionDocs(description = "Toggle fly mode for specified player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         target.setAllowFlight(!target.getAllowFlight());
 

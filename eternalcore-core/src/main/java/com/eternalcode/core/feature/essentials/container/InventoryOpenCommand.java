@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.container;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.argument.Arg;
@@ -31,7 +31,7 @@ public class InventoryOpenCommand {
 
     @Execute(route = "enderchest")
     @Permission("eternalcore.invsee.enderchest")
-    @DocsDescription(description = "Opens enderchest of another player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens enderchest of another player", arguments = "<player>")
     void enderchest(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
@@ -46,7 +46,7 @@ public class InventoryOpenCommand {
 
     @Execute(route = "armor")
     @Permission("eternalcore.invsee.armor")
-    @DocsDescription(description = "Opens armor of another player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens armor of another player", arguments = "<player>")
     void armor(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
@@ -61,7 +61,7 @@ public class InventoryOpenCommand {
 
     @Execute(route = "inventory")
     @Permission("eternalcore.invsee.inventory")
-    @DocsDescription(description = "Opens inventory of another player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens inventory of another player", arguments = "<player>")
     void inventory(Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()

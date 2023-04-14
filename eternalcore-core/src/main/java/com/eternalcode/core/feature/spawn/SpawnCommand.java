@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.spawn;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.Position;
@@ -12,12 +11,12 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
 import java.time.Duration;
 
+// TODO: impl docs
 @Route(name = "spawn")
 @Permission("eternalcore.spawn")
 public class SpawnCommand {
@@ -50,7 +49,7 @@ public class SpawnCommand {
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
         if (playerOption.isEmpty()) {
-            if (sender.hasPermission("eternalcore.teleport.bypass")) {
+            if (sender.hasPermission("eternalcore.spawn.bypass")) {
                 this.teleportService.teleport(sender, destinationLocation);
 
                 this.noticeService.create()

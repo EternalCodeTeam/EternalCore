@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
@@ -27,7 +27,7 @@ public class GiveCommand {
     }
 
     @Execute(required = 1)
-    @DocsDescription(description = "Gives you an item", arguments = "<item>")
+    @DescriptionDocs(description = "Gives you an item", arguments = "<item>")
     void execute(Player player, @Arg Material material) {
         String formattedMaterial = MaterialUtil.format(material);
 
@@ -41,7 +41,7 @@ public class GiveCommand {
     }
 
     @Execute(required = 2)
-    @DocsDescription(description = "Gives an item to another player", arguments = "<item> <player>")
+    @DescriptionDocs(description = "Gives an item to another player", arguments = "<item> <player>")
     void execute(Viewer viewer, @Arg Material material, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
@@ -62,7 +62,7 @@ public class GiveCommand {
     }
 
     @Execute(required = 2)
-    @DocsDescription(description = "Gives you an item with a custom amount", arguments = "<item> <amount>")
+    @DescriptionDocs(description = "Gives you an item with a custom amount", arguments = "<item> <amount>")
     void execute(Player player, @Arg Material material, @Arg Integer amount) {
         String formattedMaterial = MaterialUtil.format(material);
 
@@ -76,7 +76,7 @@ public class GiveCommand {
     }
 
     @Execute(required = 3)
-    @DocsDescription(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <player>")
+    @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <player>")
     void execute(Viewer viewer, @Arg Material material, @Arg Integer amount, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 

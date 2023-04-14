@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -20,7 +20,7 @@ public class KillCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Kill specified player", arguments = "<player>")
+    @DescriptionDocs(description = "Kill specified player", arguments = "<player>")
     void execute(Viewer audience, @Arg Player player) {
         player.setHealth(0);
 

@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.containers.AdditionalContainerType;
 import com.eternalcode.core.notification.NoticeService;
@@ -22,7 +22,7 @@ public class GrindstoneCommand {
     }
 
     @Execute(required = 0)
-    @DocsDescription(description = "Opens a grindstone for you")
+    @DescriptionDocs(description = "Opens a grindstone for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.GRINDSTONE);
 
@@ -33,7 +33,7 @@ public class GrindstoneCommand {
     }
 
     @Execute(required = 1)
-    @DocsDescription(description = "Opens a grindstone for another player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens a grindstone for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.GRINDSTONE);
 

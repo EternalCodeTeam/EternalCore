@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.afk;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
@@ -36,7 +36,7 @@ public class AfkCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Marks you as AFK")
+    @DescriptionDocs(description = "Marks you as AFK")
     void execute(Player player) {
         UUID uuid = player.getUniqueId();
 

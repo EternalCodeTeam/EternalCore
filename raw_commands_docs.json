@@ -237,20 +237,6 @@
     ]
   },
   {
-    "name": "invsee enderchest",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.enderchest"
-    ],
-    "descriptions": [
-      "Opens enderchest of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
     "name": "invsee inventory",
     "aliases": [],
     "permissions": [
@@ -259,6 +245,20 @@
     ],
     "descriptions": [
       "Opens inventory of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "invsee enderchest",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.enderchest"
+    ],
+    "descriptions": [
+      "Opens enderchest of another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
@@ -943,7 +943,7 @@
       "eternalcore.helpop"
     ],
     "descriptions": [
-      "Send helpop message"
+      "Send helpop message to all administrator with eternalcore.helpop.spy permission"
     ],
     "arguments": [
       "\u003cmessage\u003e"

@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.playerinfo;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -20,7 +20,7 @@ public class PingCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Shows your ping")
+    @DescriptionDocs(description = "Shows your ping")
     void execute(Player sender) {
         this.noticeService.create()
             .notice(translation -> translation.player().pingMessage())
@@ -31,7 +31,7 @@ public class PingCommand {
 
 
     @Execute(required = 1)
-    @DocsDescription(description = "Shows ping of other player", arguments = "<player>")
+    @DescriptionDocs(description = "Shows ping of other player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         this.noticeService.create()
             .notice(translation -> translation.player().pingOtherMessage())

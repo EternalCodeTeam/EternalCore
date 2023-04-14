@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.playerinfo;
 
-import com.eternalcode.annotations.scan.command.DocsDescription;
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -29,7 +29,7 @@ public class OnlinePlayersListCommand {
     }
 
     @Execute
-    @DocsDescription(description = "Shows online players list")
+    @DescriptionDocs(description = "Shows online players list")
     void execute(Viewer viewer) {
         Collection<? extends Player> online = this.server.getOnlinePlayers();
 
