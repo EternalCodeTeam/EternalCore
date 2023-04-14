@@ -36,7 +36,7 @@ public class AfkCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Marks you as AFK")
+    @DescriptionDocs(description = "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will be ignore afk delay")
     void execute(Player player) {
         UUID uuid = player.getUniqueId();
 

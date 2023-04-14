@@ -26,7 +26,7 @@ public class HomeCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleport to home", arguments = "<home>")
+    @DescriptionDocs(description = "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time", arguments = "<home>")
     void execute(Player player, @ArgHome Home home) {
         if (player.hasPermission("eternalcore.teleport.bypass")) {
             this.teleportService.teleport(player, home.getLocation());
