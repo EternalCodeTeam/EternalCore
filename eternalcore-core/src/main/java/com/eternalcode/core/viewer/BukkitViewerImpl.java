@@ -46,15 +46,16 @@ class BukkitViewerImpl implements Viewer {
 
     @Override
     public String getName() {
-        if (console) {
+        if (this.console) {
             return "CONSOLE";
         }
 
-        Player player = Bukkit.getServer().getPlayer(uuid);
+        Player player = Bukkit.getServer().getPlayer(this.uuid);
 
         if (player == null) {
             throw new IllegalStateException("Unknown player name");
-        } else {
+        }
+        else {
             return player.getName();
         }
     }
