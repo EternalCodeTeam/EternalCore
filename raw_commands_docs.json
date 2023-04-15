@@ -943,7 +943,9 @@
   {
     "name": "delhome ",
     "aliases": [],
-    "permissions": [],
+    "permissions": [
+      "eternalcore.delhome"
+    ],
     "descriptions": [
       "Delete home"
     ],
@@ -967,7 +969,9 @@
   {
     "name": "sethome ",
     "aliases": [],
-    "permissions": [],
+    "permissions": [
+      "eternalcore.sethome"
+    ],
     "descriptions": [
       "Set home location"
     ],
@@ -977,54 +981,10 @@
   },
   {
     "name": "sethome ",
-    "aliases": [],
-    "permissions": [],
-    "descriptions": [
-      "Set home location with specified name"
-    ],
-    "arguments": [
-      "\u003chome\u003e"
-    ]
-  },
-  {
-    "name": "delhome ",
-    "aliases": [],
-    "permissions": [],
-    "descriptions": [
-      "Delete home"
-    ],
-    "arguments": [
-      "\u003chome\u003e"
-    ]
-  },
-  {
-    "name": "home ",
     "aliases": [],
     "permissions": [
-      "eternalcore.home"
+      "eternalcore.sethome"
     ],
-    "descriptions": [
-      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
-    ],
-    "arguments": [
-      "\u003chome\u003e"
-    ]
-  },
-  {
-    "name": "sethome ",
-    "aliases": [],
-    "permissions": [],
-    "descriptions": [
-      "Set home location"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "sethome ",
-    "aliases": [],
-    "permissions": [],
     "descriptions": [
       "Set home location with specified name"
     ],
@@ -1237,205 +1197,6 @@
     ],
     "arguments": [
       ""
-    ]
-  },
-  {
-    "name": "back ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.back"
-    ],
-    "descriptions": [
-      "Teleport to last location"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "back ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.back"
-    ],
-    "descriptions": [
-      "Teleport specified player to last location"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "teleport ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.teleport"
-    ],
-    "descriptions": [
-      "Teleport player to specified player, location and world"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e \u003cx\u003e \u003cy\u003e \u003cz\u003e \u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "teleport ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.teleport"
-    ],
-    "descriptions": [
-      "Teleport to specified player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "teleport ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.teleport"
-    ],
-    "descriptions": [
-      "Teleport to specified location and world"
-    ],
-    "arguments": [
-      "\u003cx\u003e \u003cy\u003e \u003cz\u003e \u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "teleport ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.teleport"
-    ],
-    "descriptions": [
-      "Teleport player to player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e \u003ctarget-player\u003e"
-    ]
-  },
-  {
-    "name": "tphere ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tphere"
-    ],
-    "descriptions": [
-      "Teleport player to you"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "tppos ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tppos"
-    ],
-    "descriptions": [
-      "Teleport specified player to specified coordinates"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e \u003cx\u003e \u003cy\u003e \u003cz\u003e"
-    ]
-  },
-  {
-    "name": "tppos ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tppos"
-    ],
-    "descriptions": [
-      "Teleport to specified coordinates"
-    ],
-    "arguments": [
-      "\u003cx\u003e \u003cy\u003e \u003cz\u003e"
-    ]
-  },
-  {
-    "name": "tpup ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tpup"
-    ],
-    "descriptions": [
-      "Teleport you to the highest block"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "tpaaccept ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tpaccept"
-    ],
-    "descriptions": [
-      "Accept teleport request"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "tpaaccept -all",
-    "aliases": [
-      "tpaaccept, *"
-    ],
-    "permissions": [
-      "eternalcore.tpaccept"
-    ],
-    "descriptions": [
-      "Accept all teleport requests"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "tpa ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tpa"
-    ],
-    "descriptions": [
-      "Send teleport request to player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "tpadeny -all",
-    "aliases": [
-      "tpadeny, *"
-    ],
-    "permissions": [
-      "eternalcore.tpadeny"
-    ],
-    "descriptions": [
-      "Deny all teleport requests"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "tpadeny ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.tpadeny"
-    ],
-    "descriptions": [
-      "Deny teleport request"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
     ]
   },
   {

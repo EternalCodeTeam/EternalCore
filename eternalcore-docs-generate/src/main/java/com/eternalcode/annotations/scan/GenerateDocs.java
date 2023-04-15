@@ -17,8 +17,15 @@ public class GenerateDocs {
         Class<?> aClass = Class.forName("com.eternalcode.core.EternalCore");
         EternalScanner scanner = new EternalScanner(aClass.getClassLoader(), aClass.getPackage());
 
-        List<CommandResult> commandResults = scanner.scan(new CommandScanResolver());
-        List<FeatureResult> featureResults = scanner.scan(new FeatureScanResolver());
+        List<CommandResult> commandResults = scanner.scan(new CommandScanResolver())
+            .stream()
+            .distinct()
+            .toList();
+
+        List<FeatureResult> featureResults = scanner.scan(new FeatureScanResolver())
+            .stream()
+            .distinct()
+            .toList();
 
         Gson gson = new GsonBuilder()
             .setPrettyPrinting()
