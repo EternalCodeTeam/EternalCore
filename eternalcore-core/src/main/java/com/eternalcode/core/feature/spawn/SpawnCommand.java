@@ -76,13 +76,13 @@ public class SpawnCommand {
     }
 
     @Execute
-    void execute(Viewer viewer, @Arg Player player) {
+    void execute(Viewer sender, @Arg Player player) {
         Position position = this.locations.spawn;
 
         if (position.isNoneWorld()) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
-                .viewer(viewer)
+                .viewer(sender)
                 .send();
 
             return;
@@ -94,14 +94,14 @@ public class SpawnCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedBy())
-            .placeholder("{PLAYER}", viewer.getName())
+            .placeholder("{SENDER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
-            .viewer(viewer)
+            .viewer(sender)
             .send();
     }
 }

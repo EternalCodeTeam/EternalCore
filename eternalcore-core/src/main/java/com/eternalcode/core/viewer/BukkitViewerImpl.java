@@ -2,6 +2,7 @@ package com.eternalcode.core.viewer;
 
 import com.eternalcode.core.language.Language;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -49,7 +50,13 @@ class BukkitViewerImpl implements Viewer {
             return "CONSOLE";
         }
 
-        return Bukkit.getServer().getOfflinePlayer(uuid).getName();
+        Player player = Bukkit.getServer().getPlayer(uuid);
+
+        if (player == null) {
+            throw new IllegalStateException("Unknown player name");
+        } else {
+            return player.getName();
+        }
     }
 
     @Override
