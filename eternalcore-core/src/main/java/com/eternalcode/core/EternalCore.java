@@ -36,7 +36,6 @@ import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
 import com.eternalcode.core.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.feature.afk.AfkCommand;
 import com.eternalcode.core.feature.afk.AfkController;
-import com.eternalcode.core.feature.afk.AfkMessagesController;
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
@@ -87,7 +86,6 @@ import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
 import com.eternalcode.core.feature.privatechat.PrivateChatCommands;
-import com.eternalcode.core.feature.privatechat.PrivateChatPresenter;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.feature.reportchat.HelpOpCommand;
 import com.eternalcode.core.feature.spawn.SetSpawnCommand;
@@ -115,8 +113,6 @@ import com.eternalcode.core.notification.NotificationAnnouncer;
 import com.eternalcode.core.notification.adventure.AdventureNotificationAnnouncer;
 import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
-import com.eternalcode.core.publish.LocalPublisher;
-import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.teleport.TeleportDeathController;
@@ -173,7 +169,6 @@ class EternalCore implements EternalCoreApi {
      * Scheduler & Publisher
      **/
     private final Scheduler scheduler;
-    private final Publisher publisher;
 
     /**
      * Configuration & Database
@@ -185,7 +180,6 @@ class EternalCore implements EternalCoreApi {
     private final LocationsConfiguration locationsConfiguration;
     private final LanguageConfiguration languageConfiguration;
     private final PlaceholdersConfiguration placeholdersConfiguration;
-    private final CommandConfiguration commandConfiguration;
 
     /**
      * Services & Managers
@@ -232,7 +226,6 @@ class EternalCore implements EternalCoreApi {
         this.softwareCheck(plugin.getLogger());
 
         this.scheduler = new BukkitSchedulerImpl(plugin);
-        this.publisher = new LocalPublisher();
 
         /* Configuration */
         ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(plugin.getDataFolder());
@@ -242,7 +235,7 @@ class EternalCore implements EternalCoreApi {
         this.locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
         this.languageConfiguration = this.configurationManager.load(new LanguageConfiguration());
         this.placeholdersConfiguration = this.configurationManager.load(new PlaceholdersConfiguration());
-        this.commandConfiguration = this.configurationManager.load(new CommandConfiguration());
+        CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, this.locationsConfiguration);
@@ -281,42 +274,37 @@ class EternalCore implements EternalCoreApi {
         this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, plugin.getLogger());
         this.bridgeManager.init();
 
-        this.teleportService = new TeleportService();
-        this.teleportTaskService = new TeleportTaskService();
+        /* Adventure */
+        this.audiencesProvider = BukkitAudiences.create(plugin);
+        this.miniMessage = MiniMessage.builder()
+                .postProcessor(new LegacyColorProcessor())
+                .build();
 
-        this.afkService = new AfkService(this.pluginConfiguration.afk, this.publisher);
-        this.warpManager = WarpManager.create(warpRepository);
-        this.homeManager = HomeManager.create(homeRepository);
-        this.teleportRequestService = new TeleportRequestService(this.pluginConfiguration.tpa);
+        /* Notice & Viewer & Language & Messages */
+        this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
 
         this.translationManager = TranslationManager.create(this.configurationManager, this.languageConfiguration);
         this.chatManager = new ChatManager(this.pluginConfiguration.chat);
 
-        /* Adventure */
-        this.audiencesProvider = BukkitAudiences.create(plugin);
-        this.miniMessage = MiniMessage.builder()
-            .postProcessor(new LegacyColorProcessor())
-            .build();
-
-        /* Audiences System */
-        this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
-
         this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
-        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.publisher, this.userManager);
+        this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.userManager);
 
-        /* FrameWorks & Libs */
-        /**
-         * FrameWorks & Libs
-         **/
+        /* Services */
+        this.teleportService = new TeleportService();
+        this.teleportTaskService = new TeleportTaskService();
+
+        this.afkService = new AfkService(this.pluginConfiguration.afk, this.noticeService, userManager);
+        this.warpManager = WarpManager.create(warpRepository);
+        this.homeManager = HomeManager.create(homeRepository);
+        this.teleportRequestService = new TeleportRequestService(this.pluginConfiguration.tpa);
+
         LanguageInventory languageInventory = new LanguageInventory(this.languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
         WarpInventory warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
         this.skullAPI = LiteSkullFactory.builder()
             .bukkitScheduler(plugin)
             .build();
-
-        CommandConfiguration commandConfiguration = this.configurationManager.load(new CommandConfiguration());
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
 
@@ -455,11 +443,6 @@ class EternalCore implements EternalCoreApi {
             new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
-        /* Subscribers */
-
-        this.publisher.subscribe(new AfkMessagesController(this.noticeService, this.userManager));
-        this.publisher.subscribe(new PrivateChatPresenter(this.noticeService));
-
         /* Tasks */
 
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, this.teleportService, server);
@@ -510,10 +493,6 @@ class EternalCore implements EternalCoreApi {
 
     public Scheduler getScheduler() {
         return this.scheduler;
-    }
-
-    public Publisher getPublisher() {
-        return this.publisher;
     }
 
     public ConfigurationManager getConfigurationManager() {
