@@ -28,7 +28,19 @@ public class UserManager {
     }
 
     public User getOrCreate(UUID uuid, String name) {
-        return this.usersByUUID.getOrDefault(uuid, this.create(uuid, name));
+        User userByUUID = this.usersByUUID.get(uuid);
+
+        if (userByUUID != null) {
+            return userByUUID;
+        }
+
+        User userByName = this.usersByName.get(name);
+
+        if (userByName != null) {
+            return userByName;
+        }
+
+        return this.create(uuid, name);
     }
 
     public User create(UUID uuid, String name) {
