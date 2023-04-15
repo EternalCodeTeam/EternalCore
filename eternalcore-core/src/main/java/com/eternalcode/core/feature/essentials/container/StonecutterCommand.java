@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "stonecutter")
-@Permission("eternalcore.workbench")
+@Permission("eternalcore.stonecutter")
 public class StonecutterCommand {
 
     private final NoticeService noticeService;

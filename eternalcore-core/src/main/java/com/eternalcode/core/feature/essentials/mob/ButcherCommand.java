@@ -31,7 +31,7 @@ public class ButcherCommand {
     }
 
     @Execute(required = 0)
-    @DescriptionDocs(description = "Kills all mobs in 2 chunks around you", arguments = "<chunks> <mobType>")
+    @DescriptionDocs(description = "Kills all mobs in 2 chunks around you")
     void execute(Player player) {
         this.execute(player, 2);
     }
