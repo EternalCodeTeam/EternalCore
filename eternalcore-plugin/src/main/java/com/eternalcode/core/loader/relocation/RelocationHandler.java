@@ -32,6 +32,7 @@ import com.eternalcode.core.loader.dependency.DependencyLoadResult;
 import com.eternalcode.core.loader.dependency.DependencyLoaderImpl;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -76,7 +77,6 @@ public class RelocationHandler implements AutoCloseable {
         this.jarRelocatorConstructor = jarRelocatorConstructor;
         this.jarRelocatorRunMethod = jarRelocatorRunMethod;
     }
-
 
     public Path relocateDependency(Path jar, Dependency dependency, List<Relocation> relocations) {
         if (relocations.isEmpty()) {
@@ -133,7 +133,7 @@ public class RelocationHandler implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
         this.classLoader.close();
     }
 

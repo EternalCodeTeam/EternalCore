@@ -1,6 +1,7 @@
 package com.eternalcode.core.loader.dependency;
 
 import com.eternalcode.core.loader.classloader.IsolatedClassLoader;
+import com.eternalcode.core.loader.classloader.IsolatedClassLoaderImpl;
 import com.eternalcode.core.loader.pom.PomXmlScanner;
 import com.eternalcode.core.loader.relocation.Relocation;
 import com.eternalcode.core.loader.relocation.RelocationHandler;
@@ -33,15 +34,16 @@ public class DependencyLoaderImpl implements DependencyLoader {
 
     @Override
     public DependencyLoadResult load(List<Dependency> dependencies, List<Relocation> relocations) {
-        return this.load(new IsolatedClassLoader(), dependencies, relocations);
+        return this.load(new IsolatedClassLoaderImpl(), dependencies, relocations);
     }
 
     @Override
     public DependencyLoadResult load(ClassLoader loader, List<Dependency> dependencies, List<Relocation> relocations, URL... urls) {
-        return this.load(new IsolatedClassLoader(loader, urls), dependencies, relocations);
+        return this.load(new IsolatedClassLoaderImpl(loader, urls), dependencies, relocations);
     }
 
-    private DependencyLoadResult load(IsolatedClassLoader loader, List<Dependency> dependencies, List<Relocation> relocations) {
+    @Override
+    public DependencyLoadResult load(IsolatedClassLoader loader, List<Dependency> dependencies, List<Relocation> relocations) {
         PomXmlScanner scanner = new PomXmlScanner(this.repositories);
         DependencyCollector collector = new DependencyCollector();
 

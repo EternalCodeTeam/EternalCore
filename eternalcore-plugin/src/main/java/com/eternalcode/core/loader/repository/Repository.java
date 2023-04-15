@@ -24,4 +24,9 @@ public class Repository {
         return new Repository(url);
     }
 
+    @Override
+    public String toString() {
+        return url;
+    }
+
 }
