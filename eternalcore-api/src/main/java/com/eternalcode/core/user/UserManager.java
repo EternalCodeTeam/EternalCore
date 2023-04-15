@@ -15,10 +15,6 @@ public class UserManager {
     private final Map<UUID, User> usersByUUID = new ConcurrentHashMap<>();
     private final Map<String, User> usersByName = new ConcurrentHashMap<>();
 
-    public Set<User> getUsers() {
-        return new HashSet<>(this.usersByUUID.values());
-    }
-
     public Option<User> getUser(UUID uuid) {
         return Option.of(this.usersByUUID.get(uuid));
     }
@@ -43,11 +39,7 @@ public class UserManager {
         return Option.of(user);
     }
 
-    public Collection<User> getUsersByUUID() {
+    public Collection<User> getUsers() {
         return Collections.unmodifiableCollection(this.usersByUUID.values());
-    }
-
-    public Collection<User> getUsersByName() {
-        return Collections.unmodifiableCollection(this.usersByName.values());
     }
 }
