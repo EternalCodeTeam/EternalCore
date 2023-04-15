@@ -23,7 +23,7 @@
  *  SOFTWARE.
  */
 
-package com.eternalcode.core.loader.classpath;
+package com.eternalcode.core.loader.classloader;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -33,7 +33,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Path;
 import java.util.Collection;
 
-public abstract class URLClassLoaderAccessor {
+abstract class URLClassLoaderAccessor {
 
     public static URLClassLoaderAccessor create(URLClassLoader classLoader) {
         if (ReflectionURLClassLoaderAccessor.isSupported()) {

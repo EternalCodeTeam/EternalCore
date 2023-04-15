@@ -28,19 +28,19 @@ public class UserManager {
     }
 
     public User getOrCreate(UUID uuid, String name) {
-        return this.create(uuid, name).orElseGet(this.usersByUUID.get(uuid));
+        return this.usersByUUID.getOrDefault(uuid, this.create(uuid, name));
     }
 
-    public Option<User> create(UUID uuid, String name) {
+    public User create(UUID uuid, String name) {
         if (this.usersByUUID.containsKey(uuid) || this.usersByName.containsKey(name)) {
-            return Option.none();
+            throw new IllegalStateException("User already exists");
         }
 
         User user = new User(uuid, name);
         this.usersByUUID.put(uuid, user);
         this.usersByName.put(name, user);
 
-        return Option.of(user);
+        return user;
     }
 
     public Collection<User> getUsersByUUID() {
