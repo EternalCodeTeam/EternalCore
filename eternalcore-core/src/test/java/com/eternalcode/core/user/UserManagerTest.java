@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserManagerTest {
@@ -22,6 +23,18 @@ class UserManagerTest {
         manager.create(UUID.randomUUID(), "Norbert");
         manager.create(UUID.randomUUID(), "Martin");
         assertEquals(4, manager.getUsers().size());
+    }
+
+    @Test
+    void testCreateSameUser() {
+        UserManager manager = new UserManager();
+
+        manager.create(UUID.randomUUID(), "Piotr");
+        assertThrows(IllegalStateException.class, () -> manager.create(UUID.randomUUID(), "Piotr"));
+
+        UUID uuid = UUID.randomUUID();
+        manager.create(uuid, "Rollczi");
+        assertThrows(IllegalStateException.class, () -> manager.create(uuid, "Lucky"));
     }
 
     @Test
@@ -60,6 +73,8 @@ class UserManagerTest {
         assertEquals(user, manager.getOrCreate(uuid, "Michał"));
         assertEquals(1, manager.getUsers().size());
         assertTrue(manager.getUsers().contains(user));
+
+        assertEquals(user, manager.getOrCreate(uuid, "Michał"));
     }
 
 }

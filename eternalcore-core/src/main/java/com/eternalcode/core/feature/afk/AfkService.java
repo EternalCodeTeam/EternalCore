@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.afk;
 
-import com.eternalcode.core.publish.Publisher;
+import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserManager;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -10,21 +12,23 @@ import java.util.UUID;
 public class AfkService {
 
     private final AfkSettings afkSettings;
-    private final Publisher publisher;
+    private final NoticeService noticeService;
+    private final UserManager userManager;
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
     private final Map<UUID, Integer> interactions = new HashMap<>();
 
-    public AfkService(AfkSettings afkSettings, Publisher publisher) {
+    public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager) {
         this.afkSettings = afkSettings;
-        this.publisher = publisher;
+        this.noticeService = noticeService;
+        this.userManager = userManager;
     }
 
     public Afk markAfk(UUID player, AfkReason reason) {
         Afk afk = new Afk(player, reason, Instant.now());
 
         this.afkByPlayer.put(player, afk);
-        this.publisher.publish(new AfkChangeEvent(player, true));
+        this.notifyAfk(player, false);
         return afk;
     }
 
@@ -57,8 +61,17 @@ public class AfkService {
         }
 
         this.interactions.remove(player);
-        this.publisher.publish(new AfkChangeEvent(player, false));
+        this.notifyAfk(player, false);
         return true;
+    }
+
+    private void notifyAfk(UUID player, boolean afk) {
+        this.noticeService.create()
+            .onlinePlayers()
+            .player(player)
+            .notice(translation -> afk ? translation.afk().afkOn() : translation.afk().afkOff())
+            .placeholder("{PLAYER}", this.userManager.getUser(player).map(User::getName))
+            .sendAsync();
     }
 
 }

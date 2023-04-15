@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.privatechat;
 
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.cache.Cache;
@@ -18,8 +17,8 @@ public class PrivateChatService {
 
     private final NoticeService noticeService;
     private final IgnoreRepository ignoreRepository;
-    private final Publisher publisher;
     private final UserManager userManager;
+    private final PrivateChatPresenter presenter;
 
     private final Cache<UUID, UUID> replies = CacheBuilder.newBuilder()
         .expireAfterWrite(Duration.ofHours(1))
@@ -27,11 +26,11 @@ public class PrivateChatService {
 
     private final Set<UUID> socialSpy = new HashSet<>();
 
-    public PrivateChatService(NoticeService noticeService, IgnoreRepository ignoreRepository, Publisher publisher, UserManager userManager) {
+    public PrivateChatService(NoticeService noticeService, IgnoreRepository ignoreRepository, UserManager userManager) {
         this.noticeService = noticeService;
         this.ignoreRepository = ignoreRepository;
-        this.publisher = publisher;
         this.userManager = userManager;
+        this.presenter = new PrivateChatPresenter(noticeService);
     }
 
     public void privateMessage(User sender, User target, String message) {
@@ -47,7 +46,7 @@ public class PrivateChatService {
                 this.replies.put(sender.getUniqueId(), target.getUniqueId());
             }
 
-            this.publisher.publish(new PrivateMessage(sender, target, message, this.socialSpy, isIgnored));
+            this.presenter.onPrivate(new PrivateMessage(sender, target, message, this.socialSpy, isIgnored));
         });
     }
 
