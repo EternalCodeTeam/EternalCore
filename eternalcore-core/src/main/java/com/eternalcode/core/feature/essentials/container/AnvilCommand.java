@@ -16,6 +16,10 @@ public class AnvilCommand {
 
     private final NoticeService noticeService;
 
+    public AnvilCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
+
     @Execute(required = 0)
     @DescriptionDocs(description = "Opens an anvil for you")
     void executeSelf(Player player) {
@@ -25,10 +29,6 @@ public class AnvilCommand {
             .notice(translation -> translation.container().genericContainerOpened())
             .player(player.getUniqueId())
             .send();
-    }
-
-    public AnvilCommand(NoticeService noticeService) {
-        this.noticeService = noticeService;
     }
 
     @Execute(required = 1)
