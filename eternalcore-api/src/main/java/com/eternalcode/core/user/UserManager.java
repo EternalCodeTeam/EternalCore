@@ -15,10 +15,6 @@ public class UserManager {
     private final Map<UUID, User> usersByUUID = new ConcurrentHashMap<>();
     private final Map<String, User> usersByName = new ConcurrentHashMap<>();
 
-    public Set<User> getUsers() {
-        return new HashSet<>(this.usersByUUID.values());
-    }
-
     public Option<User> getUser(UUID uuid) {
         return Option.of(this.usersByUUID.get(uuid));
     }
@@ -28,26 +24,34 @@ public class UserManager {
     }
 
     public User getOrCreate(UUID uuid, String name) {
-        return this.create(uuid, name).orElseGet(this.usersByUUID.get(uuid));
+        User userByUUID = this.usersByUUID.get(uuid);
+
+        if (userByUUID != null) {
+            return userByUUID;
+        }
+
+        User userByName = this.usersByName.get(name);
+
+        if (userByName != null) {
+            return userByName;
+        }
+
+        return this.create(uuid, name);
     }
 
-    public Option<User> create(UUID uuid, String name) {
+    public User create(UUID uuid, String name) {
         if (this.usersByUUID.containsKey(uuid) || this.usersByName.containsKey(name)) {
-            return Option.none();
+            throw new IllegalStateException("User already exists");
         }
 
         User user = new User(uuid, name);
         this.usersByUUID.put(uuid, user);
         this.usersByName.put(name, user);
 
-        return Option.of(user);
+        return user;
     }
 
-    public Collection<User> getUsersByUUID() {
+    public Collection<User> getUsers() {
         return Collections.unmodifiableCollection(this.usersByUUID.values());
-    }
-
-    public Collection<User> getUsersByName() {
-        return Collections.unmodifiableCollection(this.usersByName.values());
     }
 }

@@ -12,4 +12,6 @@ public interface Viewer {
 
     boolean isConsole();
 
+    String getName();
+
 }

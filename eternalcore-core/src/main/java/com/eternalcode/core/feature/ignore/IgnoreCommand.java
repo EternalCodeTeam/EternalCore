@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.ignore;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
@@ -24,6 +25,7 @@ public class IgnoreCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Ignore specified player", arguments = "<player>")
     void ignore(User sender, @Arg User target) {
         UUID senderUuid = sender.getUniqueId();
         UUID targetUuid = target.getUniqueId();
@@ -53,6 +55,7 @@ public class IgnoreCommand {
     }
 
     @Execute(route = "-all", aliases = "*")
+    @DescriptionDocs(description = "Ignore all players")
     void ignoreAll(User sender) {
         UUID senderUuid = sender.getUniqueId();
 

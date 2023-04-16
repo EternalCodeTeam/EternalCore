@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.user.User;
 import org.bukkit.Location;
 import panda.std.Option;
@@ -10,6 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@FeatureDocs(
+    name = "Home",
+    description = "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
+)
 public class HomeManager {
 
     private final Map<UUID, Map<String, Home>> homes = new HashMap<>();

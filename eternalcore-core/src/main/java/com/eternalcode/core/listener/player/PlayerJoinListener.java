@@ -1,9 +1,9 @@
 package com.eternalcode.core.listener.player;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
-import org.bukkit.GameMode;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +23,10 @@ public class PlayerJoinListener implements Listener {
         this.server = server;
     }
 
+    @FeatureDocs(
+        description = "Send a random welcome message from config to a player when they join the server",
+        name = "Player Join Message"
+    )
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -35,14 +39,7 @@ public class PlayerJoinListener implements Listener {
                 .send();
         }
 
-        if (this.config.sound.enabledAfterJoin) {
-            for (Player online : this.server.getOnlinePlayers()) {
-                online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch);
-            }
-        }
-
-        this.noticeService
-            .create()
+        this.noticeService.create()
             .notice(translation -> translation.event().welcomeTitle())
             .notice(translation -> translation.event().welcomeSubtitle())
             .placeholder("{PLAYER}", player.getName())
@@ -57,5 +54,18 @@ public class PlayerJoinListener implements Listener {
             .onlinePlayers()
             .sendAsync();
 
+    }
+
+    @FeatureDocs(
+        description = "Play a sound after a player joins the server",
+        name = "Player Join Sound"
+    )
+    @EventHandler
+    public void onPlayerJoinSound(PlayerJoinEvent event) {
+        if (this.config.sound.enabledAfterJoin) {
+            for (Player online : this.server.getOnlinePlayers()) {
+                online.playSound(online.getLocation(), this.config.sound.afterJoin, this.config.sound.afterJoinVolume, this.config.sound.afterJoinPitch);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.eternalcode.core.listener.player;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import org.bukkit.Server;
@@ -10,6 +11,11 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.help.HelpTopic;
 import panda.std.Option;
 
+@FeatureDocs(
+    name = "CommandBlocker",
+    description = "It allows you to block commands with custom message",
+    permission = "eternalcore.commandblocker.bypass"
+)
 public class PlayerCommandPreprocessListener implements Listener {
 
     private final NoticeService noticeService;
@@ -34,7 +40,7 @@ public class PlayerCommandPreprocessListener implements Listener {
                 return;
             }
 
-            if (player.hasPermission("eternalcode.commandblocker.bypass")) {
+            if (player.hasPermission("eternalcore.commandblocker.bypass")) {
                 return;
             }
 

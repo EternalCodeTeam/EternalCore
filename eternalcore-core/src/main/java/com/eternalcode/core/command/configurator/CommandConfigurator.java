@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.configurator;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.command.configurator.config.Command;
 import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.command.configurator.config.SubCommand;
@@ -12,6 +13,11 @@ public class CommandConfigurator implements CommandEditor {
     public CommandConfigurator(CommandConfiguration commandConfiguration) {
         this.commandConfiguration = commandConfiguration;
     }
+
+    @FeatureDocs(
+        name = "CommandConfigurator",
+        description = "Adds support for command configuration, which allows you to change the name, aliases, permissions and disable the command"
+    )
 
     @Override
     public State edit(State state) {

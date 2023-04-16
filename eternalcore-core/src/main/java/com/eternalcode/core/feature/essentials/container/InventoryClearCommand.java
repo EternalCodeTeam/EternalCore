@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.container;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -20,6 +21,7 @@ public class InventoryClearCommand {
     }
 
     @Execute(required = 0)
+    @DescriptionDocs(description = "Clears your inventory")
     void execute(Player player) {
         this.clear(player);
 
@@ -31,6 +33,7 @@ public class InventoryClearCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Clears inventory of player", arguments = "<player>")
     void execute(Viewer audience, @Arg Player target) {
         this.clear(target);
 

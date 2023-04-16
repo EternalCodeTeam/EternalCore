@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -32,6 +33,7 @@ public class WarpCommand {
     }
 
     @Execute(required = 0)
+    @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps")
     void warp(Player player, User user) {
         if (!this.config.warp.inventoryEnabled) {
             this.noticeService.create()
@@ -47,6 +49,7 @@ public class WarpCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant")
     void warp(Player player, @Arg Warp warp) {
         if (player.hasPermission("eternalcore.warp.bypass")) {
             this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
@@ -58,6 +61,7 @@ public class WarpCommand {
 
     @Execute(route = "add", required = 1)
     @Permission("eternalcore.warp.create")
+    @DescriptionDocs(description = "Create warp")
     void add(Player player, @Arg String warp) {
         if (this.warpManager.warpExists(warp)) {
             this.noticeService.create()
@@ -80,6 +84,7 @@ public class WarpCommand {
 
     @Execute(route = "remove", required = 1)
     @Permission("eternalcore.warp.delete")
+    @DescriptionDocs(description = "Remove warp")
     void remove(Player player, @Arg Warp warp) {
         this.warpManager.removeWarp(warp.getName());
 

@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -36,6 +37,7 @@ public class TpaAcceptCommand {
 
     @Execute
     @Required(1)
+    @DescriptionDocs(description = "Accept teleport request", arguments = "<player>")
     public void executeTarget(Player player, @Arg @By(RequesterArgument.KEY) Player target) {
         this.teleportTaskService.createTeleport(
             target.getUniqueId(),
@@ -62,6 +64,7 @@ public class TpaAcceptCommand {
     }
 
     @Execute(route = "-all", aliases = "*")
+    @DescriptionDocs(description = "Accept all teleport requests")
     public void executeAll(Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 

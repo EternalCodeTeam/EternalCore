@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.afk;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.notification.NoticeService;
@@ -14,6 +16,11 @@ import java.util.UUID;
 
 @Route(name = "afk")
 @Permission("eternalcore.afk")
+@FeatureDocs(
+    name = "Afk",
+    permission = { "eternalcore.afk", "eternalcore.afk.bypass" },
+    description = "It allows you to mark yourself as AFK, or if you are AFK, eternalcore will mark you as AFK after some time"
+)
 public class AfkCommand {
 
     private final NoticeService noticeService;
@@ -29,6 +36,7 @@ public class AfkCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will be ignore afk delay")
     void execute(Player player) {
         UUID uuid = player.getUniqueId();
 

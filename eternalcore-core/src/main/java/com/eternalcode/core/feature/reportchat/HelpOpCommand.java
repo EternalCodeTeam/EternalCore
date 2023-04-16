@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.reportchat;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.notification.Notice;
@@ -34,6 +35,7 @@ public class HelpOpCommand {
 
     @Execute
     @Min(1)
+    @DescriptionDocs(description = "Send helpop message to all administrator with eternalcore.helpop.spy permission", arguments = "<message>")
     void execute(Player player, @Joiner String message) {
         UUID uuid = player.getUniqueId();
 

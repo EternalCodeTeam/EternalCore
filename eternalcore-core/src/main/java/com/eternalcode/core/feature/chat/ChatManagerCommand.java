@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.chat;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.DurationArgument;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;
@@ -31,6 +32,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "clear", aliases = "cc")
+    @DescriptionDocs(description = "Clears chat")
     public void clear(CommandSender sender) {
         this.noticeService.create()
             .staticNotice(this.clear)
@@ -41,6 +43,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "on")
+    @DescriptionDocs(description = "Enables chat")
     public void enable(Viewer viewer, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
@@ -57,6 +60,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "off")
+    @DescriptionDocs(description = "Disables chat")
     public void disable(Viewer viewer, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
@@ -73,6 +77,7 @@ public class ChatManagerCommand {
     }
 
     @Execute(route = "slowmode", required = 1)
+    @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
     public void slowmode(Viewer viewer, @Arg @By(DurationArgument.KEY) Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());

@@ -1,5 +1,6 @@
 package com.eternalcode.core.listener.player;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
@@ -8,6 +9,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import panda.utilities.StringUtils;
 
+@FeatureDocs(
+    description = "Send a message to all players when a player dies",
+    name = "Player Death Message"
+)
 public class PlayerDeathListener implements Listener {
 
     private final NoticeService noticeService;
