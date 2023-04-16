@@ -10,7 +10,9 @@ import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
+import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -413,19 +415,26 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENEventSection implements EventSection {
-        @Description({
-            " # EternalCore will pick a random message for the list below, every time the player do a various action.",
-            " # If the {KILLER} will be, for example a console, it will pick the unknownPlayerDeath message."
-        })
-        public String unknownPlayerDeath = "unknown";
-
         @Description("# {PLAYER} - Killed player, {KILLER} - Killer")
         public List<Notification> deathMessage = List.of(
             Notification.chat("<red>► <dark_red>{PLAYER} <red>died!"),
             Notification.chat("<red>► <dark_red>{PLAYER} <red>was killed by <dark_red>{KILLER}!")
         );
 
-        @Description("# {PLAYER} - Player who joined")
+        @Description({
+            "# EternalCore will pick a random message for the list below, every time the player do a various action.",
+            "# If the {KILLER} not be found, the message will be picked from list if contains cause.",
+            "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
+        })
+        public Map<EntityDamageEvent.DamageCause, List<Notification>> deathMessageByDamageCause = Map.of(
+            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(Notification.chat("<red>► <dark_red>{PLAYER} <red>fell into the void!")),
+            EntityDamageEvent.DamageCause.FALL, Arrays.asList(
+                Notification.chat("<red>► <dark_red>{PLAYER} <red>fell from a high place!"),
+                Notification.chat("<red>► <dark_red>{PLAYER} <red>fell off a deadly cliff!")
+            )
+        );
+
+        @Description({ "", "# {PLAYER} - Player who joined" })
         public List<Notification> joinMessage = List.of(
             Notification.chat("<green>► <green>{PLAYER} <white>joined the server!"),
             Notification.chat("<green>► <white>Welcome to the server <green>{PLAYER}<white>!")

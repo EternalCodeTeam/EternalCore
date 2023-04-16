@@ -22,10 +22,19 @@ public class PlayerDeathListener implements Listener {
 
         event.setDeathMessage(StringUtils.EMPTY);
 
+        if (player.getKiller() != null) {
+            this.noticeService.create()
+                .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
+                .placeholder("{PLAYER}", player.getName())
+                .onlinePlayers()
+                .send();
+
+            return;
+        }
+
         this.noticeService.create()
-            .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
+            .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessageByDamageCause().get(player.getLastDamageCause().getCause())))
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{KILLER}", translation -> player.getKiller() != null ? player.getKiller().getName() : translation.event().unknownPlayerDeath())
             .onlinePlayers()
             .send();
     }
