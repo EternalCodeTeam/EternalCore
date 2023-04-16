@@ -10,7 +10,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import panda.utilities.StringUtils;
 
 @FeatureDocs(
-    description = "Send a message to all players when a player dies",
+    description = "Send a message to all players when a player dies, you can configure the messages based on damage cause in configuration, see: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html for all damage causes",
     name = "Player Death Message"
 )
 public class PlayerDeathListener implements Listener {
