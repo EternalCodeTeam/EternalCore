@@ -418,8 +418,8 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLEventSection implements EventSection {
         @Description("# {PLAYER} - Gracz który został uśmiercony, {KILLER} - Gracz który zabił gracza")
         public List<Notification> deathMessage = List.of(
-            Notification.actionbar("<red>► <dark_red>{PLAYER} <red>zginął przez {KILLER}!"),
-            Notification.actionbar("<red>► <dark_red>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!")
+            Notification.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął przez {KILLER}!"),
+            Notification.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!")
         );
 
         @Description({
@@ -428,10 +428,10 @@ public class PLTranslation extends AbstractTranslation {
             "# Lista powodów zgonu: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
         })
         public Map<EntityDamageEvent.DamageCause, List<Notification>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(Notification.chat("<red>► <dark_red>{PLAYER} <red>wypadł z naszego świata!")),
+            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(Notification.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł z naszego świata!")),
             EntityDamageEvent.DamageCause.FALL, Arrays.asList(
-                Notification.chat("<red>► <dark_red>{PLAYER} <red>spadł z wysokości!"),
-                Notification.chat("<red>► <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
+                Notification.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z wysokości!"),
+                Notification.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
             )
         );
 
