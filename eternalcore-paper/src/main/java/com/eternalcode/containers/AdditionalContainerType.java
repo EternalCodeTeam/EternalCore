@@ -14,7 +14,7 @@ public class AdditionalContainerType {
     public static final AdditionalContainerType CARTOGRAPHY_TABLE = new AdditionalContainerType("cartography_table", player -> player.openCartographyTable(null, true));
     public static final AdditionalContainerType LOOM = new AdditionalContainerType("loom", player -> player.openLoom(null, true));
     public static final AdditionalContainerType SMITHING_TABLE = new AdditionalContainerType("smithing_table", player -> player.openSmithingTable(null, true));
-    public static final AdditionalContainerType ENCANTING_TABLE = new AdditionalContainerType("enchanting_table", player -> player.openEnchanting(null, true));
+    public static final AdditionalContainerType ENCHANTING_TABLE = new AdditionalContainerType("enchanting_table", player -> player.openEnchanting(null, true));
 
     private final String name;
     private final Consumer<Player> consumer;
