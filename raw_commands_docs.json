@@ -392,20 +392,6 @@
     ]
   },
   {
-    "name": "invsee enderchest",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.enderchest"
-    ],
-    "descriptions": [
-      "Opens enderchest of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
     "name": "invsee inventory",
     "aliases": [],
     "permissions": [
@@ -414,6 +400,20 @@
     ],
     "descriptions": [
       "Opens inventory of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "invsee enderchest",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.enderchest"
+    ],
+    "descriptions": [
+      "Opens enderchest of another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
@@ -1129,8 +1129,25 @@
     "permissions": [
       "eternalcore.spawn"
     ],
-    "descriptions": [],
-    "arguments": []
+    "descriptions": [
+      "Teleports specified player to spawn location"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "spawn ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.spawn"
+    ],
+    "descriptions": [
+      "Teleports you to spawn location"
+    ],
+    "arguments": [
+      ""
+    ]
   },
   {
     "name": "warp ",
