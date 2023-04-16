@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageSettings;
@@ -14,6 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+@FeatureDocs(
+    name = "Translations",
+    description = "EternalCore can use multiple languages at once, the player can determine which EternalCore language I want to use, or you can determine from above what language all players want to use"
+)
 public class TranslationManager {
 
     private final Map<Language, Translation> translatedMessages = new HashMap<>();

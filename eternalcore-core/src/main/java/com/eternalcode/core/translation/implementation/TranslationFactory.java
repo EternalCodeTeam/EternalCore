@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
 

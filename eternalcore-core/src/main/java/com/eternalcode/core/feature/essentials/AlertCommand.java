@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;
 import dev.rollczi.litecommands.argument.Arg;
@@ -19,6 +20,7 @@ public class AlertCommand {
     }
 
     @Execute(min = 2)
+    @DescriptionDocs(description = "Sends alert to all players with specified notice type and text", arguments = "<type> <message>")
     void execute(@Arg NoticeType type, @Joiner String text) {
         this.noticeService.create()
             .notice(type, translation -> translation.chat().alertMessageFormat())

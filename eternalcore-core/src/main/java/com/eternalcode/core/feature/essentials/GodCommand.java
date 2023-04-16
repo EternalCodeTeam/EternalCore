@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -19,6 +20,7 @@ public class GodCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Toggle god mode")
     void execute(Player sender) {
         sender.setInvulnerable(!sender.isInvulnerable());
 
@@ -30,6 +32,7 @@ public class GodCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Toggle god mode for specified player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         target.setInvulnerable(!target.isInvulnerable());
 

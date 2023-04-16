@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home.command;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.notification.NoticeService;
@@ -30,11 +31,13 @@ public class SetHomeCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Set home location with specified name", arguments = "<home>")
     void execute(User user, Player player, @Arg String home) {
         this.setHome(user, player, home);
     }
 
     @Execute(required = 0)
+    @DescriptionDocs(description = "Set home location")
     void execute(User user, Player player) {
         this.setHome(user, player, "home");
     }

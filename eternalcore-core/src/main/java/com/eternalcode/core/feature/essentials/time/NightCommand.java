@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.time;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -19,6 +20,7 @@ public class NightCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Sets time to night in specified world", arguments = "<world>")
     void night(Viewer viewer, @Arg World world) {
         world.setTime(13700);
 

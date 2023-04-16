@@ -39,6 +39,7 @@ import com.eternalcode.core.feature.afk.AfkController;
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
+import com.eternalcode.core.feature.chat.ChatManagerController;
 import com.eternalcode.core.feature.essentials.AlertCommand;
 import com.eternalcode.core.feature.essentials.FeedCommand;
 import com.eternalcode.core.feature.essentials.FlyCommand;
@@ -99,7 +100,7 @@ import com.eternalcode.core.feature.warp.WarpRepository;
 import com.eternalcode.core.language.LanguageCommand;
 import com.eternalcode.core.language.LanguageInventory;
 import com.eternalcode.core.language.config.LanguageConfiguration;
-import com.eternalcode.core.listener.player.PlayerChatListener;
+import com.eternalcode.core.listener.player.PlayerChatSoundListener;
 import com.eternalcode.core.listener.player.PlayerCommandPreprocessListener;
 import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
@@ -415,9 +416,10 @@ class EternalCore implements EternalCoreApi {
 
         Stream.of(
             new TeleportDeathController(this.teleportService),
-            new PlayerChatListener(this.chatManager, this.noticeService, pluginConfiguration, server),
+            new PlayerChatSoundListener(pluginConfiguration, server),
             new PlayerJoinListener(pluginConfiguration, this.noticeService, server),
             new PlayerQuitListener(pluginConfiguration, this.noticeService, server),
+            new ChatManagerController(this.chatManager, this.noticeService),
             new PrepareUserController(this.userManager, server),
             new PlayerCommandPreprocessListener(this.noticeService, pluginConfiguration, server),
             new SignChangeListener(this.miniMessage),

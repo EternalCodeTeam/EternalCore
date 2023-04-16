@@ -1,5 +1,6 @@
 package com.eternalcode.core;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.command.async.Async;
@@ -30,7 +31,7 @@ class EternalCoreCommand {
 
     @Async
     @Execute(route = "reload")
-    @Permission("eternalcore.reload")
+    @DescriptionDocs(description = "Reloads EternalCore configuration")
     void reload(Audience audience) {
         long millis = this.reload();
         Component message = this.miniMessage.deserialize(RELOAD_MESSAGE.formatted(millis));

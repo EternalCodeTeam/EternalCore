@@ -1,5 +1,6 @@
 package com.eternalcode.core.listener.player;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -13,6 +14,11 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import panda.std.Option;
 import panda.utilities.text.Joiner;
 
+@FeatureDocs(
+    name = "Bypass Full Server",
+    description = "This feature allows you to bypass the full server, example for vip rank.",
+    permission = "eternalcore.slot.bypass"
+)
 public class PlayerLoginListener implements Listener {
 
     private final TranslationManager translationManager;
