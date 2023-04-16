@@ -1,9 +1,49 @@
 [
   {
-    "name": "PlaceholderAPI",
-    "permissions": [],
+    "name": "Afk",
+    "permissions": [
+      "eternalcore.afk",
+      "eternalcore.afk.bypass"
+    ],
     "descriptions": [
-      "Adds support for PlaceholderAPI"
+      "It allows you to mark yourself as AFK, or if you are AFK, eternalcore will mark you as AFK after some time"
+    ]
+  },
+  {
+    "name": "Bypass Full Server",
+    "permissions": [
+      "eternalcore.slot.bypass"
+    ],
+    "descriptions": [
+      "This feature allows you to bypass the full server, example for vip rank."
+    ]
+  },
+  {
+    "name": "ChatManager",
+    "permissions": [
+      "eternalcore.chat.noslowmode",
+      "eternalcore.chat.bypass"
+    ],
+    "descriptions": [
+      "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
+    ]
+  },
+  {
+    "name": "Colored sign",
+    "permissions": [
+      "eternalcore.sign"
+    ],
+    "descriptions": [
+      "Allows you to use color codes in signs"
+    ]
+  },
+  {
+    "name": "CommandBlocker",
+    "permissions": [
+      "eternalcore.commandblocker.bypass"
+    ],
+    "descriptions": [
+      "It allows you to block commands with custom message"
     ]
   },
   {
@@ -28,30 +68,10 @@
     ]
   },
   {
-    "name": "Afk",
-    "permissions": [
-      "eternalcore.afk",
-      "eternalcore.afk.bypass"
-    ],
-    "descriptions": [
-      "It allows you to mark yourself as AFK, or if you are AFK, eternalcore will mark you as AFK after some time"
-    ]
-  },
-  {
-    "name": "ChatManager",
-    "permissions": [
-      "eternalcore.chat.noslowmode",
-      "eternalcore.chat.bypass"
-    ],
-    "descriptions": [
-      "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
-    ]
-  },
-  {
-    "name": "Warp System",
+    "name": "Home",
     "permissions": [],
     "descriptions": [
-      "Allows you to create warps, optionally you can enable warp inventory"
+      "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
     ]
   },
   {
@@ -62,19 +82,10 @@
     ]
   },
   {
-    "name": "Sound after message in chat",
+    "name": "PlaceholderAPI",
     "permissions": [],
     "descriptions": [
-      "It allows you to play sound after message in chat"
-    ]
-  },
-  {
-    "name": "CommandBlocker",
-    "permissions": [
-      "eternalcore.commandblocker.bypass"
-    ],
-    "descriptions": [
-      "It allows you to block commands with custom message"
+      "Adds support for PlaceholderAPI"
     ]
   },
   {
@@ -85,13 +96,6 @@
     ]
   },
   {
-    "name": "Player Join Sound",
-    "permissions": [],
-    "descriptions": [
-      "Play a sound after a player joins the server"
-    ]
-  },
-  {
     "name": "Player Join Message",
     "permissions": [],
     "descriptions": [
@@ -99,12 +103,10 @@
     ]
   },
   {
-    "name": "Bypass Full Server",
-    "permissions": [
-      "eternalcore.slot.bypass"
-    ],
+    "name": "Player Join Sound",
+    "permissions": [],
     "descriptions": [
-      "This feature allows you to bypass the full server, example for vip rank."
+      "Play a sound after a player joins the server"
     ]
   },
   {
@@ -122,12 +124,10 @@
     ]
   },
   {
-    "name": "Colored sign",
-    "permissions": [
-      "eternalcore.sign"
-    ],
+    "name": "Sound after message in chat",
+    "permissions": [],
     "descriptions": [
-      "Allows you to use color codes in signs"
+      "It allows you to play sound after message in chat"
     ]
   },
   {
@@ -135,6 +135,13 @@
     "permissions": [],
     "descriptions": [
       "EternalCore can use multiple languages at once, the player can determine which EternalCore language I want to use, or you can determine from above what language all players want to use"
+    ]
+  },
+  {
+    "name": "Warp System",
+    "permissions": [],
+    "descriptions": [
+      "Allows you to create warps, optionally you can enable warp inventory"
     ]
   }
 ]

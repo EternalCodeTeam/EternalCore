@@ -20,11 +20,13 @@ public class GenerateDocs {
 
         List<CommandResult> commandResults = scanner.scan(new CommandScanResolver())
             .stream()
+            .sorted(Comparator.comparing(CommandResult::name))
             .distinct()
             .toList();
 
         List<FeatureResult> featureResults = scanner.scan(new FeatureScanResolver())
             .stream()
+            .sorted(Comparator.comparing(FeatureResult::name))
             .distinct()
             .toList();
 

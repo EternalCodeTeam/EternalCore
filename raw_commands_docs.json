@@ -1,18 +1,5 @@
 [
   {
-    "name": "eternalcore reload",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.eternalcore"
-    ],
-    "descriptions": [
-      "Reloads EternalCore configuration"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
     "name": "adminchat ",
     "aliases": [],
     "permissions": [
@@ -39,39 +26,130 @@
     ]
   },
   {
-    "name": "chat slowmode",
+    "name": "alert ",
     "aliases": [],
     "permissions": [
-      "eternalcore.chat"
+      "eternalcore.alert"
     ],
     "descriptions": [
-      "Sets slowmode for chat"
+      "Sends alert to all players with specified notice type and text"
     ],
     "arguments": [
-      "\u003ctime\u003e"
+      "\u003ctype\u003e \u003cmessage\u003e"
     ]
   },
   {
-    "name": "chat on",
+    "name": "anvil ",
     "aliases": [],
     "permissions": [
-      "eternalcore.chat"
+      "eternalcore.anvil"
     ],
     "descriptions": [
-      "Enables chat"
+      "Opens an anvil for you"
     ],
     "arguments": [
       ""
     ]
   },
   {
-    "name": "chat off",
+    "name": "anvil ",
     "aliases": [],
     "permissions": [
-      "eternalcore.chat"
+      "eternalcore.anvil"
     ],
     "descriptions": [
-      "Disables chat"
+      "Opens an anvil for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "back ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.back"
+    ],
+    "descriptions": [
+      "Teleport to last location"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "back ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.back"
+    ],
+    "descriptions": [
+      "Teleport specified player to last location"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": [
+      "Kills all mobs in 2 chunks around you"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": [
+      "Kills all mobs in specified chunks around you"
+    ],
+    "arguments": [
+      "\u003cchunks\u003e"
+    ]
+  },
+  {
+    "name": "butcher ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.butcher"
+    ],
+    "descriptions": [
+      "Kills specified mob in specified chunks around you"
+    ],
+    "arguments": [
+      "\u003cchunks\u003e \u003cmobType\u003e"
+    ]
+  },
+  {
+    "name": "cartography ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.cartography"
+    ],
+    "descriptions": [
+      "Opens a cartography table for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "cartography ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.cartography"
+    ],
+    "descriptions": [
+      "Opens a cartography table for you"
     ],
     "arguments": [
       ""
@@ -93,16 +171,159 @@
     ]
   },
   {
-    "name": "alert ",
+    "name": "chat off",
     "aliases": [],
     "permissions": [
-      "eternalcore.alert"
+      "eternalcore.chat"
     ],
     "descriptions": [
-      "Sends alert to all players with specified notice type and text"
+      "Disables chat"
     ],
     "arguments": [
-      "\u003ctype\u003e \u003cmessage\u003e"
+      ""
+    ]
+  },
+  {
+    "name": "chat on",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Enables chat"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "chat slowmode",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Sets slowmode for chat"
+    ],
+    "arguments": [
+      "\u003ctime\u003e"
+    ]
+  },
+  {
+    "name": "clear ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.clear"
+    ],
+    "descriptions": [
+      "Clears your inventory"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "clear ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.clear"
+    ],
+    "descriptions": [
+      "Clears inventory of player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "day ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.day"
+    ],
+    "descriptions": [
+      "Sets time to day in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "delhome ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.delhome"
+    ],
+    "descriptions": [
+      "Delete home"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
+    ]
+  },
+  {
+    "name": "disposal ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.disposal"
+    ],
+    "descriptions": [
+      "Opens a disposal"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "enchant ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enchant"
+    ],
+    "descriptions": [
+      "Enchants item in hand"
+    ],
+    "arguments": [
+      "\u003cenchantment\u003e \u003clevel\u003e"
+    ]
+  },
+  {
+    "name": "enderchest ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enderchest"
+    ],
+    "descriptions": [
+      "Opens your enderchest"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "enderchest ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enderchest"
+    ],
+    "descriptions": [
+      "Opens another player his enderchest"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "eternalcore reload",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.eternalcore"
+    ],
+    "descriptions": [
+      "Reloads EternalCore configuration"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -158,334 +379,6 @@
     ]
   },
   {
-    "name": "god ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.god"
-    ],
-    "descriptions": [
-      "Toggle god mode for specified player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "god ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.god"
-    ],
-    "descriptions": [
-      "Toggle god mode"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "heal ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.heal"
-    ],
-    "descriptions": [
-      "Heal other player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "heal ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.heal"
-    ],
-    "descriptions": [
-      "Heal yourself"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "kill ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.kill"
-    ],
-    "descriptions": [
-      "Kill specified player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "speed ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.speed"
-    ],
-    "descriptions": [
-      "Set speed of walking and flying to specified amount and player"
-    ],
-    "arguments": [
-      "\u003camount\u003e \u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "speed ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.speed"
-    ],
-    "descriptions": [
-      "Set speed of walking and flying to specified amount"
-    ],
-    "arguments": [
-      "\u003camount\u003e"
-    ]
-  },
-  {
-    "name": "anvil ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.anvil"
-    ],
-    "descriptions": [
-      "Opens an anvil for you"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "anvil ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.anvil"
-    ],
-    "descriptions": [
-      "Opens an anvil for another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "cartography ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.cartography"
-    ],
-    "descriptions": [
-      "Opens a cartography table for another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "cartography ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.cartography"
-    ],
-    "descriptions": [
-      "Opens a cartography table for you"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "disposal ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.disposal"
-    ],
-    "descriptions": [
-      "Opens a disposal"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "enderchest ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.enderchest"
-    ],
-    "descriptions": [
-      "Opens your enderchest"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "enderchest ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.enderchest"
-    ],
-    "descriptions": [
-      "Opens another player his enderchest"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "grindstone ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.grindstone"
-    ],
-    "descriptions": [
-      "Opens a grindstone for you"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "grindstone ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.grindstone"
-    ],
-    "descriptions": [
-      "Opens a grindstone for another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "clear ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.clear"
-    ],
-    "descriptions": [
-      "Clears your inventory"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "clear ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.clear"
-    ],
-    "descriptions": [
-      "Clears inventory of player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "invsee inventory",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.inventory"
-    ],
-    "descriptions": [
-      "Opens inventory of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "invsee enderchest",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.enderchest"
-    ],
-    "descriptions": [
-      "Opens enderchest of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "invsee armor",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.armor"
-    ],
-    "descriptions": [
-      "Opens armor of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "stonecutter ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.stonecutter"
-    ],
-    "descriptions": [
-      "Opens a stonecutter for another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "stonecutter ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.stonecutter"
-    ],
-    "descriptions": [
-      "Opens a stonecutter for you"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "workbench ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.workbench"
-    ],
-    "descriptions": [
-      "Opens a workbench for you"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "workbench ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.workbench"
-    ],
-    "descriptions": [
-      "Opens a workbench for another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
     "name": "gamemode ",
     "aliases": [],
     "permissions": [
@@ -509,19 +402,6 @@
     ],
     "arguments": [
       "\u003cgamemode\u003e"
-    ]
-  },
-  {
-    "name": "enchant ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.enchant"
-    ],
-    "descriptions": [
-      "Enchants item in hand"
-    ],
-    "arguments": [
-      "\u003cenchantment\u003e \u003clevel\u003e"
     ]
   },
   {
@@ -577,6 +457,58 @@
     ]
   },
   {
+    "name": "god ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.god"
+    ],
+    "descriptions": [
+      "Toggle god mode for specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "god ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.god"
+    ],
+    "descriptions": [
+      "Toggle god mode"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "grindstone ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.grindstone"
+    ],
+    "descriptions": [
+      "Opens a grindstone for you"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "grindstone ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.grindstone"
+    ],
+    "descriptions": [
+      "Opens a grindstone for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
     "name": "hat ",
     "aliases": [],
     "permissions": [
@@ -590,367 +522,42 @@
     ]
   },
   {
-    "name": "itemflag ",
+    "name": "heal ",
     "aliases": [],
     "permissions": [
-      "eternalcore.itemflag"
+      "eternalcore.heal"
     ],
     "descriptions": [
-      "Adds or removes item flag from item in hand"
-    ],
-    "arguments": [
-      "\u003citem-flag\u003e"
-    ]
-  },
-  {
-    "name": "itemflag clear",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemflag"
-    ],
-    "descriptions": [
-      "Clears all item flags from item in hand"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "itemlore clear",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemlore"
-    ],
-    "descriptions": [
-      "Clears lore of item in hand"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "itemlore ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemlore"
-    ],
-    "descriptions": [
-      "Sets lore of item in hand"
-    ],
-    "arguments": [
-      "\u003cline\u003e \u003ctext\u003e"
-    ]
-  },
-  {
-    "name": "itemname clear",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemname"
-    ],
-    "descriptions": [
-      "Clears name of item in hand"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "itemname ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.itemname"
-    ],
-    "descriptions": [
-      "Sets name of item in hand"
-    ],
-    "arguments": [
-      "\u003cname\u003e"
-    ]
-  },
-  {
-    "name": "repair all",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.repair"
-    ],
-    "descriptions": [
-      "Repairs all items in inventory"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "repair ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.repair"
-    ],
-    "descriptions": [
-      "Repairs item in hand"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "repair armor",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.repair"
-    ],
-    "descriptions": [
-      "Repairs all items in armor"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "skull ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.skull"
-    ],
-    "descriptions": [
-      "Gives you a skull of player"
+      "Heal other player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
     ]
   },
   {
-    "name": "butcher ",
+    "name": "heal ",
     "aliases": [],
     "permissions": [
-      "eternalcore.butcher"
+      "eternalcore.heal"
     ],
     "descriptions": [
-      "Kills all mobs in 2 chunks around you"
+      "Heal yourself"
     ],
     "arguments": [
       ""
     ]
   },
   {
-    "name": "butcher ",
+    "name": "helpop ",
     "aliases": [],
     "permissions": [
-      "eternalcore.butcher"
+      "eternalcore.helpop"
     ],
     "descriptions": [
-      "Kills all mobs in specified chunks around you"
+      "Send helpop message to all administrator with eternalcore.helpop.spy permission"
     ],
     "arguments": [
-      "\u003cchunks\u003e"
-    ]
-  },
-  {
-    "name": "butcher ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.butcher"
-    ],
-    "descriptions": [
-      "Kills specified mob in specified chunks around you"
-    ],
-    "arguments": [
-      "\u003cchunks\u003e \u003cmobType\u003e"
-    ]
-  },
-  {
-    "name": "online ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.online"
-    ],
-    "descriptions": [
-      "Shows online players count"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "list ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.list"
-    ],
-    "descriptions": [
-      "Shows online players list"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "ping ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.ping"
-    ],
-    "descriptions": [
-      "Shows ping of other player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "ping ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.ping"
-    ],
-    "descriptions": [
-      "Shows your ping"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "whois ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.whois"
-    ],
-    "descriptions": [
-      "Shows information about player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "day ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.day"
-    ],
-    "descriptions": [
-      "Sets time to day in specified world"
-    ],
-    "arguments": [
-      "\u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "night ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.night"
-    ],
-    "descriptions": [
-      "Sets time to night in specified world"
-    ],
-    "arguments": [
-      "\u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "time add",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.time"
-    ],
-    "descriptions": [
-      "Adds specified amount of time to specified world"
-    ],
-    "arguments": [
-      "\u003ctime\u003e"
-    ]
-  },
-  {
-    "name": "time set",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.time"
-    ],
-    "descriptions": [
-      "Sets specified time"
-    ],
-    "arguments": [
-      "\u003ctime\u003e"
-    ]
-  },
-  {
-    "name": "time add",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.time"
-    ],
-    "descriptions": [
-      "Add specified amount of time to specified world"
-    ],
-    "arguments": [
-      "\u003ctime\u003e \u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "time set",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.time"
-    ],
-    "descriptions": [
-      "Sets specified time to specified world"
-    ],
-    "arguments": [
-      "\u003ctime\u003e \u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "rain ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.rain"
-    ],
-    "descriptions": [
-      "Sets weather to rain in specified world"
-    ],
-    "arguments": [
-      "\u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "sun ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.sun"
-    ],
-    "descriptions": [
-      "Sets weather to sun in specified world"
-    ],
-    "arguments": [
-      "\u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "thunder ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.thunder"
-    ],
-    "descriptions": [
-      "Sets weather to thunder in specified world"
-    ],
-    "arguments": [
-      "\u003cworld\u003e"
-    ]
-  },
-  {
-    "name": "delhome ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.delhome"
-    ],
-    "descriptions": [
-      "Delete home"
-    ],
-    "arguments": [
-      "\u003chome\u003e"
+      "\u003cmessage\u003e"
     ]
   },
   {
@@ -961,32 +568,6 @@
     ],
     "descriptions": [
       "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
-    ],
-    "arguments": [
-      "\u003chome\u003e"
-    ]
-  },
-  {
-    "name": "sethome ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.sethome"
-    ],
-    "descriptions": [
-      "Set home location"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "sethome ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.sethome"
-    ],
-    "descriptions": [
-      "Set home location with specified name"
     ],
     "arguments": [
       "\u003chome\u003e"
@@ -1021,43 +602,159 @@
     ]
   },
   {
-    "name": "unignore ",
+    "name": "invsee armor",
     "aliases": [],
     "permissions": [
-      "eternalcore.ignore"
+      "eternalcore.invsee",
+      "eternalcore.invsee.armor"
     ],
     "descriptions": [
-      "Unignore specified player"
+      "Opens armor of another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
     ]
   },
   {
-    "name": "unignore -all",
-    "aliases": [
-      "unignore, *"
-    ],
+    "name": "invsee enderchest",
+    "aliases": [],
     "permissions": [
-      "eternalcore.ignore"
+      "eternalcore.invsee",
+      "eternalcore.invsee.enderchest"
     ],
     "descriptions": [
-      "Unignore all players"
+      "Opens enderchest of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "invsee inventory",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.invsee",
+      "eternalcore.invsee.inventory"
+    ],
+    "descriptions": [
+      "Opens inventory of another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "itemflag ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemflag"
+    ],
+    "descriptions": [
+      "Adds or removes item flag from item in hand"
+    ],
+    "arguments": [
+      "\u003citem-flag\u003e"
+    ]
+  },
+  {
+    "name": "itemflag clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemflag"
+    ],
+    "descriptions": [
+      "Clears all item flags from item in hand"
     ],
     "arguments": [
       ""
     ]
   },
   {
-    "name": "socialspy",
-    "aliases": [
-      "spy"
-    ],
+    "name": "itemlore ",
+    "aliases": [],
     "permissions": [
-      "eternalcore.spy"
+      "eternalcore.itemlore"
     ],
     "descriptions": [
-      "Enable or disable social spy"
+      "Sets lore of item in hand"
+    ],
+    "arguments": [
+      "\u003cline\u003e \u003ctext\u003e"
+    ]
+  },
+  {
+    "name": "itemlore clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemlore"
+    ],
+    "descriptions": [
+      "Clears lore of item in hand"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "itemname ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemname"
+    ],
+    "descriptions": [
+      "Sets name of item in hand"
+    ],
+    "arguments": [
+      "\u003cname\u003e"
+    ]
+  },
+  {
+    "name": "itemname clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemname"
+    ],
+    "descriptions": [
+      "Clears name of item in hand"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "kill ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.kill"
+    ],
+    "descriptions": [
+      "Kill specified player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "language ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.language"
+    ],
+    "descriptions": [
+      "Open language inventory"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "list ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.list"
+    ],
+    "descriptions": [
+      "Shows online players list"
     ],
     "arguments": [
       ""
@@ -1083,6 +780,110 @@
     ]
   },
   {
+    "name": "night ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.night"
+    ],
+    "descriptions": [
+      "Sets time to night in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "online ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.online"
+    ],
+    "descriptions": [
+      "Shows online players count"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "ping ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ping"
+    ],
+    "descriptions": [
+      "Shows ping of other player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "ping ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.ping"
+    ],
+    "descriptions": [
+      "Shows your ping"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "rain ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.rain"
+    ],
+    "descriptions": [
+      "Sets weather to rain in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "repair ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": [
+      "Repairs item in hand"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "repair all",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": [
+      "Repairs all items in inventory"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "repair armor",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.repair"
+    ],
+    "descriptions": [
+      "Repairs all items in armor"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "reply",
     "aliases": [
       "r"
@@ -1098,16 +899,29 @@
     ]
   },
   {
-    "name": "helpop ",
+    "name": "sethome ",
     "aliases": [],
     "permissions": [
-      "eternalcore.helpop"
+      "eternalcore.sethome"
     ],
     "descriptions": [
-      "Send helpop message to all administrator with eternalcore.helpop.spy permission"
+      "Set home location"
     ],
     "arguments": [
-      "\u003cmessage\u003e"
+      ""
+    ]
+  },
+  {
+    "name": "sethome ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sethome"
+    ],
+    "descriptions": [
+      "Set home location with specified name"
+    ],
+    "arguments": [
+      "\u003chome\u003e"
     ]
   },
   {
@@ -1118,6 +932,34 @@
     ],
     "descriptions": [
       "Set spawn location"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "skull ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.skull"
+    ],
+    "descriptions": [
+      "Gives you a skull of player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "socialspy",
+    "aliases": [
+      "spy"
+    ],
+    "permissions": [
+      "eternalcore.spy"
+    ],
+    "descriptions": [
+      "Enable or disable social spy"
     ],
     "arguments": [
       ""
@@ -1150,96 +992,68 @@
     ]
   },
   {
-    "name": "warp ",
+    "name": "speed ",
     "aliases": [],
     "permissions": [
-      "eternalcore.warp"
+      "eternalcore.speed"
     ],
     "descriptions": [
-      "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps"
+      "Set speed of walking and flying to specified amount and player"
     ],
     "arguments": [
-      ""
+      "\u003camount\u003e \u003cplayer\u003e"
     ]
   },
   {
-    "name": "warp add",
+    "name": "speed ",
     "aliases": [],
     "permissions": [
-      "eternalcore.warp",
-      "eternalcore.warp.create"
+      "eternalcore.speed"
     ],
     "descriptions": [
-      "Create warp"
+      "Set speed of walking and flying to specified amount"
     ],
     "arguments": [
-      ""
+      "\u003camount\u003e"
     ]
   },
   {
-    "name": "warp remove",
+    "name": "stonecutter ",
     "aliases": [],
     "permissions": [
-      "eternalcore.warp.delete",
-      "eternalcore.warp"
+      "eternalcore.stonecutter"
     ],
     "descriptions": [
-      "Remove warp"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "warp ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.warp"
-    ],
-    "descriptions": [
-      "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "language ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.language"
-    ],
-    "descriptions": [
-      "Open language inventory"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "back ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.back"
-    ],
-    "descriptions": [
-      "Teleport to last location"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "back ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.back"
-    ],
-    "descriptions": [
-      "Teleport specified player to last location"
+      "Opens a stonecutter for another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "stonecutter ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.stonecutter"
+    ],
+    "descriptions": [
+      "Opens a stonecutter for you"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "sun ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sun"
+    ],
+    "descriptions": [
+      "Sets weather to sun in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
     ]
   },
   {
@@ -1295,6 +1109,140 @@
     ]
   },
   {
+    "name": "thunder ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.thunder"
+    ],
+    "descriptions": [
+      "Sets weather to thunder in specified world"
+    ],
+    "arguments": [
+      "\u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "time add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Adds specified amount of time to specified world"
+    ],
+    "arguments": [
+      "\u003ctime\u003e"
+    ]
+  },
+  {
+    "name": "time add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Add specified amount of time to specified world"
+    ],
+    "arguments": [
+      "\u003ctime\u003e \u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "time set",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets specified time"
+    ],
+    "arguments": [
+      "\u003ctime\u003e"
+    ]
+  },
+  {
+    "name": "time set",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets specified time to specified world"
+    ],
+    "arguments": [
+      "\u003ctime\u003e \u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "tpa ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpa"
+    ],
+    "descriptions": [
+      "Send teleport request to player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tpaaccept ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": [
+      "Accept teleport request"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tpaaccept -all",
+    "aliases": [
+      "tpaaccept, *"
+    ],
+    "permissions": [
+      "eternalcore.tpaccept"
+    ],
+    "descriptions": [
+      "Accept all teleport requests"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "tpadeny ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tpadeny"
+    ],
+    "descriptions": [
+      "Deny teleport request"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tpadeny -all",
+    "aliases": [
+      "tpadeny, *"
+    ],
+    "permissions": [
+      "eternalcore.tpadeny"
+    ],
+    "descriptions": [
+      "Deny all teleport requests"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "tphere ",
     "aliases": [],
     "permissions": [
@@ -1347,69 +1295,121 @@
     ]
   },
   {
-    "name": "tpaaccept ",
+    "name": "unignore ",
     "aliases": [],
     "permissions": [
-      "eternalcore.tpaccept"
+      "eternalcore.ignore"
     ],
     "descriptions": [
-      "Accept teleport request"
+      "Unignore specified player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
     ]
   },
   {
-    "name": "tpaaccept -all",
+    "name": "unignore -all",
     "aliases": [
-      "tpaaccept, *"
+      "unignore, *"
     ],
     "permissions": [
-      "eternalcore.tpaccept"
+      "eternalcore.ignore"
     ],
     "descriptions": [
-      "Accept all teleport requests"
+      "Unignore all players"
     ],
     "arguments": [
       ""
     ]
   },
   {
-    "name": "tpa ",
+    "name": "warp ",
     "aliases": [],
     "permissions": [
-      "eternalcore.tpa"
+      "eternalcore.warp"
     ],
     "descriptions": [
-      "Send teleport request to player"
+      "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp"
+    ],
+    "descriptions": [
+      "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp",
+      "eternalcore.warp.create"
+    ],
+    "descriptions": [
+      "Create warp"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp.delete",
+      "eternalcore.warp"
+    ],
+    "descriptions": [
+      "Remove warp"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "whois ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.whois"
+    ],
+    "descriptions": [
+      "Shows information about player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
     ]
   },
   {
-    "name": "tpadeny -all",
-    "aliases": [
-      "tpadeny, *"
-    ],
+    "name": "workbench ",
+    "aliases": [],
     "permissions": [
-      "eternalcore.tpadeny"
+      "eternalcore.workbench"
     ],
     "descriptions": [
-      "Deny all teleport requests"
+      "Opens a workbench for you"
     ],
     "arguments": [
       ""
     ]
   },
   {
-    "name": "tpadeny ",
+    "name": "workbench ",
     "aliases": [],
     "permissions": [
-      "eternalcore.tpadeny"
+      "eternalcore.workbench"
     ],
     "descriptions": [
-      "Deny teleport request"
+      "Opens a workbench for another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
