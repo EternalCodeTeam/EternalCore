@@ -10,20 +10,20 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Route(name = "anvil")
-@Permission("eternalcore.anvil")
-public class AnvilCommand {
+@Route(name = "loom", aliases = "lom")
+@Permission("eternalcore.loom")
+public class LoomCommand {
 
     private final NoticeService noticeService;
 
-    public AnvilCommand(NoticeService noticeService) {
+    public LoomCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
     @Execute(required = 0)
-    @DescriptionDocs(description = "Opens an anvil for you")
+    @DescriptionDocs(description = "Opens a loom table for you")
     void executeSelf(Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.ANVIL);
+        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.LOOM);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
@@ -32,9 +32,9 @@ public class AnvilCommand {
     }
 
     @Execute(required = 1)
-    @DescriptionDocs(description = "Opens an anvil for another player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens a loom table for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
-        AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.ANVIL);
+        AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.LOOM);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())

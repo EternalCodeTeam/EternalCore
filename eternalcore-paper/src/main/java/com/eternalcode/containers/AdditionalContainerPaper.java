@@ -14,8 +14,7 @@ public final class AdditionalContainerPaper {
     private static final Logger LOGGER = Logger.getLogger("AdditionalContainerPaper");
 
     @SuppressWarnings("deprecation")
-    public static void openAdditionalContainer(Player player, @NotNull AdditionalContainerType type) {
-
+    public static void openAdditionalContainer(Player player, @NotNull AdditionalContainerType container) {
         if (!ENVIRONMENT.isPaper()) {
             player.sendMessage(ChatColor.RED + "This feature is not supported on this server. Please contact the server administrator and check console!");
             LOGGER.warning("This feature is only available on paper, use paper or other paper 1-17-1.19x forks");
@@ -23,14 +22,6 @@ public final class AdditionalContainerPaper {
             return;
         }
 
-        switch (type) {
-            case ANVIL -> player.openAnvil(null, true);
-            case STONE_CUTTER -> player.openStonecutter(null, true);
-            case CARTOGRAPHY_TABLE -> player.openCartographyTable(null, true);
-            case GRINDSTONE -> player.openGrindstone(null, true);
-            case LOOM -> player.openLoom(null, true);
-            case SMITHING_TABLE -> player.openSmithingTable(null, true);
-            default -> throw new IllegalStateException("Unexpected value: " + type);
-        }
+        container.open(player);
     }
 }

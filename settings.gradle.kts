@@ -21,3 +21,4 @@ pluginManagement {
         maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
     }
 }
+include("eternalcore-paper")
