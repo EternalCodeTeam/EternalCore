@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.spawn;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.Position;
@@ -33,6 +34,7 @@ public class SpawnCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Teleports you to spawn location")
     void executeSelf(Player sender) {
         Position position = this.locations.spawn;
 
@@ -76,6 +78,7 @@ public class SpawnCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Teleports specified player to spawn location", arguments = "<player>")
     void execute(Viewer sender, @Arg Player player) {
         Position position = this.locations.spawn;
 
