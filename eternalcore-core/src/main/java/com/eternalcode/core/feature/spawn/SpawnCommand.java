@@ -6,17 +6,16 @@ import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
-import dev.rollczi.litecommands.argument.option.Opt;
+import com.eternalcode.core.viewer.Viewer;
+import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 import java.time.Duration;
 
-// TODO: impl docs
 @Route(name = "spawn")
 @Permission("eternalcore.spawn")
 public class SpawnCommand {
@@ -34,7 +33,7 @@ public class SpawnCommand {
     }
 
     @Execute
-    void execute(Player sender, @Opt Option<Player> playerOption) {
+    void executeSelf(Player sender) {
         Position position = this.locations.spawn;
 
         if (position.isNoneWorld()) {
@@ -48,51 +47,61 @@ public class SpawnCommand {
 
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
-        if (playerOption.isEmpty()) {
-            if (sender.hasPermission("eternalcore.spawn.bypass")) {
-                this.teleportService.teleport(sender, destinationLocation);
-
-                this.noticeService.create()
-                    .notice(translation -> translation.teleport().teleported())
-                    .player(sender.getUniqueId())
-                    .send();
-
-                return;
-            }
-
-            if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
-                this.noticeService.create()
-                    .notice(translation -> translation.teleport().teleportTaskAlreadyExist())
-                    .player(sender.getUniqueId())
-                    .send();
-
-                return;
-            }
-
-            this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), Duration.ofSeconds(5));
+        if (sender.hasPermission("eternalcore.teleport.bypass")) {
+            this.teleportService.teleport(sender, destinationLocation);
 
             this.noticeService.create()
-                .notice(translation -> translation.teleport().teleporting())
+                .notice(translation -> translation.teleport().teleported())
                 .player(sender.getUniqueId())
                 .send();
 
             return;
         }
 
-        Player player = playerOption.get();
+        if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
+            this.noticeService.create()
+                .notice(translation -> translation.teleport().teleportTaskAlreadyExist())
+                .player(sender.getUniqueId())
+                .send();
+
+            return;
+        }
+
+        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), Duration.ofSeconds(5));
+
+        this.noticeService.create()
+            .notice(translation -> translation.teleport().teleporting())
+            .player(sender.getUniqueId())
+            .send();
+    }
+
+    @Execute
+    void execute(Viewer sender, @Arg Player player) {
+        Position position = this.locations.spawn;
+
+        if (position.isNoneWorld()) {
+            this.noticeService.create()
+                .notice(translation -> translation.spawn().spawnNoSet())
+                .viewer(sender)
+                .send();
+
+            return;
+        }
+
+        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
         this.teleportService.teleport(player, destinationLocation);
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedBy())
-            .placeholder("{PLAYER}", sender.getName())
+            .placeholder("{SENDER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedOther())
             .placeholder("{PLAYER}", player.getName())
-            .player(sender.getUniqueId())
+            .viewer(sender)
             .send();
     }
 }
