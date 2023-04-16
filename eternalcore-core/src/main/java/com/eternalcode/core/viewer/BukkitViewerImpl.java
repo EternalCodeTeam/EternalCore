@@ -55,9 +55,8 @@ class BukkitViewerImpl implements Viewer {
         if (player == null) {
             throw new IllegalStateException("Unknown player name");
         }
-        else {
-            return player.getName();
-        }
+        
+        return player.getName();
     }
 
     @Override
