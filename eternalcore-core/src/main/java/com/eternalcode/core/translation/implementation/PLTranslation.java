@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.automessage.AutoMessage;
 import com.eternalcode.core.feature.warp.config.WarpConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
@@ -11,6 +12,7 @@ import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 
 import java.util.Collections;
 import java.util.List;
@@ -684,5 +686,25 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLLanguageSection implements LanguageSection {
         public Notification languageChanged = Notification.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
+    }
+
+    @Description({ " ", "# Automatyczne wiadomości " })
+    public PLAutoMessageSection autoMessage = new PLAutoMessageSection();
+
+    @Getter
+    @Contextual
+    public static class PLAutoMessageSection implements AutoMessageSection {
+
+        public List<AutoMessage> messages = List.of(
+            AutoMessage.withNotification(
+                Notification.actionbar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
+            ).withSound(Sound.ITEM_ARMOR_EQUIP_IRON),
+
+            AutoMessage.withNotification(
+                Notification.chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?"),
+                Notification.chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!"),
+                Notification.chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Kliknij aby wykonać</green>")
+            ).withSound(Sound.BLOCK_ANVIL_BREAK)
+        );
     }
 }

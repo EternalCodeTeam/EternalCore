@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.automessage.AutoMessage;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
@@ -348,6 +349,12 @@ public interface Translation {
         Notification genericContainerOpened();
         Notification genericContainerOpenedBy();
         Notification genericContainerOpenedFor();
+    }
+
+    AutoMessageSection autoMessage();
+
+    interface AutoMessageSection {
+        List<AutoMessage> messages();
     }
 
 }
