@@ -32,7 +32,7 @@ public class LoomCommand {
     }
 
     @Execute(required = 1)
-    @DescriptionDocs(description = "Opens a loom table for another player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens a loom for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.LOOM);
 
