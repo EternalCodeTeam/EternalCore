@@ -21,7 +21,7 @@ public class LoomCommand {
     }
 
     @Execute(required = 0)
-    @DescriptionDocs(description = "Opens a loom table for you")
+    @DescriptionDocs(description = "Opens a loom for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.LOOM);
 
