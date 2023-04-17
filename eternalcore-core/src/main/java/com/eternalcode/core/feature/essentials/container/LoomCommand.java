@@ -10,7 +10,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Route(name = "loom", aliases = "lom")
+@Route(name = "loom")
 @Permission("eternalcore.loom")
 public class LoomCommand {
 
