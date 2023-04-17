@@ -16,7 +16,7 @@ public class AfkService {
     private final UserManager userManager;
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
-    private final Map<UUID, Integer> interactions = new HashMap<>();
+    private final Map<UUID, Integer> interactionsCount = new HashMap<>();
 
     public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager) {
         this.afkSettings = afkSettings;
@@ -27,8 +27,15 @@ public class AfkService {
     public Afk markAfk(UUID player, AfkReason reason) {
         Afk afk = new Afk(player, reason, Instant.now());
 
-        this.afkByPlayer.put(player, afk);
-        this.notifyAfk(player, false);
+        if (!this.isAfk(player)) {
+            this.afkByPlayer.put(player, afk);
+            this.notifyAfk(player, true);
+
+            return afk;
+        }
+
+        this.clearAfk(player);
+
         return afk;
     }
 
@@ -41,16 +48,15 @@ public class AfkService {
     }
 
     public void markInteraction(UUID player) {
-        int interactions = this.interactions.getOrDefault(player, 0);
+        int count = this.interactionsCount.getOrDefault(player, 0);
+        count++;
 
-        interactions++;
-
-        if (interactions >= this.afkSettings.interactionsCountDisableAfk()) {
+        if (count >= this.afkSettings.interactionsCountDisableAfk()) {
             this.clearAfk(player);
             return;
         }
 
-        this.interactions.put(player, interactions);
+        this.interactionsCount.put(player, count);
     }
 
     public boolean clearAfk(UUID player) {
@@ -60,7 +66,7 @@ public class AfkService {
             return false;
         }
 
-        this.interactions.remove(player);
+        this.interactionsCount.remove(player);
         this.notifyAfk(player, false);
         return true;
     }
@@ -71,7 +77,7 @@ public class AfkService {
             .player(player)
             .notice(translation -> afk ? translation.afk().afkOn() : translation.afk().afkOff())
             .placeholder("{PLAYER}", this.userManager.getUser(player).map(User::getName))
-            .sendAsync();
+            .send();
     }
 
 }
