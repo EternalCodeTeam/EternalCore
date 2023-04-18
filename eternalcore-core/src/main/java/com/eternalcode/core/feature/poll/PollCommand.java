@@ -25,13 +25,18 @@ public class PollCommand {
     @Execute(required = 1)
     @Route(name = "create")
     void execute(User user, @Arg Duration duration) {
-        this.pollManager.createNewPoll(user, duration);
+        if (!this.pollManager.markPlayer(user, duration)) {
+            this.noticeService.create()
+                .user(user)
+                .notice(translation -> translation.poll().alreadyCreatingPoll())
+                .send();
+        }
     }
 
     @Execute(required = 0)
     @Route(name = "cancel")
     void execute(Player player) {
-        if (!this.pollManager.getPollSetupMap().containsKey(player.getUniqueId())) {
+        if (!this.pollManager.isMarked(player)) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.poll().cantCancelPoll())
@@ -45,6 +50,6 @@ public class PollCommand {
             .notice(translation -> translation.poll().pollCancelled())
             .send();
 
-        this.pollManager.getPollSetupMap().remove(player.getUniqueId());
+        this.pollManager.unmarkPlayer(player);
     }
 }

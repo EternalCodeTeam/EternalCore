@@ -655,6 +655,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notification howToCancelPoll = Notification.chat("<green>► <white>Jeżeli chcesz <red>anulować <white>tworzenie ankiety wpisz <underlined>/poll cancel");
         public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Tworzenie ankiety zostało anulowane!");
         public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>Nie możesz anulować ankiety bo żadnej nie tworzysz!");
+        public Notification pollEnded = Notification.chat("<gray>(<green><bold>A</bold><gray>) <white>Ankieta zakończona <underline>kliknij tutaj</underline>, aby zobaczyć wyniki!");
+        public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>Nie możesz utworzyć nowej ankiety, ponieważ już ją tworzysz!");
+        public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>Nie możesz stworzyć ankiety bo już jakaś trwa!");
         public Notification descriptionConfigStage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Opis'");
         public Notification optionsConfigStage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Liste Opcji'");
     }

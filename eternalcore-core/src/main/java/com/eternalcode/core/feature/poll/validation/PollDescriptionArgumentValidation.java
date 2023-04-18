@@ -6,7 +6,7 @@ import com.eternalcode.core.translation.Translation;
 
 import java.util.function.Function;
 
-public class PollDescriptionArgument implements PollArgumentValidation {
+public class PollDescriptionArgumentValidation implements PollArgumentValidation {
 
     private static final int MAX_DESCRIPTION_LENGTH = 30;
 

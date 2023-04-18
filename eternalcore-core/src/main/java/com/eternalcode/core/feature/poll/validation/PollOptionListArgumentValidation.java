@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
 
-public class PollOptionListArgument implements PollArgumentValidation {
+public class PollOptionListArgumentValidation implements PollArgumentValidation {
 
     private final int MIN_OPTIONS_SIZE = 2;
     private final int MAX_OPTIONS_SIZE = 4;

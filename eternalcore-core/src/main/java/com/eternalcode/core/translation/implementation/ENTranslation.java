@@ -650,6 +650,9 @@ public class ENTranslation extends AbstractTranslation {
         public Notification howToCancelPoll = Notification.chat("<green>► <white>If you want to <red>cancel <white>creating a poll type <underlined>/poll cancel");
         public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Poll creation has been cancelled!");
         public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>You can't cancel a poll because you don't create one!");
+        public Notification pollEnded = Notification.chat("<gray>(<green><bold>P</bold><gray>) <white>Poll finished <underline>click here</underline><reset> to see the results!");
+        public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>You cannot create a new poll because you are already creating one!");
+        public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one active!");
         public Notification descriptionConfigStage = Notification.chat("<green>► <white>You are now configuring 'Description'");
         public Notification optionsConfigStage = Notification.chat("<green>► <white>You are now configuring the 'Option List'");
     }

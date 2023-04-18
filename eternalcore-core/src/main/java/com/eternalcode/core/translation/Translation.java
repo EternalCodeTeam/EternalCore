@@ -330,6 +330,9 @@ public interface Translation {
         Notification howToCancelPoll();
         Notification pollCancelled();
         Notification cantCancelPoll();
+        Notification pollEnded();
+        Notification alreadyCreatingPoll();
+        Notification pollIsActive();
         Notification descriptionConfigStage();
         Notification optionsConfigStage();
     }

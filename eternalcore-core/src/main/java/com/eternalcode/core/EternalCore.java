@@ -258,7 +258,7 @@ class EternalCore implements EternalCoreApi {
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.tpa);
-        this.pollManager = new PollManager(this.noticeService);
+        this.pollManager = new PollManager(this.noticeService, this.getScheduler());
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);

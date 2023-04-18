@@ -25,13 +25,13 @@ public class PollController implements Listener {
         final Player player = event.getPlayer();
         final String message = event.getMessage();
 
-        if (!this.pollManager.getPollSetupMap().containsKey(player.getUniqueId())) {
+        if (!this.pollManager.isMarked(player)) {
             return;
         }
 
         event.setCancelled(true);
 
-        Poll poll = this.pollManager.getPollSetupMap().get(player.getUniqueId());
+        Poll poll = this.pollManager.getMarkedPoll(player);
         CurrentIterator<PollArgumentValidation> iterator = poll.getArgumentValidationIterator();
 
         PollArgumentValidation argumentValidation = iterator.current();
@@ -46,12 +46,24 @@ public class PollController implements Listener {
         }
 
         if (!iterator.hasNext()) {
+
+           if (this.pollManager.isPollActive()) {
+               this.noticeService.create()
+                   .player(player.getUniqueId())
+                   .notice(translation -> translation.poll().pollIsActive())
+                   .send();
+
+               this.pollManager.unmarkPlayer(player);
+               return;
+           }
+
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.poll().pollCreated())
                 .send();
 
-            this.pollManager.getPollSetupMap().remove(player.getUniqueId());
+            this.pollManager.unmarkPlayer(player);
+            this.pollManager.startTask(poll);
             return;
         }
 
@@ -67,6 +79,6 @@ public class PollController implements Listener {
         final Player player = event.getPlayer();
 
         // Remove player from map...
-        this.pollManager.getPollSetupMap().remove(player.getUniqueId());
+        this.pollManager.unmarkPlayer(player);
     }
 }
