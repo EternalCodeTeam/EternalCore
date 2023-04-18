@@ -86,6 +86,9 @@ import com.eternalcode.core.feature.home.command.SetHomeCommand;
 import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
+import com.eternalcode.core.feature.poll.PollCommand;
+import com.eternalcode.core.feature.poll.PollController;
+import com.eternalcode.core.feature.poll.PollManager;
 import com.eternalcode.core.feature.privatechat.PrivateChatCommands;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.feature.reportchat.HelpOpCommand;
@@ -189,6 +192,7 @@ class EternalCore implements EternalCoreApi {
     private final TranslationManager translationManager;
     private final AfkService afkService;
     private final TeleportRequestService teleportRequestService;
+    private final PollManager pollManager;
 
     /* Database */
     private DatabaseManager databaseManager;
@@ -254,6 +258,7 @@ class EternalCore implements EternalCoreApi {
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.tpa);
+        this.pollManager = new PollManager(this.noticeService, this.translationManager);
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
@@ -392,6 +397,7 @@ class EternalCore implements EternalCoreApi {
                 new InventoryClearCommand(this.noticeService),
                 new InventoryOpenCommand(server, this.noticeService),
                 new ButcherCommand(this.noticeService, pluginConfiguration),
+                new PollCommand(this.noticeService, this.pollManager),
 
                 // Info Commands
                 new OnlinePlayerCountCommand(this.noticeService, server),
@@ -426,7 +432,8 @@ class EternalCore implements EternalCoreApi {
             new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
-            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)
+            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage),
+            new PollController(this.noticeService, this.pollManager)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Tasks */

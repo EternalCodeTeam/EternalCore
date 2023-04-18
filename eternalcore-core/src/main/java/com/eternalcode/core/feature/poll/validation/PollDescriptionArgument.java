@@ -8,13 +8,19 @@ import java.util.function.Function;
 
 public class PollDescriptionArgument implements PollArgumentValidation {
 
+    private static final int MAX_DESCRIPTION_LENGTH = 30;
+
     @Override
     public Function<Translation, Notification> getMessage() {
-        return null;
+        return ignore -> Notification.chat("Konfigurujesz teraz description!");
     }
 
     @Override
     public boolean isValid(Poll poll, String message) {
-        return false;
+        if (message.length() > MAX_DESCRIPTION_LENGTH) {
+            return false;
+        }
+        poll.setDescription(message);
+        return true;
     }
 }
