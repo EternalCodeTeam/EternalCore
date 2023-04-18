@@ -636,6 +636,18 @@ public class ENTranslation extends AbstractTranslation {
         public Notification enchantedMessage = Notification.chat("<green>► <white>Item in hand is enchanted!");
     }
 
+    @Description({
+        " ",
+        "# This section is responsible for poll/voting messages",
+    })
+    public ENPollSection poll = new ENPollSection();
+
+    @Getter
+    @Contextual
+    public static class ENPollSection implements PollSection {
+        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>You have entered the options incorrectly, follow the instructions!");
+        public Notification pollCreated = Notification.chat("<green>► <white>The poll was successfully created!");
+    }
 
     @Description({ " ", "# Messages sent on time and weather change." })
     public ENTimeAndWeatherMessageSection timeAndWeather = new ENTimeAndWeatherMessageSection();

@@ -643,6 +643,19 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# Ta sekcja odpowiada za wiadomości dotyczących ankiet/głosowań",
+    })
+    public PLPollSection poll = new PLPollSection();
+
+    @Getter
+    @Contextual
+    public static class PLPollSection implements PollSection {
+        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>Źle podałeś opcje, zasostuj się do zaleceń!");
+        public Notification pollCreated = Notification.chat("<green>► <white>Ankieta została poprawnie stworzona!");
+    }
+
+    @Description({
+        " ",
         "# Komunikaty odpowiedzialne za ustawianie czasu i pogody",
     })
     public PLTimeAndWeatherMessageSection timeAndWeather = new PLTimeAndWeatherMessageSection();

@@ -321,6 +321,14 @@ public interface Translation {
         Notification enchantedMessage();
     }
 
+    // poll section
+    PollSection poll();
+
+    interface PollSection {
+        Notification optionNotValid();
+        Notification pollCreated();
+    }
+
     // time and weather
     TimeAndWeatherSection timeAndWeather();
 
