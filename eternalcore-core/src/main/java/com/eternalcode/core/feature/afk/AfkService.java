@@ -3,7 +3,10 @@ package com.eternalcode.core.feature.afk;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +20,7 @@ public class AfkService {
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
     private final Map<UUID, Integer> interactionsCount = new HashMap<>();
+    private final Map<UUID, Instant> lastPlayerMovement = new HashMap<>();
 
     public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager) {
         this.afkSettings = afkSettings;
@@ -59,16 +63,46 @@ public class AfkService {
         this.interactionsCount.put(player, count);
     }
 
-    public boolean clearAfk(UUID player) {
+    public void clearAfk(UUID player) {
         Afk afk = this.afkByPlayer.remove(player);
 
         if (afk == null) {
-            return false;
+            return;
         }
 
         this.interactionsCount.remove(player);
         this.notifyAfk(player, false);
-        return true;
+    }
+
+    public void updateLastPlayerMovement(UUID player) {
+        this.lastPlayerMovement.put(player, Instant.now());
+    }
+
+    public void checkAfkTimeout() {
+        Duration afkTimeout = this.afkSettings.getAfkTimeout();
+        Instant now = Instant.now();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            UUID playerId = player.getUniqueId();
+
+            if (isAfk(playerId)) {
+                return;
+            }
+
+            Instant lastMovement = this.lastPlayerMovement.get(playerId);
+
+            if (lastMovement != null && Duration.between(lastMovement, now).compareTo(afkTimeout) >= 0) {
+                this.markAfk(playerId, AfkReason.INACTIVITY);
+            }
+        }
+    }
+
+    public void updateInteraction(UUID uuid) {
+        if (!this.isAfk(uuid)) {
+            return;
+        }
+
+        this.markInteraction(uuid);
     }
 
     private void notifyAfk(UUID player, boolean afk) {

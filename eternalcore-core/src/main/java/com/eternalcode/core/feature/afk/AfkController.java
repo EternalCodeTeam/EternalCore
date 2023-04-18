@@ -8,6 +8,8 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.UUID;
+
 public class AfkController implements Listener {
 
     private final AfkService afkService;
@@ -18,7 +20,10 @@ public class AfkController implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     void onMove(PlayerMoveEvent event) {
-        this.handleEvent(event);
+        UUID uniqueId = event.getPlayer().getUniqueId();
+
+        this.afkService.updateInteraction(uniqueId);
+        this.afkService.updateLastPlayerMovement(uniqueId);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -26,14 +31,5 @@ public class AfkController implements Listener {
         this.afkService.clearAfk(event.getPlayer().getUniqueId());
     }
 
-    private void handleEvent(PlayerEvent event) {
-        Player player = event.getPlayer();
-
-        if (!this.afkService.isAfk(player.getUniqueId())) {
-            return;
-        }
-
-        this.afkService.markInteraction(player.getUniqueId());
-    }
 
 }
