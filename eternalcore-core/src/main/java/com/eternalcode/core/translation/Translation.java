@@ -327,6 +327,11 @@ public interface Translation {
     interface PollSection {
         Notification optionNotValid();
         Notification pollCreated();
+        Notification howToCancelPoll();
+        Notification pollCancelled();
+        Notification cantCancelPoll();
+        Notification descriptionConfigStage();
+        Notification optionsConfigStage();
     }
 
     // time and weather

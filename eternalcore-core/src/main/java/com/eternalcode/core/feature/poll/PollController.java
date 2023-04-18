@@ -55,12 +55,11 @@ public class PollController implements Listener {
             return;
         }
 
-//        this.noticeService.create()
-//            .player(player.getUniqueId())
-//            .notice(ignore -> )
-//                    .send();
-
-        iterator.next();
+        // Send message and advance to next element
+        this.noticeService.create()
+            .player(player.getUniqueId())
+            .notice(translation -> iterator.next().getMessage().apply(translation))
+            .send();
     }
 
     @EventHandler
@@ -68,7 +67,6 @@ public class PollController implements Listener {
         final Player player = event.getPlayer();
 
         // Remove player from map...
-        this.pollManager.getPollSetupMap().computeIfPresent(player.getUniqueId(),
-            (uuid, ignore) -> this.pollManager.getPollSetupMap().remove(uuid));
+        this.pollManager.getPollSetupMap().remove(player.getUniqueId());
     }
 }

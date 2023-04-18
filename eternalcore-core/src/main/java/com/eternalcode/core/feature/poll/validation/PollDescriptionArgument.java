@@ -12,7 +12,7 @@ public class PollDescriptionArgument implements PollArgumentValidation {
 
     @Override
     public Function<Translation, Notification> getMessage() {
-        return ignore -> Notification.chat("Konfigurujesz teraz description!");
+        return translation -> translation.poll().descriptionConfigStage();
     }
 
     @Override

@@ -6,6 +6,7 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
+import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
@@ -25,5 +26,25 @@ public class PollCommand {
     @Route(name = "create")
     void execute(User user, @Arg Duration duration) {
         this.pollManager.createNewPoll(user, duration);
+    }
+
+    @Execute(required = 0)
+    @Route(name = "cancel")
+    void execute(Player player) {
+        if (!this.pollManager.getPollSetupMap().containsKey(player.getUniqueId())) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.poll().cantCancelPoll())
+                .send();
+
+            return;
+        }
+
+        this.noticeService.create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.poll().pollCancelled())
+            .send();
+
+        this.pollManager.getPollSetupMap().remove(player.getUniqueId());
     }
 }

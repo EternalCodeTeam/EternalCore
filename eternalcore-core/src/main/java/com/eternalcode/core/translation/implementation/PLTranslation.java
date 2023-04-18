@@ -650,8 +650,13 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLPollSection implements PollSection {
-        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>Źle podałeś opcje, zasostuj się do zaleceń!");
+        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>Źle podałeś opcje, zasostuj się do zaleceń i spróbuj ponownie!");
         public Notification pollCreated = Notification.chat("<green>► <white>Ankieta została poprawnie stworzona!");
+        public Notification howToCancelPoll = Notification.chat("<green>► <white>Jeżeli chcesz <red>anulować <white>tworzenie ankiety wpisz <underlined>/poll cancel");
+        public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Tworzenie ankiety zostało anulowane!");
+        public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>Nie możesz anulować ankiety bo żadnej nie tworzysz!");
+        public Notification descriptionConfigStage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Opis'");
+        public Notification optionsConfigStage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Liste Opcji'");
     }
 
     @Description({

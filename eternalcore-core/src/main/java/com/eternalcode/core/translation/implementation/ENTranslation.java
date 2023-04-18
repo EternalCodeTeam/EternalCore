@@ -645,8 +645,13 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENPollSection implements PollSection {
-        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>You have entered the options incorrectly, follow the instructions!");
+        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>You have entered the options incorrectly, follow the instructions and try again!");
         public Notification pollCreated = Notification.chat("<green>► <white>The poll was successfully created!");
+        public Notification howToCancelPoll = Notification.chat("<green>► <white>If you want to <red>cancel <white>creating a poll type <underlined>/poll cancel");
+        public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Poll creation has been cancelled!");
+        public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>You can't cancel a poll because you don't create one!");
+        public Notification descriptionConfigStage = Notification.chat("<green>► <white>You are now configuring 'Description'");
+        public Notification optionsConfigStage = Notification.chat("<green>► <white>You are now configuring the 'Option List'");
     }
 
     @Description({ " ", "# Messages sent on time and weather change." })
