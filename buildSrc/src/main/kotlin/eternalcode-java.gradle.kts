@@ -22,4 +22,5 @@ java {
 tasks.withType<JavaCompile>() {
     options.compilerArgs = listOf("-Xlint:deprecation", "-parameters")
     options.encoding = "UTF-8"
+    options.setIncremental(true)
 }
