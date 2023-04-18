@@ -436,7 +436,7 @@ class EternalCore implements EternalCoreApi {
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
 
         AfkTask afkTask = new AfkTask(this.afkService, server);
-        this.scheduler.timerSync(afkTask, Duration.ofMillis(1), Duration.ofMinutes(1));
+        this.scheduler.timerSync(afkTask, Duration.ofMinutes(1), Duration.ofMinutes(1));
 
         // bStats metrics
         Metrics metrics = new Metrics((JavaPlugin) plugin, 13964);
