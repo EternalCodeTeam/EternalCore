@@ -22,14 +22,12 @@ public class AfkController implements Listener {
     void onMove(PlayerMoveEvent event) {
         UUID uniqueId = event.getPlayer().getUniqueId();
 
-        this.afkService.updateInteraction(uniqueId);
-        this.afkService.updateLastPlayerMovement(uniqueId);
+        this.afkService.markInteraction(uniqueId);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     void onQuit(PlayerQuitEvent event) {
         this.afkService.clearAfk(event.getPlayer().getUniqueId());
     }
-
 
 }

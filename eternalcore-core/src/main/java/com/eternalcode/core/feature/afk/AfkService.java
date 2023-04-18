@@ -20,7 +20,7 @@ public class AfkService {
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
     private final Map<UUID, Integer> interactionsCount = new HashMap<>();
-    private final Map<UUID, Instant> lastPlayerMovement = new HashMap<>();
+    private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
     public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager) {
         this.afkSettings = afkSettings;
@@ -28,23 +28,34 @@ public class AfkService {
         this.userManager = userManager;
     }
 
+    public void switchAfk(UUID player, AfkReason reason) {
+        if (this.isAfk(player)) {
+            this.clearAfk(player);
+            return;
+        }
+
+        this.markAfk(player, reason);
+    }
+
     public Afk markAfk(UUID player, AfkReason reason) {
         Afk afk = new Afk(player, reason, Instant.now());
 
-        if (!this.isAfk(player)) {
-            this.afkByPlayer.put(player, afk);
-            this.notifyAfk(player, true);
-
-            return afk;
-        }
-
-        this.clearAfk(player);
+        this.afkByPlayer.put(player, afk);
+        this.sendAfkNotification(player, true);
 
         return afk;
     }
 
-    public Afk markAfk(UUID player) {
-        return this.markAfk(player, AfkReason.PLUGIN);
+    public void clearAfk(UUID player) {
+        Afk afk = this.afkByPlayer.remove(player);
+
+        if (afk == null) {
+            return;
+        }
+
+        this.interactionsCount.remove(player);
+        this.lastInteraction.remove(player);
+        this.sendAfkNotification(player, false);
     }
 
     public boolean isAfk(UUID player) {
@@ -52,6 +63,8 @@ public class AfkService {
     }
 
     public void markInteraction(UUID player) {
+        this.lastInteraction.put(player, Instant.now());
+
         int count = this.interactionsCount.getOrDefault(player, 0);
         count++;
 
@@ -63,33 +76,18 @@ public class AfkService {
         this.interactionsCount.put(player, count);
     }
 
-    public void clearAfk(UUID player) {
-        Afk afk = this.afkByPlayer.remove(player);
-
-        if (afk == null) {
-            return;
-        }
-
-        this.interactionsCount.remove(player);
-        this.notifyAfk(player, false);
-    }
-
-    public void updateLastPlayerMovement(UUID player) {
-        this.lastPlayerMovement.put(player, Instant.now());
-    }
-
-    public void checkAfkTimeout() {
-        Duration afkTimeout = this.afkSettings.getAfkTimeout();
+    public void checkLastMovement() {
+        Duration afkTimeout = this.afkSettings.getAfkInactivityTime();
         Instant now = Instant.now();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             UUID playerId = player.getUniqueId();
 
             if (isAfk(playerId)) {
-                return;
+                continue;
             }
 
-            Instant lastMovement = this.lastPlayerMovement.get(playerId);
+            Instant lastMovement = this.lastInteraction.get(playerId);
 
             if (lastMovement != null && Duration.between(lastMovement, now).compareTo(afkTimeout) >= 0) {
                 this.markAfk(playerId, AfkReason.INACTIVITY);
@@ -97,15 +95,7 @@ public class AfkService {
         }
     }
 
-    public void updateInteraction(UUID uuid) {
-        if (!this.isAfk(uuid)) {
-            return;
-        }
-
-        this.markInteraction(uuid);
-    }
-
-    private void notifyAfk(UUID player, boolean afk) {
+    private void sendAfkNotification(UUID player, boolean afk) {
         this.noticeService.create()
             .onlinePlayers()
             .player(player)

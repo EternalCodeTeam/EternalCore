@@ -10,6 +10,6 @@ public class AfkTask implements Runnable {
 
     @Override
     public void run() {
-        this.afkService.checkAfkTimeout();
+        this.afkService.checkLastMovement();
     }
 }
