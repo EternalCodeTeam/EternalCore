@@ -46,6 +46,24 @@ public class AfkService {
         return afk;
     }
 
+    public void markInteraction(UUID player) {
+        this.lastInteraction.put(player, Instant.now());
+
+        if (!this.isAfk(player)) {
+            return;
+        }
+
+        int count = this.interactionsCount.getOrDefault(player, 0);
+        count++;
+
+        if (count >= this.afkSettings.interactionsCountDisableAfk()) {
+            this.clearAfk(player);
+            return;
+        }
+
+        this.interactionsCount.put(player, count);
+    }
+
     public void clearAfk(UUID player) {
         Afk afk = this.afkByPlayer.remove(player);
 
@@ -62,37 +80,15 @@ public class AfkService {
         return this.afkByPlayer.containsKey(player);
     }
 
-    public void markInteraction(UUID player) {
-        this.lastInteraction.put(player, Instant.now());
-
-        int count = this.interactionsCount.getOrDefault(player, 0);
-        count++;
-
-        if (count >= this.afkSettings.interactionsCountDisableAfk()) {
-            this.clearAfk(player);
-            return;
-        }
-
-        this.interactionsCount.put(player, count);
-    }
-
-    public void checkLastMovement() {
-        Duration afkTimeout = this.afkSettings.getAfkInactivityTime();
+    public boolean isInactive(UUID player) {
         Instant now = Instant.now();
+        Instant lastMovement = this.lastInteraction.get(player);
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            UUID playerId = player.getUniqueId();
-
-            if (isAfk(playerId)) {
-                continue;
-            }
-
-            Instant lastMovement = this.lastInteraction.get(playerId);
-
-            if (lastMovement != null && Duration.between(lastMovement, now).compareTo(afkTimeout) >= 0) {
-                this.markAfk(playerId, AfkReason.INACTIVITY);
-            }
+        if (lastMovement != null && Duration.between(lastMovement, now).compareTo(this.afkSettings.getAfkInactivityTime()) >= 0) {
+            return true;
         }
+
+        return false;
     }
 
     private void sendAfkNotification(UUID player, boolean afk) {
