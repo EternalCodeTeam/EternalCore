@@ -157,6 +157,11 @@ public class Notice {
         return this;
     }
 
+    public Notice emptyLine() {
+        this.notifications.add(NotificationsExtractor.of(new Notification(StringUtils.EMPTY, NoticeType.CHAT)));
+        return this;
+    }
+
     @CheckReturnValue
     public Notice notifications(Function<Translation, List<Notification>> function) {
         NotificationsExtractor notificationsExtractor = function::apply;
