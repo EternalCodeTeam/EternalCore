@@ -24,14 +24,14 @@ public class CurrentIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
-        if (!hasNext()) {
+        if (!this.hasNext()) {
             throw new IllegalStateException("No more elements");
         }
-        return this.list.get(++position);
+        return this.list.get(++this.position);
     }
 
     public E current() {
-        return this.list.get(position);
+        return this.list.get(this.position);
     }
 
 }
