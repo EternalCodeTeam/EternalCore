@@ -8,11 +8,11 @@ import java.util.function.Function;
 
 public class PollDescriptionArgumentValidation implements PollArgumentValidation {
 
-    private static final int MAX_DESCRIPTION_LENGTH = 30;
+    private static final int MAX_DESCRIPTION_LENGTH = 25;
 
     @Override
     public Function<Translation, Notification> getMessage() {
-        return translation -> translation.poll().descriptionConfigStage();
+        return translation -> translation.poll().descriptionValidationMessage();
     }
 
     @Override

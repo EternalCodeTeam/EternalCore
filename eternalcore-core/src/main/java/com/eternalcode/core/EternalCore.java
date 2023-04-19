@@ -7,6 +7,7 @@ import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.command.argument.UuidArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
@@ -163,6 +164,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -310,6 +312,7 @@ class EternalCore implements EternalCoreApi {
             .argument(Duration.class, DurationArgument.KEY,     new DurationArgument(this.viewerProvider, this.translationManager))
             .argument(Integer.class, SpeedArgument.KEY,         new SpeedArgument(this.viewerProvider, this.translationManager))
             .argument(MobEntity.class,                          new MobEntityArgument(this.viewerProvider, this.translationManager))
+            .argument(UUID.class,                               new UuidArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class, new LocationArgument(this.translationManager, this.viewerProvider))

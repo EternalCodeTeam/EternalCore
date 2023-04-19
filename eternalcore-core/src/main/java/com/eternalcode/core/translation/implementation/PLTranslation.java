@@ -650,16 +650,40 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLPollSection implements PollSection {
-        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>Źle podałeś opcje, zasostuj się do zaleceń i spróbuj ponownie!");
+        @Description(" ")
+        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>Źle podałeś opcje, zastosuj się do zaleceń i spróbuj ponownie!");
+
+        @Description(" ")
         public Notification pollCreated = Notification.chat("<green>► <white>Ankieta została poprawnie stworzona!");
+
+        @Description(" ")
         public Notification howToCancelPoll = Notification.chat("<green>► <white>Jeżeli chcesz <red>anulować <white>tworzenie ankiety wpisz <underlined>/poll cancel");
+
+        @Description(" ")
         public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Tworzenie ankiety zostało anulowane!");
+
+        @Description(" ")
         public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>Nie możesz anulować ankiety bo żadnej nie tworzysz!");
-        public Notification pollEnded = Notification.chat("<gray>(<green><bold>A</bold><gray>) <white>Ankieta zakończona <underline>kliknij tutaj</underline>, aby zobaczyć wyniki!");
+
+        @Description({ " ", "# {UUID} - UUID ankieta służy do sprwadzenia wyników pod /poll check {UUID}" })
+        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Ankieta się zakończyła <underlined><click:run_command:/poll check {UUID}><hover:show_text:\"<red>Click :)\">kliknij tutaj<reset> aby zobaczyć wyniki");
+
+        @Description(" ")
         public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>Nie możesz utworzyć nowej ankiety, ponieważ już ją tworzysz!");
+
+        @Description(" ")
         public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>Nie możesz stworzyć ankiety bo już jakaś trwa!");
-        public Notification descriptionConfigStage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Opis'");
-        public Notification optionsConfigStage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Liste Opcji'");
+
+        @Description(" ")
+        public Notification cantVote = Notification.chat("<red>✘ <dark_red>Nie możesz zagłosować bo nie ma żadnej aktywnej ankiety!");
+
+        @Description(" ")
+        public Notification descriptionValidationMessage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Opis' <newline>" +
+            "<green>► <gray>Przykładowy opis: 'To jest przykładowy opis!'");
+
+        @Description(" ")
+        public Notification optionsValidationMessage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Liste Opcji' <newline>" +
+            "<green>► <gray>Przykładowe opcje: 'Opcja Pierwsza, Opcja Druga'");
     }
 
     @Description({

@@ -8,7 +8,6 @@ import com.eternalcode.core.scheduler.Scheduler;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -55,6 +54,7 @@ public class PollManager {
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> firstValidation.getMessage().apply(translation))
+            .emptyLine()
             .notice(translation -> translation.poll().howToCancelPoll())
             .send();
 
@@ -80,7 +80,7 @@ public class PollManager {
         return poll;
     }
 
-    public void startTask(@NotNull Poll poll) {
+    public void startTask(Poll poll) {
         Instant endTime = Instant.now().plus(poll.getDuration());
         UUID pollUuid = UUID.randomUUID();
 
@@ -109,5 +109,9 @@ public class PollManager {
 
     public boolean isPollActive() {
         return this.activePoll != null;
+    }
+
+    public Poll getActivePoll() {
+        return this.activePoll;
     }
 }

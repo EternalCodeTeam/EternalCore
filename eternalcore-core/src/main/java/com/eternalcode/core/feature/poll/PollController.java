@@ -70,6 +70,7 @@ public class PollController implements Listener {
 
         this.noticeService.create()
             .player(player.getUniqueId())
+            .emptyLine()
             .notice(translation -> iterator.next().getMessage().apply(translation))
             .send();
     }

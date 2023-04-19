@@ -18,7 +18,7 @@ public class PollOptionListArgumentValidation implements PollArgumentValidation 
 
     @Override
     public Function<Translation, Notification> getMessage() {
-        return translation -> translation.poll().optionsConfigStage();
+        return translation -> translation.poll().optionsValidationMessage();
     }
 
     @Override

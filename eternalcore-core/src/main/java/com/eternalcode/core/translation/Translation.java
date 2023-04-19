@@ -333,8 +333,9 @@ public interface Translation {
         Notification pollEnded();
         Notification alreadyCreatingPoll();
         Notification pollIsActive();
-        Notification descriptionConfigStage();
-        Notification optionsConfigStage();
+        Notification cantVote();
+        Notification descriptionValidationMessage();
+        Notification optionsValidationMessage();
     }
 
     // time and weather

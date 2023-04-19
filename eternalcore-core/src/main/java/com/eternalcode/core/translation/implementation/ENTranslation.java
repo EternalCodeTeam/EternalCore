@@ -645,16 +645,40 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENPollSection implements PollSection {
+        @Description(" ")
         public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>You have entered the options incorrectly, follow the instructions and try again!");
+
+        @Description(" ")
         public Notification pollCreated = Notification.chat("<green>► <white>The poll was successfully created!");
+
+        @Description(" ")
         public Notification howToCancelPoll = Notification.chat("<green>► <white>If you want to <red>cancel <white>creating a poll type <underlined>/poll cancel");
-        public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Poll creation has been cancelled!");
+
+        @Description(" ")
+        public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Poll creation has been canceled!");
+
+        @Description(" ")
         public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>You can't cancel a poll because you don't create one!");
-        public Notification pollEnded = Notification.chat("<gray>(<green><bold>P</bold><gray>) <white>Poll finished <underline>click here</underline><reset> to see the results!");
+
+        @Description({ " ", "# {UUID} - Poll UUID is used to check the results under /poll check {UUID}" })
+        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Poll is over <underlined><click:run_command:/poll check {UUID}><hover:show_text:\"<red>Click :)\">click here<reset> to see results");
+
+        @Description(" ")
         public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>You cannot create a new poll because you are already creating one!");
-        public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one active!");
-        public Notification descriptionConfigStage = Notification.chat("<green>► <white>You are now configuring 'Description'");
-        public Notification optionsConfigStage = Notification.chat("<green>► <white>You are now configuring the 'Option List'");
+
+        @Description(" ")
+        public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one!");
+
+        @Description(" ")
+        public Notification cantVote = Notification.chat("<red>✘ <dark_red>You cannot vote because there is no active poll!");
+
+        @Description(" ")
+        public Notification descriptionValidationMessage = Notification.chat("<green>► <white>You are now configuring 'Description' <newline>" +
+            "<green>► <gray>Example description: 'This is an example description!'");
+
+        @Description(" ")
+        public Notification optionsValidationMessage = Notification.chat("<green>► <white>You are now configuring the 'Option List' <newline>" +
+            "<green>► <gray>Example options: 'Option One, Option Two'");
     }
 
     @Description({ " ", "# Messages sent on time and weather change." })
