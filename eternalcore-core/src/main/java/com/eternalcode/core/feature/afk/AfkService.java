@@ -3,7 +3,10 @@ package com.eternalcode.core.feature.afk;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +19,8 @@ public class AfkService {
     private final UserManager userManager;
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
-    private final Map<UUID, Integer> interactions = new HashMap<>();
+    private final Map<UUID, Integer> interactionsCount = new HashMap<>();
+    private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
     public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager) {
         this.afkSettings = afkSettings;
@@ -24,54 +28,76 @@ public class AfkService {
         this.userManager = userManager;
     }
 
+    public void switchAfk(UUID player, AfkReason reason) {
+        if (this.isAfk(player)) {
+            this.clearAfk(player);
+            return;
+        }
+
+        this.markAfk(player, reason);
+    }
+
     public Afk markAfk(UUID player, AfkReason reason) {
         Afk afk = new Afk(player, reason, Instant.now());
 
         this.afkByPlayer.put(player, afk);
-        this.notifyAfk(player, false);
+        this.sendAfkNotification(player, true);
+
         return afk;
     }
 
-    public Afk markAfk(UUID player) {
-        return this.markAfk(player, AfkReason.PLUGIN);
+    public void markInteraction(UUID player) {
+        this.lastInteraction.put(player, Instant.now());
+
+        if (!this.isAfk(player)) {
+            return;
+        }
+
+        int count = this.interactionsCount.getOrDefault(player, 0);
+        count++;
+
+        if (count >= this.afkSettings.interactionsCountDisableAfk()) {
+            this.clearAfk(player);
+            return;
+        }
+
+        this.interactionsCount.put(player, count);
+    }
+
+    public void clearAfk(UUID player) {
+        Afk afk = this.afkByPlayer.remove(player);
+
+        if (afk == null) {
+            return;
+        }
+
+        this.interactionsCount.remove(player);
+        this.lastInteraction.remove(player);
+        this.sendAfkNotification(player, false);
     }
 
     public boolean isAfk(UUID player) {
         return this.afkByPlayer.containsKey(player);
     }
 
-    public void markInteraction(UUID player) {
-        int interactions = this.interactions.getOrDefault(player, 0);
+    public boolean isInactive(UUID player) {
+        Instant now = Instant.now();
+        Instant lastMovement = this.lastInteraction.get(player);
 
-        interactions++;
-
-        if (interactions >= this.afkSettings.interactionsCountDisableAfk()) {
-            this.clearAfk(player);
-            return;
+        if (lastMovement != null && Duration.between(lastMovement, now).compareTo(this.afkSettings.getAfkInactivityTime()) >= 0) {
+            return true;
         }
 
-        this.interactions.put(player, interactions);
+        return false;
     }
 
-    public boolean clearAfk(UUID player) {
-        Afk afk = this.afkByPlayer.remove(player);
-
-        if (afk == null) {
-            return false;
-        }
-
-        this.interactions.remove(player);
-        this.notifyAfk(player, false);
-        return true;
-    }
-
-    private void notifyAfk(UUID player, boolean afk) {
+    private void sendAfkNotification(UUID player, boolean afk) {
         this.noticeService.create()
             .onlinePlayers()
             .player(player)
             .notice(translation -> afk ? translation.afk().afkOn() : translation.afk().afkOff())
             .placeholder("{PLAYER}", this.userManager.getUser(player).map(User::getName))
-            .sendAsync();
+            .send();
     }
 
 }
