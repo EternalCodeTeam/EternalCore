@@ -22,8 +22,8 @@ public class PollController implements Listener {
 
     @EventHandler
     private void onMessageReceived(AsyncPlayerChatEvent event) {
-        final Player player = event.getPlayer();
-        final String message = event.getMessage();
+        Player player = event.getPlayer();
+        String message = event.getMessage();
 
         if (!this.pollManager.isMarked(player)) {
             return;
@@ -33,10 +33,10 @@ public class PollController implements Listener {
 
         Poll poll = this.pollManager.getMarkedPoll(player);
         CurrentIterator<PollArgumentValidation> iterator = poll.getArgumentValidationIterator();
-
         PollArgumentValidation argumentValidation = iterator.current();
 
         if (!argumentValidation.isValid(poll, message)) {
+
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.poll().optionNotValid())
@@ -46,16 +46,16 @@ public class PollController implements Listener {
         }
 
         if (!iterator.hasNext()) {
+            if (this.pollManager.isPollActive()) {
+                this.noticeService.create()
+                    .player(player.getUniqueId())
+                    .notice(translation -> translation.poll().pollIsActive())
+                    .send();
 
-           if (this.pollManager.isPollActive()) {
-               this.noticeService.create()
-                   .player(player.getUniqueId())
-                   .notice(translation -> translation.poll().pollIsActive())
-                   .send();
+                this.pollManager.unmarkPlayer(player);
 
-               this.pollManager.unmarkPlayer(player);
-               return;
-           }
+                return;
+            }
 
             this.noticeService.create()
                 .player(player.getUniqueId())
@@ -64,10 +64,10 @@ public class PollController implements Listener {
 
             this.pollManager.unmarkPlayer(player);
             this.pollManager.startTask(poll);
+
             return;
         }
 
-        // Send message and advance to next element
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> iterator.next().getMessage().apply(translation))

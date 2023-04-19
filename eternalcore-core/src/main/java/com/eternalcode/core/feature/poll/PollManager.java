@@ -9,6 +9,7 @@ import com.eternalcode.core.user.User;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -18,7 +19,7 @@ public class PollManager {
 
     private final NoticeService noticeService;
     private final Scheduler scheduler;
-    private final Map<UUID, Poll> pollSetupMap;
+    private final Map<UUID, Poll> markedPolls;
     private final List<PollArgumentValidation> argumentValidations;
 
     private final Cache<UUID, Poll> previousPolls;
@@ -28,7 +29,7 @@ public class PollManager {
     public PollManager(NoticeService noticeService, Scheduler scheduler) {
         this.noticeService = noticeService;
         this.scheduler = scheduler;
-        this.pollSetupMap = new HashMap<>();
+        this.markedPolls = new HashMap<>();
 
         this.argumentValidations = List.of(
             new PollDescriptionArgumentValidation(),
@@ -43,32 +44,32 @@ public class PollManager {
     public boolean markPlayer(User user, Duration duration) {
         Poll poll = new Poll(this.argumentValidations, duration);
 
-        if (this.pollSetupMap.containsKey(user.getUniqueId())) {
+        if (this.markedPolls.containsKey(user.getUniqueId())) {
             return false;
         }
 
-        PollArgumentValidation validation = poll.getArgumentValidationIterator().next();
+        PollArgumentValidation firstValidation = poll.getArgumentValidationIterator().next();
 
         this.noticeService.create()
             .user(user)
-            .notice(translation -> validation.getMessage().apply(translation))
+            .notice(translation -> firstValidation.getMessage().apply(translation))
             .notice(translation -> translation.poll().howToCancelPoll())
             .send();
 
-        this.pollSetupMap.put(user.getUniqueId(), poll);
+        this.markedPolls.put(user.getUniqueId(), poll);
         return true;
     }
 
     public void unmarkPlayer(Player player) {
-        this.pollSetupMap.remove(player.getUniqueId());
+        this.markedPolls.remove(player.getUniqueId());
     }
 
     public boolean isMarked(Player player) {
-        return this.pollSetupMap.containsKey(player.getUniqueId());
+        return this.markedPolls.containsKey(player.getUniqueId());
     }
 
     public Poll getMarkedPoll(Player player) {
-        Poll poll = this.pollSetupMap.get(player.getUniqueId());
+        Poll poll = this.markedPolls.get(player.getUniqueId());
 
         if (poll == null) {
             throw new NullPointerException("Marked poll not found!");
@@ -77,8 +78,9 @@ public class PollManager {
         return poll;
     }
 
-    public void startTask(Poll poll) {
+    public void startTask(@NotNull Poll poll) {
         Instant endTime = Instant.now().plus(poll.getDuration());
+        UUID pollUuid = UUID.randomUUID();
 
         this.activePoll = poll;
 
@@ -87,15 +89,16 @@ public class PollManager {
             if (Instant.now().isAfter(endTime)) {
                 task.cancel();
 
-                UUID pollUuid = UUID.randomUUID();
-                this.previousPolls.put(pollUuid, poll);
-
                 this.noticeService.create()
                     .onlinePlayers()
-                    .placeholder("{CMD}", "<click:run_command:/poll check %s>".formatted(pollUuid.toString()))
+                    .placeholder("{UUID}", pollUuid.toString())
                     .notice(translation -> translation.poll().pollEnded())
                     .send();
 
+                // Add the poll to the previous polls cache
+                this.previousPolls.put(pollUuid, poll);
+
+                // Remove reference
                 this.activePoll = null;
             }
 

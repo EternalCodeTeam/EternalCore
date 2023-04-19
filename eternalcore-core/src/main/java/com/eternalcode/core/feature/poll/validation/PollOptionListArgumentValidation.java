@@ -23,7 +23,8 @@ public class PollOptionListArgumentValidation implements PollArgumentValidation 
 
     @Override
     public boolean isValid(Poll poll, String message) {
-        String[] arrayOfOptions = message.split(",");
+        String[] arrayOfOptions = message.replaceAll("\\s*,\\s*", ",").split(",");
+        
         int optionsLength = arrayOfOptions.length;
 
         if (optionsLength < MIN_OPTIONS_SIZE) {
