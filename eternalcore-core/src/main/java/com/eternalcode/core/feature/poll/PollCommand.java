@@ -24,10 +24,10 @@ public class PollCommand {
 
     @Execute(required = 1)
     @Route(name = "create")
-    void execute(User user, @Arg Duration duration) {
-        if (!this.pollManager.markPlayer(user, duration)) {
+    void execute(Player player, @Arg Duration duration) {
+        if (!this.pollManager.markPlayer(player, duration)) {
             this.noticeService.create()
-                .user(user)
+                .player(player.getUniqueId())
                 .notice(translation -> translation.poll().alreadyCreatingPoll())
                 .send();
         }

@@ -5,7 +5,6 @@ import com.eternalcode.core.feature.poll.validation.PollDescriptionArgumentValid
 import com.eternalcode.core.feature.poll.validation.PollOptionListArgumentValidation;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.scheduler.Scheduler;
-import com.eternalcode.core.user.User;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.bukkit.entity.Player;
@@ -41,22 +40,22 @@ public class PollManager {
             .build();
     }
 
-    public boolean markPlayer(User user, Duration duration) {
+    public boolean markPlayer(Player player, Duration duration) {
         Poll poll = new Poll(this.argumentValidations, duration);
 
-        if (this.markedPolls.containsKey(user.getUniqueId())) {
+        if (this.markedPolls.containsKey(player.getUniqueId())) {
             return false;
         }
 
         PollArgumentValidation firstValidation = poll.getArgumentValidationIterator().next();
 
         this.noticeService.create()
-            .user(user)
+            .player(player.getUniqueId())
             .notice(translation -> firstValidation.getMessage().apply(translation))
             .notice(translation -> translation.poll().howToCancelPoll())
             .send();
 
-        this.markedPolls.put(user.getUniqueId(), poll);
+        this.markedPolls.put(player.getUniqueId(), poll);
         return true;
     }
 
