@@ -54,7 +54,6 @@ public class PollManager {
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> firstValidation.getMessage().apply(translation))
-            .emptyLine()
             .notice(translation -> translation.poll().howToCancelPoll())
             .send();
 
@@ -97,6 +96,9 @@ public class PollManager {
                     .notice(translation -> translation.poll().pollEnded())
                     .send();
 
+                PollInventory inventory = new PollInventory(this, this.noticeService, poll);
+                poll.setResultsInventory(inventory.createResultsInventory());
+
                 // Add the poll to the previous polls cache
                 this.previousPolls.put(pollUuid, poll);
 
@@ -113,5 +115,9 @@ public class PollManager {
 
     public Poll getActivePoll() {
         return this.activePoll;
+    }
+
+    public Cache<UUID, Poll> getPreviousPolls() {
+        return this.previousPolls;
     }
 }

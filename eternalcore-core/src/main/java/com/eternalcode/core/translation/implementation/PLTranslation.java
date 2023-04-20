@@ -678,6 +678,15 @@ public class PLTranslation extends AbstractTranslation {
         public Notification cantVote = Notification.chat("<red>✘ <dark_red>Nie możesz zagłosować bo nie ma żadnej aktywnej ankiety!");
 
         @Description(" ")
+        public Notification unavailablePollResults = Notification.chat("<red>✘ <dark_red>Ta ankieta nie istnieje lub wygasła!");
+
+        @Description(" ")
+        public Notification successfullyVoted = Notification.chat("<green>► <white>Poprawnie zagłosowałeś w ankiecie!");
+
+        @Description(" ")
+        public Notification alreadyVoted  = Notification.chat("<red>✘ <dark_red>Nie możesz głosować dwa razy!");
+
+        @Description(" ")
         public Notification descriptionValidationMessage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Opis' <newline>" +
             "<green>► <gray>Przykładowy opis: 'To jest przykładowy opis!'");
 

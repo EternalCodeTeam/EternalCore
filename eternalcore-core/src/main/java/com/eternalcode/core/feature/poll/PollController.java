@@ -53,7 +53,6 @@ public class PollController implements Listener {
                     .send();
 
                 this.pollManager.unmarkPlayer(player);
-
                 return;
             }
 
@@ -64,13 +63,11 @@ public class PollController implements Listener {
 
             this.pollManager.unmarkPlayer(player);
             this.pollManager.startTask(poll);
-
             return;
         }
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .emptyLine()
             .notice(translation -> iterator.next().getMessage().apply(translation))
             .send();
     }
@@ -78,8 +75,6 @@ public class PollController implements Listener {
     @EventHandler
     private void onPlayerQuit(PlayerQuitEvent event) {
         final Player player = event.getPlayer();
-
-        // Remove player from map...
         this.pollManager.unmarkPlayer(player);
     }
 }

@@ -4,6 +4,7 @@ import com.eternalcode.core.feature.poll.Poll;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.util.LabeledOptionUtil;
+import panda.utilities.StringUtils;
 
 import java.util.List;
 import java.util.function.Function;
@@ -33,6 +34,12 @@ public class PollOptionListArgumentValidation implements PollArgumentValidation 
 
         if (optionsLength > MAX_OPTIONS_SIZE) {
             return false;
+        }
+
+        for (String option : arrayOfOptions) {
+            if (StringUtils.isEmpty(option)) {
+                return false;
+            }
         }
 
         List<LabeledOption<String>> options = Stream.of(arrayOfOptions)

@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.poll;
 
+import com.eternalcode.core.notification.NoticeService;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.components.GuiType;
 import dev.triumphteam.gui.guis.Gui;
@@ -12,9 +13,13 @@ import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
 
 public class PollInventory {
 
+    private final PollManager pollManager;
+    private final NoticeService noticeService;
     private final Poll poll;
 
-    public PollInventory(Poll poll) {
+    public PollInventory(PollManager pollManager, NoticeService noticeService, Poll poll) {
+        this.pollManager = pollManager;
+        this.noticeService = noticeService;
         this.poll = poll;
     }
 
@@ -30,7 +35,30 @@ public class PollInventory {
                 .name(Component.text(labeledOption.getOption()))
                 .asGuiItem();
 
-            item.setAction((event) -> this.poll.vote(player, labeledOption));
+            item.setAction((event) -> {
+
+                event.getWhoClicked().closeInventory();
+
+                if (!this.pollManager.isPollActive()) {
+                    return;
+                }
+
+                if (this.poll.isAlreadyVoted(player)) {
+                    this.noticeService.create()
+                        .player(player.getUniqueId())
+                        .notice(translation -> translation.poll().alreadyVoted())
+                        .send();
+
+                    return;
+                }
+
+                this.poll.vote(player, labeledOption);
+
+                this.noticeService.create()
+                    .player(player.getUniqueId())
+                    .notice(translation -> translation.poll().successfullyVoted())
+                    .send();
+            });
 
             gui.addItem(item);
         }
@@ -50,7 +78,20 @@ public class PollInventory {
             .type(GuiType.HOPPER)
             .create();
 
+        int totalVotes = this.poll.getTotalVotes();
 
+        this.poll.getOptionList().forEach(labeledOption -> {
+            int votes = this.poll.getVotesOf(labeledOption);
+
+            double percentage = (totalVotes > 0) ? ((double) votes / totalVotes) * 100 : 0;
+
+            GuiItem item = ItemBuilder.from(Material.PAPER)
+                .name(Component.text(labeledOption.getOption()))
+                .lore(Component.text("Percentage: " + percentage + "%"))
+                .asGuiItem();
+
+            gui.addItem(item);
+        });
 
         return gui;
     }

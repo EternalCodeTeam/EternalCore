@@ -35,7 +35,7 @@ public class PollCommand {
 
         Poll poll = this.pollManager.getActivePoll();
 
-        PollInventory inventory = new PollInventory(poll);
+        PollInventory inventory = new PollInventory(this.pollManager, this.noticeService, poll);
         inventory.openVoteInventory(player);
     }
 
@@ -73,6 +73,17 @@ public class PollCommand {
     @Execute(required = 1)
     @Route(name = "check")
     void executeCheck(Player player, @Arg UUID uuid) {
+        Poll poll = this.pollManager.getPreviousPolls().getIfPresent(uuid);
 
+        if (poll == null) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.poll().unavailablePollResults())
+                .send();
+
+            return;
+        }
+
+        poll.getResultsInventory().open(player);
     }
 }

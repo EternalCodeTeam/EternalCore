@@ -334,6 +334,9 @@ public interface Translation {
         Notification alreadyCreatingPoll();
         Notification pollIsActive();
         Notification cantVote();
+        Notification unavailablePollResults();
+        Notification successfullyVoted();
+        Notification alreadyVoted();
         Notification descriptionValidationMessage();
         Notification optionsValidationMessage();
     }

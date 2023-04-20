@@ -670,7 +670,16 @@ public class ENTranslation extends AbstractTranslation {
         public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one!");
 
         @Description(" ")
+        public Notification unavailablePollResults = Notification.chat("<red>✘ <dark_red>This poll does not exist or has expired!");
+
+        @Description(" ")
         public Notification cantVote = Notification.chat("<red>✘ <dark_red>You cannot vote because there is no active poll!");
+
+        @Description(" ")
+        public Notification successfullyVoted = Notification.chat("<green>► <white>You have correctly voted in the poll!");
+
+        @Description(" ")
+        public Notification alreadyVoted  = Notification.chat("<red>✘ <dark_red>You cannot vote twice!");
 
         @Description(" ")
         public Notification descriptionValidationMessage = Notification.chat("<green>► <white>You are now configuring 'Description' <newline>" +
