@@ -650,11 +650,10 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLPollSection implements PollSection {
-        @Description(" ")
         public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>Źle podałeś opcje, zastosuj się do zaleceń i spróbuj ponownie!");
 
-        @Description(" ")
-        public Notification pollCreated = Notification.chat("<green>► <white>Ankieta została poprawnie stworzona!");
+        @Description({ " ", "# {OWNER} - Nazwa użtkownika który stworzył ankiete" })
+        public Notification pollCreated = Notification.chat("<green>► <white>Użytkownik <underlined>{OWNER}<reset> stworzył ankiete, zagłosuj za pomocą <bold>/poll");
 
         @Description(" ")
         public Notification howToCancelPoll = Notification.chat("<green>► <white>Jeżeli chcesz <red>anulować <white>tworzenie ankiety wpisz <underlined>/poll cancel");
@@ -687,11 +686,11 @@ public class PLTranslation extends AbstractTranslation {
         public Notification alreadyVoted  = Notification.chat("<red>✘ <dark_red>Nie możesz głosować dwa razy!");
 
         @Description(" ")
-        public Notification descriptionValidationMessage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Opis' <newline>" +
+        public Notification descriptionValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz 'Opis' <newline>" +
             "<green>► <gray>Przykładowy opis: 'To jest przykładowy opis!'");
 
         @Description(" ")
-        public Notification optionsValidationMessage = Notification.chat("<green>► <white>Konfigurujesz teraz 'Liste Opcji' <newline>" +
+        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz 'Liste Opcji' <newline>" +
             "<green>► <gray>Przykładowe opcje: 'Opcja Pierwsza, Opcja Druga'");
     }
 

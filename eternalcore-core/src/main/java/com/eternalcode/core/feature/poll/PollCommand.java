@@ -5,6 +5,7 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -16,10 +17,12 @@ public class PollCommand {
 
     private final NoticeService noticeService;
     private final PollManager pollManager;
+    private final MiniMessage miniMessage;
 
-    public PollCommand(NoticeService noticeService, PollManager pollManager) {
+    public PollCommand(NoticeService noticeService, PollManager pollManager, MiniMessage miniMessage) {
         this.noticeService = noticeService;
         this.pollManager = pollManager;
+        this.miniMessage = miniMessage;
     }
 
     @Execute(required = 0)
@@ -35,7 +38,7 @@ public class PollCommand {
 
         Poll poll = this.pollManager.getActivePoll();
 
-        PollInventory inventory = new PollInventory(this.pollManager, this.noticeService, poll);
+        PollInventory inventory = new PollInventory(poll, this.pollManager, this.noticeService, this.miniMessage);
         inventory.openVoteInventory(player);
     }
 

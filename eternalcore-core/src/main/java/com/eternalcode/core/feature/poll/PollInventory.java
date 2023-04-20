@@ -6,6 +6,7 @@ import dev.triumphteam.gui.components.GuiType;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -13,14 +14,16 @@ import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
 
 public class PollInventory {
 
+    private final Poll poll;
     private final PollManager pollManager;
     private final NoticeService noticeService;
-    private final Poll poll;
+    private final MiniMessage miniMessage;
 
-    public PollInventory(PollManager pollManager, NoticeService noticeService, Poll poll) {
+    public PollInventory(Poll poll, PollManager pollManager, NoticeService noticeService, MiniMessage miniMessage) {
+        this.poll = poll;
         this.pollManager = pollManager;
         this.noticeService = noticeService;
-        this.poll = poll;
+        this.miniMessage = miniMessage;
     }
 
     public void openVoteInventory(Player player) {
@@ -87,7 +90,7 @@ public class PollInventory {
 
             GuiItem item = ItemBuilder.from(Material.PAPER)
                 .name(Component.text(labeledOption.getOption()))
-                .lore(Component.text("Percentage: " + percentage + "%"))
+                .lore(this.miniMessage.deserialize(" <yellow><bold>" + percentage + "%"))
                 .asGuiItem();
 
             gui.addItem(item);

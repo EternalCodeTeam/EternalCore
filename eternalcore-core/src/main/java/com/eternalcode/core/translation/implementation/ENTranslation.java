@@ -645,11 +645,10 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENPollSection implements PollSection {
-        @Description(" ")
         public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>You have entered the options incorrectly, follow the instructions and try again!");
 
-        @Description(" ")
-        public Notification pollCreated = Notification.chat("<green>► <white>The poll was successfully created!");
+        @Description({ " ", "# {OWNER} - The name of the user who created the poll" })
+        public Notification pollCreated = Notification.chat("<green>► <white><underlined>{OWNER}<reset> has created a poll, please vote using <bold>/poll");
 
         @Description(" ")
         public Notification howToCancelPoll = Notification.chat("<green>► <white>If you want to <red>cancel <white>creating a poll type <underlined>/poll cancel");
@@ -682,11 +681,11 @@ public class ENTranslation extends AbstractTranslation {
         public Notification alreadyVoted  = Notification.chat("<red>✘ <dark_red>You cannot vote twice!");
 
         @Description(" ")
-        public Notification descriptionValidationMessage = Notification.chat("<green>► <white>You are now configuring 'Description' <newline>" +
+        public Notification descriptionValidationMessage = Notification.chat("<newline><green>► <white>You are now configuring 'Description' <newline>" +
             "<green>► <gray>Example description: 'This is an example description!'");
 
         @Description(" ")
-        public Notification optionsValidationMessage = Notification.chat("<green>► <white>You are now configuring the 'Option List' <newline>" +
+        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>You are now configuring the 'Option List' <newline>" +
             "<green>► <gray>Example options: 'Option One, Option Two'");
     }
 

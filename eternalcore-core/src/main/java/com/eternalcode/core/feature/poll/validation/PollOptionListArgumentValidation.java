@@ -15,7 +15,7 @@ import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
 public class PollOptionListArgumentValidation implements PollArgumentValidation {
 
     private static final int MIN_OPTIONS_SIZE = 2;
-    private static final int MAX_OPTIONS_SIZE = 4;
+    private static final int MAX_OPTIONS_SIZE = 5;
 
     @Override
     public Function<Translation, Notification> getMessage() {

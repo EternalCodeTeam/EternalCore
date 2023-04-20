@@ -57,7 +57,8 @@ public class PollController implements Listener {
             }
 
             this.noticeService.create()
-                .player(player.getUniqueId())
+                .onlinePlayers()
+                .placeholder("{OWNER}", player.getName())
                 .notice(translation -> translation.poll().pollCreated())
                 .send();
 

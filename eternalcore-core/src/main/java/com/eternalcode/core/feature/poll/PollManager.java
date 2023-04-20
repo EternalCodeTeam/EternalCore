@@ -7,6 +7,7 @@ import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class PollManager {
 
     private final NoticeService noticeService;
+    private final MiniMessage miniMessage;
     private final Scheduler scheduler;
     private final Map<UUID, Poll> markedPolls;
     private final List<PollArgumentValidation> argumentValidations;
@@ -27,8 +29,9 @@ public class PollManager {
 
     private Poll activePoll;
 
-    public PollManager(NoticeService noticeService, Scheduler scheduler) {
+    public PollManager(NoticeService noticeService, MiniMessage miniMessage, Scheduler scheduler) {
         this.noticeService = noticeService;
+        this.miniMessage = miniMessage;
         this.scheduler = scheduler;
         this.markedPolls = new HashMap<>();
 
@@ -96,7 +99,7 @@ public class PollManager {
                     .notice(translation -> translation.poll().pollEnded())
                     .send();
 
-                PollInventory inventory = new PollInventory(this, this.noticeService, poll);
+                PollInventory inventory = new PollInventory(poll, this, this.noticeService, this.miniMessage);
                 poll.setResultsInventory(inventory.createResultsInventory());
 
                 // Add the poll to the previous polls cache
