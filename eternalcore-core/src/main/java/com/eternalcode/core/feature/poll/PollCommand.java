@@ -43,6 +43,7 @@ public class PollCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.poll.create")
     @Route(name = "create")
     void executeCreate(Player player, @Arg Duration duration) {
         if (this.pollManager.isPollActive()) {
@@ -63,6 +64,7 @@ public class PollCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.poll.create")
     @Route(name = "cancel")
     void executeCancel(Player player) {
         if (!this.pollManager.isMarked(player)) {
