@@ -1,8 +1,10 @@
 package com.eternalcode.core.feature.poll;
 
-import com.eternalcode.core.feature.poll.validation.PollArgumentValidation;
 import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.shared.CurrentIterator;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
@@ -14,10 +16,14 @@ public class PollController implements Listener {
 
     private final NoticeService noticeService;
     private final PollManager pollManager;
+    private final TranslationManager translationManager;
+    private final UserManager userManager;
 
-    public PollController(NoticeService noticeService, PollManager pollManager) {
+    public PollController(NoticeService noticeService, PollManager pollManager, TranslationManager translationManager, UserManager userManager) {
         this.noticeService = noticeService;
         this.pollManager = pollManager;
+        this.translationManager = translationManager;
+        this.userManager = userManager;
     }
 
     @EventHandler
@@ -32,14 +38,23 @@ public class PollController implements Listener {
         event.setCancelled(true);
 
         Poll poll = this.pollManager.getMarkedPoll(player);
-        CurrentIterator<PollArgumentValidation> iterator = poll.getArgumentValidationIterator();
-        PollArgumentValidation argumentValidation = iterator.current();
 
-        if (!argumentValidation.isValid(poll, message)) {
+        User user = this.userManager.getUser(player.getUniqueId())
+            .orThrow(() -> new NullPointerException("User cannot be null!"));
+
+        Translation userTranslation = this.translationManager.getMessages(user);
+
+        var iterator = poll.getArgumentValidationIterator();
+        var argumentValidation = iterator.current();
+        var optionalNotificationError = argumentValidation.isValid(poll, message, userTranslation);
+
+        if (optionalNotificationError.isPresent()) {
+            System.out.println(optionalNotificationError.get().getMessage());
 
             this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.poll().optionNotValid())
+                .user(user)
+                .formatter(argumentValidation.getFormatter())
+                .notice(ignore -> optionalNotificationError.get())
                 .send();
 
             return;
@@ -48,7 +63,7 @@ public class PollController implements Listener {
         if (!iterator.hasNext()) {
             if (this.pollManager.isPollActive()) {
                 this.noticeService.create()
-                    .player(player.getUniqueId())
+                    .user(user)
                     .notice(translation -> translation.poll().pollIsActive())
                     .send();
 
@@ -68,7 +83,7 @@ public class PollController implements Listener {
         }
 
         this.noticeService.create()
-            .player(player.getUniqueId())
+            .user(user)
             .notice(translation -> iterator.next().getMessage().apply(translation))
             .send();
     }

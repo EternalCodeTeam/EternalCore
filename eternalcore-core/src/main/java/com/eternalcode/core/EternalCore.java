@@ -436,7 +436,7 @@ class EternalCore implements EternalCoreApi {
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
             new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage),
-            new PollController(this.noticeService, this.pollManager)
+            new PollController(this.noticeService, this.pollManager, this.translationManager, this.userManager)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Tasks */

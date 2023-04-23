@@ -325,7 +325,7 @@ public interface Translation {
     PollSection poll();
 
     interface PollSection {
-        Notification optionNotValid();
+        // command notification
         Notification pollCreated();
         Notification howToCancelPoll();
         Notification pollCancelled();
@@ -337,8 +337,16 @@ public interface Translation {
         Notification unavailablePollResults();
         Notification successfullyVoted();
         Notification alreadyVoted();
+
+        // description validation
         Notification descriptionValidationMessage();
+        Notification descriptionMaxLengthMessage();
+
+        // option validation
         Notification optionsValidationMessage();
+        Notification optionsMinOptionSizeMessage();
+        Notification optionsMaxOptionSizeMessage();
+        Notification optionsIsEmptyMessage();
     }
 
     // time and weather

@@ -79,6 +79,7 @@ public class PollInventory {
         Gui gui = Gui.gui()
             .title(Component.text(this.poll.getDescription()))
             .type(GuiType.HOPPER)
+            .disableAllInteractions()
             .create();
 
         int totalVotes = this.poll.getTotalVotes();
@@ -90,11 +91,17 @@ public class PollInventory {
 
             GuiItem item = ItemBuilder.from(Material.PAPER)
                 .name(Component.text(labeledOption.getOption()))
-                .lore(this.miniMessage.deserialize(" <yellow><bold>" + percentage + "%"))
+                .lore(this.miniMessage.deserialize(" <yellow>" + percentage + "%"))
                 .asGuiItem();
 
             gui.addItem(item);
         });
+
+        GuiItem fillItem = ItemBuilder.from(Material.GRAY_STAINED_GLASS_PANE)
+            .name(Component.text(" "))
+            .asGuiItem();
+
+        gui.getFiller().fill(fillItem);
 
         return gui;
     }

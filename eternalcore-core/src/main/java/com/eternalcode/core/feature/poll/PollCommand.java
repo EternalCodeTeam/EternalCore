@@ -45,6 +45,15 @@ public class PollCommand {
     @Execute(required = 1)
     @Route(name = "create")
     void executeCreate(Player player, @Arg Duration duration) {
+        if (this.pollManager.isPollActive()) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.poll().pollIsActive())
+                .send();
+
+            return;
+        }
+
         if (!this.pollManager.markPlayer(player, duration)) {
             this.noticeService.create()
                 .player(player.getUniqueId())

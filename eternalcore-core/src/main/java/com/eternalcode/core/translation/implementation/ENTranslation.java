@@ -645,9 +645,7 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENPollSection implements PollSection {
-        public Notification optionNotValid = Notification.chat("<red>✘ <dark_red>You have entered the options incorrectly, follow the instructions and try again!");
-
-        @Description({ " ", "# {OWNER} - The name of the user who created the poll" })
+        @Description("# {OWNER} - The name of the user who created the poll")
         public Notification pollCreated = Notification.chat("<green>► <white><underlined>{OWNER}<reset> has created a poll, please vote using <bold>/poll");
 
         @Description(" ")
@@ -681,12 +679,18 @@ public class ENTranslation extends AbstractTranslation {
         public Notification alreadyVoted  = Notification.chat("<red>✘ <dark_red>You cannot vote twice!");
 
         @Description(" ")
-        public Notification descriptionValidationMessage = Notification.chat("<newline><green>► <white>You are now configuring 'Description' <newline>" +
-            "<green>► <gray>Example description: 'This is an example description!'");
+        public Notification descriptionValidationMessage = Notification.chat("<newline><green>► <white>You are now setting up 'Description' <newline><green>► <gray>Sample description: 'This is a sample description!'");
 
         @Description(" ")
-        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>You are now configuring the 'Option List' <newline>" +
-            "<green>► <gray>Example options: 'Option One, Option Two'");
+        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>You are now configuring 'Option List' <newline><green>► <gray>Example options: 'Option One, Option Two'");
+
+        @Description({ " ", "# {MAX_LENGTH} - Maximum description length" })
+        public Notification descriptionMaxLengthMessage = Notification.chat("<red>✘ <dark_red>The description cannot be longer than {MAX_LENGTH} characters");
+
+        @Description({ " ", "# {MIN_SIZE} - Minimum number of options, {MAX_SIZE} - Maximum number of options" })
+        public Notification optionsMinOptionSizeMessage = Notification.chat("<red>✘ <dark_red>Minimum number of options is {MIN_SIZE}");
+        public Notification optionsMaxOptionSizeMessage = Notification.chat("<red>✘ <dark_red>The maximum number of options is {MAX_SIZE}");
+        public Notification optionsIsEmptyMessage = Notification.chat("<red>✘ <dark_red>One of the options is empty!");
     }
 
     @Description({ " ", "# Messages sent on time and weather change." })
