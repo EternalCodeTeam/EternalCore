@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
@@ -180,6 +181,17 @@ public class Notice {
 
         return this;
     }
+
+
+    @CheckReturnValue
+    public Notice placeholder(String from, Optional<String> to) {
+        if (to.isPresent()) {
+            this.placeholders.put(from, translation -> to.get());
+        }
+
+        return this;
+    }
+
 
     @CheckReturnValue
     public Notice placeholder(String from, Supplier<String> to) {

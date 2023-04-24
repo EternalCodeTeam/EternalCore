@@ -1,12 +1,9 @@
 package com.eternalcode.core.user;
 
-import panda.std.Option;
-
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,12 +12,12 @@ public class UserManager {
     private final Map<UUID, User> usersByUUID = new ConcurrentHashMap<>();
     private final Map<String, User> usersByName = new ConcurrentHashMap<>();
 
-    public Option<User> getUser(UUID uuid) {
-        return Option.of(this.usersByUUID.get(uuid));
+    public Optional<User> getUser(UUID uuid) {
+        return Optional.ofNullable(this.usersByUUID.get(uuid));
     }
 
-    public Option<User> getUser(String name) {
-        return Option.of(this.usersByName.get(name));
+    public Optional<User> getUser(String name) {
+        return Optional.ofNullable(this.usersByName.get(name));
     }
 
     public User getOrCreate(UUID uuid, String name) {

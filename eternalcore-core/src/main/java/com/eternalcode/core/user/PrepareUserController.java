@@ -1,7 +1,5 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.user.client.ClientSettings;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +22,7 @@ public class PrepareUserController implements Listener {
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
-        ClientBukkitSettings clientSettings = new ClientBukkitSettings(this.server, user.getUniqueId());
+        UserClientBukkitSettings clientSettings = new UserClientBukkitSettings(this.server, user.getUniqueId());
 
         user.setClientSettings(clientSettings);
     }
@@ -34,9 +32,9 @@ public class PrepareUserController implements Listener {
         Player player = event.getPlayer();
 
         User user = this.userManager.getUser(player.getUniqueId())
-            .orThrow(() -> new IllegalStateException("User not found"));
+            .orElseThrow(() -> new IllegalStateException("User not found"));
 
-        user.setClientSettings(ClientSettings.NONE);
+        user.setClientSettings(UserClientSettings.NONE);
     }
 
     @EventHandler
@@ -44,8 +42,8 @@ public class PrepareUserController implements Listener {
         Player player = event.getPlayer();
 
         User user = this.userManager.getUser(player.getUniqueId())
-            .orThrow(() -> new IllegalStateException("User not found"));
+            .orElseThrow(() -> new IllegalStateException("User not found"));
 
-        user.setClientSettings(ClientSettings.NONE);
+        user.setClientSettings(UserClientSettings.NONE);
     }
 }
