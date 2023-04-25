@@ -2,9 +2,11 @@ package com.eternalcode.core.scheduler;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitTask;
 import panda.std.reactive.Completable;
 
 import java.time.Duration;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class BukkitSchedulerImpl implements Scheduler {
@@ -23,8 +25,18 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
+    public void sync(Consumer<BukkitTask> taskConsumer) {
+        this.rootScheduler.runTask(this.plugin, taskConsumer);
+    }
+
+    @Override
     public Task async(Runnable task) {
         return new BukkitTaskImpl(this.rootScheduler.runTaskAsynchronously(this.plugin, task));
+    }
+
+    @Override
+    public void async(Consumer<BukkitTask> taskConsumer) {
+        this.rootScheduler.runTaskAsynchronously(this.plugin, taskConsumer);
     }
 
     @Override
@@ -33,8 +45,18 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
+    public void laterSync(Consumer<BukkitTask> taskConsumer, Duration delay) {
+        this.rootScheduler.runTaskLater(this.plugin, taskConsumer, this.toTick(delay));
+    }
+
+    @Override
     public Task laterAsync(Runnable task, Duration delay) {
         return new BukkitTaskImpl(this.rootScheduler.runTaskLaterAsynchronously(this.plugin, task, this.toTick(delay)));
+    }
+
+    @Override
+    public void laterAsync(Consumer<BukkitTask> taskConsumer, Duration delay) {
+        this.rootScheduler.runTaskLaterAsynchronously(this.plugin, taskConsumer, this.toTick(delay));
     }
 
     @Override
@@ -43,8 +65,18 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
+    public void timerSync(Consumer<BukkitTask> taskConsumer, Duration delay, Duration period) {
+        this.rootScheduler.runTaskTimer(this.plugin, taskConsumer, this.toTick(delay), this.toTick(period));
+    }
+
+    @Override
     public Task timerAsync(Runnable task, Duration delay, Duration period) {
         return new BukkitTaskImpl(this.rootScheduler.runTaskTimerAsynchronously(this.plugin, task, this.toTick(delay), this.toTick(period)));
+    }
+
+    @Override
+    public void timerAsync(Consumer<BukkitTask> taskConsumer, Duration delay, Duration period) {
+        this.rootScheduler.runTaskTimerAsynchronously(this.plugin, taskConsumer, this.toTick(delay), this.toTick(period));
     }
 
     @Override

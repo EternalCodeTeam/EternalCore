@@ -321,6 +321,34 @@ public interface Translation {
         Notification enchantedMessage();
     }
 
+    // poll section
+    PollSection poll();
+
+    interface PollSection {
+        // command notification
+        Notification pollCreated();
+        Notification howToCancelPoll();
+        Notification pollCancelled();
+        Notification cantCancelPoll();
+        Notification pollEnded();
+        Notification alreadyCreatingPoll();
+        Notification pollIsActive();
+        Notification cantVote();
+        Notification unavailablePollResults();
+        Notification successfullyVoted();
+        Notification alreadyVoted();
+
+        // description validation
+        Notification descriptionValidationMessage();
+        Notification descriptionMaxLengthMessage();
+
+        // option validation
+        Notification optionsValidationMessage();
+        Notification optionsMinOptionSizeMessage();
+        Notification optionsMaxOptionSizeMessage();
+        Notification optionsIsEmptyMessage();
+    }
+
     // time and weather
     TimeAndWeatherSection timeAndWeather();
 

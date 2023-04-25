@@ -7,6 +7,7 @@ import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgument;
+import com.eternalcode.core.command.argument.UuidArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
@@ -87,6 +88,9 @@ import com.eternalcode.core.feature.home.command.SetHomeCommand;
 import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
+import com.eternalcode.core.feature.poll.PollCommand;
+import com.eternalcode.core.feature.poll.PollController;
+import com.eternalcode.core.feature.poll.PollManager;
 import com.eternalcode.core.feature.privatechat.PrivateChatCommands;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.feature.reportchat.HelpOpCommand;
@@ -161,6 +165,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -190,6 +195,7 @@ class EternalCore implements EternalCoreApi {
     private final TranslationManager translationManager;
     private final AfkService afkService;
     private final TeleportRequestService teleportRequestService;
+    private final PollManager pollManager;
 
     /* Database */
     private DatabaseManager databaseManager;
@@ -255,6 +261,7 @@ class EternalCore implements EternalCoreApi {
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.tpa);
+        this.pollManager = new PollManager(this.noticeService, this.miniMessage, this.getScheduler());
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
@@ -306,6 +313,7 @@ class EternalCore implements EternalCoreApi {
             .argument(Duration.class, DurationArgument.KEY,     new DurationArgument(this.viewerProvider, this.translationManager))
             .argument(Integer.class, SpeedArgument.KEY,         new SpeedArgument(this.viewerProvider, this.translationManager))
             .argument(MobEntity.class,                          new MobEntityArgument(this.viewerProvider, this.translationManager))
+            .argument(UUID.class,                               new UuidArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class, new LocationArgument(this.translationManager, this.viewerProvider))
@@ -393,6 +401,7 @@ class EternalCore implements EternalCoreApi {
                 new InventoryClearCommand(this.noticeService),
                 new InventoryOpenCommand(server, this.noticeService),
                 new ButcherCommand(this.noticeService, pluginConfiguration),
+                new PollCommand(this.noticeService, this.pollManager, this.miniMessage),
 
                 // Info Commands
                 new OnlinePlayerCountCommand(this.noticeService, server),
@@ -427,7 +436,8 @@ class EternalCore implements EternalCoreApi {
             new PlayerDeathListener(this.noticeService),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
-            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)
+            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage),
+            new PollController(this.noticeService, this.pollManager, this.translationManager, this.userManager)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Tasks */

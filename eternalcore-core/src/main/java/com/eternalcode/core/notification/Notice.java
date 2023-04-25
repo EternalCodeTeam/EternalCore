@@ -106,6 +106,7 @@ public class Notice {
         return this;
     }
 
+    @CheckReturnValue
     public Notice message(NotificationExtractor extractor) {
         this.notifications.add(extractor);
 
