@@ -2,12 +2,17 @@ package com.eternalcode.core.listener.player;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import panda.std.Option;
 import panda.utilities.StringUtils;
+
+import java.util.List;
 
 @FeatureDocs(
     description = "Send a message to all players when a player dies, you can configure the messages based on damage cause in configuration, see: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html for all damage causes",
@@ -31,14 +36,26 @@ public class PlayerDeathListener implements Listener {
             this.noticeService.create()
                 .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
                 .placeholder("{PLAYER}", player.getName())
+                .placeholder("{KILLER}", player.getKiller().getName())
                 .onlinePlayers()
                 .send();
 
             return;
         }
 
+
         this.noticeService.create()
-            .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessageByDamageCause().get(player.getLastDamageCause().getCause())))
+            .noticeOption(translation -> {
+                EntityDamageEvent.DamageCause cause = player.getLastDamageCause().getCause();
+
+                List<Notification> notifications = translation.event().deathMessageByDamageCause().get(cause);
+
+                if (notifications == null) {
+                    return Option.none();
+                }
+
+                return RandomUtil.randomElement(notifications);
+            })
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();
