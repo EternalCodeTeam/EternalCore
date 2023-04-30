@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.poll;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.user.User;
@@ -14,6 +15,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+@FeatureDocs(
+    name = "Poll system",
+    description = "It manages and allows you to create any poll you want"
+)
 public class PollManager {
 
     private final NoticeService noticeService;

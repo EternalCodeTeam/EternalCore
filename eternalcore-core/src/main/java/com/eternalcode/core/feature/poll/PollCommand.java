@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.poll;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -12,10 +13,6 @@ import java.time.Duration;
 
 @Route(name = "poll")
 @Permission("eternalcore.poll")
-@FeatureDocs(
-    name = "PollSystem",
-    description = "It manages and allows you to create any poll you want"
-)
 public class PollCommand {
 
     private final PollManager pollManager;
