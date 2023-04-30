@@ -10,8 +10,6 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
-
 public class PollInventory {
 
     private final Poll poll;
@@ -33,9 +31,9 @@ public class PollInventory {
             .disableAllInteractions()
             .create();
 
-        for (LabeledOption<String> labeledOption : this.poll.getOptionList()) {
+        for (PollOption pollOption : this.poll.getOptionList()) {
             GuiItem item = ItemBuilder.from(Material.PAPER)
-                .name(Component.text(labeledOption.getOption()))
+                .name(Component.text(pollOption.getOption()))
                 .asGuiItem();
 
             item.setAction((event) -> {
@@ -55,7 +53,7 @@ public class PollInventory {
                     return;
                 }
 
-                this.poll.vote(player, labeledOption);
+                this.poll.vote(player, pollOption);
 
                 this.noticeService.create()
                     .player(player.getUniqueId())
@@ -84,18 +82,18 @@ public class PollInventory {
 
         int totalVotes = this.poll.getTotalVotes();
 
-        this.poll.getOptionList().forEach(labeledOption -> {
-            int votes = this.poll.getVotesOf(labeledOption);
+        for (PollOption pollOption : this.poll.getOptionList()) {
+            int votes = pollOption.getVotes();
 
             double percentage = (totalVotes > 0) ? ((double) votes / totalVotes) * 100 : 0;
 
             GuiItem item = ItemBuilder.from(Material.PAPER)
-                .name(Component.text(labeledOption.getOption()))
-                .lore(this.miniMessage.deserialize(" <yellow>" + percentage + "%"))
-                .asGuiItem();
+                    .name(Component.text(pollOption.getOption()))
+                    .lore(this.miniMessage.deserialize(" <yellow>" + percentage + "%"))
+                    .asGuiItem();
 
             gui.addItem(item);
-        });
+        }
 
         GuiItem fillItem = ItemBuilder.from(Material.GRAY_STAINED_GLASS_PANE)
             .name(Component.text(" "))

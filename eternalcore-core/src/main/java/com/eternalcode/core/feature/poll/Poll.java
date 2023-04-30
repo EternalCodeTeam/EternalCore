@@ -11,8 +11,6 @@ import java.util.UUID;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
-
 public class Poll {
 
     private final CurrentIterator<PollArgumentValidation> argumentValidationIterator;
@@ -31,25 +29,14 @@ public class Poll {
         this.duration = duration;
     }
 
-    public void vote(Player player, LabeledOption<String> option) {
-        this.findOption(option).incrementVotes();
+    public void vote(Player player, PollOption pollOption) {
+        pollOption.incrementVotes();
         this.totalVotes.incrementAndGet();
         this.alreadyVoted.add(player.getUniqueId());
     }
 
     public boolean isAlreadyVoted(Player player) {
         return this.alreadyVoted.contains(player.getUniqueId());
-    }
-
-    public int getVotesOf(LabeledOption<String> option) {
-        return this.findOption(option).getVotes();
-    }
-
-    private PollOption findOption(LabeledOption<String> option) {
-        return this.optionList.stream()
-            .filter(pollOption -> pollOption.equals(option))
-            .findFirst()
-            .orElseThrow(() -> new NullPointerException("No such option found!"));
     }
 
     public CurrentIterator<PollArgumentValidation> getArgumentValidationIterator() {
@@ -60,8 +47,8 @@ public class Poll {
         return this.optionList;
     }
 
-    public void setOptionList(List<LabeledOption<String>> optionList) {
-        this.optionList = optionList.stream().map(PollOption::new).toList();
+    public void setOptionList(List<PollOption> optionList) {
+        this.optionList = new ArrayList<>(optionList);
     }
 
     public String getDescription() {

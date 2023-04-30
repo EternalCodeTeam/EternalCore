@@ -1,17 +1,20 @@
 package com.eternalcode.core.feature.poll;
 
-import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
+public class PollOption {
 
-public class PollOption extends LabeledOption<String> {
+    private final String option;
+    private int votes = 0;
 
-    private int votes;
-
-    public PollOption(LabeledOption<String> option) {
-        super(option.getOption());
+    public PollOption(String option) {
+        this.option = option;
     }
 
     public void incrementVotes() {
-        ++this.votes;
+        this.votes++;
+    }
+
+    public String getOption() {
+        return option;
     }
 
     public int getVotes() {

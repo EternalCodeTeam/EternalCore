@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.poll.validation;
 
 import com.eternalcode.core.feature.poll.Poll;
+import com.eternalcode.core.feature.poll.PollOption;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.translation.Translation;
-import com.eternalcode.core.util.LabeledOptionUtil;
 import panda.utilities.StringUtils;
 import panda.utilities.text.Formatter;
 
@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
-
-import static com.eternalcode.core.util.LabeledOptionUtil.LabeledOption;
 
 public class PollOptionListArgumentValidation implements PollArgumentValidation {
 
@@ -54,11 +52,12 @@ public class PollOptionListArgumentValidation implements PollArgumentValidation 
             }
         }
 
-        List<LabeledOption<String>> options = Stream.of(arrayOfOptions)
-            .map(LabeledOptionUtil::ofString)
+        List<PollOption> options = Stream.of(arrayOfOptions)
+            .map(PollOption::new)
             .toList();
 
         poll.setOptionList(options);
+
         return Optional.empty();
     }
 }
