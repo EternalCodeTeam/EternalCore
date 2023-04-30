@@ -6,10 +6,10 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import panda.std.Option;
 
 import java.time.Duration;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -59,7 +59,7 @@ public class PrivateChatService {
             return;
         }
 
-        Option<User> targetOption = this.userManager.getUser(uuid);
+        Optional<User> targetOption = this.userManager.getUser(uuid);
 
         if (targetOption.isEmpty()) {
             this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());

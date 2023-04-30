@@ -1,8 +1,8 @@
-package com.eternalcode.core.user.client;
+package com.eternalcode.core.user;
 
 import java.util.Locale;
 
-class ClientNoneSettings implements ClientSettings {
+class UserClientNoneSettings implements UserClientSettings {
 
     @Override
     public Locale getLocate() {

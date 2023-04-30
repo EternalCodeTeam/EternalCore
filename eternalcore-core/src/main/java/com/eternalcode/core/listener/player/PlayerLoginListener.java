@@ -11,8 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-import panda.std.Option;
 import panda.utilities.text.Joiner;
+
+import java.util.Optional;
 
 @FeatureDocs(
     name = "Bypass Full Server",
@@ -50,7 +51,7 @@ public class PlayerLoginListener implements Listener {
     }
 
     private String extractServerFullMessage(Player player) {
-        Option<User> userOption = this.userManager.getUser(player.getUniqueId());
+        Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
         if (userOption.isEmpty()) {
             return Joiner.on("\n")

@@ -15,9 +15,9 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import panda.std.Option;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @FeatureDocs(
@@ -47,7 +47,7 @@ public class LanguageInventory {
             .disableAllInteractions()
             .create();
 
-        Option<User> userOption = this.userManager.getUser(player.getUniqueId());
+        Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
         if (userOption.isEmpty()) {
             return;

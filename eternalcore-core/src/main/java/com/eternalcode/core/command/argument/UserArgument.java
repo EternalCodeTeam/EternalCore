@@ -14,6 +14,7 @@ import org.bukkit.entity.HumanEntity;
 import panda.std.Result;
 
 import java.util.List;
+import java.util.Optional;
 
 @ArgumentName("player")
 public class UserArgument extends AbstractViewerArgument<User> {
@@ -37,7 +38,13 @@ public class UserArgument extends AbstractViewerArgument<User> {
 
     @Override
     public Result<User, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
-        return this.userManager.getUser(argument).toResult(() -> translation.argument().offlinePlayer());
+        Optional<User> optionalUser = this.userManager.getUser(argument);
+
+        if (optionalUser.isPresent()) {
+            return Result.ok(optionalUser.get());
+        }
+
+        return Result.error(translation.argument().offlinePlayer());
     }
 
 }

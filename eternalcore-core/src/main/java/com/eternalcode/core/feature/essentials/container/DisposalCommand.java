@@ -38,7 +38,7 @@ public class DisposalCommand {
     void execute(Player player) {
         Language language = this.userManager.getUser(player.getUniqueId())
             .map(user -> user.getSettings().getLanguage())
-            .orElseGet(Language.DEFAULT);
+            .orElse(Language.DEFAULT);
 
         Translation translation = this.translationManager.getMessages(language);
         Component component = this.miniMessage.deserialize(translation.inventory().disposalTitle());
