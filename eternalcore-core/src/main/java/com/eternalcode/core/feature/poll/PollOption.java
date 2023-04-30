@@ -14,7 +14,7 @@ public class PollOption {
     }
 
     public String getOption() {
-        return option;
+        return this.option;
     }
 
     public int getVotes() {
