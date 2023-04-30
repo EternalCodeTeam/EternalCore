@@ -21,7 +21,7 @@ public class IsolatedClassAccessorLoader implements IsolatedClassLoader {
 
     @Override
     public Class<?> loadClass(String className) throws ClassNotFoundException {
-        return this.classLoader.loadClass(className);
+        return  this.classLoader.loadClass(className);
     }
 
     @Override

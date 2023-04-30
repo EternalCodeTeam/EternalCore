@@ -9,10 +9,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -70,7 +70,7 @@ public class BukkitViewerProvider implements ViewerProvider {
 
     public Viewer any(Object any) {
         if (any instanceof Player player) {
-            Option<User> userOption = this.userManager.getUser(player.getUniqueId());
+            Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
             if (userOption.isPresent()) {
                 return userOption.get();

@@ -1,16 +1,15 @@
-package com.eternalcode.core.user.settings;
+package com.eternalcode.core.user;
 
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.user.client.ClientSettings;
 
 import java.util.function.Supplier;
 
-public class SettingsImpl implements Settings {
+class UserSettingsImpl implements UserSettings {
 
-    private final Supplier<ClientSettings> clientSettings;
+    private final Supplier<UserClientSettings> clientSettings;
     private Language language = Language.DEFAULT;
 
-    public SettingsImpl(Supplier<ClientSettings> clientSettings) {
+    public UserSettingsImpl(Supplier<UserClientSettings> clientSettings) {
         this.clientSettings = clientSettings;
     }
 

@@ -2,9 +2,6 @@ package com.eternalcode.core.user;
 
 import com.eternalcode.core.entity.Entity;
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.user.client.ClientSettings;
-import com.eternalcode.core.user.settings.Settings;
-import com.eternalcode.core.user.settings.SettingsImpl;
 import com.eternalcode.core.viewer.Viewer;
 
 import java.util.Objects;
@@ -12,8 +9,8 @@ import java.util.UUID;
 
 public class User implements Entity, Viewer {
 
-    private Settings settings = new SettingsImpl(() -> this.clientSettings);
-    private ClientSettings clientSettings = ClientSettings.NONE;
+    private UserSettings userSettings = new UserSettingsImpl(() -> this.userClientSettings);
+    private UserClientSettings userClientSettings = UserClientSettings.NONE;
 
     private final String name;
     private final UUID uuid;
@@ -35,7 +32,7 @@ public class User implements Entity, Viewer {
 
     @Override
     public Language getLanguage() {
-        return this.settings.getLanguage();
+        return this.userSettings.getLanguage();
     }
 
     @Override
@@ -43,20 +40,20 @@ public class User implements Entity, Viewer {
         return false;
     }
 
-    public ClientSettings getClientSettings() {
-        return this.clientSettings;
+    public UserClientSettings getClientSettings() {
+        return this.userClientSettings;
     }
 
-    public void setClientSettings(ClientSettings clientSettings) {
-        this.clientSettings = clientSettings;
+    public void setClientSettings(UserClientSettings userClientSettings) {
+        this.userClientSettings = userClientSettings;
     }
 
-    public Settings getSettings() {
-        return this.settings;
+    public UserSettings getSettings() {
+        return this.userSettings;
     }
 
-    public void setSettings(Settings settings) {
-        this.settings = settings;
+    public void setSettings(UserSettings userSettings) {
+        this.userSettings = userSettings;
     }
 
     @Override

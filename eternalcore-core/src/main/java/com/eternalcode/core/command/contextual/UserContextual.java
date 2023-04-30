@@ -25,7 +25,7 @@ public class UserContextual implements Contextual<CommandSender, User> {
     public Result<User, Object> extract(CommandSender sender, Invocation<CommandSender> invocation) {
         if (sender instanceof Player player) {
             return Result.ok(this.userManager.getUser(player.getUniqueId())
-                .orThrow(() -> new IllegalStateException("Player " + player.getName() + " is not registered!")));
+                .orElseThrow(() -> new IllegalStateException("Player " + player.getName() + " is not registered!")));
         }
 
         Translation translation = this.translationManager.getDefaultMessages();

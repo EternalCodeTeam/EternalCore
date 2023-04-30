@@ -1,7 +1,6 @@
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.test.MockServer;
-import com.eternalcode.core.user.client.ClientSettings;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,9 +42,9 @@ class PrepareUserControllerTest {
         this.mockServer.joinPlayer(PLAYER_NAME, PLAYER_UUID);
         User user = assertOptionPresent(this.userManager.getUser(PLAYER_UUID));
 
-        ClientSettings clientSettings = user.getClientSettings();
-        assertTrue(clientSettings.isOnline());
-        assertInstanceOf(ClientBukkitSettings.class, clientSettings);
+        UserClientSettings userClientSettings = user.getClientSettings();
+        assertTrue(userClientSettings.isOnline());
+        assertInstanceOf(UserClientBukkitSettings.class, userClientSettings);
     }
 
     @Test
@@ -56,9 +55,9 @@ class PrepareUserControllerTest {
 
         this.mockServer.quitPlayer(player);
 
-        ClientSettings clientSettings = user.getClientSettings();
-        assertTrue(clientSettings.isOffline());
-        assertEquals(ClientSettings.NONE, clientSettings);
+        UserClientSettings userClientSettings = user.getClientSettings();
+        assertTrue(userClientSettings.isOffline());
+        assertEquals(UserClientSettings.NONE, userClientSettings);
     }
 
     @Test
@@ -69,9 +68,9 @@ class PrepareUserControllerTest {
 
         this.mockServer.kickPlayer(player);
 
-        ClientSettings clientSettings = user.getClientSettings();
-        assertTrue(clientSettings.isOffline());
-        assertEquals(ClientSettings.NONE, clientSettings);
+        UserClientSettings userClientSettings = user.getClientSettings();
+        assertTrue(userClientSettings.isOffline());
+        assertEquals(UserClientSettings.NONE, userClientSettings);
     }
 
 }

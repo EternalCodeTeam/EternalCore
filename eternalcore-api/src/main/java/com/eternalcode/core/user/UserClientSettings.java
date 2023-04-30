@@ -1,12 +1,12 @@
-package com.eternalcode.core.user.client;
+package com.eternalcode.core.user;
 
 import java.util.Locale;
 
-public interface ClientSettings {
+public interface UserClientSettings {
 
     Locale getLocate();
 
-    ClientSettings NONE = new ClientNoneSettings();
+    UserClientSettings NONE = new UserClientNoneSettings();
 
     boolean isOnline();
 
