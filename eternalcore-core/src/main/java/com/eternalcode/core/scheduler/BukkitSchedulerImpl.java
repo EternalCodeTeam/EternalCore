@@ -25,8 +25,8 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
-    public void sync(Consumer<BukkitTask> taskConsumer) {
-        this.rootScheduler.runTask(this.plugin, taskConsumer);
+    public void sync(Consumer<Task> taskConsumer) {
+        this.rootScheduler.runTask(this.plugin, this.toBukkit(taskConsumer));
     }
 
     @Override
@@ -35,8 +35,8 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
-    public void async(Consumer<BukkitTask> taskConsumer) {
-        this.rootScheduler.runTaskAsynchronously(this.plugin, taskConsumer);
+    public void async(Consumer<Task> taskConsumer) {
+        this.rootScheduler.runTaskAsynchronously(this.plugin, this.toBukkit(taskConsumer));
     }
 
     @Override
@@ -45,8 +45,8 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
-    public void laterSync(Consumer<BukkitTask> taskConsumer, Duration delay) {
-        this.rootScheduler.runTaskLater(this.plugin, taskConsumer, this.toTick(delay));
+    public void laterSync(Consumer<Task> taskConsumer, Duration delay) {
+        this.rootScheduler.runTaskLater(this.plugin, this.toBukkit(taskConsumer), this.toTick(delay));
     }
 
     @Override
@@ -55,8 +55,8 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
-    public void laterAsync(Consumer<BukkitTask> taskConsumer, Duration delay) {
-        this.rootScheduler.runTaskLaterAsynchronously(this.plugin, taskConsumer, this.toTick(delay));
+    public void laterAsync(Consumer<Task> taskConsumer, Duration delay) {
+        this.rootScheduler.runTaskLaterAsynchronously(this.plugin, this.toBukkit(taskConsumer), this.toTick(delay));
     }
 
     @Override
@@ -65,8 +65,8 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
-    public void timerSync(Consumer<BukkitTask> taskConsumer, Duration delay, Duration period) {
-        this.rootScheduler.runTaskTimer(this.plugin, taskConsumer, this.toTick(delay), this.toTick(period));
+    public void timerSync(Consumer<Task> taskConsumer, Duration delay, Duration period) {
+        this.rootScheduler.runTaskTimer(this.plugin, this.toBukkit(taskConsumer), this.toTick(delay), this.toTick(period));
     }
 
     @Override
@@ -75,8 +75,8 @@ public class BukkitSchedulerImpl implements Scheduler {
     }
 
     @Override
-    public void timerAsync(Consumer<BukkitTask> taskConsumer, Duration delay, Duration period) {
-        this.rootScheduler.runTaskTimerAsynchronously(this.plugin, taskConsumer, this.toTick(delay), this.toTick(period));
+    public void timerAsync(Consumer<Task> taskConsumer, Duration delay, Duration period) {
+        this.rootScheduler.runTaskTimerAsynchronously(this.plugin, this.toBukkit(taskConsumer), this.toTick(delay), this.toTick(period));
     }
 
     @Override
@@ -95,6 +95,10 @@ public class BukkitSchedulerImpl implements Scheduler {
 
     private long toTick(Duration duration) {
         return duration.toMillis() / 50L;
+    }
+
+    private Consumer<BukkitTask> toBukkit(Consumer<Task> taskConsumer) {
+        return task -> taskConsumer.accept(new BukkitTaskImpl(task));
     }
 
 }

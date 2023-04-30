@@ -332,7 +332,7 @@ public interface Translation {
         Notification cantCancelPoll();
         Notification pollEnded();
         Notification alreadyCreatingPoll();
-        Notification pollIsActive();
+        Notification pollAlreadyActive();
         Notification cantVote();
         Notification unavailablePollResults();
         Notification successfullyVoted();

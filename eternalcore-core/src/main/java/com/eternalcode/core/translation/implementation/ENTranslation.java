@@ -658,13 +658,13 @@ public class ENTranslation extends AbstractTranslation {
         public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>You can't cancel a poll because you don't create one!");
 
         @Description({ " ", "# {UUID} - Poll UUID is used to check the results under /poll check {UUID}" })
-        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Poll is over <underlined><click:run_command:/poll check {UUID}><hover:show_text:\"<red>Click :)\">click here<reset> to see results");
+        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Poll is over <underlined><click:run_command:/poll check {NAME}><hover:show_text:\"<red>Click :)\">click here<reset> to see results");
 
         @Description(" ")
         public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>You cannot create a new poll because you are already creating one!");
 
         @Description(" ")
-        public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one!");
+        public Notification pollAlreadyActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one!");
 
         @Description(" ")
         public Notification unavailablePollResults = Notification.chat("<red>✘ <dark_red>This poll does not exist or has expired!");

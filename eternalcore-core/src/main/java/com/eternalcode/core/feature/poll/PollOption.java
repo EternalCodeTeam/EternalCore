@@ -1,23 +1,23 @@
 package com.eternalcode.core.feature.poll;
 
-public class PollOption {
+class PollOption {
 
     private final String option;
     private int votes = 0;
 
-    public PollOption(String option) {
+    PollOption(String option) {
         this.option = option;
     }
 
-    public void incrementVotes() {
+    void incrementVotes() {
         this.votes++;
     }
 
-    public String getOption() {
+    String getOption() {
         return this.option;
     }
 
-    public int getVotes() {
+    int getVotes() {
         return this.votes;
     }
 

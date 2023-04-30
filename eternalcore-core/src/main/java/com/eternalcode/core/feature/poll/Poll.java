@@ -1,75 +1,123 @@
 package com.eternalcode.core.feature.poll;
 
-import com.eternalcode.core.feature.poll.validation.PollArgumentValidation;
-import com.eternalcode.core.shared.CurrentIterator;
-import dev.triumphteam.gui.guis.Gui;
-import org.bukkit.entity.Player;
+import com.eternalcode.core.util.Preconditions;
 
 import java.time.Duration;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.ArrayList;
 
-public class Poll {
+class Poll {
 
-    private final CurrentIterator<PollArgumentValidation> argumentValidationIterator;
-    private final List<UUID> alreadyVoted;
+    private final String name;
+    private final String description;
     private final Duration duration;
+    private final List<PollOption> optionList = new ArrayList<>();
 
-    private List<PollOption> optionList;
-    private String description;
-    private Gui resultsInventory;
+    private final List<UUID> alreadyVoted = new ArrayList<>();
 
-    public Poll(List<PollArgumentValidation> validationList, Duration duration) {
-        this.argumentValidationIterator = CurrentIterator.wrap(validationList);
-        this.alreadyVoted = new ArrayList<>();
+    private Poll(String name, String description, Duration duration, List<PollOption> optionList) {
+        this.name = name;
+        this.description = description;
         this.duration = duration;
+        this.optionList.addAll(optionList);
     }
 
-    public void vote(Player player, PollOption pollOption) {
-        pollOption.incrementVotes();
-        this.alreadyVoted.add(player.getUniqueId());
+    String getName() {
+        return this.name;
     }
 
-    public boolean isAlreadyVoted(Player player) {
-        return this.alreadyVoted.contains(player.getUniqueId());
-    }
-
-    public CurrentIterator<PollArgumentValidation> getArgumentValidationIterator() {
-        return this.argumentValidationIterator;
-    }
-
-    public List<PollOption> getOptionList() {
-        return this.optionList;
-    }
-
-    public void setOptionList(List<PollOption> optionList) {
-        this.optionList = new ArrayList<>(optionList);
-    }
-
-    public String getDescription() {
+    String getDescription() {
         return this.description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Duration getDuration() {
+    Duration getDuration() {
         return this.duration;
     }
 
-    public Gui getResultsInventory() {
-        return this.resultsInventory;
+    List<PollOption> getOptionList() {
+        return Collections.unmodifiableList(this.optionList);
     }
 
-    public void setResultsInventory(Gui resultsInventory) {
-        this.resultsInventory = resultsInventory;
-    }
-
-    public int getTotalVotes() {
+    int getTotalVotes() {
         return this.optionList.stream()
-            .mapToInt(PollOption::getVotes)
-            .sum();
+                .mapToInt(PollOption::getVotes)
+                .sum();
     }
+
+    void vote(UUID player, PollOption pollOption) {
+        if (this.isAlreadyVoted(player)) {
+            throw new IllegalStateException("Player already voted");
+        }
+
+        if (!this.optionList.contains(pollOption)) {
+            throw new IllegalArgumentException("Poll option not contained in poll");
+        }
+
+        pollOption.incrementVotes();
+        this.alreadyVoted.add(player);
+    }
+
+    boolean isAlreadyVoted(UUID player) {
+        return this.alreadyVoted.contains(player);
+    }
+
+    static Builder builder() {
+        return new Builder();
+    }
+
+    static class Builder {
+        private String name;
+        private String description;
+        private Duration duration;
+        private List<PollOption> optionList = new ArrayList<>();
+
+        Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        String name() {
+            return this.name;
+        }
+
+        Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        String description() {
+            return this.description;
+        }
+
+        Builder duration(Duration duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        Duration duration() {
+            return this.duration;
+        }
+
+        Builder optionList(List<PollOption> optionList) {
+            this.optionList = optionList;
+            return this;
+        }
+
+        List<PollOption> optionList() {
+            return this.optionList;
+        }
+
+        Poll build() {
+            Preconditions.notNull(this.name, "name");
+            Preconditions.notNull(this.description, "description");
+            Preconditions.notNull(this.duration, "duration");
+            Preconditions.notNull(this.optionList, "optionList");
+            Preconditions.isMoreThan(this.optionList, 2, "optionList");
+
+            return new Poll(this.name, this.description, this.duration, this.optionList);
+        }
+    }
+
 }

@@ -26,7 +26,7 @@ public class Repository {
 
     @Override
     public String toString() {
-        return url;
+        return this.url;
     }
 
 }

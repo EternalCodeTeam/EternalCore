@@ -5,99 +5,48 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import dev.rollczi.litecommands.suggestion.Suggest;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
-import java.util.UUID;
 
 @Route(name = "poll")
 @Permission("eternalcore.poll")
 public class PollCommand {
 
-    private final NoticeService noticeService;
     private final PollManager pollManager;
-    private final MiniMessage miniMessage;
+    private final PollVoteInventory pollVoteInventory;
+    private final PollResultsInventory pollResultsInventory;
 
-    public PollCommand(NoticeService noticeService, PollManager pollManager, MiniMessage miniMessage) {
-        this.noticeService = noticeService;
+    public PollCommand(NoticeService noticeService, PollManager pollManager) {
         this.pollManager = pollManager;
-        this.miniMessage = miniMessage;
+        this.pollVoteInventory = new PollVoteInventory(pollManager, noticeService);
+        this.pollResultsInventory = new PollResultsInventory(pollManager, noticeService);
     }
 
     @Execute(required = 0)
-    void executeVote(Player player) {
-        if (!this.pollManager.isPollActive()) {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.poll().cantVote())
-                .send();
-
-            return;
-        }
-
-        Poll poll = this.pollManager.getActivePoll();
-
-        PollInventory inventory = new PollInventory(poll, this.pollManager, this.noticeService, this.miniMessage);
-        inventory.openVoteInventory(player);
+    void openVoteInventory(Player player) {
+        this.pollVoteInventory.openVoteInventory(player);
     }
 
     @Execute(required = 1)
     @Permission("eternalcore.poll.create")
     @Route(name = "create")
-    void executeCreate(Player player, @Arg Duration duration) {
-        if (this.pollManager.isPollActive()) {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.poll().pollIsActive())
-                .send();
-
-            return;
-        }
-
-        if (!this.pollManager.markPlayer(player, duration)) {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.poll().alreadyCreatingPoll())
-                .send();
-        }
+    void executeCreate(Player player, @Arg @Suggest("pool_name") String name, @Arg Duration duration) {
+        this.pollManager.startCreatingPool(player.getUniqueId(), name, duration);
     }
 
     @Execute(required = 0)
     @Permission("eternalcore.poll.create")
     @Route(name = "cancel")
     void executeCancel(Player player) {
-        if (!this.pollManager.isMarked(player)) {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.poll().cantCancelPoll())
-                .send();
-
-            return;
-        }
-
-        this.noticeService.create()
-            .player(player.getUniqueId())
-            .notice(translation -> translation.poll().pollCancelled())
-            .send();
-
-        this.pollManager.unmarkPlayer(player);
+        this.pollManager.cancelCreatingPool(player.getUniqueId());
     }
 
     @Execute(required = 1)
     @Route(name = "check")
-    void executeCheck(Player player, @Arg UUID uuid) {
-        Poll poll = this.pollManager.getPreviousPolls().getIfPresent(uuid);
-
-        if (poll == null) {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.poll().unavailablePollResults())
-                .send();
-
-            return;
-        }
-
-        poll.getResultsInventory().open(player);
+    void executeCheck(Player player, @Arg String name) {
+        this.pollResultsInventory.openResultsInventory(player, name);
     }
+
 }

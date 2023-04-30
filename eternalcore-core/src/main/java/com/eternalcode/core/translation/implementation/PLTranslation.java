@@ -663,13 +663,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>Nie możesz anulować ankiety bo żadnej nie tworzysz!");
 
         @Description({ " ", "# {UUID} - UUID ankieta służy do sprwadzenia wyników pod /poll check {UUID}" })
-        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Ankieta się zakończyła <underlined><click:run_command:/poll check {UUID}><hover:show_text:\"<red>Click :)\">kliknij tutaj<reset> aby zobaczyć wyniki");
+        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Ankieta się zakończyła <underlined><click:run_command:/poll check {NAME}><hover:show_text:\"<red>Click :)\">kliknij tutaj<reset> aby zobaczyć wyniki");
 
         @Description(" ")
         public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>Nie możesz utworzyć nowej ankiety, ponieważ już ją tworzysz!");
 
         @Description(" ")
-        public Notification pollIsActive = Notification.chat("<red>✘ <dark_red>Nie możesz stworzyć ankiety bo już jakaś trwa!");
+        public Notification pollAlreadyActive = Notification.chat("<red>✘ <dark_red>Nie możesz stworzyć ankiety bo już jakaś trwa!");
 
         @Description(" ")
         public Notification cantVote = Notification.chat("<red>✘ <dark_red>Nie możesz zagłosować bo nie ma żadnej aktywnej ankiety!");

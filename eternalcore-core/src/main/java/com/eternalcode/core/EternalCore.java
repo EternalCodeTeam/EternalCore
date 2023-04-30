@@ -88,7 +88,7 @@ import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
 import com.eternalcode.core.feature.poll.PollCommand;
-import com.eternalcode.core.feature.poll.PollController;
+import com.eternalcode.core.feature.poll.PollCreateController;
 import com.eternalcode.core.feature.poll.PollManager;
 import com.eternalcode.core.feature.privatechat.PrivateChatCommands;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
@@ -260,7 +260,7 @@ class EternalCore implements EternalCoreApi {
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.tpa);
-        this.pollManager = new PollManager(this.noticeService, this.miniMessage, this.getScheduler());
+        this.pollManager = new PollManager(this.noticeService, this.getScheduler());
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
@@ -400,7 +400,7 @@ class EternalCore implements EternalCoreApi {
                 new InventoryClearCommand(this.noticeService),
                 new InventoryOpenCommand(server, this.noticeService),
                 new ButcherCommand(this.noticeService, pluginConfiguration),
-                new PollCommand(this.noticeService, this.pollManager, this.miniMessage),
+                new PollCommand(this.noticeService, this.pollManager),
 
                 // Info Commands
                 new OnlinePlayerCountCommand(this.noticeService, server),
@@ -436,7 +436,7 @@ class EternalCore implements EternalCoreApi {
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
             new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage),
-            new PollController(this.noticeService, this.pollManager, this.translationManager, this.userManager)
+            new PollCreateController(this.noticeService, this.pollManager, this.userManager)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Tasks */

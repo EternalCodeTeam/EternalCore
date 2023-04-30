@@ -1,126 +1,138 @@
 package com.eternalcode.core.feature.poll;
 
-import com.eternalcode.core.feature.poll.validation.PollArgumentValidation;
-import com.eternalcode.core.feature.poll.validation.PollDescriptionArgumentValidation;
-import com.eternalcode.core.feature.poll.validation.PollOptionListArgumentValidation;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.scheduler.Scheduler;
+import com.eternalcode.core.user.User;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class PollManager {
 
     private final NoticeService noticeService;
-    private final MiniMessage miniMessage;
     private final Scheduler scheduler;
-    private final Map<UUID, Poll> markedPolls;
-    private final List<PollArgumentValidation> argumentValidations;
 
-    private final Cache<UUID, Poll> previousPolls;
+    private final Map<UUID, Poll.Builder> creatingPollsByPlayers;
+    private final Cache<String, Poll> previousPolls;
 
-    private Poll activePoll;
+    private @Nullable Poll activePoll;
 
-    public PollManager(NoticeService noticeService, MiniMessage miniMessage, Scheduler scheduler) {
+    public PollManager(NoticeService noticeService, Scheduler scheduler) {
         this.noticeService = noticeService;
-        this.miniMessage = miniMessage;
         this.scheduler = scheduler;
-        this.markedPolls = new HashMap<>();
-
-        this.argumentValidations = List.of(
-            new PollDescriptionArgumentValidation(),
-            new PollOptionListArgumentValidation()
-        );
+        this.creatingPollsByPlayers = new HashMap<>();
 
         this.previousPolls = CacheBuilder.newBuilder()
-            .expireAfterWrite(Duration.ofMinutes(1))
+            .expireAfterWrite(Duration.ofMinutes(15))
             .build();
     }
 
-    public boolean markPlayer(Player player, Duration duration) {
-        Poll poll = new Poll(this.argumentValidations, duration);
+    public void startCreatingPool(UUID player, String name, Duration duration) {
+        if (this.isPollActive()) {
+            this.noticeService.create()
+                    .player(player)
+                    .notice(translation -> translation.poll().pollAlreadyActive())
+                    .send();
 
-        if (this.markedPolls.containsKey(player.getUniqueId())) {
-            return false;
+            return;
         }
 
-        PollArgumentValidation firstValidation = poll.getArgumentValidationIterator().next();
+        if (this.creatingPollsByPlayers.containsKey(player)) {
+            this.noticeService.create()
+                    .player(player)
+                    .notice(translation -> translation.poll().alreadyCreatingPoll())
+                    .send();
+            
+            return;
+        }
 
         this.noticeService.create()
-            .player(player.getUniqueId())
-            .notice(translation -> firstValidation.getMessage().apply(translation))
+            .player(player)
+            .notice(translation -> translation.poll().descriptionValidationMessage())
             .notice(translation -> translation.poll().howToCancelPoll())
             .send();
 
-        this.markedPolls.put(player.getUniqueId(), poll);
-        return true;
+        Poll.Builder builder = Poll.builder()
+                .name(name)
+                .duration(duration);
+
+        this.creatingPollsByPlayers.put(player, builder);
     }
 
-    public void unmarkPlayer(Player player) {
-        this.markedPolls.remove(player.getUniqueId());
+    public void cancelCreatingPool(UUID player) {
+        if (!this.isCreatingPoll(player)) {
+            this.noticeService.player(player, translation -> translation.poll().cantCancelPoll());
+            return;
+        }
+
+        this.noticeService.player(player, translation -> translation.poll().pollCancelled());
+        this.creatingPollsByPlayers.remove(player);
     }
 
-    public boolean isMarked(Player player) {
-        return this.markedPolls.containsKey(player.getUniqueId());
+    public boolean isCreatingPoll(UUID player) {
+        return this.creatingPollsByPlayers.containsKey(player);
     }
 
-    public Poll getMarkedPoll(Player player) {
-        Poll poll = this.markedPolls.get(player.getUniqueId());
+    public Poll.Builder getCreatingPoll(UUID player) {
+        Poll.Builder builder = this.creatingPollsByPlayers.get(player);
 
-        if (poll == null) {
+        if (builder == null) {
             throw new NullPointerException("Marked poll not found!");
         }
 
-        return poll;
-    }
-
-    public void startTask(Poll poll) {
-        Instant endTime = Instant.now().plus(poll.getDuration());
-        UUID pollUuid = UUID.randomUUID();
-
-        this.activePoll = poll;
-
-        this.scheduler.timerAsync((task) -> {
-
-            if (Instant.now().isAfter(endTime)) {
-                task.cancel();
-
-                this.noticeService.create()
-                    .onlinePlayers()
-                    .placeholder("{UUID}", pollUuid.toString())
-                    .notice(translation -> translation.poll().pollEnded())
-                    .send();
-
-                PollInventory inventory = new PollInventory(poll, this, this.noticeService, this.miniMessage);
-                poll.setResultsInventory(inventory.createResultsInventory());
-
-                // Add the poll to the previous polls cache
-                this.previousPolls.put(pollUuid, poll);
-
-                // Remove reference
-                this.activePoll = null;
-            }
-
-        }, Duration.ZERO, Duration.ofSeconds(1));
+        return builder;
     }
 
     public boolean isPollActive() {
         return this.activePoll != null;
     }
 
-    public Poll getActivePoll() {
-        return this.activePoll;
+    public Optional<Poll> getActivePoll() {
+        return Optional.ofNullable(this.activePoll);
     }
 
-    public Cache<UUID, Poll> getPreviousPolls() {
-        return this.previousPolls;
+    public Optional<Poll> getPreviousPoll(String name) {
+        return Optional.ofNullable(this.previousPolls.getIfPresent(name));
     }
+
+    public void startPool(User owner, Poll poll) {
+        this.noticeService.create()
+            .onlinePlayers()
+            .placeholder("{OWNER}", owner.getName())
+            .notice(translation -> translation.poll().pollCreated())
+            .send();
+
+        this.runPollTask(poll);
+    }
+
+    private void runPollTask(Poll poll) {
+        Instant pollEndMoment = Instant.now().plus(poll.getDuration());
+
+        this.activePoll = poll;
+
+        this.scheduler.timerAsync(task -> {
+            if (Instant.now().isBefore(pollEndMoment)) {
+                return;
+            }
+
+            task.cancel();
+
+            this.noticeService.create()
+                .onlinePlayers()
+                .placeholder("{NAME}", poll.getName())
+                .notice(translation -> translation.poll().pollEnded())
+                .send();
+
+            this.previousPolls.put(poll.getName(), poll);
+            this.activePoll = null;
+        }, Duration.ZERO, Duration.ofSeconds(1));
+    }
+
 }
