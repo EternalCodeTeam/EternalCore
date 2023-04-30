@@ -38,6 +38,7 @@ import com.eternalcode.core.feature.adminchat.AdminChatCommand;
 import com.eternalcode.core.feature.afk.AfkCommand;
 import com.eternalcode.core.feature.afk.AfkController;
 import com.eternalcode.core.feature.afk.AfkService;
+import com.eternalcode.core.feature.afk.AfkTask;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
 import com.eternalcode.core.feature.chat.ChatManagerController;
@@ -443,6 +444,9 @@ class EternalCore implements EternalCoreApi {
 
         TeleportTask task = new TeleportTask(this.noticeService, this.teleportTaskService, this.teleportService, server);
         this.scheduler.timerSync(task, Duration.ofMillis(200), Duration.ofMillis(200));
+
+        AfkTask afkTask = new AfkTask(this.afkService, server);
+        this.scheduler.timerSync(afkTask, Duration.ofMinutes(1), Duration.ofMinutes(1));
 
         // bStats metrics
         Metrics metrics = new Metrics((JavaPlugin) plugin, 13964);

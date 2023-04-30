@@ -53,7 +53,7 @@ public class AfkCommand {
             return;
         }
 
-        this.afkService.markAfk(uuid, AfkReason.COMMAND);
+        this.afkService.switchAfk(uuid, AfkReason.COMMAND);
 
         if (player.hasPermission("eternalcore.afk.bypass")) {
             return;

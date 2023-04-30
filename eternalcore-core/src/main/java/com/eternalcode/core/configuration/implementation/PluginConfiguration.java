@@ -176,8 +176,11 @@ public class PluginConfiguration implements ReloadableConfig {
         })
         public int interactionsCountDisableAfk = 20;
 
-        @Description({ " ", "# Number of seconds a player must be idle to be considered AFK" })
+        @Description({ " ", "# Time before using the /afk command again" })
         public Duration afkCommandDelay = Duration.ofSeconds(60);
+
+        @Description({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
+        public Duration afkInactivityTime = Duration.ofMinutes(10);
 
         @Override
         public int interactionsCountDisableAfk() {
@@ -187,6 +190,11 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public Duration getAfkDelay() {
             return this.afkCommandDelay;
+        }
+
+        @Override
+        public Duration getAfkInactivityTime() {
+            return this.afkInactivityTime;
         }
     }
 
