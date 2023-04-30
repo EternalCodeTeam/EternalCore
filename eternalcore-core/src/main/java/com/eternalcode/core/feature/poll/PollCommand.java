@@ -29,6 +29,7 @@ public class PollCommand {
     }
 
     @Execute(required = 0)
+    @DescriptionDocs(description = "Vote for the current poll")
     void openVoteInventory(Player player) {
         this.pollVoteInventory.openVoteInventory(player);
     }
