@@ -45,6 +45,7 @@ public class PollCommand {
     @Execute(required = 0)
     @Permission("eternalcore.poll.create")
     @Route(name = "cancel")
+    @DescriptionDocs(description = "Cancel creating new poll")
     void executeCancel(Player player) {
         this.pollManager.cancelCreatingPool(player.getUniqueId());
     }
