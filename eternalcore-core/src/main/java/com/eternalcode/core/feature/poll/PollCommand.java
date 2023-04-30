@@ -12,6 +12,10 @@ import java.time.Duration;
 
 @Route(name = "poll")
 @Permission("eternalcore.poll")
+@FeatureDocs(
+    name = "PollSystem",
+    description = "It manages and allows you to create any poll you want"
+)
 public class PollCommand {
 
     private final PollManager pollManager;
