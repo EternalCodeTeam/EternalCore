@@ -42,7 +42,7 @@ public class PollCreateController implements Listener {
 
         Poll.Builder creatingPoll = this.pollManager.getCreatingPoll(uniqueId);
         User user = this.userManager.getUser(uniqueId)
-            .orThrow(() -> new NullPointerException("User cannot be null!"));
+            .orElseThrow(() -> new NullPointerException("User cannot be null!"));
 
         event.setCancelled(true);
 
