@@ -9,13 +9,11 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Poll {
 
     private final CurrentIterator<PollArgumentValidation> argumentValidationIterator;
     private final List<UUID> alreadyVoted;
-    private final AtomicInteger totalVotes;
     private final Duration duration;
 
     private List<PollOption> optionList;
@@ -25,13 +23,11 @@ public class Poll {
     public Poll(List<PollArgumentValidation> validationList, Duration duration) {
         this.argumentValidationIterator = CurrentIterator.wrap(validationList);
         this.alreadyVoted = new ArrayList<>();
-        this.totalVotes = new AtomicInteger();
         this.duration = duration;
     }
 
     public void vote(Player player, PollOption pollOption) {
         pollOption.incrementVotes();
-        this.totalVotes.incrementAndGet();
         this.alreadyVoted.add(player.getUniqueId());
     }
 
@@ -72,6 +68,8 @@ public class Poll {
     }
 
     public int getTotalVotes() {
-        return this.totalVotes.get();
+        return this.optionList.stream()
+            .mapToInt(PollOption::getVotes)
+            .sum();
     }
 }
