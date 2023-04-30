@@ -52,6 +52,7 @@ public class PollCommand {
 
     @Execute(required = 1)
     @Route(name = "check")
+    @DescriptionDocs(description = "Check poll results")
     void executeCheck(Player player, @Arg String name) {
         this.pollResultsInventory.openResultsInventory(player, name);
     }
