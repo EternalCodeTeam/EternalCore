@@ -73,7 +73,7 @@ public class PollManager {
         this.creatingPollsByPlayers.put(player, builder);
     }
 
-    public void cancelCreatingPool(UUID player) {
+    public void cancelCreatingPoll(UUID player) {
         if (!this.isCreatingPoll(player)) {
             this.noticeService.player(player, translation -> translation.poll().cantCancelPoll());
             return;
