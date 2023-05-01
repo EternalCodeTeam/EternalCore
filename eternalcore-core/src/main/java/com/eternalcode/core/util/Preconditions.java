@@ -47,7 +47,13 @@ public final class Preconditions {
 
     public static void isMoreThan(Collection<?> collection, int size, String name) {
         if (collection.size() <= size) {
-            throw new IllegalArgumentException(name + " must be more than " + size);
+            throw new IllegalArgumentException(name + " must be more than " + size + " but was " + collection.size());
+        }
+    }
+
+    public static void isMoreThanOrEquals(Collection<?> collection, int size, String name) {
+        if (collection.size() < size) {
+            throw new IllegalArgumentException(name + " must be more than or equals to " + size + " but was " + collection.size());
         }
     }
 

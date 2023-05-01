@@ -114,7 +114,7 @@ class Poll {
             Preconditions.notNull(this.description, "description");
             Preconditions.notNull(this.duration, "duration");
             Preconditions.notNull(this.optionList, "optionList");
-            Preconditions.isMoreThan(this.optionList, 2, "optionList");
+            Preconditions.isMoreThanOrEquals(this.optionList, 2, "optionList");
 
             return new Poll(this.name, this.description, this.duration, this.optionList);
         }

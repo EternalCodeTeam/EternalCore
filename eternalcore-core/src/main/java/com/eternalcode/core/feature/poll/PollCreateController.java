@@ -51,7 +51,7 @@ public class PollCreateController implements Listener {
             return;
         }
 
-        if (creatingPoll.optionList() == null) {
+        if (creatingPoll.optionList() == null || creatingPoll.optionList().size() < MIN_OPTIONS_SIZE) {
             this.handleOptionList(user, creatingPoll, message);
         }
 
