@@ -650,7 +650,7 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLPollSection implements PollSection {
-        @Description("# {OWNER} - Nazwa użtkownika który stworzył ankiete")
+        @Description("# {OWNER} - Nazwa użytkownika który stworzył ankiete")
         public Notification pollCreated = Notification.chat("<green>► <white>Użytkownik <underlined>{OWNER}<reset> stworzył ankiete, zagłosuj za pomocą <bold>/poll");
 
         @Description(" ")
