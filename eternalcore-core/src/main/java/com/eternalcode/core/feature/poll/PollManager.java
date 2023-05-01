@@ -120,6 +120,7 @@ public class PollManager {
             .notice(translation -> translation.poll().pollCreated())
             .send();
 
+        this.creatingPollsByPlayers.remove(owner.getUniqueId());
         this.runPollTask(poll);
     }
 
