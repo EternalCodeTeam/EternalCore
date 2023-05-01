@@ -41,7 +41,7 @@ public class PollManager {
             .build();
     }
 
-    public void startCreatingPool(UUID player, String name, Duration duration) {
+    public void startCreatingPoll(UUID player, String name, Duration duration) {
         if (this.isPollActive()) {
             this.noticeService.create()
                     .player(player)
