@@ -63,7 +63,7 @@ public class PollCreateController implements Listener {
 
         if (this.pollManager.isPollActive()) {
             this.noticeService.user(user, translation -> translation.poll().pollAlreadyActive());
-            this.pollManager.cancelCreatingPool(uniqueId);
+            this.pollManager.cancelCreatingPoll(uniqueId);
             return;
         }
 
