@@ -52,7 +52,11 @@ public class PollCreateController implements Listener {
         }
 
         if (creatingPoll.optionList() == null || creatingPoll.optionList().size() < MIN_OPTIONS_SIZE) {
-            this.handleOptionList(user, creatingPoll, message);
+            boolean isValid = this.handleOptionList(user, creatingPoll, message);
+
+            if (!isValid) {
+                return;
+            }
         }
 
         Poll poll = creatingPoll.build();
@@ -81,7 +85,7 @@ public class PollCreateController implements Listener {
         this.noticeService.user(user, translation -> translation.poll().optionsValidationMessage());
     }
 
-    private void handleOptionList(User user, Poll.Builder creatingPoll, String message) {
+    private boolean handleOptionList(User user, Poll.Builder creatingPoll, String message) {
         String[] arrayOfOptions = message.replaceAll("\\s*,\\s*", ",").split(",");
 
         int optionsLength = arrayOfOptions.length;
@@ -93,7 +97,7 @@ public class PollCreateController implements Listener {
                 .notice(translation -> translation.poll().optionsMinOptionSizeMessage())
                 .send();
 
-            return;
+            return false;
         }
 
         if (optionsLength > MAX_OPTIONS_SIZE) {
@@ -102,13 +106,13 @@ public class PollCreateController implements Listener {
                 .placeholder("{MAX_SIZE}", () -> String.valueOf(MAX_OPTIONS_SIZE))
                 .notice(translation -> translation.poll().optionsMaxOptionSizeMessage())
                 .send();
-            return;
+            return false;
         }
 
         for (String option : arrayOfOptions) {
             if (option.isBlank()) {
                 this.noticeService.user(user, translation -> translation.poll().optionsIsEmptyMessage());
-                return;
+                return false;
             }
         }
 
@@ -117,6 +121,7 @@ public class PollCreateController implements Listener {
             .toList();
 
         creatingPoll.optionList(options);
+        return true;
     }
 
     @EventHandler

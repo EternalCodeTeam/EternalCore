@@ -43,7 +43,7 @@ public class PollCommand {
         this.pollManager.startCreatingPool(player.getUniqueId(), name, duration);
     }
 
-    @Execute(route = "cancel", required = 0)
+    @Execute(route = "cancel-create", required = 0)
     @Permission("eternalcore.poll.create")
     @DescriptionDocs(description = "Cancel creating new poll")
     void executeCancel(Player player) {
