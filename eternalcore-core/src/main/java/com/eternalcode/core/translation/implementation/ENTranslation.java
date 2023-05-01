@@ -646,7 +646,7 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENPollSection implements PollSection {
         @Description("# {OWNER} - The name of the user who created the poll")
-        public Notification pollCreated = Notification.chat("<green>► <white><underlined>{OWNER}<reset> has created a poll, please vote using <bold>/poll");
+        public Notification pollCreated = Notification.chat("<green>► <white><underlined>{OWNER}<reset> has created a poll, please vote using <gray>/poll");
 
         @Description(" ")
         public Notification howToCancelPoll = Notification.chat("<green>► <white>If you want to <red>cancel <white>creating a poll type <underlined>/poll cancel");
