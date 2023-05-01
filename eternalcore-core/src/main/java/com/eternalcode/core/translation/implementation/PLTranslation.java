@@ -687,7 +687,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notification descriptionValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz 'Opis' <newline><green>► <gray>Przykładowy opis: 'To jest przykładowy opis!'");
 
         @Description(" ")
-        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz 'Liste Opcji' <newline><green>► <gray>Przykładowe opcje: 'Opcja Pierwsza, Opcja Druga'");
+        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz listę opcji. <newline><green>► <gray>Przykładowe opcje: 'Opcja Pierwsza, Opcja Druga'");
 
         @Description({ " ", "# {MAX_LENGTH} - Maksymalna długość opisu" })
         public Notification descriptionMaxLengthMessage = Notification.chat("<red>✘ <dark_red>Opis nie może być dłuższy niż {MAX_LENGTH} znaków");
