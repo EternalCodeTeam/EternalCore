@@ -128,7 +128,7 @@ public class PollCreateController implements Listener {
     private void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        this.pollManager.cancelCreatingPool(player.getUniqueId());
+        this.pollManager.cancelCreatingPoll(player.getUniqueId());
     }
 
 }
