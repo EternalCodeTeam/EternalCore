@@ -43,10 +43,15 @@ public class PlayerDeathListener implements Listener {
             return;
         }
 
+        EntityDamageEvent lastDamageCasue = player.getLastDamageCause();
+
+        if (lastDamageCasue == null) {
+            return;
+        }
 
         this.noticeService.create()
             .noticeOption(translation -> {
-                EntityDamageEvent.DamageCause cause = player.getLastDamageCause().getCause();
+                EntityDamageEvent.DamageCause cause = lastDamageCasue.getCause();
 
                 List<Notification> notifications = translation.event().deathMessageByDamageCause().get(cause);
 

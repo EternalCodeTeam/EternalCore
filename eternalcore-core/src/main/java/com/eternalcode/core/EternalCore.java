@@ -107,6 +107,7 @@ import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerLoginListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
+import com.eternalcode.core.listener.player.PlayerRespawnListener;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;
@@ -425,6 +426,7 @@ class EternalCore implements EternalCoreApi {
             new PlayerCommandPreprocessListener(this.noticeService, pluginConfiguration, server),
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService),
+            new PlayerRespawnListener(this.teleportService, pluginConfiguration, locationsConfiguration),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
             new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)

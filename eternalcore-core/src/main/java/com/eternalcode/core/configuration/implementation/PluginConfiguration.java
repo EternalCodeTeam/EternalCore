@@ -74,6 +74,16 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Description({" ", "# Teleport section"})
+    public Tp tp = new Tp();
+
+    @Contextual
+    public static class Tp {
+
+        @Description("# Teleports the player to spawn after death")
+        public boolean teleportToSpawnOnDeath = true;
+    }
+
     @Description({ " ", "# Homes Section" })
     public Homes homes = new Homes();
 
