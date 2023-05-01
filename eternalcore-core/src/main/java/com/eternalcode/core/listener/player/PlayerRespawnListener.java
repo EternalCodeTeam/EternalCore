@@ -26,7 +26,7 @@ public class PlayerRespawnListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
-        if (this.config.tp.teleportToSpawnOnDeath) {
+        if (this.config.teleport.teleportToSpawnOnDeath) {
             Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
             this.teleportService.teleport(player, destinationLocation);
         }

@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.teleport.Teleport;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -51,10 +52,10 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Description({ " ", "# Teleport request section" })
-    public Tpa tpa = new Tpa();
+    public TeleportAsk teleportAsk = new TeleportAsk();
 
     @Contextual
-    public static class Tpa implements TeleportRequestSettings {
+    public static class TeleportAsk implements TeleportRequestSettings {
         @Description("# Time of tpa requests expire")
 
         @Description({ " ", "# Time of tpa requests expire" })
@@ -75,10 +76,10 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Description({" ", "# Teleport section"})
-    public Tp tp = new Tp();
+    public Teleport teleport = new Teleport();
 
     @Contextual
-    public static class Tp {
+    public static class Teleport {
 
         @Description("# Teleports the player to spawn after death")
         public boolean teleportToSpawnOnDeath = true;

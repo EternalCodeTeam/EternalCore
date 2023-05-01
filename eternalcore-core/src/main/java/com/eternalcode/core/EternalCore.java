@@ -255,7 +255,7 @@ class EternalCore implements EternalCoreApi {
         this.translationManager = TranslationManager.create(this.configurationManager, languageConfiguration);
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager);
-        this.teleportRequestService = new TeleportRequestService(pluginConfiguration.tpa);
+        this.teleportRequestService = new TeleportRequestService(pluginConfiguration.teleportAsk);
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
@@ -356,7 +356,7 @@ class EternalCore implements EternalCoreApi {
 
                 // Tpa Commands
                 new TpaCommand(this.teleportRequestService, this.noticeService),
-                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, pluginConfiguration.tpa, server),
+                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, pluginConfiguration.teleportAsk, server),
                 new TpaDenyCommand(this.teleportRequestService, this.noticeService, server),
 
                 // Spawn & Warp Command
