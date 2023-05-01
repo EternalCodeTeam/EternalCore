@@ -67,7 +67,7 @@ public class PollCreateController implements Listener {
             return;
         }
 
-        this.pollManager.startPool(user, poll);
+        this.pollManager.startPoll(user, poll);
     }
 
     private void handleDescription(User user, Poll.Builder poll, String message) {
