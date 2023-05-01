@@ -58,7 +58,7 @@ public class PollCommand {
 
     public static class PollArgument extends StringArgument {
 
-        public static final String KEY = "pool";
+        public static final String KEY = "poll";
         private final PollManager pollManager;
 
         public PollArgument(PollManager pollManager) {
