@@ -6,6 +6,7 @@ import java.util.Map;
 public final class Preconditions {
 
     private Preconditions() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
     public static void notNull(Object object, String name) {

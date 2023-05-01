@@ -3,13 +3,18 @@ package com.eternalcode.core.feature.poll;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.argument.basictype.StringArgument;
+import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.suggestion.Suggest;
+import dev.rollczi.litecommands.suggestion.Suggestion;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
+import java.util.List;
 
 @Route(name = "poll")
 @Permission("eternalcore.poll")
@@ -31,27 +36,41 @@ public class PollCommand {
         this.pollVoteInventory.openVoteInventory(player);
     }
 
-    @Execute(required = 1)
+    @Execute(route = "create", required = 1)
     @Permission("eternalcore.poll.create")
-    @Route(name = "create")
     @DescriptionDocs(description = "Create new poll", arguments = "<poll name> <duration>")
     void executeCreate(Player player, @Arg @Suggest("pool_name") String name, @Arg Duration duration) {
         this.pollManager.startCreatingPool(player.getUniqueId(), name, duration);
     }
 
-    @Execute(required = 0)
+    @Execute(route = "cancel", required = 0)
     @Permission("eternalcore.poll.create")
-    @Route(name = "cancel")
     @DescriptionDocs(description = "Cancel creating new poll")
     void executeCancel(Player player) {
         this.pollManager.cancelCreatingPool(player.getUniqueId());
     }
 
-    @Execute(required = 1)
-    @Route(name = "check")
+    @Execute(route = "check", required = 1)
     @DescriptionDocs(description = "Check poll results")
-    void executeCheck(Player player, @Arg String name) {
+    void executeCheck(Player player, @Arg @By(PoolArgument.KEY) String name) {
         this.pollResultsInventory.openResultsInventory(player, name);
     }
 
+    public static class PoolArgument extends StringArgument {
+
+        public static final String KEY = "pool";
+        private final PollManager pollManager;
+
+        public PoolArgument(PollManager pollManager) {
+            this.pollManager = pollManager;
+        }
+
+        @Override
+        public List<Suggestion> suggest(LiteInvocation invocation) {
+            return this.pollManager.getPreviousPolls().stream()
+                .map(poll -> Suggestion.of(poll.getName()))
+                .toList();
+        }
+
+    }
 }

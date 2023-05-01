@@ -10,6 +10,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -105,6 +107,10 @@ public class PollManager {
 
     public Optional<Poll> getPreviousPoll(String name) {
         return Optional.ofNullable(this.previousPolls.getIfPresent(name));
+    }
+
+    public Collection<Poll> getPreviousPolls() {
+        return Collections.unmodifiableCollection(this.previousPolls.asMap().values());
     }
 
     public void startPool(User owner, Poll poll) {

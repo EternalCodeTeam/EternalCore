@@ -7,7 +7,6 @@ import com.eternalcode.core.command.argument.GameModeArgument;
 import com.eternalcode.core.command.argument.LocationArgument;
 import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgument;
-import com.eternalcode.core.command.argument.UuidArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
@@ -302,18 +301,18 @@ class EternalCore implements EternalCoreApi {
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
 
             // Arguments (include optional)
-            .argument(String.class, StringNicknameArgument.KEY, new StringNicknameArgument(server))
-            .argument(GameMode.class,                           new GameModeArgument(this.viewerProvider, this.translationManager, commandConfiguration.argument))
-            .argument(NoticeType.class,                         new NoticeTypeArgument(this.viewerProvider, this.translationManager))
-            .argument(Warp.class,                               new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
-            .argument(Enchantment.class,                        new EnchantmentArgument(this.viewerProvider, this.translationManager))
-            .argument(User.class,                               new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
-            .argument(Player.class,                             new PlayerArgument(this.viewerProvider, this.translationManager, server))
-            .argument(Player.class, RequesterArgument.KEY,      new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
-            .argument(Duration.class, DurationArgument.KEY,     new DurationArgument(this.viewerProvider, this.translationManager))
-            .argument(Integer.class, SpeedArgument.KEY,         new SpeedArgument(this.viewerProvider, this.translationManager))
-            .argument(MobEntity.class,                          new MobEntityArgument(this.viewerProvider, this.translationManager))
-            .argument(UUID.class,                               new UuidArgument(this.viewerProvider, this.translationManager))
+            .argument(String.class, StringNicknameArgument.KEY,   new StringNicknameArgument(server))
+            .argument(String.class, PollCommand.PoolArgument.KEY, new PollCommand.PoolArgument(this.pollManager))
+            .argument(GameMode.class,                             new GameModeArgument(this.viewerProvider, this.translationManager, commandConfiguration.argument))
+            .argument(NoticeType.class,                           new NoticeTypeArgument(this.viewerProvider, this.translationManager))
+            .argument(Warp.class,                                 new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
+            .argument(Enchantment.class,                          new EnchantmentArgument(this.viewerProvider, this.translationManager))
+            .argument(User.class,                                 new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
+            .argument(Player.class,                               new PlayerArgument(this.viewerProvider, this.translationManager, server))
+            .argument(Player.class, RequesterArgument.KEY,        new RequesterArgument(this.teleportRequestService, this.translationManager, this.viewerProvider, server))
+            .argument(Duration.class, DurationArgument.KEY,       new DurationArgument(this.viewerProvider, this.translationManager))
+            .argument(Integer.class, SpeedArgument.KEY,           new SpeedArgument(this.viewerProvider, this.translationManager))
+            .argument(MobEntity.class,                            new MobEntityArgument(this.viewerProvider, this.translationManager))
 
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class, new LocationArgument(this.translationManager, this.viewerProvider))
