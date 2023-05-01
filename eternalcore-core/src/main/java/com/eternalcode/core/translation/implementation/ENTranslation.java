@@ -664,7 +664,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>You cannot create a new poll because you are already creating one!");
 
         @Description(" ")
-        public Notification pollAlreadyActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one!");
+        public Notification pollAlreadyActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because one already exists!");
 
         @Description(" ")
         public Notification unavailablePollResults = Notification.chat("<red>✘ <dark_red>This poll does not exist or has expired!");
