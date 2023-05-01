@@ -113,7 +113,7 @@ public class PollManager {
         return Collections.unmodifiableCollection(this.previousPolls.asMap().values());
     }
 
-    public void startPool(User owner, Poll poll) {
+    public void startPoll(User owner, Poll poll) {
         this.noticeService.create()
             .onlinePlayers()
             .placeholder("{OWNER}", owner.getName())
