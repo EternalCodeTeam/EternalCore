@@ -164,7 +164,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -302,7 +301,7 @@ class EternalCore implements EternalCoreApi {
 
             // Arguments (include optional)
             .argument(String.class, StringNicknameArgument.KEY,   new StringNicknameArgument(server))
-            .argument(String.class, PollCommand.PoolArgument.KEY, new PollCommand.PoolArgument(this.pollManager))
+            .argument(String.class, PollCommand.PollArgument.KEY, new PollCommand.PollArgument(this.pollManager))
             .argument(GameMode.class,                             new GameModeArgument(this.viewerProvider, this.translationManager, commandConfiguration.argument))
             .argument(NoticeType.class,                           new NoticeTypeArgument(this.viewerProvider, this.translationManager))
             .argument(Warp.class,                                 new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))

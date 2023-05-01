@@ -52,16 +52,16 @@ public class PollCommand {
 
     @Execute(route = "check", required = 1)
     @DescriptionDocs(description = "Check poll results")
-    void executeCheck(Player player, @Arg @By(PoolArgument.KEY) String name) {
+    void executeCheck(Player player, @Arg @By(PollArgument.KEY) String name) {
         this.pollResultsInventory.openResultsInventory(player, name);
     }
 
-    public static class PoolArgument extends StringArgument {
+    public static class PollArgument extends StringArgument {
 
         public static final String KEY = "pool";
         private final PollManager pollManager;
 
-        public PoolArgument(PollManager pollManager) {
+        public PollArgument(PollManager pollManager) {
             this.pollManager = pollManager;
         }
 
