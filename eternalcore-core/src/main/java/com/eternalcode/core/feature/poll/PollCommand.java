@@ -39,7 +39,7 @@ public class PollCommand {
     @Execute(route = "create", required = 2)
     @Permission("eternalcore.poll.create")
     @DescriptionDocs(description = "Create new poll", arguments = "<poll name> <duration>")
-    void executeCreate(Player player, @Arg @Suggest("pool_name") String name, @Arg Duration duration) {
+    void executeCreate(Player player, @Arg @Suggest("poll_name") String name, @Arg Duration duration) {
         this.pollManager.startCreatingPoll(player.getUniqueId(), name, duration);
     }
 
