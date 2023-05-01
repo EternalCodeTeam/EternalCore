@@ -36,7 +36,7 @@ public class PollCommand {
         this.pollVoteInventory.openVoteInventory(player);
     }
 
-    @Execute(route = "create", required = 1)
+    @Execute(route = "create", required = 2)
     @Permission("eternalcore.poll.create")
     @DescriptionDocs(description = "Create new poll", arguments = "<poll name> <duration>")
     void executeCreate(Player player, @Arg @Suggest("pool_name") String name, @Arg Duration duration) {
