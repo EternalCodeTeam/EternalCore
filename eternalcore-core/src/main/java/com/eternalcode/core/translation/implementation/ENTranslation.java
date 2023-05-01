@@ -646,7 +646,7 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENPollSection implements PollSection {
         @Description("# {OWNER} - The name of the user who created the poll")
-        public Notification pollCreated = Notification.chat("<green>► <white><underlined>{OWNER}<reset> has created a poll, please vote using <bold>/poll");
+        public Notification pollCreated = Notification.chat("<green>► <white><underlined>{OWNER}<reset> has created a poll, please vote using <gray>/poll");
 
         @Description(" ")
         public Notification howToCancelPoll = Notification.chat("<green>► <white>If you want to <red>cancel <white>creating a poll type <underlined>/poll cancel");
@@ -655,16 +655,16 @@ public class ENTranslation extends AbstractTranslation {
         public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Poll creation has been canceled!");
 
         @Description(" ")
-        public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>You can't cancel a poll because you don't create one!");
+        public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>You can't cancel a poll because you haven't created one!");
 
         @Description({ " ", "# {UUID} - Poll UUID is used to check the results under /poll check {UUID}" })
-        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Poll is over <underlined><click:run_command:/poll check {NAME}><hover:show_text:\"<red>Click :)\">click here<reset> to see results");
+        public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Poll is over! <underlined><click:run_command:/poll check {NAME}><hover:show_text:\"<red>Click :)\">click here<reset> to see results");
 
         @Description(" ")
         public Notification alreadyCreatingPoll = Notification.chat("<red>✘ <dark_red>You cannot create a new poll because you are already creating one!");
 
         @Description(" ")
-        public Notification pollAlreadyActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because there is already one!");
+        public Notification pollAlreadyActive = Notification.chat("<red>✘ <dark_red>You can't create a poll because one already exists!");
 
         @Description(" ")
         public Notification unavailablePollResults = Notification.chat("<red>✘ <dark_red>This poll does not exist or has expired!");

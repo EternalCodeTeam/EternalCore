@@ -650,7 +650,7 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLPollSection implements PollSection {
-        @Description("# {OWNER} - Nazwa użtkownika który stworzył ankiete")
+        @Description("# {OWNER} - Nazwa użytkownika który stworzył ankiete")
         public Notification pollCreated = Notification.chat("<green>► <white>Użytkownik <underlined>{OWNER}<reset> stworzył ankiete, zagłosuj za pomocą <bold>/poll");
 
         @Description(" ")
@@ -660,7 +660,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notification pollCancelled = Notification.chat("<red>✘ <dark_red>Tworzenie ankiety zostało anulowane!");
 
         @Description(" ")
-        public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>Nie możesz anulować ankiety bo żadnej nie tworzysz!");
+        public Notification cantCancelPoll = Notification.chat("<red>✘ <dark_red>Nie możesz anulować ankiety, ponieważ żadnej nie tworzysz!");
 
         @Description({ " ", "# {UUID} - UUID ankieta służy do sprwadzenia wyników pod /poll check {UUID}" })
         public Notification pollEnded = Notification.chat("<yellow><bold>☆<reset> Ankieta się zakończyła <underlined><click:run_command:/poll check {NAME}><hover:show_text:\"<red>Click :)\">kliknij tutaj<reset> aby zobaczyć wyniki");
@@ -687,7 +687,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notification descriptionValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz 'Opis' <newline><green>► <gray>Przykładowy opis: 'To jest przykładowy opis!'");
 
         @Description(" ")
-        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz 'Liste Opcji' <newline><green>► <gray>Przykładowe opcje: 'Opcja Pierwsza, Opcja Druga'");
+        public Notification optionsValidationMessage = Notification.chat("<newline><green>► <white>Konfigurujesz teraz listę opcji. <newline><green>► <gray>Przykładowe opcje: 'Opcja Pierwsza, Opcja Druga'");
 
         @Description({ " ", "# {MAX_LENGTH} - Maksymalna długość opisu" })
         public Notification descriptionMaxLengthMessage = Notification.chat("<red>✘ <dark_red>Opis nie może być dłuższy niż {MAX_LENGTH} znaków");
