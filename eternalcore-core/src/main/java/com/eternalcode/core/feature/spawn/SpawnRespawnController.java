@@ -1,4 +1,4 @@
-package com.eternalcode.core.listener.player;
+package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
@@ -10,13 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-public class PlayerRespawnListener implements Listener {
+public class SpawnRespawnController implements Listener {
 
     private final TeleportService teleportService;
     private final PluginConfiguration config;
     private final LocationsConfiguration locations;
 
-    public PlayerRespawnListener(TeleportService teleportService, PluginConfiguration config, LocationsConfiguration locations) {
+    public SpawnRespawnController(TeleportService teleportService, PluginConfiguration config, LocationsConfiguration locations) {
         this.teleportService = teleportService;
         this.config = config;
         this.locations = locations;
