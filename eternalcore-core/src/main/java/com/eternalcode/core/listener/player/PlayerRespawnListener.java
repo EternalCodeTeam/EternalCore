@@ -23,7 +23,7 @@ public class PlayerRespawnListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
+    void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
         if (this.config.teleport.teleportToSpawnOnDeath) {
