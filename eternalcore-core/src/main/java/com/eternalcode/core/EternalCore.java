@@ -110,6 +110,7 @@ import com.eternalcode.core.listener.player.PlayerDeathListener;
 import com.eternalcode.core.listener.player.PlayerJoinListener;
 import com.eternalcode.core.listener.player.PlayerLoginListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
+import com.eternalcode.core.feature.spawn.SpawnRespawnController;
 import com.eternalcode.core.listener.sign.SignChangeListener;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;
@@ -258,8 +259,8 @@ class EternalCore implements EternalCoreApi {
         this.translationManager = TranslationManager.create(this.configurationManager, languageConfiguration);
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager);
-        this.teleportRequestService = new TeleportRequestService(pluginConfiguration.tpa);
         this.pollManager = new PollManager(this.noticeService, this.getScheduler());
+        this.teleportRequestService = new TeleportRequestService(pluginConfiguration.teleportAsk);
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
@@ -361,7 +362,7 @@ class EternalCore implements EternalCoreApi {
 
                 // Tpa Commands
                 new TpaCommand(this.teleportRequestService, this.noticeService),
-                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, pluginConfiguration.tpa, server),
+                new TpaAcceptCommand(this.teleportRequestService, this.teleportTaskService, this.noticeService, pluginConfiguration.teleportAsk, server),
                 new TpaDenyCommand(this.teleportRequestService, this.noticeService, server),
 
                 // Spawn & Warp Command
@@ -432,6 +433,7 @@ class EternalCore implements EternalCoreApi {
             new PlayerCommandPreprocessListener(this.noticeService, pluginConfiguration, server),
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService),
+            new SpawnRespawnController(this.teleportService, pluginConfiguration, locationsConfiguration),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
             new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage),

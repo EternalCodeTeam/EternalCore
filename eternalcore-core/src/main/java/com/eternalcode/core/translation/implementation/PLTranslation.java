@@ -578,7 +578,7 @@ public class PLTranslation extends AbstractTranslation {
         );
 
         @Description({ " ", "# {KILLED} - Liczba zabitych mobów" })
-        public Notification butcherCommand = Notification.chat("<green>► <white>Zabiłeś <gren>{KILLED} <white>mobów!");
+        public Notification butcherCommand = Notification.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>mobów!");
 
         @Description({ " ", "# {SAFE_CHUNKS} - Liczba bezpiecznych chunków" })
         public Notification safeChunksMessage = Notification.chat("<red>✘ <dark_red>Błąd: <red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
