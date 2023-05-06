@@ -46,7 +46,6 @@ import com.eternalcode.core.feature.essentials.FlyCommand;
 import com.eternalcode.core.feature.essentials.GodCommand;
 import com.eternalcode.core.feature.essentials.HealCommand;
 import com.eternalcode.core.feature.essentials.KillCommand;
-import com.eternalcode.core.feature.essentials.container.EnchantingTableCommand;
 import com.eternalcode.core.feature.essentials.container.LoomCommand;
 import com.eternalcode.core.feature.essentials.container.SmithingTableCommand;
 import com.eternalcode.core.feature.essentials.mob.ButcherCommand;
@@ -374,7 +373,6 @@ class EternalCore implements EternalCoreApi {
                 new StonecutterCommand(this.noticeService),
                 new LoomCommand(this.noticeService),
                 new SmithingTableCommand(this.noticeService),
-                new EnchantingTableCommand(this.noticeService),
                 new DisposalCommand(this.miniMessage, this.translationManager, this.userManager, server, this.noticeService),
 
                 // Private Chat Commands
