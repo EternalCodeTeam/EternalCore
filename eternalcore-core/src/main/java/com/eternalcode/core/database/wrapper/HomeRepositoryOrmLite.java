@@ -41,7 +41,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             .where()
             .eq("owner", user.getUniqueId())
             .and()
-            .eq("name", user.getName())
+            .eq("name", name)
             .queryForFirst()
         ).map(HomeWrapper::toHome));
     }
@@ -80,8 +80,6 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
         return this.action(HomeWrapper.class, dao -> Option.supplyThrowing(Throwable.class, () -> dao.queryBuilder()
             .where()
             .eq("owner", user.getUniqueId())
-            .and()
-            .eq("name", user.getName())
             .query()
         )).thenApply(option -> option.map(homes -> homes.stream()
             .map(HomeWrapper::toHome)
