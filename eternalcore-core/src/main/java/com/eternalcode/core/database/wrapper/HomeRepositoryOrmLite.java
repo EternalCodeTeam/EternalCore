@@ -63,7 +63,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             builder.where()
                 .eq("owner", user.getUniqueId())
                 .and()
-                .eq("name", user.getName());
+                .eq("name", name);
 
             return builder.delete();
         }).onError(Throwable::printStackTrace).orElseGet(throwable -> 0));
