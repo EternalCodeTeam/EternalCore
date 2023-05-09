@@ -12,28 +12,23 @@ import java.util.logging.Logger;
 
 public class AdditionalContainerPaper {
 
-    public static final AdditionalContainerPaper ANVIL = new AdditionalContainerPaper("anvil", player -> player.openAnvil(null, true));
-    public static final AdditionalContainerPaper STONE_CUTTER = new AdditionalContainerPaper("stone_cutter", player -> player.openStonecutter(null, true));
-    public static final AdditionalContainerPaper GRINDSTONE = new AdditionalContainerPaper("grindstone", player -> player.openGrindstone(null, true));
-    public static final AdditionalContainerPaper CARTOGRAPHY_TABLE = new AdditionalContainerPaper("cartography_table", player -> player.openCartographyTable(null, true));
-    public static final AdditionalContainerPaper LOOM = new AdditionalContainerPaper("loom", player -> player.openLoom(null, true));
-    public static final AdditionalContainerPaper SMITHING_TABLE = new AdditionalContainerPaper("smithing_table", player -> player.openSmithingTable(null, true));
+    public static final AdditionalContainerPaper ANVIL = new AdditionalContainerPaper(player -> player.openAnvil(null, true));
+    public static final AdditionalContainerPaper STONE_CUTTER = new AdditionalContainerPaper(player -> player.openStonecutter(null, true));
+    public static final AdditionalContainerPaper GRINDSTONE = new AdditionalContainerPaper(player -> player.openGrindstone(null, true));
+    public static final AdditionalContainerPaper CARTOGRAPHY_TABLE = new AdditionalContainerPaper(player -> player.openCartographyTable(null, true));
+    public static final AdditionalContainerPaper LOOM = new AdditionalContainerPaper(player -> player.openLoom(null, true));
+    public static final AdditionalContainerPaper SMITHING_TABLE = new AdditionalContainerPaper(player -> player.openSmithingTable(null, true));
 
     private static final Environment ENVIRONMENT = PaperLib.getEnvironment();
     private static final Logger LOGGER = Logger.getLogger("AdditionalContainerPaper");
 
-    private final String name;
     private final Consumer<Player> consumer;
 
-    public AdditionalContainerPaper(String name, Consumer<Player> consumer) {
-        this.name = name;
+    public AdditionalContainerPaper(Consumer<Player> consumer) {
         this.consumer = consumer;
     }
 
-    public String name() {
-        return this.name;
-    }
-
+    @SuppressWarnings("deprecation")
     public void open(Player player) {
         if (!ENVIRONMENT.isPaper()) {
             player.sendMessage(ChatColor.RED + "This feature is not supported on this server. Please contact the server administrator and check console!");
@@ -43,29 +38,5 @@ public class AdditionalContainerPaper {
         }
 
         this.consumer.accept(player);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        AdditionalContainerPaper that = (AdditionalContainerPaper) o;
-        return Objects.equals(this.name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name);
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 }
