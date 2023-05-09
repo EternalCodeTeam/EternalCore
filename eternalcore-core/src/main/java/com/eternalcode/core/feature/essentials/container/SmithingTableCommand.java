@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.essentials.container;
 
-
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.core.notification.NoticeService;
@@ -10,20 +9,20 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-@Route(name = "cartography", aliases = "cartography-table")
-@Permission("eternalcore.cartography")
-public class CartographyTableCommand {
+@Route(name = "smithingtable", aliases = "smithing")
+@Permission("eternalcore.smithingtable")
+public class SmithingTableCommand {
 
     private final NoticeService noticeService;
 
-    public CartographyTableCommand(NoticeService noticeService) {
+    public SmithingTableCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
     @Execute(required = 0)
-    @DescriptionDocs(description = "Opens a cartography table for you")
+    @DescriptionDocs(description = "Opens a smithing table for you")
     void executeSelf(Player player) {
-        AdditionalContainerPaper.CARTOGRAPHY_TABLE.open(player);
+        AdditionalContainerPaper.SMITHING_TABLE.open(player);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
@@ -32,9 +31,9 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 1)
-    @DescriptionDocs(description = "Opens a cartography table for another player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens a smithing table for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
-        AdditionalContainerPaper.CARTOGRAPHY_TABLE.open(target);
+        AdditionalContainerPaper.SMITHING_TABLE.open(target);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())
