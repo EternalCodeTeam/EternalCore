@@ -61,7 +61,7 @@ eternalShadow {
     )
 
     // gui library
-    library("dev.triumphteam:triumph-gui:3.1.4")
+    library("dev.triumphteam:triumph-gui:3.1.5")
     libraryRelocate("dev.triumphteam")
 
     // metrics
