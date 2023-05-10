@@ -43,7 +43,7 @@ eternalShadow {
     )
 
     // command framework & skull library
-    library("dev.rollczi.litecommands:bukkit-adventure:2.8.7")
+    library("dev.rollczi.litecommands:bukkit-adventure:2.8.8")
     library("dev.rollczi:liteskullapi:1.3.0")
     libraryRelocate(
         "dev.rollczi.litecommands",
