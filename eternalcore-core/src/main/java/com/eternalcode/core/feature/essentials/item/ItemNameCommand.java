@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.util.AdventureUtil;
 import com.eternalcode.core.util.legacy.Legacy;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
