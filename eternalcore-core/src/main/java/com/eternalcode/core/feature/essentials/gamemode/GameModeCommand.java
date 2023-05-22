@@ -12,7 +12,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.handle.LiteException;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
-import panda.std.Blank;
 
 @Route(name = "gamemode", aliases = { "gm" })
 @Permission("eternalcore.gamemode")
@@ -31,7 +30,7 @@ public class GameModeCommand {
         GameMode gameMode = this.commandConfiguration.getGameMode(invocation.label());
 
         if (gameMode == null) {
-            throw new LiteException("");
+            throw LiteException.newInvalidUsage();
         }
 
         this.execute(player, gameMode);
