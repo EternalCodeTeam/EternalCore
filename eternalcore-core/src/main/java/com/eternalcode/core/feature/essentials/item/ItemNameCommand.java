@@ -41,7 +41,7 @@ public class ItemNameCommand {
 
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        String serialized = Legacy.SECTION_SERIALIZER.serialize(AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(name)));
+        String serialized = Legacy.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(name));
 
         itemMeta.setDisplayName(serialized);
         itemStack.setItemMeta(itemMeta);
