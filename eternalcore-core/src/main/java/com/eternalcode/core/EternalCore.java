@@ -16,6 +16,7 @@ import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.command.argument.MobEntityArgument;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.command.argument.home.HomeArgument;
+import com.eternalcode.core.command.configurator.GameModeConfigurator;
 import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.command.configurator.CommandConfigurator;
 import com.eternalcode.core.command.contextual.PlayerContextual;
@@ -387,7 +388,7 @@ class EternalCore implements EternalCoreApi {
                 // Moderation Commands
                 new FlyCommand(this.noticeService),
                 new GodCommand(this.noticeService),
-                new GameModeCommand(this.noticeService),
+                new GameModeCommand(commandConfiguration, this.noticeService),
                 new SpeedCommand(this.noticeService),
                 new GiveCommand(this.noticeService, pluginConfiguration),
                 new EnchantCommand(pluginConfiguration, this.noticeService),
@@ -416,6 +417,7 @@ class EternalCore implements EternalCoreApi {
                 ChatManagerCommand.create(this.chatManager, this.noticeService, pluginConfiguration.chat.linesToClear)
             )
             .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
+            .commandEditor(GameModeCommand.class, new GameModeConfigurator(commandConfiguration))
             .register();
 
         /* Listeners */

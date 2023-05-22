@@ -1,12 +1,15 @@
 package com.eternalcode.core.feature.essentials.gamemode;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.handle.LiteException;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -14,10 +17,23 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.gamemode")
 public class GameModeCommand {
 
+    private final CommandConfiguration commandConfiguration;
     private final NoticeService noticeService;
 
-    public GameModeCommand(NoticeService noticeService) {
+    public GameModeCommand(CommandConfiguration commandConfiguration, NoticeService noticeService) {
+        this.commandConfiguration = commandConfiguration;
         this.noticeService = noticeService;
+    }
+
+    @Execute(required = 0)
+    void executeAlias(LiteInvocation invocation, Player player) {
+        GameMode gameMode = this.commandConfiguration.getGameMode(invocation.label());
+
+        if (gameMode == null) {
+            throw LiteException.newInvalidUsage();
+        }
+
+        this.execute(player, gameMode);
     }
 
     @Execute(required = 1)
