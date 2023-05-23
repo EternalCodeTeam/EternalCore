@@ -9,6 +9,7 @@ import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
+import com.eternalcode.core.command.argument.SpeedTypeArgument;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
