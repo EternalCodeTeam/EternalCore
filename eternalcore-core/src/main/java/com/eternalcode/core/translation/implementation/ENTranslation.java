@@ -501,12 +501,15 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notification speedBetweenZeroAndTen = Notification.chat("<red>✘ <dark_red>Enter speed from 0 to 10!");
+        public Notification speedTypeNotCorrect = Notification.chat("<red>✘ <dark_red>Invalid speed type!")
 
-        @Description("# {SPEED} - Speed value")
-        public Notification speedSet = Notification.chat("<green>► <white>Speed is set to <green>{SPEED}");
+        @Description("# {SPEED} - Walk or fly speed value")
+        public Notification speedWalkSet = Notification.chat("<green>► <white>Walking speed is set to <green>{SPEED}");
+        public Notification speedFlySet = Notification.chat("<green>► <white>Flying speed is set to <green>{SPEED}");
 
-        @Description("# {PLAYER} - Target player, {SPEED} - Target player speed value")
-        public Notification speedSetBy = Notification.chat("<green>► <white>Speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
+        @Description("# {PLAYER} - Target player, {SPEED} - Target player walk or fly speed value")
+        public Notification speedWalkSetBy = Notification.chat("<green>► <white>Walking speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
+        public Notification speedFlySetBy = Notification.chat("<green>► <white>Flying speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
 
         @Description({ " ", "# {STATE} - Godmode status" })
         public Notification godMessage = Notification.chat("<green>► <white>God is now {STATE}");

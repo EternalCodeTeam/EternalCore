@@ -1,0 +1,62 @@
+package com.eternalcode.core.feature.essentials.speed;
+
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.command.argument.SpeedArgument;
+import com.eternalcore.core.feature.essentials.speed.SpeedType;
+import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.viewer.Viewer;
+import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
+import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
+import dev.rollczi.litecommands.command.route.Route;
+import org.bukkit.entity.Player;
+
+@Route(name = "speed")
+@Permission("eternalcore.speed")
+public class SpeedCommand {
+
+    private final NoticeService noticeService;
+
+    public SpeedCommand(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
+
+    @Execute(required = 2)
+    @DescriptionDocs(description = "Set speed of walking or flying to specified amount", arguments = "<type> <amount>")
+    void execute(Player player, @Arg SpeedType speedType, @Arg @By(SpeedArgument.KEY) Integer amount) {
+        this.setSpeed(player, speedType, amount);
+
+        this.noticeService.create()
+            .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSet() : translation.player().speedFlySet())
+            .placeholder("{SPEED}", String.valueOf(amount))
+            .player(player.getUniqueId())
+            .send();
+    }
+
+    @Execute(required = 3)
+    @DescriptionDocs(description = "Set speed of walking or flying to specified amount and player", arguments = "<type> <amount> <player>")
+    void execute(Viewer viewer, @Arg SpeedType speedType, @Arg @By(SpeedArgument.KEY) Integer amount, @Arg Player target) {
+        this.setSpeed(target, speedType, amount);
+
+        this.noticeService.create()
+            .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSet() : translation.player().speedFlySet())
+            .placeholder("{SPEED}", String.valueOf(amount))
+            .player(target.getUniqueId())
+            .send();
+
+        this.noticeService.create()
+            .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSetBy() : translation.player().speedFlySetBy())
+            .placeholder("{PLAYER}", target.getName())
+            .placeholder("{SPEED}", String.valueOf(amount))
+            .viewer(viewer)
+            .send();
+    }
+
+    void setSpeed(Player player, SpeedType speedType, int amount) {
+        switch (speedType) {
+            case WALK -> player.setWalkSpeed(amount / 10.0f);
+            case FLY -> player.setFlySpeed(amount / 10.0f);
+        }
+    }
+}
