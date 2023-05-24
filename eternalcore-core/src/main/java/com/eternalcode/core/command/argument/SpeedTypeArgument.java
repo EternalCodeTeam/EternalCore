@@ -7,14 +7,12 @@ import com.eternalcode.core.feature.essentials.speed.SpeedType;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.command.amount.AmountValidator;
 import dev.rollczi.litecommands.suggestion.Suggestion;
 import panda.std.Option;
 import panda.std.Result;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @ArgumentName("type")
 public class SpeedTypeArgument extends AbstractViewerArgument<SpeedType> {
@@ -25,7 +23,7 @@ public class SpeedTypeArgument extends AbstractViewerArgument<SpeedType> {
 
     @Override
     public Result<SpeedType, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
-        return Option.supplyThrowing(IllegalArgumentException.class, () -> SpeedType.valueOf(argument))
+        return Option.supplyThrowing(IllegalArgumentException.class, () -> SpeedType.valueOf(argument.toUpperCase()))
                 .toResult(() -> translation.player().speedTypeNotCorrect());
     }
 

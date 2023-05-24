@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.essentials.speed;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.SpeedArgument;
-import com.eternalcore.core.feature.essentials.speed.SpeedType;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -57,6 +56,7 @@ public class SpeedCommand {
         switch (speedType) {
             case WALK -> player.setWalkSpeed(amount / 10.0f);
             case FLY -> player.setFlySpeed(amount / 10.0f);
+            default -> throw new IllegalStateException("Unexpected value: " + speedType);
         }
     }
 }

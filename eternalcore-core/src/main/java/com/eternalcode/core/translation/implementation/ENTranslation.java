@@ -501,7 +501,7 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notification speedBetweenZeroAndTen = Notification.chat("<red>✘ <dark_red>Enter speed from 0 to 10!");
-        public Notification speedTypeNotCorrect = Notification.chat("<red>✘ <dark_red>Invalid speed type!")
+        public Notification speedTypeNotCorrect = Notification.chat("<red>✘ <dark_red>Invalid speed type!");
 
         @Description("# {SPEED} - Walk or fly speed value")
         public Notification speedWalkSet = Notification.chat("<green>► <white>Walking speed is set to <green>{SPEED}");
