@@ -21,16 +21,47 @@ public class SpeedCommand {
         this.noticeService = noticeService;
     }
 
+    @Execute(required = 1)
+    @DescriptionDocs(description = "Set speed depending on whether you flying or walking by specified amount", arguments = "<amount>")
+    void execute(Player player, @Arg @By(SpeedArgument.KEY) Integer amount) {
+        this.setSpeed(player, amount);
+
+        this.noticeService.create()
+                .notice(translation -> player.isFlying() ? translation.player().speedFlySet() : translation.player().speedWalkSet())
+                .placeholder("{SPEED}", String.valueOf(amount))
+                .player(player.getUniqueId())
+                .send();
+    }
+
+    @Execute(required = 2)
+    @DescriptionDocs(description = "Set speed depending on whether the player is flying or walking by specified amount", arguments = "<amount> <player>")
+    void execute(Viewer viewer, @Arg @By(SpeedArgument.KEY) Integer amount, @Arg Player target) {
+        this.setSpeed(target, amount);
+
+        this.noticeService.create()
+                .notice(translation -> target.isFlying() ? translation.player().speedFlySet() : translation.player().speedWalkSet())
+                .placeholder("{SPEED}", String.valueOf(amount))
+                .player(target.getUniqueId())
+                .send();
+
+        this.noticeService.create()
+                .notice(translation -> target.isFlying() ? translation.player().speedFlySetBy() : translation.player().speedWalkSetBy())
+                .placeholder("{PLAYER}", target.getName())
+                .placeholder("{SPEED}", String.valueOf(amount))
+                .viewer(viewer)
+                .send();
+    }
+
     @Execute(required = 2)
     @DescriptionDocs(description = "Set speed of walking or flying to specified amount", arguments = "<type> <amount>")
     void execute(Player player, @Arg SpeedType speedType, @Arg @By(SpeedArgument.KEY) Integer amount) {
         this.setSpeed(player, speedType, amount);
 
         this.noticeService.create()
-            .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSet() : translation.player().speedFlySet())
-            .placeholder("{SPEED}", String.valueOf(amount))
-            .player(player.getUniqueId())
-            .send();
+                .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSet() : translation.player().speedFlySet())
+                .placeholder("{SPEED}", String.valueOf(amount))
+                .player(player.getUniqueId())
+                .send();
     }
 
     @Execute(required = 3)
@@ -39,17 +70,26 @@ public class SpeedCommand {
         this.setSpeed(target, speedType, amount);
 
         this.noticeService.create()
-            .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSet() : translation.player().speedFlySet())
-            .placeholder("{SPEED}", String.valueOf(amount))
-            .player(target.getUniqueId())
-            .send();
+                .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSet() : translation.player().speedFlySet())
+                .placeholder("{SPEED}", String.valueOf(amount))
+                .player(target.getUniqueId())
+                .send();
 
         this.noticeService.create()
-            .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSetBy() : translation.player().speedFlySetBy())
-            .placeholder("{PLAYER}", target.getName())
-            .placeholder("{SPEED}", String.valueOf(amount))
-            .viewer(viewer)
-            .send();
+                .notice(translation -> speedType == SpeedType.WALK ? translation.player().speedWalkSetBy() : translation.player().speedFlySetBy())
+                .placeholder("{PLAYER}", target.getName())
+                .placeholder("{SPEED}", String.valueOf(amount))
+                .viewer(viewer)
+                .send();
+    }
+
+    void setSpeed(Player player, int amount) {
+        if (player.isFlying()) {
+            player.setFlySpeed(amount / 10.0f);
+        }
+        else {
+            player.setWalkSpeed(amount / 10.0f);
+        }
     }
 
     void setSpeed(Player player, SpeedType speedType, int amount) {
