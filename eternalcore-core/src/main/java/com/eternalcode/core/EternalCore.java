@@ -9,6 +9,7 @@ import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
+import com.eternalcode.core.command.argument.SpeedTypeArgument;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
@@ -51,7 +52,8 @@ import com.eternalcode.core.feature.essentials.KillCommand;
 import com.eternalcode.core.feature.essentials.container.LoomCommand;
 import com.eternalcode.core.feature.essentials.container.SmithingTableCommand;
 import com.eternalcode.core.feature.essentials.mob.ButcherCommand;
-import com.eternalcode.core.feature.essentials.SpeedCommand;
+import com.eternalcode.core.feature.essentials.speed.SpeedCommand;
+import com.eternalcode.core.feature.essentials.speed.SpeedType;
 import com.eternalcode.core.feature.essentials.container.AnvilCommand;
 import com.eternalcode.core.feature.essentials.container.CartographyTableCommand;
 import com.eternalcode.core.feature.essentials.container.DisposalCommand;
@@ -302,6 +304,7 @@ class EternalCore implements EternalCoreApi {
             .argument(String.class, StringNicknameArgument.KEY, new StringNicknameArgument(server))
             .argument(GameMode.class,                           new GameModeArgument(this.viewerProvider, this.translationManager, commandConfiguration.argument))
             .argument(NoticeType.class,                         new NoticeTypeArgument(this.viewerProvider, this.translationManager))
+            .argument(SpeedType.class,                          new SpeedTypeArgument(this.viewerProvider, this.translationManager))
             .argument(Warp.class,                               new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
             .argument(Enchantment.class,                        new EnchantmentArgument(this.viewerProvider, this.translationManager))
             .argument(User.class,                               new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
