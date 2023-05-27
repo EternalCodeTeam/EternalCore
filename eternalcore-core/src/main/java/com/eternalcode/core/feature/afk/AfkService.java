@@ -1,10 +1,8 @@
 package com.eternalcode.core.feature.afk;
 
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.time.Instant;

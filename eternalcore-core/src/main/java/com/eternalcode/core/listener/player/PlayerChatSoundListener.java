@@ -10,8 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 @FeatureDocs(
-    name = "Sound after message in chat",
-    description = "It allows you to play sound after message in chat"
+    name = "Sound after message fadeIn chat",
+    description = "It allows you to play sound after message fadeIn chat"
 )
 public class PlayerChatSoundListener implements Listener {
 

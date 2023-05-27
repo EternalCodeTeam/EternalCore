@@ -1,7 +1,7 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -26,7 +26,7 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
     }
 
     @Override
-    public Result<GameMode, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<GameMode, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {
@@ -35,7 +35,7 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
 
         Optional<GameMode> alias = this.gameModeArgumentSettings.getByAlias(argument);
 
-        return alias.<Result<GameMode, Notification>>map(Result::ok)
+        return alias.<Result<GameMode, Notice>>map(Result::ok)
             .orElseGet(() -> Result.error(translation.player().gameModeNotCorrect()));
     }
 

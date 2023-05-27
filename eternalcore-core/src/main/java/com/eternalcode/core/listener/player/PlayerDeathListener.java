@@ -1,8 +1,8 @@
 package com.eternalcode.core.listener.player;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ import panda.utilities.StringUtils;
 import java.util.List;
 
 @FeatureDocs(
-    description = "Send a message to all players when a player dies, you can configure the messages based on damage cause in configuration, see: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html for all damage causes",
+    description = "Send a message to all players when a player dies, you can configure the messages based on damage cause fadeIn configuration, see: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html for all damage causes",
     name = "Player Death Message"
 )
 public class PlayerDeathListener implements Listener {
@@ -53,7 +53,7 @@ public class PlayerDeathListener implements Listener {
             .noticeOption(translation -> {
                 EntityDamageEvent.DamageCause cause = lastDamageCasue.getCause();
 
-                List<Notification> notifications = translation.event().deathMessageByDamageCause().get(cause);
+                List<Notice> notifications = translation.event().deathMessageByDamageCause().get(cause);
 
                 if (notifications == null) {
                     return Option.none();

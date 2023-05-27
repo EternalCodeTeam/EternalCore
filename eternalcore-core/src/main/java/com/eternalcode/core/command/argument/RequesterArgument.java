@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -32,7 +32,7 @@ public class RequesterArgument extends AbstractViewerArgument<Player> {
     }
 
     @Override
-    public Result<Player, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<Player, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         Player target = this.server.getPlayer(argument);
 
         if (!(invocation.sender().getHandle() instanceof Player player)) {

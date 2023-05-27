@@ -2,10 +2,10 @@ package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
-import com.eternalcode.core.configuration.composer.NotificationComposer;
+import com.eternalcode.core.configuration.composer.NoticeComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
@@ -26,7 +26,7 @@ public class ConfigurationManager {
         .withComposer(Duration.class, new DurationComposer())
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Position.class, new PositionComposer())
-        .withComposer(Notification.class, new NotificationComposer())
+        .withComposer(Notice.class, new NoticeComposer())
         .withMemberResolver(Visibility.PACKAGE_PRIVATE)
         .build();
 

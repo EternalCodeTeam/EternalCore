@@ -2,7 +2,7 @@ package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.RequesterArgument;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.amount.Required;

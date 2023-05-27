@@ -3,8 +3,8 @@ package com.eternalcode.core.feature.reportchat;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
-import com.eternalcode.core.notification.Notice;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeBroadcast;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.amount.Min;
@@ -52,7 +52,7 @@ public class HelpOpCommand {
             return;
         }
 
-        Notice notice = this.noticeService.create()
+        NoticeBroadcast notice = this.noticeService.create()
             .console()
             .player(uuid)
             .notice(translation -> translation.helpOp().format())

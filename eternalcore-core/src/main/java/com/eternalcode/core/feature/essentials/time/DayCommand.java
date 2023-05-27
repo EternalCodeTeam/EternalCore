@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.essentials.time;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -20,7 +20,7 @@ public class DayCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Sets time to day in specified world", arguments = "<world>")
+    @DescriptionDocs(description = "Sets time to day fadeIn specified world", arguments = "<world>")
     void day(Viewer viewer, @Arg World world) {
         world.setTime(100);
 

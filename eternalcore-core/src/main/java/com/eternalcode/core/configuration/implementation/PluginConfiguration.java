@@ -23,7 +23,7 @@ public class PluginConfiguration implements ReloadableConfig {
         "#",
         "# This is the main configuration file for EternalCore.",
         "#",
-        "# If you need help with the configuration or have any questions related to EternalCore, join us in our discord, or create an issue on our GitHub.",
+        "# If you need help with the configuration or have any questions related to EternalCore, join us fadeIn our discord, or create an issue on our GitHub.",
         "#",
         "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
         "# Discord: https://discord.gg/FQ7jmGBd6c",
@@ -61,7 +61,7 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
-        @Description({ " ", "# Time of teleportation time in /tpa commands" })
+        @Description({ " ", "# Time of teleportation time fadeIn /tpa commands" })
         public Duration tpaTimer = Duration.ofSeconds(10);
 
         @Override
@@ -134,7 +134,7 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Custom message for unknown command" })
         public boolean replaceStandardHelpMessage = false;
 
-        @Description({ " ", "# Chat delay to send next message in chat" })
+        @Description({ " ", "# Chat delay to send next message fadeIn chat" })
         public Duration chatDelay = Duration.ofSeconds(5);
 
         @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
@@ -217,7 +217,7 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Use unsafe enchantments? Allows you to apply custom enchants to various items")
         public boolean unsafeEnchantments = true;
 
-        @Description({ " ", "# The default item give amount, when no amount is specified in the command." })
+        @Description({ " ", "# The default item give amount, when no amount is specified fadeIn the command." })
         public int defaultGiveAmount = 1;
     }
 

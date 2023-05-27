@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -22,7 +22,7 @@ public class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
     }
 
     @Override
-    public Result<Enchantment, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<Enchantment, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument));
 
         if (enchantment == null) {

@@ -39,7 +39,7 @@
 - Add warp system (/warp)
 - Add support to PlaceholderAPI
 - More advanced /hat command
-- Add support to multiple notification type for configs
+- Add support to multiple notice type for configs
 - Add replay messages for all time-related commands
 - Add replay messages for all weather-related commands
 - Add home limit per permission

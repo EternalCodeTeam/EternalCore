@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.essentials;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.SpeedArgument;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;

@@ -86,7 +86,7 @@ public class DatabaseManager {
 
         this.connectionSource = new DataSourceConnectionSource(this.dataSource, this.dataSource.getJdbcUrl());
 
-        this.logger.info("Loaded database " + databaseType.toString().toLowerCase() + " in " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+        this.logger.info("Loaded database " + databaseType.toString().toLowerCase() + " fadeIn " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
     public void close() {

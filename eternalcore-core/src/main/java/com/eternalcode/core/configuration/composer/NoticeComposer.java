@@ -1,7 +1,6 @@
 package com.eternalcode.core.configuration.composer;
 
-import com.eternalcode.core.notification.NoticeType;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import panda.std.Result;
 import panda.utilities.text.Joiner;
 
@@ -10,17 +9,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NotificationComposer implements SimpleComposer<Notification> {
+public class NoticeComposer implements SimpleComposer<Notice> {
 
     private static final String SERIALIZE_FORMAT = "[%s]%s";
     private static final Pattern DESERIALIZE_PATTERN = Pattern.compile("\\[([^]]*)](.*)");
 
     @Override
-    public Result<Notification, Exception> deserialize(String source) {
+    public Result<Notice, Exception> deserialize(String source) {
         Matcher matcher = DESERIALIZE_PATTERN.matcher(source);
 
         if (!matcher.matches()) {
-            return Result.ok(Notification.chat(source));
+            return Result.ok(Notice.chat(source));
         }
 
         String types = matcher.group(1);
@@ -38,11 +37,11 @@ public class NotificationComposer implements SimpleComposer<Notification> {
             }
         }
 
-        return Result.ok(Notification.of(message, noticeTypes));
+        return Result.ok(Notice.of(message, noticeTypes));
     }
 
     @Override
-    public Result<String, Exception> serialize(Notification notification) {
+    public Result<String, Exception> serialize(Notice notification) {
         if (notification.getTypes().contains(NoticeType.CHAT) && notification.getTypes().size() == 1) {
             return Result.ok(notification.getMessage());
         }

@@ -10,7 +10,7 @@ import org.bukkit.event.block.SignChangeEvent;
 
 @FeatureDocs(
     name = "Colored sign",
-    description = "Allows you to use color codes in signs",
+    description = "Allows you to use color codes fadeIn signs",
     permission = "eternalcore.sign"
 )
 public class SignChangeListener implements Listener {

@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.home.command;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.home.HomeManager;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;

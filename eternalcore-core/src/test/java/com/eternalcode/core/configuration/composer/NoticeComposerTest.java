@@ -8,9 +8,9 @@ import panda.std.Result;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class NotificationComposerTest {
+class NoticeComposerTest {
 
-    private static final NotificationComposer COMPOSER = new NotificationComposer();
+    private static final NoticeComposer COMPOSER = new NoticeComposer();
 
     @Test
     void deserializeDefaultNotice() {

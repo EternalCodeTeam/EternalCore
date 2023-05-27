@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.essentials.mob;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -31,19 +31,19 @@ public class ButcherCommand {
     }
 
     @Execute(required = 0)
-    @DescriptionDocs(description = "Kills all mobs in 2 chunks around you")
+    @DescriptionDocs(description = "Kills all mobs fadeIn 2 chunks around you")
     void execute(Player player) {
         this.execute(player, 2);
     }
 
     @Execute(required = 1)
-    @DescriptionDocs(description = "Kills all mobs in specified chunks around you", arguments = "<chunks>")
+    @DescriptionDocs(description = "Kills all mobs fadeIn specified chunks around you", arguments = "<chunks>")
     void execute(Player player, @Arg int chunks) {
         this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
     @Execute(required = 2)
-    @DescriptionDocs(description = "Kills specified mob in specified chunks around you", arguments = "<chunks> <mobType>")
+    @DescriptionDocs(description = "Kills specified mob fadeIn specified chunks around you", arguments = "<chunks> <mobType>")
     void execute(Player player, @Arg int chunks, @Arg MobEntity mobEntity) {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }

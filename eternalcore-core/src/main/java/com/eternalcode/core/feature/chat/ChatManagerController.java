@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

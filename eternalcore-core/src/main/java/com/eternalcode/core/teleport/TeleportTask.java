@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport;
 
-import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.notification.NoticeType;
+import com.eternalcode.core.notice.Notice;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Location;
@@ -49,7 +49,7 @@ public class TeleportTask implements Runnable {
                 this.teleportTaskService.removeTeleport(uuid);
 
                 this.noticeService.create()
-                    .notice(NoticeType.ACTIONBAR, translation -> StringUtils.EMPTY)
+                    .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
                     .notice(translation -> translation.teleport().teleportTaskCanceled())
                     .player(player.getUniqueId())
                     .send();

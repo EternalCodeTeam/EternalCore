@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.handler;
 
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;

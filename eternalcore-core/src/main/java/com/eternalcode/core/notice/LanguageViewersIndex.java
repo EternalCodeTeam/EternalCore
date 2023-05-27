@@ -1,15 +1,17 @@
-package com.eternalcode.core.notification;
+package com.eternalcode.core.notice;
 
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.viewer.Viewer;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-record ViewersWithLanguage(Map<Language, Set<Viewer>> viewersByLanguage) {
+class LanguageViewersIndex {
+
+    private final Map<Language, Set<Viewer>> viewersByLanguage;
+
+    private LanguageViewersIndex(Map<Language, Set<Viewer>> viewersByLanguage) {
+        this.viewersByLanguage = viewersByLanguage;
+    }
 
     Set<Language> getLanguages() {
         return this.viewersByLanguage.keySet();
@@ -19,7 +21,7 @@ record ViewersWithLanguage(Map<Language, Set<Viewer>> viewersByLanguage) {
         return this.viewersByLanguage.get(language);
     }
 
-    static ViewersWithLanguage of(Collection<Viewer> viewers) {
+    static LanguageViewersIndex of(Collection<Viewer> viewers) {
         Map<Language, Set<Viewer>> viewersByLanguage = new HashMap<>();
 
         for (Viewer viewer : viewers) {
@@ -28,7 +30,7 @@ record ViewersWithLanguage(Map<Language, Set<Viewer>> viewersByLanguage) {
                 .add(viewer);
         }
 
-        return new ViewersWithLanguage(viewersByLanguage);
+        return new LanguageViewersIndex(viewersByLanguage);
     }
 
 }

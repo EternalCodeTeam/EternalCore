@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.contextual;
 
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
@@ -29,7 +29,7 @@ public class UserContextual implements Contextual<CommandSender, User> {
         }
 
         Translation translation = this.translationManager.getDefaultMessages();
-        Notification onlyPlayer = translation.argument().onlyPlayer();
+        Notice onlyPlayer = translation.argument().onlyPlayer();
 
         return Result.error(onlyPlayer);
     }

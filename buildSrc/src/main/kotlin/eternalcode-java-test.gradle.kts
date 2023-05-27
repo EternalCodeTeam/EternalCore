@@ -11,6 +11,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     testImplementation("org.mockito:mockito-core:5.3.1")
     testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
+    testImplementation("net.kyori:adventure-platform-facet:4.3.0")
     testImplementation("net.kyori:adventure-text-minimessage:4.13.1")
 }
 

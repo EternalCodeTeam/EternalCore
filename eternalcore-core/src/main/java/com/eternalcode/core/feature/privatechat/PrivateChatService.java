@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.privatechat;
 
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.cache.Cache;

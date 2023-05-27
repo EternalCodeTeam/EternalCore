@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
