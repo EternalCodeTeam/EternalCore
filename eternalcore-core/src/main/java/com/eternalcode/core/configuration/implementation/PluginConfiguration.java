@@ -83,6 +83,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description("# Teleports the player to spawn after death")
         public boolean teleportToSpawnOnDeath = true;
+
+        @Description("# Time of teleportation to spawn")
+        public Duration teleportTimeToSpawn = Duration.ofSeconds(5);
     }
 
     @Description({ " ", "# Homes Section" })
