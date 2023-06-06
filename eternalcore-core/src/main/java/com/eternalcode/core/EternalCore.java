@@ -367,7 +367,7 @@ class EternalCore implements EternalCoreApi {
 
                 // Spawn & Warp Command
                 new SetSpawnCommand(this.configurationManager, locationsConfiguration, this.noticeService),
-                new SpawnCommand(locationsConfiguration, pluginConfiguration, this.noticeService, this.teleportTaskService, this.teleportService),
+                new SpawnCommand(locationsConfiguration, pluginConfiguration.teleport, this.noticeService, this.teleportTaskService, this.teleportService),
                 new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, pluginConfiguration, warpInventory),
 
                 // Inventory Commands

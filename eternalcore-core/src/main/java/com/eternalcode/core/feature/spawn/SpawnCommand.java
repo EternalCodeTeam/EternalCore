@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -21,15 +20,15 @@ import org.bukkit.entity.Player;
 public class SpawnCommand {
 
     private final LocationsConfiguration locations;
-    private final PluginConfiguration pluginConfiguration;
+    private final SpawnSettings spawnSettings;
     private final TeleportTaskService teleportTaskService;
     private final TeleportService teleportService;
     private final NoticeService noticeService;
 
-    public SpawnCommand(LocationsConfiguration locations, PluginConfiguration pluginConfiguration, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
+    public SpawnCommand(LocationsConfiguration locations, SpawnSettings spawnSettings, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
         this.teleportTaskService = teleportTaskService;
         this.locations = locations;
-        this.pluginConfiguration = pluginConfiguration;
+        this.spawnSettings = spawnSettings;
         this.noticeService = noticeService;
         this.teleportService = teleportService;
     }
@@ -70,7 +69,7 @@ public class SpawnCommand {
             return;
         }
 
-        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), this.pluginConfiguration.teleport.teleportTimeToSpawn);
+        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), this.spawnSettings.teleportationTimeToSpawn());
 
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleporting())
