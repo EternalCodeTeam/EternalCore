@@ -15,6 +15,10 @@ sealed interface NoticeContent {
 
     record Music(Sound sound, @Nullable SoundCategory category, float pitch, float volume) implements NoticeContent { }
 
-    record None() implements NoticeContent { }
+    record None() implements NoticeContent {
+
+        public static final None INSTANCE = new None();
+
+    }
 
 }

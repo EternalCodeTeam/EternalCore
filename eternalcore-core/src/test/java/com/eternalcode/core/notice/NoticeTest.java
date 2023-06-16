@@ -120,7 +120,7 @@ class NoticeTest {
 
     private void assertMessage(Notice notice, int index, NoticeType type, String... expected) {
         Notice.Part<?> part = notice.parts().get(index);
-        NoticeContent.Text textInput = assertInstanceOf(NoticeContent.Text.class, part.input());
+        NoticeContent.Text textInput = assertInstanceOf(NoticeContent.Text.class, part.content());
 
         assertEquals(type, part.type());
         assertEquals(expected.length, textInput.messages().size());
@@ -132,7 +132,7 @@ class NoticeTest {
 
     private void assertTimes(Notice notice, int index, Duration in, Duration stay, Duration out) {
         Notice.Part<?> part = notice.parts().get(index);
-        NoticeContent.Times delay = assertInstanceOf(NoticeContent.Times.class, part.input());
+        NoticeContent.Times delay = assertInstanceOf(NoticeContent.Times.class, part.content());
 
         assertEquals(NoticeType.TITLE_TIMES, part.type());
         assertEquals(in, delay.fadeIn());
@@ -146,7 +146,7 @@ class NoticeTest {
 
     private void assertSound(Notice notice, int index, Sound sound, float volume, float pitch, SoundCategory category) {
         Notice.Part<?> part = notice.parts().get(index);
-        NoticeContent.Music soundInput = assertInstanceOf(NoticeContent.Music.class, part.input());
+        NoticeContent.Music soundInput = assertInstanceOf(NoticeContent.Music.class, part.content());
 
         assertEquals(NoticeType.SOUND, part.type());
         assertEquals(sound, soundInput.sound());

@@ -10,11 +10,11 @@ import static com.eternalcode.core.notice.NoticeContent.Times;
 class NoticeType<T extends NoticeContent> {
 
     static final NoticeType<Text> CHAT = of(Text.class, "chat");
-    static final NoticeType<Text> ACTION_BAR = of(Text.class, "action_bar");
+    static final NoticeType<Text> ACTION_BAR = of(Text.class, "actionbar");
     static final NoticeType<Text> TITLE = of(Text.class, "title");
     static final NoticeType<Text> SUBTITLE = of(Text.class, "subtitle");
-    static final NoticeType<Times> TITLE_TIMES = of(Times.class, "title_times");
-    static final NoticeType<None> TITLE_HIDE = of(None.class, "title_hide");
+    static final NoticeType<Times> TITLE_TIMES = of(Times.class, "times");
+    static final NoticeType<None> TITLE_HIDE = of(None.class, "titleHide");
     static final NoticeType<Music> SOUND = of(Music.class, "sound");
 
     public static final List<NoticeType<?>> VALUES = List.of(
@@ -39,7 +39,7 @@ class NoticeType<T extends NoticeContent> {
         return this.name;
     }
 
-    Class<T> inputType() {
+    Class<T> contentType() {
         return this.inputType;
     }
 

@@ -2,7 +2,7 @@ package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
-import com.eternalcode.core.configuration.composer.NoticeComposer;
+import com.eternalcode.core.notice.NoticeComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notice.Notice;

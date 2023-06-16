@@ -75,6 +75,12 @@ public class Notice {
             .build();
     }
 
+    public static Notice hideTitle() {
+        return Notice.builder()
+            .hideTitle()
+            .build();
+    }
+
     public static Notice sound(Sound sound, SoundCategory category, float volume, float pitch) {
         return Notice.builder()
             .sound(sound, category, pitch, volume)
@@ -87,7 +93,7 @@ public class Notice {
             .build();
     }
 
-    public static Notice none() {
+    public static Notice empty() {
         return new Notice(Collections.emptyList());
     }
 
@@ -132,6 +138,10 @@ public class Notice {
             return this.with(NoticeType.SUBTITLE.of(new Text(List.of(subtitle))));
         }
 
+        public Builder hideTitle() {
+            return this.with(NoticeType.TITLE_HIDE.of(None.INSTANCE));
+        }
+
         public Builder times(Duration in, Duration stay, Duration out) {
             return this.with(NoticeType.TITLE_TIMES.of(new Times(in, stay, out)));
         }
@@ -143,8 +153,9 @@ public class Notice {
         public Builder sound(Sound sound,  SoundCategory category,  float pitch, float volume) {
             return this.with(NoticeType.SOUND.of(new Music(sound, category, pitch, volume)));
         }
+
     }
 
-    record Part<T extends NoticeContent>(NoticeType<T> type, T input) { }
+    record Part<T extends NoticeContent>(NoticeType<T> type, T content) { }
 
 }

@@ -684,7 +684,7 @@ public class PLTranslation extends AbstractTranslation {
             "# {PLAYER} - Gracz który otworzył kontener"
         })
 
-        public Notice genericContainerOpened = Notice.none();
+        public Notice genericContainerOpened = Notice.empty();
         public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>Otwarto kontener przez gracza <green>{PLAYER}<white>!");
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>Otwarto kontener dla gracza <green>{PLAYER}<white>!");
     }

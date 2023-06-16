@@ -136,7 +136,7 @@ class NoticeBroadcastImpl implements NoticeBroadcast {
                 return apply.get();
             }
 
-            return Notice.none();
+            return Notice.empty();
         });
         return this;
     }
@@ -268,7 +268,7 @@ class NoticeBroadcastImpl implements NoticeBroadcast {
 
     @SuppressWarnings("unchecked")
     private <T extends NoticeContent> Notice.Part<T> formatter(Notice.Part<T> part, UnaryOperator<String> function) {
-        if (part.input() instanceof NoticeContent.Text text) {
+        if (part.content() instanceof NoticeContent.Text text) {
             List<String> messages = text.messages().stream()
                 .map(function)
                 .toList();

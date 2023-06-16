@@ -63,7 +63,7 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
             throw new IllegalStateException("No announcer for " + part.type());
         }
 
-        announcer.announce(viewer, audience, part.input());
+        announcer.announce(viewer, audience, part.content());
     }
 
     interface NoticePartAnnouncer<T extends NoticeContent> {

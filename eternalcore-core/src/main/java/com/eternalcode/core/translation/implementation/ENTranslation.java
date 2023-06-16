@@ -669,7 +669,7 @@ public class ENTranslation extends AbstractTranslation {
             "# {PLAYER} - Player who opened the container"
         })
 
-        public Notice genericContainerOpened = Notice.none();
+        public Notice genericContainerOpened = Notice.empty();
 
         public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>The specified container has been opened by <green>{PLAYER}<white>!");
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>The specified container has been opened for <green>{PLAYER}<white>!");
