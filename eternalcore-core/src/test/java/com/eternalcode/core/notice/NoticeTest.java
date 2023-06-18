@@ -140,11 +140,11 @@ class NoticeTest {
         assertEquals(out, delay.fadeOut());
     }
 
-    private void assertSound(Notice notice, int index, Sound sound, float volume, float pitch) {
-        assertSound(notice, index, sound, volume, pitch, null);
+    private void assertSound(Notice notice, int index, Sound sound, float pitch, float volume) {
+        assertSound(notice, index, sound, pitch, volume, null);
     }
 
-    private void assertSound(Notice notice, int index, Sound sound, float volume, float pitch, SoundCategory category) {
+    private void assertSound(Notice notice, int index, Sound sound, float pitch, float volume, SoundCategory category) {
         Notice.Part<?> part = notice.parts().get(index);
         NoticeContent.Music soundInput = assertInstanceOf(NoticeContent.Music.class, part.content());
 

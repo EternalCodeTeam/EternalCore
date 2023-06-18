@@ -26,7 +26,7 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
             .join(requiredPermissions.getPermissions())
             .toString();
 
-        noticeService.create()
+        this.noticeService.create()
             .notice(translation -> translation.argument().permissionMessage())
             .placeholder("{PERMISSIONS}", perms)
             .viewer(viewer)

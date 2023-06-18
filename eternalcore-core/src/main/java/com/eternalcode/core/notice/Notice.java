@@ -5,9 +5,17 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.eternalcode.core.notice.NoticeContent.*;
+import static com.eternalcode.core.notice.NoticeContent.Music;
+import static com.eternalcode.core.notice.NoticeContent.None;
+import static com.eternalcode.core.notice.NoticeContent.Text;
+import static com.eternalcode.core.notice.NoticeContent.Times;
 
 public class Notice {
 
@@ -157,12 +165,13 @@ public class Notice {
             return this.withPart(new Part<>(NoticeType.SOUND, new Music(sound, null, pitch, volume)));
         }
 
-        public Builder sound(Sound sound,  SoundCategory category,  float pitch, float volume) {
+        public Builder sound(Sound sound, SoundCategory category, float pitch, float volume) {
             return this.withPart(new Part<>(NoticeType.SOUND, new Music(sound, category, pitch, volume)));
         }
 
     }
 
-    record Part<T extends NoticeContent>(NoticeType type, T content) { }
+    record Part<T extends NoticeContent>(NoticeType type, T content) {
+    }
 
 }

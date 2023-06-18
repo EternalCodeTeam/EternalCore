@@ -1,7 +1,7 @@
 package com.eternalcode.core.notice;
 
-import static com.eternalcode.core.notice.NoticeContent.None;
 import static com.eternalcode.core.notice.NoticeContent.Music;
+import static com.eternalcode.core.notice.NoticeContent.None;
 import static com.eternalcode.core.notice.NoticeContent.Text;
 import static com.eternalcode.core.notice.NoticeContent.Times;
 

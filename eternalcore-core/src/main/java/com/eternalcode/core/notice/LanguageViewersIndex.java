@@ -3,7 +3,11 @@ package com.eternalcode.core.notice;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.viewer.Viewer;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 class LanguageViewersIndex {
 

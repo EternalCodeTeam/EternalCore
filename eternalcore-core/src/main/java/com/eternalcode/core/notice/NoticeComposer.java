@@ -8,7 +8,10 @@ import com.eternalcode.core.notice.NoticeContent.Times;
 import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
 import net.dzikoysk.cdn.CdnSettings;
 import net.dzikoysk.cdn.CdnUtils;
-import net.dzikoysk.cdn.model.*;
+import net.dzikoysk.cdn.model.Element;
+import net.dzikoysk.cdn.model.Entry;
+import net.dzikoysk.cdn.model.Piece;
+import net.dzikoysk.cdn.model.Section;
 import net.dzikoysk.cdn.module.standard.StandardOperators;
 import net.dzikoysk.cdn.reflect.TargetType;
 import net.dzikoysk.cdn.serdes.Composer;
@@ -32,9 +35,9 @@ public class NoticeComposer implements Composer<Notice> {
     public Result<? extends Element<?>, ? extends Exception> serialize(CdnSettings settings, List<String> description, String key, TargetType type, Notice entity) {
         SerializeContext context = new SerializeContext(settings, description, key, type, entity);
 
-        return serializeEmpty(context)
-            .orElse(error -> serializerUndisclosedChat(context))
-            .orElse(error -> serializeAll(context));
+        return this.serializeEmpty(context)
+            .orElse(error -> this.serializerUndisclosedChat(context))
+            .orElse(error -> this.serializeAll(context));
     }
 
     private Result<Element<?>, Exception> serializeEmpty(SerializeContext context) {
@@ -167,15 +170,16 @@ public class NoticeComposer implements Composer<Notice> {
         return section;
     }
 
-    private record SerializeContext(CdnSettings settings, List<String> description, String key, TargetType type, Notice notice) {
+    private record SerializeContext(CdnSettings settings, List<String> description, String key, TargetType type,
+                                    Notice notice) {
     }
 
     @Override
     public Result<Notice, Exception> deserialize(CdnSettings settings, Element<?> source, TargetType type, Notice defaultValue, boolean entryAsRecord) {
         DeserializeContext context = new DeserializeContext(settings, source, type, defaultValue, entryAsRecord);
 
-        return deserializeEmpty(context)
-            .orElse(error -> deserializeAll(context));
+        return this.deserializeEmpty(context)
+            .orElse(error -> this.deserializeAll(context));
     }
 
     private Result<Notice, Exception> deserializeEmpty(DeserializeContext context) {
@@ -200,7 +204,7 @@ public class NoticeComposer implements Composer<Notice> {
         }
 
         if (context.source() instanceof Section section) {
-            return deserializeSection(section);
+            return this.deserializeSection(section);
         }
 
         return Result.error(new UnsupportedOperationException("Unsupported element type: " + context.source().getClass()));
@@ -211,12 +215,12 @@ public class NoticeComposer implements Composer<Notice> {
 
         for (Element<?> element : section.getValue()) {
             if (element instanceof Piece piece) {
-                builder.chat(deserializePiece(piece));
+                builder.chat(this.deserializePiece(piece));
                 continue;
             }
 
             if (element instanceof Entry entry) {
-                String value = deserializePiece(entry.getValue());
+                String value = this.deserializePiece(entry.getValue());
                 NoticeType noticeType = NoticeType.fromKey(entry.getName());
 
                 if (noticeType.contentType() == Text.class) {
@@ -269,7 +273,7 @@ public class NoticeComposer implements Composer<Notice> {
                         throw new IllegalStateException("Unsupported element type: " + subElement.getValue());
                     }
 
-                    builder.chat(deserializePiece(piece));
+                    builder.chat(this.deserializePiece(piece));
                 }
 
                 continue;
@@ -291,7 +295,8 @@ public class NoticeComposer implements Composer<Notice> {
         return CdnUtils.destringify(value.trim());
     }
 
-    record DeserializeContext(CdnSettings settings, Element<?> source, TargetType type, Notice defaultValue, boolean entryAsRecord) {
+    record DeserializeContext(CdnSettings settings, Element<?> source, TargetType type, Notice defaultValue,
+                              boolean entryAsRecord) {
     }
 
 }

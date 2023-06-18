@@ -319,7 +319,7 @@ class EternalCore implements EternalCoreApi {
             .contextualBind(User.class,     new UserContextual(this.translationManager, this.userManager))
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
-            .permissionHandler(new PermissionMessage(this.viewerProvider, noticeService))
+            .permissionHandler(new PermissionMessage(this.viewerProvider, this.noticeService))
             .resultHandler(Notice.class, new NotificationHandler(this.viewerProvider, this.noticeService))
 
             .commandInstance(

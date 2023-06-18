@@ -18,12 +18,12 @@ import java.util.function.BiConsumer;
 class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
 
     private final Map<NoticeType, NoticePartAnnouncer<?>> announcers = new ImmutableBiMap.Builder<NoticeType, NoticePartAnnouncer<?>>()
-        .put(NoticeType.CHAT,        text(Audience::sendMessage))
-        .put(NoticeType.ACTION_BAR,  text(Audience::sendActionBar))
-        .put(NoticeType.TITLE,       text((audience, title) -> audience.sendTitlePart(TitlePart.TITLE, title)))
-        .put(NoticeType.SUBTITLE,    text((audience, subtitle) -> audience.sendTitlePart(TitlePart.SUBTITLE, subtitle)))
+        .put(NoticeType.CHAT,       this.text((audience, message) -> audience.sendMessage(message)))
+        .put(NoticeType.ACTION_BAR, this.text((audience, message) -> audience.sendActionBar(message)))
+        .put(NoticeType.TITLE,      this.text((audience, title) -> audience.sendTitlePart(TitlePart.TITLE, title)))
+        .put(NoticeType.SUBTITLE,   this.text((audience, subtitle) -> audience.sendTitlePart(TitlePart.SUBTITLE, subtitle)))
         .put(NoticeType.TITLE_TIMES, new TimesNoticePartAnnouncer())
-        .put(NoticeType.TITLE_HIDE,  (viewer, audience, input) -> audience.clearTitle())
+        .put(NoticeType.TITLE_HIDE, (viewer, audience, input) -> audience.clearTitle())
         .put(NoticeType.SOUND, new SoundNoticePartAnnouncer())
         .build();
 
@@ -39,8 +39,8 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
     public void announce(Viewer viewer, Notice notice) {
         for (Notice.Part<?> part : notice.parts()) {
             Audience audience = viewer.isConsole()
-                ? audienceProvider.console()
-                : audienceProvider.player(viewer.getUniqueId());
+                ? this.audienceProvider.console()
+                : this.audienceProvider.player(viewer.getUniqueId());
 
             this.announce(viewer, audience, part);
         }
@@ -49,8 +49,8 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
     @Override
     public void announce(Viewer viewer, Notice.Part<?> part) {
         Audience audience = viewer.isConsole()
-            ? audienceProvider.console()
-            : audienceProvider.player(viewer.getUniqueId());
+            ? this.audienceProvider.console()
+            : this.audienceProvider.player(viewer.getUniqueId());
 
         this.announce(viewer, audience, part);
     }
@@ -73,7 +73,7 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
     private NoticePartAnnouncer<NoticeContent.Text> text(BiConsumer<Audience, Component> consumer) {
         return (viewer, audience, input) -> {
             for (String text : input.messages()) {
-                consumer.accept(audience, componentSerializer.deserialize(text));
+                consumer.accept(audience, this.componentSerializer.deserialize(text));
             }
         };
     }

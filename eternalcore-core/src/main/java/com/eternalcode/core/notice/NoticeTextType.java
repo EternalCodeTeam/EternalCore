@@ -14,7 +14,7 @@ public enum NoticeTextType {
     }
 
     NoticeType getType() {
-        return type;
+        return this.type;
     }
 
 }
