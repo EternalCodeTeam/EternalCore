@@ -15,9 +15,9 @@ eternalShadow {
     onlyCompile("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
 
     onlyCompile("me.clip:placeholderapi:2.11.3")
-    onlyCompile("org.projectlombok:lombok:1.18.26")
+    onlyCompile("org.projectlombok:lombok:1.18.28")
     onlyCompile("org.jetbrains:annotations:24.0.1")
-    annotationProcessors("org.projectlombok:lombok:1.18.26")
+    annotationProcessors("org.projectlombok:lombok:1.18.28")
 
     // Paper and Adventure libraries
     library("io.papermc:paperlib:1.0.8")
@@ -43,7 +43,7 @@ eternalShadow {
     )
 
     // command framework & skull library
-    library("dev.rollczi.litecommands:bukkit-adventure:2.8.7")
+    library("dev.rollczi.litecommands:bukkit-adventure:2.8.8")
     library("dev.rollczi:liteskullapi:1.3.0")
     libraryRelocate(
         "dev.rollczi.litecommands",
@@ -51,9 +51,9 @@ eternalShadow {
     )
 
     // common libraries
-    library("org.panda-lang:expressible:1.3.4")
+    library("org.panda-lang:expressible:1.3.5")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
-    library("commons-io:commons-io:2.11.0")
+    library("commons-io:commons-io:2.12.0")
     libraryRelocate(
         "panda.std",
         "panda.utilities",
@@ -61,7 +61,7 @@ eternalShadow {
     )
 
     // gui library
-    library("dev.triumphteam:triumph-gui:3.1.4")
+    library("dev.triumphteam:triumph-gui:3.1.5")
     libraryRelocate("dev.triumphteam")
 
     // metrics

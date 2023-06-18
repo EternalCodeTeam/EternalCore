@@ -246,8 +246,13 @@ public interface Translation {
 
         // speed
         Notification speedBetweenZeroAndTen();
-        Notification speedSet();
-        Notification speedSetBy();
+        Notification speedTypeNotCorrect();
+
+        Notification speedWalkSet();
+        Notification speedFlySet();
+
+        Notification speedWalkSetBy();
+        Notification speedFlySetBy();
 
         // godmode
         Notification godMessage();

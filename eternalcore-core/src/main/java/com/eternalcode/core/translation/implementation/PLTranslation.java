@@ -516,10 +516,15 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notification speedBetweenZeroAndTen = Notification.chat("<red>✘ <dark_red>Błąd: <red>Ustaw prędkość w zakresie 0-10!");
-        @Description("# {SPEED} - Ustawiona prędkość")
-        public Notification speedSet = Notification.chat("<green>► <white>Ustawiono prędkość na <green>{SPEED}");
-        @Description("# {PLAYER} - Gracz któremu została ustawiona prędkość, {SPEED} - Ustawiona prędkość")
-        public Notification speedSetBy = Notification.chat("<green>► <white>Ustawiono prędkość gracza <green>{PLAYER} <white>na <green>{SPEED}");
+        public Notification speedTypeNotCorrect = Notification.chat("<red>✘ <dark_red>Błąd: <red>Nieprawidłowy typ prędkości");
+
+        @Description("# {SPEED} - Ustawiona prędkość chodzenia lub latania")
+        public Notification speedWalkSet = Notification.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
+        public Notification speedFlySet = Notification.chat("<green>► <white>Ustawiono prędkość latania na <green>{SPEED}");
+
+        @Description("# {PLAYER} - Gracz któremu została ustawiona prędkość chodzenia lub latania, {SPEED} - Ustawiona prędkość")
+        public Notification speedWalkSetBy = Notification.chat("<green>► <white>Ustawiono prędkość chodzenia gracza <green>{PLAYER} <white>na <green>{SPEED}");
+        public Notification speedFlySetBy = Notification.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
 
         @Description({ " ", "# {STATE} - Status nieśmiertelności" })
         public Notification godMessage = Notification.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");

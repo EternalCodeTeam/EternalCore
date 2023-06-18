@@ -9,6 +9,7 @@ import com.eternalcode.core.command.argument.NoticeTypeArgument;
 import com.eternalcode.core.command.argument.PlayerArgument;
 import com.eternalcode.core.command.argument.RequesterArgument;
 import com.eternalcode.core.command.argument.SpeedArgument;
+import com.eternalcode.core.command.argument.SpeedTypeArgument;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.command.argument.UserArgument;
 import com.eternalcode.core.command.argument.WarpArgument;
@@ -16,6 +17,7 @@ import com.eternalcode.core.command.argument.WorldArgument;
 import com.eternalcode.core.command.argument.MobEntityArgument;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.command.argument.home.HomeArgument;
+import com.eternalcode.core.command.configurator.GameModeConfigurator;
 import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.command.configurator.CommandConfigurator;
 import com.eternalcode.core.command.contextual.PlayerContextual;
@@ -47,8 +49,11 @@ import com.eternalcode.core.feature.essentials.FlyCommand;
 import com.eternalcode.core.feature.essentials.GodCommand;
 import com.eternalcode.core.feature.essentials.HealCommand;
 import com.eternalcode.core.feature.essentials.KillCommand;
+import com.eternalcode.core.feature.essentials.container.LoomCommand;
+import com.eternalcode.core.feature.essentials.container.SmithingTableCommand;
 import com.eternalcode.core.feature.essentials.mob.ButcherCommand;
-import com.eternalcode.core.feature.essentials.SpeedCommand;
+import com.eternalcode.core.feature.essentials.speed.SpeedCommand;
+import com.eternalcode.core.feature.essentials.speed.SpeedType;
 import com.eternalcode.core.feature.essentials.container.AnvilCommand;
 import com.eternalcode.core.feature.essentials.container.CartographyTableCommand;
 import com.eternalcode.core.feature.essentials.container.DisposalCommand;
@@ -305,6 +310,7 @@ class EternalCore implements EternalCoreApi {
             .argument(String.class, PollCommand.PollArgument.KEY, new PollCommand.PollArgument(this.pollManager))
             .argument(GameMode.class,                             new GameModeArgument(this.viewerProvider, this.translationManager, commandConfiguration.argument))
             .argument(NoticeType.class,                           new NoticeTypeArgument(this.viewerProvider, this.translationManager))
+            .argument(SpeedType.class,                          new SpeedTypeArgument(this.viewerProvider, this.translationManager))
             .argument(Warp.class,                                 new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
             .argument(Enchantment.class,                          new EnchantmentArgument(this.viewerProvider, this.translationManager))
             .argument(User.class,                                 new UserArgument(this.viewerProvider, this.translationManager, server, this.userManager))
@@ -313,7 +319,6 @@ class EternalCore implements EternalCoreApi {
             .argument(Duration.class, DurationArgument.KEY,       new DurationArgument(this.viewerProvider, this.translationManager))
             .argument(Integer.class, SpeedArgument.KEY,           new SpeedArgument(this.viewerProvider, this.translationManager))
             .argument(MobEntity.class,                            new MobEntityArgument(this.viewerProvider, this.translationManager))
-
             // multilevel Arguments (include optional)
             .argumentMultilevel(Location.class, new LocationArgument(this.translationManager, this.viewerProvider))
 
@@ -367,7 +372,7 @@ class EternalCore implements EternalCoreApi {
 
                 // Spawn & Warp Command
                 new SetSpawnCommand(this.configurationManager, locationsConfiguration, this.noticeService),
-                new SpawnCommand(locationsConfiguration, this.noticeService, this.teleportTaskService, this.teleportService),
+                new SpawnCommand(locationsConfiguration, pluginConfiguration.teleport, this.noticeService, this.teleportTaskService, this.teleportService),
                 new WarpCommand(this.noticeService, this.warpManager, this.teleportTaskService, pluginConfiguration, warpInventory),
 
                 // Inventory Commands
@@ -377,6 +382,8 @@ class EternalCore implements EternalCoreApi {
                 new CartographyTableCommand(this.noticeService),
                 new GrindstoneCommand(this.noticeService),
                 new StonecutterCommand(this.noticeService),
+                new LoomCommand(this.noticeService),
+                new SmithingTableCommand(this.noticeService),
                 new DisposalCommand(this.miniMessage, this.translationManager, this.userManager, server, this.noticeService),
 
                 // Private Chat Commands
@@ -389,7 +396,7 @@ class EternalCore implements EternalCoreApi {
                 // Moderation Commands
                 new FlyCommand(this.noticeService),
                 new GodCommand(this.noticeService),
-                new GameModeCommand(this.noticeService),
+                new GameModeCommand(commandConfiguration, this.noticeService),
                 new SpeedCommand(this.noticeService),
                 new GiveCommand(this.noticeService, pluginConfiguration),
                 new EnchantCommand(pluginConfiguration, this.noticeService),
@@ -419,6 +426,7 @@ class EternalCore implements EternalCoreApi {
                 ChatManagerCommand.create(this.chatManager, this.noticeService, pluginConfiguration.chat.linesToClear)
             )
             .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
+            .commandEditor(GameModeCommand.class, new GameModeConfigurator(commandConfiguration))
             .register();
 
         /* Listeners */

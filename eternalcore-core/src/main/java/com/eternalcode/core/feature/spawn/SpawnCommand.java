@@ -15,20 +15,20 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-
 @Route(name = "spawn")
 @Permission("eternalcore.spawn")
 public class SpawnCommand {
 
     private final LocationsConfiguration locations;
+    private final SpawnSettings spawnSettings;
     private final TeleportTaskService teleportTaskService;
     private final TeleportService teleportService;
     private final NoticeService noticeService;
 
-    public SpawnCommand(LocationsConfiguration locations, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
+    public SpawnCommand(LocationsConfiguration locations, SpawnSettings spawnSettings, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
         this.teleportTaskService = teleportTaskService;
         this.locations = locations;
+        this.spawnSettings = spawnSettings;
         this.noticeService = noticeService;
         this.teleportService = teleportService;
     }
@@ -69,7 +69,7 @@ public class SpawnCommand {
             return;
         }
 
-        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), Duration.ofSeconds(5));
+        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), this.spawnSettings.teleportationTimeToSpawn());
 
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleporting())
