@@ -7,13 +7,13 @@ public enum NoticeTextType {
     TITLE(NoticeType.TITLE),
     SUBTITLE(NoticeType.SUBTITLE);
 
-    private final NoticeType<NoticeContent.Text> type;
+    private final NoticeType type;
 
-    NoticeTextType(NoticeType<NoticeContent.Text> type) {
+    NoticeTextType(NoticeType type) {
         this.type = type;
     }
 
-    NoticeType<NoticeContent.Text> getType() {
+    NoticeType getType() {
         return type;
     }
 

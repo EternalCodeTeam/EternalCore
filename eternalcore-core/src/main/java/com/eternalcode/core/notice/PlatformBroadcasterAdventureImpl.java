@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 
 class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
 
-    private final Map<NoticeType<?>, NoticePartAnnouncer<?>> announcers = new ImmutableBiMap.Builder<NoticeType<?>, NoticePartAnnouncer<?>>()
+    private final Map<NoticeType, NoticePartAnnouncer<?>> announcers = new ImmutableBiMap.Builder<NoticeType, NoticePartAnnouncer<?>>()
         .put(NoticeType.CHAT,        text(Audience::sendMessage))
         .put(NoticeType.ACTION_BAR,  text(Audience::sendActionBar))
         .put(NoticeType.TITLE,       text((audience, title) -> audience.sendTitlePart(TitlePart.TITLE, title)))
