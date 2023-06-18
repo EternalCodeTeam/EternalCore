@@ -40,8 +40,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.event().welcomeTitle())
-            .notice(translation -> translation.event().welcomeSubtitle())
+            .notice(translation -> translation.event().welcome())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .sendAsync();

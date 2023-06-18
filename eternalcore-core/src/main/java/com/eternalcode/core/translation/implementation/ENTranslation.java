@@ -436,8 +436,8 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({ "", "# {PLAYER} - Player who joined" })
         public List<Notice> joinMessage = List.of(
-            Notice.chat("<green>► <green>{PLAYER} <white>joined the server!"),
-            Notice.chat("<green>► <white>Welcome to the server <green>{PLAYER}<white>!")
+            Notice.actionbar("<green>► <green>{PLAYER} <white>joined the server!"),
+            Notice.actionbar("<green>► <white>Welcome to the server <green>{PLAYER}<white>!")
         );
 
         @Description("# {PLAYER} - Player who joined.")
@@ -448,13 +448,12 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description("# {PLAYER} - Player who left")
         public List<Notice> quitMessage = List.of(
-            Notice.chat("<red>► {PLAYER} <white>logged off the server!"),
-            Notice.chat("<red>► {PLAYER} <white>left the server!")
+            Notice.actionbar("<red>► {PLAYER} <white>logged off the server!"),
+            Notice.actionbar("<red>► {PLAYER} <white>left the server!")
         );
 
         @Description({ " ", "# {PLAYER} - Player who joined" })
-        public Notice welcomeTitle = Notice.chat("<yellow>EternalCode.pl");
-        public Notice welcomeSubtitle = Notice.chat("<yellow>Welcome back to the server!");
+        public Notice welcome = Notice.title("<yellow>EternalCode.pl", "<yellow>Welcome back to the server!");
     }
 
 

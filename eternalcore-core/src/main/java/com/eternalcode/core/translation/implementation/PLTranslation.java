@@ -472,8 +472,7 @@ public class PLTranslation extends AbstractTranslation {
         );
 
         @Description({ " ", "# {PLAYER} - Gracz który dołączył do serwera" })
-        public Notice welcomeTitle = Notice.title("<yellow>{PLAYER}");
-        public Notice welcomeSubtitle = Notice.subtitle("<yellow>Witaj ponownie na serwerze!");
+        public Notice welcome = Notice.title("<yellow>{PLAYER}", "<yellow>Witaj ponownie na serwerze!");
     }
 
     @Description({

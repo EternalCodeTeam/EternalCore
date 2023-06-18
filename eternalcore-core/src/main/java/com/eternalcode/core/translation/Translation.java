@@ -215,8 +215,7 @@ public interface Translation {
 
         Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
 
-        Notice welcomeTitle();
-        Notice welcomeSubtitle();
+        Notice welcome();
     }
 
     // inventory section
