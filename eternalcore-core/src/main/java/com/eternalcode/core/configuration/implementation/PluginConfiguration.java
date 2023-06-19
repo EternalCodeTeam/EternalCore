@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.teleport.Teleport;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -79,10 +80,18 @@ public class PluginConfiguration implements ReloadableConfig {
     public Teleport teleport = new Teleport();
 
     @Contextual
-    public static class Teleport {
+    public static class Teleport implements SpawnSettings {
 
         @Description("# Teleports the player to spawn after death")
         public boolean teleportToSpawnOnDeath = true;
+
+        @Description("# Time of teleportation to spawn")
+        public Duration teleportTimeToSpawn = Duration.ofSeconds(5);
+
+        @Override
+        public Duration teleportationTimeToSpawn() {
+            return this.teleportTimeToSpawn;
+        }
     }
 
     @Description({ " ", "# Homes Section" })

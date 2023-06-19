@@ -245,8 +245,13 @@ public interface Translation {
 
         // speed
         Notice speedBetweenZeroAndTen();
-        Notice speedSet();
-        Notice speedSetBy();
+        Notice speedTypeNotCorrect();
+
+        Notice speedWalkSet();
+        Notice speedFlySet();
+
+        Notice speedWalkSetBy();
+        Notice speedFlySetBy();
 
         // godmode
         Notice godMessage();
