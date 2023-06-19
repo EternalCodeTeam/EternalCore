@@ -35,11 +35,12 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.adminchat.AdminChatCommand;
-import com.eternalcode.core.feature.afk.AfkCommand;
-import com.eternalcode.core.feature.afk.AfkController;
-import com.eternalcode.core.feature.afk.AfkService;
-import com.eternalcode.core.feature.afk.AfkTask;
+import com.eternalcode.core.afk.AfkCommand;
+import com.eternalcode.core.afk.AfkController;
+import com.eternalcode.core.afk.AfkService;
+import com.eternalcode.core.afk.AfkTask;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
 import com.eternalcode.core.feature.chat.ChatManagerController;
@@ -179,6 +180,7 @@ class EternalCore implements EternalCoreApi {
     private final BukkitViewerProvider viewerProvider;
     private final TeleportService teleportService;
     private final TeleportTaskService teleportTaskService;
+    private final EventCaller eventCaller;
 
     /* Adventure */
     private final BukkitAudiences audiencesProvider;
@@ -223,6 +225,7 @@ class EternalCore implements EternalCoreApi {
         this.viewerProvider = new BukkitViewerProvider(this.userManager, server);
         this.teleportService = new TeleportService();
         this.teleportTaskService = new TeleportTaskService();
+        this.eventCaller = new EventCaller(server);
 
         /* Adventure */
         this.audiencesProvider = BukkitAudiences.create(plugin);
@@ -259,7 +262,7 @@ class EternalCore implements EternalCoreApi {
         this.chatManager = new ChatManager(pluginConfiguration.chat);
         this.translationManager = TranslationManager.create(this.configurationManager, languageConfiguration);
         this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
-        this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager);
+        this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager, this.eventCaller);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.teleportAsk);
 
         /* Database */
@@ -523,6 +526,10 @@ class EternalCore implements EternalCoreApi {
 
     public TeleportTaskService getTeleportTaskService() {
         return this.teleportTaskService;
+    }
+
+    public EventCaller getEventCaller() {
+        return this.eventCaller;
     }
 
     public WarpManager getWarpManager() {
