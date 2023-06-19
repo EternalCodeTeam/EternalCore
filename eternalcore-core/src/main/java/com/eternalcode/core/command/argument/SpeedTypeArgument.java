@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.feature.essentials.speed.SpeedType;
@@ -22,7 +22,7 @@ public class SpeedTypeArgument extends AbstractViewerArgument<SpeedType> {
     }
 
     @Override
-    public Result<SpeedType, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<SpeedType, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         return Option.supplyThrowing(IllegalArgumentException.class, () -> SpeedType.valueOf(argument.toUpperCase()))
                 .toResult(() -> translation.player().speedTypeNotCorrect());
     }
