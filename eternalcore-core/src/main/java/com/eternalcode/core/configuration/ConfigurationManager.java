@@ -2,6 +2,7 @@ package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
+import com.eternalcode.core.configuration.composer.MaterialComposer;
 import com.eternalcode.core.configuration.composer.NotificationComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.language.Language;
@@ -10,6 +11,7 @@ import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.reflect.Visibility;
+import org.bukkit.Material;
 
 import java.io.File;
 import java.time.Duration;
@@ -27,6 +29,7 @@ public class ConfigurationManager {
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Position.class, new PositionComposer())
         .withComposer(Notification.class, new NotificationComposer())
+        .withComposer(Material.class, new MaterialComposer())
         .withMemberResolver(Visibility.PACKAGE_PRIVATE)
         .build();
 
