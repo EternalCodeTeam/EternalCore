@@ -28,7 +28,7 @@ public class ItemNameCommand {
 
     @Execute
     @Min(1)
-    @DescriptionDocs(description = "Sets name of item fadeIn hand", arguments = "<name>")
+    @DescriptionDocs(description = "Sets name of item in hand", arguments = "<name>")
     void execute(Player player, @Joiner String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
@@ -53,7 +53,7 @@ public class ItemNameCommand {
     }
 
     @Execute(route = "clear")
-    @DescriptionDocs(description = "Clears name of item fadeIn hand")
+    @DescriptionDocs(description = "Clears name of item in hand")
     void clear(Player player) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 

@@ -20,7 +20,7 @@ public class NightCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Sets time to night fadeIn specified world", arguments = "<world>")
+    @DescriptionDocs(description = "Sets time to night in specified world", arguments = "<world>")
     void night(Viewer viewer, @Arg World world) {
         world.setTime(13700);
 

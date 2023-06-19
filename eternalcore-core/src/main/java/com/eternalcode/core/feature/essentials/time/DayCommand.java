@@ -20,7 +20,7 @@ public class DayCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Sets time to day fadeIn specified world", arguments = "<world>")
+    @DescriptionDocs(description = "Sets time to day in specified world", arguments = "<world>")
     void day(Viewer viewer, @Arg World world) {
         world.setTime(100);
 

@@ -33,7 +33,7 @@ public class WarpCommand {
     }
 
     @Execute(required = 0)
-    @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature fadeIn config, if feature is disable eternalcore show all available warps")
+    @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps")
     void warp(Player player, User user) {
         if (!this.config.warp.inventoryEnabled) {
             this.noticeService.create()

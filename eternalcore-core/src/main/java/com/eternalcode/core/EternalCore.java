@@ -449,7 +449,7 @@ class EternalCore implements EternalCoreApi {
         //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
 
         long millis = started.elapsed(TimeUnit.MILLISECONDS);
-        plugin.getLogger().info("Successfully loaded EternalCore fadeIn " + millis + "ms");
+        plugin.getLogger().info("Successfully loaded EternalCore in " + millis + "ms");
     }
 
     public void disable() {

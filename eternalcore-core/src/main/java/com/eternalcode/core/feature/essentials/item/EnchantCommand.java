@@ -27,7 +27,7 @@ public class EnchantCommand {
 
     @Execute
     @Min(2)
-    @DescriptionDocs(description = "Enchants item fadeIn hand", arguments = "<enchantment> <level>")
+    @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level>")
     void execute(Player player, @Arg Enchantment enchantment, @Arg int level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());

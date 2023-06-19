@@ -21,7 +21,7 @@ public class HatCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Puts item fadeIn hand on head")
+    @DescriptionDocs(description = "Puts item in hand on head")
     void execute(Player player) {
         PlayerInventory playerInventory = player.getInventory();
 

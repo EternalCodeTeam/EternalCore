@@ -20,7 +20,7 @@ public class RainCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Sets weather to rain fadeIn specified world", arguments = "<world>")
+    @DescriptionDocs(description = "Sets weather to rain in specified world", arguments = "<world>")
     void rain(Viewer viewer, @Arg World world) {
         world.setStorm(true);
         world.setThundering(false);

@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Permission("eternalcore.eternalcore")
 class EternalCoreCommand {
 
-    private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Configuration has ben successfully reloaded fadeIn %d ms.</green>";
+    private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Configuration has ben successfully reloaded in %d ms.</green>";
 
     private final ConfigurationManager configurationManager;
     private final MiniMessage miniMessage;

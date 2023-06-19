@@ -26,7 +26,7 @@ public class ItemFlagCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Adds or removes item flag from item fadeIn hand", arguments = "<item-flag>")
+    @DescriptionDocs(description = "Adds or removes item flag from item in hand", arguments = "<item-flag>")
     void execute(Player player, @Arg ItemFlag flag) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
@@ -50,7 +50,7 @@ public class ItemFlagCommand {
     }
 
     @Execute(route = "clear")
-    @DescriptionDocs(description = "Clears all item flags from item fadeIn hand")
+    @DescriptionDocs(description = "Clears all item flags from item in hand")
     void clear(Player player) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();

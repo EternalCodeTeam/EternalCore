@@ -31,10 +31,10 @@ public class ENTranslation extends AbstractTranslation {
 
     @Description({
         "#",
-        "# This file is responsible for the English translation fadeIn eternalcore.",
+        "# This file is responsible for the English translation in eternalcore.",
         "#",
         "# If you need help with setup or have any questions related to EternalCore,",
-        "# join us fadeIn our discord, or write a request fadeIn the \"Issues\" tab on GitHub",
+        "# join us in our discord, or write a request in the \"Issues\" tab on GitHub",
         "#",
         "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
         "# Discord: https://discord.gg/FQ7jmGBd6c",
@@ -48,7 +48,7 @@ public class ENTranslation extends AbstractTranslation {
         "# More information about MiniMessages: https://docs.adventure.kyori.net/minimessage/format.html",
         "# You can use the web generator to generate and preview messages: https://webui.adventure.kyori.net/",
         "#",
-        "# You can without any restrictions send to, whether the message is to be sent fadeIn the chat, actionbar, or both, how",
+        "# You can without any restrictions send to, whether the message is to be sent in the chat, actionbar, or both, how",
         "# add prefix before messages:",
         "# [CHAT] - Message will be sent to chat",
         "# [ACTIONBAR] - Message will be sent to actionbar",
@@ -60,9 +60,9 @@ public class ENTranslation extends AbstractTranslation {
         "# [CHAT, ACTIONBAR] - Message will be sent to chat and actionbar",
         "# [CHAT, ACTIONBAR, TITLE] - Message will be sent to chat, actionbar and title",
         "#",
-        "# If you don't enter any prefix, the message will be sent simply fadeIn the chat",
+        "# If you don't enter any prefix, the message will be sent simply in the chat",
         "#",
-        "# All options except EternalCore messages are described fadeIn the config.yml file",
+        "# All options except EternalCore messages are described in the config.yml file",
         " "
     })
 
@@ -163,12 +163,12 @@ public class ENTranslation extends AbstractTranslation {
 
         // Task
         @Description({ "# {TIME} - Teleportation time" })
-        public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleporting fadeIn <green>{TIME}");
+        public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleporting in <green>{TIME}");
         @Description(" ")
         public Notice teleported = Notice.chat("<green>► <white>Teleported!");
         public Notice teleporting = Notice.chat("<green>► <white>Teleporting...");
         public Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>You've moved, teleportation canceled!");
-        public Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>You are fadeIn teleport!");
+        public Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>You are in teleport!");
 
         // Coordinates XYZ
         @Description({ " ", "# {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate" })
@@ -232,7 +232,7 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({
             " ",
-            "# We used MiniMessages formatting fadeIn these messages",
+            "# We used MiniMessages formatting in these messages",
             "# The current request acceptance message allows the player to click on it to accept the teleport request with MiniMessages!",
             "# More information about MiniMessages: https://docs.adventure.kyori.net/minimessage/format.html",
         })
@@ -398,7 +398,7 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENAfkSection implements AfkSection {
-        @Description("# {PLAYER} - Player who is fadeIn AFK")
+        @Description("# {PLAYER} - Player who is in AFK")
         public Notice afkOn = Notice.chat("<green>► <white>{PLAYER} is AFK!");
         public Notice afkOff = Notice.chat("<green>► <white>{PLAYER} is no more AFK!");
 
@@ -635,7 +635,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
 
         @Description(" ")
-        public Notice enchantedMessage = Notice.chat("<green>► <white>Item fadeIn hand is enchanted!");
+        public Notice enchantedMessage = Notice.chat("<green>► <white>Item in hand is enchanted!");
     }
 
 
@@ -646,17 +646,17 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENTimeAndWeatherMessageSection implements TimeAndWeatherSection {
         @Description("# {WORLD} - World name")
-        public Notice timeSetDay = Notice.chat("<green>► <white>Time set to day fadeIn the <green>{WORLD}<white>!");
-        public Notice timeSetNight = Notice.chat("<green>► <white>Time set to night fadeIn the <green>{WORLD}<white>!");
+        public Notice timeSetDay = Notice.chat("<green>► <white>Time set to day in the <green>{WORLD}<white>!");
+        public Notice timeSetNight = Notice.chat("<green>► <white>Time set to night in the <green>{WORLD}<white>!");
 
-        @Description("# {TIME} - Changed time fadeIn ticks")
+        @Description("# {TIME} - Changed time in ticks")
         public Notice timeSet = Notice.chat("<green>► <white>Time set to <green>{TIME}");
         public Notice timeAdd = Notice.chat("<green>► <white>Time added <green>{TIME}");
 
         @Description("# {WORLD} - World name")
-        public Notice weatherSetRain = Notice.chat("<green>► <white>Weather set to rain fadeIn the <green>{WORLD}<white>!");
-        public Notice weatherSetSun = Notice.chat("<green>► <white>Weather set to sun fadeIn the <green>{WORLD}<white>!");
-        public Notice weatherSetThunder = Notice.chat("<green>► <white>Weather set to thunder fadeIn the <green>{WORLD}<white>!");
+        public Notice weatherSetRain = Notice.chat("<green>► <white>Weather set to rain in the <green>{WORLD}<white>!");
+        public Notice weatherSetSun = Notice.chat("<green>► <white>Weather set to sun in the <green>{WORLD}<white>!");
+        public Notice weatherSetThunder = Notice.chat("<green>► <white>Weather set to thunder in the <green>{WORLD}<white>!");
     }
 
     @Description({ " ", "# Messages responsible for containers" })
