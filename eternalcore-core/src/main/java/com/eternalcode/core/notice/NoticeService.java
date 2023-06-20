@@ -17,15 +17,15 @@ import java.util.UUID;
 
 public class NoticeService {
 
-    private final PlatformBroadcaster announcer;
+    private final PlatformBroadcaster broadcaster;
 
     private final Scheduler scheduler;
     private final TranslationManager translationManager;
     private final ViewerProvider viewerProvider;
     private final PlaceholderRegistry placeholderRegistry;
 
-    private NoticeService(PlatformBroadcaster announcer, Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, PlaceholderRegistry placeholderRegistry) {
-        this.announcer = announcer;
+    private NoticeService(PlatformBroadcaster broadcaster, Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, PlaceholderRegistry placeholderRegistry) {
+        this.broadcaster = broadcaster;
         this.scheduler = scheduler;
         this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
@@ -34,7 +34,7 @@ public class NoticeService {
 
     @CheckReturnValue
     public NoticeBroadcast create() {
-        return new NoticeBroadcastImpl(this.scheduler, this.translationManager, this.viewerProvider, this.announcer, this.placeholderRegistry);
+        return new NoticeBroadcastImpl(this.scheduler, this.translationManager, this.viewerProvider, this.broadcaster, this.placeholderRegistry);
     }
 
     public void player(UUID player, NoticeExtractor extractor, Formatter... formatters) {
