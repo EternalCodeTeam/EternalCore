@@ -2,10 +2,9 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
-import com.eternalcode.core.feature.afk.AfkSettings;
+import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
-import com.eternalcode.core.teleport.Teleport;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
