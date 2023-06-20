@@ -568,7 +568,7 @@ class EternalCore implements EternalCoreApi {
         return this.viewerProvider;
     }
 
-    public NoticeService getNoticeFacade() {
+    public NoticeService getNoticeService() {
         return this.noticeService;
     }
 
