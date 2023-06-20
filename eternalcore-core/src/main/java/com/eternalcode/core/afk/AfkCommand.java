@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.afk;
+package com.eternalcode.core.afk;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;

@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.afk;
+package com.eternalcode.core.afk;
 
 public enum AfkReason {
 

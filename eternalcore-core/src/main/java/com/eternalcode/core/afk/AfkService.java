@@ -1,5 +1,6 @@
-package com.eternalcode.core.feature.afk;
+package com.eternalcode.core.afk;
 
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -15,15 +16,17 @@ public class AfkService {
     private final AfkSettings afkSettings;
     private final NoticeService noticeService;
     private final UserManager userManager;
+    private final EventCaller eventCaller;
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
     private final Map<UUID, Integer> interactionsCount = new HashMap<>();
     private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
-    public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager) {
+    public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
         this.afkSettings = afkSettings;
         this.noticeService = noticeService;
         this.userManager = userManager;
+        this.eventCaller = eventCaller;
     }
 
     public void switchAfk(UUID player, AfkReason reason) {
@@ -39,6 +42,7 @@ public class AfkService {
         Afk afk = new Afk(player, reason, Instant.now());
 
         this.afkByPlayer.put(player, afk);
+        this.eventCaller.callEvent(new AfkSwitchEvent(afk));
         this.sendAfkNotification(player, true);
 
         return afk;
@@ -71,6 +75,7 @@ public class AfkService {
 
         this.interactionsCount.remove(player);
         this.lastInteraction.remove(player);
+        this.eventCaller.callEvent(new AfkSwitchEvent(afk));
         this.sendAfkNotification(player, false);
     }
 
