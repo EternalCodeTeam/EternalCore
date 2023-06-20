@@ -24,7 +24,7 @@ import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
 import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.handler.InvalidUsage;
-import com.eternalcode.core.command.handler.NotificationHandler;
+import com.eternalcode.core.command.handler.NoticeHandler;
 import com.eternalcode.core.command.handler.PermissionMessage;
 import com.eternalcode.core.configuration.ConfigurationBackupService;
 import com.eternalcode.core.configuration.ConfigurationManager;
@@ -326,7 +326,7 @@ class EternalCore implements EternalCoreApi {
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
             .permissionHandler(new PermissionMessage(this.viewerProvider, this.noticeService))
-            .resultHandler(Notice.class, new NotificationHandler(this.viewerProvider, this.noticeService))
+            .resultHandler(Notice.class, new NoticeHandler(this.viewerProvider, this.noticeService))
 
             .commandInstance(
                 new EternalCoreCommand(this.configurationManager, this.miniMessage),

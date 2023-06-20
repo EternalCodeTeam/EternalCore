@@ -8,12 +8,12 @@ import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.handle.Handler;
 import org.bukkit.command.CommandSender;
 
-public class NotificationHandler implements Handler<CommandSender, Notice> {
+public class NoticeHandler implements Handler<CommandSender, Notice> {
 
     private final BukkitViewerProvider viewerProvider;
     private final NoticeService noticeService;
 
-    public NotificationHandler(BukkitViewerProvider viewerProvider, NoticeService noticeService) {
+    public NoticeHandler(BukkitViewerProvider viewerProvider, NoticeService noticeService) {
         this.viewerProvider = viewerProvider;
         this.noticeService = noticeService;
     }
