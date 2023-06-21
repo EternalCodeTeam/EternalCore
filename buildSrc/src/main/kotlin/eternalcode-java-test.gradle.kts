@@ -11,10 +11,10 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
-    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.mockito:mockito-core:5.4.0")
     testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
     testImplementation("net.kyori:adventure-platform-facet:4.3.0")
-    testImplementation("net.kyori:adventure-text-minimessage:4.13.1")
+    testImplementation("net.kyori:adventure-text-minimessage:4.14.0")
 }
 
 tasks.getByName<Test>("test") {
