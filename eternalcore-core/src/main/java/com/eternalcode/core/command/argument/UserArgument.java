@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
@@ -37,7 +37,7 @@ public class UserArgument extends AbstractViewerArgument<User> {
     }
 
     @Override
-    public Result<User, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<User, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         Optional<User> optionalUser = this.userManager.getUser(argument);
 
         if (optionalUser.isPresent()) {

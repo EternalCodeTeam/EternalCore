@@ -2,7 +2,7 @@ package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpManager;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -25,7 +25,7 @@ public class WarpArgument extends AbstractViewerArgument<Warp> {
     }
 
     @Override
-    public Result<Warp, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<Warp, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         Option<Warp> warpOption = this.warpManager.findWarp(argument);
 
         if (warpOption.isEmpty()) {

@@ -1,9 +1,8 @@
 package com.eternalcode.core.feature.adminchat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.notification.Notice;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeBroadcast;
+import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -27,7 +26,7 @@ public class AdminChatCommand {
     @Execute(min = 1)
     @DescriptionDocs(description = "Sends a message to all staff members with eternalcore.adminchat.spy permissions", arguments = "<message>")
     public void execute(CommandSender sender, @Joiner String message) {
-        Notice notice = this.noticeService.create()
+        NoticeBroadcast notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())
             .placeholder("{PLAYER}", sender.getName())

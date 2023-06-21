@@ -1,8 +1,8 @@
 package com.eternalcode.core.listener.player;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,7 +53,7 @@ public class PlayerDeathListener implements Listener {
             .noticeOption(translation -> {
                 EntityDamageEvent.DamageCause cause = lastDamageCasue.getCause();
 
-                List<Notification> notifications = translation.event().deathMessageByDamageCause().get(cause);
+                List<Notice> notifications = translation.event().deathMessageByDamageCause().get(cause);
 
                 if (notifications == null) {
                     return Option.none();

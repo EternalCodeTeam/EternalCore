@@ -1,4 +1,4 @@
-package com.eternalcode.core.notification.extractor;
+package com.eternalcode.core.notice.extractor;
 
 import com.eternalcode.core.translation.Translation;
 

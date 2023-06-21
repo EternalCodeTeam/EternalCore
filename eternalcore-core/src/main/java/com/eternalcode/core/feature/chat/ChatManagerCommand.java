@@ -2,9 +2,8 @@ package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.DurationArgument;
-import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.notification.NoticeType;
-import com.eternalcode.core.notification.adventure.AdventureNotification;
+import com.eternalcode.core.notice.Notice;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
@@ -13,6 +12,7 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 
 import java.time.Duration;
@@ -21,11 +21,11 @@ import java.time.Duration;
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
 
-    private final AdventureNotification clear;
+    private final Notice clear;
     private final NoticeService noticeService;
     private final ChatManager chatManager;
 
-    private ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, AdventureNotification clear) {
+    private ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, Notice clear) {
         this.noticeService = noticeService;
         this.chatManager = chatManager;
         this.clear = clear;
@@ -101,7 +101,9 @@ public class ChatManagerCommand {
             clear = clear.append(Component.newline());
         }
 
-        return new ChatManagerCommand(chatManager, audiences, new AdventureNotification(clear, NoticeType.CHAT));
+        String serialized = MiniMessage.miniMessage().serialize(clear);
+
+        return new ChatManagerCommand(chatManager, audiences, Notice.chat(serialized));
     }
 }
 

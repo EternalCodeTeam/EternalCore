@@ -1,6 +1,6 @@
 package com.eternalcode.core.command.argument;
 
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -26,7 +26,7 @@ public class SpeedArgument extends AbstractViewerArgument<Integer> {
     }
 
     @Override
-    public Result<Integer, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<Integer, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         return Option.supplyThrowing(NumberFormatException.class, () -> Integer.parseInt(argument))
             .filter(SPEED_VALID::valid)
             .toResult(() -> translation.player().speedBetweenZeroAndTen());

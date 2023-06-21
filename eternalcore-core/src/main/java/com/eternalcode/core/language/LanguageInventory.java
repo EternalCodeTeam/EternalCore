@@ -3,7 +3,7 @@ package com.eternalcode.core.language;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.language.config.LanguageConfigItem;
 import com.eternalcode.core.language.config.LanguageConfiguration;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.util.AdventureUtil;

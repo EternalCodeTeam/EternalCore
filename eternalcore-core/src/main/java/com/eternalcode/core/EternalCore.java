@@ -24,7 +24,7 @@ import com.eternalcode.core.command.contextual.PlayerContextual;
 import com.eternalcode.core.command.contextual.UserContextual;
 import com.eternalcode.core.command.contextual.ViewerContextual;
 import com.eternalcode.core.command.handler.InvalidUsage;
-import com.eternalcode.core.command.handler.NotificationHandler;
+import com.eternalcode.core.command.handler.NoticeHandler;
 import com.eternalcode.core.command.handler.PermissionMessage;
 import com.eternalcode.core.configuration.ConfigurationBackupService;
 import com.eternalcode.core.configuration.ConfigurationManager;
@@ -115,11 +115,9 @@ import com.eternalcode.core.listener.player.PlayerLoginListener;
 import com.eternalcode.core.listener.player.PlayerQuitListener;
 import com.eternalcode.core.feature.spawn.SpawnRespawnController;
 import com.eternalcode.core.listener.sign.SignChangeListener;
-import com.eternalcode.core.notification.NoticeService;
-import com.eternalcode.core.notification.NoticeType;
-import com.eternalcode.core.notification.Notification;
-import com.eternalcode.core.notification.NotificationAnnouncer;
-import com.eternalcode.core.notification.adventure.AdventureNotificationAnnouncer;
+import com.eternalcode.core.notice.Notice;
+import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
@@ -185,7 +183,6 @@ class EternalCore implements EternalCoreApi {
     /* Adventure */
     private final BukkitAudiences audiencesProvider;
     private final MiniMessage miniMessage;
-    private final AdventureNotificationAnnouncer notificationAnnouncer;
 
     /* Configuration */
     private final ConfigurationManager configurationManager;
@@ -233,8 +230,6 @@ class EternalCore implements EternalCoreApi {
                 .postProcessor(new LegacyColorProcessor())
                 .build();
 
-        this.notificationAnnouncer = new AdventureNotificationAnnouncer(this.audiencesProvider, this.miniMessage);
-
         /* Configuration */
         ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(plugin.getDataFolder());
         this.configurationManager = new ConfigurationManager(configurationBackupService, plugin.getDataFolder());
@@ -261,7 +256,7 @@ class EternalCore implements EternalCoreApi {
 
         this.chatManager = new ChatManager(pluginConfiguration.chat);
         this.translationManager = TranslationManager.create(this.configurationManager, languageConfiguration);
-        this.noticeService = new NoticeService(this.scheduler, this.translationManager, this.viewerProvider, this.notificationAnnouncer, this.placeholderRegistry);
+        this.noticeService = NoticeService.adventure(this.audiencesProvider, this.miniMessage, this.scheduler, this.viewerProvider, this.translationManager, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager, this.eventCaller);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.teleportAsk);
 
@@ -306,7 +301,7 @@ class EternalCore implements EternalCoreApi {
             // Arguments (include optional)
             .argument(String.class, StringNicknameArgument.KEY, new StringNicknameArgument(server))
             .argument(GameMode.class,                           new GameModeArgument(this.viewerProvider, this.translationManager, commandConfiguration.argument))
-            .argument(NoticeType.class,                         new NoticeTypeArgument(this.viewerProvider, this.translationManager))
+            .argument(NoticeTextType.class,                     new NoticeTypeArgument(this.viewerProvider, this.translationManager))
             .argument(SpeedType.class,                          new SpeedTypeArgument(this.viewerProvider, this.translationManager))
             .argument(Warp.class,                               new WarpArgument(this.warpManager, this.translationManager, this.viewerProvider))
             .argument(Enchantment.class,                        new EnchantmentArgument(this.viewerProvider, this.translationManager))
@@ -330,8 +325,8 @@ class EternalCore implements EternalCoreApi {
             .contextualBind(User.class,     new UserContextual(this.translationManager, this.userManager))
 
             .invalidUsageHandler(new InvalidUsage(this.viewerProvider, this.noticeService))
-            .permissionHandler(new PermissionMessage(this.viewerProvider, this.audiencesProvider, this.translationManager, this.miniMessage))
-            .resultHandler(Notification.class, new NotificationHandler(this.viewerProvider, this.noticeService))
+            .permissionHandler(new PermissionMessage(this.viewerProvider, this.noticeService))
+            .resultHandler(Notice.class, new NoticeHandler(this.viewerProvider, this.noticeService))
 
             .commandInstance(
                 new EternalCoreCommand(this.configurationManager, this.miniMessage),
@@ -571,10 +566,6 @@ class EternalCore implements EternalCoreApi {
     @Override
     public BukkitViewerProvider getViewerProvider() {
         return this.viewerProvider;
-    }
-
-    public NotificationAnnouncer getNotificationAnnouncer() {
-        return this.notificationAnnouncer;
     }
 
     public NoticeService getNoticeService() {

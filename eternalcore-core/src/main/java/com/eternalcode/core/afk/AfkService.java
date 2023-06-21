@@ -1,7 +1,7 @@
 package com.eternalcode.core.afk;
 
 import com.eternalcode.core.event.EventCaller;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 

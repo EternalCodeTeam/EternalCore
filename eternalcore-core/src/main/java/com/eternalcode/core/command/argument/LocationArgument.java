@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -28,7 +29,7 @@ public class LocationArgument implements MultilevelArgument<Location> {
     }
 
     @Override
-    public Result<Location, String> parseMultilevel(LiteInvocation invocation, String... arguments) {
+    public Result<Location, Notice> parseMultilevel(LiteInvocation invocation, String... arguments) {
         Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
         Translation translation = this.translationManager.getMessages(viewer);
 
@@ -38,7 +39,7 @@ public class LocationArgument implements MultilevelArgument<Location> {
             double z = Double.parseDouble(arguments[2]);
 
             return new Location(null, x, y, z);
-        }).mapErr(ex -> translation.argument().youMustGiveWorldName().getMessage());
+        }).mapErr(ex -> translation.argument().youMustGiveWorldName());
     }
 
     @Override

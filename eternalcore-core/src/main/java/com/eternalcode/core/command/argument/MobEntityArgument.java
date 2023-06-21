@@ -2,7 +2,7 @@ package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.feature.essentials.mob.MobEntity;
 import com.eternalcode.core.feature.essentials.mob.MobType;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.EntityUtil;
@@ -24,7 +24,7 @@ public class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
     }
 
     @Override
-    public Result<MobEntity, Notification> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public Result<MobEntity, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
         try {
             MobType mobType = MobType.valueOf(argument.toUpperCase());
 

@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -47,7 +47,7 @@ public class TpaCommand {
         this.noticeService
             .create()
             .player(target.getUniqueId())
-            .notifications(translation -> translation.tpa().tpaReceivedMessage())
+            .notice(translation -> translation.tpa().tpaReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
 

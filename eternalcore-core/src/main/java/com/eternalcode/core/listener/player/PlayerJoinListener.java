@@ -2,7 +2,7 @@ package com.eternalcode.core.listener.player;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -40,8 +40,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.event().welcomeTitle())
-            .notice(translation -> translation.event().welcomeSubtitle())
+            .notice(translation -> translation.event().welcome())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .sendAsync();

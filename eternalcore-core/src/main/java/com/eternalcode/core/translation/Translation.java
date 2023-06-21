@@ -2,7 +2,7 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
-import com.eternalcode.core.notification.Notification;
+import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -17,24 +17,24 @@ public interface Translation {
     ArgumentSection argument();
 
     interface ArgumentSection {
-        Notification permissionMessage();
-        Notification usageMessage();
-        Notification usageMessageHead();
-        Notification usageMessageEntry();
-        Notification offlinePlayer();
-        Notification onlyPlayer();
-        Notification numberBiggerThanOrEqualZero();
-        Notification noItem();
-        Notification noArgument();
-        Notification noDamaged();
-        Notification noDamagedItems();
-        Notification noEnchantment();
-        Notification noValidEnchantmentLevel();
-        Notification invalidTimeFormat();
-        Notification worldDoesntExist();
-        Notification youMustGiveWorldName();
-        Notification incorrectNumberOfChunks();
-        Notification incorrectLocation();
+        Notice permissionMessage();
+        Notice usageMessage();
+        Notice usageMessageHead();
+        Notice usageMessageEntry();
+        Notice offlinePlayer();
+        Notice onlyPlayer();
+        Notice numberBiggerThanOrEqualZero();
+        Notice noItem();
+        Notice noArgument();
+        Notice noDamaged();
+        Notice noDamagedItems();
+        Notice noEnchantment();
+        Notice noValidEnchantmentLevel();
+        Notice invalidTimeFormat();
+        Notice worldDoesntExist();
+        Notice youMustGiveWorldName();
+        Notice incorrectNumberOfChunks();
+        Notice incorrectLocation();
     }
 
     // format section
@@ -49,16 +49,16 @@ public interface Translation {
     HelpOpSection helpOp();
 
     interface HelpOpSection {
-        Notification format();
-        Notification send();
-        Notification helpOpDelay();
+        Notice format();
+        Notice send();
+        Notice helpOpDelay();
     }
 
     // AdminChat Section
     AdminChatSection adminChat();
 
     interface AdminChatSection {
-        Notification format();
+        Notice format();
     }
 
     // Teleport Section
@@ -66,40 +66,40 @@ public interface Translation {
 
     interface TeleportSection {
         // teleport
-        Notification teleportedToPlayer();
-        Notification teleportedPlayerToPlayer();
-        Notification teleportedToHighestBlock();
+        Notice teleportedToPlayer();
+        Notice teleportedPlayerToPlayer();
+        Notice teleportedToHighestBlock();
 
         // Task
-        Notification teleportTimerFormat();
-        Notification teleported();
-        Notification teleporting();
-        Notification teleportTaskCanceled();
-        Notification teleportTaskAlreadyExist();
+        Notice teleportTimerFormat();
+        Notice teleported();
+        Notice teleporting();
+        Notice teleportTaskCanceled();
+        Notice teleportTaskAlreadyExist();
 
         // Coordinates XYZ
-        Notification teleportedToCoordinates();
-        Notification teleportedSpecifiedPlayerToCoordinates();
+        Notice teleportedToCoordinates();
+        Notice teleportedSpecifiedPlayerToCoordinates();
 
         // Back
-        Notification teleportedToLastLocation();
-        Notification teleportedSpecifiedPlayerLastLocation();
-        Notification lastLocationNoExist();
+        Notice teleportedToLastLocation();
+        Notice teleportedSpecifiedPlayerLastLocation();
+        Notice lastLocationNoExist();
     }
 
     // Chat Section
     ChatSection chat();
 
     interface ChatSection {
-        Notification disabled();
-        Notification enabled();
-        Notification cleared();
-        Notification alreadyDisabled();
-        Notification alreadyEnabled();
-        Notification slowModeSet();
-        Notification slowMode();
-        Notification disabledChatInfo();
-        Notification commandNotFound();
+        Notice disabled();
+        Notice enabled();
+        Notice cleared();
+        Notice alreadyDisabled();
+        Notice alreadyEnabled();
+        Notice slowModeSet();
+        Notice slowMode();
+        Notice disabledChatInfo();
+        Notice commandNotFound();
         String alertMessageFormat();
     }
 
@@ -107,11 +107,11 @@ public interface Translation {
     WarpSection warp();
 
     interface WarpSection {
-        Notification warpAlreadyExists();
-        Notification notExist();
-        Notification create();
-        Notification remove();
-        Notification available();
+        Notice warpAlreadyExists();
+        Notice notExist();
+        Notice create();
+        Notice remove();
+        Notice available();
 
         WarpInventorySection warpInventory();
 
@@ -146,86 +146,85 @@ public interface Translation {
     HomeSection home();
 
     interface HomeSection {
-        Notification notExist();
-        Notification create();
-        Notification delete();
-        Notification limit();
-        Notification overrideHomeLocation();
+        Notice notExist();
+        Notice create();
+        Notice delete();
+        Notice limit();
+        Notice overrideHomeLocation();
     }
 
     // tpa section
     TpaSection tpa();
 
     interface TpaSection {
-        Notification tpaSelfMessage();
-        Notification tpaAlreadySentMessage();
-        Notification tpaSentMessage();
-        List<Notification> tpaReceivedMessage();
+        Notice tpaSelfMessage();
+        Notice tpaAlreadySentMessage();
+        Notice tpaSentMessage();
+        Notice tpaReceivedMessage();
 
-        Notification tpaDenyNoRequestMessage();
-        Notification tpaDenyDoneMessage();
-        Notification tpaDenyReceivedMessage();
-        Notification tpaDenyAllDenied();
+        Notice tpaDenyNoRequestMessage();
+        Notice tpaDenyDoneMessage();
+        Notice tpaDenyReceivedMessage();
+        Notice tpaDenyAllDenied();
 
-        Notification tpaAcceptMessage();
-        Notification tpaAcceptNoRequestMessage();
-        Notification tpaAcceptReceivedMessage();
-        Notification tpaAcceptAllAccepted();
+        Notice tpaAcceptMessage();
+        Notice tpaAcceptNoRequestMessage();
+        Notice tpaAcceptReceivedMessage();
+        Notice tpaAcceptAllAccepted();
     }
 
     // private section
     PrivateChatSection privateChat();
 
     interface PrivateChatSection {
-        Notification noReply();
-        Notification privateMessageYouToTarget();
-        Notification privateMessageTargetToYou();
+        Notice noReply();
+        Notice privateMessageYouToTarget();
+        Notice privateMessageTargetToYou();
 
-        Notification socialSpyMessage();
-        Notification socialSpyEnable();
-        Notification socialSpyDisable();
+        Notice socialSpyMessage();
+        Notice socialSpyEnable();
+        Notice socialSpyDisable();
 
-        Notification ignorePlayer();
-        Notification ignoreAll();
-        Notification unIgnorePlayer();
-        Notification unIgnoreAll();
-        Notification alreadyIgnorePlayer();
-        Notification notIgnorePlayer();
-        Notification cantIgnoreYourself();
-        Notification cantUnIgnoreYourself();
+        Notice ignorePlayer();
+        Notice ignoreAll();
+        Notice unIgnorePlayer();
+        Notice unIgnoreAll();
+        Notice alreadyIgnorePlayer();
+        Notice notIgnorePlayer();
+        Notice cantIgnoreYourself();
+        Notice cantUnIgnoreYourself();
     }
 
     // afk section
     AfkSection afk();
 
     interface AfkSection {
-        Notification afkOn();
-        Notification afkOff();
-        Notification afkDelay();
+        Notice afkOn();
+        Notice afkOff();
+        Notice afkDelay();
     }
 
     // event section
     EventSection event();
 
     interface EventSection {
-        List<Notification> deathMessage();
-        List<Notification> joinMessage();
-        List<Notification> quitMessage();
-        List<Notification> firstJoinMessage();
+        List<Notice> deathMessage();
+        List<Notice> joinMessage();
+        List<Notice> quitMessage();
+        List<Notice> firstJoinMessage();
 
-        Map<EntityDamageEvent.DamageCause, List<Notification>> deathMessageByDamageCause();
+        Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
 
-        Notification welcomeTitle();
-        Notification welcomeSubtitle();
+        Notice welcome();
     }
 
     // inventory section
     InventorySection inventory();
 
     interface InventorySection {
-        Notification inventoryClearMessage();
-        Notification inventoryClearMessageBy();
-        Notification cantOpenYourInventory();
+        Notice inventoryClearMessage();
+        Notice inventoryClearMessageBy();
+        Notice cantOpenYourInventory();
         String disposalTitle();
     }
 
@@ -234,46 +233,46 @@ public interface Translation {
 
     interface PlayerSection {
         // feed
-        Notification feedMessage();
-        Notification feedMessageBy();
+        Notice feedMessage();
+        Notice feedMessageBy();
 
         // heal
-        Notification healMessage();
-        Notification healMessageBy();
+        Notice healMessage();
+        Notice healMessageBy();
 
         // kill
-        Notification killedMessage();
+        Notice killedMessage();
 
         // speed
-        Notification speedBetweenZeroAndTen();
-        Notification speedTypeNotCorrect();
+        Notice speedBetweenZeroAndTen();
+        Notice speedTypeNotCorrect();
 
-        Notification speedWalkSet();
-        Notification speedFlySet();
+        Notice speedWalkSet();
+        Notice speedFlySet();
 
-        Notification speedWalkSetBy();
-        Notification speedFlySetBy();
+        Notice speedWalkSetBy();
+        Notice speedFlySetBy();
 
         // godmode
-        Notification godMessage();
-        Notification godSetMessage();
+        Notice godMessage();
+        Notice godSetMessage();
 
         // fly
-        Notification flyMessage();
-        Notification flySetMessage();
+        Notice flyMessage();
+        Notice flySetMessage();
 
         // ping
-        Notification pingMessage();
-        Notification pingOtherMessage();
+        Notice pingMessage();
+        Notice pingOtherMessage();
 
         // gamemode
-        Notification gameModeNotCorrect();
-        Notification gameModeMessage();
-        Notification gameModeSetMessage();
+        Notice gameModeNotCorrect();
+        Notice gameModeMessage();
+        Notice gameModeSetMessage();
 
         // online
-        Notification onlinePlayersCountMessage();
-        Notification onlinePlayersMessage();
+        Notice onlinePlayersCountMessage();
+        Notice onlinePlayersMessage();
 
         // slot-bypass
         List<String> fullServerSlots();
@@ -282,8 +281,8 @@ public interface Translation {
         List<String> whoisCommand();
 
         // butcher
-        Notification butcherCommand();
-        Notification safeChunksMessage();
+        Notice butcherCommand();
+        Notice safeChunksMessage();
     }
 
     // spawn section
@@ -291,11 +290,11 @@ public interface Translation {
 
     interface SpawnSection {
         // spawn
-        Notification spawnSet();
-        Notification spawnNoSet();
+        Notice spawnSet();
+        Notice spawnNoSet();
 
-        Notification spawnTeleportedBy();
-        Notification spawnTeleportedOther();
+        Notice spawnTeleportedBy();
+        Notice spawnTeleportedOther();
     }
 
     // item section
@@ -303,58 +302,58 @@ public interface Translation {
 
     interface ItemSection {
         // item name & lore
-        Notification itemClearNameMessage();
-        Notification itemClearLoreMessage();
+        Notice itemClearNameMessage();
+        Notice itemClearLoreMessage();
 
-        Notification itemChangeNameMessage();
-        Notification itemChangeLoreMessage();
+        Notice itemChangeNameMessage();
+        Notice itemChangeLoreMessage();
 
         // item flags
-        Notification itemFlagRemovedMessage();
-        Notification itemFlagAddedMessage();
-        Notification itemFlagClearedMessage();
+        Notice itemFlagRemovedMessage();
+        Notice itemFlagAddedMessage();
+        Notice itemFlagClearedMessage();
 
         // give
-        Notification giveReceived();
-        Notification giveGiven();
+        Notice giveReceived();
+        Notice giveGiven();
 
-        Notification giveNotItem();
+        Notice giveNotItem();
 
         // others
-        Notification repairMessage();
-        Notification skullMessage();
-        Notification enchantedMessage();
+        Notice repairMessage();
+        Notice skullMessage();
+        Notice enchantedMessage();
     }
 
     // time and weather
     TimeAndWeatherSection timeAndWeather();
 
     interface TimeAndWeatherSection {
-        Notification timeSetDay();
-        Notification timeSetNight();
+        Notice timeSetDay();
+        Notice timeSetNight();
 
-        Notification timeSet();
-        Notification timeAdd();
+        Notice timeSet();
+        Notice timeAdd();
 
-        Notification weatherSetRain();
-        Notification weatherSetSun();
-        Notification weatherSetThunder();
+        Notice weatherSetRain();
+        Notice weatherSetSun();
+        Notice weatherSetThunder();
     }
 
     // language section
     LanguageSection language();
 
     interface LanguageSection {
-        Notification languageChanged();
+        Notice languageChanged();
     }
 
     // container section
     ContainerSection container();
 
     interface ContainerSection {
-        Notification genericContainerOpened();
-        Notification genericContainerOpenedBy();
-        Notification genericContainerOpenedFor();
+        Notice genericContainerOpened();
+        Notice genericContainerOpenedBy();
+        Notice genericContainerOpenedFor();
     }
 
 }

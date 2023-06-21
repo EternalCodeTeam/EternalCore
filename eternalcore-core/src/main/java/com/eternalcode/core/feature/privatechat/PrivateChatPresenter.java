@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.privatechat;
 
-import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import panda.utilities.text.Formatter;
 
