@@ -44,3 +44,4 @@
 - Add replay messages for all weather-related commands
 - Add home limit per permission
 - Add message translation to world and location argument
+- Refactor messages config format
