@@ -24,18 +24,12 @@ public class AutoMessageCommand {
     void execute(Player player) {
         this.autoMessageService.switchReciving(player.getUniqueId()).then(reciving -> {
             if (reciving) {
-                this.noticeService.create()
-                    .player(player.getUniqueId())
-                    .notice(messages -> messages.autoMessage().enabled())
-                    .send();
+                this.noticeService.player(player.getUniqueId(), messages -> messages.autoMessage().enabled());
 
                 return;
             }
 
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(messages -> messages.autoMessage().disabled())
-                .send();
+            this.noticeService.player(player.getUniqueId(), messages -> messages.autoMessage().disabled());
         });
     }
 }
