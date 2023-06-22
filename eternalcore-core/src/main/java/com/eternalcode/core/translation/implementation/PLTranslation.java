@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
@@ -725,5 +726,27 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLLanguageSection implements LanguageSection {
         public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
+    }
+
+    @Description({ " ", "# Automatyczne wiadomości " })
+    public PLAutoMessageSection autoMessage = new PLAutoMessageSection();
+
+    @Getter
+    @Contextual
+    public static class PLAutoMessageSection implements AutoMessageSection {
+
+        public List<Notice> messages = List.of(
+            Notice.builder()
+                .actionBar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
+                .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
+                .build(),
+
+            Notice.builder()
+                .chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?")
+                .chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!")
+                .chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Kliknij aby wykonać</green>")
+                .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
+                .build()
+        );
     }
 }

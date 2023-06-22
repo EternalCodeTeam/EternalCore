@@ -356,4 +356,10 @@ public interface Translation {
         Notice genericContainerOpenedFor();
     }
 
+    AutoMessageSection autoMessage();
+
+    interface AutoMessageSection {
+        List<Notice> messages();
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.eternalcode.core.database;
 
+import com.eternalcode.core.feature.automessage.AutoMessageRepository;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeRepository;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
@@ -9,10 +10,11 @@ import panda.std.Option;
 import panda.std.reactive.Completable;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public final class NoneRepository implements HomeRepository, IgnoreRepository {
+public final class NoneRepository implements HomeRepository, IgnoreRepository, AutoMessageRepository {
 
     @Override
     public Completable<Option<Home>> getHome(UUID uuid) {
@@ -74,4 +76,23 @@ public final class NoneRepository implements HomeRepository, IgnoreRepository {
         return Completable.completed(Blank.BLANK);
     }
 
+    @Override
+    public Completable<List<UUID>> findRecivers(List<UUID> onlineUniqueIds) {
+        return Completable.completed(Collections.emptyList()));
+    }
+
+    @Override
+    public Completable<Boolean> isReciving(UUID uniqueId) {
+        return Completable.completed(false);
+    }
+
+    @Override
+    public Completable<Blank> enableReciving(UUID uniqueId) {
+        return Completable.completed(Blank.BLANK);
+    }
+
+    @Override
+    public Completable<Blank> disableReciving(UUID uniqueId) {
+        return Completable.completed(Blank.BLANK);
+    }
 }

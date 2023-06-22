@@ -44,20 +44,20 @@ abstract class AbstractRepositoryOrmLite {
     }
 
     <T, ID, R> Completable<R> action(Class<T> type, ThrowingFunction<Dao<T, ID>, R, SQLException> action) {
-        Completable<R> completableFuture = new Completable<>();
+        Completable<R> completable = new Completable<>();
 
         this.scheduler.async(() -> {
             Dao<T, ID> dao = this.databaseManager.getDao(type);
 
             try {
-                completableFuture.complete(action.apply(dao));
+                completable.complete(action.apply(dao));
             }
             catch (SQLException sqlException) {
                 sqlException.printStackTrace();
             }
         });
 
-        return completableFuture;
+        return completable;
     }
 
 }
