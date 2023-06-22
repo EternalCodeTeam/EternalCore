@@ -11,6 +11,7 @@ import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements AutoMessageRepository {
@@ -44,10 +45,7 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
 
     @Override
     public Completable<Boolean> isReciving(UUID uniqueId) {
-        return this.action(AutoMessageIgnoreWrapper.class, dao -> dao.queryBuilder()
-            .where()
-            .eq("unique_id", uniqueId)
-            .queryForFirst() == null);
+        return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenApply(Optional::isEmpty);
     }
 
     @Override
