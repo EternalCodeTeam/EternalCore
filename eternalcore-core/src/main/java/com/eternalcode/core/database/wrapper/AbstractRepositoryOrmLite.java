@@ -8,6 +8,7 @@ import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 abstract class AbstractRepositoryOrmLite {
 
@@ -31,6 +32,10 @@ abstract class AbstractRepositoryOrmLite {
         return this.action(type, dao -> dao.queryForId(id));
     }
 
+    <T, ID> Completable<Optional<T>> selectSafe(Class<T> type, ID id) {
+        return this.action(type, dao -> Optional.ofNullable(dao.queryForId(id)));
+    }
+
     <T> Completable<Integer> delete(Class<T> type, T warp) {
         return this.action(type, dao -> dao.delete(warp));
     }
@@ -52,8 +57,8 @@ abstract class AbstractRepositoryOrmLite {
             try {
                 completable.complete(action.apply(dao));
             }
-            catch (SQLException sqlException) {
-                sqlException.printStackTrace();
+            catch (Throwable throwable) {
+                throwable.printStackTrace();
             }
         });
 

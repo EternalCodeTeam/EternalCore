@@ -21,20 +21,18 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
 
     @Override
     public Completable<List<UUID>> findRecivers(List<UUID> onlineUniqueIds) {
+        if (onlineUniqueIds.isEmpty()) {
+            return Completable.completed(onlineUniqueIds);
+        }
+
         Completable<List<AutoMessageIgnoreWrapper>> wrapperList = this.action(AutoMessageIgnoreWrapper.class, dao -> {
             Where<AutoMessageIgnoreWrapper, Object> where = dao.queryBuilder().where();
 
-            boolean first = true;
-
             for (UUID onlineUniqueId : onlineUniqueIds) {
-                if (!first) {
-                    where.or();
-                }
-
                 where.eq("unique_id", onlineUniqueId);
-
-                first = false;
             }
+
+            where.or(onlineUniqueIds.size());
 
             return where.query();
         });
@@ -54,10 +52,12 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
 
     @Override
     public Completable<Boolean> switchReciving(UUID uniqueId) {
-        return this.select(AutoMessageIgnoreWrapper.class, uniqueId).thenCompose(wrapper -> {
-            if (wrapper == null) {
+        return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenCompose(optional -> {
+            if (optional.isEmpty()) {
                 return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId)).thenApply(result -> true);
             }
+
+            AutoMessageIgnoreWrapper wrapper = optional.get();
 
             return this.delete(AutoMessageIgnoreWrapper.class, wrapper).thenApply(state -> false);
         });

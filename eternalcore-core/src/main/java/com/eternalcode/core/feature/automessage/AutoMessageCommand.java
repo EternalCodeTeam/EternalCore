@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.automessage;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -19,10 +20,12 @@ public class AutoMessageCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Toggles the display of automatic messages.")
     void execute(Player player) {
         this.autoMessageService.switchReciving(player.getUniqueId()).then(reciving -> {
             if (reciving) {
                 this.noticeService.create()
+                    .player(player.getUniqueId())
                     .notice(messages -> messages.autoMessage().enabled())
                     .send();
 
@@ -30,6 +33,7 @@ public class AutoMessageCommand {
             }
 
             this.noticeService.create()
+                .player(player.getUniqueId())
                 .notice(messages -> messages.autoMessage().disabled())
                 .send();
         });

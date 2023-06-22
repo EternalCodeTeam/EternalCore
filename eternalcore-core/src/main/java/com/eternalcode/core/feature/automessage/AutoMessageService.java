@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.automessage;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.scheduler.Scheduler;
@@ -10,11 +11,12 @@ import org.bukkit.entity.Entity;
 import panda.std.Option;
 import panda.std.reactive.Completable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+@FeatureDocs(name = "AutoMessage", description = "Automatically sends messages to players at a given time interval.")
 public class AutoMessageService {
 
     private final AutoMessageRepository repository;
@@ -65,7 +67,7 @@ public class AutoMessageService {
     }
 
     private Option<Notice> nextAutoMessage(Translation.AutoMessageSection messageSection) {
-        List<Notice> messages = messageSection.messages();
+        Collection<Notice> messages = messageSection.messages();
 
         if (messages.isEmpty()) {
             return Option.none();
@@ -77,6 +79,6 @@ public class AutoMessageService {
 
         int index = this.broadcastCount.getAndIncrement() % messages.size();
 
-        return Option.of(messages.get(index));
+        return Option.ofOptional(messages.stream().skip(index).findFirst());
     }
 }

@@ -14,6 +14,7 @@ import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -719,16 +720,22 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENAutoMessageSection implements AutoMessageSection {
 
-        public List<Notice> messages = List.of(
-            Notice.builder()
+        @Description({
+            "",
+            "# If you want to useplaceholder %server_online% you need to install",
+            "# PlaceholderAPI plugin and download placeholders for Server",
+            "# like /papi ecloud download Server",
+        })
+        public Map<String, Notice> messages = Map.of(
+            "1", Notice.builder()
                 .actionBar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
                 .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
                 .build(),
 
-            Notice.builder()
+            "2", Notice.builder()
                 .chat("<dark_gray>» <gold>You need help from an admin?")
                 .chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!")
-                .chat("<dark_gray>» <green><click:suggest_command:'/helpop'></click>Click to execute</green>")
+                .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Click to execute!</click></green>")
                 .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
                 .build()
         );
@@ -737,8 +744,8 @@ public class ENTranslation extends AbstractTranslation {
         public Notice disabled = Notice.chat("<green>► <white>Disabled auto messages!");
 
         @Override
-        public List<Notice> messages() {
-            return this.messages;
+        public Collection<Notice> messages() {
+            return this.messages.values();
         }
 
         @Override

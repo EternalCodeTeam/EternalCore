@@ -6,6 +6,8 @@ import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -359,7 +361,7 @@ public interface Translation {
     AutoMessageSection autoMessage();
 
     interface AutoMessageSection {
-        List<Notice> messages();
+        Collection<Notice> messages();
 
         Notice enabled();
         Notice disabled();
