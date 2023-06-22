@@ -732,5 +732,23 @@ public class ENTranslation extends AbstractTranslation {
                 .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
                 .build()
         );
+
+        public Notice enabled = Notice.chat("<green>► <white>Enabled auto messages!");
+        public Notice disabled = Notice.chat("<green>► <white>Disabled auto messages!");
+
+        @Override
+        public List<Notice> messages() {
+            return this.messages;
+        }
+
+        @Override
+        public Notice enabled() {
+            return this.enabled;
+        }
+
+        @Override
+        public Notice disabled() {
+            return this.disabled;
+        }
     }
 }

@@ -360,6 +360,9 @@ public interface Translation {
 
     interface AutoMessageSection {
         List<Notice> messages();
+
+        Notice enabled();
+        Notice disabled();
     }
 
 }

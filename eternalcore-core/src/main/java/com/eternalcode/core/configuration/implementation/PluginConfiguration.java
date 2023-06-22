@@ -3,6 +3,7 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.afk.AfkSettings;
+import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
@@ -245,6 +246,37 @@ public class PluginConfiguration implements ReloadableConfig {
     public static class Butcher {
         @Description("# Safe number of chunks for command execution (above this number it will not be possible to execute the command)")
         public int safeChunkNumber = 5;
+    }
+
+    @Description({ " ", "# AutoMessage Section" })
+    public AutoMessage autoMessage = new AutoMessage();
+
+    @Contextual
+    public static class AutoMessage implements AutoMessageSettings {
+
+        @Description("# AutoMessage should be enabled?")
+        public boolean enabled = true;
+
+        @Description("# Interval between messages")
+        public Duration interval = Duration.ofSeconds(60);
+
+        @Description("# Draw mode (RANDOM, SEQUENTIAL)")
+        public DrawMode drawMode = DrawMode.RANDOM;
+
+        @Override
+        public boolean enabled() {
+            return this.enabled;
+        }
+
+        @Override
+        public Duration interval() {
+            return this.interval;
+        }
+
+        @Override
+        public DrawMode drawMode() {
+            return this.drawMode;
+        }
     }
 
     @Override

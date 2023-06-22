@@ -7,7 +7,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
-import panda.std.Blank;
 import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
@@ -22,7 +21,6 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
 
     @Override
     public Completable<List<UUID>> findRecivers(List<UUID> onlineUniqueIds) {
-
         Completable<List<AutoMessageIgnoreWrapper>> wrapperList = this.action(AutoMessageIgnoreWrapper.class, dao -> {
             Where<AutoMessageIgnoreWrapper, Object> where = dao.queryBuilder().where();
 

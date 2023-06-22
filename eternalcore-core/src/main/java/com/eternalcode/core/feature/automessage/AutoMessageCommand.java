@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.automessage;
 
 import com.eternalcode.core.notice.NoticeService;
+import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
@@ -17,13 +18,20 @@ public class AutoMessageCommand {
         this.noticeService = noticeService;
     }
 
+    @Execute
     void execute(Player player) {
         this.autoMessageService.switchReciving(player.getUniqueId()).then(reciving -> {
             if (reciving) {
-                player.sendMessage("§aYou are now reciving auto messages!");
+                this.noticeService.create()
+                    .notice(messages -> messages.autoMessage().enabled())
+                    .send();
+
+                return;
             }
 
-            player.sendMessage("§cYou are no longer reciving auto messages!");
+            this.noticeService.create()
+                .notice(messages -> messages.autoMessage().disabled())
+                .send();
         });
     }
 }

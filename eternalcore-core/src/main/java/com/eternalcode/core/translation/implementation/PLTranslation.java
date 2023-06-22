@@ -5,6 +5,7 @@ import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.j256.ormlite.stmt.query.Not;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -748,5 +749,23 @@ public class PLTranslation extends AbstractTranslation {
                 .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
                 .build()
         );
+
+        public Notice enabled = Notice.chat("<green>► <white>Włączono automatyczne wiadomości!");
+        public Notice disabled = Notice.chat("<green>► <white>Wyłączono automatyczne wiadomości!");
+
+        @Override
+        public List<Notice> messages() {
+            return this.messages;
+        }
+
+        @Override
+        public Notice enabled() {
+            return this.enabled;
+        }
+
+        @Override
+        public Notice disabled() {
+            return this.disabled;
+        }
     }
 }

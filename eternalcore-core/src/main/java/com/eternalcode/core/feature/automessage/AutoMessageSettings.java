@@ -4,6 +4,8 @@ import java.time.Duration;
 
 public interface AutoMessageSettings {
 
+    boolean enabled();
+
     Duration interval();
 
     DrawMode drawMode();

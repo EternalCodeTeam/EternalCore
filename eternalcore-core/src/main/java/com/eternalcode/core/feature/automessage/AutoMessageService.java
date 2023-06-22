@@ -7,7 +7,6 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import panda.std.Option;
 import panda.std.reactive.Completable;
 
@@ -52,7 +51,7 @@ public class AutoMessageService {
 
             this.noticeService.create()
                 .players(recivers)
-                .noticeOption(translation -> nextAutoMessage(translation.autoMessage()))
+                .noticeOption(translation -> this.nextAutoMessage(translation.autoMessage()))
                 .send();
         });
     }
@@ -60,7 +59,9 @@ public class AutoMessageService {
     private void tick() {
         this.scheduler.laterAsync(this::tick, this.settings.interval());
 
-        this.broadcastNextMessage();
+        if (this.settings.enabled()) {
+            this.broadcastNextMessage();
+        }
     }
 
     private Option<Notice> nextAutoMessage(Translation.AutoMessageSection messageSection) {
