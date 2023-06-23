@@ -10,9 +10,11 @@ import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -709,5 +711,51 @@ public class ENTranslation extends AbstractTranslation {
     public static class ENLanguageSection implements LanguageSection {
         public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
 
+    }
+
+    @Description({ " ", "# Auto message" })
+    public ENAutoMessageSection autoMessage = new ENAutoMessageSection();
+
+    @Getter
+    @Contextual
+    public static class ENAutoMessageSection implements AutoMessageSection {
+
+        @Description({
+            "",
+            "# If you want to useplaceholder %server_online% you need to install",
+            "# PlaceholderAPI plugin and download placeholders for Server",
+            "# like /papi ecloud download Server",
+        })
+        public Map<String, Notice> messages = Map.of(
+            "1", Notice.builder()
+                .actionBar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
+                .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
+                .build(),
+
+            "2", Notice.builder()
+                .chat("<dark_gray>» <gold>You need help from an admin?")
+                .chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!")
+                .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Click to execute!</click></green>")
+                .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
+                .build()
+        );
+
+        public Notice enabled = Notice.chat("<green>► <white>Enabled auto messages!");
+        public Notice disabled = Notice.chat("<green>► <white>Disabled auto messages!");
+
+        @Override
+        public Collection<Notice> messages() {
+            return this.messages.values();
+        }
+
+        @Override
+        public Notice enabled() {
+            return this.enabled;
+        }
+
+        @Override
+        public Notice disabled() {
+            return this.disabled;
+        }
     }
 }

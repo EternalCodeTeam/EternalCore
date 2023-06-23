@@ -6,6 +6,8 @@ import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -354,6 +356,15 @@ public interface Translation {
         Notice genericContainerOpened();
         Notice genericContainerOpenedBy();
         Notice genericContainerOpenedFor();
+    }
+
+    AutoMessageSection autoMessage();
+
+    interface AutoMessageSection {
+        Collection<Notice> messages();
+
+        Notice enabled();
+        Notice disabled();
     }
 
 }

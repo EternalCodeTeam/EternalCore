@@ -33,6 +33,7 @@ import com.eternalcode.core.configuration.implementation.PlaceholdersConfigurati
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
+import com.eternalcode.core.database.wrapper.AutoMessageRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.HomeRepositoryOrmLite;
 import com.eternalcode.core.database.wrapper.IgnoreRepositoryOrmLite;
 import com.eternalcode.core.event.EventCaller;
@@ -41,6 +42,9 @@ import com.eternalcode.core.afk.AfkCommand;
 import com.eternalcode.core.afk.AfkController;
 import com.eternalcode.core.afk.AfkService;
 import com.eternalcode.core.afk.AfkTask;
+import com.eternalcode.core.feature.automessage.AutoMessageCommand;
+import com.eternalcode.core.feature.automessage.AutoMessageRepository;
+import com.eternalcode.core.feature.automessage.AutoMessageService;
 import com.eternalcode.core.feature.chat.ChatManager;
 import com.eternalcode.core.feature.chat.ChatManagerCommand;
 import com.eternalcode.core.feature.chat.ChatManagerController;
@@ -203,6 +207,7 @@ class EternalCore implements EternalCoreApi {
     private final PrivateChatService privateChatService;
     private final WarpManager warpManager;
     private final HomeManager homeManager;
+    private final AutoMessageService autoMessageService;
 
     /* Frameworks & Libraries */
     private final LiteCommands<CommandSender> liteCommands;
@@ -264,6 +269,7 @@ class EternalCore implements EternalCoreApi {
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
         HomeRepository homeRepository;
         IgnoreRepository ignoreRepository;
+        AutoMessageRepository autoMessageRepository;
 
         try {
             this.databaseManager = new DatabaseManager(pluginConfiguration, plugin.getLogger(), plugin.getDataFolder());
@@ -271,6 +277,7 @@ class EternalCore implements EternalCoreApi {
 
             homeRepository = HomeRepositoryOrmLite.create(this.databaseManager, this.scheduler);
             ignoreRepository = IgnoreRepositoryOrmLite.create(this.databaseManager, this.scheduler);
+            autoMessageRepository = AutoMessageRepositoryOrmLite.create(this.databaseManager, this.scheduler);
 
         }
         catch (Exception exception) {
@@ -281,12 +288,14 @@ class EternalCore implements EternalCoreApi {
 
             homeRepository = noneRepository;
             ignoreRepository = noneRepository;
+            autoMessageRepository = noneRepository;
         }
 
         /* depends on Database */
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.userManager);
         this.warpManager = WarpManager.create(warpRepository);
         this.homeManager = HomeManager.create(homeRepository);
+        this.autoMessageService = new AutoMessageService(autoMessageRepository, pluginConfiguration.autoMessage, this.noticeService, this.scheduler, server);
 
         LanguageInventory languageInventory = new LanguageInventory(languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
         WarpInventory warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
@@ -330,6 +339,9 @@ class EternalCore implements EternalCoreApi {
 
             .commandInstance(
                 new EternalCoreCommand(this.configurationManager, this.miniMessage),
+
+                // AutoMessage Command
+                new AutoMessageCommand(this.autoMessageService, this.noticeService),
 
                 // Home Commands
                 new HomeCommand(this.teleportTaskService, this.teleportService),
@@ -533,6 +545,10 @@ class EternalCore implements EternalCoreApi {
 
     public HomeManager getHomeManager() {
         return this.homeManager;
+    }
+
+    public AutoMessageService getAutoMessageService() {
+        return this.autoMessageService;
     }
 
     public AfkService getAfkService() {
