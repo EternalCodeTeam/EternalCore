@@ -22,7 +22,7 @@ eternalShadow {
     // Paper and Adventure libraries
     library("io.papermc:paperlib:1.0.8")
     library("net.kyori:adventure-platform-bukkit:4.3.0")
-    library("net.kyori:adventure-text-minimessage:4.13.1")
+    library("net.kyori:adventure-text-minimessage:4.14.0")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
@@ -53,7 +53,7 @@ eternalShadow {
     // common libraries
     library("org.panda-lang:expressible:1.3.5")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
-    library("commons-io:commons-io:2.12.0")
+    library("commons-io:commons-io:2.13.0")
     libraryRelocate(
         "panda.std",
         "panda.utilities",
