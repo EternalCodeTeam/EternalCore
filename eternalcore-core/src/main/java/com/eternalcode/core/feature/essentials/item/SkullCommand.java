@@ -11,6 +11,7 @@ import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.liteskullapi.SkullAPI;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,7 +35,14 @@ public class SkullCommand {
                 .name(Component.text(name))
                 .build();
 
-            player.getInventory().addItem(namedSkull);
+            ItemStack mainHand = player.getInventory().getItemInMainHand();
+
+            if (mainHand.getType() == Material.PLAYER_HEAD) {
+                mainHand.setItemMeta(namedSkull.getItemMeta());
+            }
+            else {
+                player.getInventory().addItem(namedSkull);
+            }
 
             this.noticeService.create()
                 .notice(translation -> translation.item().skullMessage())
