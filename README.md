@@ -36,6 +36,7 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
 - AFK system
 - Chat features, including:
     - Admin chat
+    - Auto Messages system `(with sequence or random option)`
     - Chat on/off switch
     - Chat slow mode
     - /ignore /unignore `(with -all option)` command
