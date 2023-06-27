@@ -160,13 +160,25 @@ class NoticeBroadcastImpl implements NoticeBroadcast {
 
     @Override
     public NoticeBroadcast notice(NoticeTextType type, String... text) {
-        this.notifications.add(translation -> Notice.chat(text));
+        for (String line : text) {
+            List<String> list = Collections.singletonList(line);
+            NoticeContent.Text content = new NoticeContent.Text(list);
+
+            this.notifications.add(translation -> Notice.of(type.getType(), content));
+        }
+
         return this;
     }
 
     @Override
     public NoticeBroadcast notice(NoticeTextType type, Collection<String> text) {
-        this.notifications.add(translation -> Notice.chat(text));
+        for (String line : text) {
+            List<String> list = Collections.singletonList(line);
+            NoticeContent.Text content = new NoticeContent.Text(list);
+
+            this.notifications.add(translation -> Notice.of(type.getType(), content));
+        }
+
         return this;
     }
 
