@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation(project(":eternalcore-core"))
 
-    implementation("com.google.guava:guava:32.0.1-jre")
+    implementation("com.google.guava:guava:32.1.0-jre")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("dev.rollczi.litecommands:core:2.8.8")
 
