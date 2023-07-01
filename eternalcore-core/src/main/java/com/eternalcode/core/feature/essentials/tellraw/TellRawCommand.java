@@ -28,6 +28,14 @@ public class TellRawCommand {
             .notice(type, message)
             .player(target.getUniqueId())
             .send();
+
+        this.noticeService.create()
+            .notice(translation -> translation.chat().tellrawInfo())
+            .placeholder("{PLAYER}", target.getName())
+            .placeholder("{MESSAGE}", message)
+            .placeholder("{TYPE}", type.name())
+            .viewer(sender)
+            .send();
     }
 
     @Execute(route = "-all", aliases = "*")
@@ -36,6 +44,13 @@ public class TellRawCommand {
         this.noticeService.create()
             .notice(type, message)
             .onlinePlayers()
+            .send();
+
+        this.noticeService.create()
+            .notice(translation -> translation.chat().tellrawAllInfo())
+            .placeholder("{MESSAGE}", message)
+            .placeholder("{TYPE}", type.name())
+            .viewer(sender)
             .send();
     }
 }
