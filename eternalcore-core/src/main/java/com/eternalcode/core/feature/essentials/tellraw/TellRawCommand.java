@@ -22,7 +22,7 @@ public class TellRawCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Send player a message without any prefixes etc.", arguments = "<player> <notice_type> <message>")
+    @DescriptionDocs(description = "Send a message to the player without any prefixes etc.", arguments = "<player> <notice_type> <message>")
     void tellRaw(Viewer sender, @Arg Player target, @Arg NoticeTextType type, @Joiner String message) {
         this.noticeService.create()
             .notice(type, message)
