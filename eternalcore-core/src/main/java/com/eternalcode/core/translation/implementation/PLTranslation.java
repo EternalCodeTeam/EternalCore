@@ -210,6 +210,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
         @Description(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
+
+
+        @Description(" ")
+        public Notice randomTeleportProcessBegin = Notice.chat("<green>► <white>Rozpoczynanie procesu losowania lokalizacji...");
+        @Description({"# {PLAYER} - Gracz który został teleportowany, {WORLD} - Świat, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
+        public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
+        public Notice teleportedToRandomLocationAdmin = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokazlizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
     }
 
     @Description({

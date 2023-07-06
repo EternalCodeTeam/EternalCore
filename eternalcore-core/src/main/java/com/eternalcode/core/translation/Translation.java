@@ -87,6 +87,11 @@ public interface Translation {
         Notice teleportedToLastLocation();
         Notice teleportedSpecifiedPlayerLastLocation();
         Notice lastLocationNoExist();
+
+        // RTP
+        Notice randomTeleportProcessBegin();
+        Notice teleportedToRandomLocation();
+        Notice teleportedToRandomLocationAdmin();
     }
 
     // Chat Section

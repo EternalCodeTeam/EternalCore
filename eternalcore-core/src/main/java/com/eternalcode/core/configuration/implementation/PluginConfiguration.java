@@ -92,6 +92,9 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration teleportationTimeToSpawn() {
             return this.teleportTimeToSpawn;
         }
+
+        @Description("# Radius of random teleportation")
+        public int randomTeleportRadius = 1000;
     }
 
     @Description({ " ", "# Homes Section" })

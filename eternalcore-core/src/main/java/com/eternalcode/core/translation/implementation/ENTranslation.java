@@ -209,6 +209,12 @@ public class ENTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Description(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
+
+        @Description(" ")
+        public Notice randomTeleportProcessBegin = Notice.chat("<green>► <white>Teleportation to a random location has started!");
+        @Description({"# {PLAYER} - Player who has been teleported, {WORLD} - World name, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate" })
+        public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>You have been teleported to a random location!");
+        public Notice teleportedToRandomLocationAdmin = Notice.chat("<green>► <white>You have teleported <green>{PLAYER} <white>to a random location! His current location is: world: {WORLD}, x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
     }
 
 
