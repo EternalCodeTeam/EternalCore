@@ -58,6 +58,12 @@ public class ConfigurationManager {
             .orThrow(RuntimeException::new);
     }
 
+    public void saveAll() {
+        for (ReloadableConfig config : this.configs) {
+            this.save(config);
+        }
+    }
+
     public void reload() {
         this.configurationBackupService.createBackup();
 

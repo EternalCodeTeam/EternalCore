@@ -1,10 +1,8 @@
 package com.eternalcode.core.configuration.migration;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import com.eternalcode.core.configuration.ConfigurationManager;
+import org.bukkit.plugin.Plugin;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,14 +10,15 @@ import java.util.List;
 public class MigrateFactory {
 
     private final List<Migration> migrations;
+    private final MigrateService migrationService;
 
-    private MigrateFactory() {
+    private MigrateFactory(Plugin plugin, ConfigurationManager configurationManager) {
         this.migrations = new ArrayList<>();
+        this.migrationService = new MigrateService(plugin, configurationManager);
     }
 
-    @Contract(value = " -> new", pure = true)
-    public static @NotNull MigrateFactory create() {
-        return new MigrateFactory();
+    public static MigrateFactory create(Plugin plugin, ConfigurationManager configurationManager) {
+        return new MigrateFactory(plugin, configurationManager);
     }
 
     public MigrateFactory withMigration(Migration migration) {
@@ -31,37 +30,7 @@ public class MigrateFactory {
         this.migrations.sort(Comparator.comparingInt(Migration::migrationNumber));
 
         for (Migration migration : this.migrations) {
-            migrateSingleMigration(migration);
+            this.migrationService.migrateSingleMigration(migration);
         }
     }
-
-    private void migrateSingleMigration(@NotNull Migration migration) {
-        Path filePath = migration.filePath();
-        String oldValue = migration.oldValue();
-        String newValue = migration.newValue();
-
-        try {
-            List<String> lines = Files.readAllLines(filePath);
-            List<String> updatedLines = updateLines(lines, oldValue, newValue);
-
-            Files.write(filePath, updatedLines);
-        }
-        catch (Exception exception) {
-            throw new MigrateException("An error occurred while migrating the configuration file", exception);
-        }
-    }
-
-    private @NotNull List<String> updateLines(@NotNull List<String> lines, String oldValue, String newValue) {
-        List<String> updatedLines = new ArrayList<>();
-
-        for (String line : lines) {
-            if (line.contains(oldValue)) {
-                line = line.replace(oldValue, newValue);
-            }
-            updatedLines.add(line);
-        }
-
-        return updatedLines;
-    }
-
 }

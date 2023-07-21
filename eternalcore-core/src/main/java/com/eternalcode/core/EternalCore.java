@@ -31,6 +31,8 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.configuration.migration.MigrateFactory;
+import com.eternalcode.core.configuration.migration.impl.PC1;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.NoneRepository;
 import com.eternalcode.core.database.wrapper.AutoMessageRepositoryOrmLite;
@@ -239,6 +241,12 @@ class EternalCore implements EternalCoreApi {
         ConfigurationBackupService configurationBackupService = new ConfigurationBackupService(plugin.getDataFolder());
         this.configurationManager = new ConfigurationManager(configurationBackupService, plugin.getDataFolder());
 
+        MigrateFactory.create(plugin, this.configurationManager)
+            .withMigration(
+                new PC1()
+            )
+            .migrate();
+
         PluginConfiguration pluginConfiguration = this.configurationManager.load(new PluginConfiguration());
         LocationsConfiguration locationsConfiguration = this.configurationManager.load(new LocationsConfiguration());
         LanguageConfiguration languageConfiguration = this.configurationManager.load(new LanguageConfiguration());
@@ -427,7 +435,7 @@ class EternalCore implements EternalCoreApi {
                 new IgnoreCommand(ignoreRepository, this.noticeService),
                 new UnIgnoreCommand(ignoreRepository, this.noticeService),
 
-                ChatManagerCommand.create(this.chatManager, this.noticeService, pluginConfiguration.chat.linesToClear)
+                ChatManagerCommand.create(this.chatManager, this.noticeService, pluginConfiguration.chat.numberOfLinesToClear)
             )
             .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
             .commandEditor(GameModeCommand.class, new GameModeConfigurator(commandConfiguration))

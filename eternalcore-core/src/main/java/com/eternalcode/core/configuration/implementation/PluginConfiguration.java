@@ -147,7 +147,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration chatDelay = Duration.ofSeconds(5);
 
         @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
-        public int linesToClear = 128;
+        public int numberOfLinesToClear = 128;
 
         public boolean chatEnabled = true;
 
