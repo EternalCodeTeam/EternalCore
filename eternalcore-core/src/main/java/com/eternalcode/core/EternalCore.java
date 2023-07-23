@@ -100,8 +100,8 @@ import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
 import com.eternalcode.core.feature.privatechat.PrivateChatCommands;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.feature.reportchat.HelpOpCommand;
-import com.eternalcode.core.feature.rtp.RTPCommand;
-import com.eternalcode.core.feature.rtp.RTPService;
+import com.eternalcode.core.feature.rtp.RandomTeleportCommand;
+import com.eternalcode.core.feature.rtp.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SetSpawnCommand;
 import com.eternalcode.core.feature.spawn.SpawnCommand;
 import com.eternalcode.core.feature.warp.Warp;
@@ -185,7 +185,7 @@ class EternalCore implements EternalCoreApi {
     private final TeleportService teleportService;
     private final TeleportTaskService teleportTaskService;
     private final EventCaller eventCaller;
-    private final RTPService rtpService;
+    private final RandomTeleportService randomTeleportService;
 
     /* Adventure */
     private final BukkitAudiences audiencesProvider;
@@ -267,7 +267,7 @@ class EternalCore implements EternalCoreApi {
         this.noticeService = NoticeService.adventure(this.audiencesProvider, this.miniMessage, this.scheduler, this.viewerProvider, this.translationManager, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager, this.eventCaller);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.teleportAsk);
-        this.rtpService = new RTPService(pluginConfiguration.teleport);
+        this.randomTeleportService = new RandomTeleportService(pluginConfiguration.teleport, this.scheduler);
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
@@ -373,7 +373,7 @@ class EternalCore implements EternalCoreApi {
                 new TeleportHereCommand(this.noticeService, this.teleportService),
                 new TeleportBackCommand(this.teleportService, this.noticeService),
                 new TeleportUpCommand(this.teleportService, this.noticeService),
-                new RTPCommand(this.noticeService, this.rtpService, server),
+                new RandomTeleportCommand(this.noticeService, this.randomTeleportService, server),
 
                 // Tpa Commands
                 new TpaCommand(this.teleportRequestService, this.noticeService),
