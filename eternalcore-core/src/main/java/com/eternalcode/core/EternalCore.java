@@ -124,6 +124,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.placeholder.PlaceholderBukkitRegistryImpl;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
+import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import com.eternalcode.core.scheduler.BukkitSchedulerImpl;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.teleport.TeleportDeathController;
@@ -169,7 +170,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -248,16 +248,9 @@ class EternalCore implements EternalCoreApi {
 
         /* depends on Configuration */
         this.placeholderRegistry = new PlaceholderBukkitRegistryImpl(server);
-        this.placeholderRegistry.registerPlaceholderReplacer(text -> {
-            for (Map.Entry<String, String> entry : placeholdersConfiguration.placeholders.entrySet()) {
-                text = text.replace(entry.getKey(), entry.getValue());
-            }
-
-            return text;
+        placeholdersConfiguration.placeholders.forEach((key, value) -> {
+            this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(key, value));
         });
-
-        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, plugin.getLogger());
-        this.bridgeManager.init();
 
         this.chatManager = new ChatManager(pluginConfiguration.chat);
         this.translationManager = TranslationManager.create(this.configurationManager, languageConfiguration);
@@ -300,10 +293,18 @@ class EternalCore implements EternalCoreApi {
         LanguageInventory languageInventory = new LanguageInventory(languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
         WarpInventory warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
+        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, plugin.getLogger());
+        this.bridgeManager.init();
+
         /* Frameworks & Libraries */
         this.skullAPI = LiteSkullFactory.builder()
             .bukkitScheduler(plugin)
             .build();
+
+        this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())));
+        // Tutaj jest problem i nie wiem jak to naprawić
+        // this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("auto_message_enabled", player -> String.valueOf(this.autoMessageService.isReceiving(player.getUniqueId()).get())));
+        this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))));
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
 

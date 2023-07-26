@@ -1,6 +1,8 @@
 package com.eternalcode.core.bridge;
 
+import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiExtension;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
+import com.eternalcode.core.feature.automessage.AutoMessageService;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginManager;
@@ -20,7 +22,10 @@ public class BridgeManager {
     }
 
     public void init() {
-        this.setupBridge("PlaceholderAPI", () -> this.placeholderRegistry.registerPlayerPlaceholderReplacer(new PlaceholderApiReplacer()));
+        this.setupBridge("PlaceholderAPI", () -> {
+            this.placeholderRegistry.registerPlaceholder(new PlaceholderApiReplacer());
+            new PlaceholderApiExtension(this.placeholderRegistry).initialize();
+        });
     }
 
     private void setupBridge(String pluginName, BridgeInitializer bridge) {

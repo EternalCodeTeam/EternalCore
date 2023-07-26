@@ -16,7 +16,7 @@ public class PlaceholdersConfiguration implements ReloadableConfig {
         "# Remember that it only works in EternalCore!"
     })
     public Map<String, String> placeholders = Map.of(
-        "{prefix}", "&7"
+        "prefix", "&7"
     );
 
     @Override
