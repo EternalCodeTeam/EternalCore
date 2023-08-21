@@ -32,7 +32,6 @@ public class FeedCommand {
 
     @Execute
     @Permission("eternalcore.feed.other")
-    @Permission("eternalcore.feed")
     @DescriptionDocs(description = "Feed other player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         this.feed(target);
