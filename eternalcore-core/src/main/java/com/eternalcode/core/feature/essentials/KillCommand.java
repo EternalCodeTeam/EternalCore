@@ -20,6 +20,18 @@ public class KillCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Kill yourself")
+    void execute(Player player) {
+        player.setHealth(0);
+
+        this.noticeService.create()
+            .notice(translation -> translation.player().killedMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .player(player.getUniqueId())
+            .send();
+    }
+
+    @Execute
     @DescriptionDocs(description = "Kill specified player", arguments = "<player>")
     void execute(Viewer audience, @Arg Player player) {
         player.setHealth(0);
