@@ -16,7 +16,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Route(name = "spawn")
-@Permission("eternalcore.spawn")
 public class SpawnCommand {
 
     private final LocationsConfiguration locations;
@@ -34,6 +33,7 @@ public class SpawnCommand {
     }
 
     @Execute
+    @Permission("eternalcore.spawn.self")
     @DescriptionDocs(description = "Teleports you to spawn location")
     void executeSelf(Player sender) {
         Position position = this.locations.spawn;
@@ -78,6 +78,7 @@ public class SpawnCommand {
     }
 
     @Execute
+    @Permission("eternalcore.spawn.other")
     @DescriptionDocs(description = "Teleports specified player to spawn location", arguments = "<player>")
     void execute(Viewer sender, @Arg Player player) {
         Position position = this.locations.spawn;

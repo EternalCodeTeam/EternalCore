@@ -11,7 +11,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "grindstone")
-@Permission("eternalcore.grindstone")
 public class GrindstoneCommand {
 
     private final NoticeService announcer;
@@ -21,6 +20,7 @@ public class GrindstoneCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.grindstone.self")
     @DescriptionDocs(description = "Opens a grindstone for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.GRINDSTONE.open(player);
@@ -32,6 +32,7 @@ public class GrindstoneCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.grindstone.other")
     @DescriptionDocs(description = "Opens a grindstone for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.GRINDSTONE.open(target);

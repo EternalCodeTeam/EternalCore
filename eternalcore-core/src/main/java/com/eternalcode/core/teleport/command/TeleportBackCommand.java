@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import panda.std.Option;
 
 @Route(name = "back")
-@Permission("eternalcore.back")
 public class TeleportBackCommand {
 
     private final TeleportService teleportService;
@@ -25,6 +24,7 @@ public class TeleportBackCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.back.self")
     @DescriptionDocs(description = "Teleport to last location")
     void execute(Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
@@ -40,6 +40,7 @@ public class TeleportBackCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.back.other")
     @DescriptionDocs(description = "Teleport specified player to last location", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());

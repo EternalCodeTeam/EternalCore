@@ -11,7 +11,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "cartography", aliases = "cartography-table")
-@Permission("eternalcore.cartography")
 public class CartographyTableCommand {
 
     private final NoticeService noticeService;
@@ -21,6 +20,7 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.cartography.self")
     @DescriptionDocs(description = "Opens a cartography table for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.CARTOGRAPHY_TABLE.open(player);
@@ -32,6 +32,7 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.cartography.other")
     @DescriptionDocs(description = "Opens a cartography table for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.CARTOGRAPHY_TABLE.open(target);

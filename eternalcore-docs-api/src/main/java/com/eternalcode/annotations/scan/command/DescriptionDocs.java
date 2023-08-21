@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD })
 public @interface DescriptionDocs {
 
-    String[] description();
+    java.lang.String description();
 
     String[] arguments() default "";
 

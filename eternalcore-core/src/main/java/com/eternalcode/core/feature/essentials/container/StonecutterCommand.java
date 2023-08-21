@@ -11,7 +11,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "stonecutter")
-@Permission("eternalcore.stonecutter")
 public class StonecutterCommand {
 
     private final NoticeService noticeService;
@@ -21,6 +20,7 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.stonecutter.self")
     @DescriptionDocs(description = "Opens a stonecutter for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.STONE_CUTTER.open(player);
@@ -32,6 +32,7 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.stonecutter.other")
     @DescriptionDocs(description = "Opens a stonecutter for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.STONE_CUTTER.open(target);

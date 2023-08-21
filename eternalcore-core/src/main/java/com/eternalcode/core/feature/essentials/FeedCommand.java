@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "feed")
-@Permission("eternalcore.feed")
 public class FeedCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class FeedCommand {
     }
 
     @Execute
+    @Permission("eternalcore.feed.self")
     @DescriptionDocs(description = "Feed yourself")
     void execute(Player player) {
         this.feed(player);
@@ -31,6 +31,8 @@ public class FeedCommand {
     }
 
     @Execute
+    @Permission("eternalcore.feed.other")
+    @Permission("eternalcore.feed")
     @DescriptionDocs(description = "Feed other player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         this.feed(target);

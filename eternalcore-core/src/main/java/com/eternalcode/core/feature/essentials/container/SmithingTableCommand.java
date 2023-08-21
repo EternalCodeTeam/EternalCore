@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "smithingtable", aliases = "smithing")
-@Permission("eternalcore.smithingtable")
 public class SmithingTableCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class SmithingTableCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.smithingtable.self")
     @DescriptionDocs(description = "Opens a smithing table for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.SMITHING_TABLE.open(player);
@@ -31,6 +31,7 @@ public class SmithingTableCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.smithingtable.other")
     @DescriptionDocs(description = "Opens a smithing table for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.SMITHING_TABLE.open(target);
