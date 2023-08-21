@@ -20,7 +20,7 @@ public class GrindstoneCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.grindstone.self")
+    @Permission("eternalcore.grindstone")
     @DescriptionDocs(description = "Opens a grindstone for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.GRINDSTONE.open(player);

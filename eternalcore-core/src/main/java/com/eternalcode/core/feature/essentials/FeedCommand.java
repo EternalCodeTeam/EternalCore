@@ -19,7 +19,7 @@ public class FeedCommand {
     }
 
     @Execute
-    @Permission("eternalcore.feed.self")
+    @Permission("eternalcore.feed")
     @DescriptionDocs(description = "Feed yourself")
     void execute(Player player) {
         this.feed(player);

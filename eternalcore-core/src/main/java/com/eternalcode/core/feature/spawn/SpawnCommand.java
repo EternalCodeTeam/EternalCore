@@ -33,7 +33,7 @@ public class SpawnCommand {
     }
 
     @Execute
-    @Permission("eternalcore.spawn.self")
+    @Permission("eternalcore.spawn")
     @DescriptionDocs(description = "Teleports you to spawn location")
     void executeSelf(Player sender) {
         Position position = this.locations.spawn;

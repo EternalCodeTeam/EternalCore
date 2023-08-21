@@ -20,7 +20,7 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.stonecutter.self")
+    @Permission("eternalcore.stonecutter")
     @DescriptionDocs(description = "Opens a stonecutter for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.STONE_CUTTER.open(player);

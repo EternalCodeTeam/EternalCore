@@ -19,7 +19,7 @@ public class AnvilCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.anvil.self")
+    @Permission("eternalcore.anvil")
     @DescriptionDocs(description = "Opens an anvil for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.ANVIL.open(player);

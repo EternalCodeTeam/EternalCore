@@ -19,7 +19,7 @@ public class LoomCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.loom.self")
+    @Permission("eternalcore.loom")
     @DescriptionDocs(description = "Opens a loom for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.LOOM.open(player);

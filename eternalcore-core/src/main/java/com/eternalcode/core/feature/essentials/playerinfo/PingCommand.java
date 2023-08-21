@@ -19,7 +19,7 @@ public class PingCommand {
     }
 
     @Execute
-    @Permission("eternalcore.ping.self")
+    @Permission("eternalcore.ping")
     @DescriptionDocs(description = "Shows your ping")
     void execute(Player sender) {
         this.noticeService.create()

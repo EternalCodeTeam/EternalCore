@@ -20,7 +20,7 @@ public class HealCommand {
     }
 
     @Execute
-    @Permission("eternalcore.heal.self")
+    @Permission("eternalcore.heal")
     @DescriptionDocs(description = "Heal yourself")
     void execute(Player player) {
         this.heal(player);

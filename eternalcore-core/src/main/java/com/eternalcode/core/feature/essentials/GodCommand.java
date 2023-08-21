@@ -19,7 +19,7 @@ public class GodCommand {
     }
 
     @Execute
-    @Permission("eternalcore.god.self")
+    @Permission("eternalcore.god")
     @DescriptionDocs(description = "Toggle god mode")
     void execute(Player sender) {
         sender.setInvulnerable(!sender.isInvulnerable());

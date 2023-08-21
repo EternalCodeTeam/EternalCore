@@ -19,7 +19,7 @@ public class FlyCommand {
     }
 
     @Execute
-    @Permission("eternalcore.fly.self")
+    @Permission("eternalcore.fly")
     @DescriptionDocs(description = "Toggle fly mode")
     void execute(Player player) {
         player.setAllowFlight(!player.getAllowFlight());

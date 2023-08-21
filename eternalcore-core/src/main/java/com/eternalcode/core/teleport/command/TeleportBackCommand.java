@@ -24,7 +24,7 @@ public class TeleportBackCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.back.self")
+    @Permission("eternalcore.back")
     @DescriptionDocs(description = "Teleport to last location")
     void execute(Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());

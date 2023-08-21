@@ -19,7 +19,7 @@ public class EnderchestCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.enderchest.self")
+    @Permission("eternalcore.enderchest")
     @DescriptionDocs(description = "Opens your enderchest")
     void execute(Player player) {
         player.openInventory(player.getEnderChest());

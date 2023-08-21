@@ -20,7 +20,7 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.cartography.self")
+    @Permission("eternalcore.cartography")
     @DescriptionDocs(description = "Opens a cartography table for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.CARTOGRAPHY_TABLE.open(player);

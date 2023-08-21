@@ -19,7 +19,7 @@ public class WorkbenchCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.workbench.self")
+    @Permission("eternalcore.workbench")
     @DescriptionDocs(description = "Opens a workbench for you")
     void executeSelf(Player sender) {
         sender.openWorkbench(null, true);

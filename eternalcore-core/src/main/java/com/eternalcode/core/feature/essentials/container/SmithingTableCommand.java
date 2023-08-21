@@ -19,7 +19,7 @@ public class SmithingTableCommand {
     }
 
     @Execute(required = 0)
-    @Permission("eternalcore.smithingtable.self")
+    @Permission("eternalcore.smithingtable")
     @DescriptionDocs(description = "Opens a smithing table for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.SMITHING_TABLE.open(player);
