@@ -84,6 +84,7 @@ public class EnchantCommand {
         }
 
         item.addEnchantment(enchantment, level);
+        
         this.noticeService.create()
             .player(playerId)
             .notice(translation -> translation.item().enchantedMessage())
