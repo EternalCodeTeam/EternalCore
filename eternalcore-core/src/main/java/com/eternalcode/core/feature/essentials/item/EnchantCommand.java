@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.UUID;
+
 @Route(name = "enchant")
 @Permission("eternalcore.enchant")
 public class EnchantCommand {
@@ -41,24 +43,49 @@ public class EnchantCommand {
             return;
         }
 
+        this.enchantItem(player.getUniqueId(), handItem, enchantment, level);
+    }
+
+    @Execute
+    @Min(3)
+    @DescriptionDocs(description = "Enchants item in hand", arguments = "<player> <enchantment> <level>")
+    void execute(Player sender, @Arg Player target, @Arg Enchantment enchantment, @Arg int level) {
+        PlayerInventory targetInventory = target.getInventory();
+        ItemStack handItem = targetInventory.getItem(targetInventory.getHeldItemSlot());
+
+        if (handItem == null) {
+            this.noticeService.create()
+                .player(sender.getUniqueId())
+                .notice(translation -> translation.argument().noItem())
+                .send();
+
+            return;
+        }
+
+        this.enchantItem(sender.getUniqueId(), handItem, enchantment, level);
+    }
+
+    private void enchantItem(UUID playerId, ItemStack item, Enchantment enchantment, int level) {
         if (this.configuration.items.unsafeEnchantments) {
-            handItem.addUnsafeEnchantment(enchantment, level);
-        }
-        else {
-            if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(handItem)) {
-                this.noticeService.create()
-                    .player(player.getUniqueId())
-                    .notice(translation -> translation.argument().noValidEnchantmentLevel())
-                    .send();
-
-                return;
-            }
-
-            handItem.addEnchantment(enchantment, level);
+            item.addUnsafeEnchantment(enchantment, level);
+            this.noticeService.create()
+                .player(playerId)
+                .notice(translation -> translation.item().enchantedMessage())
+                .send();
+            return;
         }
 
+        if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(item)) {
+            this.noticeService.create()
+                .player(playerId)
+                .notice(translation -> translation.argument().noValidEnchantmentLevel())
+                .send();
+            return;
+        }
+
+        item.addEnchantment(enchantment, level);
         this.noticeService.create()
-            .player(player.getUniqueId())
+            .player(playerId)
             .notice(translation -> translation.item().enchantedMessage())
             .send();
     }
