@@ -5,6 +5,7 @@ import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -80,7 +81,7 @@ public class PluginConfiguration implements ReloadableConfig {
     public Teleport teleport = new Teleport();
 
     @Contextual
-    public static class Teleport implements SpawnSettings {
+    public static class Teleport implements SpawnSettings, RandomTeleportSettings {
 
         @Description("# Teleports the player to spawn after death")
         public boolean teleportToSpawnOnDeath = true;
@@ -95,6 +96,19 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description("# Radius of random teleportation")
         public int randomTeleportRadius = 1000;
+
+        @Description("# Number of attempts to teleport to a random location")
+        public int randomTeleportAttempts = 10;
+
+        @Override
+        public int randomTeleportRadius() {
+            return this.randomTeleportRadius;
+        }
+
+        @Override
+        public int randomTeleportAttempts() {
+            return this.randomTeleportAttempts;
+        }
     }
 
     @Description({ " ", "# Homes Section" })

@@ -1,7 +1,5 @@
-package com.eternalcode.core.feature.rtp;
+package com.eternalcode.core.feature.randomteleport;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.scheduler.Scheduler;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -38,19 +36,16 @@ public class RandomTeleportService {
 
     private static final int DEFAULT_WORLD_BORDER_SIZE = 29_999_984;
 
-    private final Scheduler scheduler;
-
-    private final PluginConfiguration.Teleport teleportConfiguration;
+    private final RandomTeleportSettings randomTeleportSettings;
 
     private final Random random = new Random();
 
-    public RandomTeleportService(PluginConfiguration.Teleport teleportConfiguration, Scheduler scheduler) {
-        this.teleportConfiguration = teleportConfiguration;
-        this.scheduler = scheduler;
+    public RandomTeleportService(RandomTeleportSettings randomTeleportSettings) {
+        this.randomTeleportSettings = randomTeleportSettings;
     }
 
     public CompletableFuture<TeleportResult> teleport(Player player) {
-        return this.getSafeRandomLocation(player.getWorld(), 100)
+        return this.getSafeRandomLocation(player.getWorld(), this.randomTeleportSettings.randomTeleportAttempts())
             .thenCompose(location -> PaperLib.teleportAsync(player, location).thenApply(success -> new TeleportResult(success, location)));
     }
 
@@ -59,23 +54,23 @@ public class RandomTeleportService {
             return CompletableFuture.failedFuture(new RuntimeException("Cannot find safe location"));
         }
 
-        int radius = this.teleportConfiguration.randomTeleportRadius;
+        int radius = this.randomTeleportSettings.randomTeleportRadius();
 
         if (this.hasSetWorldBorder(world)) {
             radius = (int) (world.getWorldBorder().getSize() / 2);
         }
 
-        int x = this.random.nextInt(-radius, radius);
-        int z = this.random.nextInt(-radius, radius);
+        int randomX = this.random.nextInt(-radius, radius);
+        int randomZ = this.random.nextInt(-radius, radius);
 
-        return PaperLib.getChunkAtAsync(new Location(world, x, 100, z)).thenCompose(chunk -> {
-            int y = chunk.getWorld().getHighestBlockYAt(x, z);
+        return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
+            int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
 
             if (world.getEnvironment() == World.Environment.NETHER) {
-                y = this.random.nextInt(125);
+                randomY = this.random.nextInt(125);
             }
 
-            Location generatedLocation = new Location(world, x, y, z).add(0.5, 1, 0.5);
+            Location generatedLocation = new Location(world, randomX, randomY, randomZ).add(0.5, 1, 0.5);
 
             if (this.isSafeLocation(chunk, generatedLocation)) {
                 return CompletableFuture.completedFuture(generatedLocation);
@@ -115,6 +110,7 @@ public class RandomTeleportService {
     }
 
     private boolean hasSetWorldBorder(World world) {
-        return world.getWorldBorder().getSize() < DEFAULT_WORLD_BORDER_SIZE;
+        double currentWorldBorderSize = world.getWorldBorder().getSize();
+        return currentWorldBorderSize < DEFAULT_WORLD_BORDER_SIZE;
     }
 }

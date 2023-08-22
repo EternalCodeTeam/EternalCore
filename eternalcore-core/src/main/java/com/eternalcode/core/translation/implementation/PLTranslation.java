@@ -217,6 +217,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({"# {PLAYER} - Gracz który został teleportowany, {WORLD} - Świat, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
         public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
         public Notice teleportedToRandomLocationAdmin = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokazlizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
+        public Notice randomTeleportProcessFailed = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!!");
     }
 
     @Description({

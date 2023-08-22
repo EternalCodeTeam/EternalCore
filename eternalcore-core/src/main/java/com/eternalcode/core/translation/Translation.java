@@ -92,6 +92,7 @@ public interface Translation {
         Notice randomTeleportProcessBegin();
         Notice teleportedToRandomLocation();
         Notice teleportedToRandomLocationAdmin();
+        Notice randomTeleportProcessFailed();
     }
 
     // Chat Section
