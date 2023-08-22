@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "ping")
-@Permission("eternalcore.ping")
 public class PingCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class PingCommand {
     }
 
     @Execute
+    @Permission("eternalcore.ping")
     @DescriptionDocs(description = "Shows your ping")
     void execute(Player sender) {
         this.noticeService.create()
@@ -31,6 +31,7 @@ public class PingCommand {
 
 
     @Execute(required = 1)
+    @Permission("eternalcore.ping.other")
     @DescriptionDocs(description = "Shows ping of other player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         this.noticeService.create()

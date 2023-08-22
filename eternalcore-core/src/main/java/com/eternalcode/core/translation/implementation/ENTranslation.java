@@ -249,6 +249,10 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
+
+        @Description({" ", "# {PLAYER} - Player who received the message", "# {MESSAGE} - message content", "# {TYPE} - message type"})
+        public Notice tellrawInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>{PLAYER} <white>with the content: {MESSAGE}");
+        public Notice tellrawAllInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>all <white>with the content: {MESSAGE}");
     }
 
     @Description({

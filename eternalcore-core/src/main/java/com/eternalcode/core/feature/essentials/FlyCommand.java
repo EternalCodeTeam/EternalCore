@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "fly")
-@Permission("eternalcore.fly")
 public class FlyCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class FlyCommand {
     }
 
     @Execute
+    @Permission("eternalcore.fly")
     @DescriptionDocs(description = "Toggle fly mode")
     void execute(Player player) {
         player.setAllowFlight(!player.getAllowFlight());
@@ -32,6 +32,7 @@ public class FlyCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.fly.other")
     @DescriptionDocs(description = "Toggle fly mode for specified player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         target.setAllowFlight(!target.getAllowFlight());

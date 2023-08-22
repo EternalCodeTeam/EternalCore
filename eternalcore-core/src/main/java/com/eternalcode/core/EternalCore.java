@@ -82,6 +82,7 @@ import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayerCountComma
 import com.eternalcode.core.feature.essentials.playerinfo.OnlinePlayersListCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.PingCommand;
 import com.eternalcode.core.feature.essentials.playerinfo.WhoIsCommand;
+import com.eternalcode.core.feature.essentials.tellraw.TellRawCommand;
 import com.eternalcode.core.feature.essentials.time.DayCommand;
 import com.eternalcode.core.feature.essentials.time.NightCommand;
 import com.eternalcode.core.feature.essentials.time.TimeCommand;
@@ -402,6 +403,7 @@ class EternalCore implements EternalCoreApi {
                 new AdminChatCommand(this.noticeService, server),
                 new HelpOpCommand(this.noticeService, pluginConfiguration, server),
                 new AlertCommand(this.noticeService),
+                new TellRawCommand(this.noticeService),
 
                 // Moderation Commands
                 new FlyCommand(this.noticeService),

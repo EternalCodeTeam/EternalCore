@@ -109,6 +109,8 @@ public interface Translation {
         Notice disabledChatInfo();
         Notice commandNotFound();
         String alertMessageFormat();
+        Notice tellrawInfo();
+        Notice tellrawAllInfo();
     }
 
     // Warp Section

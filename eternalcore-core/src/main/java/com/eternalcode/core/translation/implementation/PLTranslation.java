@@ -253,6 +253,10 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
+
+        @Description({" ", "# {PLAYER} - Gracz, który otrzymał wiadomość", "# {MESSAGE} - wiadomość", "# {TYPE} - typ wiadomości"})
+        public Notice tellrawInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>{PLAYER} <white>o treści: {MESSAGE}");
+        public Notice tellrawAllInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>wszystkich <white>o treści: {MESSAGE}");
     }
 
     @Description({
