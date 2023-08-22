@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "god", aliases = "godmode")
-@Permission("eternalcore.god")
 public class GodCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class GodCommand {
     }
 
     @Execute
+    @Permission("eternalcore.god")
     @DescriptionDocs(description = "Toggle god mode")
     void execute(Player sender) {
         sender.setInvulnerable(!sender.isInvulnerable());
@@ -32,6 +32,7 @@ public class GodCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.god.other")
     @DescriptionDocs(description = "Toggle god mode for specified player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         target.setInvulnerable(!target.isInvulnerable());

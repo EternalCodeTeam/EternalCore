@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "enderchest", aliases = { "ec" })
-@Permission("eternalcore.enderchest")
 public class EnderchestCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class EnderchestCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.enderchest")
     @DescriptionDocs(description = "Opens your enderchest")
     void execute(Player player) {
         player.openInventory(player.getEnderChest());
@@ -31,6 +31,7 @@ public class EnderchestCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.enderchest.other")
     @DescriptionDocs(description = "Opens another player his enderchest", arguments = "<player>")
     void execute(Player player, @Arg Player target) {
         player.openInventory(target.getEnderChest());
