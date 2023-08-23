@@ -470,7 +470,9 @@ public class PLTranslation extends AbstractTranslation {
             )
         );
 
-        public Notice unknownDeathCause = Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt bojowy!");
+        public List<Notice> unknownDeathCause = List.of(
+            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt bojowy!")
+        );
 
         @Description({
             " ",

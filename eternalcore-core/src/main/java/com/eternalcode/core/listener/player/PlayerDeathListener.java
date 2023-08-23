@@ -46,13 +46,11 @@ public class PlayerDeathListener implements Listener {
         EntityDamageEvent lastDamageCause = player.getLastDamageCause();
 
         if (lastDamageCause == null) {
-
             this.noticeService.create()
-                .notice(translation -> translation.event().unknownDeathCause())
+                .noticeOption(translation -> RandomUtil.randomElement(translation.event().unknownDeathCause()))
                 .placeholder("{PLAYER}", player.getName())
                 .onlinePlayers()
                 .send();
-
             return;
         }
 
@@ -63,7 +61,7 @@ public class PlayerDeathListener implements Listener {
                 List<Notice> notifications = translation.event().deathMessageByDamageCause().get(cause);
 
                 if (notifications == null) {
-                    return Option.none();
+                    return RandomUtil.randomElement(translation.event().unknownDeathCause());
                 }
 
                 return RandomUtil.randomElement(notifications);

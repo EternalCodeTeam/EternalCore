@@ -464,7 +464,9 @@ public class ENTranslation extends AbstractTranslation {
             )
         );
 
-        public Notice unknownDeathCause = Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!");
+        public List<Notice> unknownDeathCause = List.of(
+            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!")
+        );
 
         @Description({ "", "# {PLAYER} - Player who joined" })
         public List<Notice> joinMessage = List.of(
