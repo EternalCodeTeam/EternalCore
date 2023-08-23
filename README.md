@@ -11,90 +11,82 @@
 
 [![Gradle](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/gradle_vector.svg)](https://gradle.org/)
 [![Java](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/built-with/java17_vector.svg)](https://www.java.com/)
-
 </div>
 
-# Information's
+# Welcome to EternalCore! 🚀
 
-- EternalCore supports Minecraft latest minor version of each major version starting from 1.17+, eg. 1.17, 1.18, 1.19,
-  etc.
-- EternalCore requires Java 17 or higher. On older versions, the plugin may not work properly.
+EternalCore is your ultimate companion for enhancing your Minecraft server experience. 💎
 
-# Development builds
+## :information_source: Information
 
-Get the development builds from [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions)
+- EternalCore fully supports Minecraft's latest minor versions starting from 1.17 onwards, including 1.18 and beyond!
+- It requires **Java 17 or higher** to operate optimally. For older versions of Java, the plugin's performance might be affected.
 
-<details><summary>Video guide</summary>
+## :hammer_and_wrench: Development Builds
 
-![gif](https://i.imgur.com/hmv38VS.gif)
+Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions).
 
+<details><summary>🎥 Video Guide</summary>
+  <img src="https://i.imgur.com/hmv38VS.gif" alt="Video Guide">
 </details>
 
-# Features
+## :sparkles: Features
 
-- Slot Bypass `(eternalcore.bypass.slot)`
-- AFK system
-- Chat features, including:
-    - Admin chat
-    - Auto Messages system `(with sequence or random option and command to disable receiving message)`
-    - Chat on/off switch
-    - Chat slow mode
-    - /ignore /unignore `(with -all option)` command
-    - /msg, /socialspy /reply command
-    - /helpop command
-    - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
-    ![image](https://i.imgur.com/qzXz4Fp.gif)
+- :white_check_mark: Slot Bypass `(eternalcore.bypass.slot)`
+- :zzz: AFK System
+- :speech_balloon: Chat Features, including:
+  - Admin Chat
+  - Auto Messages System (with sequence or random options)
+  - Chat On/Off Switch
+  - Chat Slow Mode
+  - /ignore and /unignore (with -all option)
+  - /msg, /socialspy, and /reply commands
+  - /helpop command
+- :hammer: Open Utility Blocks with simple commands like `/workbench`
+- :briefcase: Player Inventory Viewer
+- :heart: Player Attribute Management, including heal, feed, teleportation, and godmode modification
+- :ping_pong: Ping Command to check client-server connectivity
+- :bust_in_silhouette: Player Information Command (`/whois`)
+- :house: Home, Warp, and Spawn System
+- :page_facing_up: PlaceholderAPI Support
+- :memo: Customizable and Translatable Messages (Player language selection available)
+- :gear: Advanced Configuration System for customization
+- :card_index: Database Integration (PostgreSQL, SQLite, MySQL, MariaDB, H2)
+- :rainbow: Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing (e.g., &7, &e)
+- ...and much more!
 
-- Open utility blocks with simple commands, such as `/workbench`
-- Player inventory viewer
-- Player attribute management, including heal, feed, teleportation, and godmode modification
-- Ping command to ensure client <-> server connection
-- Player information command `(/whois)`
-- Home, warp, and spawn system
-- PlaceholderAPI support
-- Customizable and translatable messages `(Optional player language selection)`
-- Advanced configuration system for customizing almost every aspect of the plugin
-- Database integration: `(PostGreSQL, SQLite, MySQL, MariaDB, H2)`
-- Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing `(e.g &7, &e)` and message destination specification
-- [And much more!](https://docs.eternalcode.pl/eternalcore/features.html)
+## :building_construction: Building
 
-# Building
+To build EternalCore, follow these steps (Make sure you have **JDK 17 or higher**):
 
-To build EternalCore do the following (Make sure you have JDK 17 or higher)
-
-```
+```shell
 ./gradlew clean shadowJar
 ```
+- The output file will be located at `eternalcore-plugin/libs`.
 
-- #### Output file will be located at build/libs
 
-# Contributing
+## :octocat: Contributing
 
 Create a public fork of EternalCore, make changes and then create
 a [Pull Request](https://github.com/EternalCodeTeam/EternalCore/pulls) with your appropriate changes.
 See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master/.github/CONTRIBUTING.md) to find out
 more.
 
-# License
+## :scroll: License
 
-#### EternalCore is published under the GNU GPL-v3 license. In particular, the developer:
+EternalCore is published under the GNU GPL-v3 license.
 
-- Is freely allowed to modify and improve the code
-- Can distribute production versions
-- Must publish any changes made, i.e. the public fork of this repository
-- Cannot change the license or copyright
+- You are free to modify and improve the code.
+- You can distribute production versions.
+- You must publish any changes made (public fork of this repository).
+- You cannot change the license or copyright.
+- For more details, refer to the [LICENSE](LICENSE) file.
 
-#### Additionally:
+## :bookmark_tabs: Other Dependencies
 
-- It is forbidden to modify or remove the code responsible for the compliance of production versions with the license.
-- The authors of this project are not responsible for using the application, modifying and distributing it.
-- Trademarks appearing in this project and this document belong to their rightful owners and are used for informational
-  purposes only.
-
-# Other Dependencies usages
-
+EternalCore uses various dependencies for its functionality, including:
 - [LiteCommands (by Rollczi ❤️)](https://github.com/Rollczi/LiteCommands)
-- [Lombok](https://projectlombok.org/)
+- [Lombok (Only for configs)](https://projectlombok.org/)
 - [PaperLib](https://github.com/PaperMC/PaperLib)
 - [Spigot API](https://www.spigotmc.org/wiki/spigot-gradle/)
 - [Kyori Adventure](https://docs.adventure.kyori.net/)
@@ -105,10 +97,10 @@ more.
 - [Ormlite JDBC](https://github.com/j256/ormlite-jdbc)
 - [TriumphGUI](https://github.com/TriumphTeam/triumph-gui)
 
-# Special thanks
+## :heart: Special Thanks
 
-[<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="" width="150">](https://www.jetbrains.com)
+[<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="JetBrains" width="150">](https://www.jetbrains.com)
 
-We thank JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for high quality tools.
-We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) to work with our projects and accelerate your
-productivity!
+We extend our gratitude to JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for their outstanding tools. We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) to work with our projects and boost your productivity!
+
+
