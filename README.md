@@ -42,6 +42,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
   - /ignore and /unignore (with -all option)
   - /msg, /socialspy, and /reply commands
   - /helpop command
+  - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
 - :hammer: Open Utility Blocks with simple commands like `/workbench`
 - :briefcase: Player Inventory Viewer
 - :heart: Player Attribute Management, including heal, feed, teleportation, and godmode modification
