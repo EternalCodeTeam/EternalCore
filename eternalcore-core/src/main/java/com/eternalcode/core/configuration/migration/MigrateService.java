@@ -8,9 +8,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
 
 public class MigrateService {
 
