@@ -42,6 +42,9 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
     - /ignore /unignore `(with -all option)` command
     - /msg, /socialspy /reply command
     - /helpop command
+    - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
+    ![image](https://i.imgur.com/qzXz4Fp.gif)
+
 - Open utility blocks with simple commands, such as `/workbench`
 - Player inventory viewer
 - Player attribute management, including heal, feed, teleportation, and godmode modification
@@ -52,9 +55,8 @@ Get the development builds from [GitHub Actions](https://github.com/EternalCodeT
 - Customizable and translatable messages `(Optional player language selection)`
 - Advanced configuration system for customizing almost every aspect of the plugin
 - Database integration: `(PostGreSQL, SQLite, MySQL, MariaDB, H2)`
-- Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color
-  processing `(e.g &7, &e)` and message destination specification
-- And much more!
+- Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing `(e.g &7, &e)` and message destination specification
+- [And much more!](https://docs.eternalcode.pl/eternalcore/features.html)
 
 # Building
 
