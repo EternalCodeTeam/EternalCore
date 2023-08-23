@@ -33,6 +33,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 
 ## :sparkles: Features
 
+- :keyboard: Over **60+** useful commands.
 - :white_check_mark: Slot Bypass `(eternalcore.bypass.slot)`
 - :zzz: AFK System
 - :speech_balloon: Chat Features, including:
