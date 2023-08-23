@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Route(name = "clear")
-@Permission("eternalcore.clear")
 public class InventoryClearCommand {
 
     private final NoticeService noticeService;

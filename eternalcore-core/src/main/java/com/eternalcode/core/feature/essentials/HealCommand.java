@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
 @Route(name = "heal")
-@Permission("eternalcore.heal")
 public class HealCommand {
 
     private final NoticeService noticeService;
@@ -21,6 +20,7 @@ public class HealCommand {
     }
 
     @Execute
+    @Permission("eternalcore.heal")
     @DescriptionDocs(description = "Heal yourself")
     void execute(Player player) {
         this.heal(player);
@@ -29,6 +29,7 @@ public class HealCommand {
     }
 
     @Execute
+    @Permission("eternalcore.heal.other")
     @DescriptionDocs(description = "Heal other player", arguments = "<player>")
     void execute(Viewer viewer, @Arg Player target) {
         this.heal(target);
