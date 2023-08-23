@@ -15,12 +15,12 @@
 
 # Welcome to EternalCore! 🚀
 
-EternalCore is your ultimate companion for enhancing your Minecraft server experience. 💎
+EternalCore is your ultimate companion for enhancing your Minecraft server experience. 💎 Crafted with care, EternalCore is dedicated to incorporating essential and highly practical server functions into a single plugin.
 
 ## :information_source: Information
 
 - EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.1`.
-- It requires **Java 17 or higher** to operate optimally. For older versions of Java, the plugin's performance might be affected.
+- Requires **Java 17 or later** to work properly. For older versions of Java, this may affect the functionality of the plug-in.
 - If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
 ## :hammer_and_wrench: Development Builds
