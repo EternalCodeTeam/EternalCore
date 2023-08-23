@@ -20,7 +20,7 @@ EternalCore is your ultimate companion for enhancing your Minecraft server exper
 ## :information_source: Information
 
 - EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.1`.
-- Requires **Java 17 or later** to work properly. For older versions of Java, this may affect the functionality of the plug-in.
+- Requires **Java 17 or later** to work properly. For older versions of Java, this may affect the functionality of the plugin.
 - If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
 ## :hammer_and_wrench: Development Builds
