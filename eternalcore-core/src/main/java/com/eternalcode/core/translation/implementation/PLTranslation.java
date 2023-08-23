@@ -470,6 +470,8 @@ public class PLTranslation extends AbstractTranslation {
             )
         );
 
+        public Notice unknownDeathCause = Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt bojowy!");
+
         @Description({
             " ",
             "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",

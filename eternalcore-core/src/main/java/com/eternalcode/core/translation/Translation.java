@@ -213,6 +213,7 @@ public interface Translation {
 
     interface EventSection {
         List<Notice> deathMessage();
+        Notice unknownDeathCause();
         List<Notice> joinMessage();
         List<Notice> quitMessage();
         List<Notice> firstJoinMessage();
