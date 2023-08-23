@@ -21,6 +21,7 @@ EternalCore is your ultimate companion for enhancing your Minecraft server exper
 
 - EternalCore fully supports Minecraft's latest minor versions starting from 1.17 onwards, including 1.18 and beyond!
 - It requires **Java 17 or higher** to operate optimally. For older versions of Java, the plugin's performance might be affected.
+- If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
 ## :hammer_and_wrench: Development Builds
 
@@ -54,7 +55,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 - :gear: Advanced Configuration System for customization
 - :card_index: Database Integration (PostgreSQL, SQLite, MySQL, MariaDB, H2)
 - :rainbow: Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing (e.g., &7, &e)
-- ...and much more!
+- [...and much more!](https://docs.eternalcode.pl/eternalcore/features.html)
 
 ## :building_construction: Building
 
