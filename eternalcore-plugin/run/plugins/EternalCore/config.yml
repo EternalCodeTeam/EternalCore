@@ -1,0 +1,125 @@
+#
+# This is the main configuration file for EternalCore.
+#
+# If you need help with the configuration or have any questions related to EternalCore, join us in our discord, or create an issue on our GitHub.
+#
+# Issues: https://github.com/EternalCodeTeam/EternalCore/issues
+# Discord: https://discord.gg/FQ7jmGBd6c
+# Website: https://eternalcode.pl/
+# Source Code: https://github.com/EternalCodeTeam/EternalCore
+#
+
+# Database Section
+database:
+  # SQL Drivers and ports:
+  # MySQL (3306), MariaDB (3306), PostgresQL (5432)
+  # SQLite, H2
+  databaseType: "SQLITE"
+  hostname: "127.0.0.1"
+  database: "database"
+  username: "root"
+  password: "U5eStr0ngP4ssw0rd"
+  port: 3306
+
+# Teleport request section
+teleportAsk:
+  # Time of tpa requests expire
+  
+  # Time of tpa requests expire
+  tpaRequestExpire: "1m20s"
+  
+  # Time of teleportation time in /tpa commands
+  tpaTimer: "10s"
+
+# Teleport section
+teleport:
+  # Teleports the player to spawn after death
+  teleportToSpawnOnDeath: true
+  # Time of teleportation to spawn
+  teleportTimeToSpawn: "5s"
+
+# Homes Section
+homes:
+  # Max homes per permission
+  maxHomes:
+    eternalcore.home.default: 1
+    eternalcore.home.vip: 2
+    eternalcore.home.premium: 3
+
+# Awesome sounds
+sound:
+  # Do you want to enable sound after player join to server?
+  enabledAfterJoin: true
+  afterJoin: "BLOCK_NOTE_BLOCK_PLING"
+  afterJoinVolume: 1.8
+  afterJoinPitch: 1.0
+  
+  # Do you want to enable sound after player quit server?
+  enableAfterQuit: true
+  afterQuit: "BLOCK_NOTE_BLOCK_BASEDRUM"
+  afterQuitVolume: 1.8
+  afterQuitPitch: 1.0
+  
+  # Do you want to enable sound after player send message on chat server?
+  enableAfterChatMessage: true
+  afterChatMessage: "ENTITY_ITEM_PICKUP"
+  afterChatMessageVolume: 1.8
+  afterChatMessagePitch: 1.0
+
+# Chat Section
+chat:
+  # Delay to send the next message under /helpop
+  helpOpDelay: "1m"
+  
+  # Custom message for unknown command
+  replaceStandardHelpMessage: false
+  
+  # Chat delay to send next message in chat
+  chatDelay: "5s"
+  
+  # Number of lines that will be cleared when using the /chat clear command
+  numberOfLinesToClear: 128
+  chatEnabled: true
+
+# Additional formatting options
+format:
+  separator: "&7, "
+
+# AFK Section
+afk:
+  # Number of interactions a player must make to have AFK status removed
+  # This is for so that stupid miss-click doesn't disable AFK status
+  interactionsCountDisableAfk: 20
+  
+  # Time before using the /afk command again
+  afkCommandDelay: "1m"
+  
+  # The amount of time a player must be inactive to be marked as AFK
+  afkInactivityTime: "10m"
+
+# Items
+items:
+  # Use unsafe enchantments? Allows you to apply custom enchants to various items
+  unsafeEnchantments: true
+  
+  # The default item give amount, when no amount is specified in the command.
+  defaultGiveAmount: 1
+
+# Warp Section
+warp:
+  # Warp inventory should be enabled?
+  inventoryEnabled: true
+
+# Butcher
+butcher:
+  # Safe number of chunks for command execution (above this number it will not be possible to execute the command)
+  safeChunkNumber: 5
+
+# AutoMessage Section
+autoMessage:
+  # AutoMessage should be enabled?
+  enabled: true
+  # Interval between messages
+  interval: "1m"
+  # Draw mode (RANDOM, SEQUENTIAL)
+  drawMode: "RANDOM"
