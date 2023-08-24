@@ -63,7 +63,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 To build EternalCore, follow these steps (Make sure you have **JDK 17 or higher**):
 
 ```shell
-./gradlew clean shadowJar
+./gradlew clean eternalcore-plugin:shadowJar
 ```
 - The output file will be located at `eternalcore-plugin/libs`.
 
