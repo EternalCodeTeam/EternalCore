@@ -4,7 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":eternalcore-core"))
+    implementation(project(mapOf("path" to ":eternalcore-core")))
+    implementation(project(mapOf("path" to ":eternalcore-docs-api")))
 
     implementation("com.google.guava:guava:32.1.2-jre")
     implementation("com.google.code.gson:gson:2.10.1")

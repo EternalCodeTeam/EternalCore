@@ -7,9 +7,10 @@ plugins {
 
 dependencies {
     // modules
-    implementation(project(":eternalcore-api"))
-    implementation(project(":eternalcore-paper"))
-    implementation(project(":eternalcore-docs-api"))
+    implementation(project(mapOf("path" to ":eternalcore-api")))
+    implementation(project(mapOf("path" to ":eternalcore-paper")))
+    implementation(project(mapOf("path" to ":eternalcore-docs-api")))
+
 
     // Base libraries
     compileOnly("org.jetbrains:annotations:24.0.1")
