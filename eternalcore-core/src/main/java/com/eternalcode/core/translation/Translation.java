@@ -88,6 +88,7 @@ public interface Translation {
         Notice lastLocationNoExist();
     }
 
+    // Random Teleport Section
     RandomTeleportSection randomTeleport();
 
     interface RandomTeleportSection {

@@ -209,17 +209,26 @@ public class ENTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Description(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
-
-        // RTP
-        @Description(" ")
-        public Notice randomTeleportProcessBegin = Notice.chat("<green>► <white>Teleportation to a random location has started!");
-        @Description({"# {PLAYER} - Player who has been teleported, {WORLD} - World name, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate" })
-        public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>You have been teleported to a random location!");
-        public Notice teleportedToRandomLocationAdmin = Notice.chat("<green>► <white>You have teleported <green>{PLAYER} <white>to a random location! His current location is: world: {WORLD}, x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
-
-        public Notice randomTeleportProcessFailed = Notice.chat("<red>✘ <dark_red>A safe location could not be found, please try again!");
     }
 
+    @Description({
+        " ",
+        "# This section is responsible for messages related to random teleport",
+    })
+    public ENRandomTeleportSection randomTeleport = new ENRandomTeleportSection();
+
+    @Getter
+    @Contextual
+    public static class ENRandomTeleportSection implements RandomTeleportSection {
+        public Notice randomTeleportStarted = Notice.chat("<green>► <white>Teleportation to a random location has started!");
+        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>A safe location could not be found, please try again!");
+
+        @Description(" ")
+        public Notice teleportedToRandomLocationOther = Notice.chat("<green>► <white>You have teleported <green>{PLAYER} <white>to a random location! His current location is: world: {WORLD}, x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
+
+        @Description({"# {PLAYER} - Player who has been teleported, {WORLD} - World name, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate" })
+        public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>You have been teleported to a random location!");
+    }
 
     public ENChatSection chat = new ENChatSection();
 
