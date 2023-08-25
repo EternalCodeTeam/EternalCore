@@ -30,7 +30,7 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        event.setDeathMessage(StringUtils.EMPTY);
+        event.setDeathMessage(null);
 
         if (player.getKiller() != null) {
             this.noticeService.create()
@@ -43,20 +43,25 @@ public class PlayerDeathListener implements Listener {
             return;
         }
 
-        EntityDamageEvent lastDamageCasue = player.getLastDamageCause();
+        EntityDamageEvent lastDamageCause = player.getLastDamageCause();
 
-        if (lastDamageCasue == null) {
+        if (lastDamageCause == null) {
+            this.noticeService.create()
+                .noticeOption(translation -> RandomUtil.randomElement(translation.event().unknownDeathCause()))
+                .placeholder("{PLAYER}", player.getName())
+                .onlinePlayers()
+                .send();
             return;
         }
 
         this.noticeService.create()
             .noticeOption(translation -> {
-                EntityDamageEvent.DamageCause cause = lastDamageCasue.getCause();
+                EntityDamageEvent.DamageCause cause = lastDamageCause.getCause();
 
                 List<Notice> notifications = translation.event().deathMessageByDamageCause().get(cause);
 
                 if (notifications == null) {
-                    return Option.none();
+                    return RandomUtil.randomElement(translation.event().unknownDeathCause());
                 }
 
                 return RandomUtil.randomElement(notifications);

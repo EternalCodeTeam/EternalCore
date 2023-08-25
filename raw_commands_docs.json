@@ -32,7 +32,7 @@
       "eternalcore.alert"
     ],
     "descriptions": [
-      "Sends alert to all players with specified notice type and text"
+      "Sends alert to all players with specified notice type and messages"
     ],
     "arguments": [
       "\u003ctype\u003e \u003cmessage\u003e"
@@ -55,13 +55,26 @@
     "name": "anvil ",
     "aliases": [],
     "permissions": [
-      "eternalcore.anvil"
+      "eternalcore.anvil.other"
     ],
     "descriptions": [
       "Opens an anvil for another player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "automessage ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.automessage"
+    ],
+    "descriptions": [
+      "Toggles the display of automatic messages."
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -81,7 +94,7 @@
     "name": "back ",
     "aliases": [],
     "permissions": [
-      "eternalcore.back"
+      "eternalcore.back.other"
     ],
     "descriptions": [
       "Teleport specified player to last location"
@@ -133,7 +146,7 @@
     "name": "cartography ",
     "aliases": [],
     "permissions": [
-      "eternalcore.cartography"
+      "eternalcore.cartography.other"
     ],
     "descriptions": [
       "Opens a cartography table for another player"
@@ -212,27 +225,23 @@
   {
     "name": "clear ",
     "aliases": [],
-    "permissions": [
-      "eternalcore.clear"
-    ],
-    "descriptions": [
-      "Clears your inventory"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "clear ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.clear"
-    ],
+    "permissions": [],
     "descriptions": [
       "Clears inventory of player"
     ],
     "arguments": [
       "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "clear ",
+    "aliases": [],
+    "permissions": [],
+    "descriptions": [
+      "Clears your inventory"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -284,7 +293,33 @@
       "Enchants item in hand"
     ],
     "arguments": [
+      "\u003cenchantment\u003e \u003clevel\u003e \u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "enchant ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enchant"
+    ],
+    "descriptions": [
+      "Enchants item in hand"
+    ],
+    "arguments": [
       "\u003cenchantment\u003e \u003clevel\u003e"
+    ]
+  },
+  {
+    "name": "enderchest ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.enderchest.other"
+    ],
+    "descriptions": [
+      "Opens another player his enderchest"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -298,19 +333,6 @@
     ],
     "arguments": [
       ""
-    ]
-  },
-  {
-    "name": "enderchest ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.enderchest"
-    ],
-    "descriptions": [
-      "Opens another player his enderchest"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
     ]
   },
   {
@@ -333,23 +355,23 @@
       "eternalcore.feed"
     ],
     "descriptions": [
-      "Feed other player"
+      "Feed yourself"
     ],
     "arguments": [
-      "\u003cplayer\u003e"
+      ""
     ]
   },
   {
     "name": "feed ",
     "aliases": [],
     "permissions": [
-      "eternalcore.feed"
+      "eternalcore.feed.other"
     ],
     "descriptions": [
-      "Feed yourself"
+      "Feed other player"
     ],
     "arguments": [
-      ""
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -369,7 +391,7 @@
     "name": "fly ",
     "aliases": [],
     "permissions": [
-      "eternalcore.fly"
+      "eternalcore.fly.other"
     ],
     "descriptions": [
       "Toggle fly mode for specified player"
@@ -403,6 +425,15 @@
     "arguments": [
       "\u003cgamemode\u003e"
     ]
+  },
+  {
+    "name": "gamemode ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.gamemode"
+    ],
+    "descriptions": [],
+    "arguments": []
   },
   {
     "name": "give ",
@@ -463,23 +494,23 @@
       "eternalcore.god"
     ],
     "descriptions": [
-      "Toggle god mode for specified player"
+      "Toggle god mode"
     ],
     "arguments": [
-      "\u003cplayer\u003e"
+      ""
     ]
   },
   {
     "name": "god ",
     "aliases": [],
     "permissions": [
-      "eternalcore.god"
+      "eternalcore.god.other"
     ],
     "descriptions": [
-      "Toggle god mode"
+      "Toggle god mode for specified player"
     ],
     "arguments": [
-      ""
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -499,7 +530,7 @@
     "name": "grindstone ",
     "aliases": [],
     "permissions": [
-      "eternalcore.grindstone"
+      "eternalcore.grindstone.other"
     ],
     "descriptions": [
       "Opens a grindstone for another player"
@@ -528,23 +559,23 @@
       "eternalcore.heal"
     ],
     "descriptions": [
-      "Heal other player"
+      "Heal yourself"
     ],
     "arguments": [
-      "\u003cplayer\u003e"
+      ""
     ]
   },
   {
     "name": "heal ",
     "aliases": [],
     "permissions": [
-      "eternalcore.heal"
+      "eternalcore.heal.other"
     ],
     "descriptions": [
-      "Heal yourself"
+      "Heal other player"
     ],
     "arguments": [
-      ""
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -728,6 +759,19 @@
       "eternalcore.kill"
     ],
     "descriptions": [
+      "Kill yourself"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "kill ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.kill"
+    ],
+    "descriptions": [
       "Kill specified player"
     ],
     "arguments": [
@@ -758,6 +802,32 @@
     ],
     "arguments": [
       ""
+    ]
+  },
+  {
+    "name": "loom ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.loom"
+    ],
+    "descriptions": [
+      "Opens a loom for you"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "loom ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.loom.other"
+    ],
+    "descriptions": [
+      "Opens a loom for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -809,7 +879,7 @@
     "name": "ping ",
     "aliases": [],
     "permissions": [
-      "eternalcore.ping"
+      "eternalcore.ping.other"
     ],
     "descriptions": [
       "Shows ping of other player"
@@ -951,6 +1021,32 @@
     ]
   },
   {
+    "name": "smithingtable ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.smithingtable.other"
+    ],
+    "descriptions": [
+      "Opens a smithing table for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "smithingtable ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.smithingtable"
+    ],
+    "descriptions": [
+      "Opens a smithing table for you"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "socialspy",
     "aliases": [
       "spy"
@@ -969,7 +1065,7 @@
     "name": "spawn ",
     "aliases": [],
     "permissions": [
-      "eternalcore.spawn"
+      "eternalcore.spawn.other"
     ],
     "descriptions": [
       "Teleports specified player to spawn location"
@@ -998,10 +1094,10 @@
       "eternalcore.speed"
     ],
     "descriptions": [
-      "Set speed of walking and flying to specified amount and player"
+      "Set speed depending on whether you flying or walking by specified amount"
     ],
     "arguments": [
-      "\u003camount\u003e \u003cplayer\u003e"
+      "\u003cspeed\u003e"
     ]
   },
   {
@@ -1011,23 +1107,36 @@
       "eternalcore.speed"
     ],
     "descriptions": [
-      "Set speed of walking and flying to specified amount"
+      "Set speed depending on whether the player is flying or walking by specified amount"
     ],
     "arguments": [
-      "\u003camount\u003e"
+      "\u003cspeed\u003e \u003cplayer\u003e"
     ]
   },
   {
-    "name": "stonecutter ",
+    "name": "speed ",
     "aliases": [],
     "permissions": [
-      "eternalcore.stonecutter"
+      "eternalcore.speed"
     ],
     "descriptions": [
-      "Opens a stonecutter for another player"
+      "Set speed of walking or flying to specified amount"
     ],
     "arguments": [
-      "\u003cplayer\u003e"
+      "\u003ctype\u003e \u003cspeed\u003e"
+    ]
+  },
+  {
+    "name": "speed ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.speed"
+    ],
+    "descriptions": [
+      "Set speed of walking or flying to specified amount and player"
+    ],
+    "arguments": [
+      "\u003ctype\u003e \u003cspeed\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -1041,6 +1150,19 @@
     ],
     "arguments": [
       ""
+    ]
+  },
+  {
+    "name": "stonecutter ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.stonecutter.other"
+    ],
+    "descriptions": [
+      "Opens a stonecutter for another player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -1106,6 +1228,34 @@
     ],
     "arguments": [
       "\u003cplayer\u003e \u003ctarget-player\u003e"
+    ]
+  },
+  {
+    "name": "tellraw ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tellraw"
+    ],
+    "descriptions": [
+      "Send a message to the player without any prefixes etc."
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003cnotice_type\u003e \u003cmessage\u003e"
+    ]
+  },
+  {
+    "name": "tellraw -all",
+    "aliases": [
+      "tellraw, *"
+    ],
+    "permissions": [
+      "eternalcore.tellraw"
+    ],
+    "descriptions": [
+      "Broadcast a message without any prefixes etc."
+    ],
+    "arguments": [
+      "\u003cnotice_type\u003e \u003cmessage\u003e"
     ]
   },
   {
@@ -1393,13 +1543,13 @@
     "name": "workbench ",
     "aliases": [],
     "permissions": [
-      "eternalcore.workbench"
+      "eternalcore.workbench.other"
     ],
     "descriptions": [
-      "Opens a workbench for you"
+      "Opens a workbench for another player"
     ],
     "arguments": [
-      ""
+      "\u003cplayer\u003e"
     ]
   },
   {
@@ -1409,10 +1559,10 @@
       "eternalcore.workbench"
     ],
     "descriptions": [
-      "Opens a workbench for another player"
+      "Opens a workbench for you"
     ],
     "arguments": [
-      "\u003cplayer\u003e"
+      ""
     ]
   }
 ]
