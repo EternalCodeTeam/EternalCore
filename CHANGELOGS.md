@@ -1,3 +1,8 @@
+### 1.0.1 (snapshot)
+
+#### Fixes:
+#### Features:
+
 ### 1.0.0
 
 #### Fixes:
