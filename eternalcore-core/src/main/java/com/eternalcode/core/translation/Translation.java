@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -87,12 +86,15 @@ public interface Translation {
         Notice teleportedToLastLocation();
         Notice teleportedSpecifiedPlayerLastLocation();
         Notice lastLocationNoExist();
+    }
 
-        // RTP
-        Notice randomTeleportProcessBegin();
+    RandomTeleportSection randomTeleport();
+
+    interface RandomTeleportSection {
+        Notice randomTeleportStarted();
+        Notice randomTeleportFailed();
         Notice teleportedToRandomLocation();
-        Notice teleportedToRandomLocationAdmin();
-        Notice randomTeleportProcessFailed();
+        Notice teleportedToRandomLocationOther();
     }
 
     // Chat Section

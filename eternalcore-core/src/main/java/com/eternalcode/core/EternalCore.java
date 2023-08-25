@@ -268,7 +268,7 @@ class EternalCore implements EternalCoreApi {
         this.noticeService = NoticeService.adventure(this.audiencesProvider, this.miniMessage, this.scheduler, this.viewerProvider, this.translationManager, this.placeholderRegistry);
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager, this.eventCaller);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.teleportAsk);
-        this.randomTeleportService = new RandomTeleportService(pluginConfiguration.teleport);
+        this.randomTeleportService = new RandomTeleportService(pluginConfiguration.randomTeleport);
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);

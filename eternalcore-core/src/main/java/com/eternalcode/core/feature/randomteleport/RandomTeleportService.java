@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.EnumSet;
@@ -35,6 +36,9 @@ public class RandomTeleportService {
     );
 
     private static final int DEFAULT_WORLD_BORDER_SIZE = 29_999_984;
+
+    private static final int DEFAULT_NETHER_HEIGHT = 125;
+    private static final int NETHER_MAX_HEIGHT = 127;
 
     private final RandomTeleportSettings randomTeleportSettings;
 
@@ -67,7 +71,7 @@ public class RandomTeleportService {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
 
             if (world.getEnvironment() == World.Environment.NETHER) {
-                randomY = this.random.nextInt(125);
+                randomY = this.random.nextInt(DEFAULT_NETHER_HEIGHT);
             }
 
             Location generatedLocation = new Location(world, randomX, randomY, randomZ).add(0.5, 1, 0.5);
@@ -87,8 +91,8 @@ public class RandomTeleportService {
 
         World world = chunk.getWorld();
         Block block = world.getBlockAt(location);
-        Block blockAbove = world.getBlockAt(location.clone().add(0, 1, 0));
-        Block blockFloor = world.getBlockAt(location.clone().add(0, -1, 0));
+        Block blockAbove = block.getRelative(BlockFace.UP);
+        Block blockFloor = block.getRelative(BlockFace.DOWN);
 
         if (UNSAFE_BLOCKS.contains(blockFloor.getType())) {
             return false;
@@ -104,7 +108,7 @@ public class RandomTeleportService {
 
         return switch (world.getEnvironment()) {
             case NORMAL, THE_END -> true;
-            case NETHER -> location.getY() <= 127;
+            case NETHER -> location.getY() <= NETHER_MAX_HEIGHT;
             default -> false;
         };
     }

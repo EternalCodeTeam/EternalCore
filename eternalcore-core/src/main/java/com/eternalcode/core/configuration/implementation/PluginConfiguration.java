@@ -81,8 +81,7 @@ public class PluginConfiguration implements ReloadableConfig {
     public Teleport teleport = new Teleport();
 
     @Contextual
-    public static class Teleport implements SpawnSettings, RandomTeleportSettings {
-
+    public static class Teleport implements SpawnSettings {
         @Description("# Teleports the player to spawn after death")
         public boolean teleportToSpawnOnDeath = true;
 
@@ -93,7 +92,13 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration teleportationTimeToSpawn() {
             return this.teleportTimeToSpawn;
         }
+    }
 
+    @Description({ "", "# Random Teleport Section" })
+    public RandomTeleport randomTeleport = new RandomTeleport();
+
+    @Contextual
+    public static class RandomTeleport implements RandomTeleportSettings {
         @Description("# Radius of random teleportation")
         public int randomTeleportRadius = 1000;
 

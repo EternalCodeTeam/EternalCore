@@ -34,7 +34,7 @@ public class RandomTeleportCommand {
     @DescriptionDocs(description = "Teleportation of the sender to a random location.")
     void executeSelf(Player player) {
         this.noticeService.create()
-            .notice(translation -> translation.teleport().randomTeleportProcessBegin())
+            .notice(translation -> translation.randomTeleport().randomTeleportStarted())
             .player(player.getUniqueId())
             .send();
 
@@ -54,7 +54,7 @@ public class RandomTeleportCommand {
     @DescriptionDocs(description = "Teleportation of a player to a random location.", arguments = "<player>")
     void executeOther(Viewer sender, @Arg Player player) {
         this.noticeService.create()
-            .notice(translation -> translation.teleport().randomTeleportProcessBegin())
+            .notice(translation -> translation.randomTeleport().randomTeleportStarted())
             .player(player.getUniqueId())
             .send();
 
@@ -72,20 +72,20 @@ public class RandomTeleportCommand {
 
     private void handleTeleportFailure(Player player) {
         this.noticeService.create()
-            .notice(translation -> translation.teleport().randomTeleportProcessFailed())
+            .notice(translation -> translation.randomTeleport().randomTeleportFailed())
             .player(player.getUniqueId())
             .send();
     }
 
     private void handleTeleportSuccess(Player player) {
         this.noticeService.player(player.getUniqueId(),
-            translation -> translation.teleport().teleportedToRandomLocation(),
+            translation -> translation.randomTeleport().teleportedToRandomLocation(),
             PLACEHOLDERS.toFormatter(player));
     }
 
     private void handleAdminTeleport(Viewer sender, Player player) {
         this.noticeService.viewer(sender,
-            translation -> translation.teleport().teleportedToRandomLocationAdmin(),
+            translation -> translation.randomTeleport().teleportedToRandomLocationOther(),
             PLACEHOLDERS.toFormatter(player));
     }
 }
