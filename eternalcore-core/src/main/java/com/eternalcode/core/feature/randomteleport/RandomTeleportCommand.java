@@ -85,7 +85,7 @@ public class RandomTeleportCommand {
 
     private void handleAdminTeleport(Viewer sender, Player player) {
         this.noticeService.viewer(sender,
-            translation -> translation.randomTeleport().teleportedSpecifiedPlayerToRandomLocationOther(),
+            translation -> translation.randomTeleport().teleportedSpecifiedPlayerToRandomLocation(),
             PLACEHOLDERS.toFormatter(player));
     }
 }
