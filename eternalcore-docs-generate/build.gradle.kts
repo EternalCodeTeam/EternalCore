@@ -19,7 +19,7 @@ dependencies {
     runtimeOnly("com.zaxxer:HikariCP:5.0.1")
     runtimeOnly("dev.rollczi.litecommands:bukkit-adventure:2.8.9")
     runtimeOnly("dev.rollczi:liteskullapi:1.3.0")
-    runtimeOnly("org.panda-lang:expressible:1.3.5")
+    runtimeOnly("org.panda-lang:expressible:1.3.6")
     runtimeOnly("org.panda-lang:panda-utilities:0.5.3-alpha")
     runtimeOnly("commons-io:commons-io:2.13.0")
     runtimeOnly("dev.triumphteam:triumph-gui:3.1.5")

@@ -56,7 +56,7 @@ eternalShadow {
     )
 
     // common libraries
-    library("org.panda-lang:expressible:1.3.5")
+    library("org.panda-lang:expressible:1.3.6")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
     library("commons-io:commons-io:2.13.0")
     libraryRelocate(
