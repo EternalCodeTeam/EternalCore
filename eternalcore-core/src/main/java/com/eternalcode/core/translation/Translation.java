@@ -95,7 +95,7 @@ public interface Translation {
         Notice randomTeleportStarted();
         Notice randomTeleportFailed();
         Notice teleportedToRandomLocation();
-        Notice teleportedToRandomLocationOther();
+        Notice teleportedSpecifiedPlayerToRandomLocationOther();
     }
 
     // Chat Section
