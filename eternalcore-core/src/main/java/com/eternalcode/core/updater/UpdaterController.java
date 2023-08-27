@@ -1,5 +1,6 @@
 package com.eternalcode.core.updater;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.platform.AudienceProvider;
@@ -11,6 +12,11 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.concurrent.CompletableFuture;
 
+@FeatureDocs(
+    name = "Updater",
+    permission = "eternalcore.receiveupdates",
+    description = "Sends a message to the player when a new plugin update is available after joining the server."
+)
 public class UpdaterController implements Listener {
 
     private static final String NEW_VERSION_AVAILABLE = "<b><gradient:#8a1212:#fc6b03>EternalCore:</gradient></b> <color:#fce303>New version of EternalCore is available, please update!";
