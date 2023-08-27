@@ -214,6 +214,25 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# Ta sekcja odpowiada za edycję komunikatów losowej teleportacji",
+    })
+    public PLRandomTeleportSection randomTeleport = new PLRandomTeleportSection();
+
+    @Getter
+    @Contextual
+    public static class PLRandomTeleportSection implements RandomTeleportSection {
+        @Description(" ")
+        public Notice randomTeleportStarted = Notice.chat("<green>► <white>Rozpoczynanie procesu losowania lokalizacji...");
+        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!!");
+
+        public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
+
+        @Description({"# {PLAYER} - Gracz który został teleportowany, {WORLD} - Świat, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
+        public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokazlizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
+    }
+
+    @Description({
+        " ",
         "# Ta sekcja odpowiada za edycję ustawień czatu",
     })
     public PLChatSection chat = new PLChatSection();
