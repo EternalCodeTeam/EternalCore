@@ -34,6 +34,9 @@ public class PluginConfiguration implements ReloadableConfig {
         "#",
     })
 
+    @Description("# Whether the player should receive information about new plugin updates upon joining the server")
+    public boolean shouldReceivePluginUpdates = true;
+
     @Description({ " ", "# Database Section" })
     public Database database = new Database();
 
