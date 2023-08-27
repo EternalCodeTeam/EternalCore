@@ -211,6 +211,25 @@ public class ENTranslation extends AbstractTranslation {
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
     }
 
+    @Description({
+        " ",
+        "# This section is responsible for messages related to random teleport",
+    })
+    public ENRandomTeleportSection randomTeleport = new ENRandomTeleportSection();
+
+    @Getter
+    @Contextual
+    public static class ENRandomTeleportSection implements RandomTeleportSection {
+        public Notice randomTeleportStarted = Notice.chat("<green>► <white>Teleportation to a random location has started!");
+        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>A safe location could not be found, please try again!");
+
+
+        @Description({"# {PLAYER} - Player who has been teleported, {WORLD} - World name, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate" })
+        public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>You have been teleported to a random location!");
+
+        @Description(" ")
+        public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>You have teleported <green>{PLAYER} <white>to a random location! His current location is: world: {WORLD}, x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
+    }
 
     public ENChatSection chat = new ENChatSection();
 
@@ -462,6 +481,10 @@ public class ENTranslation extends AbstractTranslation {
                 Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell from a high place!"),
                 Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell off a deadly cliff!")
             )
+        );
+
+        public List<Notice> unknownDeathCause = List.of(
+            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!")
         );
 
         @Description({ "", "# {PLAYER} - Player who joined" })
