@@ -21,6 +21,9 @@ dependencies {
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.28")
     annotationProcessor("org.projectlombok:lombok:1.18.28")
+
+    //GitCheck
+    implementation("com.eternalcode:gitcheck:1.0.0")
 }
 
 eternalShadow {

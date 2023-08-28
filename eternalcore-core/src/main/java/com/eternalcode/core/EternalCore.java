@@ -144,6 +144,8 @@ import com.eternalcode.core.teleport.request.TpaAcceptCommand;
 import com.eternalcode.core.teleport.request.TpaCommand;
 import com.eternalcode.core.teleport.request.TpaDenyCommand;
 import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.core.updater.UpdaterController;
+import com.eternalcode.core.updater.UpdaterService;
 import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -203,6 +205,7 @@ class EternalCore implements EternalCoreApi {
     private final TranslationManager translationManager;
     private final AfkService afkService;
     private final TeleportRequestService teleportRequestService;
+    private final UpdaterService updaterService;
 
     /* Database */
     private DatabaseManager databaseManager;
@@ -269,6 +272,7 @@ class EternalCore implements EternalCoreApi {
         this.afkService = new AfkService(pluginConfiguration.afk, this.noticeService, this.userManager, this.eventCaller);
         this.teleportRequestService = new TeleportRequestService(pluginConfiguration.teleportAsk);
         this.randomTeleportService = new RandomTeleportService(pluginConfiguration.randomTeleport);
+        this.updaterService = new UpdaterService(plugin.getDescription());
 
         /* Database */
         WarpRepository warpRepository = new WarpConfigRepository(this.configurationManager, locationsConfiguration);
@@ -455,7 +459,8 @@ class EternalCore implements EternalCoreApi {
             new SpawnRespawnController(this.teleportService, pluginConfiguration, locationsConfiguration),
             new TeleportListeners(this.noticeService, this.teleportTaskService),
             new AfkController(this.afkService),
-            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage)
+            new PlayerLoginListener(this.translationManager, this.userManager, this.miniMessage),
+            new UpdaterController(pluginConfiguration, this.updaterService, this.audiencesProvider, this.miniMessage)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, plugin));
 
         /* Tasks */
