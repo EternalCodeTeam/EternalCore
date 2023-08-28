@@ -12,7 +12,6 @@ import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -68,7 +67,7 @@ public class WarpInventory {
                     player.getUniqueId(),
                     PositionAdapter.convert(player.getLocation()),
                     warp.getPosition(),
-                    Duration.ofSeconds(5)
+                    this.warpManager.findTeleportationTime(player)
                 );
             });
 

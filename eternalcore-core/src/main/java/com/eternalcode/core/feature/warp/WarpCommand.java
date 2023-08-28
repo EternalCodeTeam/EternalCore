@@ -56,7 +56,9 @@ public class WarpCommand {
             return;
         }
 
-        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ofSeconds(5));
+        Duration teleportationTime = this.warpManager.findTeleportationTime(player);
+
+        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), teleportationTime);
     }
 
     @Execute(route = "add", required = 1)

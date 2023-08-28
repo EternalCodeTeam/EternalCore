@@ -7,6 +7,7 @@ import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
+import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -117,6 +118,28 @@ public class PluginConfiguration implements ReloadableConfig {
         public int randomTeleportAttempts() {
             return this.randomTeleportAttempts;
         }
+    }
+
+    @Description({ " ", "# Warp Teleport Section" })
+    public WarpTeleport warpTeleport = new WarpTeleport();
+
+    @Contextual
+    public static class WarpTeleport implements WarpSettings {
+
+        public Duration warpTeleportDefaultTime = Duration.ofSeconds(10);
+
+        public Map<String, Duration> warpTeleportTimesByPermission = Map.of("eternalcore.warp.vip", Duration.ofSeconds(5));
+
+        @Override
+        public Duration teleportationTimeToWarp() {
+            return this.warpTeleportDefaultTime;
+        }
+
+        @Override
+        public Map<String, Duration> teleportationTimesByPermission() {
+            return this.warpTeleportTimesByPermission;
+        }
+
     }
 
     @Description({ " ", "# Homes Section" })

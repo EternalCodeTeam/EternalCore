@@ -302,7 +302,7 @@ class EternalCore implements EternalCoreApi {
 
         /* depends on Database */
         this.privateChatService = new PrivateChatService(this.noticeService, ignoreRepository, this.userManager);
-        this.warpManager = WarpManager.create(warpRepository);
+        this.warpManager = WarpManager.create(warpRepository, pluginConfiguration.warpTeleport);
         this.homeManager = HomeManager.create(homeRepository);
         this.autoMessageService = new AutoMessageService(autoMessageRepository, pluginConfiguration.autoMessage, this.noticeService, this.scheduler, server);
 

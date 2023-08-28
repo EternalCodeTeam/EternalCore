@@ -2,8 +2,10 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.shared.Position;
+import org.bukkit.entity.Player;
 import panda.std.Option;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,9 +19,11 @@ public class WarpManager {
 
     private final Map<String, Warp> warpMap = new HashMap<>();
     private final WarpRepository warpRepository;
+    private final WarpSettings warpSettings;
 
-    private WarpManager(WarpRepository warpRepository) {
+    private WarpManager(WarpRepository warpRepository, WarpSettings warpSettings) {
         this.warpRepository = warpRepository;
+        this.warpSettings = warpSettings;
     }
 
     public void createWarp(String name, Position position) {
@@ -52,8 +56,22 @@ public class WarpManager {
         return Collections.unmodifiableCollection(this.warpMap.keySet());
     }
 
-    public static WarpManager create(WarpRepository warpRepository) {
-        WarpManager warpManager = new WarpManager(warpRepository);
+    public Duration findTeleportationTime(Player player) {
+        if (this.warpSettings.teleportationTimesByPermission().isEmpty()) {
+            return this.warpSettings.teleportationTimeToWarp();
+        }
+
+        for (String permission : this.warpSettings.teleportationTimesByPermission().keySet()) {
+            if (player.hasPermission(permission)) {
+                return this.warpSettings.teleportationTimesByPermission().get(permission);
+            }
+        }
+
+        return this.warpSettings.teleportationTimeToWarp();
+    }
+
+    public static WarpManager create(WarpRepository warpRepository, WarpSettings warpSettings) {
+        WarpManager warpManager = new WarpManager(warpRepository, warpSettings);
 
         warpRepository.getWarps().thenAcceptAsync(warps -> {
             for (Warp warp : warps) {
