@@ -63,11 +63,17 @@ public class WarpInventory {
 
                 player.closeInventory();
 
+                Duration teleportationTime = this.warpManager.findTeleportationTime(player);
+
+                if (player.hasPermission("eternalcore.warp.bypass")) {
+                    teleportationTime = Duration.ZERO;
+                }
+
                 this.teleportTaskService.createTeleport(
                     player.getUniqueId(),
                     PositionAdapter.convert(player.getLocation()),
                     warp.getPosition(),
-                    this.warpManager.findTeleportationTime(player)
+                    teleportationTime
                 );
             });
 
