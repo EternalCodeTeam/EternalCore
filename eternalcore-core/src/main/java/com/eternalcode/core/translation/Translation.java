@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -89,6 +88,16 @@ public interface Translation {
         Notice lastLocationNoExist();
     }
 
+    // Random Teleport Section
+    RandomTeleportSection randomTeleport();
+
+    interface RandomTeleportSection {
+        Notice randomTeleportStarted();
+        Notice randomTeleportFailed();
+        Notice teleportedToRandomLocation();
+        Notice teleportedSpecifiedPlayerToRandomLocation();
+    }
+
     // Chat Section
     ChatSection chat();
 
@@ -103,6 +112,8 @@ public interface Translation {
         Notice disabledChatInfo();
         Notice commandNotFound();
         String alertMessageFormat();
+        Notice tellrawInfo();
+        Notice tellrawAllInfo();
     }
 
     // Warp Section
@@ -211,6 +222,7 @@ public interface Translation {
 
     interface EventSection {
         List<Notice> deathMessage();
+        List<Notice> unknownDeathCause();
         List<Notice> joinMessage();
         List<Notice> quitMessage();
         List<Notice> firstJoinMessage();

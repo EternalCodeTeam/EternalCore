@@ -5,6 +5,7 @@ import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -32,6 +33,9 @@ public class PluginConfiguration implements ReloadableConfig {
         "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
         "#",
     })
+
+    @Description("# Whether the player should receive information about new plugin updates upon joining the server")
+    public boolean shouldReceivePluginUpdates = true;
 
     @Description({ " ", "# Database Section" })
     public Database database = new Database();
@@ -81,7 +85,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Teleport implements SpawnSettings {
-
         @Description("# Teleports the player to spawn after death")
         public boolean teleportToSpawnOnDeath = true;
 
@@ -91,6 +94,28 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public Duration teleportationTimeToSpawn() {
             return this.teleportTimeToSpawn;
+        }
+    }
+
+    @Description({ "", "# Random Teleport Section" })
+    public RandomTeleport randomTeleport = new RandomTeleport();
+
+    @Contextual
+    public static class RandomTeleport implements RandomTeleportSettings {
+        @Description("# Radius of random teleportation")
+        public int randomTeleportRadius = 1000;
+
+        @Description("# Number of attempts to teleport to a random location")
+        public int randomTeleportAttempts = 10;
+
+        @Override
+        public int randomTeleportRadius() {
+            return this.randomTeleportRadius;
+        }
+
+        @Override
+        public int randomTeleportAttempts() {
+            return this.randomTeleportAttempts;
         }
     }
 

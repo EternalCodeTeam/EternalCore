@@ -21,7 +21,7 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
     }
 
     @Override
-    public Completable<List<UUID>> findRecivers(List<UUID> onlineUniqueIds) {
+    public Completable<List<UUID>> findReceivers(List<UUID> onlineUniqueIds) {
         if (onlineUniqueIds.isEmpty()) {
             return Completable.completed(onlineUniqueIds);
         }
@@ -44,12 +44,12 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
     }
 
     @Override
-    public Completable<Boolean> isReciving(UUID uniqueId) {
+    public Completable<Boolean> isReceiving(UUID uniqueId) {
         return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenApply(Optional::isEmpty);
     }
 
     @Override
-    public Completable<Boolean> switchReciving(UUID uniqueId) {
+    public Completable<Boolean> switchReceiving(UUID uniqueId) {
         return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenCompose(optional -> {
             if (optional.isEmpty()) {
                 return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId)).thenApply(result -> true);

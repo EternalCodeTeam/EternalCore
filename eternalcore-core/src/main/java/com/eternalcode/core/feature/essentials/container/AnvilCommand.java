@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "anvil")
-@Permission("eternalcore.anvil")
 public class AnvilCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class AnvilCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.anvil")
     @DescriptionDocs(description = "Opens an anvil for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.ANVIL.open(player);
@@ -31,6 +31,7 @@ public class AnvilCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.anvil.other")
     @DescriptionDocs(description = "Opens an anvil for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.ANVIL.open(target);

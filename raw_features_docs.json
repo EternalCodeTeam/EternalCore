@@ -10,6 +10,13 @@
     ]
   },
   {
+    "name": "AutoMessage",
+    "permissions": [],
+    "descriptions": [
+      "Automatically sends messages to players at a given time interval."
+    ]
+  },
+  {
     "name": "Bypass Full Server",
     "permissions": [
       "eternalcore.slot.bypass"

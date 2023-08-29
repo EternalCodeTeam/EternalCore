@@ -77,17 +77,17 @@ public final class NoneRepository implements HomeRepository, IgnoreRepository, A
     }
 
     @Override
-    public Completable<List<UUID>> findRecivers(List<UUID> onlineUniqueIds) {
+    public Completable<List<UUID>> findReceivers(List<UUID> onlineUniqueIds) {
         return Completable.completed(Collections.emptyList());
     }
 
     @Override
-    public Completable<Boolean> isReciving(UUID uniqueId) {
+    public Completable<Boolean> isReceiving(UUID uniqueId) {
         return Completable.completed(false);
     }
 
     @Override
-    public Completable<Boolean> switchReciving(UUID uniqueId) {
+    public Completable<Boolean> switchReceiving(UUID uniqueId) {
         return Completable.completed(false);
     }
 }

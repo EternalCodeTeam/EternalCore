@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "workbench")
-@Permission("eternalcore.workbench")
 public class WorkbenchCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class WorkbenchCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.workbench")
     @DescriptionDocs(description = "Opens a workbench for you")
     void executeSelf(Player sender) {
         sender.openWorkbench(null, true);
@@ -31,6 +31,7 @@ public class WorkbenchCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.workbench.other")
     @DescriptionDocs(description = "Opens a workbench for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         target.openWorkbench(null, true);

@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "loom")
-@Permission("eternalcore.loom")
 public class LoomCommand {
 
     private final NoticeService noticeService;
@@ -20,6 +19,7 @@ public class LoomCommand {
     }
 
     @Execute(required = 0)
+    @Permission("eternalcore.loom")
     @DescriptionDocs(description = "Opens a loom for you")
     void executeSelf(Player player) {
         AdditionalContainerPaper.LOOM.open(player);
@@ -31,6 +31,7 @@ public class LoomCommand {
     }
 
     @Execute(required = 1)
+    @Permission("eternalcore.loom.other")
     @DescriptionDocs(description = "Opens a loom for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
         AdditionalContainerPaper.LOOM.open(target);
