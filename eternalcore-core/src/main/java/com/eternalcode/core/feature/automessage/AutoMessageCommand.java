@@ -8,7 +8,7 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "automessage", aliases = { "automsg" })
-@Permission("eternalcode.automessage")
+@Permission("eternalcore.automessage")
 public class AutoMessageCommand {
 
     private final AutoMessageService autoMessageService;
@@ -22,8 +22,8 @@ public class AutoMessageCommand {
     @Execute
     @DescriptionDocs(description = "Toggles the display of automatic messages.")
     void execute(Player player) {
-        this.autoMessageService.switchReceiving(player.getUniqueId()).then(reciving -> {
-            if (reciving) {
+        this.autoMessageService.switchReceiving(player.getUniqueId()).then(receiving -> {
+            if (receiving) {
                 this.noticeService.player(player.getUniqueId(), messages -> messages.autoMessage().enabled());
 
                 return;
