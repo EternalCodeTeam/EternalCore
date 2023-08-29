@@ -37,8 +37,8 @@ public class AutoMessageService {
         this.tick();
     }
 
-    public Completable<Boolean> switchReciving(UUID uniqueId) {
-        return this.repository.switchReciving(uniqueId);
+    public Completable<Boolean> switchReceiving(UUID uniqueId) {
+        return this.repository.switchReceiving(uniqueId);
     }
 
     public void broadcastNextMessage() {
@@ -46,13 +46,13 @@ public class AutoMessageService {
             .map(Entity::getUniqueId)
             .toList();
 
-        this.repository.findRecivers(onlineUniqueIds).then(recivers -> {
-            if (recivers.isEmpty()) {
+        this.repository.findReceivers(onlineUniqueIds).then(receivers -> {
+            if (receivers.isEmpty()) {
                 return;
             }
 
             this.noticeService.create()
-                .players(recivers)
+                .players(receivers)
                 .noticeOption(translation -> this.nextAutoMessage(translation.autoMessage()))
                 .send();
         });
