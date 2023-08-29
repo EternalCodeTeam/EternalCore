@@ -43,19 +43,6 @@ public class SetHomeCommand {
     }
 
     private void setHome(User user, Player player, String home) {
-        int amountOfUserHomes = this.homeManager.getHomes(player.getUniqueId()).size();
-        int maxAmountOfUserHomes = this.getMaxAmountOfHomes(player);
-
-        if (amountOfUserHomes >= this.getMaxAmountOfHomes(player)) {
-            this.noticeService.create()
-                .user(user)
-                .placeholder("{LIMIT}", String.valueOf(maxAmountOfUserHomes))
-                .notice(translation -> translation.home().limit())
-                .send();
-
-            return;
-        }
-
         if (this.homeManager.hasHomeWithSpecificName(user, home)) {
             this.homeManager.createHome(user, home, player.getLocation());
 
@@ -63,6 +50,19 @@ public class SetHomeCommand {
                 .user(user)
                 .placeholder("{HOME}", home)
                 .notice(translation -> translation.home().overrideHomeLocation())
+                .send();
+
+            return;
+        }
+
+        int amountOfUserHomes = this.homeManager.getHomes(player.getUniqueId()).size();
+        int maxAmountOfUserHomes = this.getMaxAmountOfHomes(player);
+
+        if (amountOfUserHomes >= maxAmountOfUserHomes) {
+            this.noticeService.create()
+                .user(user)
+                .placeholder("{LIMIT}", String.valueOf(maxAmountOfUserHomes))
+                .notice(translation -> translation.home().limit())
                 .send();
 
             return;
@@ -76,6 +76,7 @@ public class SetHomeCommand {
             .placeholder("{HOME}", home)
             .send();
     }
+
 
     public int getMaxAmountOfHomes(Player player) {
         Map<String, Integer> maxHomes = this.pluginConfiguration.homes.maxHomes;
