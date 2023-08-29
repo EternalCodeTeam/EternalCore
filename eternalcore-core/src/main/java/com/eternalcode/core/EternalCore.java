@@ -353,7 +353,7 @@ class EternalCore implements EternalCoreApi {
                 new AutoMessageCommand(this.autoMessageService, this.noticeService),
 
                 // Home Commands
-                new HomeCommand(this.teleportTaskService, this.teleportService),
+                new HomeCommand(this.teleportTaskService, this.teleportService, this.noticeService, this.homeManager),
                 new SetHomeCommand(this.homeManager, this.noticeService, pluginConfiguration),
                 new DelHomeCommand(this.homeManager, this.noticeService),
 
