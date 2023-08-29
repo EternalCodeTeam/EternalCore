@@ -7,11 +7,11 @@ import java.util.UUID;
 
 public interface AutoMessageRepository {
 
-    Completable<List<UUID>> findRecivers(List<UUID> onlineUniqueIds);
+    Completable<List<UUID>> findReceivers(List<UUID> onlineUniqueIds);
 
     // for nearby feafure like placeholders etc
-    Completable<Boolean> isReciving(UUID uniqueId);
+    Completable<Boolean> isReceiving(UUID uniqueId);
 
-    Completable<Boolean> switchReciving(UUID uniqueId);
+    Completable<Boolean> switchReceiving(UUID uniqueId);
 
 }

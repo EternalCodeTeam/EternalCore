@@ -22,7 +22,7 @@ public class AutoMessageCommand {
     @Execute
     @DescriptionDocs(description = "Toggles the display of automatic messages.")
     void execute(Player player) {
-        this.autoMessageService.switchReciving(player.getUniqueId()).then(receiving -> {
+        this.autoMessageService.switchReceiving(player.getUniqueId()).then(receiving -> {
             if (receiving) {
                 this.noticeService.player(player.getUniqueId(), messages -> messages.autoMessage().enabled());
 
