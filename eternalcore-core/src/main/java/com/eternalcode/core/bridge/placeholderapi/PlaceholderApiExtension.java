@@ -5,6 +5,7 @@ import com.eternalcode.core.placeholder.PlaceholderRaw;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,9 +14,11 @@ import java.util.Optional;
 public class PlaceholderApiExtension extends PlaceholderExpansion implements BridgeInitializer {
 
     private final PlaceholderRegistry placeholderRegistry;
+    private final Plugin plugin;
 
-    public PlaceholderApiExtension(PlaceholderRegistry placeholderRegistry) {
+    public PlaceholderApiExtension(PlaceholderRegistry placeholderRegistry, Plugin plugin) {
         this.placeholderRegistry = placeholderRegistry;
+        this.plugin = plugin;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class PlaceholderApiExtension extends PlaceholderExpansion implements Bri
 
     @Override
     public @NotNull String getIdentifier() {
-        return "eternalcore";
+        return this.plugin.getDescription().getName();
     }
 
     @Override
@@ -41,7 +44,7 @@ public class PlaceholderApiExtension extends PlaceholderExpansion implements Bri
 
     @Override
     public @NotNull String getVersion() {
-        return "1.0.0";
+        return this.plugin.getDescription().getVersion();
     }
 
     @Override

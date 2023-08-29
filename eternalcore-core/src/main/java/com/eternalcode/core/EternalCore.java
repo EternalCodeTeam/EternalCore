@@ -302,7 +302,7 @@ class EternalCore implements EternalCoreApi {
         LanguageInventory languageInventory = new LanguageInventory(languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
         WarpInventory warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
-        this.bridgeManager = new BridgeManager(this.placeholderRegistry, server, plugin.getLogger());
+        this.bridgeManager = new BridgeManager(this.placeholderRegistry, plugin, plugin.getLogger());
         this.bridgeManager.init();
 
         /* Frameworks & Libraries */
@@ -311,8 +311,6 @@ class EternalCore implements EternalCoreApi {
             .build();
 
         this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())));
-        // Tutaj jest problem i nie wiem jak to naprawić
-        // this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("auto_message_enabled", player -> String.valueOf(this.autoMessageService.isReceiving(player.getUniqueId()).get())));
         this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))));
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
