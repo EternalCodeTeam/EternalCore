@@ -1,4 +1,4 @@
-package com.eternalcode.core.util.legacy;
+package com.eternalcode.core.adventure.legacy;
 
 import net.kyori.adventure.text.Component;
 

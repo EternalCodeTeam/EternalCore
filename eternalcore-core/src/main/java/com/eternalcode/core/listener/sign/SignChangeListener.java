@@ -1,7 +1,7 @@
 package com.eternalcode.core.listener.sign;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.util.legacy.Legacy;
+import com.eternalcode.core.adventure.legacy.Legacy;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

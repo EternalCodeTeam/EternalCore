@@ -149,7 +149,8 @@ import com.eternalcode.core.updater.UpdaterService;
 import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.util.legacy.LegacyColorProcessor;
+import com.eternalcode.core.adventure.resolver.CenterTagResolver;
+import com.eternalcode.core.adventure.legacy.LegacyColorProcessor;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import com.google.common.base.Stopwatch;
@@ -162,6 +163,7 @@ import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -240,6 +242,10 @@ class EternalCore implements EternalCoreApi {
         this.audiencesProvider = BukkitAudiences.create(plugin);
         this.miniMessage = MiniMessage.builder()
                 .postProcessor(new LegacyColorProcessor())
+                .tags(TagResolver.builder()
+                        .resolver(CenterTagResolver.RESOLVER)
+                        .resolver(TagResolver.standard())
+                        .build())
                 .build();
 
         /* Configuration */

@@ -75,4 +75,12 @@ eternalShadow {
     // metrics
     library("org.bstats:bstats-bukkit:3.0.2")
     libraryRelocate("org.bstats")
+
+    // pixel-width
+    library("solar.squares:pixel-width-core:1.1.0")
+    library("solar.squares:pixel-width-utils:1.1.0")
+    libraryRelocate(
+        "solar.squares:pixel-width-core:1.1.0",
+        "solar.squares:pixel-width-utils:1.1.0"
+    )
 }
