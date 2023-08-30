@@ -3,7 +3,6 @@ package com.eternalcode.core.bridge;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiExtension;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
-import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
@@ -24,12 +23,12 @@ public class BridgeManager {
     public void init() {
         this.setupBridge("PlaceholderAPI", () -> {
             this.placeholderRegistry.registerPlaceholder(new PlaceholderApiReplacer());
-            new PlaceholderApiExtension(this.placeholderRegistry, this.plugin).initialize();
+            new PlaceholderApiExtension(this.placeholderRegistry, this.plugin.getDescription()).initialize();
         });
     }
 
     private void setupBridge(String pluginName, BridgeInitializer bridge) {
-        PluginManager pluginManager = this.plugin.getServer().getPluginManager();;
+        PluginManager pluginManager = this.plugin.getServer().getPluginManager();
 
         if (pluginManager.isPluginEnabled(pluginName)) {
             bridge.initialize();
