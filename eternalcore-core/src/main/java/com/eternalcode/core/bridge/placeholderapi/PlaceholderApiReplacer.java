@@ -1,7 +1,7 @@
 package com.eternalcode.core.bridge.placeholderapi;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.placeholder.PlayerPlaceholderReplacer;
+import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 
@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
     name = "PlaceholderAPI",
     description = "Adds support for PlaceholderAPI"
 )
-public class PlaceholderApiReplacer implements PlayerPlaceholderReplacer {
+public class PlaceholderApiReplacer implements PlaceholderReplacer {
 
     @Override
     public String apply(String text, Player targetPlayer) {

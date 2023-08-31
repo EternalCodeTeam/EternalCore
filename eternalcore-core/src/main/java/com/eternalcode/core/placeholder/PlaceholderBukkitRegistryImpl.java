@@ -4,36 +4,29 @@ import com.eternalcode.core.viewer.Viewer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
 
     private final Server server;
-    private final Set<PlaceholderReplacer> replacers = new HashSet<>();
-    private final Set<PlayerPlaceholderReplacer> replacerPlayers = new HashSet<>();
+    private final Set<PlaceholderReplacer> replacerPlayers = new HashSet<>();
+    private final Map<String, PlaceholderRaw> rawPlaceholders = new HashMap<>();
 
     public PlaceholderBukkitRegistryImpl(Server server) {
         this.server = server;
     }
 
     @Override
-    public void registerPlaceholderReplacer(PlaceholderReplacer stack) {
-        this.replacers.add(stack);
-    }
-
-    @Override
-    public void registerPlayerPlaceholderReplacer(PlayerPlaceholderReplacer stack) {
+    public void registerPlaceholder(PlaceholderReplacer stack) {
         this.replacerPlayers.add(stack);
-    }
 
-    @Override
-    public String format(String text) {
-        for (PlaceholderReplacer replacer : this.replacers) {
-            text = replacer.apply(text);
+        if (stack instanceof PlaceholderRaw raw) {
+            this.rawPlaceholders.put(raw.getRawTarget(), raw);
         }
-
-        return text;
     }
 
     @Override
@@ -42,13 +35,18 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
             Player playerTarget = this.server.getPlayer(target.getUniqueId());
 
             if (playerTarget != null) {
-                for (PlayerPlaceholderReplacer replacer : this.replacerPlayers) {
+                for (PlaceholderReplacer replacer : this.replacerPlayers) {
                     text = replacer.apply(text, playerTarget);
                 }
             }
         }
 
-        return this.format(text);
+        return text;
+    }
+
+    @Override
+    public Optional<PlaceholderRaw> getRawPlaceholder(String target) {
+        return Optional.ofNullable(this.rawPlaceholders.get(target));
     }
 
 }

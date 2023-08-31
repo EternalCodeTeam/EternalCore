@@ -1,8 +1,11 @@
 package com.eternalcode.core.bridge;
 
+import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiExtension;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import org.bukkit.Server;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.logging.Logger;
@@ -10,17 +13,22 @@ import java.util.logging.Logger;
 public class BridgeManager {
 
     private final PlaceholderRegistry placeholderRegistry;
+    private final PluginDescriptionFile pluginDescriptionFile;
     private final Server server;
     private final Logger logger;
 
-    public BridgeManager(PlaceholderRegistry placeholderRegistry, Server server, Logger logger) {
+    public BridgeManager(PlaceholderRegistry placeholderRegistry, PluginDescriptionFile pluginDescriptionFile, Server server, Logger logger) {
         this.placeholderRegistry = placeholderRegistry;
+        this.pluginDescriptionFile = pluginDescriptionFile;
         this.server = server;
         this.logger = logger;
     }
 
     public void init() {
-        this.setupBridge("PlaceholderAPI", () -> this.placeholderRegistry.registerPlayerPlaceholderReplacer(new PlaceholderApiReplacer()));
+        this.setupBridge("PlaceholderAPI", () -> {
+            this.placeholderRegistry.registerPlaceholder(new PlaceholderApiReplacer());
+            new PlaceholderApiExtension(this.placeholderRegistry, this.pluginDescriptionFile).initialize();
+        });
     }
 
     private void setupBridge(String pluginName, BridgeInitializer bridge) {
