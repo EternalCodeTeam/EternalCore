@@ -9,9 +9,9 @@ import solar.squares.pixelwidth.utils.CenterAPI;
 
 public class CenterTagResolver implements Modifying {
 
-    public static final String CENTER = "center";
+    public static final String TAG_NAME = "center";
 
-    public static final TagResolver RESOLVER = TagResolver.resolver(CENTER, new CenterTagResolver());
+    public static final TagResolver RESOLVER = TagResolver.resolver(TAG_NAME, new CenterTagResolver());
 
     @Override
     public Component apply(@NotNull Component current, int depth) {
