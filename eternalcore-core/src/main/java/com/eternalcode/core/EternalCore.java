@@ -242,10 +242,7 @@ class EternalCore implements EternalCoreApi {
         this.audiencesProvider = BukkitAudiences.create(plugin);
         this.miniMessage = MiniMessage.builder()
                 .postProcessor(new LegacyColorProcessor())
-                .tags(TagResolver.builder()
-                        .resolver(CenterTagResolver.RESOLVER)
-                        .resolver(TagResolver.standard())
-                        .build())
+                .editTags(builder -> builder.resolver(CenterTagResolver.RESOLVER))
                 .build();
 
         /* Configuration */

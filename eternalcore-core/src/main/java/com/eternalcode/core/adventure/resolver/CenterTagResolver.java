@@ -15,7 +15,7 @@ public class CenterTagResolver implements Modifying {
 
     @Override
     public Component apply(@NotNull Component current, int depth) {
-        if (current instanceof TextComponent component && !((TextComponent) current).content().isBlank()) {
+        if (current instanceof TextComponent component && !component.content().isBlank()) {
             return CenterAPI.center(component);
         }
 
