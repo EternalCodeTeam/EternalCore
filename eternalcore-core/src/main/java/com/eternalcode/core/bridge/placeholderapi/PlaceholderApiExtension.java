@@ -35,7 +35,7 @@ public class PlaceholderApiExtension extends PlaceholderExpansion implements Bri
 
     @Override
     public @NotNull String getIdentifier() {
-        return "EternalCore";
+        return "eternalcore";
     }
 
     @Override
