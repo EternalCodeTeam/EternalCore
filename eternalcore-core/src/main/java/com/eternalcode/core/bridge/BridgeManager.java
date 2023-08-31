@@ -3,7 +3,9 @@ package com.eternalcode.core.bridge;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiExtension;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
+import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.logging.Logger;
@@ -11,24 +13,26 @@ import java.util.logging.Logger;
 public class BridgeManager {
 
     private final PlaceholderRegistry placeholderRegistry;
-    private final Plugin plugin;
+    private final PluginDescriptionFile pluginDescriptionFile;
+    private final Server server;
     private final Logger logger;
 
-    public BridgeManager(PlaceholderRegistry placeholderRegistry, Plugin plugin, Logger logger) {
+    public BridgeManager(PlaceholderRegistry placeholderRegistry, PluginDescriptionFile pluginDescriptionFile, Server server, Logger logger) {
         this.placeholderRegistry = placeholderRegistry;
-        this.plugin = plugin;
+        this.pluginDescriptionFile = pluginDescriptionFile;
+        this.server = server;
         this.logger = logger;
     }
 
     public void init() {
-        this.setupBridge("placeholderapi", () -> {
+        this.setupBridge("PlaceholderAPI", () -> {
             this.placeholderRegistry.registerPlaceholder(new PlaceholderApiReplacer());
-            new PlaceholderApiExtension(this.placeholderRegistry, this.plugin.getDescription()).initialize();
+            new PlaceholderApiExtension(this.placeholderRegistry, this.pluginDescriptionFile).initialize();
         });
     }
 
     private void setupBridge(String pluginName, BridgeInitializer bridge) {
-        PluginManager pluginManager = this.plugin.getServer().getPluginManager();
+        PluginManager pluginManager = this.server.getPluginManager();
 
         if (pluginManager.isPluginEnabled(pluginName)) {
             bridge.initialize();

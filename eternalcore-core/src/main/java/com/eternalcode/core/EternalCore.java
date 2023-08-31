@@ -302,7 +302,7 @@ class EternalCore implements EternalCoreApi {
         LanguageInventory languageInventory = new LanguageInventory(languageConfiguration, this.noticeService, this.userManager, this.miniMessage);
         WarpInventory warpInventory = new WarpInventory(this.teleportTaskService, this.translationManager, this.warpManager, this.miniMessage);
 
-        this.bridgeManager = new BridgeManager(this.placeholderRegistry, plugin, plugin.getLogger());
+        this.bridgeManager = new BridgeManager(this.placeholderRegistry, plugin.getDescription(), server, plugin.getLogger());
         this.bridgeManager.init();
 
         /* Frameworks & Libraries */
