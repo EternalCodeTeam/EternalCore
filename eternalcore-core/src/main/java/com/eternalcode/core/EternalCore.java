@@ -153,7 +153,6 @@ import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.util.legacy.LegacyColorProcessor;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
-
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
