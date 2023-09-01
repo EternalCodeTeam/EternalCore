@@ -16,11 +16,13 @@ public class HomeLimitPlaceholderImpl implements PlaceholderReplacer {
 
     @Override
     public String apply(String text, Player targetPlayer) {
-        int maxValue = this.pluginConfiguration.homes.maxHomes.values()
+        int allowedHomes = this.pluginConfiguration.homes.maxHomes.entrySet()
             .stream()
+            .filter(entry -> targetPlayer.hasPermission(entry.getKey()))
+            .map(Map.Entry::getValue)
             .max(Integer::compare)
             .orElse(0);
 
-        return String.valueOf(maxValue);
+        return String.valueOf(allowedHomes);
     }
 }
