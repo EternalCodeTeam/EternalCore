@@ -71,6 +71,7 @@ public class HelpOpCommand {
 
         this.noticeService
             .create()
+            .player(player.getUniqueId())
             .notice(translation -> translation.helpOp().send())
             .send();
 
