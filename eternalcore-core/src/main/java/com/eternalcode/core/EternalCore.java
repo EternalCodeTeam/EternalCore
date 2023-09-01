@@ -177,6 +177,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -329,7 +330,16 @@ class EternalCore implements EternalCoreApi {
             }),
 
             PlaceholderReplacer.of("homes_number", player -> String.valueOf(this.homeManager.getHomes(player.getUniqueId()).size())),
-            PlaceholderReplacer.of("homes_limit", player -> String.valueOf(pluginConfiguration.homes.maxHomes.size()))
+            PlaceholderReplacer.of("homes_limit_global", player -> String.valueOf(pluginConfiguration.homes.maxHomes.size())),
+
+            PlaceholderReplacer.of("homes_limit", player -> {
+                List<String> personalLimit = pluginConfiguration.homes.maxHomes.keySet()
+                    .stream()
+                    .filter(player::hasPermission)
+                    .toList();
+
+                return String.valueOf(personalLimit.size());
+            })
         ).forEach(this.placeholderRegistry::registerPlaceholder);
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
