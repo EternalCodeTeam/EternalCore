@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.util.legacy.Legacy;
+import com.eternalcode.core.adventure.legacy.Legacy;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;

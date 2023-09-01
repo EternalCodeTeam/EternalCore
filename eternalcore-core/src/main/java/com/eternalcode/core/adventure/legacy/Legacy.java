@@ -1,8 +1,6 @@
-package com.eternalcode.core.util.legacy;
+package com.eternalcode.core.adventure.legacy;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import panda.std.stream.PandaStream;
 
