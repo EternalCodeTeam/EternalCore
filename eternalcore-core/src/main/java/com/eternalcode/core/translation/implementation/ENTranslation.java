@@ -738,7 +738,15 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENLanguageSection implements LanguageSection {
         public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
+    }
 
+    @Description({ " ", "# Default messages returned by Placeholders" })
+    public ENPlaceholderSection placeholder = new ENPlaceholderSection();
+
+    @Getter
+    @Contextual
+    public static class ENPlaceholderSection implements PlaceholderSection {
+        public String homeNotFound = "You don't have any home.";
     }
 
     @Description({ " ", "# Auto message" })

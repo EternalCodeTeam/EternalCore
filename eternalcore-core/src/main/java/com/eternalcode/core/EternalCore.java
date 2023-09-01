@@ -323,7 +323,7 @@ class EternalCore implements EternalCoreApi {
             PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())),
             PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))),
 
-            PlaceholderReplacer.of("homes", new HomesPlaceholderImpl(this.homeManager)),
+            PlaceholderReplacer.of("homes", new HomesPlaceholderImpl(this.homeManager, this.userManager, this.translationManager)),
             PlaceholderReplacer.of("homes_number", new HomeNumberPlaceholderImpl(this.homeManager)),
             PlaceholderReplacer.of("homes_limit_global", new HomeLimitGlobalPlaceholderImpl(pluginConfiguration)),
             PlaceholderReplacer.of("homes_limit", new HomeLimitPlaceholderImpl(pluginConfiguration))

@@ -758,6 +758,15 @@ public class PLTranslation extends AbstractTranslation {
         public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
     }
 
+    @Description({ " ", "# Domyślne wiadomości zwracane przez Placeholdery" })
+    public PLPlaceholderSection placeholder = new PLPlaceholderSection();
+
+    @Getter
+    @Contextual
+    public static class PLPlaceholderSection implements PlaceholderSection {
+        public String homeNotFound = "Nie posiadasz żadnego domu.";
+    }
+
     @Description({ " ", "# Automatyczne wiadomości " })
     public PLAutoMessageSection autoMessage = new PLAutoMessageSection();
 

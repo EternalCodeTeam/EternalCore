@@ -362,6 +362,13 @@ public interface Translation {
         Notice languageChanged();
     }
 
+    // Placeholder section
+    PlaceholderSection placeholder();
+
+    interface PlaceholderSection {
+        String homeNotFound();
+    }
+
     // container section
     ContainerSection container();
 
