@@ -95,6 +95,10 @@ import com.eternalcode.core.feature.home.HomeRepository;
 import com.eternalcode.core.feature.home.command.DelHomeCommand;
 import com.eternalcode.core.feature.home.command.HomeCommand;
 import com.eternalcode.core.feature.home.command.SetHomeCommand;
+import com.eternalcode.core.feature.home.placeholder.HomeLimitGlobalPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomeLimitPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomeNumberPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomesPlaceholderImpl;
 import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
@@ -177,6 +181,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -317,27 +323,10 @@ class EternalCore implements EternalCoreApi {
             PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())),
             PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))),
 
-            PlaceholderReplacer.of("homes", player -> {
-                Collection<Home> homes = this.homeManager.getHomes(player.getUniqueId());
-
-                if (homes.isEmpty()) {
-                    return "You don't have any home";
-                }
-
-                return homes.stream().map(Home::getName).collect(Collectors.joining(", "));
-            }),
-
-            PlaceholderReplacer.of("homes_number", player -> String.valueOf(this.homeManager.getHomes(player.getUniqueId()).size())),
-            PlaceholderReplacer.of("homes_limit_global", player -> String.valueOf(pluginConfiguration.homes.maxHomes.size())),
-
-            PlaceholderReplacer.of("homes_limit", player -> {
-                List<String> personalLimit = pluginConfiguration.homes.maxHomes.keySet()
-                    .stream()
-                    .filter(player::hasPermission)
-                    .toList();
-
-                return String.valueOf(personalLimit.size());
-            })
+            PlaceholderReplacer.of("homes", new HomesPlaceholderImpl(this.homeManager)),
+            PlaceholderReplacer.of("homes_number", new HomeNumberPlaceholderImpl(this.homeManager)),
+            PlaceholderReplacer.of("homes_limit_global", new HomeLimitGlobalPlaceholderImpl(pluginConfiguration)),
+            PlaceholderReplacer.of("homes_limit", new HomeLimitPlaceholderImpl(pluginConfiguration))
         ).forEach(this.placeholderRegistry::registerPlaceholder);
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
