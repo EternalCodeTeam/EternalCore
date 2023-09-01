@@ -153,6 +153,7 @@ import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.util.legacy.LegacyColorProcessor;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
+import com.google.common.base.Joiner;
 import com.google.common.base.Stopwatch;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.argument.Arg;
@@ -175,8 +176,11 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
+import java.util.Collection;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class EternalCore implements EternalCoreApi {
@@ -310,8 +314,23 @@ class EternalCore implements EternalCoreApi {
             .bukkitScheduler(plugin)
             .build();
 
-        this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())));
-        this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))));
+        Stream.of(
+            PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())),
+            PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))),
+
+            PlaceholderReplacer.of("homes", player -> {
+                Collection<Home> homes = this.homeManager.getHomes(player.getUniqueId());
+
+                if (homes.isEmpty()) {
+                    return "You don't have any home";
+                }
+
+                return homes.stream().map(Home::getName).collect(Collectors.joining(", "));
+            }),
+
+            PlaceholderReplacer.of("homes_number", player -> String.valueOf(this.homeManager.getHomes(player.getUniqueId()).size())),
+            PlaceholderReplacer.of("homes_limit", player -> String.valueOf(pluginConfiguration.homes.maxHomes.size()))
+        ).forEach(this.placeholderRegistry::registerPlaceholder);
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
 
