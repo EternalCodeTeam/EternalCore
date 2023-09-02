@@ -33,7 +33,7 @@ public class HomesPlaceholderImpl implements PlaceholderReplacer {
         Translation translation = this.translationManager.getMessages(user);
 
         if (homes.isEmpty()) {
-            return translation.placeholder().homeNotFound();
+            return translation.home().noHomesOwned();
         }
 
         return homes.stream().map(Home::getName).collect(Collectors.joining(", "));

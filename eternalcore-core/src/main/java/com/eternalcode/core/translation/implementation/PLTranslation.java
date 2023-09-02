@@ -397,6 +397,9 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " ", "# {LIMIT} - Limit domów" })
         public Notice limit = Notice.chat("<green>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
+
+        @Description({ " ", "# Wiadomości placeholderów" })
+        public String noHomesOwned = "Nie posiadasz żadnego domu.";
     }
 
     @Description({
@@ -756,15 +759,6 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLLanguageSection implements LanguageSection {
         public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
-    }
-
-    @Description({ " ", "# Domyślne wiadomości zwracane przez Placeholdery" })
-    public PLPlaceholderSection placeholder = new PLPlaceholderSection();
-
-    @Getter
-    @Contextual
-    public static class PLPlaceholderSection implements PlaceholderSection {
-        public String homeNotFound = "Nie posiadasz żadnego domu.";
     }
 
     @Description({ " ", "# Automatyczne wiadomości " })

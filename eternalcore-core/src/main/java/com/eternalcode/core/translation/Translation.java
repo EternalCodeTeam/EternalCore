@@ -165,6 +165,7 @@ public interface Translation {
         Notice delete();
         Notice limit();
         Notice overrideHomeLocation();
+        String noHomesOwned();
     }
 
     // tpa section
@@ -360,13 +361,6 @@ public interface Translation {
 
     interface LanguageSection {
         Notice languageChanged();
-    }
-
-    // Placeholder section
-    PlaceholderSection placeholder();
-
-    interface PlaceholderSection {
-        String homeNotFound();
     }
 
     // container section
