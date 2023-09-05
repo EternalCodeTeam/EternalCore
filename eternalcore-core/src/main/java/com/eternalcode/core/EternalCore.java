@@ -95,9 +95,9 @@ import com.eternalcode.core.feature.home.HomeRepository;
 import com.eternalcode.core.feature.home.command.DelHomeCommand;
 import com.eternalcode.core.feature.home.command.HomeCommand;
 import com.eternalcode.core.feature.home.command.SetHomeCommand;
-import com.eternalcode.core.feature.home.placeholder.HomeLimitPlaceholderImpl;
-import com.eternalcode.core.feature.home.placeholder.HomeNumberPlaceholderImpl;
-import com.eternalcode.core.feature.home.placeholder.HomesPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomesLimitPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomesCountPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomesOwnedPlaceholderImpl;
 import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
@@ -178,13 +178,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class EternalCore implements EternalCoreApi {
@@ -322,9 +317,9 @@ class EternalCore implements EternalCoreApi {
             PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())),
             PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))),
 
-            PlaceholderReplacer.of("homes_owned", new HomesPlaceholderImpl(this.homeManager, this.userManager, this.translationManager)),
-            PlaceholderReplacer.of("homes_count", new HomeNumberPlaceholderImpl(this.homeManager)),
-            PlaceholderReplacer.of("homes_limit", new HomeLimitPlaceholderImpl(this.homeManager, pluginConfiguration))
+            PlaceholderReplacer.of("homes_owned", new HomesOwnedPlaceholderImpl(this.homeManager, this.userManager, this.translationManager)),
+            PlaceholderReplacer.of("homes_count", new HomesCountPlaceholderImpl(this.homeManager)),
+            PlaceholderReplacer.of("homes_limit", new HomesLimitPlaceholderImpl(this.homeManager, pluginConfiguration))
         ).forEach(this.placeholderRegistry::registerPlaceholder);
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)

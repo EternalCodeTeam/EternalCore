@@ -5,12 +5,12 @@ import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import org.bukkit.entity.Player;
 
-public class HomeLimitPlaceholderImpl implements PlaceholderReplacer {
+public class HomesLimitPlaceholderImpl implements PlaceholderReplacer {
 
     private final HomeManager homeManager;
     private final PluginConfiguration pluginConfiguration;
 
-    public HomeLimitPlaceholderImpl(HomeManager homeManager, PluginConfiguration pluginConfiguration) {
+    public HomesLimitPlaceholderImpl(HomeManager homeManager, PluginConfiguration pluginConfiguration) {
         this.homeManager = homeManager;
         this.pluginConfiguration = pluginConfiguration;
     }

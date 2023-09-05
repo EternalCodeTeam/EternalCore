@@ -12,13 +12,13 @@ import org.bukkit.entity.Player;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class HomesPlaceholderImpl implements PlaceholderReplacer {
+public class HomesOwnedPlaceholderImpl implements PlaceholderReplacer {
 
     private final HomeManager homeManager;
     private final UserManager userManager;
     private final TranslationManager translationManager;
 
-    public HomesPlaceholderImpl(HomeManager homeManager, UserManager userManager, TranslationManager translationManager) {
+    public HomesOwnedPlaceholderImpl(HomeManager homeManager, UserManager userManager, TranslationManager translationManager) {
         this.homeManager = homeManager;
         this.userManager = userManager;
         this.translationManager = translationManager;
