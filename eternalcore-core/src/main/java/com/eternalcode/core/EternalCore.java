@@ -149,6 +149,7 @@ import com.eternalcode.core.updater.UpdaterController;
 import com.eternalcode.core.updater.UpdaterService;
 import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserLoadTask;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.adventure.resolver.CenterTagResolver;
 import com.eternalcode.core.adventure.legacy.LegacyColorProcessor;
@@ -472,6 +473,9 @@ class EternalCore implements EternalCoreApi {
 
         AfkTask afkTask = new AfkTask(this.afkService, server);
         this.scheduler.timerSync(afkTask, Duration.ofMinutes(1), Duration.ofMinutes(1));
+
+        UserLoadTask userLoadTask = new UserLoadTask(server, this.userManager);
+        this.scheduler.sync(userLoadTask);
 
         // bStats metrics
         Metrics metrics = new Metrics((JavaPlugin) plugin, 13964);
