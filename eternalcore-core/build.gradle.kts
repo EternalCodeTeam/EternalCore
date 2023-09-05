@@ -46,9 +46,6 @@ eternalShadow {
     // database
     library("com.j256.ormlite:ormlite-jdbc:6.1")
     library("com.zaxxer:HikariCP:5.0.1")
-    libraryRelocate(
-        "org.slf4j"
-    )
 
     // command framework & skull library
     library("dev.rollczi.litecommands:bukkit-adventure:2.8.9")
