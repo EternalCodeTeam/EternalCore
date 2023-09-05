@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.home;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.user.User;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import panda.std.Option;
 
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @FeatureDocs(
     name = "Home",
@@ -65,6 +67,19 @@ public class HomeManager {
 
     public Collection<Home> getHomes(UUID user) {
         return Collections.unmodifiableCollection(this.homes.getOrDefault(user, new HashMap<>()).values());
+    }
+
+    public int getMaxAmountOfHomes(Player player, Map<String, Integer> homes) {
+        return homes.entrySet().stream()
+            .flatMap(entry -> {
+                if (player.hasPermission(entry.getKey())) {
+                    return Stream.of(entry.getValue());
+                }
+
+                return Stream.empty();
+            })
+            .max(Integer::compareTo)
+            .orElse(0);
     }
 
     public static HomeManager create(HomeRepository repository) {

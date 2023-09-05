@@ -1,28 +1,23 @@
 package com.eternalcode.core.feature.home.placeholder;
 
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import org.bukkit.entity.Player;
 
-import java.util.Map;
-
 public class HomeLimitPlaceholderImpl implements PlaceholderReplacer {
 
+    private final HomeManager homeManager;
     private final PluginConfiguration pluginConfiguration;
 
-    public HomeLimitPlaceholderImpl(PluginConfiguration pluginConfiguration) {
+    public HomeLimitPlaceholderImpl(HomeManager homeManager, PluginConfiguration pluginConfiguration) {
+        this.homeManager = homeManager;
         this.pluginConfiguration = pluginConfiguration;
     }
 
     @Override
     public String apply(String text, Player targetPlayer) {
-        int allowedHomes = this.pluginConfiguration.homes.maxHomes.entrySet()
-            .stream()
-            .filter(entry -> targetPlayer.hasPermission(entry.getKey()))
-            .map(Map.Entry::getValue)
-            .max(Integer::compare)
-            .orElse(0);
-
-        return String.valueOf(allowedHomes);
+        int maxHomes = this.homeManager.getMaxAmountOfHomes(targetPlayer, this.pluginConfiguration.homes.maxHomes);
+        return String.valueOf(maxHomes);
     }
 }
