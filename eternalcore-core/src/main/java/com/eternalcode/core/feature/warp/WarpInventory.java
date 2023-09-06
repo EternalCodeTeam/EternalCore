@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.core.feature.warp.config.WarpConfigItem;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
@@ -22,6 +24,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class WarpInventory {
 
     private final TeleportTaskService teleportTaskService;
@@ -29,6 +32,7 @@ public class WarpInventory {
     private final WarpManager warpManager;
     private final MiniMessage miniMessage;
 
+    @Inject
     public WarpInventory(TeleportTaskService teleportTaskService, TranslationManager translationManager, WarpManager warpManager, MiniMessage miniMessage) {
         this.teleportTaskService = teleportTaskService;
         this.translationManager = translationManager;

@@ -4,6 +4,8 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.persister.LocationPersister;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeRepository;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.user.User;
 import com.j256.ormlite.field.DatabaseField;
@@ -22,10 +24,19 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRepository {
 
+    @Inject
     private HomeRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) {
         super(databaseManager, scheduler);
+
+        try {
+            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeWrapper.class);
+        }
+        catch (SQLException sqlException) {
+            throw new RuntimeException(sqlException);
+        }
     }
 
     @Override
@@ -41,7 +52,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             .where()
             .eq("owner", user.getUniqueId())
             .and()
-            .eq("name", user.getName())
+            .eq("name", name)
             .queryForFirst()
         ).map(HomeWrapper::toHome));
     }
@@ -63,7 +74,7 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             builder.where()
                 .eq("owner", user.getUniqueId())
                 .and()
-                .eq("name", user.getName());
+                .eq("name", name);
 
             return builder.delete();
         }).onError(Throwable::printStackTrace).orElseGet(throwable -> 0));
@@ -80,24 +91,11 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
         return this.action(HomeWrapper.class, dao -> Option.supplyThrowing(Throwable.class, () -> dao.queryBuilder()
             .where()
             .eq("owner", user.getUniqueId())
-            .and()
-            .eq("name", user.getName())
             .query()
         )).thenApply(option -> option.map(homes -> homes.stream()
             .map(HomeWrapper::toHome)
             .collect(Collectors.toSet())
         ).orElseGet(new HashSet<>()));
-    }
-
-    public static HomeRepository create(DatabaseManager databaseManager, Scheduler scheduler) {
-        try {
-            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeWrapper.class);
-        }
-        catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException);
-        }
-
-        return new HomeRepositoryOrmLite(databaseManager, scheduler);
     }
 
     @DatabaseTable(tableName = "eternal_core_homes")

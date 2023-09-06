@@ -2,6 +2,7 @@ package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.feature.essentials.mob.MobEntity;
 import com.eternalcode.core.feature.essentials.mob.MobType;
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -16,6 +17,7 @@ import panda.std.Result;
 import java.util.List;
 import java.util.stream.Stream;
 
+@LiteArgument(type = MobEntity.class)
 @ArgumentName("mob")
 public class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
 

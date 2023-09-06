@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.request;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -20,6 +21,7 @@ public class TpaCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Send teleport request to player", arguments = "<player>")
     public void execute(Player player, @Arg Player target) {
         if (player.equals(target)) {
 

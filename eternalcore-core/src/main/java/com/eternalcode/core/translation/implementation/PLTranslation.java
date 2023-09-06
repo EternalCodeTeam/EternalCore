@@ -11,7 +11,9 @@ import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
+import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -414,16 +416,23 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLEventSection implements EventSection {
-        @Description({
-            "# EternalCore będzie losować losową wiadomość z poniższej listy, za każdym razem gdy gracz zginie.",
-            "# Jeżeli {KILLER} będzie np. konsolą, albo przyczyną naturalną (upadek, lava itd.) zwróci w tym placeholderze wiadomość z unknownPlayerDeath",
-        })
-        public String unknownPlayerDeath = "niezidentyfikowany obiekt bojowy";
-
         @Description("# {PLAYER} - Gracz który został uśmiercony, {KILLER} - Gracz który zabił gracza")
         public List<Notification> deathMessage = List.of(
-            Notification.actionbar("<red>► <dark_red>{PLAYER} <red>zginął przez {KILLER}!"),
-            Notification.actionbar("<red>► <dark_red>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!")
+            Notification.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął przez {KILLER}!"),
+            Notification.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!")
+        );
+
+        @Description({
+            "# EternalCore będzie losować losową wiadomość z poniższej listy, za każdym razem gdy gracz zginie.",
+            "# Jeżeli {KILLER} nie będzie uwzględniony to wiadomość zostanie pobrana z tej listy.",
+            "# Lista powodów zgonu: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
+        })
+        public Map<EntityDamageEvent.DamageCause, List<Notification>> deathMessageByDamageCause = Map.of(
+            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(Notification.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł z naszego świata!")),
+            EntityDamageEvent.DamageCause.FALL, Arrays.asList(
+                Notification.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z wysokości!"),
+                Notification.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
+            )
         );
 
         @Description({
@@ -507,10 +516,15 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notification speedBetweenZeroAndTen = Notification.chat("<red>✘ <dark_red>Błąd: <red>Ustaw prędkość w zakresie 0-10!");
-        @Description("# {SPEED} - Ustawiona prędkość")
-        public Notification speedSet = Notification.chat("<green>► <white>Ustawiono prędkość na <green>{SPEED}");
-        @Description("# {PLAYER} - Gracz któremu została ustawiona prędkość, {SPEED} - Ustawiona prędkość")
-        public Notification speedSetBy = Notification.chat("<green>► <white>Ustawiono prędkość gracza <green>{PLAYER} <white>na <green>{SPEED}");
+        public Notification speedTypeNotCorrect = Notification.chat("<red>✘ <dark_red>Błąd: <red>Nieprawidłowy typ prędkości");
+
+        @Description("# {SPEED} - Ustawiona prędkość chodzenia lub latania")
+        public Notification speedWalkSet = Notification.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
+        public Notification speedFlySet = Notification.chat("<green>► <white>Ustawiono prędkość latania na <green>{SPEED}");
+
+        @Description("# {PLAYER} - Gracz któremu została ustawiona prędkość chodzenia lub latania, {SPEED} - Ustawiona prędkość")
+        public Notification speedWalkSetBy = Notification.chat("<green>► <white>Ustawiono prędkość chodzenia gracza <green>{PLAYER} <white>na <green>{SPEED}");
+        public Notification speedFlySetBy = Notification.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
 
         @Description({ " ", "# {STATE} - Status nieśmiertelności" })
         public Notification godMessage = Notification.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
@@ -569,7 +583,7 @@ public class PLTranslation extends AbstractTranslation {
         );
 
         @Description({ " ", "# {KILLED} - Liczba zabitych mobów" })
-        public Notification butcherCommand = Notification.chat("<green>► <white>Zabiłeś <gren>{KILLED} <white>mobów!");
+        public Notification butcherCommand = Notification.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>mobów!");
 
         @Description({ " ", "# {SAFE_CHUNKS} - Liczba bezpiecznych chunków" })
         public Notification safeChunksMessage = Notification.chat("<red>✘ <dark_red>Błąd: <red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");

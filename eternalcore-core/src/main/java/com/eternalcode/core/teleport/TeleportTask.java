@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport;
 
+import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -14,7 +15,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+@Task(delay = 200L, period = 200L, unit = TimeUnit.MICROSECONDS)
 public class TeleportTask implements Runnable {
 
     private final NoticeService noticeService;

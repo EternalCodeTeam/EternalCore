@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.weather;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -19,6 +20,7 @@ public class SunCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Sets weather to sun in specified world", arguments = "<world>")
     void sun(Viewer viewer, @Arg World world) {
         world.setClearWeatherDuration(20 * 60 * 10);
         world.setStorm(false);

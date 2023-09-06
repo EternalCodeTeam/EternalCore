@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport;
 
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import io.papermc.lib.PaperLib;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class TeleportService {
 
     private final Map<UUID, Position> lastPosition = new HashMap<>();

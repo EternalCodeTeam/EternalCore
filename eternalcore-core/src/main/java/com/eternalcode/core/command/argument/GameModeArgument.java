@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -15,6 +16,7 @@ import panda.std.Result;
 import java.util.List;
 import java.util.Optional;
 
+@LiteArgument(type = GameMode.class)
 @ArgumentName("gamemode")
 public class GameModeArgument extends AbstractViewerArgument<GameMode> {
 

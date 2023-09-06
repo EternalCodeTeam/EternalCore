@@ -4,6 +4,7 @@ import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notification.Notification;
 import org.bukkit.Material;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -207,11 +208,12 @@ public interface Translation {
     EventSection event();
 
     interface EventSection {
-        String unknownPlayerDeath();
         List<Notification> deathMessage();
         List<Notification> joinMessage();
         List<Notification> quitMessage();
         List<Notification> firstJoinMessage();
+
+        Map<EntityDamageEvent.DamageCause, List<Notification>> deathMessageByDamageCause();
 
         Notification welcomeTitle();
         Notification welcomeSubtitle();
@@ -244,8 +246,13 @@ public interface Translation {
 
         // speed
         Notification speedBetweenZeroAndTen();
-        Notification speedSet();
-        Notification speedSetBy();
+        Notification speedTypeNotCorrect();
+
+        Notification speedWalkSet();
+        Notification speedFlySet();
+
+        Notification speedWalkSetBy();
+        Notification speedFlySetBy();
 
         // godmode
         Notification godMessage();

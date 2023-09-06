@@ -16,17 +16,17 @@ public class IsolatedClassAccessorLoader implements IsolatedClassLoader {
 
     @Override
     public void addPath(Path path) {
-        accessor.addJarToClasspath(path);
+        this.accessor.addJarToClasspath(path);
     }
 
     @Override
     public Class<?> loadClass(String className) throws ClassNotFoundException {
-        return classLoader.loadClass(className);
+        return  this.classLoader.loadClass(className);
     }
 
     @Override
     public void close() throws IOException {
-        classLoader.close();
+        this.classLoader.close();
     }
 
 }

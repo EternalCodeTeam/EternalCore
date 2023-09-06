@@ -1,25 +1,25 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageSettings;
-import com.eternalcode.core.language.config.LanguageConfiguration;
-import com.eternalcode.core.translation.implementation.TranslationFactory;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
-import panda.std.stream.PandaStream;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+@FeatureDocs(
+    name = "Translations",
+    description = "EternalCore can use multiple languages at once, the player can determine which EternalCore language I want to use, or you can determine from above what language all players want to use"
+)
 public class TranslationManager {
 
     private final Map<Language, Translation> translatedMessages = new HashMap<>();
     private Translation defaultTranslation;
 
-    public TranslationManager(Translation defaultTranslation) {
+    TranslationManager(Translation defaultTranslation) {
         this.defaultTranslation = defaultTranslation;
     }
 
@@ -62,23 +62,5 @@ public class TranslationManager {
         return this.getMessages(viewer.getLanguage());
     }
 
-    public static TranslationManager create(ConfigurationManager configurationManager, LanguageConfiguration languageConfiguration) {
-        List<AbstractTranslation> usedMessagesList = PandaStream.of(languageConfiguration.languages)
-            .map(TranslationFactory::create)
-            .toList();
-
-        Translation defaultTranslation = PandaStream.of(usedMessagesList)
-            .find(usedMessages -> usedMessages.getLanguage().equals(languageConfiguration.defaultLanguage))
-            .orThrow(() -> new RuntimeException("Default language not found!"));
-
-        TranslationManager translationManager = new TranslationManager(defaultTranslation);
-
-        for (ReloadableTranslation message : usedMessagesList) {
-            configurationManager.load(message);
-            translationManager.loadLanguage(message.getLanguage(), message);
-        }
-
-        return translationManager;
-    }
 
 }

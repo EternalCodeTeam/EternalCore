@@ -1,5 +1,6 @@
 package com.eternalcode.core.teleport.command;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.teleport.TeleportService;
 import dev.rollczi.litecommands.argument.Arg;
@@ -21,6 +22,7 @@ public class TeleportHereCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Teleport player to you", arguments = "<player>")
     void tpHere(Player sender, @Arg Player target) {
         this.teleportService.teleport(target, sender.getLocation());
         this.noticeService.create()

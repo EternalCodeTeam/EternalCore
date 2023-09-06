@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.shared.Position;
 import panda.std.Option;
 
@@ -12,11 +14,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+@Service
 public class WarpConfigRepository implements WarpRepository {
 
     private final LocationsConfiguration locationsConfiguration;
     private final ConfigurationManager configurationManager;
 
+    @Inject
     public WarpConfigRepository(ConfigurationManager configurationManager, LocationsConfiguration locationsConfiguration) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;

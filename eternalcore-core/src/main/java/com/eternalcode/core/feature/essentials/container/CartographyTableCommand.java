@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
-import com.eternalcode.containers.AdditionalContainerType;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -21,8 +21,9 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 0)
+    @DescriptionDocs(description = "Opens a cartography table for you")
     void executeSelf(Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.CARTOGRAPHY_TABLE);
+        AdditionalContainerPaper.CARTOGRAPHY_TABLE.open(player);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
@@ -31,8 +32,9 @@ public class CartographyTableCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Opens a cartography table for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
-        AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.CARTOGRAPHY_TABLE);
+        AdditionalContainerPaper.CARTOGRAPHY_TABLE.open(target);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())

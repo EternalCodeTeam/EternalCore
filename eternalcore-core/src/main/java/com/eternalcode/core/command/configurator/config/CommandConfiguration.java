@@ -2,6 +2,7 @@ package com.eternalcode.core.command.configurator.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
+import com.eternalcode.core.injector.annotations.component.ConfigurationYml;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;
@@ -10,10 +11,12 @@ import org.bukkit.GameMode;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@ConfigurationYml
 public class CommandConfiguration implements ReloadableConfig {
 
     public Argument argument = new Argument();
@@ -46,6 +49,30 @@ public class CommandConfiguration implements ReloadableConfig {
                     .toList();
         }
 
+    }
+
+    @Description("# List of shortcuts for gamemode command")
+    public Map<GameMode, List<String>> gameModeShortCuts = Map.of(
+                GameMode.SURVIVAL, Collections.singletonList("gms"),
+                GameMode.CREATIVE, Collections.singletonList("gmc"),
+                GameMode.ADVENTURE, Collections.singletonList("gma"),
+                GameMode.SPECTATOR, Collections.singletonList("gmsp")
+    );
+
+    public List<String> getGameModeShortCuts() {
+        return this.gameModeShortCuts.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .toList();
+    }
+
+    public GameMode getGameMode(String label) {
+        return this.gameModeShortCuts.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().contains(label))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(null);
     }
 
     @Description({

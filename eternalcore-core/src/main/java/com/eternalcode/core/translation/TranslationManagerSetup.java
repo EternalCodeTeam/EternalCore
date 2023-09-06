@@ -1,0 +1,35 @@
+package com.eternalcode.core.translation;
+
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.injector.annotations.Bean;
+import com.eternalcode.core.injector.annotations.component.BeanSetup;
+import com.eternalcode.core.language.config.LanguageConfiguration;
+import com.eternalcode.core.translation.implementation.TranslationFactory;
+import panda.std.stream.PandaStream;
+
+import java.util.List;
+
+@BeanSetup
+class TranslationManagerSetup {
+
+    @Bean
+    TranslationManager create(ConfigurationManager configurationManager, LanguageConfiguration languageConfiguration) {
+        List<AbstractTranslation> usedMessagesList = PandaStream.of(languageConfiguration.languages)
+            .map(TranslationFactory::create)
+            .toList();
+
+        Translation defaultTranslation = PandaStream.of(usedMessagesList)
+            .find(usedMessages -> usedMessages.getLanguage().equals(languageConfiguration.defaultLanguage))
+            .orThrow(() -> new RuntimeException("Default language not found!"));
+
+        TranslationManager translationManager = new TranslationManager(defaultTranslation);
+
+        for (ReloadableTranslation message : usedMessagesList) {
+            configurationManager.load(message);
+            translationManager.loadLanguage(message.getLanguage(), message);
+        }
+
+        return translationManager;
+    }
+    
+}

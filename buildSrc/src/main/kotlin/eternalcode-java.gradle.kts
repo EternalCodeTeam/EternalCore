@@ -7,7 +7,7 @@ group = "com.eternalcode"
 version = "1.0.0"
 
 checkstyle {
-    toolVersion = "10.9.3"
+    toolVersion = "10.11.0"
 
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 

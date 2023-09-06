@@ -1,13 +1,16 @@
 package com.eternalcode.core.command.handler;
 
+import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.command.permission.RequiredPermissions;
 import dev.rollczi.litecommands.handle.Handler;
 import org.bukkit.command.CommandSender;
 
+@LiteHandler(Notification.class)
 public class NotificationHandler implements Handler<CommandSender, Notification> {
 
     private final BukkitViewerProvider viewerProvider;

@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home.command;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
@@ -22,6 +23,7 @@ public class DelHomeCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Delete home", arguments = "<home>")
     void execute(User user, @ArgHome Home home) {
         this.homeManager.deleteHome(user, home.getName());
         this.noticeService.create()

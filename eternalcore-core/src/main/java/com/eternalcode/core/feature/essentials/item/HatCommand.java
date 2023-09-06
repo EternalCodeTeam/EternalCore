@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.util.ItemUtil;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -20,6 +21,7 @@ public class HatCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Puts item in hand on head")
     void execute(Player player) {
         PlayerInventory playerInventory = player.getInventory();
 

@@ -1,5 +1,7 @@
 package com.eternalcode.core.notification.adventure;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.notification.NotificationAnnouncer;
@@ -11,11 +13,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
 import panda.utilities.StringUtils;
 
+@Service
 public class AdventureNotificationAnnouncer implements NotificationAnnouncer {
 
     private final AudienceProvider audienceProvider;
     private final MiniMessage miniMessage;
 
+    @Inject
     public AdventureNotificationAnnouncer(AudienceProvider audienceProvider, MiniMessage miniMessage) {
         this.audienceProvider = audienceProvider;
         this.miniMessage = miniMessage;

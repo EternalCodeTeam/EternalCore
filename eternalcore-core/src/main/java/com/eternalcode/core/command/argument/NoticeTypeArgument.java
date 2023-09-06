@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notification.NoticeType;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.Translation;
@@ -14,6 +15,7 @@ import panda.std.Result;
 import java.util.Arrays;
 import java.util.List;
 
+@LiteArgument(type = NoticeType.class)
 @ArgumentName("action")
 public class NoticeTypeArgument extends AbstractViewerArgument<NoticeType> {
 

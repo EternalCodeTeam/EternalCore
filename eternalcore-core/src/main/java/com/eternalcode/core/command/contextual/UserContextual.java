@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.contextual;
 
+import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -11,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Result;
 
+@LiteContextual(User.class)
 public class UserContextual implements Contextual<CommandSender, User> {
 
     private final TranslationManager translationManager;
@@ -25,7 +27,7 @@ public class UserContextual implements Contextual<CommandSender, User> {
     public Result<User, Object> extract(CommandSender sender, Invocation<CommandSender> invocation) {
         if (sender instanceof Player player) {
             return Result.ok(this.userManager.getUser(player.getUniqueId())
-                .orThrow(() -> new IllegalStateException("Player " + player.getName() + " is not registered!")));
+                .orElseThrow(() -> new IllegalStateException("Player " + player.getName() + " is not registered!")));
         }
 
         Translation translation = this.translationManager.getDefaultMessages();

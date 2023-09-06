@@ -1,5 +1,7 @@
 package com.eternalcode.core.notification;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notification.extractor.NotificationExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.scheduler.Scheduler;
@@ -12,6 +14,7 @@ import panda.utilities.text.Formatter;
 import javax.annotation.CheckReturnValue;
 import java.util.UUID;
 
+@Service
 public class NoticeService {
 
     private final Scheduler scheduler;
@@ -20,6 +23,7 @@ public class NoticeService {
     private final NotificationAnnouncer announcer;
     private final PlaceholderRegistry placeholderRegistry;
 
+    @Inject
     public NoticeService(Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, NotificationAnnouncer announcer, PlaceholderRegistry placeholderRegistry) {
         this.scheduler = scheduler;
         this.translationManager = translationManager;

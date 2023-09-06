@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.essentials.playerinfo;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -21,6 +22,7 @@ public class OnlinePlayerCountCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Shows online players count")
     void execute(Viewer viewer) {
         this.noticeService
             .create()

@@ -1,0 +1,147 @@
+[
+  {
+    "name": "Afk",
+    "permissions": [
+      "eternalcore.afk",
+      "eternalcore.afk.bypass"
+    ],
+    "descriptions": [
+      "It allows you to mark yourself as AFK, or if you are AFK, eternalcore will mark you as AFK after some time"
+    ]
+  },
+  {
+    "name": "Bypass Full Server",
+    "permissions": [
+      "eternalcore.slot.bypass"
+    ],
+    "descriptions": [
+      "This feature allows you to bypass the full server, example for vip rank."
+    ]
+  },
+  {
+    "name": "ChatManager",
+    "permissions": [
+      "eternalcore.chat.noslowmode",
+      "eternalcore.chat.bypass"
+    ],
+    "descriptions": [
+      "It allows you to manage chat, with slowmode, chat clear, chat on/off etc."
+    ]
+  },
+  {
+    "name": "Colored sign",
+    "permissions": [
+      "eternalcore.sign"
+    ],
+    "descriptions": [
+      "Allows you to use color codes in signs"
+    ]
+  },
+  {
+    "name": "CommandBlocker",
+    "permissions": [
+      "eternalcore.commandblocker.bypass"
+    ],
+    "descriptions": [
+      "It allows you to block commands with custom message"
+    ]
+  },
+  {
+    "name": "CommandConfigurator",
+    "permissions": [],
+    "descriptions": [
+      "Adds support for command configuration, which allows you to change the name, aliases, permissions and disable the command"
+    ]
+  },
+  {
+    "name": "Configuration Backup",
+    "permissions": [],
+    "descriptions": [
+      "Backs up the full configuration to prevent config destruction, backup is only 3 days back"
+    ]
+  },
+  {
+    "name": "Database",
+    "permissions": [],
+    "descriptions": [
+      "Adds support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
+    ]
+  },
+  {
+    "name": "Home",
+    "permissions": [],
+    "descriptions": [
+      "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
+    ]
+  },
+  {
+    "name": "Language Inventory",
+    "permissions": [],
+    "descriptions": [
+      "This feature allows you to create a language selector inventory"
+    ]
+  },
+  {
+    "name": "PlaceholderAPI",
+    "permissions": [],
+    "descriptions": [
+      "Adds support for PlaceholderAPI"
+    ]
+  },
+  {
+    "name": "Player Death Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a message to all players when a player dies, you can configure the messages based on damage cause in configuration, see: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html for all damage causes"
+    ]
+  },
+  {
+    "name": "Player Join Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a random welcome message from config to a player when they join the server"
+    ]
+  },
+  {
+    "name": "Player Join Sound",
+    "permissions": [],
+    "descriptions": [
+      "Play a sound after a player joins the server"
+    ]
+  },
+  {
+    "name": "Player Quit Message",
+    "permissions": [],
+    "descriptions": [
+      "Send a random goodbye message from config to a player when they quit the server"
+    ]
+  },
+  {
+    "name": "Player Quit Sound",
+    "permissions": [],
+    "descriptions": [
+      "Play a sound after a player quits the server"
+    ]
+  },
+  {
+    "name": "Sound after message in chat",
+    "permissions": [],
+    "descriptions": [
+      "It allows you to play sound after message in chat"
+    ]
+  },
+  {
+    "name": "Translations",
+    "permissions": [],
+    "descriptions": [
+      "EternalCore can use multiple languages at once, the player can determine which EternalCore language I want to use, or you can determine from above what language all players want to use"
+    ]
+  },
+  {
+    "name": "Warp System",
+    "permissions": [],
+    "descriptions": [
+      "Allows you to create warps, optionally you can enable warp inventory"
+    ]
+  }
+]

@@ -1,6 +1,8 @@
 package com.eternalcode.core.command.handler;
 
+import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
@@ -11,6 +13,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
+@LiteHandler(CommandSender.class)
 public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
 
     private static final Placeholders<String> SCHEME = Placeholders.of("{USAGE}", scheme -> scheme);

@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.contextual;
 
+import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -9,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import panda.std.Result;
 
+@LiteContextual(Player.class)
 public class PlayerContextual implements Contextual<CommandSender, Player> {
 
     private final TranslationManager translationManager;

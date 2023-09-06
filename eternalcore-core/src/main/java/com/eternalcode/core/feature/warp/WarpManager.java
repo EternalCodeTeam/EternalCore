@@ -1,5 +1,8 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.shared.Position;
 import panda.std.Option;
 
@@ -8,13 +11,24 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@FeatureDocs(
+    name = "Warp System",
+    description = "Allows you to create warps, optionally you can enable warp inventory"
+)
+@Service
 public class WarpManager {
 
-    private final Map<String, Warp> warpMap = new HashMap<>();
+    private final Map<String, Warp> warpMap = new HashMap<>(); //TODO remove this map and use WarpRepository
     private final WarpRepository warpRepository;
 
+    @Inject
     private WarpManager(WarpRepository warpRepository) {
         this.warpRepository = warpRepository;
+        warpRepository.getWarps().thenAcceptAsync(warps -> { //TODO use only CompletableFuture
+            for (Warp warp : warps) {
+                this.warpMap.put(warp.getName(), warp);
+            }
+        });
     }
 
     public void createWarp(String name, Position position) {
@@ -45,18 +59,6 @@ public class WarpManager {
 
     public Collection<String> getNamesOfWarps() {
         return Collections.unmodifiableCollection(this.warpMap.keySet());
-    }
-
-    public static WarpManager create(WarpRepository warpRepository) {
-        WarpManager warpManager = new WarpManager(warpRepository);
-
-        warpRepository.getWarps().thenAcceptAsync(warps -> {
-            for (Warp warp : warps) {
-                warpManager.warpMap.put(warp.getName(), warp);
-            }
-        });
-
-        return warpManager;
     }
 
 }

@@ -1,25 +1,29 @@
 package com.eternalcode.core.bridge;
 
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.logging.Logger;
 
+@Service
 public class BridgeManager {
 
     private final PlaceholderRegistry placeholderRegistry;
     private final Server server;
     private final Logger logger;
 
+    @Inject
     public BridgeManager(PlaceholderRegistry placeholderRegistry, Server server, Logger logger) {
         this.placeholderRegistry = placeholderRegistry;
         this.server = server;
         this.logger = logger;
     }
 
-    public void init() {
+    void init() {
         this.setupBridge("PlaceholderAPI", () -> this.placeholderRegistry.registerPlayerPlaceholderReplacer(new PlaceholderApiReplacer()));
     }
 

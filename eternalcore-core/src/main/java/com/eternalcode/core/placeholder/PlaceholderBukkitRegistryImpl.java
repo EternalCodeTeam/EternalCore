@@ -1,5 +1,7 @@
 package com.eternalcode.core.placeholder;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.viewer.Viewer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -7,12 +9,14 @@ import org.bukkit.entity.Player;
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
 
     private final Server server;
     private final Set<PlaceholderReplacer> replacers = new HashSet<>();
     private final Set<PlayerPlaceholderReplacer> replacerPlayers = new HashSet<>();
 
+    @Inject
     public PlaceholderBukkitRegistryImpl(Server server) {
         this.server = server;
     }

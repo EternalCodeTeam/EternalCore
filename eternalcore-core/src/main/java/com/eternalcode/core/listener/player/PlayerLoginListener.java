@@ -1,5 +1,7 @@
 package com.eternalcode.core.listener.player;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -10,9 +12,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-import panda.std.Option;
 import panda.utilities.text.Joiner;
 
+import java.util.Optional;
+
+@FeatureDocs(
+    name = "Bypass Full Server",
+    description = "This feature allows you to bypass the full server, example for vip rank.",
+    permission = "eternalcore.slot.bypass"
+)
+@Controller
 public class PlayerLoginListener implements Listener {
 
     private final TranslationManager translationManager;
@@ -44,7 +53,7 @@ public class PlayerLoginListener implements Listener {
     }
 
     private String extractServerFullMessage(Player player) {
-        Option<User> userOption = this.userManager.getUser(player.getUniqueId());
+        Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
         if (userOption.isEmpty()) {
             return Joiner.on("\n")

@@ -4,6 +4,8 @@ import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.spawn.SpawnSettings;
+import com.eternalcode.core.injector.annotations.component.ConfigurationYml;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 
+@ConfigurationYml
 public class PluginConfiguration implements ReloadableConfig {
 
     @Description({
@@ -51,10 +54,10 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Description({ " ", "# Teleport request section" })
-    public Tpa tpa = new Tpa();
+    public TeleportAsk teleportAsk = new TeleportAsk();
 
     @Contextual
-    public static class Tpa implements TeleportRequestSettings {
+    public static class TeleportAsk implements TeleportRequestSettings {
         @Description("# Time of tpa requests expire")
 
         @Description({ " ", "# Time of tpa requests expire" })
@@ -71,6 +74,24 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public Duration teleportTime() {
             return this.tpaTimer;
+        }
+    }
+
+    @Description({" ", "# Teleport section"})
+    public Teleport teleport = new Teleport();
+
+    @Contextual
+    public static class Teleport implements SpawnSettings {
+
+        @Description("# Teleports the player to spawn after death")
+        public boolean teleportToSpawnOnDeath = true;
+
+        @Description("# Time of teleportation to spawn")
+        public Duration teleportTimeToSpawn = Duration.ofSeconds(5);
+
+        @Override
+        public Duration teleportationTimeToSpawn() {
+            return this.teleportTimeToSpawn;
         }
     }
 
@@ -176,8 +197,11 @@ public class PluginConfiguration implements ReloadableConfig {
         })
         public int interactionsCountDisableAfk = 20;
 
-        @Description({ " ", "# Number of seconds a player must be idle to be considered AFK" })
+        @Description({ " ", "# Time before using the /afk command again" })
         public Duration afkCommandDelay = Duration.ofSeconds(60);
+
+        @Description({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
+        public Duration afkInactivityTime = Duration.ofMinutes(10);
 
         @Override
         public int interactionsCountDisableAfk() {
@@ -187,6 +211,11 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public Duration getAfkDelay() {
             return this.afkCommandDelay;
+        }
+
+        @Override
+        public Duration getAfkInactivityTime() {
+            return this.afkInactivityTime;
         }
     }
 

@@ -1,5 +1,8 @@
 package com.eternalcode.core.feature.chat;
 
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -7,13 +10,15 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
+@Service
 public class ChatManager {
 
     private final Cache<UUID, Instant> slowdown;
     private final ChatSettings chatSettings;
 
-    public ChatManager(ChatSettings chatSettings) {
-        this.chatSettings = chatSettings;
+    @Inject
+    public ChatManager(PluginConfiguration pluginConfiguration) {
+        this.chatSettings = pluginConfiguration.chat;
         this.slowdown = CacheBuilder.newBuilder()
             .expireAfterWrite(this.chatSettings.getChatDelay().plus(Duration.ofSeconds(10)))
             .build();

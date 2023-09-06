@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -19,6 +20,7 @@ import org.bukkit.entity.Player;
 import java.lang.reflect.Parameter;
 import java.util.List;
 
+@LiteNativeArgument(annotation = Arg.class, type = World.class)
 @ArgumentName("world")
 public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
 

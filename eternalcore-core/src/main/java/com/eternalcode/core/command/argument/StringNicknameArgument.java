@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -10,6 +11,7 @@ import panda.std.Result;
 
 import java.util.List;
 
+@LiteArgument(type = String.class, name = StringNicknameArgument.KEY)
 @ArgumentName("player")
 public class StringNicknameArgument implements OneArgument<String> {
 

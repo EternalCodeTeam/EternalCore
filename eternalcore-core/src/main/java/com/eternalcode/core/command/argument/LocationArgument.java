@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@LiteArgument(type = Location.class)
 @ArgumentName("x y z")
 public class LocationArgument implements MultilevelArgument<Location> {
 

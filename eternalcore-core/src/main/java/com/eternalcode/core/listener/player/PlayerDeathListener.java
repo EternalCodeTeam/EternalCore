@@ -1,13 +1,25 @@
 package com.eternalcode.core.listener.player;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notification.NoticeService;
+import com.eternalcode.core.notification.Notification;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import panda.std.Option;
 import panda.utilities.StringUtils;
 
+import java.util.List;
+
+@FeatureDocs(
+    description = "Send a message to all players when a player dies, you can configure the messages based on damage cause in configuration, see: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html for all damage causes",
+    name = "Player Death Message"
+)
+@Controller
 public class PlayerDeathListener implements Listener {
 
     private final NoticeService noticeService;
@@ -22,10 +34,36 @@ public class PlayerDeathListener implements Listener {
 
         event.setDeathMessage(StringUtils.EMPTY);
 
+        if (player.getKiller() != null) {
+            this.noticeService.create()
+                .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
+                .placeholder("{PLAYER}", player.getName())
+                .placeholder("{KILLER}", player.getKiller().getName())
+                .onlinePlayers()
+                .send();
+
+            return;
+        }
+
+        EntityDamageEvent lastDamageCasue = player.getLastDamageCause();
+
+        if (lastDamageCasue == null) {
+            return;
+        }
+
         this.noticeService.create()
-            .noticeOption(translation -> RandomUtil.randomElement(translation.event().deathMessage()))
+            .noticeOption(translation -> {
+                EntityDamageEvent.DamageCause cause = lastDamageCasue.getCause();
+
+                List<Notification> notifications = translation.event().deathMessageByDamageCause().get(cause);
+
+                if (notifications == null) {
+                    return Option.none();
+                }
+
+                return RandomUtil.randomElement(notifications);
+            })
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{KILLER}", translation -> player.getKiller() != null ? player.getKiller().getName() : translation.event().unknownPlayerDeath())
             .onlinePlayers()
             .send();
     }

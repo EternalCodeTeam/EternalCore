@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.essentials.container;
 
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
-import com.eternalcode.containers.AdditionalContainerType;
 import com.eternalcode.core.notification.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -11,7 +11,7 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "stonecutter")
-@Permission("eternalcore.workbench")
+@Permission("eternalcore.stonecutter")
 public class StonecutterCommand {
 
     private final NoticeService noticeService;
@@ -21,8 +21,9 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 0)
+    @DescriptionDocs(description = "Opens a stonecutter for you")
     void executeSelf(Player player) {
-        AdditionalContainerPaper.openAdditionalContainer(player, AdditionalContainerType.STONE_CUTTER);
+        AdditionalContainerPaper.STONE_CUTTER.open(player);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
@@ -31,8 +32,9 @@ public class StonecutterCommand {
     }
 
     @Execute(required = 1)
+    @DescriptionDocs(description = "Opens a stonecutter for another player", arguments = "<player>")
     void execute(Player sender, @Arg Player target) {
-        AdditionalContainerPaper.openAdditionalContainer(target, AdditionalContainerType.STONE_CUTTER);
+        AdditionalContainerPaper.STONE_CUTTER.open(target);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())

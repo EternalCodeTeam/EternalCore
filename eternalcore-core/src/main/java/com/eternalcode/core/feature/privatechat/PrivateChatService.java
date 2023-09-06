@@ -1,18 +1,21 @@
 package com.eternalcode.core.feature.privatechat;
 
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notification.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import panda.std.Option;
 
 import java.time.Duration;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+@Service
 public class PrivateChatService {
 
     private final NoticeService noticeService;
@@ -26,6 +29,7 @@ public class PrivateChatService {
 
     private final Set<UUID> socialSpy = new HashSet<>();
 
+    @Inject
     public PrivateChatService(NoticeService noticeService, IgnoreRepository ignoreRepository, UserManager userManager) {
         this.noticeService = noticeService;
         this.ignoreRepository = ignoreRepository;
@@ -59,7 +63,7 @@ public class PrivateChatService {
             return;
         }
 
-        Option<User> targetOption = this.userManager.getUser(uuid);
+        Optional<User> targetOption = this.userManager.getUser(uuid);
 
         if (targetOption.isEmpty()) {
             this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());

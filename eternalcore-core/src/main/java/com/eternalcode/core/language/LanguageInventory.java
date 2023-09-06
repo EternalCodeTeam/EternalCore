@@ -1,5 +1,8 @@
 package com.eternalcode.core.language;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.language.config.LanguageConfigItem;
 import com.eternalcode.core.language.config.LanguageConfiguration;
 import com.eternalcode.core.notification.NoticeService;
@@ -14,11 +17,16 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import panda.std.Option;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@FeatureDocs(
+    name = "Language Inventory",
+    description = "This feature allows you to create a language selector inventory"
+)
+@Service
 public class LanguageInventory {
 
     private final LanguageConfiguration languageConfiguration;
@@ -26,6 +34,7 @@ public class LanguageInventory {
     private final UserManager userManager;
     private final MiniMessage miniMessage;
 
+    @Inject
     public LanguageInventory(LanguageConfiguration languageConfiguration, NoticeService noticeService, UserManager userManager, MiniMessage miniMessage) {
         this.languageConfiguration = languageConfiguration;
         this.noticeService = noticeService;
@@ -42,7 +51,7 @@ public class LanguageInventory {
             .disableAllInteractions()
             .create();
 
-        Option<User> userOption = this.userManager.getUser(player.getUniqueId());
+        Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
         if (userOption.isEmpty()) {
             return;
