@@ -147,6 +147,7 @@ import com.eternalcode.core.teleport.request.TpaDenyCommand;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.updater.UpdaterController;
 import com.eternalcode.core.updater.UpdaterService;
+import com.eternalcode.core.user.LoadUserController;
 import com.eternalcode.core.user.PrepareUserController;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -164,7 +165,6 @@ import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -455,6 +455,7 @@ class EternalCore implements EternalCoreApi {
             new PlayerQuitListener(pluginConfiguration, this.noticeService, server),
             new ChatManagerController(this.chatManager, this.noticeService),
             new PrepareUserController(this.userManager, server),
+            new LoadUserController(this.userManager, server),
             new PlayerCommandPreprocessListener(this.noticeService, pluginConfiguration, server),
             new SignChangeListener(this.miniMessage),
             new PlayerDeathListener(this.noticeService),
