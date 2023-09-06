@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import dev.rollczi.litecommands.argument.Arg;
@@ -21,6 +22,7 @@ public class ItemFlagCommand {
 
     private final NoticeService noticeService;
 
+    @Inject
     public ItemFlagCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }

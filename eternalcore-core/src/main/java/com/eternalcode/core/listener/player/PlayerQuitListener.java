@@ -2,6 +2,8 @@ package com.eternalcode.core.listener.player;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.EventController;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
@@ -11,11 +13,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import panda.utilities.StringUtils;
 
+@EventController
 public class PlayerQuitListener implements Listener {
     private final PluginConfiguration config;
     private final NoticeService noticeService;
     private final Server server;
 
+    @Inject
     public PlayerQuitListener(PluginConfiguration config, NoticeService noticeService, Server server) {
         this.config = config;
         this.noticeService = noticeService;

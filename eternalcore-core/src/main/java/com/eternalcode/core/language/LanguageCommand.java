@@ -1,6 +1,7 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -12,6 +13,7 @@ public class LanguageCommand {
 
     private final LanguageInventory languageInventory;
 
+    @Inject
     public LanguageCommand(LanguageInventory languageInventory) {
         this.languageInventory = languageInventory;
     }

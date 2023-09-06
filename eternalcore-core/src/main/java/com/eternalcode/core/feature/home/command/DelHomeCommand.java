@@ -4,6 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -17,6 +18,7 @@ public class DelHomeCommand {
     private final HomeManager homeManager;
     private final NoticeService noticeService;
 
+    @Inject
     public DelHomeCommand(HomeManager homeManager, NoticeService noticeService) {
         this.homeManager = homeManager;
         this.noticeService = noticeService;

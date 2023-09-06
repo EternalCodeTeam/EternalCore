@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.gamemode;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.configurator.config.CommandConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -20,6 +21,7 @@ public class GameModeCommand {
     private final CommandConfiguration commandConfiguration;
     private final NoticeService noticeService;
 
+    @Inject
     public GameModeCommand(CommandConfiguration commandConfiguration, NoticeService noticeService) {
         this.commandConfiguration = commandConfiguration;
         this.noticeService = noticeService;

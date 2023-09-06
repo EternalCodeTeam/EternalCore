@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
@@ -21,6 +22,7 @@ public class GiveCommand {
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfig;
 
+    @Inject
     public GiveCommand(NoticeService noticeService, PluginConfiguration pluginConfig) {
         this.noticeService = noticeService;
         this.pluginConfig = pluginConfig;

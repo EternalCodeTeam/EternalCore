@@ -1,5 +1,7 @@
 package com.eternalcode.core.notice;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.extractor.NoticeExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.scheduler.Scheduler;
@@ -7,14 +9,12 @@ import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerProvider;
-import net.kyori.adventure.platform.AudienceProvider;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.ComponentSerializer;
 import panda.utilities.text.Formatter;
 
 import javax.annotation.CheckReturnValue;
 import java.util.UUID;
 
+@Service
 public class NoticeService {
 
     private final PlatformBroadcaster broadcaster;
@@ -24,7 +24,8 @@ public class NoticeService {
     private final ViewerProvider viewerProvider;
     private final PlaceholderRegistry placeholderRegistry;
 
-    private NoticeService(PlatformBroadcaster broadcaster, Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, PlaceholderRegistry placeholderRegistry) {
+    @Inject
+    NoticeService(PlatformBroadcaster broadcaster, Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, PlaceholderRegistry placeholderRegistry) {
         this.broadcaster = broadcaster;
         this.scheduler = scheduler;
         this.translationManager = translationManager;
@@ -84,19 +85,6 @@ public class NoticeService {
             .notice(extractor)
             .formatter(formatters)
             .send();
-    }
-
-    public static NoticeService adventure(
-        AudienceProvider audienceProvider,
-        ComponentSerializer<Component, Component, String> componentSerializer,
-        Scheduler scheduler,
-        ViewerProvider viewerProvider,
-        TranslationManager translationManager,
-        PlaceholderRegistry placeholderRegistry
-    ) {
-        PlatformBroadcasterAdventureImpl noticeAnnouncer = new PlatformBroadcasterAdventureImpl(audienceProvider, componentSerializer);
-
-        return new NoticeService(noticeAnnouncer, scheduler, translationManager, viewerProvider, placeholderRegistry);
     }
 
 }

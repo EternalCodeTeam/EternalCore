@@ -7,6 +7,7 @@ import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
+import com.eternalcode.core.injector.annotations.component.ConfigurationYml;
 import com.eternalcode.core.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.time.Duration;
 import java.util.Map;
 
+@ConfigurationYml
 public class PluginConfiguration implements ReloadableConfig {
 
     @Description({
@@ -198,6 +200,11 @@ public class PluginConfiguration implements ReloadableConfig {
         @Exclude
         public void setChatDelay(Duration chatDelay) {
             this.chatDelay = chatDelay;
+        }
+
+        @Override
+        public int linesToClear() {
+            return this.linesToClear;
         }
 
     }

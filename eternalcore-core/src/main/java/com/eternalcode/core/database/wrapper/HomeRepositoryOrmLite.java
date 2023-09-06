@@ -4,6 +4,8 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.persister.LocationPersister;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeRepository;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.user.User;
 import com.j256.ormlite.field.DatabaseField;
@@ -22,8 +24,10 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRepository {
 
+    @Inject
     private HomeRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) {
         super(databaseManager, scheduler);
     }

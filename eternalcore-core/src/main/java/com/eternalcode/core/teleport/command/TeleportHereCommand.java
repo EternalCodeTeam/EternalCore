@@ -1,6 +1,7 @@
 package com.eternalcode.core.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.teleport.TeleportService;
 import dev.rollczi.litecommands.argument.Arg;
@@ -16,6 +17,7 @@ public class TeleportHereCommand {
     private final NoticeService noticeService;
     private final TeleportService teleportService;
 
+    @Inject
     public TeleportHereCommand(NoticeService noticeService, TeleportService teleportService) {
         this.noticeService = noticeService;
         this.teleportService = teleportService;

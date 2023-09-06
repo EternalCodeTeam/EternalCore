@@ -14,6 +14,8 @@ public interface ChatSettings extends DelaySettings {
 
     void setChatDelay(Duration chatDelay);
 
+    int linesToClear();
+
     @Override
     default Duration delay() {
         return this.getChatDelay();

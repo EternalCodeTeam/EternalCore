@@ -1,6 +1,8 @@
 package com.eternalcode.core.afk;
 
 import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class AfkService {
 
     private final AfkSettings afkSettings;
@@ -22,6 +25,7 @@ public class AfkService {
     private final Map<UUID, Integer> interactionsCount = new HashMap<>();
     private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
+    @Inject
     public AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
         this.afkSettings = afkSettings;
         this.noticeService = noticeService;

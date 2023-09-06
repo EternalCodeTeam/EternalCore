@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -14,6 +16,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
+@Service
 public class RandomTeleportService {
 
     private static final Set<Material> UNSAFE_BLOCKS = EnumSet.of(
@@ -44,6 +47,7 @@ public class RandomTeleportService {
 
     private final Random random = new Random();
 
+    @Inject
     public RandomTeleportService(RandomTeleportSettings randomTeleportSettings) {
         this.randomTeleportSettings = randomTeleportSettings;
     }

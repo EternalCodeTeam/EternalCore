@@ -1,5 +1,7 @@
 package com.eternalcode.core.viewer;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -16,11 +18,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+@Service
 public class BukkitViewerProvider implements ViewerProvider {
 
     private final UserManager userManager;
     private final Server server;
 
+    @Inject
     public BukkitViewerProvider(UserManager userManager, Server server) {
         this.userManager = userManager;
         this.server = server;

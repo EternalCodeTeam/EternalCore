@@ -1,11 +1,11 @@
 package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +15,7 @@ public class InventoryClearCommand {
 
     private final NoticeService noticeService;
 
+    @Inject
     public InventoryClearCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }

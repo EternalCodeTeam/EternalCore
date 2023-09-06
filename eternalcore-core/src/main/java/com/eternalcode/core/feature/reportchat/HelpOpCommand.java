@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.reportchat;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -26,6 +27,7 @@ public class HelpOpCommand {
     private final Server server;
     private final Delay<UUID> delay;
 
+    @Inject
     public HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {
         this.noticeService = noticeService;
         this.config = config;

@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.playerinfo;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -22,6 +23,7 @@ public class OnlinePlayersListCommand {
     private final PluginConfiguration config;
     private final Server server;
 
+    @Inject
     public OnlinePlayersListCommand(PluginConfiguration config, NoticeService noticeService, Server server) {
         this.config = config;
         this.noticeService = noticeService;

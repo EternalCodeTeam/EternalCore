@@ -1,6 +1,7 @@
 package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -15,6 +16,7 @@ public class TpaCommand {
     private final TeleportRequestService requestService;
     private final NoticeService noticeService;
 
+    @Inject
     public TpaCommand(TeleportRequestService requestService, NoticeService noticeService) {
         this.requestService = requestService;
         this.noticeService = noticeService;

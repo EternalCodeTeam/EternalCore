@@ -2,6 +2,7 @@ package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.RequesterArgument;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
@@ -23,6 +24,7 @@ public class TpaDenyCommand {
     private final NoticeService noticeService;
     private final Server server;
 
+    @Inject
     public TpaDenyCommand(TeleportRequestService requestService, NoticeService noticeService, Server server) {
         this.requestService = requestService;
         this.noticeService = noticeService;

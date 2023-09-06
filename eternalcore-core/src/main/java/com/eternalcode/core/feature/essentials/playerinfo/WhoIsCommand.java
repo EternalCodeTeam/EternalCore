@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.playerinfo;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -16,6 +17,7 @@ public class WhoIsCommand {
 
     private final NoticeService noticeService;
 
+    @Inject
     public WhoIsCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }

@@ -1,6 +1,7 @@
 package com.eternalcode.core.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.teleport.TeleportService;
@@ -35,6 +36,7 @@ public class TeleportCommand {
     private final NoticeService noticeService;
     private final TeleportService teleportService;
 
+    @Inject
     public TeleportCommand(NoticeService noticeService, TeleportService teleportService) {
         this.noticeService = noticeService;
         this.teleportService = teleportService;

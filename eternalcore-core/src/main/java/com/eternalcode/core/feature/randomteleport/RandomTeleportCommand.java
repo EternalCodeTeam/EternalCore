@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.randomteleport;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.viewer.Viewer;
@@ -24,6 +25,7 @@ public class RandomTeleportCommand {
     private final NoticeService noticeService;
     private final RandomTeleportService randomTeleportService;
 
+    @Inject
     public RandomTeleportCommand(NoticeService noticeService, RandomTeleportService randomTeleportService) {
         this.noticeService = noticeService;
         this.randomTeleportService = randomTeleportService;

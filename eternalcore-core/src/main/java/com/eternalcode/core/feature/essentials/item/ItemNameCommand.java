@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.adventure.legacy.Legacy;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
@@ -21,6 +22,7 @@ public class ItemNameCommand {
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
 
+    @Inject
     public ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;

@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.DurationArgument;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -11,6 +12,7 @@ import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
+import java.util.function.Supplier;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
@@ -21,21 +23,22 @@ import java.time.Duration;
 @Permission("eternalcore.chat")
 public class ChatManagerCommand {
 
-    private final Notice clear;
+    private final Supplier<Notice> clear;
     private final NoticeService noticeService;
     private final ChatManager chatManager;
 
-    private ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, Notice clear) {
+    @Inject
+    private ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, ChatSettings settings) {
         this.noticeService = noticeService;
         this.chatManager = chatManager;
-        this.clear = clear;
+        this.clear = create(settings);
     }
 
     @Execute(route = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
     public void clear(CommandSender sender) {
         this.noticeService.create()
-            .staticNotice(this.clear)
+            .staticNotice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
@@ -94,16 +97,8 @@ public class ChatManagerCommand {
             .send();
     }
 
-    public static ChatManagerCommand create(ChatManager chatManager, NoticeService audiences, int linesToClear) {
-        Component clear = Component.empty();
-
-        for (int lineIndex = 0; lineIndex < linesToClear; lineIndex++) {
-            clear = clear.append(Component.newline());
-        }
-
-        String serialized = MiniMessage.miniMessage().serialize(clear);
-
-        return new ChatManagerCommand(chatManager, audiences, Notice.chat(serialized));
+    public static Supplier<Notice> create(ChatSettings settings) {
+        return () -> Notice.chat("<newline>".repeat(Math.max(0, settings.linesToClear())));
     }
 }
 

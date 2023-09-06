@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.privatechat;
 
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -13,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+@Service
 public class PrivateChatService {
 
     private final NoticeService noticeService;
@@ -26,6 +29,7 @@ public class PrivateChatService {
 
     private final Set<UUID> socialSpy = new HashSet<>();
 
+    @Inject
     public PrivateChatService(NoticeService noticeService, IgnoreRepository ignoreRepository, UserManager userManager) {
         this.noticeService = noticeService;
         this.ignoreRepository = ignoreRepository;

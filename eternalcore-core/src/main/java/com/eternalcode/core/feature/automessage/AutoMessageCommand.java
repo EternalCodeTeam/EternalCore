@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.automessage;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -14,6 +15,7 @@ public class AutoMessageCommand {
     private final AutoMessageService autoMessageService;
     private final NoticeService noticeService;
 
+    @Inject
     public AutoMessageCommand(AutoMessageService autoMessageService, NoticeService noticeService) {
         this.autoMessageService = autoMessageService;
         this.noticeService = noticeService;

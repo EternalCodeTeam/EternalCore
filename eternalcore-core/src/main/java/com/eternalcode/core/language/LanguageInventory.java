@@ -1,6 +1,8 @@
 package com.eternalcode.core.language;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.language.config.LanguageConfigItem;
 import com.eternalcode.core.language.config.LanguageConfiguration;
 import com.eternalcode.core.notice.NoticeService;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
     name = "Language Inventory",
     description = "This feature allows you to create a language selector inventory"
 )
+@Service
 public class LanguageInventory {
 
     private final LanguageConfiguration languageConfiguration;
@@ -31,6 +34,7 @@ public class LanguageInventory {
     private final UserManager userManager;
     private final MiniMessage miniMessage;
 
+    @Inject
     public LanguageInventory(LanguageConfiguration languageConfiguration, NoticeService noticeService, UserManager userManager, MiniMessage miniMessage) {
         this.languageConfiguration = languageConfiguration;
         this.noticeService = noticeService;

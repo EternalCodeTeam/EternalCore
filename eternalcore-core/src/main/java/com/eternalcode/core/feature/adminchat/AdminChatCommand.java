@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.adminchat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
@@ -18,6 +19,7 @@ public class AdminChatCommand {
     private final NoticeService noticeService;
     private final Server server;
 
+    @Inject
     public AdminChatCommand(NoticeService noticeService, Server server) {
         this.noticeService = noticeService;
         this.server = server;

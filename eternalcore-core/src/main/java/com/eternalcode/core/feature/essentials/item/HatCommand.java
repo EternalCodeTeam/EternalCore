@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.ItemUtil;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -16,6 +17,7 @@ public class HatCommand {
 
     private final NoticeService noticeService;
 
+    @Inject
     public HatCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }

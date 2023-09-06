@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
@@ -25,6 +26,7 @@ public class DisposalCommand {
     private final UserManager userManager;
     private final Server server;
 
+    @Inject
     public DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server, NoticeService noticeService) {
         this.miniMessage = miniMessage;
         this.translationManager = translationManager;

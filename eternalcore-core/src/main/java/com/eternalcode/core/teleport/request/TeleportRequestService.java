@@ -1,5 +1,7 @@
 package com.eternalcode.core.teleport.request;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -8,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class TeleportRequestService {
 
     private final Cache<UUID, UUID> requests;
 
+    @Inject
     public TeleportRequestService(TeleportRequestSettings settings) {
         this.requests = CacheBuilder
             .newBuilder()

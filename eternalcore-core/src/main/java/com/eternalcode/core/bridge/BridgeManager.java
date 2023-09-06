@@ -2,6 +2,8 @@ package com.eternalcode.core.bridge;
 
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiExtension;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
@@ -10,6 +12,7 @@ import org.bukkit.plugin.PluginManager;
 
 import java.util.logging.Logger;
 
+@Service
 public class BridgeManager {
 
     private final PlaceholderRegistry placeholderRegistry;
@@ -17,11 +20,13 @@ public class BridgeManager {
     private final Server server;
     private final Logger logger;
 
+    @Inject
     public BridgeManager(PlaceholderRegistry placeholderRegistry, PluginDescriptionFile pluginDescriptionFile, Server server, Logger logger) {
         this.placeholderRegistry = placeholderRegistry;
         this.pluginDescriptionFile = pluginDescriptionFile;
         this.server = server;
         this.logger = logger;
+        this.init();
     }
 
     public void init() {

@@ -2,6 +2,7 @@ package com.eternalcode.core.teleport.request;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.RequesterArgument;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
@@ -27,6 +28,7 @@ public class TpaAcceptCommand {
     private final TeleportRequestSettings settings;
     private final Server server;
 
+    @Inject
     public TpaAcceptCommand(TeleportRequestService requestService, TeleportTaskService teleportTaskService, NoticeService noticeService, TeleportRequestSettings settings, Server server) {
         this.requestService = requestService;
         this.teleportTaskService = teleportTaskService;

@@ -4,6 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.home.ArgHome;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
@@ -25,6 +26,7 @@ public class HomeCommand {
     private final NoticeService noticeService;
     private final HomeManager homeManager;
 
+    @Inject
     public HomeCommand(TeleportTaskService teleportTaskService, TeleportService teleportService, NoticeService noticeService, HomeManager homeManager) {
         this.teleportTaskService = teleportTaskService;
         this.teleportService = teleportService;

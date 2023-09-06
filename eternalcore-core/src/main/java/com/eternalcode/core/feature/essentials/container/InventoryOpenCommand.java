@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.adventure.legacy.Legacy;
 import dev.rollczi.litecommands.argument.Arg;
@@ -24,6 +25,7 @@ public class InventoryOpenCommand {
     private final Server server;
     private final NoticeService noticeService;
 
+    @Inject
     public InventoryOpenCommand(Server server, NoticeService noticeService) {
         this.server = server;
         this.noticeService = noticeService;

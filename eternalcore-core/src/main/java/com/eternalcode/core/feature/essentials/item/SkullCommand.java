@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.command.argument.StringNicknameArgument;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.By;
@@ -22,6 +23,7 @@ public class SkullCommand {
     private final NoticeService noticeService;
     private final SkullAPI skullAPI;
 
+    @Inject
     public SkullCommand(NoticeService noticeService, SkullAPI skullAPI) {
         this.skullAPI = skullAPI;
         this.noticeService = noticeService;

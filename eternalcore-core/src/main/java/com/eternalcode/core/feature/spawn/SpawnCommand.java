@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -24,6 +25,7 @@ public class SpawnCommand {
     private final TeleportService teleportService;
     private final NoticeService noticeService;
 
+    @Inject
     public SpawnCommand(LocationsConfiguration locations, SpawnSettings spawnSettings, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
         this.teleportTaskService = teleportTaskService;
         this.locations = locations;

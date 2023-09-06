@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
@@ -24,6 +25,7 @@ public class WarpCommand {
     private final NoticeService noticeService;
     private final WarpManager warpManager;
 
+    @Inject
     public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, PluginConfiguration config, WarpInventory warpInventory) {
         this.noticeService = noticeService;
         this.warpManager = warpManager;

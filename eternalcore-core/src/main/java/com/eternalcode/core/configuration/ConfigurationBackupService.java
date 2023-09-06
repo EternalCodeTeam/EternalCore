@@ -1,6 +1,8 @@
 package com.eternalcode.core.configuration;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -15,12 +17,14 @@ import java.time.temporal.ChronoUnit;
     name = "Configuration Backup",
     description = "Backs up the full configuration to prevent config destruction, backup is only 3 days back"
 )
+@Service
 public class ConfigurationBackupService {
 
     private static final String BACKUP_FOLDER_NAME = "backup";
     private static final String BACKUP_FILE_EXTENSION = ".bak";
     private final File dataFolder;
 
+    @Inject
     public ConfigurationBackupService(File dataFolder) {
         this.dataFolder = dataFolder;
     }
