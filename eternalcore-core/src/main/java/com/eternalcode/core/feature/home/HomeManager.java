@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.home;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.user.User;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -69,8 +70,8 @@ public class HomeManager {
         return Collections.unmodifiableCollection(this.homes.getOrDefault(user, new HashMap<>()).values());
     }
 
-    public int getMaxAmountOfHomes(Player player, Map<String, Integer> homes) {
-        return homes.entrySet().stream()
+    public int getMaxAmountOfHomes(Player player, PluginConfiguration.Homes homes) {
+        return homes.maxHomes.entrySet().stream()
             .flatMap(entry -> {
                 if (player.hasPermission(entry.getKey())) {
                     return Stream.of(entry.getValue());

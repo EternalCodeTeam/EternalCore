@@ -17,7 +17,7 @@ public class HomesLimitPlaceholderImpl implements PlaceholderReplacer {
 
     @Override
     public String apply(String text, Player targetPlayer) {
-        int maxHomes = this.homeManager.getMaxAmountOfHomes(targetPlayer, this.pluginConfiguration.homes.maxHomes);
+        int maxHomes = this.homeManager.getMaxAmountOfHomes(targetPlayer, this.pluginConfiguration.homes);
         return String.valueOf(maxHomes);
     }
 }
