@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import java.util.Collections;
 import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 
 @Contextual
 public class WarpInventoryItem {
@@ -17,7 +18,7 @@ public class WarpInventoryItem {
         .withTexture("ewogICJ0aW1lc3RhbXAiIDogMTY2NDAzNTM1MjUyNCwKICAicHJvZmlsZUlkIiA6ICJjYjIzZWZhOWY1N2U0ZTQyOGE0MDU2OTM4NDlhODAxZiIsCiAgInByb2ZpbGVOYW1lIiA6ICJWMUdHTyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS82MThhZjFiODNhZGZmNzM1MDA3ZmVkMjMwMTkxOWMwYjYzZWJmZTgwZTVkNjFiYTkzN2M5MmViMWVhY2Y2ZDI4IgogICAgfQogIH0KfQ==")
         .withSlot(10)
         .withGlow(true)
-        .withAttributes(false)
+        .withFlags(ItemFlag.HIDE_ATTRIBUTES)
         .build();
 
     public WarpInventoryItem(String warpName, ConfigItem warpItem) {
@@ -25,6 +26,8 @@ public class WarpInventoryItem {
         this.warpItem = warpItem;
     }
 
+    public WarpInventoryItem() {
+    }
 
     public String warpName() {
         return this.warpName;

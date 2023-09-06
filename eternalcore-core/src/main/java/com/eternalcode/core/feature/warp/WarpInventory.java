@@ -15,16 +15,11 @@ import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 @Service
 public class WarpInventory {
@@ -127,9 +122,7 @@ public class WarpInventory {
 
     private void createDecorations(WarpInventorySection warpSection, Gui gui) {
         for (ConfigItem item : warpSection.decorationItems().items()) {
-            GuiItem guiItem = this.createItem(item);
-
-            guiItem.setAction(event -> {
+            GuiItem guiItem = item.createItemBuilder(this.miniMessage).asGuiItem(event -> {
                 Player player = (Player) event.getWhoClicked();
 
                 if (item.commands.isEmpty()) {
@@ -158,10 +151,7 @@ public class WarpInventory {
             Warp warp = warpOptional.get();
             ConfigItem warpItem = item.warpItem();
 
-            GuiItem guiItem = this.createItem(warpItem);
-
-
-            guiItem.setAction(event -> {
+            GuiItem guiItem = warpItem.createItemBuilder(miniMessage).asGuiItem(event -> {
                 Player player = (Player) event.getWhoClicked();
 
                 player.closeInventory();
@@ -172,46 +162,11 @@ public class WarpInventory {
         });
     }
 
-    private GuiItem createItem(ConfigItem item) {
-        Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
-
-        List<Component> lore = item.lore()
-            .stream()
-            .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
-            .toList();
-
-        if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {
-            return ItemBuilder.skull()
-                .name(name)
-                .lore(lore)
-                .texture(item.texture())
-                .glow(item.glow())
-                .asGuiItem();
-        }
-
-        ItemBuilder itemBuilder = ItemBuilder.from(item.material())
-            .name(name)
-            .lore(lore)
-            .glow(item.glow());
-
-        ItemStack build = itemBuilder.build();
-
-        if (!item.attributes) {
-            ItemMeta meta = build.getItemMeta();
-
-            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            build.setItemMeta(meta);
-        }
-
-        return new GuiItem(build);
-    }
-
     public void openInventory(Player player, Language language) {
         this.createInventory(language).open(player);
     }
 
     public void addWarp(Warp warp) {
-
         if (!this.warpManager.warpExists(warp.getName())) {
             return;
         }
@@ -237,28 +192,27 @@ public class WarpInventory {
                 }
             }
 
+            WarpInventoryItem item = WarpInventoryItem.builder()
+                .withWarpName(warp.getName())
+                .withWarpItem(ConfigItem.builder()
+                    .withName(this.config.warp.itemNamePrefix + warp.getName())
+                    .withLore(Collections.singletonList(this.config.warp.itemLore))
+                    .withMaterial(this.config.warp.itemMaterial)
+                    .withTexture(this.config.warp.itemTexture)
+                    .withSlot(slot)
+                    .withGlow(true)
+                    .withFlags(ItemFlag.HIDE_ATTRIBUTES)
+                    .build()
+                )
+                .build();
 
-            warpSection.addItem(warp.getName(),
-                WarpInventoryItem.builder()
-                    .withWarpName(warp.getName())
-                    .withWarpItem(ConfigItem.builder()
-                        .withName(this.config.warp.itemNamePrefix + warp.getName())
-                        .withLore(Collections.singletonList(this.config.warp.itemLore))
-                        .withMaterial(this.config.warp.itemMaterial)
-                        .withTexture(this.config.warp.itemTexture)
-                        .withSlot(slot)
-                        .withGlow(true)
-                        .withAttributes(false)
-                        .build())
-                    .build());
-
+            warpSection.addItem(warp.getName(), item);
             this.configurationManager.save(translation);
 
         }
     }
 
     public boolean removeWarp(String warpName) {
-
         if (!this.warpManager.warpExists(warpName)) {
             return false;
         }

@@ -94,10 +94,7 @@ class LanguageInventory {
         }
 
         for (LanguageConfigItem languageConfigItem : languageSelector.languageConfigItemMap) {
-            BaseItemBuilder baseItemBuilder = this.createItem(languageConfigItem);
-            GuiItem guiItem = baseItemBuilder.asGuiItem();
-
-            guiItem.setAction(event -> {
+            GuiItem guiItem = languageConfigItem.createItemBuilder(miniMessage).asGuiItem(event -> {
                 user.getSettings().setLanguage(languageConfigItem.language);
 
                 player.closeInventory();
@@ -112,10 +109,7 @@ class LanguageInventory {
         }
 
         for (ConfigItem item : languageSection.decorationItems()) {
-            BaseItemBuilder baseItemBuilder = this.createItem(item);
-            GuiItem guiItem = baseItemBuilder.asGuiItem();
-
-            guiItem.setAction(event -> {
+            GuiItem guiItem = item.createItemBuilder(miniMessage).asGuiItem(event -> {
                 if (item.commands.isEmpty()) {
                     return;
                 }
@@ -133,24 +127,4 @@ class LanguageInventory {
         gui.open(player);
     }
 
-    private BaseItemBuilder createItem(ConfigItem item) {
-        Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
-        List<Component> lore = item.lore()
-            .stream()
-            .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
-            .toList();
-
-        if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {
-            return ItemBuilder.skull()
-                .name(name)
-                .lore(lore)
-                .texture(item.texture())
-                .glow(item.glow());
-        }
-
-        return ItemBuilder.from(item.material())
-            .name(name)
-            .lore(lore)
-            .glow(item.glow());
-    }
 }

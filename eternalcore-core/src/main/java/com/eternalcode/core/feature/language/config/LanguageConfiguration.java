@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.inventory.ItemFlag;
 
 @ConfigurationFile
 public class LanguageConfiguration implements ReloadableConfig {
@@ -65,7 +66,7 @@ public class LanguageConfiguration implements ReloadableConfig {
                 Material.PLAYER_HEAD,
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODc5ZDk5ZDljNDY0NzRlMjcxM2E3ZTg0YTk1ZTRjZTdlOGZmOGVhNGQxNjQ0MTNhNTkyZTQ0MzVkMmM2ZjlkYyJ9fX0",
                 false,
-                false,
+                List.of(),
                 20,
                 Collections.emptyList(),
                 Language.EN)
@@ -76,7 +77,7 @@ public class LanguageConfiguration implements ReloadableConfig {
                 Material.REPEATER,
                 "none",
                 false,
-                false,
+                List.of(),
                 22,
                 Collections.emptyList(),
                 Language.DEFAULT)
@@ -87,7 +88,7 @@ public class LanguageConfiguration implements ReloadableConfig {
                 Material.PLAYER_HEAD,
                 "ewogICJ0aW1lc3RhbXAiIDogMTYyNzMxOTA4NjYyOCwKICAicHJvZmlsZUlkIiA6ICJiNTM5NTkyMjMwY2I0MmE0OWY5YTRlYmYxNmRlOTYwYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJtYXJpYW5hZmFnIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2IxZDFlZmVkNjIyZTEzMTJlOTg0NGU4OTgzNjQzMzM5MGEyMTFjN2E1NTVhMzQzMWI0OTk2NWMzZTNiMzhiYjYiCiAgICB9CiAgfQp9",
                 false,
-                false,
+                List.of(),
                 24,
                 Collections.emptyList(),
                 Language.PL)

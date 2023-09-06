@@ -1,11 +1,19 @@
 package com.eternalcode.core.configuration.contextual;
 
+import com.eternalcode.commons.adventure.AdventureUtil;
+import dev.triumphteam.gui.builder.item.BaseItemBuilder;
+import dev.triumphteam.gui.builder.item.ItemBuilder;
+import dev.triumphteam.gui.guis.GuiItem;
+import java.util.Arrays;
 import net.dzikoysk.cdn.entity.Contextual;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.ComponentSerializer;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.inventory.ItemFlag;
 
 @Contextual
 public class ConfigItem {
@@ -15,17 +23,16 @@ public class ConfigItem {
     public Material material = Material.PLAYER_HEAD;
     public String texture = "none";
     public boolean glow = false;
-    public boolean attributes = false;
+    public List<ItemFlag> flags = new ArrayList<>();
     public int slot = 0;
     public List<String> commands = new ArrayList<>();
 
-    public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, boolean attributes, int slot, List<String> commands) {
+    public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, List<ItemFlag> flags, int slot, List<String> commands) {
         this.name = name;
         this.lore = lore;
         this.material = material;
         this.texture = texture;
         this.glow = glow;
-        this.attributes = attributes;
         this.slot = slot;
         this.commands = commands;
     }
@@ -60,6 +67,34 @@ public class ConfigItem {
 
     public List<String> commands() {
         return this.commands;
+    }
+
+    public ItemFlag[] flags() {
+        return flags.toArray(value -> new ItemFlag[value]);
+    }
+
+    public BaseItemBuilder<?> createItemBuilder(ComponentSerializer<Component, Component, String> serializer) {
+        Component name = AdventureUtil.resetItalic(serializer.deserialize(this.name()));
+
+        List<Component> lore = this.lore()
+            .stream()
+            .map(entry -> AdventureUtil.resetItalic(serializer.deserialize(entry)))
+            .toList();
+
+        if (this.material() == Material.PLAYER_HEAD && !this.texture().isEmpty()) {
+            return ItemBuilder.skull()
+                .name(name)
+                .lore(lore)
+                .glow(this.glow())
+                .flags(this.flags())
+                .texture(this.texture());
+        }
+
+        return ItemBuilder.from(this.material())
+            .name(name)
+            .lore(lore)
+            .glow(this.glow())
+            .flags(this.flags());
     }
 
     public static Builder builder() {
@@ -99,9 +134,8 @@ public class ConfigItem {
             return this;
         }
 
-        public Builder withAttributes(boolean attributes) {
-            this.configItem.attributes = attributes;
-
+        public Builder withFlags(ItemFlag... flags) {
+            configItem.flags.addAll(Arrays.asList(flags));
             return this;
         }
 
