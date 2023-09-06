@@ -5,6 +5,7 @@ import com.eternalcode.core.database.persister.LocationPersister;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeRepository;
 import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.user.User;
@@ -24,12 +25,13 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Service
+@Repository
 public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRepository {
 
     @Inject
-    private HomeRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) {
+    private HomeRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeWrapper.class);
     }
 
     @Override
@@ -89,17 +91,6 @@ public class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             .map(HomeWrapper::toHome)
             .collect(Collectors.toSet())
         ).orElseGet(new HashSet<>()));
-    }
-
-    public static HomeRepository create(DatabaseManager databaseManager, Scheduler scheduler) {
-        try {
-            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeWrapper.class);
-        }
-        catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException);
-        }
-
-        return new HomeRepositoryOrmLite(databaseManager, scheduler);
     }
 
     @DatabaseTable(tableName = "eternal_core_homes")

@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.spawn;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventController;
+import com.eternalcode.core.injector.annotations.component.EventListener;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportService;
@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Objects;
 
-@EventController
+@EventListener
 public class SpawnRespawnController implements Listener {
 
     private final TeleportService teleportService;

@@ -8,7 +8,8 @@ import com.eternalcode.core.injector.DependencyInjector;
 import com.eternalcode.core.injector.DependencyProcessors;
 import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.injector.annotations.component.ConfigurationYml;
-import com.eternalcode.core.injector.annotations.component.EventController;
+import com.eternalcode.core.injector.annotations.component.EventListener;
+import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
@@ -28,10 +29,13 @@ import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;
 import java.io.File;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+
+import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -54,6 +58,7 @@ class EternalCore implements EternalCoreApi {
         DependencyProcessors processors = new DependencyProcessors()
             .on(BeanSetup.class)
             .on(Service.class)
+            .on(Repository.class)
             .on(Runnable.class, Task.class, (dependencyProvider, task) -> {
                 Scheduler scheduler = dependencyProvider.getDependency(Scheduler.class);
                 Task taskAnnotation = this.getAnnotation(task, Task.class);
@@ -69,9 +74,28 @@ class EternalCore implements EternalCoreApi {
                     scheduler.timerSync(task, delay, period);
                 }
             })
-            .on(Listener.class, EventController.class, listener -> pluginManager.registerEvents(listener, plugin))
+            .on(Listener.class, EventListener.class, listener -> pluginManager.registerEvents(listener, plugin))
             .on(Subscriber.class, (provider, instance) -> provider.getDependency(Publisher.class).subscribe(instance))
-            .on(ReloadableConfig.class, ConfigurationYml.class, (provider, config) -> provider.getDependency(ConfigurationManager.class).load(config))
+            .on(ReloadableConfig.class, ConfigurationYml.class, (provider, config) -> {
+                ReloadableConfig loaded = provider.getDependency(ConfigurationManager.class).load(config);
+                DependencyInjector dependencyInjector = provider.getDependency(DependencyInjector.class);
+
+                for (Field field : config.getClass().getDeclaredFields()) {
+                    if (!field.getType().isAnnotationPresent(Contextual.class)) {
+                        continue;
+                    }
+
+                    try {
+                        field.setAccessible(true);
+                        Object value = field.get(loaded);
+
+                        dependencyInjector.registerUnSafe(field.getType(), () -> value);
+                    }
+                    catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            })
             .on(Route.class, (provider, commandInstance) -> provider.getDependency(LiteCommandsBuilder.class).commandInstance(commandInstance))
             .on(RootRoute.class, (provider, commandInstance) -> provider.getDependency(LiteCommandsBuilder.class).commandInstance(commandInstance))
             .on(MultilevelArgument.class, LiteArgument.class, (provider, argument) -> {
@@ -96,7 +120,7 @@ class EternalCore implements EternalCoreApi {
         this.injector = new DependencyInjector(processors)
             .registerSelf()
             .register(Server.class, () -> server)
-            .register((Class<Plugin>) plugin.getClass(), () -> plugin)
+            .registerUnSafe(plugin.getClass(), () -> plugin)
             .register(Logger.class, () -> plugin.getLogger())
             .register(File.class, () -> plugin.getDataFolder())
             .scan(scanner -> scanner.packages(EternalCore.class.getPackageName()))

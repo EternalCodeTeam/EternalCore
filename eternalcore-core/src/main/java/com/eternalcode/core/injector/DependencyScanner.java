@@ -57,11 +57,7 @@ public class DependencyScanner {
                     .append(illegalDependency.getMessage());
             }
 
-            String regex = illegalDependencies.stream()
-                .map(e -> e.getDependencyType().getSimpleName())
-                .collect(Collectors.joining("|"));
-
-            throw new InjectException(errorMessage.toString() + "(" + regex + ")");
+            throw new InjectException(errorMessage.toString());
         }
 
         return dependencyRegistry;

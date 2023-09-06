@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -14,6 +15,7 @@ import panda.std.Result;
 import java.util.Arrays;
 import java.util.List;
 
+@LiteArgument(type = Enchantment.class)
 @ArgumentName("enchantment")
 public class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 

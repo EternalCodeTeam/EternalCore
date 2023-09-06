@@ -81,7 +81,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "slowmode", required = 1)
     @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
-    public void slowmode(Viewer viewer, @Arg @By(DurationArgument.KEY) Duration duration) {
+    public void slowmode(Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 

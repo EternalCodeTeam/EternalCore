@@ -2,7 +2,7 @@ package com.eternalcode.core.listener.player;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventController;
+import com.eternalcode.core.injector.annotations.component.EventListener;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
@@ -22,7 +22,7 @@ import java.util.Optional;
     description = "This feature allows you to bypass the full server, example for vip rank.",
     permission = "eternalcore.slot.bypass"
 )
-@EventController
+@EventListener
 public class PlayerLoginListener implements Listener {
 
     private final TranslationManager translationManager;

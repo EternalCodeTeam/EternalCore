@@ -1,7 +1,7 @@
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventController;
+import com.eternalcode.core.injector.annotations.component.EventListener;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-@EventController
+@EventListener
 public class PrepareUserController implements Listener {
 
     private final UserManager userManager;

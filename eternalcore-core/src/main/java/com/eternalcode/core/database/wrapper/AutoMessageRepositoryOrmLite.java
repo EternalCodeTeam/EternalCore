@@ -2,6 +2,8 @@ package com.eternalcode.core.database.wrapper;
 
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.feature.automessage.AutoMessageRepository;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.Where;
@@ -14,10 +16,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements AutoMessageRepository {
 
-    private AutoMessageRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) {
+    @Inject
+    private AutoMessageRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), AutoMessageIgnoreWrapper.class);
     }
 
     @Override
@@ -74,14 +79,4 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
         }
     }
 
-    public static AutoMessageRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
-        try {
-            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), AutoMessageIgnoreWrapper.class);
-        }
-        catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException);
-        }
-
-        return new AutoMessageRepositoryOrmLite(databaseManager, scheduler);
-    }
 }

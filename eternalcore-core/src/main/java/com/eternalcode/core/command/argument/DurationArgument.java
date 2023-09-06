@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -16,10 +17,9 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 
+@LiteArgument(type = Duration.class)
 @ArgumentName("duration")
 public class DurationArgument extends AbstractViewerArgument<Duration> {
-
-    public static final String KEY = "duration";
 
     private static final List<Duration> SUGGESTED_DURATIONS = Arrays.asList(
         Duration.ofSeconds(1),

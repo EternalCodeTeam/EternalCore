@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
 import com.eternalcode.core.translation.Translation;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@LiteArgument(type = Player.class, name = RequesterArgument.KEY)
 @ArgumentName("player")
 public class RequesterArgument extends AbstractViewerArgument<Player> {
 

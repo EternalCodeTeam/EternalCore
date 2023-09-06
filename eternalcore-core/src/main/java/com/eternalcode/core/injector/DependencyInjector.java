@@ -47,6 +47,11 @@ public class DependencyInjector implements DependencyProvider {
         return this;
     }
 
+    public DependencyInjector registerUnSafe(Class<?> type, Supplier<?> supplier) {
+        this.dependencies.put(type, dependencyProvider -> supplier.get());
+        return this;
+    }
+
     public <T> DependencyInjector register(Class<T> type) {
         for (LazyDependency<?, ?> dependency : LazyDependency.scanClassForDependencies(type)) {
             this.register(dependency);

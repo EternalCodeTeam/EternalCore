@@ -2,6 +2,8 @@ package com.eternalcode.core.database.wrapper;
 
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -22,6 +24,7 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+@Repository
 public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
 
     private static final UUID IGNORE_ALL = UUID.nameUUIDFromBytes("*".getBytes());
@@ -29,13 +32,15 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
     private final Dao<IgnoreWrapper, Long> cachedDao;
     private final LoadingCache<UUID, Set<UUID>> ignores;
 
-    private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) {
+    @Inject
+    private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
         this.cachedDao = databaseManager.getDao(IgnoreWrapper.class);
         this.ignores = CacheBuilder.newBuilder()
             .expireAfterAccess(Duration.ofMinutes(15))
             .refreshAfterWrite(Duration.ofMinutes(3))
             .build(new IgnoreLoader());
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
     }
 
     @Override
@@ -127,17 +132,6 @@ public class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implement
             this.ignoredUuid = ignoredUuid;
         }
 
-    }
-
-    public static IgnoreRepositoryOrmLite create(DatabaseManager databaseManager, Scheduler scheduler) {
-        try {
-            TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
-        }
-        catch (SQLException sqlException) {
-            throw new RuntimeException(sqlException);
-        }
-
-        return new IgnoreRepositoryOrmLite(databaseManager, scheduler);
     }
 
     private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {

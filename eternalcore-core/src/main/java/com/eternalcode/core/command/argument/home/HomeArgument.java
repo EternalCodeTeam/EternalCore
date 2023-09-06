@@ -2,6 +2,7 @@ package com.eternalcode.core.command.argument.home;
 
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -19,6 +20,7 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@LiteNativeArgument(type = Home.class, annotation = ArgHome.class)
 @ArgumentName("name")
 public class HomeArgument implements SingleOrElseArgument<CommandSender, ArgHome> {
 

@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventController;
+import com.eternalcode.core.injector.annotations.component.EventListener;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ import java.util.UUID;
     description = "It allows you to manage chat, with slowmode, chat clear, chat on/off etc.",
     permission = { "eternalcore.chat.noslowmode", "eternalcore.chat.bypass" }
 )
-@EventController
+@EventListener
 public class ChatManagerController implements Listener {
 
     private final ChatManager chatManager;

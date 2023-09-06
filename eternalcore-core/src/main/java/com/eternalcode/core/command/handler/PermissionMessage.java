@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.handler;
 
+import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
@@ -9,6 +10,7 @@ import dev.rollczi.litecommands.handle.PermissionHandler;
 import org.bukkit.command.CommandSender;
 import panda.utilities.text.Joiner;
 
+@LiteHandler(RequiredPermissions.class)
 public class PermissionMessage implements PermissionHandler<CommandSender> {
 
     private final BukkitViewerProvider viewerProvider;
