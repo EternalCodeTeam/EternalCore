@@ -392,6 +392,8 @@ public class ENTranslation extends AbstractTranslation {
         @Description({ " ", "# {LIMIT} - Homes limit" })
         public Notice limit = Notice.chat("<red>► <white>You have reached the limit of homes! Your limit is <red>{LIMIT}<white>.");
 
+        @Description({ " ", "# Placeholders messages" })
+        public String noHomesOwned = "You don't have any home.";
     }
 
     @Description({
@@ -738,7 +740,6 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENLanguageSection implements LanguageSection {
         public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
-
     }
 
     @Description({ " ", "# Auto message" })

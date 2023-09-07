@@ -95,6 +95,9 @@ import com.eternalcode.core.feature.home.HomeRepository;
 import com.eternalcode.core.feature.home.command.DelHomeCommand;
 import com.eternalcode.core.feature.home.command.HomeCommand;
 import com.eternalcode.core.feature.home.command.SetHomeCommand;
+import com.eternalcode.core.feature.home.placeholder.HomesLimitPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomesCountPlaceholderImpl;
+import com.eternalcode.core.feature.home.placeholder.HomesOwnedPlaceholderImpl;
 import com.eternalcode.core.feature.ignore.IgnoreCommand;
 import com.eternalcode.core.feature.ignore.IgnoreRepository;
 import com.eternalcode.core.feature.ignore.UnIgnoreCommand;
@@ -313,8 +316,14 @@ class EternalCore implements EternalCoreApi {
             .bukkitScheduler(plugin)
             .build();
 
-        this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())));
-        this.placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))));
+        Stream.of(
+            PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())),
+            PlaceholderReplacer.of("afk", player -> String.valueOf(this.afkService.isAfk(player.getUniqueId()))),
+
+            PlaceholderReplacer.of("homes_owned", new HomesOwnedPlaceholderImpl(this.homeManager, this.userManager, this.translationManager)),
+            PlaceholderReplacer.of("homes_count", new HomesCountPlaceholderImpl(this.homeManager)),
+            PlaceholderReplacer.of("homes_limit", new HomesLimitPlaceholderImpl(this.homeManager, pluginConfiguration))
+        ).forEach(this.placeholderRegistry::registerPlaceholder);
 
         this.liteCommands = LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, this.audiencesProvider, this.miniMessage)
 
