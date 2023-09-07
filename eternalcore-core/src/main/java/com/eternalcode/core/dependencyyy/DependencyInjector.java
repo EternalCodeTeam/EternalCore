@@ -32,7 +32,7 @@ public class DependencyInjector {
 
         int parameterIndex = 0;
         for (Class<?> parameterType : method.getParameterTypes()) {
-            BeanHolder<?> bean = this.beanFactory.getBean(parameterType);
+            BeanHolder<?> bean = this.beanFactory.getSingletonBean(parameterType);
 
             parameters[parameterIndex++] = bean.get();
         }
@@ -56,7 +56,7 @@ public class DependencyInjector {
 
         int parameterIndex = 0;
         for (Class<?> parameterType : constructor.getParameterTypes()) {
-            BeanHolder<?> bean = this.beanFactory.getBean(parameterType);
+            BeanHolder<?> bean = this.beanFactory.getSingletonBean(parameterType);
 
             parameters[parameterIndex++] = bean.get();
         }

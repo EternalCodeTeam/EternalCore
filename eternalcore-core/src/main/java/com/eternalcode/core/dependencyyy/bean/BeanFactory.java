@@ -6,7 +6,7 @@ public class BeanFactory {
 
     private final BeanContainer container = new BeanContainer();
 
-    public <T> BeanHolder<T> getBean(Class<T> type) {
+    public <T> BeanHolder<T> getSingletonBean(Class<T> type) {
         List<BeanHolder<T>> beans = container.getBeans(type);
 
         if (beans.isEmpty()) {

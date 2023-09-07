@@ -13,4 +13,10 @@ class BeanHolderImpl<T> implements BeanHolder<T> {
         return this.instance;
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public Class<T> getType() {
+        return (Class<T>) this.instance.getClass();
+    }
+
 }

@@ -9,7 +9,9 @@ public class BeanContainer {
 
     private final Map<Class<?>, BeanHolder<?>> beans = new HashMap<>();
 
-    public <T> void addBean(Class<T> type, BeanHolder<T> bean) {
+    public <T> void addBean(BeanHolder<T> bean) {
+        Class<T> type = bean.getType();
+
         if (this.beans.containsKey(type)) {
             throw new BeanException("Bean already exists for type " + type.getName(), type);
         }
