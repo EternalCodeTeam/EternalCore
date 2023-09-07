@@ -3,7 +3,7 @@ package com.eternalcode.core.listener.sign;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.adventure.legacy.Legacy;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventListener;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ import org.bukkit.event.block.SignChangeEvent;
     description = "Allows you to use color codes in signs",
     permission = "eternalcore.sign"
 )
-@EventListener
+@Controller
 public class SignChangeListener implements Listener {
 
     private final MiniMessage miniMessage;

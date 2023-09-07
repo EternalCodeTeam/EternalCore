@@ -71,7 +71,7 @@ final class LocalPublisher implements Publisher {
             Object instance = nativeSubscriber.subscriber;
             Method method = nativeSubscriber.method;
 
-            this.dependencyInjector.invoke(instance, method, publishEvent);
+            this.dependencyInjector.invokeMethod(instance, method, publishEvent);
         }
     }
 

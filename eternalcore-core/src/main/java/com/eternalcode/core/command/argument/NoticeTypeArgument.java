@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.notice.Notice;
@@ -19,6 +20,7 @@ import java.util.List;
 @ArgumentName("action")
 public class NoticeTypeArgument extends AbstractViewerArgument<NoticeTextType> {
 
+    @Inject
     public NoticeTypeArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }

@@ -22,7 +22,6 @@ import java.util.logging.Logger;
     name = "Database",
     description = "Adds support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
 )
-@Service
 public class DatabaseManager {
 
     private final PluginConfiguration config;
@@ -34,8 +33,7 @@ public class DatabaseManager {
     private HikariDataSource dataSource;
     private ConnectionSource connectionSource;
 
-    @Inject
-    public DatabaseManager(PluginConfiguration config, Logger logger, File dataFolder) {
+    DatabaseManager(PluginConfiguration config, Logger logger, File dataFolder) {
         this.config = config;
         this.logger = logger;
         this.dataFolder = dataFolder;

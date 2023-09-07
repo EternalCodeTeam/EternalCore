@@ -1,121 +1,95 @@
 package com.eternalcode.core.injector;
 
-import com.eternalcode.core.util.MapUtil;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.bean.BeanException;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
-import org.jetbrains.annotations.Nullable;
 
-public class DependencyInjector implements DependencyProvider {
+public class DependencyInjector {
 
-    private final Map<Class<?>, Dependency<?>> dependencies = new HashMap<>();
-    private final DependencyProcessors processors;
+    private final DependencyProvider dependencyProvider;
 
-    public DependencyInjector() {
-        this.processors = new DependencyProcessors();
+    public DependencyInjector(DependencyProvider dependencyProvider) {
+        this.dependencyProvider = dependencyProvider;
     }
 
-    public DependencyInjector(DependencyProcessors processors) {
-        this.processors = processors;
-    }
-
-    public DependencyInjector scan(UnaryOperator<DependencyScanner> operator) {
-        DependencyScanner dependencyScanner = operator.apply(new DependencyScanner(this.processors));
-
-        for (LazyDependency<?, ?> dependency : dependencyScanner.scan()) {
-            this.dependencies.put(dependency.getType(), dependency);
-        }
-
-        return this;
-    }
-
-    public DependencyInjector registerSelf() {
-        return this.register(DependencyInjector.class, () ->  this);
-    }
-
-    public <T> DependencyInjector register(Class<T> type, Dependency<T> dependency) {
-        this.dependencies.put(type, dependency);
-        return this;
-    }
-
-    public <T> DependencyInjector register(Class<T> type, Supplier<T> supplier) {
-        this.register(type, dependencyProvider -> supplier.get());
-        return this;
-    }
-
-    public DependencyInjector registerUnSafe(Class<?> type, Supplier<?> supplier) {
-        this.dependencies.put(type, dependencyProvider -> supplier.get());
-        return this;
-    }
-
-    public <T> DependencyInjector register(Class<T> type) {
-        for (LazyDependency<?, ?> dependency : LazyDependency.scanClassForDependencies(type)) {
-            this.register(dependency);
-        }
-
-        return this;
-    }
-
-    private <T> DependencyInjector register(LazyDependency<?, T> dependency) {
-        return this.register(dependency.getType(), dependency);
-    }
-
-    @Override
-    public <T> T getDependency(Class<T> type) {
-        Dependency<T> dependency = this.findDependency(type);
-        return dependency.get(this);
-    }
-
-    public Object invoke(@Nullable Object instance, Method method, Object... args) {
-        Object[] newArgs = new Object[method.getParameterCount()];
-
-        int i = 0;
-        for (Parameter parameter : method.getParameters()) {
-            Object arg = this.findFromArgs(args, parameter.getType());
-
-            if (arg != null) {
-                newArgs[i++] = arg;
-                continue;
-            }
-
-            newArgs[i++] = this.getDependency(parameter.getType());
-        }
-
-        try {
-            method.setAccessible(true);
-            return method.invoke(instance, newArgs);
-        }
-        catch (IllegalAccessException | InvocationTargetException e) {
-            throw new InjectException("Cannot invoke method " + method.getName() + " in " + method.getDeclaringClass().getName(), e);
-        }
-    }
-
-    private @Nullable Object findFromArgs(Object[] args, Class<?> type) {
-        for (Object arg : args) {
-            if (type.isAssignableFrom(arg.getClass())) {
-                return arg;
-            }
-        }
-
-        return null;
-    }
-
-    public DependencyInjector initializeAll() {
-        for (Dependency<?> dependency : this.dependencies.values()) {
-            this.processors.process(this, dependency);
-        }
-
-        return this;
+    public DependencyProvider getDependencyProvider() {
+        return this.dependencyProvider;
     }
 
     @SuppressWarnings("unchecked")
-    private <T> Dependency<T> findDependency(Class<T> type) {
-        return (Dependency<T>) MapUtil.findByInstanceOf(type, this.dependencies)
-            .orElseThrow(() -> new InjectDependencyNotFoundException("Cannot find dependency " + type.getName(), type));
+    public <T> T newInstance(Class<T> clazz) {
+        for (Constructor<?> constructor : clazz.getDeclaredConstructors()) {
+            if (this.isInjectable(constructor)) {
+                return this.newInstance((Constructor<T>) constructor);
+            }
+        }
+
+        throw new DependencyInjectorException("No injectable constructor found for " + clazz.getName() + "! Please, annotate one of the constructors with @Inject.", clazz);
+    }
+
+    public Object invokeMethod(Object instance, Method method, Object... additionalDependencies) {
+        Class<?> declaringClass = method.getDeclaringClass();
+        Object[] parameters = new Object[method.getParameterCount()];
+
+        int parameterIndex = 0;
+
+        try {
+            for (Class<?> parameterType : method.getParameterTypes()) {
+                Object dependency = this.getDependency(parameterType, additionalDependencies);
+
+                parameters[parameterIndex++] = dependency;
+            }
+
+            method.setAccessible(true);
+            return method.invoke(instance, parameters);
+        }
+        catch (BeanException beanException) {
+            throw new DependencyInjectorException("Failed to invoke method " + method.getName() + " in " + declaringClass.getName() + "!", beanException, declaringClass);
+        }
+        catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            throw new DependencyInjectorException(exception, declaringClass);
+        }
+    }
+
+    private Object getDependency(Class<?> parameterType, Object... additionalDependencies) {
+        for (Object additionalDependency : additionalDependencies) {
+            if (parameterType.isInstance(additionalDependency)) {
+                return additionalDependency;
+            }
+        }
+
+        return this.dependencyProvider.getDependency(parameterType);
+    }
+
+    private boolean isInjectable(Constructor<?> constructor) {
+        return constructor.getParameterCount() == 0 || constructor.isAnnotationPresent(Inject.class);
+    }
+
+    private <T> T newInstance(Constructor<T> constructor, Object... additionalDependencies) {
+        Class<T> declaringClass = constructor.getDeclaringClass();
+        Object[] parameters = new Object[constructor.getParameterCount()];
+
+        int parameterIndex = 0;
+
+        try {
+            for (Class<?> parameterType : constructor.getParameterTypes()) {
+                Object dependency = this.getDependency(parameterType, additionalDependencies);
+
+                parameters[parameterIndex++] = dependency;
+            }
+
+            constructor.setAccessible(true);
+            return constructor.newInstance(parameters);
+        }
+        catch (BeanException beanException) {
+            throw new DependencyInjectorException("Failed to create a new instance of " + declaringClass.getName() + "!", beanException, declaringClass);
+        }
+        catch (InvocationTargetException | InstantiationException | IllegalAccessException exception) {
+            throw new DependencyInjectorException(exception, declaringClass);
+        }
     }
 
 }

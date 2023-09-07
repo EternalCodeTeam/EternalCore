@@ -1,18 +1,12 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.language.LanguageSettings;
-import com.eternalcode.core.language.config.LanguageConfiguration;
-import com.eternalcode.core.translation.implementation.TranslationFactory;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
-import panda.std.stream.PandaStream;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 

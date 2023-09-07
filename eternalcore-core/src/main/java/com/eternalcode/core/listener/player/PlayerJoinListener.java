@@ -3,7 +3,7 @@ package com.eternalcode.core.listener.player;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventListener;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.Server;
@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import panda.utilities.StringUtils;
 
-@EventListener
+@Controller
 public class PlayerJoinListener implements Listener {
 
     private final PluginConfiguration config;

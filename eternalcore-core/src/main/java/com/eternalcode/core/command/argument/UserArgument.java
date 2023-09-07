@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
@@ -24,6 +25,7 @@ public class UserArgument extends AbstractViewerArgument<User> {
     private final Server server;
     private final UserManager userManager;
 
+    @Inject
     public UserArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager, Server server, UserManager userManager) {
         super(viewerProvider, translationManager);
         this.server = server;

@@ -2,7 +2,7 @@ package com.eternalcode.core.command.configurator.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
-import com.eternalcode.core.injector.annotations.component.ConfigurationYml;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@ConfigurationYml
+@ConfigurationFile
 public class CommandConfiguration implements ReloadableConfig {
 
     public Argument argument = new Argument();

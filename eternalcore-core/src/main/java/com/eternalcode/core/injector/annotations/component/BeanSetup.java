@@ -7,10 +7,16 @@ import java.lang.annotation.Target;
 
 /**
  * BeanSetup annotation is used to mark a class as a holder for beans.
+ *
+ * @see Component
+ * @see Service
+ * @see Repository
+ * @see Task
+ * @see Controller
+ * @see ConfigurationFile
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface BeanSetup {
 
-    //class ([a-z]*)(Service|Manager) \{
 }

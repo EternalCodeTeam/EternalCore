@@ -1,7 +1,7 @@
 package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventListener;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.UUID;
 
-@EventListener
+@Controller
 public class TeleportListeners implements Listener {
 
     private final NoticeService noticeService;

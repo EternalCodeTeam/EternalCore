@@ -41,7 +41,10 @@ class EternalCoreWrapper {
             Method disableMethod = this.eternalCoreClass.getMethod("disable");
 
             disableMethod.setAccessible(true);
-            disableMethod.invoke(this.eternalCore);
+
+            if (this.eternalCore != null) {
+                disableMethod.invoke(this.eternalCore);
+            }
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exception) {
             throw new RuntimeException(exception);

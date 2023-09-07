@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -28,6 +29,7 @@ public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
     private final TranslationManager translationManager;
     private final BukkitViewerProvider viewerProvider;
 
+    @Inject
     public WorldArgument(Server server, TranslationManager translationManager, BukkitViewerProvider viewerProvider) {
         this.server = server;
         this.translationManager = translationManager;

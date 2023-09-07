@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.handler;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
@@ -20,6 +21,7 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
     private final BukkitViewerProvider viewerProvider;
     private final NoticeService noticeService;
 
+    @Inject
     public InvalidUsage(BukkitViewerProvider viewerProvider, NoticeService noticeService) {
         this.viewerProvider = viewerProvider;
         this.noticeService = noticeService;

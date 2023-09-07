@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.teleport.request.TeleportRequestService;
@@ -27,6 +28,7 @@ public class RequesterArgument extends AbstractViewerArgument<Player> {
     private final TeleportRequestService requestService;
     private final Server server;
 
+    @Inject
     public RequesterArgument(TeleportRequestService requestService, TranslationManager translationManager, BukkitViewerProvider viewerProvider, Server server) {
         super(viewerProvider, translationManager);
         this.requestService = requestService;

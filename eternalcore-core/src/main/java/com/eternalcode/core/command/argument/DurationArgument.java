@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
@@ -32,6 +33,7 @@ public class DurationArgument extends AbstractViewerArgument<Duration> {
         Duration.ofMinutes(10)
     );
 
+    @Inject
     public DurationArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }

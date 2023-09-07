@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.contextual;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
@@ -13,6 +14,7 @@ public class ViewerContextual implements Contextual<CommandSender, Viewer> {
 
     private final BukkitViewerProvider bukkitViewerProvider;
 
+    @Inject
     public ViewerContextual(BukkitViewerProvider bukkitViewerProvider) {
         this.bukkitViewerProvider = bukkitViewerProvider;
     }

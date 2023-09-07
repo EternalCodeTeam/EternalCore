@@ -2,6 +2,7 @@ package com.eternalcode.core.command.argument.home;
 
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -28,6 +29,7 @@ public class HomeArgument implements SingleOrElseArgument<CommandSender, ArgHome
     private final BukkitViewerProvider viewerProvider;
     private final TranslationManager translationManager;
 
+    @Inject
     public HomeArgument(HomeManager homeManager, BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
         this.homeManager = homeManager;
         this.viewerProvider = viewerProvider;

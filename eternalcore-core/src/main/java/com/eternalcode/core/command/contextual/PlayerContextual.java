@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.contextual;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
@@ -15,6 +16,7 @@ public class PlayerContextual implements Contextual<CommandSender, Player> {
 
     private final TranslationManager translationManager;
 
+    @Inject
     public PlayerContextual(TranslationManager translationManager) {
         this.translationManager = translationManager;
     }

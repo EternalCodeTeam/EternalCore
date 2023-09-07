@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.reflect.ClassPath;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +43,25 @@ public final class ReflectUtil {
         catch (IOException | ClassNotFoundException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    public static Set<Class<?>> getAllSuperClasses(Class<?> base) {
+        Set<Class<?>> classes = new LinkedHashSet<>();
+        classes.add(base);
+        classes.addAll(List.of(base.getInterfaces()));
+
+        Class<?> superclass = base.getSuperclass();
+
+        if (superclass != null) {
+            classes.addAll(getAllSuperClasses(superclass));
+        }
+
+        return classes;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T unsafeCast(Object object) {
+        return (T) object;
     }
 
 }

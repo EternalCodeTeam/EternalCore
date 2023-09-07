@@ -1,6 +1,7 @@
 package com.eternalcode.core.command.argument;
 
 import com.eternalcode.core.feature.essentials.speed.SpeedType;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
@@ -20,6 +21,7 @@ public class StringNicknameArgument implements OneArgument<String> {
 
     private final Server server;
 
+    @Inject
     public StringNicknameArgument(Server server) {
         this.server = server;
     }

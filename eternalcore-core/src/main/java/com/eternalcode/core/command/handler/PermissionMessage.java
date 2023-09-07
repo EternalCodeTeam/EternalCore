@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.handler;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.BukkitViewerProvider;
@@ -16,6 +17,7 @@ public class PermissionMessage implements PermissionHandler<CommandSender> {
     private final BukkitViewerProvider viewerProvider;
     private final NoticeService noticeService;
 
+    @Inject
     public PermissionMessage(BukkitViewerProvider viewerProvider, NoticeService noticeService) {
         this.viewerProvider = viewerProvider;
         this.noticeService = noticeService;

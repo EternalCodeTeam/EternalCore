@@ -1,7 +1,7 @@
 package com.eternalcode.core.language.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
-import com.eternalcode.core.injector.annotations.component.ConfigurationYml;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.language.Language;
 import com.google.common.collect.ImmutableList;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@ConfigurationYml
+@ConfigurationFile
 public class LanguageConfiguration implements ReloadableConfig {
 
     @Description(" ")

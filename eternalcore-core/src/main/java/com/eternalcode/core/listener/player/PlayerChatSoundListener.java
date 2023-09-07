@@ -3,7 +3,7 @@ package com.eternalcode.core.listener.player;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventListener;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
     name = "Sound after message in chat",
     description = "It allows you to play sound after message in chat"
 )
-@EventListener
+@Controller
 public class PlayerChatSoundListener implements Listener {
 
     private final PluginConfiguration config;

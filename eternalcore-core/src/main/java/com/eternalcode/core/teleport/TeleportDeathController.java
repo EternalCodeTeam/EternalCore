@@ -1,14 +1,14 @@
 package com.eternalcode.core.teleport;
 
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.EventListener;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-@EventListener
+@Controller
 public class TeleportDeathController implements Listener {
 
     private final TeleportService teleportService;

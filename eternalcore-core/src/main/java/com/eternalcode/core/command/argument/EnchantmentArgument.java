@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
@@ -19,6 +20,7 @@ import java.util.List;
 @ArgumentName("enchantment")
 public class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 
+    @Inject
     public EnchantmentArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }

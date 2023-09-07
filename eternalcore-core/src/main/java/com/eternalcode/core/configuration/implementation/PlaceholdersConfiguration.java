@@ -1,7 +1,7 @@
 package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
-import com.eternalcode.core.injector.annotations.component.ConfigurationYml;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
@@ -9,7 +9,7 @@ import net.dzikoysk.cdn.source.Source;
 import java.io.File;
 import java.util.Map;
 
-@ConfigurationYml
+@ConfigurationFile
 public class PlaceholdersConfiguration implements ReloadableConfig {
 
     @Description({

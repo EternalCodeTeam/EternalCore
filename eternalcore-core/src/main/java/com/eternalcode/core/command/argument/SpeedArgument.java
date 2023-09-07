@@ -1,5 +1,6 @@
 package com.eternalcode.core.command.argument;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
@@ -23,6 +24,7 @@ public class SpeedArgument extends AbstractViewerArgument<Integer> {
 
     private static final AmountValidator SPEED_VALID = AmountValidator.none().min(0).max(10);
 
+    @Inject
     public SpeedArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
