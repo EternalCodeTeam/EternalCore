@@ -18,10 +18,10 @@ import java.util.List;
 
 @LiteArgument(type = NoticeTextType.class)
 @ArgumentName("action")
-public class NoticeTypeArgument extends AbstractViewerArgument<NoticeTextType> {
+class NoticeTypeArgument extends AbstractViewerArgument<NoticeTextType> {
 
     @Inject
-    public NoticeTypeArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
+    NoticeTypeArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
 

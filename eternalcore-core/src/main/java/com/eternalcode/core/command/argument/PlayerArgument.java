@@ -18,12 +18,12 @@ import java.util.List;
 
 @LiteArgument(type = Player.class)
 @ArgumentName("player")
-public class PlayerArgument extends AbstractViewerArgument<Player> {
+class PlayerArgument extends AbstractViewerArgument<Player> {
 
     private final Server server;
 
     @Inject
-    public PlayerArgument(ViewerProvider viewerProvider, TranslationManager translationManager, Server server) {
+    PlayerArgument(ViewerProvider viewerProvider, TranslationManager translationManager, Server server) {
         super(viewerProvider, translationManager);
         this.server = server;
     }

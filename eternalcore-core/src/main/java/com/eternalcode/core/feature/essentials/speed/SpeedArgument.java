@@ -1,5 +1,6 @@
-package com.eternalcode.core.command.argument;
+package com.eternalcode.core.feature.essentials.speed;
 
+import com.eternalcode.core.command.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
@@ -18,9 +19,9 @@ import java.util.stream.IntStream;
 
 @LiteArgument(type = Integer.class, name = SpeedArgument.KEY)
 @ArgumentName("speed")
-public class SpeedArgument extends AbstractViewerArgument<Integer> {
+class SpeedArgument extends AbstractViewerArgument<Integer> {
 
-    public static final String KEY = "speed";
+    static final String KEY = "speed";
 
     private static final AmountValidator SPEED_VALID = AmountValidator.none().min(0).max(10);
 

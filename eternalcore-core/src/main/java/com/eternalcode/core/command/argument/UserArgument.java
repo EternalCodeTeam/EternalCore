@@ -20,13 +20,13 @@ import java.util.Optional;
 
 @LiteArgument(type = User.class)
 @ArgumentName("player")
-public class UserArgument extends AbstractViewerArgument<User> {
+class UserArgument extends AbstractViewerArgument<User> {
 
     private final Server server;
     private final UserManager userManager;
 
     @Inject
-    public UserArgument(ViewerProvider viewerProvider, TranslationManager translationManager, Server server, UserManager userManager) {
+    UserArgument(ViewerProvider viewerProvider, TranslationManager translationManager, Server server, UserManager userManager) {
         super(viewerProvider, translationManager);
         this.server = server;
         this.userManager = userManager;

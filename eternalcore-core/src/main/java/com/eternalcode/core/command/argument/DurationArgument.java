@@ -20,7 +20,7 @@ import java.util.List;
 
 @LiteArgument(type = Duration.class)
 @ArgumentName("duration")
-public class DurationArgument extends AbstractViewerArgument<Duration> {
+class DurationArgument extends AbstractViewerArgument<Duration> {
 
     private static final List<Duration> SUGGESTED_DURATIONS = Arrays.asList(
         Duration.ofSeconds(1),
@@ -34,7 +34,7 @@ public class DurationArgument extends AbstractViewerArgument<Duration> {
     );
 
     @Inject
-    public DurationArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
+    DurationArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
 

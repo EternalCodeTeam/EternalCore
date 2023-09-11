@@ -12,12 +12,12 @@ import org.bukkit.entity.Player;
 import panda.std.Result;
 
 @LiteContextual(Player.class)
-public class PlayerContextual implements Contextual<CommandSender, Player> {
+class PlayerContextual implements Contextual<CommandSender, Player> {
 
     private final TranslationManager translationManager;
 
     @Inject
-    public PlayerContextual(TranslationManager translationManager) {
+    PlayerContextual(TranslationManager translationManager) {
         this.translationManager = translationManager;
     }
 

@@ -19,12 +19,12 @@ import java.util.Optional;
 
 @LiteArgument(type = GameMode.class)
 @ArgumentName("gamemode")
-public class GameModeArgument extends AbstractViewerArgument<GameMode> {
+class GameModeArgument extends AbstractViewerArgument<GameMode> {
 
     private final GameModeArgumentSettings gameModeArgumentSettings;
 
     @Inject
-    public GameModeArgument(ViewerProvider viewerProvider, TranslationManager translationManager, GameModeArgumentSettings gameModeArgumentSettings) {
+    GameModeArgument(ViewerProvider viewerProvider, TranslationManager translationManager, GameModeArgumentSettings gameModeArgumentSettings) {
         super(viewerProvider, translationManager);
         this.gameModeArgumentSettings = gameModeArgumentSettings;
     }

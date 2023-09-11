@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.command.argument.StringNicknameArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
@@ -31,7 +30,7 @@ class SkullCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives you a skull of player", arguments = "<player>")
-    void execute(Player player, @Arg @By(StringNicknameArgument.KEY) String name) {
+    void execute(Player player, @Arg @By(SkullNicknameArgument.KEY) String name) {
         this.skullAPI.acceptSyncSkull(name, skull -> {
             ItemStack namedSkull = ItemBuilder.from(skull)
                 .name(Component.text(name))

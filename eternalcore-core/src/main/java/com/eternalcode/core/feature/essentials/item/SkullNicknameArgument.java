@@ -1,4 +1,4 @@
-package com.eternalcode.core.command.argument;
+package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
@@ -12,16 +12,16 @@ import panda.std.Result;
 
 import java.util.List;
 
-@LiteArgument(type = String.class, name = StringNicknameArgument.KEY)
+@LiteArgument(type = String.class, name = SkullNicknameArgument.KEY)
 @ArgumentName("player")
-public class StringNicknameArgument implements OneArgument<String> {
+class SkullNicknameArgument implements OneArgument<String> {
 
-    public static final String KEY = "player";
+    static final String KEY = "player";
 
     private final Server server;
 
     @Inject
-    public StringNicknameArgument(Server server) {
+    SkullNicknameArgument(Server server) {
         this.server = server;
     }
 

@@ -21,13 +21,13 @@ import java.util.List;
 
 @LiteArgument(type = Location.class)
 @ArgumentName("x y z")
-public class LocationArgument implements MultilevelArgument<Location> {
+class LocationArgument implements MultilevelArgument<Location> {
 
     private final TranslationManager translationManager;
     private final ViewerProvider viewerProvider;
 
     @Inject
-    public LocationArgument(TranslationManager translationManager, ViewerProvider viewerProvider) {
+    LocationArgument(TranslationManager translationManager, ViewerProvider viewerProvider) {
         this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
     }

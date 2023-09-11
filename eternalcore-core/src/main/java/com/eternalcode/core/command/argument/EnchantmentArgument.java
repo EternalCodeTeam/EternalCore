@@ -18,10 +18,10 @@ import java.util.List;
 
 @LiteArgument(type = Enchantment.class)
 @ArgumentName("enchantment")
-public class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
+class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 
     @Inject
-    public EnchantmentArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
+    EnchantmentArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
 

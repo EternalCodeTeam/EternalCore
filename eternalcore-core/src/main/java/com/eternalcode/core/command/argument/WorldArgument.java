@@ -23,14 +23,14 @@ import java.util.List;
 
 @LiteNativeArgument(type = World.class, annotation = Arg.class)
 @ArgumentName("world")
-public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
+class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
 
     private final Server server;
     private final TranslationManager translationManager;
     private final ViewerProvider viewerProvider;
 
     @Inject
-    public WorldArgument(Server server, TranslationManager translationManager, ViewerProvider viewerProvider) {
+    WorldArgument(Server server, TranslationManager translationManager, ViewerProvider viewerProvider) {
         this.server = server;
         this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;

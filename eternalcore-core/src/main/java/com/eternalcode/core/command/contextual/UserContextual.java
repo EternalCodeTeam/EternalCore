@@ -14,13 +14,13 @@ import org.bukkit.entity.Player;
 import panda.std.Result;
 
 @LiteContextual(User.class)
-public class UserContextual implements Contextual<CommandSender, User> {
+class UserContextual implements Contextual<CommandSender, User> {
 
     private final TranslationManager translationManager;
     private final UserManager userManager;
 
     @Inject
-    public UserContextual(TranslationManager translationManager, UserManager userManager) {
+    UserContextual(TranslationManager translationManager, UserManager userManager) {
         this.translationManager = translationManager;
         this.userManager = userManager;
     }

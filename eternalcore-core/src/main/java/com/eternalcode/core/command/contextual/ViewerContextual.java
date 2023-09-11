@@ -10,12 +10,12 @@ import org.bukkit.command.CommandSender;
 import panda.std.Result;
 
 @LiteContextual(Viewer.class)
-public class ViewerContextual implements Contextual<CommandSender, Viewer> {
+class ViewerContextual implements Contextual<CommandSender, Viewer> {
 
     private final ViewerProvider bukkitViewerProvider;
 
     @Inject
-    public ViewerContextual(ViewerProvider bukkitViewerProvider) {
+    ViewerContextual(ViewerProvider bukkitViewerProvider) {
         this.bukkitViewerProvider = bukkitViewerProvider;
     }
 
