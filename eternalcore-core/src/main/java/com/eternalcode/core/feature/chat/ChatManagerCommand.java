@@ -25,7 +25,7 @@ class ChatManagerCommand {
     private final ChatManager chatManager;
 
     @Inject
-    private ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, ChatSettings settings) {
+    ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, ChatSettings settings) {
         this.noticeService = noticeService;
         this.chatManager = chatManager;
         this.clear = create(settings);

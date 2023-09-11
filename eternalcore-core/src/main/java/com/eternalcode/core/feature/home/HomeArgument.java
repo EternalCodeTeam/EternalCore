@@ -19,7 +19,7 @@ class HomeArgument extends AbstractViewerArgument<Home> {
     private final HomeManager homeManager;
 
     @Inject
-    protected HomeArgument(ViewerProvider viewerProvider, TranslationManager translationManager, HomeManager homeManager) {
+    HomeArgument(ViewerProvider viewerProvider, TranslationManager translationManager, HomeManager homeManager) {
         super(viewerProvider, translationManager);
         this.homeManager = homeManager;
     }

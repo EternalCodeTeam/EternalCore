@@ -30,7 +30,7 @@ class AfkCommand {
     private final Delay<UUID> delay;
 
     @Inject
-    public AfkCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration, AfkService afkService) {
+    AfkCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration, AfkService afkService) {
         this.noticeService = noticeService;
         this.pluginConfiguration = pluginConfiguration;
         this.afkService = afkService;

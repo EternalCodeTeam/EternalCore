@@ -26,7 +26,7 @@ class SpeedArgument extends AbstractViewerArgument<Integer> {
     private static final AmountValidator SPEED_VALID = AmountValidator.none().min(0).max(10);
 
     @Inject
-    public SpeedArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
+    SpeedArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
 

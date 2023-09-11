@@ -29,7 +29,7 @@ class RequesterArgument extends AbstractViewerArgument<Player> {
     private final Server server;
 
     @Inject
-    public RequesterArgument(TeleportRequestService requestService, TranslationManager translationManager, ViewerProvider viewerProvider, Server server) {
+    RequesterArgument(TeleportRequestService requestService, TranslationManager translationManager, ViewerProvider viewerProvider, Server server) {
         super(viewerProvider, translationManager);
         this.requestService = requestService;
         this.server = server;

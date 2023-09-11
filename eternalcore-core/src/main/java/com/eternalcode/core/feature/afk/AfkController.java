@@ -16,7 +16,7 @@ class AfkController implements Listener {
     private final AfkService afkService;
 
     @Inject
-    public AfkController(AfkService afkService) {
+    AfkController(AfkService afkService) {
         this.afkService = afkService;
     }
 
