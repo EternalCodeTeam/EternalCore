@@ -11,13 +11,13 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 @Controller
-public class PrepareUserController implements Listener {
+class PrepareUserController implements Listener {
 
     private final UserManager userManager;
     private final Server server;
 
     @Inject
-    public PrepareUserController(UserManager userManager, Server server) {
+    PrepareUserController(UserManager userManager, Server server) {
         this.userManager = userManager;
         this.server = server;
     }

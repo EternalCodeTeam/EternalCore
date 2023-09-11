@@ -82,7 +82,17 @@ class HomeManager {
         return Collections.unmodifiableCollection(this.homes.getOrDefault(user, new HashMap<>()).values());
     }
 
-    public int getMaxAmountOfHomes(Player player, PluginConfiguration.Homes homes) {
+    public int getAmountOfHomes(UUID user) {
+        Map<String, Home> homes = this.homes.get(user);
+
+        if (homes == null) {
+            return 0;
+        }
+
+        return homes.size();
+    }
+
+    public int getHomesLimit(Player player, PluginConfiguration.Homes homes) {
         return homes.maxHomes.entrySet().stream()
             .flatMap(entry -> {
                 if (player.hasPermission(entry.getKey())) {

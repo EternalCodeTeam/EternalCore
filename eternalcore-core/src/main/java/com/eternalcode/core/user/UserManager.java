@@ -1,6 +1,5 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,10 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserManager {
-
-    @Inject
-    UserManager() {
-    }
 
     private final Map<UUID, User> usersByUUID = new ConcurrentHashMap<>();
     private final Map<String, User> usersByName = new ConcurrentHashMap<>();
