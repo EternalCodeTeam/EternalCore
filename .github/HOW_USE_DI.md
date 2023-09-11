@@ -145,3 +145,6 @@ public class UserBeanSetup {
     @Bean // <- marks a method that will be registered as a bean. (dependency)
     public OtherProvider otherProvider(Server server) {
         return new OtherProvider(server);
+    }
+}
+```
