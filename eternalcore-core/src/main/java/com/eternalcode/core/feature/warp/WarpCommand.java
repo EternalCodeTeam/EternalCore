@@ -83,7 +83,7 @@ public class WarpCommand {
     }
 
     @Execute(route = "delwarp", required = 1)
-    @Permission("eternalcore.warp.delete")
+    @Permission("eternalcore.delwarp")
     @DescriptionDocs(description = "Remove warp")
     void remove(Player player, @Arg Warp warp) {
         this.warpManager.removeWarp(warp.getName());
