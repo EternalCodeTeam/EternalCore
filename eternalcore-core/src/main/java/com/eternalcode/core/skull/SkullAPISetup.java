@@ -1,5 +1,6 @@
 package com.eternalcode.core.skull;
 
+import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.BeanSetup;
@@ -9,7 +10,7 @@ import dev.rollczi.liteskullapi.SkullAPI;
 import org.bukkit.plugin.Plugin;
 
 @BeanSetup
-class SkullAPISetup {
+class SkullAPISetup implements Subscriber {
 
     @Bean
     public SkullAPI skullAPI(Plugin plugin) {

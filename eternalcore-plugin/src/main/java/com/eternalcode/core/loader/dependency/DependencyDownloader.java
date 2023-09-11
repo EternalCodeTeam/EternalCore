@@ -4,13 +4,16 @@ import com.eternalcode.core.loader.repository.Repository;
 import com.google.common.io.ByteStreams;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -18,27 +21,37 @@ import java.util.logging.Logger;
 public class DependencyDownloader {
 
     private final Logger logger;
-    private final Path cacheDirectory;
+    private final Repository localRepository;
     private final List<Repository> repositories;
 
-    public DependencyDownloader(Logger logger, File dataFolder, List<Repository> repositories) {
+    public DependencyDownloader(Logger logger, Repository localRepository, List<Repository> repositories) {
         this.logger = logger;
         this.repositories = repositories;
-        this.cacheDirectory = this.setupCacheDirectory(dataFolder);
+        this.localRepository = localRepository;
     }
 
-    public Path downloadDependency(Dependency dependency) {
-        Path file = this.cacheDirectory.resolve(dependency.toJarFileName());
 
-        if (Files.exists(file)) {
-            return file;
+    public Path downloadDependency(Dependency dependency) {
+        try {
+            return this.tryDownloadDependency(dependency);
+        }
+        catch (URISyntaxException exception) {
+            throw new DependencyException(exception);
+        }
+    }
+
+    private Path tryDownloadDependency(Dependency dependency) throws URISyntaxException {
+        Path localPath = dependency.toMavenJar(this.localRepository).toPath();
+
+        if (Files.exists(localPath)) {
+            return localPath;
         }
 
         List<DependencyException> exceptions = new ArrayList<>();
 
         for (Repository repository : this.repositories) {
             try {
-                Path path = this.downloadJarAndSave(repository, dependency, file);
+                Path path = this.downloadJarAndSave(repository, dependency, localPath);
                 this.logger.info("Downloaded " + dependency + " from " + repository);
                 return path;
             }
@@ -59,8 +72,13 @@ public class DependencyDownloader {
     private Path downloadJarAndSave(Repository repository, Dependency dependency, Path file) {
         try {
             byte[] bytes = this.downloadJar(repository, dependency);
+            Path parent = file.getParent();
 
-            Files.write(file, bytes);
+            Files.createDirectories(parent);
+            Files.write(file, bytes, StandardOpenOption.CREATE);
+        }
+        catch (FileNotFoundException | NoSuchFileException fileNotFoundException) {
+            throw new DependencyException("Dependency not found for repositoru: " + dependency.toMavenJar(repository).toString());
         }
         catch (IOException e) {
             throw new DependencyException(e);
@@ -70,7 +88,7 @@ public class DependencyDownloader {
     }
 
     private byte[] downloadJar(Repository repository, Dependency dependency) throws IOException {
-        URLConnection connection = new URL(dependency.toMavenJarPath(repository)).openConnection();
+        URLConnection connection = dependency.toMavenJar(repository).toURL().openConnection();
 
         try (InputStream in = connection.getInputStream()) {
             byte[] bytes = ByteStreams.toByteArray(in);
@@ -81,20 +99,6 @@ public class DependencyDownloader {
 
             return bytes;
         }
-    }
-
-    private Path setupCacheDirectory(File dataFolder) {
-        Path cacheDirectory = dataFolder.toPath().resolve("libs");
-        try {
-            Files.createDirectories(cacheDirectory);
-        }
-        catch (FileAlreadyExistsException ignored) {
-        }
-        catch (IOException ioException) {
-            throw new DependencyException("Unable to create libs/ directory", ioException);
-        }
-
-        return cacheDirectory;
     }
 
 }

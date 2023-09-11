@@ -3,11 +3,15 @@ package com.eternalcode.core.injector.bean;
 import com.eternalcode.core.injector.DependencyProvider;
 import com.eternalcode.core.injector.bean.processor.BeanProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class BeanFactory implements DependencyProvider {
+
+    private final static ThreadLocal<List<Class<?>>> dependencyStacktrace = ThreadLocal.withInitial(() -> new ArrayList<>());
 
     private final BeanContainer container = new BeanContainer();
     private final BeanCandidateContainer candidateContainer = new BeanCandidateContainer();
@@ -22,23 +26,42 @@ public class BeanFactory implements DependencyProvider {
         return this.getSingletonBean(clazz).get();
     }
 
-    public <T> BeanHolder<T> getSingletonBean(Class<T> type) {
-        List<BeanHolder<T>> beans = this.container.getBeans(type);
+    private <T> BeanHolder<T> getSingletonBean(Class<T> type) {
+        List<Class<?>> stacktrace = dependencyStacktrace.get();
 
-        if (beans.isEmpty()) {
-            return this.createBeanFromCandidate(type)
-                .orElseThrow(() -> new BeanException("No bean found for type " + type.getName(), type));
+        if (stacktrace.contains(type)) {
+            stacktrace.add(type);
+            String cycledDependencies = stacktrace.stream()
+                .map(dependencyType -> dependencyType.getName())
+                .collect(Collectors.joining(System.lineSeparator() + " -> "));
+            stacktrace.remove(stacktrace.size() - 1);
+
+            throw new BeanException("Cycled dependency detected! [" + cycledDependencies + "]", type);
         }
 
-        if (beans.size() > 1) {
-            String beansAsString = String.join(", ", beans.stream()
-                .map(bean -> bean.getType().getName())
-                .toArray(String[]::new));
+        stacktrace.add(type);
 
-            throw new BeanException("Multiple beans found for type " + type.getName() + ": " + beansAsString, type);
+        try {
+            List<BeanHolder<T>> beans = this.container.getBeans(type);
+
+            if (beans.isEmpty()) {
+                return this.createBeanFromCandidate(type)
+                    .orElseThrow(() -> new BeanException("No bean found for type " + type.getName(), type));
+            }
+
+            if (beans.size() > 1) {
+                String beansAsString = String.join(", ", beans.stream()
+                    .map(bean -> bean.get().toString())
+                    .toArray(String[]::new));
+
+                throw new BeanException("Multiple beans found for type " + type.getName() + ": " + beansAsString, type);
+            }
+
+            return beans.get(0);
         }
-
-        return beans.get(0);
+        finally {
+            stacktrace.remove(stacktrace.size() - 1);
+        }
     }
 
     public <T> List<BeanHolder<T>> getBeans(Class<T> type) {
@@ -46,22 +69,13 @@ public class BeanFactory implements DependencyProvider {
     }
 
     private <T> Optional<BeanHolder<T>> createBeanFromCandidate(Class<T> type) {
-        List<BeanCandidate> candidates = this.candidateContainer.getCandidates(type);
+        BeanCandidate beanCandidate = this.candidateContainer.nextCandidate(type);
 
-        if (candidates.isEmpty()) {
+        if (beanCandidate == null) {
             return Optional.empty();
         }
 
-        if (candidates.size() > 1) {
-            String candidatesAsString = String.join(", ", candidates.stream()
-                .map(candidate -> candidate.toString())
-                .toArray(String[]::new));
-
-            throw new BeanException("Multiple candidates found for type " + type.getName() + ": " + candidatesAsString, type);
-        }
-
-        BeanCandidate candidate = candidates.get(0);
-        BeanHolder<T> bean = this.initializeCandidate(candidate, type);
+        BeanHolder<T> bean = this.initializeCandidate(beanCandidate, type);
 
         return Optional.of(bean);
     }
@@ -79,8 +93,10 @@ public class BeanFactory implements DependencyProvider {
         return this.addCandidate(BeanCandidate.of(type, instance));
     }
 
-    public BeanFactory initializeCandidates(Class<?> type ) {
-        for (BeanCandidate candidate : this.candidateContainer.getCandidates(type)) {
+    public BeanFactory initializeCandidates(Class<?> type) {
+        BeanCandidate candidate;
+
+        while ((candidate = this.candidateContainer.nextCandidate(type)) != null) {
             this.initializeCandidate(candidate, type);
         }
 
@@ -88,7 +104,9 @@ public class BeanFactory implements DependencyProvider {
     }
 
     public BeanFactory initializeCandidates() {
-        for (BeanCandidate candidate : this.candidateContainer.getCandidatesCopy()) {
+        BeanCandidate candidate;
+
+        while ((candidate = this.candidateContainer.nextCandidate()) != null) {
             this.initializeCandidate(candidate, Object.class);
         }
 

@@ -4,7 +4,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class AfkSwitchEvent extends Event implements Cancellable {
+class AfkSwitchEvent extends Event implements Cancellable {
 
     private final static HandlerList HANDLER_LIST = new HandlerList();
 

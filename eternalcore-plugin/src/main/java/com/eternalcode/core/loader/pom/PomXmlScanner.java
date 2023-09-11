@@ -3,6 +3,10 @@ package com.eternalcode.core.loader.pom;
 import com.eternalcode.core.loader.dependency.Dependency;
 import com.eternalcode.core.loader.dependency.DependencyCollector;
 import com.eternalcode.core.loader.repository.Repository;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -20,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class PomXmlScanner {
+public class PomXmlScanner implements DependencyScanner {
 
     private static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
 
@@ -33,18 +37,20 @@ public class PomXmlScanner {
             DOCUMENT_BUILDER_FACTORY.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             DOCUMENT_BUILDER_FACTORY.setXIncludeAware(false);
             DOCUMENT_BUILDER_FACTORY.setExpandEntityReferences(false);
-        }
-        catch (ParserConfigurationException exception) {
+        } catch (ParserConfigurationException exception) {
             throw new RuntimeException("Failed to configure XML parser", exception);
         }
     }
 
+    private final Repository localRepository;
     private final List<Repository> repositories = new ArrayList<>();
 
-    public PomXmlScanner(List<Repository> repositories) {
+    public PomXmlScanner(List<Repository> repositories, Repository localRepository) {
+        this.localRepository = localRepository;
         this.repositories.addAll(repositories);
     }
 
+    @Override
     public DependencyCollector findAllChildren(DependencyCollector collector, Dependency dependency) {
 
         for (Repository repository : this.repositories) {
@@ -73,23 +79,45 @@ public class PomXmlScanner {
 
     private Optional<List<Dependency>> tryReadDependency(Dependency dependency, Repository repository) {
         try {
-            String pomXmlPath = dependency.toPomXmlPath(repository);
-            URL url = new URL(pomXmlPath);
+            File pomXml = this.savePomXmlToLocalRepository(dependency, repository);
+            List<Dependency> dependencies = this.readDependency(pomXml);
 
-            try (InputStream inputStream = url.openStream()) {
-                List<Dependency> dependencies = this.readDependency(inputStream);
+            return Optional.of(dependencies);
 
-                return Optional.of(dependencies);
-            }
         }
-        catch (IOException | SAXException | ParserConfigurationException exception) {
+        catch (IOException | SAXException | ParserConfigurationException | URISyntaxException exception) {
             return Optional.empty();
         }
     }
 
-    private List<Dependency> readDependency(InputStream inputStream) throws ParserConfigurationException, IOException, SAXException {
+    private File savePomXmlToLocalRepository(Dependency dependency, Repository repository) throws URISyntaxException, IOException {
+        File localFile = dependency.toPomXml(this.localRepository).toFile();
+
+        if (localFile.exists() && !this.isEmpty(localFile)) {
+            return localFile;
+        }
+
+        URL url = dependency.toPomXml(repository).toURL();
+
+        try (InputStream inputStream = url.openStream()) {
+            Files.createDirectories(localFile.toPath());
+            Files.copy(inputStream, localFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        return localFile;
+    }
+
+    private boolean isEmpty(File file) {
+        try {
+            return Files.size(file.toPath()) == 0;
+        } catch (IOException exception) {
+            return true;
+        }
+    }
+
+    private List<Dependency> readDependency(File file) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilder builder = DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
-        Document doc = builder.parse(inputStream);
+        Document doc = builder.parse(file);
 
         Element root = doc.getDocumentElement();
         PomXmlProperties properties = PomXmlProperties.from(root);

@@ -45,7 +45,7 @@ public class BeanProcessor {
             Set<Processor<BEAN, A>> beanProcessors = ReflectUtil.unsafeCast(processors.get(superClass));
 
             if (beanProcessors == null) {
-                return;
+                continue;
             }
 
             for (Processor<BEAN, A> processor : beanProcessors) {

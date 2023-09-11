@@ -48,7 +48,9 @@ public final class ReflectUtil {
     public static Set<Class<?>> getAllSuperClasses(Class<?> base) {
         Set<Class<?>> classes = new LinkedHashSet<>();
         classes.add(base);
-        classes.addAll(List.of(base.getInterfaces()));
+        for (Class<?> baseInterface : base.getInterfaces()) {
+            classes.addAll(getAllSuperClasses(baseInterface));
+        }
 
         Class<?> superclass = base.getSuperclass();
 

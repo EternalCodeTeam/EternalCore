@@ -1,5 +1,9 @@
 package com.eternalcode.core.loader.repository;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+
 public class Repository {
 
     private final String url;
@@ -10,10 +14,6 @@ public class Repository {
 
     public String url() {
         return this.url;
-    }
-
-    public String urlSlash() {
-        return this.url + "/";
     }
 
     public static Repository of(String url) {
@@ -27,6 +27,15 @@ public class Repository {
     @Override
     public String toString() {
         return this.url;
+    }
+
+    public static Repository localRepository(Path repositoryFolder) {
+        try {
+            return Repository.of(repositoryFolder.toUri().toURL().toString());
+        }
+        catch (MalformedURLException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
 }

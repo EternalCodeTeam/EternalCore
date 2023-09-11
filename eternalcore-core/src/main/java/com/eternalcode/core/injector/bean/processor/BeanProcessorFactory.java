@@ -4,16 +4,21 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
 import com.eternalcode.core.publish.Publisher;
+import com.eternalcode.core.publish.Subscribe;
+import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.scheduler.Scheduler;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.simple.MultilevelArgument;
 import dev.rollczi.litecommands.command.root.RootRoute;
 import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.contextual.Contextual;
 import dev.rollczi.litecommands.handle.Handler;
+import java.lang.reflect.Method;
 import org.bukkit.Server;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -49,9 +54,20 @@ public final class BeanProcessorFactory {
             .onProcess(Listener.class, (provider, listener, none) -> {
                 pluginManager.registerEvents(listener, plugin);
             })
-            .onProcess(Object.class, (provider, potentialSubscriber, none) -> {
+            .onProcess(Subscriber.class, (provider, potentialSubscriber, none) -> {
                 Publisher publisher = provider.getDependency(Publisher.class);
                 publisher.subscribe(potentialSubscriber);
+            })
+            .onProcess(Object.class, (dependencyProvider, instance, none) -> {
+                if (instance instanceof Subscriber) {
+                    return;
+                }
+
+                for (Method method : instance.getClass().getDeclaredMethods()) {
+                    if (method.isAnnotationPresent(Subscribe.class)) {
+                        throw new IllegalStateException("Missing 'implements Subscriber' in declaration of class " + instance.getClass());
+                    }
+                }
             })
             .onProcess(ReloadableConfig.class, (provider, config, configurationFile) -> {
                 ConfigurationManager configurationManager = provider.getDependency(ConfigurationManager.class);
@@ -79,6 +95,11 @@ public final class BeanProcessorFactory {
                 LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
 
                 builder.resultHandler(liteHandler.value(), handler);
+            })
+            .onProcess(LiteContextual.class, Contextual.class, (provider, contextual, liteContextual) -> {
+                LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
+
+                builder.contextualBind(liteContextual.value(), contextual);
             });
     }
 

@@ -1,11 +1,14 @@
 package com.eternalcode.core.placeholder;
 
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
+import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.Subscribe;
 import org.bukkit.Server;
 
-class PlaceholdersSetup {
+@Controller
+class PlaceholdersSetup implements Subscriber {
 
     @Subscribe(EternalInitializeEvent.class)
     void setUp(PlaceholderRegistry placeholderRegistry, PlaceholdersConfiguration placeholdersConfiguration) {

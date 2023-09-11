@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class AfkService {
+class AfkService {
 
     private final AfkSettings afkSettings;
     private final NoticeService noticeService;

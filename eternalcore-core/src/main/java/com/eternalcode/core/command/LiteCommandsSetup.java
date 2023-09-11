@@ -4,6 +4,7 @@ import com.eternalcode.core.command.configurator.CommandConfigurator;
 import com.eternalcode.core.command.configurator.GameModeConfigurator;
 import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.injector.bean.BeanFactory;
+import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import com.eternalcode.core.feature.essentials.gamemode.GameModeCommand;
@@ -19,7 +20,7 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 @BeanSetup
-class LiteCommandsSetup {
+class LiteCommandsSetup implements Subscriber {
 
     @Bean
     public LiteCommandsBuilder<CommandSender> liteCommandsBuilder(Server server, AudienceProvider audiencesProvider, MiniMessage miniMessage, CommandConfiguration commandConfiguration) {

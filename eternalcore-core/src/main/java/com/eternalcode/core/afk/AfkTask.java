@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 @Task(delay = 1L, period = 1L, unit = TimeUnit.MINUTES)
-public class AfkTask implements Runnable {
+class AfkTask implements Runnable {
 
     private final AfkService afkService;
     private final Server server;

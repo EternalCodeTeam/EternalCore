@@ -1,6 +1,6 @@
 package com.eternalcode.core.afk;
 
-public enum AfkReason {
+enum AfkReason {
 
     INACTIVITY,
     COMMAND,

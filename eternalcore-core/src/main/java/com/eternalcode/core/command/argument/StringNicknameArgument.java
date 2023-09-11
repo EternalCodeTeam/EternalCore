@@ -13,7 +13,7 @@ import panda.std.Result;
 
 import java.util.List;
 
-@LiteArgument(type = SpeedType.class, name = StringNicknameArgument.KEY)
+@LiteArgument(type = String.class, name = StringNicknameArgument.KEY)
 @ArgumentName("player")
 public class StringNicknameArgument implements OneArgument<String> {
 

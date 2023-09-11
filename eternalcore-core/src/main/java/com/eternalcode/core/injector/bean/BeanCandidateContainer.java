@@ -3,36 +3,59 @@ package com.eternalcode.core.injector.bean;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nullable;
 
 class BeanCandidateContainer {
 
-    private final Set<BeanCandidate> candidates = ConcurrentHashMap.newKeySet();
+    private final Object lock = new Object();
+
+    private final Set<BeanCandidate> candidates = new HashSet<>();
 
     void addCandidate(BeanCandidate candidate) {
-        this.candidates.add(candidate);
+        synchronized (this.lock) {
+            this.candidates.add(candidate);
+        }
     }
 
     void removeCandidate(BeanCandidate candidate) {
-        this.candidates.remove(candidate);
+        synchronized (this.lock) {
+            this.candidates.remove(candidate);
+        }
     }
 
-    List<BeanCandidate> getCandidates(Class<?> type) {
-        List<BeanCandidate> candidates = new ArrayList<>();
+    @Nullable
+    BeanCandidate nextCandidate(Class<?> type) {
+        synchronized (this.lock) {
+            for (BeanCandidate candidate : this.candidates) {
+                if (!candidate.isCandidate(type)) {
+                    continue;
+                }
 
-        for (BeanCandidate candidate : this.candidates) {
-            if (candidate.isCandidate(type)) {
-                candidates.add(candidate);
+                this.candidates.remove(candidate);
+                return candidate;
             }
         }
 
-        return candidates;
+        return null;
     }
 
-    Set<BeanCandidate> getCandidatesCopy() {
-        return Collections.unmodifiableSet(this.candidates);
+    @Nullable
+    BeanCandidate nextCandidate() {
+        synchronized (this.lock) {
+            Iterator<BeanCandidate> iterator = this.candidates.iterator();
+
+            if (!iterator.hasNext()) {
+                return null;
+            }
+
+            BeanCandidate candidate = iterator.next();
+            iterator.remove();
+            return candidate;
+        }
     }
 
 }

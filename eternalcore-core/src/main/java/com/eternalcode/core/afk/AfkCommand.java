@@ -22,7 +22,7 @@ import java.util.UUID;
     permission = { "eternalcore.afk", "eternalcore.afk.bypass" },
     description = "It allows you to mark yourself as AFK, or if you are AFK, eternalcore will mark you as AFK after some time"
 )
-public class AfkCommand {
+class AfkCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
