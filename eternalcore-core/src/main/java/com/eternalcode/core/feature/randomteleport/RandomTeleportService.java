@@ -7,6 +7,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -38,8 +39,6 @@ class RandomTeleportService {
         Material.VINE
     );
 
-    private static final int DEFAULT_WORLD_BORDER_SIZE = 29_999_984;
-
     private static final int DEFAULT_NETHER_HEIGHT = 125;
     private static final int NETHER_MAX_HEIGHT = 127;
 
@@ -63,10 +62,6 @@ class RandomTeleportService {
         }
 
         int radius = this.randomTeleportSettings.randomTeleportRadius();
-
-        if (this.hasSetWorldBorder(world)) {
-            radius = (int) (world.getWorldBorder().getSize() / 2);
-        }
 
         int randomX = this.random.nextInt(-radius, radius);
         int randomZ = this.random.nextInt(-radius, radius);
@@ -110,15 +105,16 @@ class RandomTeleportService {
             return false;
         }
 
+        WorldBorder worldBorder = world.getWorldBorder();
+
+        if (!worldBorder.isInside(location)) {
+            return false;
+        }
+
         return switch (world.getEnvironment()) {
             case NORMAL, THE_END -> true;
             case NETHER -> location.getY() <= NETHER_MAX_HEIGHT;
             default -> false;
         };
-    }
-
-    private boolean hasSetWorldBorder(World world) {
-        double currentWorldBorderSize = world.getWorldBorder().getSize();
-        return currentWorldBorderSize < DEFAULT_WORLD_BORDER_SIZE;
     }
 }

@@ -7,6 +7,7 @@ import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.command.amount.Required;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -33,6 +34,7 @@ class HomeCommand {
     }
 
     @Execute
+    @Required(0)
     @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time")
     void execute(Player player) {
         Collection<Home> playerHomes = this.homeManager.getHomes(player.getUniqueId());
@@ -51,6 +53,7 @@ class HomeCommand {
     }
 
     @Execute
+    @Required(1)
     @DescriptionDocs(description = "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time", arguments = "<home>")
     void execute(Player player, @Arg Home home) {
         this.teleportToHome(player, home);

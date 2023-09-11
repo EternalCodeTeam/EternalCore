@@ -396,6 +396,9 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " ", "# {LIMIT} - Limit domów" })
         public Notice limit = Notice.chat("<green>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
+
+        @Description({ " ", "# Wiadomości placeholderów" })
+        public String noHomesOwned = "Nie posiadasz żadnego domu.";
     }
 
     @Description({

@@ -16,4 +16,8 @@ public interface PlaceholderReplacer {
         return new PlaceholderRaw(target, replacement);
     }
 
+    static PlaceholderReplacer of(String target, PlaceholderReplacer placeholder) {
+        return new PlaceholderRaw(target, player -> placeholder.apply(target, player));
+    }
+
 }

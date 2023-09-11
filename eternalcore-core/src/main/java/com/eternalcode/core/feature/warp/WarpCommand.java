@@ -10,12 +10,12 @@ import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.command.root.RootRoute;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
-@Route(name = "warp")
+@RootRoute
 @Permission("eternalcore.warp")
 class WarpCommand {
 
@@ -34,7 +34,7 @@ class WarpCommand {
         this.warpInventory = warpInventory;
     }
 
-    @Execute(required = 0)
+    @Execute(route = "warp", required = 0)
     @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps")
     void warp(Player player, User user) {
         if (!this.config.warp.inventoryEnabled) {
@@ -50,7 +50,7 @@ class WarpCommand {
         this.warpInventory.openInventory(player, user.getLanguage());
     }
 
-    @Execute(required = 1)
+    @Execute(route = "warp", required = 1)
     @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant")
     void warp(Player player, @Arg Warp warp) {
         if (player.hasPermission("eternalcore.warp.bypass")) {
@@ -61,8 +61,8 @@ class WarpCommand {
         this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ofSeconds(5));
     }
 
-    @Execute(route = "add", required = 1)
-    @Permission("eternalcore.warp.create")
+    @Execute(route = "setwarp", required = 1)
+    @Permission("eternalcore.setwarp")
     @DescriptionDocs(description = "Create warp")
     void add(Player player, @Arg String warp) {
         if (this.warpManager.warpExists(warp)) {
@@ -84,8 +84,8 @@ class WarpCommand {
             .send();
     }
 
-    @Execute(route = "remove", required = 1)
-    @Permission("eternalcore.warp.delete")
+    @Execute(route = "delwarp", required = 1)
+    @Permission("eternalcore.delwarp")
     @DescriptionDocs(description = "Remove warp")
     void remove(Player player, @Arg Warp warp) {
         this.warpManager.removeWarp(warp.getName());

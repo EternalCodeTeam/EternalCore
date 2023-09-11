@@ -11,9 +11,6 @@ import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
-import java.util.Map;
-import java.util.stream.Stream;
-
 @Route(name = "sethome")
 @Permission("eternalcore.sethome")
 class SetHomeCommand {
@@ -55,7 +52,7 @@ class SetHomeCommand {
         }
 
         int amountOfUserHomes = this.homeManager.getHomes(player.getUniqueId()).size();
-        int maxAmountOfUserHomes = this.getMaxAmountOfHomes(player);
+        int maxAmountOfUserHomes = this.homeManager.getMaxAmountOfHomes(player, this.pluginConfiguration.homes);
 
         if (amountOfUserHomes >= maxAmountOfUserHomes) {
             this.noticeService.create()
@@ -75,20 +72,4 @@ class SetHomeCommand {
             .placeholder("{HOME}", home)
             .send();
     }
-
-    int getMaxAmountOfHomes(Player player) {
-        Map<String, Integer> maxHomes = this.pluginConfiguration.homes.maxHomes;
-
-        return maxHomes.entrySet().stream()
-            .flatMap(entry -> {
-                if (player.hasPermission(entry.getKey())) {
-                    return Stream.of(entry.getValue());
-                }
-
-                return Stream.empty();
-            })
-            .max(Integer::compareTo)
-            .orElse(0);
-    }
-
 }
