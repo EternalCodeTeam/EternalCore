@@ -14,20 +14,20 @@ import org.bukkit.entity.Player;
 
 @Route(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
-public class AdminChatCommand {
+class AdminChatCommand {
 
     private final NoticeService noticeService;
     private final Server server;
 
     @Inject
-    public AdminChatCommand(NoticeService noticeService, Server server) {
+    AdminChatCommand(NoticeService noticeService, Server server) {
         this.noticeService = noticeService;
         this.server = server;
     }
 
     @Execute(min = 1)
     @DescriptionDocs(description = "Sends a message to all staff members with eternalcore.adminchat.spy permissions", arguments = "<message>")
-    public void execute(CommandSender sender, @Joiner String message) {
+    void execute(CommandSender sender, @Joiner String message) {
         NoticeBroadcast notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())
@@ -44,4 +44,5 @@ public class AdminChatCommand {
 
         notice.send();
     }
+
 }

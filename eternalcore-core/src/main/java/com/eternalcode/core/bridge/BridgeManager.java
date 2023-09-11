@@ -11,24 +11,21 @@ import org.bukkit.plugin.PluginManager;
 
 import java.util.logging.Logger;
 
-@Service
-public class BridgeManager {
+class BridgeManager {
 
     private final PlaceholderRegistry placeholderRegistry;
     private final PluginDescriptionFile pluginDescriptionFile;
     private final Server server;
     private final Logger logger;
-
-    @Inject
-    public BridgeManager(PlaceholderRegistry placeholderRegistry, PluginDescriptionFile pluginDescriptionFile, Server server, Logger logger) {
+    
+    BridgeManager(PlaceholderRegistry placeholderRegistry, PluginDescriptionFile pluginDescriptionFile, Server server, Logger logger) {
         this.placeholderRegistry = placeholderRegistry;
         this.pluginDescriptionFile = pluginDescriptionFile;
         this.server = server;
         this.logger = logger;
-        this.init();
     }
 
-    public void init() {
+    void init() {
         this.setupBridge("PlaceholderAPI", () -> {
             this.placeholderRegistry.registerPlaceholder(new PlaceholderApiReplacer());
             new PlaceholderApiExtension(this.placeholderRegistry, this.pluginDescriptionFile).initialize();
@@ -44,4 +41,5 @@ public class BridgeManager {
             this.logger.info("Successfully hooked into " + pluginName + " bridge!");
         }
     }
+    
 }

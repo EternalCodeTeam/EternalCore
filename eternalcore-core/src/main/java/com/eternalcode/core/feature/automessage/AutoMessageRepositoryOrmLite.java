@@ -1,6 +1,7 @@
-package com.eternalcode.core.database.wrapper;
+package com.eternalcode.core.feature.automessage;
 
 import com.eternalcode.core.database.DatabaseManager;
+import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
 import com.eternalcode.core.feature.automessage.AutoMessageRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements AutoMessageRepository {
+class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements AutoMessageRepository {
 
     @Inject
     private AutoMessageRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {

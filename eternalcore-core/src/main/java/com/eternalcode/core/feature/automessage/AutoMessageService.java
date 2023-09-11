@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @FeatureDocs(name = "AutoMessage", description = "Automatically sends messages to players at a given time interval.")
 @Service
-public class AutoMessageService {
+class AutoMessageService {
 
     private final AutoMessageRepository repository;
     private final AutoMessageSettings settings;
@@ -31,7 +31,7 @@ public class AutoMessageService {
     private final AtomicInteger broadcastCount = new AtomicInteger(0);
 
     @Inject
-    public AutoMessageService(AutoMessageRepository repository, AutoMessageSettings settings, NoticeService noticeService, Scheduler scheduler, Server server) {
+    AutoMessageService(AutoMessageRepository repository, AutoMessageSettings settings, NoticeService noticeService, Scheduler scheduler, Server server) {
         this.repository = repository;
         this.settings = settings;
         this.noticeService = noticeService;
@@ -41,11 +41,11 @@ public class AutoMessageService {
         this.tick();
     }
 
-    public Completable<Boolean> switchReceiving(UUID uniqueId) {
+    Completable<Boolean> switchReceiving(UUID uniqueId) {
         return this.repository.switchReceiving(uniqueId);
     }
 
-    public void broadcastNextMessage() {
+    void broadcastNextMessage() {
         List<UUID> onlineUniqueIds = this.server.getOnlinePlayers().stream()
             .map(Entity::getUniqueId)
             .toList();

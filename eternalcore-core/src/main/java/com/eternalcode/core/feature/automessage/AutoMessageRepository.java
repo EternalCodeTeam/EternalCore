@@ -5,7 +5,7 @@ import panda.std.reactive.Completable;
 import java.util.List;
 import java.util.UUID;
 
-public interface AutoMessageRepository {
+interface AutoMessageRepository {
 
     Completable<List<UUID>> findReceivers(List<UUID> onlineUniqueIds);
 

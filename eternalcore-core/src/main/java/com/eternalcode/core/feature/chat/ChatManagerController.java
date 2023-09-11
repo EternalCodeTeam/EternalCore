@@ -20,19 +20,19 @@ import java.util.UUID;
     permission = { "eternalcore.chat.noslowmode", "eternalcore.chat.bypass" }
 )
 @Controller
-public class ChatManagerController implements Listener {
+class ChatManagerController implements Listener {
 
     private final ChatManager chatManager;
     private final NoticeService noticeService;
 
     @Inject
-    public ChatManagerController(ChatManager chatManager, NoticeService noticeService) {
+    ChatManagerController(ChatManager chatManager, NoticeService noticeService) {
         this.chatManager = chatManager;
         this.noticeService = noticeService;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public void onChatSlowMode(AsyncPlayerChatEvent event) {
+    void onChatSlowMode(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
@@ -62,7 +62,7 @@ public class ChatManagerController implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void markUseChat(AsyncPlayerChatEvent event) {
+    void markUseChat(AsyncPlayerChatEvent event) {
         this.chatManager.markUseChat(event.getPlayer().getUniqueId());
     }
 

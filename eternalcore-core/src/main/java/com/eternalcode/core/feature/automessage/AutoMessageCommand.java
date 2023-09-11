@@ -10,13 +10,13 @@ import org.bukkit.entity.Player;
 
 @Route(name = "automessage", aliases = { "automsg" })
 @Permission("eternalcore.automessage")
-public class AutoMessageCommand {
+class AutoMessageCommand {
 
     private final AutoMessageService autoMessageService;
     private final NoticeService noticeService;
 
     @Inject
-    public AutoMessageCommand(AutoMessageService autoMessageService, NoticeService noticeService) {
+    AutoMessageCommand(AutoMessageService autoMessageService, NoticeService noticeService) {
         this.autoMessageService = autoMessageService;
         this.noticeService = noticeService;
     }

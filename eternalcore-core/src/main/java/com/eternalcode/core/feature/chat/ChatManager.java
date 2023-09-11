@@ -10,32 +10,32 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Service
-public class ChatManager {
+class ChatManager {
 
     private final Cache<UUID, Instant> slowdown;
     private final ChatSettings chatSettings;
 
     @Inject
-    public ChatManager(ChatSettings chatSettings) {
+    ChatManager(ChatSettings chatSettings) {
         this.chatSettings = chatSettings;
         this.slowdown = CacheBuilder.newBuilder()
             .expireAfterWrite(this.chatSettings.getChatDelay().plus(Duration.ofSeconds(10)))
             .build();
     }
 
-    public ChatSettings getChatSettings() {
+    ChatSettings getChatSettings() {
         return this.chatSettings;
     }
 
-    public void markUseChat(UUID userUuid) {
+    void markUseChat(UUID userUuid) {
         this.slowdown.put(userUuid, Instant.now().plus(this.chatSettings.getChatDelay()));
     }
 
-    public boolean hasSlowedChat(UUID userUuid) {
+    boolean hasSlowedChat(UUID userUuid) {
         return Instant.now().isBefore(this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
     }
 
-    public Duration getSlowDown(UUID userUuid) {
+    Duration getSlowDown(UUID userUuid) {
         return Duration.between(Instant.now(), this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
     }
 

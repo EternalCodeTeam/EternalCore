@@ -18,7 +18,7 @@ import java.time.Duration;
 
 @Route(name = "chat")
 @Permission("eternalcore.chat")
-public class ChatManagerCommand {
+class ChatManagerCommand {
 
     private final Supplier<Notice> clear;
     private final NoticeService noticeService;
@@ -33,7 +33,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
-    public void clear(CommandSender sender) {
+    void clear(CommandSender sender) {
         this.noticeService.create()
             .staticNotice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
@@ -44,7 +44,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "on")
     @DescriptionDocs(description = "Enables chat")
-    public void enable(Viewer viewer, CommandSender sender) {
+    void enable(Viewer viewer, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
@@ -61,7 +61,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "off")
     @DescriptionDocs(description = "Disables chat")
-    public void disable(Viewer viewer, CommandSender sender) {
+    void disable(Viewer viewer, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
@@ -78,7 +78,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "slowmode", required = 1)
     @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
-    public void slowmode(Viewer viewer, @Arg Duration duration) {
+    void slowmode(Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 
@@ -94,7 +94,7 @@ public class ChatManagerCommand {
             .send();
     }
 
-    public static Supplier<Notice> create(ChatSettings settings) {
+    private static Supplier<Notice> create(ChatSettings settings) {
         return () -> Notice.chat("<newline>".repeat(Math.max(0, settings.linesToClear())));
     }
 }
