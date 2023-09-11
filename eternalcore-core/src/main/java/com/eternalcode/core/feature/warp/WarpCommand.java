@@ -60,7 +60,7 @@ public class WarpCommand {
     }
 
     @Execute(route = "setwarp", required = 1)
-    @Permission("eternalcore.warp.create")
+    @Permission("eternalcore.setwarp")
     @DescriptionDocs(description = "Create warp")
     void add(Player player, @Arg String warp) {
         if (this.warpManager.warpExists(warp)) {
