@@ -17,13 +17,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 @Route(name = "itemname", aliases = { "itemrename" })
 @Permission("eternalcore.itemname")
-public class ItemNameCommand {
+class ItemNameCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
 
     @Inject
-    public ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
     }

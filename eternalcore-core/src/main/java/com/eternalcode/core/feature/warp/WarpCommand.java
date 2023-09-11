@@ -5,7 +5,7 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -17,7 +17,7 @@ import java.time.Duration;
 
 @Route(name = "warp")
 @Permission("eternalcore.warp")
-public class WarpCommand {
+class WarpCommand {
 
     private final TeleportTaskService teleportTaskService;
     private final PluginConfiguration config;
@@ -26,7 +26,7 @@ public class WarpCommand {
     private final WarpManager warpManager;
 
     @Inject
-    public WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, PluginConfiguration config, WarpInventory warpInventory) {
+    WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, PluginConfiguration config, WarpInventory warpInventory) {
         this.noticeService = noticeService;
         this.warpManager = warpManager;
         this.teleportTaskService = teleportTaskService;

@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
@@ -17,6 +18,7 @@ import dev.rollczi.litecommands.argument.simple.MultilevelArgument;
 import dev.rollczi.litecommands.command.root.RootRoute;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.contextual.Contextual;
+import dev.rollczi.litecommands.factory.CommandEditor;
 import dev.rollczi.litecommands.handle.Handler;
 import java.lang.reflect.Method;
 import org.bukkit.Server;
@@ -100,6 +102,21 @@ public final class BeanProcessorFactory {
                 LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
 
                 builder.contextualBind(liteContextual.value(), contextual);
+            })
+            .onProcess(LiteCommandEditor.class, CommandEditor.class, (provider, editor, liteCommandEditor) -> {
+                LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
+
+                if (liteCommandEditor.command() != Object.class) {
+                    builder.commandEditor(liteCommandEditor.command(), editor);
+                    return;
+                }
+
+                if (!liteCommandEditor.name().isEmpty()) {
+                    builder.commandEditor(liteCommandEditor.name(), editor);
+                    return;
+                }
+
+                builder.commandGlobalEditor(editor);
             });
     }
 

@@ -12,12 +12,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "kill")
 @Permission("eternalcore.kill")
-public class KillCommand {
+class KillCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public KillCommand(NoticeService noticeService) {
+    KillCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

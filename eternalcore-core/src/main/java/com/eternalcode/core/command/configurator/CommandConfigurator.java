@@ -4,13 +4,17 @@ import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.command.configurator.config.Command;
 import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.command.configurator.config.SubCommand;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import dev.rollczi.litecommands.factory.CommandEditor;
 
-public class CommandConfigurator implements CommandEditor {
+@LiteCommandEditor
+class CommandConfigurator implements CommandEditor {
 
     private final CommandConfiguration commandConfiguration;
 
-    public CommandConfigurator(CommandConfiguration commandConfiguration) {
+    @Inject
+    CommandConfigurator(CommandConfiguration commandConfiguration) {
         this.commandConfiguration = commandConfiguration;
     }
 

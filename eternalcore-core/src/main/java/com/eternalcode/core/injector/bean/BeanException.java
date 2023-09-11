@@ -1,6 +1,6 @@
 package com.eternalcode.core.injector.bean;
 
-import com.eternalcode.core.injector.TypedException;
+import com.eternalcode.core.shared.TypedException;
 
 public class BeanException extends TypedException {
 

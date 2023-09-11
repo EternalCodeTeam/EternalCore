@@ -5,7 +5,7 @@ import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.command.amount.AmountValidator;
@@ -25,7 +25,7 @@ public class SpeedArgument extends AbstractViewerArgument<Integer> {
     private static final AmountValidator SPEED_VALID = AmountValidator.none().min(0).max(10);
 
     @Inject
-    public SpeedArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
+    public SpeedArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
 

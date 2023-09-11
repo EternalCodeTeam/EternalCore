@@ -12,12 +12,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
 @Route(name = "heal")
-public class HealCommand {
+class HealCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public HealCommand(NoticeService noticeService) {
+    HealCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

@@ -13,14 +13,14 @@ import org.bukkit.entity.Player;
 
 @Route(name = "setspawn")
 @Permission("eternalcore.setspawn")
-public class SetSpawnCommand {
+class SetSpawnCommand {
 
     private final ConfigurationManager configurationManager;
     private final LocationsConfiguration locations;
     private final NoticeService noticeService;
 
     @Inject
-    public SetSpawnCommand(ConfigurationManager configurationManager, LocationsConfiguration locations, NoticeService noticeService) {
+    SetSpawnCommand(ConfigurationManager configurationManager, LocationsConfiguration locations, NoticeService noticeService) {
         this.configurationManager = configurationManager;
         this.locations = locations;
         this.noticeService = noticeService;

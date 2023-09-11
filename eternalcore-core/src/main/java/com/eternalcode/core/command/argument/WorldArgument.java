@@ -4,7 +4,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.ArgumentContext;
@@ -27,10 +27,10 @@ public class WorldArgument implements SingleOrElseArgument<CommandSender, Arg> {
 
     private final Server server;
     private final TranslationManager translationManager;
-    private final BukkitViewerProvider viewerProvider;
+    private final ViewerProvider viewerProvider;
 
     @Inject
-    public WorldArgument(Server server, TranslationManager translationManager, BukkitViewerProvider viewerProvider) {
+    public WorldArgument(Server server, TranslationManager translationManager, ViewerProvider viewerProvider) {
         this.server = server;
         this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;

@@ -21,13 +21,13 @@ import java.util.List;
 @SuppressWarnings("SameParameterValue")
 @Route(name = "butcher", aliases = { "killmob" })
 @Permission("eternalcore.butcher")
-public class ButcherCommand {
+class ButcherCommand {
 
     private final NoticeService noticeService;
     private final int safeChunksNumber;
 
     @Inject
-    public ButcherCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
+    ButcherCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
         this.noticeService = noticeService;
         this.safeChunksNumber = pluginConfiguration.butcher.safeChunkNumber;
     }

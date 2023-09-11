@@ -12,13 +12,13 @@ import org.bukkit.Server;
 
 @Route(name = "online")
 @Permission("eternalcore.online")
-public class OnlinePlayerCountCommand {
+class OnlinePlayerCountCommand {
 
     private final NoticeService noticeService;
     private final Server server;
 
     @Inject
-    public OnlinePlayerCountCommand(NoticeService noticeService, Server server) {
+    OnlinePlayerCountCommand(NoticeService noticeService, Server server) {
         this.noticeService = noticeService;
         this.server = server;
     }

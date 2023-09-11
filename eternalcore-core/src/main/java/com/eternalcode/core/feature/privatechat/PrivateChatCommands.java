@@ -15,13 +15,13 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 @RootRoute
-public class PrivateChatCommands {
+class PrivateChatCommands {
 
     private final PrivateChatService privateChatService;
     private final NoticeService noticeService;
 
     @Inject
-    public PrivateChatCommands(PrivateChatService privateChatService, NoticeService noticeService) {
+    PrivateChatCommands(PrivateChatService privateChatService, NoticeService noticeService) {
         this.privateChatService = privateChatService;
         this.noticeService = noticeService;
     }

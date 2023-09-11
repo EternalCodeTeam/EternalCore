@@ -1,13 +1,10 @@
 package com.eternalcode.core.command;
 
-import com.eternalcode.core.command.configurator.CommandConfigurator;
-import com.eternalcode.core.command.configurator.GameModeConfigurator;
 import com.eternalcode.core.command.configurator.config.CommandConfiguration;
 import com.eternalcode.core.injector.bean.BeanFactory;
 import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
-import com.eternalcode.core.feature.essentials.gamemode.GameModeCommand;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.publish.Subscribe;
@@ -24,9 +21,7 @@ class LiteCommandsSetup implements Subscriber {
 
     @Bean
     public LiteCommandsBuilder<CommandSender> liteCommandsBuilder(Server server, AudienceProvider audiencesProvider, MiniMessage miniMessage, CommandConfiguration commandConfiguration) {
-        return LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, audiencesProvider, miniMessage)
-            .commandGlobalEditor(new CommandConfigurator(commandConfiguration))
-            .commandEditor(GameModeCommand.class, new GameModeConfigurator(commandConfiguration));
+        return LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, audiencesProvider, miniMessage);
     }
 
     @Subscribe(EternalInitializeEvent.class)

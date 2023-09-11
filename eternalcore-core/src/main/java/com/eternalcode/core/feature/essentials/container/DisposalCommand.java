@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 
 @Route(name = "disposal")
 @Permission("eternalcore.disposal")
-public class DisposalCommand {
+class DisposalCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
@@ -27,7 +27,7 @@ public class DisposalCommand {
     private final Server server;
 
     @Inject
-    public DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server, NoticeService noticeService) {
+    DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, UserManager userManager, Server server, NoticeService noticeService) {
         this.miniMessage = miniMessage;
         this.translationManager = translationManager;
         this.userManager = userManager;

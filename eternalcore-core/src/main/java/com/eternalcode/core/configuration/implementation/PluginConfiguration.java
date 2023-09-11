@@ -2,13 +2,13 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
-import com.eternalcode.core.afk.AfkSettings;
+import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import com.eternalcode.core.teleport.request.TeleportRequestSettings;
+import com.eternalcode.core.feature.teleport.request.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;

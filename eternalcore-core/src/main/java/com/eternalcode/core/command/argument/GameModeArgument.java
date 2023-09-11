@@ -6,7 +6,7 @@ import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
@@ -24,7 +24,7 @@ public class GameModeArgument extends AbstractViewerArgument<GameMode> {
     private final GameModeArgumentSettings gameModeArgumentSettings;
 
     @Inject
-    public GameModeArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager, GameModeArgumentSettings gameModeArgumentSettings) {
+    public GameModeArgument(ViewerProvider viewerProvider, TranslationManager translationManager, GameModeArgumentSettings gameModeArgumentSettings) {
         super(viewerProvider, translationManager);
         this.gameModeArgumentSettings = gameModeArgumentSettings;
     }

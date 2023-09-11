@@ -9,12 +9,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "language", aliases = { "lang" })
 @Permission("eternalcore.language")
-public class LanguageCommand {
+class LanguageCommand {
 
     private final LanguageInventory languageInventory;
 
     @Inject
-    public LanguageCommand(LanguageInventory languageInventory) {
+    LanguageCommand(LanguageInventory languageInventory) {
         this.languageInventory = languageInventory;
     }
 

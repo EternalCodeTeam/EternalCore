@@ -12,12 +12,12 @@ import org.bukkit.World;
 
 @Route(name = "rain")
 @Permission("eternalcore.rain")
-public class RainCommand {
+class RainCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public RainCommand(NoticeService noticeService) {
+    RainCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

@@ -19,13 +19,13 @@ import java.util.UUID;
 
 @Route(name = "enchant")
 @Permission("eternalcore.enchant")
-public class EnchantCommand {
+class EnchantCommand {
 
     private final PluginConfiguration configuration;
     private final NoticeService noticeService;
 
     @Inject
-    public EnchantCommand(PluginConfiguration configuration, NoticeService noticeService) {
+    EnchantCommand(PluginConfiguration configuration, NoticeService noticeService) {
         this.configuration = configuration;
         this.noticeService = noticeService;
     }

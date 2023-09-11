@@ -15,13 +15,13 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
-public class WarpConfigRepository implements WarpRepository {
+class WarpConfigRepository implements WarpRepository {
 
     private final LocationsConfiguration locationsConfiguration;
     private final ConfigurationManager configurationManager;
 
     @Inject
-    public WarpConfigRepository(ConfigurationManager configurationManager, LocationsConfiguration locationsConfiguration) {
+    WarpConfigRepository(ConfigurationManager configurationManager, LocationsConfiguration locationsConfiguration) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
     }

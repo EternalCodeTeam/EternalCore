@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
     description = "This feature allows you to create a language selector inventory"
 )
 @Service
-public class LanguageInventory {
+class LanguageInventory {
 
     private final LanguageConfiguration languageConfiguration;
     private final NoticeService noticeService;
@@ -35,14 +35,14 @@ public class LanguageInventory {
     private final MiniMessage miniMessage;
 
     @Inject
-    public LanguageInventory(LanguageConfiguration languageConfiguration, NoticeService noticeService, UserManager userManager, MiniMessage miniMessage) {
+    LanguageInventory(LanguageConfiguration languageConfiguration, NoticeService noticeService, UserManager userManager, MiniMessage miniMessage) {
         this.languageConfiguration = languageConfiguration;
         this.noticeService = noticeService;
         this.userManager = userManager;
         this.miniMessage = miniMessage;
     }
 
-    public void open(Player player) {
+    void open(Player player) {
         LanguageConfiguration.LanguageSelector languageSelector = this.languageConfiguration.languageSelector;
 
         Gui gui = Gui.gui()

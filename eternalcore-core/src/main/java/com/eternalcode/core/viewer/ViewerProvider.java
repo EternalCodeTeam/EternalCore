@@ -17,4 +17,5 @@ public interface ViewerProvider {
 
     Viewer user(User user);
 
+    Viewer any(Object any);
 }

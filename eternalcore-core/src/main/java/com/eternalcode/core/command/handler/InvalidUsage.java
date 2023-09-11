@@ -4,7 +4,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.handle.InvalidUsageHandler;
@@ -18,18 +18,18 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
 
     private static final Placeholders<String> SCHEME = Placeholders.of("{USAGE}", scheme -> scheme);
 
-    private final BukkitViewerProvider viewerProvider;
+    private final ViewerProvider viewerProvider;
     private final NoticeService noticeService;
 
     @Inject
-    public InvalidUsage(BukkitViewerProvider viewerProvider, NoticeService noticeService) {
+    public InvalidUsage(ViewerProvider viewerProvider, NoticeService noticeService) {
         this.viewerProvider = viewerProvider;
         this.noticeService = noticeService;
     }
 
     @Override
     public void handle(CommandSender sender, LiteInvocation invocation, Schematic schematic) {
-        Viewer viewer = this.viewerProvider.sender(sender);
+        Viewer viewer = this.viewerProvider.any(sender);
 
         List<String> schematics = schematic.getSchematics();
 

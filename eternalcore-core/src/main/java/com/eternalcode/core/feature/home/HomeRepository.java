@@ -8,7 +8,7 @@ import panda.std.reactive.Completable;
 import java.util.Set;
 import java.util.UUID;
 
-public interface HomeRepository {
+interface HomeRepository {
 
     Completable<Option<Home>> getHome(UUID uuid);
 

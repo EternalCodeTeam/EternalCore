@@ -11,12 +11,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "anvil")
-public class AnvilCommand {
+class AnvilCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public AnvilCommand(NoticeService noticeService) {
+    AnvilCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

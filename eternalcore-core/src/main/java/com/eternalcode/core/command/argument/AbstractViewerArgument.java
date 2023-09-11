@@ -3,7 +3,7 @@ package com.eternalcode.core.command.argument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.simple.OneArgument;
 import dev.rollczi.litecommands.command.LiteInvocation;
@@ -11,10 +11,10 @@ import panda.std.Result;
 
 public abstract class AbstractViewerArgument<T> implements OneArgument<T> {
 
-    private final BukkitViewerProvider viewerProvider;
-    private final TranslationManager translationManager;
+    protected final ViewerProvider viewerProvider;
+    protected final TranslationManager translationManager;
 
-    protected AbstractViewerArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
+    protected AbstractViewerArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         this.viewerProvider = viewerProvider;
         this.translationManager = translationManager;
     }

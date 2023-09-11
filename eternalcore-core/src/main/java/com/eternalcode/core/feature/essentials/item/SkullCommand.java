@@ -18,13 +18,13 @@ import org.bukkit.inventory.ItemStack;
 
 @Route(name = "skull")
 @Permission("eternalcore.skull")
-public class SkullCommand {
+class SkullCommand {
 
     private final NoticeService noticeService;
     private final SkullAPI skullAPI;
 
     @Inject
-    public SkullCommand(NoticeService noticeService, SkullAPI skullAPI) {
+    SkullCommand(NoticeService noticeService, SkullAPI skullAPI) {
         this.skullAPI = skullAPI;
         this.noticeService = noticeService;
     }

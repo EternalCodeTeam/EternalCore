@@ -22,13 +22,13 @@ import java.util.List;
 
 @Route(name = "itemlore")
 @Permission("eternalcore.itemlore")
-public class ItemLoreCommand {
+class ItemLoreCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
 
     @Inject
-    public ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
     }

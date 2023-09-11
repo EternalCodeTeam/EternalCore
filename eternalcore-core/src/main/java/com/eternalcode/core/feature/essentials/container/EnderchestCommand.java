@@ -11,12 +11,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "enderchest", aliases = { "ec" })
-public class EnderchestCommand {
+class EnderchestCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public EnderchestCommand(NoticeService noticeService) {
+    EnderchestCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

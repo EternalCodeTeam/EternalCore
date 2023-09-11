@@ -16,14 +16,14 @@ import panda.utilities.text.Formatter;
 
 @Route(name = "itemflag")
 @Permission("eternalcore.itemflag")
-public class ItemFlagCommand {
+class ItemFlagCommand {
 
     private static final Placeholders<ItemFlag> ITEM_FLAG_PLACEHOLDER = Placeholders.of("{ITEM_FLAG}", Enum::name);
 
     private final NoticeService noticeService;
 
     @Inject
-    public ItemFlagCommand(NoticeService noticeService) {
+    ItemFlagCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

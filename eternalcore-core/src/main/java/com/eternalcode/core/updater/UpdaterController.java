@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
     description = "Sends a message to the player when a new plugin update is available after joining the server."
 )
 @Controller
-public class UpdaterController implements Listener {
+class UpdaterController implements Listener {
 
     private static final String NEW_VERSION_AVAILABLE = "<b><gradient:#8a1212:#fc6b03>EternalCore:</gradient></b> <color:#fce303>New version of EternalCore is available, please update!";
 
@@ -30,7 +30,7 @@ public class UpdaterController implements Listener {
     private final MiniMessage miniMessage;
 
     @Inject
-    public UpdaterController(PluginConfiguration pluginConfiguration, UpdaterService updaterService, AudienceProvider audienceProvider, MiniMessage miniMessage) {
+    UpdaterController(PluginConfiguration pluginConfiguration, UpdaterService updaterService, AudienceProvider audienceProvider, MiniMessage miniMessage) {
         this.pluginConfiguration = pluginConfiguration;
         this.updaterService = updaterService;
         this.audienceProvider = audienceProvider;
@@ -38,7 +38,7 @@ public class UpdaterController implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
+    void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         if (!player.hasPermission("eternalcore.receiveupdates")) {
@@ -64,4 +64,5 @@ public class UpdaterController implements Listener {
             }
         });
     }
+
 }

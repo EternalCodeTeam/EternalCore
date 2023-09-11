@@ -14,12 +14,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "tellraw")
 @Permission("eternalcore.tellraw")
-public class TellRawCommand {
+class TellRawCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public TellRawCommand(NoticeService noticeService) {
+    TellRawCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

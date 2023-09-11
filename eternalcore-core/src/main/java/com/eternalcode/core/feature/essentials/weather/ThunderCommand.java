@@ -12,12 +12,12 @@ import org.bukkit.World;
 
 @Route(name = "thunder", aliases = "storm")
 @Permission("eternalcore.thunder")
-public class ThunderCommand {
+class ThunderCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public ThunderCommand(NoticeService noticeService) {
+    ThunderCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

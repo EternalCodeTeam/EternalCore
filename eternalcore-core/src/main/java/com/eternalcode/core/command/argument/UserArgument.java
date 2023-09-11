@@ -7,7 +7,7 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
@@ -26,7 +26,7 @@ public class UserArgument extends AbstractViewerArgument<User> {
     private final UserManager userManager;
 
     @Inject
-    public UserArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager, Server server, UserManager userManager) {
+    public UserArgument(ViewerProvider viewerProvider, TranslationManager translationManager, Server server, UserManager userManager) {
         super(viewerProvider, translationManager);
         this.server = server;
         this.userManager = userManager;

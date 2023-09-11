@@ -11,12 +11,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "feed")
-public class FeedCommand {
+class FeedCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public FeedCommand(NoticeService noticeService) {
+    FeedCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

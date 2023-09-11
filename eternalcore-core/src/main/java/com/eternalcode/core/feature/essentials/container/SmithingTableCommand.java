@@ -11,12 +11,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "smithingtable", aliases = "smithing")
-public class SmithingTableCommand {
+class SmithingTableCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public SmithingTableCommand(NoticeService noticeService) {
+    SmithingTableCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

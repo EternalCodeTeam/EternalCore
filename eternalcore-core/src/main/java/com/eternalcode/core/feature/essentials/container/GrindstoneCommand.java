@@ -12,12 +12,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "grindstone")
-public class GrindstoneCommand {
+class GrindstoneCommand {
 
     private final NoticeService announcer;
 
     @Inject
-    public GrindstoneCommand(NoticeService announcer) {
+    GrindstoneCommand(NoticeService announcer) {
         this.announcer = announcer;
     }
 

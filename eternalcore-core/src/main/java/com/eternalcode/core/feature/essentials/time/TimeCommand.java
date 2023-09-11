@@ -13,12 +13,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "time")
 @Permission("eternalcore.time")
-public class TimeCommand {
+class TimeCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public TimeCommand(NoticeService noticeService) {
+    TimeCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

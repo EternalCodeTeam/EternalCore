@@ -17,13 +17,13 @@ import org.bukkit.inventory.ItemStack;
 
 @Route(name = "give", aliases = { "i", "item" })
 @Permission("eternalcore.give")
-public class GiveCommand {
+class GiveCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfig;
 
     @Inject
-    public GiveCommand(NoticeService noticeService, PluginConfiguration pluginConfig) {
+    GiveCommand(NoticeService noticeService, PluginConfiguration pluginConfig) {
         this.noticeService = noticeService;
         this.pluginConfig = pluginConfig;
     }

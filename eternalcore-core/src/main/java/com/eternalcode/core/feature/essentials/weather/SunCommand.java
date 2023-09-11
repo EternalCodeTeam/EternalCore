@@ -12,12 +12,12 @@ import org.bukkit.World;
 
 @Route(name = "sun")
 @Permission("eternalcore.sun")
-public class SunCommand {
+class SunCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public SunCommand(NoticeService noticeService) {
+    SunCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

@@ -16,13 +16,13 @@ import org.bukkit.entity.Player;
 
 @Route(name = "gamemode", aliases = { "gm" })
 @Permission("eternalcore.gamemode")
-public class GameModeCommand {
+class GameModeCommand {
 
     private final CommandConfiguration commandConfiguration;
     private final NoticeService noticeService;
 
     @Inject
-    public GameModeCommand(CommandConfiguration commandConfiguration, NoticeService noticeService) {
+    GameModeCommand(CommandConfiguration commandConfiguration, NoticeService noticeService) {
         this.commandConfiguration = commandConfiguration;
         this.noticeService = noticeService;
     }

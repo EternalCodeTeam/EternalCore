@@ -12,12 +12,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "cartography", aliases = "cartography-table")
-public class CartographyTableCommand {
+class CartographyTableCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public CartographyTableCommand(NoticeService noticeService) {
+    CartographyTableCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

@@ -72,6 +72,7 @@ public class BukkitViewerProvider implements ViewerProvider {
         return this.any(commandSender);
     }
 
+    @Override
     public Viewer any(Object any) {
         if (any instanceof Player player) {
             Optional<User> userOption = this.userManager.getUser(player.getUniqueId());

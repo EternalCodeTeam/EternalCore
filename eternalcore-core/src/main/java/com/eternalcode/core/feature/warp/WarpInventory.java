@@ -5,7 +5,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.language.Language;
 import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.AdventureUtil;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class WarpInventory {
+class WarpInventory {
 
     private final TeleportTaskService teleportTaskService;
     private final TranslationManager translationManager;
@@ -32,7 +32,7 @@ public class WarpInventory {
     private final MiniMessage miniMessage;
 
     @Inject
-    public WarpInventory(TeleportTaskService teleportTaskService, TranslationManager translationManager, WarpManager warpManager, MiniMessage miniMessage) {
+    WarpInventory(TeleportTaskService teleportTaskService, TranslationManager translationManager, WarpManager warpManager, MiniMessage miniMessage) {
         this.teleportTaskService = teleportTaskService;
         this.translationManager = translationManager;
         this.warpManager = warpManager;

@@ -16,7 +16,7 @@ import java.util.Map;
     description = "Allows you to create warps, optionally you can enable warp inventory"
 )
 @Service
-public class WarpManager {
+class WarpManager {
 
     private final Map<String, Warp> warpMap = new HashMap<>();
     private final WarpRepository warpRepository;

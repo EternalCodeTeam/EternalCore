@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "rtp", aliases = "randomteleport")
-public class RandomTeleportCommand {
+class RandomTeleportCommand {
 
     private static final Placeholders<Player> PLACEHOLDERS = Placeholders.<Player>builder()
         .with("{PLAYER}", Player::getName)
@@ -26,7 +26,7 @@ public class RandomTeleportCommand {
     private final RandomTeleportService randomTeleportService;
 
     @Inject
-    public RandomTeleportCommand(NoticeService noticeService, RandomTeleportService randomTeleportService) {
+    RandomTeleportCommand(NoticeService noticeService, RandomTeleportService randomTeleportService) {
         this.noticeService = noticeService;
         this.randomTeleportService = randomTeleportService;
     }

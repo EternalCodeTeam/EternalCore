@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Route(name = "clear")
-public class InventoryClearCommand {
+class InventoryClearCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public InventoryClearCommand(NoticeService noticeService) {
+    InventoryClearCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

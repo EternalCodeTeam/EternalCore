@@ -20,13 +20,13 @@ import panda.std.Option;
 
 @Route(name = "invsee", aliases = { "oi", "inventoryopen", "open", "invsee" })
 @Permission("eternalcore.invsee")
-public class InventoryOpenCommand {
+class InventoryOpenCommand {
 
     private final Server server;
     private final NoticeService noticeService;
 
     @Inject
-    public InventoryOpenCommand(Server server, NoticeService noticeService) {
+    InventoryOpenCommand(Server server, NoticeService noticeService) {
         this.server = server;
         this.noticeService = noticeService;
     }

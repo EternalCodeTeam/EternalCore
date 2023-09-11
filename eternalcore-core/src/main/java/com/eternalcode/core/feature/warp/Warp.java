@@ -2,12 +2,12 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.core.shared.Position;
 
-public class Warp {
+class Warp {
 
     private final String name;
     private final Position position;
 
-    public Warp(String name, Position position) {
+    Warp(String name, Position position) {
         this.name = name;
         this.position = position;
     }

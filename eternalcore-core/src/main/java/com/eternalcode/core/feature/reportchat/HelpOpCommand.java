@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @Route(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
-public class HelpOpCommand {
+class HelpOpCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
@@ -28,7 +28,7 @@ public class HelpOpCommand {
     private final Delay<UUID> delay;
 
     @Inject
-    public HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {
+    HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {
         this.noticeService = noticeService;
         this.config = config;
         this.server = server;

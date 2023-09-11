@@ -15,12 +15,12 @@ import org.bukkit.inventory.meta.Repairable;
 
 @Route(name = "repair")
 @Permission("eternalcore.repair")
-public class RepairCommand {
+class RepairCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public RepairCommand(NoticeService noticeService) {
+    RepairCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

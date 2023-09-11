@@ -18,7 +18,7 @@ import java.util.UUID;
     description = "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
 )
 @Service
-public class HomeManager {
+class HomeManager {
 
     private final Map<UUID, Map<String, Home>> homes = new HashMap<>();
     private final HomeRepository repository;

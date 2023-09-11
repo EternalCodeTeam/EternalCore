@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.privatechat;
 
-import com.eternalcode.core.feature.ignore.IgnoreRepository;
+import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -16,10 +16,10 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class PrivateChatService {
+class PrivateChatService {
 
     private final NoticeService noticeService;
-    private final IgnoreRepository ignoreRepository;
+    private final IgnoreService ignoreRepository;
     private final UserManager userManager;
     private final PrivateChatPresenter presenter;
 
@@ -30,14 +30,14 @@ public class PrivateChatService {
     private final Set<UUID> socialSpy = new HashSet<>();
 
     @Inject
-    public PrivateChatService(NoticeService noticeService, IgnoreRepository ignoreRepository, UserManager userManager) {
+    PrivateChatService(NoticeService noticeService, IgnoreService ignoreService, UserManager userManager) {
         this.noticeService = noticeService;
-        this.ignoreRepository = ignoreRepository;
+        this.ignoreRepository = ignoreService;
         this.userManager = userManager;
         this.presenter = new PrivateChatPresenter(noticeService);
     }
 
-    public void privateMessage(User sender, User target, String message) {
+    void privateMessage(User sender, User target, String message) {
         if (target.getClientSettings().isOffline()) {
             this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
 
@@ -54,7 +54,7 @@ public class PrivateChatService {
         });
     }
 
-    public void reply(User sender, String message) {
+    void reply(User sender, String message) {
         UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
 
         if (uuid == null) {
@@ -76,15 +76,15 @@ public class PrivateChatService {
         this.privateMessage(sender, target, message);
     }
 
-    public void enableSpy(UUID player) {
+    void enableSpy(UUID player) {
         this.socialSpy.add(player);
     }
 
-    public void disableSpy(UUID player) {
+    void disableSpy(UUID player) {
         this.socialSpy.remove(player);
     }
 
-    public boolean isSpy(UUID player) {
+    boolean isSpy(UUID player) {
         return this.socialSpy.contains(player);
     }
 

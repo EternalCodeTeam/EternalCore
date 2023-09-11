@@ -12,7 +12,7 @@ import panda.std.Lazy;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class UpdaterService {
+class UpdaterService {
 
     private static final GitRepository GIT_REPOSITORY = GitRepository.of("EternalCodeTeam", "EternalCore");
 
@@ -20,7 +20,7 @@ public class UpdaterService {
     private final Lazy<GitCheckResult> gitCheckResult;
 
     @Inject
-    public UpdaterService(PluginDescriptionFile pluginDescriptionFile) {
+    UpdaterService(PluginDescriptionFile pluginDescriptionFile) {
         this.gitCheckResult = new Lazy<>(() -> {
             String version = pluginDescriptionFile.getVersion();
 
@@ -28,7 +28,7 @@ public class UpdaterService {
         });
     }
 
-    public CompletableFuture<Boolean> isUpToDate() {
+    CompletableFuture<Boolean> isUpToDate() {
         return CompletableFuture.supplyAsync(() -> {
             GitCheckResult checkResult = this.gitCheckResult.get();
 

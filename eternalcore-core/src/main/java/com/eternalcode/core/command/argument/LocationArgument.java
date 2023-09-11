@@ -5,7 +5,7 @@ import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.argument.simple.MultilevelArgument;
@@ -24,10 +24,10 @@ import java.util.List;
 public class LocationArgument implements MultilevelArgument<Location> {
 
     private final TranslationManager translationManager;
-    private final BukkitViewerProvider viewerProvider;
+    private final ViewerProvider viewerProvider;
 
     @Inject
-    public LocationArgument(TranslationManager translationManager, BukkitViewerProvider viewerProvider) {
+    public LocationArgument(TranslationManager translationManager, ViewerProvider viewerProvider) {
         this.translationManager = translationManager;
         this.viewerProvider = viewerProvider;
     }

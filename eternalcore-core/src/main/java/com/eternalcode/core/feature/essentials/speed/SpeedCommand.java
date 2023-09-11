@@ -14,12 +14,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "speed")
 @Permission("eternalcore.speed")
-public class SpeedCommand {
+class SpeedCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public SpeedCommand(NoticeService noticeService) {
+    SpeedCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

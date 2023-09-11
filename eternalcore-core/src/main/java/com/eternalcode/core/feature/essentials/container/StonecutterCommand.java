@@ -12,12 +12,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "stonecutter")
-public class StonecutterCommand {
+class StonecutterCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public StonecutterCommand(NoticeService noticeService) {
+    StonecutterCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

@@ -6,7 +6,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.TeleportService;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,14 +16,14 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import java.util.Objects;
 
 @Controller
-public class SpawnRespawnController implements Listener {
+class SpawnRespawnController implements Listener {
 
     private final TeleportService teleportService;
     private final PluginConfiguration config;
     private final LocationsConfiguration locations;
 
     @Inject
-    public SpawnRespawnController(TeleportService teleportService, PluginConfiguration config, LocationsConfiguration locations) {
+    SpawnRespawnController(TeleportService teleportService, PluginConfiguration config, LocationsConfiguration locations) {
         this.teleportService = teleportService;
         this.config = config;
         this.locations = locations;

@@ -13,12 +13,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "whois")
 @Permission("eternalcore.whois")
-public class WhoIsCommand {
+class WhoIsCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public WhoIsCommand(NoticeService noticeService) {
+    WhoIsCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

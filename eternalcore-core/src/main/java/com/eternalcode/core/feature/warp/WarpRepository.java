@@ -5,7 +5,7 @@ import panda.std.Option;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public interface WarpRepository {
+interface WarpRepository {
 
     void addWarp(Warp warp);
 

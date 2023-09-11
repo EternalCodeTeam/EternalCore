@@ -6,7 +6,7 @@ import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.BukkitViewerProvider;
+import com.eternalcode.core.viewer.ViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
@@ -21,7 +21,7 @@ import java.util.List;
 public class NoticeTypeArgument extends AbstractViewerArgument<NoticeTextType> {
 
     @Inject
-    public NoticeTypeArgument(BukkitViewerProvider viewerProvider, TranslationManager translationManager) {
+    public NoticeTypeArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
 

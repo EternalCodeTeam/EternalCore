@@ -17,14 +17,14 @@ import java.util.Collection;
 
 @Route(name = "list")
 @Permission("eternalcore.list")
-public class OnlinePlayersListCommand {
+class OnlinePlayersListCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
     private final Server server;
 
     @Inject
-    public OnlinePlayersListCommand(PluginConfiguration config, NoticeService noticeService, Server server) {
+    OnlinePlayersListCommand(PluginConfiguration config, NoticeService noticeService, Server server) {
         this.config = config;
         this.noticeService = noticeService;
         this.server = server;

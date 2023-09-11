@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class BeanFactory implements DependencyProvider {
 
-    private final static ThreadLocal<List<Class<?>>> dependencyStacktrace = ThreadLocal.withInitial(() -> new ArrayList<>());
+    private static final ThreadLocal<List<Class<?>>> dependencyStacktrace = ThreadLocal.withInitial(() -> new ArrayList<>());
 
     private final BeanContainer container = new BeanContainer();
     private final BeanCandidateContainer candidateContainer = new BeanCandidateContainer();

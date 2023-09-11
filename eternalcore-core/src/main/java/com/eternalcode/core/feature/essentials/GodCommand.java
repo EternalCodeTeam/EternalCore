@@ -11,12 +11,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "god", aliases = "godmode")
-public class GodCommand {
+class GodCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public GodCommand(NoticeService noticeService) {
+    GodCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

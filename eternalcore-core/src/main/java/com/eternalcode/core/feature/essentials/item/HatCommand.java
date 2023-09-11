@@ -13,12 +13,12 @@ import org.bukkit.inventory.PlayerInventory;
 
 @Route(name = "hat")
 @Permission("eternalcore.hat")
-public class HatCommand {
+class HatCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public HatCommand(NoticeService noticeService) {
+    HatCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

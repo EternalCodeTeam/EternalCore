@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.mob;
 
-public enum MobType {
+enum MobType {
 
     PASSIVE(true, true),
     AGGRESSIVE(true, true),
@@ -15,11 +15,11 @@ public enum MobType {
         this.isSuggeestable = isSuggeestable;
     }
 
-    public boolean isParseable() {
+    boolean isParseable() {
         return this.isParseable;
     }
 
-    public boolean isSuggeestable() {
+    boolean isSuggeestable() {
         return this.isSuggeestable;
     }
 }
