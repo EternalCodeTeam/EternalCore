@@ -7,7 +7,7 @@ Key DI concepts include:
 - **Dependent class** (those needing dependencies from the bean container)
 
 Used DI type
-**Constructor Injection:** Dependencies are injected through the class's constructor for immediate object validity.
+**Constructor Injection:** Dependencies are injected through the class's constructor (annotated as `@Inject`)
 
 ### How to use DI
 #### 1. Repository
@@ -145,8 +145,3 @@ public class UserBeanSetup {
     @Bean // <- marks a method that will be registered as a bean. (dependency)
     public OtherProvider otherProvider(Server server) {
         return new OtherProvider(server);
-    }
-
-}
-```
-
