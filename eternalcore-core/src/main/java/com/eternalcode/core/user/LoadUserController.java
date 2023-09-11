@@ -1,5 +1,6 @@
 package com.eternalcode.core.user;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ class LoadUserController implements Listener {
     private final UserManager userManager;
     private final Server server;
 
+    @Inject
     LoadUserController(UserManager userManager, Server server) {
         this.userManager = userManager;
         this.server = server;
