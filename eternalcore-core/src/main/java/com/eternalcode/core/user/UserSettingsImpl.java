@@ -1,6 +1,6 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 
 import java.util.function.Supplier;
 

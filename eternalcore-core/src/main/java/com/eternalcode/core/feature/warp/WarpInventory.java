@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.core.feature.warp.config.WarpConfigItem;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.translation.Translation;

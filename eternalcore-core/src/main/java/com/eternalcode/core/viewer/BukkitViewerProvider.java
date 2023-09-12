@@ -2,7 +2,7 @@ package com.eternalcode.core.viewer;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import org.bukkit.Server;

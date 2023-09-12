@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
 
 import java.util.Map;

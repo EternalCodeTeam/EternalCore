@@ -1,7 +1,7 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.language.Language;
-import com.eternalcode.core.language.LanguageSettings;
+import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.language.LanguageSettings;
 
 public interface UserSettings extends LanguageSettings {
 

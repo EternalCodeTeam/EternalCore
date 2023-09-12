@@ -1,12 +1,11 @@
 package com.eternalcode.core.feature.essentials.speed;
 
-import com.eternalcode.core.command.argument.AbstractViewerArgument;
+import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.feature.essentials.speed.SpeedType;
 import com.eternalcode.core.viewer.ViewerProvider;
 import dev.rollczi.litecommands.argument.ArgumentName;
 import dev.rollczi.litecommands.command.LiteInvocation;

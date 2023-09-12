@@ -1,8 +1,8 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.language.Language;
-import com.eternalcode.core.language.LanguageSettings;
+import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.language.LanguageSettings;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 

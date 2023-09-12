@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;

@@ -1,13 +1,12 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.entity.Entity;
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.viewer.Viewer;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class User implements Entity, Viewer {
+public class User implements Viewer {
 
     private UserSettings userSettings = new UserSettingsImpl(() -> this.userClientSettings);
     private UserClientSettings userClientSettings = UserClientSettings.NONE;

@@ -1,6 +1,6 @@
 package com.eternalcode.core.notice;
 
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.viewer.Viewer;
 
 import java.util.Collection;
