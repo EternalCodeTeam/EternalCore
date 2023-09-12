@@ -18,7 +18,7 @@ public class UserRepositoryImpl implements UserRepository {
 }
 ```
 
-#### 1. Config
+#### 2. Config
 ```java
 @ConfigurationFile // <- marks a class that will be registered and loaded as a config.
 public class UserConfiguration implements ReloadableConfig {
@@ -33,7 +33,7 @@ public class UserConfiguration implements ReloadableConfig {
 }
 ```
 
-#### 2. Service / Manager etc.
+#### 3. Service / Manager etc.
 ```java
 @Service // <- means a class that will be injected into other classes. (dependency)
 public class UserService {
@@ -48,7 +48,7 @@ public class UserService {
 }
 ```
 
-#### 3. Bukkit task
+#### 4. Bukkit task
 ```java
 @Task(delay = 20L, unit = TimeUnit.SECONDS) // <- marks a class that will be registered as a task.
 public class UserTask implements Runnable {
@@ -67,7 +67,7 @@ public class UserTask implements Runnable {
     
 }
 ```
-#### 4. Bukkit listener
+#### 5. Bukkit listener
 ```java
 @Controller // <- marks a class that will be registered as a bukkit listener.
 public class UserListener implements Listener {
@@ -86,7 +86,7 @@ public class UserListener implements Listener {
     
 }
 ```
-#### 5. Command
+#### 6. Command
 ```java
 @Route(name = "example") // <- marks a class that will be registered as a command.
 public class UserCommand {
@@ -106,7 +106,7 @@ public class UserCommand {
 }
 ```
 
-#### 6. Subscriber
+#### 7. Subscriber
 ```java
 @Controller // <- marks a class that will be registered as an event subscriber.
 public class UserSubscriber implements Subscriber {
@@ -126,7 +126,7 @@ public class UserSubscriber implements Subscriber {
 }
 ```
 
-#### 7. BeanSetup
+#### 8. BeanSetup
 BeanSetup is a class that allows you to register beans in the bean container.
 It is used to register dependencies that are cannot be registered in the bean container using annotations. e.g. MiniMessage, AdventureProvider, HikariDataSource, etc.
 ```java
