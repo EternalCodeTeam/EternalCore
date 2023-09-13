@@ -22,7 +22,7 @@ class DatabaseManagerSetup implements Subscriber {
             databaseManager.connect();
         }
         catch (SQLException exception) {
-            logger.severe("Can not connect to database! Some functions may not work!");
+            logger.severe("Could not connect to database! Some functions may not work properly!");
             throw new RuntimeException(exception);
         }
 
