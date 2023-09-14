@@ -10,6 +10,7 @@ import com.j256.ormlite.table.TableUtils;
 import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,9 +39,16 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
             return where.query();
         });
 
-        return wrapperList.thenApply(ignores -> ignores.stream()
-            .map(wrapper -> wrapper.uniqueId)
-            .toList());
+        return wrapperList.thenApply(ignores -> {
+            List<UUID> ignoredIds = ignores.stream()
+                .map(wrapper -> wrapper.uniqueId)
+                .toList();
+
+            List<UUID> onlineUniqueIdsCopy = new ArrayList<>(onlineUniqueIds);
+            onlineUniqueIdsCopy.removeAll(ignoredIds);
+
+            return onlineUniqueIdsCopy;
+        });
     }
 
     @Override
@@ -52,12 +60,12 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
     public Completable<Boolean> switchReceiving(UUID uniqueId) {
         return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenCompose(optional -> {
             if (optional.isEmpty()) {
-                return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId)).thenApply(result -> true);
+                return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId)).thenApply(result -> false);
             }
 
             AutoMessageIgnoreWrapper wrapper = optional.get();
 
-            return this.delete(AutoMessageIgnoreWrapper.class, wrapper).thenApply(state -> false);
+            return this.delete(AutoMessageIgnoreWrapper.class, wrapper).thenApply(state -> true);
         });
     }
 
