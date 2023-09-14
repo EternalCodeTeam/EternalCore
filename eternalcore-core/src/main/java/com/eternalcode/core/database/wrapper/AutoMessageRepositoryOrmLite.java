@@ -10,10 +10,12 @@ import com.j256.ormlite.table.TableUtils;
 import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements AutoMessageRepository {
 
@@ -22,7 +24,7 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
     }
 
     @Override
-    public Completable<List<UUID>> findReceivers(List<UUID> onlineUniqueIds) {
+    public Completable<Set<UUID>> findReceivers(Set<UUID> onlineUniqueIds) {
         if (onlineUniqueIds.isEmpty()) {
             return Completable.completed(onlineUniqueIds);
         }
@@ -42,12 +44,13 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
         return wrapperList.thenApply(ignores -> {
             Set<UUID> ignoredIds = ignores.stream()
                 .map(wrapper -> wrapper.uniqueId)
-                .toSet();
+                .collect(Collectors.toSet());
 
-            List<UUID> onlineUniqueIdsWithoutIngores = new ArrayList<>();
+            Set<UUID> onlineUniqueIdsWithoutIngores = new HashSet<>();
+
             for (UUID onlineUniqueId : onlineUniqueIds) {
                 if (!ignoredIds.contains(onlineUniqueId)) {
-                    onlineUniqueIdsWithoutIngores.add(onlineUniqueId)
+                    onlineUniqueIdsWithoutIngores.add(onlineUniqueId);
                 }
             }
 
