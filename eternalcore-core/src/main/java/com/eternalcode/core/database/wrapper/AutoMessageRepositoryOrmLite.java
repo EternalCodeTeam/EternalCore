@@ -40,14 +40,18 @@ public class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite impl
         });
 
         return wrapperList.thenApply(ignores -> {
-            List<UUID> ignoredIds = ignores.stream()
+            Set<UUID> ignoredIds = ignores.stream()
                 .map(wrapper -> wrapper.uniqueId)
-                .toList();
+                .toSet();
 
-            List<UUID> onlineUniqueIdsCopy = new ArrayList<>(onlineUniqueIds);
-            onlineUniqueIdsCopy.removeAll(ignoredIds);
+            List<UUID> onlineUniqueIdsWithoutIngores = new ArrayList<>();
+            for (UUID onlineUniqueId : onlineUniqueIds) {
+                if (!ignoredIds.contains(onlineUniqueId)) {
+                    onlineUniqueIdsWithoutIngores.add(onlineUniqueId)
+                }
+            }
 
-            return onlineUniqueIdsCopy;
+            return onlineUniqueIdsWithoutIngores;
         });
     }
 
