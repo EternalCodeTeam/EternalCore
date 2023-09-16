@@ -32,7 +32,7 @@ class HelpOpCommand {
         this.noticeService = noticeService;
         this.config = config;
         this.server = server;
-        this.delay = new Delay<>(this.config.chat.helpOp);
+        this.delay = new Delay<>(this.config.helpOp);
     }
 
     @Execute
@@ -77,7 +77,7 @@ class HelpOpCommand {
             .notice(translation -> translation.helpOp().send())
             .send();
 
-        this.delay.markDelay(uuid, this.config.chat.helpOp.getHelpOpDelay());
+        this.delay.markDelay(uuid, this.config.helpOp.getHelpOpDelay());
     }
 
 }

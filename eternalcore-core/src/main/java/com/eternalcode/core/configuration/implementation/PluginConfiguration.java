@@ -178,9 +178,6 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Chat should be enabled?" })
         public boolean chatEnabled = true;
 
-        @Description({ " ", "# HelpOp Section" })
-        public HelpOp helpOp = new HelpOp();
-
         @Override
         @Exclude
         public boolean isChatEnabled() {
@@ -210,23 +207,21 @@ public class PluginConfiguration implements ReloadableConfig {
             return this.linesToClear;
         }
 
-        @Contextual
-        public static class HelpOp implements HelpOpSettings {
+    }
 
-            @Description("# Delay to send the next message under /helpop")
-            public Duration helpOpDelay = Duration.ofSeconds(60);
+    @Description({ " ", "# HelpOp Section" })
+    public HelpOp helpOp = new HelpOp();
 
-            @Override
-            public Duration getHelpOpDelay() {
-                return this.helpOpDelay;
-            }
+    @Contextual
+    public static class HelpOp implements HelpOpSettings {
 
-            @Override
-            public void setHelpOpDelay(final Duration helpOpDelay) {
-                this.helpOpDelay = helpOpDelay;
-            }
+        @Description("# Delay to send the next message under /helpop")
+        public Duration helpOpDelay = Duration.ofSeconds(60);
+
+        @Override
+        public Duration getHelpOpDelay() {
+            return this.helpOpDelay;
         }
-
     }
 
     @Description({ " ", "# Additional formatting options" })
