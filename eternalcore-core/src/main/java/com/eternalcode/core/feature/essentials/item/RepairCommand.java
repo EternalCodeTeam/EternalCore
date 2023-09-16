@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
@@ -14,11 +15,12 @@ import org.bukkit.inventory.meta.Repairable;
 
 @Route(name = "repair")
 @Permission("eternalcore.repair")
-public class RepairCommand {
+class RepairCommand {
 
     private final NoticeService noticeService;
 
-    public RepairCommand(NoticeService noticeService) {
+    @Inject
+    RepairCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

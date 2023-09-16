@@ -1,9 +1,11 @@
 package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.core.feature.warp.config.WarpConfigItem;
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.AdventureUtil;
@@ -12,7 +14,6 @@ import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,14 +23,16 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WarpInventory {
+@Service
+class WarpInventory {
 
     private final TeleportTaskService teleportTaskService;
     private final TranslationManager translationManager;
     private final WarpManager warpManager;
     private final MiniMessage miniMessage;
 
-    public WarpInventory(TeleportTaskService teleportTaskService, TranslationManager translationManager, WarpManager warpManager, MiniMessage miniMessage) {
+    @Inject
+    WarpInventory(TeleportTaskService teleportTaskService, TranslationManager translationManager, WarpManager warpManager, MiniMessage miniMessage) {
         this.teleportTaskService = teleportTaskService;
         this.translationManager = translationManager;
         this.warpManager = warpManager;

@@ -2,13 +2,13 @@ package com.eternalcode.core.loader.dependency;
 
 import com.eternalcode.core.loader.repository.Repository;
 
+import com.eternalcode.core.loader.resource.ResourceLocator;
 import java.util.Objects;
 
 public class Dependency {
 
     private static final String JAR_MAVEN_FORMAT = "%s/%s/%s/%s/%s-%s.jar";
-    private static final String JAR_FORMAT = "%s-%s-%s.jar";
-    private static final String JAR_FORMAT_WITH_CLASSIFIER = "%s-%s-%s-%s.jar";
+    private static final String JAR_MAVEN_FORMAT_WITH_CLASSIFIER = "%s/%s/%s/%s/%s-%s-%s.jar";
     private static final String POM_XML_FORMAT = "%s/%s/%s/%s/%s-%s.pom";
 
     private final String groupId;
@@ -21,34 +21,45 @@ public class Dependency {
         this.version = version;
     }
 
-    public String toJarFileName() {
-        return String.format(JAR_FORMAT, this.groupId, this.artifactId, this.version);
-    }
-
-    public String toJarFileName(String classifier) {
-        return String.format(JAR_FORMAT_WITH_CLASSIFIER, this.groupId, this.artifactId, this.version, classifier);
-    }
-
-    public String toMavenJarPath(Repository repository) {
-        return String.format(JAR_MAVEN_FORMAT,
-                repository.url(),
-                this.groupId.replace(".", "/"),
-                this.artifactId,
-                this.version,
-                this.artifactId,
-                this.version
+    public ResourceLocator toMavenJar(Repository repository, String classifier) {
+        String url = String.format(
+            JAR_MAVEN_FORMAT_WITH_CLASSIFIER,
+            repository.url(),
+            this.groupId,
+            this.artifactId,
+            this.version,
+            this.artifactId,
+            this.version,
+            classifier
         );
+
+        return ResourceLocator.fromString(url);
     }
 
-    public String toPomXmlPath(Repository repository) {
-        return String.format(POM_XML_FORMAT,
-                repository.url(),
-                this.groupId.replace(".", "/"),
-                this.artifactId,
-                this.version,
-                this.artifactId,
-                this.version
+    public ResourceLocator toMavenJar(Repository repository) {
+        String url = String.format(JAR_MAVEN_FORMAT,
+            repository.url(),
+            this.groupId.replace(".", "/"),
+            this.artifactId,
+            this.version,
+            this.artifactId,
+            this.version
         );
+
+        return ResourceLocator.fromString(url);
+    }
+
+    public ResourceLocator toPomXml(Repository repository) {
+        String url = String.format(POM_XML_FORMAT,
+            repository.url(),
+            this.groupId.replace(".", "/"),
+            this.artifactId,
+            this.version,
+            this.artifactId,
+            this.version
+        );
+
+        return ResourceLocator.fromString(url);
     }
 
     public String getGroupId() {

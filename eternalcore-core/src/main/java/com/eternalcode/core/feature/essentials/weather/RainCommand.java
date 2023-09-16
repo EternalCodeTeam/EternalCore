@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.weather;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -11,11 +12,12 @@ import org.bukkit.World;
 
 @Route(name = "rain")
 @Permission("eternalcore.rain")
-public class RainCommand {
+class RainCommand {
 
     private final NoticeService noticeService;
 
-    public RainCommand(NoticeService noticeService) {
+    @Inject
+    RainCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

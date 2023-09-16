@@ -28,8 +28,13 @@ public class EternalCoreLoader extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        this.eternalCore.disable();
-        this.dependencyLoader.close();
+        if (this.eternalCore != null) {
+            this.eternalCore.disable();
+        }
+
+        if (this.dependencyLoader != null) {
+            this.dependencyLoader.close();
+        }
     }
 
 }

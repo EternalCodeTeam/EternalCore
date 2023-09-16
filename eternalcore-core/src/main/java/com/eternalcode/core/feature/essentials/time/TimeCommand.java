@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.time;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -12,11 +13,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "time")
 @Permission("eternalcore.time")
-public class TimeCommand {
+class TimeCommand {
 
     private final NoticeService noticeService;
 
-    public TimeCommand(NoticeService noticeService) {
+    @Inject
+    TimeCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

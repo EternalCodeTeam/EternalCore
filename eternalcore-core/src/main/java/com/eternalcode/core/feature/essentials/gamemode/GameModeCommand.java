@@ -1,7 +1,8 @@
 package com.eternalcode.core.feature.essentials.gamemode;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.command.configurator.config.CommandConfiguration;
+import com.eternalcode.core.litecommand.configurator.config.CommandConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -15,12 +16,13 @@ import org.bukkit.entity.Player;
 
 @Route(name = "gamemode", aliases = { "gm" })
 @Permission("eternalcore.gamemode")
-public class GameModeCommand {
+class GameModeCommand {
 
     private final CommandConfiguration commandConfiguration;
     private final NoticeService noticeService;
 
-    public GameModeCommand(CommandConfiguration commandConfiguration, NoticeService noticeService) {
+    @Inject
+    GameModeCommand(CommandConfiguration commandConfiguration, NoticeService noticeService) {
         this.commandConfiguration = commandConfiguration;
         this.noticeService = noticeService;
     }

@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.adventure.legacy.Legacy;
 import dev.rollczi.litecommands.argument.joiner.Joiner;
@@ -16,12 +17,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 @Route(name = "itemname", aliases = { "itemrename" })
 @Permission("eternalcore.itemname")
-public class ItemNameCommand {
+class ItemNameCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
 
-    public ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    @Inject
+    ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
     }

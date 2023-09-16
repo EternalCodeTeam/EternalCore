@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.notice.NoticeTextType;
 import dev.rollczi.litecommands.argument.Arg;
@@ -11,11 +12,12 @@ import dev.rollczi.litecommands.command.route.Route;
 
 @Route(name = "alert", aliases = { "broadcast", "bc" })
 @Permission("eternalcore.alert")
-public class AlertCommand {
+class AlertCommand {
 
     private final NoticeService noticeService;
 
-    public AlertCommand(NoticeService noticeService) {
+    @Inject
+    AlertCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

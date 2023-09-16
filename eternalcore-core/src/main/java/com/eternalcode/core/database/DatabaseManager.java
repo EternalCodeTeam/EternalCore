@@ -31,7 +31,7 @@ public class DatabaseManager {
     private HikariDataSource dataSource;
     private ConnectionSource connectionSource;
 
-    public DatabaseManager(PluginConfiguration config, Logger logger, File dataFolder) {
+    DatabaseManager(PluginConfiguration config, Logger logger, File dataFolder) {
         this.config = config;
         this.logger = logger;
         this.dataFolder = dataFolder;

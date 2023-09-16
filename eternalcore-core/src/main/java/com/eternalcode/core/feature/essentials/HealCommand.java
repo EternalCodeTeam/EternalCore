@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -11,11 +12,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
 @Route(name = "heal")
-public class HealCommand {
+class HealCommand {
 
     private final NoticeService noticeService;
 
-    public HealCommand(NoticeService noticeService) {
+    @Inject
+    HealCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.argument.Arg;
@@ -12,11 +13,12 @@ import java.util.UUID;
 
 @Route(name = "unignore")
 @Permission("eternalcore.ignore")
-public class UnIgnoreCommand {
+class UnIgnoreCommand {
 
     private final IgnoreRepository repository;
     private final NoticeService noticeService;
 
+    @Inject
     public UnIgnoreCommand(IgnoreRepository ignoreRepository, NoticeService noticeService) {
         this.repository = ignoreRepository;
         this.noticeService = noticeService;

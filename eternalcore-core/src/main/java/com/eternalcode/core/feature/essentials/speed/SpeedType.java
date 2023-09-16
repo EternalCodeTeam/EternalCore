@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.essentials.speed;
 
-public enum SpeedType {
+enum SpeedType {
     WALK,
     FLY
 }

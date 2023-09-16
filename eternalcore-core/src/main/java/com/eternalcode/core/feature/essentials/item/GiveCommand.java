@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
@@ -16,12 +17,13 @@ import org.bukkit.inventory.ItemStack;
 
 @Route(name = "give", aliases = { "i", "item" })
 @Permission("eternalcore.give")
-public class GiveCommand {
+class GiveCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfig;
 
-    public GiveCommand(NoticeService noticeService, PluginConfiguration pluginConfig) {
+    @Inject
+    GiveCommand(NoticeService noticeService, PluginConfiguration pluginConfig) {
         this.noticeService = noticeService;
         this.pluginConfig = pluginConfig;
     }

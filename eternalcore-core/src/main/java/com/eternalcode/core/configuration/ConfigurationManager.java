@@ -4,7 +4,9 @@ import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
 import com.eternalcode.core.configuration.composer.MaterialComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeComposer;
 import com.eternalcode.core.shared.Position;
@@ -18,6 +20,7 @@ import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class ConfigurationManager {
 
     private final ConfigurationBackupService configurationBackupService;
@@ -36,6 +39,7 @@ public class ConfigurationManager {
     private final Set<ReloadableConfig> configs = new HashSet<>();
     private final File dataFolder;
 
+    @Inject
     public ConfigurationManager(ConfigurationBackupService configurationBackupService, File dataFolder) {
         this.configurationBackupService = configurationBackupService;
         this.dataFolder = dataFolder;

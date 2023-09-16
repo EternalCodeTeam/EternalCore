@@ -1,41 +1,41 @@
 package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.command.argument.DurationArgument;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import java.util.function.Supplier;
+
 import org.bukkit.command.CommandSender;
 
 import java.time.Duration;
 
 @Route(name = "chat")
 @Permission("eternalcore.chat")
-public class ChatManagerCommand {
+class ChatManagerCommand {
 
-    private final Notice clear;
+    private final Supplier<Notice> clear;
     private final NoticeService noticeService;
     private final ChatManager chatManager;
 
-    private ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, Notice clear) {
+    @Inject
+    ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, ChatSettings settings) {
         this.noticeService = noticeService;
         this.chatManager = chatManager;
-        this.clear = clear;
+        this.clear = create(settings);
     }
 
     @Execute(route = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
-    public void clear(CommandSender sender) {
+    void clear(CommandSender sender) {
         this.noticeService.create()
-            .staticNotice(this.clear)
+            .staticNotice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
@@ -44,7 +44,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "on")
     @DescriptionDocs(description = "Enables chat")
-    public void enable(Viewer viewer, CommandSender sender) {
+    void enable(Viewer viewer, CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
@@ -61,7 +61,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "off")
     @DescriptionDocs(description = "Disables chat")
-    public void disable(Viewer viewer, CommandSender sender) {
+    void disable(Viewer viewer, CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
@@ -78,7 +78,7 @@ public class ChatManagerCommand {
 
     @Execute(route = "slowmode", required = 1)
     @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
-    public void slowmode(Viewer viewer, @Arg @By(DurationArgument.KEY) Duration duration) {
+    void slowmode(Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 
@@ -94,16 +94,8 @@ public class ChatManagerCommand {
             .send();
     }
 
-    public static ChatManagerCommand create(ChatManager chatManager, NoticeService audiences, int linesToClear) {
-        Component clear = Component.empty();
-
-        for (int lineIndex = 0; lineIndex < linesToClear; lineIndex++) {
-            clear = clear.append(Component.newline());
-        }
-
-        String serialized = MiniMessage.miniMessage().serialize(clear);
-
-        return new ChatManagerCommand(chatManager, audiences, Notice.chat(serialized));
+    private static Supplier<Notice> create(ChatSettings settings) {
+        return () -> Notice.chat("<newline>".repeat(Math.max(0, settings.linesToClear())));
     }
 }
 

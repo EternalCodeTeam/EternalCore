@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.AdventureUtil;
 import com.eternalcode.core.adventure.legacy.Legacy;
@@ -21,12 +22,13 @@ import java.util.List;
 
 @Route(name = "itemlore")
 @Permission("eternalcore.itemlore")
-public class ItemLoreCommand {
+class ItemLoreCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
 
-    public ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    @Inject
+    ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
     }

@@ -1,6 +1,7 @@
 package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+@ConfigurationFile
 public class LocationsConfiguration implements ReloadableConfig {
 
     @Description("# These are spawn location, for your own safety, please don't touch it.")

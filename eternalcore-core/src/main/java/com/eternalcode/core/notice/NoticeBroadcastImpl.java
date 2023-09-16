@@ -1,6 +1,6 @@
 package com.eternalcode.core.notice;
 
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.extractor.NoticeExtractor;
 import com.eternalcode.core.notice.extractor.OptionalNoticeExtractor;
 import com.eternalcode.core.notice.extractor.TranslatedMessageExtractor;

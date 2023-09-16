@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.entity.Player;
@@ -17,18 +19,20 @@ import java.util.UUID;
     description = "It allows you to manage chat, with slowmode, chat clear, chat on/off etc.",
     permission = { "eternalcore.chat.noslowmode", "eternalcore.chat.bypass" }
 )
-public class ChatManagerController implements Listener {
+@Controller
+class ChatManagerController implements Listener {
 
     private final ChatManager chatManager;
     private final NoticeService noticeService;
 
-    public ChatManagerController(ChatManager chatManager, NoticeService noticeService) {
+    @Inject
+    ChatManagerController(ChatManager chatManager, NoticeService noticeService) {
         this.chatManager = chatManager;
         this.noticeService = noticeService;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-    public void onChatSlowMode(AsyncPlayerChatEvent event) {
+    void onChatSlowMode(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("enernalcore.chat.bypass")) {
@@ -58,7 +62,7 @@ public class ChatManagerController implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void markUseChat(AsyncPlayerChatEvent event) {
+    void markUseChat(AsyncPlayerChatEvent event) {
         this.chatManager.markUseChat(event.getPlayer().getUniqueId());
     }
 

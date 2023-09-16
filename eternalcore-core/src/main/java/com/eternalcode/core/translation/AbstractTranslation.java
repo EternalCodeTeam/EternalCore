@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 

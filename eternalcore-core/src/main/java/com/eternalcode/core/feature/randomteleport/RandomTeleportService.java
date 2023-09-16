@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -15,7 +17,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class RandomTeleportService {
+@Service
+class RandomTeleportService {
 
     private static final Set<Material> UNSAFE_BLOCKS = EnumSet.of(
         Material.LAVA,
@@ -43,11 +46,12 @@ public class RandomTeleportService {
 
     private final Random random = new Random();
 
-    public RandomTeleportService(RandomTeleportSettings randomTeleportSettings) {
+    @Inject
+    RandomTeleportService(RandomTeleportSettings randomTeleportSettings) {
         this.randomTeleportSettings = randomTeleportSettings;
     }
 
-    public CompletableFuture<TeleportResult> teleport(Player player) {
+    CompletableFuture<TeleportResult> teleport(Player player) {
         return this.getSafeRandomLocation(player.getWorld(), this.randomTeleportSettings.randomTeleportAttempts())
             .thenCompose(location -> PaperLib.teleportAsync(player, location).thenApply(success -> new TeleportResult(success, location)));
     }

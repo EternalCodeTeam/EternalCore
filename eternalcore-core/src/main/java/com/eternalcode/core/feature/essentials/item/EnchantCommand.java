@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.amount.Min;
@@ -18,12 +19,13 @@ import java.util.UUID;
 
 @Route(name = "enchant")
 @Permission("eternalcore.enchant")
-public class EnchantCommand {
+class EnchantCommand {
 
     private final PluginConfiguration configuration;
     private final NoticeService noticeService;
 
-    public EnchantCommand(PluginConfiguration configuration, NoticeService noticeService) {
+    @Inject
+    EnchantCommand(PluginConfiguration configuration, NoticeService noticeService) {
         this.configuration = configuration;
         this.noticeService = noticeService;
     }

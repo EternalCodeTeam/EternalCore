@@ -24,7 +24,14 @@ class EternalCoreWrapper {
 
             this.eternalCore = eternalCoreConstructor.newInstance(plugin);
         }
-        catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | InstantiationException exception) {
+        catch (InvocationTargetException exception) {
+            if (exception.getCause() instanceof RuntimeException runtimeException) {
+                throw runtimeException;
+            }
+
+            throw new RuntimeException("Can not enable EternalCore: ", exception.getCause());
+        }
+        catch (IllegalAccessException | NoSuchMethodException | InstantiationException exception) {
             throw new RuntimeException(exception);
         }
     }
@@ -34,7 +41,10 @@ class EternalCoreWrapper {
             Method disableMethod = this.eternalCoreClass.getMethod("disable");
 
             disableMethod.setAccessible(true);
-            disableMethod.invoke(this.eternalCore);
+
+            if (this.eternalCore != null) {
+                disableMethod.invoke(this.eternalCore);
+            }
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exception) {
             throw new RuntimeException(exception);

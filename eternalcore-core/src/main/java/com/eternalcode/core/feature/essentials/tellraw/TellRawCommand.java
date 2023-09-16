@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.tellraw;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.viewer.Viewer;
@@ -13,11 +14,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "tellraw")
 @Permission("eternalcore.tellraw")
-public class TellRawCommand {
+class TellRawCommand {
 
     private final NoticeService noticeService;
 
-    public TellRawCommand(NoticeService noticeService) {
+    @Inject
+    TellRawCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

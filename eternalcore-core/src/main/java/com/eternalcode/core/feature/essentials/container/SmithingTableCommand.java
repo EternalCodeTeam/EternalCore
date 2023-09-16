@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -10,11 +11,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "smithingtable", aliases = "smithing")
-public class SmithingTableCommand {
+class SmithingTableCommand {
 
     private final NoticeService noticeService;
 
-    public SmithingTableCommand(NoticeService noticeService) {
+    @Inject
+    SmithingTableCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

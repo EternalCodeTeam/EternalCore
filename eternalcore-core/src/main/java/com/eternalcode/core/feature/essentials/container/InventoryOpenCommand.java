@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.adventure.legacy.Legacy;
 import dev.rollczi.litecommands.argument.Arg;
@@ -19,12 +20,13 @@ import panda.std.Option;
 
 @Route(name = "invsee", aliases = { "oi", "inventoryopen", "open", "invsee" })
 @Permission("eternalcore.invsee")
-public class InventoryOpenCommand {
+class InventoryOpenCommand {
 
     private final Server server;
     private final NoticeService noticeService;
 
-    public InventoryOpenCommand(Server server, NoticeService noticeService) {
+    @Inject
+    InventoryOpenCommand(Server server, NoticeService noticeService) {
         this.server = server;
         this.noticeService = noticeService;
     }

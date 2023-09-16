@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import dev.rollczi.litecommands.argument.Arg;
@@ -15,13 +16,14 @@ import panda.utilities.text.Formatter;
 
 @Route(name = "itemflag")
 @Permission("eternalcore.itemflag")
-public class ItemFlagCommand {
+class ItemFlagCommand {
 
     private static final Placeholders<ItemFlag> ITEM_FLAG_PLACEHOLDER = Placeholders.of("{ITEM_FLAG}", Enum::name);
 
     private final NoticeService noticeService;
 
-    public ItemFlagCommand(NoticeService noticeService) {
+    @Inject
+    ItemFlagCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

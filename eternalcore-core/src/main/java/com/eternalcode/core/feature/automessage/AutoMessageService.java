@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.automessage;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.scheduler.Scheduler;
@@ -19,7 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @FeatureDocs(name = "AutoMessage", description = "Automatically sends messages to players at a given time interval.")
-public class AutoMessageService {
+@Service
+class AutoMessageService {
 
     private final AutoMessageRepository repository;
     private final AutoMessageSettings settings;
@@ -29,7 +32,8 @@ public class AutoMessageService {
 
     private final AtomicInteger broadcastCount = new AtomicInteger(0);
 
-    public AutoMessageService(AutoMessageRepository repository, AutoMessageSettings settings, NoticeService noticeService, Scheduler scheduler, Server server) {
+    @Inject
+    AutoMessageService(AutoMessageRepository repository, AutoMessageSettings settings, NoticeService noticeService, Scheduler scheduler, Server server) {
         this.repository = repository;
         this.settings = settings;
         this.noticeService = noticeService;
@@ -39,7 +43,7 @@ public class AutoMessageService {
         this.tick();
     }
 
-    public Completable<Boolean> switchReceiving(UUID uniqueId) {
+    Completable<Boolean> switchReceiving(UUID uniqueId) {
         return this.repository.switchReceiving(uniqueId);
     }
 

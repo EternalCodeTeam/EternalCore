@@ -1,5 +1,7 @@
 package com.eternalcode.core.scheduler;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import panda.std.reactive.Completable;
@@ -7,11 +9,13 @@ import panda.std.reactive.Completable;
 import java.time.Duration;
 import java.util.function.Supplier;
 
+@Service
 public class BukkitSchedulerImpl implements Scheduler {
 
     private final Plugin plugin;
     private final BukkitScheduler rootScheduler;
 
+    @Inject
     public BukkitSchedulerImpl(Plugin plugin) {
         this.plugin = plugin;
         this.rootScheduler = plugin.getServer().getScheduler();

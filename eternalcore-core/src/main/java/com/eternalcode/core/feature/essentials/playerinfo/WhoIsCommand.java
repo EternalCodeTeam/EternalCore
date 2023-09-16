@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.playerinfo;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -12,11 +13,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "whois")
 @Permission("eternalcore.whois")
-public class WhoIsCommand {
+class WhoIsCommand {
 
     private final NoticeService noticeService;
 
-    public WhoIsCommand(NoticeService noticeService) {
+    @Inject
+    WhoIsCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

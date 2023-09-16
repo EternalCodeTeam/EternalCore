@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.time;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -11,11 +12,12 @@ import org.bukkit.World;
 
 @Route(name = "night")
 @Permission("eternalcore.night")
-public class NightCommand {
+class NightCommand {
 
     private final NoticeService noticeService;
 
-    public NightCommand(NoticeService noticeService) {
+    @Inject
+    NightCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

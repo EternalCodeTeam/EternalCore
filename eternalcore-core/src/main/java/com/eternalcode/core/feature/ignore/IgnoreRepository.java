@@ -5,7 +5,7 @@ import panda.std.reactive.Completable;
 
 import java.util.UUID;
 
-public interface IgnoreRepository {
+interface IgnoreRepository {
 
     Completable<Boolean> isIgnored(UUID by, UUID target);
 

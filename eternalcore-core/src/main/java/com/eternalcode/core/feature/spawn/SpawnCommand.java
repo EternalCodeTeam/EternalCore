@@ -2,11 +2,12 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.teleport.TeleportService;
-import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -16,7 +17,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Route(name = "spawn")
-public class SpawnCommand {
+class SpawnCommand {
 
     private final LocationsConfiguration locations;
     private final SpawnSettings spawnSettings;
@@ -24,7 +25,8 @@ public class SpawnCommand {
     private final TeleportService teleportService;
     private final NoticeService noticeService;
 
-    public SpawnCommand(LocationsConfiguration locations, SpawnSettings spawnSettings, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
+    @Inject
+    SpawnCommand(LocationsConfiguration locations, SpawnSettings spawnSettings, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
         this.teleportTaskService = teleportTaskService;
         this.locations = locations;
         this.spawnSettings = spawnSettings;

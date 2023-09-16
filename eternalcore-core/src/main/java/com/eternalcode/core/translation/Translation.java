@@ -1,7 +1,7 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
-import com.eternalcode.core.language.Language;
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;

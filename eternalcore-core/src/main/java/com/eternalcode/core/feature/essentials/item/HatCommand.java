@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.ItemUtil;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -12,11 +13,12 @@ import org.bukkit.inventory.PlayerInventory;
 
 @Route(name = "hat")
 @Permission("eternalcore.hat")
-public class HatCommand {
+class HatCommand {
 
     private final NoticeService noticeService;
 
-    public HatCommand(NoticeService noticeService) {
+    @Inject
+    HatCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

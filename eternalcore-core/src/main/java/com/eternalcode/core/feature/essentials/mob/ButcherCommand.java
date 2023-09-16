@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.mob;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -20,12 +21,13 @@ import java.util.List;
 @SuppressWarnings("SameParameterValue")
 @Route(name = "butcher", aliases = { "killmob" })
 @Permission("eternalcore.butcher")
-public class ButcherCommand {
+class ButcherCommand {
 
     private final NoticeService noticeService;
     private final int safeChunksNumber;
 
-    public ButcherCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
+    @Inject
+    ButcherCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
         this.noticeService = noticeService;
         this.safeChunksNumber = pluginConfiguration.butcher.safeChunkNumber;
     }

@@ -31,6 +31,7 @@ import com.eternalcode.core.loader.dependency.DependencyException;
 import com.eternalcode.core.loader.dependency.DependencyLoadResult;
 import com.eternalcode.core.loader.dependency.DependencyLoaderImpl;
 
+import com.eternalcode.core.loader.repository.Repository;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -78,19 +79,19 @@ public class RelocationHandler implements AutoCloseable {
         this.jarRelocatorRunMethod = jarRelocatorRunMethod;
     }
 
-    public Path relocateDependency(Path jar, Dependency dependency, List<Relocation> relocations) {
+    public Path relocateDependency(Path dependencyPath, Dependency dependency, List<Relocation> relocations) {
         if (relocations.isEmpty()) {
-            return jar;
+            return dependencyPath;
         }
 
-        Path folder = jar.getParent();
-        Path relocatedJar = folder.resolve(dependency.toJarFileName("relocated"));
+        Repository localRepository = Repository.localRepository(dependencyPath.getParent());
+        Path relocatedJar = dependency.toMavenJar(localRepository, "relocated").toPath();
 
         if (Files.exists(relocatedJar)) {
             return relocatedJar;
         }
 
-        return this.relocate(jar, relocatedJar, relocations);
+        return this.relocate(dependencyPath, relocatedJar, relocations);
     }
 
     private Path relocate(Path input, Path output, List<Relocation> relocations) {
@@ -101,11 +102,13 @@ public class RelocationHandler implements AutoCloseable {
         }
 
         try {
+            Files.createDirectories(output.getParent());
+            Files.createFile(output);
             Object relocator = this.jarRelocatorConstructor.newInstance(input.toFile(), output.toFile(), mappings);
 
             this.jarRelocatorRunMethod.invoke(relocator);
         }
-        catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
+        catch (InstantiationException | IllegalAccessException | InvocationTargetException | IOException exception) {
             throw new DependencyException("Failed to create JarRelocator instance", exception);
         }
 

@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.essentials.speed;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.command.argument.SpeedArgument;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
@@ -13,11 +13,12 @@ import org.bukkit.entity.Player;
 
 @Route(name = "speed")
 @Permission("eternalcore.speed")
-public class SpeedCommand {
+class SpeedCommand {
 
     private final NoticeService noticeService;
 
-    public SpeedCommand(NoticeService noticeService) {
+    @Inject
+    SpeedCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

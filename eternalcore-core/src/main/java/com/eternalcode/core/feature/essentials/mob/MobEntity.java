@@ -5,21 +5,21 @@ import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 
-public class MobEntity {
+class MobEntity {
 
     private final MobType mobType;
     private Class<? extends Entity> entityClass;
 
-    public MobEntity(MobType mobType) {
+    MobEntity(MobType mobType) {
         this.mobType = mobType;
     }
 
-    public MobEntity(MobType mobType, Class<? extends Entity> entityClass) {
+    MobEntity(MobType mobType, Class<? extends Entity> entityClass) {
         this.mobType = mobType;
         this.entityClass = entityClass;
     }
 
-    public boolean isMatch(Entity entity) {
+    boolean isMatch(Entity entity) {
         return switch (this.mobType) {
             case PASSIVE -> EntityUtil.is(entity, Animals.class);
             case AGGRESSIVE -> EntityUtil.is(entity, Monster.class);

@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.essentials.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -11,11 +12,12 @@ import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 
 @Route(name = "stonecutter")
-public class StonecutterCommand {
+class StonecutterCommand {
 
     private final NoticeService noticeService;
 
-    public StonecutterCommand(NoticeService noticeService) {
+    @Inject
+    StonecutterCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 

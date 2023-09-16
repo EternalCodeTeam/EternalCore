@@ -1,5 +1,7 @@
 package com.eternalcode.core.notice;
 
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.viewer.Viewer;
 import com.google.common.collect.ImmutableBiMap;
 import net.kyori.adventure.audience.Audience;
@@ -15,6 +17,7 @@ import net.kyori.adventure.title.TitlePart;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+@Service
 class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
 
     private final Map<NoticeType, NoticePartAnnouncer<?>> announcers = new ImmutableBiMap.Builder<NoticeType, NoticePartAnnouncer<?>>()
@@ -30,6 +33,7 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
     private final AudienceProvider audienceProvider;
     private final ComponentSerializer<Component, Component, String> componentSerializer;
 
+    @Inject
     PlatformBroadcasterAdventureImpl(AudienceProvider audienceProvider, ComponentSerializer<Component, Component, String> componentSerializer) {
         this.audienceProvider = audienceProvider;
         this.componentSerializer = componentSerializer;

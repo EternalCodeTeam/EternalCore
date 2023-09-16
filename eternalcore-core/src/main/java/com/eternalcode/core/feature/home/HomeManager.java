@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.home;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.User;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -18,13 +20,23 @@ import java.util.stream.Stream;
     name = "Home",
     description = "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
 )
-public class HomeManager {
+@Service
+class HomeManager {
 
     private final Map<UUID, Map<String, Home>> homes = new HashMap<>();
     private final HomeRepository repository;
 
+    @Inject
     private HomeManager(HomeRepository repository) {
         this.repository = repository;
+
+        repository.getHomes().then(homes -> {
+            for (Home home : homes) {
+                Map<String, Home> homesByUuid = this.homes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
+
+                homesByUuid.put(home.getName(), home);
+            }
+        });
     }
 
     public void createHome(User user, String name, Location location) {
@@ -70,7 +82,17 @@ public class HomeManager {
         return Collections.unmodifiableCollection(this.homes.getOrDefault(user, new HashMap<>()).values());
     }
 
-    public int getMaxAmountOfHomes(Player player, PluginConfiguration.Homes homes) {
+    public int getAmountOfHomes(UUID user) {
+        Map<String, Home> homes = this.homes.get(user);
+
+        if (homes == null) {
+            return 0;
+        }
+
+        return homes.size();
+    }
+
+    public int getHomesLimit(Player player, PluginConfiguration.Homes homes) {
         return homes.maxHomes.entrySet().stream()
             .flatMap(entry -> {
                 if (player.hasPermission(entry.getKey())) {
@@ -83,17 +105,4 @@ public class HomeManager {
             .orElse(0);
     }
 
-    public static HomeManager create(HomeRepository repository) {
-        HomeManager manager = new HomeManager(repository);
-
-        repository.getHomes().then(homes -> {
-            for (Home home : homes) {
-                Map<String, Home> homesByUuid = manager.homes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
-
-                homesByUuid.put(home.getName(), home);
-            }
-        });
-
-        return manager;
-    }
 }
