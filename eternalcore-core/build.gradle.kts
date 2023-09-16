@@ -38,6 +38,7 @@ eternalShadow {
     )
 
     // configuration
+    library("org.mariadb.jdbc:mariadb-java-client:3.2.0")
     library("net.dzikoysk:cdn:1.14.4")
     libraryRelocate(
         "net.dzikoysk.cdn"
