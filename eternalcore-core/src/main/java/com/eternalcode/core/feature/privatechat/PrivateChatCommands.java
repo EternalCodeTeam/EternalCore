@@ -59,8 +59,8 @@ class PrivateChatCommands {
 
     private void modifySocialSpy(UUID uuid, Consumer<UUID> featureModifier) {
         featureModifier.accept(uuid);
-        this.noticeService
-            .create()
+
+        this.noticeService.create()
             .player(uuid)
             .notice(translation -> this.privateChatService.isSpy(uuid)
                 ? translation.privateChat().socialSpyEnable()
