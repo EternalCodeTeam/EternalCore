@@ -222,12 +222,12 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLRandomTeleportSection implements RandomTeleportSection {
         @Description(" ")
         public Notice randomTeleportStarted = Notice.chat("<green>► <white>Rozpoczynanie procesu losowania lokalizacji...");
-        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!!");
+        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!");
 
         public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
 
         @Description({"# {PLAYER} - Gracz który został teleportowany, {WORLD} - Świat, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
-        public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokazlizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
+        public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokalizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
     }
 
     @Description({
@@ -390,8 +390,8 @@ public class PLTranslation extends AbstractTranslation {
         public Notice notExist = Notice.chat("<red>► <dark_red>Nie ma takiego domu!");
 
         @Description({ " ", "# {HOME} - Nazwa domu" })
-        public Notice create = Notice.chat("<green>► <white>Stworzono home <green>{HOME}<white>!");
-        public Notice delete = Notice.chat("<red>► <white>Usunięto home <red>{HOME}<white>!");
+        public Notice create = Notice.chat("<green>► <white>Stworzono dom o nazwie <green>{HOME}<white>!");
+        public Notice delete = Notice.chat("<red>► <white>Usunięto dom o nazwie <red>{HOME}<white>!");
         public Notice overrideHomeLocation = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME}<white>!");
 
         @Description({ " ", "# {LIMIT} - Limit domów" })
@@ -423,8 +423,8 @@ public class PLTranslation extends AbstractTranslation {
         public Notice socialSpyMessage = Notice.chat("<dark_gray>[<red>ss<dark_gray>] <dark_gray>[<gray>{SENDER} -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
 
         @Description(" ")
-        public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy został <green>włączony!");
-        public Notice socialSpyDisable = Notice.chat("<red>► <white> SocialSpy został <red>wyłączony!");
+        public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy został {STATE}<white>!");
+        public Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy został {STATE}<white>!");
 
         @Description({ " ", "# {PLAYER} - Gracz który jest zignorowany" })
         public Notice ignorePlayer = Notice.chat("<green>► <white>Zignorowano gracza <red>{PLAYER}<white>!");
@@ -642,8 +642,8 @@ public class PLTranslation extends AbstractTranslation {
             "<green>► <white>Poziom najedzenia: <green>{FOOD}"
         );
 
-        @Description({ " ", "# {KILLED} - Liczba zabitych mobów" })
-        public Notice butcherCommand = Notice.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>mobów!");
+        @Description({ " ", "# {KILLED} - Liczba zabitych potworów" })
+        public Notice butcherCommand = Notice.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>potworów!");
 
         @Description({ " ", "# {SAFE_CHUNKS} - Liczba bezpiecznych chunków" })
         public Notice safeChunksMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
@@ -660,7 +660,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ " ", "# {PLAYER} - Gracz który teleportował cię na spawn" })
         public Notice spawnTeleportedBy = Notice.chat("<green>► <white>Zostałeś przeteleportowany na spawn przez gracza <green>{PLAYER}<white>!");
         @Description("# {PLAYER} - Gracz który został przeteleportowany na spawn")
-        public Notice spawnTeleportedOther = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white> został przeteleportowany na spawn!");
+        public Notice spawnTeleportedOther = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został przeteleportowany na spawn!");
     }
 
     @Description({

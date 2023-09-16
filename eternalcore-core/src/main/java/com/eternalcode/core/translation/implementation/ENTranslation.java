@@ -417,8 +417,8 @@ public class ENTranslation extends AbstractTranslation {
         public Notice socialSpyMessage = Notice.chat("<dark_gray>[<red>ss<dark_gray>] <dark_gray>[<gray>{SENDER} -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
 
         @Description(" ")
-        public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy has been <green>enabled!");
-        public Notice socialSpyDisable = Notice.chat("<red>► <white> SocialSpy has been <red>disabled!");
+        public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy has been {STATE}<white>!");
+        public Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy has been {STATE}<white>!");
 
         @Description({ " ", "# {PLAYER} - Ignored player" })
         public Notice ignorePlayer = Notice.chat("<green>► {PLAYER} <white>player has been ignored!");
