@@ -38,15 +38,15 @@ eternalShadow {
     )
 
     // configuration
-    library("org.mariadb.jdbc:mariadb-java-client:3.2.0")
-    library("org.postgresql:postgresql:42.6.0")
-    library("com.h2database:h2:2.2.222")
     library("net.dzikoysk:cdn:1.14.4")
     libraryRelocate(
         "net.dzikoysk.cdn"
     )
 
     // database
+    library("org.mariadb.jdbc:mariadb-java-client:3.2.0")
+    library("org.postgresql:postgresql:42.6.0")
+    library("com.h2database:h2:2.2.222")
     library("com.j256.ormlite:ormlite-jdbc:6.1")
     library("com.zaxxer:HikariCP:5.0.1")
 
