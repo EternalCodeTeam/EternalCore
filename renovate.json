@@ -15,6 +15,10 @@
       "matchPackagePatterns": [
         "*"
       ]
+    },
+    {
+      "matchPackagePatterns": ["h2"],
+      "enabled": false
     }
   ],
   "separateMajorMinor": false
