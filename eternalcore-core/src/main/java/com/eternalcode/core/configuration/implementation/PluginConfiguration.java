@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
+import com.eternalcode.core.feature.reportchat.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleport.request.TeleportRequestSettings;
@@ -164,8 +165,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Chat implements ChatSettings {
-        @Description("# Delay to send the next message under /helpop")
-        public Duration helpOpDelay = Duration.ofSeconds(60);
 
         @Description({ " ", "# Custom message for unknown command" })
         public boolean replaceStandardHelpMessage = false;
@@ -176,6 +175,7 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
         public int linesToClear = 128;
 
+        @Description({ " ", "# Chat should be enabled?" })
         public boolean chatEnabled = true;
 
         @Override
@@ -207,6 +207,21 @@ public class PluginConfiguration implements ReloadableConfig {
             return this.linesToClear;
         }
 
+    }
+
+    @Description({ " ", "# HelpOp Section" })
+    public HelpOp helpOp = new HelpOp();
+
+    @Contextual
+    public static class HelpOp implements HelpOpSettings {
+
+        @Description("# Delay to send the next message under /helpop")
+        public Duration helpOpDelay = Duration.ofSeconds(60);
+
+        @Override
+        public Duration getHelpOpDelay() {
+            return this.helpOpDelay;
+        }
     }
 
     @Description({ " ", "# Additional formatting options" })
