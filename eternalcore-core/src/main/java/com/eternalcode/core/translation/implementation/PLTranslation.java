@@ -642,8 +642,8 @@ public class PLTranslation extends AbstractTranslation {
             "<green>► <white>Poziom najedzenia: <green>{FOOD}"
         );
 
-        @Description({ " ", "# {KILLED} - Liczba zabitych potworów" })
-        public Notice butcherCommand = Notice.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>potworów!");
+        @Description({ " ", "# {KILLED} - Liczba zabitych mobów" })
+        public Notice butcherCommand = Notice.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>mobów!");
 
         @Description({ " ", "# {SAFE_CHUNKS} - Liczba bezpiecznych chunków" })
         public Notice safeChunksMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
