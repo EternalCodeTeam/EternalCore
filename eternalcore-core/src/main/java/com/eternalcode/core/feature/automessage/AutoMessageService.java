@@ -15,8 +15,10 @@ import panda.std.reactive.Completable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @FeatureDocs(name = "AutoMessage", description = "Automatically sends messages to players at a given time interval.")
 @Service
@@ -45,10 +47,10 @@ class AutoMessageService {
         return this.repository.switchReceiving(uniqueId);
     }
 
-    void broadcastNextMessage() {
-        List<UUID> onlineUniqueIds = this.server.getOnlinePlayers().stream()
+    public void broadcastNextMessage() {
+        Set<UUID> onlineUniqueIds = this.server.getOnlinePlayers().stream()
             .map(Entity::getUniqueId)
-            .toList();
+            .collect(Collectors.toSet());
 
         this.repository.findReceivers(onlineUniqueIds).then(receivers -> {
             if (receivers.isEmpty()) {

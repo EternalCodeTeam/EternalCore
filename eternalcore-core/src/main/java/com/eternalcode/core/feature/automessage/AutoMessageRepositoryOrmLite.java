@@ -13,9 +13,12 @@ import com.j256.ormlite.table.TableUtils;
 import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements AutoMessageRepository {
@@ -27,7 +30,7 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     }
 
     @Override
-    public Completable<List<UUID>> findReceivers(List<UUID> onlineUniqueIds) {
+    public Completable<Set<UUID>> findReceivers(Set<UUID> onlineUniqueIds) {
         if (onlineUniqueIds.isEmpty()) {
             return Completable.completed(onlineUniqueIds);
         }
@@ -44,9 +47,21 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             return where.query();
         });
 
-        return wrapperList.thenApply(ignores -> ignores.stream()
-            .map(wrapper -> wrapper.uniqueId)
-            .toList());
+        return wrapperList.thenApply(ignores -> {
+            Set<UUID> ignoredIds = ignores.stream()
+                .map(wrapper -> wrapper.uniqueId)
+                .collect(Collectors.toSet());
+
+            Set<UUID> onlineUniqueIdsWithoutIngores = new HashSet<>();
+
+            for (UUID onlineUniqueId : onlineUniqueIds) {
+                if (!ignoredIds.contains(onlineUniqueId)) {
+                    onlineUniqueIdsWithoutIngores.add(onlineUniqueId);
+                }
+            }
+
+            return onlineUniqueIdsWithoutIngores;
+        });
     }
 
     @Override
@@ -58,12 +73,12 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     public Completable<Boolean> switchReceiving(UUID uniqueId) {
         return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenCompose(optional -> {
             if (optional.isEmpty()) {
-                return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId)).thenApply(result -> true);
+                return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId)).thenApply(result -> false);
             }
 
             AutoMessageIgnoreWrapper wrapper = optional.get();
 
-            return this.delete(AutoMessageIgnoreWrapper.class, wrapper).thenApply(state -> false);
+            return this.delete(AutoMessageIgnoreWrapper.class, wrapper).thenApply(state -> true);
         });
     }
 
