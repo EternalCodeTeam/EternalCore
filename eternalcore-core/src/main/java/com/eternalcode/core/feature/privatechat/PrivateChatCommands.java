@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.command.amount.Min;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.root.RootRoute;
-import java.util.function.Consumer;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -50,16 +49,16 @@ class PrivateChatCommands {
         UUID uuid = player.getUniqueId();
 
         if (this.privateChatService.isSpy(uuid)) {
-            this.modifySocialSpy(uuid, this.privateChatService::disableSpy);
+            this.privateChatService.disableSpy(uuid);
+            this.notifyAboutSocialSpy(uuid);
             return;
         }
 
-        this.modifySocialSpy(uuid, this.privateChatService::enableSpy);
+        this.privateChatService.enableSpy(uuid);
+        this.notifyAboutSocialSpy(uuid);
     }
 
-    private void modifySocialSpy(UUID uuid, Consumer<UUID> featureModifier) {
-        featureModifier.accept(uuid);
-
+    private void notifyAboutSocialSpy(UUID uuid) {
         this.noticeService.create()
             .player(uuid)
             .notice(translation -> this.privateChatService.isSpy(uuid)
