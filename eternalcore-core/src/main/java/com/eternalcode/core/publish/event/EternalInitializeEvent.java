@@ -1,4 +1,4 @@
 package com.eternalcode.core.publish.event;
 
-public class EternalInitializeEvent implements EternalEvent {
+public class EternalInitializeEvent implements EternalCoreEvent {
 }

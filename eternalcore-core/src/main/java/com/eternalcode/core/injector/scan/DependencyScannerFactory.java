@@ -30,6 +30,7 @@ public final class DependencyScannerFactory {
                 Controller.class,
                 ConfigurationFile.class,
                 BeanSetup.class,
+
                 Route.class,
                 RootRoute.class,
                 LiteArgument.class,

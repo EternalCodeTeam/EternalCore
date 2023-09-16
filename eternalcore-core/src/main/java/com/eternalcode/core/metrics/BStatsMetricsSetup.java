@@ -13,7 +13,7 @@ class BStatsMetricsSetup implements Subscriber {
     @Subscribe(EternalInitializeEvent.class)
     public void onInitialize(JavaPlugin javaPlugin) {
         Metrics metrics = new Metrics(javaPlugin, 13964);
-        //metrics.addCustomChart(new SingleLineChart("users", () -> 0));
+        
     }
 
 }
