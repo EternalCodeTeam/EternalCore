@@ -50,12 +50,24 @@ class PrivateChatCommands {
 
         if (this.privateChatService.isSpy(uuid)) {
             this.privateChatService.disableSpy(uuid);
-            this.noticeService.player(uuid, translation -> translation.privateChat().socialSpyDisable());
+            this.notifyAboutSocialSpy(uuid);
             return;
         }
 
-        this.noticeService.player(uuid, translation -> translation.privateChat().socialSpyEnable());
         this.privateChatService.enableSpy(uuid);
+        this.notifyAboutSocialSpy(uuid);
+    }
+
+    private void notifyAboutSocialSpy(UUID uuid) {
+        this.noticeService.create()
+            .player(uuid)
+            .notice(translation -> this.privateChatService.isSpy(uuid)
+                ? translation.privateChat().socialSpyEnable()
+                : translation.privateChat().socialSpyDisable())
+            .placeholder("{STATE}", translation -> this.privateChatService.isSpy(uuid)
+                ? translation.format().enable()
+                : translation.format().disable())
+            .send();
     }
 
 }
