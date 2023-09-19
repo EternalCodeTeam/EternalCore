@@ -40,12 +40,13 @@ class HatCommand {
             return;
         }
 
+        ItemStack singleItem = new ItemStack(handItem.getType(), 1);
+        handItem.setAmount(handItem.getAmount() - 1);
+
         if (itemStack != null) {
             ItemUtil.giveItem(player, itemStack);
         }
 
-        playerInventory.setHelmet(handItem);
-
-        ItemUtil.removeItem(player, handItem.getType(), 1);
+        playerInventory.setHelmet(singleItem);
     }
 }
