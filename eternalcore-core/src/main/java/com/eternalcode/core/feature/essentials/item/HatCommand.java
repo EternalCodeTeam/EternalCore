@@ -40,7 +40,8 @@ class HatCommand {
             return;
         }
 
-        ItemStack singleItem = new ItemStack(handItem.getType(), 1);
+        ItemStack singleItem = handItem.clone();
+        singleItem.setAmount(1);
         handItem.setAmount(handItem.getAmount() - 1);
 
         if (itemStack != null) {
