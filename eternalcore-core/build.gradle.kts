@@ -9,7 +9,7 @@ dependencies {
     // modules
     implementation(project(":eternalcore-api"))
     implementation(project(":eternalcore-paper"))
-    implementation(project(":eternalcore-docs-api"))
+    api(project(":eternalcore-docs-api"))
 
     // Base libraries
     compileOnly("org.jetbrains:annotations:24.0.1")

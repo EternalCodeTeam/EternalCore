@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
     name = "Player Quit Sound"
 )
 @Controller
-public class PlayerQuitSoundListener {
+class PlayerQuitSoundListener {
 
     private final PluginConfiguration config;
     private final Server server;
