@@ -19,8 +19,8 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.3")
 
     // Lombok
-    compileOnly("org.projectlombok:lombok:1.18.28")
-    annotationProcessor("org.projectlombok:lombok:1.18.28")
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
 
     //GitCheck
     implementation("com.eternalcode:gitcheck:1.0.0")
