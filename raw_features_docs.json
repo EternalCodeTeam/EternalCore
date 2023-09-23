@@ -45,10 +45,12 @@
     ]
   },
   {
-    "name": "CommandConfigurator",
-    "permissions": [],
+    "name": "CommandBlocker",
+    "permissions": [
+      "eternalcore.commandblocker.bypass"
+    ],
     "descriptions": [
-      "Adds support for command configuration, which allows you to change the name, aliases, permissions and disable the command"
+      "It allows you to block commands with custom message"
     ]
   },
   {
@@ -136,28 +138,10 @@
     ]
   },
   {
-    "name": "Standard help message",
-    "permissions": [
-      "eternalcore.commandblocker.bypass"
-    ],
-    "descriptions": [
-      "It allows you to replace the standard help message"
-    ]
-  },
-  {
     "name": "Translations",
     "permissions": [],
     "descriptions": [
       "EternalCore can use multiple languages at once, the player can determine which EternalCore language I want to use, or you can determine from above what language all players want to use"
-    ]
-  },
-  {
-    "name": "Updater",
-    "permissions": [
-      "eternalcore.receiveupdates"
-    ],
-    "descriptions": [
-      "Sends a message to the player when a new plugin update is available after joining the server."
     ]
   },
   {

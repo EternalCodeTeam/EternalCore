@@ -271,20 +271,6 @@
     ]
   },
   {
-    "name": "delwarp",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.warp",
-      "eternalcore.delwarp"
-    ],
-    "descriptions": [
-      "Remove warp"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
     "name": "disposal ",
     "aliases": [],
     "permissions": [
@@ -603,19 +589,6 @@
     ],
     "arguments": [
       "\u003cmessage\u003e"
-    ]
-  },
-  {
-    "name": "home ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.home"
-    ],
-    "descriptions": [
-      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
-    ],
-    "arguments": [
-      ""
     ]
   },
   {
@@ -996,32 +969,6 @@
     ]
   },
   {
-    "name": "rtp ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.rtp.other"
-    ],
-    "descriptions": [
-      "Teleportation of a player to a random location."
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "rtp ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.rtp"
-    ],
-    "descriptions": [
-      "Teleportation of the sender to a random location."
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
     "name": "sethome ",
     "aliases": [],
     "permissions": [
@@ -1055,20 +1002,6 @@
     ],
     "descriptions": [
       "Set spawn location"
-    ],
-    "arguments": [
-      ""
-    ]
-  },
-  {
-    "name": "setwarp",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.setwarp",
-      "eternalcore.warp"
-    ],
-    "descriptions": [
-      "Create warp"
     ],
     "arguments": [
       ""
@@ -1540,7 +1473,7 @@
     ]
   },
   {
-    "name": "warp",
+    "name": "warp ",
     "aliases": [],
     "permissions": [
       "eternalcore.warp"
@@ -1553,13 +1486,41 @@
     ]
   },
   {
-    "name": "warp",
+    "name": "warp ",
     "aliases": [],
     "permissions": [
       "eternalcore.warp"
     ],
     "descriptions": [
       "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp",
+      "eternalcore.warp.create"
+    ],
+    "descriptions": [
+      "Create warp"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "warp remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp.delete",
+      "eternalcore.warp"
+    ],
+    "descriptions": [
+      "Remove warp"
     ],
     "arguments": [
       ""
