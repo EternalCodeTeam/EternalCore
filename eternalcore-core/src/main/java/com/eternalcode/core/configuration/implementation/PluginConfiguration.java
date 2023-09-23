@@ -94,6 +94,9 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Time of teleportation to spawn")
         public Duration teleportTimeToSpawn = Duration.ofSeconds(5);
 
+        @Description("# Include players with op in teleport to random player")
+        public boolean includeOpPlayersInRandomTeleport = false;
+
         @Override
         public Duration teleportationTimeToSpawn() {
             return this.teleportTimeToSpawn;

@@ -86,6 +86,10 @@ public interface Translation {
         Notice teleportedToLastLocation();
         Notice teleportedSpecifiedPlayerLastLocation();
         Notice lastLocationNoExist();
+
+        // teleport to random player command
+        Notice noPlayerToRandomTeleportFound();
+        Notice teleportedToRandomPlayer();
     }
 
     // Random Teleport Section
