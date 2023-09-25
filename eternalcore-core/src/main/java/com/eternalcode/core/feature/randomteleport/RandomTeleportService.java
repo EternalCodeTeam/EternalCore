@@ -3,11 +3,7 @@ package com.eternalcode.core.feature.randomteleport;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -43,16 +39,24 @@ class RandomTeleportService {
     private static final int NETHER_MAX_HEIGHT = 127;
 
     private final RandomTeleportSettings randomTeleportSettings;
-
+    private final Server server;
     private final Random random = new Random();
 
     @Inject
-    RandomTeleportService(RandomTeleportSettings randomTeleportSettings) {
+    RandomTeleportService(RandomTeleportSettings randomTeleportSettings, Server server) {
         this.randomTeleportSettings = randomTeleportSettings;
+        this.server = server;
     }
 
+
     CompletableFuture<TeleportResult> teleport(Player player) {
-        return this.getSafeRandomLocation(player.getWorld(), this.randomTeleportSettings.randomTeleportAttempts())
+        World world = player.getWorld();
+
+        if (!this.randomTeleportSettings.randomTeleportWorld().isBlank()) {
+            world = this.server.getWorld(this.randomTeleportSettings.randomTeleportWorld());
+        }
+
+        return this.getSafeRandomLocation(world, this.randomTeleportSettings.randomTeleportAttempts())
             .thenCompose(location -> PaperLib.teleportAsync(player, location).thenApply(success -> new TeleportResult(success, location)));
     }
 

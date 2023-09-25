@@ -108,12 +108,20 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Radius of random teleportation")
         public int randomTeleportRadius = 1000;
 
+        @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
+        public String randomTeleportWorld = "world";
+
         @Description("# Number of attempts to teleport to a random location")
         public int randomTeleportAttempts = 10;
 
         @Override
         public int randomTeleportRadius() {
             return this.randomTeleportRadius;
+        }
+
+        @Override
+        public String randomTeleportWorld() {
+            return this.randomTeleportWorld;
         }
 
         @Override
