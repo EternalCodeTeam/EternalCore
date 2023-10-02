@@ -61,7 +61,7 @@ class RandomTeleportService {
             world = this.server.getWorld(this.randomTeleportSettings.randomTeleportWorld());
             
             if (world == null) {
-                throw new IllegalStateException("World " + this.randomTeleportSettings.randomTeleportWorld() + "is not exists!");
+                throw new IllegalStateException("World " + this.randomTeleportSettings.randomTeleportWorld() + " is not exists!");
             }
         }
 
