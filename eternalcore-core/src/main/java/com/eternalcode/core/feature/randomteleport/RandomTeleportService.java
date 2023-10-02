@@ -6,6 +6,7 @@ import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.block.Block;
@@ -43,16 +44,28 @@ class RandomTeleportService {
     private static final int NETHER_MAX_HEIGHT = 127;
 
     private final RandomTeleportSettings randomTeleportSettings;
-
+    private final Server server;
     private final Random random = new Random();
 
     @Inject
-    RandomTeleportService(RandomTeleportSettings randomTeleportSettings) {
+    RandomTeleportService(RandomTeleportSettings randomTeleportSettings, Server server) {
         this.randomTeleportSettings = randomTeleportSettings;
+        this.server = server;
     }
 
+
     CompletableFuture<TeleportResult> teleport(Player player) {
-        return this.getSafeRandomLocation(player.getWorld(), this.randomTeleportSettings.randomTeleportAttempts())
+        World world = player.getWorld();
+
+        if (!this.randomTeleportSettings.randomTeleportWorld().isBlank()) {
+            world = this.server.getWorld(this.randomTeleportSettings.randomTeleportWorld());
+            
+            if (world == null) {
+                throw new IllegalStateException("World " + this.randomTeleportSettings.randomTeleportWorld() + " is not exists!");
+            }
+        }
+
+        return this.getSafeRandomLocation(world, this.randomTeleportSettings.randomTeleportAttempts())
             .thenCompose(location -> PaperLib.teleportAsync(player, location).thenApply(success -> new TeleportResult(success, location)));
     }
 
