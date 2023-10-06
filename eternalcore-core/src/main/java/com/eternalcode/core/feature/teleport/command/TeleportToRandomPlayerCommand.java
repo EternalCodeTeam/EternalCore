@@ -46,7 +46,7 @@ public class TeleportToRandomPlayerCommand {
 
         Player target = applicablePlayers.get(RANDOM.nextInt(applicablePlayers.size()));
 
-        player.teleport(target);
+        player.teleport(target.getLocation());
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.teleport().teleportedToRandomPlayer())
