@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-@Route(name = "teleport-to-random-player", aliases = { "tprp" })
+@Route(name = "teleport-to-random-player", aliases = {"tprp"})
 @Permission("eternalcore.tprp")
 public class TeleportToRandomPlayerCommand {
 
@@ -30,13 +30,13 @@ public class TeleportToRandomPlayerCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleport to random player on server")
+    @DescriptionDocs(description = "Teleport to random player on server, with filter op players option")
     void execute(Player player) {
-        List<Player> applicablePlayers = this.server.getOnlinePlayers().stream()
-            .filter(players -> this.pluginConfiguration.teleport.includeOpPlayersInRandomTeleport || !players.isOp())
+        List<Player> possibleTargetPlayers = this.server.getOnlinePlayers().stream()
+            .filter(target -> this.pluginConfiguration.teleport.includeOpPlayersInRandomTeleport || !target.isOp())
             .collect(Collectors.toList());
 
-        if (applicablePlayers.isEmpty()) {
+        if (possibleTargetPlayers.isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.teleport().noPlayerToRandomTeleportFound())
@@ -44,13 +44,13 @@ public class TeleportToRandomPlayerCommand {
             return;
         }
 
-        Player target = applicablePlayers.get(RANDOM.nextInt(applicablePlayers.size()));
+        Player randomPlayer = possibleTargetPlayers.get(RANDOM.nextInt(possibleTargetPlayers.size()));
 
-        player.teleport(target.getLocation());
+        player.teleport(randomPlayer);
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.teleport().teleportedToRandomPlayer())
-            .placeholder("{PLAYER}", target.getName())
+            .placeholder("{PLAYER}", randomPlayer.getName())
             .send();
     }
 }

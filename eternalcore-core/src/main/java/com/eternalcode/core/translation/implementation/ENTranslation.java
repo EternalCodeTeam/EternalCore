@@ -212,7 +212,7 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice noPlayerToRandomTeleportFound = Notice.chat("<red>✘ <dark_red>No player found to teleport!");
-        @Description({ " ", "# {PLAYER} - Player to whom he was teleported" })
+        @Description({ " ", "# {PLAYER} - The player you were teleported" })
         public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Teleported to random player <green>{PLAYER}<white>!");
     }
 
