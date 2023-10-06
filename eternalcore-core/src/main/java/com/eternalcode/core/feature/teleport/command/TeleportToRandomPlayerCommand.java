@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-@Route(name = "teleport-to-random-player", aliases = {"tprp"})
+@Route(name = "teleport-to-random-player", aliases = { "tprp" })
 @Permission("eternalcore.tprp")
 public class TeleportToRandomPlayerCommand {
 
@@ -46,7 +46,7 @@ public class TeleportToRandomPlayerCommand {
 
         Player target = applicablePlayers.get(RANDOM.nextInt(applicablePlayers.size()));
 
-        player.teleport(target.getLocation());
+        player.teleport(target);
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.teleport().teleportedToRandomPlayer())
