@@ -3,21 +3,20 @@ package com.eternalcode.core.feature.teleport.command;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.RandomUtil;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import panda.std.Option;
 
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
-@Route(name = "teleport-to-random-player", aliases = {"tprp"})
+@Route(name = "teleportorandomplayer", aliases = { "tprp" })
 @Permission("eternalcore.tprp")
 public class TeleportToRandomPlayerCommand {
-
-    private static final Random RANDOM = new Random();
 
     private final Server server;
     private final PluginConfiguration pluginConfiguration;
@@ -29,14 +28,17 @@ public class TeleportToRandomPlayerCommand {
         this.noticeService = noticeService;
     }
 
+
     @Execute
-    @DescriptionDocs(description = "Teleport to random player on server, with filter op players option")
+    @DescriptionDocs(description = "Teleport to a random player on the server, with the option to filter op players")
     void execute(Player player) {
         List<Player> possibleTargetPlayers = this.server.getOnlinePlayers().stream()
             .filter(target -> this.pluginConfiguration.teleport.includeOpPlayersInRandomTeleport || !target.isOp())
             .collect(Collectors.toList());
 
-        if (possibleTargetPlayers.isEmpty()) {
+        Option<Player> randomPlayerOption = RandomUtil.randomElement(possibleTargetPlayers);
+
+        if (randomPlayerOption.isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.teleport().noPlayerToRandomTeleportFound())
@@ -44,7 +46,7 @@ public class TeleportToRandomPlayerCommand {
             return;
         }
 
-        Player randomPlayer = possibleTargetPlayers.get(RANDOM.nextInt(possibleTargetPlayers.size()));
+        Player randomPlayer = randomPlayerOption.get();
 
         player.teleport(randomPlayer);
         this.noticeService.create()
