@@ -211,7 +211,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
 
         @Description(" ")
-        public Notice noPlayerToRandomTeleportFound = Notice.chat("<red>✘ <dark_red>Nie można odnaleźć gracza do teleportacji!");
+        public Notice randomPlayerNotFound = Notice.chat("<red>✘ <dark_red>Nie można odnaleźć gracza do teleportacji!");
         @Description({ " ", "# {PLAYER} - Gracz do którego cię teleportowano" })
         public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Zostałeś losowo teleportowany do <green>{PLAYER}<white>!");
     }

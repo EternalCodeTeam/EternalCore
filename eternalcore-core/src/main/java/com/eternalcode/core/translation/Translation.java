@@ -88,7 +88,7 @@ public interface Translation {
         Notice lastLocationNoExist();
 
         // teleport to random player command
-        Notice noPlayerToRandomTeleportFound();
+        Notice randomPlayerNotFound();
         Notice teleportedToRandomPlayer();
     }
 

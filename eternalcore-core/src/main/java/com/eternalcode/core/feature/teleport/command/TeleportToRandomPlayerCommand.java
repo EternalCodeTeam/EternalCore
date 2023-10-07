@@ -41,7 +41,7 @@ public class TeleportToRandomPlayerCommand {
         if (randomPlayerOption.isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .notice(translation -> translation.teleport().noPlayerToRandomTeleportFound())
+                .notice(translation -> translation.teleport().randomPlayerNotFound())
                 .send();
             return;
         }
