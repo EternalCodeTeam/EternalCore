@@ -29,7 +29,7 @@ dependencies {
 eternalShadow {
     // Paper and Adventure libraries
     library("io.papermc:paperlib:1.0.8")
-    library("net.kyori:adventure-platform-bukkit:4.3.0")
+    library("net.kyori:adventure-platform-bukkit:4.3.1")
     library("net.kyori:adventure-text-minimessage:4.14.0")
     libraryRelocate(
         "io.papermc.lib",
@@ -61,7 +61,7 @@ eternalShadow {
     // common libraries
     library("org.panda-lang:expressible:1.3.6")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
-    library("commons-io:commons-io:2.13.0")
+    library("commons-io:commons-io:2.14.0")
     libraryRelocate(
         "panda.std",
         "panda.utilities",
@@ -69,7 +69,7 @@ eternalShadow {
     )
 
     // gui library
-    library("dev.triumphteam:triumph-gui:3.1.5")
+    library("dev.triumphteam:triumph-gui:3.1.6")
     libraryRelocate("dev.triumphteam")
 
     // metrics
