@@ -11,9 +11,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
-    testImplementation("org.mockito:mockito-core:5.5.0")
-    testImplementation("net.kyori:adventure-platform-bukkit:4.3.0")
-    testImplementation("net.kyori:adventure-platform-facet:4.3.0")
+    testImplementation("org.mockito:mockito-core:5.6.0")
+    testImplementation("net.kyori:adventure-platform-bukkit:4.3.1")
+    testImplementation("net.kyori:adventure-platform-facet:4.3.1")
     testImplementation("net.kyori:adventure-text-minimessage:4.14.0")
 }
 
