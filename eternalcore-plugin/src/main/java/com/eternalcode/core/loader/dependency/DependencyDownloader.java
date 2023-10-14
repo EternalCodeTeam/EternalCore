@@ -3,12 +3,10 @@ package com.eternalcode.core.loader.dependency;
 import com.eternalcode.core.loader.repository.Repository;
 import com.google.common.io.ByteStreams;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
