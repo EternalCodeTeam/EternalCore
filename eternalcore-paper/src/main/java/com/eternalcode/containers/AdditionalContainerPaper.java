@@ -1,12 +1,10 @@
 package com.eternalcode.containers;
 
-
 import io.papermc.lib.PaperLib;
 import io.papermc.lib.environments.Environment;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
