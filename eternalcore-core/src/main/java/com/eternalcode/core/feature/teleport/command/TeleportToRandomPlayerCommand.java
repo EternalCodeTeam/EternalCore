@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.RandomUtil;
 import dev.rollczi.litecommands.command.execute.Execute;
@@ -22,6 +23,7 @@ public class TeleportToRandomPlayerCommand {
     private final PluginConfiguration pluginConfiguration;
     private final NoticeService noticeService;
 
+    @Inject
     public TeleportToRandomPlayerCommand(Server server, PluginConfiguration pluginConfiguration, NoticeService noticeService) {
         this.server = server;
         this.pluginConfiguration = pluginConfiguration;
