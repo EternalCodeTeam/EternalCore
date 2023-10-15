@@ -89,7 +89,7 @@ class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(translation -> translation.item().repairMessage())
+            .notice(translation -> translation.item().repairAllMessage())
             .player(player.getUniqueId())
             .send();
     }

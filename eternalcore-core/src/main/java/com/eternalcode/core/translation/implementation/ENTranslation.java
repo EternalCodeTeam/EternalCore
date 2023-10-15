@@ -690,7 +690,8 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Repaired!");
+        public Notice repairMessage = Notice.chat("<green>► <white>Repaired held item!");
+        public Notice repairAllMessage = Notice.chat("<green>► <white>Repaired all items!");
 
         @Description({ " ", "# {SKULL} - Name of the skull owner" })
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
