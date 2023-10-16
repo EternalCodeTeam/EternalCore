@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.vanish;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -20,16 +19,19 @@ public class VanishService {
     }
 
     public boolean isVanished(UUID playerUniqueId) {
-        return Optional.ofNullable(this.server.getPlayer(playerUniqueId))
-            .map(this::isVanished)
-            .orElse(false);
+        Player player = this.server.getPlayer(playerUniqueId);
+        if (player == null) {
+            return false;
+        }
+        return this.isVanished(player);
     }
 
     private boolean isVanished(Player player) {
-        boolean vanished = false;
-        for (MetadataValue value : player.getMetadata(METADATA_VANISHED_KEY)) {
-            vanished |= value.asBoolean();
+        for (MetadataValue isVanished : player.getMetadata(METADATA_VANISHED_KEY)) {
+            if (isVanished.asBoolean()) {
+                return true;
+            }
         }
-        return vanished;
+        return false;
     }
 }
