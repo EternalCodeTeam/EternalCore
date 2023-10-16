@@ -341,6 +341,7 @@ public interface Translation {
 
         // others
         Notice repairMessage();
+        Notice repairAllMessage();
         Notice skullMessage();
         Notice enchantedMessage();
     }

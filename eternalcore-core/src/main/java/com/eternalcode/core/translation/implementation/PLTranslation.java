@@ -702,7 +702,8 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podany przedmiot nie istnieje!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Naprawiono!");
+        public Notice repairMessage = Notice.chat("<green>► <white>Naprawiono trzymany przedmiot!");
+        public Notice repairAllMessage = Notice.chat("<green>► <white>Naprawiono wszystkie przedmioty!");
 
         @Description({ " ", "# {SKULL} - Nazwa gracza do którego należy głowa" })
         public Notice skullMessage = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: {SKULL}");
