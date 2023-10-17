@@ -5,13 +5,14 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "stonecutter")
+@Command(name = "stonecutter")
 class StonecutterCommand {
 
     private final NoticeService noticeService;
@@ -21,10 +22,10 @@ class StonecutterCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.stonecutter")
     @DescriptionDocs(description = "Opens a stonecutter for you")
-    void executeSelf(Player player) {
+    void executeSelf(@Context Player player) {
         AdditionalContainerPaper.STONE_CUTTER.open(player);
 
         this.noticeService.create()
@@ -33,10 +34,10 @@ class StonecutterCommand {
             .send();
     }
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.stonecutter.other")
     @DescriptionDocs(description = "Opens a stonecutter for another player", arguments = "<player>")
-    void execute(Player sender, @Arg Player target) {
+    void execute(@Context Player sender, @Arg Player target) {
         AdditionalContainerPaper.STONE_CUTTER.open(target);
 
         this.noticeService.create()

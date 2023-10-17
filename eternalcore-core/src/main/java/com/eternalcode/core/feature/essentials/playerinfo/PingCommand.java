@@ -4,13 +4,14 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "ping")
+@Command(name = "ping")
 class PingCommand {
 
     private final NoticeService noticeService;
@@ -23,7 +24,7 @@ class PingCommand {
     @Execute
     @Permission("eternalcore.ping")
     @DescriptionDocs(description = "Shows your ping")
-    void execute(Player sender) {
+    void execute(@Context Player sender) {
         this.noticeService.create()
             .notice(translation -> translation.player().pingMessage())
             .placeholder("{PING}", String.valueOf(sender.getPing()))
@@ -32,10 +33,10 @@ class PingCommand {
     }
 
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.ping.other")
     @DescriptionDocs(description = "Shows ping of other player", arguments = "<player>")
-    void execute(Viewer viewer, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg Player target) {
         this.noticeService.create()
             .notice(translation -> translation.player().pingOtherMessage())
             .placeholder("{PING}", String.valueOf(target.getPing()))

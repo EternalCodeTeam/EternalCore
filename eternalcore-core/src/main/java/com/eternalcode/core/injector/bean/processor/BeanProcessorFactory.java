@@ -7,20 +7,22 @@ import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
-import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.scheduler.Scheduler;
-import dev.rollczi.litecommands.LiteCommandsBuilder;
-import dev.rollczi.litecommands.argument.Argument;
-import dev.rollczi.litecommands.argument.simple.MultilevelArgument;
-import dev.rollczi.litecommands.command.root.RootRoute;
-import dev.rollczi.litecommands.command.route.Route;
-import dev.rollczi.litecommands.contextual.Contextual;
-import dev.rollczi.litecommands.factory.CommandEditor;
-import dev.rollczi.litecommands.handle.Handler;
+import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.command.RootCommand;
 import java.lang.reflect.Method;
+
+import dev.rollczi.litecommands.argument.ArgumentKey;
+import dev.rollczi.litecommands.argument.resolver.MultipleArgumentResolver;
+import dev.rollczi.litecommands.builder.LiteCommandsBuilder;
+import dev.rollczi.litecommands.context.ContextProvider;
+import dev.rollczi.litecommands.editor.Editor;
+import dev.rollczi.litecommands.handler.result.ResultHandler;
+import dev.rollczi.litecommands.scope.Scope;
 import org.bukkit.Server;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -75,48 +77,42 @@ public final class BeanProcessorFactory {
                 ConfigurationManager configurationManager = provider.getDependency(ConfigurationManager.class);
                 configurationManager.load(config);
             })
-            .onProcess(Route.class, Object.class, (provider, route, none) -> {
-                LiteCommandsBuilder<?> commandsBuilder = provider.getDependency(LiteCommandsBuilder.class);
-                commandsBuilder.commandInstance(route);
+            .onProcess(Command.class, Object.class, (provider, command, none) -> {
+                LiteCommandsAnnotations<?> commandsBuilder = provider.getDependency(LiteCommandsAnnotations.class);
+                commandsBuilder.load(command);
             })
-            .onProcess(RootRoute.class, Object.class, (provider, route, none) -> {
-                LiteCommandsBuilder<?> commandsBuilder = provider.getDependency(LiteCommandsBuilder.class);
-                commandsBuilder.commandInstance(route);
+            .onProcess(RootCommand.class, Object.class, (provider, rootCommand, none) -> {
+                LiteCommandsAnnotations<?> commandsBuilder = provider.getDependency(LiteCommandsAnnotations.class);
+                commandsBuilder.load(rootCommand);
             })
-            .onProcess(LiteArgument.class, MultilevelArgument.class, (provider, multilevelArgument, liteArgument) -> {
-                LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
+            .onProcess(LiteArgument.class, MultipleArgumentResolver.class, (provider, multilevelArgument, liteArgument) -> {
+                LiteCommandsBuilder<?, ?, ?> builder = provider.getDependency(LiteCommandsBuilder.class);
 
-                builder.argumentMultilevel(liteArgument.type(), liteArgument.name(), multilevelArgument);
+                builder.argument(liteArgument.type(), ArgumentKey.of(liteArgument.name()), multilevelArgument);
             })
-            .onProcess(LiteNativeArgument.class, Argument.class, (provider, argument, nativeArgument) -> {
-                LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
+            .onProcess(LiteHandler.class, ResultHandler.class, (provider, handler, liteHandler) -> {
+                LiteCommandsBuilder<?, ?, ?> builder = provider.getDependency(LiteCommandsBuilder.class);
 
-                builder.argument(nativeArgument.annotation(), nativeArgument.type(), argument);
+                builder.result(liteHandler.value(), handler);
             })
-            .onProcess(LiteHandler.class, Handler.class, (provider, handler, liteHandler) -> {
-                LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
+            .onProcess(LiteContextual.class, ContextProvider.class, (provider, contextProvider, liteContextual) -> {
+                LiteCommandsBuilder<?, ?, ?> builder = provider.getDependency(LiteCommandsBuilder.class);
 
-                builder.resultHandler(liteHandler.value(), handler);
+                builder.context(liteContextual.value(), contextProvider);
             })
-            .onProcess(LiteContextual.class, Contextual.class, (provider, contextual, liteContextual) -> {
-                LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
-
-                builder.contextualBind(liteContextual.value(), contextual);
-            })
-            .onProcess(LiteCommandEditor.class, CommandEditor.class, (provider, editor, liteCommandEditor) -> {
-                LiteCommandsBuilder<?> builder = provider.getDependency(LiteCommandsBuilder.class);
+            .onProcess(LiteCommandEditor.class, Editor.class, (provider, editor, liteCommandEditor) -> {
+                LiteCommandsBuilder<?, ?, ?> builder = provider.getDependency(LiteCommandsBuilder.class);
+                Scope scope = Scope.global();
 
                 if (liteCommandEditor.command() != Object.class) {
-                    builder.commandEditor(liteCommandEditor.command(), editor);
-                    return;
+                    scope = Scope.command(liteCommandEditor.command());
                 }
 
                 if (!liteCommandEditor.name().isEmpty()) {
-                    builder.commandEditor(liteCommandEditor.name(), editor);
-                    return;
+                    scope = Scope.command(liteCommandEditor.name());
                 }
 
-                builder.commandGlobalEditor(editor);
+                builder.editor(scope, editor);
             });
     }
 

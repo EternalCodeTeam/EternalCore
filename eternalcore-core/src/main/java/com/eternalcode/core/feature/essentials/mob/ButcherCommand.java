@@ -4,10 +4,11 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("SameParameterValue")
-@Route(name = "butcher", aliases = { "killmob" })
+@Command(name = "butcher", aliases = { "killmob" })
 @Permission("eternalcore.butcher")
 class ButcherCommand {
 
@@ -32,21 +33,21 @@ class ButcherCommand {
         this.safeChunksNumber = pluginConfiguration.butcher.safeChunkNumber;
     }
 
-    @Execute(required = 0)
+    @Execute
     @DescriptionDocs(description = "Kills all mobs in 2 chunks around you")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         this.execute(player, 2);
     }
 
-    @Execute(required = 1)
+    @Execute
     @DescriptionDocs(description = "Kills all mobs in specified chunks around you", arguments = "<chunks>")
-    void execute(Player player, @Arg int chunks) {
+    void execute(@Context Player player, @Arg int chunks) {
         this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
-    @Execute(required = 2)
+    @Execute
     @DescriptionDocs(description = "Kills specified mob in specified chunks around you", arguments = "<chunks> <mobType>")
-    void execute(Player player, @Arg int chunks, @Arg MobEntity mobEntity) {
+    void execute(@Context Player player, @Arg int chunks, @Arg MobEntity mobEntity) {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }
 

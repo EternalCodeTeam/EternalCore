@@ -26,8 +26,8 @@ public class SubCommand {
         return this.name;
     }
 
-    public boolean isCancel() {
-        return !this.enabled;
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
     public List<String> aliases() {

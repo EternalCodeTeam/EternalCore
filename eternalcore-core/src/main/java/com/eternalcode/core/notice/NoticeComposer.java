@@ -5,7 +5,8 @@ import com.eternalcode.core.notice.NoticeContent.Music;
 import com.eternalcode.core.notice.NoticeContent.None;
 import com.eternalcode.core.notice.NoticeContent.Text;
 import com.eternalcode.core.notice.NoticeContent.Times;
-import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
+import dev.rollczi.litecommands.time.DurationParser;
+import dev.rollczi.litecommands.time.TemporalAmountParser;
 import net.dzikoysk.cdn.CdnSettings;
 import net.dzikoysk.cdn.CdnUtils;
 import net.dzikoysk.cdn.model.Element;
@@ -29,7 +30,7 @@ public class NoticeComposer implements Composer<Notice> {
     private static final String MUSIC_WITH_CATEGORY = "%s %s %s %s";
     private static final String MUSIC_WITHOUT_CATEGORY = "%s %s %s";
 
-    private static final EstimatedTemporalAmountParser<Duration> DURATION_PARSER = EstimatedTemporalAmountParser.TIME_UNITS;
+    private static final TemporalAmountParser<Duration> DURATION_PARSER = DurationParser.TIME_UNITS;
 
     @Override
     public Result<? extends Element<?>, ? extends Exception> serialize(CdnSettings settings, List<String> description, String key, TargetType type, Notice entity) {

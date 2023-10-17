@@ -3,24 +3,22 @@ package com.eternalcode.core.feature.teleport.request;
 import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
-import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.ViewerProvider;
-import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.suggestion.Suggestion;
+import dev.rollczi.litecommands.argument.Argument;
+import dev.rollczi.litecommands.argument.parser.ParseResult;
+import dev.rollczi.litecommands.invocation.Invocation;
+import dev.rollczi.litecommands.suggestion.SuggestionContext;
+import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import panda.std.Result;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 @LiteArgument(type = Player.class, name = RequesterArgument.KEY)
-@ArgumentName("player")
 class RequesterArgument extends AbstractViewerArgument<Player> {
 
     static final String KEY = "requester";
@@ -36,32 +34,31 @@ class RequesterArgument extends AbstractViewerArgument<Player> {
     }
 
     @Override
-    public Result<Player, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public ParseResult<Player> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         Player target = this.server.getPlayer(argument);
 
-        if (!(invocation.sender().getHandle() instanceof Player player)) {
-            return Result.error(translation.argument().onlyPlayer());
+        if (!(invocation.sender() instanceof Player player)) {
+            return ParseResult.failure(translation.argument().onlyPlayer());
         }
 
         if (target == null || !this.requestService.hasRequest(target.getUniqueId(), player.getUniqueId())) {
-            return Result.error(translation.tpa().tpaDenyNoRequestMessage());
+            return ParseResult.failure(translation.tpa().tpaDenyNoRequestMessage());
         }
 
-        return Result.ok(target);
+        return ParseResult.success(target);
     }
 
     @Override
-    public List<Suggestion> suggest(LiteInvocation invocation) {
-        if (!(invocation.sender().getHandle() instanceof Player player)) {
-            return Collections.emptyList();
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Player> argument, SuggestionContext context) {
+        if (!(invocation.sender() instanceof Player player)) {
+            return SuggestionResult.empty();
         }
 
         return this.requestService.findRequests(player.getUniqueId()).stream()
             .map(this.server::getPlayer)
             .filter(Objects::nonNull)
             .map(HumanEntity::getName)
-            .map(Suggestion::of)
-            .toList();
+            .collect(SuggestionResult.collector());
     }
 
 }

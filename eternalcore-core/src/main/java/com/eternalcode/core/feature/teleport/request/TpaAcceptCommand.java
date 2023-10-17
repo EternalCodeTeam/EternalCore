@@ -5,19 +5,18 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.By;
-import dev.rollczi.litecommands.command.amount.Required;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.UUID;
 
-@Route(name = "tpaaccept", aliases = "tpaccept")
+@Command(name = "tpaaccept", aliases = "tpaccept")
 @Permission("eternalcore.tpaccept")
 class TpaAcceptCommand {
 
@@ -37,9 +36,8 @@ class TpaAcceptCommand {
     }
 
     @Execute
-    @Required(1)
     @DescriptionDocs(description = "Accept teleport request", arguments = "<player>")
-    void executeTarget(Player player, @Arg @By(RequesterArgument.KEY) Player target) {
+    void executeTarget(@Context Player player, @Arg(RequesterArgument.KEY) Player target) {
         this.teleportTaskService.createTeleport(
             target.getUniqueId(),
             PositionAdapter.convert(target.getLocation()),
@@ -64,9 +62,9 @@ class TpaAcceptCommand {
             .send();
     }
 
-    @Execute(route = "-all", aliases = "*")
+    @Execute(name = "-all", aliases = "*")
     @DescriptionDocs(description = "Accept all teleport requests")
-    void executeAll(Player player) {
+    void executeAll(@Context Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {

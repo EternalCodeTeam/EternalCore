@@ -6,10 +6,14 @@ import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.ViewerProvider;
-import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.argument.Argument;
+import dev.rollczi.litecommands.argument.parser.ParseResult;
+import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
+import dev.rollczi.litecommands.suggestion.SuggestionContext;
+import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.NamespacedKey;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import panda.std.Result;
 
@@ -17,7 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @LiteArgument(type = Enchantment.class)
-@ArgumentName("enchantment")
 class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 
     @Inject
@@ -26,23 +29,22 @@ class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
     }
 
     @Override
-    public Result<Enchantment, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public ParseResult<Enchantment> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument));
 
         if (enchantment == null) {
-            return Result.error(translation.argument().noEnchantment());
+            return ParseResult.failure(translation.argument().noEnchantment());
         }
 
-        return Result.ok(enchantment);
+        return ParseResult.success(enchantment);
     }
 
     @Override
-    public List<Suggestion> suggest(LiteInvocation invocation) {
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Enchantment> argument, SuggestionContext context) {
         return Arrays.stream(Enchantment.values())
             .map(Enchantment::getKey)
             .map(NamespacedKey::getKey)
-            .map(Suggestion::of)
-            .toList();
+            .collect(SuggestionResult.collector());
     }
 
 }

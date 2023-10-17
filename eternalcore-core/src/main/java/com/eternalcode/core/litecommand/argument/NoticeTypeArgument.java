@@ -3,21 +3,22 @@ package com.eternalcode.core.litecommand.argument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.NoticeTextType;
-import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.ViewerProvider;
-import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.argument.Argument;
+import dev.rollczi.litecommands.argument.parser.ParseResult;
+import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
+import dev.rollczi.litecommands.suggestion.SuggestionContext;
+import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import org.bukkit.command.CommandSender;
 import panda.std.Option;
-import panda.std.Result;
 
 import java.util.Arrays;
 import java.util.List;
 
 @LiteArgument(type = NoticeTextType.class)
-@ArgumentName("action")
 class NoticeTypeArgument extends AbstractViewerArgument<NoticeTextType> {
 
     @Inject
@@ -26,17 +27,20 @@ class NoticeTypeArgument extends AbstractViewerArgument<NoticeTextType> {
     }
 
     @Override
-    public List<Suggestion> suggest(LiteInvocation invocation) {
-        return Arrays.stream(NoticeTextType.values())
-            .map(notificationType -> notificationType.name().toLowerCase())
-            .map(Suggestion::of)
-            .toList();
+    public ParseResult<NoticeTextType> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
+        try {
+            return ParseResult.success(NoticeTextType.valueOf(argument.toUpperCase()));
+        }
+        catch (IllegalArgumentException exception) {
+            return ParseResult.failure(translation.argument().noArgument());
+        }
     }
 
     @Override
-    public Result<NoticeTextType, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
-        return Option.supplyThrowing(IllegalArgumentException.class, () -> NoticeTextType.valueOf(argument.toUpperCase()))
-            .toResult(() -> translation.argument().noArgument());
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<NoticeTextType> argument, SuggestionContext context) {
+        return Arrays.stream(NoticeTextType.values())
+            .map(notificationType -> notificationType.name().toLowerCase())
+            .collect(SuggestionResult.collector());
     }
 
 }

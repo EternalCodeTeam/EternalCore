@@ -9,14 +9,15 @@ import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-@Route(name = "spawn")
+@Command(name = "spawn")
 class SpawnCommand {
 
     private final LocationsConfiguration locations;
@@ -37,7 +38,7 @@ class SpawnCommand {
     @Execute
     @Permission("eternalcore.spawn")
     @DescriptionDocs(description = "Teleports you to spawn location")
-    void executeSelf(Player sender) {
+    void executeSelf(@Context Player sender) {
         Position position = this.locations.spawn;
 
         if (position.isNoneWorld()) {
@@ -82,7 +83,7 @@ class SpawnCommand {
     @Execute
     @Permission("eternalcore.spawn.other")
     @DescriptionDocs(description = "Teleports specified player to spawn location", arguments = "<player>")
-    void execute(Viewer sender, @Arg Player player) {
+    void execute(@Context Viewer sender, @Arg Player player) {
         Position position = this.locations.spawn;
 
         if (position.isNoneWorld()) {

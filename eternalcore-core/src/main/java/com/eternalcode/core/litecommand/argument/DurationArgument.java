@@ -7,9 +7,13 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.ViewerProvider;
-import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.argument.Argument;
+import dev.rollczi.litecommands.argument.parser.ParseResult;
+import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.Suggestion;
+import dev.rollczi.litecommands.suggestion.SuggestionContext;
+import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import org.bukkit.command.CommandSender;
 import panda.std.Option;
 import panda.std.Result;
 
@@ -19,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @LiteArgument(type = Duration.class)
-@ArgumentName("duration")
 class DurationArgument extends AbstractViewerArgument<Duration> {
 
     private static final List<Duration> SUGGESTED_DURATIONS = Arrays.asList(
@@ -39,16 +42,20 @@ class DurationArgument extends AbstractViewerArgument<Duration> {
     }
 
     @Override
-    public Result<Duration, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
-        return Option.supplyThrowing(DateTimeParseException.class, () -> Duration.parse("PT" + argument))
-            .toResult(() -> translation.argument().invalidTimeFormat());
+    public ParseResult<Duration> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
+        try {
+            return ParseResult.success(Duration.parse("PT" + argument));
+        }
+        catch (DateTimeParseException exception) {
+            return ParseResult.failure(translation.argument().invalidTimeFormat());
+        }
     }
 
     @Override
-    public List<Suggestion> suggest(LiteInvocation invocation) {
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Duration> argument, SuggestionContext context) {
         return SUGGESTED_DURATIONS.stream()
             .map(DurationUtil::format)
-            .map(Suggestion::of)
-            .toList();
+            .collect(SuggestionResult.collector());
     }
+
 }

@@ -4,14 +4,15 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 
 import java.util.UUID;
 
-@Route(name = "unignore")
+@Command(name = "unignore")
 @Permission("eternalcore.ignore")
 class UnIgnoreCommand {
 
@@ -26,7 +27,7 @@ class UnIgnoreCommand {
 
     @Execute
     @DescriptionDocs(description = "Unignore specified player", arguments = "<player>")
-    void ignore(User sender, @Arg User target) {
+    void ignore(@Context User sender, @Arg User target) {
         UUID senderUuid = sender.getUniqueId();
         UUID targetUuid = target.getUniqueId();
 
@@ -54,9 +55,9 @@ class UnIgnoreCommand {
         });
     }
 
-    @Execute(route = "-all", aliases = "*")
+    @Execute(name = "-all", aliases = "*")
     @DescriptionDocs(description = "Unignore all players")
-    void unIgnoreAll(User sender) {
+    void unIgnoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
 
         this.repository.unIgnoreAll(senderUuid).then(blank -> this.noticeService.create()

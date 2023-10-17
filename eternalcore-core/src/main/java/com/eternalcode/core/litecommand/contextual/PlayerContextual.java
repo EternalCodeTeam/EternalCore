@@ -5,14 +5,14 @@ import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import dev.rollczi.litecommands.command.Invocation;
-import dev.rollczi.litecommands.contextual.Contextual;
+import dev.rollczi.litecommands.context.ContextProvider;
+import dev.rollczi.litecommands.context.ContextResult;
+import dev.rollczi.litecommands.invocation.Invocation;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import panda.std.Result;
 
 @LiteContextual(Player.class)
-class PlayerContextual implements Contextual<CommandSender, Player> {
+class PlayerContextual implements ContextProvider<CommandSender, Player> {
 
     private final TranslationManager translationManager;
 
@@ -22,15 +22,15 @@ class PlayerContextual implements Contextual<CommandSender, Player> {
     }
 
     @Override
-    public Result<Player, Object> extract(CommandSender sender, Invocation<CommandSender> invocation) {
-        if (sender instanceof Player player) {
-            return Result.ok(player);
+    public ContextResult<Player> provide(Invocation<CommandSender> invocation) {
+        if (invocation.sender() instanceof Player player) {
+            return ContextResult.ok(() -> player);
         }
 
         Translation translation = this.translationManager.getDefaultMessages();
         Notice onlyPlayer = translation.argument().onlyPlayer();
 
-        return Result.error(onlyPlayer);
+        return ContextResult.error(onlyPlayer);
     }
 
 }

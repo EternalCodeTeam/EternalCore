@@ -8,12 +8,16 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.command.LiteInvocation;
+import dev.rollczi.litecommands.argument.Argument;
+import dev.rollczi.litecommands.argument.parser.ParseResult;
+import dev.rollczi.litecommands.invocation.Invocation;
+import dev.rollczi.litecommands.suggestion.SuggestionContext;
+import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import org.bukkit.command.CommandSender;
+import panda.std.Option;
 import panda.std.Result;
 
 @LiteArgument(type = Home.class)
-@ArgumentName("name")
 class HomeArgument extends AbstractViewerArgument<Home> {
 
     private final HomeManager homeManager;
@@ -25,11 +29,22 @@ class HomeArgument extends AbstractViewerArgument<Home> {
     }
 
     @Override
-    public Result<Home, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
-        Viewer viewer = this.viewerProvider.any(invocation.sender().getHandle());
+    public ParseResult<Home> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
+        Viewer viewer = this.viewerProvider.any(invocation.sender());
+        Option<Home> homeOption = this.homeManager.getHome(viewer.getUniqueId(), argument);
 
-        return this.homeManager.getHome(viewer.getUniqueId(), argument)
-            .toResult(translation.home().notExist());
+        if (homeOption.isEmpty()) {
+            return ParseResult.failure(translation.home().notExist());
+        }
+
+        return ParseResult.success(homeOption.get());
     }
 
+    @Override
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Home> argument, SuggestionContext context) {
+        Viewer viewer = this.viewerProvider.any(invocation.sender());
+        return this.homeManager.getHomes(viewer.getUniqueId()).stream()
+            .map(Home::getName)
+            .collect(SuggestionResult.collector());
+    }
 }

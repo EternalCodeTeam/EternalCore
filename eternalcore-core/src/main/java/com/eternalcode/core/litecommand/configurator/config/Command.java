@@ -49,7 +49,7 @@ public class Command {
         return this.subCommands;
     }
 
-    public boolean isCancel() {
-        return !this.enabled;
+    public boolean isEnabled() {
+        return this.enabled;
     }
 }

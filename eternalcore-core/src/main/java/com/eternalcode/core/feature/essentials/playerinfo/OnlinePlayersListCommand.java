@@ -5,9 +5,10 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Server;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ import panda.utilities.text.Joiner;
 
 import java.util.Collection;
 
-@Route(name = "list")
+@Command(name = "list")
 @Permission("eternalcore.list")
 class OnlinePlayersListCommand {
 
@@ -32,7 +33,7 @@ class OnlinePlayersListCommand {
 
     @Execute
     @DescriptionDocs(description = "Shows online players list")
-    void execute(Viewer viewer) {
+    void execute(@Context Viewer viewer) {
         Collection<? extends Player> online = this.server.getOnlinePlayers();
 
         String onlineCount = String.valueOf(online.size());

@@ -4,12 +4,11 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.amount.Min;
-import dev.rollczi.litecommands.command.amount.Required;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +16,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import java.util.UUID;
 
-@Route(name = "enchant")
+@Command(name = "enchant")
 @Permission("eternalcore.enchant")
 class EnchantCommand {
 
@@ -31,9 +30,8 @@ class EnchantCommand {
     }
 
     @Execute
-    @Min(2)
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level>")
-    void execute(Player player, @Arg Enchantment enchantment, @Arg int level) {
+    void execute(@Context Player player, @Arg Enchantment enchantment, @Arg int level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
@@ -50,9 +48,8 @@ class EnchantCommand {
     }
 
     @Execute
-    @Required(3)
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level> <player>")
-    void execute(Player sender, @Arg Enchantment enchantment, @Arg int level, @Arg Player target) {
+    void execute(@Context Player sender, @Arg Enchantment enchantment, @Arg int level, @Arg Player target) {
         PlayerInventory targetInventory = target.getInventory();
         ItemStack handItem = targetInventory.getItem(targetInventory.getHeldItemSlot());
 

@@ -4,10 +4,11 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.adventure.legacy.Legacy;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import panda.std.Option;
 
-@Route(name = "invsee", aliases = { "oi", "inventoryopen", "open", "invsee" })
+@Command(name = "invsee", aliases = { "oi", "inventoryopen", "open", "invsee" })
 @Permission("eternalcore.invsee")
 class InventoryOpenCommand {
 
@@ -31,10 +32,10 @@ class InventoryOpenCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(route = "enderchest")
+    @Execute(name = "enderchest")
     @Permission("eternalcore.invsee.enderchest")
     @DescriptionDocs(description = "Opens enderchest of another player", arguments = "<player>")
-    void enderchest(Player sender, @Arg Player target) {
+    void enderchest(@Context Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
                 .notice(translation -> translation.inventory().cantOpenYourInventory())
@@ -46,10 +47,10 @@ class InventoryOpenCommand {
         sender.openInventory(target.getEnderChest());
     }
 
-    @Execute(route = "armor")
+    @Execute(name = "armor")
     @Permission("eternalcore.invsee.armor")
     @DescriptionDocs(description = "Opens armor of another player", arguments = "<player>")
-    void armor(Player sender, @Arg Player target) {
+    void armor(@Context Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
                 .notice(translation -> translation.inventory().cantOpenYourInventory())
@@ -61,10 +62,10 @@ class InventoryOpenCommand {
         this.createInventory(target).open(sender);
     }
 
-    @Execute(route = "inventory")
+    @Execute(name = "inventory")
     @Permission("eternalcore.invsee.inventory")
     @DescriptionDocs(description = "Opens inventory of another player", arguments = "<player>")
-    void inventory(Player sender, @Arg Player target) {
+    void inventory(@Context Player sender, @Arg Player target) {
         if (target.equals(sender)) {
             this.noticeService.create()
                 .notice(translation -> translation.inventory().cantOpenYourInventory())

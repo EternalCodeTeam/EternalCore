@@ -4,17 +4,17 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.joiner.Joiner;
-import dev.rollczi.litecommands.command.amount.Min;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.root.RootRoute;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.RootCommand;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-@RootRoute
+@RootCommand
 class PrivateChatCommands {
 
     private final PrivateChatService privateChatService;
@@ -26,26 +26,24 @@ class PrivateChatCommands {
         this.noticeService = noticeService;
     }
 
-    @Execute(route = "msg", aliases = { "message", "m", "whisper", "tell", "t" })
-    @Min(2)
+    @Execute(name = "msg", aliases = { "message", "m", "whisper", "tell", "t" })
     @Permission("eternalcore.msg")
     @DescriptionDocs(description = "Send private message to specified player", arguments = "<player> <message>")
-    void execute(User sender, @Arg User target, @Joiner String message) {
+    void execute(@Context User sender, @Arg User target, @Join String message) {
         this.privateChatService.privateMessage(sender, target, message);
     }
 
-    @Execute(route = "reply", aliases = { "r" })
-    @Min(1)
+    @Execute(name = "reply", aliases = { "r" })
     @Permission("eternalcore.reply")
     @DescriptionDocs(description = "Reply to last private message", arguments = "<message>")
-    void execute(User sender, @Joiner String message) {
+    void execute(@Context User sender, @Join String message) {
         this.privateChatService.reply(sender, message);
     }
 
-    @Execute(route = "socialspy", aliases = { "spy" })
+    @Execute(name = "socialspy", aliases = { "spy" })
     @Permission("eternalcore.spy")
     @DescriptionDocs(description = "Enable or disable social spy")
-    void socialSpy(Player player) {
+    void socialSpy(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.privateChatService.isSpy(uuid)) {

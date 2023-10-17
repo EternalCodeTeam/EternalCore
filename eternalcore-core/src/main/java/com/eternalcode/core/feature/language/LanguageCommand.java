@@ -2,12 +2,13 @@ package com.eternalcode.core.feature.language;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "language", aliases = { "lang" })
+@Command(name = "language", aliases = { "lang" })
 @Permission("eternalcore.language")
 class LanguageCommand {
 
@@ -20,7 +21,7 @@ class LanguageCommand {
 
     @Execute
     @DescriptionDocs(description = "Open language inventory")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         this.languageInventory.open(player);
     }
 

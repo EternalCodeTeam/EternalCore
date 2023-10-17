@@ -6,15 +6,15 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.handle.InvalidUsageHandler;
+import dev.rollczi.litecommands.handler.result.ResultHandlerChain;
+import dev.rollczi.litecommands.invalidusage.InvalidUsage;
+import dev.rollczi.litecommands.invalidusage.InvalidUsageHandler;
+import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.schematic.Schematic;
 import org.bukkit.command.CommandSender;
 
-import java.util.List;
-
-@LiteHandler(Schematic.class)
-public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
+@LiteHandler(InvalidUsage.class)
+public class InvalidUsageHandlerImpl implements InvalidUsageHandler<CommandSender> {
 
     private static final Placeholders<String> SCHEME = Placeholders.of("{USAGE}", scheme -> scheme);
 
@@ -22,31 +22,30 @@ public class InvalidUsage implements InvalidUsageHandler<CommandSender> {
     private final NoticeService noticeService;
 
     @Inject
-    public InvalidUsage(ViewerProvider viewerProvider, NoticeService noticeService) {
+    public InvalidUsageHandlerImpl(ViewerProvider viewerProvider, NoticeService noticeService) {
         this.viewerProvider = viewerProvider;
         this.noticeService = noticeService;
     }
 
     @Override
-    public void handle(CommandSender sender, LiteInvocation invocation, Schematic schematic) {
-        Viewer viewer = this.viewerProvider.any(sender);
+    public void handle(Invocation<CommandSender> invocation, InvalidUsage<CommandSender> result, ResultHandlerChain<CommandSender> chain) {
+        Viewer viewer = this.viewerProvider.any(invocation.sender());
+        Schematic schematic = result.getSchematic();
 
-        List<String> schematics = schematic.getSchematics();
-
-        if (schematics.size() == 1) {
+        if (schematic.isOnlyFirst()) {
             this.noticeService.create()
                 .viewer(viewer)
                 .notice(translation -> translation.argument().usageMessage())
-                .placeholder(SCHEME, schematics.get(0))
+                .placeholder(SCHEME, schematic.first())
                 .send();
             return;
         }
 
         this.noticeService.viewer(viewer, translation -> translation.argument().usageMessageHead());
 
-        for (String schema : schematics) {
+        for (String schema : schematic.all()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().usageMessageEntry(), SCHEME.toFormatter(schema));
         }
-
     }
+
 }

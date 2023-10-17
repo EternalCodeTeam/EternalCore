@@ -4,13 +4,14 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "anvil")
+@Command(name = "anvil")
 class AnvilCommand {
 
     private final NoticeService noticeService;
@@ -20,10 +21,10 @@ class AnvilCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.anvil")
     @DescriptionDocs(description = "Opens an anvil for you")
-    void executeSelf(Player player) {
+    void executeSelf(@Context Player player) {
         AdditionalContainerPaper.ANVIL.open(player);
 
         this.noticeService.create()
@@ -32,10 +33,10 @@ class AnvilCommand {
             .send();
     }
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.anvil.other")
     @DescriptionDocs(description = "Opens an anvil for another player", arguments = "<player>")
-    void execute(Player sender, @Arg Player target) {
+    void execute(@Context Player sender, @Arg Player target) {
         AdditionalContainerPaper.ANVIL.open(target);
 
         this.noticeService.create()

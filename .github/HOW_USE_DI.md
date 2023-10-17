@@ -88,7 +88,7 @@ public class UserListener implements Listener {
 ```
 #### 6. Command
 ```java
-@Route(name = "example") // <- marks a class that will be registered as a command.
+@Command(name = "example") // <- marks a class that will be registered as a command.
 public class UserCommand {
     
     private final UserService exampleService;

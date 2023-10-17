@@ -4,13 +4,14 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.World;
 
-@Route(name = "rain")
+@Command(name = "rain")
 @Permission("eternalcore.rain")
 class RainCommand {
 
@@ -22,8 +23,18 @@ class RainCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Sets weather to rain in current world")
+    void rain(@Context Viewer viewer, @Context World world) {
+        this.setRain(viewer, world);
+    }
+
+    @Execute
     @DescriptionDocs(description = "Sets weather to rain in specified world", arguments = "<world>")
-    void rain(Viewer viewer, @Arg World world) {
+    void rainWorld(@Context Viewer viewer, @Arg World world) {
+        this.setRain(viewer, world);
+    }
+
+    private void setRain(Viewer viewer, World world) {
         world.setStorm(true);
         world.setThundering(false);
 

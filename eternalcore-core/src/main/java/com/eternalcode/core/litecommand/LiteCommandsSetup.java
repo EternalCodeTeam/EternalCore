@@ -1,6 +1,5 @@
 package com.eternalcode.core.litecommand;
 
-import com.eternalcode.core.litecommand.configurator.config.CommandConfiguration;
 import com.eternalcode.core.injector.bean.BeanFactory;
 import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
@@ -9,30 +8,49 @@ import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.publish.Subscribe;
 import dev.rollczi.litecommands.LiteCommands;
-import dev.rollczi.litecommands.LiteCommandsBuilder;
-import dev.rollczi.litecommands.bukkit.adventure.platform.LiteBukkitAdventurePlatformFactory;
+import dev.rollczi.litecommands.adventure.bukkit.platform.LiteAdventurePlatformExtension;
+import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
+import dev.rollczi.litecommands.builder.LiteCommandsBuilder;
+import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
+import dev.rollczi.litecommands.bukkit.LiteCommandsBukkit;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 
 @BeanSetup
 class LiteCommandsSetup implements Subscriber {
 
     @Bean
-    public LiteCommandsBuilder<CommandSender> liteCommandsBuilder(Server server, AudienceProvider audiencesProvider, MiniMessage miniMessage, CommandConfiguration commandConfiguration) {
-        return LiteBukkitAdventurePlatformFactory.builder(server, "eternalcore", false, audiencesProvider, miniMessage);
+    public LiteCommandsBuilder<CommandSender, ?, ?> liteCommandsBuilder(
+        Plugin plugin,
+        Server server,
+        AudienceProvider audiencesProvider,
+        MiniMessage miniMessage,
+        LiteCommandsAnnotations<CommandSender> liteCommandsAnnotations
+    ) {
+        return LiteCommandsBukkit.builder("eternalcore", plugin, server)
+            .commands(liteCommandsAnnotations)
+            .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider)
+                .serializer(miniMessage)
+            );
+    }
+
+    @Bean
+    public LiteCommandsAnnotations<CommandSender> liteCommandsAnnotations() {
+        return LiteCommandsAnnotations.create();
     }
 
     @Subscribe(EternalInitializeEvent.class)
-    public void onEnable(BeanFactory beanFactory, LiteCommandsBuilder<CommandSender> liteCommandsBuilder) {
-        LiteCommands<CommandSender> register = liteCommandsBuilder.register();
+    public void onEnable(BeanFactory beanFactory, LiteCommandsBuilder<CommandSender, ?, ?> liteCommandsBuilder) {
+        LiteCommands<CommandSender> register = liteCommandsBuilder.build();
         beanFactory.addCandidate(LiteCommands.class, () -> register);
     }
 
     @Subscribe(EternalShutdownEvent.class)
     public void onShutdown(LiteCommands<CommandSender> liteCommands) {
-        liteCommands.getPlatform().unregisterAll();
+        liteCommands.unregister();
     }
 
 }

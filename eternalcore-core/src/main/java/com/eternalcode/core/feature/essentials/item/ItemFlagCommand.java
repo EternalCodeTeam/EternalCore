@@ -4,17 +4,18 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import panda.utilities.text.Formatter;
 
-@Route(name = "itemflag")
+@Command(name = "itemflag")
 @Permission("eternalcore.itemflag")
 class ItemFlagCommand {
 
@@ -29,7 +30,7 @@ class ItemFlagCommand {
 
     @Execute
     @DescriptionDocs(description = "Adds or removes item flag from item in hand", arguments = "<item-flag>")
-    void execute(Player player, @Arg ItemFlag flag) {
+    void execute(@Context Player player, @Arg ItemFlag flag) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
 
@@ -51,9 +52,9 @@ class ItemFlagCommand {
         this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagAddedMessage(), formatter);
     }
 
-    @Execute(route = "clear")
+    @Execute(name = "clear")
     @DescriptionDocs(description = "Clears all item flags from item in hand")
-    void clear(Player player) {
+    void clear(@Context Player player) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
 

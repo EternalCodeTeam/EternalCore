@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation("dev.rollczi.litecommands:core:2.8.9")
+    testImplementation("dev.rollczi:litecommands-core:3.0.0-BETA-pre21")
     testImplementation("org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT")
     testImplementation("net.dzikoysk:cdn:1.14.4")
     testImplementation("org.panda-lang:expressible-junit:1.3.6")

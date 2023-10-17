@@ -4,18 +4,18 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.adventure.legacy.Legacy;
-import dev.rollczi.litecommands.argument.joiner.Joiner;
-import dev.rollczi.litecommands.command.amount.Min;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-@Route(name = "itemname", aliases = { "itemrename" })
+@Command(name = "itemname", aliases = { "itemrename" })
 @Permission("eternalcore.itemname")
 class ItemNameCommand {
 
@@ -29,9 +29,8 @@ class ItemNameCommand {
     }
 
     @Execute
-    @Min(1)
     @DescriptionDocs(description = "Sets name of item in hand", arguments = "<name>")
-    void execute(Player player, @Joiner String name) {
+    void execute(@Context Player player, @Join String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
@@ -54,9 +53,9 @@ class ItemNameCommand {
             .send();
     }
 
-    @Execute(route = "clear")
+    @Execute(name = "clear")
     @DescriptionDocs(description = "Clears name of item in hand")
-    void clear(Player player) {
+    void clear(@Context Player player) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {

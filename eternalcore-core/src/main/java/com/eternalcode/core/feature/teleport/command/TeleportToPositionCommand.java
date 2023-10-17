@@ -5,14 +5,15 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-@Route(name = "tppos")
+@Command(name = "tppos")
 @Permission("eternalcore.tppos")
 class TeleportToPositionCommand {
 
@@ -25,15 +26,15 @@ class TeleportToPositionCommand {
         this.teleportService = teleportService;
     }
 
-    @Execute(min = 3)
+    @Execute
     @DescriptionDocs(description = "Teleport to specified coordinates", arguments = "<x> <y> <z>")
-    void execute(Player player, @Arg int x, @Arg int y, @Arg int z) {
+    void execute(@Context Player player, @Arg int x, @Arg int y, @Arg int z) {
         this.teleport(player, x, y, z);
     }
 
-    @Execute(min = 4)
+    @Execute
     @DescriptionDocs(description = "Teleport specified player to specified coordinates", arguments = "<player> <x> <y> <z>")
-    void execute(Viewer viewer, @Arg int x, @Arg int y, @Arg int z, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg int x, @Arg int y, @Arg int z, @Arg Player target) {
         this.teleport(target, x, y, z);
 
         this.noticeService.create()
