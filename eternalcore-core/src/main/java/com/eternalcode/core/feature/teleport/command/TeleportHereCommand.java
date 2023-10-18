@@ -26,7 +26,7 @@ class TeleportHereCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport player to you", arguments = "<player>")
-    void tpHere(Player sender, @Arg Player target) {
+    void tpHere(@Context Player sender, @Arg Player target) {
         this.teleportService.teleport(target, sender.getLocation());
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleportedPlayerToPlayer())
