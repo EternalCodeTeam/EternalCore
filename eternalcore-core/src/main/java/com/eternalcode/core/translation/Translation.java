@@ -1,11 +1,13 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -133,13 +135,13 @@ public interface Translation {
         WarpInventorySection warpInventory();
 
         interface WarpInventorySection {
-
             String title();
             int rows();
 
             Map<String, WarpInventoryItem> items();
 
             BorderSection border();
+            DecorationItemsSection decorationItems();
 
             interface BorderSection {
                 boolean enabled();
@@ -155,6 +157,10 @@ public interface Translation {
                 enum FillType {
                     TOP, BOTTOM, BORDER, ALL
                 }
+            }
+
+            interface DecorationItemsSection {
+                List<ConfigItem> items();
             }
         }
     }
@@ -366,6 +372,8 @@ public interface Translation {
 
     interface LanguageSection {
         Notice languageChanged();
+
+        List<ConfigItem> decorationItems();
     }
 
     // container section

@@ -60,29 +60,34 @@ public class LanguageConfiguration implements ReloadableConfig {
         @Description({ " ", "# List of languages" })
         public List<LanguageConfigItem> languageConfigItemMap = new ImmutableList.Builder<LanguageConfigItem>()
             .add(new LanguageConfigItem(
-                Material.PLAYER_HEAD,
-                Language.EN,
-                20,
                 "&c&lEnglish",
                 Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Click to change language!"),
-                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODc5ZDk5ZDljNDY0NzRlMjcxM2E3ZTg0YTk1ZTRjZTdlOGZmOGVhNGQxNjQ0MTNhNTkyZTQ0MzVkMmM2ZjlkYyJ9fX0")
-            )
-
-            .add(new LanguageConfigItem(
-                Material.REPEATER,
-                Language.DEFAULT,
-                22,
-                "&c&lAuto",
-                Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"))
-            )
-
-            .add(new LanguageConfigItem(
                 Material.PLAYER_HEAD,
-                Language.PL,
-                24,
+                "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODc5ZDk5ZDljNDY0NzRlMjcxM2E3ZTg0YTk1ZTRjZTdlOGZmOGVhNGQxNjQ0MTNhNTkyZTQ0MzVkMmM2ZjlkYyJ9fX0",
+                false,
+                20,
+                Collections.emptyList(),
+                Language.EN)
+            )
+            .add(new LanguageConfigItem(
+                "&c&lAuto",
+                Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"),
+                Material.REPEATER,
+                "none",
+                false,
+                22,
+                Collections.emptyList(),
+                Language.DEFAULT)
+            )
+            .add(new LanguageConfigItem(
                 "&c&lPolish",
                 Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij aby zmienić język!"),
-                "ewogICJ0aW1lc3RhbXAiIDogMTYyNzMxOTA4NjYyOCwKICAicHJvZmlsZUlkIiA6ICJiNTM5NTkyMjMwY2I0MmE0OWY5YTRlYmYxNmRlOTYwYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJtYXJpYW5hZmFnIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2IxZDFlZmVkNjIyZTEzMTJlOTg0NGU4OTgzNjQzMzM5MGEyMTFjN2E1NTVhMzQzMWI0OTk2NWMzZTNiMzhiYjYiCiAgICB9CiAgfQp9")
+                Material.PLAYER_HEAD,
+                "ewogICJ0aW1lc3RhbXAiIDogMTYyNzMxOTA4NjYyOCwKICAicHJvZmlsZUlkIiA6ICJiNTM5NTkyMjMwY2I0MmE0OWY5YTRlYmYxNmRlOTYwYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJtYXJpYW5hZmFnIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2IxZDFlZmVkNjIyZTEzMTJlOTg0NGU4OTgzNjQzMzM5MGEyMTFjN2E1NTVhMzQzMWI0OTk2NWMzZTNiMzhiYjYiCiAgICB9CiAgfQp9",
+                false,
+                24,
+                Collections.emptyList(),
+                Language.PL)
             )
             .build();
     }
