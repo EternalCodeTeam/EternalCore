@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.DataSourceConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.zaxxer.hikari.HikariDataSource;
+import io.sentry.Sentry;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -95,6 +96,7 @@ public class DatabaseManager {
             this.connectionSource.close();
         }
         catch (Exception exception) {
+            Sentry.captureException(exception);
             exception.printStackTrace();
         }
     }
@@ -112,6 +114,7 @@ public class DatabaseManager {
             return (Dao<T, ID>) dao;
         }
         catch (SQLException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }

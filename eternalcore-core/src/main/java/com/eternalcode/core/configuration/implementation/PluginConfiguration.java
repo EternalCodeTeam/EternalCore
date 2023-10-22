@@ -40,6 +40,12 @@ public class PluginConfiguration implements ReloadableConfig {
     @Description("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
+    @Description({
+        "# Use sentry? Allows you to send errors to the developers",
+        "# I strongly recommend leaving this option enabled, it helps us improve the plugin",
+    })
+    public boolean useSentry = true;
+
     @Description({ " ", "# Database Section" })
     public Database database = new Database();
 

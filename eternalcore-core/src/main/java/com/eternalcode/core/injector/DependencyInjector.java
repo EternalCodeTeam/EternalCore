@@ -2,6 +2,7 @@ package com.eternalcode.core.injector;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.bean.BeanException;
+import io.sentry.Sentry;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -47,9 +48,11 @@ public class DependencyInjector {
             return method.invoke(instance, parameters);
         }
         catch (BeanException beanException) {
+            Sentry.captureException(beanException);
             throw new DependencyInjectorException("Failed to invoke method " + method.getName() + " in " + declaringClass.getName() + "!", beanException, declaringClass);
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            Sentry.captureException(exception);
             throw new DependencyInjectorException(exception, declaringClass);
         }
     }
@@ -85,9 +88,11 @@ public class DependencyInjector {
             return constructor.newInstance(parameters);
         }
         catch (BeanException beanException) {
+            Sentry.captureException(beanException);
             throw new DependencyInjectorException("Failed to create a new instance of " + declaringClass.getName() + "!", beanException, declaringClass);
         }
         catch (InvocationTargetException | InstantiationException | IllegalAccessException exception) {
+            Sentry.captureException(exception);
             throw new DependencyInjectorException(exception, declaringClass);
         }
     }

@@ -1,5 +1,7 @@
 package com.eternalcode.core.injector.bean;
 
+import io.sentry.Sentry;
+
 import java.lang.reflect.Field;
 
 public class LazyFieldBeanCandidate extends LazyBeanCandidate {
@@ -15,6 +17,7 @@ public class LazyFieldBeanCandidate extends LazyBeanCandidate {
                 return field.get(instance);
             }
             catch (IllegalAccessException exception) {
+                Sentry.captureException(exception);
                 throw new BeanException("Cannot access field " + field.getName() + " of " + instance.getClass().getName(), exception, field.getType());
             }
         });

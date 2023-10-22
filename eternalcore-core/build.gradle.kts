@@ -74,7 +74,11 @@ eternalShadow {
 
     // metrics
     library("org.bstats:bstats-bukkit:3.0.2")
-    libraryRelocate("org.bstats")
+    library("io.sentry:sentry:6.32.0")
+    libraryRelocate(
+        "org.bstats",
+/*        "io.sentry"*/
+    )
 
     // pixel-width
     library("solar.squares:pixel-width-core:1.1.0")

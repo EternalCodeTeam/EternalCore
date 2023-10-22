@@ -1,4 +1,4 @@
-package com.eternalcode.core.metrics;
+package com.eternalcode.core.telemetry;
 
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.publish.Subscriber;

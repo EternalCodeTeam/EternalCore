@@ -3,6 +3,7 @@ package com.eternalcode.core.configuration;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import io.sentry.Sentry;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -86,6 +87,7 @@ public class ConfigurationBackupService {
             Files.copy(targetFolder.toPath(), path.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
         catch (IOException exception) {
+            Sentry.captureException(exception);
             exception.printStackTrace();
         }
     }
@@ -114,6 +116,7 @@ public class ConfigurationBackupService {
                 }
             }
             catch (DateTimeParseException | IOException exception) {
+                Sentry.captureException(exception);
                 exception.printStackTrace();
             }
         }
