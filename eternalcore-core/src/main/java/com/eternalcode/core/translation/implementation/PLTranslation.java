@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.warp.config.WarpConfigItem;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.Notice;
@@ -231,7 +231,7 @@ public class PLTranslation extends AbstractTranslation {
 
         public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
 
-        @Description({"# {PLAYER} - Gracz który został teleportowany, {WORLD} - Świat, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
+        @Description({ "# {PLAYER} - Gracz który został teleportowany, {WORLD} - Świat, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z" })
         public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokalizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
     }
 
@@ -269,7 +269,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
 
-        @Description({" ", "# {PLAYER} - Gracz, który otrzymał wiadomość", "# {MESSAGE} - wiadomość", "# {TYPE} - typ wiadomości"})
+        @Description({ " ", "# {PLAYER} - Gracz, który otrzymał wiadomość", "# {MESSAGE} - wiadomość", "# {TYPE} - typ wiadomości" })
         public Notice tellrawInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>{PLAYER} <white>o treści: {MESSAGE}");
         public Notice tellrawAllInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>wszystkich <white>o treści: {MESSAGE}");
     }
@@ -355,7 +355,7 @@ public class PLTranslation extends AbstractTranslation {
 
             public Map<String, WarpInventoryItem> items = Map.of("default", WarpInventoryItem.builder()
                 .withWarpName("default")
-                .withWarpItem(WarpConfigItem.builder()
+                .withWarpItem(ConfigItem.builder()
                     .withName("&8» &6Warp: &fdomyślny")
                     .withLore(Collections.singletonList("<gray>Kliknij aby się teleportować!"))
                     .withMaterial(Material.PLAYER_HEAD)
@@ -365,6 +365,7 @@ public class PLTranslation extends AbstractTranslation {
                 .build());
 
             public PLBorderSection border = new PLBorderSection();
+            public PLDecorationItemsSection decorationItems = new PLDecorationItemsSection();
 
             @Getter
             @Contextual
@@ -378,6 +379,27 @@ public class PLTranslation extends AbstractTranslation {
                 public String name = "";
 
                 public List<String> lore = Collections.emptyList();
+            }
+
+            @Getter
+            @Contextual
+            public static class PLDecorationItemsSection implements DecorationItemsSection {
+                public List<ConfigItem> items = List.of(
+                    ConfigItem.builder()
+                        .withMaterial(Material.YELLOW_CARPET)
+                        .withName("&8» &6Przykładowy przedmiot")
+                        .withLore(Collections.singletonList("<gray>Kliknij aby ustawić dzień!"))
+                        .withSlot(18)
+                        .withCommands(List.of("day"))
+                        .build(),
+                    ConfigItem.builder()
+                        .withMaterial(Material.BLUE_CARPET)
+                        .withName("&8» &6Przykładowy przedmiot 2")
+                        .withLore(Collections.singletonList("<gray>Kliknij aby ustawić noc!"))
+                        .withSlot(19)
+                        .withCommands((List.of("night")))
+                        .build()
+                );
             }
         }
     }
@@ -764,6 +786,16 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLLanguageSection implements LanguageSection {
         public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
+
+        public List<ConfigItem> decorationItems = List.of(
+            ConfigItem.builder()
+                .withMaterial(Material.SUNFLOWER)
+                .withGlow(true)
+                .withSlot(40)
+                .withName("&7Nasz discord")
+                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
+                .build()
+        );
     }
 
     @Description({ " ", "# Automatyczne wiadomości " })
@@ -772,7 +804,6 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLAutoMessageSection implements AutoMessageSection {
-
         @Description({
             "",
             "# Jeżeli chcesz użyć placeholder'a %server_online% musisz zainstalować plugin",

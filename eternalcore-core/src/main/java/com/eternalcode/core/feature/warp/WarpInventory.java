@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.warp;
 
-import com.eternalcode.core.feature.warp.config.WarpConfigItem;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.feature.language.Language;
@@ -16,6 +16,7 @@ import dev.triumphteam.gui.guis.GuiItem;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
@@ -29,13 +30,15 @@ class WarpInventory {
     private final TeleportTaskService teleportTaskService;
     private final TranslationManager translationManager;
     private final WarpManager warpManager;
+    private final Server server;
     private final MiniMessage miniMessage;
 
     @Inject
-    WarpInventory(TeleportTaskService teleportTaskService, TranslationManager translationManager, WarpManager warpManager, MiniMessage miniMessage) {
+    WarpInventory(TeleportTaskService teleportTaskService, TranslationManager translationManager, WarpManager warpManager, Server server, MiniMessage miniMessage) {
         this.teleportTaskService = teleportTaskService;
         this.translationManager = translationManager;
         this.warpManager = warpManager;
+        this.server = server;
         this.miniMessage = miniMessage;
     }
 
@@ -57,7 +60,7 @@ class WarpInventory {
             }
 
             Warp warp = warpOption.get();
-            WarpConfigItem warpItem = item.warpItem();
+            ConfigItem warpItem = item.warpItem();
 
             BaseItemBuilder baseItemBuilder = this.createItem(warpItem);
             GuiItem guiItem = baseItemBuilder.asGuiItem();
@@ -105,28 +108,49 @@ class WarpInventory {
             }
         }
 
+        for (ConfigItem item : warpSection.decorationItems().items()) {
+            BaseItemBuilder baseItemBuilder = this.createItem(item);
+            GuiItem guiItem = baseItemBuilder.asGuiItem();
+
+            guiItem.setAction(event -> {
+                Player player = (Player) event.getWhoClicked();
+
+                if (item.commands.isEmpty()) {
+                    return;
+                }
+
+                for (String command : item.commands) {
+                    this.server.dispatchCommand(player, command);
+                }
+
+                player.closeInventory();
+            });
+
+            gui.setItem(item.slot(), guiItem);
+        }
+
         return gui;
     }
 
-    private BaseItemBuilder createItem(WarpConfigItem warpItem) {
-        Component name = AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(warpItem.name()));
-        List<Component> lore = warpItem.lore()
+    private BaseItemBuilder createItem(ConfigItem item) {
+        Component name = AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(item.name()));
+        List<Component> lore = item.lore()
             .stream()
             .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
             .toList();
 
-        if (warpItem.material() == Material.PLAYER_HEAD && !warpItem.texture().isEmpty()) {
+        if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {
             return ItemBuilder.skull()
                 .name(name)
                 .lore(lore)
-                .texture(warpItem.texture())
-                .glow(warpItem.glow());
+                .texture(item.texture())
+                .glow(item.glow());
         }
 
-        return ItemBuilder.from(warpItem.material())
-                .name(name)
-                .lore(lore)
-                .glow(warpItem.glow());
+        return ItemBuilder.from(item.material())
+            .name(name)
+            .lore(lore)
+            .glow(item.glow());
     }
 
     public void openInventory(Player player, Language language) {

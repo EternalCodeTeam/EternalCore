@@ -1,33 +1,36 @@
-package com.eternalcode.core.feature.warp.config;
+package com.eternalcode.core.configuration.contextual;
 
 import net.dzikoysk.cdn.entity.Contextual;
+import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Contextual
-public class WarpConfigItem {
+public class ConfigItem {
 
-    public String name = "&6Warp";
-    public List<String> lore = Collections.singletonList("&7Click to teleport to warp");
-
+    public String name = "&6Item";
+    public List<String> lore = Collections.singletonList("&7Default lore");
     public Material material = Material.PLAYER_HEAD;
     public String texture = "none";
-    public boolean glow = true;
+    public boolean glow = false;
+    public int slot = 0;
+    @Description("What command should be executed when the item is clicked? If it is not to be performed, leave it blank")
+    public List<String> commands = new ArrayList<>();
 
-    public int slot = 10;
-
-    public WarpConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, int slot) {
+    public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, int slot, List<String> commands) {
         this.name = name;
         this.lore = lore;
         this.material = material;
         this.texture = texture;
         this.glow = glow;
         this.slot = slot;
+        this.commands = commands;
     }
 
-    public WarpConfigItem() {
+    public ConfigItem() {
 
     }
 
@@ -55,52 +58,61 @@ public class WarpConfigItem {
         return this.slot;
     }
 
+    public List<String> commands() {
+        return this.commands;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder {
-
-        private final WarpConfigItem warpConfigItem = new WarpConfigItem();
+        private final ConfigItem configItem = new ConfigItem();
 
         public Builder withName(String name) {
-            this.warpConfigItem.name = name;
+            this.configItem.name = name;
 
             return this;
         }
 
         public Builder withLore(List<String> lore) {
-            this.warpConfigItem.lore = lore;
+            this.configItem.lore = lore;
 
             return this;
         }
 
         public Builder withMaterial(Material material) {
-            this.warpConfigItem.material = material;
+            this.configItem.material = material;
 
             return this;
         }
 
         public Builder withTexture(String texture) {
-            this.warpConfigItem.texture = texture;
+            this.configItem.texture = texture;
 
             return this;
         }
 
         public Builder withGlow(boolean glow) {
-            this.warpConfigItem.glow = glow;
+            this.configItem.glow = glow;
 
             return this;
         }
 
         public Builder withSlot(int slot) {
-            this.warpConfigItem.slot = slot;
+            this.configItem.slot = slot;
 
             return this;
         }
 
-        public WarpConfigItem build() {
-            return this.warpConfigItem;
+        public Builder withCommands(List<String> commands) {
+            this.configItem.commands = commands;
+
+            return this;
+        }
+
+        public ConfigItem build() {
+            return this.configItem;
         }
     }
 }
