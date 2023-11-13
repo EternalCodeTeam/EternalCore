@@ -44,11 +44,11 @@ eternalShadow {
     )
 
     // database
-    library("org.mariadb.jdbc:mariadb-java-client:3.2.0")
+    library("org.mariadb.jdbc:mariadb-java-client:3.3.0")
     library("org.postgresql:postgresql:42.6.0")
     library("com.h2database:h2:2.1.214")
     library("com.j256.ormlite:ormlite-jdbc:6.1")
-    library("com.zaxxer:HikariCP:5.0.1")
+    library("com.zaxxer:HikariCP:5.1.0")
 
     // command framework & skull library
     library("dev.rollczi.litecommands:bukkit-adventure:2.8.9")
@@ -61,7 +61,7 @@ eternalShadow {
     // common libraries
     library("org.panda-lang:expressible:1.3.6")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
-    library("commons-io:commons-io:2.14.0")
+    library("commons-io:commons-io:2.15.0")
     libraryRelocate(
         "panda.std",
         "panda.utilities",
@@ -69,7 +69,7 @@ eternalShadow {
     )
 
     // gui library
-    library("dev.triumphteam:triumph-gui:3.1.6")
+    library("dev.triumphteam:triumph-gui:3.1.7")
     libraryRelocate("dev.triumphteam")
 
     // metrics

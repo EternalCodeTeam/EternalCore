@@ -2,7 +2,7 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
-    id("xyz.jpenilla.run-paper") version "2.2.0"
+    id("xyz.jpenilla.run-paper") version "2.2.1"
 }
 
 eternalShadowCompiler {
