@@ -12,7 +12,7 @@ dependencies {
     api(project(":eternalcore-docs-api"))
 
     // Base libraries
-    compileOnly("org.jetbrains:annotations:24.0.1")
+    compileOnly("org.jetbrains:annotations:24.1.0")
 
     // Minecraft & Bridges API
     compileOnlyApi("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
