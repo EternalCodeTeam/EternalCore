@@ -17,7 +17,6 @@ public class ConfigItem {
     public String texture = "none";
     public boolean glow = false;
     public int slot = 0;
-    @Description("What command should be executed when the item is clicked? If it is not to be performed, leave it blank")
     public List<String> commands = new ArrayList<>();
 
     public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, int slot, List<String> commands) {
