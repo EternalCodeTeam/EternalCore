@@ -70,6 +70,11 @@ class WarpInventory {
 
                 player.closeInventory();
 
+                if (player.hasPermission("eternalcore.warp.bypass")) {
+                    this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
+                    return;
+                }
+
                 this.teleportTaskService.createTeleport(
                     player.getUniqueId(),
                     PositionAdapter.convert(player.getLocation()),
