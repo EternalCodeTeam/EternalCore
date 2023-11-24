@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration.implementation;
 
+import com.eternalcode.core.adventure.legacy.LegacyColorProcessor;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
@@ -15,6 +16,7 @@ import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Sound;
 
 import java.io.File;
@@ -94,6 +96,9 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Time of teleportation to spawn")
         public Duration teleportTimeToSpawn = Duration.ofSeconds(5);
 
+        @Description("# Include players with op in teleport to random player")
+        public boolean includeOpPlayersInRandomTeleport = false;
+
         @Override
         public Duration teleportationTimeToSpawn() {
             return this.teleportTimeToSpawn;
@@ -108,12 +113,20 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Radius of random teleportation")
         public int randomTeleportRadius = 1000;
 
+        @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
+        public String randomTeleportWorld = "world";
+
         @Description("# Number of attempts to teleport to a random location")
         public int randomTeleportAttempts = 10;
 
         @Override
         public int randomTeleportRadius() {
             return this.randomTeleportRadius;
+        }
+
+        @Override
+        public String randomTeleportWorld() {
+            return this.randomTeleportWorld;
         }
 
         @Override
@@ -300,7 +313,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class AutoMessage implements AutoMessageSettings {
-
         @Description("# AutoMessage should be enabled?")
         public boolean enabled = true;
 

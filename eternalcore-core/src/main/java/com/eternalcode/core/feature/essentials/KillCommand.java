@@ -34,7 +34,7 @@ class KillCommand {
             .send();
     }
 
-    @Execute
+    @Execute(required = 1)
     @DescriptionDocs(description = "Kill specified player", arguments = "<player>")
     void execute(@Context Viewer audience, @Arg Player player) {
         player.setHealth(0);

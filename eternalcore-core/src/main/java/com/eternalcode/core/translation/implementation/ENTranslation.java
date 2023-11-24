@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.warp.config.WarpConfigItem;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.Notice;
@@ -209,6 +209,11 @@ public class ENTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Description(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
+
+        @Description(" ")
+        public Notice randomPlayerNotFound = Notice.chat("<red>✘ <dark_red>No player found to teleport!");
+        @Description({ " ", "# {PLAYER} - The player you were teleported" })
+        public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Teleported to random player <green>{PLAYER}<white>!");
     }
 
     @Description({
@@ -346,7 +351,7 @@ public class ENTranslation extends AbstractTranslation {
 
             public Map<String, WarpInventoryItem> items = Map.of("default", WarpInventoryItem.builder()
                 .withWarpName("default")
-                .withWarpItem(WarpConfigItem.builder()
+                .withWarpItem(ConfigItem.builder()
                     .withName("&8» &6Warp: &fdefault")
                     .withLore(Collections.singletonList("<gray>Click to teleport!"))
                     .withMaterial(Material.ENDER_PEARL)
@@ -356,6 +361,7 @@ public class ENTranslation extends AbstractTranslation {
                 .build());
 
             public ENBorderSection border = new ENBorderSection();
+            public ENDecorationItemsSection decorationItems = new ENDecorationItemsSection();
 
             @Getter
             @Contextual
@@ -369,6 +375,27 @@ public class ENTranslation extends AbstractTranslation {
                 public String name = "";
 
                 public List<String> lore = Collections.emptyList();
+            }
+
+            @Getter
+            @Contextual
+            public static class ENDecorationItemsSection implements DecorationItemsSection {
+                public List<ConfigItem> items = List.of(
+                    ConfigItem.builder()
+                        .withName("&8» &6Example item")
+                        .withLore(Collections.singletonList("<gray>Click to set time to day"))
+                        .withMaterial(Material.YELLOW_CARPET)
+                        .withSlot(18)
+                        .withCommands(List.of("day"))
+                        .build(),
+                    ConfigItem.builder()
+                        .withName("&8» &6Example item 2")
+                        .withLore(Collections.singletonList("<gray>Click to set time to night"))
+                        .withMaterial(Material.BLUE_CARPET)
+                        .withSlot(19)
+                        .withCommands(List.of("night"))
+                        .build()
+                );
             }
         }
     }
@@ -685,7 +712,8 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Repaired!");
+        public Notice repairMessage = Notice.chat("<green>► <white>Repaired held item!");
+        public Notice repairAllMessage = Notice.chat("<green>► <white>Repaired all items!");
 
         @Description({ " ", "# {SKULL} - Name of the skull owner" })
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
@@ -740,6 +768,16 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENLanguageSection implements LanguageSection {
         public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
+
+        public List<ConfigItem> decorationItems = List.of(
+            ConfigItem.builder()
+                .withMaterial(Material.SUNFLOWER)
+                .withGlow(true)
+                .withSlot(40)
+                .withName("&7Our discord")
+                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
+                .build()
+        );
     }
 
     @Description({ " ", "# Auto message" })

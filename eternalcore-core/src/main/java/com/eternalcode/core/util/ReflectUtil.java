@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public final class ReflectUtil {
+
+    private static final Logger LOGGER = Logger.getLogger("EternalCore");
 
     public static final String LIBS_PACKAGE_PREFIX = "com.eternalcode.core.libs.";
 
@@ -34,7 +37,7 @@ public final class ReflectUtil {
                     loadedClasses.add(clazz);
                 }
                 catch (NoClassDefFoundError ignored) {
-                    System.out.println("Can not load: " + info.getName());
+                    LOGGER.severe("Can not load class: " + info.getName());
                 }
             }
 

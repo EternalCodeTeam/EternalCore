@@ -27,17 +27,28 @@ public final class PackageUtil {
                 String subPackageName = info.getPackageName();
 
                 if (subPackageName.equals(packageName)) {
-                    Class<?> clazz = Class.forName(info.getName());
+                    try {
+                        Class<?> clazz = Class.forName(info.getName(), false, classLoader);
 
-                    packageStack = packageStack.withClass(clazz);
-                    continue;
+                        packageStack = packageStack.withClass(clazz);
+                        continue;
+                    }
+                    catch (NoClassDefFoundError error) {
+                        continue;
+                    }
                 }
 
                 if (loadedPackages.contains(subPackageName)) {
                     continue;
                 }
 
-                Class.forName(info.getName());
+                try {
+                    Class.forName(info.getName(), false, classLoader);
+                }
+                catch (NoClassDefFoundError error) {
+                    continue;
+                }
+
                 Package subPackage = classLoader.getDefinedPackage(subPackageName);
                 Result result = resolvePackageStack(subPackage, classLoader);
                 PackageStack subPackageStack = result.packageStack();

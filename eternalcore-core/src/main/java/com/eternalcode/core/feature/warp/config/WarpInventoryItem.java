@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.warp.config;
 
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Material;
 
@@ -10,7 +11,7 @@ public class WarpInventoryItem {
 
     public String warpName = "default";
 
-    public WarpConfigItem warpItem = WarpConfigItem.builder()
+    public ConfigItem warpItem = ConfigItem.builder()
         .withName("&6Warp: &fdefault")
         .withLore(Collections.singletonList("&7Click to teleport to warp"))
         .withMaterial(Material.PLAYER_HEAD)
@@ -19,7 +20,7 @@ public class WarpInventoryItem {
         .withGlow(true)
         .build();
 
-    public WarpInventoryItem(String warpName, WarpConfigItem warpItem) {
+    public WarpInventoryItem(String warpName, ConfigItem warpItem) {
         this.warpName = warpName;
         this.warpItem = warpItem;
     }
@@ -32,7 +33,7 @@ public class WarpInventoryItem {
         return this.warpName;
     }
 
-    public WarpConfigItem warpItem() {
+    public ConfigItem warpItem() {
         return this.warpItem;
     }
 
@@ -43,7 +44,7 @@ public class WarpInventoryItem {
     public static class Builder {
 
         private String warpName;
-        private WarpConfigItem warpItem;
+        private ConfigItem warpItem;
 
         public Builder withWarpName(String warpName) {
             this.warpName = warpName;
@@ -51,7 +52,7 @@ public class WarpInventoryItem {
             return this;
         }
 
-        public Builder withWarpItem(WarpConfigItem warpItem) {
+        public Builder withWarpItem(ConfigItem warpItem) {
             this.warpItem = warpItem;
 
             return this;

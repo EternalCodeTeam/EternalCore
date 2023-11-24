@@ -19,7 +19,7 @@ import java.util.UUID;
 class PrivateChatService {
 
     private final NoticeService noticeService;
-    private final IgnoreService ignoreRepository;
+    private final IgnoreService ignoreService;
     private final UserManager userManager;
     private final PrivateChatPresenter presenter;
 
@@ -32,7 +32,7 @@ class PrivateChatService {
     @Inject
     PrivateChatService(NoticeService noticeService, IgnoreService ignoreService, UserManager userManager) {
         this.noticeService = noticeService;
-        this.ignoreRepository = ignoreService;
+        this.ignoreService = ignoreService;
         this.userManager = userManager;
         this.presenter = new PrivateChatPresenter(noticeService);
     }
@@ -44,7 +44,7 @@ class PrivateChatService {
             return;
         }
 
-        this.ignoreRepository.isIgnored(target.getUniqueId(), sender.getUniqueId()).then(isIgnored -> {
+        this.ignoreService.isIgnored(target.getUniqueId(), sender.getUniqueId()).then(isIgnored -> {
             if (!isIgnored) {
                 this.replies.put(target.getUniqueId(), sender.getUniqueId());
                 this.replies.put(sender.getUniqueId(), target.getUniqueId());

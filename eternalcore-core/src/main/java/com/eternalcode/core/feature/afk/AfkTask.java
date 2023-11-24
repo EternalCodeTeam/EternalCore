@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.afk;
 
+import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import java.util.concurrent.TimeUnit;
@@ -12,11 +13,13 @@ import java.util.UUID;
 class AfkTask implements Runnable {
 
     private final AfkService afkService;
+    private final VanishService vanishService;
     private final Server server;
 
     @Inject
-    public AfkTask(AfkService afkService, Server server) {
+    public AfkTask(AfkService afkService, VanishService vanishService, Server server) {
         this.afkService = afkService;
+        this.vanishService = vanishService;
         this.server = server;
     }
 
@@ -29,7 +32,7 @@ class AfkTask implements Runnable {
         for (Player player : this.server.getOnlinePlayers()) {
             UUID playerUuid = player.getUniqueId();
 
-            if (this.afkService.isAfk(playerUuid)) {
+            if (this.afkService.isAfk(playerUuid) || this.vanishService.isVanished(playerUuid)) {
                 continue;
             }
 

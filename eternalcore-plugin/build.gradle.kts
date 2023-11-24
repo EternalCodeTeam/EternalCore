@@ -2,7 +2,7 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
-    id("xyz.jpenilla.run-paper") version "2.1.0"
+    id("xyz.jpenilla.run-paper") version "2.2.2"
 }
 
 eternalShadowCompiler {
@@ -21,7 +21,7 @@ eternalShadowCompiler {
     }
 
     shadowJar {
-        archiveFileName.set("EternalCore v${project.version} (MC 1.17.x-1.19.x).jar")
+        archiveFileName.set("EternalCore v${project.version} (MC 1.17.x-1.20.x).jar")
 
         exclude(
             "META-INF/**",

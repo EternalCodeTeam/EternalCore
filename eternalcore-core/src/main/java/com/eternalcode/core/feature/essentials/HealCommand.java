@@ -31,7 +31,7 @@ class HealCommand {
         this.noticeService.player(player.getUniqueId(), translation -> translation.player().healMessage());
     }
 
-    @Execute
+    @Execute(required = 1)
     @Permission("eternalcore.heal.other")
     @DescriptionDocs(description = "Heal other player", arguments = "<player>")
     void execute(@Context Viewer viewer, @Arg Player target) {

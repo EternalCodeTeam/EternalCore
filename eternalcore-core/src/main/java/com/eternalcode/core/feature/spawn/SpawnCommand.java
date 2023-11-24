@@ -101,7 +101,7 @@ class SpawnCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedBy())
-            .placeholder("{SENDER}", sender.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .player(player.getUniqueId())
             .send();
 
