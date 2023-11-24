@@ -34,6 +34,6 @@ eternalShadowCompiler {
 
 tasks {
     runServer {
-        minecraftVersion("1.20.1")
+        minecraftVersion("1.20.2")
     }
 }

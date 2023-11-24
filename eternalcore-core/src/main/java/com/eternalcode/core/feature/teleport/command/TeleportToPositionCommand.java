@@ -33,7 +33,7 @@ class TeleportToPositionCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleport specified player to specified coordinates", arguments = "<player> <x> <y> <z>")
+    @DescriptionDocs(description = "Teleport specified player to specified coordinates", arguments = "<x> <y> <z> <player>")
     void execute(@Context Viewer viewer, @Arg int x, @Arg int y, @Arg int z, @Arg Player target) {
         this.teleport(target, x, y, z);
 

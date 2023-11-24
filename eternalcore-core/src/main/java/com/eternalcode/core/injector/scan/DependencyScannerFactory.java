@@ -9,6 +9,7 @@ import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -34,7 +35,8 @@ public final class DependencyScannerFactory {
                 RootCommand.class,
                 LiteArgument.class,
                 LiteHandler.class,
-                LiteContextual.class
+                LiteContextual.class,
+                LiteCommandEditor.class
             );
     }
 

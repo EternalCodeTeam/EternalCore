@@ -9,7 +9,7 @@ dependencies {
 
     implementation("com.google.guava:guava:32.1.3-jre")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("dev.rollczi:litecommands-core:3.0.0-BETA-pre21")
+    implementation("dev.rollczi:litecommands-framework:3.0.3")
 
     runtimeOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
     runtimeOnly("io.papermc:paperlib:1.0.8")
@@ -18,7 +18,7 @@ dependencies {
     runtimeOnly("net.dzikoysk:cdn:1.14.4")
     runtimeOnly("com.j256.ormlite:ormlite-jdbc:6.1")
     runtimeOnly("com.zaxxer:HikariCP:5.1.0")
-    runtimeOnly("dev.rollczi:litecommands-core:3.0.0-BETA-pre21")
+    runtimeOnly("dev.rollczi:litecommands-core:3.0.3")
     runtimeOnly("dev.rollczi:liteskullapi:1.3.0")
     runtimeOnly("org.panda-lang:expressible:1.3.6")
     runtimeOnly("org.panda-lang:panda-utilities:0.5.3-alpha")

@@ -11,6 +11,7 @@ import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.scheduler.Scheduler;
+import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
@@ -18,7 +19,6 @@ import java.lang.reflect.Method;
 
 import dev.rollczi.litecommands.argument.ArgumentKey;
 import dev.rollczi.litecommands.argument.resolver.MultipleArgumentResolver;
-import dev.rollczi.litecommands.builder.LiteCommandsBuilder;
 import dev.rollczi.litecommands.context.ContextProvider;
 import dev.rollczi.litecommands.editor.Editor;
 import dev.rollczi.litecommands.handler.result.ResultHandler;

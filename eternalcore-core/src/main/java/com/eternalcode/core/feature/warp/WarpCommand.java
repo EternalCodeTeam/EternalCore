@@ -52,7 +52,7 @@ class WarpCommand {
     }
 
     @Execute(name = "warp")
-    @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant")
+    @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant", arguments = "<warp>")
     void warp(@Context Player player, @Arg Warp warp) {
         if (player.hasPermission("eternalcore.warp.bypass")) {
             this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
@@ -87,7 +87,7 @@ class WarpCommand {
 
     @Execute(name = "delwarp")
     @Permission("eternalcore.delwarp")
-    @DescriptionDocs(description = "Remove warp")
+    @DescriptionDocs(description = "Remove warp", arguments = "<warp>")
     void remove(@Context Player player, @Arg Warp warp) {
         this.warpManager.removeWarp(warp.getName());
 
