@@ -32,7 +32,7 @@ class LiteCommandsSetup implements Subscriber {
     ) {
         return LiteCommandsBukkit.builder("eternalcore", plugin, server)
             .commands(liteCommandsAnnotations)
-            .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider)
+            .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
                 .serializer(miniMessage)
             );
     }
