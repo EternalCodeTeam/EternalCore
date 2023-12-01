@@ -44,8 +44,8 @@ eternalShadow {
     )
 
     // database
-    library("org.mariadb.jdbc:mariadb-java-client:3.3.0")
-    library("org.postgresql:postgresql:42.6.0")
+    library("org.mariadb.jdbc:mariadb-java-client:3.3.1")
+    library("org.postgresql:postgresql:42.7.0")
     library("com.h2database:h2:2.1.214")
     library("com.j256.ormlite:ormlite-jdbc:6.1")
     library("com.zaxxer:HikariCP:5.1.0")
@@ -61,7 +61,7 @@ eternalShadow {
     // common libraries
     library("org.panda-lang:expressible:1.3.6")
     library("org.panda-lang:panda-utilities:0.5.3-alpha")
-    library("commons-io:commons-io:2.15.0")
+    library("commons-io:commons-io:2.15.1")
     libraryRelocate(
         "panda.std",
         "panda.utilities",
