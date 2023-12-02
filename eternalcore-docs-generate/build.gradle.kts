@@ -22,7 +22,7 @@ dependencies {
     runtimeOnly("dev.rollczi:liteskullapi:1.3.0")
     runtimeOnly("org.panda-lang:expressible:1.3.6")
     runtimeOnly("org.panda-lang:panda-utilities:0.5.3-alpha")
-    runtimeOnly("commons-io:commons-io:2.15.0")
+    runtimeOnly("commons-io:commons-io:2.15.1")
     runtimeOnly("dev.triumphteam:triumph-gui:3.1.7")
     runtimeOnly("org.bstats:bstats-bukkit:3.0.2")
 }
