@@ -1,17 +1,16 @@
 package com.eternalcode.core.litecommand;
 
+import com.eternalcode.core.injector.annotations.Bean;
+import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.injector.bean.BeanFactory;
+import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
-import com.eternalcode.core.injector.annotations.Bean;
-import com.eternalcode.core.injector.annotations.component.BeanSetup;
-import com.eternalcode.core.publish.Subscribe;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.adventure.bukkit.platform.LiteAdventurePlatformExtension;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
-import dev.rollczi.litecommands.argument.ArgumentKey;
 import dev.rollczi.litecommands.bukkit.LiteCommandsBukkit;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.minimessage.MiniMessage;
