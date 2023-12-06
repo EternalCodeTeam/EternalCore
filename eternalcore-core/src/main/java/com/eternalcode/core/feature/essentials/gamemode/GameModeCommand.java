@@ -18,7 +18,7 @@ import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Command(name = "gamemode", aliases = { "gm" })
+@Command(name = "gamemode", aliases = "gm")
 @Permission("eternalcore.gamemode")
 class GameModeCommand {
 
