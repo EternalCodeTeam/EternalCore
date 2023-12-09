@@ -6,11 +6,13 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.command.execute.Execute;
+import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Route(name = "clear")
+@Permission("eternalcore.clear")
 class InventoryClearCommand {
 
     private final NoticeService noticeService;
@@ -34,6 +36,7 @@ class InventoryClearCommand {
 
     @Execute(required = 1)
     @DescriptionDocs(description = "Clears inventory of player", arguments = "<player>")
+    @Permission("eternalcore.clear.other")
     void execute(Viewer audience, @Arg Player target) {
         this.clear(target);
 
