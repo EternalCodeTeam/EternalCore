@@ -380,22 +380,7 @@ public class ENTranslation extends AbstractTranslation {
             @Getter
             @Contextual
             public static class ENDecorationItemsSection implements DecorationItemsSection {
-                public List<ConfigItem> items = List.of(
-                    ConfigItem.builder()
-                        .withName("&8» &6Example item")
-                        .withLore(Collections.singletonList("<gray>Click to set time to day"))
-                        .withMaterial(Material.YELLOW_CARPET)
-                        .withSlot(18)
-                        .withCommands(List.of("day"))
-                        .build(),
-                    ConfigItem.builder()
-                        .withName("&8» &6Example item 2")
-                        .withLore(Collections.singletonList("<gray>Click to set time to night"))
-                        .withMaterial(Material.BLUE_CARPET)
-                        .withSlot(19)
-                        .withCommands(List.of("night"))
-                        .build()
-                );
+                public List<ConfigItem> items = List.of();
             }
         }
     }

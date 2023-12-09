@@ -225,7 +225,10 @@
   {
     "name": "clear ",
     "aliases": [],
-    "permissions": [],
+    "permissions": [
+      "eternalcore.clear.other",
+      "eternalcore.clear"
+    ],
     "descriptions": [
       "Clears inventory of player"
     ],
@@ -236,7 +239,9 @@
   {
     "name": "clear ",
     "aliases": [],
-    "permissions": [],
+    "permissions": [
+      "eternalcore.clear"
+    ],
     "descriptions": [
       "Clears your inventory"
     ],
@@ -1295,6 +1300,19 @@
     ],
     "arguments": [
       "\u003cplayer\u003e \u003ctarget-player\u003e"
+    ]
+  },
+  {
+    "name": "teleportorandomplayer ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tprp"
+    ],
+    "descriptions": [
+      "Teleport to a random player on the server, with the option to filter op players"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {

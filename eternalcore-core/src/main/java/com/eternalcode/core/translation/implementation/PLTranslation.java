@@ -384,22 +384,7 @@ public class PLTranslation extends AbstractTranslation {
             @Getter
             @Contextual
             public static class PLDecorationItemsSection implements DecorationItemsSection {
-                public List<ConfigItem> items = List.of(
-                    ConfigItem.builder()
-                        .withMaterial(Material.YELLOW_CARPET)
-                        .withName("&8» &6Przykładowy przedmiot")
-                        .withLore(Collections.singletonList("<gray>Kliknij aby ustawić dzień!"))
-                        .withSlot(18)
-                        .withCommands(List.of("day"))
-                        .build(),
-                    ConfigItem.builder()
-                        .withMaterial(Material.BLUE_CARPET)
-                        .withName("&8» &6Przykładowy przedmiot 2")
-                        .withLore(Collections.singletonList("<gray>Kliknij aby ustawić noc!"))
-                        .withSlot(19)
-                        .withCommands((List.of("night")))
-                        .build()
-                );
+                public List<ConfigItem> items = List.of();
             }
         }
     }
