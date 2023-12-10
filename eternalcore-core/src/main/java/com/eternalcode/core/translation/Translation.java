@@ -7,7 +7,6 @@ import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -186,6 +185,7 @@ public interface Translation {
         Notice tpaAlreadySentMessage();
         Notice tpaSentMessage();
         Notice tpaReceivedMessage();
+        Notice tpaTargetIgnoresYou();
 
         Notice tpaDenyNoRequestMessage();
         Notice tpaDenyDoneMessage();

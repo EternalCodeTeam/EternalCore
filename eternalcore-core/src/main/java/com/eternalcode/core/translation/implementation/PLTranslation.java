@@ -325,6 +325,9 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice tpaAcceptAllAccepted = Notice.chat("<green>► <white>Zaakceptowano wszystkie prośby o teleportację!");
+
+        @Description(" ")
+        public Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>ignoruje Cię!");
     }
 
     @Description({
