@@ -540,7 +540,6 @@ public class ENTranslation extends AbstractTranslation {
         public Notice inventoryClearMessageBy = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>inventory cleared");
 
         @Description(" ")
-        public Notice cantOpenYourInventory = Notice.chat("<red>► <dark_red>You can't open your own inventory!");
         public String disposalTitle = "<white><bold>Trash";
     }
 

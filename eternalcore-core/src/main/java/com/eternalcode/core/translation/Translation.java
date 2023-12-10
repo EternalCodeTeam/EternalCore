@@ -249,7 +249,6 @@ public interface Translation {
     interface InventorySection {
         Notice inventoryClearMessage();
         Notice inventoryClearMessageBy();
-        Notice cantOpenYourInventory();
         String disposalTitle();
     }
 

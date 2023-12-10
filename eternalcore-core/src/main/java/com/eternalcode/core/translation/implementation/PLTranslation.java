@@ -562,7 +562,6 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ " ", "# {PLAYER} - Gracz którego ekwipunek został wyczyszczony" })
         public Notice inventoryClearMessageBy = Notice.chat("<green>► <white>Ekwipunek gracza {PLAYER} został wyczyszczony");
         @Description(" ")
-        public Notice cantOpenYourInventory = Notice.chat("<red>✘ <dark_red>Nie możesz otworzyć swojego ekwipunku!");
         public String disposalTitle = "<white><bold>Kosz";
     }
 
