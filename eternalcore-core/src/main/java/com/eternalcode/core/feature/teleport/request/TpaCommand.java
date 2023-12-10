@@ -50,6 +50,12 @@ class TpaCommand {
 
         this.isIgnoring(target, player).then((isIgnoring) -> {
             if (isIgnoring) {
+                this.noticeService.create()
+                    .player(player.getUniqueId())
+                    .notice(translation -> translation.tpa().tpaTargetIgnoresYou())
+                    .placeholder("{PLAYER}", target.getName())
+                    .send();
+
                 return;
             }
 
@@ -59,9 +65,9 @@ class TpaCommand {
                 .notice(translation -> translation.tpa().tpaReceivedMessage())
                 .placeholder("{PLAYER}", player.getName())
                 .send();
-        });
 
-        this.requestService.createRequest(player.getUniqueId(), target.getUniqueId());
+            this.requestService.createRequest(player.getUniqueId(), target.getUniqueId());
+        });
     }
 
     Completable<Boolean> isIgnoring(Player target, Player sender) {

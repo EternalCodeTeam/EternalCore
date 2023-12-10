@@ -320,6 +320,9 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice tpaAcceptAllAccepted = Notice.chat("<green>► <white>All players have accepted your teleport request!");
+
+        @Description(" ")
+        public Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>is ignoring you!");
     }
 
     @Description({
