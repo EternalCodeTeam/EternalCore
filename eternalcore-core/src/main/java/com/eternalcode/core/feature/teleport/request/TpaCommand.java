@@ -59,8 +59,7 @@ class TpaCommand {
                 return;
             }
 
-            this.noticeService
-                .create()
+            this.noticeService.create()
                 .player(target.getUniqueId())
                 .notice(translation -> translation.tpa().tpaReceivedMessage())
                 .placeholder("{PLAYER}", player.getName())
