@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.argument.Arg;
+import dev.rollczi.litecommands.argument.By;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.permission.Permission;
 import dev.rollczi.litecommands.command.route.Route;
@@ -40,17 +41,17 @@ class ButcherCommand {
 
     @Execute(required = 1)
     @DescriptionDocs(description = "Kills all mobs in specified chunks around you", arguments = "<chunks>")
-    void execute(Player player, @Arg int chunks) {
+    void execute(Player player, @Arg @By(ButcherArgument.KEY) Integer chunks) {
         this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
     @Execute(required = 2)
     @DescriptionDocs(description = "Kills specified mob in specified chunks around you", arguments = "<chunks> <mobType>")
-    void execute(Player player, @Arg int chunks, @Arg MobEntity mobEntity) {
+    void execute(Player player, @Arg @By(ButcherArgument.KEY) Integer chunks, @Arg MobEntity mobEntity) {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }
 
-    private void killMobs(Player player, int chunksNumber, MobFilter mobFilter) {
+    private void killMobs(Player player, Integer chunksNumber, MobFilter mobFilter) {
         if (chunksNumber <= 0) {
             this.noticeService.create()
                 .notice(translation -> translation.argument().incorrectNumberOfChunks())
