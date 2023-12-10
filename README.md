@@ -46,7 +46,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
   - /helpop command
   - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
 - :hammer: Open Utility Blocks with simple commands like `/workbench`
-- :briefcase: Player Inventory Viewer
+- :briefcase: ~~Player Inventory Viewer~~ (We are recommended to use: [OpenInv](https://github.com/Jikoo/OpenInv))
 - :heart: Player Attribute Management, including heal, feed, teleportation, and godmode modification
 - :ping_pong: Ping Command to check client-server connectivity
 - :bust_in_silhouette: Player Information Command (`/whois`)
