@@ -21,7 +21,7 @@ class HealCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     @Permission("eternalcore.heal")
     @DescriptionDocs(description = "Heal yourself")
     void execute(Player player) {

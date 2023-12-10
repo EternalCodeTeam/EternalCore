@@ -20,7 +20,7 @@ class FlyCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     @Permission("eternalcore.fly")
     @DescriptionDocs(description = "Toggle fly mode")
     void execute(Player player) {

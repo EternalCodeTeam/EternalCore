@@ -21,7 +21,7 @@ class KillCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     @DescriptionDocs(description = "Kill yourself")
     void execute(Player player) {
         player.setHealth(0);
