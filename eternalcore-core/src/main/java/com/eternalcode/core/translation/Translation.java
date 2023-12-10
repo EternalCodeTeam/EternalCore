@@ -168,8 +168,7 @@ public interface Translation {
     HomeSection home();
 
     interface HomeSection {
-        Notice enterName();
-        Notice notExist();
+        Notice homeList();
         Notice create();
         Notice delete();
         Notice limit();

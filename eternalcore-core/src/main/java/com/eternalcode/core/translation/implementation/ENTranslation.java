@@ -397,8 +397,8 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENHomeSection implements HomeSection {
-        public Notice enterName = Notice.chat("<red>► <dark_red>Enter the name of the home!");
-        public Notice notExist = Notice.chat("<red>► <dark_red>This home doesn't exist");
+        @Description("# {HOMES} - List of homes (separated by commas)")
+        public Notice homeList = Notice.chat("<green>► <white>Available homes: <green>{HOMES}");
 
         @Description({ " ", "# {HOME} - Home name" })
         public Notice create = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been created.");
