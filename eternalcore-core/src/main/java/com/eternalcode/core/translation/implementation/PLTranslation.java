@@ -401,8 +401,8 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLHomeSection implements HomeSection {
-        public Notice enterName = Notice.chat("<red>► <dark_red>Podaj nazwę domu!");
-        public Notice notExist = Notice.chat("<red>► <dark_red>Nie ma takiego domu!");
+        @Description({ " ", "# {HOMES} - Lista domów" })
+        public Notice homeList = Notice.chat("<green>► <white>Lista domów: <green>{HOMES}!");
 
         @Description({ " ", "# {HOME} - Nazwa domu" })
         public Notice create = Notice.chat("<green>► <white>Stworzono dom o nazwie <green>{HOME}<white>!");
