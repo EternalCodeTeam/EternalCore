@@ -23,8 +23,14 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
     private final Map<NoticeType, NoticePartAnnouncer<?>> announcers = new ImmutableBiMap.Builder<NoticeType, NoticePartAnnouncer<?>>()
         .put(NoticeType.CHAT,       this.text((audience, message) -> audience.sendMessage(message)))
         .put(NoticeType.ACTION_BAR, this.text((audience, message) -> audience.sendActionBar(message)))
-        .put(NoticeType.TITLE,      this.text((audience, title) -> audience.sendTitlePart(TitlePart.TITLE, title)))
-        .put(NoticeType.SUBTITLE,   this.text((audience, subtitle) -> audience.sendTitlePart(TitlePart.SUBTITLE, subtitle)))
+        .put(NoticeType.TITLE,      this.text((audience, title) -> {
+            audience.sendTitlePart(TitlePart.TITLE, title);
+            audience.sendTitlePart(TitlePart.SUBTITLE, Component.empty());
+        }))
+        .put(NoticeType.SUBTITLE,   this.text((audience, subtitle) -> {
+            audience.sendTitlePart(TitlePart.TITLE, Component.empty());
+            audience.sendTitlePart(TitlePart.SUBTITLE, subtitle);
+        }))
         .put(NoticeType.TITLE_TIMES, new TimesNoticePartAnnouncer())
         .put(NoticeType.TITLE_HIDE, (viewer, audience, input) -> audience.clearTitle())
         .put(NoticeType.SOUND, new SoundNoticePartAnnouncer())
