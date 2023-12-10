@@ -43,14 +43,14 @@ class HomeArgument extends AbstractViewerBroadcastArgument<Home> {
             return Result.ok(home.get());
         }
 
-        String join = String.join(", ",
+        String homes = String.join(", ",
             this.homeManager.getHomes(uniqueId).stream()
                 .map(Home::getName)
                 .toList());
 
         NoticeBroadcast notice = this.noticeService.create()
             .notice(translate -> translate.home().homeList())
-            .placeholder("{HOMES}", join)
+            .placeholder("{HOMES}", homes)
             .viewer(viewer);
 
         return Result.error(notice);
