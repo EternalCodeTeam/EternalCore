@@ -40,7 +40,7 @@ class HomeCommand {
         Collection<Home> playerHomes = this.homeManager.getHomes(player.getUniqueId());
 
         if (playerHomes.size() != 1) {
-            String join = String.join(", ",
+            String homes = String.join(", ",
                 this.homeManager.getHomes(player.getUniqueId()).stream()
                     .map(Home::getName)
                     .toList());
@@ -48,7 +48,7 @@ class HomeCommand {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.home().homeList())
-                .placeholder("{HOMES}", join)
+                .placeholder("{HOMES}", homes)
                 .send();
             return;
         }
@@ -65,7 +65,7 @@ class HomeCommand {
         this.teleportToHome(player, home);
     }
 
-    private void teleportToHome(Player player, @Arg Home home) {
+    private void teleportToHome(Player player, Home home) {
         if (player.hasPermission("eterncore.teleport.bypass")) {
             this.teleportService.teleport(player, home.getLocation());
             return;
