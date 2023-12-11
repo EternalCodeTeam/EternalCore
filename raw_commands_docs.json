@@ -225,7 +225,10 @@
   {
     "name": "clear ",
     "aliases": [],
-    "permissions": [],
+    "permissions": [
+      "eternalcore.clear.other",
+      "eternalcore.clear"
+    ],
     "descriptions": [
       "Clears inventory of player"
     ],
@@ -236,7 +239,9 @@
   {
     "name": "clear ",
     "aliases": [],
-    "permissions": [],
+    "permissions": [
+      "eternalcore.clear"
+    ],
     "descriptions": [
       "Clears your inventory"
     ],
@@ -670,48 +675,6 @@
     ],
     "arguments": [
       ""
-    ]
-  },
-  {
-    "name": "invsee armor",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.armor"
-    ],
-    "descriptions": [
-      "Opens armor of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "invsee enderchest",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.enderchest"
-    ],
-    "descriptions": [
-      "Opens enderchest of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "invsee inventory",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.invsee",
-      "eternalcore.invsee.inventory"
-    ],
-    "descriptions": [
-      "Opens inventory of another player"
-    ],
-    "arguments": [
-      "\u003cplayer\u003e"
     ]
   },
   {

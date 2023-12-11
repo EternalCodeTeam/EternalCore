@@ -325,6 +325,9 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice tpaAcceptAllAccepted = Notice.chat("<green>► <white>Zaakceptowano wszystkie prośby o teleportację!");
+
+        @Description(" ")
+        public Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>ignoruje Cię!");
     }
 
     @Description({
@@ -384,22 +387,7 @@ public class PLTranslation extends AbstractTranslation {
             @Getter
             @Contextual
             public static class PLDecorationItemsSection implements DecorationItemsSection {
-                public List<ConfigItem> items = List.of(
-                    ConfigItem.builder()
-                        .withMaterial(Material.YELLOW_CARPET)
-                        .withName("&8» &6Przykładowy przedmiot")
-                        .withLore(Collections.singletonList("<gray>Kliknij aby ustawić dzień!"))
-                        .withSlot(18)
-                        .withCommands(List.of("day"))
-                        .build(),
-                    ConfigItem.builder()
-                        .withMaterial(Material.BLUE_CARPET)
-                        .withName("&8» &6Przykładowy przedmiot 2")
-                        .withLore(Collections.singletonList("<gray>Kliknij aby ustawić noc!"))
-                        .withSlot(19)
-                        .withCommands((List.of("night")))
-                        .build()
-                );
+                public List<ConfigItem> items = List.of();
             }
         }
     }
@@ -413,8 +401,8 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLHomeSection implements HomeSection {
-        public Notice enterName = Notice.chat("<red>► <dark_red>Podaj nazwę domu!");
-        public Notice notExist = Notice.chat("<red>► <dark_red>Nie ma takiego domu!");
+        @Description({ " ", "# {HOMES} - Lista domów" })
+        public Notice homeList = Notice.chat("<green>► <white>Lista domów: <green>{HOMES}!");
 
         @Description({ " ", "# {HOME} - Nazwa domu" })
         public Notice create = Notice.chat("<green>► <white>Stworzono dom o nazwie <green>{HOME}<white>!");
@@ -574,7 +562,6 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ " ", "# {PLAYER} - Gracz którego ekwipunek został wyczyszczony" })
         public Notice inventoryClearMessageBy = Notice.chat("<green>► <white>Ekwipunek gracza {PLAYER} został wyczyszczony");
         @Description(" ")
-        public Notice cantOpenYourInventory = Notice.chat("<red>✘ <dark_red>Nie możesz otworzyć swojego ekwipunku!");
         public String disposalTitle = "<white><bold>Kosz";
     }
 

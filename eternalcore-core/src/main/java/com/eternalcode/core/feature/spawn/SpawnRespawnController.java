@@ -33,12 +33,20 @@ class SpawnRespawnController implements Listener {
     void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
+        if (this.config.teleport.teleportToRespawnPoint && this.hasRespawnPoint(player)) {
+            return;
+        }
+
         Position spawnPosition = this.locations.spawn;
 
         if (this.config.teleport.teleportToSpawnOnDeath && !Objects.equals(spawnPosition.getWorld(), Position.NONE_WORLD)) {
             Location destinationLocation = PositionAdapter.convert(spawnPosition);
             this.teleportService.teleport(player, destinationLocation);
         }
+    }
+
+    boolean hasRespawnPoint(Player player) {
+        return player.getBedSpawnLocation() != null;
     }
 
 }

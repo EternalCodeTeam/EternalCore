@@ -7,7 +7,6 @@ import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -169,8 +168,7 @@ public interface Translation {
     HomeSection home();
 
     interface HomeSection {
-        Notice enterName();
-        Notice notExist();
+        Notice homeList();
         Notice create();
         Notice delete();
         Notice limit();
@@ -186,6 +184,7 @@ public interface Translation {
         Notice tpaAlreadySentMessage();
         Notice tpaSentMessage();
         Notice tpaReceivedMessage();
+        Notice tpaTargetIgnoresYou();
 
         Notice tpaDenyNoRequestMessage();
         Notice tpaDenyDoneMessage();
@@ -250,7 +249,6 @@ public interface Translation {
     interface InventorySection {
         Notice inventoryClearMessage();
         Notice inventoryClearMessageBy();
-        Notice cantOpenYourInventory();
         String disposalTitle();
     }
 

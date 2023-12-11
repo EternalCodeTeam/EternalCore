@@ -5,13 +5,15 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Command(name = "clear")
+@Permission("eternalcore.clear")
 class InventoryClearCommand {
 
     private final NoticeService noticeService;
@@ -34,6 +36,7 @@ class InventoryClearCommand {
     }
 
     @Execute
+    @Permission("eternalcore.clear.other")
     @DescriptionDocs(description = "Clears inventory of player", arguments = "<player>")
     void execute(@Context Viewer audience, @Arg Player target) {
         this.clear(target);

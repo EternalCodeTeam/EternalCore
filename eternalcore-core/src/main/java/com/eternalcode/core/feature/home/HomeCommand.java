@@ -1,11 +1,11 @@
 package com.eternalcode.core.feature.home;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.feature.teleport.TeleportService;
-import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -39,9 +39,15 @@ class HomeCommand {
         Collection<Home> playerHomes = this.homeManager.getHomes(player.getUniqueId());
 
         if (playerHomes.size() != 1) {
+            String homes = String.join(", ",
+                this.homeManager.getHomes(player.getUniqueId()).stream()
+                    .map(Home::getName)
+                    .toList());
+
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .notice(translation -> translation.home().enterName())
+                .notice(translation -> translation.home().homeList())
+                .placeholder("{HOMES}", homes)
                 .send();
             return;
         }

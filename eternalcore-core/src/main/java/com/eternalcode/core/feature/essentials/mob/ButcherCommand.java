@@ -5,10 +5,10 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -41,17 +41,17 @@ class ButcherCommand {
 
     @Execute
     @DescriptionDocs(description = "Kills all mobs in specified chunks around you", arguments = "<chunks>")
-    void execute(@Context Player player, @Arg int chunks) {
+    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks) {
         this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
     @Execute
     @DescriptionDocs(description = "Kills specified mob in specified chunks around you", arguments = "<chunks> <mobType>")
-    void execute(@Context Player player, @Arg int chunks, @Arg MobEntity mobEntity) {
+    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks, @Arg MobEntity mobEntity) {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }
 
-    private void killMobs(Player player, int chunksNumber, MobFilter mobFilter) {
+    private void killMobs(Player player, Integer chunksNumber, MobFilter mobFilter) {
         if (chunksNumber <= 0) {
             this.noticeService.create()
                 .notice(translation -> translation.argument().incorrectNumberOfChunks())
