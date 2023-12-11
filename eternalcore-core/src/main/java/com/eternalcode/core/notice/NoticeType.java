@@ -8,7 +8,7 @@ import static com.eternalcode.core.notice.NoticeContent.Times;
 enum NoticeType {
     CHAT(Text.class, "chat"),
     ACTION_BAR(Text.class, "actionbar"),
-    BOTH_TITLE(NoticeContent.Title.class, "both"),
+    BOTH_TITLE(NoticeContent.Title.class, "bothTitle"),
     TITLE(Text.class, "title"),
     SUBTITLE(Text.class, "subtitle"),
     TITLE_TIMES(Times.class, "times"),
