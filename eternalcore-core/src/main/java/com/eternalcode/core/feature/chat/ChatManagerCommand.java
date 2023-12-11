@@ -78,11 +78,22 @@ class ChatManagerCommand {
     }
 
     @Execute(name = "slowmode")
-    @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
+    @DescriptionDocs(description = "Sets SlowMode for chat", arguments = "<time>")
     void slowmode(@Context Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 
+            return;
+        }
+
+        if (duration.isZero()) {
+            this.noticeService.create()
+                    .notice(translation -> translation.chat().slowModeOff())
+                    .placeholder("{PLAYER}", viewer.getName())
+                    .viewer(viewer)
+                    .send();
+
+            this.chatManager.getChatSettings().setChatDelay(duration);
             return;
         }
 
@@ -93,6 +104,13 @@ class ChatManagerCommand {
             .placeholder("{SLOWMODE}", DurationParser.TIME_UNITS.format(duration))
             .viewer(viewer)
             .send();
+    }
+
+    @Execute(name = "slowmode 0")
+    @DescriptionDocs(description = "Disable SlowMode for chat")
+    void slowmodeOff(@Context Viewer viewer) {
+        Duration noSlowMode = Duration.ZERO;
+        this.slowmode(viewer, noSlowMode);
     }
 
     private static Supplier<Notice> create(ChatSettings settings) {

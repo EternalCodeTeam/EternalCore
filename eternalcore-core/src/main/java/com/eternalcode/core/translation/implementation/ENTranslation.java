@@ -253,6 +253,9 @@ public class ENTranslation extends AbstractTranslation {
         @Description({ " ", "# {SLOWMODE} - Time for next message" })
         public Notice slowModeSet = Notice.chat("<green>► <white>Slowmode set to: {SLOWMODE}");
 
+        @Description({ " ", "# {PLAYER} - Player who performed the actions for the chat" })
+        public Notice slowModeOff = Notice.chat("<green>► <white>Slowmode has been disabled by <green>{PLAYER}<white>!");
+
         @Description({ " ", "# {TIME} - Time to next use (cooldown)" })
         public Notice slowMode = Notice.chat("<red>✘ <dark_red>You can write the next message for: <red>{TIME}<dark_red>!");
 

@@ -7,7 +7,6 @@ import com.eternalcode.core.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +113,7 @@ public interface Translation {
         Notice alreadyDisabled();
         Notice alreadyEnabled();
         Notice slowModeSet();
+        Notice slowModeOff();
         Notice slowMode();
         Notice disabledChatInfo();
         Notice commandNotFound();
