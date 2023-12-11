@@ -21,8 +21,8 @@ import java.util.function.BiConsumer;
 class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
 
     private final Map<NoticeType, NoticePartAnnouncer<?>> announcers = new ImmutableBiMap.Builder<NoticeType, NoticePartAnnouncer<?>>()
-        .put(NoticeType.CHAT,       this.text((audience, message) -> audience.sendMessage(message)))
-        .put(NoticeType.ACTION_BAR, this.text((audience, message) -> audience.sendActionBar(message)))
+        .put(NoticeType.CHAT,       this.text(Audience::sendMessage))
+        .put(NoticeType.ACTION_BAR, this.text(Audience::sendActionBar))
         .put(NoticeType.TITLE,      this.text((audience, title) -> {
             audience.sendTitlePart(TitlePart.TITLE, title);
             audience.sendTitlePart(TitlePart.SUBTITLE, Component.empty());
@@ -31,6 +31,7 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
             audience.sendTitlePart(TitlePart.TITLE, Component.empty());
             audience.sendTitlePart(TitlePart.SUBTITLE, subtitle);
         }))
+        .put(NoticeType.BOTH_TITLE, new TitleNoticePartAnnouncer())
         .put(NoticeType.TITLE_TIMES, new TimesNoticePartAnnouncer())
         .put(NoticeType.TITLE_HIDE, (viewer, audience, input) -> audience.clearTitle())
         .put(NoticeType.SOUND, new SoundNoticePartAnnouncer())
@@ -110,6 +111,18 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
                 : Sound.sound(Key.key(soundKey), Source.MASTER, music.volume(), music.pitch());
 
             audience.playSound(sound);
+        }
+    }
+
+    static class TitleNoticePartAnnouncer implements NoticePartAnnouncer<NoticeContent.Title> {
+
+        @Override
+        public void announce(Viewer viewer, Audience audience, NoticeContent.Title input) {
+            String title = input.title();
+            String subTitle = input.subTitle();
+
+            audience.sendTitlePart(TitlePart.TITLE, Component.text(title));
+            audience.sendTitlePart(TitlePart.SUBTITLE, Component.text(subTitle));
         }
     }
 

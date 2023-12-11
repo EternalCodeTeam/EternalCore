@@ -12,6 +12,10 @@ sealed interface NoticeContent {
     record Text(List<String> messages) implements NoticeContent {
     }
 
+    record Title(String title, String subTitle) implements NoticeContent {
+
+    }
+
     record Times(Duration fadeIn, Duration stay, Duration fadeOut) implements NoticeContent {
     }
 
