@@ -90,7 +90,7 @@ class ChatManagerCommand {
             this.noticeService.create()
                     .notice(translation -> translation.chat().slowModeOff())
                     .placeholder("{PLAYER}", viewer.getName())
-                    .viewer(viewer)
+                    .onlinePlayers()
                     .send();
 
             this.chatManager.getChatSettings().setChatDelay(duration);
@@ -102,7 +102,7 @@ class ChatManagerCommand {
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
             .placeholder("{SLOWMODE}", DurationParser.TIME_UNITS.format(duration))
-            .viewer(viewer)
+            .onlinePlayers()
             .send();
     }
 
