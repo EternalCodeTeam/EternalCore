@@ -54,7 +54,7 @@ class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
 
     @Override
     public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<MobEntity> argument, SuggestionContext context) {
-        Stream<MobType> mobTypeStream = Stream.of(MobType.values()).filter(MobType::isSuggeestable);
+        Stream<MobType> mobTypeStream = Stream.of(MobType.values()).filter(MobType::isSuggestable);
         Stream<EntityType> entityTypeStream = Stream.of(EntityType.values()).filter(EntityUtil::isMob);
 
         return Stream.concat(entityTypeStream, mobTypeStream)

@@ -4,22 +4,24 @@ enum MobType {
 
     PASSIVE(true, true),
     AGGRESSIVE(true, true),
-    OTHER(false, false),
+    VEHICLE(true, true),
+    ARMOR_STAND(true, true),
+    OTHER(true, false),
     ALL(true, true);
 
     private final boolean isParseable;
-    private final boolean isSuggeestable;
+    private final boolean isSuggestable;
 
-    MobType(boolean isParseable, boolean isSuggeestable) {
+    MobType(boolean isParseable, boolean isSuggestible) {
         this.isParseable = isParseable;
-        this.isSuggeestable = isSuggeestable;
+        this.isSuggestable = isSuggestible;
     }
 
     boolean isParseable() {
         return this.isParseable;
     }
 
-    boolean isSuggeestable() {
-        return this.isSuggeestable;
+    boolean isSuggestable() {
+        return this.isSuggestable;
     }
 }
