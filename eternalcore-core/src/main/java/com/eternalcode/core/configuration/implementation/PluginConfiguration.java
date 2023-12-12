@@ -61,6 +61,17 @@ public class PluginConfiguration implements ReloadableConfig {
         public int port = 3306;
     }
 
+    @Description({ "", "# Join settings" })
+    public Join join = new Join();
+
+    @Contextual
+    public static class Join {
+
+        @Description("# Teleport to spawn on first join")
+        public boolean teleportToSpawnOnFirstJoin = true;
+
+    }
+
     @Description({ " ", "# Teleport request section" })
     public TeleportAsk teleportAsk = new TeleportAsk();
 
