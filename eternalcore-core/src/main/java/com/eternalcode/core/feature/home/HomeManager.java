@@ -40,9 +40,13 @@ class HomeManager {
     }
 
     public void createHome(User user, String name, Location location) {
-        Home home = new Home(user.getUniqueId(), name, location);
-        Map<String, Home> userHomes = this.homes.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
+        if (this.hasHomeWithSpecificName(user, name)) {
+            this.deleteHome(user, name);
+        }
 
+        Home home = new Home(user.getUniqueId(), name, location);
+
+        Map<String, Home> userHomes = this.homes.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
         userHomes.put(name, home);
 
         this.repository.saveHome(home);
