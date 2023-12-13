@@ -21,7 +21,7 @@ class FeedCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.feed")
     @DescriptionDocs(description = "Feed yourself")
     void execute(@Context Player player) {

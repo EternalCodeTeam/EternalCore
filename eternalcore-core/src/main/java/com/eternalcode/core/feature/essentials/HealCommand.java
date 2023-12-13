@@ -22,7 +22,7 @@ class HealCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.heal")
     @DescriptionDocs(description = "Heal yourself")
     void execute(@Context Player player) {

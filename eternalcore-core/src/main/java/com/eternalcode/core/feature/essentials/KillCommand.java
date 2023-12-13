@@ -22,7 +22,7 @@ class KillCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @DescriptionDocs(description = "Kill yourself")
     void execute(@Context Player player) {
         player.setHealth(0);

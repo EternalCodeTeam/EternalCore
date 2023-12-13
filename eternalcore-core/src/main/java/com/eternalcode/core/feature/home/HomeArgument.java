@@ -18,6 +18,7 @@ import org.bukkit.command.CommandSender;
 import panda.std.Option;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @LiteArgument(type = Home.class)
 class HomeArgument extends AbstractViewerArgument<Home> {
@@ -43,17 +44,16 @@ class HomeArgument extends AbstractViewerArgument<Home> {
             return ParseResult.success(homeOption.get());
         }
 
-        String homes = String.join(", ",
-            this.homeManager.getHomes(uniqueId).stream()
-                .map(Home::getName)
-                .toList());
+        String homes = this.homeManager.getHomes(uniqueId).stream()
+            .map(home -> home.getName())
+            .collect(Collectors.joining(", "));
 
-        NoticeBroadcast notice = this.noticeService.create()
+        NoticeBroadcast homeListNotice = this.noticeService.create()
             .notice(translate -> translate.home().homeList())
             .placeholder("{HOMES}", homes)
             .viewer(viewer);
 
-        return ParseResult.failure(notice);
+        return ParseResult.failure(homeListNotice);
     }
 
 

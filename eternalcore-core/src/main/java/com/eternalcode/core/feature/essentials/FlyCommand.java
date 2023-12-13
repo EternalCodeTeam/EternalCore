@@ -21,7 +21,7 @@ class FlyCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.fly")
     @DescriptionDocs(description = "Toggle fly mode")
     void execute(@Context Player player) {
