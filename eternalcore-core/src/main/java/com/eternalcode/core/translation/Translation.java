@@ -113,6 +113,7 @@ public interface Translation {
         Notice alreadyDisabled();
         Notice alreadyEnabled();
         Notice slowModeSet();
+        Notice slowModeOff();
         Notice slowMode();
         Notice disabledChatInfo();
         Notice commandNotFound();

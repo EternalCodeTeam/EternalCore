@@ -256,6 +256,9 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ " ", "# {SLOWMODE} - Czas powolnego wysyłania wiadomości" })
         public Notice slowModeSet = Notice.chat("<green>► <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
 
+        @Description({ " ", "# {PLAYER} - Gracz który wyłączył tryb powolnego wysyłania wiadomości" })
+        public Notice slowModeOff = Notice.chat("<green>► <white>Tryb powolnego wysyłania został wyłączony przez <green>{PLAYER}<white>!");
+
         @Description({ " ", "# {TIME} - Czas powolnego wysyłania wiadomości" })
         public Notice slowMode = Notice.chat("<red>✘ <dark_red>Następną wiadomość możesz wysłać za: <red>{TIME}<dark_red>!");
 
