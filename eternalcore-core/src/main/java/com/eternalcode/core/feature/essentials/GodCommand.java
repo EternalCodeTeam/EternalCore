@@ -21,7 +21,7 @@ class GodCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
+    @Execute(required = 0)
     @Permission("eternalcore.god")
     @DescriptionDocs(description = "Toggle god mode")
     void execute(@Context Player sender) {

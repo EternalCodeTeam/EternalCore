@@ -36,8 +36,8 @@ class InventoryClearCommand {
     }
 
     @Execute
-    @Permission("eternalcore.clear.other")
     @DescriptionDocs(description = "Clears inventory of player", arguments = "<player>")
+    @Permission("eternalcore.clear.other")
     void execute(@Context Viewer audience, @Arg Player target) {
         this.clear(target);
 

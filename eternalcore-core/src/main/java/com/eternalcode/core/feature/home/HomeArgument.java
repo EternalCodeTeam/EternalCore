@@ -39,6 +39,10 @@ class HomeArgument extends AbstractViewerArgument<Home> {
 
         Option<Home> homeOption = this.homeManager.getHome(uniqueId, argument);
 
+        if (homeOption.isPresent()) {
+            return ParseResult.success(homeOption.get());
+        }
+
         String homes = String.join(", ",
             this.homeManager.getHomes(uniqueId).stream()
                 .map(Home::getName)
@@ -49,11 +53,7 @@ class HomeArgument extends AbstractViewerArgument<Home> {
             .placeholder("{HOMES}", homes)
             .viewer(viewer);
 
-        if (homeOption.isEmpty()) {
-            return ParseResult.failure(notice);
-        }
-
-        return ParseResult.success(homeOption.get());
+        return ParseResult.failure(notice);
     }
 
 
