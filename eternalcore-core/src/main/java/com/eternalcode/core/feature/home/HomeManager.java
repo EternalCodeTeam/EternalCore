@@ -41,15 +41,15 @@ class HomeManager {
 
     public void createHome(User user, String name, Location location) {
         if (this.hasHomeWithSpecificName(user, name)) {
-            this.deleteHome(user, name);
+            this.repository.deleteHome(user, name).then(completable -> {
+                Home home = new Home(user.getUniqueId(), name, location);
+
+                Map<String, Home> userHomes = this.homes.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
+                userHomes.put(name, home);
+
+                this.repository.saveHome(home);
+            });
         }
-
-        Home home = new Home(user.getUniqueId(), name, location);
-
-        Map<String, Home> userHomes = this.homes.computeIfAbsent(user.getUniqueId(), k -> new HashMap<>());
-        userHomes.put(name, home);
-
-        this.repository.saveHome(home);
     }
 
     public void deleteHome(User user, String name) {
