@@ -58,7 +58,7 @@ class TeleportCommand {
     void execute(Player sender, Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
 
-        Formatter formatter = this.formatter(sender, player.getLocation());
+        Formatter formatter = this.formatter(player, player.getLocation());
 
         this.noticeService.viewer(senderViewer, translation -> translation.teleport().teleportedToPlayer(), formatter);
     }
@@ -76,7 +76,7 @@ class TeleportCommand {
     }
 
     @Execute(min = 4, max = 5)
-    @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<player> <x> <y> <z> <world>")
+    @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<x> <y> <z> <player> <world>")
     void to(Viewer sender, @Arg Location location, @Arg Player player, @Arg World world) {
         location.setWorld(world);
 
