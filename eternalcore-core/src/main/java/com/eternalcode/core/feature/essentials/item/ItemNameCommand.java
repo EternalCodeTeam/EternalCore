@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.essentials.item;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.adventure.legacy.Legacy;
+import com.eternalcode.core.bridge.adventure.legacy.Legacy;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.execute.Execute;

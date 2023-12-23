@@ -7,7 +7,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.adventure.legacy.Legacy;
+import com.eternalcode.core.bridge.adventure.legacy.Legacy;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;

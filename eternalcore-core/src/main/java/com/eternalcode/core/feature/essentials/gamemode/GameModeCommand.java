@@ -1,11 +1,10 @@
 package com.eternalcode.core.feature.essentials.gamemode;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.litecommand.configurator.config.CommandConfiguration;
+import com.eternalcode.core.bridge.litecommand.configurator.config.CommandConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.LiteCommandsException;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;

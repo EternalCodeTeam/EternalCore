@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.sign;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.adventure.legacy.Legacy;
+import com.eternalcode.core.bridge.adventure.legacy.Legacy;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import net.kyori.adventure.text.minimessage.MiniMessage;

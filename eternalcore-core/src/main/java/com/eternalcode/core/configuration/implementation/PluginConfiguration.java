@@ -1,6 +1,5 @@
 package com.eternalcode.core.configuration.implementation;
 
-import com.eternalcode.core.adventure.legacy.LegacyColorProcessor;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
@@ -16,7 +15,6 @@ import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Sound;
 
 import java.io.File;
