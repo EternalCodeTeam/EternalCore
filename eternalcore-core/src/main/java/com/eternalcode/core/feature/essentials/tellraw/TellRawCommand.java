@@ -5,14 +5,15 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.joiner.Joiner;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "tellraw")
+@Command(name = "tellraw")
 @Permission("eternalcore.tellraw")
 class TellRawCommand {
 
@@ -25,7 +26,7 @@ class TellRawCommand {
 
     @Execute
     @DescriptionDocs(description = "Send a message to the player without any prefixes etc.", arguments = "<player> <notice_type> <message>")
-    void tellRaw(Viewer sender, @Arg Player target, @Arg NoticeTextType type, @Joiner String message) {
+    void tellRaw(@Context Viewer sender, @Arg Player target, @Arg NoticeTextType type, @Join String message) {
         this.noticeService.create()
             .notice(type, message)
             .player(target.getUniqueId())
@@ -40,9 +41,9 @@ class TellRawCommand {
             .send();
     }
 
-    @Execute(route = "-all", aliases = "*")
+    @Execute(name = "-all", aliases = "*")
     @DescriptionDocs(description = "Broadcast a message without any prefixes etc.", arguments = "<notice_type> <message>")
-    void tellRawAll(Viewer sender, @Arg NoticeTextType type, @Joiner String message) {
+    void tellRawAll(@Context Viewer sender, @Arg NoticeTextType type, @Join String message) {
         this.noticeService.create()
             .notice(type, message)
             .onlinePlayers()

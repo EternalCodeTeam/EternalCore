@@ -5,18 +5,19 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
-import dev.rollczi.litecommands.shared.EstimatedTemporalAmountParser;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import java.util.function.Supplier;
 
+import dev.rollczi.litecommands.time.DurationParser;
 import org.bukkit.command.CommandSender;
 
 import java.time.Duration;
 
-@Route(name = "chat")
+@Command(name = "chat")
 @Permission("eternalcore.chat")
 class ChatManagerCommand {
 
@@ -31,9 +32,9 @@ class ChatManagerCommand {
         this.clear = create(settings);
     }
 
-    @Execute(route = "clear", aliases = "cc")
+    @Execute(name = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
-    void clear(CommandSender sender) {
+    void clear(@Context CommandSender sender) {
         this.noticeService.create()
             .staticNotice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
@@ -42,9 +43,9 @@ class ChatManagerCommand {
             .send();
     }
 
-    @Execute(route = "on")
+    @Execute(name = "on")
     @DescriptionDocs(description = "Enables chat")
-    void enable(Viewer viewer, CommandSender sender) {
+    void enable(@Context Viewer viewer, @Context CommandSender sender) {
         if (this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
@@ -59,9 +60,9 @@ class ChatManagerCommand {
             .send();
     }
 
-    @Execute(route = "off")
+    @Execute(name = "off")
     @DescriptionDocs(description = "Disables chat")
-    void disable(Viewer viewer, CommandSender sender) {
+    void disable(@Context Viewer viewer, @Context CommandSender sender) {
         if (!this.chatManager.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
@@ -76,12 +77,23 @@ class ChatManagerCommand {
             .send();
     }
 
-    @Execute(route = "slowmode", required = 1)
+    @Execute(name = "slowmode")
     @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
-    void slowmode(Viewer viewer, @Arg Duration duration) {
+    void slowmode(@Context Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
 
+            return;
+        }
+
+        if (duration.isZero()) {
+            this.noticeService.create()
+                    .notice(translation -> translation.chat().slowModeOff())
+                    .placeholder("{PLAYER}", viewer.getName())
+                    .onlinePlayers()
+                    .send();
+
+            this.chatManager.getChatSettings().setChatDelay(duration);
             return;
         }
 
@@ -89,9 +101,16 @@ class ChatManagerCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
-            .placeholder("{SLOWMODE}", EstimatedTemporalAmountParser.TIME_UNITS.format(duration))
-            .viewer(viewer)
+            .placeholder("{SLOWMODE}", DurationParser.TIME_UNITS.format(duration))
+            .onlinePlayers()
             .send();
+    }
+
+    @Execute(name = "slowmode 0")
+    @DescriptionDocs(description = "Disable SlowMode for chat")
+    void slowmodeOff(@Context Viewer viewer) {
+        Duration noSlowMode = Duration.ZERO;
+        this.slowmode(viewer, noSlowMode);
     }
 
     private static Supplier<Notice> create(ChatSettings settings) {

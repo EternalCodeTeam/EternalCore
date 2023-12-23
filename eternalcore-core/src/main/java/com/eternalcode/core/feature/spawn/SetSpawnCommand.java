@@ -6,12 +6,13 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "setspawn")
+@Command(name = "setspawn")
 @Permission("eternalcore.setspawn")
 class SetSpawnCommand {
 
@@ -28,7 +29,7 @@ class SetSpawnCommand {
 
     @Execute
     @DescriptionDocs(description = "Set spawn location")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         this.locations.spawn = PositionAdapter.convert(player.getLocation());
 
         this.configurationManager.save(this.locations);

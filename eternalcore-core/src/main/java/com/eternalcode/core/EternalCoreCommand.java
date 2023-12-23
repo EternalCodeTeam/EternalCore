@@ -4,17 +4,18 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.google.common.base.Stopwatch;
-import dev.rollczi.litecommands.command.async.Async;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.async.Async;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.util.concurrent.TimeUnit;
 
-@Route(name = "eternalcore")
+@Command(name = "eternalcore")
 @Permission("eternalcore.eternalcore")
 class EternalCoreCommand {
 
@@ -30,9 +31,9 @@ class EternalCoreCommand {
     }
 
     @Async
-    @Execute(route = "reload")
+    @Execute(name = "reload")
     @DescriptionDocs(description = "Reloads EternalCore configuration")
-    void reload(Audience audience) {
+    void reload(@Context Audience audience) {
         long millis = this.reload();
         Component message = this.miniMessage.deserialize(RELOAD_MESSAGE.formatted(millis));
 

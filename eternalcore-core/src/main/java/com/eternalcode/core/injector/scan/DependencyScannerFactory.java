@@ -9,11 +9,11 @@ import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
-import com.eternalcode.core.injector.annotations.lite.LiteNativeArgument;
-import dev.rollczi.litecommands.command.root.RootRoute;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.command.RootCommand;
 
 public final class DependencyScannerFactory {
 
@@ -31,12 +31,12 @@ public final class DependencyScannerFactory {
                 ConfigurationFile.class,
                 BeanSetup.class,
 
-                Route.class,
-                RootRoute.class,
+                Command.class,
+                RootCommand.class,
                 LiteArgument.class,
-                LiteNativeArgument.class,
                 LiteHandler.class,
-                LiteContextual.class
+                LiteContextual.class,
+                LiteCommandEditor.class
             );
     }
 

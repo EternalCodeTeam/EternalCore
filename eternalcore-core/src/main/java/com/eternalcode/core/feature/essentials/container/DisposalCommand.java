@@ -8,15 +8,16 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.adventure.legacy.Legacy;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Route(name = "disposal")
+@Command(name = "disposal")
 @Permission("eternalcore.disposal")
 class DisposalCommand {
 
@@ -37,7 +38,7 @@ class DisposalCommand {
 
     @Execute
     @DescriptionDocs(description = "Opens a disposal")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         Language language = this.userManager.getUser(player.getUniqueId())
             .map(user -> user.getSettings().getLanguage())
             .orElse(Language.DEFAULT);

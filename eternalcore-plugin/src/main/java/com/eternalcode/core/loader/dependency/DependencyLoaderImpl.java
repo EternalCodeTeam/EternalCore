@@ -61,7 +61,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
 
         this.logger.info("Searching for dependencies");
         for (Dependency dependency : dependencies) {
-            collector = pomXmlScanner.findAllChildren(collector, dependency);
+            collector = this.pomXmlScanner.findAllChildren(collector, dependency);
         }
 
         collector.scannedDependencies(dependencies);

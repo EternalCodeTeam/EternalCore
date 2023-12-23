@@ -4,12 +4,13 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 
-@Route(name = "delhome")
+@Command(name = "delhome")
 @Permission("eternalcore.delhome")
 class DelHomeCommand {
 
@@ -24,7 +25,7 @@ class DelHomeCommand {
 
     @Execute
     @DescriptionDocs(description = "Delete home", arguments = "<home>")
-    void execute(User user, @Arg Home home) {
+    void execute(@Context User user, @Arg Home home) {
         this.homeManager.deleteHome(user, home.getName());
         this.noticeService.create()
             .user(user)

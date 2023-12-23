@@ -6,10 +6,13 @@ import com.eternalcode.core.litecommand.configurator.config.CommandConfiguration
 import com.eternalcode.core.litecommand.configurator.config.SubCommand;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
-import dev.rollczi.litecommands.factory.CommandEditor;
+import dev.rollczi.litecommands.command.builder.CommandBuilder;
+import dev.rollczi.litecommands.editor.Editor;
+import dev.rollczi.litecommands.meta.Meta;
+import org.bukkit.command.CommandSender;
 
 @LiteCommandEditor
-class CommandConfigurator implements CommandEditor {
+class CommandConfigurator implements Editor<CommandSender> {
 
     private final CommandConfiguration commandConfiguration;
 
@@ -24,27 +27,28 @@ class CommandConfigurator implements CommandEditor {
     )
 
     @Override
-    public State edit(State state) {
-        Command command = this.commandConfiguration.commands.get(state.getName());
+    public CommandBuilder<CommandSender> edit(CommandBuilder<CommandSender> context) {
+        Command command = this.commandConfiguration.commands.get(context.name());
 
         if (command == null) {
-            return state;
+            return context;
         }
 
         for (String child : command.subCommands().keySet()) {
             SubCommand subCommand = command.subCommands().get(child);
 
-            state = state.editChild(child, editor -> editor.name(subCommand.name())
-                .aliases(subCommand.aliases(), true)
-                .permission(subCommand.permissions(), true)
-                .cancel(subCommand.isCancel()));
+            context = context.editChild(child, editor -> editor.name(subCommand.name())
+                .aliases(subCommand.aliases())
+                .applyMeta(meta -> meta.list(Meta.PERMISSIONS, permissions -> permissions.addAll(command.permissions())))
+                .enabled(subCommand.isEnabled())
+            );
         }
 
-        return state
+        return context
             .name(command.name())
-            .aliases(command.aliases(), true)
-            .permission(command.permissions(), true)
-            .cancel(command.isCancel());
+            .aliases(command.aliases())
+            .applyMeta(meta -> meta.list(Meta.PERMISSIONS, permissions -> permissions.addAll(command.permissions())))
+            .enabled(command.isEnabled());
     }
 
 }

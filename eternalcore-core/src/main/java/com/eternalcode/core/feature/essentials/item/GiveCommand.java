@@ -6,16 +6,17 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Route(name = "give", aliases = { "i", "item" })
+@Command(name = "give", aliases = { "i", "item" })
 @Permission("eternalcore.give")
 class GiveCommand {
 
@@ -28,9 +29,9 @@ class GiveCommand {
         this.pluginConfig = pluginConfig;
     }
 
-    @Execute(required = 1)
+    @Execute
     @DescriptionDocs(description = "Gives you an item", arguments = "<item>")
-    void execute(Player player, @Arg Material material) {
+    void execute(@Context Player player, @Arg Material material) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(player, material);
@@ -42,9 +43,9 @@ class GiveCommand {
             .send();
     }
 
-    @Execute(required = 2)
+    @Execute
     @DescriptionDocs(description = "Gives an item to another player", arguments = "<item> <player>")
-    void execute(Viewer viewer, @Arg Material material, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg Material material, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(target, material);
@@ -63,9 +64,9 @@ class GiveCommand {
             .send();
     }
 
-    @Execute(required = 2)
+    @Execute
     @DescriptionDocs(description = "Gives you an item with a custom amount", arguments = "<item> <amount>")
-    void execute(Player player, @Arg Material material, @Arg Integer amount) {
+    void execute(@Context Player player, @Arg Material material, @Arg Integer amount) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(player, material, amount);
@@ -77,9 +78,9 @@ class GiveCommand {
             .send();
     }
 
-    @Execute(required = 3)
+    @Execute
     @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <player>")
-    void execute(Viewer viewer, @Arg Material material, @Arg Integer amount, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg Material material, @Arg Integer amount, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(target, material, amount);

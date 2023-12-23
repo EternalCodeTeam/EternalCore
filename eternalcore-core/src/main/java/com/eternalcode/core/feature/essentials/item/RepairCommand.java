@@ -3,9 +3,10 @@ package com.eternalcode.core.feature.essentials.item;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -13,7 +14,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-@Route(name = "repair")
+@Command(name = "repair")
 @Permission("eternalcore.repair")
 class RepairCommand {
 
@@ -26,7 +27,7 @@ class RepairCommand {
 
     @Execute
     @DescriptionDocs(description = "Repairs item in hand")
-    void repair(Player player) {
+    void repair(@Context Player player) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
@@ -59,9 +60,9 @@ class RepairCommand {
             .send();
     }
 
-    @Execute(route = "all")
+    @Execute(name = "all")
     @DescriptionDocs(description = "Repairs all items in inventory")
-    void repairAll(Player player) {
+    void repairAll(@Context Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getContents()) {
 
@@ -94,9 +95,9 @@ class RepairCommand {
             .send();
     }
 
-    @Execute(route = "armor")
+    @Execute(name = "armor")
     @DescriptionDocs(description = "Repairs all items in armor")
-    void repairArmor(Player player) {
+    void repairArmor(@Context Player player) {
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
 

@@ -5,15 +5,16 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import panda.std.Option;
 
-@Route(name = "back")
+@Command(name = "back")
 class TeleportBackCommand {
 
     private final TeleportService teleportService;
@@ -25,10 +26,10 @@ class TeleportBackCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.back")
     @DescriptionDocs(description = "Teleport to last location")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
@@ -41,10 +42,10 @@ class TeleportBackCommand {
         this.noticeService.player(player.getUniqueId(), translation -> translation.teleport().teleportedToLastLocation());
     }
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.back.other")
     @DescriptionDocs(description = "Teleport specified player to last location", arguments = "<player>")
-    void execute(Viewer viewer, @Arg Player player) {
+    void execute(@Context Viewer viewer, @Arg Player player) {
         Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {

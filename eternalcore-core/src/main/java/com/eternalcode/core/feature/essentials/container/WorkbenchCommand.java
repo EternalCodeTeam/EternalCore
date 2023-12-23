@@ -4,13 +4,14 @@ package com.eternalcode.core.feature.essentials.container;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "workbench")
+@Command(name = "workbench")
 class WorkbenchCommand {
 
     private final NoticeService noticeService;
@@ -20,10 +21,10 @@ class WorkbenchCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.workbench")
     @DescriptionDocs(description = "Opens a workbench for you")
-    void executeSelf(Player sender) {
+    void executeSelf(@Context Player sender) {
         sender.openWorkbench(null, true);
 
         this.noticeService.create()
@@ -32,10 +33,10 @@ class WorkbenchCommand {
             .send();
     }
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.workbench.other")
     @DescriptionDocs(description = "Opens a workbench for another player", arguments = "<player>")
-    void execute(Player sender, @Arg Player target) {
+    void execute(@Context Player sender, @Arg Player target) {
         target.openWorkbench(null, true);
 
         this.noticeService.create()

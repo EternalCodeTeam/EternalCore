@@ -4,14 +4,15 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.ItemUtil;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-@Route(name = "hat")
+@Command(name = "hat")
 @Permission("eternalcore.hat")
 class HatCommand {
 
@@ -24,7 +25,7 @@ class HatCommand {
 
     @Execute
     @DescriptionDocs(description = "Puts item in hand on head")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         PlayerInventory playerInventory = player.getInventory();
 
         ItemStack itemStack = playerInventory.getHelmet();

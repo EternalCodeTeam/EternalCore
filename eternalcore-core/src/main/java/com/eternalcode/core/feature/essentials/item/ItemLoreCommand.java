@@ -5,12 +5,12 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.AdventureUtil;
 import com.eternalcode.core.adventure.legacy.Legacy;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.argument.joiner.Joiner;
-import dev.rollczi.litecommands.command.amount.Min;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-@Route(name = "itemlore")
+@Command(name = "itemlore")
 @Permission("eternalcore.itemlore")
 class ItemLoreCommand {
 
@@ -34,9 +34,8 @@ class ItemLoreCommand {
     }
 
     @Execute
-    @Min(2)
     @DescriptionDocs(description = "Sets lore of item in hand", arguments = "<line> <text>")
-    void execute(Player player, @Arg int line, @Joiner String text) {
+    void execute(@Context Player player, @Arg int line, @Join String text) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
@@ -73,9 +72,9 @@ class ItemLoreCommand {
             .send();
     }
 
-    @Execute(route = "clear")
+    @Execute(name = "clear")
     @DescriptionDocs(description = "Clears lore of item in hand")
-    void clear(Player player) {
+    void clear(@Context Player player) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {

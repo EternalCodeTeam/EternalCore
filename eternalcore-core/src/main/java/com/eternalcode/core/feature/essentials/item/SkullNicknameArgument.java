@@ -2,19 +2,18 @@ package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
-import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.argument.simple.OneArgument;
-import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.suggestion.Suggestion;
+import dev.rollczi.litecommands.argument.Argument;
+import dev.rollczi.litecommands.argument.parser.ParseResult;
+import dev.rollczi.litecommands.argument.resolver.ArgumentResolver;
+import dev.rollczi.litecommands.invocation.Invocation;
+import dev.rollczi.litecommands.suggestion.SuggestionContext;
+import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import panda.std.Result;
-
-import java.util.List;
 
 @LiteArgument(type = String.class, name = SkullNicknameArgument.KEY)
-@ArgumentName("player")
-class SkullNicknameArgument implements OneArgument<String> {
+class SkullNicknameArgument extends ArgumentResolver<CommandSender, String> {
 
     static final String KEY = "player";
 
@@ -26,16 +25,15 @@ class SkullNicknameArgument implements OneArgument<String> {
     }
 
     @Override
-    public Result<String, String> parse(LiteInvocation invocation, String argument) {
-        return Result.ok(argument);
+    protected ParseResult<String> parse(Invocation<CommandSender> invocation, Argument<String> context, String argument) {
+        return ParseResult.success(argument);
     }
 
     @Override
-    public List<Suggestion> suggest(LiteInvocation invocation) {
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<String> argument, SuggestionContext context) {
         return this.server.getOnlinePlayers().stream()
             .map(Player::getName)
-            .map(Suggestion::of)
-            .toList();
+            .collect(SuggestionResult.collector());
     }
 
 }

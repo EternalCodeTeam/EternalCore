@@ -5,13 +5,14 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "rtp", aliases = "randomteleport")
+@Command(name = "rtp", aliases = "randomteleport")
 class RandomTeleportCommand {
 
     private static final Placeholders<Player> PLACEHOLDERS = Placeholders.<Player>builder()
@@ -34,7 +35,7 @@ class RandomTeleportCommand {
     @Execute
     @Permission("eternalcore.rtp")
     @DescriptionDocs(description = "Teleportation of the sender to a random location.")
-    void executeSelf(Player player) {
+    void executeSelf(@Context Player player) {
         this.noticeService.create()
             .notice(translation -> translation.randomTeleport().randomTeleportStarted())
             .player(player.getUniqueId())
@@ -54,7 +55,7 @@ class RandomTeleportCommand {
     @Execute
     @Permission("eternalcore.rtp.other")
     @DescriptionDocs(description = "Teleportation of a player to a random location.", arguments = "<player>")
-    void executeOther(Viewer sender, @Arg Player player) {
+    void executeOther(@Context Viewer sender, @Arg Player player) {
         this.noticeService.create()
             .notice(translation -> translation.randomTeleport().randomTeleportStarted())
             .player(player.getUniqueId())

@@ -256,6 +256,19 @@
       "eternalcore.day"
     ],
     "descriptions": [
+      "Sets time to day in current world"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "day ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.day"
+    ],
+    "descriptions": [
       "Sets time to day in specified world"
     ],
     "arguments": [
@@ -286,7 +299,7 @@
       "Remove warp"
     ],
     "arguments": [
-      ""
+      "\u003cwarp\u003e"
     ]
   },
   {
@@ -846,6 +859,19 @@
       "eternalcore.night"
     ],
     "descriptions": [
+      "Sets time to night in current world"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "night ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.night"
+    ],
+    "descriptions": [
       "Sets time to night in specified world"
     ],
     "arguments": [
@@ -902,6 +928,19 @@
     ],
     "arguments": [
       "\u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "rain ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.rain"
+    ],
+    "descriptions": [
+      "Sets weather to rain in current world"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -1209,6 +1248,19 @@
     ]
   },
   {
+    "name": "sun ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sun"
+    ],
+    "descriptions": [
+      "Sets weather to sun in current world"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "teleport ",
     "aliases": [],
     "permissions": [
@@ -1299,6 +1351,19 @@
     ],
     "arguments": [
       "\u003cnotice_type\u003e \u003cmessage\u003e"
+    ]
+  },
+  {
+    "name": "thunder ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.thunder"
+    ],
+    "descriptions": [
+      "Sets weather to thunder in current world"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
@@ -1538,7 +1603,7 @@
       "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
     ],
     "arguments": [
-      ""
+      "\u003cwarp\u003e"
     ]
   },
   {

@@ -3,22 +3,21 @@ package com.eternalcode.core.litecommand.argument;
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
-import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.ViewerProvider;
-import dev.rollczi.litecommands.argument.ArgumentName;
-import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.suggestion.Suggestion;
+import dev.rollczi.litecommands.argument.Argument;
+import dev.rollczi.litecommands.argument.parser.ParseResult;
+import dev.rollczi.litecommands.invocation.Invocation;
+import dev.rollczi.litecommands.suggestion.SuggestionContext;
+import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.GameMode;
+import org.bukkit.command.CommandSender;
 import panda.std.Option;
-import panda.std.Result;
 
-import java.util.List;
 import java.util.Optional;
 
 @LiteArgument(type = GameMode.class)
-@ArgumentName("gamemode")
 class GameModeArgument extends AbstractViewerArgument<GameMode> {
 
     private final GameModeArgumentSettings gameModeArgumentSettings;
@@ -30,25 +29,25 @@ class GameModeArgument extends AbstractViewerArgument<GameMode> {
     }
 
     @Override
-    public Result<GameMode, Notice> parse(LiteInvocation invocation, String argument, Translation translation) {
+    public ParseResult<GameMode> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         Option<GameMode> gameMode = Option.supplyThrowing(IllegalArgumentException.class, () -> GameMode.valueOf(argument.toUpperCase()));
 
         if (gameMode.isPresent()) {
-            return Result.ok(gameMode.get());
+            return ParseResult.success(gameMode.get());
         }
 
         Optional<GameMode> alias = this.gameModeArgumentSettings.getByAlias(argument);
 
-        return alias.<Result<GameMode, Notice>>map(Result::ok)
-            .orElseGet(() -> Result.error(translation.player().gameModeNotCorrect()));
+        return alias
+            .map(parsed -> ParseResult.success(parsed))
+            .orElseGet(() -> ParseResult.failure(translation.player().gameModeNotCorrect()));
     }
 
     @Override
-    public List<Suggestion> suggest(LiteInvocation invocation) {
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<GameMode> argument, SuggestionContext context) {
         return this.gameModeArgumentSettings.getAvailableAliases()
             .stream()
-            .map(Suggestion::of)
-            .toList();
+            .collect(SuggestionResult.collector());
     }
 
 }

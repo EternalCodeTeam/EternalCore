@@ -2,11 +2,11 @@ package com.eternalcode.annotations.scan.command;
 
 import com.eternalcode.annotations.scan.EternalScanRecord;
 import com.eternalcode.annotations.scan.EternalScanResolver;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.permission.Permissions;
-import dev.rollczi.litecommands.command.root.RootRoute;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.permission.Permissions;
+import dev.rollczi.litecommands.annotations.command.RootCommand;
+import dev.rollczi.litecommands.annotations.command.Command;
 import panda.std.Blank;
 
 import java.lang.annotation.Annotation;
@@ -24,13 +24,13 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
     public List<CommandResult> resolve(EternalScanRecord record) {
         Class<?> type = record.clazz();
 
-        Route annotation = type.getAnnotation(Route.class);
+        Command annotation = type.getAnnotation(Command.class);
 
         if (annotation != null) {
-            return this.handleRoute(record, annotation);
+            return this.handleCommand(record, annotation);
         }
 
-        RootRoute rootRoute = type.getAnnotation(RootRoute.class);
+        RootCommand rootRoute = type.getAnnotation(RootCommand.class);
 
         if (rootRoute != null) {
             return this.handleRootRoute(record, rootRoute);
@@ -39,7 +39,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
         return List.of();
     }
 
-    private List<CommandResult> handleRoute(EternalScanRecord record, Route route) {
+    private List<CommandResult> handleCommand(EternalScanRecord record, Command command) {
         List<CommandResult> results = new ArrayList<>();
 
         for (Method method : record.methods()) {
@@ -49,9 +49,9 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
                 continue;
             }
 
-            String name = route.name() + " " + execute.route();
+            String name = command.name() + " " + execute.name();
             List<String> aliases = Arrays.stream(execute.aliases())
-                .map(alias -> route.name() + ", " + alias)
+                .map(alias -> command.name() + ", " + alias)
                 .toList();
 
             results.add(this.handleExecutor(record, method, name, aliases));
@@ -60,7 +60,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
         return removeDuplicates(results);
     }
 
-    private List<CommandResult> handleRootRoute(EternalScanRecord record, RootRoute rootRoute) {
+    private List<CommandResult> handleRootRoute(EternalScanRecord record, RootCommand rootCommand) {
         List<CommandResult> results = new ArrayList<>();
 
         for (Method method : record.methods()) {
@@ -70,7 +70,7 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
                 continue;
             }
 
-            String name = execute.route();
+            String name = execute.name();
             List<String> aliases = Arrays.asList(execute.aliases());
 
             results.add(this.handleExecutor(record, method, name, aliases));

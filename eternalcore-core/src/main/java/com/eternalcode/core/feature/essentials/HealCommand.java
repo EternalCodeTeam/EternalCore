@@ -4,14 +4,15 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-@Route(name = "heal")
+@Command(name = "heal")
 class HealCommand {
 
     private final NoticeService noticeService;
@@ -21,19 +22,19 @@ class HealCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.heal")
     @DescriptionDocs(description = "Heal yourself")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         this.heal(player);
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.player().healMessage());
     }
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.heal.other")
     @DescriptionDocs(description = "Heal other player", arguments = "<player>")
-    void execute(Viewer viewer, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg Player target) {
         this.heal(target);
 
         this.noticeService.create()

@@ -4,13 +4,14 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "feed")
+@Command(name = "feed")
 class FeedCommand {
 
     private final NoticeService noticeService;
@@ -20,10 +21,10 @@ class FeedCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.feed")
     @DescriptionDocs(description = "Feed yourself")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         this.feed(player);
 
         this.noticeService.create()
@@ -32,10 +33,10 @@ class FeedCommand {
             .send();
     }
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.feed.other")
     @DescriptionDocs(description = "Feed other player", arguments = "<player>")
-    void execute(Viewer viewer, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg Player target) {
         this.feed(target);
 
         this.noticeService.create()

@@ -4,13 +4,14 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "god", aliases = "godmode")
+@Command(name = "god", aliases = "godmode")
 class GodCommand {
 
     private final NoticeService noticeService;
@@ -20,10 +21,10 @@ class GodCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @Permission("eternalcore.god")
     @DescriptionDocs(description = "Toggle god mode")
-    void execute(Player sender) {
+    void execute(@Context Player sender) {
         sender.setInvulnerable(!sender.isInvulnerable());
 
         this.noticeService.create()
@@ -33,10 +34,10 @@ class GodCommand {
             .send();
     }
 
-    @Execute(required = 1)
+    @Execute
     @Permission("eternalcore.god.other")
     @DescriptionDocs(description = "Toggle god mode for specified player", arguments = "<player>")
-    void execute(Viewer viewer, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg Player target) {
         target.setInvulnerable(!target.isInvulnerable());
 
         this.noticeService.create()

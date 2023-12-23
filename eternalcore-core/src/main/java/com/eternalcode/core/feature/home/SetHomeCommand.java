@@ -5,13 +5,14 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
-@Route(name = "sethome")
+@Command(name = "sethome")
 @Permission("eternalcore.sethome")
 class SetHomeCommand {
 
@@ -26,15 +27,15 @@ class SetHomeCommand {
         this.pluginConfiguration = pluginConfiguration;
     }
 
-    @Execute(required = 1)
+    @Execute
     @DescriptionDocs(description = "Set home location with specified name", arguments = "<home>")
-    void execute(User user, Player player, @Arg String home) {
+    void execute(@Context User user, @Context Player player, @Arg String home) {
         this.setHome(user, player, home);
     }
 
-    @Execute(required = 0)
+    @Execute
     @DescriptionDocs(description = "Set home location")
-    void execute(User user, Player player) {
+    void execute(@Context User user, @Context Player player) {
         this.setHome(user, player, "home");
     }
 

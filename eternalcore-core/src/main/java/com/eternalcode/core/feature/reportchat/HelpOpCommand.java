@@ -7,18 +7,18 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
-import dev.rollczi.litecommands.argument.joiner.Joiner;
-import dev.rollczi.litecommands.command.amount.Min;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.util.UUID;
 
-@Route(name = "helpop", aliases = { "report" })
+@Command(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
 class HelpOpCommand {
 
@@ -36,9 +36,8 @@ class HelpOpCommand {
     }
 
     @Execute
-    @Min(1)
     @DescriptionDocs(description = "Send helpop message to all administrator with eternalcore.helpop.spy permission", arguments = "<message>")
-    void execute(Player player, @Joiner String message) {
+    void execute(@Context Player player, @Join String message) {
         UUID uuid = player.getUniqueId();
 
         if (this.delay.hasDelay(uuid)) {

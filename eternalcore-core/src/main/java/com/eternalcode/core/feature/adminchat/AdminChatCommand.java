@@ -4,15 +4,16 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.argument.joiner.Joiner;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Route(name = "adminchat", aliases = "ac")
+@Command(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
 class AdminChatCommand {
 
@@ -25,9 +26,9 @@ class AdminChatCommand {
         this.server = server;
     }
 
-    @Execute(min = 1)
+    @Execute
     @DescriptionDocs(description = "Sends a message to all staff members with eternalcore.adminchat.spy permissions", arguments = "<message>")
-    void execute(CommandSender sender, @Joiner String message) {
+    void execute(@Context CommandSender sender, @Join String message) {
         NoticeBroadcast notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())

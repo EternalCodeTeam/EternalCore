@@ -7,15 +7,16 @@ import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.util.UUID;
 
-@Route(name = "afk")
+@Command(name = "afk")
 @Permission("eternalcore.afk")
 @FeatureDocs(
     name = "Afk",
@@ -39,7 +40,7 @@ class AfkCommand {
 
     @Execute
     @DescriptionDocs(description = "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will be ignore afk delay")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.delay.hasDelay(uuid)) {

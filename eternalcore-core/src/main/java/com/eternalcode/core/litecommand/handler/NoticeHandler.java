@@ -6,12 +6,13 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.viewer.ViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.command.LiteInvocation;
-import dev.rollczi.litecommands.handle.Handler;
+import dev.rollczi.litecommands.handler.result.ResultHandler;
+import dev.rollczi.litecommands.handler.result.ResultHandlerChain;
+import dev.rollczi.litecommands.invocation.Invocation;
 import org.bukkit.command.CommandSender;
 
 @LiteHandler(Notice.class)
-public class NoticeHandler implements Handler<CommandSender, Notice> {
+public class NoticeHandler implements ResultHandler<CommandSender, Notice> {
 
     private final ViewerProvider viewerProvider;
     private final NoticeService noticeService;
@@ -23,12 +24,13 @@ public class NoticeHandler implements Handler<CommandSender, Notice> {
     }
 
     @Override
-    public void handle(CommandSender sender, LiteInvocation invocation, Notice value) {
-        Viewer viewer = this.viewerProvider.any(sender);
+    public void handle(Invocation<CommandSender> invocation, Notice result, ResultHandlerChain<CommandSender> chain) {
+        Viewer viewer = this.viewerProvider.any(invocation.sender());
 
         this.noticeService.create()
             .viewer(viewer)
-            .staticNotice(value)
+            .staticNotice(result)
             .send();
     }
+
 }

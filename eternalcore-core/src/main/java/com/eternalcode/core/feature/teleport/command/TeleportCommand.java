@@ -6,16 +6,17 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import panda.utilities.text.Formatter;
 
-@Route(name = "teleport", aliases = { "tp" })
+@Command(name = "teleport", aliases = { "tp" })
 @Permission("eternalcore.teleport")
 class TeleportCommand {
 
@@ -42,9 +43,9 @@ class TeleportCommand {
         this.teleportService = teleportService;
     }
 
-    @Execute(required = 2)
+    @Execute
     @DescriptionDocs(description = "Teleport player to player", arguments = "<player> <target-player>")
-    void other(Viewer sender, @Arg Player player, @Arg Player target) {
+    void other(@Context Viewer sender, @Arg Player player, @Arg Player target) {
         this.teleportService.teleport(player, target.getLocation());
 
         Formatter formatter = this.formatter(player, target.getLocation());
@@ -53,9 +54,9 @@ class TeleportCommand {
         this.noticeService.viewer(sender, translation -> translation.teleport().teleportedPlayerToPlayer(), formatter, otherFormatter);
     }
 
-    @Execute(required = 1)
+    @Execute
     @DescriptionDocs(description = "Teleport to specified player", arguments = "<player>")
-    void execute(Player sender, Viewer senderViewer, @Arg Player player) {
+    void execute(@Context Player sender, @Context Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
 
         Formatter formatter = this.formatter(player, player.getLocation());
@@ -63,9 +64,9 @@ class TeleportCommand {
         this.noticeService.viewer(senderViewer, translation -> translation.teleport().teleportedToPlayer(), formatter);
     }
 
-    @Execute(min = 3, max = 4)
+    @Execute
     @DescriptionDocs(description = "Teleport to specified location and world", arguments = "<x> <y> <z> <world>")
-    void to(Player sender, @Arg Location location, @Arg World world) {
+    void to(@Context Player sender, @Arg Location location, @Arg World world) {
         location.setWorld(world);
 
         this.teleportService.teleport(sender, location);
@@ -75,9 +76,9 @@ class TeleportCommand {
         this.noticeService.player(sender.getUniqueId(), translation -> translation.teleport().teleportedToCoordinates(), formatter);
     }
 
-    @Execute(min = 4, max = 5)
+    @Execute
     @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<x> <y> <z> <player> <world>")
-    void to(Viewer sender, @Arg Location location, @Arg Player player, @Arg World world) {
+    void to(@Context Viewer sender, @Arg Location location, @Arg Player player, @Arg World world) {
         location.setWorld(world);
 
         Formatter formatter = this.formatter(player, location);

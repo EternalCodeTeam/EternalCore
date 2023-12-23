@@ -4,14 +4,15 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.argument.Arg;
-import dev.rollczi.litecommands.command.execute.Execute;
-import dev.rollczi.litecommands.command.permission.Permission;
-import dev.rollczi.litecommands.command.route.Route;
+import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Route(name = "clear")
+@Command(name = "clear")
 @Permission("eternalcore.clear")
 class InventoryClearCommand {
 
@@ -22,9 +23,9 @@ class InventoryClearCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(required = 0)
+    @Execute
     @DescriptionDocs(description = "Clears your inventory")
-    void execute(Player player) {
+    void execute(@Context Player player) {
         this.clear(player);
 
         this.noticeService.create()
@@ -34,10 +35,10 @@ class InventoryClearCommand {
 
     }
 
-    @Execute(required = 1)
+    @Execute
     @DescriptionDocs(description = "Clears inventory of player", arguments = "<player>")
     @Permission("eternalcore.clear.other")
-    void execute(Viewer audience, @Arg Player target) {
+    void execute(@Context Viewer audience, @Arg Player target) {
         this.clear(target);
 
         this.noticeService.create()
