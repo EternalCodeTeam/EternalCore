@@ -19,6 +19,10 @@
     {
       "matchPackagePatterns": ["h2"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["blossom"],
+      "enabled": false
     }
   ],
   "separateMajorMinor": true
