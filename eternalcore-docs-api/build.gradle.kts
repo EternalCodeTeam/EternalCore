@@ -6,5 +6,5 @@ plugins {
 dependencies {
     compileOnly("com.google.guava:guava:33.0.0-jre")
     compileOnly("com.google.code.gson:gson:2.10.1")
-    compileOnly("dev.rollczi:litecommands-framework:3.0.3")
+    compileOnly("dev.rollczi:litecommands-framework:3.2.1")
 }
