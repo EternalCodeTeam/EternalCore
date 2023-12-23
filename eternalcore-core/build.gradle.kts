@@ -16,7 +16,7 @@ dependencies {
 
     // Minecraft & Bridges API
     compileOnlyApi("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.3")
+    compileOnly("me.clip:placeholderapi:2.11.5")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.30")
@@ -29,8 +29,8 @@ dependencies {
 eternalShadow {
     // Paper and Adventure libraries
     library("io.papermc:paperlib:1.0.8")
-    library("net.kyori:adventure-platform-bukkit:4.3.1")
-    library("net.kyori:adventure-text-minimessage:4.14.0")
+    library("net.kyori:adventure-platform-bukkit:4.3.2")
+    library("net.kyori:adventure-text-minimessage:4.15.0")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
@@ -44,15 +44,15 @@ eternalShadow {
     )
 
     // database
-    library("org.mariadb.jdbc:mariadb-java-client:3.3.1")
-    library("org.postgresql:postgresql:42.7.0")
+    library("org.mariadb.jdbc:mariadb-java-client:3.3.2")
+    library("org.postgresql:postgresql:42.7.1")
     library("com.h2database:h2:2.1.214")
     library("com.j256.ormlite:ormlite-jdbc:6.1")
     library("com.zaxxer:HikariCP:5.1.0")
 
     // command framework & skull library
-    library("dev.rollczi:litecommands-bukkit:3.2.0")
-    library("dev.rollczi:litecommands-adventure-platform:3.1.2")
+    library("dev.rollczi:litecommands-bukkit:3.2.1")
+    library("dev.rollczi:litecommands-adventure-platform:3.2.1")
     library("dev.rollczi:liteskullapi:1.3.0")
     libraryRelocate(
         "dev.rollczi.litecommands",
