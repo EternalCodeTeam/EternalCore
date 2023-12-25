@@ -45,6 +45,11 @@ class EnchantCommand {
         }
 
         this.enchantItem(player.getUniqueId(), handItem, enchantment, level);
+
+        this.noticeService.create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.item().enchantedMessage())
+            .send();
     }
 
     @Execute
@@ -63,15 +68,23 @@ class EnchantCommand {
         }
 
         this.enchantItem(sender.getUniqueId(), handItem, enchantment, level);
+
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .notice(translation -> translation.item().enchantedMessageFor())
+            .placeholder("{PLAYER}", target.getName())
+            .send();
+
+        this.noticeService.create()
+            .player(target.getUniqueId())
+            .notice(translation -> translation.item().enchantedMessageBy())
+            .placeholder("{PLAYER}", sender.getName())
+            .send();
     }
 
     private void enchantItem(UUID playerId, ItemStack item, Enchantment enchantment, int level) {
         if (this.configuration.items.unsafeEnchantments) {
             item.addUnsafeEnchantment(enchantment, level);
-            this.noticeService.create()
-                .player(playerId)
-                .notice(translation -> translation.item().enchantedMessage())
-                .send();
             return;
         }
 

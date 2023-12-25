@@ -710,6 +710,8 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice enchantedMessage = Notice.chat("<green>► <white>Item in hand is enchanted!");
+        public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
+        public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
 
 
