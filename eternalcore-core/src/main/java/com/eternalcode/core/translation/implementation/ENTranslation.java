@@ -456,7 +456,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice cantUnIgnoreYourself = Notice.chat("<red>► <dark_red>You can't unignore yourself!");
 
         @Description({ " ", "# {PLAYER} - Ignored player" })
-        public Notice notIgnorePlayer = Notice.chat("<red>► <dark_red>>You don't ignore this player, so you can unignore him!");
+        public Notice notIgnorePlayer = Notice.chat("<red>► <dark_red>You don't ignore this player, so you can unignore him!");
     }
 
     @Description({
