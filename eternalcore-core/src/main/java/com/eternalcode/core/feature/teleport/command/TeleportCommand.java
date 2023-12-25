@@ -44,6 +44,16 @@ class TeleportCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Teleport to specified player", arguments = "<player>")
+    void execute(@Context Player sender, @Context Viewer senderViewer, @Arg Player player) {
+        this.teleportService.teleport(sender, player.getLocation());
+
+        Formatter formatter = this.formatter(player, player.getLocation());
+
+        this.noticeService.viewer(senderViewer, translation -> translation.teleport().teleportedToPlayer(), formatter);
+    }
+
+    @Execute
     @DescriptionDocs(description = "Teleport player to player", arguments = "<player> <target-player>")
     void other(@Context Viewer sender, @Arg Player player, @Arg Player target) {
         this.teleportService.teleport(player, target.getLocation());
@@ -55,13 +65,15 @@ class TeleportCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleport to specified player", arguments = "<player>")
-    void execute(@Context Player sender, @Context Viewer senderViewer, @Arg Player player) {
-        this.teleportService.teleport(sender, player.getLocation());
+    @DescriptionDocs(description = "Teleport to specified location", arguments = "<x> <y> <z>")
+    void to(@Context Player sender, @Arg Location location) {
+        location.setWorld(sender.getWorld());
 
-        Formatter formatter = this.formatter(player, player.getLocation());
+        this.teleportService.teleport(sender, location);
 
-        this.noticeService.viewer(senderViewer, translation -> translation.teleport().teleportedToPlayer(), formatter);
+        Formatter formatter = this.formatter(sender, location);
+
+        this.noticeService.player(sender.getUniqueId(), translation -> translation.teleport().teleportedToCoordinates(), formatter);
     }
 
     @Execute
@@ -77,13 +89,24 @@ class TeleportCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<x> <y> <z> <player> <world>")
-    void to(@Context Viewer sender, @Arg Location location, @Arg Player player, @Arg World world) {
+    @DescriptionDocs(description = "Teleport player to specified location and world", arguments = "<player> <x> <y> <z> <world>")
+    void to(@Context Viewer sender, @Arg Player target, @Arg Location location) {
+        location.setWorld(target.getWorld());
+
+        Formatter formatter = this.formatter(target, location);
+
+        this.teleportService.teleport(target, location);
+        this.noticeService.viewer(sender, translation -> translation.teleport().teleportedSpecifiedPlayerToCoordinates(), formatter);
+    }
+
+    @Execute
+    @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<player> <x> <y> <z> <world>")
+    void to(@Context Viewer sender, @Arg Player target, @Arg Location location, @Arg World world) {
         location.setWorld(world);
 
-        Formatter formatter = this.formatter(player, location);
+        Formatter formatter = this.formatter(target, location);
 
-        this.teleportService.teleport(player, location);
+        this.teleportService.teleport(target, location);
         this.noticeService.viewer(sender, translation -> translation.teleport().teleportedSpecifiedPlayerToCoordinates(), formatter);
     }
 
