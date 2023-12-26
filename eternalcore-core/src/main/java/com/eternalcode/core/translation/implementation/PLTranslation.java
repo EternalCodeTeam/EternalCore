@@ -744,7 +744,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ " ", "# {WORLD} - Świat w którym ustawiono pogode" })
         public Notice weatherSetRain = Notice.chat("<green>► <white>Ustawiono deszcz w świecie <green>{WORLD}<white>!");
         public Notice weatherSetSun = Notice.chat("<green>► <white>Ustawiono słoneczną pogodę w świecie <green>{WORLD}<white>!");
-        public Notice weatherSetThunder = Notice.chat("<green>► <white>Ustawiono burze w świecie <green>{WORLD}<white>!>");
+        public Notice weatherSetThunder = Notice.chat("<green>► <white>Ustawiono burze w świecie <green>{WORLD}<white>!");
     }
 
     @Description({
