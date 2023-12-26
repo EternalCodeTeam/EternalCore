@@ -41,7 +41,7 @@ class TeleportToPositionCommand {
             .notice(translation -> translation.teleport().teleportedSpecifiedPlayerToCoordinates())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{X}", String.valueOf(location.getX()))
-            .placeholder("{Y}", String.valueOf(location.getZ()))
+            .placeholder("{Y}", String.valueOf(location.getY()))
             .placeholder("{Z}", String.valueOf(location.getX()))
             .viewer(viewer)
             .send();
