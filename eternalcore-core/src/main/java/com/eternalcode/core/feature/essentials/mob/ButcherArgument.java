@@ -43,7 +43,7 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
 
     @Override
     public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Integer> argument, SuggestionContext context) {
-        return IntStream.range(0, 6)
+        return IntStream.range(1, 6)
             .mapToObj(String::valueOf)
             .collect(SuggestionResult.collector());
     }

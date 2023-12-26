@@ -41,13 +41,13 @@ class ButcherCommand {
 
     @Execute
     @DescriptionDocs(description = "Kills all mobs in specified chunks around you", arguments = "<chunks>")
-    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks) {
+    void execute(@Context Player player, @Arg(ButcherArgument.KEY) Integer chunks) {
         this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
     @Execute
     @DescriptionDocs(description = "Kills specified mob in specified chunks around you", arguments = "<chunks> <mobType>")
-    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks, @Arg MobEntity mobEntity) {
+    void execute(@Context Player player, @Arg(ButcherArgument.KEY) Integer chunks, @Arg MobEntity mobEntity) {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }
 
