@@ -28,35 +28,34 @@ class TeleportToPositionCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport to specified coordinates", arguments = "<x> <y> <z>")
-    void execute(@Context Player player, @Arg int x, @Arg int y, @Arg int z) {
-        this.teleport(player, x, y, z);
+    void execute(@Context Player player, @Arg Location location) {
+        this.teleport(player, location);
     }
 
     @Execute
     @DescriptionDocs(description = "Teleport specified player to specified coordinates", arguments = "<x> <y> <z> <player>")
-    void execute(@Context Viewer viewer, @Arg int x, @Arg int y, @Arg int z, @Arg Player target) {
-        this.teleport(target, x, y, z);
+    void execute(@Context Viewer viewer, @Arg Location location, @Arg Player target) {
+        this.teleport(target, location);
 
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleportedSpecifiedPlayerToCoordinates())
             .placeholder("{PLAYER}", target.getName())
-            .placeholder("{X}", String.valueOf(x))
-            .placeholder("{Y}", String.valueOf(y))
-            .placeholder("{Z}", String.valueOf(z))
+            .placeholder("{X}", String.valueOf(location.getX()))
+            .placeholder("{Y}", String.valueOf(location.getY()))
+            .placeholder("{Z}", String.valueOf(location.getX()))
             .viewer(viewer)
             .send();
     }
 
-    private void teleport(Player player, int x, int y, int z) {
-        Location location = new Location(player.getWorld(), x, y, z);
-
+    private void teleport(Player player, Location location) {
+        location.setWorld(player.getWorld());
         this.teleportService.teleport(player, location);
+
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleportedToCoordinates())
-            .placeholder("{PLAYER}", player.getName())
-            .placeholder("{X}", String.valueOf(x))
-            .placeholder("{Y}", String.valueOf(y))
-            .placeholder("{Z}", String.valueOf(z))
+            .placeholder("{X}", String.valueOf(location.getX()))
+            .placeholder("{Y}", String.valueOf(location.getY()))
+            .placeholder("{Z}", String.valueOf(location.getX()))
             .player(player.getUniqueId())
             .send();
     }
