@@ -174,7 +174,8 @@ public interface Translation {
         Notice delete();
         Notice limit();
         Notice overrideHomeLocation();
-        String noHomesOwned();
+        Notice noHomesOwned();
+        String noHomesOwnedPlaceholder();
     }
 
     // tpa section
