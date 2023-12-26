@@ -38,6 +38,14 @@ class HomeCommand {
     void execute(@Context Player player) {
         Collection<Home> playerHomes = this.homeManager.getHomes(player.getUniqueId());
 
+        if (playerHomes.isEmpty()) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.home().noHomesOwned())
+                .send();
+            return;
+        }
+
         if (playerHomes.size() != 1) {
             String homes = String.join(", ",
                 this.homeManager.getHomes(player.getUniqueId()).stream()
