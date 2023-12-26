@@ -21,7 +21,7 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-@LiteArgument(type = Integer.class, name = ButcherArgument.KEY)
+@LiteArgument(type = int.class, name = ButcherArgument.KEY)
 class ButcherArgument extends AbstractViewerArgument<Integer> {
 
     static final String KEY = "butcher";

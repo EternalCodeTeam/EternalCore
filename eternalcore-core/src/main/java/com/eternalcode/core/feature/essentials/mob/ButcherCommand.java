@@ -25,12 +25,10 @@ import java.util.List;
 class ButcherCommand {
 
     private final NoticeService noticeService;
-    private final int safeChunksNumber;
 
     @Inject
     ButcherCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
         this.noticeService = noticeService;
-        this.safeChunksNumber = pluginConfiguration.butcher.safeChunkNumber;
     }
 
     @Execute
@@ -41,17 +39,17 @@ class ButcherCommand {
 
     @Execute
     @DescriptionDocs(description = "Kills all mobs in specified chunks around you", arguments = "<chunks>")
-    void execute(@Context Player player, @Arg(ButcherArgument.KEY) Integer chunks) {
+    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks) {
         this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
     @Execute
     @DescriptionDocs(description = "Kills specified mob in specified chunks around you", arguments = "<chunks> <mobType>")
-    void execute(@Context Player player, @Arg(ButcherArgument.KEY) Integer chunks, @Arg MobEntity mobEntity) {
+    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks, @Arg MobEntity mobEntity) {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }
 
-    private void killMobs(Player player, Integer chunksNumber, MobFilter mobFilter) {
+    private void killMobs(Player player, int chunksNumber, MobFilter mobFilter) {
         Collection<Chunk> chunks = this.getChunksNearPlayer(player, chunksNumber);
 
         int killedMobs = 0;
