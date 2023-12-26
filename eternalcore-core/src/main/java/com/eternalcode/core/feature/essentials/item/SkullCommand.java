@@ -11,6 +11,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.liteskullapi.SkullAPI;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,9 +32,10 @@ class SkullCommand {
     @Execute
     @DescriptionDocs(description = "Gives you a skull of player", arguments = "<player>")
     void execute(@Context Player sender, @Arg(SkullNicknameArgument.KEY) String name) {
-        this.skullAPI.acceptSyncSkull(name, skull -> {
-            ItemStack namedSkull = ItemBuilder.from(skull)
+        this.skullAPI.acceptSyncSkullData(name, skull -> {
+            ItemStack namedSkull = ItemBuilder.skull()
                 .name(Component.text(name))
+                .texture(skull.getValue())
                 .build();
 
             ItemStack mainHand = sender.getInventory().getItemInMainHand();
