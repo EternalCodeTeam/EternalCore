@@ -722,6 +722,8 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice enchantedMessage = Notice.chat("<green>► <white>Item w twojej ręce został zaklęty!");
+        public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
+        public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
     }
 
     @Description({

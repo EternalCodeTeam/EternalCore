@@ -349,6 +349,8 @@ public interface Translation {
         Notice repairAllMessage();
         Notice skullMessage();
         Notice enchantedMessage();
+        Notice enchantedMessageFor();
+        Notice enchantedMessageBy();
     }
 
     // time and weather
