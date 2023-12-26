@@ -409,7 +409,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice overrideHomeLocation = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been overridden.");
         @Description({ " ", "# {LIMIT} - Homes limit" })
         public Notice limit = Notice.chat("<red>► <white>You have reached the limit of homes! Your limit is <red>{LIMIT}<white>.");
-        public Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>You don't have any home.");
+        public Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
 
         @Description({ " ", "# Placeholders messages" })
         public String noHomesOwnedPlaceholder = "You don't have any home.";
