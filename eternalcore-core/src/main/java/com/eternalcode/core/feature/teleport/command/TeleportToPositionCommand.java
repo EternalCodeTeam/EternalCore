@@ -54,7 +54,7 @@ class TeleportToPositionCommand {
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleportedToCoordinates())
             .placeholder("{X}", String.valueOf(location.getX()))
-            .placeholder("{Y}", String.valueOf(location.getZ()))
+            .placeholder("{Y}", String.valueOf(location.getY()))
             .placeholder("{Z}", String.valueOf(location.getX()))
             .player(player.getUniqueId())
             .send();
