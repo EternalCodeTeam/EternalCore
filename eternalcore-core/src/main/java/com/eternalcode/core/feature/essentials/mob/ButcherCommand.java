@@ -52,25 +52,6 @@ class ButcherCommand {
     }
 
     private void killMobs(Player player, Integer chunksNumber, MobFilter mobFilter) {
-        if (chunksNumber <= 0) {
-            this.noticeService.create()
-                .notice(translation -> translation.argument().incorrectNumberOfChunks())
-                .player(player.getUniqueId())
-                .send();
-
-            return;
-        }
-
-        if (chunksNumber > this.safeChunksNumber) {
-            this.noticeService.create()
-                .notice(translation -> translation.player().safeChunksMessage())
-                .player(player.getUniqueId())
-                .placeholder("{SAFE_CHUNKS}", String.valueOf(this.safeChunksNumber))
-                .send();
-
-            return;
-        }
-
         Collection<Chunk> chunks = this.getChunksNearPlayer(player, chunksNumber);
 
         int killedMobs = 0;

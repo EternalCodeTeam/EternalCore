@@ -10,6 +10,7 @@ enum NoticeType {
     ACTION_BAR(Text.class, "actionbar"),
     TITLE(Text.class, "title"),
     SUBTITLE(Text.class, "subtitle"),
+    TITLE_AND_SUBTITLE(Text.class, "titleAndSubtitle"),
     TITLE_TIMES(Times.class, "times"),
     TITLE_HIDE(None.class, "titleHide"),
     SOUND(Music.class, "sound");
