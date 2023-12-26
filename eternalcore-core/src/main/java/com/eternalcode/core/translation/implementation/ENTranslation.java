@@ -412,7 +412,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
 
         @Description({ " ", "# Placeholders messages" })
-        public String noHomesOwnedPlaceholder = "You don't have any home.";
+        public String noHomesOwnedPlaceholder = "You don't have any homes.";
     }
 
     @Description({
