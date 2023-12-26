@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
 @Command(name = "repair")
-@Permission("eternalcore.repair")
 class RepairCommand {
 
     private final NoticeService noticeService;
@@ -27,6 +26,7 @@ class RepairCommand {
 
     @Execute
     @DescriptionDocs(description = "Repairs item in hand")
+    @Permission("eternalcore.repair")
     void repair(@Context Player player) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
@@ -61,6 +61,7 @@ class RepairCommand {
     }
 
     @Execute(name = "all")
+    @Permission("eternalcore.repair.all")
     @DescriptionDocs(description = "Repairs all items in inventory")
     void repairAll(@Context Player player) {
         boolean exists = false;
@@ -96,6 +97,7 @@ class RepairCommand {
     }
 
     @Execute(name = "armor")
+    @Permission("eternalcore.repair.armor")
     @DescriptionDocs(description = "Repairs all items in armor")
     void repairArmor(@Context Player player) {
         boolean exists = false;
