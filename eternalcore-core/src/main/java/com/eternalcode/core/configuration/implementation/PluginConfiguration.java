@@ -122,7 +122,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class RandomTeleport implements RandomTeleportSettings {
-        @Description("# Radius of random teleportation")
+        @Description("# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.")
         public int randomTeleportRadius = 1000;
 
         @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")

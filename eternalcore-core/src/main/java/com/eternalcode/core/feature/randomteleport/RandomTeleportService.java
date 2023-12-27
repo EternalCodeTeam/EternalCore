@@ -76,8 +76,12 @@ class RandomTeleportService {
 
         int radius = this.randomTeleportSettings.randomTeleportRadius();
 
-        int randomX = this.random.nextInt(-radius, radius);
-        int randomZ = this.random.nextInt(-radius, radius);
+        Location spawnLocation = world.getSpawnLocation();
+        int spawnX = spawnLocation.getBlockX();
+        int spawnZ = spawnLocation.getBlockZ();
+
+        int randomX = spawnX + this.random.nextInt(-radius, radius);
+        int randomZ = spawnZ + this.random.nextInt(-radius, radius);
 
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
