@@ -414,9 +414,10 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " ", "# {LIMIT} - Limit domów" })
         public Notice limit = Notice.chat("<green>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
+        public Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie posiadasz żadnego domu!");
 
         @Description({ " ", "# Wiadomości placeholderów" })
-        public String noHomesOwned = "Nie posiadasz żadnego domu.";
+        public String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
     }
 
     @Description({
@@ -722,6 +723,8 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice enchantedMessage = Notice.chat("<green>► <white>Item w twojej ręce został zaklęty!");
+        public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
+        public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
     }
 
     @Description({
@@ -744,7 +747,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({ " ", "# {WORLD} - Świat w którym ustawiono pogode" })
         public Notice weatherSetRain = Notice.chat("<green>► <white>Ustawiono deszcz w świecie <green>{WORLD}<white>!");
         public Notice weatherSetSun = Notice.chat("<green>► <white>Ustawiono słoneczną pogodę w świecie <green>{WORLD}<white>!");
-        public Notice weatherSetThunder = Notice.chat("<green>► <white>Ustawiono burze w świecie <green>{WORLD}<white>!>");
+        public Notice weatherSetThunder = Notice.chat("<green>► <white>Ustawiono burze w świecie <green>{WORLD}<white>!");
     }
 
     @Description({

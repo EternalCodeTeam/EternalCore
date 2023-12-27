@@ -43,8 +43,7 @@ class HelpOpCommand {
         if (this.delay.hasDelay(uuid)) {
             Duration time = this.delay.getDurationToExpire(uuid);
 
-            this.noticeService
-                .create()
+            this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
                 .placeholder("{TIME}", DurationUtil.format(time))
                 .player(uuid)
@@ -55,7 +54,6 @@ class HelpOpCommand {
 
         NoticeBroadcast notice = this.noticeService.create()
             .console()
-            .player(uuid)
             .notice(translation -> translation.helpOp().format())
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{TEXT}", message);

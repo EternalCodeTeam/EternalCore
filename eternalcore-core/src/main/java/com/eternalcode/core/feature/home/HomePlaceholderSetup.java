@@ -51,7 +51,7 @@ class HomePlaceholderSetup implements Subscriber {
         Translation translation = this.translationManager.getMessages(user);
 
         if (homes.isEmpty()) {
-            return translation.home().noHomesOwned();
+            return translation.home().noHomesOwnedPlaceholder();
         }
 
         return homes.stream().map(Home::getName).collect(Collectors.joining(", "));

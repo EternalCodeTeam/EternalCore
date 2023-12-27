@@ -409,9 +409,10 @@ public class ENTranslation extends AbstractTranslation {
         public Notice overrideHomeLocation = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been overridden.");
         @Description({ " ", "# {LIMIT} - Homes limit" })
         public Notice limit = Notice.chat("<red>► <white>You have reached the limit of homes! Your limit is <red>{LIMIT}<white>.");
+        public Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
 
         @Description({ " ", "# Placeholders messages" })
-        public String noHomesOwned = "You don't have any home.";
+        public String noHomesOwnedPlaceholder = "You don't have any homes.";
     }
 
     @Description({
@@ -456,7 +457,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice cantUnIgnoreYourself = Notice.chat("<red>► <dark_red>You can't unignore yourself!");
 
         @Description({ " ", "# {PLAYER} - Ignored player" })
-        public Notice notIgnorePlayer = Notice.chat("<red>► <dark_red>>You don't ignore this player, so you can unignore him!");
+        public Notice notIgnorePlayer = Notice.chat("<red>► <dark_red>You don't ignore this player, so you can unignore him!");
     }
 
     @Description({
@@ -710,6 +711,8 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice enchantedMessage = Notice.chat("<green>► <white>Item in hand is enchanted!");
+        public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
+        public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
 
 

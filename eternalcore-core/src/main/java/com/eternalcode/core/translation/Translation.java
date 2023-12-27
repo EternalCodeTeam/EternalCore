@@ -174,7 +174,8 @@ public interface Translation {
         Notice delete();
         Notice limit();
         Notice overrideHomeLocation();
-        String noHomesOwned();
+        Notice noHomesOwned();
+        String noHomesOwnedPlaceholder();
     }
 
     // tpa section
@@ -349,6 +350,8 @@ public interface Translation {
         Notice repairAllMessage();
         Notice skullMessage();
         Notice enchantedMessage();
+        Notice enchantedMessageFor();
+        Notice enchantedMessageBy();
     }
 
     // time and weather
