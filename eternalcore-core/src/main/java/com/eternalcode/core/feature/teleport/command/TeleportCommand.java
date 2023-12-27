@@ -89,7 +89,7 @@ class TeleportCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleport player to specified location and world", arguments = "<player> <x> <y> <z> <world>")
+    @DescriptionDocs(description = "Teleport player to specified location and world", arguments = "<player> <x> <y> <z>")
     void to(@Context Viewer sender, @Arg Player target, @Arg Location location) {
         location.setWorld(target.getWorld());
 
