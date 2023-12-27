@@ -74,7 +74,15 @@ class RandomTeleportService {
             return CompletableFuture.failedFuture(new RuntimeException("Cannot find safe location"));
         }
 
-        int radius = this.randomTeleportSettings.randomTeleportRadius();
+        int radius = 0;
+        if (this.randomTeleportSettings.randomTeleportType() == RandomTeleportType.STATIC_RADIUS) {
+            radius = this.randomTeleportSettings.randomTeleportRadius();
+        }
+
+        if (this.randomTeleportSettings.randomTeleportType() == RandomTeleportType.WORLD_BORDER_RADIUS) {
+            WorldBorder worldBorder = world.getWorldBorder();
+            radius = (int) worldBorder.getSize() / 2;
+        }
 
         Location spawnLocation = world.getSpawnLocation();
         int spawnX = spawnLocation.getBlockX();
