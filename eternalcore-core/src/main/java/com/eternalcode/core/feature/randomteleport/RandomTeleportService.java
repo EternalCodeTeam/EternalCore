@@ -1,7 +1,9 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.shared.PositionAdapter;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -44,12 +46,14 @@ class RandomTeleportService {
     private static final int NETHER_MAX_HEIGHT = 127;
 
     private final RandomTeleportSettings randomTeleportSettings;
+    private final LocationsConfiguration locationsConfiguration;
     private final Server server;
     private final Random random = new Random();
 
     @Inject
-    RandomTeleportService(RandomTeleportSettings randomTeleportSettings, Server server) {
+    RandomTeleportService(RandomTeleportSettings randomTeleportSettings, LocationsConfiguration locationsConfiguration, Server server) {
         this.randomTeleportSettings = randomTeleportSettings;
+        this.locationsConfiguration = locationsConfiguration;
         this.server = server;
     }
 
@@ -59,7 +63,7 @@ class RandomTeleportService {
 
         if (!this.randomTeleportSettings.randomTeleportWorld().isBlank()) {
             world = this.server.getWorld(this.randomTeleportSettings.randomTeleportWorld());
-            
+
             if (world == null) {
                 throw new IllegalStateException("World " + this.randomTeleportSettings.randomTeleportWorld() + " is not exists!");
             }
@@ -74,10 +78,26 @@ class RandomTeleportService {
             return CompletableFuture.failedFuture(new RuntimeException("Cannot find safe location"));
         }
 
-        int radius = this.randomTeleportSettings.randomTeleportRadius();
+        int radius = 0;
+        if (this.randomTeleportSettings.randomTeleportType() == RandomTeleportType.STATIC_RADIUS) {
+            radius = this.randomTeleportSettings.randomTeleportRadius();
+        }
 
-        int randomX = this.random.nextInt(-radius, radius);
-        int randomZ = this.random.nextInt(-radius, radius);
+        if (this.randomTeleportSettings.randomTeleportType() == RandomTeleportType.WORLD_BORDER_RADIUS) {
+            WorldBorder worldBorder = world.getWorldBorder();
+            radius = (int) worldBorder.getSize() / 2;
+        }
+
+        boolean noneWorld = this.locationsConfiguration.spawn.isNoneWorld();
+        Location spawnLocation = !noneWorld
+            ? PositionAdapter.convert(this.locationsConfiguration.spawn)
+            : world.getSpawnLocation();
+
+        int spawnX = spawnLocation.getBlockX();
+        int spawnZ = spawnLocation.getBlockZ();
+
+        int randomX = spawnX + this.random.nextInt(-radius, radius);
+        int randomZ = spawnZ + this.random.nextInt(-radius, radius);
 
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);

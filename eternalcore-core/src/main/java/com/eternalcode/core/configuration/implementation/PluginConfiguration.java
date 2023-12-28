@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
+import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
 import com.eternalcode.core.feature.reportchat.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
@@ -122,7 +123,18 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class RandomTeleport implements RandomTeleportSettings {
-        @Description("# Radius of random teleportation")
+        @Description({
+            "# Type of random teleportation,",
+            "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
+            "# STATIC_RADIUS - radius based on the manually value."
+        })
+        public RandomTeleportType randomTeleportType = RandomTeleportType.WORLD_BORDER_RADIUS;
+
+        @Description({
+            "# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.",
+            "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
+            "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
+        })
         public int randomTeleportRadius = 1000;
 
         @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
@@ -134,6 +146,11 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public int randomTeleportRadius() {
             return this.randomTeleportRadius;
+        }
+
+        @Override
+        public RandomTeleportType randomTeleportType() {
+            return this.randomTeleportType;
         }
 
         @Override
