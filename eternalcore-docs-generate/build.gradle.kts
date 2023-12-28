@@ -9,7 +9,7 @@ dependencies {
 
     implementation("com.google.guava:guava:33.0.0-jre")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("dev.rollczi:litecommands-framework:3.2.1")
+    implementation("dev.rollczi:litecommands-framework:3.2.2")
 
     runtimeOnly("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
     runtimeOnly("io.papermc:paperlib:1.0.8")
