@@ -18,7 +18,7 @@ dependencies {
     runtimeOnly("net.dzikoysk:cdn:1.14.4")
     runtimeOnly("com.j256.ormlite:ormlite-jdbc:6.1")
     runtimeOnly("com.zaxxer:HikariCP:5.1.0")
-    runtimeOnly("dev.rollczi:litecommands-core:3.2.1")
+    runtimeOnly("dev.rollczi:litecommands-core:3.2.2")
     runtimeOnly("dev.rollczi:liteskullapi:1.3.0")
     runtimeOnly("org.panda-lang:expressible:1.3.6")
     runtimeOnly("org.panda-lang:panda-utilities:0.5.3-alpha")
