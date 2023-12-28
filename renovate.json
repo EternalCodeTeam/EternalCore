@@ -3,27 +3,10 @@
   "extends": [
     "config:base"
   ],
-  "groupName": "all dependencies",
-  "groupSlug": "all",
-  "lockFileMaintenance": {
-    "enabled": false
-  },
   "packageRules": [
-    {
-      "groupName": "all dependencies",
-      "groupSlug": "all",
-      "matchPackagePatterns": [
-        "*"
-      ]
-    },
     {
       "matchPackagePatterns": ["h2"],
       "enabled": false
-    },
-    {
-      "matchPackageNames": ["blossom"],
-      "enabled": false
     }
-  ],
-  "separateMajorMinor": true
+  ]
 }
