@@ -51,8 +51,8 @@ eternalShadow {
     library("com.zaxxer:HikariCP:5.1.0")
 
     // command framework & skull library
-    library("dev.rollczi:litecommands-bukkit:3.2.1")
-    library("dev.rollczi:litecommands-adventure-platform:3.2.1")
+    library("dev.rollczi:litecommands-bukkit:3.2.2")
+    library("dev.rollczi:litecommands-adventure-platform:3.2.2")
     library("dev.rollczi:liteskullapi:1.3.0")
     libraryRelocate(
         "dev.rollczi.litecommands",
