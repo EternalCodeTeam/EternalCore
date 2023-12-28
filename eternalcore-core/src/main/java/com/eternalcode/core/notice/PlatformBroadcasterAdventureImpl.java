@@ -25,9 +25,15 @@ class PlatformBroadcasterAdventureImpl implements PlatformBroadcaster {
         .put(NoticeType.ACTION_BAR, this.text((audience, message) -> audience.sendActionBar(message)))
         .put(NoticeType.TITLE,      this.text((audience, title) -> {
             audience.sendTitlePart(TitlePart.TITLE, title);
-            audience.sendTitlePart(TitlePart.SUBTITLE, Component.empty());
         }))
         .put(NoticeType.SUBTITLE,   this.text((audience, subtitle) -> {
+            audience.sendTitlePart(TitlePart.SUBTITLE, subtitle);
+        }))
+        .put(NoticeType.TITLE_WITH_EMPTY_SUBTITLE, this.text((audience, title) -> {
+            audience.sendTitlePart(TitlePart.TITLE, title);
+            audience.sendTitlePart(TitlePart.SUBTITLE, Component.empty());
+        }))
+        .put(NoticeType.SUBTITLE_WITH_EMPTY_TITLE, this.text((audience, subtitle) -> {
             audience.sendTitlePart(TitlePart.TITLE, Component.empty());
             audience.sendTitlePart(TitlePart.SUBTITLE, subtitle);
         }))
