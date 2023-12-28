@@ -10,13 +10,6 @@
   },
   "packageRules": [
     {
-      "groupName": "all dependencies",
-      "groupSlug": "all",
-      "matchPackagePatterns": [
-        "*"
-      ]
-    },
-    {
       "matchPackagePatterns": ["h2"],
       "enabled": false
     },
