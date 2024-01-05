@@ -166,6 +166,20 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# Ta sekcja odpowiada za wiadmości komendy /sudo"
+    })
+    public PLSudoSection sudo = new PLSudoSection();
+
+    @Getter
+    @Contextual
+    public static class PLSudoSection implements SudoSection {
+        @Description({ "# {PLAYER} - Gracz który wykonał komendę, {COMMAND} - Komenda, którą wykonał gracz" })
+        public Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> wykonał komendę: <white>{COMMAND}");
+        public Notice sudoMessage = Notice.chat("<green>► <white>Wykonałeś komendę: <green>{COMMAND} <white>na graczu: <green>{PLAYER}");
+    }
+
+    @Description({
+        " ",
         "# Ta sekcja odpowiada za komunikaty związane z teleportacją",
     })
     public PLTeleportSection teleport = new PLTeleportSection();

@@ -170,6 +170,21 @@ public class ENTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# This section is responsible for the messages of the /sudo command",
+    })
+    public ENSudoSection sudo = new ENSudoSection();
+
+    @Getter
+    @Contextual
+    public static class ENSudoSection implements SudoSection {
+        @Description({ "# {PLAYER} - Player who executed the command, {COMMAND} - Command that the player executed" })
+        public Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> executed command: <white>{COMMAND}");
+        public Notice sudoMessage = Notice.chat("<green>► <white>You executed command: <green>{COMMAND} <white>on player: <green>{PLAYER}");
+    }
+
+
+    @Description({
+        " ",
         "# This section is responsible for messages related to teleportation",
     })
     public ENTeleportSection teleport = new ENTeleportSection();
