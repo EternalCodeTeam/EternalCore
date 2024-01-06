@@ -23,14 +23,14 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${Versions.LOMBOK}")
 
     //GitCheck
-    compileOnly("com.github.eternalcode:git-check:${Versions.GIT_CHECK}")
+    compileOnly("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
 }
 
 eternalShadow {
     // Paper and Adventure libraries
-    library("io.papermc.paper:paper:${Versions.PAPERLIB}")
-    library("net.kyori.adventure:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
-    library("net.kyori.adventure:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
+    library("io.papermc:paperlib:${Versions.PAPERLIB}")
+    library("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
+    library("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
@@ -38,7 +38,7 @@ eternalShadow {
     )
 
     // configuration
-    library("net.dzikoysk.cdn:cdn-configs:${Versions.CDN_CONFIGS}")
+    library("net.dzikoysk:cdn:${Versions.CDN_CONFIGS}")
     libraryRelocate(
         "net.dzikoysk.cdn"
     )
@@ -70,7 +70,7 @@ eternalShadow {
     )
 
     // gui library
-    library("dev.triumphteam:triumphteam-gui:${Versions.TRIUMPH_GUI}")
+    library("dev.triumphteam:triumph-gui:${Versions.TRIUMPH_GUI}")
     libraryRelocate("dev.triumphteam")
 
     // metrics
