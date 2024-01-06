@@ -23,7 +23,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${Versions.LOMBOK}")
 
     //GitCheck
-    compileOnly("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
+    implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
 }
 
 eternalShadow {
@@ -52,7 +52,8 @@ eternalShadow {
     library("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
 
     // command framework & skull library
-    library("dev.rollczi:litecommands:${Versions.LITE_COMMANDS}")
+    library("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
+    library("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
     library("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
     libraryRelocate(
         "dev.rollczi.litecommands",
