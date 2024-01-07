@@ -2,6 +2,7 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
+import com.eternalcode.core.delay.DelaySettings;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
@@ -263,6 +264,21 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public Duration getHelpOpDelay() {
             return this.helpOpDelay;
+        }
+    }
+
+    @Description({ " ", "# Repair Section" })
+    public Repair repair = new Repair();
+
+    @Contextual
+    public static class Repair implements DelaySettings {
+
+        @Description({" ", "# Repair command cooldown"})
+        public Duration repairDelay = Duration.ofSeconds(5);
+
+        @Override
+        public Duration delay() {
+            return this.repairDelay;
         }
     }
 

@@ -706,6 +706,9 @@ public class ENTranslation extends AbstractTranslation {
         public Notice repairMessage = Notice.chat("<green>► <white>Repaired held item!");
         public Notice repairAllMessage = Notice.chat("<green>► <white>Repaired all items!");
 
+        @Description({ " ", "# {TIME} - Time to next use (cooldown)" })
+        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>You can use this command after <red>{TIME}!");
+
         @Description({ " ", "# {SKULL} - Name of the skull owner" })
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
 

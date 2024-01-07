@@ -1,8 +1,11 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -14,20 +17,42 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
+import java.time.Duration;
+import java.util.UUID;
+
 @Command(name = "repair")
 class RepairCommand {
 
     private final NoticeService noticeService;
+    private final Delay<UUID> delay;
+    private final PluginConfiguration config;
 
     @Inject
-    RepairCommand(NoticeService noticeService) {
+    RepairCommand(NoticeService noticeService, PluginConfiguration config) {
         this.noticeService = noticeService;
+        this.config = config;
+        this.delay = new Delay<>(this.config.repair);
     }
 
     @Execute
     @DescriptionDocs(description = "Repairs item in hand")
     @Permission("eternalcore.repair")
     void repair(@Context Player player) {
+        UUID uuid = player.getUniqueId();
+
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
+
+            this.noticeService
+                .create()
+                .notice(translation -> translation.item().repairDelayMessage())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
+
+            return;
+        }
+
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
@@ -58,12 +83,29 @@ class RepairCommand {
             .notice(translation -> translation.item().repairMessage())
             .player(player.getUniqueId())
             .send();
+
+        this.delay.markDelay(uuid, this.config.repair.delay());
     }
 
     @Execute(name = "all")
     @Permission("eternalcore.repair.all")
     @DescriptionDocs(description = "Repairs all items in inventory")
     void repairAll(@Context Player player) {
+        UUID uuid = player.getUniqueId();
+
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
+
+            this.noticeService
+                .create()
+                .notice(translation -> translation.item().repairDelayMessage())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
+
+            return;
+        }
+
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getContents()) {
 
@@ -77,6 +119,8 @@ class RepairCommand {
 
             exists = true;
             this.repairItem(itemStack);
+
+            this.delay.markDelay(uuid, this.config.repair.delay());
         }
 
         if (!exists) {
@@ -94,12 +138,29 @@ class RepairCommand {
             .notice(translation -> translation.item().repairAllMessage())
             .player(player.getUniqueId())
             .send();
+
+        this.delay.markDelay(uuid, this.config.repair.delay());
     }
 
     @Execute(name = "armor")
     @Permission("eternalcore.repair.armor")
     @DescriptionDocs(description = "Repairs all items in armor")
     void repairArmor(@Context Player player) {
+        UUID uuid = player.getUniqueId();
+
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
+
+            this.noticeService
+                .create()
+                .notice(translation -> translation.item().repairDelayMessage())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
+
+            return;
+        }
+
         boolean exists = false;
         for (ItemStack itemStack : player.getInventory().getArmorContents()) {
 
@@ -130,6 +191,8 @@ class RepairCommand {
             .notice(translation -> translation.item().repairMessage())
             .player(player.getUniqueId())
             .send();
+
+        this.delay.markDelay(uuid, this.config.repair.delay());
     }
 
 
