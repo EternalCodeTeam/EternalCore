@@ -44,11 +44,11 @@ class RepairCommand {
             Duration time = this.delay.getDurationToExpire(uuid);
 
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.item().repairDelayMessage())
-                    .placeholder("{TIME}", DurationUtil.format(time))
-                    .player(uuid)
-                    .send();
+                .create()
+                .notice(translation -> translation.item().repairDelayMessage())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
 
             return;
         }
@@ -58,20 +58,20 @@ class RepairCommand {
 
         if (handItem == null || !(handItem.getItemMeta() instanceof Repairable)) {
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.argument().noItem())
-                    .player(player.getUniqueId())
-                    .send();
+                .create()
+                .notice(translation -> translation.argument().noItem())
+                .player(player.getUniqueId())
+                .send();
 
             return;
         }
 
         if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.argument().noDamaged())
-                    .player(player.getUniqueId())
-                    .send();
+                .create()
+                .notice(translation -> translation.argument().noDamaged())
+                .player(player.getUniqueId())
+                .send();
 
             return;
         }
@@ -79,10 +79,10 @@ class RepairCommand {
         this.repairItem(handItem);
 
         this.noticeService
-                .create()
-                .notice(translation -> translation.item().repairMessage())
-                .player(player.getUniqueId())
-                .send();
+            .create()
+            .notice(translation -> translation.item().repairMessage())
+            .player(player.getUniqueId())
+            .send();
 
         this.delay.markDelay(uuid, this.config.repair.getRepairDelay());
     }
@@ -97,11 +97,11 @@ class RepairCommand {
             Duration time = this.delay.getDurationToExpire(uuid);
 
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.item().repairDelayMessage())
-                    .placeholder("{TIME}", DurationUtil.format(time))
-                    .player(uuid)
-                    .send();
+                .create()
+                .notice(translation -> translation.item().repairDelayMessage())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
 
             return;
         }
@@ -125,19 +125,19 @@ class RepairCommand {
 
         if (!exists) {
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.argument().noDamagedItems())
-                    .player(player.getUniqueId())
-                    .send();
+                .create()
+                .notice(translation -> translation.argument().noDamagedItems())
+                .player(player.getUniqueId())
+                .send();
 
             return;
         }
 
         this.noticeService
-                .create()
-                .notice(translation -> translation.item().repairAllMessage())
-                .player(player.getUniqueId())
-                .send();
+            .create()
+            .notice(translation -> translation.item().repairAllMessage())
+            .player(player.getUniqueId())
+            .send();
 
         this.delay.markDelay(uuid, this.config.repair.getRepairDelay());
     }
@@ -152,11 +152,11 @@ class RepairCommand {
             Duration time = this.delay.getDurationToExpire(uuid);
 
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.item().repairDelayMessage())
-                    .placeholder("{TIME}", DurationUtil.format(time))
-                    .player(uuid)
-                    .send();
+                .create()
+                .notice(translation -> translation.item().repairDelayMessage())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
 
             return;
         }
@@ -178,19 +178,19 @@ class RepairCommand {
 
         if (!exists) {
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.argument().noDamagedItems())
-                    .player(player.getUniqueId())
-                    .send();
+                .create()
+                .notice(translation -> translation.argument().noDamagedItems())
+                .player(player.getUniqueId())
+                .send();
 
             return;
         }
 
         this.noticeService
-                .create()
-                .notice(translation -> translation.item().repairMessage())
-                .player(player.getUniqueId())
-                .send();
+            .create()
+            .notice(translation -> translation.item().repairMessage())
+            .player(player.getUniqueId())
+            .send();
 
         this.delay.markDelay(uuid, this.config.repair.getRepairDelay());
     }
