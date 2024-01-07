@@ -12,25 +12,25 @@ dependencies {
     api(project(":eternalcore-docs-api"))
 
     // Base libraries
-    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly("org.jetbrains:annotations:${Versions.JETBRAINS_ANNOTATIONS}")
 
     // Minecraft & Bridges API
-    compileOnlyApi("org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.5")
+    compileOnlyApi("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
+    compileOnly("me.clip:placeholderapi:${Versions.PLACEHOLDER_API}")
 
     // Lombok
-    compileOnly("org.projectlombok:lombok:1.18.30")
-    annotationProcessor("org.projectlombok:lombok:1.18.30")
+    compileOnly("org.projectlombok:lombok:${Versions.LOMBOK}")
+    annotationProcessor("org.projectlombok:lombok:${Versions.LOMBOK}")
 
     //GitCheck
-    implementation("com.eternalcode:gitcheck:1.0.0")
+    implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
 }
 
 eternalShadow {
     // Paper and Adventure libraries
-    library("io.papermc:paperlib:1.0.8")
-    library("net.kyori:adventure-platform-bukkit:4.3.2")
-    library("net.kyori:adventure-text-minimessage:4.15.0")
+    library("io.papermc:paperlib:${Versions.PAPERLIB}")
+    library("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
+    library("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
@@ -38,31 +38,32 @@ eternalShadow {
     )
 
     // configuration
-    library("net.dzikoysk:cdn:1.14.4")
+    library("net.dzikoysk:cdn:${Versions.CDN_CONFIGS}")
     libraryRelocate(
         "net.dzikoysk.cdn"
     )
 
     // database
-    library("org.mariadb.jdbc:mariadb-java-client:3.3.2")
-    library("org.postgresql:postgresql:42.7.1")
-    library("com.h2database:h2:2.1.214")
-    library("com.j256.ormlite:ormlite-jdbc:6.1")
-    library("com.zaxxer:HikariCP:5.1.0")
+    library("org.mariadb.jdbc:mariadb-java-client:${Versions.MARIA_DB}")
+    library("org.postgresql:postgresql:${Versions.POSTGRESQL}")
+    library("com.h2database:h2:${Versions.H2}")
+    library("com.j256.ormlite:ormlite-core:${Versions.ORMLITE}")
+    library("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
+    library("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
 
     // command framework & skull library
-    library("dev.rollczi:litecommands-bukkit:3.2.2")
-    library("dev.rollczi:litecommands-adventure-platform:3.2.2")
-    library("dev.rollczi:liteskullapi:1.3.0")
+    library("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
+    library("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
+    library("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
     libraryRelocate(
         "dev.rollczi.litecommands",
         "dev.rollczi.liteskullapi"
     )
 
     // common libraries
-    library("org.panda-lang:expressible:1.3.6")
-    library("org.panda-lang:panda-utilities:0.5.3-alpha")
-    library("commons-io:commons-io:2.15.1")
+    library("org.panda-lang:expressible:${Versions.EXPRESSIBLE}")
+    library("org.panda-lang:panda-utilities:${Versions.PANDA_UTILITIES}")
+    library("commons-io:commons-io:${Versions.APACHE_COMMONS}")
     libraryRelocate(
         "panda.std",
         "panda.utilities",
@@ -70,18 +71,17 @@ eternalShadow {
     )
 
     // gui library
-    library("dev.triumphteam:triumph-gui:3.1.7")
+    library("dev.triumphteam:triumph-gui:${Versions.TRIUMPH_GUI}")
     libraryRelocate("dev.triumphteam")
 
     // metrics
-    library("org.bstats:bstats-bukkit:3.0.2")
+    library("org.bstats:bstats-bukkit:${Versions.BSTATS}")
     libraryRelocate("org.bstats")
 
     // pixel-width
-    library("solar.squares:pixel-width-core:1.1.0")
-    library("solar.squares:pixel-width-utils:1.1.0")
+    library("solar.squares:pixel-width-core:${Versions.PIXEL_WIDTH}")
+    library("solar.squares:pixel-width-utils:${Versions.PIXEL_WIDTH}")
     libraryRelocate(
-        "solar.squares:pixel-width-core:1.1.0",
-        "solar.squares:pixel-width-utils:1.1.0"
+        "solar.squares",
     )
 }
