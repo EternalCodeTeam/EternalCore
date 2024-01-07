@@ -84,7 +84,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.getRepairDelay());
+        this.delay.markDelay(uuid, this.config.repair.delay());
     }
 
     @Execute(name = "all")
@@ -120,7 +120,7 @@ class RepairCommand {
             exists = true;
             this.repairItem(itemStack);
 
-            this.delay.markDelay(uuid, this.config.repair.getRepairDelay());
+            this.delay.markDelay(uuid, this.config.repair.delay());
         }
 
         if (!exists) {
@@ -139,7 +139,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.getRepairDelay());
+        this.delay.markDelay(uuid, this.config.repair.delay());
     }
 
     @Execute(name = "armor")
@@ -192,7 +192,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.getRepairDelay());
+        this.delay.markDelay(uuid, this.config.repair.delay());
     }
 
 

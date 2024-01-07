@@ -2,10 +2,10 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
+import com.eternalcode.core.delay.DelaySettings;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
-import com.eternalcode.core.feature.essentials.item.RepairSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
 import com.eternalcode.core.feature.reportchat.HelpOpSettings;
@@ -271,13 +271,13 @@ public class PluginConfiguration implements ReloadableConfig {
     public Repair repair = new Repair();
 
     @Contextual
-    public static class Repair implements RepairSettings {
+    public static class Repair implements DelaySettings {
 
         @Description({" ", "# Repair command cooldown"})
         public Duration repairDelay = Duration.ofSeconds(5);
 
         @Override
-        public Duration getRepairDelay() {
+        public Duration delay() {
             return this.repairDelay;
         }
     }
