@@ -717,6 +717,8 @@ public class PLTranslation extends AbstractTranslation {
         public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podany przedmiot nie istnieje!");
         public Notice repairMessage = Notice.chat("<green>► <white>Naprawiono trzymany przedmiot!");
         public Notice repairAllMessage = Notice.chat("<green>► <white>Naprawiono wszystkie przedmioty!");
+
+        @Description({ " ", "# {TIME} - Czas przed wysłaniem następnej wiadomości (cooldown)" })
         public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Możesz użyć tej komendy za <dark_red>{TIME}!");
 
         @Description({ " ", "# {SKULL} - Nazwa gracza do którego należy głowa" })
