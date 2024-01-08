@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.itemlore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;

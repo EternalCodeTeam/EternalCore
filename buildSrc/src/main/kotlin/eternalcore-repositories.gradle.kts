@@ -12,4 +12,5 @@ repositories {
     maven { url = uri("https://repo.eternalcode.pl/snapshots/") }
     maven { url = uri("https://repo.eternalcode.pl/releases/") }
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
+    maven { url = uri("https://libraries.minecraft.net/") }
 }

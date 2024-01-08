@@ -31,9 +31,11 @@ eternalShadow {
     library("io.papermc:paperlib:${Versions.PAPERLIB}")
     library("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
     library("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
+    library("me.lucko:commodore:${Versions.COMMODORE}")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
+        "me.lucko.commodore",
         "com.google.gson",
     )
 
