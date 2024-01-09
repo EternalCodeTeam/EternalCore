@@ -12,6 +12,7 @@ import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.adventure.bukkit.platform.LiteAdventurePlatformExtension;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.bukkit.LiteCommandsBukkit;
+import dev.rollczi.litecommands.command.CommandManager;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
@@ -41,9 +42,18 @@ class LiteCommandsSetup implements Subscriber {
         return LiteCommandsAnnotations.create();
     }
 
+    @Bean
+    public LiteCommands<CommandSender> liteCommands(LiteCommandsBuilder<CommandSender, ?, ?> liteCommandsBuilder) {
+        return liteCommandsBuilder.build();
+    }
+
+    @Bean
+    public CommandManager<CommandSender> commandManager(LiteCommands<CommandSender> liteCommands) {
+        return liteCommands.getCommandManager();
+    }
+
     @Subscribe(EternalInitializeEvent.class)
-    public void onEnable(BeanFactory beanFactory, LiteCommandsBuilder<CommandSender, ?, ?> liteCommandsBuilder) {
-        LiteCommands<CommandSender> register = liteCommandsBuilder.build();
+    public void onEnable(BeanFactory beanFactory, LiteCommands<CommandSender> register) {
         beanFactory.addCandidate(LiteCommands.class, () -> register);
     }
 

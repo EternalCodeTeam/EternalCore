@@ -33,7 +33,7 @@ class ItemLoreCommand {
         this.miniMessage = miniMessage;
     }
 
-    @Execute
+    @Execute(name = "set")
     @DescriptionDocs(description = "Sets lore of item in hand", arguments = "<line> <text>")
     void execute(@Context Player player, @Arg int line, @Join String text) {
         ItemStack itemStack = this.validateItemFromMainHand(player);

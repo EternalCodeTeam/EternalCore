@@ -8,7 +8,7 @@ import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
-import com.eternalcode.core.feature.reportchat.HelpOpSettings;
+import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleport.request.TeleportRequestSettings;
