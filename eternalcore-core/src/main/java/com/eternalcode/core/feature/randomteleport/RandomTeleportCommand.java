@@ -52,11 +52,11 @@ class RandomTeleportCommand {
             Duration time = this.delay.getDurationToExpire(uuid);
 
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.randomTeleport().randomTeleportDelay())
-                    .placeholder("{TIME}", DurationUtil.format(time))
-                    .player(uuid)
-                    .send();
+                .create()
+                .notice(translation -> translation.randomTeleport().randomTeleportDelay())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
 
             return;
         }
@@ -90,11 +90,11 @@ class RandomTeleportCommand {
             Duration time = this.delay.getDurationToExpire(uuid);
 
             this.noticeService
-                    .create()
-                    .notice(translation -> translation.randomTeleport().randomTeleportDelay())
-                    .placeholder("{TIME}", DurationUtil.format(time))
-                    .player(uuid)
-                    .send();
+                .create()
+                .notice(translation -> translation.randomTeleport().randomTeleportDelay())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
 
             return;
         }
