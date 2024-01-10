@@ -14,6 +14,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -48,16 +49,7 @@ class RandomTeleportCommand {
     void executeSelf(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
-
-            this.noticeService
-                .create()
-                .notice(translation -> translation.randomTeleport().randomTeleportDelay())
-                .placeholder("{TIME}", DurationUtil.format(time))
-                .player(uuid)
-                .send();
-
+        if (this.hasRTPDelay(uuid)) {
             return;
         }
 
@@ -85,16 +77,7 @@ class RandomTeleportCommand {
     void executeOther(@Context Viewer sender, @Arg Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
-
-            this.noticeService
-                .create()
-                .notice(translation -> translation.randomTeleport().randomTeleportDelay())
-                .placeholder("{TIME}", DurationUtil.format(time))
-                .player(uuid)
-                .send();
-
+        if (this.hasRTPDelay(uuid)) {
             return;
         }
 
@@ -134,5 +117,22 @@ class RandomTeleportCommand {
         this.noticeService.viewer(sender,
             translation -> translation.randomTeleport().teleportedSpecifiedPlayerToRandomLocation(),
             PLACEHOLDERS.toFormatter(player));
+    }
+
+
+    private boolean hasRTPDelay(UUID uuid) {
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
+
+            this.noticeService
+                .create()
+                .notice(translation -> translation.randomTeleport().randomTeleportDelay())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
+
+            return true;
+        }
+        return false;
     }
 }
