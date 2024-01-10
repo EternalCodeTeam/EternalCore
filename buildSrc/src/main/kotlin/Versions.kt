@@ -1,6 +1,5 @@
-class Versions {
+object Versions {
 
-    companion object {
         const val SPIGOT_API = "1.19.4-R0.1-SNAPSHOT"
         const val PAPER_API = "1.19.4-R0.1-SNAPSHOT"
 
@@ -34,6 +33,5 @@ class Versions {
 
         const val BSTATS = "3.0.2"
         const val PIXEL_WIDTH = "1.1.0"
-    }
 
 }
