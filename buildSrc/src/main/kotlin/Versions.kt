@@ -5,7 +5,7 @@ object Versions {
 
         const val JETBRAINS_ANNOTATIONS = "24.1.0"
         const val PLACEHOLDER_API = "2.11.5"
-        const val LOMBOK = "1.18.20"
+        const val LOMBOK = "1.18.30"
         const val GIT_CHECK = "1.0.0"
 
         const val PAPERLIB = "1.0.8"
