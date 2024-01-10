@@ -14,7 +14,6 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -49,7 +48,7 @@ class RandomTeleportCommand {
     void executeSelf(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.hasRTPDelay(uuid)) {
+        if (this.hasRandomTeleportDelay(uuid)) {
             return;
         }
 
@@ -77,7 +76,7 @@ class RandomTeleportCommand {
     void executeOther(@Context Viewer sender, @Arg Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.hasRTPDelay(uuid)) {
+        if (this.hasRandomTeleportDelay(uuid)) {
             return;
         }
 
@@ -119,7 +118,7 @@ class RandomTeleportCommand {
             PLACEHOLDERS.toFormatter(player));
     }
 
-    private boolean hasRTPDelay(UUID uuid) {
+    private boolean hasRandomTeleportDelay(UUID uuid) {
         if (this.delay.hasDelay(uuid)) {
             Duration time = this.delay.getDurationToExpire(uuid);
 
