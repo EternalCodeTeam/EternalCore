@@ -119,7 +119,6 @@ class RandomTeleportCommand {
             PLACEHOLDERS.toFormatter(player));
     }
 
-
     private boolean hasRTPDelay(UUID uuid) {
         if (this.delay.hasDelay(uuid)) {
             Duration time = this.delay.getDurationToExpire(uuid);
