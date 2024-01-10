@@ -235,7 +235,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokalizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
 
         @Description({ " ", "# {TIME} - Czas do następnego użycia komendy (cooldown)" })
-        public Notice randomTeleportDelay = Notice.chat("<red>✘ <dark_red>Błąd: <red>Możesz użyć tej komendy dopiero za <dark_red>{TIME}!");
+        public Notice randomTeleportDelay = Notice.chat("<red>✘ <dark_red>Błąd: <red>Możesz skorzystać z losowej teleportacji dopiero za <dark_red>{TIME}!");
     }
 
     @Description({
