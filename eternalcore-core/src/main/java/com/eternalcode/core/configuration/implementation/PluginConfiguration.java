@@ -165,7 +165,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
 
         @Description("# Delay to request next random teleportation")
-        public Duration randomTeleportDelay = Duration.ofSeconds(15);
+        public Duration randomTeleportDelay = Duration.ofSeconds(60);
 
         @Override
         public Duration delay() {
