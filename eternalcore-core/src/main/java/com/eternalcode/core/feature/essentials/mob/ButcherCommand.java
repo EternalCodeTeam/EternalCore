@@ -25,12 +25,10 @@ import java.util.List;
 class ButcherCommand {
 
     private final NoticeService noticeService;
-    private final int safeChunksNumber;
 
     @Inject
     ButcherCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
         this.noticeService = noticeService;
-        this.safeChunksNumber = pluginConfiguration.butcher.safeChunkNumber;
     }
 
     @Execute
@@ -51,26 +49,7 @@ class ButcherCommand {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }
 
-    private void killMobs(Player player, Integer chunksNumber, MobFilter mobFilter) {
-        if (chunksNumber <= 0) {
-            this.noticeService.create()
-                .notice(translation -> translation.argument().incorrectNumberOfChunks())
-                .player(player.getUniqueId())
-                .send();
-
-            return;
-        }
-
-        if (chunksNumber > this.safeChunksNumber) {
-            this.noticeService.create()
-                .notice(translation -> translation.player().safeChunksMessage())
-                .player(player.getUniqueId())
-                .placeholder("{SAFE_CHUNKS}", String.valueOf(this.safeChunksNumber))
-                .send();
-
-            return;
-        }
-
+    private void killMobs(Player player, int chunksNumber, MobFilter mobFilter) {
         Collection<Chunk> chunks = this.getChunksNearPlayer(player, chunksNumber);
 
         int killedMobs = 0;
