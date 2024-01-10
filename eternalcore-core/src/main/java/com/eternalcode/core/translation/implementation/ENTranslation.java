@@ -234,6 +234,10 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>You have teleported <green>{PLAYER} <white>to a random location! His current location is: world: {WORLD}, x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
+
+        @Description({ " ", "# {TIME} - Time to next use (cooldown)" })
+        public Notice randomTeleportDelay = Notice.chat("<red>✘ <dark_red>You can use this command only after <red>{TIME}!");
+
     }
 
     public ENChatSection chat = new ENChatSection();

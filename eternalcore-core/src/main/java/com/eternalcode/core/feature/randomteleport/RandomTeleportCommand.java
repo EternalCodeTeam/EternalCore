@@ -1,9 +1,12 @@
 package com.eternalcode.core.feature.randomteleport;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
+import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -11,6 +14,9 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
+import java.util.UUID;
 
 @Command(name = "rtp", aliases = "randomteleport")
 class RandomTeleportCommand {
@@ -25,17 +31,37 @@ class RandomTeleportCommand {
 
     private final NoticeService noticeService;
     private final RandomTeleportService randomTeleportService;
+    private final PluginConfiguration config;
+    private final Delay<UUID> delay;
 
     @Inject
-    RandomTeleportCommand(NoticeService noticeService, RandomTeleportService randomTeleportService) {
+    RandomTeleportCommand(NoticeService noticeService, RandomTeleportService randomTeleportService, PluginConfiguration config) {
         this.noticeService = noticeService;
         this.randomTeleportService = randomTeleportService;
+        this.config = config;
+        this.delay = new Delay<>(this.config.randomTeleport);
     }
 
     @Execute
     @Permission("eternalcore.rtp")
     @DescriptionDocs(description = "Teleportation of the sender to a random location.")
     void executeSelf(@Context Player player) {
+        UUID uuid = player.getUniqueId();
+
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
+
+            this.noticeService
+                    .create()
+                    .notice(translation -> translation.randomTeleport().randomTeleportDelay())
+                    .placeholder("{TIME}", DurationUtil.format(time))
+                    .player(uuid)
+                    .send();
+
+            return;
+        }
+
+
         this.noticeService.create()
             .notice(translation -> translation.randomTeleport().randomTeleportStarted())
             .player(player.getUniqueId())
@@ -50,12 +76,29 @@ class RandomTeleportCommand {
 
                 this.handleTeleportSuccess(player);
             });
+
+        this.delay.markDelay(uuid, this.config.randomTeleport.delay());
     }
 
     @Execute
     @Permission("eternalcore.rtp.other")
     @DescriptionDocs(description = "Teleportation of a player to a random location.", arguments = "<player>")
     void executeOther(@Context Viewer sender, @Arg Player player) {
+        UUID uuid = player.getUniqueId();
+
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
+
+            this.noticeService
+                    .create()
+                    .notice(translation -> translation.randomTeleport().randomTeleportDelay())
+                    .placeholder("{TIME}", DurationUtil.format(time))
+                    .player(uuid)
+                    .send();
+
+            return;
+        }
+
         this.noticeService.create()
             .notice(translation -> translation.randomTeleport().randomTeleportStarted())
             .player(player.getUniqueId())
@@ -71,6 +114,8 @@ class RandomTeleportCommand {
                 this.handleTeleportSuccess(player);
                 this.handleAdminTeleport(sender, player);
             });
+
+        this.delay.markDelay(uuid, this.config.randomTeleport.delay());
     }
 
     private void handleTeleportFailure(Player player) {

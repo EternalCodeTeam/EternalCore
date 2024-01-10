@@ -123,7 +123,7 @@ public class PluginConfiguration implements ReloadableConfig {
     public RandomTeleport randomTeleport = new RandomTeleport();
 
     @Contextual
-    public static class RandomTeleport implements RandomTeleportSettings {
+    public static class RandomTeleport implements RandomTeleportSettings, DelaySettings {
         @Description({
             "# Type of random teleportation,",
             "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
@@ -162,6 +162,14 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public int randomTeleportAttempts() {
             return this.randomTeleportAttempts;
+        }
+
+        @Description("# Delay to request next random teleportation")
+        public Duration randomTeleportDelay = Duration.ofSeconds(15);
+
+        @Override
+        public Duration delay() {
+            return this.randomTeleportDelay;
         }
     }
 
