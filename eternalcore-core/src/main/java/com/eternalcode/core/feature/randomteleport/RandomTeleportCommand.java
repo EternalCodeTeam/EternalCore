@@ -61,7 +61,6 @@ class RandomTeleportCommand {
             return;
         }
 
-
         this.noticeService.create()
             .notice(translation -> translation.randomTeleport().randomTeleportStarted())
             .player(player.getUniqueId())
