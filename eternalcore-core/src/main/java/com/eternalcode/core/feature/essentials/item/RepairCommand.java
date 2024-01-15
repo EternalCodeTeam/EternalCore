@@ -6,10 +6,10 @@ import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -40,16 +40,7 @@ class RepairCommand {
     void repair(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
-
-            this.noticeService
-                .create()
-                .notice(translation -> translation.item().repairDelayMessage())
-                .placeholder("{TIME}", DurationUtil.format(time))
-                .player(uuid)
-                .send();
-
+        if (this.hasRepairDelay(uuid)) {
             return;
         }
 
@@ -93,16 +84,7 @@ class RepairCommand {
     void repairAll(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
-
-            this.noticeService
-                .create()
-                .notice(translation -> translation.item().repairDelayMessage())
-                .placeholder("{TIME}", DurationUtil.format(time))
-                .player(uuid)
-                .send();
-
+        if (this.hasRepairDelay(uuid)) {
             return;
         }
 
@@ -148,16 +130,7 @@ class RepairCommand {
     void repairArmor(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
-
-            this.noticeService
-                .create()
-                .notice(translation -> translation.item().repairDelayMessage())
-                .placeholder("{TIME}", DurationUtil.format(time))
-                .player(uuid)
-                .send();
-
+        if (this.hasRepairDelay(uuid)) {
             return;
         }
 
@@ -195,6 +168,21 @@ class RepairCommand {
         this.delay.markDelay(uuid, this.config.repair.delay());
     }
 
+    private boolean hasRepairDelay(UUID uuid) {
+        if (this.delay.hasDelay(uuid)) {
+            Duration time = this.delay.getDurationToExpire(uuid);
+
+            this.noticeService
+                .create()
+                .notice(translation -> translation.item().repairDelayMessage())
+                .placeholder("{TIME}", DurationUtil.format(time))
+                .player(uuid)
+                .send();
+
+            return true;
+        }
+        return false;
+    }
 
     private void repairItem(ItemStack itemStack) {
         if (itemStack.getItemMeta() == null) {
