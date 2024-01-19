@@ -16,10 +16,10 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 @LiteArgument(type = int.class, name = ItemLoreArgument.KEY)
-public class ItemLoreArgument extends AbstractViewerArgument<Integer> {
+class ItemLoreArgument extends AbstractViewerArgument<Integer> {
 
-    private static final List<Integer> suggestions = List.of(5, 10, 15, 20, 25);
-    public static final String KEY = "item-lore";
+    private static final List<Integer> suggestions = List.of(0, 1, 2, 3, 4, 5);
+    static final String KEY = "item-lore";
 
     @Inject
     public ItemLoreArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {

@@ -16,10 +16,10 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 @LiteArgument(type = int.class, name = TimeArgument.KEY)
-public class TimeArgument extends AbstractViewerArgument<Integer> {
+class TimeArgument extends AbstractViewerArgument<Integer> {
 
     private static final List<Integer> suggestions = List.of(1000, 6000, 13000, 18000);
-    public static final String KEY = "time";
+    static final String KEY = "time";
 
     @Inject
     public TimeArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {

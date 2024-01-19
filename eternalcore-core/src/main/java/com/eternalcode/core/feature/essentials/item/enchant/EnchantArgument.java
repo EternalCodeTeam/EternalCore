@@ -16,10 +16,10 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 @LiteArgument(type = int.class, name = EnchantArgument.KEY)
-public class EnchantArgument extends AbstractViewerArgument<Integer> {
+class EnchantArgument extends AbstractViewerArgument<Integer> {
 
     private static final List<Integer> suggestions = List.of(1, 2, 3, 4, 5);
-    public static final String KEY = "enchant-level";
+    static final String KEY = "enchant-level";
 
     @Inject
     public EnchantArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
@@ -31,14 +31,10 @@ public class EnchantArgument extends AbstractViewerArgument<Integer> {
         try {
             int value = Integer.parseInt(argument);
 
-            if (value < 0) {
-                return ParseResult.failure(translation.argument().numberBiggerThanOrEqualZero());
-            }
-
             return ParseResult.success(value);
         }
         catch (NumberFormatException exception) {
-            return ParseResult.failure(translation.argument().numberBiggerThanOrEqualZero());
+            return ParseResult.failure(translation.argument().noValidEnchantmentLevel());
         }
     }
 
