@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.essentials.item.enchant;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
@@ -31,7 +31,7 @@ class EnchantCommand {
 
     @Execute
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level>")
-    void execute(@Context Player player, @Arg Enchantment enchantment, @Arg int level) {
+    void execute(@Context Player player, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
@@ -54,7 +54,7 @@ class EnchantCommand {
 
     @Execute
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level> <player>")
-    void execute(@Context Player sender, @Arg Enchantment enchantment, @Arg int level, @Arg Player target) {
+    void execute(@Context Player sender, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level, @Arg Player target) {
         PlayerInventory targetInventory = target.getInventory();
         ItemStack handItem = targetInventory.getItem(targetInventory.getHeldItemSlot());
 

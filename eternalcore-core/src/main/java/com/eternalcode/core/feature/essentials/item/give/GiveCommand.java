@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.essentials.item.give;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
@@ -66,7 +66,7 @@ class GiveCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives you an item with a custom amount", arguments = "<item> <amount>")
-    void execute(@Context Player player, @Arg Material material, @Arg Integer amount) {
+    void execute(@Context Player player, @Arg Material material, @Arg(GiveArgument.KEY) int amount) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(player, material, amount);
@@ -80,7 +80,7 @@ class GiveCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <player>")
-    void execute(@Context Viewer viewer, @Arg Material material, @Arg Integer amount, @Arg Player target) {
+    void execute(@Context Viewer viewer, @Arg Material material, @Arg(GiveArgument.KEY) int amount, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
         this.giveItem(target, material, amount);
