@@ -101,6 +101,13 @@
     ]
   },
   {
+    "name": "Player First Join",
+    "permissions": [],
+    "descriptions": [
+      "Teleport to spawn on first join"
+    ]
+  },
+  {
     "name": "Player Join Message",
     "permissions": [],
     "descriptions": [

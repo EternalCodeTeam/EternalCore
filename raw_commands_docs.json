@@ -223,6 +223,19 @@
     ]
   },
   {
+    "name": "chat slowmode 0",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.chat"
+    ],
+    "descriptions": [
+      "Disable SlowMode for chat"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "clear ",
     "aliases": [],
     "permissions": [
@@ -960,7 +973,7 @@
     "name": "repair all",
     "aliases": [],
     "permissions": [
-      "eternalcore.repair"
+      "eternalcore.repair.all"
     ],
     "descriptions": [
       "Repairs all items in inventory"
@@ -973,7 +986,7 @@
     "name": "repair armor",
     "aliases": [],
     "permissions": [
-      "eternalcore.repair"
+      "eternalcore.repair.armor"
     ],
     "descriptions": [
       "Repairs all items in armor"
@@ -1267,6 +1280,19 @@
       "eternalcore.teleport"
     ],
     "descriptions": [
+      "Teleport to specified location"
+    ],
+    "arguments": [
+      "\u003cx\u003e \u003cy\u003e \u003cz\u003e"
+    ]
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": [
       "Teleport player to specified player, location and world"
     ],
     "arguments": [
@@ -1310,6 +1336,19 @@
     ],
     "arguments": [
       "\u003cplayer\u003e \u003ctarget-player\u003e"
+    ]
+  },
+  {
+    "name": "teleport ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.teleport"
+    ],
+    "descriptions": [
+      "Teleport player to specified location and world"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003cx\u003e \u003cy\u003e \u003cz\u003e"
     ]
   },
   {
@@ -1523,7 +1562,7 @@
       "Teleport specified player to specified coordinates"
     ],
     "arguments": [
-      "\u003cplayer\u003e \u003cx\u003e \u003cy\u003e \u003cz\u003e"
+      "\u003cx\u003e \u003cy\u003e \u003cz\u003e \u003cplayer\u003e"
     ]
   },
   {
