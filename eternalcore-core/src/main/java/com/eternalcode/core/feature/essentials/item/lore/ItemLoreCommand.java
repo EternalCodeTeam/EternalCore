@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.essentials.item.lore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -35,7 +35,7 @@ class ItemLoreCommand {
 
     @Execute
     @DescriptionDocs(description = "Sets lore of item in hand", arguments = "<line> <text>")
-    void execute(@Context Player player, @Arg Integer line, @Join String text) {
+    void execute(@Context Player player, @Arg(ItemLoreArgument.KEY) int line, @Join String text) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {

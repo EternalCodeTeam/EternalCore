@@ -1,5 +1,6 @@
-package com.eternalcode.core.bridge.litecommand.argument;
+package com.eternalcode.core.feature.essentials.time;
 
+import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
@@ -14,13 +15,14 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-@LiteArgument(type = Integer.class)
-public class UniversalIntegerArgument extends AbstractViewerArgument<Integer> {
+@LiteArgument(type = int.class, name = TimeArgument.KEY)
+public class TimeArgument extends AbstractViewerArgument<Integer> {
 
-    static final List<Integer> suggestions = List.of(5, 10, 15, 20, 25);
+    private static final List<Integer> suggestions = List.of(1000, 6000, 13000, 18000);
+    public static final String KEY = "time";
 
     @Inject
-    public UniversalIntegerArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
+    public TimeArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
         super(viewerProvider, translationManager);
     }
 
@@ -28,6 +30,11 @@ public class UniversalIntegerArgument extends AbstractViewerArgument<Integer> {
     public ParseResult<Integer> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         try {
             int value = Integer.parseInt(argument);
+
+            if (value < 0) {
+                return ParseResult.failure(translation.argument().numberBiggerThanOrEqualZero());
+            }
+
             return ParseResult.success(value);
         }
         catch (NumberFormatException exception) {
@@ -42,5 +49,3 @@ public class UniversalIntegerArgument extends AbstractViewerArgument<Integer> {
             .collect(SuggestionResult.collector());
     }
 }
-
-
