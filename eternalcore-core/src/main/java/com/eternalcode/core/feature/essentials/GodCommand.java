@@ -11,8 +11,6 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
-
 @Command(name = "god", aliases = "godmode")
 class GodCommand {
 
