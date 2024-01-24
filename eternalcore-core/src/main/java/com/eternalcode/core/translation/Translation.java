@@ -281,12 +281,16 @@ public interface Translation {
         Notice speedFlySetBy();
 
         // godmode
-        Notice godMessage();
-        Notice godSetMessage();
+        Notice godEnable();
+        Notice godDisable();
+        Notice godSetEnable();
+        Notice godSetDisable();
 
         // fly
-        Notice flyMessage();
-        Notice flySetMessage();
+        Notice flyEnable();
+        Notice flyDisable();
+        Notice flySetEnable();
+        Notice flySetDisable();
 
         // ping
         Notice pingMessage();

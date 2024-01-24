@@ -5,10 +5,10 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
 @Command(name = "god", aliases = "godmode")
@@ -28,9 +28,13 @@ class GodCommand {
         sender.setInvulnerable(!sender.isInvulnerable());
 
         this.noticeService.create()
-            .placeholder("{STATE}", translation -> sender.isInvulnerable() ? translation.format().enable() : translation.format().disable())
-            .notice(translation -> translation.player().godMessage())
             .player(sender.getUniqueId())
+            .notice(translation -> sender.isInvulnerable()
+                ? translation.player().godEnable()
+                : translation.player().godDisable())
+            .placeholder("{STATE}", translation -> sender.isInvulnerable()
+                ? translation.format().enable()
+                : translation.format().disable())
             .send();
     }
 
@@ -41,17 +45,24 @@ class GodCommand {
         target.setInvulnerable(!target.isInvulnerable());
 
         this.noticeService.create()
-            .placeholder("{STATE}", translation -> target.isInvulnerable() ? translation.format().enable() : translation.format().disable())
-            .notice(translation -> translation.player().godMessage())
             .player(target.getUniqueId())
+            .notice(translation -> target.isInvulnerable()
+                ? translation.player().godEnable()
+                : translation.player().godDisable())
+            .placeholder("{STATE}", translation -> target.isInvulnerable()
+                ? translation.format().enable()
+                : translation.format().disable())
             .send();
 
+
         this.noticeService.create()
-            .placeholder("{STATE}", translation -> target.isInvulnerable() ? translation.format().enable() : translation.format().disable())
-            .placeholder("{PLAYER}", target.getName())
-            .notice(translation -> translation.player().godSetMessage())
+            .placeholder("{STATE}", translation -> target.isInvulnerable()
+                ? translation.format().enable()
+                : translation.format().disable())
+            .notice(translation -> target.isInvulnerable()
+                ? translation.player().godEnable()
+                : translation.player().godDisable())
             .viewer(viewer)
             .send();
     }
-
 }

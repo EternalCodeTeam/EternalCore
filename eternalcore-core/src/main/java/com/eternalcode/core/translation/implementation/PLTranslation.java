@@ -608,14 +608,19 @@ public class PLTranslation extends AbstractTranslation {
         public Notice speedFlySetBy = Notice.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
 
         @Description({ " ", "# {STATE} - Status nieśmiertelności" })
-        public Notice godMessage = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
+        public Notice godEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
+        public Notice godDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
+
         @Description("# {PLAYER} - Gracz któremu został ustawiony tryb nieśmiertelności, {STATE} - Status nieśmiertelności")
-        public Notice godSetMessage = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
+        public Notice godSetEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
+        public Notice godSetDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
 
         @Description({ " ", "# {STATE} - Status latania" })
-        public Notice flyMessage = Notice.chat("<green>► <white>Latanie zostało {STATE}");
+        public Notice flyEnable = Notice.chat("<green>► <white>Latanie zostało {STATE}");
+        public Notice flyDisable = Notice.chat("<green>► <white>Latanie zostało {STATE}");
         @Description("# {PLAYER} - Gracz któremu zostało ustawione latanie, {STATE} - Status latania")
-        public Notice flySetMessage = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
+        public Notice flySetEnable = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
+        public Notice flySetDisable = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
 
         @Description({ " ", "# {PING} - Aktualna ilość pingu." })
         public Notice pingMessage = Notice.chat("<green>► <white>Twój ping: <green>{PING}<white>ms");

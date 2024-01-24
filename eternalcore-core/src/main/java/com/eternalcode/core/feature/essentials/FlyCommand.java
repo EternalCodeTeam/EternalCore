@@ -5,10 +5,10 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
 @Command(name = "fly")
@@ -28,7 +28,7 @@ class FlyCommand {
         player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.create()
-            .notice(translation -> translation.player().flyMessage())
+            .notice(translation -> player.getAllowFlight() ? translation.player().flyEnable() : translation.player().flyDisable())
             .placeholder("{STATE}", translation -> player.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .player(player.getUniqueId())
             .send();
@@ -41,13 +41,13 @@ class FlyCommand {
         target.setAllowFlight(!target.getAllowFlight());
 
         this.noticeService.create()
-            .notice(translation -> translation.player().flyMessage())
+            .notice(translation -> target.getAllowFlight() ? translation.player().flyEnable() : translation.player().flyDisable())
             .placeholder("{STATE}", translation -> target.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.player().flySetMessage())
+            .notice(translation -> target.getAllowFlight() ? translation.player().flySetEnable() : translation.player().flySetDisable())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{STATE}", translation -> target.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .viewer(viewer)

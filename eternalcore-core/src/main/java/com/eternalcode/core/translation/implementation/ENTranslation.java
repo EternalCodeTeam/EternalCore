@@ -589,16 +589,20 @@ public class ENTranslation extends AbstractTranslation {
         public Notice speedFlySetBy = Notice.chat("<green>► <white>Flying speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
 
         @Description({ " ", "# {STATE} - Godmode status" })
-        public Notice godMessage = Notice.chat("<green>► <white>God is now {STATE}");
+        public Notice godEnable = Notice.chat("<green>► <white>God is now {STATE}");
+        public Notice godDisable = Notice.chat("<green>► <white>God is now {STATE}");
 
         @Description({ " ", "# {PLAYER} - Target player, {STATE} - Target player godmode status" })
-        public Notice godSetMessage = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>god is now: {STATE}");
+        public Notice godSetEnable = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>god is now: {STATE}");
+        public Notice godSetDisable = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>god is now: {STATE}");
 
         @Description({ " ", "# {STATE} - Fly status" })
-        public Notice flyMessage = Notice.chat("<green>► <white>Fly is now {STATE}");
+        public Notice flyEnable = Notice.chat("<green>► <white>Fly is now {STATE}");
+        public Notice flyDisable = Notice.chat("<green>► <white>Fly is now {STATE}");
 
         @Description("# {PLAYER} - Target player, {STATE} - Target player fly status")
-        public Notice flySetMessage = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
+        public Notice flySetEnable = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
+        public Notice flySetDisable = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
 
         @Description({ " ", "# {PING} - Current ping" })
         public Notice pingMessage = Notice.chat("<green>► <white>Your ping is: <green>{PING}<white>ms");
