@@ -34,7 +34,7 @@ public class SudoCommand {
         this.sendSudoSpy(viewer, command);
     }
 
-    @Execute(name = "player")
+    @Execute
     @Permission("eternalcore.sudo.player")
     @DescriptionDocs(description = "Execute command as player", arguments = "<player> <command>")
     void player(@Context Viewer viewer, @Arg Player target, @Arg String command) {
