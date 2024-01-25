@@ -26,7 +26,7 @@ public class SudoCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(name = "console")
+    @Execute(name = "-console")
     @Permission("eternalcore.sudo.console")
     @DescriptionDocs(description = "Execute command as console", arguments = "<command>")
     void console(@Context Viewer viewer, @Arg String command) {
