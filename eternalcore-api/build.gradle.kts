@@ -1,6 +1,7 @@
 plugins {
     `eternalcode-java`
     `eternalcore-repositories`
+    `eternalcore-publish`
 }
 
 dependencies {

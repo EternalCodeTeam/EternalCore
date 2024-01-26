@@ -1,11 +1,13 @@
 package com.eternalcode.core.feature.afk;
 
 import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.afk.event.AfkSwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -14,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-class AfkService {
+class AfkServiceImpl implements AfkService {
 
     private final AfkSettings afkSettings;
     private final NoticeService noticeService;
@@ -26,13 +28,14 @@ class AfkService {
     private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
     @Inject
-    AfkService(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
+    public AfkServiceImpl(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
         this.afkSettings = afkSettings;
         this.noticeService = noticeService;
         this.userManager = userManager;
         this.eventCaller = eventCaller;
     }
 
+    @Override
     public void switchAfk(UUID player, AfkReason reason) {
         if (this.isAfk(player)) {
             this.clearAfk(player);
@@ -42,6 +45,7 @@ class AfkService {
         this.markAfk(player, reason);
     }
 
+    @Override
     public Afk markAfk(UUID player, AfkReason reason) {
         Afk afk = new Afk(player, reason, Instant.now());
 
@@ -52,50 +56,50 @@ class AfkService {
         return afk;
     }
 
-    public void markInteraction(UUID player) {
-        this.lastInteraction.put(player, Instant.now());
+    @Override
+    public void markInteraction(UUID uniqueId) {
+        this.lastInteraction.put(uniqueId, Instant.now());
 
-        if (!this.isAfk(player)) {
+        if (!this.isAfk(uniqueId)) {
             return;
         }
 
-        int count = this.interactionsCount.getOrDefault(player, 0);
+        int count = this.interactionsCount.getOrDefault(uniqueId, 0);
         count++;
 
         if (count >= this.afkSettings.interactionsCountDisableAfk()) {
-            this.clearAfk(player);
+            this.clearAfk(uniqueId);
             return;
         }
 
-        this.interactionsCount.put(player, count);
+        this.interactionsCount.put(uniqueId, count);
     }
 
-    public void clearAfk(UUID player) {
-        Afk afk = this.afkByPlayer.remove(player);
+    @Override
+    public void clearAfk(UUID uniqueId) {
+        Afk afk = this.afkByPlayer.remove(uniqueId);
 
         if (afk == null) {
             return;
         }
 
-        this.interactionsCount.remove(player);
-        this.lastInteraction.remove(player);
+        this.interactionsCount.remove(uniqueId);
+        this.lastInteraction.remove(uniqueId);
         this.eventCaller.callEvent(new AfkSwitchEvent(afk));
-        this.sendAfkNotification(player, false);
+        this.sendAfkNotification(uniqueId, false);
     }
 
-    public boolean isAfk(UUID player) {
-        return this.afkByPlayer.containsKey(player);
+    @Override
+    public boolean isAfk(UUID uniqueId) {
+        return this.afkByPlayer.containsKey(uniqueId);
     }
 
-    public boolean isInactive(UUID player) {
+    @ApiStatus.Internal
+    boolean isInactive(UUID player) {
         Instant now = Instant.now();
         Instant lastMovement = this.lastInteraction.get(player);
 
-        if (lastMovement != null && Duration.between(lastMovement, now).compareTo(this.afkSettings.getAfkInactivityTime()) >= 0) {
-            return true;
-        }
-
-        return false;
+        return lastMovement != null && Duration.between(lastMovement, now).compareTo(this.afkSettings.getAfkInactivityTime()) >= 0;
     }
 
     private void sendAfkNotification(UUID player, boolean afk) {

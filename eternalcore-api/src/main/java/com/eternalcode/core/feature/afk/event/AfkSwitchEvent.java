@@ -1,12 +1,16 @@
-package com.eternalcode.core.feature.afk;
+package com.eternalcode.core.feature.afk.event;
 
+import com.eternalcode.core.feature.afk.Afk;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-class AfkSwitchEvent extends Event implements Cancellable {
+/**
+ * Called when a player switches their afk status.
+ */
+public class AfkSwitchEvent extends Event implements Cancellable {
 
-    private final static HandlerList HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Afk afk;
     private boolean cancelled;
@@ -16,6 +20,11 @@ class AfkSwitchEvent extends Event implements Cancellable {
         this.afk = afk;
     }
 
+    /**
+     * Returns the afk object.
+     *
+     * @return the afk object
+     */
     public Afk getAfk() {
         return this.afk;
     }
