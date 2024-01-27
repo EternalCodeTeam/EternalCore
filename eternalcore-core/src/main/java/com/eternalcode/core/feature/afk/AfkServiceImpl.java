@@ -28,7 +28,7 @@ class AfkServiceImpl implements AfkService {
     private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
     @Inject
-    public AfkServiceImpl(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
+    AfkServiceImpl(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
         this.afkSettings = afkSettings;
         this.noticeService = noticeService;
         this.userManager = userManager;
