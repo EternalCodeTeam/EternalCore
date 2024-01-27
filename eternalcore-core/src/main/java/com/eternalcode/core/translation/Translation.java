@@ -63,6 +63,13 @@ public interface Translation {
         Notice format();
     }
 
+    SudoSection sudo();
+
+    interface SudoSection {
+        Notice sudoMessageSpy();
+        Notice sudoMessage();
+    }
+
     // Teleport Section
     TeleportSection teleport();
 
