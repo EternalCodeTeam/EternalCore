@@ -20,11 +20,6 @@ public class AfkSwitchEvent extends Event implements Cancellable {
         this.afk = afk;
     }
 
-    /**
-     * Returns the afk object.
-     *
-     * @return the afk object
-     */
     public Afk getAfk() {
         return this.afk;
     }

@@ -18,23 +18,23 @@ public interface AfkService {
     /**
      * Switches player's AFK status.
      *
-     * @param player Unique identifier of the player.
+     * @param uniqueId Unique identifier of the player.
      * @param reason Reason for switching AFK status.
      */
-    void switchAfk(UUID player, AfkReason reason);
+    void switchAfk(UUID uniqueId, AfkReason reason);
 
     /**
      * Marks interaction of a uniqueId. Typically, it is a mark of activity.
      * Default eternalcore requires 20 interactions to mark the player as active.
      *
-     * @param uniqueId Unique identifier of the uniqueId.
+     * @param uniqueId Unique identifier of the player.
      */
     void markInteraction(UUID uniqueId);
 
     /**
      * Clears the AFK status of a uniqueId.
      *
-     * @param uniqueId Unique identifier of the uniqueId.
+     * @param uniqueId Unique identifier of the player.
      */
     void clearAfk(UUID uniqueId);
 

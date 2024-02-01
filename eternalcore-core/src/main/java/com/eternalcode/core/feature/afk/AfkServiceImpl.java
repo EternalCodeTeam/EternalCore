@@ -36,13 +36,13 @@ class AfkServiceImpl implements AfkService {
     }
 
     @Override
-    public void switchAfk(UUID player, AfkReason reason) {
-        if (this.isAfk(player)) {
-            this.clearAfk(player);
+    public void switchAfk(UUID uniqueId, AfkReason reason) {
+        if (this.isAfk(uniqueId)) {
+            this.clearAfk(uniqueId);
             return;
         }
 
-        this.markAfk(player, reason);
+        this.markAfk(uniqueId, reason);
     }
 
     @Override
