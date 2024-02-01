@@ -22,7 +22,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Publish with Gradle
-        run: ./gradlew clean build eternalcore-api:publish
+        run: ./gradlew eternalcore-api:publish
         env:
           ETERNAL_CODE_MAVEN_USERNAME: ${{ secrets.ETERNAL_CODE_MAVEN_USERNAME }}
           ETERNAL_CODE_MAVEN_PASSWORD: ${{ secrets.ETERNAL_CODE_MAVEN_PASSWORD }}
