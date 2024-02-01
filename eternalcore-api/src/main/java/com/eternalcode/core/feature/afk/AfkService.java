@@ -25,7 +25,7 @@ public interface AfkService {
 
     /**
      * Marks interaction of a uniqueId. Typically, it is a mark of activity.
-     * Default eternalcore requires 20 interactions to mark the player as active.
+     * Default configuration of the plugin requires 20 interactions to mark the player as active.
      *
      * @param uniqueId Unique identifier of the player.
      */
