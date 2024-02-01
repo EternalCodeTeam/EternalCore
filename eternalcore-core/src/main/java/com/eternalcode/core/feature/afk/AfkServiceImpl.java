@@ -36,78 +36,78 @@ class AfkServiceImpl implements AfkService {
     }
 
     @Override
-    public void switchAfk(UUID uniqueId, AfkReason reason) {
-        if (this.isAfk(uniqueId)) {
-            this.clearAfk(uniqueId);
+    public void switchAfk(UUID playerUniqueId, AfkReason reason) {
+        if (this.isAfk(playerUniqueId)) {
+            this.clearAfk(playerUniqueId);
             return;
         }
 
-        this.markAfk(uniqueId, reason);
+        this.markAfk(playerUniqueId, reason);
     }
 
     @Override
-    public Afk markAfk(UUID player, AfkReason reason) {
-        Afk afk = new Afk(player, reason, Instant.now());
+    public Afk markAfk(UUID playerUniqueId, AfkReason reason) {
+        Afk afk = new Afk(playerUniqueId, reason, Instant.now());
 
-        this.afkByPlayer.put(player, afk);
+        this.afkByPlayer.put(playerUniqueId, afk);
         this.eventCaller.callEvent(new AfkSwitchEvent(afk));
-        this.sendAfkNotification(player, true);
+        this.sendAfkNotification(playerUniqueId, true);
 
         return afk;
     }
 
     @Override
-    public void markInteraction(UUID uniqueId) {
-        this.lastInteraction.put(uniqueId, Instant.now());
+    public void markInteraction(UUID playerUniqueId) {
+        this.lastInteraction.put(playerUniqueId, Instant.now());
 
-        if (!this.isAfk(uniqueId)) {
+        if (!this.isAfk(playerUniqueId)) {
             return;
         }
 
-        int count = this.interactionsCount.getOrDefault(uniqueId, 0);
+        int count = this.interactionsCount.getOrDefault(playerUniqueId, 0);
         count++;
 
         if (count >= this.afkSettings.interactionsCountDisableAfk()) {
-            this.clearAfk(uniqueId);
+            this.clearAfk(playerUniqueId);
             return;
         }
 
-        this.interactionsCount.put(uniqueId, count);
+        this.interactionsCount.put(playerUniqueId, count);
     }
 
     @Override
-    public void clearAfk(UUID uniqueId) {
-        Afk afk = this.afkByPlayer.remove(uniqueId);
+    public void clearAfk(UUID playerUniqueId) {
+        Afk afk = this.afkByPlayer.remove(playerUniqueId);
 
         if (afk == null) {
             return;
         }
 
-        this.interactionsCount.remove(uniqueId);
-        this.lastInteraction.remove(uniqueId);
+        this.interactionsCount.remove(playerUniqueId);
+        this.lastInteraction.remove(playerUniqueId);
         this.eventCaller.callEvent(new AfkSwitchEvent(afk));
-        this.sendAfkNotification(uniqueId, false);
+        this.sendAfkNotification(playerUniqueId, false);
     }
 
     @Override
-    public boolean isAfk(UUID uniqueId) {
-        return this.afkByPlayer.containsKey(uniqueId);
+    public boolean isAfk(UUID playerUniqueId) {
+        return this.afkByPlayer.containsKey(playerUniqueId);
     }
 
     @ApiStatus.Internal
-    boolean isInactive(UUID player) {
+    boolean isInactive(UUID playerUniqueId) {
         Instant now = Instant.now();
-        Instant lastMovement = this.lastInteraction.get(player);
+        Instant lastMovement = this.lastInteraction.get(playerUniqueId);
 
         return lastMovement != null && Duration.between(lastMovement, now).compareTo(this.afkSettings.getAfkInactivityTime()) >= 0;
     }
 
-    private void sendAfkNotification(UUID player, boolean afk) {
+    private void sendAfkNotification(UUID playerUniqueId, boolean afk) {
         this.noticeService.create()
             .onlinePlayers()
-            .player(player)
+            .player(playerUniqueId)
             .notice(translation -> afk ? translation.afk().afkOn() : translation.afk().afkOff())
-            .placeholder("{PLAYER}", this.userManager.getUser(player).map(User::getName))
+            .placeholder("{PLAYER}", this.userManager.getUser(playerUniqueId).map(User::getName))
             .send();
     }
 
