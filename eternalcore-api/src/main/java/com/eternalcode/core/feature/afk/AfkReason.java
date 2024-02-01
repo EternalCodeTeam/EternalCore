@@ -18,5 +18,5 @@ public enum AfkReason {
     /**
      * Reason is a plugin, that is the status was set programmatically by a plugin or API.
      */
-    PLUGIN,
+    PLUGIN
 }
