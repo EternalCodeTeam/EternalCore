@@ -58,6 +58,48 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 - :rainbow: Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing (e.g., &7, &e)
 - [...and much more!](https://docs.eternalcode.pl/eternalcore/features.html)
 
+## :construction_worker: Developer API
+
+To use EternalCore API, you firstly need to add EternalCode to your project. To do that follow these steps:
+You can check latest release number [here](github.com/EternalCodeTeam/EternalCore/releases/latest).
+
+1. Add repository:
+
+For Gradle projects use:
+```groovy
+maven {
+    url = uri("https://repo.eternalcode.pl/releases")
+}
+```
+
+For Maven projects use:
+```xml
+<repository>
+    <id>eternalcode-reposilite-releases</id>
+    <name>EternalCode Repository</name>
+    <url>https://repo.eternalcode.pl/releases</url>
+</repository>
+```
+
+2. Add dependency:
+
+For Gradle projects use:
+```groovy
+compileOnly("com.eternalcode:eternalcore-api:1.1.0")
+```
+
+For Maven projects use:
+```xml
+<dependency>
+    <groupId>com.eternalcode</groupId>
+    <artifactId>eternalcore-api</artifactId>
+    <version>1.1.0</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+3. You are ready to use EternalCoreAPI in your project.
+
 ## :building_construction: Building
 
 To build EternalCore, follow these steps (Make sure you have **JDK 17 or higher**):
