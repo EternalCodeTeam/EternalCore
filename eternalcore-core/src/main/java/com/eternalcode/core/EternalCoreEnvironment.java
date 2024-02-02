@@ -9,25 +9,17 @@ import java.util.logging.Logger;
 
 class EternalCoreEnvironment {
 
-    private final EternalCoreApi eternalCoreApi;
     private final Logger logger;
     private final Stopwatch stopwatch = Stopwatch.createStarted();
 
-    EternalCoreEnvironment(EternalCoreApi eternalCoreApi, Logger logger) {
-        this.eternalCoreApi = eternalCoreApi;
+    EternalCoreEnvironment(Logger logger) {
         this.logger = logger;
         this.checkSoftware();
     }
 
     void initialize() {
-        EternalCoreApiProvider.initialize(this.eternalCoreApi);
-
         long millis = this.stopwatch.elapsed(TimeUnit.MILLISECONDS);
         this.logger.info("Successfully loaded EternalCore in " + millis + "ms");
-    }
-
-    void shutdown() {
-        EternalCoreApiProvider.deinitialize();
     }
 
     private void checkSoftware() {

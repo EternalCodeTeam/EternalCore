@@ -13,12 +13,14 @@ import java.util.UUID;
 class AfkTask implements Runnable {
 
     private final AfkService afkService;
+    private final AfkServiceImpl afkServiceImpl;
     private final VanishService vanishService;
     private final Server server;
 
     @Inject
-    public AfkTask(AfkService afkService, VanishService vanishService, Server server) {
+    public AfkTask(AfkService afkService, AfkServiceImpl afkServiceImpl, VanishService vanishService, Server server) {
         this.afkService = afkService;
+        this.afkServiceImpl = afkServiceImpl;
         this.vanishService = vanishService;
         this.server = server;
     }
@@ -36,7 +38,7 @@ class AfkTask implements Runnable {
                 continue;
             }
 
-            if (this.afkService.isInactive(playerUuid)) {
+            if (this.afkServiceImpl.isInactive(playerUuid)) {
                 this.afkService.markAfk(playerUuid, AfkReason.INACTIVITY);
             }
         }

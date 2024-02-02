@@ -3,7 +3,10 @@ package com.eternalcode.core.feature.afk;
 import java.time.Instant;
 import java.util.UUID;
 
-class Afk {
+/**
+ * Represents a player being away from keyboard (AFK).
+ */
+public class Afk {
 
     private final UUID player;
     private final AfkReason afkReason;

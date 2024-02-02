@@ -24,13 +24,13 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.logging.Logger;
 
-class EternalCore implements EternalCoreApi {
+class EternalCore {
 
     private final EternalCoreEnvironment eternalCoreEnvironment;
     private final Publisher publisher;
 
     public EternalCore(Plugin plugin) {
-        this.eternalCoreEnvironment = new EternalCoreEnvironment(this, plugin.getLogger());
+        this.eternalCoreEnvironment = new EternalCoreEnvironment(plugin.getLogger());
 
         BeanProcessor beanProcessor = BeanProcessorFactory.defaultProcessors(plugin);
         BeanFactory beanFactory = new BeanFactory(beanProcessor)
@@ -57,13 +57,14 @@ class EternalCore implements EternalCoreApi {
 
         this.publisher = beanFactory.getDependency(Publisher.class);
 
+        EternalCoreApiProvider.initialize(new EternalCoreApiImpl(beanFactory));
         this.eternalCoreEnvironment.initialize();
         this.publisher.publish(new EternalInitializeEvent());
     }
 
     public void disable() {
         this.publisher.publish(new EternalShutdownEvent());
-        this.eternalCoreEnvironment.shutdown();
+        EternalCoreApiProvider.deinitialize();
     }
 
     private void loadConfigContextual(BeanFactory beanFactory) {
