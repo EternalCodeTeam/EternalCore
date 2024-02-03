@@ -66,13 +66,6 @@ You can check the latest release number [here](github.com/EternalCodeTeam/Eterna
 1. Add repository:
 
 For Gradle projects use:
-```groovy
-maven {
-    url = uri("https://repo.eternalcode.pl/releases")
-}
-```
-
-For KTS projects use:
 ```kts
 maven("https://repo.eternalcode.pl/releases")
 ```
