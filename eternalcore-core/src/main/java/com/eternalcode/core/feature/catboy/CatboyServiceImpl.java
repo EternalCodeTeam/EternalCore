@@ -8,15 +8,17 @@ import org.bukkit.entity.Cat;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 class CatboyServiceImpl implements CatboyService {
 
-    private final Set<UUID> catboys = new HashSet<>();
+    private final Map<UUID, Catboy> catboys = new HashMap<>();
     private final EventCaller eventCaller;
 
     @Inject
@@ -26,7 +28,9 @@ class CatboyServiceImpl implements CatboyService {
 
     @Override
     public void markAsCatboy(Player player, Cat.Type type) {
-        this.catboys.add(player.getUniqueId());
+        Catboy catboy = new Catboy(player.getUniqueId(), type);
+        this.catboys.put(player.getUniqueId(), catboy);
+
         Cat entity = (Cat) player.getWorld().spawnEntity(player.getLocation(), EntityType.CAT);
         entity.setInvulnerable(true);
         entity.setOwner(player);
@@ -50,12 +54,17 @@ class CatboyServiceImpl implements CatboyService {
 
     @Override
     public boolean isCatboy(UUID uuid) {
-        return this.catboys.contains(uuid);
+        return this.catboys.containsKey(uuid);
     }
 
     @Override
-    public Set<UUID> getCatboys() {
-        return Collections.unmodifiableSet(this.catboys);
+    public Optional<Catboy> getCatboy(UUID uuid) {
+        return Optional.ofNullable(this.catboys.get(uuid));
+    }
+
+    @Override
+    public Collection<Catboy> getCatboys() {
+        return Collections.unmodifiableCollection(this.catboys.values());
     }
 
 }

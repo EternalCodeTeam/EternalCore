@@ -4,7 +4,8 @@ import org.bukkit.entity.Cat;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.Set;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -36,9 +37,14 @@ public interface CatboyService {
     boolean isCatboy(UUID uuid);
 
     /**
+     * Gets the catboy of a player.
+     */
+    Optional<Catboy> getCatboy(UUID uuid);
+
+    /**
      * Gets a set of all catboys.
      */
     @Unmodifiable
-    Set<UUID> getCatboys();
+    Collection<Catboy> getCatboys();
 
 }

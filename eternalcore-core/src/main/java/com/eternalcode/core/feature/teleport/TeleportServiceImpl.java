@@ -29,7 +29,7 @@ class TeleportServiceImpl implements TeleportService {
 
     @Override
     public void teleport(Player player, Location location) {
-        EternalTeleportEvent event = eventCaller.callEvent(new EternalTeleportEvent(player, location));
+        EternalTeleportEvent event = this.eventCaller.callEvent(new EternalTeleportEvent(player, location));
 
         if (event.isCancelled()) {
             return;
