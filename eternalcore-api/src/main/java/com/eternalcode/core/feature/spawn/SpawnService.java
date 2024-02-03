@@ -22,6 +22,4 @@ public interface SpawnService {
      * Provides the spawn location in the game.
      */
     Location getSpawnLocation();
-
-
 }
