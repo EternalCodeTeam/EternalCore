@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.automessage;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.Notice;
@@ -26,16 +27,18 @@ class AutoMessageService {
     private final AutoMessageRepository repository;
     private final AutoMessageSettings settings;
     private final NoticeService noticeService;
+    private final PluginConfiguration config;
     private final Scheduler scheduler;
     private final Server server;
 
     private final AtomicInteger broadcastCount = new AtomicInteger(0);
 
     @Inject
-    AutoMessageService(AutoMessageRepository repository, AutoMessageSettings settings, NoticeService noticeService, Scheduler scheduler, Server server) {
+    AutoMessageService(AutoMessageRepository repository, AutoMessageSettings settings, NoticeService noticeService, PluginConfiguration config, Scheduler scheduler, Server server) {
         this.repository = repository;
         this.settings = settings;
         this.noticeService = noticeService;
+        this.config = config;
         this.scheduler = scheduler;
         this.server = server;
 
@@ -50,6 +53,11 @@ class AutoMessageService {
         Set<UUID> onlineUniqueIds = this.server.getOnlinePlayers().stream()
             .map(Entity::getUniqueId)
             .collect(Collectors.toSet());
+
+        int requiredReceivers = this.config.autoMessage.minPlayers;
+        if (onlineUniqueIds.size() < requiredReceivers) {
+            return;
+        }
 
         this.repository.findReceivers(onlineUniqueIds).then(receivers -> {
             if (receivers.isEmpty()) {
