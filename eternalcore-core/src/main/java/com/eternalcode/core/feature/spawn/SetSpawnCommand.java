@@ -13,19 +13,19 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.setspawn")
 class SetSpawnCommand {
 
-    private final SpawnServiceImpl spawnServiceImpl;
+    private final SpawnService spawnService;
     private final NoticeService noticeService;
 
     @Inject
-    SetSpawnCommand(SpawnServiceImpl spawnServiceImpl, NoticeService noticeService) {
-        this.spawnServiceImpl = spawnServiceImpl;
+    SetSpawnCommand(SpawnService spawnService, NoticeService noticeService) {
+        this.spawnService = spawnService;
         this.noticeService = noticeService;
     }
 
     @Execute
     @DescriptionDocs(description = "Set spawn location")
     void execute(@Context Player player) {
-        this.spawnServiceImpl.setSpawnLocation(player.getLocation());
+        this.spawnService.setSpawnLocation(player.getLocation());
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnSet())
