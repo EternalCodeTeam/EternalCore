@@ -14,8 +14,9 @@ public interface SpawnLocation {
      * To convert this Position object into a Bukkit Location object, use the {@link PositionAdapter} class.
      *
      * @return The spawn location as a Position object.
-     * @see com.eternalcode.core.position.Position
-     * @see com.eternalcode.core.position.PositionAdapter
+     * @see Position
+     * @see PositionAdapter
+     *
      */
     Position getSpawnLocation();
 }
