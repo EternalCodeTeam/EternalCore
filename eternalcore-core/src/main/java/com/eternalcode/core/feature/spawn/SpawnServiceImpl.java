@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -14,6 +15,7 @@ public class SpawnServiceImpl implements SpawnService {
     private final LocationsConfiguration locationsConfiguration;
     private final ConfigurationManager configurationManager;
 
+    @Inject
     public SpawnServiceImpl(LocationsConfiguration locationsConfiguration, ConfigurationManager configurationManager) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
