@@ -60,8 +60,8 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 
 ## :construction_worker: Developer API
 
-To use EternalCore API, you firstly need to add EternalCode to your project. To do that follow these steps:
-You can check latest release number [here](github.com/EternalCodeTeam/EternalCore/releases/latest).
+To use EternalCore API, you first need to add EternalCode to your project. To do that follow these steps:
+You can check the latest release number [here](github.com/EternalCodeTeam/EternalCore/releases/latest).
 
 1. Add repository:
 
@@ -72,11 +72,15 @@ maven {
 }
 ```
 
+For KTS projects use:
+```kts
+maven("https://repo.eternalcode.pl/releases")
+```
+
 For Maven projects use:
 ```xml
 <repository>
     <id>eternalcode-reposilite-releases</id>
-    <name>EternalCode Repository</name>
     <url>https://repo.eternalcode.pl/releases</url>
 </repository>
 ```
@@ -84,7 +88,7 @@ For Maven projects use:
 2. Add dependency:
 
 For Gradle projects use:
-```groovy
+```kts
 compileOnly("com.eternalcode:eternalcore-api:1.1.0")
 ```
 
