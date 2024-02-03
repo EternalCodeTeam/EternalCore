@@ -1,4 +1,4 @@
-package com.eternalcode.core.shared;
+package com.eternalcode.core.position;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

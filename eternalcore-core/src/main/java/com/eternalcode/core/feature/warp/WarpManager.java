@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.shared.Position;
+import com.eternalcode.core.position.Position;
 import panda.std.Option;
 
 import java.util.Collection;

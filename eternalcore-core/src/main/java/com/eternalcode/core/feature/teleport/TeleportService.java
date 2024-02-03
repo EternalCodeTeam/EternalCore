@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.shared.Position;
-import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.core.position.Position;
+import com.eternalcode.core.position.PositionAdapter;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
