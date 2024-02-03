@@ -2,20 +2,22 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.feature.teleport.TeleportService;
-import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
 
 @Command(name = "spawn")
 class SpawnCommand {
@@ -72,7 +74,11 @@ class SpawnCommand {
             return;
         }
 
-        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()), PositionAdapter.convert(destinationLocation), this.spawnSettings.teleportationTimeToSpawn());
+        Position convert = PositionAdapter.convert(destinationLocation);
+        Duration time = this.spawnSettings.teleportationTimeToSpawn();
+
+        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()),
+            convert, time);
 
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleporting())

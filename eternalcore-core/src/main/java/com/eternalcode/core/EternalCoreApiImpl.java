@@ -1,6 +1,7 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
+import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.injector.DependencyProvider;
 
 class EternalCoreApiImpl implements EternalCoreApi {
@@ -14,5 +15,10 @@ class EternalCoreApiImpl implements EternalCoreApi {
     @Override
     public AfkService getAfkService() {
         return this.dependencyProvider.getDependency(AfkService.class);
+    }
+
+    @Override
+    public SpawnService getSpawnService() {
+        return this.dependencyProvider.getDependency(SpawnService.class);
     }
 }
