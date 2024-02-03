@@ -29,6 +29,14 @@ public interface CatboyService {
     void unmarkAsCatboy(Player player);
 
     /**
+     * Changes the type of catboy.
+     *
+     * @param target The player to change the type of.
+     * @param type The new type of the catboy.
+     */
+    void changeCatboyType(Player target, Cat.Type type);
+
+    /**
      * Checks if a player is a catboy.
      *
      * @param uuid The UUID of the player to check.

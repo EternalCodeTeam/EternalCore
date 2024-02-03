@@ -26,19 +26,23 @@ class CatboyCommand {
     @Execute
     @DescriptionDocs(description = "Mark yourself as a catboy.", arguments = "[type]")
     void executeCatboySelf(@Context Player player, @Arg("type") Optional<Cat.Type> type) {
-        if (this.catboyService.isCatboy(player.getUniqueId())) {
-            this.catboyService.unmarkAsCatboy(player);
-            return;
-        }
-
-        this.catboyService.markAsCatboy(player, type.orElse(Cat.Type.BLACK));
+        this.switchCatboy(player, type);
     }
 
     @Execute
     @DescriptionDocs(description = "Mark a player as a catboy.", arguments = "<player> [type]")
     @Permission("eternalcore.catboy.others")
-    void executeCatboy(@Arg Player target, @Arg("type") Optional<Cat.Type> type) {
+    void executeCatboy(@Arg("target") Player target, @Arg("type") Optional<Cat.Type> type) {
+        this.switchCatboy(target, type);
+    }
+
+    private void switchCatboy(Player target, Optional<Cat.Type> type) {
         if (this.catboyService.isCatboy(target.getUniqueId())) {
+            if (type.isPresent()) {
+                this.catboyService.changeCatboyType(target, type.get());
+                return;
+            }
+
             this.catboyService.unmarkAsCatboy(target);
             return;
         }

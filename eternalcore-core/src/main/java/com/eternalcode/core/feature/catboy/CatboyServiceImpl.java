@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.catboy;
 
 import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.catboy.event.CatboyChangeTypeEvent;
 import com.eternalcode.core.feature.catboy.event.CatboySwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -50,6 +51,29 @@ class CatboyServiceImpl implements CatboyService {
         player.setWalkSpeed(0.2F);
 
         this.eventCaller.callEvent(new CatboySwitchEvent(player, false));
+    }
+
+    @Override
+    public void changeCatboyType(Player target, Cat.Type type) {
+        Catboy catboy = this.catboys.get(target.getUniqueId());
+
+        if (catboy == null) {
+            return;
+        }
+
+        CatboyChangeTypeEvent event = new CatboyChangeTypeEvent(target, catboy.selectedType(), type);
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        this.catboys.put(target.getUniqueId(), new Catboy(target.getUniqueId(), type));
+
+        target.getPassengers().forEach(entity -> {
+            if (entity instanceof Cat cat) {
+                cat.setCatType(type);
+            }
+        });
     }
 
     @Override
