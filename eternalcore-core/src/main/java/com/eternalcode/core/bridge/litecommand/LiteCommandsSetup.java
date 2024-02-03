@@ -11,7 +11,7 @@ import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.adventure.bukkit.platform.LiteAdventurePlatformExtension;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
-import dev.rollczi.litecommands.bukkit.LiteCommandsBukkit;
+import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
@@ -29,7 +29,7 @@ class LiteCommandsSetup implements Subscriber {
         MiniMessage miniMessage,
         LiteCommandsAnnotations<CommandSender> liteCommandsAnnotations
     ) {
-        return LiteCommandsBukkit.builder("eternalcore", plugin, server)
+        return LiteBukkitFactory.builder("eternalcore", plugin, server)
             .commands(liteCommandsAnnotations)
             .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
                 .serializer(miniMessage)
