@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.catboy;
 
+import org.bukkit.entity.Cat;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
@@ -12,11 +13,16 @@ public interface CatboyService {
 
     /**
      * Marks a player as a catboy.
+     *
+     * @param player The player to mark as a catboy.
+     * @param type The type of the catboy.
      */
-    void markAsCatboy(Player player);
+    void markAsCatboy(Player player, Cat.Type type);
 
     /**
      * Unmarks a player as a catboy.
+     *
+     * @param player The player to unmark as a catboy.
      */
     void unmarkAsCatboy(Player player);
 

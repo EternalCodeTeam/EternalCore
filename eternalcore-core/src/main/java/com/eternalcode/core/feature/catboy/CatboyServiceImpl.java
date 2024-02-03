@@ -4,6 +4,7 @@ import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.catboy.event.CatboySwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import org.bukkit.entity.Cat;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -24,9 +25,14 @@ class CatboyServiceImpl implements CatboyService {
     }
 
     @Override
-    public void markAsCatboy(Player player) {
+    public void markAsCatboy(Player player, Cat.Type type) {
         this.catboys.add(player.getUniqueId());
-        player.addPassenger(player.getWorld().spawnEntity(player.getLocation(), EntityType.CAT));
+        Cat entity = (Cat) player.getWorld().spawnEntity(player.getLocation(), EntityType.CAT);
+        entity.setInvulnerable(true);
+        entity.setOwner(player);
+        entity.setCatType(type);
+
+        player.addPassenger(entity);
         player.setWalkSpeed(0.4F);
 
         this.eventCaller.callEvent(new CatboySwitchEvent(player, true));
