@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.catboy;
 
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.Set;
 import java.util.UUID;
@@ -37,6 +38,7 @@ public interface CatboyService {
     /**
      * Gets a set of all catboys.
      */
+    @Unmodifiable
     Set<UUID> getCatboys();
 
 }
