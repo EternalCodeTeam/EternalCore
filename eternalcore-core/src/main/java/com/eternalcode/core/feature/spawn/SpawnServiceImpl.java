@@ -3,8 +3,8 @@ package com.eternalcode.core.feature.spawn;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.position.Position;
-import com.eternalcode.core.position.PositionAdapter;
+import com.eternalcode.core.shared.Position;
+import com.eternalcode.core.shared.PositionAdapter;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -25,24 +25,13 @@ public class SpawnServiceImpl implements SpawnService {
     }
 
     @Override
-    public void setSpawnLocation(Position position) {
-        this.locationsConfiguration.spawn = position;
-        this.configurationManager.save(this.locationsConfiguration);
-    }
-
-    @Override
     public void setSpawnLocation(Location location) {
         this.locationsConfiguration.spawn = PositionAdapter.convert(location);
         this.configurationManager.save(this.locationsConfiguration);
     }
 
     @Override
-    public Position getSpawnLocationAsPosition() {
-        return this.locationsConfiguration.spawn;
-    }
-
-    @Override
-    public Location getSpawnLocationAsLocation() {
+    public Location getSpawnLocation() {
         Position spawn = this.locationsConfiguration.spawn;
         return PositionAdapter.convert(spawn);
     }

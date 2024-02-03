@@ -9,7 +9,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeComposer;
-import com.eternalcode.core.position.Position;
+import com.eternalcode.core.shared.Position;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.reflect.Visibility;

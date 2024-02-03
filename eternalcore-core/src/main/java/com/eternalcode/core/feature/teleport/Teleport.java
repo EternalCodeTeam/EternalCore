@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.teleport;
 
-import com.eternalcode.core.position.Position;
+import com.eternalcode.core.shared.Position;
 
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;

@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.teleport.request;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.position.PositionAdapter;
+import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;

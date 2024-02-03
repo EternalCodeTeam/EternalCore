@@ -4,7 +4,7 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.position.Position;
+import com.eternalcode.core.shared.Position;
 import panda.std.Option;
 
 import java.util.HashMap;

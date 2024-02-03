@@ -5,7 +5,7 @@ import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.position.PositionAdapter;
+import com.eternalcode.core.shared.PositionAdapter;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;

@@ -1,4 +1,4 @@
-package com.eternalcode.core.position;
+package com.eternalcode.core.shared;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
