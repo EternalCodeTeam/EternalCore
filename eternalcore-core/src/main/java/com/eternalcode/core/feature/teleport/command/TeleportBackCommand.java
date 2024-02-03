@@ -12,7 +12,8 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import panda.std.Option;
+
+import java.util.Optional;
 
 @Command(name = "back")
 class TeleportBackCommand {
@@ -30,7 +31,7 @@ class TeleportBackCommand {
     @Permission("eternalcore.back")
     @DescriptionDocs(description = "Teleport to last location")
     void execute(@Context Player player) {
-        Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
+        Optional<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.teleport().lastLocationNoExist());
@@ -46,7 +47,7 @@ class TeleportBackCommand {
     @Permission("eternalcore.back.other")
     @DescriptionDocs(description = "Teleport specified player to last location", arguments = "<player>")
     void execute(@Context Viewer viewer, @Arg Player player) {
-        Option<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
+        Optional<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {
             this.noticeService.viewer(viewer, translation -> translation.teleport().lastLocationNoExist());
