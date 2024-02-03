@@ -3,10 +3,10 @@ package com.eternalcode.core.feature.spawn;
 import com.eternalcode.core.position.Position;
 import com.eternalcode.core.position.PositionAdapter;
 
-public interface SpawnLocation {
+public interface SpawnLocationProvider {
 
     /**
-     * Retrieves the spawn location in the game.
+     * Provide the spawn location in the game.
      * <p>
      * The spawn location is represented as a Position object, which includes the x, y, and z coordinates,
      * as well as the yaw and pitch of the location. The world name is also included in the Position object.
