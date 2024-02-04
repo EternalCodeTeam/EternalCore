@@ -18,8 +18,8 @@ public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
     private boolean cancelled;
     private Location location;
 
-    public EternalTeleportEvent(Player who, Location location) {
-        super(who);
+    public EternalTeleportEvent(Player player, Location location) {
+        super(player);
         this.location = location;
     }
 
