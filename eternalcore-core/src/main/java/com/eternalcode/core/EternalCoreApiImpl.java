@@ -1,7 +1,9 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
+import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.spawn.SpawnService;
+import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.DependencyProvider;
 
 class EternalCoreApiImpl implements EternalCoreApi {
@@ -21,4 +23,15 @@ class EternalCoreApiImpl implements EternalCoreApi {
     public SpawnService getSpawnService() {
         return this.dependencyProvider.getDependency(SpawnService.class);
     }
+
+    @Override
+    public CatboyService getCatboyService() {
+        return this.dependencyProvider.getDependency(CatboyService.class);
+    }
+
+    @Override
+    public TeleportService getTeleportService() {
+        return this.dependencyProvider.getDependency(TeleportService.class);
+    }
+
 }

@@ -48,9 +48,13 @@ class AfkServiceImpl implements AfkService {
     @Override
     public Afk markAfk(UUID playerUniqueId, AfkReason reason) {
         Afk afk = new Afk(playerUniqueId, reason, Instant.now());
+        AfkSwitchEvent event = this.eventCaller.callEvent(new AfkSwitchEvent(afk));
+
+        if (event.isCancelled()) {
+            return afk;
+        }
 
         this.afkByPlayer.put(playerUniqueId, afk);
-        this.eventCaller.callEvent(new AfkSwitchEvent(afk));
         this.sendAfkNotification(playerUniqueId, true);
 
         return afk;
@@ -77,15 +81,21 @@ class AfkServiceImpl implements AfkService {
 
     @Override
     public void clearAfk(UUID playerUniqueId) {
-        Afk afk = this.afkByPlayer.remove(playerUniqueId);
+        Afk afk = this.afkByPlayer.get(playerUniqueId);
 
         if (afk == null) {
             return;
         }
 
+        AfkSwitchEvent event = this.eventCaller.callEvent(new AfkSwitchEvent(afk));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        this.afkByPlayer.remove(playerUniqueId);
         this.interactionsCount.remove(playerUniqueId);
         this.lastInteraction.remove(playerUniqueId);
-        this.eventCaller.callEvent(new AfkSwitchEvent(afk));
         this.sendAfkNotification(playerUniqueId, false);
     }
 
