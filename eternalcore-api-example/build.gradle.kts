@@ -1,5 +1,5 @@
 plugins {
-    `eternalcode-java`
+    `java-library`
     `eternalcore-repositories`
 
     id("com.github.johnrengelman.shadow")
@@ -11,7 +11,8 @@ dependencies {
     implementation("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
 
     compileOnly("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
-    compileOnly(project(":eternalcore-api")) // This is the eternalcore-api module
+    compileOnly(project(":eternalcore-api")) // <-- This is the eternalcore-api module,
+    // replace it with compileOnly("com.eternalcode:eternalcore-api:<version>")
 }
 
 bukkit {
@@ -26,7 +27,12 @@ bukkit {
     depend = listOf("EternalCore")
 }
 
-tasks.compileJava {
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs = listOf("-Xlint:deprecation", "-parameters")
     options.encoding = "UTF-8"
 }
 
@@ -35,5 +41,15 @@ tasks.shadowJar {
 
     exclude(
         "META-INF/**",
+        "org/jetbrains/annotations/**",
+        "org/intellij/**",
     )
+
+    val libs = "com.eternalcode.example.libs"
+    listOf(
+        "dev.rollczi",
+        "panda"
+    ).forEach {
+        relocate(it, "$libs.$it")
+    }
 }
