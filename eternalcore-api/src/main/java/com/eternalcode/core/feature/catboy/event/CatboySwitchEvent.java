@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerEvent;
  */
 public class CatboySwitchEvent extends PlayerEvent {
 
-    private static final HandlerList HANDLER_LIST = new HandlerList();
+    private static final HandlerList CATBOY_SWITCH_HANDLER_LIST = new HandlerList();
 
     private final boolean isCatboy;
 
@@ -27,11 +27,11 @@ public class CatboySwitchEvent extends PlayerEvent {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLER_LIST;
+        return CATBOY_SWITCH_HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
+        return CATBOY_SWITCH_HANDLER_LIST;
     }
 
 }
