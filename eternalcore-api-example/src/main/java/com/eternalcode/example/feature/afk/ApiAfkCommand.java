@@ -70,4 +70,9 @@ public class ApiAfkCommand {
         player.sendMessage("Default configuration of the plugin requires 20 interactions to mark the player as active.");
     }
 
+    @Execute(name = "demo")
+    void executeDemo(@Context Player player) {
+        player.showDemoScreen();
+    }
+
 }

@@ -4,6 +4,7 @@ import com.eternalcode.core.EternalCoreApi;
 import com.eternalcode.core.EternalCoreApiProvider;
 import com.eternalcode.example.feature.afk.ApiAfkCommand;
 import com.eternalcode.example.feature.afk.ApiAfkListener;
+import com.eternalcode.example.feature.catboy.CatBoyListener;
 import com.eternalcode.example.feature.spawn.ApiSpawnCommand;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
@@ -40,7 +41,8 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             .build();
 
         Stream.of(
-            new ApiAfkListener()
+            new ApiAfkListener(),
+            new CatBoyListener(provide.getCatboyService())
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, this));
     }
 
