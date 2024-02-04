@@ -2,8 +2,8 @@ package com.eternalcode.core.feature.adminchat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.execute.Execute;

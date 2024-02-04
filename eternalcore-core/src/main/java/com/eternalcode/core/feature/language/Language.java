@@ -70,4 +70,8 @@ public class Language {
         return new Language(locale.getLanguage(), List.of());
     }
 
+    public Locale toLocale() {
+        return new Locale(this.lang);
+    }
+
 }

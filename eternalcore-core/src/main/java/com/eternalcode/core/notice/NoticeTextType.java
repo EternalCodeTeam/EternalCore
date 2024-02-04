@@ -1,11 +1,13 @@
 package com.eternalcode.core.notice;
 
+import com.eternalcode.multification.notice.NoticeType;
+
 public enum NoticeTextType {
 
     CHAT(NoticeType.CHAT),
     ACTION_BAR(NoticeType.ACTION_BAR),
-    TITLE(NoticeType.TITLE_WITH_EMPTY_SUBTITLE),
-    SUBTITLE(NoticeType.SUBTITLE_WITH_EMPTY_TITLE);
+    TITLE(NoticeType.TITLE),
+    SUBTITLE(NoticeType.SUBTITLE);
 
     private final NoticeType type;
 
@@ -13,8 +15,7 @@ public enum NoticeTextType {
         this.type = type;
     }
 
-    NoticeType getType() {
+    public NoticeType getType() {
         return this.type;
     }
-
 }

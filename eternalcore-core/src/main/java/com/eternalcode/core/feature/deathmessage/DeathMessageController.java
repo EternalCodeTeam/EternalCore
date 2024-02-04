@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.notice.Notice;
+import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

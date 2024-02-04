@@ -1,10 +1,11 @@
 package com.eternalcode.core.viewer;
 
+import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import com.eternalcode.multification.viewer.ViewerProvider;
 import org.bukkit.Server;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class BukkitViewerProvider implements ViewerProvider {
+public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerService {
 
     private final UserManager userManager;
     private final Server server;

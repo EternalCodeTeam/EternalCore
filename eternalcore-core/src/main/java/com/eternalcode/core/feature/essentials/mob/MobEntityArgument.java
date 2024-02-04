@@ -6,7 +6,7 @@ import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.EntityUtil;
-import com.eternalcode.core.viewer.ViewerProvider;
+import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -21,8 +21,8 @@ import java.util.stream.Stream;
 class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
 
     @Inject
-    MobEntityArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
-        super(viewerProvider, translationManager);
+    MobEntityArgument(ViewerService viewerService, TranslationManager translationManager) {
+        super(viewerService, translationManager);
     }
 
     @Override

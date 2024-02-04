@@ -3,8 +3,9 @@ package com.eternalcode.core.translation.implementation;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.core.util.AdventureUtil;
+import com.eternalcode.multification.notice.Notice;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -815,14 +816,14 @@ public class ENTranslation extends AbstractTranslation {
         public Map<String, Notice> messages = Map.of(
             "1", Notice.builder()
                 .actionBar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
-                .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
+                .sound(AdventureUtil.toAdventure(Sound.ITEM_ARMOR_EQUIP_IRON), 1.0f, 1.0f)
                 .build(),
 
             "2", Notice.builder()
                 .chat("<dark_gray>» <gold>You need help from an admin?")
                 .chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!")
                 .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Click to execute!</click></green>")
-                .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
+                .sound(AdventureUtil.toAdventure(Sound.BLOCK_ANVIL_BREAK), 1.0f, 1.0f)
                 .build()
         );
 

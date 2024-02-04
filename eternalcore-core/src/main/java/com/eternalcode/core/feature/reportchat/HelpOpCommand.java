@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.notice.NoticeBroadcast;
+import com.eternalcode.multification.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.context.Context;
