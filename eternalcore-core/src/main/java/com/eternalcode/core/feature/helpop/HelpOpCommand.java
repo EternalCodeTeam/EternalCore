@@ -42,8 +42,10 @@ class HelpOpCommand {
     @Execute
     @DescriptionDocs(description = "Send helpop message to all administrator with eternalcore.helpop.spy permission", arguments = "<message>")
     void execute(@Context Player player, @Join String message) {
-        HelpOpEvent event = new HelpOpEvent(player, message);
         UUID uuid = player.getUniqueId();
+        HelpOpEvent event = new HelpOpEvent(player, message);
+
+        this.eventCaller.callEvent(event);
 
         if (event.isCancelled()) {
             return;
@@ -82,8 +84,6 @@ class HelpOpCommand {
             .player(player.getUniqueId())
             .notice(translation -> translation.helpOp().send())
             .send();
-
-        this.eventCaller.callEvent(event);
 
         this.delay.markDelay(uuid, this.config.helpOp.getHelpOpDelay());
     }
