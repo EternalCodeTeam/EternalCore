@@ -1,10 +1,19 @@
 plugins {
     `java-library`
-    `eternalcore-repositories`
 
     id("com.github.johnrengelman.shadow")
     id("net.minecrell.plugin-yml.bukkit")
     id("xyz.jpenilla.run-paper") version "2.2.3"
+}
+
+repositories {
+    mavenCentral()
+
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // spigot
+    maven("https://repo.panda-lang.org/releases/") // expressible
+
+    // maven("https://repo.eternalcode.pl/releases/") // eternalcode
+    // uncomment the line above if you want to use eternalcode repository
 }
 
 dependencies {
