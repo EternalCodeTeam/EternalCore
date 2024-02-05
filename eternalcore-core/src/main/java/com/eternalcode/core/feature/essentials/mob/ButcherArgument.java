@@ -16,15 +16,13 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import java.util.UUID;
 import java.util.stream.IntStream;
 
 @LiteArgument(type = int.class, name = ButcherArgument.KEY)
 class ButcherArgument extends AbstractViewerArgument<Integer> {
 
-    static final String KEY = "butcher";
+    static final String KEY = "chunks";
     private final PluginConfiguration pluginConfiguration;
     private final NoticeService noticeService;
 
