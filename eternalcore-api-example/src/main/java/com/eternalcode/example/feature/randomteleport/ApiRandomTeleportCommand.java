@@ -1,7 +1,6 @@
 package com.eternalcode.example.feature.randomteleport;
 
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
-import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
