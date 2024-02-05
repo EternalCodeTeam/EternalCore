@@ -40,7 +40,7 @@ public class ApiRandomTeleportCommand {
         safeRandomLocation.thenAccept(location -> player.sendMessage("Safe random location: " + location));
     }
 
-    @Execute(name = "teleport-specific-player")
+    @Execute(name = "teleport")
     void execute(@Context Player player, @Arg Player target) {
         this.randomTeleportService.teleport(target);
     }
