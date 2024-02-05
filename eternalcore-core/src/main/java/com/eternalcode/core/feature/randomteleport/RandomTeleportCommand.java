@@ -30,14 +30,14 @@ class RandomTeleportCommand {
         .build();
 
     private final NoticeService noticeService;
-    private final RandomTeleportService randomTeleportService;
+    private final RandomTeleportServiceImpl randomTeleportServiceImpl;
     private final PluginConfiguration config;
     private final Delay<UUID> delay;
 
     @Inject
-    RandomTeleportCommand(NoticeService noticeService, RandomTeleportService randomTeleportService, PluginConfiguration config) {
+    RandomTeleportCommand(NoticeService noticeService, RandomTeleportServiceImpl randomTeleportServiceImpl, PluginConfiguration config) {
         this.noticeService = noticeService;
-        this.randomTeleportService = randomTeleportService;
+        this.randomTeleportServiceImpl = randomTeleportServiceImpl;
         this.config = config;
         this.delay = new Delay<>(this.config.randomTeleport);
     }
@@ -57,7 +57,7 @@ class RandomTeleportCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.randomTeleportService.teleport(player)
+        this.randomTeleportServiceImpl.teleport(player)
             .whenCompleteAsync((result, error) -> {
                 if (error != null || !result.success()) {
                     this.handleTeleportFailure(player);
@@ -85,7 +85,7 @@ class RandomTeleportCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.randomTeleportService.teleport(player)
+        this.randomTeleportServiceImpl.teleport(player)
             .whenCompleteAsync((result, error) -> {
                 if (error != null || !result.success()) {
                     this.handleTeleportFailure(player);
