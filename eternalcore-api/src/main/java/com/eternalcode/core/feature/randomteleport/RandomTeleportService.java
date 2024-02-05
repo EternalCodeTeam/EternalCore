@@ -37,14 +37,23 @@ public interface RandomTeleportService {
     CompletableFuture<Location> getSafeRandomLocation(World world, int attemptCount);
 
     /**
-     * Asynchronously retrieves a safe random location within the specified world,
-     * considering the specified RandomTeleportType, radius, and attempt count.
+     * Asynchronously retrieves a safe random location within the specified world, using radius.
      *
      * @param world        The world in which to find a random location.
-     * @param type         The type of random teleportation.
-     * @param radius       The radius around the center for random teleportation.
+     * @param radius       The radius around the player to search for a safe location.
      * @param attemptCount The number of attempts to find a safe location.
      * @return A CompletableFuture containing the random Location that is deemed safe.
      */
-    CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportType type, int radius, int attemptCount);
+    CompletableFuture<Location> getSafeRandomLocation(World world, int radius, int attemptCount);
+
+    /**
+     * Asynchronously retrieves a safe random location within the border in specified world.
+     *
+     * @param world        The world in which to find a random location.
+     * @param attemptCount The number of attempts to find a safe location.
+     * @return A CompletableFuture containing the random Location that is deemed safe.
+     */
+    CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount);
+
+
 }

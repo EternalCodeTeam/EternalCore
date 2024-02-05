@@ -35,7 +35,7 @@ public class ApiRandomTeleportCommand {
         World world = player.getWorld();
 
         CompletableFuture<Location> safeRandomLocation =
-            this.randomTeleportService.getSafeRandomLocation(world, type, radius, attempts);
+            this.randomTeleportService.getSafeRandomLocation(world, radius, attempts);
 
         safeRandomLocation.thenAccept(location -> player.sendMessage("Safe random location: " + location));
     }

@@ -106,7 +106,16 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportType type, int radius, int attemptCount) {
+    public CompletableFuture<Location> getSafeRandomLocation(World world, int radius, int attemptCount) {
+        return this.getSafeRandomLocation(world, RandomTeleportType.STATIC_RADIUS, radius, attemptCount);
+    }
+
+    @Override
+    public CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount) {
+        return this.getSafeRandomLocation(world, RandomTeleportType.WORLD_BORDER_RADIUS, 0, attemptCount);
+    }
+
+    private CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportType type, int radius, int attemptCount) {
         if (attemptCount < 0) {
             return CompletableFuture.failedFuture(new RuntimeException("Cannot find safe location"));
         }
