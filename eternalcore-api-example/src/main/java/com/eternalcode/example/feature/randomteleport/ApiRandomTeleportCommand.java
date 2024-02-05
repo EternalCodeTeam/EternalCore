@@ -31,7 +31,7 @@ public class ApiRandomTeleportCommand {
     }
 
     @Execute(name = "safe-random-location-with-radius")
-    void execute(@Context Player player, @Arg RandomTeleportType type, @Arg int radius, @Arg int attempts) {
+    void execute(@Context Player player, @Arg int radius, @Arg int attempts) {
         World world = player.getWorld();
 
         CompletableFuture<Location> safeRandomLocation =
