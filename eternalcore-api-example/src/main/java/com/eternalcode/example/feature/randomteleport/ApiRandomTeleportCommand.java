@@ -45,7 +45,7 @@ public class ApiRandomTeleportCommand {
         this.randomTeleportService.teleport(target);
     }
 
-    @Execute(name = "teleport-specific-player-world")
+    @Execute(name = "teleport")
     void execute(@Context Player player, @Arg Player target, @Arg World world) {
         this.randomTeleportService.teleport(target, world);
     }
