@@ -20,7 +20,7 @@ public class ApiRandomTeleportCommand {
         this.randomTeleportService = randomTeleportService;
     }
 
-    @Execute(name = "get-safe-random-location-with-attempts")
+    @Execute(name = "safe-random-location")
     void execute(@Context Player player, @Arg int attempts) {
         World world = player.getWorld();
 
