@@ -146,7 +146,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         });
     }
 
-    public boolean isSafeLocation(Chunk chunk, Location location) {
+    boolean isSafeLocation(Chunk chunk, Location location) {
         if (location == null || location.getWorld() == null) {
             return false;
         }
