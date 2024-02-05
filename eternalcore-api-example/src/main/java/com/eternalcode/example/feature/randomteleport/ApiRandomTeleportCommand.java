@@ -30,7 +30,7 @@ public class ApiRandomTeleportCommand {
         safeRandomLocation.thenAccept(location -> player.sendMessage("Safe random location: " + location));
     }
 
-    @Execute(name = "get-safe-random-location-with-type-radius-attempts")
+    @Execute(name = "safe-random-location-with-radius")
     void execute(@Context Player player, @Arg RandomTeleportType type, @Arg int radius, @Arg int attempts) {
         World world = player.getWorld();
 
