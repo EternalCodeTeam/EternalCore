@@ -64,14 +64,6 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
     @Override
     public CompletableFuture<TeleportResult> teleport(Player player) {
-        PreRandomTeleportEvent preRandomTeleportEvent = new PreRandomTeleportEvent(player);
-
-        this.eventCaller.callEvent(preRandomTeleportEvent);
-
-        if (preRandomTeleportEvent.isCancelled()) {
-            return CompletableFuture.completedFuture(new TeleportResult(false, player.getLocation()));
-        }
-
         World world = player.getWorld();
 
         if (!this.randomTeleportSettings.randomTeleportWorld().isBlank()) {
@@ -80,6 +72,20 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
             if (world == null) {
                 throw new IllegalStateException("World " + this.randomTeleportSettings.randomTeleportWorld() + " is not exists!");
             }
+        }
+
+
+        return this.teleport(player, world);
+    }
+
+    @Override
+    public CompletableFuture<TeleportResult> teleport(Player player, World world) {
+        PreRandomTeleportEvent preRandomTeleportEvent = new PreRandomTeleportEvent(player);
+
+        this.eventCaller.callEvent(preRandomTeleportEvent);
+
+        if (preRandomTeleportEvent.isCancelled()) {
+            return CompletableFuture.completedFuture(new TeleportResult(false, player.getLocation()));
         }
 
         return this.getSafeRandomLocation(world, this.randomTeleportSettings.randomTeleportAttempts())

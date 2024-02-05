@@ -15,7 +15,6 @@ public class RandomTeleportEvent extends Event {
 
     private final Player player;
     private final Location teleportLocation;
-    private boolean cancelled;
 
     public RandomTeleportEvent(Player player, Location teleportLocation) {
         super(false);

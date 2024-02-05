@@ -18,8 +18,17 @@ public interface RandomTeleportService {
     CompletableFuture<TeleportResult> teleport(Player player);
 
     /**
+     * Asynchronously teleports the specified player to a random location within the specified world.
+     *
+     * @param player The player to teleport.
+     * @param world  The world to which the player should be teleported.
+     * @return A CompletableFuture containing the TeleportResult indicating the success or failure of the teleportation.
+     */
+    CompletableFuture<TeleportResult> teleport(Player player, World world);
+
+    /**
      * Asynchronously retrieves a safe random location within the specified world.
-     * Using default configuration values for teleport type and radius.
+     * Using default configuration values for a teleport type and radius.
      *
      * @param world        The world in which to find a random location.
      * @param attemptCount The number of attempts to find a safe location.
@@ -38,13 +47,4 @@ public interface RandomTeleportService {
      * @return A CompletableFuture containing the random Location that is deemed safe.
      */
     CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportType type, int radius, int attemptCount);
-
-    /**
-     * Checks whether the specified location within the given chunk is safe for teleportation.
-     *
-     * @param chunk    The chunk in which the location resides.
-     * @param location The location to check for safety.
-     * @return true if the location is safe; false otherwise.
-     */
-    boolean isSafeLocation(Chunk chunk, Location location);
 }
