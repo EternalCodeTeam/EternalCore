@@ -6,6 +6,7 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
+import java.util.concurrent.CompletableFuture;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -23,14 +24,20 @@ public class ApiRandomTeleportCommand {
     void execute(@Context Player player, @Arg int attempts) {
         World world = player.getWorld();
 
-        this.randomTeleportService.getSafeRandomLocation(world, attempts);
+        CompletableFuture<Location> safeRandomLocation =
+            this.randomTeleportService.getSafeRandomLocation(world, attempts);
+
+        safeRandomLocation.thenAccept(location -> player.sendMessage("Safe random location: " + location));
     }
 
     @Execute(name = "get-safe-random-location-with-type-radius-attempts")
     void execute(@Context Player player, @Arg RandomTeleportType type, @Arg int radius, @Arg int attempts) {
         World world = player.getWorld();
 
-        this.randomTeleportService.getSafeRandomLocation(world, type, radius, attempts);
+        CompletableFuture<Location> safeRandomLocation =
+            this.randomTeleportService.getSafeRandomLocation(world, type, radius, attempts);
+
+        safeRandomLocation.thenAccept(location -> player.sendMessage("Safe random location: " + location));
     }
 
     @Execute(name = "teleport-specific-player")
@@ -42,5 +49,4 @@ public class ApiRandomTeleportCommand {
     void execute(@Context Player player, @Arg Player target, @Arg World world) {
         this.randomTeleportService.teleport(target, world);
     }
-
 }

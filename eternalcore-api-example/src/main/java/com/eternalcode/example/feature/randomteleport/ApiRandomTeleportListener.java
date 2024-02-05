@@ -43,26 +43,24 @@ public class ApiRandomTeleportListener implements Listener {
 
     /**
      * You can teleport the player to a random location using some actions.
-     * In this example, we will use a button on an obsidian block.
+     * In this example, we will use a button.
      */
     @EventHandler
-    public void onPlayerClickObsidianButton(PlayerInteractEvent event) {
-        // if player clicks stone button on obisidian block
+    public void onPlayerClickButton(PlayerInteractEvent event) {
         Block clickedBlock = event.getClickedBlock();
 
-        boolean tagged = Tag.BUTTONS.isTagged(clickedBlock.getType());
+        if (clickedBlock == null) {
+            return;
+        }
+
+        Material type = clickedBlock.getType();
+        boolean tagged = Tag.BUTTONS.isTagged(type);
 
         if (!tagged) {
             return;
         }
 
-        // get button and check if button is on obsidian block
-        Block buttonBlock = clickedBlock.getRelative(event.getBlockFace());
-
-        if (buttonBlock.getType() == Material.OBSIDIAN) {
-            Player player = event.getPlayer();
-
-            this.randomTeleportService.teleport(player);
-        }
+        Player player = event.getPlayer();
+        this.randomTeleportService.teleport(player);
     }
 }
