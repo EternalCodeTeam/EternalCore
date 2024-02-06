@@ -23,12 +23,12 @@ class ChatManagerCommand {
 
     private final Supplier<Notice> clear;
     private final NoticeService noticeService;
-    private final ChatManager chatManager;
+    private final ChatManagerServiceImpl chatManagerServiceImpl;
 
     @Inject
-    ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, ChatSettings settings) {
+    ChatManagerCommand(ChatManagerServiceImpl chatManagerServiceImpl, NoticeService noticeService, ChatSettings settings) {
         this.noticeService = noticeService;
-        this.chatManager = chatManager;
+        this.chatManagerServiceImpl = chatManagerServiceImpl;
         this.clear = create(settings);
     }
 
@@ -46,12 +46,12 @@ class ChatManagerCommand {
     @Execute(name = "on")
     @DescriptionDocs(description = "Enables chat")
     void enable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (this.chatManager.getChatSettings().isChatEnabled()) {
+        if (this.chatManagerServiceImpl.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
         }
 
-        this.chatManager.getChatSettings().setChatEnabled(true);
+        this.chatManagerServiceImpl.getChatSettings().setChatEnabled(true);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().enabled())
@@ -63,12 +63,12 @@ class ChatManagerCommand {
     @Execute(name = "off")
     @DescriptionDocs(description = "Disables chat")
     void disable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (!this.chatManager.getChatSettings().isChatEnabled()) {
+        if (!this.chatManagerServiceImpl.getChatSettings().isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
         }
 
-        this.chatManager.getChatSettings().setChatEnabled(false);
+        this.chatManagerServiceImpl.getChatSettings().setChatEnabled(false);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().disabled())
@@ -93,11 +93,11 @@ class ChatManagerCommand {
                     .onlinePlayers()
                     .send();
 
-            this.chatManager.getChatSettings().setChatDelay(duration);
+            this.chatManagerServiceImpl.getChatSettings().setChatDelay(duration);
             return;
         }
 
-        this.chatManager.getChatSettings().setChatDelay(duration);
+        this.chatManagerServiceImpl.getChatSettings().setChatDelay(duration);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
