@@ -6,6 +6,9 @@ plugins {
     id("xyz.jpenilla.run-paper") version "2.2.3"
 }
 
+group = "com.eternalcode"
+version = "1.1.0"
+
 repositories {
     mavenCentral()
 
