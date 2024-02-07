@@ -33,9 +33,7 @@ class AdminChatCommand {
     @Execute
     @DescriptionDocs(description = "Sends a message to all staff members with eternalcore.adminchat.spy permissions", arguments = "<message>")
     void execute(@Context CommandSender sender, @Join String message) {
-        AdminChatEvent event = new AdminChatEvent(sender, message);
-
-        this.eventCaller.callEvent(event);
+        AdminChatEvent event = this.eventCaller.callEvent(new AdminChatEvent(sender, message));
 
         if (event.isCancelled()) {
             return;

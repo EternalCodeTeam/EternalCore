@@ -10,7 +10,7 @@ public class AdminChatEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final CommandSender sender;
-    private final String content;
+    private String content;
     private boolean cancelled;
 
     public AdminChatEvent(CommandSender sender, String content) {
@@ -26,6 +26,10 @@ public class AdminChatEvent extends Event implements Cancellable {
 
     public String getContent() {
         return this.content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
