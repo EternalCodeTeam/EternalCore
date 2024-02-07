@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.adminchat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.adminchat.event.AdminChatEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
@@ -18,17 +20,25 @@ import org.bukkit.entity.Player;
 class AdminChatCommand {
 
     private final NoticeService noticeService;
+    private final EventCaller eventCaller;
     private final Server server;
 
     @Inject
-    AdminChatCommand(NoticeService noticeService, Server server) {
+    AdminChatCommand(NoticeService noticeService, EventCaller eventCaller, Server server) {
         this.noticeService = noticeService;
+        this.eventCaller = eventCaller;
         this.server = server;
     }
 
     @Execute
     @DescriptionDocs(description = "Sends a message to all staff members with eternalcore.adminchat.spy permissions", arguments = "<message>")
     void execute(@Context CommandSender sender, @Join String message) {
+        AdminChatEvent event = this.eventCaller.callEvent(new AdminChatEvent(sender, message));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         NoticeBroadcast notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())
@@ -45,5 +55,5 @@ class AdminChatCommand {
 
         notice.send();
     }
-
+    
 }
