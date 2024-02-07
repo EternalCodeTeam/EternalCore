@@ -432,6 +432,17 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({ " ", "# Placeholders messages" })
         public String noHomesOwnedPlaceholder = "You don't have any homes.";
+
+        @Description({
+            " ",
+            "# Home Admin Section, you can edit player homes as admin",
+            "# {HOME} - Home name, {PLAYER} - Player name, {HOMES} - List of homes (separated by commas)"
+        })
+        public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been overridden for <green>{PLAYER}<white>.");
+        public Notice playerNoOwnedHomes = Notice.chat("<dark_red>✘ <red>Player <dark_red>{PLAYER} <red>doesn't have any homes.");
+        public Notice createAsAdmin = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been created for <green>{PLAYER}<white>.");
+        public Notice deleteAsAdmin = Notice.chat("<red>► <white>Home <red>{HOME} <white>has been deleted for <red>{PLAYER}<white>.");
+        public Notice homeListAsAdmin = Notice.chat("<green>► <white>Available homes for <green>{PLAYER}<white>: <green>{HOMES}");
     }
 
     @Description({

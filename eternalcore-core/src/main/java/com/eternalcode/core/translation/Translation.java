@@ -184,6 +184,12 @@ public interface Translation {
         Notice overrideHomeLocation();
         Notice noHomesOwned();
         String noHomesOwnedPlaceholder();
+
+        Notice overrideHomeLocationAsAdmin();
+        Notice playerNoOwnedHomes();
+        Notice createAsAdmin();
+        Notice deleteAsAdmin();
+        Notice homeListAsAdmin();
     }
 
     // tpa section

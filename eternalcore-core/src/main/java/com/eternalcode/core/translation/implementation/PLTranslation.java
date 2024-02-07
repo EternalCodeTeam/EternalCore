@@ -435,6 +435,17 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " ", "# Wiadomości placeholderów" })
         public String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
+
+        @Description({
+            " ",
+            "# Sekcja wiadomości administracyjnych dla domów graczy",
+            "# {HOME} - Nazwa domu, {PLAYER} - Gracz"
+        })
+        public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
+        public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz <dark_red>{PLAYER} <red>nie posiada żadnego domu!");
+        public Notice createAsAdmin = Notice.chat("<green>► <white>Stworzono dom <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
+        public Notice deleteAsAdmin = Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
+        public Notice homeListAsAdmin = Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
     }
 
     @Description({
