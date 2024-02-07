@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.reportchat;
+package com.eternalcode.core.feature.helpop;
 
 import com.eternalcode.core.delay.DelaySettings;
 import java.time.Duration;

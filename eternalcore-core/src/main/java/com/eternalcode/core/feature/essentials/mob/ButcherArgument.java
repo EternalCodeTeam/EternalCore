@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 @LiteArgument(type = int.class, name = ButcherArgument.KEY)
 class ButcherArgument extends AbstractViewerArgument<Integer> {
 
-    static final String KEY = "butcher";
+    static final String KEY = "chunks";
     private final PluginConfiguration pluginConfiguration;
     private final NoticeService noticeService;
 

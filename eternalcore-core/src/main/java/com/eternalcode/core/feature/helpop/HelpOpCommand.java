@@ -1,8 +1,10 @@
-package com.eternalcode.core.feature.reportchat;
+package com.eternalcode.core.feature.helpop;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.helpop.event.HelpOpEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.multification.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
@@ -24,13 +26,15 @@ class HelpOpCommand {
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
+    private final EventCaller eventCaller;
     private final Server server;
     private final Delay<UUID> delay;
 
     @Inject
-    HelpOpCommand(NoticeService noticeService, PluginConfiguration config, Server server) {
+    HelpOpCommand(NoticeService noticeService, PluginConfiguration config, EventCaller eventCaller, Server server) {
         this.noticeService = noticeService;
         this.config = config;
+        this.eventCaller = eventCaller;
         this.server = server;
         this.delay = new Delay<>(this.config.helpOp);
     }
@@ -39,6 +43,13 @@ class HelpOpCommand {
     @DescriptionDocs(description = "Send helpop message to all administrator with eternalcore.helpop.spy permission", arguments = "<message>")
     void execute(@Context Player player, @Join String message) {
         UUID uuid = player.getUniqueId();
+        HelpOpEvent event = new HelpOpEvent(player, message);
+
+        this.eventCaller.callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
+        }
 
         if (this.delay.hasDelay(uuid)) {
             Duration time = this.delay.getDurationToExpire(uuid);

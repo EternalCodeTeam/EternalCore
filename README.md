@@ -46,7 +46,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
   - /helpop command
   - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
 - :hammer: Open Utility Blocks with simple commands like `/workbench`
-- :briefcase: ~~Player Inventory Viewer~~ (We are recommended to use: [OpenInv](https://github.com/Jikoo/OpenInv))
+- :briefcase: ~~Player Inventory Viewer~~ (We recommend to use: [OpenInv](https://github.com/Jikoo/OpenInv))
 - :heart: Player Attribute Management, including heal, feed, teleportation, and godmode modification
 - :ping_pong: Ping Command to check client-server connectivity
 - :bust_in_silhouette: Player Information Command (`/whois`)
@@ -114,15 +114,6 @@ a [Pull Request](https://github.com/EternalCodeTeam/EternalCore/pulls) with your
 See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master/.github/CONTRIBUTING.md) to find out
 more.
 
-## :scroll: License
-
-EternalCore is published under the GNU GPL-v3 license.
-
-- You are free to modify and improve the code.
-- You can distribute production versions.
-- You must publish any changes made (public fork of this repository).
-- You cannot change the license or copyright.
-- For more details, refer to the [LICENSE](LICENSE) file.
 
 ## :bookmark_tabs: Other Dependencies
 
@@ -143,4 +134,4 @@ EternalCore uses various dependencies for its functionality, including:
 
 [<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="JetBrains" width="150">](https://www.jetbrains.com)
 
-We extend our gratitude to JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for their outstanding tools. We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) to work with our projects and boost your productivity!
+We express our gratitude to JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for their outstanding tools. We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) to work with our projects and boost your productivity!

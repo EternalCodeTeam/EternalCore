@@ -17,8 +17,10 @@ import org.bukkit.entity.EntityType;
 
 import java.util.stream.Stream;
 
-@LiteArgument(type = MobEntity.class)
+@LiteArgument(type = MobEntity.class, name = MobEntityArgument.KEY)
 class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
+
+    static final String KEY = "mobType";
 
     @Inject
     MobEntityArgument(ViewerService viewerService, TranslationManager translationManager) {
