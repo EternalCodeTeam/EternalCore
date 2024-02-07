@@ -114,15 +114,6 @@ a [Pull Request](https://github.com/EternalCodeTeam/EternalCore/pulls) with your
 See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master/.github/CONTRIBUTING.md) to find out
 more.
 
-## :scroll: License
-
-EternalCore is published under the GNU GPL-v3 license.
-
-- You are free to modify and improve the code.
-- You can distribute production versions.
-- You must publish any changes made (public fork of this repository).
-- You cannot change the license or copyright.
-- For more details, refer to the [LICENSE](LICENSE) file.
 
 ## :bookmark_tabs: Other Dependencies
 
