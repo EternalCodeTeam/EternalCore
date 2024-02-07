@@ -31,7 +31,7 @@ class HomeAdminCommand {
 
     @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
-    void setHome(@Context Player player, @Arg User user, @Arg String home, @Arg Optional<Location> location) {
+    void setHome(@Context Player player, @Arg User user, @Arg(HomeUserArgument.KEY) String home, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(player.getLocation());
 
         boolean hasHome = this.homeManager.hasHomeWithSpecificName(user, home);
@@ -57,7 +57,7 @@ class HomeAdminCommand {
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
-    void deleteHome(@Context Player player, @Arg User user, @Arg String name) {
+    void deleteHome(@Context Player player, @Arg User user, @Arg(HomeUserArgument.KEY) String name) {
         boolean hasHome = this.homeManager.hasHomeWithSpecificName(user, name);
 
         if (!hasHome) {
@@ -77,15 +77,15 @@ class HomeAdminCommand {
 
     @Execute(name = "home")
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
-    void home(@Context Player player, @Arg User user, @Arg String home) {
-        Option<Home> homeOption = this.homeManager.getHome(user.getUniqueId(), home);
+    void home(@Context Player player, @Arg User user, @Arg(HomeUserArgument.KEY) String name) {
+        Option<Home> homeOption = this.homeManager.getHome(user.getUniqueId(), name);
 
         if (homeOption.isEmpty()) {
             return;
         }
 
-        Home homeObject = homeOption.get();
-        player.teleport(homeObject.getLocation());
+        Home home = homeOption.get();
+        player.teleport(home.getLocation());
     }
 
     @Execute(name = "list")
