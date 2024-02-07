@@ -57,8 +57,8 @@ class HomeAdminCommand {
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
-    void deleteHome(@Context Player player, @Arg User user, @Arg String homeName) {
-        boolean hasHome = this.homeManager.hasHomeWithSpecificName(user, homeName);
+    void deleteHome(@Context Player player, @Arg User user, @Arg String name) {
+        boolean hasHome = this.homeManager.hasHomeWithSpecificName(user, name);
 
         if (!hasHome) {
             String homes = this.formattedListUserHomes(user);
@@ -72,7 +72,7 @@ class HomeAdminCommand {
             return;
         }
 
-        this.homeManager.deleteHome(user, homeName);
+        this.homeManager.deleteHome(user, name);
     }
 
     @Execute(name = "home")
