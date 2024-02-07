@@ -61,7 +61,7 @@ class HomeAdminCommand {
         boolean hasHome = this.homeManager.hasHomeWithSpecificName(user, homeName);
 
         if (!hasHome) {
-            String homes = formattedListUserHomes(user);
+            String homes = this.formattedListUserHomes(user);
 
             this.noticeService.create()
                 .notice(translate -> translate.home().homeList())
@@ -91,7 +91,7 @@ class HomeAdminCommand {
     @Execute(name = "list")
     @DescriptionDocs(description = "List user homes", arguments = "<user>")
     void list(@Context Viewer viewer, @Arg User user) {
-        String homes = formattedListUserHomes(user);
+        String homes = this.formattedListUserHomes(user);
 
         this.noticeService.create()
             .notice(translate -> translate.home().homeListAsAdmin())
