@@ -832,14 +832,14 @@ public class PLTranslation extends AbstractTranslation {
         public Map<String, Notice> messages = Map.of(
             "1", Notice.builder()
                 .actionBar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
-                .sound(AdventureUtil.toAdventure(Sound.ITEM_ARMOR_EQUIP_IRON), 1.0f, 1.0f)
+                .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
                 .build(),
 
             "2", Notice.builder()
                 .chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?")
                 .chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!")
                 .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></green>")
-                .sound(AdventureUtil.toAdventure(Sound.BLOCK_ANVIL_BREAK), 1.0f, 1.0f)
+                .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
                 .build()
         );
 

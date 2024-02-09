@@ -816,14 +816,14 @@ public class ENTranslation extends AbstractTranslation {
         public Map<String, Notice> messages = Map.of(
             "1", Notice.builder()
                 .actionBar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
-                .sound(AdventureUtil.toAdventure(Sound.ITEM_ARMOR_EQUIP_IRON), 1.0f, 1.0f)
+                .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
                 .build(),
 
             "2", Notice.builder()
                 .chat("<dark_gray>» <gold>You need help from an admin?")
                 .chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!")
                 .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Click to execute!</click></green>")
-                .sound(AdventureUtil.toAdventure(Sound.BLOCK_ANVIL_BREAK), 1.0f, 1.0f)
+                .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
                 .build()
         );
 
