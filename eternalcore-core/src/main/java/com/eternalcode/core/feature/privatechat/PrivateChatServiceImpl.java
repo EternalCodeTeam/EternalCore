@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.privatechat;
 
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -16,12 +17,13 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-class PrivateChatService {
+class PrivateChatServiceImpl implements PrivateChatService {
 
     private final NoticeService noticeService;
     private final IgnoreService ignoreService;
     private final UserManager userManager;
     private final PrivateChatPresenter presenter;
+    private final EventCaller eventCaller;
 
     private final Cache<UUID, UUID> replies = CacheBuilder.newBuilder()
         .expireAfterWrite(Duration.ofHours(1))
@@ -30,11 +32,15 @@ class PrivateChatService {
     private final Set<UUID> socialSpy = new HashSet<>();
 
     @Inject
-    PrivateChatService(NoticeService noticeService, IgnoreService ignoreService, UserManager userManager) {
+    PrivateChatServiceImpl(NoticeService noticeService, IgnoreService ignoreService, UserManager userManager,
+        EventCaller eventCaller
+    ) {
         this.noticeService = noticeService;
         this.ignoreService = ignoreService;
         this.userManager = userManager;
-        this.presenter = new PrivateChatPresenter(noticeService);
+        this.eventCaller = eventCaller;
+
+        this.presenter = new PrivateChatPresenter(noticeService, eventCaller);
     }
 
     void privateMessage(User sender, User target, String message) {
@@ -76,15 +82,18 @@ class PrivateChatService {
         this.privateMessage(sender, target, message);
     }
 
-    void enableSpy(UUID player) {
+    @Override
+    public void enableSpy(UUID player) {
         this.socialSpy.add(player);
     }
 
-    void disableSpy(UUID player) {
+    @Override
+    public void disableSpy(UUID player) {
         this.socialSpy.remove(player);
     }
 
-    boolean isSpy(UUID player) {
+    @Override
+    public boolean isSpy(UUID player) {
         return this.socialSpy.contains(player);
     }
 
