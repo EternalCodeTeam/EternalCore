@@ -1,11 +1,14 @@
 package com.eternalcode.core.util;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.jetbrains.annotations.NotNull;
 
 public final class AdventureUtil {
 
-    public final static Component RESET_ITEM = Component.text()
+    public static final Component RESET_ITEM = Component.text()
         .decoration(TextDecoration.ITALIC, false)
         .build();
 

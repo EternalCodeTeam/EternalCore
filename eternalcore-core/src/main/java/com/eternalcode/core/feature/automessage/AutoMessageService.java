@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.notice.Notice;
+import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.scheduler.Scheduler;
 import com.eternalcode.core.translation.Translation;

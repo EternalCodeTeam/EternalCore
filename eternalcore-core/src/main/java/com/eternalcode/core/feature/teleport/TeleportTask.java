@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
-import com.eternalcode.core.notice.Notice;
+import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.util.DurationUtil;

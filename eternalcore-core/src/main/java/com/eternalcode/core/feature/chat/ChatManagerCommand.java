@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.notice.Notice;
+import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -36,7 +36,7 @@ class ChatManagerCommand {
     @DescriptionDocs(description = "Clears chat")
     void clear(@Context CommandSender sender) {
         this.noticeService.create()
-            .staticNotice(this.clear.get())
+            .notice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()

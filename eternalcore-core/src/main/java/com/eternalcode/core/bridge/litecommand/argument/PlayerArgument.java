@@ -4,7 +4,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.ViewerProvider;
+import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -21,8 +21,8 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
     private final Server server;
 
     @Inject
-    public PlayerArgument(ViewerProvider viewerProvider, TranslationManager translationManager, Server server) {
-        super(viewerProvider, translationManager);
+    public PlayerArgument(ViewerService viewerService, TranslationManager translationManager, Server server) {
+        super(viewerService, translationManager);
         this.server = server;
     }
 

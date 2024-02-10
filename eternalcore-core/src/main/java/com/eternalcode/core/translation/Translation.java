@@ -3,7 +3,7 @@ package com.eternalcode.core.translation;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.notice.Notice;
+import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 

@@ -24,6 +24,9 @@ dependencies {
 
     //GitCheck
     implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
+
+    implementation("com.eternalcode:multification-core:${Versions.MULTIFICATION}")
+    implementation("com.eternalcode:multification-cdn:${Versions.MULTIFICATION}")
 }
 
 eternalShadow {

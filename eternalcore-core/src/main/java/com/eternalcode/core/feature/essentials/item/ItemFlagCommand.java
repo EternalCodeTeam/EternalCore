@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import panda.utilities.text.Formatter;
+import com.eternalcode.multification.shared.Formatter;
 
 @Command(name = "itemflag")
 @Permission("eternalcore.itemflag")
