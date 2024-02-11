@@ -23,7 +23,7 @@ import org.bukkit.inventory.meta.Repairable;
 @Command(name = "repair")
 class RepairCommand {
 
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.DATE_TIME_UNITS;
+    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
 
     private final NoticeService noticeService;
     private final Delay<UUID> delay;

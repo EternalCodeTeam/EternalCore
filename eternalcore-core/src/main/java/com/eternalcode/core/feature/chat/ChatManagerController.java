@@ -22,7 +22,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 @Controller
 class ChatManagerController implements Listener {
 
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.DATE_TIME_UNITS;
+    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
     private final ChatManager chatManager;
     private final NoticeService noticeService;
 

@@ -25,7 +25,7 @@ import org.bukkit.entity.Player;
 )
 class AfkCommand {
 
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.DATE_TIME_UNITS;
+    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
     private final AfkService afkService;

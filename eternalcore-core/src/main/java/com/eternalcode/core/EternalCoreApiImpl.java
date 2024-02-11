@@ -40,4 +40,6 @@ class EternalCoreApiImpl implements EternalCoreApi {
         return this.dependencyProvider.getDependency(RandomTeleportService.class);
     }
 
+    // WARP SERVICE HERE! ⚠⚠⚠⚠⚠
+
 }

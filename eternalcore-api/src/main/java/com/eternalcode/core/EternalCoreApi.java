@@ -18,4 +18,6 @@ public interface EternalCoreApi {
 
     RandomTeleportService getRandomTeleportService();
 
+    // WARP SERVICE HERE! ⚠⚠⚠⚠⚠
+
 }

@@ -21,7 +21,7 @@ import panda.utilities.StringUtils;
 @Task(delay = 200L, period = 200L)
 class TeleportTask implements Runnable {
 
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.DATE_TIME_UNITS;
+    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
 
     private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
