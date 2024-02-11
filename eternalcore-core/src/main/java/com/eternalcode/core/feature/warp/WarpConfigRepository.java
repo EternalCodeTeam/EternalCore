@@ -29,7 +29,7 @@ class WarpConfigRepository implements WarpRepository {
 
     @Override
     public void addWarp(Warp warp) {
-        this.edit(warps -> warps.put(warp.name(), PositionAdapter.convert(warp.location())));
+        this.edit(warps -> warps.put(warp.getName(), PositionAdapter.convert(warp.getLocation())));
     }
 
     @Override
@@ -49,13 +49,13 @@ class WarpConfigRepository implements WarpRepository {
 
     @Override
     public CompletableFuture<Option<Warp>> getWarp(String name) {
-        return CompletableFuture.completedFuture(Option.of(this.locationsConfiguration.warps.get(name)).map(location -> new Warp(name, PositionAdapter.convert(location))));
+        return CompletableFuture.completedFuture(Option.of(this.locationsConfiguration.warps.get(name)).map(location -> new WarpImpl(name, location)));
     }
 
     @Override
     public CompletableFuture<List<Warp>> getWarps() {
         return CompletableFuture.completedFuture(this.locationsConfiguration.warps.entrySet().stream()
-            .map(entry -> new Warp(entry.getKey(), PositionAdapter.convert(entry.getValue())))
+            .map(entry -> new WarpImpl(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList()));
     }
 

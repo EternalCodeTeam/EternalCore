@@ -72,14 +72,14 @@ class WarpInventory {
                 player.closeInventory();
 
                 if (player.hasPermission("eternalcore.warp.bypass")) {
-                    this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()),  PositionAdapter.convert(warp.location()), Duration.ZERO);
+                    this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()),  PositionAdapter.convert(warp.getLocation()), Duration.ZERO);
                     return;
                 }
 
                 this.teleportTaskService.createTeleport(
                     player.getUniqueId(),
                     PositionAdapter.convert(player.getLocation()),
-                    PositionAdapter.convert(warp.location()),
+                    PositionAdapter.convert(warp.getLocation()),
                     Duration.ofSeconds(5)
                 );
             });

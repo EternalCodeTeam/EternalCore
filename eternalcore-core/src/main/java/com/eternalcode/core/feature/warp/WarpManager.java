@@ -3,10 +3,14 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.shared.PositionAdapter;
 import org.bukkit.Location;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Optional;
+import java.util.Collection;
+import java.util.Collections;
 
 @FeatureDocs(
     name = "Warp System",
@@ -24,38 +28,43 @@ class WarpManager implements WarpService {
 
         warpRepository.getWarps().thenAcceptAsync(warps -> { //TODO: Use only completable
             for (Warp warp : warps) {
-                this.warpMap.put(warp.name(), warp);
+                this.warpMap.put(warp.getName(), warp);
             }
         });
     }
 
-    public void createWarp(@NotNull String name, @NotNull Location location) {
+    @Override
+    public void createWarp( String name, Location location) {
 
-        Warp warp = new Warp(name, location);
+        Warp warp = new WarpImpl(name, PositionAdapter.convert(location));
 
         this.warpMap.put(name, warp);
 
         this.warpRepository.addWarp(warp);
     }
 
-    public void removeWarp(@NotNull String warp) {
+    @Override
+    public void removeWarp( String warp) {
         Warp remove = this.warpMap.remove(warp);
 
         if (remove == null) {
             return;
         }
 
-        this.warpRepository.removeWarp(remove.name());
+        this.warpRepository.removeWarp(remove.getName());
     }
 
-    public boolean warpExists(@NotNull String name) {
+    @Override
+    public boolean warpExists( String name) {
         return this.warpMap.containsKey(name);
     }
 
-    public Optional<Warp> findWarp(@NotNull String name) {
+    @Override
+    public Optional<Warp> findWarp( String name) {
         return Optional.ofNullable(this.warpMap.get(name));
     }
 
+    @Override
     public Collection<String> getNamesOfWarps() {
         return Collections.unmodifiableCollection(this.warpMap.keySet());
     }

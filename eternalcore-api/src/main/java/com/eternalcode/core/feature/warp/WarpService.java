@@ -1,20 +1,19 @@
 package com.eternalcode.core.feature.warp;
 
 import org.bukkit.Location;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Optional;
 
 public interface WarpService {
 
-    void createWarp(@NotNull String name,@NotNull Location location);
+    void createWarp(String name, Location location);
 
-    void removeWarp(@NotNull String warp);
+    void removeWarp(String warp);
 
-    boolean warpExists(@NotNull String name);
+    boolean warpExists(String name);
 
-    Optional<Warp> findWarp(@NotNull String name);
+    Optional<Warp> findWarp(String name);
 
     Collection<String> getNamesOfWarps();
 }
