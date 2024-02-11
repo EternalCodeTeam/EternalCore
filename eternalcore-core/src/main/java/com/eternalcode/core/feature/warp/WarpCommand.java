@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.warp.event.WarpEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.shared.PositionAdapter;
@@ -12,6 +13,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -55,11 +57,13 @@ class WarpCommand {
     @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant", arguments = "<warp>")
     void warp(@Context Player player, @Arg Warp warp) {
         if (player.hasPermission("eternalcore.warp.bypass")) {
-            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
-            return;
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(warp.location()), Duration.ZERO);
         }
-
-        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ofSeconds(5));
+        else {
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(warp.location()), Duration.ofSeconds(5));
+        }
+        WarpEvent event = new WarpEvent(player,warp);
+        Bukkit.getPluginManager().callEvent(event);
     }
 
     @Execute(name = "setwarp")
@@ -76,7 +80,7 @@ class WarpCommand {
             return;
         }
 
-        this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
+        this.warpManager.createWarp(warp, player.getLocation());
 
         this.noticeService.create()
             .player(player.getUniqueId())
@@ -89,12 +93,12 @@ class WarpCommand {
     @Permission("eternalcore.delwarp")
     @DescriptionDocs(description = "Remove warp", arguments = "<warp>")
     void remove(@Context Player player, @Arg Warp warp) {
-        this.warpManager.removeWarp(warp.getName());
+        this.warpManager.removeWarp(warp.name());
 
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.warp().remove())
-            .placeholder("{WARP}", warp.getName())
+            .placeholder("{WARP}", warp.name())
             .send();
     }
 

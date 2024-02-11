@@ -22,6 +22,7 @@ import panda.std.Option;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,7 +54,7 @@ class WarpInventory {
             .create();
 
         warpSection.items().values().forEach(item -> {
-            Option<Warp> warpOption = this.warpManager.findWarp(item.warpName());
+            Optional<Warp> warpOption = this.warpManager.findWarp(item.warpName());
 
             if (warpOption.isEmpty()) {
                 return;
@@ -71,14 +72,14 @@ class WarpInventory {
                 player.closeInventory();
 
                 if (player.hasPermission("eternalcore.warp.bypass")) {
-                    this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
+                    this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()),  PositionAdapter.convert(warp.location()), Duration.ZERO);
                     return;
                 }
 
                 this.teleportTaskService.createTeleport(
                     player.getUniqueId(),
                     PositionAdapter.convert(player.getLocation()),
-                    warp.getPosition(),
+                    PositionAdapter.convert(warp.location()),
                     Duration.ofSeconds(5)
                 );
             });

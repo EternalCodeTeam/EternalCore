@@ -3,20 +3,17 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.shared.Position;
-import panda.std.Option;
+import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @FeatureDocs(
     name = "Warp System",
     description = "Allows you to create warps, optionally you can enable warp inventory"
 )
 @Service
-class WarpManager {
+class WarpManager implements WarpService {
 
     private final Map<String, Warp> warpMap = new HashMap<>();
     private final WarpRepository warpRepository;
@@ -27,35 +24,36 @@ class WarpManager {
 
         warpRepository.getWarps().thenAcceptAsync(warps -> { //TODO: Use only completable
             for (Warp warp : warps) {
-                this.warpMap.put(warp.getName(), warp);
+                this.warpMap.put(warp.name(), warp);
             }
         });
     }
 
-    public void createWarp(String name, Position position) {
-        Warp warp = new Warp(name, position);
+    public void createWarp(@NotNull String name, @NotNull Location location) {
+
+        Warp warp = new Warp(name, location);
 
         this.warpMap.put(name, warp);
 
         this.warpRepository.addWarp(warp);
     }
 
-    public void removeWarp(String warp) {
+    public void removeWarp(@NotNull String warp) {
         Warp remove = this.warpMap.remove(warp);
 
         if (remove == null) {
             return;
         }
 
-        this.warpRepository.removeWarp(remove.getName());
+        this.warpRepository.removeWarp(remove.name());
     }
 
-    public boolean warpExists(String name) {
+    public boolean warpExists(@NotNull String name) {
         return this.warpMap.containsKey(name);
     }
 
-    public Option<Warp> findWarp(String name) {
-        return Option.of(this.warpMap.get(name));
+    public Optional<Warp> findWarp(@NotNull String name) {
+        return Optional.ofNullable(this.warpMap.get(name));
     }
 
     public Collection<String> getNamesOfWarps() {
