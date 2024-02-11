@@ -4,12 +4,12 @@ import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import org.bukkit.Location;
 
-public class WarpImpl implements Warp {
+class WarpImpl implements Warp {
 
     private final String name;
     private final Position position;
 
-    public WarpImpl(String name, Position position) {
+    WarpImpl(String name, Position position) {
         this.name = name;
         this.position = position;
     }
