@@ -3,7 +3,7 @@ object Versions {
         const val SPIGOT_API = "1.19.4-R0.1-SNAPSHOT"
         const val PAPER_API = "1.19.4-R0.1-SNAPSHOT"
 
-        const val MULTIFICATION = "1.0.1-SNAPSHOT"
+        const val MULTIFICATION = "1.0.1"
 
         const val JETBRAINS_ANNOTATIONS = "24.1.0"
         const val PLACEHOLDER_API = "2.11.5"
