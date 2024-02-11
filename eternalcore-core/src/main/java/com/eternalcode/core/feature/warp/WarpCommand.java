@@ -58,8 +58,8 @@ class WarpCommand {
     @Execute(name = "warp")
     @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant", arguments = "<warp>")
     void warp(@Context Player player, @Arg Warp warp) {
-        WarpTeleportEvent event = this.eventCaller.callEvent(new WarpTeleportEvent(player,warp));
-        if(event.isCancelled()){
+        WarpTeleportEvent event = this.eventCaller.callEvent(new WarpTeleportEvent(player, warp));
+        if (event.isCancelled()) {
             return;
         }
 

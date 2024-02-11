@@ -14,7 +14,7 @@ public class WarpTeleportEvent extends Event implements Cancellable {
     private boolean cancelled;
     private final Warp warp;
 
-    public WarpTeleportEvent( Player player, Warp warp) {
+    public WarpTeleportEvent(Player player, Warp warp) {
         super(false);
 
         this.player = player;

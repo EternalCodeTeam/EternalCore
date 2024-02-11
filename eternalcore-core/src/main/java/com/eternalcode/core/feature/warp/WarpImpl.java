@@ -4,21 +4,23 @@ import com.eternalcode.core.shared.Position;
 import com.eternalcode.core.shared.PositionAdapter;
 import org.bukkit.Location;
 
-public class WarpImpl implements Warp{
+public class WarpImpl implements Warp {
 
     private final String name;
     private final Position position;
 
-    public WarpImpl(String name, Position position){
+    public WarpImpl(String name, Position position) {
         this.name = name;
         this.position = position;
     }
+
     @Override
-    public String getName(){
-        return name;
+    public String getName() {
+        return this.name;
     }
+
     @Override
-    public Location getLocation(){
-        return PositionAdapter.convert(position);
+    public Location getLocation() {
+        return PositionAdapter.convert(this.position);
     }
 }
