@@ -9,7 +9,7 @@ class WarpImpl implements Warp {
     private final String name;
     private final Position position;
 
-    public WarpImpl(String name, Position position) {
+    WarpImpl(String name, Position position) {
         this.name = name;
         this.position = position;
     }
