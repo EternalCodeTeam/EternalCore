@@ -45,6 +45,6 @@ public class WarpTeleportEvent extends Event implements Cancellable {
 
     @Override
     public void setCancelled(boolean cancel) {
-            this.cancelled = cancel;
+        this.cancelled = cancel;
     }
 }
