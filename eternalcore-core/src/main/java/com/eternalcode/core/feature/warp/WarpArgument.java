@@ -30,7 +30,8 @@ class WarpArgument extends AbstractViewerArgument<Warp> {
     public ParseResult<Warp> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         Optional<Warp> warpOption = this.warpManager.findWarp(argument);
 
-        return warpOption.map(ParseResult::success).orElseGet(() -> ParseResult.failure(translation.warp().notExist()));
+        return warpOption.map(ParseResult::success)
+            .orElseGet(() -> ParseResult.failure(translation.warp().notExist()));
 
     }
 
