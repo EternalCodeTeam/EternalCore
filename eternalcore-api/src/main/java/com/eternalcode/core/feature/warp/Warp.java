@@ -7,4 +7,5 @@ public interface Warp {
     Location getLocation();
 
     String getName();
+
 }
