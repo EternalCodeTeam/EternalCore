@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.joinmessage;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.commons.shared.RandomElementUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,7 +31,7 @@ class PlayerJoinMessageController implements Listener {
 
         if (!player.hasPlayedBefore()) {
             this.noticeService.create()
-                .noticeOption(translation -> RandomUtil.randomElement(translation.event().firstJoinMessage()))
+                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().firstJoinMessage()))
                 .placeholder("{PLAYER}", player.getName())
                 .onlinePlayers()
                 .send();
@@ -46,10 +46,9 @@ class PlayerJoinMessageController implements Listener {
         event.setJoinMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(translation -> RandomUtil.randomElement(translation.event().joinMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().joinMessage()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .sendAsync();
-
     }
 }

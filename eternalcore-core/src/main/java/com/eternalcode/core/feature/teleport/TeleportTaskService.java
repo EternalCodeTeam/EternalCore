@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.shared.Position;
+import com.eternalcode.commons.shared.bukkit.position.Position;
 import panda.std.Option;
 
 import java.time.Instant;

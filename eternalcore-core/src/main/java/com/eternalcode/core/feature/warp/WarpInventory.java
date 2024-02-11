@@ -1,14 +1,14 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.commons.adventure.AdventureUtil;
+import com.eternalcode.commons.shared.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.util.AdventureUtil;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -92,13 +92,13 @@ class WarpInventory {
             ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
 
             if (!borderSection.name().equals("")) {
-                borderItem.name(AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(borderSection.name())));
+                borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(borderSection.name())));
             }
 
             if (!borderSection.lore().isEmpty()) {
                 borderItem.lore(borderSection.lore()
                     .stream()
-                    .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+                    .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
                     .collect(Collectors.toList()));
             }
 
@@ -138,10 +138,10 @@ class WarpInventory {
     }
 
     private BaseItemBuilder createItem(ConfigItem item) {
-        Component name = AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(item.name()));
+        Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
         List<Component> lore = item.lore()
             .stream()
-            .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+            .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
             .toList();
 
         if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {

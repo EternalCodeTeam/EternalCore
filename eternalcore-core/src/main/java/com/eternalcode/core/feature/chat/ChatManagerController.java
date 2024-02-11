@@ -1,18 +1,18 @@
 package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.commons.shared.time.DurationParser;
+import com.eternalcode.commons.shared.time.TemporalAmountParser;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.DurationUtil;
+import java.time.Duration;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import java.time.Duration;
-import java.util.UUID;
 
 @FeatureDocs(
     name = "ChatManager",
@@ -22,6 +22,7 @@ import java.util.UUID;
 @Controller
 class ChatManagerController implements Listener {
 
+    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.DATE_TIME_UNITS;
     private final ChatManager chatManager;
     private final NoticeService noticeService;
 
@@ -54,7 +55,7 @@ class ChatManagerController implements Listener {
                 .create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.chat().slowMode())
-                .placeholder("{TIME}", DurationUtil.format(time))
+                .placeholder("{TIME}", TEMPORAL_AMOUNT_PARSER.format(time))
                 .send();
 
             event.setCancelled(true);
@@ -65,5 +66,4 @@ class ChatManagerController implements Listener {
     void markUseChat(AsyncPlayerChatEvent event) {
         this.chatManager.markUseChat(event.getPlayer().getUniqueId());
     }
-
 }

@@ -1,25 +1,27 @@
 package com.eternalcode.core.feature.teleport;
 
+import com.eternalcode.commons.shared.time.DurationParser;
+import com.eternalcode.commons.shared.time.TemporalAmountParser;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
-import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.shared.PositionAdapter;
-import com.eternalcode.core.util.DurationUtil;
+import com.eternalcode.commons.shared.bukkit.position.PositionAdapter;
+import com.eternalcode.multification.notice.Notice;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import panda.utilities.StringUtils;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-@Task(delay = 200L, period = 200L, unit = TimeUnit.MILLISECONDS)
+@Task(delay = 200L, period = 200L)
 class TeleportTask implements Runnable {
+
+    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.DATE_TIME_UNITS;
 
     private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
@@ -27,7 +29,12 @@ class TeleportTask implements Runnable {
     private final Server server;
 
     @Inject
-    TeleportTask(NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService, Server server) {
+    TeleportTask(
+        NoticeService noticeService,
+        TeleportTaskService teleportTaskService,
+        TeleportService teleportService,
+        Server server
+    ) {
         this.noticeService = noticeService;
         this.teleportTaskService = teleportTaskService;
         this.teleportService = teleportService;
@@ -69,7 +76,7 @@ class TeleportTask implements Runnable {
 
                 this.noticeService.create()
                     .notice(translation -> translation.teleport().teleportTimerFormat())
-                    .placeholder("{TIME}", DurationUtil.format(duration))
+                    .placeholder("{TIME}", TEMPORAL_AMOUNT_PARSER.format(duration))
                     .player(player.getUniqueId())
                     .send();
 

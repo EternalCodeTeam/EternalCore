@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.sign;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.bridge.adventure.legacy.Legacy;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -32,7 +32,7 @@ class SignChangeListener implements Listener {
 
        if (player.hasPermission("eternalcore.sign")) {
             for (int i = 0; i < lines.length; i++) {
-                event.setLine(i, Legacy.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(lines[i])));
+                event.setLine(i, AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(lines[i])));
             }
         }
     }

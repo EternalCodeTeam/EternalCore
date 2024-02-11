@@ -6,7 +6,7 @@ import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.bridge.adventure.legacy.Legacy;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
@@ -50,7 +50,7 @@ class FullServerBypassController implements Listener {
             String serverFullMessage = this.extractServerFullMessage(player);
             Component serverFullMessageComponent = this.miniMessage.deserialize(serverFullMessage);
 
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, Legacy.SECTION_SERIALIZER.serialize(serverFullMessageComponent));
+            event.disallow(PlayerLoginEvent.Result.KICK_FULL, AdventureUtil.SECTION_SERIALIZER.serialize(serverFullMessageComponent));
         }
     }
 

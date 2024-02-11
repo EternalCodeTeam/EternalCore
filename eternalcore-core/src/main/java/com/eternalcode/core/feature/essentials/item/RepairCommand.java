@@ -1,15 +1,18 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.shared.time.DurationParser;
+import com.eternalcode.commons.shared.time.TemporalAmountParser;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -17,11 +20,10 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-import java.time.Duration;
-import java.util.UUID;
-
 @Command(name = "repair")
 class RepairCommand {
+
+    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.DATE_TIME_UNITS;
 
     private final NoticeService noticeService;
     private final Delay<UUID> delay;
@@ -175,7 +177,7 @@ class RepairCommand {
             this.noticeService
                 .create()
                 .notice(translation -> translation.item().repairDelayMessage())
-                .placeholder("{TIME}", DurationUtil.format(time))
+                .placeholder("{TIME}", TEMPORAL_AMOUNT_PARSER.format(time))
                 .player(uuid)
                 .send();
 
@@ -190,11 +192,11 @@ class RepairCommand {
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        if (!(itemMeta instanceof Repairable) || !(itemMeta instanceof Damageable damageable) || damageable.getDamage() == 0) {
+        if (!(itemMeta instanceof Repairable) || !(itemMeta instanceof Damageable damageable)
+            || damageable.getDamage() == 0) {
             return;
         }
         damageable.setDamage(0);
         itemStack.setItemMeta(itemMeta);
     }
-
 }

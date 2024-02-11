@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.warp;
 
-import com.eternalcode.core.shared.Position;
+import com.eternalcode.commons.shared.bukkit.position.Position;
 
 class Warp {
 

@@ -1,9 +1,9 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.shared.bukkit.ItemUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.ItemUtil;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;

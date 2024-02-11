@@ -1,22 +1,21 @@
 package com.eternalcode.core.feature.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.shared.RandomElementUtil;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.RandomUtil;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-@Command(name = "teleportorandomplayer", aliases = {"tprp"})
+@Command(name = "teleportorandomplayer", aliases = { "tprp" })
 @Permission("eternalcore.tprp")
 public class TeleportToRandomPlayerCommand {
 
@@ -25,12 +24,15 @@ public class TeleportToRandomPlayerCommand {
     private final NoticeService noticeService;
 
     @Inject
-    public TeleportToRandomPlayerCommand(Server server, PluginConfiguration pluginConfiguration, NoticeService noticeService) {
+    public TeleportToRandomPlayerCommand(
+        Server server,
+        PluginConfiguration pluginConfiguration,
+        NoticeService noticeService
+    ) {
         this.server = server;
         this.pluginConfiguration = pluginConfiguration;
         this.noticeService = noticeService;
     }
-
 
     @Execute
     @DescriptionDocs(description = "Teleport to a random player on the server, with the option to filter op players")
@@ -39,7 +41,7 @@ public class TeleportToRandomPlayerCommand {
             .filter(target -> this.pluginConfiguration.teleport.includeOpPlayersInRandomTeleport || !target.isOp())
             .collect(Collectors.toList());
 
-        Option<Player> randomPlayerOption = RandomUtil.randomElement(possibleTargetPlayers);
+        Optional<Player> randomPlayerOption = RandomElementUtil.randomElement(possibleTargetPlayers);
 
         if (randomPlayerOption.isEmpty()) {
             this.noticeService.create()
