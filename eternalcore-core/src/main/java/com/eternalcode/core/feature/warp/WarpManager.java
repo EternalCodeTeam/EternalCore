@@ -26,7 +26,7 @@ class WarpManager implements WarpService {
     private WarpManager(WarpRepository warpRepository) {
         this.warpRepository = warpRepository;
 
-        warpRepository.getWarps().thenAcceptAsync(warps -> { //TODO: Use only completable
+        warpRepository.getWarps().thenAcceptAsync(warps -> {
             for (Warp warp : warps) {
                 this.warpMap.put(warp.getName(), warp);
             }
