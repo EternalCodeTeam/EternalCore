@@ -2,7 +2,9 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.warp.event.WarpTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.commons.shared.bukkit.position.PositionAdapter;
@@ -25,14 +27,16 @@ class WarpCommand {
     private final WarpInventory warpInventory;
     private final NoticeService noticeService;
     private final WarpManager warpManager;
+    private final EventCaller eventCaller;
 
     @Inject
-    WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, PluginConfiguration config, WarpInventory warpInventory) {
+    WarpCommand(NoticeService noticeService, WarpManager warpManager, TeleportTaskService teleportTaskService, PluginConfiguration config, WarpInventory warpInventory, EventCaller eventCaller) {
         this.noticeService = noticeService;
         this.warpManager = warpManager;
         this.teleportTaskService = teleportTaskService;
         this.config = config;
         this.warpInventory = warpInventory;
+        this.eventCaller = eventCaller;
     }
 
     @Execute(name = "warp")
@@ -54,12 +58,16 @@ class WarpCommand {
     @Execute(name = "warp")
     @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant", arguments = "<warp>")
     void warp(@Context Player player, @Arg Warp warp) {
-        if (player.hasPermission("eternalcore.warp.bypass")) {
-            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
+        WarpTeleportEvent event = this.eventCaller.callEvent(new WarpTeleportEvent(player, warp));
+        if (event.isCancelled()) {
             return;
         }
 
-        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ofSeconds(5));
+        if (player.hasPermission("eternalcore.warp.bypass")) {
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(warp.getLocation()), Duration.ZERO);
+            return;
+        }
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(warp.getLocation()), Duration.ofSeconds(5));
     }
 
     @Execute(name = "setwarp")
@@ -76,7 +84,7 @@ class WarpCommand {
             return;
         }
 
-        this.warpManager.createWarp(warp, PositionAdapter.convert(player.getLocation()));
+        this.warpManager.createWarp(warp, player.getLocation());
 
         this.noticeService.create()
             .player(player.getUniqueId())

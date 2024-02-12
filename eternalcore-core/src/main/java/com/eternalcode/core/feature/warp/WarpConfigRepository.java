@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.commons.shared.bukkit.position.Position;
+import com.eternalcode.commons.shared.bukkit.position.PositionAdapter;
 import panda.std.Option;
 
 import java.util.HashMap;
@@ -28,7 +29,7 @@ class WarpConfigRepository implements WarpRepository {
 
     @Override
     public void addWarp(Warp warp) {
-        this.edit(warps -> warps.put(warp.getName(), warp.getPosition()));
+        this.edit(warps -> warps.put(warp.getName(), PositionAdapter.convert(warp.getLocation())));
     }
 
     @Override
@@ -48,13 +49,13 @@ class WarpConfigRepository implements WarpRepository {
 
     @Override
     public CompletableFuture<Option<Warp>> getWarp(String name) {
-        return CompletableFuture.completedFuture(Option.of(this.locationsConfiguration.warps.get(name)).map(location -> new Warp(name, location)));
+        return CompletableFuture.completedFuture(Option.of(this.locationsConfiguration.warps.get(name)).map(location -> new WarpImpl(name, location)));
     }
 
     @Override
     public CompletableFuture<List<Warp>> getWarps() {
         return CompletableFuture.completedFuture(this.locationsConfiguration.warps.entrySet().stream()
-            .map(entry -> new Warp(entry.getKey(), entry.getValue()))
+            .map(entry -> new WarpImpl(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList()));
     }
 
