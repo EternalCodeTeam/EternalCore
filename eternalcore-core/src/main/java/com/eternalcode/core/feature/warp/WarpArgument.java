@@ -12,7 +12,8 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.command.CommandSender;
-import panda.std.Option;
+
+import java.util.Optional;
 
 @LiteArgument(type = Warp.class)
 class WarpArgument extends AbstractViewerArgument<Warp> {
@@ -27,13 +28,11 @@ class WarpArgument extends AbstractViewerArgument<Warp> {
 
     @Override
     public ParseResult<Warp> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        Option<Warp> warpOption = this.warpManager.findWarp(argument);
+        Optional<Warp> warpOption = this.warpManager.findWarp(argument);
 
-        if (warpOption.isEmpty()) {
-            return ParseResult.failure(translation.warp().notExist());
-        }
+        return warpOption.map(ParseResult::success)
+            .orElseGet(() -> ParseResult.failure(translation.warp().notExist()));
 
-        return ParseResult.success(warpOption.get());
     }
 
     @Override
