@@ -50,23 +50,6 @@ public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCore
         return this.formatter(placeholders.toFormatter(context));
     }
 
-    @CheckReturnValue
-    @Deprecated(forRemoval = true)
-    // TODO: Use Optional instead of Option in all places
-    public B noticeOption(OptionNoticeProvider<Translation> extractor) {
-        this.notifications.add(translation -> {
-            Option<Notice> apply = extractor.extract(translation);
-
-            if (apply.isPresent()) {
-                return apply.get();
-            }
-
-            return Notice.empty();
-        });
-
-        return this.getThis();
-    }
-
     public B notice(NoticeTextType type, TextMessageProvider<Translation> extractor) {
         this.notifications.add(translation -> {
             List<String> list = Collections.singletonList(extractor.extract(translation));
