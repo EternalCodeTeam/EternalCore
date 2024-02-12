@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.time.TemporalAmountParser;
 import java.util.function.Supplier;
 
 import dev.rollczi.litecommands.time.DurationParser;
@@ -20,6 +21,8 @@ import java.time.Duration;
 @Command(name = "chat")
 @Permission("eternalcore.chat")
 class ChatManagerCommand {
+
+    public static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
 
     private final Supplier<Notice> clear;
     private final NoticeService noticeService;
@@ -101,7 +104,7 @@ class ChatManagerCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
-            .placeholder("{SLOWMODE}", DurationParser.TIME_UNITS.format(duration))
+            .placeholder("{SLOWMODE}", TEMPORAL_AMOUNT_PARSER.format(duration))
             .onlinePlayers()
             .send();
     }
