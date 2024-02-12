@@ -54,13 +54,13 @@ class WarpInventory {
             .create();
 
         warpSection.items().values().forEach(item -> {
-            Optional<Warp> warpOption = this.warpManager.findWarp(item.warpName());
+            Optional<Warp> warpOptional = this.warpManager.findWarp(item.warpName());
 
-            if (warpOption.isEmpty()) {
+            if (warpOptional.isEmpty()) {
                 return;
             }
 
-            Warp warp = warpOption.get();
+            Warp warp = warpOptional.get();
             ConfigItem warpItem = item.warpItem();
 
             BaseItemBuilder baseItemBuilder = this.createItem(warpItem);

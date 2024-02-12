@@ -65,10 +65,9 @@ class WarpCommand {
 
         if (player.hasPermission("eternalcore.warp.bypass")) {
             this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(warp.getLocation()), Duration.ZERO);
+            return;
         }
-        else {
             this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(warp.getLocation()), Duration.ofSeconds(5));
-        }
     }
 
     @Execute(name = "setwarp")
