@@ -844,4 +844,38 @@ public class ENTranslation extends AbstractTranslation {
             return this.disabled;
         }
     }
+
+
+    @Description({ " ", "# This section is responsible for handling jail-related stuff." })
+    public ENJailSection jail = new ENJailSection();
+
+    @Getter
+    @Contextual
+    public static class ENJailSection implements JailSection {
+
+        public Notice jailLocationSet = Notice.chat("<green>► <white>Jail location has been set!");
+        public Notice jailLocationRemove = Notice.chat("<red>✘ <dark_red>Jail location has been removed!");
+        public Notice jailLocationNotSet = Notice.chat("<red>✘ <dark_red>Jail location is not set!");
+        public Notice jailLocationOverride = Notice.chat("<red>✘ <dark_red>Jail location has been overridden!");
+
+        public Notice jailDetainPublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
+        public Notice jailDetainPrivate = Notice.chat("<green>► <white>You have been jailed!");
+        public Notice jailDetainNoPlayer = Notice.chat("<red>✘ <dark_red>No player found to jail!");
+
+
+        public Notice jailDetainOverride = Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER} <white>!");
+
+        public Notice jailNoPlayer = Notice.chat("<red>✘ <dark_red>No player found to jail!");
+        public Notice jailRelease = Notice.chat("<red>✘ <dark_red>You have been released from jail!");
+
+        public Notice jailReleasePublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been granted freedom!");
+        public Notice jailReleaseNoPlayer = Notice.chat("<red>✘ <dark_red>Player is not in jail!");
+
+        public Notice jailReleaseSender = Notice.chat("<green>► <white>You have released <green>{PLAYER} <white>from jail!");
+        public Notice jailReleasePrivate = Notice.chat("<green>► <white>You have been released from jail!");
+
+        public Notice jailReleaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
+
+
+    }
 }

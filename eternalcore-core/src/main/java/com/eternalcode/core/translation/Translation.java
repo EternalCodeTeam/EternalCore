@@ -409,4 +409,17 @@ public interface Translation {
         Notice disabled();
     }
 
+    JailService jailService();
+
+    interface JailService {
+        Notice jailSetup();
+        Notice jailDetainSelf();
+        Notice jailDetainOther();
+        Notice jailDetainOtherWithReason();
+        Notice jailDetainOtherForTime();
+        Notice jailDetainOtherForTimeWithReason();
+        Notice jailRelease();
+        Notice jailReleaseOther();
+    }
+
 }
