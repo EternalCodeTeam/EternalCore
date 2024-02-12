@@ -1,6 +1,7 @@
 package com.eternalcode.core.bridge.adventure;
 
 import com.eternalcode.commons.adventure.AdventureLegacyColorPostProcessor;
+import com.eternalcode.commons.adventure.AdventureLegacyColorPreProcessor;
 import com.eternalcode.core.bridge.adventure.resolver.CenterTagResolver;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.BeanSetup;
@@ -21,6 +22,7 @@ class AdventureSetup {
     MiniMessage miniMessage() {
         return MiniMessage.builder()
             .postProcessor(new AdventureLegacyColorPostProcessor())
+            .preProcessor(new AdventureLegacyColorPreProcessor())
             .editTags(builder -> builder.resolver(CenterTagResolver.RESOLVER))
             .build();
     }
