@@ -20,4 +20,5 @@ public class Prisoner {
         this.reason = reason;
         this.lockedUpByWho = lockedUpByWho;
     }
+
 }

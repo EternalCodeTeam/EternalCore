@@ -37,7 +37,8 @@ public class PomXmlScanner implements DependencyScanner {
             DOCUMENT_BUILDER_FACTORY.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             DOCUMENT_BUILDER_FACTORY.setXIncludeAware(false);
             DOCUMENT_BUILDER_FACTORY.setExpandEntityReferences(false);
-        } catch (ParserConfigurationException exception) {
+        }
+        catch (ParserConfigurationException exception) {
             throw new RuntimeException("Failed to configure XML parser", exception);
         }
     }
@@ -110,7 +111,8 @@ public class PomXmlScanner implements DependencyScanner {
     private boolean isEmpty(File file) {
         try {
             return Files.size(file.toPath()) == 0;
-        } catch (IOException exception) {
+        }
+        catch (IOException exception) {
             return true;
         }
     }

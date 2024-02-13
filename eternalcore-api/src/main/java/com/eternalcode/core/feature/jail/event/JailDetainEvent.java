@@ -22,11 +22,11 @@ public class JailDetainEvent extends PlayerEvent {
     }
 
     public String getReason() {
-        return reason;
+        return this.reason;
     }
 
     public Player getDetainedBy() {
-        return detainedBy;
+        return this.detainedBy;
     }
 
     /**

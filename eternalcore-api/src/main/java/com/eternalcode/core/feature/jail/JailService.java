@@ -4,14 +4,26 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
+import java.time.Duration;
 
 public interface JailService {
-    void setupJailArea(Location jailLocation);
 
-    void detainPlayer(Player player, @Nullable String reason, @Nullable Player detainedBy);
+    /**
+     * Changes location of the jail.
+     *
+     * @param jailLocation The location of the jail.
+     * @param setter Player who sets the jail location.
+     */
+    void setupJailArea(Location jailLocation, Player setter);
 
-    void releasePlayer(Player player);
+    void removeJailArea(Player remover);
+
+    void detainPlayer(Player player, @Nullable String reason, Player detainedBy, @Nullable Duration duration);
+
+    void releasePlayer(Player player, Player releasedBy);
+
+    void releaseAllPlayers(Player player);
 
     boolean isLocationSet();
+
 }

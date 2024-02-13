@@ -409,17 +409,24 @@ public interface Translation {
         Notice disabled();
     }
 
-    JailService jailService();
+    JailSection jailSection();
 
-    interface JailService {
-        Notice jailSetup();
-        Notice jailDetainSelf();
-        Notice jailDetainOther();
-        Notice jailDetainOtherWithReason();
-        Notice jailDetainOtherForTime();
-        Notice jailDetainOtherForTimeWithReason();
-        Notice jailRelease();
-        Notice jailReleaseOther();
+    interface JailSection {
+        Notice jailLocationSet();
+        Notice jailLocationRemove();
+        Notice jailLocationNotSet();
+        Notice jailLocationOverride();
+        Notice jailDetainPublic();
+        Notice jailDetainPrivate();
+        Notice jailDetainNoPlayer();
+        Notice jailDetainOverride();
+
+        Notice jailReleasePublic();
+        Notice jailReleaseSender();
+        Notice jailReleasePrivate();
+        Notice jailReleaseNoPlayer();
+        Notice jailReleaseAll();
+        Notice jailReleaseNoPlayers();
     }
 
 }

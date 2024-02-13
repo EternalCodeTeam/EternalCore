@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 public class JailController implements Listener {
 
     private  final JailService jailService;
+
     public JailController(JailService jailService) {
         this.jailService = jailService;
     }
@@ -18,9 +19,6 @@ public class JailController implements Listener {
             return;
         }
 
-        String message = "You have been released from jail.";
-        event.getPlayer().sendMessage(message);
-
     }
 
     @EventHandler
@@ -29,10 +27,7 @@ public class JailController implements Listener {
             return;
         }
 
-        String message = "You have been detained in jail.";
-        event.getPlayer().sendMessage(message);
 
-        event.getDetainedBy().sendMessage("You have detained " + event.getPlayer().getName() + " in jail.");
     }
 
 
