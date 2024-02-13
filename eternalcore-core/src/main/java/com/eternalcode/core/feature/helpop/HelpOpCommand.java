@@ -1,13 +1,12 @@
 package com.eternalcode.core.feature.helpop;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.shared.time.DurationParser;
-import com.eternalcode.commons.shared.time.TemporalAmountParser;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.helpop.event.HelpOpEvent;
 import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -24,8 +23,6 @@ import java.util.UUID;
 @Command(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
 class HelpOpCommand {
-
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
@@ -59,7 +56,7 @@ class HelpOpCommand {
 
             this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
-                .placeholder("{TIME}", TEMPORAL_AMOUNT_PARSER.format(time))
+                .placeholder("{TIME}", DurationUtil.format(time))
                 .player(uuid)
                 .send();
 

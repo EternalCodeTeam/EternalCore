@@ -1,13 +1,12 @@
 package com.eternalcode.core.feature.randomteleport;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.shared.time.DurationParser;
-import com.eternalcode.commons.shared.time.TemporalAmountParser;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
+import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -28,8 +27,6 @@ class RandomTeleportCommand {
         .with("{Y}", player -> String.valueOf(player.getLocation().getBlockY()))
         .with("{Z}", player -> String.valueOf(player.getLocation().getBlockZ()))
         .build();
-
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
 
     private final NoticeService noticeService;
     private final RandomTeleportService randomTeleportService;
@@ -133,7 +130,7 @@ class RandomTeleportCommand {
             this.noticeService
                 .create()
                 .notice(translation -> translation.randomTeleport().randomTeleportDelay())
-                .placeholder("{TIME}", TEMPORAL_AMOUNT_PARSER.format(time))
+                .placeholder("{TIME}", DurationUtil.format(time))
                 .player(uuid)
                 .send();
 

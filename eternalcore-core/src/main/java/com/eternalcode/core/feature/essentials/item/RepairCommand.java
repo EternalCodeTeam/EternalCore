@@ -1,12 +1,11 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.shared.time.DurationParser;
-import com.eternalcode.commons.shared.time.TemporalAmountParser;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -22,8 +21,6 @@ import org.bukkit.inventory.meta.Repairable;
 
 @Command(name = "repair")
 class RepairCommand {
-
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
 
     private final NoticeService noticeService;
     private final Delay<UUID> delay;
@@ -177,7 +174,7 @@ class RepairCommand {
             this.noticeService
                 .create()
                 .notice(translation -> translation.item().repairDelayMessage())
-                .placeholder("{TIME}", TEMPORAL_AMOUNT_PARSER.format(time))
+                .placeholder("{TIME}", DurationUtil.format(time))
                 .player(uuid)
                 .send();
 

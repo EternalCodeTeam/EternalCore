@@ -2,12 +2,11 @@ package com.eternalcode.core.feature.afk;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.commons.shared.time.DurationParser;
-import com.eternalcode.commons.shared.time.TemporalAmountParser;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -25,7 +24,6 @@ import org.bukkit.entity.Player;
 )
 class AfkCommand {
 
-    private static final TemporalAmountParser<Duration> TEMPORAL_AMOUNT_PARSER = DurationParser.TIME_UNITS;
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
     private final AfkService afkService;
@@ -50,7 +48,7 @@ class AfkCommand {
             this.noticeService
                 .create()
                 .notice(translation -> translation.afk().afkDelay())
-                .placeholder("{TIME}", TEMPORAL_AMOUNT_PARSER.format(time))
+                .placeholder("{TIME}", DurationUtil.format(time))
                 .player(uuid)
                 .send();
 
