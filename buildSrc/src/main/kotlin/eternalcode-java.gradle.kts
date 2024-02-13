@@ -10,6 +10,7 @@ checkstyle {
     toolVersion = "10.12.5"
 
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    configProperties["checkstyle.suppressions.file"] = "${rootDir}/config/checkstyle/suppressions.xml"
 
     maxErrors = 0
     maxWarnings = 0
