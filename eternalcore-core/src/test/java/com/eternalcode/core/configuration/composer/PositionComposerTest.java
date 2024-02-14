@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.composer;
 
-import com.eternalcode.commons.shared.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.Position;
 import org.junit.jupiter.api.Test;
 import panda.std.Result;
 

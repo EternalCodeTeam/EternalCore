@@ -2,7 +2,7 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import com.eternalcode.commons.shared.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.Position;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;

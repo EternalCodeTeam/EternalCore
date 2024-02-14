@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.joinmessage;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.commons.shared.RandomElementUtil;
+import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;

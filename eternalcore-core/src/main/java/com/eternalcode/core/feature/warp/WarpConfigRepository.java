@@ -4,8 +4,8 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.commons.shared.bukkit.position.Position;
-import com.eternalcode.commons.shared.bukkit.position.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import panda.std.Option;
 
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package com.eternalcode.core.database.wrapper;
 
-import com.eternalcode.commons.shared.scheduler.Scheduler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
 import com.j256.ormlite.dao.Dao;
 import panda.std.function.ThrowingFunction;

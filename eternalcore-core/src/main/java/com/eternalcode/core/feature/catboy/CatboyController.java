@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.catboy;
 
-import com.eternalcode.commons.shared.scheduler.Scheduler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.teleport.event.EternalTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;

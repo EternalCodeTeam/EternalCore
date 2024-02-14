@@ -7,7 +7,7 @@ import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.feature.warp.event.WarpTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.commons.shared.bukkit.position.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;

@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.automessage;
 
-import com.eternalcode.commons.shared.scheduler.Scheduler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;

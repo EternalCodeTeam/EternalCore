@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Location;
-import com.eternalcode.commons.shared.bukkit.position.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 
 import java.util.Map;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package com.eternalcode.core.injector.bean.processor;
 
-import com.eternalcode.commons.shared.scheduler.Scheduler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.Task;

@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.composer;
 
-import com.eternalcode.commons.shared.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.Position;
 import panda.std.Result;
 
 public class PositionComposer implements SimpleComposer<Position> {

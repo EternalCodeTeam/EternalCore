@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.automessage;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.commons.shared.RandomElementUtil;
-import com.eternalcode.commons.shared.scheduler.Scheduler;
+import com.eternalcode.commons.RandomElementUtil;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;

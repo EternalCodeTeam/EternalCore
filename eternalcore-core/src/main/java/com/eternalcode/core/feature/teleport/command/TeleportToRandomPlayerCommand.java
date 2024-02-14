@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.shared.RandomElementUtil;
+import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;

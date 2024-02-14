@@ -1,7 +1,7 @@
 package com.eternalcode.core.util;
 
-import com.eternalcode.commons.shared.time.DurationParser;
-import com.eternalcode.commons.shared.time.TemporalAmountParser;
+import com.eternalcode.commons.time.DurationParser;
+import com.eternalcode.commons.time.TemporalAmountParser;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
