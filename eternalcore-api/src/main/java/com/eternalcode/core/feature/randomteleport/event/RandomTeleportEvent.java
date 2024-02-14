@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.randomteleport.event;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -11,7 +10,7 @@ import org.bukkit.event.HandlerList;
  */
 public class RandomTeleportEvent extends Event {
 
-    private static final HandlerList HANDLER_LIST = new HandlerList();
+    private static final HandlerList RANDOM_TELEPORT_HANDLER_LIST = new HandlerList();
 
     private final Player player;
     private final Location teleportLocation;
@@ -21,6 +20,10 @@ public class RandomTeleportEvent extends Event {
 
         this.player = player;
         this.teleportLocation = teleportLocation;
+    }
+
+    public static HandlerList getRandomTeleportHandlerList() {
+        return RANDOM_TELEPORT_HANDLER_LIST;
     }
 
     public Player getPlayer() {
@@ -33,11 +36,6 @@ public class RandomTeleportEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLER_LIST;
+        return RANDOM_TELEPORT_HANDLER_LIST;
     }
-
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
-
 }
