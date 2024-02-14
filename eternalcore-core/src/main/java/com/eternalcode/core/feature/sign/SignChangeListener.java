@@ -1,9 +1,11 @@
 package com.eternalcode.core.feature.sign;
 
+import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
+
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.bridge.adventure.legacy.Legacy;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,9 +32,10 @@ class SignChangeListener implements Listener {
         Player player = event.getPlayer();
         String[] lines = event.getLines();
 
-       if (player.hasPermission("eternalcore.sign")) {
+        if (player.hasPermission("eternalcore.sign")) {
             for (int i = 0; i < lines.length; i++) {
-                event.setLine(i, Legacy.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(lines[i])));
+                Component deserialize = this.miniMessage.deserialize(lines[i]);
+                event.setLine(i, legacySection().serialize(deserialize));
             }
         }
     }
