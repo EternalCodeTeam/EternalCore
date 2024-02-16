@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.ignore;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.concurrent.CompletableFuture;
-import panda.std.reactive.Completable;
 
 import java.util.UUID;
 
