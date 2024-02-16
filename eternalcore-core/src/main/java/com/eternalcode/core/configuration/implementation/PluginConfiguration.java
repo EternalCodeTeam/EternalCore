@@ -70,6 +70,9 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Teleport to spawn on first join")
         public boolean teleportToSpawnOnFirstJoin = true;
 
+        @Description("# Teleport to spawn on join")
+        public boolean teleportToSpawnOnJoin = false;
+
     }
 
     @Description({ " ", "# Teleport request section" })
