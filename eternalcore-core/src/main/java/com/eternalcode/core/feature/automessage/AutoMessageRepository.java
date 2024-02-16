@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.automessage;
 
 import java.util.concurrent.CompletableFuture;
-import panda.std.reactive.Completable;
 
 import java.util.Set;
 import java.util.UUID;
