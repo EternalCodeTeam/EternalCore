@@ -32,7 +32,13 @@ class AfkController implements Listener {
     private final PluginConfiguration config;
 
     @Inject
-    AfkController(AfkService afkService, MiniMessage miniMessage, UserManager userManager, TranslationManager translationManager, PluginConfiguration config) {
+    AfkController(
+    AfkService afkService,
+    MiniMessage miniMessage,
+    UserManager userManager,
+    TranslationManager translationManager, 
+    PluginConfiguration config
+   ) {
         this.afkService = afkService;
         this.miniMessage = miniMessage;
         this.userManager = userManager;
