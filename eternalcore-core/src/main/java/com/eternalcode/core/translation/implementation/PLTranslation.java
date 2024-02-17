@@ -501,7 +501,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
 
         @Description({ " " })
-        public String afkKickReason = "<red>Zostałeś wyrzucone z powodu nieaktywności!";
+        public String afkKickReason = "<red>Zostałeś wyrzucone z powodu braku aktywności!";
     }
 
     @Description({
