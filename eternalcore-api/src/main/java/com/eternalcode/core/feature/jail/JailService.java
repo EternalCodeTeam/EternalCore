@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.time.Duration;
+import java.util.Map;
+import java.util.UUID;
 
 public interface JailService {
 
@@ -25,5 +27,9 @@ public interface JailService {
     void releaseAllPlayers(Player player);
 
     boolean isLocationSet();
+
+    Location getJailLocation();
+
+    Map<UUID, Prisoner> getJailedPlayers();
 
 }

@@ -878,5 +878,7 @@ public class ENTranslation extends AbstractTranslation {
 
         public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
 
+        public Notice playerCannotUseCommand = Notice.chat("<red>✘ <dark_red>You can't use this command! You are in jail!");
+
     }
 }

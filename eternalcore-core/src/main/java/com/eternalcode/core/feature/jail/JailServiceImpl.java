@@ -7,6 +7,7 @@ import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,18 +24,32 @@ public class JailServiceImpl implements JailService {
 
     // id - name - location
     // 1 - "" - jail location
-    private Location jailLocation;
+
     private final TeleportService teleportService;
     private final SpawnService spawnService;
     private final NoticeService noticeService;
 
+    private Location jailLocation;
+
+
     private final Map<UUID, Prisoner> jailedPlayers = new ConcurrentHashMap<>();
+
 
     @Inject
     JailServiceImpl(TeleportService teleportService, SpawnService spawnService, NoticeService noticeService) {
         this.teleportService = teleportService;
         this.spawnService = spawnService;
         this.noticeService = noticeService;
+    }
+
+    @Override
+    public Map<UUID, Prisoner> getJailedPlayers() {
+        return this.jailedPlayers;
+    }
+
+    @Override
+    public Location getJailLocation() {
+        return this.jailLocation;
     }
 
     @Override

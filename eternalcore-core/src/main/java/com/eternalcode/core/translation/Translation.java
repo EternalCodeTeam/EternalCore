@@ -427,6 +427,8 @@ public interface Translation {
         Notice jailReleaseNoPlayer();
         Notice jailReleaseAll();
         Notice jailReleaseNoPlayers();
+
+        Notice playerCannotUseCommand();
     }
 
 }

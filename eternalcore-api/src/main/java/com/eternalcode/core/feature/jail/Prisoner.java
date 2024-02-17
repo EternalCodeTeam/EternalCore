@@ -21,4 +21,26 @@ public class Prisoner {
         this.lockedUpByWho = lockedUpByWho;
     }
 
+    public UUID getPlayer() {
+        return player;
+    }
+
+    public Instant getPrisonTime() {
+        return prison_time;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public UUID getLockedUpByWho() {
+        return lockedUpByWho;
+    }
+
+    public boolean isLockedUp() {
+        return prison_time.isAfter(Instant.now());
+    }
+
+
+
 }
