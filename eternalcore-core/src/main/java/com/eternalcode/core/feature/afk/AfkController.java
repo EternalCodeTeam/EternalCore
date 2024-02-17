@@ -44,19 +44,21 @@ class AfkController implements Listener {
     void onAfkSwitch(AfkSwitchEvent event) {
         UUID playerUUID = event.getAfk().getPlayer();
 
-        if (this.afkService.isAfk(playerUUID) && this.config.afk.kickOnAfk) {
-            Player player = Bukkit.getPlayer(playerUUID);
-
-            if (player == null) {
-                return;
-            }
-
-            User user = this.userManager.getOrCreate(playerUUID, player.getName());
-            Translation translation = this.translationManager.getMessages(user);
-
-            Component component = this.miniMessage.deserialize(translation.afk().afkKickReason());
-            player.kickPlayer(Legacy.SECTION_SERIALIZER.serialize(component));
+        if (!this.afkService.isAfk(playerUUID) || !this.config.afk.kickOnAfk) {
+            return;
         }
+
+        Player player = Bukkit.getPlayer(playerUUID);
+
+        if (player == null) {
+            return;
+        }
+
+        User user = this.userManager.getOrCreate(playerUUID, player.getName());
+        Translation translation = this.translationManager.getMessages(user);
+
+        Component component = this.miniMessage.deserialize(translation.afk().afkKickReason());
+        player.kickPlayer(Legacy.SECTION_SERIALIZER.serialize(component));
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
