@@ -495,6 +495,9 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({ " ", "# {TIME} - Time after the player can execute the command." })
         public Notice afkDelay = Notice.chat("<red>► <dark_red>You can use this command only after <red>{TIME}!");
+
+        @Description({ " " })
+        public String afkKickReason = "<red>You have been kicked due to inactivity!";
     }
 
     @Description({

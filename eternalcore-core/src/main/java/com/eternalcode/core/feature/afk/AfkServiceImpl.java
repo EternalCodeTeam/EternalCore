@@ -48,13 +48,16 @@ class AfkServiceImpl implements AfkService {
     @Override
     public Afk markAfk(UUID playerUniqueId, AfkReason reason) {
         Afk afk = new Afk(playerUniqueId, reason, Instant.now());
+
+        this.afkByPlayer.put(playerUniqueId, afk);
+
         AfkSwitchEvent event = this.eventCaller.callEvent(new AfkSwitchEvent(afk));
 
         if (event.isCancelled()) {
+            this.afkByPlayer.remove(playerUniqueId);
             return afk;
         }
 
-        this.afkByPlayer.put(playerUniqueId, afk);
         this.sendAfkNotification(playerUniqueId, true);
 
         return afk;
