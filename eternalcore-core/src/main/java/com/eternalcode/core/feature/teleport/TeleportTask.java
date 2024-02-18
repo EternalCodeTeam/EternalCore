@@ -11,12 +11,13 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import panda.utilities.StringUtils;
 
-@Task(delay = 200L, period = 200L)
+@Task(delay = 200L, period = 200L, unit = TimeUnit.MILLISECONDS)
 class TeleportTask implements Runnable {
 
     private final NoticeService noticeService;
