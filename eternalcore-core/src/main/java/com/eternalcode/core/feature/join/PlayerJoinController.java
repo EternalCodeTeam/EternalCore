@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 @Controller
 public class PlayerJoinController implements Listener {
 
-    private static final String BOMBOM = "Spawn is not set! Set it using the /setspawn command";
+    private static final String WARNING = "Spawn is not set! Set it using the /setspawn command";
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerJoinController.class);
 
     private final LocationsConfiguration locationsConfiguration;
@@ -64,7 +64,7 @@ public class PlayerJoinController implements Listener {
         Position spawnPosition = this.locationsConfiguration.spawn;
 
         if (spawnPosition == null || spawnPosition.isNoneWorld()) {
-            LOGGER.warn(BOMBOM);
+            LOGGER.warn(WARNING);
 
             return;
         }
