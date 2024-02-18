@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.UUID;
 
 @Controller
-public class AfkStateController implements Listener {
+class AfkStateController implements Listener {
 
     private final AfkService afkService;
 

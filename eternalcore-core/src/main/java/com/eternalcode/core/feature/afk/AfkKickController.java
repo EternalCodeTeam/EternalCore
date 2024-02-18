@@ -20,7 +20,7 @@ import org.bukkit.event.Listener;
 import java.util.UUID;
 
 @Controller
-public class AfkKickController implements Listener {
+class AfkKickController implements Listener {
 
     private final MiniMessage miniMessage;
     private final Server server;
