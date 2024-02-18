@@ -52,17 +52,17 @@ public class RelocationHandler implements AutoCloseable {
             Dependency.of(
                     "org.ow2.asm",
                     "asm",
-                    "9.1"
+                    "9.2"
             ),
             Dependency.of(
                     "org.ow2.asm",
                     "asm-commons",
-                    "9.1"
+                    "9.2"
             ),
             Dependency.of(
                     "me.lucko",
                     "jar-relocator",
-                    "1.4"
+                    "1.7"
             )
     );
 

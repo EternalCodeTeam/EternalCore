@@ -17,8 +17,6 @@ import com.eternalcode.multification.viewer.ViewerProvider;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import org.jetbrains.annotations.CheckReturnValue;
-import panda.std.Option;
 
 /**
  * This class is an extension of {@link NoticeBroadcastImpl} that provides more methods for creating notices.
@@ -48,23 +46,6 @@ public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCore
 
     public <CONTEXT> B placeholders(Placeholders<CONTEXT> placeholders, CONTEXT context) {
         return this.formatter(placeholders.toFormatter(context));
-    }
-
-    @CheckReturnValue
-    @Deprecated(forRemoval = true)
-    // TODO: Use Optional instead of Option in all places
-    public B noticeOption(OptionNoticeProvider<Translation> extractor) {
-        this.notifications.add(translation -> {
-            Option<Notice> apply = extractor.extract(translation);
-
-            if (apply.isPresent()) {
-                return apply.get();
-            }
-
-            return Notice.empty();
-        });
-
-        return this.getThis();
     }
 
     public B notice(NoticeTextType type, TextMessageProvider<Translation> extractor) {
