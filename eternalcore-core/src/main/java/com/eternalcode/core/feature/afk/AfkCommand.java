@@ -7,14 +7,13 @@ import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
-import org.bukkit.entity.Player;
-
 import java.time.Duration;
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 @Command(name = "afk")
 @Permission("eternalcore.afk")
@@ -64,5 +63,4 @@ class AfkCommand {
 
         this.delay.markDelay(uuid, this.pluginConfiguration.afk.delay());
     }
-
 }

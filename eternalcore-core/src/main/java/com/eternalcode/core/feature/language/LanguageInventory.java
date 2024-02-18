@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.language;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.config.LanguageConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -11,7 +12,6 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.util.AdventureUtil;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -73,12 +73,12 @@ class LanguageInventory {
             ItemBuilder borderItem = ItemBuilder.from(languageSelector.border.material);
 
             if (!languageSelector.border.name.equals("")) {
-                borderItem.name(AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(languageSelector.border.name)));
+                borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(languageSelector.border.name)));
             }
 
             if (!languageSelector.border.lore.isEmpty()) {
                 borderItem.lore(languageSelector.border.lore.stream()
-                    .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+                    .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
                     .collect(Collectors.toList()));
             }
 
@@ -134,10 +134,10 @@ class LanguageInventory {
     }
 
     private BaseItemBuilder createItem(ConfigItem item) {
-        Component name = AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(item.name()));
+        Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
         List<Component> lore = item.lore()
             .stream()
-            .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+            .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
             .toList();
 
         if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {
