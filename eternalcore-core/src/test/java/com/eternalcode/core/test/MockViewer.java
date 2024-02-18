@@ -2,7 +2,6 @@ package com.eternalcode.core.test;
 
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.viewer.Viewer;
-
 import java.util.Objects;
 import java.util.UUID;
 
@@ -16,6 +15,14 @@ public class MockViewer implements Viewer {
         this.name = name;
         this.uuid = uuid;
         this.console = console;
+    }
+
+    public static MockViewer player(String name, UUID uuid) {
+        return new MockViewer(name, uuid, false);
+    }
+
+    public static MockViewer console() {
+        return new MockViewer("CONSOLE", UUID.nameUUIDFromBytes(new byte[0]), true);
     }
 
     @Override
@@ -38,18 +45,14 @@ public class MockViewer implements Viewer {
         return this.console;
     }
 
-    public static MockViewer player(String name, UUID uuid) {
-        return new MockViewer(name, uuid, false);
-    }
-
-    public static MockViewer console() {
-        return new MockViewer("CONSOLE", UUID.nameUUIDFromBytes(new byte[0]), true);
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MockViewer that)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof MockViewer that)) {
+            return false;
+        }
         return console == that.console && Objects.equals(name, that.name) && Objects.equals(uuid, that.uuid);
     }
 

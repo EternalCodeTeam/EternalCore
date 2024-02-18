@@ -1,17 +1,17 @@
 package com.eternalcode.core.feature.automessage;
 
-import panda.std.reactive.Completable;
+import java.util.concurrent.CompletableFuture;
 
 import java.util.Set;
 import java.util.UUID;
 
 interface AutoMessageRepository {
 
-    Completable<Set<UUID>> findReceivers(Set<UUID> onlineUniqueIds);
+    CompletableFuture<Set<UUID>> findReceivers(Set<UUID> onlineUniqueIds);
 
     // for nearby feafure like placeholders etc
-    Completable<Boolean> isReceiving(UUID uniqueId);
+    CompletableFuture<Boolean> isReceiving(UUID uniqueId);
 
-    Completable<Boolean> switchReceiving(UUID uniqueId);
+    CompletableFuture<Boolean> switchReceiving(UUID uniqueId);
 
 }

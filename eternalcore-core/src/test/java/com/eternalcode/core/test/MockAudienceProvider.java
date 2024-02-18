@@ -1,6 +1,10 @@
 package com.eternalcode.core.test;
 
 import com.eternalcode.core.viewer.Viewer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.platform.facet.Facet;
 import net.kyori.adventure.platform.facet.FacetAudience;
@@ -15,11 +19,6 @@ import net.kyori.adventure.translation.GlobalTranslator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import panda.std.Blank;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
 
 public class MockAudienceProvider extends FacetAudienceProvider<Viewer, MockAudienceProvider.MockAudience> {
 
@@ -59,10 +58,30 @@ public class MockAudienceProvider extends FacetAudienceProvider<Viewer, MockAudi
         public void contributePointers(Viewer viewer, net.kyori.adventure.pointer.Pointers.Builder builder) {
             if (viewer.isConsole()) {
                 builder.withStatic(FacetPointers.TYPE, FacetPointers.Type.CONSOLE);
-            } else {
+            }
+            else {
                 builder.withDynamic(Identity.UUID, viewer::getUniqueId);
                 builder.withStatic(FacetPointers.TYPE, FacetPointers.Type.PLAYER);
             }
+        }
+    }
+
+    static class Chat implements Facet.Chat<Viewer, String> {
+
+        private final List<String> messages = new ArrayList<>();
+
+        @Override
+        public void sendMessage(
+            @NotNull Viewer viewer,
+            @NotNull Identity source,
+            @NotNull String message,
+            @NotNull Object type) {
+            messages.add(message);
+        }
+
+        @Override
+        public @Nullable String createMessage(@NotNull Viewer viewer, @NotNull Component message) {
+            return MiniMessage.miniMessage().serialize(message);
         }
     }
 
@@ -94,20 +113,4 @@ public class MockAudienceProvider extends FacetAudienceProvider<Viewer, MockAudi
             }
         }
     }
-
-    static class Chat implements Facet.Chat<Viewer, String> {
-
-        private final List<String> messages = new ArrayList<>();
-
-        @Override
-        public void sendMessage(@NotNull Viewer viewer, @NotNull Identity source, @NotNull String message, @NotNull Object type) {
-            messages.add(message);
-        }
-
-        @Override
-        public @Nullable String createMessage(@NotNull Viewer viewer, @NotNull Component message) {
-            return MiniMessage.miniMessage().serialize(message);
-        }
-    }
-
 }

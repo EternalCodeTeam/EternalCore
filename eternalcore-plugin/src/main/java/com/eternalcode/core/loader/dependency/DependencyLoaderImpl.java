@@ -32,7 +32,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
     private final Map<Dependency, Path> loaded = new HashMap<>();
 
     public DependencyLoaderImpl(Logger logger, File dataFolder, List<Repository> repositories) {
-        Path localRepositoryPath = setupCacheDirectory(dataFolder);
+        Path localRepositoryPath = this.setupCacheDirectory(dataFolder);
         Repository localRepository = Repository.localRepository(localRepositoryPath);
 
         List<Repository> allRepositories = new ArrayList<>();
