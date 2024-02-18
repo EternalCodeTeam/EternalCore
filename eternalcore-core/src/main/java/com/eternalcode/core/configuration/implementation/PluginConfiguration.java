@@ -71,7 +71,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public boolean teleportToSpawnOnFirstJoin = true;
 
         @Description("# Teleport to spawn on join")
-        public boolean alwaysTeleportToSpawnOnJoin = false;
+        public boolean teleportToSpawnOnJoin = false;
 
     }
 

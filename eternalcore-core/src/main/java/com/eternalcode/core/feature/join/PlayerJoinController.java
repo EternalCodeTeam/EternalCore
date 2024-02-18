@@ -52,7 +52,7 @@ public class PlayerJoinController implements Listener {
 
     @EventHandler
     void onJoin(PlayerJoinEvent event) {
-        if (!this.pluginConfiguration.join.alwaysTeleportToSpawnOnJoin) {
+        if (!this.pluginConfiguration.join.teleportToSpawnOnJoin) {
             return;
         }
         Player player = event.getPlayer();
