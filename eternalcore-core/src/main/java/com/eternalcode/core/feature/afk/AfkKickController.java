@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.afk;
 
-import com.eternalcode.core.bridge.adventure.legacy.Legacy;
+import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
+
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.afk.event.AfkSwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -11,6 +12,7 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,6 +63,6 @@ class AfkKickController implements Listener {
         Translation translation = this.translationManager.getMessages(user);
 
         Component component = this.miniMessage.deserialize(translation.afk().afkKickReason());
-        player.kickPlayer(Legacy.SECTION_SERIALIZER.serialize(component));
+        player.kickPlayer(legacySection().serialize(component));
     }
 }
