@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.quitmessage;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.RandomUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,10 +32,9 @@ class PlayerQuitMessageController implements Listener {
         event.setQuitMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOption(translation -> RandomUtil.randomElement(translation.event().quitMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().quitMessage()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();
     }
-
 }

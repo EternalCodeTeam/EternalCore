@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.composer;
 
-import com.eternalcode.core.shared.Position;
+import com.eternalcode.commons.bukkit.position.Position;
 import org.junit.jupiter.api.Test;
 import panda.std.Result;
 
@@ -19,12 +19,12 @@ class PositionComposerTest {
         assertTrue(result.isOk());
         Position position = result.get();
 
-        assertEquals(1.0, position.getX());
-        assertEquals(2.0, position.getY());
-        assertEquals(3.0, position.getZ());
-        assertEquals(4.0, position.getYaw());
-        assertEquals(5.0, position.getPitch());
-        assertEquals("world", position.getWorld());
+        assertEquals(1.0, position.x());
+        assertEquals(2.0, position.y());
+        assertEquals(3.0, position.z());
+        assertEquals(4.0, position.yaw());
+        assertEquals(5.0, position.pitch());
+        assertEquals("world", position.world());
     }
 
     @Test

@@ -24,7 +24,7 @@ public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
     }
 
     public Location getLocation() {
-        return location;
+        return this.location;
     }
 
     public void setLocation(Location location) {
