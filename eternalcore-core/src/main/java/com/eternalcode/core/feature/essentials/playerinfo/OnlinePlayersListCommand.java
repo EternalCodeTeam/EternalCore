@@ -40,7 +40,7 @@ class OnlinePlayersListCommand {
     void execute(@Context Viewer viewer) {
         Collection<? extends Player> online = this.server.getOnlinePlayers()
             .stream()
-            .filter(player -> !this.vanishService.isVanished(player.getUniqueId()))
+            .filter(player -> !this.vanishService.isVanished(player))
             .toList();
 
         String onlineCount = String.valueOf(online.size());

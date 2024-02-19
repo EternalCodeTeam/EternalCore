@@ -9,10 +9,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Server;
-import org.bukkit.entity.Player;
 
 @Command(name = "online")
 @Permission("eternalcore.online")
@@ -33,7 +30,7 @@ class OnlinePlayerCountCommand {
     @DescriptionDocs(description = "Shows online players count")
     void execute(@Context Viewer viewer) {
         long visiblePlayerCount = this.server.getOnlinePlayers().stream()
-            .filter(player -> !this.vanishService.isVanished(player.getUniqueId()))
+            .filter(player -> !this.vanishService.isVanished(player))
             .count();
 
         this.noticeService
