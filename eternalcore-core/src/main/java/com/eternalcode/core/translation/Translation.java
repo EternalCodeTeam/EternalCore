@@ -236,6 +236,7 @@ public interface Translation {
         Notice afkOn();
         Notice afkOff();
         Notice afkDelay();
+        String afkKickReason();
     }
 
     // event section

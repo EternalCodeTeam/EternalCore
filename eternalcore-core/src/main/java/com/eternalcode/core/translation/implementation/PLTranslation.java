@@ -498,6 +498,9 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " ", "# {TIME} - Czas po którym gracz może użyć komendy" })
         public Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
+
+        @Description({ " " })
+        public String afkKickReason = "<red>Zostałeś wyrzucone z powodu braku aktywności!";
     }
 
     @Description({
