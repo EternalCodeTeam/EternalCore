@@ -169,6 +169,33 @@
     ]
   },
   {
+    "name": "catboy ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.catboy"
+    ],
+    "descriptions": [
+      "Mark yourself as a catboy."
+    ],
+    "arguments": [
+      "[type]"
+    ]
+  },
+  {
+    "name": "catboy ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.catboy",
+      "eternalcore.catboy.others"
+    ],
+    "descriptions": [
+      "Mark a player as a catboy."
+    ],
+    "arguments": [
+      "\u003cplayer\u003e [type]"
+    ]
+  },
+  {
     "name": "chat clear",
     "aliases": [
       "chat, cc"
@@ -1245,6 +1272,32 @@
     ],
     "arguments": [
       "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "sudo ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sudo.player"
+    ],
+    "descriptions": [
+      "Execute command as player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003ccommand\u003e"
+    ]
+  },
+  {
+    "name": "sudo -console",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sudo.console"
+    ],
+    "descriptions": [
+      "Execute command as console"
+    ],
+    "arguments": [
+      "\u003ccommand\u003e"
     ]
   },
   {
