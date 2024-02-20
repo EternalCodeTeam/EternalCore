@@ -16,6 +16,14 @@ public interface AfkService {
     boolean isAfk(UUID playerUniqueId);
 
     /**
+     * Returns the AFK status of a uniqueId.
+     *
+     * @param playerUniqueId Unique identifier of the player.
+     * @return Afk object representing player's AFK status.
+     */
+    Afk getAfk(UUID playerUniqueId);
+
+    /**
      * Switches player's AFK status.
      *
      * @param playerUniqueId Unique identifier of the player.

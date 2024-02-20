@@ -104,6 +104,11 @@ class AfkServiceImpl implements AfkService {
         return this.afkByPlayer.containsKey(playerUniqueId);
     }
 
+    @Override
+    public Afk getAfk(UUID playerUniqueId) {
+        return this.afkByPlayer.get(playerUniqueId);
+    }
+
     @ApiStatus.Internal
     boolean isInactive(UUID playerUniqueId) {
         Instant now = Instant.now();
