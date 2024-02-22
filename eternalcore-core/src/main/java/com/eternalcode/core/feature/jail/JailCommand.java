@@ -79,14 +79,6 @@ public class JailCommand {
 
     @Execute(name = "release")
     @Permission("eternalcore.jail.release")
-    @DescriptionDocs(description = "Release a player from jail", arguments = "<player>")
-    void executeJailRelease(@Context Player player, @Arg Player target) {
-        // Unjail player
-        this.jailService.releasePlayer(target, player);
-    }
-
-    @Execute(name = "release")
-    @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release self from jail")
     void executeJailReleaseSelf(@Context Player player) {
         // Unjail self
@@ -95,11 +87,17 @@ public class JailCommand {
 
     @Execute(name = "release")
     @Permission("eternalcore.jail.release")
+    @DescriptionDocs(description = "Release a player from jail", arguments = "<player>")
+    void executeJailRelease(@Context Player player, @Arg Player target) {
+        // Unjail player
+        this.jailService.releasePlayer(target, player);
+    }
+
+    @Execute(name = "release all")
+    @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release all players from jail")
     void executeJailReleaseAll(@Context Player player) {
         // Unjail all players
         this.jailService.releaseAllPlayers(player);
     }
-
-
 }

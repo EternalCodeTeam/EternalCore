@@ -5,10 +5,10 @@ import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandSendEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.Map;
 import java.util.UUID;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Controller
 public class JailController implements Listener {
 
-    private  final JailService jailService;
+    private final JailService jailService;
     private Map<UUID, Prisoner> jailedPlayers;
     private final NoticeService noticeService;
 
@@ -44,7 +44,20 @@ public class JailController implements Listener {
 
     }
 
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent tp) {
 
+        UUID player = tp.getPlayer().getUniqueId();
+
+        if (!this.jailedPlayers.containsKey(player)) {
+            return;
+        }
+        if (tp.getCause().equals(PlayerTeleportEvent.TeleportCause.CHORUS_FRUIT)
+            || tp.getCause().equals(PlayerTeleportEvent.TeleportCause.COMMAND)) {
+            tp.setCancelled(true);
+
+        }
+    }
 
     @EventHandler
     public void onJailRelease(JailReleaseEvent event) {

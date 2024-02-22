@@ -1,46 +1,43 @@
 package com.eternalcode.core.feature.jail;
 
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
 public class Prisoner {
 
     private final UUID player;
-    private final Instant prison_time;
     private final String reason;
+    private final Instant detainedAt;
+    private final Duration prisonTime;
     private final UUID lockedUpByWho;
 
-
-    public Prisoner(UUID player, Instant prisonTime, String reason, UUID lockedUpByWho) {
+    public Prisoner(@NotNull UUID player, @NotNull String reason, @NotNull Instant detainedAt, @NotNull Duration prisonTime, @NotNull UUID lockedUpByWho) {
         this.player = player;
-        this.prison_time = prisonTime;
         this.reason = reason;
+        this.detainedAt = detainedAt;
+        this.prisonTime = prisonTime;
         this.lockedUpByWho = lockedUpByWho;
     }
-
-    public UUID getPlayer() {
-        return player;
-    }
-
-    public Instant getPrisonTime() {
-        return prison_time;
+    public UUID getUuid() {
+        return this.player;
     }
 
     public String getReason() {
-        return reason;
+        return this.reason;
     }
 
-    public UUID getLockedUpByWho() {
-        return lockedUpByWho;
+    public Instant getDetainedAt() {
+        return this.detainedAt;
     }
 
-    public boolean isLockedUp() {
-        return prison_time.isAfter(Instant.now());
+    public Duration getDuration() {
+        return this.prisonTime;
     }
 
-
-
+    public UUID getDetainedBy() {
+        return this.lockedUpByWho;
+    }
 }
