@@ -1,0 +1,89 @@
+package com.eternalcode.core.feature.ignore.event;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+public class IgnoreEvent extends Event implements Cancellable {
+
+    private static final HandlerList HANDLER_LIST = new HandlerList();
+
+    private final Player by;
+    private final Player target;
+    private final Action type;
+    private boolean cancelled;
+
+    public IgnoreEvent(@NotNull Player by, @Nullable Player target, @NotNull Action type) {
+        super(true);
+        this.by = by;
+        this.target = target;
+        this.type = type;
+    }
+
+    /**
+     * @return the player executing the ignore action. If the action is PURGE, this will be null.
+     */
+
+    public Player getBy() {
+        return by;
+    }
+
+    /**
+     * @return the player being targeted by the ignore action. If the action is PURGE/IGNORE_ALL/UNIGNORE_ALL, this will be null.
+     */
+
+    public Player getTarget() {
+        return target;
+    }
+
+    /**
+     * @return the type of ignore action
+     * @see Action
+     */
+
+    public Action getType() {
+        return type;
+    }
+
+    /**
+     * @return Whether the event is cancelled
+     */
+
+    @Override
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+
+    /**
+     * @param cancel Whether to cancel the event
+     */
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
+    }
+
+    @NotNull
+    @Override
+    public HandlerList getHandlers() {
+        return HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLER_LIST;
+    }
+
+    /**
+     * The type of ignore action
+     */
+
+    public enum Action {
+        IGNORE,
+        IGNORE_ALL,
+        UNIGNORE,
+        UNIGNORE_ALL,
+    }
+}

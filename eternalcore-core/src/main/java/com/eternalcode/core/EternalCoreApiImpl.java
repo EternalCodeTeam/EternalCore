@@ -2,6 +2,7 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
+import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
@@ -22,23 +23,28 @@ class EternalCoreApiImpl implements EternalCoreApi {
     }
 
     @Override
-    public SpawnService getSpawnService() {
-        return this.dependencyProvider.getDependency(SpawnService.class);
-    }
-
-    @Override
     public CatboyService getCatboyService() {
         return this.dependencyProvider.getDependency(CatboyService.class);
     }
 
     @Override
-    public TeleportService getTeleportService() {
-        return this.dependencyProvider.getDependency(TeleportService.class);
+    public IgnoreService getIgnoreService() {
+        return this.dependencyProvider.getDependency(IgnoreService.class);
     }
 
     @Override
     public RandomTeleportService getRandomTeleportService() {
         return this.dependencyProvider.getDependency(RandomTeleportService.class);
+    }
+
+    @Override
+    public SpawnService getSpawnService() {
+        return this.dependencyProvider.getDependency(SpawnService.class);
+    }
+
+    @Override
+    public TeleportService getTeleportService() {
+        return this.dependencyProvider.getDependency(TeleportService.class);
     }
 
     @Override

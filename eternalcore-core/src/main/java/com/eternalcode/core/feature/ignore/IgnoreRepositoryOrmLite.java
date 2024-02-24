@@ -13,6 +13,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Set;
@@ -20,10 +22,9 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import org.jetbrains.annotations.NotNull;
 
 @Repository
-class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
+class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreService {
 
     private static final UUID IGNORE_ALL = UUID.nameUUIDFromBytes("*".getBytes());
 
@@ -103,6 +104,12 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                 return builder.delete();
             })
             .thenRun(() -> this.ignores.refresh(by));
+    }
+
+    @Override
+    public CompletableFuture<Void> purgeAll() {
+        return this.deleteAll(IgnoreWrapper.class)
+            .thenRun(this.ignores::invalidateAll);
     }
 
     @DatabaseTable(tableName = "eternal_core_ignores")

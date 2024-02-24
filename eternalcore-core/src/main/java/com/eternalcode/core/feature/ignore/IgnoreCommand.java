@@ -1,14 +1,18 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.ignore.event.IgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -16,13 +20,17 @@ import java.util.UUID;
 @Permission("eternalcore.ignore")
 class IgnoreCommand {
 
-    private final IgnoreRepository repository;
+    private final IgnoreService repository;
     private final NoticeService noticeService;
+    private final EventCaller eventCaller;
+    private final Server server;
 
     @Inject
-    IgnoreCommand(IgnoreRepository repository, NoticeService noticeService) {
+    IgnoreCommand(IgnoreService repository, NoticeService noticeService, EventCaller eventCaller, Server server) {
         this.repository = repository;
         this.noticeService = noticeService;
+        this.eventCaller = eventCaller;
+        this.server = server;
     }
 
     @Execute
@@ -46,6 +54,14 @@ class IgnoreCommand {
 
                 return;
             }
+            Player senderPlayer = this.server.getPlayer(senderUuid);
+            Player targetPlayer = this.server.getPlayer(targetUuid);
+
+            IgnoreEvent event = this.eventCaller.callEvent(new IgnoreEvent(senderPlayer, targetPlayer, IgnoreEvent.Action.IGNORE));
+
+            if (event.isCancelled()) {
+                return;
+            }
 
             this.repository.ignore(senderUuid, targetUuid).thenAccept(unused -> this.noticeService.create()
                 .player(senderUuid)
@@ -59,6 +75,13 @@ class IgnoreCommand {
     @DescriptionDocs(description = "Ignore all players")
     void ignoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
+
+        Player player = this.server.getPlayer(senderUuid);
+        IgnoreEvent event = this.eventCaller.callEvent(new IgnoreEvent(player, null, IgnoreEvent.Action.IGNORE_ALL));
+
+        if (event.isCancelled()) {
+            return;
+        }
 
         this.repository.ignoreAll(senderUuid).thenAccept(blank -> this.noticeService.create()
             .player(senderUuid)
