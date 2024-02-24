@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 
 public class WarpTeleportEvent extends Event implements Cancellable {
 
-    private static final HandlerList WARP_TELEPORT_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
     private final Warp warp;
@@ -31,7 +31,7 @@ public class WarpTeleportEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return WARP_TELEPORT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class WarpTeleportEvent extends Event implements Cancellable {
     }
 
     public static HandlerList getHandlerList() {
-        return WARP_TELEPORT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }

@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 
 public class AdminChatEvent extends Event implements Cancellable {
 
-    private static final HandlerList ADMIN_CHAT_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final CommandSender sender;
     private String content;
@@ -44,10 +44,10 @@ public class AdminChatEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return ADMIN_CHAT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return ADMIN_CHAT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }

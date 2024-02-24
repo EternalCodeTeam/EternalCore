@@ -10,7 +10,7 @@ import org.bukkit.event.HandlerList;
  */
 public class RandomTeleportEvent extends Event {
 
-    private static final HandlerList RANDOM_TELEPORT_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
     private final Location teleportLocation;
@@ -32,10 +32,10 @@ public class RandomTeleportEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return RANDOM_TELEPORT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return RANDOM_TELEPORT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }

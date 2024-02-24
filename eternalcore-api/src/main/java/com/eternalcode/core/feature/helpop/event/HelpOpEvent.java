@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 
 public class HelpOpEvent extends Event implements Cancellable {
 
-    private static final HandlerList HELP_OP_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
     private final String content;
@@ -40,10 +40,10 @@ public class HelpOpEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return HELP_OP_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return HELP_OP_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }

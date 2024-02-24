@@ -10,7 +10,7 @@ import org.bukkit.event.HandlerList;
  */
 public class AfkSwitchEvent extends Event implements Cancellable {
 
-    private static final HandlerList AFK_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Afk afk;
     private final boolean isAfk;
@@ -42,10 +42,10 @@ public class AfkSwitchEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return AFK_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return AFK_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }

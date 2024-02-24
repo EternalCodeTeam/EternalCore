@@ -10,7 +10,7 @@ import org.bukkit.event.HandlerList;
  */
 public class PreRandomTeleportEvent extends Event implements Cancellable {
 
-    private static final HandlerList PRE_RANDOM_TELEPORT_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
     private boolean cancelled;
@@ -37,10 +37,10 @@ public class PreRandomTeleportEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return PRE_RANDOM_TELEPORT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return PRE_RANDOM_TELEPORT_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }
