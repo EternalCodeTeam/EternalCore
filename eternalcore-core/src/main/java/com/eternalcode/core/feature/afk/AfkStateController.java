@@ -11,12 +11,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.UUID;
 
 @Controller
-class AfkController implements Listener {
+class AfkStateController implements Listener {
 
     private final AfkService afkService;
 
     @Inject
-    AfkController(AfkService afkService) {
+    public AfkStateController(AfkService afkService) {
         this.afkService = afkService;
     }
 
@@ -31,5 +31,4 @@ class AfkController implements Listener {
     void onQuit(PlayerQuitEvent event) {
         this.afkService.clearAfk(event.getPlayer().getUniqueId());
     }
-
 }

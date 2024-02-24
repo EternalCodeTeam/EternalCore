@@ -3,8 +3,8 @@ package com.eternalcode.core.translation.implementation;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.multification.notice.Notice;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -498,6 +498,9 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " ", "# {TIME} - Czas po którym gracz może użyć komendy" })
         public Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
+
+        @Description({ " " })
+        public String afkKickReason = "<red>Zostałeś wyrzucone z powodu braku aktywności!";
     }
 
     @Description({

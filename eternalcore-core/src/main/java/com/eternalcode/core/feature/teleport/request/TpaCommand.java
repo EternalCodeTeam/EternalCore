@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import java.util.concurrent.CompletableFuture;
 import org.bukkit.entity.Player;
 import panda.std.reactive.Completable;
 
@@ -49,7 +50,7 @@ class TpaCommand {
             .placeholder("{PLAYER}", target.getName())
             .send();
 
-        this.isIgnoring(target, player).then((isIgnoring) -> {
+        this.isIgnoring(target, player).thenAccept((isIgnoring) -> {
             if (isIgnoring) {
                 this.noticeService.create()
                     .player(player.getUniqueId())
@@ -70,7 +71,7 @@ class TpaCommand {
         });
     }
 
-    Completable<Boolean> isIgnoring(Player target, Player sender) {
+    CompletableFuture<Boolean> isIgnoring(Player target, Player sender) {
         return this.ignoreService.isIgnored(target.getUniqueId(), sender.getUniqueId());
     }
 }

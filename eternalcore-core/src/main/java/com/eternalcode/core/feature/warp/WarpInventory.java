@@ -1,14 +1,14 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.commons.adventure.AdventureUtil;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.shared.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.util.AdventureUtil;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -22,6 +22,7 @@ import panda.std.Option;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,13 +54,13 @@ class WarpInventory {
             .create();
 
         warpSection.items().values().forEach(item -> {
-            Option<Warp> warpOption = this.warpManager.findWarp(item.warpName());
+            Optional<Warp> warpOptional = this.warpManager.findWarp(item.warpName());
 
-            if (warpOption.isEmpty()) {
+            if (warpOptional.isEmpty()) {
                 return;
             }
 
-            Warp warp = warpOption.get();
+            Warp warp = warpOptional.get();
             ConfigItem warpItem = item.warpItem();
 
             BaseItemBuilder baseItemBuilder = this.createItem(warpItem);
@@ -71,14 +72,14 @@ class WarpInventory {
                 player.closeInventory();
 
                 if (player.hasPermission("eternalcore.warp.bypass")) {
-                    this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), warp.getPosition(), Duration.ZERO);
+                    this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()),  PositionAdapter.convert(warp.getLocation()), Duration.ZERO);
                     return;
                 }
 
                 this.teleportTaskService.createTeleport(
                     player.getUniqueId(),
                     PositionAdapter.convert(player.getLocation()),
-                    warp.getPosition(),
+                    PositionAdapter.convert(warp.getLocation()),
                     Duration.ofSeconds(5)
                 );
             });
@@ -92,13 +93,13 @@ class WarpInventory {
             ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
 
             if (!borderSection.name().equals("")) {
-                borderItem.name(AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(borderSection.name())));
+                borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(borderSection.name())));
             }
 
             if (!borderSection.lore().isEmpty()) {
                 borderItem.lore(borderSection.lore()
                     .stream()
-                    .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+                    .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
                     .collect(Collectors.toList()));
             }
 
@@ -138,10 +139,10 @@ class WarpInventory {
     }
 
     private BaseItemBuilder createItem(ConfigItem item) {
-        Component name = AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(item.name()));
+        Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
         List<Component> lore = item.lore()
             .stream()
-            .map(entry -> AdventureUtil.RESET_ITEM.append(this.miniMessage.deserialize(entry)))
+            .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
             .toList();
 
         if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {

@@ -14,7 +14,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import panda.utilities.text.Formatter;
+import com.eternalcode.multification.shared.Formatter;
 
 @Command(name = "teleport", aliases = { "tp" })
 @Permission("eternalcore.teleport")

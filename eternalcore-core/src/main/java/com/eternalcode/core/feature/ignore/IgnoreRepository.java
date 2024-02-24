@@ -1,20 +1,20 @@
 package com.eternalcode.core.feature.ignore;
 
-import panda.std.Blank;
-import panda.std.reactive.Completable;
+import java.lang.Void;
+import java.util.concurrent.CompletableFuture;
 
 import java.util.UUID;
 
 interface IgnoreRepository {
 
-    Completable<Boolean> isIgnored(UUID by, UUID target);
+    CompletableFuture<Boolean> isIgnored(UUID by, UUID target);
 
-    Completable<Blank> ignore(UUID by, UUID target);
+    CompletableFuture<Void> ignore(UUID by, UUID target);
 
-    Completable<Blank> ignoreAll(UUID by);
+    CompletableFuture<Void> ignoreAll(UUID by);
 
-    Completable<Blank> unIgnore(UUID by, UUID target);
+    CompletableFuture<Void> unIgnore(UUID by, UUID target);
 
-    Completable<Blank> unIgnoreAll(UUID by);
+    CompletableFuture<Void> unIgnoreAll(UUID by);
 
 }

@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.randomteleport.event;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -39,5 +38,4 @@ public class RandomTeleportEvent extends Event {
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
-
 }

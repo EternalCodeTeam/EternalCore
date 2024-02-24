@@ -4,8 +4,8 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.core.shared.Position;
-import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ class SpawnRespawnController implements Listener {
 
         Position spawnPosition = this.locations.spawn;
 
-        if (this.config.teleport.teleportToSpawnOnDeath && !Objects.equals(spawnPosition.getWorld(), Position.NONE_WORLD)) {
+        if (this.config.teleport.teleportToSpawnOnDeath && !Objects.equals(spawnPosition.world(), Position.NONE_WORLD)) {
             Location destinationLocation = PositionAdapter.convert(spawnPosition);
             this.teleportService.teleport(player, destinationLocation);
         }

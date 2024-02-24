@@ -1,6 +1,6 @@
 package com.eternalcode.core.placeholder;
 
-import panda.utilities.text.Formatter;
+import com.eternalcode.multification.shared.Formatter;
 
 import java.util.HashMap;
 import java.util.Map;

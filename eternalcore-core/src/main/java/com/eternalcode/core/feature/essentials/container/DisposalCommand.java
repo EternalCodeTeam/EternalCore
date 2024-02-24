@@ -7,7 +7,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.bridge.adventure.legacy.Legacy;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -45,7 +45,7 @@ class DisposalCommand {
 
         Translation translation = this.translationManager.getMessages(language);
         Component component = this.miniMessage.deserialize(translation.inventory().disposalTitle());
-        String serialize = Legacy.SECTION_SERIALIZER.serialize(component);
+        String serialize = AdventureUtil.SECTION_SERIALIZER.serialize(component);
 
         player.openInventory(this.server.createInventory(null, 54, serialize));
 

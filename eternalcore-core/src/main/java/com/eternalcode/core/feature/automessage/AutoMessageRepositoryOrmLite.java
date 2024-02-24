@@ -1,23 +1,21 @@
 package com.eternalcode.core.feature.automessage;
 
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
-import com.eternalcode.core.feature.automessage.AutoMessageRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
-import com.eternalcode.core.scheduler.Scheduler;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
-import panda.std.reactive.Completable;
-
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Repository
@@ -30,50 +28,52 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     }
 
     @Override
-    public Completable<Set<UUID>> findReceivers(Set<UUID> onlineUniqueIds) {
+    public CompletableFuture<Set<UUID>> findReceivers(Set<UUID> onlineUniqueIds) {
         if (onlineUniqueIds.isEmpty()) {
-            return Completable.completed(onlineUniqueIds);
+            return CompletableFuture.completedFuture(onlineUniqueIds);
         }
 
-        Completable<List<AutoMessageIgnoreWrapper>> wrapperList = this.action(AutoMessageIgnoreWrapper.class, dao -> {
-            Where<AutoMessageIgnoreWrapper, Object> where = dao.queryBuilder().where();
+        CompletableFuture<List<AutoMessageIgnoreWrapper>> wrapperList =
+            this.action(AutoMessageIgnoreWrapper.class, dao -> {
+                Where<AutoMessageIgnoreWrapper, Object> where = dao.queryBuilder().where();
 
-            for (UUID onlineUniqueId : onlineUniqueIds) {
-                where.eq("unique_id", onlineUniqueId);
-            }
+                for (UUID onlineUniqueId : onlineUniqueIds) {
+                    where.eq("unique_id", onlineUniqueId);
+                }
 
-            where.or(onlineUniqueIds.size());
+                where.or(onlineUniqueIds.size());
 
-            return where.query();
-        });
+                return where.query();
+            });
 
         return wrapperList.thenApply(ignores -> {
             Set<UUID> ignoredIds = ignores.stream()
                 .map(wrapper -> wrapper.uniqueId)
                 .collect(Collectors.toSet());
 
-            Set<UUID> onlineUniqueIdsWithoutIngores = new HashSet<>();
+            Set<UUID> onlineUniqueIdsWithoutIgnores = new HashSet<>();
 
             for (UUID onlineUniqueId : onlineUniqueIds) {
                 if (!ignoredIds.contains(onlineUniqueId)) {
-                    onlineUniqueIdsWithoutIngores.add(onlineUniqueId);
+                    onlineUniqueIdsWithoutIgnores.add(onlineUniqueId);
                 }
             }
 
-            return onlineUniqueIdsWithoutIngores;
+            return onlineUniqueIdsWithoutIgnores;
         });
     }
 
     @Override
-    public Completable<Boolean> isReceiving(UUID uniqueId) {
+    public CompletableFuture<Boolean> isReceiving(UUID uniqueId) {
         return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenApply(Optional::isEmpty);
     }
 
     @Override
-    public Completable<Boolean> switchReceiving(UUID uniqueId) {
+    public CompletableFuture<Boolean> switchReceiving(UUID uniqueId) {
         return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenCompose(optional -> {
             if (optional.isEmpty()) {
-                return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId)).thenApply(result -> false);
+                return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId))
+                    .thenApply(result -> false);
             }
 
             AutoMessageIgnoreWrapper wrapper = optional.get();
@@ -94,5 +94,4 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             this.uniqueId = uniqueId;
         }
     }
-
 }

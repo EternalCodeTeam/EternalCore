@@ -4,25 +4,24 @@ import com.eternalcode.core.loader.dependency.Dependency;
 import com.eternalcode.core.loader.dependency.DependencyCollector;
 import com.eternalcode.core.loader.repository.Repository;
 import java.io.File;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class PomXmlScanner implements DependencyScanner {
 
@@ -37,7 +36,8 @@ public class PomXmlScanner implements DependencyScanner {
             DOCUMENT_BUILDER_FACTORY.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             DOCUMENT_BUILDER_FACTORY.setXIncludeAware(false);
             DOCUMENT_BUILDER_FACTORY.setExpandEntityReferences(false);
-        } catch (ParserConfigurationException exception) {
+        }
+        catch (ParserConfigurationException exception) {
             throw new RuntimeException("Failed to configure XML parser", exception);
         }
     }
@@ -83,14 +83,14 @@ public class PomXmlScanner implements DependencyScanner {
             List<Dependency> dependencies = this.readDependency(pomXml);
 
             return Optional.of(dependencies);
-
         }
         catch (IOException | SAXException | ParserConfigurationException | URISyntaxException exception) {
             return Optional.empty();
         }
     }
 
-    private File savePomXmlToLocalRepository(Dependency dependency, Repository repository) throws URISyntaxException, IOException {
+    private File savePomXmlToLocalRepository(Dependency dependency, Repository repository)
+        throws URISyntaxException, IOException {
         File localFile = dependency.toPomXml(this.localRepository).toFile();
 
         if (localFile.exists() && !this.isEmpty(localFile)) {
@@ -110,7 +110,8 @@ public class PomXmlScanner implements DependencyScanner {
     private boolean isEmpty(File file) {
         try {
             return Files.size(file.toPath()) == 0;
-        } catch (IOException exception) {
+        }
+        catch (IOException exception) {
             return true;
         }
     }
@@ -163,5 +164,4 @@ public class PomXmlScanner implements DependencyScanner {
 
         return Collections.unmodifiableList(dependencies);
     }
-
 }

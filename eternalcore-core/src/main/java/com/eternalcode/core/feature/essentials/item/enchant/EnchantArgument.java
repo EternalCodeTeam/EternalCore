@@ -5,7 +5,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.ViewerProvider;
+import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -22,8 +22,8 @@ class EnchantArgument extends AbstractViewerArgument<Integer> {
     static final String KEY = "enchant-level";
 
     @Inject
-    public EnchantArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
-        super(viewerProvider, translationManager);
+    public EnchantArgument(ViewerService viewerService, TranslationManager translationManager) {
+        super(viewerService, translationManager);
     }
 
     @Override

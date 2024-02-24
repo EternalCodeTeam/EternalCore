@@ -50,7 +50,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
             return;
         }
 
-        this.ignoreService.isIgnored(target.getUniqueId(), sender.getUniqueId()).then(isIgnored -> {
+        this.ignoreService.isIgnored(target.getUniqueId(), sender.getUniqueId()).thenAccept(isIgnored -> {
             if (!isIgnored) {
                 this.replies.put(target.getUniqueId(), sender.getUniqueId());
                 this.replies.put(sender.getUniqueId(), target.getUniqueId());

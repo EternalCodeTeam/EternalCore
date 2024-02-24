@@ -2,89 +2,101 @@ package com.eternalcode.core.notice;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.notice.extractor.NoticeExtractor;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
-import com.eternalcode.core.scheduler.Scheduler;
+import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserManager;
+import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.viewer.ViewerProvider;
-import panda.utilities.text.Formatter;
-
-import javax.annotation.CheckReturnValue;
-import java.util.UUID;
+import com.eternalcode.multification.Multification;
+import com.eternalcode.multification.adventure.AudienceConverter;
+import com.eternalcode.multification.executor.AsyncExecutor;
+import com.eternalcode.multification.locate.LocaleProvider;
+import com.eternalcode.multification.platform.PlatformBroadcaster;
+import com.eternalcode.multification.shared.Replacer;
+import com.eternalcode.multification.translation.TranslationProvider;
+import com.eternalcode.multification.viewer.ViewerProvider;
+import net.kyori.adventure.platform.AudienceProvider;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Server;
+import org.jetbrains.annotations.NotNull;
 
 @Service
-public class NoticeService {
+public class NoticeService extends Multification<Viewer, Translation> {
 
-    private final PlatformBroadcaster broadcaster;
-
-    private final Scheduler scheduler;
+    private final UserManager userManager;
     private final TranslationManager translationManager;
-    private final ViewerProvider viewerProvider;
-    private final PlaceholderRegistry placeholderRegistry;
+    private final AudienceProvider audienceProvider;
+    private final MiniMessage miniMessage;
+    private final PlaceholderRegistry registry;
+    private final Server server;
+    private final Scheduler scheduler;
 
     @Inject
-    NoticeService(PlatformBroadcaster broadcaster, Scheduler scheduler, TranslationManager translationManager, ViewerProvider viewerProvider, PlaceholderRegistry placeholderRegistry) {
-        this.broadcaster = broadcaster;
-        this.scheduler = scheduler;
+    public NoticeService(
+        UserManager userManager,
+        TranslationManager translationManager,
+        AudienceProvider audienceProvider,
+        MiniMessage miniMessage,
+        PlaceholderRegistry registry,
+        Server server,
+        Scheduler scheduler
+    ) {
+        this.userManager = userManager;
         this.translationManager = translationManager;
-        this.viewerProvider = viewerProvider;
-        this.placeholderRegistry = placeholderRegistry;
+        this.audienceProvider = audienceProvider;
+        this.miniMessage = miniMessage;
+        this.registry = registry;
+        this.server = server;
+        this.scheduler = scheduler;
     }
 
-    @CheckReturnValue
-    public NoticeBroadcast create() {
-        return new NoticeBroadcastImpl(this.scheduler, this.translationManager, this.viewerProvider, this.broadcaster, this.placeholderRegistry);
+    @Override
+    public @NotNull ViewerProvider<Viewer> viewerProvider() {
+        return new BukkitViewerProvider(this.userManager, this.server);
     }
 
-    public void player(UUID player, NoticeExtractor extractor, Formatter... formatters) {
-        this.create()
-            .player(player)
-            .notice(extractor)
-            .formatter(formatters)
-            .send();
+    @Override
+    public @NotNull TranslationProvider<Translation> translationProvider() {
+        return this.translationManager;
     }
 
-    public void players(Iterable<UUID> players, NoticeExtractor extractor, Formatter... formatters) {
-        this.create()
-            .players(players)
-            .notice(extractor)
-            .formatter(formatters)
-            .send();
+    @Override
+    public @NotNull AudienceConverter<Viewer> audienceConverter() {
+        return viewer -> this.audienceProvider.player(viewer.getUniqueId());
     }
 
-    public void user(User user, NoticeExtractor extractor, Formatter... formatters) {
-        this.create()
-            .user(user)
-            .notice(extractor)
-            .formatter(formatters)
-            .send();
+    @Override
+    protected @NotNull PlatformBroadcaster platformBroadcaster() {
+        return PlatformBroadcaster.withSerializer(this.miniMessage);
     }
 
-    public void viewer(Viewer viewer, NoticeExtractor extractor, Formatter... formatters) {
-        this.create()
-            .viewer(viewer)
-            .notice(extractor)
-            .formatter(formatters)
-            .send();
+    @Override
+    protected @NotNull Replacer<Viewer> globalReplacer() {
+        return (viewer, text) -> this.registry.format(text, viewer);
     }
 
-
-    public void console(NoticeExtractor extractor, Formatter... formatters) {
-        this.create()
-            .console()
-            .notice(extractor)
-            .formatter(formatters)
-            .send();
+    @Override
+    protected @NotNull AsyncExecutor asyncExecutor() {
+        return this.scheduler::async;
     }
 
-    public void all(NoticeExtractor extractor, Formatter... formatters) {
-        this.create()
-            .all()
-            .notice(extractor)
-            .formatter(formatters)
-            .send();
+    @Override
+    protected @NotNull LocaleProvider<Viewer> localeProvider() {
+        return viewer -> viewer.getLanguage().toLocale();
     }
 
+    @Override
+    public EternalCoreBroadcastImpl<Viewer, Translation, ?> create() {
+        return new EternalCoreBroadcastImpl<>(
+            this.asyncExecutor(),
+            this.translationProvider(),
+            this.viewerProvider(),
+            this.platformBroadcaster(),
+            this.localeProvider(),
+            this.audienceConverter(),
+            this.globalReplacer()
+        );
+    }
 }
