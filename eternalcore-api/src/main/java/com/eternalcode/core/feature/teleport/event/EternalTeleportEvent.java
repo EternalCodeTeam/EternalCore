@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerEvent;
  * Called before an async player teleportation. (This event is not async)
  * Only called when the {@link com.eternalcode.core.feature.teleport.TeleportService} teleports the player, but
  * this event is not called when the player teleports using the vanilla method.
- * */
+ */
 public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -49,5 +49,4 @@ public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
-
 }
