@@ -13,15 +13,11 @@ public class PrivateChatEvent extends Event {
     private final String content;
 
     public PrivateChatEvent(UUID sender, UUID receiver, String content) {
-        super(false);
+        super(true);
 
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
     }
 
     public UUID getSender() {
@@ -38,6 +34,10 @@ public class PrivateChatEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
+        return HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 }

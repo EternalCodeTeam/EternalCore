@@ -40,7 +40,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
         this.userManager = userManager;
         this.eventCaller = eventCaller;
 
-        this.presenter = new PrivateChatPresenter(noticeService, eventCaller);
+        this.presenter = new PrivateChatPresenter(noticeService);
     }
 
     void privateMessage(User sender, User target, String message) {
@@ -57,6 +57,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
             }
 
             this.presenter.onPrivate(new PrivateMessage(sender, target, message, this.socialSpy, isIgnored));
+            this.eventCaller.callEvent(new PrivateChatEvent(sender.getUniqueId(), target.getUniqueId(), message));
         });
     }
 

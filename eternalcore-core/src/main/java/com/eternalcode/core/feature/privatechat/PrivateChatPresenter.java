@@ -16,11 +16,9 @@ class PrivateChatPresenter {
         .build();
 
     private final NoticeService notice;
-    private final EventCaller eventCaller;
 
-    public PrivateChatPresenter(NoticeService noticeService, EventCaller eventCaller) {
+    public PrivateChatPresenter(NoticeService noticeService) {
         this.notice = noticeService;
-        this.eventCaller = eventCaller;
     }
 
     void onPrivate(PrivateMessage event) {
@@ -34,8 +32,6 @@ class PrivateChatPresenter {
 
         this.notice.player(sender, translation -> translation.privateChat().privateMessageYouToTarget(), formatter);
         this.notice.players(event.spies(), translation -> translation.privateChat().socialSpyMessage(), formatter);
-
-        this.eventCaller.callEvent(new PrivateChatEvent(sender, target, event.message()));
     }
 
 }

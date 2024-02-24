@@ -39,8 +39,8 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             .commands(
                 new ApiSpawnCommand(provide.getSpawnService()),
                 new ApiAfkCommand(provide.getAfkService()),
-                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
-                new ApiPrivateChatListener(server)
+                new ApiRandomTeleportCommand(provide.getRandomTeleportService())
+
             )
 
             .build();
@@ -48,7 +48,8 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
         Stream.of(
             new ApiAfkListener(),
             new CatBoyListener(provide.getCatboyService()),
-            new ApiRandomTeleportListener(provide.getRandomTeleportService())
+            new ApiRandomTeleportListener(provide.getRandomTeleportService()),
+            new ApiPrivateChatListener(server)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, this));
     }
 
