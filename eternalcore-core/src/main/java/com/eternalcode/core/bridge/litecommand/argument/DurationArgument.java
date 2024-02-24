@@ -11,12 +11,11 @@ import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
-import org.bukkit.command.CommandSender;
-
 import java.time.Duration;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
+import org.bukkit.command.CommandSender;
 
 @LiteArgument(type = Duration.class)
 class DurationArgument extends AbstractViewerArgument<Duration> {
@@ -48,10 +47,13 @@ class DurationArgument extends AbstractViewerArgument<Duration> {
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Duration> argument, SuggestionContext context) {
+    public SuggestionResult suggest(
+        Invocation<CommandSender> invocation,
+        Argument<Duration> argument,
+        SuggestionContext context
+    ) {
         return SUGGESTED_DURATIONS.stream()
             .map(DurationUtil::format)
             .collect(SuggestionResult.collector());
     }
-
 }

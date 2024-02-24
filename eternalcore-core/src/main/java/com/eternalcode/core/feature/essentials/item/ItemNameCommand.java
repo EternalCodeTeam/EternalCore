@@ -1,9 +1,10 @@
 package com.eternalcode.core.feature.essentials.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.bridge.adventure.legacy.Legacy;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -32,7 +33,7 @@ class ItemNameCommand {
     @DescriptionDocs(description = "Sets name of item in hand", arguments = "<name>")
     void execute(@Context Player player, @Join String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
-
+        
         if (itemStack == null) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
 
@@ -41,7 +42,7 @@ class ItemNameCommand {
 
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        String serialized = Legacy.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(name));
+        String serialized = AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(name));
 
         itemMeta.setDisplayName(serialized);
         itemStack.setItemMeta(itemMeta);

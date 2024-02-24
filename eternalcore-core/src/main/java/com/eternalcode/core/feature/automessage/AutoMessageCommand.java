@@ -25,7 +25,7 @@ class AutoMessageCommand {
     @Execute
     @DescriptionDocs(description = "Toggles the display of automatic messages.")
     void execute(@Context Player player) {
-        this.autoMessageService.switchReceiving(player.getUniqueId()).then(receiving -> {
+        this.autoMessageService.switchReceiving(player.getUniqueId()).thenAccept(receiving -> {
             if (receiving) {
                 this.noticeService.player(player.getUniqueId(), messages -> messages.autoMessage().enabled());
 

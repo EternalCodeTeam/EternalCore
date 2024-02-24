@@ -13,11 +13,13 @@ public class AfkSwitchEvent extends Event implements Cancellable {
     private static final HandlerList AFK_HANDLER_LIST = new HandlerList();
 
     private final Afk afk;
+    private final boolean isAfk;
     private boolean cancelled;
 
-    public AfkSwitchEvent(Afk afk) {
+    public AfkSwitchEvent(Afk afk, boolean isAfk) {
         super(false);
         this.afk = afk;
+        this.isAfk = isAfk;
     }
 
     public static HandlerList getAfkHandlerList() {
@@ -26,6 +28,10 @@ public class AfkSwitchEvent extends Event implements Cancellable {
 
     public Afk getAfk() {
         return this.afk;
+    }
+
+    public boolean isAfk() {
+        return this.isAfk;
     }
 
     @Override

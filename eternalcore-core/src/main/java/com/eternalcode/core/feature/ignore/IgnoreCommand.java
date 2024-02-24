@@ -36,7 +36,7 @@ class IgnoreCommand {
             return;
         }
 
-        this.repository.isIgnored(senderUuid, targetUuid).then(isIgnored -> {
+        this.repository.isIgnored(senderUuid, targetUuid).thenAccept(isIgnored -> {
             if (isIgnored) {
                 this.noticeService.create()
                     .user(sender)
@@ -47,7 +47,7 @@ class IgnoreCommand {
                 return;
             }
 
-            this.repository.ignore(senderUuid, targetUuid).then(unused -> this.noticeService.create()
+            this.repository.ignore(senderUuid, targetUuid).thenAccept(unused -> this.noticeService.create()
                 .player(senderUuid)
                 .placeholder("{PLAYER}", target.getName())
                 .notice(translation -> translation.privateChat().ignorePlayer())
@@ -60,7 +60,7 @@ class IgnoreCommand {
     void ignoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
 
-        this.repository.ignoreAll(senderUuid).then(blank -> this.noticeService.create()
+        this.repository.ignoreAll(senderUuid).thenAccept(blank -> this.noticeService.create()
             .player(senderUuid)
             .notice(translation -> translation.privateChat().ignoreAll())
             .send());
