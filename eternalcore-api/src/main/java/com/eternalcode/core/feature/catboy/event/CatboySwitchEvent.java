@@ -18,10 +18,6 @@ public class CatboySwitchEvent extends PlayerEvent {
         this.isCatboy = isCatboy;
     }
 
-    public static HandlerList getHandlerList() {
-        return CATBOY_SWITCH_HANDLER_LIST;
-    }
-
     /**
      * Checks if the player is a catboy.
      */
@@ -31,6 +27,10 @@ public class CatboySwitchEvent extends PlayerEvent {
 
     @Override
     public HandlerList getHandlers() {
+        return CATBOY_SWITCH_HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return CATBOY_SWITCH_HANDLER_LIST;
     }
 }

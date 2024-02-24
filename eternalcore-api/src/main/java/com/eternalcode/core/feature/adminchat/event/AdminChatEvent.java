@@ -20,10 +20,6 @@ public class AdminChatEvent extends Event implements Cancellable {
         this.content = content;
     }
 
-    public static HandlerList getAdminChatHandlerList() {
-        return ADMIN_CHAT_HANDLER_LIST;
-    }
-
     public CommandSender getSender() {
         return this.sender;
     }
@@ -48,6 +44,10 @@ public class AdminChatEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
+        return ADMIN_CHAT_HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return ADMIN_CHAT_HANDLER_LIST;
     }
 }

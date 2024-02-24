@@ -22,10 +22,6 @@ public class AfkSwitchEvent extends Event implements Cancellable {
         this.isAfk = isAfk;
     }
 
-    public static HandlerList getAfkHandlerList() {
-        return AFK_HANDLER_LIST;
-    }
-
     public Afk getAfk() {
         return this.afk;
     }
@@ -46,6 +42,10 @@ public class AfkSwitchEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
+        return AFK_HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return AFK_HANDLER_LIST;
     }
 }

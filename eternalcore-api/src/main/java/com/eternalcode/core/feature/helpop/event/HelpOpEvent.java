@@ -20,10 +20,6 @@ public class HelpOpEvent extends Event implements Cancellable {
         this.content = content;
     }
 
-    public static HandlerList getHelpOpHandlerList() {
-        return HELP_OP_HANDLER_LIST;
-    }
-
     public Player getPlayer() {
         return this.player;
     }
@@ -44,6 +40,10 @@ public class HelpOpEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
+        return HELP_OP_HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return HELP_OP_HANDLER_LIST;
     }
 }

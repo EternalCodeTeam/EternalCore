@@ -23,10 +23,6 @@ public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
         this.location = location;
     }
 
-    public static HandlerList getTeleportHandlerList() {
-        return TELEPORT_HANDLER_LIST;
-    }
-
     public Location getLocation() {
         return this.location;
     }
@@ -47,6 +43,10 @@ public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
+        return TELEPORT_HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return TELEPORT_HANDLER_LIST;
     }
 }

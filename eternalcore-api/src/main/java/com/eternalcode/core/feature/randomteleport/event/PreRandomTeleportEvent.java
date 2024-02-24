@@ -21,10 +21,6 @@ public class PreRandomTeleportEvent extends Event implements Cancellable {
         this.player = player;
     }
 
-    public static HandlerList getPreRandomTeleportHandlerList() {
-        return PRE_RANDOM_TELEPORT_HANDLER_LIST;
-    }
-
     public Player getPlayer() {
         return this.player;
     }
@@ -41,6 +37,10 @@ public class PreRandomTeleportEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
+        return PRE_RANDOM_TELEPORT_HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return PRE_RANDOM_TELEPORT_HANDLER_LIST;
     }
 }

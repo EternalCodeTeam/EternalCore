@@ -22,10 +22,6 @@ public class RandomTeleportEvent extends Event {
         this.teleportLocation = teleportLocation;
     }
 
-    public static HandlerList getRandomTeleportHandlerList() {
-        return RANDOM_TELEPORT_HANDLER_LIST;
-    }
-
     public Player getPlayer() {
         return this.player;
     }
@@ -36,6 +32,10 @@ public class RandomTeleportEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
+        return RANDOM_TELEPORT_HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return RANDOM_TELEPORT_HANDLER_LIST;
     }
 }
