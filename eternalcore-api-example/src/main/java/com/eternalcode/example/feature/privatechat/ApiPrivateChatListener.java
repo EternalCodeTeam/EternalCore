@@ -25,10 +25,11 @@ public class ApiPrivateChatListener implements Listener {
         Player receiverPlayer = this.server.getPlayer(receiver);
 
         for (Player player : this.server.getOnlinePlayers()) {
-            if (player.hasPermission("privatechat.spy")) {
-                player.sendMessage(
-                    "Private Chat: " + senderPlayer.getName() + " -> " + receiverPlayer.getName() + ": " + content);
+            if (!player.hasPermission("privatechat.spy")) {
+                return;
             }
+
+            player.sendMessage("Private Chat: " + senderPlayer.getName() + " -> " + receiverPlayer.getName() + ": " + content);
         }
     }
 }

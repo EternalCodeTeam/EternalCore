@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.privatechat;
 
-import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.multification.shared.Formatter;
