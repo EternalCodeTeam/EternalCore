@@ -2,72 +2,110 @@ package com.eternalcode.core.feature.home;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.home.database.HomeRepository;
+import com.eternalcode.core.feature.home.event.HomeCreateEvent;
+import com.eternalcode.core.feature.home.event.HomeDeleteEvent;
+import com.eternalcode.core.feature.home.event.HomeOverrideEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.User;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import panda.std.Option;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 @FeatureDocs(
     name = "Home",
     description = "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
 )
 @Service
-class HomeManager {
+public class HomeManager implements HomeService {
 
-    private final Map<UUID, Map<String, Home>> homes = new HashMap<>();
+    private final Map<UUID, Map<String, Home>> userHomes = new HashMap<>();
     private final HomeRepository repository;
+    private final EventCaller eventCaller;
 
     @Inject
-    private HomeManager(HomeRepository repository) {
+    private HomeManager(HomeRepository repository, EventCaller eventCaller) {
         this.repository = repository;
+        this.eventCaller = eventCaller;
 
-        repository.getHomes().thenAccept(homes -> {
-            for (Home home : homes) {
-                Map<String, Home> homesByUuid = this.homes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
+        repository.getHomes().thenAccept(set -> {
+            for (Home home : set) {
+                Map<String, Home> homesByUuid = this.userHomes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
 
                 homesByUuid.put(home.getName(), home);
             }
         });
     }
 
-    public void createHome(User user, String name, Location location) {
+    public Home createHome(User user, String name, Location location) {
         UUID uniqueId = user.getUniqueId();
-        Home home = new Home(uniqueId, name, location);
-        Map<String, Home> userHomes = this.homes.computeIfAbsent(uniqueId, k -> new HashMap<>());
+        Home home = new HomeImpl(uniqueId, name, location);
+        Map<String, Home> homes = this.userHomes.computeIfAbsent(uniqueId, k -> new HashMap<>());
 
         if (this.hasHomeWithSpecificName(user, name)) {
             this.repository.deleteHome(user, name).thenAccept(completable -> {
-                userHomes.put(name, home);
+                HomeOverrideEvent event = new HomeOverrideEvent(user.getUniqueId(), home);
+                this.eventCaller.callEvent(event);
+
+                if (event.isCancelled()) {
+                    return;
+                }
+
+                homes.put(name, home);
                 this.repository.saveHome(home);
             });
-            return;
+
+            return home;
         }
 
-        userHomes.put(name, home);
+        HomeCreateEvent event = new HomeCreateEvent(user.getUniqueId(), home);
+        this.eventCaller.callEvent(event);
+
+        if (event.isCancelled()) {
+            return home;
+        }
+
+        homes.put(name, home);
         this.repository.saveHome(home);
+
+        return home;
     }
 
     public void deleteHome(User user, String name) {
-        Map<String, Home> homes = this.homes.get(user.getUniqueId());
+        Map<String, Home> homes = this.userHomes.get(user.getUniqueId());
 
-        if (homes != null) {
+        if (homes == null) {
+            return;
+        }
+
+        Home home = homes.get(name);
+
+        if (home != null) {
             homes.remove(name);
+        }
+
+        HomeDeleteEvent event = new HomeDeleteEvent(user.getUniqueId(), home);
+        this.eventCaller.callEvent(event);
+
+        if (event.isCancelled()) {
+            return;
         }
 
         this.repository.deleteHome(user, name);
     }
 
     public boolean hasHomeWithSpecificName(User user, String name) {
-        Map<String, Home> homes = this.homes.get(user.getUniqueId());
+        Map<String, Home> homes = this.userHomes.get(user.getUniqueId());
 
         if (homes == null) {
             return false;
@@ -76,31 +114,31 @@ class HomeManager {
         return homes.containsKey(name);
     }
 
-    public Option<Home> getHome(UUID uniqueId, String name) {
-        Map<String, Home> homes = this.homes.get(uniqueId);
+    public Optional<Home> getHome(UUID uniqueId, String name) {
+        Map<String, Home> home = this.userHomes.get(uniqueId);
 
-        if (homes == null) {
-            return Option.none();
+        if (home == null) {
+            return Optional.empty();
         }
 
-        return Option.of(homes.get(name));
+        return Optional.of(home.get(name));
     }
 
     public Collection<Home> getHomes(UUID user) {
-        return Collections.unmodifiableCollection(this.homes.getOrDefault(user, new HashMap<>()).values());
+        return Collections.unmodifiableCollection(this.userHomes.getOrDefault(user, new HashMap<>()).values());
     }
 
     public int getAmountOfHomes(UUID user) {
-        Map<String, Home> homes = this.homes.get(user);
+        Map<String, Home> count = this.userHomes.get(user);
 
-        if (homes == null) {
+        if (count == null) {
             return 0;
         }
 
-        return homes.size();
+        return count.size();
     }
 
-    public int getHomesLimit(Player player, PluginConfiguration.Homes homes) {
+    public int getHomeLimit(Player player, PluginConfiguration.Homes homes) {
         return homes.maxHomes.entrySet().stream()
             .flatMap(entry -> {
                 if (player.hasPermission(entry.getKey())) {
@@ -113,4 +151,34 @@ class HomeManager {
             .orElse(0);
     }
 
+    @Override
+    public CompletableFuture<Optional<Home>> getHome(Player player, String homeName) {
+        return this.repository.getHome(player.getUniqueId(), homeName);
+    }
+
+    @Override
+    public CompletableFuture<Void> createHome(String name, UUID owner, Location location) {
+        return this.repository.saveHome(new HomeImpl(owner, name, location));
+    }
+
+    @Override
+    public CompletableFuture<Integer> deleteHome(Player player, String homeName) {
+        return this.repository.deleteHome(player.getUniqueId(), homeName);
+    }
+
+    @Override
+    public CompletableFuture<Boolean> hasHomeWithSpecificName(Player player, String homeName) {
+        // TODO: use HomeManager#hasHomeWithSpecificName maybe??? ಠ_ಠ
+        return this.repository.getHome(player.getUniqueId(), homeName).thenApply(Optional::isPresent);
+    }
+
+    @Override
+    public CompletableFuture<Set<Home>> getHomes() {
+        return this.repository.getHomes();
+    }
+
+    @Override
+    public CompletableFuture<Set<Home>> getHomes(Player player) {
+        return this.repository.getHomes(player.getUniqueId());
+    }
 }

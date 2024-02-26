@@ -2,6 +2,7 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
@@ -44,6 +45,11 @@ class EternalCoreApiImpl implements EternalCoreApi {
     @Override
     public WarpService getWarpService() {
         return this.dependencyProvider.getDependency(WarpService.class);
+    }
+
+    @Override
+    public HomeService getHomeService() {
+        return this.dependencyProvider.getDependency(HomeService.class);
     }
 
 }

@@ -1,20 +1,21 @@
-package com.eternalcode.core.feature.home;
+package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.feature.home.Home;
+import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
-import org.bukkit.entity.Player;
-
 import java.time.Duration;
 import java.util.Collection;
+import org.bukkit.entity.Player;
 
 @Command(name = "home")
 @Permission("eternalcore.home")
@@ -26,7 +27,11 @@ class HomeCommand {
     private final HomeManager homeManager;
 
     @Inject
-    HomeCommand(TeleportTaskService teleportTaskService, TeleportService teleportService, NoticeService noticeService, HomeManager homeManager) {
+    HomeCommand(
+        TeleportTaskService teleportTaskService,
+        TeleportService teleportService,
+        NoticeService noticeService,
+        HomeManager homeManager) {
         this.teleportTaskService = teleportTaskService;
         this.teleportService = teleportService;
         this.noticeService = noticeService;
@@ -47,7 +52,8 @@ class HomeCommand {
         }
 
         if (playerHomes.size() != 1) {
-            String homes = String.join(", ",
+            String homes = String.join(
+                ", ",
                 this.homeManager.getHomes(player.getUniqueId()).stream()
                     .map(Home::getName)
                     .toList());
@@ -77,7 +83,12 @@ class HomeCommand {
             return;
         }
 
-        this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(home.getLocation()), Duration.ofSeconds(5));
+        // TODO: implement @{link HomeTeleportEvent}, but it's need recode @{link TeleportTaskService} to return CompletableFuture, to be able use @{link CompletableFuture#thenAccept} method
+        this.teleportTaskService.createTeleport(
+            player.getUniqueId(),
+            PositionAdapter.convert(player.getLocation()),
+            PositionAdapter.convert(
+                home.getLocation()),
+            Duration.ofSeconds(5));
     }
-
 }

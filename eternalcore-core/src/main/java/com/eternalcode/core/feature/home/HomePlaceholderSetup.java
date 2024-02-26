@@ -12,11 +12,10 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import org.bukkit.entity.Player;
-
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.bukkit.entity.Player;
 
 @Controller
 class HomePlaceholderSetup implements Subscriber {
@@ -27,7 +26,12 @@ class HomePlaceholderSetup implements Subscriber {
     private final PluginConfiguration pluginConfiguration;
 
     @Inject
-    HomePlaceholderSetup(HomeManager homeManager, UserManager userManager, TranslationManager translationManager, PluginConfiguration pluginConfiguration) {
+    HomePlaceholderSetup(
+        HomeManager homeManager,
+        UserManager userManager,
+        TranslationManager translationManager,
+        PluginConfiguration pluginConfiguration
+    ) {
         this.homeManager = homeManager;
         this.userManager = userManager;
         this.translationManager = translationManager;
@@ -62,7 +66,6 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String homesLimit(Player targetPlayer) {
-        return String.valueOf(this.homeManager.getHomesLimit(targetPlayer, this.pluginConfiguration.homes));
+        return String.valueOf(this.homeManager.getHomeLimit(targetPlayer, this.pluginConfiguration.homes));
     }
-
 }
