@@ -23,7 +23,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "5.1.0"
 
-    const val LITE_COMMANDS = "3.3.3"
+    const val LITE_COMMANDS = "3.4.0"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.0.0-jre"
