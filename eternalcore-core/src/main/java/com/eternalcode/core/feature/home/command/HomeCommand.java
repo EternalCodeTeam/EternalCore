@@ -83,7 +83,8 @@ class HomeCommand {
             return;
         }
 
-        // TODO: implement @{link HomeTeleportEvent}, but it's need recode @{link TeleportTaskService} to return CompletableFuture, to be able use @{link CompletableFuture#thenAccept} method
+        // TODO: Implement HomeTeleportEvent. This requires refactoring TeleportTaskService to return a CompletableFuture.
+        // Consequently, we can then utilize the CompletableFuture's thenAccept method.
         this.teleportTaskService.createTeleport(
             player.getUniqueId(),
             PositionAdapter.convert(player.getLocation()),
