@@ -105,7 +105,7 @@ public class JailServiceImpl implements JailService {
     }
 
     @Override
-    public void detainPlayer(Player player, @Nullable String reason, Player detainedBy, Duration time) {
+    public void detainPlayer(Player player, @Nullable String reason, Player detainedBy, @Nullable Duration time) {
         if (!this.isLocationSet()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailLocationNotSet())
@@ -116,6 +116,10 @@ public class JailServiceImpl implements JailService {
 
         if (reason == null) {
             reason = "Reason has not been provided.";
+        }
+
+        if (time == null) {
+            time = Duration.ofDays(365);
         }
 
         if (!player.isOnline()) {
@@ -260,6 +264,37 @@ public class JailServiceImpl implements JailService {
             .notice(translation -> translation.jailSection().jailReleaseAll())
             .all()
             .send();
+    }
+
+    @Override
+    public void listJailedPlayers(Player player) {
+        if (this.jailedPlayers.isEmpty()) {
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailListNoPlayers())
+                .player(player.getUniqueId())
+                .send();
+            return;
+        }
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailListStart())
+            .player(player.getUniqueId())
+            .send();
+
+        this.jailedPlayers.forEach((uuid, prisoner) -> {
+            Player jailedPlayer = Bukkit.getPlayer(uuid);
+
+            if (jailedPlayer != null) {
+                this.noticeService.create()
+                    .notice(translation -> translation.jailSection().jailListPlayer())
+                    .placeholder("{PLAYER}", jailedPlayer.getName())
+                    .placeholder("{DURATION}", prisoner.getDuration().toString())
+                    .placeholder("{REASON}", prisoner.getReason())
+                    .placeholder("{DETAINED_BY}", Bukkit.getOfflinePlayer(prisoner.getDetainedBy()).getName())
+                    .player(player.getUniqueId())
+                    .send();
+            }
+        });
     }
 
     @Override

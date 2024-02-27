@@ -427,8 +427,10 @@ public interface Translation {
         Notice jailReleaseNoPlayer();
         Notice jailReleaseAll();
         Notice jailReleaseNoPlayers();
-
         Notice playerCannotUseCommand();
+        Notice jailListStart();
+        Notice jailListNoPlayers();
+        Notice jailListPlayer();
     }
 
 }

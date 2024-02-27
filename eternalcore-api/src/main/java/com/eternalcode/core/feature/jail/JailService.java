@@ -27,6 +27,7 @@ public interface JailService {
     void releaseAllPlayers(Player player);
 
     boolean isLocationSet();
+    void listJailedPlayers(Player player);
 
     Location getJailLocation();
 

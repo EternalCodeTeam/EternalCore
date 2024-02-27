@@ -93,11 +93,19 @@ public class JailCommand {
         this.jailService.releasePlayer(target, player);
     }
 
-    @Execute(name = "release all")
+    @Execute(name = "release all", aliases = {"release *"})
     @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release all players from jail")
     void executeJailReleaseAll(@Context Player player) {
         // Unjail all players
         this.jailService.releaseAllPlayers(player);
+    }
+
+    @Execute(name = "list")
+    @Permission("eternalcore.jail.list")
+    @DescriptionDocs(description = "List all jailed players")
+    void executeJailList(@Context Player player) {
+        // List all jailed players
+        this.jailService.listJailedPlayers(player);
     }
 }
