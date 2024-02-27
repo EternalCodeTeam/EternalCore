@@ -7,7 +7,6 @@ import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.shared.Position;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,28 +21,38 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class JailServiceImpl implements JailService {
 
-    // id - name - location
-    // 1 - "" - jail location
-
     private final TeleportService teleportService;
     private final SpawnService spawnService;
     private final NoticeService noticeService;
 
     private Location jailLocation;
-    private Position jailPosition;
+    private JailLocationRepository jailRepository;
 
-    private JailRepository jailRepository;
+    private PrisonersRepository prisonersRepository;
 
 
     private final Map<UUID, Prisoner> jailedPlayers = new ConcurrentHashMap<>();
 
 
     @Inject
-    JailServiceImpl(TeleportService teleportService, SpawnService spawnService, NoticeService noticeService, JailRepository jailRepository) {
+    JailServiceImpl(TeleportService teleportService, SpawnService spawnService, NoticeService noticeService, PrisonersRepository prisonersRepository, JailLocationRepository jailLocationRepository) {
         this.teleportService = teleportService;
         this.spawnService = spawnService;
         this.noticeService = noticeService;
-        this.jailRepository = jailRepository;
+        this.prisonersRepository = prisonersRepository;
+        this.jailRepository = jailLocationRepository;
+
+        this.prisonersRepository.getPrisoners().then(prisoners -> {
+            for (Prisoner prisoner : prisoners) {
+                this.jailedPlayers.put(prisoner.getUuid(), prisoner);
+            }
+        });
+
+        this.jailRepository.getJailLocation().then(location -> {
+            if (location.isPresent()) {
+                this.jailLocation = location.get();
+            }
+        });
     }
 
     @Override
@@ -71,8 +80,10 @@ public class JailServiceImpl implements JailService {
                 .send();
         }
 
-        this.jailLocation = new Location(setter.getWorld(), jailLocation.getX(), jailLocation.getY(), jailLocation.getZ(), jailLocation.getYaw(), jailLocation.getPitch());
-        }
+        Location location = new Location(setter.getWorld(), jailLocation.getX(), jailLocation.getY(), jailLocation.getZ(), jailLocation.getYaw(), jailLocation.getPitch());
+        this.jailRepository.setJailLocation(location);
+        this.jailLocation = location;
+    }
 
     @Override
     public void removeJailArea(Player remover) {
@@ -85,6 +96,8 @@ public class JailServiceImpl implements JailService {
         }
 
         this.jailLocation = null;
+        this.jailRepository.deleteJailLocation();
+
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailLocationRemove())
             .player(remover.getUniqueId())
@@ -101,7 +114,7 @@ public class JailServiceImpl implements JailService {
             return;
         }
 
-        if ( reason == null ) {
+        if (reason == null) {
             reason = "Reason has not been provided.";
         }
 
@@ -122,7 +135,6 @@ public class JailServiceImpl implements JailService {
         }
 
 
-
         JailDetainEvent jailDetainEvent = new JailDetainEvent(player, reason, detainedBy);
 
         if (jailDetainEvent.isCancelled()) {
@@ -132,10 +144,10 @@ public class JailServiceImpl implements JailService {
         Prisoner prisoner = new Prisoner(player.getUniqueId(), reason, Instant.now(), time, detainedBy.getUniqueId());
 
         if (isPlayerJailed) {
-            this.jailRepository.editPrisoner(prisoner);
+            this.prisonersRepository.editPrisoner(prisoner);
         }
         else {
-            this.jailRepository.savePrisoner(prisoner);
+            this.prisonersRepository.savePrisoner(prisoner);
         }
 
         this.jailedPlayers.put(player.getUniqueId(), prisoner);
@@ -175,7 +187,7 @@ public class JailServiceImpl implements JailService {
 
         JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(player.getUniqueId());
 
-        this.jailRepository.deletePrisoner(player.getUniqueId());
+        this.prisonersRepository.deletePrisoner(player.getUniqueId());
 
         if (jailReleaseEvent.isCancelled()) {
             return;
@@ -242,7 +254,7 @@ public class JailServiceImpl implements JailService {
         );
 
         this.jailedPlayers.clear();
-        this.jailRepository.deleteAllPrisoners();
+        this.prisonersRepository.deleteAllPrisoners();
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailReleaseAll())
@@ -255,5 +267,4 @@ public class JailServiceImpl implements JailService {
 
         return this.jailLocation != null;
     }
-
 }

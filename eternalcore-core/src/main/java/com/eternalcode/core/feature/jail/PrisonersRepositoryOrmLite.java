@@ -5,10 +5,10 @@ import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.scheduler.Scheduler;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
-import net.kyori.option.Option;
 import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
@@ -16,13 +16,15 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
-class JailRepositoryOrmLite extends AbstractRepositoryOrmLite implements JailRepository {
+class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements PrisonersRepository {
 
     @Inject
-    private JailRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
+    private PrisonersRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
         TableUtils.createTableIfNotExists(databaseManager.connectionSource(), PrisonerWrapper.class);
     }
@@ -31,6 +33,14 @@ class JailRepositoryOrmLite extends AbstractRepositoryOrmLite implements JailRep
     public Completable<Optional<Prisoner>> getPrisoner(UUID uuid) {
         return this.selectSafe(PrisonerWrapper.class, uuid)
             .thenApply(optional -> optional.map(prisonerWrapper -> prisonerWrapper.toPrisoner()));
+    }
+
+    @Override
+    public Completable<Set<Prisoner>> getPrisoners() {
+        return this.selectAll(PrisonerWrapper.class)
+            .thenApply(prisonerWrappers -> prisonerWrappers.stream()
+                .map(PrisonerWrapper::toPrisoner)
+                .collect(Collectors.toSet()));
     }
 
     @Override
@@ -70,10 +80,10 @@ class JailRepositoryOrmLite extends AbstractRepositoryOrmLite implements JailRep
         @DatabaseField(columnName = "reason")
         private String reason;
 
-        @DatabaseField(columnName = "detained_at")
+        @DatabaseField(columnName = "detained_at", dataType = DataType.SERIALIZABLE)
         private Instant detainedAt;
 
-        @DatabaseField(columnName = "duration")
+        @DatabaseField(columnName = "duration", dataType = DataType.SERIALIZABLE)
         private Duration duration;
 
         @DatabaseField(columnName = "detained_by")
@@ -98,5 +108,4 @@ class JailRepositoryOrmLite extends AbstractRepositoryOrmLite implements JailRep
             return new PrisonerWrapper(prisoner.getUuid(), prisoner.getReason(), prisoner.getDetainedAt(), prisoner.getDuration(), prisoner.getDetainedBy());
         }
     }
-
 }

@@ -3,10 +3,13 @@ package com.eternalcode.core.feature.jail;
 import panda.std.reactive.Completable;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
-public interface JailRepository {
+public interface PrisonersRepository {
     Completable<Optional<Prisoner>> getPrisoner(UUID uuid);
+
+    Completable<Set<Prisoner>> getPrisoners();
 
     void deletePrisoner(UUID uuid);
 
