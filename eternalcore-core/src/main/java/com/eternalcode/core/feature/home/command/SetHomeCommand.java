@@ -75,13 +75,13 @@ class SetHomeCommand {
                 .notice(translation -> translation.home().limit())
                 .send();
 
-            this.eventCaller.callEvent(new HomeLimitReachedEvent(player, maxAmountOfUserHomes, amountOfUserHomes));
+            this.eventCaller.callEvent(new HomeLimitReachedEvent(player.getUniqueId(), maxAmountOfUserHomes, amountOfUserHomes));
 
             return;
         }
 
         Home createdHome = this.homeManager.createHome(user, homeName, player.getLocation());
-        this.eventCaller.callEvent(new HomeCreateEvent(player, createdHome));
+        this.eventCaller.callEvent(new HomeCreateEvent(player.getUniqueId(), createdHome));
 
         this.noticeService.create()
             .user(user)
