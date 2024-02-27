@@ -5,6 +5,7 @@ import com.eternalcode.core.EternalCoreApiProvider;
 import com.eternalcode.example.feature.afk.ApiAfkCommand;
 import com.eternalcode.example.feature.afk.ApiAfkListener;
 import com.eternalcode.example.feature.catboy.CatBoyListener;
+import com.eternalcode.example.feature.ignore.ApiIgnoreCommand;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportCommand;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportListener;
 import com.eternalcode.example.feature.spawn.ApiSpawnCommand;
@@ -36,9 +37,10 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             .message(LiteMessages.MISSING_PERMISSIONS, input -> "You don't have permission to execute this command!")
 
             .commands(
-                new ApiSpawnCommand(provide.getSpawnService()),
                 new ApiAfkCommand(provide.getAfkService()),
-                new ApiRandomTeleportCommand(provide.getRandomTeleportService())
+                new ApiIgnoreCommand(provide.getIgnoreService()),
+                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                new ApiSpawnCommand(provide.getSpawnService())
             )
 
             .build();
