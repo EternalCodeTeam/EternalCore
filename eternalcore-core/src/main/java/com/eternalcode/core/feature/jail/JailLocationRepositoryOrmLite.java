@@ -48,7 +48,7 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
     static class JailLocationWrapper {
 
         @DatabaseField(columnName = "id", id = true)
-        private final static int id = 1;  // Only one record, so a constant ID
+        private final int id = 1;  // Only one record, so a constant ID
 
         @DatabaseField(columnName = "world")
         private String world;

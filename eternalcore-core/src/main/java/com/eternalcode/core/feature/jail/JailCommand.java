@@ -42,7 +42,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Detain self")
     void executeJailDetainSelf(@Context Player player) {
         // Jail self forever
-        this.jailService.detainPlayer(player, null, player, null);
+        this.jailService.detainPlayer(player,  player, null);
     }
 
     @Execute(name = "detain")
@@ -50,7 +50,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Detain a player", arguments = "<player>")
     void executeJailDetain(@Context Player player, @Arg Player target) {
         // Jail player forever
-        this.jailService.detainPlayer(target, null, player, null);
+        this.jailService.detainPlayer(target,  player, null);
     }
 
     @Execute(name = "detain")
@@ -58,7 +58,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Detain a player with a reason", arguments = "<player> <reason>")
     void executeJailDetainWithReason(@Context Player player, @Arg Player target, @Arg String reason) {
         // Jail player forever with a reason
-        this.jailService.detainPlayer(target, reason, player, null);
+        this.jailService.detainPlayer(target, player, null);
     }
 
     @Execute(name = "detain")
@@ -66,15 +66,15 @@ public class JailCommand {
     @DescriptionDocs(description = "Detain a player for a time", arguments = "<player> <time>")
     void executeJailDetainForTime(@Context Player player, @Arg Player target, @Arg Duration duration) {
         // Jail player for a time
-        this.jailService.detainPlayer(target, null, player, duration);
+        this.jailService.detainPlayer(target,  player, duration);
     }
 
     @Execute(name = "detain")
     @Permission("eternalcore.jail.detain")
     @DescriptionDocs(description = "Detain a player for a time with a reason", arguments = "<player> <time> <reason>")
-    void executeJailDetainForTimeWithReason(@Context Player player, @Arg Player target, @Arg Duration duration, @Arg String reason) {
+    void executeJailDetainForTimeWithReason(@Context Player player, @Arg Player target, @Arg Duration duration) {
         // Jail player for a time with a reason
-        this.jailService.detainPlayer(target, reason, player, duration);
+        this.jailService.detainPlayer(target, player, duration);
     }
 
     @Execute(name = "release")

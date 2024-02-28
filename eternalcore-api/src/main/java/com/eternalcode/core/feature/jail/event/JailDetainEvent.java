@@ -10,19 +10,13 @@ import java.util.UUID;
 public class JailDetainEvent extends PlayerEvent {
 
     private static final HandlerList JAIL_DETAIN_HANDLER_LIST = new HandlerList();
-    private final String reason;
     private final Player detainedBy;
     private final boolean isInJail;
 
-    public JailDetainEvent(@NotNull Player player, String reason, Player detainedBy) {
+    public JailDetainEvent(@NotNull Player player, Player detainedBy) {
         super(player);
-        this.reason = reason;
         this.detainedBy = detainedBy;
         this.isInJail = true;
-    }
-
-    public String getReason() {
-        return this.reason;
     }
 
     public Player getDetainedBy() {

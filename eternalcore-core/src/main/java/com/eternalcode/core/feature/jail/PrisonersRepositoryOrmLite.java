@@ -77,8 +77,6 @@ class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pr
         @DatabaseField(columnName = "id", id = true)
         private UUID uuid;
 
-        @DatabaseField(columnName = "reason")
-        private String reason;
 
         @DatabaseField(columnName = "detained_at", dataType = DataType.SERIALIZABLE)
         private Instant detainedAt;
@@ -92,20 +90,19 @@ class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pr
         PrisonerWrapper() {
         }
 
-        PrisonerWrapper(UUID uuid, String reason, Instant detainedAt, Duration duration, UUID detainedBy) {
+        PrisonerWrapper(UUID uuid, Instant detainedAt, Duration duration, UUID detainedBy) {
             this.uuid = uuid;
-            this.reason = reason;
             this.detainedAt = detainedAt;
             this.duration = duration;
             this.detainedBy = detainedBy;
         }
 
         Prisoner toPrisoner() {
-            return new Prisoner(this.uuid, this.reason, this.detainedAt, this.duration, this.detainedBy);
+            return new Prisoner(this.uuid, this.detainedAt, this.duration, this.detainedBy);
         }
 
         static PrisonerWrapper from(Prisoner prisoner) {
-            return new PrisonerWrapper(prisoner.getUuid(), prisoner.getReason(), prisoner.getDetainedAt(), prisoner.getDuration(), prisoner.getDetainedBy());
+            return new PrisonerWrapper(prisoner.getUuid(), prisoner.getDetainedAt(), prisoner.getDuration(), prisoner.getDetainedBy());
         }
     }
 }

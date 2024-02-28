@@ -899,7 +899,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice playerCannotUseCommand = Notice.chat("<red>✘ <dark_red>You can't use this command! You are in jail!");
         public Notice jailListNoPlayers = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nikt nie jest uwięziony!");
         public Notice jailListStart = Notice.chat("<green>► <white>Lista graczy w jail'u:");
-        public Notice jailListPlayer = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{DURATION} <white> z powodu: <green>{REASON}!");
+        public Notice jailListPlayer = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{DURATION} <white>!");
 
     }
 }

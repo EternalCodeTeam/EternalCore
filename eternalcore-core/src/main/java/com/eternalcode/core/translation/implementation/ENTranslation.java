@@ -882,6 +882,6 @@ public class ENTranslation extends AbstractTranslation {
 
         public Notice jailListNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
         public Notice jailListStart = Notice.chat("<green>► <white>Players in jail: ");
-        public Notice jailListPlayer = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{DURATION}<gray>) <white>detained by <green>{DETAINED_BY} <white> for <green>{REASON}");
+        public Notice jailListPlayer = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{DURATION}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
     }
 }

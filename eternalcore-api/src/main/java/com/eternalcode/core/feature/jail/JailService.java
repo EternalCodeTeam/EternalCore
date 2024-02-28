@@ -20,7 +20,7 @@ public interface JailService {
 
     void removeJailArea(Player remover);
 
-    void detainPlayer(Player player, @Nullable String reason, Player detainedBy, @Nullable Duration duration);
+    void detainPlayer(Player player, Player detainedBy, @Nullable Duration duration);
 
     void releasePlayer(Player player, Player releasedBy);
 

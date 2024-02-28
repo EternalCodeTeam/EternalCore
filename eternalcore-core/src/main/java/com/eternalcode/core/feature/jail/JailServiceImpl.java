@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -105,17 +107,13 @@ public class JailServiceImpl implements JailService {
     }
 
     @Override
-    public void detainPlayer(Player player, @Nullable String reason, Player detainedBy, @Nullable Duration time) {
+    public void detainPlayer(Player player, Player detainedBy, @Nullable Duration time) {
         if (!this.isLocationSet()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailLocationNotSet())
                 .player(player.getUniqueId())
                 .send();
             return;
-        }
-
-        if (reason == null) {
-            reason = "Reason has not been provided.";
         }
 
         if (time == null) {
@@ -139,13 +137,13 @@ public class JailServiceImpl implements JailService {
         }
 
 
-        JailDetainEvent jailDetainEvent = new JailDetainEvent(player, reason, detainedBy);
+        JailDetainEvent jailDetainEvent = new JailDetainEvent(player, detainedBy);
 
         if (jailDetainEvent.isCancelled()) {
             return;
         }
 
-        Prisoner prisoner = new Prisoner(player.getUniqueId(), reason, Instant.now(), time, detainedBy.getUniqueId());
+        Prisoner prisoner = new Prisoner(player.getUniqueId(), Instant.now(), time, detainedBy.getUniqueId());
 
         if (isPlayerJailed) {
             this.prisonersRepository.editPrisoner(prisoner);
@@ -288,8 +286,7 @@ public class JailServiceImpl implements JailService {
                 this.noticeService.create()
                     .notice(translation -> translation.jailSection().jailListPlayer())
                     .placeholder("{PLAYER}", jailedPlayer.getName())
-                    .placeholder("{DURATION}", prisoner.getDuration().toString())
-                    .placeholder("{REASON}", prisoner.getReason())
+                    .placeholder("{DURATION}", String.valueOf(prisoner.getDetainedAt().plus(prisoner.getDuration().toHours(), ChronoUnit.HOURS)))
                     .placeholder("{DETAINED_BY}", Bukkit.getOfflinePlayer(prisoner.getDetainedBy()).getName())
                     .player(player.getUniqueId())
                     .send();
