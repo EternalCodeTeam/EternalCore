@@ -22,8 +22,8 @@ import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @ConfigurationFile
 public class PluginConfiguration implements ReloadableConfig {
@@ -406,13 +406,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration defaultJailDuration = Duration.ofMinutes(30);
 
         @Description("# Allowed commands in jail")
-        public Set<String> allowedCommands = Set.of(
-            "help",
-            "msg",
-            "r",
-            "tell",
-            "helpop",
-            "t");
+        public List<String> allowedCommands = List.of("help", "msg", "r", "tell", "me", "helpop");
 
         @Override
         public Duration defaultJailDuration() {
@@ -420,7 +414,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
 
         @Override
-        public Set<String> allowedCommands() {
+        public List<String>  allowedCommands() {
             return this.allowedCommands;
         }
     }

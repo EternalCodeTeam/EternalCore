@@ -15,7 +15,6 @@ import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,9 +27,9 @@ public class JailServiceImpl implements JailService {
     private final NoticeService noticeService;
     private final JailSettings settings;
     private Location jailLocation;
-    private JailLocationRepository jailRepository;
+    private final JailLocationRepository jailRepository;
 
-    private PrisonersRepository prisonersRepository;
+    private final PrisonersRepository prisonersRepository;
 
 
     private final Map<UUID, Prisoner> jailedPlayers = new ConcurrentHashMap<>();
@@ -71,7 +70,8 @@ public class JailServiceImpl implements JailService {
                 .notice(translation -> translation.jailSection().jailLocationOverride())
                 .player(setter.getUniqueId())
                 .send();
-        } else {
+        }
+        else {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailLocationSet())
                 .player(setter.getUniqueId())
@@ -143,7 +143,8 @@ public class JailServiceImpl implements JailService {
 
         if (isPlayerJailed) {
             this.prisonersRepository.editPrisoner(prisoner);
-        } else {
+        }
+        else {
             this.prisonersRepository.savePrisoner(prisoner);
         }
 

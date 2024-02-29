@@ -1,11 +1,11 @@
 package com.eternalcode.core.feature.jail;
 
 import java.time.Duration;
-import java.util.Set;
+import java.util.List;
 
 public interface JailSettings {
 
     Duration defaultJailDuration();
 
-    Set<String> allowedCommands();
+    List<String> allowedCommands();
 }
