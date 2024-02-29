@@ -34,4 +34,8 @@ public class Prisoner {
     public UUID getDetainedBy() {
         return this.lockedUpByWho;
     }
+
+    public boolean isReleased() {
+        return this.detainedAt.plus(this.prisonTime).isBefore(Instant.now());
+    }
 }

@@ -7,10 +7,12 @@ import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerCommandSendEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -20,28 +22,41 @@ public class JailController implements Listener {
     private Map<UUID, Prisoner> jailedPlayers;
     private final NoticeService noticeService;
 
+    private static final  Set<TeleportCause> CANCELLED_CAUSES = Set.of(
+        TeleportCause.CHORUS_FRUIT,
+        TeleportCause.COMMAND,
+        TeleportCause.ENDER_PEARL
+    );
+
 
     @Inject
-    public JailController(JailService jailService, NoticeService noticeService) {
+    public JailController(JailService jailService, NoticeService noticeService, JailSettings settings) {
         this.jailService = jailService;
         this.noticeService = noticeService;
         this.jailedPlayers = this.jailService.getJailedPlayers();
     }
 
     @EventHandler
-    public void onPlayerCommandSend(PlayerCommandSendEvent event) {
+    public void onPlayerPreCommand(PlayerCommandPreprocessEvent event) {
 
         UUID player = event.getPlayer().getUniqueId();
 
         if (!this.jailedPlayers.containsKey(player)) {
             return;
         }
-        event.getCommands().clear();
+
+        String command = event.getMessage().split(" ")[0].substring(1);
+
+        if (this.jailService.isAllowedCommand(command)) {
+            return;
+        }
+
         this.noticeService.create()
             .notice(translation -> translation.jailSection().playerCannotUseCommand())
             .player(player)
             .send();
 
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -52,10 +67,9 @@ public class JailController implements Listener {
         if (!this.jailedPlayers.containsKey(player)) {
             return;
         }
-        if (tp.getCause().equals(PlayerTeleportEvent.TeleportCause.CHORUS_FRUIT)
-            || tp.getCause().equals(PlayerTeleportEvent.TeleportCause.COMMAND)) {
-            tp.setCancelled(true);
 
+        if (CANCELLED_CAUSES.contains(tp.getCause())) {
+            tp.setCancelled(true);
         }
     }
 

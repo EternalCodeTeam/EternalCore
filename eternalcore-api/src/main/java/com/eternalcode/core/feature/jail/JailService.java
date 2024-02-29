@@ -22,12 +22,16 @@ public interface JailService {
 
     void detainPlayer(Player player, Player detainedBy, @Nullable Duration duration);
 
-    void releasePlayer(Player player, Player releasedBy);
+    void releasePlayer(Player player, @Nullable Player releasedBy);
 
     void releaseAllPlayers(Player player);
 
     boolean isLocationSet();
     void listJailedPlayers(Player player);
+
+    boolean isAllowedCommand(String command);
+
+    boolean isPlayerJailed(UUID player);
 
     Location getJailLocation();
 
