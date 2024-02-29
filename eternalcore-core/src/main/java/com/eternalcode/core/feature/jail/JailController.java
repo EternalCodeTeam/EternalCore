@@ -22,7 +22,7 @@ public class JailController implements Listener {
     private Map<UUID, Prisoner> jailedPlayers;
     private final NoticeService noticeService;
 
-    private static final  Set<TeleportCause> CANCELLED_CAUSES = Set.of(
+    private static final Set<TeleportCause> CANCELLED_CAUSES = Set.of(
         TeleportCause.CHORUS_FRUIT,
         TeleportCause.COMMAND,
         TeleportCause.ENDER_PEARL
@@ -38,10 +38,17 @@ public class JailController implements Listener {
 
     @EventHandler
     public void onPlayerPreCommand(PlayerCommandPreprocessEvent event) {
-
         UUID player = event.getPlayer().getUniqueId();
 
         if (!this.jailedPlayers.containsKey(player)) {
+            return;
+        }
+
+        if (event.getPlayer().isOp()) {
+            return;
+        }
+
+        if (event.getPlayer().hasPermission("eternalcore.jail.bypass")) {
             return;
         }
 
@@ -84,6 +91,11 @@ public class JailController implements Listener {
 
     @EventHandler
     public void onJailDetain(JailDetainEvent event) {
+
+        if (event.getPlayer().hasPermission("eternalcore.jail.bypass")) {
+            event.setCancelled(true);
+        }
+
         if (event.isCancelled()) {
             return;
         }
@@ -91,10 +103,7 @@ public class JailController implements Listener {
         this.updateJailedPlayers();
     }
 
-
     public void updateJailedPlayers() {
         this.jailedPlayers = this.jailService.getJailedPlayers();
     }
-
-
 }

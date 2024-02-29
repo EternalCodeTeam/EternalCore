@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -14,6 +14,11 @@ import org.bukkit.entity.Player;
 import java.time.Duration;
 
 @Command(name = "jail")
+@FeatureDocs(
+    name = "Jail",
+    permission = { "eternalcore.jail.setup", "eternalcore.jail.detain", "eternalcore.jail.release", "eternalcore.jail.bypass" },
+    description = "Permissions allow for you to setup jail location on your server, detain players, release players, and bypass jail."
+)
 public class JailCommand {
 
     private final JailService jailService;

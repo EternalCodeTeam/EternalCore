@@ -1,22 +1,24 @@
 package com.eternalcode.core.feature.jail.event;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
-public class JailDetainEvent extends PlayerEvent {
+public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList JAIL_DETAIN_HANDLER_LIST = new HandlerList();
     private final Player detainedBy;
     private final boolean isInJail;
 
+    private boolean isCancelled;
+
     public JailDetainEvent(@NotNull Player player, Player detainedBy) {
         super(player);
         this.detainedBy = detainedBy;
         this.isInJail = true;
+        this.isCancelled = false;
     }
 
     public Player getDetainedBy() {
@@ -32,7 +34,12 @@ public class JailDetainEvent extends PlayerEvent {
     }
 
     public boolean isCancelled() {
-        return false;
+        return this.isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean b) {
+        this.isCancelled = b;
     }
 
     @Override
