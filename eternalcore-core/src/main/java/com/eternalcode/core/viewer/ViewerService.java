@@ -1,11 +1,10 @@
 package com.eternalcode.core.viewer;
 
 import com.eternalcode.core.user.User;
-
 import java.util.Collection;
 import java.util.UUID;
 
-public interface ViewerProvider {
+public interface ViewerService {
 
     Collection<Viewer> all();
 

@@ -22,8 +22,10 @@ dependencies {
     compileOnly("org.projectlombok:lombok:${Versions.LOMBOK}")
     annotationProcessor("org.projectlombok:lombok:${Versions.LOMBOK}")
 
-    //GitCheck
+    // GitCheck
     implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
+
+    testImplementation("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
 }
 
 eternalShadow {
@@ -41,6 +43,20 @@ eternalShadow {
     library("net.dzikoysk:cdn:${Versions.CDN_CONFIGS}")
     libraryRelocate(
         "net.dzikoysk.cdn"
+    )
+
+    // Multification
+    library("com.eternalcode:multification-core:${Versions.MULTIFICATION}")
+    library("com.eternalcode:multification-cdn:${Versions.MULTIFICATION}")
+    libraryRelocate(
+        "com.eternalcode.multification",
+    )
+
+    // EternalCode Commons
+    library("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
+    library("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
+    libraryRelocate(
+        "com.eternalcode.commons",
     )
 
     // database

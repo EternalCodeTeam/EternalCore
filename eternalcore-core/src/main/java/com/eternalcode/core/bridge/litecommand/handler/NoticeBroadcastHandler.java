@@ -1,7 +1,7 @@
 package com.eternalcode.core.bridge.litecommand.handler;
 
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
-import com.eternalcode.core.notice.NoticeBroadcast;
+import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.handler.result.ResultHandler;
 import dev.rollczi.litecommands.handler.result.ResultHandlerChain;
 import dev.rollczi.litecommands.invocation.Invocation;

@@ -2,21 +2,20 @@ package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
-import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.util.DurationUtil;
-import java.util.concurrent.TimeUnit;
-import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-import panda.utilities.StringUtils;
-
+import com.eternalcode.multification.notice.Notice;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import org.bukkit.Location;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
+import panda.utilities.StringUtils;
 
 @Task(delay = 200L, period = 200L, unit = TimeUnit.MILLISECONDS)
 class TeleportTask implements Runnable {
@@ -27,7 +26,12 @@ class TeleportTask implements Runnable {
     private final Server server;
 
     @Inject
-    TeleportTask(NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService, Server server) {
+    TeleportTask(
+        NoticeService noticeService,
+        TeleportTaskService teleportTaskService,
+        TeleportService teleportService,
+        Server server
+    ) {
         this.noticeService = noticeService;
         this.teleportTaskService = teleportTaskService;
         this.teleportService = teleportService;

@@ -101,10 +101,10 @@
     ]
   },
   {
-    "name": "Player First Join",
+    "name": "Player Join",
     "permissions": [],
     "descriptions": [
-      "Teleport to spawn on first join"
+      "Teleport to spawn on first join or spawn on join"
     ]
   },
   {
@@ -140,6 +140,13 @@
     "permissions": [],
     "descriptions": [
       "It allows you to play sound after message in chat"
+    ]
+  },
+  {
+    "name": "Spy sudo",
+    "permissions": [],
+    "descriptions": [
+      "Allows you to spy on other players\u0027 sudo commands execution, permission to spy: eternalcore.sudo.spy"
     ]
   },
   {
