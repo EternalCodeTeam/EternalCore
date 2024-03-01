@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.jail;
 
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.commons.time.DurationParser;
 import com.eternalcode.core.feature.jail.event.JailDetainEvent;
 import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
@@ -9,7 +11,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -17,7 +18,6 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,7 +29,7 @@ public class JailServiceImpl implements JailService {
     private final SpawnService spawnService;
     private final NoticeService noticeService;
     private final JailSettings settings;
-    private Location jailLocation;
+    private Position jailPosition;
     private final JailLocationRepository jailRepository;
 
     private final PrisonersRepository prisonersRepository;
@@ -54,7 +54,7 @@ public class JailServiceImpl implements JailService {
             return null;
         });
 
-        this.jailLocation = this.jailRepository.getJailLocation().join().orElse(null);
+        this.jailPosition = this.jailRepository.getJailLocation().join().orElse(null);
     }
 
     @Override
@@ -63,8 +63,8 @@ public class JailServiceImpl implements JailService {
     }
 
     @Override
-    public Location getJailLocation() {
-        return this.jailLocation;
+    public Location getJailPosition() {
+        return PositionAdapter.convert(this.jailPosition);
     }
 
     @Override
@@ -82,9 +82,10 @@ public class JailServiceImpl implements JailService {
                 .send();
         }
 
-        Location location = new Location(setter.getWorld(), jailLocation.getX(), jailLocation.getY(), jailLocation.getZ(), jailLocation.getYaw(), jailLocation.getPitch());
-        this.jailRepository.setJailLocation(location);
-        this.jailLocation = location;
+        Position position = new Position(jailLocation.getX(), jailLocation.getY(), jailLocation.getZ(), jailLocation.getYaw(), jailLocation.getPitch(), setter.getWorld().getName());
+
+        this.jailRepository.setJailLocation(position);
+        this.jailPosition = position;
     }
 
     @Override
@@ -97,7 +98,7 @@ public class JailServiceImpl implements JailService {
             return;
         }
 
-        this.jailLocation = null;
+        this.jailPosition = null;
         this.jailRepository.deleteJailLocation();
 
         this.noticeService.create()
@@ -161,7 +162,9 @@ public class JailServiceImpl implements JailService {
                 .send();
         }
 
-        this.teleportService.teleport(player, this.jailLocation);
+        Location jailLocation = PositionAdapter.convert(this.jailPosition);
+
+        this.teleportService.teleport(player, jailLocation);
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailDetainPublic())
@@ -295,7 +298,7 @@ public class JailServiceImpl implements JailService {
 
     @Override
     public boolean isLocationSet() {
-        return this.jailLocation != null;
+        return this.jailPosition != null;
     }
 
     @Override

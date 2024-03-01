@@ -33,7 +33,7 @@ public interface JailService {
 
     boolean isPlayerJailed(UUID player);
 
-    Location getJailLocation();
+    Location getJailPosition();
 
     Map<UUID, Prisoner> getJailedPlayers();
 

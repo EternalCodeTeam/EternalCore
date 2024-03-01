@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.jail;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -9,8 +10,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import panda.std.reactive.Completable;
+
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -23,29 +23,27 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
     @Inject
     private JailLocationRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
-        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), JailLocationWrapper.class);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), JailPositionWrapper.class);
     }
 
     @Override
-    public CompletableFuture<Optional<Location>> getJailLocation() {
-        return this.select(JailLocationWrapper.class, new JailLocationWrapper())
-            .thenApply(Optional::of)
-            .thenApply(jailLocation -> jailLocation.map(JailLocationWrapper::toLocation));
+    public CompletableFuture<Optional<Position>> getJailLocation() {
+        return this.selectSafe(JailPositionWrapper.class, 1)
+            .thenApply(optional -> optional.map(JailPositionWrapper::toPosition));
     }
 
     @Override
-    public void setJailLocation(Location location) {
-        JailLocationWrapper jailLocationWrapper = new JailLocationWrapper(location);
-        this.save(JailLocationWrapper.class, jailLocationWrapper);
+    public void setJailLocation(Position position) {
+        this.save(JailPositionWrapper.class, new JailPositionWrapper(position));
     }
 
     @Override
     public void deleteJailLocation() {
-        this.delete(JailLocationWrapper.class, new JailLocationWrapper());
+        this.delete(JailPositionWrapper.class, new JailPositionWrapper());
     }
 
     @DatabaseTable(tableName = "eternal_core_jail_location")
-    static class JailLocationWrapper {
+    static class JailPositionWrapper {
 
         @DatabaseField(columnName = "id", id = true)
         private final int id = 1;  // Only one record, so a constant ID
@@ -68,24 +66,24 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
         @DatabaseField(columnName = "pitch")
         private float pitch;
 
-        JailLocationWrapper() {
+        JailPositionWrapper() {
         }
 
-        JailLocationWrapper(Location location) {
-            this.world = location.getWorld().getName();
-            this.x = location.getX();
-            this.y = location.getY();
-            this.z = location.getZ();
-            this.yaw = location.getYaw();
-            this.pitch = location.getPitch();
+        JailPositionWrapper(Position position) {
+            this.world = position.world();
+            this.x = position.x();
+            this.y = position.y();
+            this.z = position.z();
+            this.yaw = position.yaw();
+            this.pitch = position.pitch();
         }
 
-        Location toLocation() {
+        Position toPosition() {
             try {
-                return new Location(Bukkit.getWorld(this.world), this.x, this.y, this.z, this.yaw, this.pitch);
+                return new Position(this.x, this.y, this.z, this.yaw, this.pitch, this.world);
             }
             catch (Exception e) {
-                Bukkit.getLogger().log(Level.SEVERE, "Error converting JailLocationWrapper to Location", e);
+                Bukkit.getLogger().log(Level.SEVERE, "Error converting JailLocationWrapper to Position", e);
                 return null;
             }
         }
