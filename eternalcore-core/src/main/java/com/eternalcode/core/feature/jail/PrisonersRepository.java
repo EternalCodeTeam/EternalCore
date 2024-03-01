@@ -5,11 +5,12 @@ import panda.std.reactive.Completable;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public interface PrisonersRepository {
-    Completable<Optional<Prisoner>> getPrisoner(UUID uuid);
+    CompletableFuture<Optional<Prisoner>> getPrisoner(UUID uuid);
 
-    Completable<Set<Prisoner>> getPrisoners();
+    CompletableFuture<Set<Prisoner>> getPrisoners();
 
     void deletePrisoner(UUID uuid);
 
@@ -17,7 +18,7 @@ public interface PrisonersRepository {
 
     void deleteAllPrisoners();
 
-    Completable<java.util.List<Prisoner>> getAllPrisoners();
+    CompletableFuture<java.util.List<Prisoner>> getAllPrisoners();
 
     void savePrisoner(Prisoner prisoner);
 }

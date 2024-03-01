@@ -1,12 +1,15 @@
 package com.eternalcode.core.feature.jail;
 
+import com.eternalcode.commons.time.DurationParser;
 import com.eternalcode.core.feature.jail.event.JailDetainEvent;
 import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
 import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -44,13 +47,14 @@ public class JailServiceImpl implements JailService {
         this.prisonersRepository = prisonersRepository;
         this.jailRepository = jailLocationRepository;
 
-        this.prisonersRepository.getPrisoners().then(prisoners -> {
+        this.prisonersRepository.getPrisoners().thenApply(prisoners -> {
             for (Prisoner prisoner : prisoners) {
                 this.jailedPlayers.put(prisoner.getUuid(), prisoner);
             }
+            return null;
         });
 
-        this.jailRepository.getJailLocation().then(location -> location.ifPresent(value -> this.jailLocation = value));
+        this.jailLocation = this.jailRepository.getJailLocation().join().orElse(null);
     }
 
     @Override
@@ -281,7 +285,7 @@ public class JailServiceImpl implements JailService {
                 this.noticeService.create()
                     .notice(translation -> translation.jailSection().jailListPlayer())
                     .placeholder("{PLAYER}", jailedPlayer.getName())
-                    .placeholder("{DURATION}", String.valueOf(prisoner.getDetainedAt().plus(prisoner.getDuration().toHours(), ChronoUnit.HOURS)))
+                    .placeholder("{DURATION}", DurationParser.DATE_TIME_UNITS.format(prisoner.getReleaseTime()))
                     .placeholder("{DETAINED_BY}", Bukkit.getOfflinePlayer(prisoner.getDetainedBy()).getName())
                     .player(player.getUniqueId())
                     .send();
@@ -291,10 +295,8 @@ public class JailServiceImpl implements JailService {
 
     @Override
     public boolean isLocationSet() {
-
         return this.jailLocation != null;
     }
-
 
     @Override
     public boolean isAllowedCommand(String command) {

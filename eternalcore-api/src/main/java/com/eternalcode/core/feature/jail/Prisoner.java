@@ -38,4 +38,8 @@ public class Prisoner {
     public boolean isReleased() {
         return this.detainedAt.plus(this.prisonTime).isBefore(Instant.now());
     }
+
+    public Duration getReleaseTime() {
+        return Duration.between(Instant.now(), this.detainedAt.plus(this.prisonTime));
+    }
 }

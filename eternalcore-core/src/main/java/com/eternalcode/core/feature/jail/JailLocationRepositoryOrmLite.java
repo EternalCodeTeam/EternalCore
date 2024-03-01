@@ -4,7 +4,7 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
-import com.eternalcode.core.scheduler.Scheduler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
@@ -14,6 +14,7 @@ import panda.std.reactive.Completable;
 
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 @Repository
@@ -26,11 +27,10 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
     }
 
     @Override
-    public Completable<Optional<Location>> getJailLocation() {
-        return this.selectAll(JailLocationWrapper.class)
-            .thenApply(jailLocationWrappers -> jailLocationWrappers.stream()
-                .findFirst()
-                .map(JailLocationWrapper::toLocation));
+    public CompletableFuture<Optional<Location>> getJailLocation() {
+        return this.select(JailLocationWrapper.class, new JailLocationWrapper())
+            .thenApply(Optional::of)
+            .thenApply(jailLocation -> jailLocation.map(JailLocationWrapper::toLocation));
     }
 
     @Override

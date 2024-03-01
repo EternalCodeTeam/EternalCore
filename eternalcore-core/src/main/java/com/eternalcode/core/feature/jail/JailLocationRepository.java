@@ -1,12 +1,12 @@
 package com.eternalcode.core.feature.jail;
 
 import org.bukkit.Location;
-import panda.std.reactive.Completable;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public interface JailLocationRepository {
-    Completable<Optional<Location>> getJailLocation();
+    CompletableFuture<Optional<Location>> getJailLocation();
 
     void setJailLocation(Location location);
 
