@@ -4,7 +4,6 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
-import com.eternalcode.core.util.AdventureUtil;
 import com.eternalcode.multification.notice.Notice;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -495,6 +494,9 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({ " ", "# {TIME} - Time after the player can execute the command." })
         public Notice afkDelay = Notice.chat("<red>► <dark_red>You can use this command only after <red>{TIME}!");
+
+        @Description({ " " })
+        public String afkKickReason = "<red>You have been kicked due to inactivity!";
     }
 
     @Description({

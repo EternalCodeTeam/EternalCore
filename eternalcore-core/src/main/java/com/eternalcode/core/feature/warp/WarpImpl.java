@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.warp;
 
-import com.eternalcode.core.shared.Position;
-import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import org.bukkit.Location;
 
 class WarpImpl implements Warp {
@@ -23,4 +23,5 @@ class WarpImpl implements Warp {
     public Location getLocation() {
         return PositionAdapter.convert(this.position);
     }
+
 }

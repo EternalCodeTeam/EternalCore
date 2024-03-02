@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerEvent;
  */
 public class CatboyChangeTypeEvent extends PlayerEvent implements Cancellable {
 
-    private static final HandlerList CATBOY_CHANGE_TYPE_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Cat.Type oldType;
     private Cat.Type newType;
@@ -56,11 +56,11 @@ public class CatboyChangeTypeEvent extends PlayerEvent implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return CATBOY_CHANGE_TYPE_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return CATBOY_CHANGE_TYPE_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
 }

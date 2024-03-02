@@ -30,7 +30,7 @@ class HomeManager {
     private HomeManager(HomeRepository repository) {
         this.repository = repository;
 
-        repository.getHomes().then(homes -> {
+        repository.getHomes().thenAccept(homes -> {
             for (Home home : homes) {
                 Map<String, Home> homesByUuid = this.homes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
 
@@ -45,7 +45,7 @@ class HomeManager {
         Map<String, Home> userHomes = this.homes.computeIfAbsent(uniqueId, k -> new HashMap<>());
 
         if (this.hasHomeWithSpecificName(user, name)) {
-            this.repository.deleteHome(user, name).then(completable -> {
+            this.repository.deleteHome(user, name).thenAccept(completable -> {
                 userHomes.put(name, home);
                 this.repository.saveHome(home);
             });

@@ -1,5 +1,6 @@
 package com.eternalcode.core.injector.bean.processor;
 
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.Task;
@@ -10,7 +11,6 @@ import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
-import com.eternalcode.core.scheduler.Scheduler;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.annotations.command.Command;

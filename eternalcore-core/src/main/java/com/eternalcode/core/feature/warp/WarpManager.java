@@ -3,8 +3,8 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.shared.PositionAdapter;
 import org.bukkit.Location;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ class WarpManager implements WarpService {
     private WarpManager(WarpRepository warpRepository) {
         this.warpRepository = warpRepository;
 
-        warpRepository.getWarps().thenAcceptAsync(warps -> { //TODO: Use only completable
+        warpRepository.getWarps().thenAcceptAsync(warps -> {
             for (Warp warp : warps) {
                 this.warpMap.put(warp.getName(), warp);
             }
