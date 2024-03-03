@@ -54,7 +54,14 @@ public class JailServiceImpl implements JailService {
             return null;
         });
 
-        this.jailPosition = this.jailRepository.getJailLocation().join().orElse(null);
+        this.jailRepository.getJailLocation().whenComplete((position, throwable) -> {
+            if (throwable != null) {
+                throwable.printStackTrace();
+                return;
+            }
+
+            position.ifPresent(value -> this.jailPosition = value);
+        });
     }
 
     @Override

@@ -28,8 +28,8 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
 
     @Override
     public CompletableFuture<Optional<Position>> getJailLocation() {
-        return this.selectSafe(JailPositionWrapper.class, 1)
-            .thenApply(optional -> optional.map(JailPositionWrapper::toPosition));
+        return this.selectSafe(JailPositionWrapper.class, JailPositionWrapper.SINGLE_LOCALIZATION_ID)
+            .thenApply(optional -> optional.map(jailPositionWrapper -> jailPositionWrapper.toPosition()));
     }
 
     @Override
@@ -39,14 +39,16 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
 
     @Override
     public void deleteJailLocation() {
-        this.delete(JailPositionWrapper.class, new JailPositionWrapper());
+        this.deleteById(JailPositionWrapper.class, JailPositionWrapper.SINGLE_LOCALIZATION_ID);
     }
 
     @DatabaseTable(tableName = "eternal_core_jail_location")
     static class JailPositionWrapper {
 
+        public static final int SINGLE_LOCALIZATION_ID = 1;
+
         @DatabaseField(columnName = "id", id = true)
-        private final int id = 1;  // Only one record, so a constant ID
+        private int id;  // Only one record, so a constant ID
 
         @DatabaseField(columnName = "world")
         private String world;
@@ -70,6 +72,7 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
         }
 
         JailPositionWrapper(Position position) {
+            this.id = SINGLE_LOCALIZATION_ID;
             this.world = position.world();
             this.x = position.x();
             this.y = position.y();
