@@ -60,26 +60,10 @@ public class JailCommand {
 
     @Execute(name = "detain")
     @Permission("eternalcore.jail.detain")
-    @DescriptionDocs(description = "Detain a player with a reason", arguments = "<player> <reason>")
-    void executeJailDetainWithReason(@Context Player player, @Arg Player target, @Arg String reason) {
-        // Jail player forever with a reason
-        this.jailService.detainPlayer(target, player, null);
-    }
-
-    @Execute(name = "detain")
-    @Permission("eternalcore.jail.detain")
-    @DescriptionDocs(description = "Detain a player for a time", arguments = "<player> <time>")
+    @DescriptionDocs(description = "Detain a player for some time", arguments = "<player> <time>")
     void executeJailDetainForTime(@Context Player player, @Arg Player target, @Arg Duration duration) {
         // Jail player for a time
         this.jailService.detainPlayer(target,  player, duration);
-    }
-
-    @Execute(name = "detain")
-    @Permission("eternalcore.jail.detain")
-    @DescriptionDocs(description = "Detain a player for a time with a reason", arguments = "<player> <time> <reason>")
-    void executeJailDetainForTimeWithReason(@Context Player player, @Arg Player target, @Arg Duration duration) {
-        // Jail player for a time with a reason
-        this.jailService.detainPlayer(target, player, duration);
     }
 
     @Execute(name = "release")
