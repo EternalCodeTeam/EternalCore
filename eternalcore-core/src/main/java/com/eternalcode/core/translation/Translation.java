@@ -419,6 +419,7 @@ public interface Translation {
         Notice jailLocationOverride();
         Notice jailDetainPublic();
         Notice jailDetainPrivate();
+        Notice jailDetainTitle();
         Notice jailDetainNoPlayer();
         Notice jailDetainOverride();
 

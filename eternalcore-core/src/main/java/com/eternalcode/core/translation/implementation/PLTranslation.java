@@ -882,6 +882,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice jailDetainPublic = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony!");
         public Notice jailDetainPrivate = Notice.chat("<green>► <white>Zostałeś uwięziony!");
         public Notice jailDetainNoPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz nie został znaleziony!");
+        public Notice jailDetainTitle = Notice.title("<red>Uwięziony!", "<white>Zostałeś uwięziony!");
 
 
         public Notice jailDetainOverride = Notice.chat("<green>► <white>Nadpisałeś lokalizację jail'a!");

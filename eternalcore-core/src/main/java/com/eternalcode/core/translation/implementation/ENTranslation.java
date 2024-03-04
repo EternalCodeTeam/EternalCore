@@ -864,6 +864,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice jailDetainPublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
         public Notice jailDetainPrivate = Notice.chat("<green>► <white>You have been jailed!");
         public Notice jailDetainNoPlayer = Notice.chat("<red>✘ <dark_red>No player found to jail!");
+        public Notice jailDetainTitle = Notice.title("<red>✘ <dark_red>Jailed!", "<white>You have been jailed!");
 
 
         public Notice jailDetainOverride = Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER} <white>!");
