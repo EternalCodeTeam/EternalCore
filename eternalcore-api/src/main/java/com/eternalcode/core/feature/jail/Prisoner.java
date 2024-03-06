@@ -42,4 +42,8 @@ public class Prisoner {
     public Duration getReleaseTime() {
         return Duration.between(Instant.now(), this.detainedAt.plus(this.prisonTime));
     }
+
+    public Duration getRemainingTime() {
+        return Duration.between(Instant.now(), this.detainedAt.plus(this.prisonTime));
+    }
 }

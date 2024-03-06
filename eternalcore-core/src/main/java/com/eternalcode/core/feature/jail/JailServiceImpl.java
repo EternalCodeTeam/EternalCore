@@ -12,7 +12,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.notice.NoticeTextType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -149,6 +148,7 @@ public class JailServiceImpl implements JailService {
         if (isPlayerJailed) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainOverride())
+                .placeholder("{PLAYER}", player.getName())
                 .player(player.getUniqueId())
                 .send();
         }

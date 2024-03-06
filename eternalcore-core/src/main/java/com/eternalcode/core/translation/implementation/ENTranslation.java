@@ -855,37 +855,28 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENJailSection implements JailSection {
-
         public Notice jailLocationSet = Notice.chat("<green>► <white>Jail location has been set!");
         public Notice jailLocationRemove = Notice.chat("<red>✘ <dark_red>Jail location has been removed!");
         public Notice jailLocationNotSet = Notice.chat("<red>✘ <dark_red>Jail location is not set!");
         public Notice jailLocationOverride = Notice.chat("<green>► <white>Jail location has been overridden!");
-
         public Notice jailDetainPublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
         public Notice jailDetainPrivate = Notice.chat("<green>► <white>You have been jailed!");
         public Notice jailDetainNoPlayer = Notice.chat("<red>✘ <dark_red>No player found to jail!");
-        public Notice jailDetainTitle = Notice.title("<red>✘ <dark_red>Jailed!", "<white>You have been jailed!");
-
-
         public Notice jailDetainOverride = Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER} <white>!");
-
         public Notice jailNoPlayer = Notice.chat("<red>✘ <dark_red>No player found to jail!");
         public Notice jailRelease = Notice.chat("<red>✘ <dark_red>You have been released from jail!");
-
         public Notice jailReleasePublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been granted freedom!");
         public Notice jailReleaseNoPlayer = Notice.chat("<red>✘ <dark_red>Player is not in jail!");
-
         public Notice jailReleaseSender = Notice.chat("<green>► <white>You have released <green>{PLAYER} <white>from jail!");
         public Notice jailReleasePrivate = Notice.chat("<green>► <white>You have been released from jail!");
-
         public Notice jailReleaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
-
         public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
-
         public Notice playerCannotUseCommand = Notice.chat("<red>✘ <dark_red>You can't use this command! You are in jail!");
-
         public Notice jailListNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
         public Notice jailListStart = Notice.chat("<green>► <white>Players in jail: ");
         public Notice jailListPlayer = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{DURATION}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
+
+        public Notice jailDetainCountdown = Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{TIME}!");
+        public Notice jailDetainTitle = Notice.title("<red>Jailed!", "<white>You are in jail!");
     }
 }

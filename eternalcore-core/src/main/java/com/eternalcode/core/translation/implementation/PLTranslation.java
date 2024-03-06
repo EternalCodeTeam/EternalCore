@@ -870,40 +870,30 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLJailSection implements JailSection {
-
         public Notice jailLocationSet = Notice.chat("<green>► <white>Ustawiono lokalizację jail'a!");
         public Notice jailLocationRemove = Notice.chat("<red>✘ <dark_red>Usunięto lokalizację jail'a!");
         public Notice jailLocationNotSet = Notice.chat("<red>✘ <dark_red>Błąd: <red>Lokalizacja jail'a nie została ustawiona!");
         public Notice jailLocationOverride = Notice.chat("<green>► <white>Nadpisałeś lokalizację jail'a!");
-
-
-
-
         public Notice jailDetainPublic = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony!");
         public Notice jailDetainPrivate = Notice.chat("<green>► <white>Zostałeś uwięziony!");
         public Notice jailDetainNoPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz nie został znaleziony!");
-        public Notice jailDetainTitle = Notice.title("<red>Uwięziony!", "<white>Zostałeś uwięziony!");
-
-
         public Notice jailDetainOverride = Notice.chat("<green>► <white>Nadpisałeś lokalizację jail'a!");
-
         public Notice jailNoPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podany gracz nie istnieje!");
         public Notice jailRelease = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz nie jest uwięziony!");
-
-
         public Notice jailReleasePublic = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwolniony!");
         public Notice jailReleaseNoPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz nie został znaleziony!");
-
         public Notice jailReleaseSender = Notice.chat("<green>► <white>Uwolniłeś gracza <green>{PLAYER}!");
         public Notice jailReleasePrivate = Notice.chat("<green>► <white>Zostałeś uwolniony!");
-
         public Notice jailReleaseAll = Notice.chat("<green>► <white>Wszyscy gracze zostali uwolnieni!");
         public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nikt nie jest uwięziony!");
-
         public Notice playerCannotUseCommand = Notice.chat("<red>✘ <dark_red>You can't use this command! You are in jail!");
         public Notice jailListNoPlayers = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nikt nie jest uwięziony!");
         public Notice jailListStart = Notice.chat("<green>► <white>Lista graczy w jail'u:");
         public Notice jailListPlayer = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{DURATION} <white>!");
 
+
+
+        public Notice jailDetainCountdown = Notice.actionbar("<red>Pozostało <green>{TIME} <red>do uwolnienia!");
+        public Notice jailDetainTitle = Notice.title("<red>Uwięziony!", "<white>Zostałeś zapuszkowany!");
     }
 }

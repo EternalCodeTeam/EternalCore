@@ -1,20 +1,31 @@
 package com.eternalcode.core.feature.jail;
 
+import com.eternalcode.commons.time.DurationParser;
+import com.eternalcode.commons.time.TemporalAmountParser;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
+import com.eternalcode.core.notice.NoticeService;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Task(period = 20 * 60 * 5, delay = 20 * 60 * 5)
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+
+import static com.eternalcode.core.feature.jail.JailServiceImpl.JAIL_TIME_UNITS;
+
+@Task(period = 20, delay = 5)
 public class JailTask implements Runnable {
 
     private final JailService jailService;
     private final Server server;
+    private final NoticeService noticeService;
+
 
     @Inject
-    public JailTask(JailService jailService, Server server) {
+    public JailTask(JailService jailService, Server server, NoticeService noticeService) {
         this.jailService = jailService;
         this.server = server;
+        this.noticeService = noticeService;
     }
 
     @Override
@@ -26,6 +37,13 @@ public class JailTask implements Runnable {
             if (player == null) {
                 continue;
             }
+
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailDetainCountdown())
+                .placeholder("{TIME}", JAIL_TIME_UNITS.format(prisoner.getRemainingTime()))
+                .player(prisoner.getUuid())
+                .send();
+
 
             if (prisoner.isReleased()) {
                 this.jailService.releasePlayer(player, null);
