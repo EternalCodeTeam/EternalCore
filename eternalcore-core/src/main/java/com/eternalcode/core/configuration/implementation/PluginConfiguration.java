@@ -306,6 +306,10 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Afk implements AfkSettings {
+
+        @Description("# Mark player as AFK when inactive?")
+        public boolean markPlayerAsAfk = true;
+
         @Description({
             "# Number of interactions a player must make to have AFK status removed",
             "# This is for so that stupid miss-click doesn't disable AFK status"
@@ -320,6 +324,11 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description({ " ", "# Should a player be kicked from the game when marked as AFK?" })
         public boolean kickOnAfk = false;
+
+        @Override
+        public boolean markPlayerAsAfk() {
+            return this.markPlayerAsAfk;
+        }
 
         @Override
         public int interactionsCountDisableAfk() {

@@ -14,13 +14,21 @@ class AfkTask implements Runnable {
 
     private final AfkService afkService;
     private final AfkServiceImpl afkServiceImpl;
+    private final AfkSettings afkSettings;
     private final VanishService vanishService;
     private final Server server;
 
     @Inject
-    public AfkTask(AfkService afkService, AfkServiceImpl afkServiceImpl, VanishService vanishService, Server server) {
+    public AfkTask(
+        AfkService afkService,
+        AfkServiceImpl afkServiceImpl,
+        AfkSettings afkSettings,
+        VanishService vanishService,
+        Server server
+    ) {
         this.afkService = afkService;
         this.afkServiceImpl = afkServiceImpl;
+        this.afkSettings = afkSettings;
         this.vanishService = vanishService;
         this.server = server;
     }
@@ -31,6 +39,10 @@ class AfkTask implements Runnable {
     }
 
     void markAllInactivePlayers() {
+        if (!this.afkSettings.markPlayerAsAfk()) {
+            return;
+        }
+
         for (Player player : this.server.getOnlinePlayers()) {
             UUID playerUuid = player.getUniqueId();
 
