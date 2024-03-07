@@ -171,13 +171,6 @@ public class JailServiceImpl implements JailService {
 
         this.jailedPlayers.put(player.getUniqueId(), prisoner);
 
-        if (player.getUniqueId().equals(detainedBy.getUniqueId())) {
-            this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailDetainPrivate())
-                .player(player.getUniqueId())
-                .send();
-        }
-
         Location jailLocation = PositionAdapter.convert(this.jailPosition);
 
         this.teleportService.teleport(player, jailLocation);
@@ -189,7 +182,7 @@ public class JailServiceImpl implements JailService {
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailDetainTitle())
+            .notice(translation -> translation.jailSection().jailDetainPrivate())
             .player(player.getUniqueId())
             .send();
 
