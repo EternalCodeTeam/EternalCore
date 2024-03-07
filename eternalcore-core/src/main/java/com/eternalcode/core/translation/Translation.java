@@ -419,8 +419,7 @@ public interface Translation {
         Notice jailLocationOverride();
         Notice jailDetainPublic();
         Notice jailDetainPrivate();
-        Notice jailDetainCountdown();
-        Notice jailDetainTitle();
+        Notice jailDetainCountdownActionbar();
 
         Notice jailDetainOverride();
 
@@ -434,6 +433,7 @@ public interface Translation {
         Notice jailListStart();
         Notice jailListNoPlayers();
         Notice jailListPlayer();
+        Notice jailReleaseActionbar();
     }
 
 }
