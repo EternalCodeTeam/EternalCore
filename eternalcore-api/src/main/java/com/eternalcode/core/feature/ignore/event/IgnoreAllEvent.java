@@ -5,37 +5,27 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class IgnoreEvent extends Event implements Cancellable {
+public class IgnoreAllEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player by;
-    private final Player target;
     private boolean cancelled;
 
-    public IgnoreEvent(@NotNull Player by, @Nullable Player target) {
+    public IgnoreAllEvent(@NotNull Player by) {
         super(true);
         this.by = by;
-        this.target = target;
     }
 
     /**
-     * @return the player executing the ignore action.
+     * @return the player executing the ignore all action.
      */
 
     public Player getBy() {
         return by;
     }
 
-    /**
-     * @return the player being targeted by the ignore action.
-     */
-
-    public Player getTarget() {
-        return target;
-    }
 
     /**
      * @return Whether the event is cancelled

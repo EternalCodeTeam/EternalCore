@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class IgnoreEvent extends Event implements Cancellable {
+public class UnIgnoreEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
@@ -15,14 +15,14 @@ public class IgnoreEvent extends Event implements Cancellable {
     private final Player target;
     private boolean cancelled;
 
-    public IgnoreEvent(@NotNull Player by, @Nullable Player target) {
+    public UnIgnoreEvent(@NotNull Player by, @Nullable Player target) {
         super(true);
         this.by = by;
         this.target = target;
     }
 
     /**
-     * @return the player executing the ignore action.
+     * @return the player executing the unignore action.
      */
 
     public Player getBy() {
@@ -30,7 +30,7 @@ public class IgnoreEvent extends Event implements Cancellable {
     }
 
     /**
-     * @return the player being targeted by the ignore action.
+     * @return the player being targeted by the unignore action.
      */
 
     public Player getTarget() {

@@ -1,41 +1,31 @@
 package com.eternalcode.core.feature.ignore.event;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-public class IgnoreEvent extends Event implements Cancellable {
+public class PurgeEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
-    private final Player by;
-    private final Player target;
+    private final CommandSender by;
     private boolean cancelled;
 
-    public IgnoreEvent(@NotNull Player by, @Nullable Player target) {
+    public PurgeEvent(@NotNull CommandSender by) {
         super(true);
         this.by = by;
-        this.target = target;
     }
 
     /**
-     * @return the player executing the ignore action.
+     * @return the {@link CommandSender} executing the purge action. This could be either a {@link org.bukkit.entity.Player} or a {@link org.bukkit.command.ConsoleCommandSender}.
      */
 
-    public Player getBy() {
+    public CommandSender getBy() {
         return by;
     }
 
-    /**
-     * @return the player being targeted by the ignore action.
-     */
-
-    public Player getTarget() {
-        return target;
-    }
 
     /**
      * @return Whether the event is cancelled
