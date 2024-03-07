@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.ignore.event.IgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.IgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -57,7 +58,7 @@ class IgnoreCommand {
             Player senderPlayer = this.server.getPlayer(senderUuid);
             Player targetPlayer = this.server.getPlayer(targetUuid);
 
-            IgnoreEvent event = this.eventCaller.callEvent(new IgnoreEvent(senderPlayer, targetPlayer, IgnoreEvent.Action.IGNORE));
+            IgnoreEvent event = this.eventCaller.callEvent(new IgnoreEvent(senderPlayer, targetPlayer));
 
             if (event.isCancelled()) {
                 return;
@@ -77,7 +78,7 @@ class IgnoreCommand {
         UUID senderUuid = sender.getUniqueId();
 
         Player player = this.server.getPlayer(senderUuid);
-        IgnoreEvent event = this.eventCaller.callEvent(new IgnoreEvent(player, null, IgnoreEvent.Action.IGNORE_ALL));
+        IgnoreAllEvent event = this.eventCaller.callEvent(new IgnoreAllEvent(player));
 
         if (event.isCancelled()) {
             return;
