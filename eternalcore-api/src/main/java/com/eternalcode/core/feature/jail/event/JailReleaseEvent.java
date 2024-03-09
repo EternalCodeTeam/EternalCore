@@ -1,10 +1,8 @@
 package com.eternalcode.core.feature.jail.event;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -14,16 +12,13 @@ public class JailReleaseEvent extends Event implements Cancellable {
     private static final HandlerList JAIL_RELEASE_HANDLER_LIST = new HandlerList();
     private final boolean isInJail;
     private final UUID player;
+    private boolean isCancelled = false;
 
     public JailReleaseEvent(@NotNull UUID uniqueId) {
         this.player = uniqueId;
         this.isInJail = false;
     }
 
-
-    /**
-     * Checks if the player is in jail.
-     */
     public UUID getPlayer() {
         return this.player;
     }
@@ -33,12 +28,12 @@ public class JailReleaseEvent extends Event implements Cancellable {
     }
 
     public boolean isCancelled() {
-        return false;
+        return this.isCancelled;
     }
 
     @Override
     public void setCancelled(boolean b) {
-
+        this.isCancelled = b;
     }
 
     @Override

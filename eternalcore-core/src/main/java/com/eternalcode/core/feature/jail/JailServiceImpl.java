@@ -2,8 +2,6 @@ package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.commons.time.DurationParser;
-import com.eternalcode.commons.time.TemporalAmountParser;
 import com.eternalcode.core.feature.jail.event.JailDetainEvent;
 import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
 import com.eternalcode.core.feature.spawn.SpawnService;
@@ -12,14 +10,14 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
 import com.eternalcode.core.notice.NoticeService;
-import org.bukkit.Bukkit;
+import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,45 +29,27 @@ public class JailServiceImpl implements JailService {
     private final SpawnService spawnService;
     private final NoticeService noticeService;
     private final JailSettings settings;
-    private Position jailPosition;
+    private final Server server;
+    
     private final JailLocationRepository jailRepository;
-
     private final PrisonersRepository prisonersRepository;
-
-
+    
     private final Map<UUID, Prisoner> jailedPlayers = new ConcurrentHashMap<>();
-
-    public static final TemporalAmountParser<Duration> JAIL_TIME_UNITS = new DurationParser()
-        .withUnit("s", ChronoUnit.SECONDS)
-        .withUnit("m", ChronoUnit.MINUTES)
-        .withUnit("h", ChronoUnit.HOURS)
-        .withUnit("d", ChronoUnit.DAYS);
-
+    
+    private Position jailPosition;
 
     @Inject
-    JailServiceImpl(TeleportService teleportService, SpawnService spawnService, NoticeService noticeService, PrisonersRepository prisonersRepository, JailLocationRepository jailLocationRepository, JailSettings settings) {
+    JailServiceImpl(TeleportService teleportService, SpawnService spawnService, NoticeService noticeService, PrisonersRepository prisonersRepository, JailLocationRepository jailLocationRepository, JailSettings settings, Server server) {
         this.teleportService = teleportService;
         this.spawnService = spawnService;
         this.noticeService = noticeService;
         this.settings = settings;
+        this.server = server;
+
         this.prisonersRepository = prisonersRepository;
         this.jailRepository = jailLocationRepository;
 
-        this.prisonersRepository.getPrisoners().thenApply(prisoners -> {
-            for (Prisoner prisoner : prisoners) {
-                this.jailedPlayers.put(prisoner.getUuid(), prisoner);
-            }
-            return null;
-        });
-
-        this.jailRepository.getJailLocation().whenComplete((position, throwable) -> {
-            if (throwable != null) {
-                throwable.printStackTrace();
-                return;
-            }
-
-            position.ifPresent(value -> this.jailPosition = value);
-        });
+        this.loadFromDatabase();
     }
 
     @Override
@@ -84,18 +64,11 @@ public class JailServiceImpl implements JailService {
 
     @Override
     public void setupJailArea(Location jailLocation, Player setter) {
-        if (this.isLocationSet()) {
-            this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailLocationOverride())
-                .player(setter.getUniqueId())
-                .send();
-        }
-        else {
-            this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailLocationSet())
-                .player(setter.getUniqueId())
-                .send();
-        }
+
+        this.noticeService.create()
+            .notice(translation -> (this.isLocationSet() ? translation.jailSection().jailLocationOverride() : translation.jailSection().jailLocationSet()))
+            .player(setter.getUniqueId())
+            .send();
 
         Position position = new Position(jailLocation.getX(), jailLocation.getY(), jailLocation.getZ(), jailLocation.getYaw(), jailLocation.getPitch(), setter.getWorld().getName());
 
@@ -162,12 +135,7 @@ public class JailServiceImpl implements JailService {
 
         Prisoner prisoner = new Prisoner(player.getUniqueId(), Instant.now(), time, detainedBy.getUniqueId());
 
-        if (isPlayerJailed) {
-            this.prisonersRepository.editPrisoner(prisoner);
-        }
-        else {
-            this.prisonersRepository.savePrisoner(prisoner);
-        }
+        this.prisonersRepository.savePrisoner(prisoner);
 
         this.jailedPlayers.put(player.getUniqueId(), prisoner);
 
@@ -244,7 +212,7 @@ public class JailServiceImpl implements JailService {
         }
 
         this.jailedPlayers.forEach((uuid, prisoner) -> {
-                Player jailedPlayer = Bukkit.getPlayer(uuid);
+                Player jailedPlayer = this.server.getPlayer(uuid);
 
                 JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(uuid);
 
@@ -296,14 +264,14 @@ public class JailServiceImpl implements JailService {
             .send();
 
         this.jailedPlayers.forEach((uuid, prisoner) -> {
-            Player jailedPlayer = Bukkit.getPlayer(uuid);
+            Player jailedPlayer = this.server.getPlayer(uuid);
 
             if (jailedPlayer != null) {
                 this.noticeService.create()
                     .notice(translation -> translation.jailSection().jailListPlayer())
                     .placeholder("{PLAYER}", jailedPlayer.getName())
-                    .placeholder("{DURATION}", JAIL_TIME_UNITS.format(prisoner.getReleaseTime()))
-                    .placeholder("{DETAINED_BY}", Bukkit.getOfflinePlayer(prisoner.getDetainedBy()).getName())
+                    .placeholder("{DURATION}", DurationUtil.format(prisoner.getReleaseTime()))
+                    .placeholder("{DETAINED_BY}", this.server.getOfflinePlayer(prisoner.getDetainedBy()).getName())
                     .player(player.getUniqueId())
                     .send();
             }
@@ -327,5 +295,22 @@ public class JailServiceImpl implements JailService {
         }
 
         return !this.jailedPlayers.get(player).isReleased();
+    }
+
+    private void loadFromDatabase() {
+        this.prisonersRepository.getPrisoners().thenAccept(prisoners -> {
+            for (Prisoner prisoner : prisoners) {
+                this.jailedPlayers.put(prisoner.getUuid(), prisoner);
+            }
+        });
+
+        this.jailRepository.getJailLocation().whenComplete((position, throwable) -> {
+            if (throwable != null) {
+                throwable.printStackTrace();
+                return;
+            }
+
+            position.ifPresent(value -> this.jailPosition = value);
+        });
     }
 }

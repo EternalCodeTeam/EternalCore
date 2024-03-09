@@ -11,13 +11,13 @@ public class Prisoner {
     private final UUID player;
     private final Instant detainedAt;
     private final Duration prisonTime;
-    private final UUID lockedUpByWho;
+    private final UUID lockedUpBy;
 
-    public Prisoner(@NotNull UUID player, @NotNull Instant detainedAt, @NotNull Duration prisonTime, @NotNull UUID lockedUpByWho) {
+    public Prisoner(@NotNull UUID player, @NotNull Instant detainedAt, @NotNull Duration prisonTime, @NotNull UUID lockedUpBy) {
         this.player = player;
         this.detainedAt = detainedAt;
         this.prisonTime = prisonTime;
-        this.lockedUpByWho = lockedUpByWho;
+        this.lockedUpBy = lockedUpBy;
     }
     public UUID getUuid() {
         return this.player;
@@ -32,7 +32,7 @@ public class Prisoner {
     }
 
     public UUID getDetainedBy() {
-        return this.lockedUpByWho;
+        return this.lockedUpBy;
     }
 
     public boolean isReleased() {

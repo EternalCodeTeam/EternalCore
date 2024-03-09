@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.jail;
 
-import panda.std.reactive.Completable;
-
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -18,7 +17,7 @@ public interface PrisonersRepository {
 
     void deleteAllPrisoners();
 
-    CompletableFuture<java.util.List<Prisoner>> getAllPrisoners();
+    CompletableFuture<List<Prisoner>> getAllPrisoners();
 
     void savePrisoner(Prisoner prisoner);
 }

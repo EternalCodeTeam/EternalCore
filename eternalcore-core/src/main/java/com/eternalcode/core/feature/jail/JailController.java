@@ -5,13 +5,13 @@ import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,7 +19,6 @@ import java.util.UUID;
 public class JailController implements Listener {
 
     private final JailService jailService;
-    private Map<UUID, Prisoner> jailedPlayers;
     private final NoticeService noticeService;
 
     private static final Set<TeleportCause> CANCELLED_CAUSES = Set.of(
@@ -30,25 +29,20 @@ public class JailController implements Listener {
 
 
     @Inject
-    public JailController(JailService jailService, NoticeService noticeService, JailSettings settings) {
+    public JailController(JailService jailService, NoticeService noticeService) {
         this.jailService = jailService;
         this.noticeService = noticeService;
-        this.jailedPlayers = this.jailService.getJailedPlayers();
     }
 
     @EventHandler
     public void onPlayerPreCommand(PlayerCommandPreprocessEvent event) {
-        UUID player = event.getPlayer().getUniqueId();
+        Player player = event.getPlayer();
 
-        if (!this.jailedPlayers.containsKey(player)) {
+        if (!this.jailService.getJailedPlayers().containsKey(player.getUniqueId())) {
             return;
         }
 
-        if (event.getPlayer().isOp()) {
-            return;
-        }
-
-        if (event.getPlayer().hasPermission("eternalcore.jail.bypass")) {
+        if (player.hasPermission("eternalcore.jail.bypass")) {
             return;
         }
 
@@ -60,23 +54,23 @@ public class JailController implements Listener {
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().playerCannotUseCommand())
-            .player(player)
+            .player(player.getUniqueId())
             .send();
 
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onTeleport(PlayerTeleportEvent tp) {
+    public void onTeleport(PlayerTeleportEvent teleportEvent) {
 
-        UUID player = tp.getPlayer().getUniqueId();
+        UUID player = teleportEvent.getPlayer().getUniqueId();
 
-        if (!this.jailedPlayers.containsKey(player)) {
+        if (!this.jailService.getJailedPlayers().containsKey(player)) {
             return;
         }
 
-        if (CANCELLED_CAUSES.contains(tp.getCause())) {
-            tp.setCancelled(true);
+        if (CANCELLED_CAUSES.contains(teleportEvent.getCause())) {
+            teleportEvent.setCancelled(true);
         }
     }
 
@@ -85,8 +79,6 @@ public class JailController implements Listener {
         if (event.isCancelled()) {
             return;
         }
-
-        this.updateJailedPlayers();
     }
 
     @EventHandler
@@ -99,11 +91,7 @@ public class JailController implements Listener {
         if (event.isCancelled()) {
             return;
         }
-
-        this.updateJailedPlayers();
     }
 
-    public void updateJailedPlayers() {
-        this.jailedPlayers = this.jailService.getJailedPlayers();
-    }
+
 }

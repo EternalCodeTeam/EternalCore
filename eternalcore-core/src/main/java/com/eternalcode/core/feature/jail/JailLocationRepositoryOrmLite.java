@@ -9,13 +9,11 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
-import org.bukkit.Bukkit;
 
 
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.logging.Level;
 
 @Repository
 class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements JailLocationRepository {
@@ -82,13 +80,7 @@ class JailLocationRepositoryOrmLite extends AbstractRepositoryOrmLite implements
         }
 
         Position toPosition() {
-            try {
-                return new Position(this.x, this.y, this.z, this.yaw, this.pitch, this.world);
-            }
-            catch (Exception e) {
-                Bukkit.getLogger().log(Level.SEVERE, "Error converting JailLocationWrapper to Position", e);
-                return null;
-            }
+            return new Position(this.x, this.y, this.z, this.yaw, this.pitch, this.world);
         }
     }
 }

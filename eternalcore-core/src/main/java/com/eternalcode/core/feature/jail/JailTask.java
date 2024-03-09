@@ -3,10 +3,9 @@ package com.eternalcode.core.feature.jail;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.DurationUtil;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-
-import static com.eternalcode.core.feature.jail.JailServiceImpl.JAIL_TIME_UNITS;
 
 @Task(period = 20, delay = 5)
 public class JailTask implements Runnable {
@@ -14,7 +13,6 @@ public class JailTask implements Runnable {
     private final JailService jailService;
     private final Server server;
     private final NoticeService noticeService;
-
 
     @Inject
     public JailTask(JailService jailService, Server server, NoticeService noticeService) {
@@ -35,7 +33,7 @@ public class JailTask implements Runnable {
 
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainCountdownActionbar())
-                .placeholder("{TIME}", JAIL_TIME_UNITS.format(prisoner.getRemainingTime()))
+                .placeholder("{TIME}", DurationUtil.format(prisoner.getRemainingTime()))
                 .player(prisoner.getUuid())
                 .send();
 
