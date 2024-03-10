@@ -6,7 +6,7 @@ import java.time.Duration;
 
 public interface AfkSettings extends DelaySettings {
 
-    boolean markPlayerAsAfk();
+    boolean autoMarkAskAfk();
 
     int interactionsCountDisableAfk();
 

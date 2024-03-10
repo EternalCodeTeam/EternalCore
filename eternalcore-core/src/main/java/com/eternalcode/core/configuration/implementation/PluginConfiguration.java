@@ -330,7 +330,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public boolean kickOnAfk = false;
 
         @Override
-        public boolean markPlayerAsAfk() {
+        public boolean autoMarkAskAfk() {
             return this.autoMarkAsAfk;
         }
 
