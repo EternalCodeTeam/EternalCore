@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.jail;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -22,18 +23,38 @@ import java.time.Duration;
 public class JailCommand {
 
     private final JailService jailService;
+    private final NoticeService noticeService;
     private final PrisonerService prisonerService;
 
     @Inject
-    JailCommand(JailService jailService, PrisonerService prisonerService) {
+    JailCommand(JailService jailService, NoticeService noticeService, PrisonerService prisonerService) {
         this.jailService = jailService;
+        this.noticeService = noticeService;
         this.prisonerService = prisonerService;
+    }
+
+    @Execute(name = "setup")
+    @Permission("eternalcore.jail.setup")
+    @DescriptionDocs(description = "Define jail spawn area")
+    void executeJailSetup(@Context Player player) {
+        this.noticeService.create()
+            .notice(translation -> (this.jailService.isLocationSet() ? translation.jailSection().jailLocationOverride() : translation.jailSection().jailLocationSet()))
+            .player(player.getUniqueId())
+            .send();
+
+        Location location = player.getLocation();
+        this.jailService.setupJailArea(location, player);
     }
 
     @Execute(name = "setup")
     @Permission("eternalcore.jail.setup")
     @DescriptionDocs(description = "Define jail spawn area", arguments = "<location>")
     void executeJailSetup(@Context Player player, @Arg Location location) {
+        this.noticeService.create()
+            .notice(translation -> (this.jailService.isLocationSet() ? translation.jailSection().jailLocationOverride() : translation.jailSection().jailLocationSet()))
+            .player(player.getUniqueId())
+            .send();
+
         this.jailService.setupJailArea(location, player);
     }
 
@@ -41,7 +62,21 @@ public class JailCommand {
     @Permission("eternalcore.jail.setup")
     @DescriptionDocs(description = "Remove jail spawn area")
     void executeJailRemove(@Context Player player) {
+
+        if (!this.jailService.isLocationSet()) {
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailLocationNotSet())
+                .player(player.getUniqueId())
+                .send();
+            return;
+        }
+
         this.jailService.removeJailArea(player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailLocationRemove())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(name = "detain")
