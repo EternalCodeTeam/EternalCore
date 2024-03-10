@@ -307,8 +307,12 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Afk implements AfkSettings {
 
-        @Description("# Mark player as AFK when inactive?")
-        public boolean markPlayerAsAfk = true;
+        @Description({
+            "# Should a player be marked as AFK automatically?",
+            "# If set to true, the player will be marked as AFK after a certain amount of time of inactivity",
+            "# If set to false, the player will have to use the /afk command to be marked as AFK"
+        })
+        public boolean autoMarkAsAfk = true;
 
         @Description({
             "# Number of interactions a player must make to have AFK status removed",
@@ -327,7 +331,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Override
         public boolean markPlayerAsAfk() {
-            return this.markPlayerAsAfk;
+            return this.autoMarkAsAfk;
         }
 
         @Override
