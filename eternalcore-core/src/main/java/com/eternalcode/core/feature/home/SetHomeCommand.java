@@ -36,7 +36,7 @@ class SetHomeCommand {
     @Execute
     @DescriptionDocs(description = "Set home location")
     void execute(@Context User user, @Context Player player) {
-        this.setHome(user, player, "home");
+        this.setHome(user, player, this.pluginConfiguration.homes.defaultHomeName);
     }
 
     private void setHome(User user, Player player, String home) {
