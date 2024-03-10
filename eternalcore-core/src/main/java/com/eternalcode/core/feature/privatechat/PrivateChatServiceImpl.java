@@ -9,12 +9,12 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 @Service
 class PrivateChatServiceImpl implements PrivateChatService {
@@ -32,7 +32,10 @@ class PrivateChatServiceImpl implements PrivateChatService {
     private final Set<UUID> socialSpy = new HashSet<>();
 
     @Inject
-    PrivateChatServiceImpl(NoticeService noticeService, IgnoreService ignoreService, UserManager userManager,
+    PrivateChatServiceImpl(
+        NoticeService noticeService,
+        IgnoreService ignoreService,
+        UserManager userManager,
         EventCaller eventCaller
     ) {
         this.noticeService = noticeService;
@@ -56,8 +59,9 @@ class PrivateChatServiceImpl implements PrivateChatService {
                 this.replies.put(sender.getUniqueId(), target.getUniqueId());
             }
 
-            this.presenter.onPrivate(new PrivateMessage(sender, target, message, this.socialSpy, isIgnored));
-            this.eventCaller.callEvent(new PrivateChatEvent(sender.getUniqueId(), target.getUniqueId(), message));
+            PrivateChatEvent event = new PrivateChatEvent(sender.getUniqueId(), target.getUniqueId(), message);
+            this.eventCaller.callEvent(event);
+            this.presenter.onPrivate(new PrivateMessage(sender, target, event.getContent(), this.socialSpy, isIgnored));
         });
     }
 
@@ -98,4 +102,14 @@ class PrivateChatServiceImpl implements PrivateChatService {
         return this.socialSpy.contains(player);
     }
 
+    @Override
+    public void reply(Player sender, String message) {
+        this.reply(this.userManager.getOrCreate(sender.getUniqueId(), sender.getName()), message);
+    }
+
+    @Override
+    public void privateMessage(Player sender, Player target, String message) {
+        User user = this.userManager.getOrCreate(target.getUniqueId(), target.getName());
+        this.privateMessage(this.userManager.getOrCreate(sender.getUniqueId(), sender.getName()), user, message);
+    }
 }

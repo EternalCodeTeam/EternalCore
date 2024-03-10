@@ -32,4 +32,13 @@ public class ApiPrivateChatListener implements Listener {
             player.sendMessage("Private Chat: " + senderPlayer.getName() + " -> " + receiverPlayer.getName() + ": " + content);
         }
     }
+
+    @EventHandler
+    public void overridePrivateChat(PrivateChatEvent event) {
+        String content = event.getContent();
+
+        if (content.contains("kurła!")) {
+            event.setContent("nie wolno przeklinać!");
+        }
+    }
 }
