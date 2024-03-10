@@ -18,7 +18,7 @@ import java.util.UUID;
 @Controller
 public class JailController implements Listener {
 
-    private final JailService jailService;
+    private final PrisonerService prisonerService;
     private final NoticeService noticeService;
 
     private static final Set<TeleportCause> CANCELLED_CAUSES = Set.of(
@@ -29,8 +29,8 @@ public class JailController implements Listener {
 
 
     @Inject
-    public JailController(JailService jailService, NoticeService noticeService) {
-        this.jailService = jailService;
+    public JailController(PrisonerService prisonerService, NoticeService noticeService) {
+        this.prisonerService = prisonerService;
         this.noticeService = noticeService;
     }
 
@@ -38,7 +38,7 @@ public class JailController implements Listener {
     public void onPlayerPreCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.jailService.getJailedPlayers().containsKey(player.getUniqueId())) {
+        if (!this.prisonerService.getJailedPlayers().containsKey(player.getUniqueId())) {
             return;
         }
 
@@ -48,7 +48,7 @@ public class JailController implements Listener {
 
         String command = event.getMessage().split(" ")[0].substring(1);
 
-        if (this.jailService.isAllowedCommand(command)) {
+        if (this.prisonerService.isAllowedCommand(command)) {
             return;
         }
 
@@ -65,7 +65,7 @@ public class JailController implements Listener {
 
         UUID player = teleportEvent.getPlayer().getUniqueId();
 
-        if (!this.jailService.getJailedPlayers().containsKey(player)) {
+        if (!this.prisonerService.getJailedPlayers().containsKey(player)) {
             return;
         }
 

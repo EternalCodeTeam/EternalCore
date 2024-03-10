@@ -22,10 +22,12 @@ import java.time.Duration;
 public class JailCommand {
 
     private final JailService jailService;
+    private final PrisonerService prisonerService;
 
     @Inject
-    JailCommand(JailService jailService) {
+    JailCommand(JailService jailService, PrisonerService prisonerService) {
         this.jailService = jailService;
+        this.prisonerService = prisonerService;
     }
 
     @Execute(name = "setup")
@@ -47,7 +49,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Detain self")
     void executeJailDetainSelf(@Context Player player) {
         // Jail self forever
-        this.jailService.detainPlayer(player,  player, null);
+        this.prisonerService.detainPlayer(player,  player, null);
     }
 
     @Execute(name = "detain")
@@ -55,7 +57,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Detain a player", arguments = "<player>")
     void executeJailDetain(@Context Player player, @Arg Player target) {
         // Jail player forever
-        this.jailService.detainPlayer(target,  player, null);
+        this.prisonerService.detainPlayer(target,  player, null);
     }
 
     @Execute(name = "detain")
@@ -63,7 +65,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Detain a player for some time", arguments = "<player> <time>")
     void executeJailDetainForTime(@Context Player player, @Arg Player target, @Arg Duration duration) {
         // Jail player for a time
-        this.jailService.detainPlayer(target,  player, duration);
+        this.prisonerService.detainPlayer(target,  player, duration);
     }
 
     @Execute(name = "release")
@@ -71,7 +73,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Release self from jail")
     void executeJailReleaseSelf(@Context Player player) {
         // Unjail self
-        this.jailService.releasePlayer(player, player);
+        this.prisonerService.releasePlayer(player, player);
     }
 
     @Execute(name = "release")
@@ -79,7 +81,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Release a player from jail", arguments = "<player>")
     void executeJailRelease(@Context Player player, @Arg Player target) {
         // Unjail player
-        this.jailService.releasePlayer(target, player);
+        this.prisonerService.releasePlayer(target, player);
     }
 
     @Execute(name = "release all", aliases = {"release *"})
@@ -87,7 +89,7 @@ public class JailCommand {
     @DescriptionDocs(description = "Release all players from jail")
     void executeJailReleaseAll(@Context Player player) {
         // Unjail all players
-        this.jailService.releaseAllPlayers(player);
+        this.prisonerService.releaseAllPlayers(player);
     }
 
     @Execute(name = "list")
@@ -95,6 +97,6 @@ public class JailCommand {
     @DescriptionDocs(description = "List all jailed players")
     void executeJailList(@Context Player player) {
         // List all jailed players
-        this.jailService.listJailedPlayers(player);
+        this.prisonerService.listJailedPlayers(player);
     }
 }

@@ -10,20 +10,20 @@ import org.bukkit.entity.Player;
 @Task(period = 20, delay = 5)
 public class JailTask implements Runnable {
 
-    private final JailService jailService;
+    private final PrisonerService prisonerService;
     private final Server server;
     private final NoticeService noticeService;
 
     @Inject
-    public JailTask(JailService jailService, Server server, NoticeService noticeService) {
-        this.jailService = jailService;
+    public JailTask(PrisonerService prisonerService, Server server, NoticeService noticeService) {
+        this.prisonerService = prisonerService;
         this.server = server;
         this.noticeService = noticeService;
     }
 
     @Override
     public void run() {
-        for (Prisoner prisoner : this.jailService.getJailedPlayers().values()) {
+        for (Prisoner prisoner : this.prisonerService.getJailedPlayers().values()) {
 
             Player player = this.server.getPlayer(prisoner.getUuid());
 
@@ -44,7 +44,7 @@ public class JailTask implements Runnable {
                     .player(prisoner.getUuid())
                     .send();
 
-                this.jailService.releasePlayer(player, null);
+                this.prisonerService.releasePlayer(player, null);
             }
         }
     }
