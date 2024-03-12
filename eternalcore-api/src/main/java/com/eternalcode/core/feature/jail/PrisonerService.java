@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public interface PrisonerService {
@@ -16,11 +17,11 @@ public interface PrisonerService {
 
     void releaseAllPlayers(Player player);
 
-    void listJailedPlayers(Player player);
+    Set<JailedPlayer> getJailedPlayers();
 
     boolean isAllowedCommand(String command);
 
     boolean isPlayerJailed(UUID player);
 
-    Map<UUID, Prisoner> getJailedPlayers();
+    Map<UUID, Prisoner> getPrisoners();
 }

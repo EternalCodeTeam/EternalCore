@@ -23,7 +23,7 @@ public class JailTask implements Runnable {
 
     @Override
     public void run() {
-        for (Prisoner prisoner : this.prisonerService.getJailedPlayers().values()) {
+        for (Prisoner prisoner : this.prisonerService.getPrisoners().values()) {
 
             Player player = this.server.getPlayer(prisoner.getUuid());
 

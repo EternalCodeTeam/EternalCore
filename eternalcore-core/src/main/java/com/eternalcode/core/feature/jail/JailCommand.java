@@ -62,7 +62,6 @@ public class JailCommand {
     @Permission("eternalcore.jail.setup")
     @DescriptionDocs(description = "Remove jail spawn area")
     void executeJailRemove(@Context Player player) {
-
         if (!this.jailService.isLocationSet()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailLocationNotSet())
@@ -83,31 +82,78 @@ public class JailCommand {
     @Permission("eternalcore.jail.detain")
     @DescriptionDocs(description = "Detain self")
     void executeJailDetainSelf(@Context Player player) {
-        // Jail self forever
-        this.prisonerService.detainPlayer(player,  player, null);
+        if (!this.jailService.isLocationSet()) {
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailLocationNotSet())
+                .player(player.getUniqueId())
+                .send();
+            return;
+        }
+
+        this.prisonerService.detainPlayer(player, player, null);
     }
 
     @Execute(name = "detain")
     @Permission("eternalcore.jail.detain")
     @DescriptionDocs(description = "Detain a player", arguments = "<player>")
     void executeJailDetain(@Context Player player, @Arg Player target) {
-        // Jail player forever
-        this.prisonerService.detainPlayer(target,  player, null);
+        if (this.isPrisonAvailable(player, target)) {
+            return;
+        }
+
+        boolean isPlayerJailed = this.prisonerService.isPlayerJailed(target.getUniqueId());
+
+        if (isPlayerJailed) {
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailDetainOverride())
+                .placeholder("{PLAYER}", player.getName())
+                .player(player.getUniqueId())
+                .send();
+        }
+
+        this.prisonerService.detainPlayer(target, player, null);
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailDetainPublic())
+            .placeholder("{PLAYER}", player.getName())
+            .all()
+            .send();
+
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailDetainPrivate())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(name = "detain")
     @Permission("eternalcore.jail.detain")
     @DescriptionDocs(description = "Detain a player for some time", arguments = "<player> <time>")
     void executeJailDetainForTime(@Context Player player, @Arg Player target, @Arg Duration duration) {
-        // Jail player for a time
-        this.prisonerService.detainPlayer(target,  player, duration);
+        if (this.isPrisonAvailable(player, target)) {
+            return;
+        }
+
+        this.prisonerService.detainPlayer(target, player, duration);
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailDetainPublic())
+            .placeholder("{PLAYER}", player.getName())
+            .all()
+            .send();
+
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailDetainPrivate())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(name = "release")
     @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release self from jail")
     void executeJailReleaseSelf(@Context Player player) {
-        // Unjail self
+
         this.prisonerService.releasePlayer(player, player);
     }
 
@@ -115,23 +161,95 @@ public class JailCommand {
     @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release a player from jail", arguments = "<player>")
     void executeJailRelease(@Context Player player, @Arg Player target) {
-        // Unjail player
+
+        if (!this.prisonerService.isPlayerJailed(target.getUniqueId())) {
+
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailReleaseNoPlayer())
+                .player(player.getUniqueId())
+                .send();
+            return;
+        }
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailReleaseSender())
+            .placeholder("{PLAYER}", target.getName())
+            .player(player.getUniqueId())
+            .send();
+
         this.prisonerService.releasePlayer(target, player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailReleasePublic())
+            .placeholder("{PLAYER}", target.getName())
+            .all()
+            .send();
     }
 
-    @Execute(name = "release all", aliases = {"release *"})
+    @Execute(name = "release all", aliases = { "release *" })
     @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release all players from jail")
     void executeJailReleaseAll(@Context Player player) {
-        // Unjail all players
+        if (this.prisonerService.getPrisoners().isEmpty()) {
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailReleaseNoPlayers())
+                .player(player.getUniqueId())
+                .send();
+            return;
+        }
+
         this.prisonerService.releaseAllPlayers(player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailReleaseAll())
+            .all()
+            .send();
     }
 
     @Execute(name = "list")
     @Permission("eternalcore.jail.list")
     @DescriptionDocs(description = "List all jailed players")
     void executeJailList(@Context Player player) {
-        // List all jailed players
-        this.prisonerService.listJailedPlayers(player);
+        if (this.prisonerService.getPrisoners().isEmpty()) {
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailListNoPlayers())
+                .player(player.getUniqueId())
+                .send();
+            return;
+        }
+
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailListStart())
+            .player(player.getUniqueId())
+            .send();
+
+        this.prisonerService.getJailedPlayers().forEach(
+            jailedPlayer -> this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailListPlayer())
+                .placeholder("{PLAYER}", jailedPlayer.getPlayerName())
+                .placeholder("{DURATION}", jailedPlayer.getRemainingTime())
+                .placeholder("{DETAINED_BY}", jailedPlayer.getDetainedBy())
+                .player(player.getUniqueId())
+                .send()
+        );
+    }
+
+    private boolean isPrisonAvailable(@Context Player player, @Arg Player target) {
+        if (!this.jailService.isLocationSet()) {
+            this.noticeService.create()
+                .notice(translation -> translation.jailSection().jailLocationNotSet())
+                .player(player.getUniqueId())
+                .send();
+            return true;
+        }
+
+        if (!target.isOnline()) {
+            this.noticeService.create()
+                .notice(translation -> translation.argument().offlinePlayer())
+                .player(player.getUniqueId())
+                .send();
+            return true;
+        }
+        return false;
     }
 }
