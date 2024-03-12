@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.core.feature.jail.event.JailDetainEvent;
-import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -75,21 +74,11 @@ public class JailController implements Listener {
     }
 
     @EventHandler
-    public void onJailRelease(JailReleaseEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-    }
-
-    @EventHandler
     public void onJailDetain(JailDetainEvent event) {
+        Player player = event.getPlayer();
 
-        if (event.getPlayer().hasPermission("eternalcore.jail.bypass")) {
+        if (player.hasPermission("eternalcore.jail.bypass")) {
             event.setCancelled(true);
-        }
-
-        if (event.isCancelled()) {
-            return;
         }
     }
 

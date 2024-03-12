@@ -30,10 +30,8 @@ public interface PrisonerService {
 
     /**
      * Releases all players from jail.
-     *
-     * @param player The player who released the players.
      */
-    void releaseAllPlayers(Player player);
+    void releaseAllPlayers();
 
     /**
      * Returns Set of jailedPlayers, which contains string values of:

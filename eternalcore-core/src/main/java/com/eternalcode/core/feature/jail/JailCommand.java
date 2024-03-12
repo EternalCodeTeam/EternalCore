@@ -223,18 +223,18 @@ public class JailCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.prisonerService.getJailedPlayers().forEach(
-            jailedPlayer -> this.noticeService.create()
+        for (JailedPlayer jailedPlayer : this.prisonerService.getJailedPlayers()) {
+            this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailListPlayer())
                 .placeholder("{PLAYER}", jailedPlayer.getPlayerName())
                 .placeholder("{DURATION}", jailedPlayer.getRemainingTime())
                 .placeholder("{DETAINED_BY}", jailedPlayer.getDetainedBy())
                 .player(player.getUniqueId())
-                .send()
-        );
+                .send();
+        }
     }
 
-    private boolean isPrisonAvailable(@Context Player player, @Arg Player target) {
+    private boolean isPrisonAvailable(Player player, Player target) {
         if (!this.jailService.isLocationSet()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailLocationNotSet())

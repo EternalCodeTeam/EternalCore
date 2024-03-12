@@ -84,7 +84,7 @@ public class PrisonerServiceImpl implements PrisonerService {
     }
 
     @Override
-    public void releaseAllPlayers(Player player) {
+    public void releaseAllPlayers() {
         this.jailedPlayers.forEach((uuid, prisoner) -> {
                 Player jailedPlayer = this.server.getPlayer(uuid);
 
@@ -108,7 +108,6 @@ public class PrisonerServiceImpl implements PrisonerService {
 
     @Override
     public Set<JailedPlayer> getJailedPlayers() {
-
 
         Set<JailedPlayer> jailedPlayersSet = new HashSet<>();
 
@@ -149,6 +148,5 @@ public class PrisonerServiceImpl implements PrisonerService {
             }
         });
     }
-
 
 }
