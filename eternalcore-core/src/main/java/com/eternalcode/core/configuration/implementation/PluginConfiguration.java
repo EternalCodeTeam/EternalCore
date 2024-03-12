@@ -183,6 +183,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Homes {
+        @Description("# Default home name")
+        public String defaultHomeName = "home";
+
         @Description("# Max homes per permission")
         public Map<String, Integer> maxHomes = Map.of(
             "eternalcore.home.default", 1,
