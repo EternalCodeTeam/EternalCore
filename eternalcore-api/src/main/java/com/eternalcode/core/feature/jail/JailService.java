@@ -15,10 +15,21 @@ public interface JailService {
      */
     void setupJailArea(Location jailLocation, Player setter);
 
+    /**
+     * Removes the jail location.
+     *
+     * @param player The player who removes the jail location.
+     */
     void removeJailArea(Player remover);
 
+    /**
+     * Returns true if the jail location is set.
+     */
     boolean isLocationSet();
 
+    /**
+     * Provides the jail location.
+     */
     Location getJailPosition();
 
 }
