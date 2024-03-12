@@ -198,7 +198,7 @@ public class JailCommand {
             return;
         }
 
-        this.prisonerService.releaseAllPlayers(player);
+        this.prisonerService.releaseAllPlayers();
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailReleaseAll())
