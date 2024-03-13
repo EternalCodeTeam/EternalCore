@@ -120,7 +120,6 @@ public class PrisonerServiceImpl implements PrisonerService {
             Player jailedPlayer = this.server.getPlayer(uuid);
 
             if (jailedPlayer != null) {
-
                 jailedPlayersSet.add(new JailedPlayer(
                     jailedPlayer.getName(),
                     DurationUtil.format(prisoner.getReleaseTime()),
