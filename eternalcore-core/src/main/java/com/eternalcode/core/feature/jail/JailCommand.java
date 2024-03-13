@@ -142,7 +142,6 @@ public class JailCommand {
             .all()
             .send();
 
-
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailDetainPrivate())
             .player(player.getUniqueId())
