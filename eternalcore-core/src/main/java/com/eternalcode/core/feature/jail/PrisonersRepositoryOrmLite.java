@@ -103,7 +103,12 @@ class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pr
         }
 
         static PrisonerWrapper from(Prisoner prisoner) {
-            return new PrisonerWrapper(prisoner.getUuid(), prisoner.getDetainedAt(), prisoner.getDuration(), prisoner.getDetainedBy());
+            return new PrisonerWrapper(
+                prisoner.getPlayerUniqueId(),
+                prisoner.getDetainedAt(),
+                prisoner.getDuration(),
+                prisoner.getDetainedBy()
+            );
         }
     }
 }

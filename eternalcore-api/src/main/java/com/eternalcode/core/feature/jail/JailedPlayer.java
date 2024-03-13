@@ -23,5 +23,4 @@ public class JailedPlayer {
     public String getDetainedBy() {
         return this.detainedBy;
     }
-
 }

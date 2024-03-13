@@ -13,14 +13,19 @@ public class Prisoner {
     private final Duration prisonTime;
     private final String lockedUpByName;
 
-    public Prisoner(@NotNull UUID player, @NotNull Instant detainedAt, @NotNull Duration prisonTime, @NotNull String lockedUpBy) {
+    public Prisoner(
+        @NotNull UUID player,
+        @NotNull Instant detainedAt,
+        @NotNull Duration prisonTime,
+        @NotNull String lockedUpBy
+    ) {
         this.player = player;
         this.detainedAt = detainedAt;
         this.prisonTime = prisonTime;
         this.lockedUpByName = lockedUpBy;
     }
     
-    public UUID getUuid() {
+    public UUID getPlayerUniqueId() {
         return this.player;
     }
 
@@ -40,8 +45,8 @@ public class Prisoner {
         return this.detainedAt.plus(this.prisonTime).isBefore(Instant.now());
     }
 
-    public Duration getReleaseTime() {
-        return Duration.between(Instant.now(), this.detainedAt.plus(this.prisonTime));
+    public Instant getReleaseTime() {
+        return Instant.now().plus(this.prisonTime);
     }
 
     public Duration getRemainingTime() {

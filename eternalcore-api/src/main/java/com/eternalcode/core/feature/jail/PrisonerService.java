@@ -14,16 +14,16 @@ public interface PrisonerService {
     /**
      * Detains the player in jail.
      *
-     * @param player The player to detain.
+     * @param player     The player to detain.
      * @param detainedBy The player who detained the player.
-     * @param duration The duration of the detainment.
+     * @param duration   The duration of the detainment.
      */
     void detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration duration);
 
     /**
      * Releases the player from jail.
      *
-     * @param player The player to release.
+     * @param player     The player to release.
      * @param releasedBy The player who released the player.
      */
     void releasePlayer(Player player, @Nullable CommandSender releasedBy);
@@ -34,7 +34,7 @@ public interface PrisonerService {
     void releaseAllPlayers();
 
     /**
-     * Returns Set of jailedPlayers, which contains string values of:
+     * Returns Set of jailedPlayers, which has string values of:
      * Name of player
      * Remaining time in jail
      * Name of player who jailed them
@@ -43,24 +43,30 @@ public interface PrisonerService {
 
     /**
      * Returns true if command is allowed in jail.
-     * ex. /help, /msg
+     * Ex. /help, /msg
+     *
+     * @param command The command to check.
      */
-    boolean isAllowedCommand(String command);
+    boolean isCommandAllowed(String command);
 
     /**
      * Returns true if player is jailed.
+     *
+     * @param player The player to check.
      */
     boolean isPlayerJailed(UUID player);
 
     /**
-     * Returns Map of prisoners, which contains:
-     * UUID of player
+     * Returns Map of prisoners, which has:
+     * A UUID of player
      * Prisoner object
      */
     Map<UUID, Prisoner> getPrisoners();
 
     /**
      * Returns true if player is prisoner.
+     *
+     * @param player The player to check.
      */
-    boolean isPrisoner(UUID player);
+    boolean isNotInPrison(UUID player);
 }

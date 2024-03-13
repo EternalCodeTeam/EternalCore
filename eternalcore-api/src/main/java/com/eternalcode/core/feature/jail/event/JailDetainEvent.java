@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
-    private static final HandlerList JAIL_DETAIN_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
     private final CommandSender detainedBy;
     private final boolean isInJail;
 
@@ -44,10 +44,10 @@ public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return JAIL_DETAIN_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return JAIL_DETAIN_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }

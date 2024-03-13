@@ -9,18 +9,18 @@ import java.util.UUID;
 
 public class JailReleaseEvent extends Event implements Cancellable {
 
-    private static final HandlerList JAIL_RELEASE_HANDLER_LIST = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
     private final boolean isInJail;
-    private final UUID player;
+    private final UUID uuid;
     private boolean isCancelled = false;
 
     public JailReleaseEvent(@NotNull UUID uniqueId) {
-        this.player = uniqueId;
+        this.uuid = uniqueId;
         this.isInJail = false;
     }
 
-    public UUID getPlayer() {
-        return this.player;
+    public UUID getPlayerUniqueId() {
+        return this.uuid;
     }
 
     public boolean isInJail() {
@@ -38,10 +38,10 @@ public class JailReleaseEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return JAIL_RELEASE_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
-        return JAIL_RELEASE_HANDLER_LIST;
+        return HANDLER_LIST;
     }
 }

@@ -25,7 +25,7 @@ public class JailTask implements Runnable {
     public void run() {
         for (Prisoner prisoner : this.prisonerService.getPrisoners().values()) {
 
-            Player player = this.server.getPlayer(prisoner.getUuid());
+            Player player = this.server.getPlayer(prisoner.getPlayerUniqueId());
 
             if (player == null) {
                 continue;
@@ -34,14 +34,13 @@ public class JailTask implements Runnable {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainCountdownActionbar())
                 .placeholder("{TIME}", DurationUtil.format(prisoner.getRemainingTime()))
-                .player(prisoner.getUuid())
+                .player(prisoner.getPlayerUniqueId())
                 .send();
-
 
             if (prisoner.isReleased()) {
                 this.noticeService.create()
                     .notice(translation -> translation.jailSection().jailReleaseActionbar())
-                    .player(prisoner.getUuid())
+                    .player(prisoner.getPlayerUniqueId())
                     .send();
 
                 this.prisonerService.releasePlayer(player, null);

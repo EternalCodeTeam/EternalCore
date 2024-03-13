@@ -4,6 +4,8 @@ import com.eternalcode.core.feature.jail.event.JailDetainEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
+import java.util.Set;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,14 +13,8 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
-import java.util.Set;
-import java.util.UUID;
-
 @Controller
 public class JailController implements Listener {
-
-    private final PrisonerService prisonerService;
-    private final NoticeService noticeService;
 
     private static final Set<TeleportCause> CANCELLED_CAUSES = Set.of(
         TeleportCause.CHORUS_FRUIT,
@@ -26,6 +22,8 @@ public class JailController implements Listener {
         TeleportCause.ENDER_PEARL
     );
 
+    private final PrisonerService prisonerService;
+    private final NoticeService noticeService;
 
     @Inject
     public JailController(PrisonerService prisonerService, NoticeService noticeService) {
@@ -37,7 +35,7 @@ public class JailController implements Listener {
     public void onPlayerPreCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.prisonerService.isPrisoner(player.getUniqueId())) {
+        if (this.prisonerService.isNotInPrison(player.getUniqueId())) {
             return;
         }
 
@@ -47,7 +45,7 @@ public class JailController implements Listener {
 
         String command = event.getMessage().split(" ")[0].substring(1);
 
-        if (this.prisonerService.isAllowedCommand(command)) {
+        if (this.prisonerService.isCommandAllowed(command)) {
             return;
         }
 
@@ -61,10 +59,9 @@ public class JailController implements Listener {
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent teleportEvent) {
-
         UUID uniqueId = teleportEvent.getPlayer().getUniqueId();
 
-        if (!this.prisonerService.isPrisoner(uniqueId)) {
+        if (this.prisonerService.isNotInPrison(uniqueId)) {
             return;
         }
 
@@ -81,6 +78,4 @@ public class JailController implements Listener {
             event.setCancelled(true);
         }
     }
-
-
 }
