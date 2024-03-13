@@ -44,7 +44,7 @@ public class JailCommand {
             .send();
 
         Location location = player.getLocation();
-        this.jailService.setupJailArea(location, player);
+        this.jailService.setupJailArea(location);
     }
 
     @Execute(name = "setup")
@@ -58,7 +58,7 @@ public class JailCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.jailService.setupJailArea(location, player);
+        this.jailService.setupJailArea(location);
     }
 
     @Execute(name = "remove")
