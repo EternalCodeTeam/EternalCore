@@ -3,8 +3,6 @@ package com.eternalcode.core.feature.jail;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-
-
 public interface JailService {
 
     /**
