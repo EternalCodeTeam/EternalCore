@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.jail;
 
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.jail.event.JailDetainEvent;
 import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
 import com.eternalcode.core.feature.spawn.SpawnService;
@@ -27,6 +28,7 @@ public class PrisonerServiceImpl implements PrisonerService {
     private final SpawnService spawnService;
     private final JailService jailService;
     private final JailSettings settings;
+    private final EventCaller eventCaller;
     private final Server server;
 
     private final PrisonersRepository prisonersRepository;
@@ -37,12 +39,14 @@ public class PrisonerServiceImpl implements PrisonerService {
         SpawnService spawnService,
         JailService jailService,
         JailSettings settings,
+        EventCaller eventCaller,
         Server server,
         PrisonersRepository prisonersRepository
     ) {
         this.teleportService = teleportService;
         this.spawnService = spawnService;
         this.jailService = jailService;
+        this.eventCaller = eventCaller;
         this.settings = settings;
         this.server = server;
         this.prisonersRepository = prisonersRepository;
@@ -67,6 +71,7 @@ public class PrisonerServiceImpl implements PrisonerService {
         }
 
         JailDetainEvent jailDetainEvent = new JailDetainEvent(player, detainedBy);
+        this.eventCaller.callEvent(jailDetainEvent);
 
         if (jailDetainEvent.isCancelled()) {
             return;
@@ -83,6 +88,7 @@ public class PrisonerServiceImpl implements PrisonerService {
     @Override
     public void releasePlayer(Player player, @Nullable CommandSender releasedBy) {
         JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(player.getUniqueId());
+        this.eventCaller.callEvent(jailReleaseEvent);
 
         if (jailReleaseEvent.isCancelled()) {
             return;
@@ -99,6 +105,7 @@ public class PrisonerServiceImpl implements PrisonerService {
         this.jailedPlayers.forEach((uuid, prisoner) -> {
                 Player jailedPlayer = this.server.getPlayer(uuid);
                 JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(uuid);
+                this.eventCaller.callEvent(jailReleaseEvent);
 
                 if (jailReleaseEvent.isCancelled()) {
                     return;
