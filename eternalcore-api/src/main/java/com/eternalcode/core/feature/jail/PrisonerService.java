@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.jail;
 
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
