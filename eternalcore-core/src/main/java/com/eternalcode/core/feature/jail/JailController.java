@@ -37,7 +37,7 @@ public class JailController implements Listener {
     public void onPlayerPreCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.prisonerService.getPrisoners().containsKey(player.getUniqueId())) {
+        if (!this.prisonerService.isPrisoner(player.getUniqueId())) {
             return;
         }
 
@@ -62,9 +62,9 @@ public class JailController implements Listener {
     @EventHandler
     public void onTeleport(PlayerTeleportEvent teleportEvent) {
 
-        UUID player = teleportEvent.getPlayer().getUniqueId();
+        UUID uniqueId = teleportEvent.getPlayer().getUniqueId();
 
-        if (!this.prisonerService.getPrisoners().containsKey(player)) {
+        if (!this.prisonerService.isPrisoner(uniqueId)) {
             return;
         }
 

@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Location;
@@ -10,50 +11,32 @@ import org.bukkit.entity.Player;
 @Service
 public class JailServiceImpl implements JailService {
 
-    private final JailLocationRepository jailRepository;
-
-    private Position jailPosition;
+    private final LocationsConfiguration locationsConfiguration;
 
     @Inject
-    public JailServiceImpl(JailLocationRepository jailRepository) {
-        this.jailRepository = jailRepository;
-
-        this.loadFromDatabase();
+    public JailServiceImpl(LocationsConfiguration locationsConfiguration) {
+        this.locationsConfiguration = locationsConfiguration;
     }
 
     @Override
     public Location getJailPosition() {
-        return PositionAdapter.convert(this.jailPosition);
+        return PositionAdapter.convert(this.locationsConfiguration.jail);
     }
 
     @Override
     public void setupJailArea(Location jailLocation, Player setter) {
 
-        Position position = new Position(jailLocation.getX(), jailLocation.getY(), jailLocation.getZ(), jailLocation.getYaw(), jailLocation.getPitch(), setter.getWorld().getName());
-
-        this.jailRepository.setJailLocation(position);
-        this.jailPosition = position;
+        this.locationsConfiguration.jail = new Position(jailLocation.getX(), jailLocation.getY(), jailLocation.getZ(), jailLocation.getYaw(), jailLocation.getPitch(), setter.getWorld().getName());
     }
 
     @Override
     public void removeJailArea(Player remover) {
-        this.jailPosition = null;
-        this.jailRepository.deleteJailLocation();
+        this.locationsConfiguration.jail = null;
     }
 
     @Override
     public boolean isLocationSet() {
-        return this.jailPosition != null;
+        return this.locationsConfiguration.jail != null && !this.locationsConfiguration.jail.isNoneWorld();
     }
 
-    private void loadFromDatabase() {
-        this.jailRepository.getJailLocation().whenComplete((position, throwable) -> {
-            if (throwable != null) {
-                throwable.printStackTrace();
-                return;
-            }
-
-            position.ifPresent(value -> this.jailPosition = value);
-        });
-    }
 }

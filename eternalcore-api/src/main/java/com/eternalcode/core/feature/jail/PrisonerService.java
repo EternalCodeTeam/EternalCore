@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.jail;
 
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
@@ -18,7 +19,7 @@ public interface PrisonerService {
      * @param detainedBy The player who detained the player.
      * @param duration The duration of the detainment.
      */
-    void detainPlayer(Player player, Player detainedBy, @Nullable Duration duration);
+    void detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration duration);
 
     /**
      * Releases the player from jail.
@@ -26,7 +27,7 @@ public interface PrisonerService {
      * @param player The player to release.
      * @param releasedBy The player who released the player.
      */
-    void releasePlayer(Player player, @Nullable Player releasedBy);
+    void releasePlayer(Player player, @Nullable CommandSender releasedBy);
 
     /**
      * Releases all players from jail.
@@ -58,4 +59,9 @@ public interface PrisonerService {
      * Prisoner object
      */
     Map<UUID, Prisoner> getPrisoners();
+
+    /**
+     * Returns true if player is prisoner.
+     */
+    boolean isPrisoner(UUID player);
 }

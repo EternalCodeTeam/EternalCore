@@ -18,7 +18,7 @@ public interface JailService {
     /**
      * Removes the jail location.
      *
-     * @param player The player who removes the jail location.
+     * @param remover The player who removes the jail location.
      */
     void removeJailArea(Player remover);
 

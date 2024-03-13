@@ -14,11 +14,14 @@ import java.util.Map;
 @ConfigurationFile
 public class LocationsConfiguration implements ReloadableConfig {
 
-    @Description("# These are spawn location, for your own safety, please don't touch it.")
+    @Description("# This is spawn location, for your own safety, please don't touch it.")
     public Position spawn = new Position(0, 0, 0, 0.0f, 0.0f, Position.NONE_WORLD);
 
     @Description("# These are warp locations, for your own safety, please don't touch it.")
     public Map<String, Position> warps = new HashMap<>();
+
+    @Description("# This is jail location, for your own safety, please don't touch it.")
+    public Position jail = new Position(0, 0, 0, 0.0f, 0.0f, Position.NONE_WORLD);
 
     @Override
     public Resource resource(File folder) {

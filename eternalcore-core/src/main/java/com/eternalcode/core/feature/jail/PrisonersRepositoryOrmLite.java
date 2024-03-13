@@ -86,12 +86,12 @@ class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pr
         private Duration duration;
 
         @DatabaseField(columnName = "detained_by")
-        private UUID detainedBy;
+        private String detainedBy;
 
         PrisonerWrapper() {
         }
 
-        PrisonerWrapper(UUID uuid, Instant detainedAt, Duration duration, UUID detainedBy) {
+        PrisonerWrapper(UUID uuid, Instant detainedAt, Duration duration, String detainedBy) {
             this.uuid = uuid;
             this.detainedAt = detainedAt;
             this.duration = duration;

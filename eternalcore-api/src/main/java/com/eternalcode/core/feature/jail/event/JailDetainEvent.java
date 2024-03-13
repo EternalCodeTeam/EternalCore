@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.jail.event;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
@@ -9,19 +10,19 @@ import org.jetbrains.annotations.NotNull;
 public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList JAIL_DETAIN_HANDLER_LIST = new HandlerList();
-    private final Player detainedBy;
+    private final CommandSender detainedBy;
     private final boolean isInJail;
 
     private boolean isCancelled;
 
-    public JailDetainEvent(@NotNull Player player, Player detainedBy) {
+    public JailDetainEvent(@NotNull Player player, CommandSender detainedBy) {
         super(player);
         this.detainedBy = detainedBy;
         this.isInJail = true;
         this.isCancelled = false;
     }
 
-    public Player getDetainedBy() {
+    public CommandSender getDetainedBy() {
         return this.detainedBy;
     }
 

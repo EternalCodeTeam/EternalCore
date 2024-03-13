@@ -9,6 +9,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.util.DurationUtil;
 
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
@@ -50,7 +51,12 @@ public class PrisonerServiceImpl implements PrisonerService {
     }
 
     @Override
-    public void detainPlayer(Player player, Player detainedBy, @Nullable Duration time) {
+    public boolean isPrisoner(UUID player) {
+        return this.jailedPlayers.containsKey(player);
+    }
+
+    @Override
+    public void detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration time) {
         if (time == null) {
             time = this.settings.defaultJailDuration();
         }
@@ -61,7 +67,7 @@ public class PrisonerServiceImpl implements PrisonerService {
             return;
         }
 
-        Prisoner prisoner = new Prisoner(player.getUniqueId(), Instant.now(), time, detainedBy.getUniqueId());
+        Prisoner prisoner = new Prisoner(player.getUniqueId(), Instant.now(), time, detainedBy.getName());
 
         this.prisonersRepository.savePrisoner(prisoner);
         this.jailedPlayers.put(player.getUniqueId(), prisoner);
@@ -70,7 +76,7 @@ public class PrisonerServiceImpl implements PrisonerService {
     }
 
     @Override
-    public void releasePlayer(Player player, @Nullable Player releasedBy) {
+    public void releasePlayer(Player player, @Nullable CommandSender releasedBy) {
         JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(player.getUniqueId());
 
         if (jailReleaseEvent.isCancelled()) {
@@ -119,7 +125,7 @@ public class PrisonerServiceImpl implements PrisonerService {
                 jailedPlayersSet.add(new JailedPlayer(
                     jailedPlayer.getName(),
                     DurationUtil.format(prisoner.getReleaseTime()),
-                    this.server.getOfflinePlayer(prisoner.getDetainedBy()).getName()
+                    prisoner.getDetainedBy()
                 ));
             }
         });
