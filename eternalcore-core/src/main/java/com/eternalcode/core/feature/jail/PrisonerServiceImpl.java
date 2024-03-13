@@ -114,7 +114,6 @@ public class PrisonerServiceImpl implements PrisonerService {
 
     @Override
     public Set<JailedPlayer> getJailedPlayers() {
-
         Set<JailedPlayer> jailedPlayersSet = new HashSet<>();
 
         this.jailedPlayers.forEach((uuid, prisoner) -> {
