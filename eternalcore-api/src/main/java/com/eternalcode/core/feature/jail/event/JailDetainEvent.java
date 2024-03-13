@@ -29,7 +29,6 @@ public class JailDetainEvent extends PlayerEvent implements Cancellable {
     /**
      * Checks if the player is in jail.
      */
-
     public boolean isInJail() {
         return this.isInJail;
     }
