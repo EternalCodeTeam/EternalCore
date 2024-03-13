@@ -19,6 +19,7 @@ public class Prisoner {
         this.prisonTime = prisonTime;
         this.lockedUpByName = lockedUpBy;
     }
+    
     public UUID getUuid() {
         return this.player;
     }
