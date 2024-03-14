@@ -11,11 +11,13 @@ import com.eternalcode.core.util.DurationUtil;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.Set;
+import java.util.HashSet;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -156,6 +158,11 @@ public class PrisonerServiceImpl implements PrisonerService {
         return this.settings.allowedCommands().contains(command);
     }
 
+    @Override
+    public Collection<Prisoner> getCollectionPrisoners() {
+        return Collections.unmodifiableCollection(this.jailedPlayers.values());
+    }
+
     private void loadFromDatabase() {
         this.prisonersRepository.getPrisoners().thenAccept(prisoners -> {
             for (Prisoner prisoner : prisoners) {
@@ -163,5 +170,4 @@ public class PrisonerServiceImpl implements PrisonerService {
             }
         });
     }
-
 }

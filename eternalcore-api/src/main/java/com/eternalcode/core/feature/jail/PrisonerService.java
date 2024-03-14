@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.time.Duration;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -69,4 +70,9 @@ public interface PrisonerService {
      * @param player The player to check.
      */
     boolean isNotInPrison(UUID player);
+
+    /**
+     * Returns Collection of all prisoners.
+     */
+    Collection<Prisoner> getCollectionPrisoners();
 }
