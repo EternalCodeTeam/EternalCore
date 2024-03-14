@@ -57,17 +57,12 @@ public class PrisonerServiceImpl implements PrisonerService {
     }
 
     @Override
-    public Map<UUID, Prisoner> getPrisoners() {
-        return this.jailedPlayers;
-    }
-
-    @Override
     public boolean isNotInPrison(UUID player) {
         return !this.jailedPlayers.containsKey(player);
     }
 
     @Override
-    public void detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration time) {
+    public boolean detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration time) {
         if (time == null) {
             time = this.settings.defaultJailDuration();
         }
@@ -76,7 +71,7 @@ public class PrisonerServiceImpl implements PrisonerService {
         this.eventCaller.callEvent(jailDetainEvent);
 
         if (jailDetainEvent.isCancelled()) {
-            return;
+            return false;
         }
 
         Prisoner prisoner = new Prisoner(player.getUniqueId(), Instant.now(), time, detainedBy.getName());
@@ -85,21 +80,24 @@ public class PrisonerServiceImpl implements PrisonerService {
         this.jailedPlayers.put(player.getUniqueId(), prisoner);
 
         this.teleportService.teleport(player, this.jailService.getJailLocation());
+        return true;
     }
 
     @Override
-    public void releasePlayer(Player player, @Nullable CommandSender releasedBy) {
+    public boolean releasePlayer(Player player, @Nullable CommandSender releasedBy) {
         JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(player.getUniqueId());
         this.eventCaller.callEvent(jailReleaseEvent);
 
         if (jailReleaseEvent.isCancelled()) {
-            return;
+            return false;
         }
 
         this.prisonersRepository.deletePrisoner(player.getUniqueId());
         this.jailedPlayers.remove(player.getUniqueId());
 
         this.spawnService.teleportToSpawn(player);
+
+        return true;
     }
 
     @Override
@@ -159,7 +157,7 @@ public class PrisonerServiceImpl implements PrisonerService {
     }
 
     @Override
-    public Collection<Prisoner> getCollectionPrisoners() {
+    public Collection<Prisoner> getPrisoners() {
         return Collections.unmodifiableCollection(this.jailedPlayers.values());
     }
 

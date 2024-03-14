@@ -880,11 +880,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notice jailDetainPrivate = Notice.chat("<green>► <white>Zostałeś uwięziony!");
         public Notice jailDetainNoPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz nie został znaleziony!");
         public Notice jailNoPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podany gracz nie istnieje!");
+        public Notice jailDetainCanceled = Notice.chat("<red>✘ <dark_red>Błąd: <red>Uwięzienie gracza zostało anulowane!");
         public Notice playerCannotUseCommand = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie możesz użyć tej komendy!");
         @Description({" ", "# {PLAYER} - Gracz który został uwięziony"})
         public Notice jailDetainPublic = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony!");
         @Description({" ", "# {PLAYER} - Gracz który został uwięziony"})
         public Notice jailDetainOverride = Notice.chat("<green>► <white>Napisałeś nadaną karę graczowi <green>{PLAYER}<white>!");
+
 
         @Description({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące uwolnienia gracza"})
         public Notice jailRelease = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz nie jest uwięziony!");
@@ -892,6 +894,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice jailReleasePrivate = Notice.chat("<green>► <white>Zostałeś uwolniony!");
         public Notice jailReleaseAll = Notice.chat("<green>► <white>Wszyscy gracze zostali uwolnieni!");
         public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nikt nie jest uwięziony!");
+        public Notice jailReleaseCanceled = Notice.chat("<red>✘ <dark_red>Błąd: <red>Uwolnienie gracza zostało anulowane!");
         public Notice jailReleaseActionbar = Notice.actionbar("<green>► <white>Zostałeś uwolniony!");
         @Description({" ", "# {PLAYER} - Gracz który został uwolniony"})
         public Notice jailReleasePublic = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwolniony!");

@@ -870,7 +870,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice jailDetainOverride = Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER} <white>!");
         @Description({" ", "# {PLAYER} - Player who has been detained"})
         public Notice jailDetainPublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
-
+        public Notice jailDetainCanceled = Notice.chat("<red>✘ <dark_red>Detain has been canceled!");
 
         @Description({" ", "# Section responsible for releasing players from jail"})
         public Notice jailRelease = Notice.chat("<red>✘ <dark_red>You have been released from jail!");
@@ -878,6 +878,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice jailReleasePrivate = Notice.chat("<green>► <white>You have been released from jail!");
         public Notice jailReleaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
         public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
+        public Notice jailReleaseCanceled = Notice.chat("<red>✘ <dark_red>Release from jail has been canceled!");
         @Description({" ", "# {PLAYER} - Player who has been released from jail"})
         public Notice jailReleasePublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been granted freedom!");
         @Description({" ", "# {PLAYER} - Player who has been released from jail"})
@@ -885,6 +886,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice jailReleaseActionbar = Notice.actionbar("<green> You have been released from jail!");
         @Description({" ", "# {TIME} - Time left to release"})
         public Notice jailDetainCountdownActionbar = Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{TIME}!");
+
 
         @Description({" ", "# Section responsible for listing players in jail"})
         public Notice jailListStart = Notice.chat("<green>► <white>Players in jail: ");

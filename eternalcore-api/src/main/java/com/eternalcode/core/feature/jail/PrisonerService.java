@@ -19,7 +19,7 @@ public interface PrisonerService {
      * @param detainedBy The player who detained the player.
      * @param duration   The duration of the detainment.
      */
-    void detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration duration);
+    boolean detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration duration);
 
     /**
      * Releases the player from jail.
@@ -27,7 +27,7 @@ public interface PrisonerService {
      * @param player     The player to release.
      * @param releasedBy The player who released the player.
      */
-    void releasePlayer(Player player, @Nullable CommandSender releasedBy);
+    boolean releasePlayer(Player player, @Nullable CommandSender releasedBy);
 
     /**
      * Releases all players from jail.
@@ -62,7 +62,7 @@ public interface PrisonerService {
      * A UUID of player
      * Prisoner object
      */
-    Map<UUID, Prisoner> getPrisoners();
+    Collection<Prisoner> getPrisoners();
 
     /**
      * Returns true if player is prisoner.
@@ -70,9 +70,4 @@ public interface PrisonerService {
      * @param player The player to check.
      */
     boolean isNotInPrison(UUID player);
-
-    /**
-     * Returns Collection of all prisoners.
-     */
-    Collection<Prisoner> getCollectionPrisoners();
 }

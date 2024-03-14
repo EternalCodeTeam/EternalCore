@@ -422,18 +422,19 @@ public interface Translation {
         Notice jailDetainPrivate();
         Notice jailDetainCountdownActionbar();
         Notice jailDetainOverride();
+        Notice jailDetainCanceled();
+
         Notice jailReleasePublic();
         Notice jailReleaseSender();
         Notice jailReleasePrivate();
         Notice jailReleaseNoPlayer();
         Notice jailReleaseAll();
         Notice jailReleaseNoPlayers();
+        Notice jailReleaseCanceled();
         Notice jailReleaseActionbar();
-
         Notice jailListStart();
         Notice jailListNoPlayers();
         Notice jailListPlayer();
-
         Notice playerCannotUseCommand();
     }
 
