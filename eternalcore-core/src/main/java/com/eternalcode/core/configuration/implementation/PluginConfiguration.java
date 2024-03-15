@@ -309,14 +309,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Afk implements AfkSettings {
-
-        @Description({
-            "# Should a player be marked as AFK automatically?",
-            "# If set to true, the player will be marked as AFK after a certain amount of time of inactivity",
-            "# If set to false, the player will have to use the /afk command to be marked as AFK"
-        })
-        public boolean autoMarkAsAfk = true;
-
         @Description({
             "# Number of interactions a player must make to have AFK status removed",
             "# This is for so that stupid miss-click doesn't disable AFK status"
@@ -325,6 +317,13 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description({ " ", "# Time before using the /afk command again" })
         public Duration afkCommandDelay = Duration.ofSeconds(60);
+
+        @Description({
+            "# Should a player be marked as AFK automatically?",
+            "# If set to true, the player will be marked as AFK after a certain amount of time of inactivity",
+            "# If set to false, the player will have to use the /afk command to be marked as AFK"
+        })
+        public boolean autoMarkAsAfk = true;
 
         @Description({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
         public Duration afkInactivityTime = Duration.ofMinutes(10);
