@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @Controller
 class HomePlaceholderSetup implements Subscriber {
@@ -51,7 +52,11 @@ class HomePlaceholderSetup implements Subscriber {
         int homesLimit = this.homeManager.getHomesLimit(targetPlayer, this.pluginConfiguration.homes);
         int amountOfHomes = this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId());
 
-        if (amountOfHomes >= homesLimit) {
+        return homesLeft(homesLimit, amountOfHomes);
+    }
+
+    private static String homesLeft(int homesLimit, int amountOfHomes) {
+        if (homesLimit == 0) {
             return "0";
         }
 
