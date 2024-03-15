@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
+
     private final CommandSender detainedBy;
 
     private boolean cancelled = false;

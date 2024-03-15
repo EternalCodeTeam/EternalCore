@@ -10,6 +10,7 @@ import java.util.UUID;
 public class JailReleaseEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
+
     private final UUID uuid;
     private boolean cancelled = false;
 
