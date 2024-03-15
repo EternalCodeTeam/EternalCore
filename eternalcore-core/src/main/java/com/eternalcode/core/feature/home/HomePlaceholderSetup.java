@@ -31,7 +31,8 @@ class HomePlaceholderSetup implements Subscriber {
         HomeManager homeManager,
         UserManager userManager,
         TranslationManager translationManager,
-        PluginConfiguration pluginConfiguration) {
+        PluginConfiguration pluginConfiguration
+    ) {
         this.homeManager = homeManager;
         this.userManager = userManager;
         this.translationManager = translationManager;
