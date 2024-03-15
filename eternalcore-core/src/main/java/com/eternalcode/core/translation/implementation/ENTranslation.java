@@ -863,35 +863,30 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({" ", "# Section responsible for detaining players"})
         public Notice jailDetainPrivate = Notice.chat("<green>► <white>You have been jailed!");
-        public Notice jailDetainNoPlayer = Notice.chat("<red>✘ <dark_red>No player found to jail!");
-        public Notice jailNoPlayer = Notice.chat("<red>✘ <dark_red>No player found to jail!");
-        public Notice playerCannotUseCommand = Notice.chat("<red>✘ <dark_red>You can't use this command! You are in jail!");
+        public Notice jailCannotUseCommand = Notice.chat("<red>✘ <dark_red>You can't use this command! You are in jail!");
+        public Notice jailDetainCanceled = Notice.chat("<red>✘ <dark_red>Detain has been canceled!");
         @Description({" ", "# {PLAYER} - Player who has been detained"})
         public Notice jailDetainOverride = Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER} <white>!");
         @Description({" ", "# {PLAYER} - Player who has been detained"})
-        public Notice jailDetainPublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
-        public Notice jailDetainCanceled = Notice.chat("<red>✘ <dark_red>Detain has been canceled!");
+        public Notice jailDetainBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
+        @Description({" ", "# {TIME} - Time left to release"})
+        public Notice jailDetainCountdown = Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{TIME}!");
 
         @Description({" ", "# Section responsible for releasing players from jail"})
-        public Notice jailRelease = Notice.chat("<red>✘ <dark_red>You have been released from jail!");
-        public Notice jailReleaseNoPlayer = Notice.chat("<red>✘ <dark_red>Player is not in jail!");
-        public Notice jailReleasePrivate = Notice.chat("<green>► <white>You have been released from jail!");
+        public Notice jailReleaseOffline = Notice.chat("<red>✘ <dark_red>Player is not in jail!");
         public Notice jailReleaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
         public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
         public Notice jailReleaseCanceled = Notice.chat("<red>✘ <dark_red>Release from jail has been canceled!");
+        public Notice jailRelease = Notice.actionbar("<green> You have been released from jail!");
         @Description({" ", "# {PLAYER} - Player who has been released from jail"})
-        public Notice jailReleasePublic = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been granted freedom!");
+        public Notice jailReleaseBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been granted freedom!");
         @Description({" ", "# {PLAYER} - Player who has been released from jail"})
         public Notice jailReleaseSender = Notice.chat("<green>► <white>You have released <green>{PLAYER} <white>from jail!");
-        public Notice jailReleaseActionbar = Notice.actionbar("<green> You have been released from jail!");
-        @Description({" ", "# {TIME} - Time left to release"})
-        public Notice jailDetainCountdownActionbar = Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{TIME}!");
-
 
         @Description({" ", "# Section responsible for listing players in jail"})
-        public Notice jailListStart = Notice.chat("<green>► <white>Players in jail: ");
-        public Notice jailListNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
+        public Notice jailListHeader = Notice.chat("<green>► <white>Players in jail: ");
+        public Notice jailListEmpty = Notice.chat("<red>✘ <dark_red>No players found in jail!");
         @Description({" ", "# {PLAYER} - Player who has been detained", "# {DURATION} - Time of detention", "# {DETAINED_BY} - Player who detained the player"})
-        public Notice jailListPlayer = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{DURATION}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
+        public Notice jailListPlayerEntry = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{DURATION}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
     }
 }

@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.jail;
 
 import org.bukkit.Location;
 
+import java.util.Optional;
+
 public interface JailService {
 
     /**
@@ -24,6 +26,6 @@ public interface JailService {
     /**
      * Provides the jail location.
      */
-    Location getJailLocation();
+    Optional<Location> getJailLocation();
 
 }

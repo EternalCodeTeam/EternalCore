@@ -31,14 +31,14 @@ public class JailTask implements Runnable {
             }
 
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailDetainCountdownActionbar())
+                .notice(translation -> translation.jailSection().jailDetainCountdown())
                 .placeholder("{TIME}", DurationUtil.format(prisoner.getRemainingTime()))
                 .player(prisoner.getPlayerUniqueId())
                 .send();
 
             if (prisoner.isReleased()) {
                 this.noticeService.create()
-                    .notice(translation -> translation.jailSection().jailReleaseActionbar())
+                    .notice(translation -> translation.jailSection().jailRelease())
                     .player(prisoner.getPlayerUniqueId())
                     .send();
 

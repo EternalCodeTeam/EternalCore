@@ -418,24 +418,24 @@ public interface Translation {
         Notice jailLocationNotSet();
         Notice jailLocationOverride();
 
-        Notice jailDetainPublic();
+        Notice jailDetainBroadcast();
         Notice jailDetainPrivate();
-        Notice jailDetainCountdownActionbar();
+        Notice jailDetainCountdown();
         Notice jailDetainOverride();
         Notice jailDetainCanceled();
 
-        Notice jailReleasePublic();
+        Notice jailReleaseBroadcast();
         Notice jailReleaseSender();
-        Notice jailReleasePrivate();
-        Notice jailReleaseNoPlayer();
+        Notice jailReleaseOffline();
         Notice jailReleaseAll();
         Notice jailReleaseNoPlayers();
         Notice jailReleaseCanceled();
-        Notice jailReleaseActionbar();
-        Notice jailListStart();
-        Notice jailListNoPlayers();
-        Notice jailListPlayer();
-        Notice playerCannotUseCommand();
+        Notice jailRelease();
+
+        Notice jailListHeader();
+        Notice jailListEmpty();
+        Notice jailListPlayerEntry();
+        Notice jailCannotUseCommand();
     }
 
 }

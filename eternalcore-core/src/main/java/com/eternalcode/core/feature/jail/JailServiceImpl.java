@@ -8,6 +8,8 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Location;
 
+import java.util.Optional;
+
 @Service
 public class JailServiceImpl implements JailService {
 
@@ -21,8 +23,8 @@ public class JailServiceImpl implements JailService {
     }
 
     @Override
-    public Location getJailLocation() {
-        return PositionAdapter.convert(this.locationsConfiguration.jail);
+    public Optional<Location> getJailLocation() {
+        return Optional.of(PositionAdapter.convert(this.locationsConfiguration.jail));
     }
 
     @Override

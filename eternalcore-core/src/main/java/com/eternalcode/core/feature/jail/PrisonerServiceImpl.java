@@ -60,6 +60,10 @@ public class PrisonerServiceImpl implements PrisonerService {
             time = this.settings.defaultJailDuration();
         }
 
+        if (this.jailService.getJailLocation().isPresent()) {
+            return false;
+        }
+
         JailDetainEvent jailDetainEvent = new JailDetainEvent(player, detainedBy);
         this.eventCaller.callEvent(jailDetainEvent);
 
@@ -72,7 +76,7 @@ public class PrisonerServiceImpl implements PrisonerService {
         this.prisonersRepository.savePrisoner(prisoner);
         this.jailedPlayers.put(player.getUniqueId(), prisoner);
 
-        this.teleportService.teleport(player, this.jailService.getJailLocation());
+        this.teleportService.teleport(player, this.jailService.getJailLocation().get());
         return true;
     }
 
