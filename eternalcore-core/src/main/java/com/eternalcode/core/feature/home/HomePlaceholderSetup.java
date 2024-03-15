@@ -49,7 +49,13 @@ class HomePlaceholderSetup implements Subscriber {
 
     private String homesLeft(Player targetPlayer) {
         int homesLimit = this.homeManager.getHomesLimit(targetPlayer, this.pluginConfiguration.homes);
-        return String.valueOf(homesLimit - this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId()));
+        int amountOfHomes = this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId());
+
+        if (amountOfHomes >= homesLimit) {
+            return "0";
+        }
+
+        return String.valueOf(homesLimit - amountOfHomes);
     }
 
     private String ownedHomes(Player targetPlayer) {
