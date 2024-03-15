@@ -11,35 +11,25 @@ public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
     private final CommandSender detainedBy;
-    private final boolean isInJail;
 
-    private boolean isCancelled;
+    private boolean cancelled = false;
 
     public JailDetainEvent(@NotNull Player player, CommandSender detainedBy) {
         super(player);
         this.detainedBy = detainedBy;
-        this.isInJail = true;
-        this.isCancelled = false;
     }
 
     public CommandSender getDetainedBy() {
         return this.detainedBy;
     }
 
-    /**
-     * Checks if the player is in jail.
-     */
-    public boolean isInJail() {
-        return this.isInJail;
-    }
-
     public boolean isCancelled() {
-        return this.isCancelled;
+        return this.cancelled;
     }
 
     @Override
-    public void setCancelled(boolean b) {
-        this.isCancelled = b;
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
     }
 
     @Override

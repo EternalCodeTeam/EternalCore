@@ -6,8 +6,6 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public interface PrisonerService {
@@ -35,14 +33,6 @@ public interface PrisonerService {
     void releaseAllPlayers();
 
     /**
-     * Returns Set of jailedPlayers, which has string values of:
-     * Name of player
-     * Remaining time in jail
-     * Name of player who jailed them
-     */
-    Set<JailedPlayer> getJailedPlayers();
-
-    /**
      * Returns true if command is allowed in jail.
      * Ex. /help, /msg
      *
@@ -63,11 +53,4 @@ public interface PrisonerService {
      * Prisoner object
      */
     Collection<Prisoner> getPrisoners();
-
-    /**
-     * Returns true if player is prisoner.
-     *
-     * @param player The player to check.
-     */
-    boolean isNotInPrison(UUID player);
 }

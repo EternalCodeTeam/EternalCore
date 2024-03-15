@@ -1,12 +1,12 @@
 package com.eternalcode.core.feature.jail;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 @Service
 public class JailServiceImpl implements JailService {
@@ -33,7 +33,7 @@ public class JailServiceImpl implements JailService {
 
     @Override
     public void removeJailArea() {
-        this.locationsConfiguration.jail = null;
+        this.locationsConfiguration.jail = new Position(0, 0, 0, 0.0f, 0.0f, Position.NONE_WORLD);
     }
 
     @Override

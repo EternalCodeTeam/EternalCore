@@ -10,30 +10,24 @@ import java.util.UUID;
 public class JailReleaseEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
-    private final boolean isInJail;
     private final UUID uuid;
-    private boolean isCancelled = false;
+    private boolean cancelled = false;
 
     public JailReleaseEvent(@NotNull UUID uniqueId) {
         this.uuid = uniqueId;
-        this.isInJail = false;
     }
 
     public UUID getPlayerUniqueId() {
         return this.uuid;
     }
 
-    public boolean isInJail() {
-        return this.isInJail;
-    }
-
     public boolean isCancelled() {
-        return this.isCancelled;
+        return this.cancelled;
     }
 
     @Override
-    public void setCancelled(boolean b) {
-        this.isCancelled = b;
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
     }
 
     @Override

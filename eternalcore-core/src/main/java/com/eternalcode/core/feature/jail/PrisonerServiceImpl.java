@@ -7,7 +7,6 @@ import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.util.DurationUtil;
 import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
@@ -16,8 +15,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.Set;
-import java.util.HashSet;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,6 +23,7 @@ import org.bukkit.entity.Player;
 public class PrisonerServiceImpl implements PrisonerService {
 
     private final Map<UUID, Prisoner> jailedPlayers = new HashMap<>();
+
     private final TeleportService teleportService;
     private final SpawnService spawnService;
     private final JailService jailService;
@@ -54,11 +52,6 @@ public class PrisonerServiceImpl implements PrisonerService {
         this.prisonersRepository = prisonersRepository;
 
         this.loadFromDatabase();
-    }
-
-    @Override
-    public boolean isNotInPrison(UUID player) {
-        return !this.jailedPlayers.containsKey(player);
     }
 
     @Override
@@ -121,25 +114,6 @@ public class PrisonerServiceImpl implements PrisonerService {
 
         this.jailedPlayers.clear();
         this.prisonersRepository.deleteAllPrisoners();
-    }
-
-    @Override
-    public Set<JailedPlayer> getJailedPlayers() {
-        Set<JailedPlayer> jailedPlayersSet = new HashSet<>();
-
-        this.jailedPlayers.forEach((uuid, prisoner) -> {
-            Player jailedPlayer = this.server.getPlayer(uuid);
-
-            if (jailedPlayer != null) {
-                jailedPlayersSet.add(new JailedPlayer(
-                    jailedPlayer.getName(),
-                    DurationUtil.format(prisoner.getRemainingTime()),
-                    prisoner.getDetainedBy()
-                ));
-            }
-        });
-
-        return jailedPlayersSet;
     }
 
     @Override
