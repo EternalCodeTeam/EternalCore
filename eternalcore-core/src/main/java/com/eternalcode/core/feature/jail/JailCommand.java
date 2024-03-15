@@ -180,7 +180,7 @@ public class JailCommand {
             return;
         }
 
-        prisonerService.releasePlayer(target, player);
+        this.prisonerService.releasePlayer(target, player);
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailReleaseSender())
