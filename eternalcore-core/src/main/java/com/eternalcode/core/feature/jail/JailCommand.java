@@ -119,16 +119,7 @@ public class JailCommand {
                 .send();
         }
 
-        boolean detainResult = this.prisonerService.detainPlayer(target, player, null);
-
-        if (!detainResult) {
-            this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailDetainCanceled())
-                .player(player.getUniqueId())
-                .send();
-
-            return;
-        }
+        this.prisonerService.detainPlayer(target, player, null);
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailDetainBroadcast())
@@ -150,16 +141,7 @@ public class JailCommand {
             return;
         }
 
-        boolean detainResult = this.prisonerService.detainPlayer(target, player, duration);
-
-        if (!detainResult) {
-            this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailDetainCanceled())
-                .player(player.getUniqueId())
-                .send();
-
-            return;
-        }
+        this.prisonerService.detainPlayer(target, player, duration);
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailDetainBroadcast())
@@ -177,14 +159,13 @@ public class JailCommand {
     @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release self from jail")
     void executeJailReleaseSelf(@Context Player player) {
-        boolean releaseResult = this.prisonerService.releasePlayer(player, player);
+        this.prisonerService.releasePlayer(player, player);
 
-        if (!releaseResult) {
-            this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailReleaseCanceled())
-                .player(player.getUniqueId())
-                .send();
-        }
+        this.noticeService.create()
+            .notice(translation -> translation.jailSection().jailReleaseSender())
+            .placeholder("{PLAYER}", player.getName())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(name = "release")
@@ -199,16 +180,7 @@ public class JailCommand {
             return;
         }
 
-        boolean releaseResult = this.prisonerService.releasePlayer(target, player);
-
-        if (!releaseResult) {
-            this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailReleaseCanceled())
-                .player(player.getUniqueId())
-                .send();
-
-            return;
-        }
+        prisonerService.releasePlayer(target, player);
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailReleaseSender())
