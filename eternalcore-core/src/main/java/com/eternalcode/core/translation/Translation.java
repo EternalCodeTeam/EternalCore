@@ -422,14 +422,12 @@ public interface Translation {
         Notice jailDetainPrivate();
         Notice jailDetainCountdown();
         Notice jailDetainOverride();
-        Notice jailDetainCanceled();
 
         Notice jailReleaseBroadcast();
         Notice jailReleaseSender();
         Notice jailReleaseOffline();
         Notice jailReleaseAll();
         Notice jailReleaseNoPlayers();
-        Notice jailReleaseCanceled();
         Notice jailRelease();
 
         Notice jailListHeader();
