@@ -13,6 +13,8 @@ import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleport.request.TeleportRequestSettings;
+import java.util.HashSet;
+import java.util.Set;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -415,7 +417,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration defaultJailDuration = Duration.ofMinutes(30);
 
         @Description("# Allowed commands in jail")
-        public List<String> allowedCommands = List.of("help", "msg", "r", "tell", "me", "helpop");
+        public Set<String> allowedCommands = Set.of("help", "msg", "r", "tell", "me", "helpop");
 
         @Override
         public Duration defaultJailDuration() {
@@ -423,7 +425,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
 
         @Override
-        public List<String> allowedCommands() {
+        public Set<String> allowedCommands() {
             return this.allowedCommands;
         }
     }

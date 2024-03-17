@@ -25,7 +25,13 @@ public class JailServiceImpl implements JailService {
 
     @Override
     public Optional<Location> getJailLocation() {
-        return Optional.of(PositionAdapter.convert(this.locationsConfiguration.jail));
+        Position position = this.locationsConfiguration.jail;
+
+        if (position.isNoneWorld()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(PositionAdapter.convert(position));
     }
 
     @Override
@@ -36,7 +42,9 @@ public class JailServiceImpl implements JailService {
     }
 
     @Override
+    @Blocking
     public void removeJailArea() {
         this.locationsConfiguration.jail = LocationsConfiguration.EMPTY_POSITION;
+        this.configurationManager.save(this.locationsConfiguration);
     }
 }

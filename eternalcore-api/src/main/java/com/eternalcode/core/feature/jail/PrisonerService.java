@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface PrisonerService {
 
     /**
-     * Detains the player in jail. If the duration is null, the default duration is used.
+     * Detains the player in jail. If the duration is null, the default duration from plugin configuration is used.
      * If the player is already jailed, the duration is updated. Detained player is teleported to jail.
      * Returns true if player has been detained.
      *
@@ -31,29 +31,13 @@ public interface PrisonerService {
     boolean releasePlayer(Player player);
 
     /**
-     * Releases all players from jail.
+     * Releases all players from jail and teleports them to spawn.
+     * If some players are offline and there are still jailed, they will not be teleported to spawn.
      */
     void releaseAllPlayers();
 
-    /**
-     * Returns true if command is allowed in jail.
-     * Ex. /help, /msg
-     *
-     * @param command The command to check.
-     */
-    boolean isCommandAllowed(String command);
-
-    /**
-     * Returns true if player is jailed.
-     *
-     * @param player The player to check.
-     */
     boolean isPlayerJailed(UUID player);
 
-    /**
-     * Returns Map of prisoners, which has:
-     * A UUID of player
-     * Prisoner object
-     */
     Collection<Prisoner> getPrisoners();
+
 }

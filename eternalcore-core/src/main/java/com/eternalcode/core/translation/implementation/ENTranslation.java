@@ -870,16 +870,17 @@ public class ENTranslation extends AbstractTranslation {
         public Notice jailDetainBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
         @Description({" ", "# {TIME} - Time left to release"})
         public Notice jailDetainCountdown = Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{TIME}!");
+        @Description({" ", "# {PLAYER} - Admin who you can't detain"})
+        public Notice jailDetainAdmin = Notice.chat("<red>✘ <dark_red>You can't jail <red>{PLAYER} <dark_red>because he is an admin!");
 
         @Description({" ", "# Section responsible for releasing players from jail"})
-        public Notice jailReleaseOffline = Notice.chat("<red>✘ <dark_red>Player is not in jail!");
-        public Notice jailReleaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
-        public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
-        public Notice jailRelease = Notice.actionbar("<green> You have been released from jail!");
         @Description({" ", "# {PLAYER} - Player who has been released from jail"})
         public Notice jailReleaseBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been granted freedom!");
-        @Description({" ", "# {PLAYER} - Player who has been released from jail"})
-        public Notice jailReleaseSender = Notice.chat("<green>► <white>You have released <green>{PLAYER} <white>from jail!");
+        public Notice jailReleasePrivate = Notice.actionbar("<green> You have been released from jail!");
+        public Notice jailReleaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
+        public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
+        @Description({" ", "# {PLAYER} - Player nickname"})
+        public Notice jailIsNotPrisoner = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not a prisoner!");
 
         @Description({" ", "# Section responsible for listing players in jail"})
         public Notice jailListHeader = Notice.chat("<green>► <white>Players in jail: ");

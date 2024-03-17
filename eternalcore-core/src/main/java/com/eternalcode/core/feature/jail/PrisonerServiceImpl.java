@@ -100,21 +100,20 @@ public class PrisonerServiceImpl implements PrisonerService {
     @Override
     public void releaseAllPlayers() {
         this.jailedPlayers.forEach((uuid, prisoner) -> {
-                Player jailedPlayer = this.server.getPlayer(uuid);
-                JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(uuid);
-                this.eventCaller.callEvent(jailReleaseEvent);
+            Player jailedPlayer = this.server.getPlayer(uuid);
+            JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(uuid);
+            this.eventCaller.callEvent(jailReleaseEvent);
 
-                if (jailReleaseEvent.isCancelled()) {
-                    return;
-                }
-
-                this.jailedPlayers.remove(uuid);
-
-                if (jailedPlayer != null) {
-                    this.teleportService.teleport(jailedPlayer, this.spawnService.getSpawnLocation());
-                }
+            if (jailReleaseEvent.isCancelled()) {
+                return;
             }
-        );
+
+            this.jailedPlayers.remove(uuid);
+
+            if (jailedPlayer != null) {
+                this.teleportService.teleport(jailedPlayer, this.spawnService.getSpawnLocation());
+            }
+        });
 
         this.jailedPlayers.clear();
         this.prisonersRepository.deleteAllPrisoners();
@@ -122,16 +121,13 @@ public class PrisonerServiceImpl implements PrisonerService {
 
     @Override
     public boolean isPlayerJailed(UUID player) {
-        if (!this.jailedPlayers.containsKey(player)) {
+        Prisoner prisoner = this.jailedPlayers.get(player);
+
+        if (prisoner == null || prisoner.isPrisonExpired()) {
             return false;
         }
 
-        return !this.jailedPlayers.get(player).isPrisonExpired();
-    }
-
-    @Override
-    public boolean isCommandAllowed(String command) {
-        return this.settings.allowedCommands().contains(command);
+        return true;
     }
 
     @Override

@@ -24,11 +24,13 @@ public class JailController implements Listener {
 
     private final PrisonerService prisonerService;
     private final NoticeService noticeService;
+    private final JailSettings jailSettings;
 
     @Inject
-    public JailController(PrisonerService prisonerService, NoticeService noticeService) {
+    public JailController(PrisonerService prisonerService, NoticeService noticeService, JailSettings jailSettings) {
         this.prisonerService = prisonerService;
         this.noticeService = noticeService;
+        this.jailSettings = jailSettings;
     }
 
     @EventHandler
@@ -45,7 +47,7 @@ public class JailController implements Listener {
 
         String command = event.getMessage().split(" ")[0].substring(1);
 
-        if (this.prisonerService.isCommandAllowed(command)) {
+        if (this.jailSettings.allowedCommands().contains(command)) {
             return;
         }
 

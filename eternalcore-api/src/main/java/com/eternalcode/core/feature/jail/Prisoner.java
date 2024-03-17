@@ -33,12 +33,12 @@ public class Prisoner {
         return this.detainedAt;
     }
 
-    public Duration getPrisonTime() {
-        return this.prisonTime;
-    }
-
     public String getDetainedBy() {
         return this.detainedBy;
+    }
+
+    public Duration getPrisonTime() {
+        return this.prisonTime;
     }
 
     public boolean isPrisonExpired() {
