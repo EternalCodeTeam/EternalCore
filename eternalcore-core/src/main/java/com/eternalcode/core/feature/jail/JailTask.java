@@ -9,23 +9,23 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 @Task(period = 1, delay = 1, unit = TimeUnit.SECONDS)
-public class JailTask implements Runnable {
+class JailTask implements Runnable {
 
-    private final PrisonerService prisonerService;
+    private final JailService jailService;
     private final Server server;
     private final NoticeService noticeService;
 
     @Inject
-    public JailTask(PrisonerService prisonerService, Server server, NoticeService noticeService) {
-        this.prisonerService = prisonerService;
+    JailTask(JailService jailService, Server server, NoticeService noticeService) {
+        this.jailService = jailService;
         this.server = server;
         this.noticeService = noticeService;
     }
 
     @Override
     public void run() {
-        for (Prisoner prisoner : this.prisonerService.getPrisoners()) {
-            Player player = this.server.getPlayer(prisoner.getPlayerUniqueId());
+        for (JailedPlayer jailedPlayer : this.jailService.getJailedPlayers()) {
+            Player player = this.server.getPlayer(jailedPlayer.getPlayerUniqueId());
 
             if (player == null) {
                 continue;
@@ -33,17 +33,17 @@ public class JailTask implements Runnable {
 
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainCountdown())
-                .placeholder("{TIME}", DurationUtil.format(prisoner.getRemainingTime()))
-                .player(prisoner.getPlayerUniqueId())
+                .placeholder("{TIME}", DurationUtil.format(jailedPlayer.getRemainingTime()))
+                .player(jailedPlayer.getPlayerUniqueId())
                 .send();
 
-            if (prisoner.isPrisonExpired()) {
+            if (jailedPlayer.isPrisonExpired()) {
                 this.noticeService.create()
                     .notice(translation -> translation.jailSection().jailReleasePrivate())
-                    .player(prisoner.getPlayerUniqueId())
+                    .player(jailedPlayer.getPlayerUniqueId())
                     .send();
 
-                this.prisonerService.releasePlayer(player);
+                this.jailService.releasePlayer(player);
             }
         }
     }

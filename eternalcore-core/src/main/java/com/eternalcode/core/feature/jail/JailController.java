@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 @Controller
-public class JailController implements Listener {
+class JailController implements Listener {
 
     private static final Set<TeleportCause> CANCELLED_CAUSES = Set.of(
         TeleportCause.CHORUS_FRUIT,
@@ -22,13 +22,13 @@ public class JailController implements Listener {
         TeleportCause.ENDER_PEARL
     );
 
-    private final PrisonerService prisonerService;
-    private final NoticeService noticeService;
+    private final JailService jailService;
     private final JailSettings jailSettings;
+    private final NoticeService noticeService;
 
     @Inject
-    public JailController(PrisonerService prisonerService, NoticeService noticeService, JailSettings jailSettings) {
-        this.prisonerService = prisonerService;
+    public JailController(JailService jailService, JailSettings jailSettings, NoticeService noticeService) {
+        this.jailService = jailService;
         this.noticeService = noticeService;
         this.jailSettings = jailSettings;
     }
@@ -37,7 +37,7 @@ public class JailController implements Listener {
     public void onPlayerPreCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.prisonerService.isPlayerJailed(player.getUniqueId())) {
+        if (!this.jailService.isPlayerJailed(player.getUniqueId())) {
             return;
         }
 
@@ -63,7 +63,7 @@ public class JailController implements Listener {
     public void onTeleport(PlayerTeleportEvent teleportEvent) {
         UUID uniqueId = teleportEvent.getPlayer().getUniqueId();
 
-        if (!this.prisonerService.isPlayerJailed(uniqueId)) {
+        if (!this.jailService.isPlayerJailed(uniqueId)) {
             return;
         }
 

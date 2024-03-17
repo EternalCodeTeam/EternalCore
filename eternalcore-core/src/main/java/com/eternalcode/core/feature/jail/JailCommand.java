@@ -22,19 +22,17 @@ import org.bukkit.entity.Player;
     permission = { "eternalcore.jail.bypass" },
     description = "Permission allows to bypass jail punishment"
 )
-public class JailCommand {
+class JailCommand {
 
     private final JailService jailService;
     private final NoticeService noticeService;
-    private final PrisonerService prisonerService;
     private final JailSettings jailSettings;
     private final Server server;
 
     @Inject
-    JailCommand(JailService jailService, NoticeService noticeService, PrisonerService prisonerService, JailSettings jailSettings, Server server) {
+    JailCommand(JailService jailService, NoticeService noticeService, JailSettings jailSettings, Server server) {
         this.jailService = jailService;
         this.noticeService = noticeService;
-        this.prisonerService = prisonerService;
         this.jailSettings = jailSettings;
         this.server = server;
     }
@@ -46,7 +44,7 @@ public class JailCommand {
     void executeJailSetup(@Context Player player) {
         Location location = player.getLocation();
 
-        boolean isLastJailSet = this.jailService.getJailLocation().isPresent();
+        boolean isLastJailSet = this.jailService.getJailAreaLocation().isPresent();
         this.jailService.setupJailArea(location);
 
         this.noticeService.create()
@@ -62,7 +60,7 @@ public class JailCommand {
     @Permission("eternalcore.jail.setup")
     @DescriptionDocs(description = "Define jail spawn area", arguments = "<location>")
     void executeJailSetup(@Context Player player, @Arg Location location) {
-        boolean isLastJailSet = this.jailService.getJailLocation().isPresent();
+        boolean isLastJailSet = this.jailService.getJailAreaLocation().isPresent();
 
         location.setWorld(player.getWorld());
         this.jailService.setupJailArea(location);
@@ -122,7 +120,7 @@ public class JailCommand {
             return;
         }
 
-        boolean isPlayerJailed = this.prisonerService.isPlayerJailed(target.getUniqueId());
+        boolean isPlayerJailed = this.jailService.isPlayerJailed(target.getUniqueId());
 
         if (isPlayerJailed) {
             this.noticeService.create()
@@ -132,7 +130,7 @@ public class JailCommand {
                 .send();
         }
 
-        this.prisonerService.detainPlayer(target, player, duration);
+        this.jailService.detainPlayer(target, player, duration);
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailDetainBroadcast())
@@ -157,7 +155,7 @@ public class JailCommand {
     @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release a player from jail", arguments = "<player>")
     void executeJailRelease(@Context Player player, @Arg Player target) {
-        if (!this.prisonerService.isPlayerJailed(target.getUniqueId())) {
+        if (!this.jailService.isPlayerJailed(target.getUniqueId())) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailIsNotPrisoner())
                 .player(player.getUniqueId())
@@ -165,7 +163,7 @@ public class JailCommand {
             return;
         }
 
-        this.prisonerService.releasePlayer(target);
+        this.jailService.releasePlayer(target);
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailReleasePrivate())
@@ -183,7 +181,7 @@ public class JailCommand {
     @Permission("eternalcore.jail.release")
     @DescriptionDocs(description = "Release all players from jail")
     void executeJailReleaseAll(@Context Player player) {
-        if (this.prisonerService.getPrisoners().isEmpty()) {
+        if (this.jailService.getJailedPlayers().isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailReleaseNoPlayers())
                 .player(player.getUniqueId())
@@ -191,7 +189,7 @@ public class JailCommand {
             return;
         }
 
-        this.prisonerService.releaseAllPlayers();
+        this.jailService.releaseAllPlayers();
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailReleaseAll())
@@ -203,7 +201,7 @@ public class JailCommand {
     @Permission("eternalcore.jail.list")
     @DescriptionDocs(description = "List all jailed players")
     void executeJailList(@Context Player player) {
-        if (this.prisonerService.getPrisoners().isEmpty()) {
+        if (this.jailService.getJailedPlayers().isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailListEmpty())
                 .player(player.getUniqueId())
@@ -216,19 +214,19 @@ public class JailCommand {
             .player(player.getUniqueId())
             .send();
 
-        for (Prisoner prisoner : this.prisonerService.getPrisoners()) {
+        for (JailedPlayer jailedPlayer : this.jailService.getJailedPlayers()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailListPlayerEntry())
-                .placeholder("{PLAYER}", this.server.getOfflinePlayer(prisoner.getPlayerUniqueId()).getName())
-                .placeholder("{DURATION}", DurationParser.TIME_UNITS.format(prisoner.getRemainingTime()))
-                .placeholder("{DETAINED_BY}", prisoner.getDetainedBy())
+                .placeholder("{PLAYER}", this.server.getOfflinePlayer(jailedPlayer.getPlayerUniqueId()).getName())
+                .placeholder("{DURATION}", DurationParser.TIME_UNITS.format(jailedPlayer.getRemainingTime()))
+                .placeholder("{DETAINED_BY}", jailedPlayer.getDetainedBy())
                 .player(player.getUniqueId())
                 .send();
         }
     }
 
     private boolean isPrisonAvailable(Player player) {
-        if (this.jailService.getJailLocation().isEmpty()) {
+        if (this.jailService.getJailAreaLocation().isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailLocationNotSet())
                 .player(player.getUniqueId())

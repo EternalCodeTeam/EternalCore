@@ -6,14 +6,14 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
-public class Prisoner {
+public class JailedPlayer {
 
     private final UUID player;
     private final Instant detainedAt;
     private final Duration prisonTime;
     private final String detainedBy;
 
-    public Prisoner(
+    public JailedPlayer(
         @NotNull UUID player,
         @NotNull Instant detainedAt,
         @NotNull Duration prisonTime,

@@ -34,16 +34,16 @@ class PrisonerWrapper {
         this.detainedBy = detainedBy;
     }
 
-    Prisoner toPrisoner() {
-        return new Prisoner(this.uuid, this.detainedAt, this.duration, this.detainedBy);
+    JailedPlayer toPrisoner() {
+        return new JailedPlayer(this.uuid, this.detainedAt, this.duration, this.detainedBy);
     }
 
-    static PrisonerWrapper from(Prisoner prisoner) {
+    static PrisonerWrapper from(JailedPlayer jailedPlayer) {
         return new PrisonerWrapper(
-            prisoner.getPlayerUniqueId(),
-            prisoner.getDetainedAt(),
-            prisoner.getPrisonTime(),
-            prisoner.getDetainedBy()
+            jailedPlayer.getPlayerUniqueId(),
+            jailedPlayer.getDetainedAt(),
+            jailedPlayer.getPrisonTime(),
+            jailedPlayer.getDetainedBy()
         );
     }
 }

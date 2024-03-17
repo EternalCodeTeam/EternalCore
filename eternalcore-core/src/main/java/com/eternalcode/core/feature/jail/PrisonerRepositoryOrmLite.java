@@ -17,22 +17,22 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Repository
-class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements PrisonersRepository {
+class PrisonerRepositoryOrmLite extends AbstractRepositoryOrmLite implements PrisonerRepository {
 
     @Inject
-    private PrisonersRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
+    private PrisonerRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
         TableUtils.createTableIfNotExists(databaseManager.connectionSource(), PrisonerWrapper.class);
     }
 
     @Override
-    public CompletableFuture<Optional<Prisoner>> getPrisoner(UUID uuid) {
+    public CompletableFuture<Optional<JailedPlayer>> getPrisoner(UUID uuid) {
         return this.selectSafe(PrisonerWrapper.class, uuid)
             .thenApply(optional -> optional.map(prisonerWrapper -> prisonerWrapper.toPrisoner()));
     }
 
     @Override
-    public CompletableFuture<Set<Prisoner>> getPrisoners() {
+    public CompletableFuture<Set<JailedPlayer>> getPrisoners() {
         return this.selectAll(PrisonerWrapper.class)
             .thenApply(prisonerWrappers -> prisonerWrappers.stream()
                 .map(PrisonerWrapper::toPrisoner)
@@ -45,8 +45,8 @@ class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pr
     }
 
     @Override
-    public void editPrisoner(Prisoner prisoner) {
-        this.save(PrisonerWrapper.class, PrisonerWrapper.from(prisoner));
+    public void editPrisoner(JailedPlayer jailedPlayer) {
+        this.save(PrisonerWrapper.class, PrisonerWrapper.from(jailedPlayer));
     }
 
     @Override
@@ -55,7 +55,7 @@ class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pr
     }
 
     @Override
-    public CompletableFuture<List<Prisoner>> getAllPrisoners() {
+    public CompletableFuture<List<JailedPlayer>> getAllPrisoners() {
         return this.selectAll(PrisonerWrapper.class)
             .thenApply(prisonerWrappers -> prisonerWrappers.stream()
                 .map(PrisonerWrapper::toPrisoner)
@@ -63,8 +63,8 @@ class PrisonersRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pr
     }
 
     @Override
-    public void savePrisoner(Prisoner prisoner) {
-        this.save(PrisonerWrapper.class, PrisonerWrapper.from(prisoner));
+    public void savePrisoner(JailedPlayer jailedPlayer) {
+        this.save(PrisonerWrapper.class, PrisonerWrapper.from(jailedPlayer));
     }
 
 }
