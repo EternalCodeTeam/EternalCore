@@ -34,7 +34,6 @@ class JailServiceImpl implements JailService {
 
     private final TeleportService teleportService;
     private final SpawnService spawnService;
-    private final JailService jailService;
     private final JailSettings settings;
     private final EventCaller eventCaller;
     private final Server server;
@@ -44,10 +43,9 @@ class JailServiceImpl implements JailService {
     private final ConfigurationManager configurationManager;
 
     @Inject
-    JailServiceImpl(TeleportService teleportService, SpawnService spawnService, JailService jailService, JailSettings settings, EventCaller eventCaller, Server server, PrisonerRepository prisonerRepository, LocationsConfiguration locationsConfiguration, ConfigurationManager configurationManager) {
+    JailServiceImpl(TeleportService teleportService, SpawnService spawnService, JailSettings settings, EventCaller eventCaller, Server server, PrisonerRepository prisonerRepository, LocationsConfiguration locationsConfiguration, ConfigurationManager configurationManager) {
         this.teleportService = teleportService;
         this.spawnService = spawnService;
-        this.jailService = jailService;
         this.settings = settings;
         this.eventCaller = eventCaller;
         this.server = server;
@@ -64,7 +62,9 @@ class JailServiceImpl implements JailService {
             time = this.settings.defaultJailDuration();
         }
 
-        if (this.jailService.getJailAreaLocation().isEmpty()) {
+        Optional<Location> jailAreaLocation = this.getJailAreaLocation();
+
+        if (jailAreaLocation.isEmpty()) {
             return false;
         }
 
@@ -80,7 +80,7 @@ class JailServiceImpl implements JailService {
         this.prisonerRepository.savePrisoner(jailedPlayer);
         this.jailedPlayers.put(player.getUniqueId(), jailedPlayer);
 
-        this.teleportService.teleport(player, this.jailService.getJailAreaLocation().get());
+        this.teleportService.teleport(player, jailAreaLocation.get());
         return true;
     }
 
