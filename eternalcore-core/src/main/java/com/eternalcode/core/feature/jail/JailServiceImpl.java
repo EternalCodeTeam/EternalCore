@@ -7,6 +7,7 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Location;
+import org.jetbrains.annotations.Blocking;
 
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ public class JailServiceImpl implements JailService {
     }
 
     @Override
+    @Blocking
     public void setupJailArea(Location jailLocation) {
         this.locationsConfiguration.jail = PositionAdapter.convert(jailLocation);
         this.configurationManager.save(this.locationsConfiguration);
@@ -35,11 +37,6 @@ public class JailServiceImpl implements JailService {
 
     @Override
     public void removeJailArea() {
-        this.locationsConfiguration.jail = new Position(0, 0, 0, 0.0f, 0.0f, Position.NONE_WORLD);
-    }
-
-    @Override
-    public boolean isJailLocationSet() {
-        return !this.locationsConfiguration.jail.isNoneWorld();
+        this.locationsConfiguration.jail = LocationsConfiguration.EMPTY_POSITION;
     }
 }

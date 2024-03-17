@@ -19,11 +19,6 @@ public interface JailService {
     void removeJailArea();
 
     /**
-     * Returns true if the jail location is set.
-     */
-    boolean isJailLocationSet();
-
-    /**
      * Provides the jail location.
      */
     Optional<Location> getJailLocation();

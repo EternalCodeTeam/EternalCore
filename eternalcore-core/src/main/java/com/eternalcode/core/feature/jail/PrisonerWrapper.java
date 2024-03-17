@@ -42,7 +42,7 @@ class PrisonerWrapper {
         return new PrisonerWrapper(
             prisoner.getPlayerUniqueId(),
             prisoner.getDetainedAt(),
-            prisoner.getDuration(),
+            prisoner.getPrisonTime(),
             prisoner.getDetainedBy()
         );
     }

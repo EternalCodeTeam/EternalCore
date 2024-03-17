@@ -11,7 +11,9 @@ import java.util.UUID;
 public interface PrisonerService {
 
     /**
-     * Detains the player in jail.
+     * Detains the player in jail. If the duration is null, the default duration is used.
+     * If the player is already jailed, the duration is updated. Detained player is teleported to jail.
+     * Returns true if player has been detained.
      *
      * @param player     The player to detain.
      * @param detainedBy The player who detained the player.
@@ -20,12 +22,13 @@ public interface PrisonerService {
     boolean detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration duration);
 
     /**
-     * Releases the player from jail.
+     * Releases the player from jail. If the player is not jailed, nothing happens.
+     * Released player is teleported to spawn.
+     * Returns true if player has been released.
      *
      * @param player     The player to release.
-     * @param releasedBy The player who released the player.
      */
-    boolean releasePlayer(Player player, @Nullable CommandSender releasedBy);
+    boolean releasePlayer(Player player);
 
     /**
      * Releases all players from jail.

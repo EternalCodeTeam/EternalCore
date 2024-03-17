@@ -60,7 +60,7 @@ public class PrisonerServiceImpl implements PrisonerService {
             time = this.settings.defaultJailDuration();
         }
 
-        if (this.jailService.getJailLocation().isPresent()) {
+        if (this.jailService.getJailLocation().isEmpty()) {
             return false;
         }
 
@@ -81,7 +81,7 @@ public class PrisonerServiceImpl implements PrisonerService {
     }
 
     @Override
-    public boolean releasePlayer(Player player, @Nullable CommandSender releasedBy) {
+    public boolean releasePlayer(Player player) {
         JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(player.getUniqueId());
         this.eventCaller.callEvent(jailReleaseEvent);
 
@@ -126,7 +126,7 @@ public class PrisonerServiceImpl implements PrisonerService {
             return false;
         }
 
-        return !this.jailedPlayers.get(player).isReleased();
+        return !this.jailedPlayers.get(player).isPrisonExpired();
     }
 
     @Override

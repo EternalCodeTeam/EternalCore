@@ -11,7 +11,7 @@ public class Prisoner {
     private final UUID player;
     private final Instant detainedAt;
     private final Duration prisonTime;
-    private final String lockedUpByName;
+    private final String detainedBy;
 
     public Prisoner(
         @NotNull UUID player,
@@ -22,7 +22,7 @@ public class Prisoner {
         this.player = player;
         this.detainedAt = detainedAt;
         this.prisonTime = prisonTime;
-        this.lockedUpByName = lockedUpBy;
+        this.detainedBy = lockedUpBy;
     }
     
     public UUID getPlayerUniqueId() {
@@ -33,15 +33,15 @@ public class Prisoner {
         return this.detainedAt;
     }
 
-    public Duration getDuration() {
+    public Duration getPrisonTime() {
         return this.prisonTime;
     }
 
     public String getDetainedBy() {
-        return this.lockedUpByName;
+        return this.detainedBy;
     }
 
-    public boolean isReleased() {
+    public boolean isPrisonExpired() {
         return this.detainedAt.plus(this.prisonTime).isBefore(Instant.now());
     }
 

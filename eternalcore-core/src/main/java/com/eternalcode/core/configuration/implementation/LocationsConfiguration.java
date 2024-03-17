@@ -16,7 +16,7 @@ import java.util.Map;
 public class LocationsConfiguration implements ReloadableConfig {
 
     @Exclude
-    private static final Position EMPTY_POSITION = new Position(0, 80, 0, 0.0f, 0.0f, Position.NONE_WORLD);
+    public static final Position EMPTY_POSITION = new Position(0, 0, 0, 0.0f, 0.0f, Position.NONE_WORLD);
 
     @Description("# This is spawn location, for your own safety, please don't touch it.")
     public Position spawn = EMPTY_POSITION;
