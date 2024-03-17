@@ -1,7 +1,5 @@
 package com.eternalcode.core.feature.jail;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
@@ -13,12 +11,7 @@ public class JailedPlayer {
     private final Duration prisonTime;
     private final String detainedBy;
 
-    public JailedPlayer(
-        @NotNull UUID player,
-        @NotNull Instant detainedAt,
-        @NotNull Duration prisonTime,
-        @NotNull String lockedUpBy
-    ) {
+    public JailedPlayer(UUID player, Instant detainedAt, Duration prisonTime, String lockedUpBy) {
         this.player = player;
         this.detainedAt = detainedAt;
         this.prisonTime = prisonTime;

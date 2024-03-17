@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.jail.event;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -14,7 +13,7 @@ public class JailReleaseEvent extends Event implements Cancellable {
     private final UUID uuid;
     private boolean cancelled = false;
 
-    public JailReleaseEvent(@NotNull UUID uniqueId) {
+    public JailReleaseEvent(UUID uniqueId) {
         this.uuid = uniqueId;
     }
 
@@ -22,6 +21,7 @@ public class JailReleaseEvent extends Event implements Cancellable {
         return this.uuid;
     }
 
+    @Override
     public boolean isCancelled() {
         return this.cancelled;
     }

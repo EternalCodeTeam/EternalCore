@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
-import org.jetbrains.annotations.NotNull;
 
 public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
@@ -15,7 +14,7 @@ public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
     private boolean cancelled = false;
 
-    public JailDetainEvent(@NotNull Player player, CommandSender detainedBy) {
+    public JailDetainEvent(Player player, CommandSender detainedBy) {
         super(player);
         this.detainedBy = detainedBy;
     }
@@ -24,6 +23,7 @@ public class JailDetainEvent extends PlayerEvent implements Cancellable {
         return this.detainedBy;
     }
 
+    @Override
     public boolean isCancelled() {
         return this.cancelled;
     }
