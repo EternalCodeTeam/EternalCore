@@ -112,8 +112,6 @@ class JailServiceImpl implements JailService {
                 return;
             }
 
-            this.jailedPlayers.remove(uuid);
-
             if (jailedPlayer != null) {
                 this.teleportService.teleport(jailedPlayer, this.spawnService.getSpawnLocation());
             }

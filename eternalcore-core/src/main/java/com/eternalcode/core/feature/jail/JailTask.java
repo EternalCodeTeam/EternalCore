@@ -33,7 +33,7 @@ class JailTask implements Runnable {
 
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainCountdown())
-                .placeholder("{TIME}", DurationUtil.format(jailedPlayer.getRemainingTime()))
+                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.getRemainingTime()))
                 .player(jailedPlayer.getPlayerUniqueId())
                 .send();
 

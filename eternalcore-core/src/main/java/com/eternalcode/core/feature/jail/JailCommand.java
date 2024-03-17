@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.multification.time.DurationParser;
+import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -115,6 +115,7 @@ class JailCommand {
         if (target.hasPermission("eternalcore.jail.bypass")) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainAdmin())
+                .placeholder("{PLAYER}", target.getName())
                 .player(player.getUniqueId())
                 .send();
             return;
@@ -125,7 +126,7 @@ class JailCommand {
         if (isPlayerJailed) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainOverride())
-                .placeholder("{PLAYER}", player.getName())
+                .placeholder("{PLAYER}", target.getName())
                 .player(player.getUniqueId())
                 .send();
         }
@@ -134,13 +135,13 @@ class JailCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailDetainBroadcast())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER}", target.getName())
             .all()
             .send();
 
         this.noticeService.create()
             .notice(translation -> translation.jailSection().jailDetainPrivate())
-            .player(player.getUniqueId())
+            .player(target.getUniqueId())
             .send();
     }
 
@@ -158,6 +159,7 @@ class JailCommand {
         if (!this.jailService.isPlayerJailed(target.getUniqueId())) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailIsNotPrisoner())
+                .placeholder("{PLAYER}", target.getName())
                 .player(player.getUniqueId())
                 .send();
             return;
@@ -218,7 +220,7 @@ class JailCommand {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailListPlayerEntry())
                 .placeholder("{PLAYER}", this.server.getOfflinePlayer(jailedPlayer.getPlayerUniqueId()).getName())
-                .placeholder("{DURATION}", DurationParser.TIME_UNITS.format(jailedPlayer.getRemainingTime()))
+                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.getRemainingTime()))
                 .placeholder("{DETAINED_BY}", jailedPlayer.getDetainedBy())
                 .player(player.getUniqueId())
                 .send();

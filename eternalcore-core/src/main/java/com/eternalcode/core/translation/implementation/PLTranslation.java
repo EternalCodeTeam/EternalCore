@@ -883,8 +883,8 @@ public class PLTranslation extends AbstractTranslation {
         public Notice jailDetainBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony!");
         @Description({" ", "# {PLAYER} - Gracz który został uwięziony"})
         public Notice jailDetainOverride = Notice.chat("<green>► <white>Napisałeś nadaną karę graczowi <green>{PLAYER}<white>!");
-        @Description({" ", "# {TIME} - Pozostały czas do uwolnienia"})
-        public Notice jailDetainCountdown = Notice.actionbar("<red>Pozostało <green>{TIME} <red>do uwolnienia!");
+        @Description({" ", "# {REMAINING_TIME} - Pozostały czas do uwolnienia"})
+        public Notice jailDetainCountdown = Notice.actionbar("<red>Pozostało <green>{REMAINING_TIME} <red>do uwolnienia!");
         @Description({" ", "# {PLAYER} - Administrator którego nie możesz uwięzić"})
         public Notice jailDetainAdmin = Notice.chat("<red>✘ <dark_red>Nie możesz uwięzić administratora <red>{PLAYER}!");
 
@@ -900,7 +900,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące listy graczy w jail'u"})
         public Notice jailListHeader = Notice.chat("<green>► <white>Lista graczy w jail'u:");
         public Notice jailListEmpty = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nikt nie jest uwięziony!");
-        @Description({" ", "# {PLAYER} - Gracz który jest uwięziony, {DETAINED_BY} - Gracz który uwięził gracza, {DURATION} - Czas pozostały do uwolnienia"})
-        public Notice jailListPlayerEntry = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{DURATION} <white>!");
+        @Description({" ", "# {PLAYER} - Gracz który jest uwięziony, {DETAINED_BY} - Gracz który uwięził gracza, {REMAINING_TIME} - Czas pozostały do uwolnienia"})
+        public Notice jailListPlayerEntry = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{REMAINING_TIME} <white>!");
     }
 }

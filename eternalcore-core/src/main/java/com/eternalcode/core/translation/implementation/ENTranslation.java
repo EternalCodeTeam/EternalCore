@@ -868,8 +868,8 @@ public class ENTranslation extends AbstractTranslation {
         public Notice jailDetainOverride = Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER} <white>!");
         @Description({" ", "# {PLAYER} - Player who has been detained"})
         public Notice jailDetainBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
-        @Description({" ", "# {TIME} - Time left to release"})
-        public Notice jailDetainCountdown = Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{TIME}!");
+        @Description({" ", "# {REMAINING_TIME} - Time left to release"})
+        public Notice jailDetainCountdown = Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{REMAINING_TIME}!");
         @Description({" ", "# {PLAYER} - Admin who you can't detain"})
         public Notice jailDetainAdmin = Notice.chat("<red>✘ <dark_red>You can't jail <red>{PLAYER} <dark_red>because he is an admin!");
 
@@ -885,7 +885,7 @@ public class ENTranslation extends AbstractTranslation {
         @Description({" ", "# Section responsible for listing players in jail"})
         public Notice jailListHeader = Notice.chat("<green>► <white>Players in jail: ");
         public Notice jailListEmpty = Notice.chat("<red>✘ <dark_red>No players found in jail!");
-        @Description({" ", "# {PLAYER} - Player who has been detained", "# {DURATION} - Time of detention", "# {DETAINED_BY} - Player who detained the player"})
-        public Notice jailListPlayerEntry = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{DURATION}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
+        @Description({" ", "# {PLAYER} - Player who has been detained", "# {REMAINING_TIME} - Time of detention", "# {DETAINED_BY} - Player who detained the player"})
+        public Notice jailListPlayerEntry = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{REMAINING_TIME}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
     }
 }
