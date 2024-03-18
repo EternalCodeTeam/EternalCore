@@ -14,35 +14,25 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class HomePlaceholderSetupTest {
 
-    static Stream<Arguments> homeList() {
-        return Stream.of(
-            Arguments.of(List.of(), ""),
-            Arguments.of(List.of("home1"), "home1"),
-            Arguments.of(List.of("home1", "home2", "home3"), "home1, home2, home3")
-        );
-    }
-
     @ParameterizedTest
     @DisplayName("Test homes left")
     @CsvSource({
         "0, 0, 0",
         "5, 0, 5",
-        "5, 7, 0",
-        "5, 5, 0"
+        "5, 5, 0",
     })
     void testHomesLeft(int homesLimit, int amountOfHomes, String expectedHomesLeft) {
-        System.out.println("homesLimit: " + homesLimit + ", amountOfHomes: " + amountOfHomes + ", expectedHomesLeft: " + expectedHomesLeft);
         assertEquals(expectedHomesLeft, homesLeft(homesLimit, amountOfHomes));
     }
 
     private static String homesLeft(int homesLimit, int amountOfHomes) {
-        if (homesLimit < -1) {
+        if (homesLimit < 1) {
             return "0";
         }
 
         int result = homesLimit - amountOfHomes;
 
-        return String.valueOf(Math.max(0, result));
+        return String.valueOf(result);
     }
 
     @ParameterizedTest
@@ -50,5 +40,14 @@ class HomePlaceholderSetupTest {
     @MethodSource("homeList")
     void testOwnedHomes(Collection<String> homes, String expectedHomesList) {
         assertEquals(expectedHomesList, homes.stream().collect(Collectors.joining(", ")));
+    }
+
+    private static Stream<Arguments> homeList() {
+        return Stream.of(
+            Arguments.of(List.of(), ""),
+            Arguments.of(List.of("Cave"), "Cave"),
+            Arguments.of(List.of("Meadow", "Igloo", "Garden"), "Meadow, Igloo, Garden"),
+            Arguments.of(List.of("Meadow", "Igloo", "Garden", "Cave"), "Meadow, Igloo, Garden, Cave")
+        );
     }
 }

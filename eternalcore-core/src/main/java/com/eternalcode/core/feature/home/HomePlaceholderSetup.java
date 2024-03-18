@@ -63,7 +63,7 @@ class HomePlaceholderSetup implements Subscriber {
 
         int result = homesLimit - amountOfHomes;
 
-        return String.valueOf(Math.max(0, result));
+        return String.valueOf(result);
     }
 
     private String ownedHomes(Player targetPlayer) {
