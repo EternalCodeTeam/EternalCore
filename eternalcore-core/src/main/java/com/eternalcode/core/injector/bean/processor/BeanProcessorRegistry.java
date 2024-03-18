@@ -10,11 +10,11 @@ class BeanProcessorRegistry {
 
     private final Map<Class<?>, Set<Processor<?, ?>>> registry = new HashMap<>();
 
-    public <BEAN, A extends Annotation> void register(Class<BEAN> bean, Processor<BEAN, A> processor) {
+    <BEAN, A extends Annotation> void register(Class<BEAN> bean, Processor<BEAN, A> processor) {
         this.registry.computeIfAbsent(bean, c -> new HashSet<>()).add(processor);
     }
 
-    public Set<Processor<?, ?>> getProcessors(Class<?> bean) {
+    Set<Processor<?, ?>> getProcessors(Class<?> bean) {
         return this.registry.get(bean);
     }
 }
