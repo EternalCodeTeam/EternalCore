@@ -323,7 +323,7 @@ public class PluginConfiguration implements ReloadableConfig {
             "# If set to true, the player will be marked as AFK after a certain amount of time of inactivity",
             "# If set to false, the player will have to use the /afk command to be marked as AFK"
         })
-        public boolean autoMarkAsAfk = true;
+        public boolean autoAfk = true;
 
         @Description({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
         public Duration afkInactivityTime = Duration.ofMinutes(10);
@@ -332,8 +332,8 @@ public class PluginConfiguration implements ReloadableConfig {
         public boolean kickOnAfk = false;
 
         @Override
-        public boolean autoMarkAskAfk() {
-            return this.autoMarkAsAfk;
+        public boolean autoAfk() {
+            return this.autoAfk;
         }
 
         @Override

@@ -39,7 +39,7 @@ class AfkTask implements Runnable {
     }
 
     void markAllInactivePlayers() {
-        if (!this.afkSettings.autoMarkAskAfk()) {
+        if (!this.afkSettings.autoAfk()) {
             return;
         }
 
