@@ -11,7 +11,7 @@ public class JailReleaseEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final UUID uuid;
-    private boolean cancelled = false;
+    private boolean cancelled;
 
     public JailReleaseEvent(UUID uniqueId) {
         this.uuid = uniqueId;

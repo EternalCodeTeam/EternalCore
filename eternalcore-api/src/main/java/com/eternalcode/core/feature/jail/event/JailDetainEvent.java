@@ -12,7 +12,7 @@ public class JailDetainEvent extends PlayerEvent implements Cancellable {
 
     private final CommandSender detainedBy;
 
-    private boolean cancelled = false;
+    private boolean cancelled;
 
     public JailDetainEvent(Player player, CommandSender detainedBy) {
         super(player);

@@ -3,19 +3,25 @@ package com.eternalcode.core.configuration.composer;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
 import net.dzikoysk.cdn.CdnSettings;
 import net.dzikoysk.cdn.CdnUtils;
 import net.dzikoysk.cdn.model.Element;
 import net.dzikoysk.cdn.model.Entry;
 import net.dzikoysk.cdn.model.NamedElement;
 import net.dzikoysk.cdn.model.Section;
+
 import static net.dzikoysk.cdn.module.standard.StandardOperators.ARRAY_SEPARATOR;
+
 import net.dzikoysk.cdn.reflect.TargetType;
 import net.dzikoysk.cdn.serdes.Composer;
 import panda.std.Result;
+
 import static panda.std.Result.error;
 import static panda.std.Result.ok;
+
 import panda.std.stream.PandaStream;
+
 import static panda.utilities.StringUtils.EMPTY;
 
 public final class SetComposer implements Composer<Set<Object>> {
