@@ -410,4 +410,31 @@ public interface Translation {
         Notice disabled();
     }
 
+    JailSection jailSection();
+
+    interface JailSection {
+        Notice jailLocationSet();
+        Notice jailLocationRemove();
+        Notice jailLocationNotSet();
+        Notice jailLocationOverride();
+
+        Notice jailDetainBroadcast();
+        Notice jailDetainPrivate();
+        Notice jailDetainCountdown();
+        Notice jailDetainOverride();
+        Notice jailDetainAdmin();
+
+        Notice jailReleaseBroadcast();
+        Notice jailReleasePrivate();
+        Notice jailReleaseAll();
+        Notice jailReleaseNoPlayers();
+        Notice jailIsNotPrisoner();
+
+        Notice jailListHeader();
+        Notice jailListEmpty();
+        Notice jailListPlayerEntry();
+
+        Notice jailCannotUseCommand();
+    }
+
 }
