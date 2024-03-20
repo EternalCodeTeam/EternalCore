@@ -42,9 +42,8 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
                 new ApiSpawnCommand(provide.getSpawnService()),
                 new ApiAfkCommand(provide.getAfkService()),
                 new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
-                new ApiJailCommand(provide.getJailService())
+                new ApiJailCommand(provide.getJailService()),
                 new ApiRandomTeleportCommand(provide.getRandomTeleportService())
-
             )
 
             .build();
