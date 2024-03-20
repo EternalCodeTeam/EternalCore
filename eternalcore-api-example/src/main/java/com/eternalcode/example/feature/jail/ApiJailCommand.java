@@ -18,7 +18,6 @@ public class ApiJailCommand {
     /**
      * This method allows jailed player to buy freedom for 1 exp.
      */
-
     @Execute(name = "buy freedom")
     void executeBuyFreedom(@Context Player player) {
         if (!this.jailService.isPlayerJailed(player.getUniqueId())) {
