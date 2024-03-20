@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class SudoCommand {
     @Execute(name = "-console")
     @Permission("eternalcore.sudo.console")
     @DescriptionDocs(description = "Execute command as console", arguments = "<command>")
-    void console(@Context Viewer viewer, @Arg String command) {
+    void console(@Context Viewer viewer, @Join String command) {
         this.server.dispatchCommand(this.server.getConsoleSender(), command);
         this.sendSudoSpy(viewer, command);
     }
@@ -37,7 +38,7 @@ public class SudoCommand {
     @Execute
     @Permission("eternalcore.sudo.player")
     @DescriptionDocs(description = "Execute command as player", arguments = "<player> <command>")
-    void player(@Context Viewer viewer, @Arg Player target, @Arg String command) {
+    void player(@Context Viewer viewer, @Arg Player target, @Join String command) {
         this.server.dispatchCommand(target, command);
         this.sendSudoSpy(viewer, command);
     }
