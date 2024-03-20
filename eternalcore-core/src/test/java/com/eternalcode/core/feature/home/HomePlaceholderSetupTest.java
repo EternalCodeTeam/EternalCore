@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home;
 
+import static com.eternalcode.core.feature.home.HomePlaceholderSetup.homesLeft;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Collection;
@@ -25,15 +26,6 @@ class HomePlaceholderSetupTest {
         assertEquals(expectedHomesLeft, homesLeft(homesLimit, amountOfHomes));
     }
 
-    private static String homesLeft(int homesLimit, int amountOfHomes) {
-        if (homesLimit < 1) {
-            return "0";
-        }
-
-        int result = homesLimit - amountOfHomes;
-
-        return String.valueOf(result);
-    }
 
     @ParameterizedTest
     @DisplayName("Test owned homes formatting")
