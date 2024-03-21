@@ -26,5 +26,6 @@ public interface HomeRepository {
     CompletableFuture<Set<Home>> getHomes();
 
     CompletableFuture<Set<Home>> getHomes(User user);
+
     CompletableFuture<Set<Home>> getHomes(UUID playerUniqueId);
 }
