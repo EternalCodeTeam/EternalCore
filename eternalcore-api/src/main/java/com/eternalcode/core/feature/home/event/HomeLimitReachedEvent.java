@@ -5,6 +5,9 @@ import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
+/**
+ * Event called when a player tries to create a home but has reached the limit.
+ */
 public class HomeLimitReachedEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -26,11 +29,11 @@ public class HomeLimitReachedEvent extends Event {
     }
 
     public int getMaxLimit() {
-        return maxLimit;
+        return this.maxLimit;
     }
 
     public int getLimitAmount() {
-        return limitAmount;
+        return this.limitAmount;
     }
 
     @Override

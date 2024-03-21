@@ -7,6 +7,9 @@ import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
+/**
+ * Event called when a home is overridden with new location.
+ */
 public class HomeOverrideEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

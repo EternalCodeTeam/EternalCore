@@ -10,6 +10,7 @@ import com.eternalcode.core.feature.home.event.HomeOverrideEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserManager;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,11 +32,13 @@ public class HomeManager implements HomeService {
 
     private final Map<UUID, Map<String, Home>> userHomes = new HashMap<>();
     private final HomeRepository repository;
+    private final UserManager userManager;
     private final EventCaller eventCaller;
 
     @Inject
-    private HomeManager(HomeRepository repository, EventCaller eventCaller) {
+    private HomeManager(HomeRepository repository, UserManager userManager, EventCaller eventCaller) {
         this.repository = repository;
+        this.userManager = userManager;
         this.eventCaller = eventCaller;
 
         repository.getHomes().thenAccept(set -> {
@@ -168,8 +171,10 @@ public class HomeManager implements HomeService {
 
     @Override
     public CompletableFuture<Boolean> hasHomeWithSpecificName(Player player, String homeName) {
-        // TODO: use HomeManager#hasHomeWithSpecificName maybe??? ಠ_ಠ
-        return this.repository.getHome(player.getUniqueId(), homeName).thenApply(Optional::isPresent);
+        User user = this.userManager.getOrCreate(player.getUniqueId(), player.getName());
+
+        boolean hasHome = this.hasHomeWithSpecificName(user, homeName);
+        return CompletableFuture.completedFuture(hasHome);
     }
 
     @Override
