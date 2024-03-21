@@ -64,7 +64,13 @@ public class NoticeService extends Multification<Viewer, Translation> {
 
     @Override
     public @NotNull AudienceConverter<Viewer> audienceConverter() {
-        return viewer -> this.audienceProvider.player(viewer.getUniqueId());
+        return viewer -> {
+            if (viewer.isConsole()) {
+                return this.audienceProvider.console();
+            }
+
+            return this.audienceProvider.player(viewer.getUniqueId());
+        };
     }
 
     @Override
