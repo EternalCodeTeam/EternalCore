@@ -4,7 +4,6 @@ import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.ignore.event.IgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.IgnoreEvent;
-import com.eternalcode.core.feature.ignore.event.PurgeEvent;
 import com.eternalcode.core.feature.ignore.event.UnIgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.UnIgnoreEvent;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -71,18 +70,5 @@ public class ApiIgnoreCommand {
         }
         this.ignoreService.unIgnoreAll(player.getUniqueId());
         player.sendMessage("You have unignored all players via eternalcore api bridge!");
-    }
-
-    @Execute(name = "purge")
-    void executePurge(@Context Player player) {
-        PurgeEvent event = this.caller.callEvent(new PurgeEvent(player));
-
-        if (event.isCancelled()) {
-            return;
-        }
-        this.ignoreService.purgeAll();
-
-
-        player.sendMessage("You have purged all ignored players via eternalcore api bridge!");
     }
 }

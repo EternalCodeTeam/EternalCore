@@ -26,20 +26,11 @@ public class IgnoreAllEvent extends Event implements Cancellable {
         return by;
     }
 
-
-    /**
-     * @return Whether the event is cancelled
-     */
-
     @Override
     public boolean isCancelled() {
         return this.cancelled;
     }
 
-
-    /**
-     * @param cancel Whether to cancel the event
-     */
     @Override
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;

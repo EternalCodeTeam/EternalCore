@@ -2,6 +2,7 @@ package com.eternalcode.example;
 
 import com.eternalcode.core.EternalCoreApi;
 import com.eternalcode.core.EternalCoreApiProvider;
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.example.feature.afk.ApiAfkCommand;
 import com.eternalcode.example.feature.afk.ApiAfkListener;
 import com.eternalcode.example.feature.catboy.CatBoyListener;
@@ -28,6 +29,7 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         Server server = this.getServer();
+        EventCaller caller = new EventCaller(this.getServer());
 
         EternalCoreApi provide = EternalCoreApiProvider.provide();
 
@@ -38,7 +40,7 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
 
             .commands(
                 new ApiAfkCommand(provide.getAfkService()),
-                new ApiIgnoreCommand(provide.getIgnoreService()),
+                new ApiIgnoreCommand(provide.getIgnoreService(), caller),
                 new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
                 new ApiSpawnCommand(provide.getSpawnService())
             )
