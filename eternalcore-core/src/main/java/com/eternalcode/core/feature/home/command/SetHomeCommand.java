@@ -16,6 +16,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
 @Command(name = "sethome")
@@ -49,7 +50,7 @@ class SetHomeCommand {
     @Execute
     @DescriptionDocs(description = "Set home location")
     void execute(@Context User user, @Context Player player) {
-        this.setOrOverrideHome(user, player, "home");
+        this.setOrOverrideHome(user, player, this.pluginConfiguration.homes.defaultHomeName);
     }
 
     private void setOrOverrideHome(User user, Player player, String homeName) {
