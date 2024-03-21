@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.ignore;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.event.IgnoreAllEvent;
-import com.eternalcode.core.feature.ignore.event.IgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -53,14 +52,6 @@ class IgnoreCommand {
                     .notice(translation -> translation.privateChat().alreadyIgnorePlayer())
                     .send();
 
-                return;
-            }
-            Player senderPlayer = this.server.getPlayer(senderUuid);
-            Player targetPlayer = this.server.getPlayer(targetUuid);
-
-            IgnoreEvent event = this.eventCaller.callEvent(new IgnoreEvent(senderPlayer, targetPlayer));
-
-            if (event.isCancelled()) {
                 return;
             }
 

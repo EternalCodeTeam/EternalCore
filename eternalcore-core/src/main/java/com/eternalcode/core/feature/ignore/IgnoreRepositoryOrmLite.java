@@ -3,6 +3,11 @@ package com.eternalcode.core.feature.ignore;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.ignore.event.IgnoreAllEvent;
+import com.eternalcode.core.feature.ignore.event.IgnoreEvent;
+import com.eternalcode.core.feature.ignore.event.UnIgnoreAllEvent;
+import com.eternalcode.core.feature.ignore.event.UnIgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 import com.google.common.cache.CacheBuilder;
@@ -13,6 +18,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
@@ -30,11 +37,16 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     private final Dao<IgnoreWrapper, Long> cachedDao;
     private final LoadingCache<UUID, Set<UUID>> ignores;
+    private final EventCaller caller;
+    private final Server server;
 
     @Inject
-    private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
+    private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler, EventCaller caller, Server server) throws SQLException {
         super(databaseManager, scheduler);
         this.cachedDao = databaseManager.getDao(IgnoreWrapper.class);
+        this.caller = caller;
+        this.server = server;
+
         this.ignores = CacheBuilder.newBuilder()
             .expireAfterAccess(Duration.ofMinutes(15))
             .refreshAfterWrite(Duration.ofMinutes(3))
@@ -58,6 +70,25 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     @Override
     public CompletableFuture<Void> ignore(UUID by, UUID target) {
+        Player senderPlayer = this.server.getPlayer(by);
+        Player targetPlayer = null;
+
+        if (!target.equals(IGNORE_ALL)) {
+            targetPlayer = this.server.getPlayer(target);
+        } else {
+            IgnoreAllEvent event = this.caller.callEvent(new IgnoreAllEvent(senderPlayer));
+
+            if (event.isCancelled()) {
+                return CompletableFuture.completedFuture(null);
+            }
+        }
+
+        IgnoreEvent event = this.caller.callEvent(new IgnoreEvent(senderPlayer, targetPlayer));
+
+        if (event.isCancelled()) {
+            return CompletableFuture.completedFuture(null);
+        }
+
         return CompletableFuture.runAsync(() -> {
             try {
                 Set<UUID> uuids = this.ignores.get(by);
@@ -80,6 +111,15 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     @Override
     public CompletableFuture<Void> unIgnore(UUID by, UUID target) {
+        Player senderPlayer = this.server.getPlayer(by);
+        Player targetPlayer = this.server.getPlayer(target);
+
+        UnIgnoreEvent event = this.caller.callEvent(new UnIgnoreEvent(senderPlayer, targetPlayer));
+
+        if (event.isCancelled()) {
+            return CompletableFuture.completedFuture(null);
+        }
+
         return this.action(IgnoreWrapper.class, dao -> {
                 DeleteBuilder<IgnoreWrapper, Object> builder = dao.deleteBuilder();
 
@@ -95,6 +135,12 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     @Override
     public CompletableFuture<Void> unIgnoreAll(UUID by) {
+        UnIgnoreAllEvent event = this.caller.callEvent(new UnIgnoreAllEvent(this.server.getPlayer(by)));
+
+        if (event.isCancelled()) {
+            return CompletableFuture.completedFuture(null);
+        }
+
         return this.action(IgnoreWrapper.class, dao -> {
                 DeleteBuilder<IgnoreWrapper, Object> builder = dao.deleteBuilder();
 
