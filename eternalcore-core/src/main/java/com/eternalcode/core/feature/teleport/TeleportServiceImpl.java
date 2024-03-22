@@ -37,18 +37,17 @@ class TeleportServiceImpl implements TeleportService {
 
         Location last = player.getLocation().clone();
 
-        PaperLib.teleportAsync(player, event.getLocation());
+        PaperLib.teleportAsync(player, event.getLocation()); // TODO: maybe add option in config to use sync teleport?
         this.markLastLocation(player.getUniqueId(), last);
     }
 
     @Override
     public Optional<Location> getLastLocation(UUID player) {
-        return Optional.ofNullable(this.lastPosition.get(player)).map(PositionAdapter::convert);
+        return Optional.ofNullable(this.lastPosition.get(player)).map(position -> PositionAdapter.convert(position));
     }
 
     @Override
     public void markLastLocation(UUID player, Location location) {
         this.lastPosition.put(player, PositionAdapter.convert(location));
     }
-
 }

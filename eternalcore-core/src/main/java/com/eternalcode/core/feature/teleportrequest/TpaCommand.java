@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport.request;
+package com.eternalcode.core.feature.teleportrequest;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.ignore.IgnoreService;
@@ -11,7 +11,6 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.entity.Player;
-import panda.std.reactive.Completable;
 
 @Command(name = "tpa")
 @Permission("eternalcore.tpa")

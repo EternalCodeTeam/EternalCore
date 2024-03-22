@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.commons.bukkit.position.Position;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import panda.std.Option;
 
 import java.time.Instant;
@@ -15,24 +17,24 @@ import java.util.UUID;
 @Service
 public class TeleportTaskService {
 
-    private final Map<UUID, Teleport> teleportMap = new HashMap<>();
+    private final Map<UUID, Teleport> teleports = new HashMap<>();
 
     public void createTeleport(UUID uuid, Position startLocation, Position destinationLocation, TemporalAmount time) {
         Teleport teleport = new Teleport(uuid, startLocation, destinationLocation, time);
 
-        this.teleportMap.put(uuid, teleport);
+        this.teleports.put(uuid, teleport);
     }
 
     public void removeTeleport(UUID uuid) {
-        this.teleportMap.remove(uuid);
+        this.teleports.remove(uuid);
     }
 
-    Option<Teleport> findTeleport(UUID uuid) {
-        return Option.of(this.teleportMap.get(uuid));
+    Optional<Teleport> findTeleport(UUID uuid) {
+        return Optional.of(this.teleports.get(uuid));
     }
 
-    public boolean inTeleport(UUID uuid) {
-        Option<Teleport> teleportOption = this.findTeleport(uuid);
+    public boolean isInTeleport(UUID uuid) {
+        Optional<Teleport> teleportOption = this.findTeleport(uuid);
 
         if (teleportOption.isEmpty()) {
             return false;
@@ -50,7 +52,6 @@ public class TeleportTaskService {
     }
 
     Collection<Teleport> getTeleports() {
-        return Collections.unmodifiableCollection(this.teleportMap.values());
+        return Collections.unmodifiableCollection(this.teleports.values());
     }
-
 }

@@ -8,20 +8,20 @@ import java.util.UUID;
 
 class Teleport {
 
-    private final UUID uuid;
+    private final UUID playerUniqueId;
     private final Position startLocation;
     private final Position destinationLocation;
     private final Instant teleportMoment;
 
     Teleport(UUID uuid, Position startLocation, Position destinationLocation, TemporalAmount time) {
-        this.uuid = uuid;
+        this.playerUniqueId = uuid;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
         this.teleportMoment = Instant.now().plus(time);
     }
 
-    UUID getUuid() {
-        return this.uuid;
+    UUID getPlayerUniqueId() {
+        return this.playerUniqueId;
     }
 
     Position getStartLocation() {

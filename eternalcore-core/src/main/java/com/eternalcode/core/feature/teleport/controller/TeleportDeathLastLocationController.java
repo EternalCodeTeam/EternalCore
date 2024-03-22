@@ -1,5 +1,6 @@
-package com.eternalcode.core.feature.teleport;
+package com.eternalcode.core.feature.teleport.controller;
 
+import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.entity.Player;
@@ -9,12 +10,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 @Controller
-class TeleportDeathController implements Listener {
+class TeleportDeathLastLocationController implements Listener {
 
     private final TeleportService teleportService;
 
     @Inject
-    TeleportDeathController(TeleportService teleportService) {
+    TeleportDeathLastLocationController(TeleportService teleportService) {
         this.teleportService = teleportService;
     }
 
