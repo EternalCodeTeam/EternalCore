@@ -6,7 +6,7 @@ import java.time.temporal.TemporalAmount;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-class Teleport {
+public class Teleport {
     private final UUID playerUniqueId;
     private final Position startLocation;
     private final Position destinationLocation;
@@ -26,19 +26,19 @@ class Teleport {
         return this.result;
     }
 
-    UUID getPlayerUniqueId() {
+    public UUID getPlayerUniqueId() {
         return this.playerUniqueId;
     }
 
-    Position getStartLocation() {
+    public Position getStartLocation() {
         return this.startLocation;
     }
 
-    Position getDestinationLocation() {
+    public Position getDestinationLocation() {
         return this.destinationLocation;
     }
 
-    Instant getTeleportMoment() {
+    public Instant getTeleportMoment() {
         return this.teleportMoment;
     }
 }
