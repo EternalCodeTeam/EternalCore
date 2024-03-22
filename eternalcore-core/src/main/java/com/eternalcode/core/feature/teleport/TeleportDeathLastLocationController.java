@@ -1,6 +1,5 @@
-package com.eternalcode.core.feature.teleport.controller;
+package com.eternalcode.core.feature.teleport;
 
-import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.entity.Player;
@@ -25,5 +24,4 @@ class TeleportDeathLastLocationController implements Listener {
 
         this.teleportService.markLastLocation(player.getUniqueId(), player.getLocation());
     }
-
 }

@@ -48,7 +48,7 @@ class TeleportTask implements Runnable {
                 continue;
             }
 
-            if (this.isPlayerMovedDuringTeleport(player, teleport) || this.showTeleportFormat(player, teleport)) {
+            if (this.isPlayerMovedDuringTeleport(player, teleport) || this.checkTeleportTimer(player, teleport)) {
                 continue;
             }
 
@@ -63,13 +63,15 @@ class TeleportTask implements Runnable {
         this.teleportService.teleport(player, destinationLocation);
         this.teleportTaskService.removeTeleport(uuid);
 
+        teleport.getResult().complete(TeleportResult.SUCCESS);
+
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleported())
             .player(player.getUniqueId())
             .send();
     }
 
-    private boolean showTeleportFormat(Player player, Teleport teleport) {
+    private boolean checkTeleportTimer(Player player, Teleport teleport) {
         Instant now = Instant.now();
         Instant teleportMoment = teleport.getTeleportMoment();
 
@@ -93,6 +95,8 @@ class TeleportTask implements Runnable {
 
         if (player.getLocation().distance(startLocation) > 0.5) {
             this.teleportTaskService.removeTeleport(uuid);
+
+            teleport.getResult().complete(TeleportResult.FAILED);
 
             this.noticeService.create()
                 .notice(translation -> Notice.actionbar(StringUtils.EMPTY))

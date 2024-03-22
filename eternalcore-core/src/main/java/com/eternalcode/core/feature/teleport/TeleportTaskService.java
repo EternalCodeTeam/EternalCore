@@ -1,17 +1,14 @@
 package com.eternalcode.core.feature.teleport;
 
-import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.commons.bukkit.position.Position;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import panda.std.Option;
-
+import com.eternalcode.core.injector.annotations.component.Service;
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,10 +16,16 @@ public class TeleportTaskService {
 
     private final Map<UUID, Teleport> teleports = new HashMap<>();
 
-    public void createTeleport(UUID uuid, Position startLocation, Position destinationLocation, TemporalAmount time) {
+    public Teleport createTeleport(
+        UUID uuid,
+        Position startLocation,
+        Position destinationLocation,
+        TemporalAmount time) {
         Teleport teleport = new Teleport(uuid, startLocation, destinationLocation, time);
 
         this.teleports.put(uuid, teleport);
+
+        return teleport;
     }
 
     public void removeTeleport(UUID uuid) {
