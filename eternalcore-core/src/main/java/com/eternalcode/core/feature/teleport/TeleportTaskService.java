@@ -33,7 +33,7 @@ public class TeleportTaskService {
     }
 
     Optional<Teleport> findTeleport(UUID uuid) {
-        return Optional.of(this.teleports.get(uuid));
+        return Optional.ofNullable(this.teleports.get(uuid));
     }
 
     public boolean isInTeleport(UUID uuid) {
