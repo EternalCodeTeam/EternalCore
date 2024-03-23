@@ -8,6 +8,8 @@ import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.Notice;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
@@ -38,7 +40,9 @@ class TeleportTask implements Runnable {
 
     @Override
     public void run() {
-        for (Teleport teleport : this.teleportTaskService.getTeleports()) {
+        List<Teleport> teleports = new ArrayList<>(this.teleportTaskService.getTeleports());
+
+        for (Teleport teleport : teleports) {
             UUID uuid = teleport.getPlayerUniqueId();
 
             Player player = this.server.getPlayer(uuid);
@@ -48,7 +52,27 @@ class TeleportTask implements Runnable {
                 continue;
             }
 
-            if (this.isPlayerMovedDuringTeleport(player, teleport) || this.checkTeleportTimer(player, teleport)) {
+            Instant now = Instant.now();
+            Instant teleportMoment = teleport.getTeleportMoment();
+
+            if (now.isBefore(teleportMoment)) {
+                Duration duration = Duration.between(now, teleportMoment);
+
+                this.noticeService.create()
+                    .notice(translation -> translation.teleport().teleportTimerFormat())
+                    .placeholder("{TIME}", DurationUtil.format(duration))
+                    .player(player.getUniqueId())
+                    .send();
+                continue;
+            }
+
+            if (this.hasPlayerMovedDuringTeleport(player, teleport)) {
+                this.noticeService.create()
+                    .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
+                    .notice(translation -> translation.teleport().teleportTaskCanceled())
+                    .player(player.getUniqueId())
+                    .send();
+
                 continue;
             }
 
@@ -71,38 +95,13 @@ class TeleportTask implements Runnable {
             .send();
     }
 
-    private boolean checkTeleportTimer(Player player, Teleport teleport) {
-        Instant now = Instant.now();
-        Instant teleportMoment = teleport.getTeleportMoment();
-
-        if (now.isBefore(teleportMoment)) {
-            Duration duration = Duration.between(now, teleportMoment);
-
-            this.noticeService.create()
-                .notice(translation -> translation.teleport().teleportTimerFormat())
-                .placeholder("{TIME}", DurationUtil.format(duration))
-                .player(player.getUniqueId())
-                .send();
-
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isPlayerMovedDuringTeleport(Player player, Teleport teleport) {
+    private boolean hasPlayerMovedDuringTeleport(Player player, Teleport teleport) {
         Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
         UUID uuid = teleport.getPlayerUniqueId();
 
         if (player.getLocation().distance(startLocation) > 0.5) {
             this.teleportTaskService.removeTeleport(uuid);
-
             teleport.getResult().complete(TeleportResult.FAILED);
-
-            this.noticeService.create()
-                .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
-                .notice(translation -> translation.teleport().teleportTaskCanceled())
-                .player(player.getUniqueId())
-                .send();
 
             return true;
         }

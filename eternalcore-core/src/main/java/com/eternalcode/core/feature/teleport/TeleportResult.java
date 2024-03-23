@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.teleport;
 
-public enum TeleportResult {
+enum TeleportResult {
 
     SUCCESS,
     FAILED

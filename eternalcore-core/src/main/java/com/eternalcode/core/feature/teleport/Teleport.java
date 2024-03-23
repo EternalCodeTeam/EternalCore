@@ -7,13 +7,14 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class Teleport {
+
     private final UUID playerUniqueId;
     private final Position startLocation;
     private final Position destinationLocation;
     private final Instant teleportMoment;
     private final CompletableFuture<TeleportResult> result;
 
-    public Teleport(UUID playerUniqueId, Position startLocation, Position destinationLocation, TemporalAmount time) {
+    Teleport(UUID playerUniqueId, Position startLocation, Position destinationLocation, TemporalAmount time) {
         this.playerUniqueId = playerUniqueId;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
