@@ -20,7 +20,8 @@ public class TeleportTaskService {
         UUID uuid,
         Position startLocation,
         Position destinationLocation,
-        TemporalAmount time) {
+        TemporalAmount time
+    ) {
         Teleport teleport = new Teleport(uuid, startLocation, destinationLocation, time);
 
         this.teleports.put(uuid, teleport);
