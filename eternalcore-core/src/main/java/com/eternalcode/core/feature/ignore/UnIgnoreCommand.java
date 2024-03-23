@@ -1,14 +1,19 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.ignore.event.UnIgnoreAllEvent;
+import com.eternalcode.core.feature.ignore.event.UnIgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -16,13 +21,17 @@ import java.util.UUID;
 @Permission("eternalcore.ignore")
 class UnIgnoreCommand {
 
-    private final IgnoreRepository repository;
+    private final IgnoreService repository;
     private final NoticeService noticeService;
+    private final EventCaller eventCaller;
+    private final Server server;
 
     @Inject
-    public UnIgnoreCommand(IgnoreRepository ignoreRepository, NoticeService noticeService) {
-        this.repository = ignoreRepository;
+    public UnIgnoreCommand(IgnoreService ignoreService, NoticeService noticeService, EventCaller eventCaller, Server server) {
+        this.repository = ignoreService;
         this.noticeService = noticeService;
+        this.eventCaller = eventCaller;
+        this.server = server;
     }
 
     @Execute
@@ -47,6 +56,15 @@ class UnIgnoreCommand {
                 return;
             }
 
+            Player senderPlayer = this.server.getPlayer(senderUuid);
+            Player targetPlayer = this.server.getPlayer(targetUuid);
+
+            UnIgnoreEvent event = this.eventCaller.callEvent(new UnIgnoreEvent(senderPlayer, targetPlayer));
+
+            if (event.isCancelled()) {
+                return;
+            }
+
             this.repository.unIgnore(senderUuid, targetUuid).thenAccept(blank -> this.noticeService.create()
                 .player(senderUuid)
                 .placeholder("{PLAYER}", target.getName())
@@ -59,6 +77,14 @@ class UnIgnoreCommand {
     @DescriptionDocs(description = "Unignore all players")
     void unIgnoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
+
+        Player player = this.server.getPlayer(senderUuid);
+
+        UnIgnoreAllEvent event = this.eventCaller.callEvent(new UnIgnoreAllEvent(player));
+
+        if (event.isCancelled()) {
+            return;
+        }
 
         this.repository.unIgnoreAll(senderUuid).thenAccept(blank -> this.noticeService.create()
             .player(senderUuid)

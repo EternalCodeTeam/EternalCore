@@ -40,6 +40,10 @@ public abstract class AbstractRepositoryOrmLite {
         return this.action(type, dao -> dao.delete(warp));
     }
 
+    protected <T> CompletableFuture<Integer> deleteAll(Class<T> type) {
+        return this.action(type, dao -> dao.deleteBuilder().delete());
+    }
+
     protected <T, ID> CompletableFuture<Integer> deleteById(Class<T> type, ID id) {
         return this.action(type, dao -> dao.deleteById(id));
     }
