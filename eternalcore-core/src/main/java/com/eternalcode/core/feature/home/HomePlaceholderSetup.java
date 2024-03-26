@@ -12,11 +12,11 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import org.bukkit.entity.Player;
-
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @Controller
 class HomePlaceholderSetup implements Subscriber {
@@ -27,7 +27,12 @@ class HomePlaceholderSetup implements Subscriber {
     private final PluginConfiguration pluginConfiguration;
 
     @Inject
-    HomePlaceholderSetup(HomeManager homeManager, UserManager userManager, TranslationManager translationManager, PluginConfiguration pluginConfiguration) {
+    HomePlaceholderSetup(
+        HomeManager homeManager,
+        UserManager userManager,
+        TranslationManager translationManager,
+        PluginConfiguration pluginConfiguration
+    ) {
         this.homeManager = homeManager;
         this.userManager = userManager;
         this.translationManager = translationManager;
@@ -39,8 +44,26 @@ class HomePlaceholderSetup implements Subscriber {
         Stream.of(
             PlaceholderReplacer.of("homes_owned", (text, targetPlayer) -> this.ownedHomes(targetPlayer)),
             PlaceholderReplacer.of("homes_count", (text, targetPlayer) -> this.homesCount(targetPlayer)),
-            PlaceholderReplacer.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer))
+            PlaceholderReplacer.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer)),
+            PlaceholderReplacer.of("homes_left", (text, targetPlayer) -> this.homesLeft(targetPlayer))
         ).forEach(placeholder -> placeholderRegistry.registerPlaceholder(placeholder));
+    }
+
+    private String homesLeft(Player targetPlayer) {
+        int homesLimit = this.homeManager.getHomesLimit(targetPlayer, this.pluginConfiguration.homes);
+        int amountOfHomes = this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId());
+
+        return homesLeft(homesLimit, amountOfHomes);
+    }
+
+    static String homesLeft(int homesLimit, int amountOfHomes) {
+        if (homesLimit < -1) {
+            return "0";
+        }
+
+        int result = homesLimit - amountOfHomes;
+
+        return String.valueOf(result);
     }
 
     private String ownedHomes(Player targetPlayer) {
@@ -64,5 +87,4 @@ class HomePlaceholderSetup implements Subscriber {
     private String homesLimit(Player targetPlayer) {
         return String.valueOf(this.homeManager.getHomesLimit(targetPlayer, this.pluginConfiguration.homes));
     }
-
 }
