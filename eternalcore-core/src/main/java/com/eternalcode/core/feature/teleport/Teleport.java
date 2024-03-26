@@ -27,6 +27,14 @@ public class Teleport {
         return this.result;
     }
 
+    public void completeResult(TeleportResult result) {
+        if (this.result.isDone()) {
+            throw new IllegalStateException("Teleport result already completed");
+        }
+
+        this.result.complete(result);
+    }
+
     public UUID getPlayerUniqueId() {
         return this.playerUniqueId;
     }

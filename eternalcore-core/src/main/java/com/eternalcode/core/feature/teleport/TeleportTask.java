@@ -8,7 +8,6 @@ import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.Notice;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +39,7 @@ class TeleportTask implements Runnable {
 
     @Override
     public void run() {
-        List<Teleport> teleports = new ArrayList<>(this.teleportTaskService.getTeleports());
+        List<Teleport> teleports = List.copyOf(this.teleportTaskService.getTeleports());
 
         for (Teleport teleport : teleports) {
             UUID uuid = teleport.getPlayerUniqueId();
@@ -67,6 +66,9 @@ class TeleportTask implements Runnable {
             }
 
             if (this.hasPlayerMovedDuringTeleport(player, teleport)) {
+                this.teleportTaskService.removeTeleport(uuid);
+                teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
+
                 this.noticeService.create()
                     .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
                     .notice(translation -> translation.teleport().teleportTaskCanceled())
@@ -87,7 +89,7 @@ class TeleportTask implements Runnable {
         this.teleportService.teleport(player, destinationLocation);
         this.teleportTaskService.removeTeleport(uuid);
 
-        teleport.getResult().complete(TeleportResult.SUCCESS);
+        teleport.completeResult(TeleportResult.SUCCESS);
 
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleported())
@@ -97,16 +99,9 @@ class TeleportTask implements Runnable {
 
     private boolean hasPlayerMovedDuringTeleport(Player player, Teleport teleport) {
         Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
-        UUID uuid = teleport.getPlayerUniqueId();
 
-        if (player.getLocation().distance(startLocation) > 0.5) {
-            this.teleportTaskService.removeTeleport(uuid);
-            teleport.getResult().complete(TeleportResult.FAILED);
-
-            return true;
-        }
-
-        return false;
+        return player.getLocation().distance(startLocation) > 0.5;
     }
+
 }
 
