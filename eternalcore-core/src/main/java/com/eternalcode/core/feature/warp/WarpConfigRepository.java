@@ -1,19 +1,19 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import panda.std.Option;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import panda.std.Option;
 
 @Service
 class WarpConfigRepository implements WarpRepository {
@@ -43,13 +43,13 @@ class WarpConfigRepository implements WarpRepository {
         editor.accept(warps);
 
         this.locationsConfiguration.warps = warps;
-
         this.configurationManager.save(this.locationsConfiguration);
     }
 
     @Override
-    public CompletableFuture<Option<Warp>> getWarp(String name) {
-        return CompletableFuture.completedFuture(Option.of(this.locationsConfiguration.warps.get(name)).map(location -> new WarpImpl(name, location)));
+    public CompletableFuture<Optional<Warp>> getWarp(String name) {
+        return CompletableFuture.completedFuture(Optional.of(this.locationsConfiguration.warps.get(name))
+            .map(location -> new WarpImpl(name, location)));
     }
 
     @Override
@@ -58,5 +58,4 @@ class WarpConfigRepository implements WarpRepository {
             .map(entry -> new WarpImpl(entry.getKey(), entry.getValue()))
             .collect(Collectors.toList()));
     }
-
 }
