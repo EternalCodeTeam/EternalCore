@@ -24,10 +24,10 @@ public class WarpTeleportService {
     private final EventCaller eventCaller;
 
     @Inject
+    public WarpTeleportService(
         TeleportTaskService teleportTaskService,
         PluginConfiguration pluginConfiguration,
         EventCaller eventCaller
-    WarpTeleportService(
     ) {
         this.teleportTaskService = teleportTaskService;
         this.pluginConfiguration = pluginConfiguration;
