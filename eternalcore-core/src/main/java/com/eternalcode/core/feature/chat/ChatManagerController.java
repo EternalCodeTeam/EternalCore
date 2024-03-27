@@ -21,12 +21,12 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 @Controller
 class ChatManagerController implements Listener {
 
-    private final ChatManager chatManager;
+    private final ChatManagerServiceImpl chatManagerServiceImpl;
     private final NoticeService noticeService;
 
     @Inject
-    ChatManagerController(ChatManager chatManager, NoticeService noticeService) {
-        this.chatManager = chatManager;
+    ChatManagerController(ChatManagerServiceImpl chatManagerServiceImpl, NoticeService noticeService) {
+        this.chatManagerServiceImpl = chatManagerServiceImpl;
         this.noticeService = noticeService;
     }
 
@@ -34,7 +34,7 @@ class ChatManagerController implements Listener {
     void onChatSlowMode(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.chatManager.getChatSettings().isChatEnabled() && !player.hasPermission("eternalcore.chat.bypass")) {
+        if (!this.chatManagerServiceImpl.getChatSettings().isChatEnabled() && !player.hasPermission("eternalcore.chat.bypass")) {
             this.noticeService.create()
                 .notice(translation -> translation.chat().disabledChatInfo())
                 .player(player.getUniqueId())
@@ -46,8 +46,8 @@ class ChatManagerController implements Listener {
 
         UUID uuid = player.getUniqueId();
 
-        if (this.chatManager.hasSlowedChat(uuid) && !player.hasPermission("eternalcore.chat.noslowmode")) {
-            Duration time = this.chatManager.getSlowDown(uuid);
+        if (this.chatManagerServiceImpl.hasSlowedChat(uuid) && !player.hasPermission("eternalcore.chat.noslowmode")) {
+            Duration time = this.chatManagerServiceImpl.getSlowDown(uuid);
 
             this.noticeService
                 .create()
@@ -62,6 +62,6 @@ class ChatManagerController implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     void markUseChat(AsyncPlayerChatEvent event) {
-        this.chatManager.markUseChat(event.getPlayer().getUniqueId());
+        this.chatManagerServiceImpl.markUseChat(event.getPlayer().getUniqueId());
     }
 }

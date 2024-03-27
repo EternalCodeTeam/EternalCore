@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.randomteleport;
 
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
