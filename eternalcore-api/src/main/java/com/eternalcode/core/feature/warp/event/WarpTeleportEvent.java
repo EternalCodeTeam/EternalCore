@@ -7,7 +7,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called when player is want to teleport to warp, but before teleportation.
+ * Called after teleportation to warp
  */
 public class WarpTeleportEvent extends Event {
 
