@@ -4,6 +4,7 @@ import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.jail.JailService;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
@@ -56,6 +57,11 @@ class EternalCoreApiImpl implements EternalCoreApi {
     @Override
     public JailService getJailService() {
         return this.dependencyProvider.getDependency(JailService.class);
+    }
+
+    @Override
+    public HomeService getHomeService() {
+        return this.dependencyProvider.getDependency(HomeService.class);
     }
 
 }

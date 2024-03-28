@@ -186,6 +186,9 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Default home name")
         public String defaultHomeName = "home";
 
+        @Description("# Time of teleportation to homes")
+        public Duration teleportTimeToHomes = Duration.ofSeconds(5);
+
         @Description("# Max homes per permission")
         public Map<String, Integer> maxHomes = Map.of(
             "eternalcore.home.default", 1,
