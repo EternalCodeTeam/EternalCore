@@ -6,9 +6,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-/**
- * Called after player is teleported to warp.
- */
+ * Called before teleportation to warp.
 public class PreWarpTeleportEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
