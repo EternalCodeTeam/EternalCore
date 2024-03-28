@@ -1,11 +1,10 @@
 package com.eternalcode.core.feature.home.event;
 
 import com.eternalcode.core.feature.home.Home;
+import java.util.UUID;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-
-import java.util.UUID;
 
 /**
  * Event called when a home is overridden with new location.

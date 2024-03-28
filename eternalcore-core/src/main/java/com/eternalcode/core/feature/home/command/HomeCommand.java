@@ -1,11 +1,9 @@
 package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
-import com.eternalcode.core.feature.teleport.TeleportService;
-import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.home.HomeTeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -13,7 +11,6 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import java.time.Duration;
 import java.util.Collection;
 import org.bukkit.entity.Player;
 
@@ -21,21 +18,19 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.home")
 class HomeCommand {
 
-    private final TeleportTaskService teleportTaskService;
-    private final TeleportService teleportService;
     private final NoticeService noticeService;
     private final HomeManager homeManager;
+    private final HomeTeleportService homeTeleportService;
 
     @Inject
     HomeCommand(
-        TeleportTaskService teleportTaskService,
-        TeleportService teleportService,
         NoticeService noticeService,
-        HomeManager homeManager) {
-        this.teleportTaskService = teleportTaskService;
-        this.teleportService = teleportService;
+        HomeManager homeManager,
+        HomeTeleportService homeTeleportService
+    ) {
         this.noticeService = noticeService;
         this.homeManager = homeManager;
+        this.homeTeleportService = homeTeleportService;
     }
 
     @Execute
@@ -68,28 +63,12 @@ class HomeCommand {
 
         Home firstHome = playerHomes.iterator().next();
 
-        this.teleportToHome(player, firstHome);
+        this.homeTeleportService.teleport(player, firstHome);
     }
 
     @Execute
     @DescriptionDocs(description = "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time", arguments = "<home>")
     void execute(@Context Player player, @Arg Home home) {
-        this.teleportToHome(player, home);
-    }
-
-    private void teleportToHome(Player player, Home home) {
-        if (player.hasPermission("eterncore.teleport.bypass")) {
-            this.teleportService.teleport(player, home.getLocation());
-            return;
-        }
-
-        // TODO: Implement HomeTeleportEvent. This requires refactoring TeleportTaskService to return a CompletableFuture.
-        // Consequently, we can then utilize the CompletableFuture's thenAccept method.
-        this.teleportTaskService.createTeleport(
-            player.getUniqueId(),
-            PositionAdapter.convert(player.getLocation()),
-            PositionAdapter.convert(
-                home.getLocation()),
-            Duration.ofSeconds(5));
+        this.homeTeleportService.teleport(player, home);
     }
 }
