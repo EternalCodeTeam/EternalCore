@@ -41,31 +41,22 @@ public class WarpTeleportService {
             return;
         }
 
+        Duration teleportTime = player.hasPermission(WARP_BYPASS)
+            ? Duration.ZERO
+            : this.pluginConfiguration.warp.teleportTimeToWarp;
+
         Position playerLocation = PositionAdapter.convert(player.getLocation());
         Position warpLocation = PositionAdapter.convert(warp.getLocation());
         UUID uniqueId = player.getUniqueId();
 
         WarpTeleportEvent post = new WarpTeleportEvent(player, warp);
-        if (player.hasPermission(WARP_BYPASS)) {
-            Teleport teleport = this.teleportTaskService.createTeleport(
-                uniqueId,
-                playerLocation,
-                warpLocation,
-                Duration.ZERO
-            );
-
-            teleport.getResult().whenComplete((result, throwable) -> this.eventCaller.callEvent(post));
-
-            return;
-        }
 
         Teleport teleport = this.teleportTaskService.createTeleport(
             uniqueId,
             playerLocation,
             warpLocation,
-            this.pluginConfiguration.warp.teleportTimeToWarp
+            teleportTime
         );
-
         teleport.getResult().whenComplete((result, throwable) -> this.eventCaller.callEvent(post));
     }
 }
