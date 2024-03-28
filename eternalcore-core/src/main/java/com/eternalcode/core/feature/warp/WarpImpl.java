@@ -23,5 +23,4 @@ class WarpImpl implements Warp {
     public Location getLocation() {
         return PositionAdapter.convert(this.position);
     }
-
 }

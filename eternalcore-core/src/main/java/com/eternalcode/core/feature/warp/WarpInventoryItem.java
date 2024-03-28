@@ -1,10 +1,9 @@
-package com.eternalcode.core.feature.warp.config;
+package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
+import java.util.Collections;
 import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Material;
-
-import java.util.Collections;
 
 @Contextual
 public class WarpInventoryItem {
@@ -62,5 +61,4 @@ public class WarpInventoryItem {
             return new WarpInventoryItem(this.warpName, this.warpItem);
         }
     }
-
 }
