@@ -31,7 +31,7 @@ object Versions {
 
     const val EXPRESSIBLE = "1.3.6"
     const val PANDA_UTILITIES = "0.5.3-alpha"
-    const val APACHE_COMMONS = "2.15.1"
+    const val APACHE_COMMONS = "2.16.0"
 
     const val TRIUMPH_GUI = "3.1.7"
 
