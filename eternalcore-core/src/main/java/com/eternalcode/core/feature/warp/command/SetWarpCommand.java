@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.warp.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.feature.warp.WarpManager;
+import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -16,12 +16,12 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.setwarp")
 class SetWarpCommand {
 
-    private final WarpManager warpManager;
+    private final WarpService warpService;
     private final NoticeService noticeService;
 
     @Inject
-    SetWarpCommand(WarpManager warpManager, NoticeService noticeService) {
-        this.warpManager = warpManager;
+    SetWarpCommand(WarpService warpService, NoticeService noticeService) {
+        this.warpService = warpService;
         this.noticeService = noticeService;
     }
 
@@ -34,7 +34,7 @@ class SetWarpCommand {
     }
 
     private void createWarp(Player player, String warp, UUID uniqueId) {
-        if (this.warpManager.warpExists(warp)) {
+        if (this.warpService.warpExists(warp)) {
             this.noticeService.create()
                 .player(uniqueId)
                 .placeholder("{WARP}", warp)
@@ -44,7 +44,7 @@ class SetWarpCommand {
             return;
         }
 
-        this.warpManager.createWarp(warp, player.getLocation());
+        this.warpService.createWarp(warp, player.getLocation());
 
         this.noticeService.create()
             .player(uniqueId)

@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.warp.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.warp.Warp;
-import com.eternalcode.core.feature.warp.WarpManager;
+import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -16,12 +16,12 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.delwarp")
 class DelWarpCommand {
 
-    private final WarpManager warpManager;
+    private final WarpService warpService;
     private final NoticeService noticeService;
 
     @Inject
-    DelWarpCommand(WarpManager warpManager, NoticeService noticeService) {
-        this.warpManager = warpManager;
+    DelWarpCommand(WarpService warpService, NoticeService noticeService) {
+        this.warpService = warpService;
         this.noticeService = noticeService;
     }
 
@@ -34,7 +34,7 @@ class DelWarpCommand {
     }
 
     private void removeWarp(Player player, String name) {
-        if (!this.warpManager.warpExists(name)) {
+        if (!this.warpService.warpExists(name)) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .placeholder("{WARP}", name)
@@ -44,7 +44,7 @@ class DelWarpCommand {
             return;
         }
 
-        this.warpManager.removeWarp(name);
+        this.warpService.removeWarp(name);
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.warp().remove())

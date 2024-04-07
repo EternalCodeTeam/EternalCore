@@ -14,7 +14,7 @@ public class PreWarpTeleportEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
-    private final Warp warp;
+    private Warp warp;
     private boolean cancelled;
 
     public PreWarpTeleportEvent(Player player, Warp warp) {
@@ -30,6 +30,10 @@ public class PreWarpTeleportEvent extends Event implements Cancellable {
 
     public Warp getWarp() {
         return this.warp;
+    }
+
+    public void setWarp(Warp warp) {
+        this.warp = warp;
     }
 
     @Override

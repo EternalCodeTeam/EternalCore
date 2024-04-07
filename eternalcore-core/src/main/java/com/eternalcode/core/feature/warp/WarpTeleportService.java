@@ -45,11 +45,12 @@ public class WarpTeleportService {
             ? Duration.ZERO
             : this.pluginConfiguration.warp.teleportTimeToWarp;
 
+        Warp destinationWarp = pre.getWarp();
         Position playerLocation = PositionAdapter.convert(player.getLocation());
-        Position warpLocation = PositionAdapter.convert(warp.getLocation());
+        Position warpLocation = PositionAdapter.convert(destinationWarp.getLocation());
         UUID uniqueId = player.getUniqueId();
 
-        WarpTeleportEvent post = new WarpTeleportEvent(player, warp);
+        WarpTeleportEvent post = new WarpTeleportEvent(player, destinationWarp);
 
         Teleport teleport = this.teleportTaskService.createTeleport(
             uniqueId,
