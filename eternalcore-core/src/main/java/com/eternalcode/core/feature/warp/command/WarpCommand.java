@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpInventory;
-import com.eternalcode.core.feature.warp.WarpManager;
+import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.feature.warp.WarpTeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -22,7 +22,7 @@ class WarpCommand {
 
     private final PluginConfiguration config;
     private final WarpInventory warpInventory;
-    private final WarpManager warpManager;
+    private final WarpService warpService;
     private final NoticeService noticeService;
     private final WarpTeleportService warpTeleportService;
 
@@ -30,13 +30,13 @@ class WarpCommand {
     WarpCommand(
         PluginConfiguration config,
         WarpInventory warpInventory,
-        WarpManager warpManager,
+        WarpService warpService,
         NoticeService noticeService,
         WarpTeleportService warpTeleportService
     ) {
         this.config = config;
         this.warpInventory = warpInventory;
-        this.warpManager = warpManager;
+        this.warpService = warpService;
         this.noticeService = noticeService;
         this.warpTeleportService = warpTeleportService;
     }
@@ -48,7 +48,7 @@ class WarpCommand {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().available())
-                .placeholder("{WARPS}", String.join(", ", this.warpManager.getNamesOfWarps()))
+                .placeholder("{WARPS}", String.join(", ", this.warpService.getNamesOfWarps()))
                 .send();
 
             return;
