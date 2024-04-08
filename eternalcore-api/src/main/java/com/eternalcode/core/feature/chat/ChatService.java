@@ -3,14 +3,7 @@ package com.eternalcode.core.feature.chat;
 import java.time.Duration;
 import java.util.UUID;
 
-public interface ChatManagerService {
-
-    /**
-     * Get the chat settings
-     *
-     * @return the chat settings
-     */
-    ChatSettings getChatSettings();
+public interface ChatService {
 
     /**
      * Mark the user as having used chat

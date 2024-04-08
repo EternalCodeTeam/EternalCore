@@ -2,30 +2,25 @@ package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
 @Service
-class ChatManagerServiceImpl implements ChatManagerService {
+class ChatServiceImpl implements ChatService {
 
-    private final Cache<UUID, Instant> slowdown;
     private final ChatSettings chatSettings;
+    private final Cache<UUID, Instant> slowdown;
 
     @Inject
-    ChatManagerServiceImpl(ChatSettings chatSettings) {
+    ChatServiceImpl(ChatSettings chatSettings) {
         this.chatSettings = chatSettings;
-        this.slowdown = CacheBuilder.newBuilder()
+        this.slowdown = Caffeine.newBuilder()
             .expireAfterWrite(this.chatSettings.getChatDelay().plus(Duration.ofSeconds(10)))
             .build();
-    }
-
-    @Override
-    public ChatSettings getChatSettings() {
-        return this.chatSettings;
     }
 
     @Override

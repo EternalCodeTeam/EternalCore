@@ -21,12 +21,17 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 @Controller
 class ChatManagerController implements Listener {
 
-    private final ChatManagerServiceImpl chatManagerServiceImpl;
+    private static final String CHAT_SLOWMODE_BYPASS_PERMISSION = "eternalcore.chat.noslowmode";
+    private static final String CHAT_BYPASS_PERMISSION = "eternalcore.chat.bypass";
+
+    private final ChatService chatService;
+    private final ChatSettings chatSettings;
     private final NoticeService noticeService;
 
     @Inject
-    ChatManagerController(ChatManagerServiceImpl chatManagerServiceImpl, NoticeService noticeService) {
-        this.chatManagerServiceImpl = chatManagerServiceImpl;
+    ChatManagerController(ChatService chatService, ChatSettings chatSettings, NoticeService noticeService) {
+        this.chatService = chatService;
+        this.chatSettings = chatSettings;
         this.noticeService = noticeService;
     }
 
@@ -34,7 +39,7 @@ class ChatManagerController implements Listener {
     void onChatSlowMode(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.chatManagerServiceImpl.getChatSettings().isChatEnabled() && !player.hasPermission("eternalcore.chat.bypass")) {
+        if (!this.chatSettings.isChatEnabled() && !player.hasPermission(CHAT_BYPASS_PERMISSION)) {
             this.noticeService.create()
                 .notice(translation -> translation.chat().disabledChatInfo())
                 .player(player.getUniqueId())
@@ -46,8 +51,8 @@ class ChatManagerController implements Listener {
 
         UUID uuid = player.getUniqueId();
 
-        if (this.chatManagerServiceImpl.hasSlowedChat(uuid) && !player.hasPermission("eternalcore.chat.noslowmode")) {
-            Duration time = this.chatManagerServiceImpl.getSlowDown(uuid);
+        if (this.chatService.hasSlowedChat(uuid) && !player.hasPermission(CHAT_SLOWMODE_BYPASS_PERMISSION)) {
+            Duration time = this.chatService.getSlowDown(uuid);
 
             this.noticeService
                 .create()
@@ -62,6 +67,6 @@ class ChatManagerController implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     void markUseChat(AsyncPlayerChatEvent event) {
-        this.chatManagerServiceImpl.markUseChat(event.getPlayer().getUniqueId());
+        this.chatService.markUseChat(event.getPlayer().getUniqueId());
     }
 }

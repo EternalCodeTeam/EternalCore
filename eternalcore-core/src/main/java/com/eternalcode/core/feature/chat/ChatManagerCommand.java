@@ -19,15 +19,17 @@ import org.bukkit.command.CommandSender;
 @Permission("eternalcore.chat")
 class ChatManagerCommand {
 
-    private final Supplier<Notice> clear;
     private final NoticeService noticeService;
-    private final ChatManagerServiceImpl chatManagerServiceImpl;
+    private final ChatSettings chatSettings;
+
+    private final Supplier<Notice> clear;
 
     @Inject
-    ChatManagerCommand(ChatManagerServiceImpl chatManagerServiceImpl, NoticeService noticeService, ChatSettings settings) {
+    ChatManagerCommand(NoticeService noticeService, ChatSettings chatSettings) {
         this.noticeService = noticeService;
-        this.chatManagerServiceImpl = chatManagerServiceImpl;
-        this.clear = create(settings);
+        this.chatSettings = chatSettings;
+
+        this.clear = create(chatSettings);
     }
 
     @Execute(name = "clear", aliases = "cc")
@@ -44,12 +46,12 @@ class ChatManagerCommand {
     @Execute(name = "on")
     @DescriptionDocs(description = "Enables chat")
     void enable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (this.chatManagerServiceImpl.getChatSettings().isChatEnabled()) {
+        if (this.chatSettings.isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
         }
 
-        this.chatManagerServiceImpl.getChatSettings().setChatEnabled(true);
+        this.chatSettings.setChatEnabled(true);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().enabled())
@@ -61,12 +63,12 @@ class ChatManagerCommand {
     @Execute(name = "off")
     @DescriptionDocs(description = "Disables chat")
     void disable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (!this.chatManagerServiceImpl.getChatSettings().isChatEnabled()) {
+        if (!this.chatSettings.isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
         }
 
-        this.chatManagerServiceImpl.getChatSettings().setChatEnabled(false);
+        this.chatSettings.setChatEnabled(false);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().disabled())
@@ -91,11 +93,11 @@ class ChatManagerCommand {
                 .onlinePlayers()
                 .send();
 
-            this.chatManagerServiceImpl.getChatSettings().setChatDelay(duration);
+            this.chatSettings.setChatDelay(duration);
             return;
         }
 
-        this.chatManagerServiceImpl.getChatSettings().setChatDelay(duration);
+        this.chatSettings.setChatDelay(duration);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
