@@ -1,9 +1,9 @@
 package com.eternalcode.core.feature.catboy;
 
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.teleport.event.EternalTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.core.scheduler.Scheduler;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Cat;

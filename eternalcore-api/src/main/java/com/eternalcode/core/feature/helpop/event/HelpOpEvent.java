@@ -46,5 +46,4 @@ public class HelpOpEvent extends Event implements Cancellable {
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
-
 }

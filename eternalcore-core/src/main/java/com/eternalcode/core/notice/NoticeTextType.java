@@ -1,5 +1,7 @@
 package com.eternalcode.core.notice;
 
+import com.eternalcode.multification.notice.NoticeType;
+
 public enum NoticeTextType {
 
     CHAT(NoticeType.CHAT),
@@ -13,8 +15,7 @@ public enum NoticeTextType {
         this.type = type;
     }
 
-    NoticeType getType() {
+    public NoticeType getType() {
         return this.type;
     }
-
 }

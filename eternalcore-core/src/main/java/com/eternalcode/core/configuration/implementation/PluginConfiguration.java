@@ -6,12 +6,14 @@ import com.eternalcode.core.delay.DelaySettings;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import com.eternalcode.core.feature.teleport.request.TeleportRequestSettings;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
+import java.util.Set;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -70,6 +72,9 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Teleport to spawn on first join")
         public boolean teleportToSpawnOnFirstJoin = true;
 
+        @Description("# Teleport to spawn on join")
+        public boolean teleportToSpawnOnJoin = false;
+
     }
 
     @Description({ " ", "# Teleport request section" })
@@ -96,7 +101,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
-    @Description({" ", "# Teleport section"})
+    @Description({ " ", "# Teleport section" })
     public Teleport teleport = new Teleport();
 
     @Contextual
@@ -178,6 +183,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Homes {
+        @Description("# Default home name")
+        public String defaultHomeName = "home";
+
         @Description("# Max homes per permission")
         public Map<String, Integer> maxHomes = Map.of(
             "eternalcore.home.default", 1,
@@ -281,7 +289,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Repair implements DelaySettings {
 
-        @Description({" ", "# Repair command cooldown"})
+        @Description({ " ", "# Repair command cooldown" })
         public Duration repairDelay = Duration.ofSeconds(5);
 
         @Override
@@ -312,8 +320,23 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description({ " ", "# Time before using the /afk command again" })
         public Duration afkCommandDelay = Duration.ofSeconds(60);
 
+        @Description({
+            "# Should a player be marked as AFK automatically?",
+            "# If set to true, the player will be marked as AFK after a certain amount of time of inactivity",
+            "# If set to false, the player will have to use the /afk command to be marked as AFK"
+        })
+        public boolean autoAfk = true;
+
         @Description({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
         public Duration afkInactivityTime = Duration.ofMinutes(10);
+
+        @Description({ " ", "# Should a player be kicked from the game when marked as AFK?" })
+        public boolean kickOnAfk = false;
+
+        @Override
+        public boolean autoAfk() {
+            return this.autoAfk;
+        }
 
         @Override
         public int interactionsCountDisableAfk() {
@@ -391,6 +414,29 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public DrawMode drawMode() {
             return this.drawMode;
+        }
+    }
+
+    @Description({ " ", "# Jail Section" })
+    public Jail jail = new Jail();
+
+    @Contextual
+    public static class Jail implements JailSettings {
+
+        @Description("# Default jail duration, set if no duration is specified")
+        public Duration defaultJailDuration = Duration.ofMinutes(30);
+
+        @Description("# Allowed commands in jail")
+        public Set<String> allowedCommands = Set.of("help", "msg", "r", "tell", "me", "helpop");
+
+        @Override
+        public Duration defaultJailDuration() {
+            return this.defaultJailDuration;
+        }
+
+        @Override
+        public Set<String> allowedCommands() {
+            return this.allowedCommands;
         }
     }
 

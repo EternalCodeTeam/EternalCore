@@ -4,7 +4,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.ViewerProvider;
+import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -20,8 +20,8 @@ import java.util.Arrays;
 class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 
     @Inject
-    EnchantmentArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
-        super(viewerProvider, translationManager);
+    EnchantmentArgument(ViewerService viewerService, TranslationManager translationManager) {
+        super(viewerService, translationManager);
     }
 
     @Override

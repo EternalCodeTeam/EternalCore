@@ -3,16 +3,14 @@ package com.eternalcode.core.feature.privatechat;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
-import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
-import org.bukkit.entity.Player;
-
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 @RootCommand
 class PrivateChatCommands {
@@ -21,7 +19,10 @@ class PrivateChatCommands {
     private final NoticeService noticeService;
 
     @Inject
-    PrivateChatCommands(PrivateChatService privateChatService, NoticeService noticeService) {
+    PrivateChatCommands(
+        PrivateChatService privateChatService,
+        NoticeService noticeService
+    ) {
         this.privateChatService = privateChatService;
         this.noticeService = noticeService;
     }
@@ -29,14 +30,14 @@ class PrivateChatCommands {
     @Execute(name = "msg", aliases = { "message", "m", "whisper", "tell", "t" })
     @Permission("eternalcore.msg")
     @DescriptionDocs(description = "Send private message to specified player", arguments = "<player> <message>")
-    void execute(@Context User sender, @Arg User target, @Join String message) {
+    void execute(@Context Player sender, @Arg Player target, @Join String message) {
         this.privateChatService.privateMessage(sender, target, message);
     }
 
     @Execute(name = "reply", aliases = { "r" })
     @Permission("eternalcore.reply")
     @DescriptionDocs(description = "Reply to last private message", arguments = "<message>")
-    void execute(@Context User sender, @Join String message) {
+    void execute(@Context Player sender, @Join String message) {
         this.privateChatService.reply(sender, message);
     }
 
@@ -67,5 +68,4 @@ class PrivateChatCommands {
                 : translation.format().disable())
             .send();
     }
-
 }

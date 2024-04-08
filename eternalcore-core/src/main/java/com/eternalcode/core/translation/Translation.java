@@ -3,7 +3,7 @@ package com.eternalcode.core.translation;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.notice.Notice;
+import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -236,6 +236,7 @@ public interface Translation {
         Notice afkOn();
         Notice afkOff();
         Notice afkDelay();
+        String afkKickReason();
     }
 
     // event section
@@ -407,6 +408,33 @@ public interface Translation {
 
         Notice enabled();
         Notice disabled();
+    }
+
+    JailSection jailSection();
+
+    interface JailSection {
+        Notice jailLocationSet();
+        Notice jailLocationRemove();
+        Notice jailLocationNotSet();
+        Notice jailLocationOverride();
+
+        Notice jailDetainBroadcast();
+        Notice jailDetainPrivate();
+        Notice jailDetainCountdown();
+        Notice jailDetainOverride();
+        Notice jailDetainAdmin();
+
+        Notice jailReleaseBroadcast();
+        Notice jailReleasePrivate();
+        Notice jailReleaseAll();
+        Notice jailReleaseNoPlayers();
+        Notice jailIsNotPrisoner();
+
+        Notice jailListHeader();
+        Notice jailListEmpty();
+        Notice jailListPlayerEntry();
+
+        Notice jailCannotUseCommand();
     }
 
 }

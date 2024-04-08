@@ -5,14 +5,13 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
+import java.time.Duration;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import java.time.Duration;
-import java.util.UUID;
 
 @FeatureDocs(
     name = "ChatManager",
@@ -65,5 +64,4 @@ class ChatManagerController implements Listener {
     void markUseChat(AsyncPlayerChatEvent event) {
         this.chatManagerServiceImpl.markUseChat(event.getPlayer().getUniqueId());
     }
-
 }

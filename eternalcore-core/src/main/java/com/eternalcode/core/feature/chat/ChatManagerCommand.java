@@ -2,20 +2,18 @@ package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.notice.Notice;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.multification.notice.Notice;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
-import java.util.function.Supplier;
-
-import dev.rollczi.litecommands.time.DurationParser;
-import org.bukkit.command.CommandSender;
-
 import java.time.Duration;
+import java.util.function.Supplier;
+import org.bukkit.command.CommandSender;
 
 @Command(name = "chat")
 @Permission("eternalcore.chat")
@@ -36,7 +34,7 @@ class ChatManagerCommand {
     @DescriptionDocs(description = "Clears chat")
     void clear(@Context CommandSender sender) {
         this.noticeService.create()
-            .staticNotice(this.clear.get())
+            .notice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
@@ -88,10 +86,10 @@ class ChatManagerCommand {
 
         if (duration.isZero()) {
             this.noticeService.create()
-                    .notice(translation -> translation.chat().slowModeOff())
-                    .placeholder("{PLAYER}", viewer.getName())
-                    .onlinePlayers()
-                    .send();
+                .notice(translation -> translation.chat().slowModeOff())
+                .placeholder("{PLAYER}", viewer.getName())
+                .onlinePlayers()
+                .send();
 
             this.chatManagerServiceImpl.getChatSettings().setChatDelay(duration);
             return;
@@ -101,7 +99,7 @@ class ChatManagerCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
-            .placeholder("{SLOWMODE}", DurationParser.TIME_UNITS.format(duration))
+            .placeholder("{SLOWMODE}", DurationUtil.format(duration))
             .onlinePlayers()
             .send();
     }

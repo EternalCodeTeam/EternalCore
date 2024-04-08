@@ -4,4 +4,7 @@
     "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 <suppressions>
     <suppress checks="EmptyLineSeparator" files="Translation.java"/>
+    <suppress checks="RequireThis" files=".*[\\/]test[\\/]"/>
+    <suppress checks="AvoidStarImport" files=".*[\\/]test[\\/]"/>
+    <suppress checks="WhitespaceAround" files=".*[\\/]test[\\/]"/>
 </suppressions>
