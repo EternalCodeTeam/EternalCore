@@ -1,34 +1,27 @@
 package com.eternalcode.core.feature.chat.event;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import java.util.UUID;
-
+/**
+ * Called when one of the server administrators disables chat using /chat off command.
+ */
 public class DisableChatEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
+    private final CommandSender commandSender;
     private boolean cancelled;
-    private final UUID playerUniqueId;
 
-    public DisableChatEvent(UUID playerUniqueId) {
+    public DisableChatEvent(CommandSender commandSender) {
         super(false);
-        this.playerUniqueId = playerUniqueId;
+        this.commandSender = commandSender;
     }
 
-    public UUID getPlayerUniqueId() {
-        return this.playerUniqueId;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
+    public CommandSender getCommandSender() {
+        return this.commandSender;
     }
 
     @Override
@@ -39,5 +32,14 @@ public class DisableChatEvent extends Event implements Cancellable {
     @Override
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLER_LIST;
     }
 }

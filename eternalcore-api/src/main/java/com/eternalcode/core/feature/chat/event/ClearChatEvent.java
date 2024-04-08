@@ -1,25 +1,29 @@
 package com.eternalcode.core.feature.chat.event;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
 
+/**
+ * Called when one of the server administrators clear chat using /chat clear command.
+ */
 public class ClearChatEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private boolean cancelled;
-    private final UUID playerUniqueId;
+    private final CommandSender commandSender;
 
-    public ClearChatEvent(UUID playerUniqueId) {
+    public ClearChatEvent(CommandSender commandSender) {
         super(false);
-        this.playerUniqueId = playerUniqueId;
+        this.commandSender = commandSender;
     }
 
-    public UUID getPlayerUniqueId() {
-        return this.playerUniqueId;
+    public CommandSender getCommandSender() {
+        return this.commandSender;
     }
 
     @Override
