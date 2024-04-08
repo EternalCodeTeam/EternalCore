@@ -13,12 +13,4 @@ public class TellRawNotice {
         this.noticeTextType = noticeTextType;
         this.noticeText = noticeText;
     }
-
-    public void setNoticeTextType(NoticeTextType noticeTextType) {
-        this.noticeTextType = noticeTextType;
-    }
-
-    public void setNoticeText(String noticeText) {
-        this.noticeText = noticeText;
-    }
 }

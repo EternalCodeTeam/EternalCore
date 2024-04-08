@@ -23,6 +23,8 @@ class TellRawCommand {
 
     private final NoticeService noticeService;
 
+    private Set<TellRawNotice> notices = new HashSet<>();
+
     @Inject
     TellRawCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
@@ -60,8 +62,6 @@ class TellRawCommand {
             .viewer(sender)
             .send();
     }
-
-    private Set<TellRawNotice> notices = new HashSet<>();
 
     @Execute(name = "-multiple")
     @DescriptionDocs(description = "Save a message to send it later with /tellraw -send command", arguments = "<notice_type> <message>")
