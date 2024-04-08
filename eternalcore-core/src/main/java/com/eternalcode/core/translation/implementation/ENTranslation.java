@@ -291,10 +291,10 @@ public class ENTranslation extends AbstractTranslation {
         public Notice tellrawInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>{PLAYER} <white>with the content: {MESSAGE}");
         public Notice tellrawAllInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>all <white>with the content: {MESSAGE}");
 
-        public Notice tellrawSaved = Notice.chat("<green>► <white>Message saved!");
-        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>No messages saved!");
+        public Notice tellrawSaved = Notice.chat("<green>► <white>Message saved in queue!");
+        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>No messages saved in queue!");
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
-        public Notice tellrawCleared = Notice.chat("<green>► <white>Messages cleared!");
+        public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
     }
 
     @Description({

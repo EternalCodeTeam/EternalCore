@@ -293,7 +293,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice tellrawInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>{PLAYER} <white>o treści: {MESSAGE}");
         public Notice tellrawAllInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>wszystkich <white>o treści: {MESSAGE}");
 
-        public Notice tellrawSaved = Notice.chat("<green>► <white>Zapisano wiadomość!");
+        public Notice tellrawSaved = Notice.chat("<green>► <white>Zapisano wiadomość w kolejce!");
         public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma zapisanych wiadomości!");
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Wysłano wszystkie zapisane wiadomości!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
