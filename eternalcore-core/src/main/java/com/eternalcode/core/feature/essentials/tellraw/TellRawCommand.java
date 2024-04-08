@@ -9,7 +9,6 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ class TellRawCommand {
 
     private final NoticeService noticeService;
 
-    private Set<TellRawNotice> notices = new HashSet<>();
+    private final Set<TellRawNotice> multipleNotices = new HashSet<>();
 
     @Inject
     TellRawCommand(NoticeService noticeService) {
@@ -67,7 +66,7 @@ class TellRawCommand {
     @DescriptionDocs(description = "Save a message to send it later with /tellraw -send command", arguments = "<notice_type> <message>")
     void tellRawMultiple(@Context Viewer sender, @Arg NoticeTextType type, @Join String message) {
 
-        this.notices.add(new TellRawNotice(type, message));
+        this.multipleNotices.add(new TellRawNotice(type, message));
 
         this.noticeService.create()
             .notice(translation -> translation.chat().tellrawSaved())
@@ -81,7 +80,7 @@ class TellRawCommand {
     @DescriptionDocs(description = "")
     void tellRawSend(@Context Viewer sender) {
 
-        if (this.notices.isEmpty()) {
+        if (this.multipleNotices.isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.chat().tellrawNoSaved())
                 .viewer(sender)
@@ -89,14 +88,14 @@ class TellRawCommand {
             return;
         }
 
-        for (TellRawNotice notice : this.notices) {
+        for (TellRawNotice notice : this.multipleNotices) {
             this.noticeService.create()
                 .notice(notice.getNoticeTextType(), notice.getNoticeText())
                 .onlinePlayers()
                 .send();
         }
 
-        this.notices.clear();
+        this.multipleNotices.clear();
 
         this.noticeService.create()
             .notice(translation -> translation.chat().tellrawMultipleSent())
@@ -108,7 +107,7 @@ class TellRawCommand {
     @DescriptionDocs(description = "")
     void tellRawSend(@Context Viewer sender, @Arg Player target) {
 
-        if (this.notices.isEmpty()) {
+        if (this.multipleNotices.isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.chat().tellrawNoSaved())
                 .placeholder("{PLAYER}", target.getName())
@@ -117,14 +116,14 @@ class TellRawCommand {
             return;
         }
 
-        for (TellRawNotice notice : this.notices) {
+        for (TellRawNotice notice : this.multipleNotices) {
             this.noticeService.create()
                 .notice(notice.getNoticeTextType(), notice.getNoticeText())
                 .player(target.getUniqueId())
                 .send();
         }
 
-        this.notices.clear();
+        this.multipleNotices.clear();
 
         this.noticeService.create()
             .notice(translation -> translation.chat().tellrawMultipleSent())
@@ -136,7 +135,7 @@ class TellRawCommand {
     @Execute(name = "-clear")
     @DescriptionDocs(description = "")
     void tellRawClear(@Context Viewer sender) {
-        this.notices.clear();
+        this.multipleNotices.clear();
 
         this.noticeService.create()
             .notice(translation -> translation.chat().tellrawCleared())
