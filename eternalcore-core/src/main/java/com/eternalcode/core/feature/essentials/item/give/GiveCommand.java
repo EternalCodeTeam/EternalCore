@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.item.give;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.essentials.item.enchant.EnchantArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
@@ -13,6 +14,7 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -99,6 +101,29 @@ class GiveCommand {
             .send();
     }
 
+    @Execute
+    @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <player>")
+    void execute(@Context Viewer viewer, @Arg Material material, @Arg(GiveArgument.KEY) int amount, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level, @Arg Player target) {
+        String formattedMaterial = MaterialUtil.format(material);
+
+        this.giveItem(target, material, amount, enchantment, level);
+
+        this.noticeService.create()
+            .placeholder("{ITEM}", formattedMaterial)
+            .placeholder("{ENCHANTMENT}", enchantment.getKey().getKey())
+            .notice(translation -> translation.item().giveReceivedEnchantment())
+            .player(target.getUniqueId())
+            .send();
+
+        this.noticeService.create()
+            .placeholder("{ITEM}", formattedMaterial)
+            .placeholder("{PLAYER}", target.getName())
+            .placeholder("{ENCHANTMENT}", enchantment.getKey().getKey())
+            .notice(translation -> translation.item().giveGivenEnchantment())
+            .viewer(viewer)
+            .send();
+    }
+
     private void giveItem(Player player, Material material) {
         int amount = this.pluginConfig.items.defaultGiveAmount;
 
@@ -120,6 +145,15 @@ class GiveCommand {
     private void giveItem(Player player, Material material, int amount) {
         ItemStack item = ItemBuilder.from(material)
             .amount(amount)
+            .build();
+
+        player.getInventory().addItem(item);
+    }
+
+    private void giveItem(Player player, Material material, int amount, Enchantment enchantment, int level) {
+        ItemStack item = ItemBuilder.from(material)
+            .amount(amount)
+            .enchant(enchantment, level)
             .build();
 
         player.getInventory().addItem(item);
