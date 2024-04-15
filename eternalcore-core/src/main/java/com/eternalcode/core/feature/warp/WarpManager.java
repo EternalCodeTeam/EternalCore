@@ -1,16 +1,15 @@
 package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import org.bukkit.Location;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
-
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Optional;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import org.bukkit.Location;
 
 @FeatureDocs(
     name = "Warp System",
@@ -34,8 +33,7 @@ class WarpManager implements WarpService {
     }
 
     @Override
-    public void createWarp( String name, Location location) {
-
+    public void createWarp(String name, Location location) {
         Warp warp = new WarpImpl(name, PositionAdapter.convert(location));
 
         this.warpMap.put(name, warp);
@@ -44,7 +42,7 @@ class WarpManager implements WarpService {
     }
 
     @Override
-    public void removeWarp( String warp) {
+    public void removeWarp(String warp) {
         Warp remove = this.warpMap.remove(warp);
 
         if (remove == null) {
@@ -55,12 +53,12 @@ class WarpManager implements WarpService {
     }
 
     @Override
-    public boolean warpExists( String name) {
+    public boolean warpExists(String name) {
         return this.warpMap.containsKey(name);
     }
 
     @Override
-    public Optional<Warp> findWarp( String name) {
+    public Optional<Warp> findWarp(String name) {
         return Optional.ofNullable(this.warpMap.get(name));
     }
 
@@ -68,5 +66,4 @@ class WarpManager implements WarpService {
     public Collection<String> getNamesOfWarps() {
         return Collections.unmodifiableCollection(this.warpMap.keySet());
     }
-
 }

@@ -3,7 +3,7 @@ object Versions {
     const val SPIGOT_API = "1.19.4-R0.1-SNAPSHOT"
     const val PAPER_API = "1.19.4-R0.1-SNAPSHOT"
 
-    const val ETERNALCODE_COMMONS = "1.1.1"
+    const val ETERNALCODE_COMMONS = "1.1.2"
     const val MULTIFICATION = "1.0.2"
 
     const val JETBRAINS_ANNOTATIONS = "24.1.0"
@@ -31,7 +31,7 @@ object Versions {
 
     const val EXPRESSIBLE = "1.3.6"
     const val PANDA_UTILITIES = "0.5.3-alpha"
-    const val APACHE_COMMONS = "2.16.0"
+    const val APACHE_COMMONS = "2.16.1"
 
     const val TRIUMPH_GUI = "3.1.7"
 
