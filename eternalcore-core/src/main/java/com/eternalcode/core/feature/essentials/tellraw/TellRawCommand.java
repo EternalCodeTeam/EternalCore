@@ -12,19 +12,16 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
-import java.util.UUID;
 
 @Command(name = "tellraw")
-@Permission("eternalcore.tellraw")
+@Permission({ "eternalcore.tellraw" })
 class TellRawCommand {
 
     private final NoticeService noticeService;
-    private final TellRawService tellRawService;
 
     @Inject
-    TellRawCommand(NoticeService noticeService, TellRawService tellRawService) {
+    TellRawCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.tellRawService = tellRawService;
     }
 
     @Execute
@@ -60,85 +57,4 @@ class TellRawCommand {
             .send();
     }
 
-    @Execute(name = "-multiple")
-    @DescriptionDocs(description = "Save a message to send it later with /tellraw -send command", arguments = "<notice_type> <message>")
-    void tellRawMultiple(@Context Viewer sender, @Arg NoticeTextType type, @Join String message) {
-
-        this.tellRawService.addNotice(sender.getUniqueId(), new TellRawNotice(type, message));
-
-        this.noticeService.create()
-            .notice(translation -> translation.chat().tellrawSaved())
-            .placeholder("{MESSAGE}", message)
-            .placeholder("{TYPE}", type.name())
-            .viewer(sender)
-            .send();
-    }
-
-    @Execute(name = "-multiple-all")
-    @DescriptionDocs(description = "Send all saved messages to all players")
-    void tellRawSend(@Context Viewer sender) {
-        UUID uuid = sender.getUniqueId();
-
-        if (!this.tellRawService.hasNotices(uuid)) {
-            this.noticeService.create()
-                .notice(translation -> translation.chat().tellrawNoSaved())
-                .viewer(sender)
-                .send();
-            return;
-        }
-
-        for (TellRawNotice notice : this.tellRawService.getNotices(sender.getUniqueId())) {
-            this.noticeService.create()
-                .notice(notice.type(), notice.message())
-                .onlinePlayers()
-                .send();
-        }
-
-        this.tellRawService.removeNotices(uuid);
-
-        this.noticeService.create()
-            .notice(translation -> translation.chat().tellrawMultipleSent())
-            .viewer(sender)
-            .send();
-    }
-
-    @Execute(name = "-multiple-send")
-    @DescriptionDocs(description = "Send all saved messages to the player", arguments = "<player>")
-    void tellRawSend(@Context Viewer sender, @Arg Player target) {
-        UUID uuid = sender.getUniqueId();
-
-        if (!this.tellRawService.hasNotices(uuid)) {
-            this.noticeService.create()
-                .notice(translation -> translation.chat().tellrawNoSaved())
-                .placeholder("{PLAYER}", target.getName())
-                .viewer(sender)
-                .send();
-            return;
-        }
-
-        for (TellRawNotice tellRawNotice : this.tellRawService.getNotices(uuid)) {
-            this.noticeService.create()
-                .notice(tellRawNotice.type(), tellRawNotice.message())
-                .player(target.getUniqueId())
-                .send();
-        }
-
-        this.tellRawService.removeNotices(uuid);
-
-        this.noticeService.create()
-            .notice(translation -> translation.chat().tellrawMultipleSent())
-            .viewer(sender)
-            .send();
-    }
-
-    @Execute(name = "-multiple-clear")
-    @DescriptionDocs(description = "Clear all saved messages")
-    void tellRawClear(@Context Viewer sender) {
-        this.tellRawService.removeNotices(sender.getUniqueId());
-
-        this.noticeService.create()
-            .notice(translation -> translation.chat().tellrawCleared())
-            .viewer(sender)
-            .send();
-    }
 }
