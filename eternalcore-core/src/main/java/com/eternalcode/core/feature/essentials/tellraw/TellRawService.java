@@ -14,14 +14,11 @@ public class TellRawService {
     private final Map<UUID, Set<TellRawNotice>> multipleNotices = new HashMap<>();
 
     @Inject
-    TellRawService() {}
+    TellRawService() {
+    }
 
     void addNotice(UUID uuid, TellRawNotice notice) {
-        Set<TellRawNotice> notices = this.multipleNotices.get(uuid);
-
-        if (notices == null) {
-            notices = new HashSet<>();
-        }
+        Set<TellRawNotice> notices = this.multipleNotices.computeIfAbsent(uuid, k -> new HashSet<>());
 
         notices.add(notice);
         this.multipleNotices.put(uuid, notices);
@@ -33,5 +30,9 @@ public class TellRawService {
 
     void removeNotices(UUID uuid) {
         this.multipleNotices.remove(uuid);
+    }
+
+    boolean hasNotices(UUID uuid) {
+        return this.multipleNotices.containsKey(uuid);
     }
 }
