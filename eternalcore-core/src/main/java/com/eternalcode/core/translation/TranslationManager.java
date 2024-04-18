@@ -68,6 +68,6 @@ public class TranslationManager implements TranslationProvider<Translation> {
     @NotNull
     @Override
     public Translation provide(Locale locale) {
-        return this.getMessages(Language.fromLocate(locale));
+        return this.getMessages(Language.fromLocale(locale));
     }
 }
