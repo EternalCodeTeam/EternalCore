@@ -727,10 +727,11 @@ public class ENTranslation extends AbstractTranslation {
         @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item"})
         public Notice giveGiven = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
 
-        @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item, {ENCHANTMENT} - enchantment name"})
+        @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item, {ENCHANTMENT} - enchantment name, "
+            + "{ENCHANTMENT_LEVEL} - enchantment level"})
         public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
 
-        @Description({" ", "{ITEM} - the item, {ENCHANTMENT} - enchantment name"})
+        @Description({" ", "{ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
         public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>You have received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
 
         @Description(" ")

@@ -102,7 +102,7 @@ class GiveCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <player>")
+    @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <enchantment> <level> <player>")
     void execute(@Context Viewer viewer, @Arg Material material, @Arg(GiveArgument.KEY) int amount, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
@@ -111,6 +111,7 @@ class GiveCommand {
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{ENCHANTMENT}", enchantment.getKey().getKey())
+            .placeholder("{ENCHANTMENT_LEVEL}", String.valueOf(level))
             .notice(translation -> translation.item().giveReceivedEnchantment())
             .player(target.getUniqueId())
             .send();
@@ -119,6 +120,7 @@ class GiveCommand {
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{ENCHANTMENT}", enchantment.getKey().getKey())
+            .placeholder("{ENCHANTMENT_LEVEL}", String.valueOf(level))
             .notice(translation -> translation.item().giveGivenEnchantment())
             .viewer(viewer)
             .send();
