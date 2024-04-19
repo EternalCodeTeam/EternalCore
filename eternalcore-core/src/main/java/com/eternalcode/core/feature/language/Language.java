@@ -10,7 +10,7 @@ public class Language {
 
     public static final Language PL = new Language("pl", List.of("pl_pl"));
     public static final Language EN = new Language("en", List.of("en_en"));
-    public static final Language DEFAULT = Language.fromLocate(Locale.ROOT);
+    public static final Language DEFAULT = Language.fromLocale(Locale.ROOT);
 
     private final String lang;
     private final List<String> aliases;
@@ -66,7 +66,7 @@ public class Language {
         return Objects.hash(this.lang);
     }
 
-    public static Language fromLocate(Locale locale) {
+    public static Language fromLocale(Locale locale) {
         return new Language(locale.getLanguage(), List.of());
     }
 
