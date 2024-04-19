@@ -29,10 +29,7 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
 
     @Override
     public ParseResult<Player> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        Player target = this.server.getOnlinePlayers().stream()
-            .filter(player -> player.getName().equalsIgnoreCase(argument))
-            .findFirst()
-            .orElse(null);
+        Player target = this.server.getPlayerExact(argument);
 
         if (target == null) {
             return ParseResult.failure(translation.argument().offlinePlayer());
