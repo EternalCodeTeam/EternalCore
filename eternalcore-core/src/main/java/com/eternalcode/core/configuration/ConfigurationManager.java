@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
 import com.eternalcode.core.configuration.composer.MaterialComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
+import com.eternalcode.core.configuration.composer.SetComposer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.feature.language.Language;
@@ -29,6 +30,7 @@ public class ConfigurationManager {
         .createYamlLike()
         .getSettings()
         .withComposer(Duration.class, new DurationComposer())
+        .withComposer(Set.class, new SetComposer())
         .withComposer(Language.class, new LanguageComposer())
         .withComposer(Position.class, new PositionComposer())
         .withComposer(Notice.class, new MultificationNoticeCdnComposer())

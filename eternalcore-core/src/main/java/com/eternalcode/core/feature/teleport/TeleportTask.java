@@ -1,14 +1,13 @@
 package com.eternalcode.core.feature.teleport;
 
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.Notice;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -40,22 +39,35 @@ class TeleportTask implements Runnable {
 
     @Override
     public void run() {
-        List<Teleport> teleportsCopy = new ArrayList<>(this.teleportTaskService.getTeleports());
+        List<Teleport> teleports = List.copyOf(this.teleportTaskService.getTeleports());
 
-        for (Teleport teleport : teleportsCopy) {
-            Location destinationLocation = PositionAdapter.convert(teleport.getDestinationLocation());
-            Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
-            UUID uuid = teleport.getUuid();
-            Instant teleportMoment = teleport.getTeleportMoment();
+        for (Teleport teleport : teleports) {
+            UUID uuid = teleport.getPlayerUniqueId();
 
             Player player = this.server.getPlayer(uuid);
 
             if (player == null) {
+                this.teleportTaskService.removeTeleport(uuid);
                 continue;
             }
 
-            if (player.getLocation().distance(startLocation) > 0.5) {
+            Instant now = Instant.now();
+            Instant teleportMoment = teleport.getTeleportMoment();
+
+            if (now.isBefore(teleportMoment)) {
+                Duration duration = Duration.between(now, teleportMoment);
+
+                this.noticeService.create()
+                    .notice(translation -> translation.teleport().teleportTimerFormat())
+                    .placeholder("{TIME}", DurationUtil.format(duration))
+                    .player(player.getUniqueId())
+                    .send();
+                continue;
+            }
+
+            if (this.hasPlayerMovedDuringTeleport(player, teleport)) {
                 this.teleportTaskService.removeTeleport(uuid);
+                teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
 
                 this.noticeService.create()
                     .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
@@ -66,28 +78,30 @@ class TeleportTask implements Runnable {
                 continue;
             }
 
-            Instant now = Instant.now();
-
-            if (now.isBefore(teleportMoment)) {
-                Duration duration = Duration.between(now, teleportMoment);
-
-                this.noticeService.create()
-                    .notice(translation -> translation.teleport().teleportTimerFormat())
-                    .placeholder("{TIME}", DurationUtil.format(duration))
-                    .player(player.getUniqueId())
-                    .send();
-
-                continue;
-            }
-
-            this.teleportService.teleport(player, destinationLocation);
-            this.teleportTaskService.removeTeleport(uuid);
-
-            this.noticeService.create()
-                .notice(translation -> translation.teleport().teleported())
-                .player(player.getUniqueId())
-                .send();
+            this.completeTeleport(player, teleport);
         }
     }
+
+    private void completeTeleport(Player player, Teleport teleport) {
+        Location destinationLocation = PositionAdapter.convert(teleport.getDestinationLocation());
+        UUID uuid = teleport.getPlayerUniqueId();
+
+        this.teleportService.teleport(player, destinationLocation);
+        this.teleportTaskService.removeTeleport(uuid);
+
+        teleport.completeResult(TeleportResult.SUCCESS);
+
+        this.noticeService.create()
+            .notice(translation -> translation.teleport().teleported())
+            .player(player.getUniqueId())
+            .send();
+    }
+
+    private boolean hasPlayerMovedDuringTeleport(Player player, Teleport teleport) {
+        Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
+
+        return player.getLocation().distance(startLocation) > 0.5;
+    }
+
 }
 

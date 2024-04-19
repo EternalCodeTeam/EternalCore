@@ -2,6 +2,9 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
+import com.eternalcode.core.feature.jail.JailService;
+import com.eternalcode.core.feature.language.LanguageService;
+import com.eternalcode.core.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
@@ -19,5 +22,11 @@ public interface EternalCoreApi {
 
     RandomTeleportService getRandomTeleportService();
 
+    PrivateChatService getPrivateChatService();
+
     WarpService getWarpService();
+
+    JailService getJailService();
+
+    LanguageService getLanguageService();
 }

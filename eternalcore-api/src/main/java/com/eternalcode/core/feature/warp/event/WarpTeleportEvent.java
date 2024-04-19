@@ -6,13 +6,15 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class WarpTeleportEvent extends Event implements Cancellable {
+/**
+ * Called after teleportation to warp
+ */
+public class WarpTeleportEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
     private final Warp warp;
-    private boolean cancelled;
 
     public WarpTeleportEvent(Player player, Warp warp) {
         super(false);
@@ -32,16 +34,6 @@ public class WarpTeleportEvent extends Event implements Cancellable {
     @Override
     public HandlerList getHandlers() {
         return HANDLER_LIST;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return this.cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancel) {
-        this.cancelled = cancel;
     }
 
     public static HandlerList getHandlerList() {

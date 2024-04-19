@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport.request;
+package com.eternalcode.core.feature.teleportrequest;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;

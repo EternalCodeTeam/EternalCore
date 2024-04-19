@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import java.util.Locale;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -26,7 +27,7 @@ class EnchantmentArgument extends AbstractViewerArgument<Enchantment> {
 
     @Override
     public ParseResult<Enchantment> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument));
+        Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument.toLowerCase(Locale.ROOT)));
 
         if (enchantment == null) {
             return ParseResult.failure(translation.argument().noEnchantment());

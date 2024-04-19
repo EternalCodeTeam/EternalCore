@@ -5,6 +5,9 @@ import com.eternalcode.core.EternalCoreApiProvider;
 import com.eternalcode.example.feature.afk.ApiAfkCommand;
 import com.eternalcode.example.feature.afk.ApiAfkListener;
 import com.eternalcode.example.feature.catboy.CatBoyListener;
+import com.eternalcode.example.feature.jail.ApiJailCommand;
+import com.eternalcode.example.feature.jail.ApiJailListener;
+import com.eternalcode.example.feature.privatechat.ApiPrivateChatListener;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportCommand;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportListener;
 import com.eternalcode.example.feature.spawn.ApiSpawnCommand;
@@ -38,6 +41,8 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             .commands(
                 new ApiSpawnCommand(provide.getSpawnService()),
                 new ApiAfkCommand(provide.getAfkService()),
+                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                new ApiJailCommand(provide.getJailService()),
                 new ApiRandomTeleportCommand(provide.getRandomTeleportService())
             )
 
@@ -46,7 +51,10 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
         Stream.of(
             new ApiAfkListener(),
             new CatBoyListener(provide.getCatboyService()),
-            new ApiRandomTeleportListener(provide.getRandomTeleportService())
+            new ApiRandomTeleportListener(provide.getRandomTeleportService()),
+            new ApiPrivateChatListener(server),
+            new ApiRandomTeleportListener(provide.getRandomTeleportService()),
+            new ApiJailListener(server)
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, this));
     }
 
