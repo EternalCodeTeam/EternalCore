@@ -354,7 +354,9 @@ public interface Translation {
 
         // give
         Notice giveReceived();
+        Notice giveReceivedEnchantment();
         Notice giveGiven();
+        Notice giveGivenEnchantment();
 
         Notice giveNotItem();
 

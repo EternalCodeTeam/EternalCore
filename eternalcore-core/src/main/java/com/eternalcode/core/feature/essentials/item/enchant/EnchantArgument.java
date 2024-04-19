@@ -16,10 +16,10 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 @LiteArgument(type = int.class, name = EnchantArgument.KEY)
-class EnchantArgument extends AbstractViewerArgument<Integer> {
+public class EnchantArgument extends AbstractViewerArgument<Integer> {
 
     private static final List<Integer> suggestions = List.of(1, 2, 3, 4, 5);
-    static final String KEY = "enchant-level";
+    public static final String KEY = "enchant-level";
 
     @Inject
     public EnchantArgument(ViewerService viewerService, TranslationManager translationManager) {
