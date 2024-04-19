@@ -14,6 +14,7 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import java.util.Objects;
 
 @LiteArgument(type = Player.class)
 public class PlayerArgument extends AbstractViewerArgument<Player> {
@@ -28,7 +29,10 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
 
     @Override
     public ParseResult<Player> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        Player target = this.server.getPlayer(argument);
+        Player target = this.server.getOnlinePlayers().stream()
+            .filter(player -> player.getName().equalsIgnoreCase(argument))
+            .findFirst()
+            .orElse(null);
 
         if (target == null) {
             return ParseResult.failure(translation.argument().offlinePlayer());
