@@ -9,12 +9,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 @Controller
-class TeleportDeathController implements Listener {
+class TeleportDeathLastLocationController implements Listener {
 
     private final TeleportService teleportService;
 
     @Inject
-    TeleportDeathController(TeleportService teleportService) {
+    TeleportDeathLastLocationController(TeleportService teleportService) {
         this.teleportService = teleportService;
     }
 
@@ -24,5 +24,4 @@ class TeleportDeathController implements Listener {
 
         this.teleportService.markLastLocation(player.getUniqueId(), player.getLocation());
     }
-
 }

@@ -1,7 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -726,6 +726,13 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item"})
         public Notice giveGiven = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
+
+        @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item, {ENCHANTMENT} - enchantment name, "
+            + "{ENCHANTMENT_LEVEL} - enchantment level"})
+        public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
+
+        @Description({" ", "{ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
+        public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>You have received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
 
         @Description(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");

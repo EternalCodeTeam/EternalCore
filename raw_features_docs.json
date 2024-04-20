@@ -80,6 +80,15 @@
     ]
   },
   {
+    "name": "Jail Bypass",
+    "permissions": [
+      "eternalcore.jail.bypass"
+    ],
+    "descriptions": [
+      "Permission allows to bypass jail punishment"
+    ]
+  },
+  {
     "name": "Language Inventory",
     "permissions": [],
     "descriptions": [

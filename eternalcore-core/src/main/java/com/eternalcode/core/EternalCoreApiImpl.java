@@ -4,6 +4,7 @@ import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.jail.JailService;
+import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
@@ -30,23 +31,23 @@ class EternalCoreApiImpl implements EternalCoreApi {
     }
 
     @Override
-    public IgnoreService getIgnoreService() {
-        return this.dependencyProvider.getDependency(IgnoreService.class);
-    }
-
-    @Override
     public JailService getJailService() {
         return this.dependencyProvider.getDependency(JailService.class);
     }
 
     @Override
-    public RandomTeleportService getRandomTeleportService() {
-        return this.dependencyProvider.getDependency(RandomTeleportService.class);
+    public LanguageService getLanguageService() {
+        return this.dependencyProvider.getDependency(LanguageService.class);
     }
 
     @Override
     public PrivateChatService getPrivateChatService() {
         return this.dependencyProvider.getDependency(PrivateChatService.class);
+    }
+
+    @Override
+    public RandomTeleportService getRandomTeleportService() {
+        return this.dependencyProvider.getDependency(RandomTeleportService.class);
     }
 
     @Override
@@ -60,8 +61,12 @@ class EternalCoreApiImpl implements EternalCoreApi {
     }
 
     @Override
+    public TeleportService getTeleportService() {
+        return this.dependencyProvider.getDependency(TeleportService.class);
+    }
+
+    @Override
     public WarpService getWarpService() {
         return this.dependencyProvider.getDependency(WarpService.class);
     }
-
 }

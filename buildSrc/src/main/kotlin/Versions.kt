@@ -3,7 +3,7 @@ object Versions {
     const val SPIGOT_API = "1.19.4-R0.1-SNAPSHOT"
     const val PAPER_API = "1.19.4-R0.1-SNAPSHOT"
 
-    const val ETERNALCODE_COMMONS = "1.1.1"
+    const val ETERNALCODE_COMMONS = "1.1.2"
     const val MULTIFICATION = "1.0.2"
 
     const val JETBRAINS_ANNOTATIONS = "24.1.0"
@@ -23,7 +23,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "5.1.0"
 
-    const val LITE_COMMANDS = "3.4.0"
+    const val LITE_COMMANDS = "3.4.1"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.1.0-jre"
@@ -31,7 +31,7 @@ object Versions {
 
     const val EXPRESSIBLE = "1.3.6"
     const val PANDA_UTILITIES = "0.5.3-alpha"
-    const val APACHE_COMMONS = "2.15.1"
+    const val APACHE_COMMONS = "2.16.1"
 
     const val TRIUMPH_GUI = "3.1.7"
 

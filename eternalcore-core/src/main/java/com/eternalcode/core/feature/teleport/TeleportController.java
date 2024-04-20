@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.teleport;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,16 +12,14 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.UUID;
-
 @Controller
-class TeleportListeners implements Listener {
+class TeleportController implements Listener {
 
     private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
 
     @Inject
-    TeleportListeners(NoticeService noticeService, TeleportTaskService teleportTaskService) {
+    TeleportController(NoticeService noticeService, TeleportTaskService teleportTaskService) {
         this.noticeService = noticeService;
         this.teleportTaskService = teleportTaskService;
     }
@@ -49,13 +48,12 @@ class TeleportListeners implements Listener {
     private void removeTeleport(Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.teleportTaskService.inTeleport(uuid)) {
+        if (this.teleportTaskService.isInTeleport(uuid)) {
             this.teleportTaskService.removeTeleport(uuid);
 
             this.noticeService.create()
-                    .notice(translation -> translation.teleport().teleportTaskCanceled())
-                    .send();
+                .notice(translation -> translation.teleport().teleportTaskCanceled())
+                .send();
         }
     }
-
 }

@@ -7,16 +7,17 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Called after teleportation to warp
+ * Called before teleportation to warp.
  */
-public class WarpTeleportEvent extends Event {
+public class PreWarpTeleportEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Player player;
-    private final Warp warp;
+    private Warp warp;
+    private boolean cancelled;
 
-    public WarpTeleportEvent(Player player, Warp warp) {
+    public PreWarpTeleportEvent(Player player, Warp warp) {
         super(false);
 
         this.player = player;
@@ -29,6 +30,20 @@ public class WarpTeleportEvent extends Event {
 
     public Warp getWarp() {
         return this.warp;
+    }
+
+    public void setWarp(Warp warp) {
+        this.warp = warp;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        this.cancelled = cancel;
     }
 
     @Override

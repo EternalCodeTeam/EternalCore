@@ -329,10 +329,9 @@
     ]
   },
   {
-    "name": "delwarp",
+    "name": "delwarp ",
     "aliases": [],
     "permissions": [
-      "eternalcore.warp",
       "eternalcore.delwarp"
     ],
     "descriptions": [
@@ -796,6 +795,138 @@
     ]
   },
   {
+    "name": "jail detain",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.detain"
+    ],
+    "descriptions": [
+      "Detain a player for some time"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003ctime\u003e"
+    ]
+  },
+  {
+    "name": "jail detain",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.detain"
+    ],
+    "descriptions": [
+      "Detain a player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "jail detain",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.detain"
+    ],
+    "descriptions": [
+      "Detain self"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail list",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.list"
+    ],
+    "descriptions": [
+      "List all jailed players"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail release",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.release"
+    ],
+    "descriptions": [
+      "Release self from jail"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail release",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.release"
+    ],
+    "descriptions": [
+      "Release a player from jail"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "jail release -all",
+    "aliases": [
+      "jail, release *"
+    ],
+    "permissions": [
+      "eternalcore.jail.release"
+    ],
+    "descriptions": [
+      "Release all players from jail"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.setup"
+    ],
+    "descriptions": [
+      "Remove jail spawn area"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail setup",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.setup"
+    ],
+    "descriptions": [
+      "Define jail spawn area"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail setup",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.setup"
+    ],
+    "descriptions": [
+      "Define jail spawn area"
+    ],
+    "arguments": [
+      "\u003clocation\u003e"
+    ]
+  },
+  {
     "name": "kill ",
     "aliases": [],
     "permissions": [
@@ -1103,11 +1234,10 @@
     ]
   },
   {
-    "name": "setwarp",
+    "name": "setwarp ",
     "aliases": [],
     "permissions": [
-      "eternalcore.setwarp",
-      "eternalcore.warp"
+      "eternalcore.setwarp"
     ],
     "descriptions": [
       "Create warp"

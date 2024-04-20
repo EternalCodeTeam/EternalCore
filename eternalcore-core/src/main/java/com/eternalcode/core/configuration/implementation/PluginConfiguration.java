@@ -12,8 +12,7 @@ import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import com.eternalcode.core.feature.teleport.request.TeleportRequestSettings;
-import java.util.HashSet;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import java.util.Set;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -24,7 +23,6 @@ import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.List;
 import java.util.Map;
 
 @ConfigurationFile
@@ -373,6 +371,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Warp {
+        @Description("# Time of teleportation to warp's")
+        public Duration teleportTimeToWarp = Duration.ofSeconds(5);
+
         @Description("# Warp inventory should be enabled?")
         public boolean inventoryEnabled = true;
     }

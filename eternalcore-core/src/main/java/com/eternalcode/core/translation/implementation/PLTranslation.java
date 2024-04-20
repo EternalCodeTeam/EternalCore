@@ -1,7 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -737,6 +737,14 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({" ", "# {PLAYER} - Osoba której został przydzielony przedmiot, {ITEM} - Nazwa otrzymanego przedmiotu"})
         public Notice giveGiven = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM}");
+
+        @Description({" ", "# {PLAYER} - Gracz który otrzymał przedmiot, {ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - "
+            + "Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom zaklęcia"})
+        public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
+
+        @Description({" ", "{ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom "
+            + "zaklęcia"})
+        public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
 
         @Description(" ")
         public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podany przedmiot nie istnieje!");

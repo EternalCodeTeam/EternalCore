@@ -65,7 +65,7 @@ class SpawnCommand {
             return;
         }
 
-        if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
+        if (this.teleportTaskService.isInTeleport(sender.getUniqueId())) {
             this.noticeService.create()
                 .notice(translation -> translation.teleport().teleportTaskAlreadyExist())
                 .player(sender.getUniqueId())
