@@ -44,7 +44,7 @@ class TellRawCommand {
             .send();
     }
 
-    @Execute(name = "-all", aliases = "*")
+    @Execute(name = "send -all", aliases = "send *")
     @DescriptionDocs(description = "Broadcast a message without any prefixes etc.", arguments = "<notice_type> <message>")
     void tellRawAll(@Context Viewer sender, @Arg NoticeTextType type, @Join String message) {
         this.noticeService.create()
