@@ -128,6 +128,10 @@ public interface Translation {
         String alertMessageFormat();
         Notice tellrawInfo();
         Notice tellrawAllInfo();
+        Notice tellrawSaved();
+        Notice tellrawNoSaved();
+        Notice tellrawMultipleSent();
+        Notice tellrawCleared();
     }
 
     // Warp Section
