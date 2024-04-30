@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class TellRawService {
+class TellRawService {
 
     private final Map<UUID, Set<TellRawNotice>> multipleNotices = new HashMap<>();
 
