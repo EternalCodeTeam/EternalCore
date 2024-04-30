@@ -31,19 +31,23 @@ class ChatServiceImpl implements ChatService {
     public void markUseChat(UUID userUuid) {
         Duration chatDelay = this.chatSettings.getChatDelay();
 
-        ChatRestrictEvent event = new ChatRestrictEvent(userUuid, ChatRestrictCause.SLOWMODE);
-        this.eventCaller.callEvent(event);
-
-        if (event.isCancelled()) {
-            return;
-        }
-
         this.slowdown.put(userUuid, Instant.now().plus(chatDelay));
     }
 
     @Override
     public boolean hasSlowedChat(UUID userUuid) {
-        return Instant.now().isBefore(this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
+        boolean before = Instant.now().isBefore(this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
+
+        if (before) {
+            ChatRestrictEvent event = new ChatRestrictEvent(userUuid, ChatRestrictCause.SLOWMODE);
+            this.eventCaller.callEvent(event);
+
+            if (event.isCancelled()) {
+                return false;
+            }
+        }
+
+        return before;
     }
 
     @Override

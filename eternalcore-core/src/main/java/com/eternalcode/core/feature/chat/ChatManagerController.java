@@ -73,8 +73,6 @@ class ChatManagerController implements Listener {
                 .placeholder("{TIME}", DurationUtil.format(time))
                 .send();
 
-            this.eventCaller.callEvent(new ChatRestrictEvent(uniqueId, ChatRestrictCause.SLOWMODE));
-
             event.setCancelled(true);
         }
     }
