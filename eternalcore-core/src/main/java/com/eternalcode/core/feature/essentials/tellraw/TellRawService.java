@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.essentials.tellraw;
 
-import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,10 +11,6 @@ import java.util.UUID;
 public class TellRawService {
 
     private final Map<UUID, Set<TellRawNotice>> multipleNotices = new HashMap<>();
-
-    @Inject
-    TellRawService() {
-    }
 
     void addNotice(UUID uuid, TellRawNotice notice) {
         Set<TellRawNotice> notices = this.multipleNotices.computeIfAbsent(uuid, k -> new HashSet<>());

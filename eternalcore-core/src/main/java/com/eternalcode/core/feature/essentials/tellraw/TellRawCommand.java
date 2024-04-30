@@ -14,7 +14,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
 @Command(name = "tellraw")
-@Permission({ "eternalcore.tellraw" })
+@Permission("eternalcore.tellraw")
 class TellRawCommand {
 
     private final NoticeService noticeService;

@@ -15,15 +15,15 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @Command(name = "tellraw-queue", aliases = "tellraw-q")
-@Permission({ "eternalcore.tellraw.queue" })
+@Permission("eternalcore.tellraw.queue")
 class TellRawQueueCommand {
 
     private final TellRawService tellRawService;
     private final NoticeService noticeService;
 
     @Inject
-    TellRawQueueCommand(NoticeService noticeService) {
-        this.tellRawService = new TellRawService();
+    TellRawQueueCommand(NoticeService noticeService, TellRawService tellRawService) {
+        this.tellRawService = tellRawService;
         this.noticeService = noticeService;
     }
 
