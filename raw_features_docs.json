@@ -36,15 +36,6 @@
     ]
   },
   {
-    "name": "Colored sign",
-    "permissions": [
-      "eternalcore.sign"
-    ],
-    "descriptions": [
-      "Allows you to use color codes in signs"
-    ]
-  },
-  {
     "name": "CommandConfigurator",
     "permissions": [],
     "descriptions": [
