@@ -145,8 +145,7 @@ class ChatCommand {
     @DescriptionDocs(description = "Disable SlowMode for chat")
     void slowmodeOff(@Context Viewer viewer) {
         Duration noSlowMode = Duration.ZERO;
-        this.slowmode(viewer, noSlowMode); // you don't need to trigger the event a second time, because it's reefers
-        // to the method above.
+        this.slowmode(viewer, noSlowMode);
     }
 
     private static Supplier<Notice> create(ChatSettings settings) {
