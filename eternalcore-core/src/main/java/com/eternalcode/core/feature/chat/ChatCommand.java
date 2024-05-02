@@ -46,8 +46,7 @@ class ChatCommand {
     @Execute(name = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
     void clear(@Context CommandSender sender) {
-        ClearChatEvent event = new ClearChatEvent(sender);
-        this.eventCaller.callEvent(event);
+        ClearChatEvent event = this.eventCaller.callEvent(new ClearChatEvent(sender));
 
         if (event.isCancelled()) {
             return;
@@ -69,8 +68,7 @@ class ChatCommand {
             return;
         }
 
-        EnableChatEvent event = new EnableChatEvent(sender);
-        this.eventCaller.callEvent(event);
+        EnableChatEvent event = this.eventCaller.callEvent(new EnableChatEvent(sender));
 
         if (event.isCancelled()) {
             return;
@@ -93,8 +91,7 @@ class ChatCommand {
             return;
         }
 
-        DisableChatEvent event = new DisableChatEvent(sender);
-        this.eventCaller.callEvent(event);
+        DisableChatEvent event = this.eventCaller.callEvent(new DisableChatEvent(sender));
 
         if (event.isCancelled()) {
             return;
@@ -130,7 +127,11 @@ class ChatCommand {
         }
 
         Duration chatDelay = this.chatSettings.getChatDelay();
-        this.eventCaller.callEvent(new EditSlowModeEvent(chatDelay, duration, viewer.getUniqueId()));
+        EditSlowModeEvent event = this.eventCaller.callEvent(new EditSlowModeEvent(chatDelay, duration, viewer.getUniqueId()));
+
+        if (event.isCancelled()) {
+            return;
+        }
 
         this.chatSettings.setChatDelay(duration);
 

@@ -1,8 +1,5 @@
 package com.eternalcode.core.feature.chat;
 
-import com.eternalcode.core.event.EventCaller;
-import com.eternalcode.core.feature.chat.event.restrict.ChatRestrictCause;
-import com.eternalcode.core.feature.chat.event.restrict.ChatRestrictEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.github.benmanes.caffeine.cache.Cache;
@@ -16,12 +13,10 @@ class ChatServiceImpl implements ChatService {
 
     private final ChatSettings chatSettings;
     private final Cache<UUID, Instant> slowdown;
-    private final EventCaller eventCaller;
 
     @Inject
-    ChatServiceImpl(ChatSettings chatSettings, EventCaller eventCaller) {
+    ChatServiceImpl(ChatSettings chatSettings) {
         this.chatSettings = chatSettings;
-        this.eventCaller = eventCaller;
         this.slowdown = Caffeine.newBuilder()
             .expireAfterWrite(this.chatSettings.getChatDelay().plus(Duration.ofSeconds(10)))
             .build();
@@ -36,22 +31,18 @@ class ChatServiceImpl implements ChatService {
 
     @Override
     public boolean hasSlowedChat(UUID userUuid) {
-        boolean before = Instant.now().isBefore(this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
-
-        if (before) {
-            ChatRestrictEvent event = new ChatRestrictEvent(userUuid, ChatRestrictCause.SLOWMODE);
-            this.eventCaller.callEvent(event);
-
-            if (event.isCancelled()) {
-                return false;
-            }
-        }
-
-        return before;
+        return Instant.now().isBefore(this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
     }
 
     @Override
-    public Duration getSlowDown(UUID userUuid) {
-        return Duration.between(Instant.now(), this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
+    public Duration getRemainingSlowDown(UUID userUuid) {
+        Instant unlockMoment = this.slowdown.asMap().get(userUuid);
+
+        if (unlockMoment == null) {
+            return Duration.ZERO;
+        }
+
+        return Duration.between(Instant.now(), unlockMoment);
     }
+
 }

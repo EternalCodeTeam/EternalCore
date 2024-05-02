@@ -26,7 +26,7 @@ public class ChatRestrictEvent extends Event implements Cancellable {
         return this.playerUniqueId;
     }
 
-    public ChatRestrictCause getChatRestrictCause() {
+    public ChatRestrictCause getCause() {
         return this.chatRestrictCause;
     }
 
