@@ -1,6 +1,11 @@
 package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.chat.event.ClearChatEvent;
+import com.eternalcode.core.feature.chat.event.DisableChatEvent;
+import com.eternalcode.core.feature.chat.event.EditSlowModeEvent;
+import com.eternalcode.core.feature.chat.event.EnableChatEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -17,22 +22,36 @@ import org.bukkit.command.CommandSender;
 
 @Command(name = "chat")
 @Permission("eternalcore.chat")
-class ChatManagerCommand {
+class ChatCommand {
+
+    private final NoticeService noticeService;
+    private final ChatSettings chatSettings;
+    private final EventCaller eventCaller;
 
     private final Supplier<Notice> clear;
-    private final NoticeService noticeService;
-    private final ChatManager chatManager;
 
     @Inject
-    ChatManagerCommand(ChatManager chatManager, NoticeService noticeService, ChatSettings settings) {
+    ChatCommand(
+        NoticeService noticeService,
+        ChatSettings chatSettings,
+        EventCaller eventCaller
+    ) {
         this.noticeService = noticeService;
-        this.chatManager = chatManager;
-        this.clear = create(settings);
+        this.chatSettings = chatSettings;
+
+        this.clear = create(chatSettings);
+        this.eventCaller = eventCaller;
     }
 
     @Execute(name = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
     void clear(@Context CommandSender sender) {
+        ClearChatEvent event = this.eventCaller.callEvent(new ClearChatEvent(sender));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         this.noticeService.create()
             .notice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
@@ -44,12 +63,18 @@ class ChatManagerCommand {
     @Execute(name = "on")
     @DescriptionDocs(description = "Enables chat")
     void enable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (this.chatManager.getChatSettings().isChatEnabled()) {
+        if (this.chatSettings.isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
         }
 
-        this.chatManager.getChatSettings().setChatEnabled(true);
+        EnableChatEvent event = this.eventCaller.callEvent(new EnableChatEvent(sender));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        this.chatSettings.setChatEnabled(true);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().enabled())
@@ -61,12 +86,18 @@ class ChatManagerCommand {
     @Execute(name = "off")
     @DescriptionDocs(description = "Disables chat")
     void disable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (!this.chatManager.getChatSettings().isChatEnabled()) {
+        if (!this.chatSettings.isChatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
         }
 
-        this.chatManager.getChatSettings().setChatEnabled(false);
+        DisableChatEvent event = this.eventCaller.callEvent(new DisableChatEvent(sender));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        this.chatSettings.setChatEnabled(false);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().disabled())
@@ -91,11 +122,18 @@ class ChatManagerCommand {
                 .onlinePlayers()
                 .send();
 
-            this.chatManager.getChatSettings().setChatDelay(duration);
+            this.chatSettings.setChatDelay(duration);
             return;
         }
 
-        this.chatManager.getChatSettings().setChatDelay(duration);
+        Duration chatDelay = this.chatSettings.getChatDelay();
+        EditSlowModeEvent event = this.eventCaller.callEvent(new EditSlowModeEvent(chatDelay, duration, viewer.getUniqueId()));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        this.chatSettings.setChatDelay(duration);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
