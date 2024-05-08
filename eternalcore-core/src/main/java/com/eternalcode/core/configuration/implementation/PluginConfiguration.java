@@ -371,11 +371,14 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Warp {
-        @Description("# Time of teleportation to warp's")
+        @Description("# Time of teleportation to warp")
         public Duration teleportTimeToWarp = Duration.ofSeconds(5);
 
         @Description("# Warp inventory should be enabled?")
         public boolean inventoryEnabled = true;
+
+        @Description("# Warp inventory auto add new warps")
+        public boolean autoAddNewWarps = true;
     }
 
     @Description({ " ", "# Butcher" })

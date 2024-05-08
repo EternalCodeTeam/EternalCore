@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface WarpService {
 
-    void createWarp(String name, Location location);
+    Warp createWarp(String name, Location location);
 
     void removeWarp(String warp);
 

@@ -1,10 +1,12 @@
 package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.commons.adventure.AdventureUtil;
+import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.Translation.WarpSection.WarpInventorySection;
 import com.eternalcode.core.translation.TranslationManager;
@@ -25,24 +27,27 @@ import org.bukkit.entity.Player;
 public class WarpInventory {
 
     private final TranslationManager translationManager;
-    private final WarpManager warpManager;
+    private final WarpServiceImpl warpManager;
     private final Server server;
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
+    private final ConfigurationManager configurationManager;
 
     @Inject
     WarpInventory(
         TranslationManager translationManager,
-        WarpManager warpManager,
+        WarpServiceImpl warpManager,
         Server server,
         MiniMessage miniMessage,
-        WarpTeleportService warpTeleportService
+        WarpTeleportService warpTeleportService,
+        ConfigurationManager configurationManager
     ) {
         this.translationManager = translationManager;
         this.warpManager = warpManager;
         this.server = server;
         this.miniMessage = miniMessage;
         this.warpTeleportService = warpTeleportService;
+        this.configurationManager = configurationManager;
     }
 
     private Gui createInventory(Language language) {
@@ -163,5 +168,36 @@ public class WarpInventory {
 
     public void openInventory(Player player, Language language) {
         this.createInventory(language).open(player);
+    }
+
+    public void addWarp(Warp warp) {
+
+        if (!this.warpManager.warpExists(warp.getName())) {
+            return;
+        }
+
+        for (Language language : this.translationManager.getAvailableLanguages()) {
+
+            AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
+            Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+
+            int size = warpSection.items().size() + 10;
+
+
+            warpSection.addItem(warp.getName(),
+                WarpInventoryItem.builder()
+                    .withWarpName(warp.getName())
+                    .withWarpItem(ConfigItem.builder()
+                        .withName("&8» &6Warp: &f" + warp.getName())
+                        .withLore(Collections.singletonList("<gray>Click to teleport!"))
+                        .withMaterial(Material.ENDER_PEARL)
+                        .withSlot(size)
+                        .withGlow(true)
+                        .build())
+                    .build());
+
+            this.configurationManager.save(translation);
+
+        }
     }
 }

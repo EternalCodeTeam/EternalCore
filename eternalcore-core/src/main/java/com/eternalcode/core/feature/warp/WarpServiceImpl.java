@@ -16,13 +16,13 @@ import org.bukkit.Location;
     description = "Allows you to create warps, optionally you can enable warp inventory"
 )
 @Service
-class WarpManager implements WarpService {
+class WarpServiceImpl implements WarpService {
 
     private final Map<String, Warp> warpMap = new HashMap<>();
     private final WarpRepository warpRepository;
 
     @Inject
-    private WarpManager(WarpRepository warpRepository) {
+    private WarpServiceImpl(WarpRepository warpRepository) {
         this.warpRepository = warpRepository;
 
         warpRepository.getWarps().thenAcceptAsync(warps -> {
@@ -33,12 +33,14 @@ class WarpManager implements WarpService {
     }
 
     @Override
-    public void createWarp(String name, Location location) {
+    public Warp createWarp(String name, Location location) {
         Warp warp = new WarpImpl(name, PositionAdapter.convert(location));
 
         this.warpMap.put(name, warp);
 
         this.warpRepository.addWarp(warp);
+
+        return warp;
     }
 
     @Override
