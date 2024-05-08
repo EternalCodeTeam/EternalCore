@@ -183,7 +183,8 @@ public class WarpInventory {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 
-            int size = warpSection.items().size() + GUI_FIRST_ITEM_SLOT;
+            int size = warpSection.items().size();
+            int slot = warpSection.border().enabled() ? size + GUI_FIRST_ITEM_SLOT : size;
 
             warpSection.addItem(warp.getName(),
                 WarpInventoryItem.builder()
@@ -192,7 +193,7 @@ public class WarpInventory {
                         .withName("&8» &6Warp: &f" + warp.getName())
                         .withLore(Collections.singletonList("<gray>Click to teleport!"))
                         .withMaterial(Material.ENDER_PEARL)
-                        .withSlot(size)
+                        .withSlot(slot)
                         .withGlow(true)
                         .build())
                     .build());
