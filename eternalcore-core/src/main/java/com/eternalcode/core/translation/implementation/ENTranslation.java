@@ -1,6 +1,5 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
