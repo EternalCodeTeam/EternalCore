@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Getter
 @Accessors(fluent = true)
-public class ENTranslation extends AbstractTranslation implements ReloadableConfig {
+public class ENTranslation extends AbstractTranslation {
 
     ENTranslation(Language language) {
         super(language);

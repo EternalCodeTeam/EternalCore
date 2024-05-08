@@ -26,8 +26,10 @@ import org.bukkit.entity.Player;
 @Service
 public class WarpInventory {
 
+    private static final int GUI_FIRST_ITEM_SLOT = 10;
+
     private final TranslationManager translationManager;
-    private final WarpServiceImpl warpManager;
+    private final WarpService warpManager;
     private final Server server;
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
@@ -36,7 +38,7 @@ public class WarpInventory {
     @Inject
     WarpInventory(
         TranslationManager translationManager,
-        WarpServiceImpl warpManager,
+        WarpService warpManager,
         Server server,
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
@@ -181,8 +183,7 @@ public class WarpInventory {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 
-            int size = warpSection.items().size() + 10;
-
+            int size = warpSection.items().size() + GUI_FIRST_ITEM_SLOT;
 
             warpSection.addItem(warp.getName(),
                 WarpInventoryItem.builder()
