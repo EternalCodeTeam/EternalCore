@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -34,6 +35,7 @@ public class WarpInventory {
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
     private final ConfigurationManager configurationManager;
+    private final PluginConfiguration config;
 
     @Inject
     WarpInventory(
@@ -42,7 +44,8 @@ public class WarpInventory {
         Server server,
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
-        ConfigurationManager configurationManager
+        ConfigurationManager configurationManager,
+        PluginConfiguration config
     ) {
         this.translationManager = translationManager;
         this.warpManager = warpManager;
@@ -50,6 +53,7 @@ public class WarpInventory {
         this.miniMessage = miniMessage;
         this.warpTeleportService = warpTeleportService;
         this.configurationManager = configurationManager;
+        this.config = config;
     }
 
     private Gui createInventory(Language language) {
@@ -190,9 +194,10 @@ public class WarpInventory {
                 WarpInventoryItem.builder()
                     .withWarpName(warp.getName())
                     .withWarpItem(ConfigItem.builder()
-                        .withName("&8» &6Warp: &f" + warp.getName())
-                        .withLore(Collections.singletonList("<gray>Click to teleport!"))
-                        .withMaterial(Material.ENDER_PEARL)
+                        .withName(this.config.warp.itemNamePrefix + warp.getName())
+                        .withLore(Collections.singletonList(this.config.warp.itemLore))
+                        .withMaterial(this.config.warp.itemMaterial)
+                        .withTexture(this.config.warp.itemTexture)
                         .withSlot(slot)
                         .withGlow(true)
                         .build())
