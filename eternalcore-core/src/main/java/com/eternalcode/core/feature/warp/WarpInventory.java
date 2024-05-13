@@ -27,7 +27,13 @@ import org.bukkit.entity.Player;
 @Service
 public class WarpInventory {
 
-    private static final int GUI_FIRST_ITEM_SLOT = 10;
+    private static final int GUI_ITEM_SLOT_WITH_TOP_BORDER = 9;
+    private static final int GUI_ITEM_SLOT_WITHOUT_BORDER = 0;
+    private static final int GUI_ITEM_SLOT_WITH_ALL_BORDER = 1;
+    private static final int GUI_ITEM_SLOT_WITH_BORDER = 10;
+
+    private static final int GUI_ROW_SIZE_WITHOUT_BORDER = 9;
+    private static final int GUI_ROW_SIZE_WITH_BORDER = 7;
 
     private final TranslationManager translationManager;
     private final WarpService warpManager;
@@ -60,9 +66,24 @@ public class WarpInventory {
         Translation translation = this.translationManager.getMessages(language);
         Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 
+        int rowsCount;
+        int size = warpSection.items().size();
+
+        if (!warpSection.border().enabled()) {
+            rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1;
+        }
+        else {
+            switch (warpSection.border().fillType()) {
+                case BORDER, ALL -> rowsCount = (size + 1) / GUI_ROW_SIZE_WITH_BORDER + 3;
+                case TOP, BOTTOM -> rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 2;
+                default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
+            }
+        }
+
+
         Gui gui = Gui.gui()
             .title(this.miniMessage.deserialize(warpSection.title()))
-            .rows(warpSection.rows())
+            .rows(rowsCount)
             .disableAllInteractions()
             .create();
 
@@ -188,7 +209,21 @@ public class WarpInventory {
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 
             int size = warpSection.items().size();
-            int slot = warpSection.border().enabled() ? size + GUI_FIRST_ITEM_SLOT : size;
+            int slot;
+
+            if (!warpSection.border().enabled()) {
+                slot = GUI_ITEM_SLOT_WITHOUT_BORDER + size;
+            }
+            else {
+                switch (warpSection.border().fillType()) {
+                    case BORDER -> slot = GUI_ITEM_SLOT_WITH_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
+                    case ALL -> slot = GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
+                    case TOP -> slot = GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
+                    case BOTTOM -> slot = size;
+                    default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
+                }
+            }
+
 
             warpSection.addItem(warp.getName(),
                 WarpInventoryItem.builder()

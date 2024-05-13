@@ -380,7 +380,6 @@ public class PLTranslation extends AbstractTranslation {
         @Contextual
         public static class PLWarpInventory implements WarpInventorySection {
             public String title = "<dark_gray>» <green>Lista dostępnych warpów";
-            public int rows = 3;
 
             @Description({
                 " ",
@@ -400,6 +399,7 @@ public class PLTranslation extends AbstractTranslation {
             @Getter
             @Contextual
             public static class PLBorderSection implements BorderSection {
+                @Description({" ", "# Zmiany w tej sekcji mogą wpłynąć na wygląd GUI, zwróć uwagę na zmiany slotów przedmiotów w GUI."})
                 public boolean enabled = true;
 
                 public Material material = Material.GRAY_STAINED_GLASS_PANE;

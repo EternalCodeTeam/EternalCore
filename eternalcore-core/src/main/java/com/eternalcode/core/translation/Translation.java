@@ -149,7 +149,6 @@ public interface Translation {
 
         interface WarpInventorySection {
             String title();
-            int rows();
 
             Map<String, WarpInventoryItem> items();
             void setItems(Map<String, WarpInventoryItem> items);

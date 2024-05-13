@@ -378,7 +378,6 @@ public class ENTranslation extends AbstractTranslation {
         @Contextual
         public static class ENWarpInventory implements WarpInventorySection {
             public String title = "<dark_gray>» <green>Available warps:";
-            public int rows = 3;
 
 
             @Description({" ", "# Warps located inside GUI inventory can be customized here, to add warp use /addwarpgui <warp> command. "})
@@ -394,6 +393,8 @@ public class ENTranslation extends AbstractTranslation {
             @Getter
             @Contextual
             public static class ENBorderSection implements BorderSection {
+
+                @Description({" ", "# Changes of border section may affect the appearance of the GUI inventory, after changes adjust slots of existing items."})
                 public boolean enabled = true;
 
                 public Material material = Material.GRAY_STAINED_GLASS_PANE;
