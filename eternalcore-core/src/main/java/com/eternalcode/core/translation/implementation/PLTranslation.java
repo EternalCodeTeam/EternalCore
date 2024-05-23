@@ -385,7 +385,7 @@ public class PLTranslation extends AbstractTranslation {
             @Description({
                 " ",
                 "# Poniższa lista określa przedmioty w GUI, które są wyświetlane w liście dostępnych warpów.",
-                "# Możesz edytować przedmioty, w celu dodania kolejnych warpów do listy skorzystać z komendy /addwarpgui <warp> na swoim serwerze.",
+                "# Możesz edytować przedmioty, a dodawanie kolejnych warpów następuje automatycznie za pomocą komendy /setwarp",
             })
             public Map<String, WarpInventoryItem> items = new HashMap<>();
 

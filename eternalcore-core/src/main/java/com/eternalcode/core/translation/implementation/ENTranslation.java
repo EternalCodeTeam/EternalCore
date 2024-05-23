@@ -381,7 +381,7 @@ public class ENTranslation extends AbstractTranslation {
             public String title = "<dark_gray>» <green>Available warps:";
 
 
-            @Description({" ", "# Warps located inside GUI inventory can be customized here, to add warp use /addwarpgui <warp> command. "})
+            @Description({" ", "# Warps located inside GUI inventory can be customized here. More warps will be added on creation with /setwarp command. "})
             public Map<String, WarpInventoryItem> items = new HashMap<>();
 
             public void setItems(Map<String, WarpInventoryItem> items) {
