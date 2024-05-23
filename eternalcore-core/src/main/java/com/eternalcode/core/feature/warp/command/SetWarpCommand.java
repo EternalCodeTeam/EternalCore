@@ -19,6 +19,8 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.setwarp")
 class SetWarpCommand {
 
+    private static final int MAX_WARPS_IN_GUI = 56;
+
     private final WarpService warpService;
     private final WarpInventory warpInventory;
     private final NoticeService noticeService;
@@ -61,12 +63,24 @@ class SetWarpCommand {
 
         if (this.config.warp.autoAddNewWarps) {
 
-            this.warpInventory.addWarp(createdWarp);
+            if (this.warpService.getNamesOfWarps().size() <= MAX_WARPS_IN_GUI) {
+
+                this.warpInventory.addWarp(createdWarp);
+
+                this.noticeService.create()
+                    .player(uniqueId)
+                    .notice(translation -> translation.warp().itemAdded())
+                    .send();
+
+                return;
+            }
 
             this.noticeService.create()
                 .player(uniqueId)
-                .notice(translation -> translation.warp().itemAdded())
+                .notice(translation -> translation.warp().itemLimit())
+                .placeholder("{LIMIT}", String.valueOf(MAX_WARPS_IN_GUI))
                 .send();
+
         }
     }
 }

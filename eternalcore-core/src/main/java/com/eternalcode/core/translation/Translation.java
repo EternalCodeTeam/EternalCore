@@ -145,6 +145,7 @@ public interface Translation {
         Notice available();
         Notice itemAdded();
         Notice noWarps();
+        Notice itemLimit();
 
         WarpInventorySection warpInventory();
 

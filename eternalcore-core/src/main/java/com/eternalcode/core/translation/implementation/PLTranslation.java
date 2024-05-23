@@ -371,6 +371,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice notExist = Notice.chat("<red>► <dark_red>Nie odnaleziono takiego warpu!");
         public Notice itemAdded = Notice.chat("<green>► <white>Dodano warp do GUI!");
         public Notice noWarps = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma dostępnych warpów!");
+        public Notice itemLimit = Notice.chat("<red>✘ <dark_red>Błąd: <red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
         @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
         public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
 
