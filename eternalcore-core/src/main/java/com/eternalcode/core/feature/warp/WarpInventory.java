@@ -242,4 +242,24 @@ public class WarpInventory {
 
         }
     }
+
+    public boolean removeWarp(String warpName) {
+
+        if (!this.warpManager.warpExists(warpName)) {
+            return false;
+        }
+
+        for (Language language : this.translationManager.getAvailableLanguages()) {
+
+            AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
+            Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+
+            warpSection.removeItem(warpName);
+
+            this.configurationManager.save(translation);
+
+        }
+
+        return true;
+    }
 }

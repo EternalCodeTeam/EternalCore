@@ -367,6 +367,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice remove = Notice.chat("<red>► <white>Warp <red>{WARP} <white>has been deleted.");
         public Notice notExist = Notice.chat("<red>► <dark_red>This warp doesn't exist");
         public Notice itemAdded = Notice.chat("<green>► <white>Warp has been added to GUI!");
+        public Notice noWarps = Notice.chat("<red>✘ <dark_red>There are no warps!");
 
         @Description({" ", "# {WARPS} - List of warps (separated by commas)"})
         public Notice available = Notice.chat("<green>► <white>Available warps: <green>{WARPS}");

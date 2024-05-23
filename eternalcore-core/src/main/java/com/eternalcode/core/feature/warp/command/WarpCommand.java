@@ -54,6 +54,15 @@ class WarpCommand {
             return;
         }
 
+        if (!this.warpService.hasWarps()) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.warp().noWarps())
+                .send();
+
+            return;
+        }
+
         this.warpInventory.openInventory(player, user.getLanguage());
     }
 

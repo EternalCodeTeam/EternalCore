@@ -144,6 +144,7 @@ public interface Translation {
         Notice remove();
         Notice available();
         Notice itemAdded();
+        Notice noWarps();
 
         WarpInventorySection warpInventory();
 
@@ -156,6 +157,13 @@ public interface Translation {
             default void addItem(String name, WarpInventoryItem item) {
                 Map<String, WarpInventoryItem> items = new HashMap<>(this.items());
                 items.put(name, item);
+
+                this.setItems(items);
+            }
+
+            default void removeItem(String name) {
+                Map<String, WarpInventoryItem> items = new HashMap<>(this.items());
+                items.remove(name);
 
                 this.setItems(items);
             }

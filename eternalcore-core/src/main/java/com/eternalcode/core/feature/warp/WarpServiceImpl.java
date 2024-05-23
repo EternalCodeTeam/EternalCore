@@ -68,4 +68,9 @@ class WarpServiceImpl implements WarpService {
     public Collection<String> getNamesOfWarps() {
         return Collections.unmodifiableCollection(this.warpMap.keySet());
     }
+
+    @Override
+    public boolean hasWarps() {
+        return !this.warpMap.isEmpty();
+    }
 }
