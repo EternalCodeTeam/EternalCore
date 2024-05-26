@@ -13,7 +13,7 @@ import org.bukkit.plugin.Plugin;
 class AdventureSetup {
 
     @Bean
-    AudienceProvider skullAPI(Plugin plugin) {
+    AudienceProvider audienceProvider(Plugin plugin) {
         return BukkitAudiences.create(plugin);
     }
 

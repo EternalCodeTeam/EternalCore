@@ -7,17 +7,17 @@ object Versions {
     const val MULTIFICATION = "1.0.2"
 
     const val JETBRAINS_ANNOTATIONS = "24.1.0"
-    const val PLACEHOLDER_API = "2.11.5"
+    const val PLACEHOLDER_API = "2.11.6"
     const val LOMBOK = "1.18.32"
     const val GIT_CHECK = "1.0.0"
 
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_PLATFORM = "4.3.2"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.16.0"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "4.17.0"
     const val ADVENTURE_PLATFORM_FACET = "4.3.2"
     const val CDN_CONFIGS = "1.14.4"
 
-    const val MARIA_DB = "3.3.3"
+    const val MARIA_DB = "3.4.0"
     const val POSTGRESQL = "42.7.3"
     const val H2 = "2.1.214"
     const val ORMLITE = "6.1"
@@ -26,8 +26,8 @@ object Versions {
     const val LITE_COMMANDS = "3.4.1"
     const val LITE_SKULL_API = "1.3.0"
 
-    const val GUAVA = "33.1.0-jre"
-    const val GSON = "2.10.1"
+    const val GUAVA = "33.2.0-jre"
+    const val GSON = "2.11.0"
 
     const val EXPRESSIBLE = "1.3.6"
     const val PANDA_UTILITIES = "0.5.3-alpha"
@@ -44,6 +44,6 @@ object Versions {
     const val JUNIT_JUPITER_API = "5.10.2"
     const val JUNIT_JUPITER_PARAMS = "5.10.2"
     const val JUNIT_JUPITER_ENGINE = "5.10.2"
-    const val MOCKITO_CORE = "5.11.0"
+    const val MOCKITO_CORE = "5.12.0"
 
 }
