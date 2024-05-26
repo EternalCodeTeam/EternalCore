@@ -7,7 +7,7 @@ group = "com.eternalcode"
 version = "1.2.1"
 
 checkstyle {
-    toolVersion = "10.16.0"
+    toolVersion = "10.17.0"
 
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     configProperties["checkstyle.suppressions.file"] = "${rootDir}/config/checkstyle/suppressions.xml"
