@@ -43,8 +43,26 @@ class HomePlaceholderSetup implements Subscriber {
         Stream.of(
             PlaceholderReplacer.of("homes_owned", (text, targetPlayer) -> this.ownedHomes(targetPlayer)),
             PlaceholderReplacer.of("homes_count", (text, targetPlayer) -> this.homesCount(targetPlayer)),
-            PlaceholderReplacer.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer))
+            PlaceholderReplacer.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer)),
+            PlaceholderReplacer.of("homes_left", (text, targetPlayer) -> this.homesLeft(targetPlayer))
         ).forEach(placeholder -> placeholderRegistry.registerPlaceholder(placeholder));
+    }
+
+    private String homesLeft(Player targetPlayer) {
+        int homesLimit = this.homeManager.getHomeLimit(targetPlayer, this.pluginConfiguration.homes);
+        int amountOfHomes = this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId());
+
+        return homesLeft(homesLimit, amountOfHomes);
+    }
+
+    static String homesLeft(int homesLimit, int amountOfHomes) {
+        if (homesLimit < -1) {
+            return "0";
+        }
+
+        int result = homesLimit - amountOfHomes;
+
+        return String.valueOf(result);
     }
 
     private String ownedHomes(Player targetPlayer) {

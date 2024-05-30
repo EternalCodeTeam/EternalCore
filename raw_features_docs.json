@@ -36,15 +36,6 @@
     ]
   },
   {
-    "name": "Colored sign",
-    "permissions": [
-      "eternalcore.sign"
-    ],
-    "descriptions": [
-      "Allows you to use color codes in signs"
-    ]
-  },
-  {
     "name": "CommandConfigurator",
     "permissions": [],
     "descriptions": [
@@ -77,6 +68,15 @@
     "permissions": [],
     "descriptions": [
       "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
+    ]
+  },
+  {
+    "name": "Jail Bypass",
+    "permissions": [
+      "eternalcore.jail.bypass"
+    ],
+    "descriptions": [
+      "Permission allows to bypass jail punishment"
     ]
   },
   {

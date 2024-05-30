@@ -1,7 +1,7 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.config.WarpInventoryItem;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
@@ -128,6 +128,10 @@ public interface Translation {
         String alertMessageFormat();
         Notice tellrawInfo();
         Notice tellrawAllInfo();
+        Notice tellrawSaved();
+        Notice tellrawNoSaved();
+        Notice tellrawMultipleSent();
+        Notice tellrawCleared();
     }
 
     // Warp Section
@@ -354,7 +358,9 @@ public interface Translation {
 
         // give
         Notice giveReceived();
+        Notice giveReceivedEnchantment();
         Notice giveGiven();
+        Notice giveGivenEnchantment();
 
         Notice giveNotItem();
 

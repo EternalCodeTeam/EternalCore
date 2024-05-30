@@ -3,7 +3,7 @@ plugins {
 
     id("com.github.johnrengelman.shadow")
     id("net.minecrell.plugin-yml.bukkit")
-    id("xyz.jpenilla.run-paper") version "2.2.3"
+    id("xyz.jpenilla.run-paper") version "2.3.0"
 }
 
 group = "com.eternalcode"
