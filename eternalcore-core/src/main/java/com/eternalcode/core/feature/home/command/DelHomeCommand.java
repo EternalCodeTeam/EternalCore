@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.home.Home;
-import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -16,19 +16,19 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 @Permission("eternalcore.delhome")
 class DelHomeCommand {
 
-    private final HomeManager homeManager;
+    private final HomeService homeService;
     private final NoticeService noticeService;
 
     @Inject
-    DelHomeCommand(HomeManager homeManager, NoticeService noticeService) {
-        this.homeManager = homeManager;
+    DelHomeCommand(HomeService homeService, NoticeService noticeService) {
+        this.homeService = homeService;
         this.noticeService = noticeService;
     }
 
     @Execute
     @DescriptionDocs(description = "Delete home", arguments = "<home>")
     void execute(@Context User user, @Arg Home home) {
-        this.homeManager.deleteHome(user, home.getName());
+        this.homeService.deleteHome(user.getUniqueId(), home.getName());
         this.noticeService.create()
             .user(user)
             .notice(translation -> translation.home().delete())

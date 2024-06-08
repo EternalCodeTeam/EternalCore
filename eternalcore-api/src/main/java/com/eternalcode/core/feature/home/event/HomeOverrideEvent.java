@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.home.event;
 
 import com.eternalcode.core.feature.home.Home;
 import java.util.UUID;
+import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,13 +16,15 @@ public class HomeOverrideEvent extends Event implements Cancellable {
 
     private final UUID playerUniqueId;
     private final Home home;
+    private Location location;
     private boolean cancelled;
 
-    public HomeOverrideEvent(UUID playerUniqueId, Home home) {
+    public HomeOverrideEvent(UUID playerUniqueId, Home home, Location location) {
         super(false);
 
         this.playerUniqueId = playerUniqueId;
         this.home = home;
+        this.location = this.home.getLocation();
     }
 
     public Home getHome() {
@@ -30,6 +33,10 @@ public class HomeOverrideEvent extends Event implements Cancellable {
 
     public UUID getPlayerUniqueId() {
         return this.playerUniqueId;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

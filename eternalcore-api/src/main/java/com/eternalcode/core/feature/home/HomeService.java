@@ -1,22 +1,25 @@
 package com.eternalcode.core.feature.home;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public interface HomeService {
 
-    CompletableFuture<Optional<Home>> getHome(Player player, String homeName);
+    int getAmountOfHomes(UUID playerUniqueId);
 
-    CompletableFuture<Void> createHome(String name, UUID owner, Location location);
+    Collection<Home> getHomes(UUID playerUniqueId);
 
-    CompletableFuture<Integer> deleteHome(Player player, String homeName);
-    CompletableFuture<Boolean> hasHomeWithSpecificName(Player player, String homeName);
+    Optional<Home> getHome(UUID uniqueId, String name);
 
-    CompletableFuture<Set<Home>> getHomes();
+    boolean hasHomeWithSpecificName(UUID playerUniqueId, String name);
 
-    CompletableFuture<Set<Home>> getHomes(Player player);
+    void deleteHome(UUID playerUniqueId, String name);
+
+    Home createHome(UUID playerUniqueId, String name, Location location);
+
+    int getHomeLimit(Player player, Map<String, Integer> maxHomes);
 }

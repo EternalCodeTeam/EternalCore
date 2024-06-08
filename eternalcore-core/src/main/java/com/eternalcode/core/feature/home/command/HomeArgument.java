@@ -2,8 +2,7 @@ package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.feature.home.Home;
-import com.eternalcode.core.feature.home.HomeImpl;
-import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.NoticeService;
@@ -22,21 +21,21 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.command.CommandSender;
 
-@LiteArgument(type = HomeImpl.class)
+@LiteArgument(type = Home.class)
 class HomeArgument extends AbstractViewerArgument<Home> {
 
-    private final HomeManager homeManager;
+    private final HomeService homeService;
     private final NoticeService noticeService;
 
     @Inject
     HomeArgument(
         ViewerService viewerService,
         TranslationManager translationManager,
-        HomeManager homeManager,
+        HomeService homeService,
         NoticeService noticeService
     ) {
         super(viewerService, translationManager);
-        this.homeManager = homeManager;
+        this.homeService = homeService;
         this.noticeService = noticeService;
     }
 
@@ -45,13 +44,13 @@ class HomeArgument extends AbstractViewerArgument<Home> {
         Viewer viewer = this.viewerService.any(invocation.sender());
         UUID uniqueId = viewer.getUniqueId();
 
-        Optional<Home> homeOption = this.homeManager.getHome(uniqueId, argument);
+        Optional<Home> homeOption = this.homeService.getHome(uniqueId, argument);
 
         if (homeOption.isPresent()) {
             return ParseResult.success(homeOption.get());
         }
 
-        String homes = this.homeManager.getHomes(uniqueId).stream()
+        String homes = this.homeService.getHomes(uniqueId).stream()
             .map(home -> home.getName())
             .collect(Collectors.joining(", "));
 
@@ -70,7 +69,7 @@ class HomeArgument extends AbstractViewerArgument<Home> {
         SuggestionContext context
     ) {
         Viewer viewer = this.viewerService.any(invocation.sender());
-        return this.homeManager.getHomes(viewer.getUniqueId()).stream()
+        return this.homeService.getHomes(viewer.getUniqueId()).stream()
             .map(Home::getName)
             .collect(SuggestionResult.collector());
     }

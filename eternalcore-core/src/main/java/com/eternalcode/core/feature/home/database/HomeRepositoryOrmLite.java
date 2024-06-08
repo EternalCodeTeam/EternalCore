@@ -17,13 +17,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Repository
-class HomeServiceOrmLite extends AbstractRepositoryOrmLite implements HomeRepository {
+class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRepository {
 
     private static final String OWNER_COLUMN = "owner";
     private static final String NAME_COLUMN = "name";
 
     @Inject
-    private HomeServiceOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
+    private HomeRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
         TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeWrapper.class);
     }

@@ -4,10 +4,9 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.Home;
-import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.home.event.HomeCreateEvent;
 import com.eternalcode.core.feature.home.event.HomeLimitReachedEvent;
-import com.eternalcode.core.feature.home.event.HomeOverrideEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -16,26 +15,26 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @Command(name = "sethome")
 @Permission("eternalcore.sethome")
 class SetHomeCommand {
 
-    private final HomeManager homeManager;
+    private final HomeService homeService;
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
     private final EventCaller eventCaller;
 
     @Inject
     SetHomeCommand(
-        HomeManager homeManager,
+        HomeService homeService,
         NoticeService noticeService,
         PluginConfiguration pluginConfiguration,
         EventCaller eventCaller
     ) {
-        this.homeManager = homeManager;
+        this.homeService = homeService;
         this.noticeService = noticeService;
         this.pluginConfiguration = pluginConfiguration;
         this.eventCaller = eventCaller;
@@ -54,8 +53,10 @@ class SetHomeCommand {
     }
 
     private void setOrOverrideHome(User user, Player player, String homeName) {
-        if (this.homeManager.hasHomeWithSpecificName(user, homeName)) {
-            this.homeManager.createHome(user, homeName, player.getLocation());
+        UUID uniqueId = user.getUniqueId();
+
+        if (this.homeService.hasHomeWithSpecificName(uniqueId, homeName)) {
+            this.homeService.createHome(uniqueId, homeName, player.getLocation());
 
             this.noticeService.create()
                 .user(user)
@@ -66,8 +67,8 @@ class SetHomeCommand {
             return;
         }
 
-        int amountOfUserHomes = this.homeManager.getHomes(player.getUniqueId()).size();
-        int maxAmountOfUserHomes = this.homeManager.getHomeLimit(player, this.pluginConfiguration.homes);
+        int amountOfUserHomes = this.homeService.getHomes(player.getUniqueId()).size();
+        int maxAmountOfUserHomes = this.homeService.getHomeLimit(player, this.pluginConfiguration.homes.maxHomes);
 
         if (amountOfUserHomes >= maxAmountOfUserHomes) {
             this.noticeService.create()
@@ -81,8 +82,8 @@ class SetHomeCommand {
             return;
         }
 
-        Home createdHome = this.homeManager.createHome(user, homeName, player.getLocation());
-        this.eventCaller.callEvent(new HomeCreateEvent(player.getUniqueId(), createdHome));
+        Home createdHome = this.homeService.createHome(uniqueId, homeName, player.getLocation());
+        this.eventCaller.callEvent(new HomeCreateEvent(player.getUniqueId(), createdHome, createdHome.getLocation()));
 
         this.noticeService.create()
             .user(user)

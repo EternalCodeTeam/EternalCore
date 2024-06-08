@@ -20,19 +20,19 @@ import org.bukkit.entity.Player;
 @Controller
 class HomePlaceholderSetup implements Subscriber {
 
-    private final HomeManager homeManager;
+    private final HomeService homeService;
     private final UserManager userManager;
     private final TranslationManager translationManager;
     private final PluginConfiguration pluginConfiguration;
 
     @Inject
     HomePlaceholderSetup(
-        HomeManager homeManager,
+        HomeService homeService,
         UserManager userManager,
         TranslationManager translationManager,
         PluginConfiguration pluginConfiguration
     ) {
-        this.homeManager = homeManager;
+        this.homeService = homeService;
         this.userManager = userManager;
         this.translationManager = translationManager;
         this.pluginConfiguration = pluginConfiguration;
@@ -49,8 +49,8 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String homesLeft(Player targetPlayer) {
-        int homesLimit = this.homeManager.getHomeLimit(targetPlayer, this.pluginConfiguration.homes);
-        int amountOfHomes = this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId());
+        int homesLimit = this.homeService.getHomeLimit(targetPlayer, this.pluginConfiguration.homes.maxHomes);
+        int amountOfHomes = this.homeService.getAmountOfHomes(targetPlayer.getUniqueId());
 
         return homesLeft(homesLimit, amountOfHomes);
     }
@@ -66,7 +66,7 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String ownedHomes(Player targetPlayer) {
-        Collection<Home> homes = this.homeManager.getHomes(targetPlayer.getUniqueId());
+        Collection<Home> homes = this.homeService.getHomes(targetPlayer.getUniqueId());
 
         User user = this.userManager.getOrCreate(targetPlayer.getUniqueId(), targetPlayer.getName());
 
@@ -80,10 +80,10 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String homesCount(Player targetPlayer) {
-        return String.valueOf(this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId()));
+        return String.valueOf(this.homeService.getAmountOfHomes(targetPlayer.getUniqueId()));
     }
 
     private String homesLimit(Player targetPlayer) {
-        return String.valueOf(this.homeManager.getHomeLimit(targetPlayer, this.pluginConfiguration.homes));
+        return String.valueOf(this.homeService.getHomeLimit(targetPlayer, this.pluginConfiguration.homes.maxHomes));
     }
 }

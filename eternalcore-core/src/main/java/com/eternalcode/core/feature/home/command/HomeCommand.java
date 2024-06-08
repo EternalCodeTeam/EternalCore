@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.home.Home;
-import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.home.HomeTeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -19,24 +19,24 @@ import org.bukkit.entity.Player;
 class HomeCommand {
 
     private final NoticeService noticeService;
-    private final HomeManager homeManager;
+    private final HomeService homeService;
     private final HomeTeleportService homeTeleportService;
 
     @Inject
     HomeCommand(
         NoticeService noticeService,
-        HomeManager homeManager,
+        HomeService homeService,
         HomeTeleportService homeTeleportService
     ) {
         this.noticeService = noticeService;
-        this.homeManager = homeManager;
+        this.homeService = homeService;
         this.homeTeleportService = homeTeleportService;
     }
 
     @Execute
     @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time")
     void execute(@Context Player player) {
-        Collection<Home> playerHomes = this.homeManager.getHomes(player.getUniqueId());
+        Collection<Home> playerHomes = this.homeService.getHomes(player.getUniqueId());
 
         if (playerHomes.isEmpty()) {
             this.noticeService.create()
@@ -49,7 +49,7 @@ class HomeCommand {
         if (playerHomes.size() != 1) {
             String homes = String.join(
                 ", ",
-                this.homeManager.getHomes(player.getUniqueId()).stream()
+                this.homeService.getHomes(player.getUniqueId()).stream()
                     .map(Home::getName)
                     .toList());
 
