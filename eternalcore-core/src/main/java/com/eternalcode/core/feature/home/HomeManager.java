@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.home;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.database.HomeRepository;
 import com.eternalcode.core.feature.home.event.HomeCreateEvent;
@@ -57,38 +56,39 @@ public class HomeManager implements HomeService {
         }
 
         User user = userOptional.get();
-
         UUID uniqueId = user.getUniqueId();
         Home home = new HomeImpl(uniqueId, name, location);
         Map<String, Home> homes = this.userHomes.computeIfAbsent(uniqueId, k -> new HashMap<>());
 
         if (this.hasHomeWithSpecificName(uniqueId, name)) {
             this.repository.deleteHome(user, name).thenAccept(completable -> {
-                HomeOverrideEvent event = new HomeOverrideEvent(uniqueId, home, location);
+                Home homeInEvent = new HomeImpl(uniqueId, name, location);
+                HomeOverrideEvent event = new HomeOverrideEvent(uniqueId, homeInEvent, location);
                 this.eventCaller.callEvent(event);
 
                 if (event.isCancelled()) {
                     return;
                 }
 
-                homes.put(name, home);
-                this.repository.saveHome(home);
+                homes.put(name, homeInEvent);
+                this.repository.saveHome(homeInEvent);
             });
 
             return home;
         }
 
-        HomeCreateEvent event = new HomeCreateEvent(user.getUniqueId(), home, home.getLocation());
+        Home homeInEvent = new HomeImpl(uniqueId, name, location);
+        HomeCreateEvent event = new HomeCreateEvent(user.getUniqueId(), homeInEvent, location);
         this.eventCaller.callEvent(event);
 
         if (event.isCancelled()) {
             return home;
         }
 
-        homes.put(name, home);
-        this.repository.saveHome(home);
+        homes.put(name, homeInEvent);
+        this.repository.saveHome(homeInEvent);
 
-        return home;
+        return homeInEvent;
     }
 
     @Override
@@ -109,8 +109,8 @@ public class HomeManager implements HomeService {
 
         Home home = homes.get(name);
 
-        if (home != null) {
-            homes.remove(name);
+        if (home == null) {
+            return;
         }
 
         HomeDeleteEvent event = new HomeDeleteEvent(user.getUniqueId(), home);
@@ -120,6 +120,7 @@ public class HomeManager implements HomeService {
             return;
         }
 
+        homes.remove(name);
         this.repository.deleteHome(user, name);
     }
 

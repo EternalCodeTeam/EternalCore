@@ -21,10 +21,9 @@ public class HomeCreateEvent extends Event implements Cancellable {
 
     public HomeCreateEvent(UUID playerUniqueId, Home home, Location location) {
         super(false);
-
         this.playerUniqueId = playerUniqueId;
         this.home = home;
-        this.location = this.home.getLocation();
+        this.location = location;
     }
 
     public Home getHome() {
@@ -37,6 +36,10 @@ public class HomeCreateEvent extends Event implements Cancellable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     @Override

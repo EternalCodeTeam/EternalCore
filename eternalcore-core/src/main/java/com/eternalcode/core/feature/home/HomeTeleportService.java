@@ -48,7 +48,7 @@ public class HomeTeleportService {
             : this.pluginConfiguration.homes.teleportTimeToHomes;
 
         Position playerLocation = PositionAdapter.convert(player.getLocation());
-        Position homeLocation = PositionAdapter.convert(home.getLocation());
+        Position homeLocation = PositionAdapter.convert(pre.getLocation());
 
         HomeTeleportEvent post = new HomeTeleportEvent(uniqueId, home);
         Teleport teleport = this.teleportTaskService.createTeleport(

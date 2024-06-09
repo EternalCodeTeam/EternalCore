@@ -24,7 +24,7 @@ public class HomeOverrideEvent extends Event implements Cancellable {
 
         this.playerUniqueId = playerUniqueId;
         this.home = home;
-        this.location = this.home.getLocation();
+        this.location = location;
     }
 
     public Home getHome() {
@@ -37,6 +37,10 @@ public class HomeOverrideEvent extends Event implements Cancellable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 
     @Override
