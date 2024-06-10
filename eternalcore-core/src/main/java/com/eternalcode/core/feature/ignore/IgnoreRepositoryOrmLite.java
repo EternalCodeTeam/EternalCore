@@ -13,6 +13,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
@@ -107,6 +108,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
             .thenRun(() -> this.ignores.refresh(by));
     }
 
+    @ApiStatus.Internal
     @Override
     public CompletableFuture<Void> purgeAll() {
         return this.deleteAll(IgnoreWrapper.class)

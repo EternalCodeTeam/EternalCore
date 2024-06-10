@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.ignore;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public interface IgnoreRepository {
+interface IgnoreRepository {
 
     CompletableFuture<Boolean> isIgnored(UUID by, UUID target);
 
