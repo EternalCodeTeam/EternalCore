@@ -127,8 +127,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
         @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
         UUID ignoredUuid;
 
-        IgnoreWrapper() {
-        }
+        IgnoreWrapper() {}
 
         IgnoreWrapper(UUID playerUuid, UUID ignoredUuid) {
             this.playerUuid = playerUuid;
