@@ -17,7 +17,7 @@ public class ChatRestrictEvent extends Event implements Cancellable {
     private boolean cancelled;
 
     public ChatRestrictEvent(UUID playerUniqueId, ChatRestrictCause chatRestrictCause) {
-        super(false);
+        super(true);
         this.playerUniqueId = playerUniqueId;
         this.chatRestrictCause = chatRestrictCause;
     }

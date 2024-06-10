@@ -12,9 +12,9 @@ object Versions {
     const val GIT_CHECK = "1.0.0"
 
     const val PAPERLIB = "1.0.8"
-    const val ADVENTURE_PLATFORM = "4.3.2"
+    const val ADVENTURE_PLATFORM = "4.3.3"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.17.0"
-    const val ADVENTURE_PLATFORM_FACET = "4.3.2"
+    const val ADVENTURE_PLATFORM_FACET = "4.3.3"
     const val CDN_CONFIGS = "1.14.4"
 
     const val MARIA_DB = "3.4.0"
@@ -23,17 +23,17 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "5.1.0"
 
-    const val LITE_COMMANDS = "3.4.1"
+    const val LITE_COMMANDS = "3.4.2"
     const val LITE_SKULL_API = "1.3.0"
 
-    const val GUAVA = "33.2.0-jre"
+    const val GUAVA = "33.2.1-jre"
     const val GSON = "2.11.0"
 
     const val EXPRESSIBLE = "1.3.6"
     const val PANDA_UTILITIES = "0.5.3-alpha"
     const val APACHE_COMMONS = "2.16.1"
 
-    const val TRIUMPH_GUI = "3.1.7"
+    const val TRIUMPH_GUI = "3.1.10"
 
     const val BSTATS = "3.0.2"
     const val PIXEL_WIDTH = "1.1.0"
