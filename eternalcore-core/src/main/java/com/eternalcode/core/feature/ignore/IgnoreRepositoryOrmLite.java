@@ -30,8 +30,6 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     private final Dao<IgnoreWrapper, Long> cachedDao;
     private final LoadingCache<UUID, Set<UUID>> ignores;
-    private final EventCaller caller;
-    private final Server server;
 
     @Inject
     private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
