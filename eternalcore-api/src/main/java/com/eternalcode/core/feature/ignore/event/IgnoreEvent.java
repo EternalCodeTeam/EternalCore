@@ -26,7 +26,7 @@ public class IgnoreEvent extends Event implements Cancellable {
      */
 
     public Player getBy() {
-        return by;
+        return this.by;
     }
 
     /**
@@ -34,7 +34,7 @@ public class IgnoreEvent extends Event implements Cancellable {
      */
 
     public Player getTarget() {
-        return target;
+        return this.target;
     }
 
     @Override

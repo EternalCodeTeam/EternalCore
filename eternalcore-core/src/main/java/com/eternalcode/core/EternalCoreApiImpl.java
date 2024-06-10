@@ -31,6 +31,11 @@ class EternalCoreApiImpl implements EternalCoreApi {
     }
 
     @Override
+    public IgnoreService getIgnoreService() {
+        return this.dependencyProvider.getDependency(IgnoreService.class);
+    }
+
+    @Override
     public JailService getJailService() {
         return this.dependencyProvider.getDependency(JailService.class);
     }
@@ -53,11 +58,6 @@ class EternalCoreApiImpl implements EternalCoreApi {
     @Override
     public SpawnService getSpawnService() {
         return this.dependencyProvider.getDependency(SpawnService.class);
-    }
-
-    @Override
-    public TeleportService getTeleportService() {
-        return this.dependencyProvider.getDependency(TeleportService.class);
     }
 
     @Override

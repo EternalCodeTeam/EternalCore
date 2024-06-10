@@ -23,7 +23,7 @@ public class UnIgnoreAllEvent extends Event implements Cancellable {
      */
 
     public Player getBy() {
-        return by;
+        return this.by;
     }
 
     @Override
