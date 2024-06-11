@@ -68,7 +68,7 @@ class SetHomeCommand {
         }
 
         int amountOfUserHomes = this.homeService.getHomes(player.getUniqueId()).size();
-        int maxAmountOfUserHomes = this.homeService.getHomeLimit(player, this.pluginConfiguration.homes.maxHomes);
+        int maxAmountOfUserHomes = this.homeService.getHomeLimit(player);
 
         if (amountOfUserHomes >= maxAmountOfUserHomes) {
             this.noticeService.create()
