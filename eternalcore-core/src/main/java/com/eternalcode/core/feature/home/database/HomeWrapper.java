@@ -9,7 +9,7 @@ import java.util.UUID;
 import org.bukkit.Location;
 
 @DatabaseTable(tableName = "eternal_core_homes")
-public class HomeWrapper {
+class HomeWrapper {
 
     @DatabaseField(columnName = "id", id = true)
     private UUID uuid;
@@ -26,7 +26,7 @@ public class HomeWrapper {
     HomeWrapper() {
     }
 
-    public HomeWrapper(UUID uuid, UUID owner, String name, Location location) {
+    HomeWrapper(UUID uuid, UUID owner, String name, Location location) {
         this.uuid = uuid;
         this.owner = owner;
         this.name = name;
