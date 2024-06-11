@@ -14,7 +14,6 @@ import org.bukkit.Server;
 
 import java.util.UUID;
 
-// TODO: Add translations when event is cancelled
 
 @Command(name = "unignore")
 @Permission("eternalcore.ignore")
