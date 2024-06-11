@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.home.event;
 
-import com.eternalcode.core.feature.home.Home;
 import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
@@ -15,31 +14,49 @@ public class HomeCreateEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final UUID playerUniqueId;
-    private final Home home;
+    private String homeName;
+    private UUID homeUniqueId;
     private Location location;
     private boolean cancelled;
 
-    public HomeCreateEvent(UUID playerUniqueId, Home home, Location location) {
+    public HomeCreateEvent(UUID playerUniqueId, String homeName, UUID homeUniqueId, Location location) {
         super(false);
         this.playerUniqueId = playerUniqueId;
-        this.home = home;
+        this.homeName = homeName;
+        this.homeUniqueId = homeUniqueId;
         this.location = location;
     }
 
-    public Home getHome() {
-        return home;
+    public static HandlerList getHandlerList() {
+        return HANDLER_LIST;
+    }
+
+    public UUID getHomeUniqueId() {
+        return homeUniqueId;
+    }
+
+    public void setHomeUniqueId(UUID homeUniqueId) {
+        this.homeUniqueId = homeUniqueId;
+    }
+
+    public String getHomeName() {
+        return homeName;
+    }
+
+    public void setHomeName(String homeName) {
+        this.homeName = homeName;
     }
 
     public UUID getPlayerUniqueId() {
         return this.playerUniqueId;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public Location getLocation() {
         return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override
@@ -54,10 +71,6 @@ public class HomeCreateEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
-
-    public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 }
