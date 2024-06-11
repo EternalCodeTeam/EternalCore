@@ -78,7 +78,7 @@ public class HomeManager implements HomeService {
         }
 
         Home homeInEvent = new HomeImpl(uniqueId, name, location);
-        HomeCreateEvent event = new HomeCreateEvent(user.getUniqueId(), homeInEvent, location);
+        HomeCreateEvent event = new HomeCreateEvent(user.getUniqueId(), name, home.getUuid(), location);
         this.eventCaller.callEvent(event);
 
         if (event.isCancelled()) {
