@@ -55,7 +55,7 @@ class SetHomeCommand {
     private void setOrOverrideHome(User user, Player player, String homeName) {
         UUID uniqueId = user.getUniqueId();
 
-        if (this.homeService.hasHomeWithSpecificName(uniqueId, homeName)) {
+        if (this.homeService.hasHome(uniqueId, homeName)) {
             this.homeService.createHome(uniqueId, homeName, player.getLocation());
 
             this.noticeService.create()
@@ -86,10 +86,7 @@ class SetHomeCommand {
             return;
         }
 
-        Home createdHome = this.homeService.createHome(uniqueId, homeName, player.getLocation());
-        this.eventCaller.callEvent(new HomeCreateEvent(player.getUniqueId(),
-            createdHome.getName(), createdHome.getUuid(), player.getLocation()));
-
+        this.homeService.createHome(uniqueId, homeName, player.getLocation());
         this.noticeService.create()
             .user(user)
             .notice(translation -> translation.home().create())

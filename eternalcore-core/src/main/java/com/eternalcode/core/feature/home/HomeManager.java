@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.home;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.database.HomeRepository;
 import com.eternalcode.core.feature.home.event.HomeCreateEvent;
@@ -32,14 +33,22 @@ public class HomeManager implements HomeService {
     private final HomeRepository repository;
     private final EventCaller eventCaller;
 
+    private final PluginConfiguration pluginConfiguration;
+
     @Inject
-    private HomeManager(HomeRepository repository, UserManager userManager, EventCaller eventCaller) {
+    private HomeManager(
+        HomeRepository repository,
+        UserManager userManager,
+        EventCaller eventCaller,
+        PluginConfiguration pluginConfiguration
+    ) {
         this.repository = repository;
         this.userManager = userManager;
         this.eventCaller = eventCaller;
+        this.pluginConfiguration = pluginConfiguration;
 
-        repository.getHomes().thenAccept(set -> {
-            for (Home home : set) {
+        repository.getHomes().thenAccept(homes -> {
+            for (Home home : homes) {
                 Map<String, Home> homesByUuid = this.userHomes.computeIfAbsent(home.getOwner(), k -> new HashMap<>());
 
                 homesByUuid.put(home.getName(), home);
@@ -60,10 +69,10 @@ public class HomeManager implements HomeService {
         Home home = new HomeImpl(uniqueId, name, location);
         Map<String, Home> homes = this.userHomes.computeIfAbsent(uniqueId, k -> new HashMap<>());
 
-        if (this.hasHomeWithSpecificName(uniqueId, name)) {
+        if (this.hasHome(uniqueId, name)) {
             this.repository.deleteHome(user, name).thenAccept(completable -> {
                 Home homeInEvent = new HomeImpl(uniqueId, name, location);
-                HomeOverrideEvent event = new HomeOverrideEvent(uniqueId, homeInEvent, location);
+                HomeOverrideEvent event = new HomeOverrideEvent(uniqueId, name, home.getUuid(), location);
                 this.eventCaller.callEvent(event);
 
                 if (event.isCancelled()) {
@@ -125,7 +134,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public boolean hasHomeWithSpecificName(UUID playerUniqueId, String name) {
+    public boolean hasHome(UUID playerUniqueId, String name) {
         Optional<User> userOptional = this.userManager.getUser(playerUniqueId);
 
         if (userOptional.isEmpty()) {
@@ -145,13 +154,13 @@ public class HomeManager implements HomeService {
 
     @Override
     public Optional<Home> getHome(UUID uniqueId, String name) {
-        Map<String, Home> home = this.userHomes.get(uniqueId);
+        Map<String, Home> homes = this.userHomes.get(uniqueId);
 
-        if (home == null) {
+        if (homes == null) {
             return Optional.empty();
         }
 
-        return Optional.of(home.get(name));
+        return Optional.of(homes.get(name));
     }
 
     @Override
@@ -161,17 +170,19 @@ public class HomeManager implements HomeService {
 
     @Override
     public int getAmountOfHomes(UUID user) {
-        Map<String, Home> home = this.userHomes.get(user);
+        Map<String, Home> homes = this.userHomes.get(user);
 
-        if (home == null) {
+        if (homes == null) {
             return 0;
         }
 
-        return home.size();
+        return homes.size();
     }
 
     @Override
-    public int getHomeLimit(Player player, Map<String, Integer> maxHomes) {
+    public int getHomeLimit(Player player) {
+        Map<String, Integer> maxHomes = this.pluginConfiguration.homes.maxHomes;
+
         return maxHomes.entrySet().stream()
             .flatMap(entry -> {
                 if (player.hasPermission(entry.getKey())) {

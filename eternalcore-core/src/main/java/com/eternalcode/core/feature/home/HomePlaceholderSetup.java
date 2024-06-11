@@ -49,7 +49,7 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String homesLeft(Player targetPlayer) {
-        int homesLimit = this.homeService.getHomeLimit(targetPlayer, this.pluginConfiguration.homes.maxHomes);
+        int homesLimit = this.homeService.getHomeLimit(targetPlayer);
         int amountOfHomes = this.homeService.getAmountOfHomes(targetPlayer.getUniqueId());
 
         return homesLeft(homesLimit, amountOfHomes);
@@ -84,6 +84,6 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String homesLimit(Player targetPlayer) {
-        return String.valueOf(this.homeService.getHomeLimit(targetPlayer, this.pluginConfiguration.homes.maxHomes));
+        return String.valueOf(this.homeService.getHomeLimit(targetPlayer));
     }
 }

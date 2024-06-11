@@ -14,8 +14,8 @@ public class HomeCreateEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final UUID playerUniqueId;
+    private final UUID homeUniqueId;
     private String homeName;
-    private UUID homeUniqueId;
     private Location location;
     private boolean cancelled;
 
@@ -33,10 +33,6 @@ public class HomeCreateEvent extends Event implements Cancellable {
 
     public UUID getHomeUniqueId() {
         return homeUniqueId;
-    }
-
-    public void setHomeUniqueId(UUID homeUniqueId) {
-        this.homeUniqueId = homeUniqueId;
     }
 
     public String getHomeName() {

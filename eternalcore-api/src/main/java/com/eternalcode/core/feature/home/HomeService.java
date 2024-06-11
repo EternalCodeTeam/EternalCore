@@ -15,11 +15,11 @@ public interface HomeService {
 
     Optional<Home> getHome(UUID uniqueId, String name);
 
-    boolean hasHomeWithSpecificName(UUID playerUniqueId, String name);
+    boolean hasHome(UUID playerUniqueId, String name);
 
     void deleteHome(UUID playerUniqueId, String name);
 
     Home createHome(UUID playerUniqueId, String name, Location location);
 
-    int getHomeLimit(Player player, Map<String, Integer> maxHomes);
+    int getHomeLimit(Player player);
 }

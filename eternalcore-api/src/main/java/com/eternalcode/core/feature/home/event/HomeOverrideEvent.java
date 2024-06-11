@@ -15,20 +15,30 @@ public class HomeOverrideEvent extends Event implements Cancellable {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final UUID playerUniqueId;
-    private final Home home;
+    private final UUID homeUniqueId;
+    private String homeName;
     private Location location;
     private boolean cancelled;
 
-    public HomeOverrideEvent(UUID playerUniqueId, Home home, Location location) {
+    public HomeOverrideEvent(UUID playerUniqueId, String homeName, UUID homeUniqueId, Location location) {
         super(false);
 
         this.playerUniqueId = playerUniqueId;
-        this.home = home;
+        this.homeName = homeName;
+        this.homeUniqueId = homeUniqueId;
         this.location = location;
     }
 
-    public Home getHome() {
-        return home;
+    public String getHomeName() {
+        return homeName;
+    }
+
+    public void setHomeName(String homeName) {
+        this.homeName = homeName;
+    }
+
+    public UUID getHomeUniqueId() {
+        return homeUniqueId;
     }
 
     public UUID getPlayerUniqueId() {
