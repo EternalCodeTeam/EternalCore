@@ -38,6 +38,8 @@ object Versions {
     const val BSTATS = "3.0.2"
     const val PIXEL_WIDTH = "1.1.0"
 
+    const val CAFFEINE = "3.1.8"
+
     // tests
     const val EXPRESSIBLE_JUNIT = "1.3.6"
     const val GROOVY_ALL = "3.0.21"
