@@ -24,6 +24,7 @@ public class PreHomeTeleportEvent extends Event implements Cancellable {
 
         this.playerUniqueId = playerUniqueId;
         this.home = home;
+        this.location = home.getLocation();
     }
 
     public static HandlerList getHandlerList() {
