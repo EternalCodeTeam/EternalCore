@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-// TODO: IgnoreService interface and IgnoreRepository. IgnoreService calls IgnoreRepository methods. IgnoreService manages events, whereas IgnoreRepository manages the database.
 
 public class IgnoreServiceImpl implements IgnoreService {
 
