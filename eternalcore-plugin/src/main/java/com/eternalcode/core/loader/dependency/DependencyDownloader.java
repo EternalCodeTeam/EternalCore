@@ -41,6 +41,10 @@ public class DependencyDownloader {
     private Path tryDownloadDependency(Dependency dependency) throws URISyntaxException {
         Path localPath = dependency.toMavenJar(this.localRepository).toPath();
 
+        if (Files.exists(localPath)) {
+            return localPath;
+        }
+
         List<DependencyException> exceptions = new ArrayList<>();
 
         for (Repository repository : this.repositories) {

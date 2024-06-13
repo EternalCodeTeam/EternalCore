@@ -93,11 +93,10 @@ public class HomeManager implements HomeService {
             return home;
         }
 
-        Home homeInEvent = new HomeImpl(uniqueId, event.getHomeName(), event.getLocation());
-        homes.put(event.getHomeName(), homeInEvent);
-        this.repository.saveHome(homeInEvent);
+        homes.put(event.getHomeName(), home);
+        this.repository.saveHome(home);
 
-        return homeInEvent;
+        return home;
     }
 
     @Override
@@ -122,8 +121,7 @@ public class HomeManager implements HomeService {
             return;
         }
 
-        Home homeInEvent = new HomeImpl(home.getUuid(), home.getName(), home.getLocation());
-        HomeDeleteEvent event = new HomeDeleteEvent(user.getUniqueId(), homeInEvent);
+        HomeDeleteEvent event = new HomeDeleteEvent(user.getUniqueId(), home);
         this.eventCaller.callEvent(event);
 
         if (event.isCancelled()) {
