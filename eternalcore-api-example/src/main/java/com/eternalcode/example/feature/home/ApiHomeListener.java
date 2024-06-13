@@ -29,7 +29,7 @@ public class ApiHomeListener implements Listener {
     public void onHomeOverride(HomeOverrideEvent event) {
         Location location = event.getLocation();
 
-        String name = event.getHome().getName();
+        String name = event.getHomeName();
         int blockX = location.getBlockX();
         int blockY = location.getBlockY();
         int blockZ = location.getBlockZ();
@@ -41,7 +41,7 @@ public class ApiHomeListener implements Listener {
     public void onHomeCreate(HomeCreateEvent event) {
         Location location = event.getLocation();
 
-        String name = event.getHome().getName();
+        String name = event.getHomeName();
         int blockX = location.getBlockX();
         int blockY = location.getBlockY();
         int blockZ = location.getBlockZ();
@@ -60,6 +60,7 @@ public class ApiHomeListener implements Listener {
 
         if (player.hasPotionEffect(PotionEffectType.BAD_OMEN)) {
             event.setLocation(player.getWorld().getSpawnLocation());
+            event.setHomeName("bimbimbambam");
             System.out.println("Troll: Home location overridden to world spawn.");
         }
     }

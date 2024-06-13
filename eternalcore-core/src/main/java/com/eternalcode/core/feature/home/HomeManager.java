@@ -71,7 +71,6 @@ public class HomeManager implements HomeService {
 
         if (this.hasHome(uniqueId, name)) {
             this.repository.deleteHome(user, name).thenAccept(completable -> {
-                Home homeInEvent = new HomeImpl(uniqueId, name, location);
                 HomeOverrideEvent event = new HomeOverrideEvent(uniqueId, name, home.getUuid(), location);
                 this.eventCaller.callEvent(event);
 
@@ -79,14 +78,14 @@ public class HomeManager implements HomeService {
                     return;
                 }
 
-                homes.put(name, homeInEvent);
+                Home homeInEvent = new HomeImpl(uniqueId, event.getHomeName(), event.getLocation());
+                homes.put(event.getHomeName(), homeInEvent);
                 this.repository.saveHome(homeInEvent);
             });
 
             return home;
         }
 
-        Home homeInEvent = new HomeImpl(uniqueId, name, location);
         HomeCreateEvent event = new HomeCreateEvent(user.getUniqueId(), name, home.getUuid(), location);
         this.eventCaller.callEvent(event);
 
@@ -94,7 +93,8 @@ public class HomeManager implements HomeService {
             return home;
         }
 
-        homes.put(name, homeInEvent);
+        Home homeInEvent = new HomeImpl(uniqueId, event.getHomeName(), event.getLocation());
+        homes.put(event.getHomeName(), homeInEvent);
         this.repository.saveHome(homeInEvent);
 
         return homeInEvent;
@@ -122,7 +122,8 @@ public class HomeManager implements HomeService {
             return;
         }
 
-        HomeDeleteEvent event = new HomeDeleteEvent(user.getUniqueId(), home);
+        Home homeInEvent = new HomeImpl(home.getUuid(), home.getName(), home.getLocation());
+        HomeDeleteEvent event = new HomeDeleteEvent(user.getUniqueId(), homeInEvent);
         this.eventCaller.callEvent(event);
 
         if (event.isCancelled()) {

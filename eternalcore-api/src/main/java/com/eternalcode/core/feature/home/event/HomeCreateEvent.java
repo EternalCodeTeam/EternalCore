@@ -27,10 +27,6 @@ public class HomeCreateEvent extends Event implements Cancellable {
         this.location = location;
     }
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
-
     public UUID getHomeUniqueId() {
         return homeUniqueId;
     }
@@ -67,6 +63,10 @@ public class HomeCreateEvent extends Event implements Cancellable {
 
     @Override
     public HandlerList getHandlers() {
+        return HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 }
