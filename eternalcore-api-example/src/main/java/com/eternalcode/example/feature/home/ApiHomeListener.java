@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class ApiHomeListener implements Listener {
 
-    public static final String HOME_OVVERIDE_FORMAT = "Home %s overridden to %s at %d, %d, %d.";
+    public static final String HOME_OVERRIDE_FORMAT = "Home %s overridden to %s at %d, %d, %d.";
     public static final String HOME_DELETE_FORMAT = "Home %s deleted.";
 
     private final Server server;
@@ -33,7 +33,7 @@ public class ApiHomeListener implements Listener {
         int blockX = location.getBlockX();
         int blockY = location.getBlockY();
         int blockZ = location.getBlockZ();
-        System.out.printf((HOME_OVVERIDE_FORMAT) + "%n",
+        System.out.printf((HOME_OVERRIDE_FORMAT) + "%n",
             name, location.getWorld().getName(), blockX, blockY, blockZ);
     }
 
@@ -45,7 +45,7 @@ public class ApiHomeListener implements Listener {
         int blockX = location.getBlockX();
         int blockY = location.getBlockY();
         int blockZ = location.getBlockZ();
-        System.out.printf((HOME_OVVERIDE_FORMAT) + "%n",
+        System.out.printf((HOME_OVERRIDE_FORMAT) + "%n",
             name, location.getWorld().getName(), blockX, blockY, blockZ);
     }
 
