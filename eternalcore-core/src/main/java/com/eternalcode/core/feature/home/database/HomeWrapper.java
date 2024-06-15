@@ -23,8 +23,7 @@ class HomeWrapper {
     @DatabaseField(columnName = "location", persisterClass = LocationPersister.class)
     private Location location;
 
-    HomeWrapper() {
-    }
+    HomeWrapper() {}
 
     HomeWrapper(UUID uuid, UUID owner, String name, Location location) {
         this.uuid = uuid;

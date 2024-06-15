@@ -79,7 +79,14 @@ class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRep
 
     @Override
     public CompletableFuture<Integer> deleteHome(UUID playerUniqueId, String homeName) {
-        return null;
+        return this.action(HomeWrapper.class, dao -> {
+            DeleteBuilder<HomeWrapper, Object> builder = dao.deleteBuilder();
+            builder.where()
+                .eq(OWNER_COLUMN, playerUniqueId)
+                .and()
+                .eq(NAME_COLUMN, homeName);
+            return builder.delete();
+        });
     }
 
     @Override
