@@ -26,7 +26,7 @@ public class ApiHomeListener implements Listener {
     }
 
     @EventHandler
-    public void onHomeOverride(HomeOverrideEvent event) {
+    void onHomeOverride(HomeOverrideEvent event) {
         Location location = event.getLocation();
 
         String name = event.getHomeName();
@@ -38,7 +38,7 @@ public class ApiHomeListener implements Listener {
     }
 
     @EventHandler
-    public void onHomeCreate(HomeCreateEvent event) {
+    void onHomeCreate(HomeCreateEvent event) {
         Location location = event.getLocation();
 
         String name = event.getHomeName();
@@ -50,7 +50,7 @@ public class ApiHomeListener implements Listener {
     }
 
     @EventHandler
-    public void onHomeCreateTroll(HomeCreateEvent event) {
+    void onHomeCreateTroll(HomeCreateEvent event) {
         UUID playerUniqueId = event.getPlayerUniqueId();
         Player player = this.server.getPlayer(playerUniqueId);
 
@@ -66,7 +66,7 @@ public class ApiHomeListener implements Listener {
     }
 
     @EventHandler
-    public void onHomeDelete(HomeDeleteEvent event) {
+    void onHomeDelete(HomeDeleteEvent event) {
         Home home = event.getHome();
 
         String name = home.getName();
