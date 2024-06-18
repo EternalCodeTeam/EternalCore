@@ -15,10 +15,11 @@ public class DurationUtil {
         .roundOff(ChronoUnit.MILLIS);
 
     private static final TemporalAmountParser<Duration> STANDARD_FORMAT = new DurationParser()
-        .withUnit("s", ChronoUnit.SECONDS)
-        .withUnit("m", ChronoUnit.MINUTES)
+        .withUnit("d", ChronoUnit.DAYS)
         .withUnit("h", ChronoUnit.HOURS)
-        .withUnit("d", ChronoUnit.DAYS);
+        .withUnit("m", ChronoUnit.MINUTES)
+        .withUnit("s", ChronoUnit.SECONDS)
+        .withUnit("ms", ChronoUnit.MILLIS);
 
     public DurationUtil() {
         throw new UnsupportedOperationException("This class cannot be instantiated");
@@ -29,7 +30,11 @@ public class DurationUtil {
             return WITHOUT_MILLS_FORMAT.format(duration);
         }
 
-        return STANDARD_FORMAT.format(duration);
+        if (duration.toMillis() < Duration.ofSeconds(1).toMillis()) {
+            return STANDARD_FORMAT.format(duration);
+        }
+
+        return WITHOUT_MILLS_FORMAT.format(duration);
     }
 
     public static String format(Duration duration) {
