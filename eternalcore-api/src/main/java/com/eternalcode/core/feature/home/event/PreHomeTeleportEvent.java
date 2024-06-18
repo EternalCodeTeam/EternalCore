@@ -27,16 +27,12 @@ public class PreHomeTeleportEvent extends Event implements Cancellable {
         this.location = home.getLocation();
     }
 
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
-
     public Home getHome() {
-        return home;
+        return this.home;
     }
 
     public Location getLocation() {
-        return location;
+        return this.location;
     }
 
     public void setLocation(Location location) {
@@ -56,6 +52,10 @@ public class PreHomeTeleportEvent extends Event implements Cancellable {
     @Override
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLER_LIST;
     }
 
     @Override

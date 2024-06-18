@@ -25,19 +25,19 @@ public class HomeTeleportEvent extends Event {
     }
 
     public Home getHome() {
-        return home;
+        return this.home;
     }
 
     public UUID getPlayerUniqueId() {
         return this.playerUniqueId;
     }
 
-    @Override
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 }

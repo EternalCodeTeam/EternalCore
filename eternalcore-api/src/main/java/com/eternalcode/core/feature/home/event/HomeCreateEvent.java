@@ -28,11 +28,11 @@ public class HomeCreateEvent extends Event implements Cancellable {
     }
 
     public UUID getHomeUniqueId() {
-        return homeUniqueId;
+        return this.homeUniqueId;
     }
 
     public String getHomeName() {
-        return homeName;
+        return this.homeName;
     }
 
     public void setHomeName(String homeName) {
@@ -44,7 +44,7 @@ public class HomeCreateEvent extends Event implements Cancellable {
     }
 
     public Location getLocation() {
-        return location;
+        return this.location;
     }
 
     public void setLocation(Location location) {

@@ -26,7 +26,7 @@ public class HomeDeleteEvent extends Event implements Cancellable {
     }
 
     public Home getHome() {
-        return home;
+        return this.home;
     }
 
     public UUID getPlayerUniqueId() {

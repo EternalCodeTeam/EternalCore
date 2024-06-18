@@ -30,7 +30,7 @@ public class HomeOverrideEvent extends Event implements Cancellable {
     }
 
     public String getHomeName() {
-        return homeName;
+        return this.homeName;
     }
 
     public void setHomeName(String homeName) {
@@ -38,7 +38,7 @@ public class HomeOverrideEvent extends Event implements Cancellable {
     }
 
     public UUID getHomeUniqueId() {
-        return homeUniqueId;
+        return this.homeUniqueId;
     }
 
     public UUID getPlayerUniqueId() {
@@ -50,7 +50,7 @@ public class HomeOverrideEvent extends Event implements Cancellable {
     }
 
     public Location getLocation() {
-        return location;
+        return this.location;
     }
 
     @Override
