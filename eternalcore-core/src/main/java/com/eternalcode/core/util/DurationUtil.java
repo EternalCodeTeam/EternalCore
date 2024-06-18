@@ -21,6 +21,8 @@ public class DurationUtil {
         .withUnit("s", ChronoUnit.SECONDS)
         .withUnit("ms", ChronoUnit.MILLIS);
 
+    public static final Duration ONE_SECOND = Duration.ofSeconds(1);
+
     public DurationUtil() {
         throw new UnsupportedOperationException("This class cannot be instantiated");
     }
@@ -30,7 +32,7 @@ public class DurationUtil {
             return WITHOUT_MILLS_FORMAT.format(duration);
         }
 
-        if (duration.toMillis() < Duration.ofSeconds(1).toMillis()) {
+        if (duration.toMillis() < ONE_SECOND.toMillis()) {
             return STANDARD_FORMAT.format(duration);
         }
 
