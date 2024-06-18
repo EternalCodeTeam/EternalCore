@@ -31,4 +31,8 @@ public class DurationUtil {
 
         return STANDARD_FORMAT.format(duration);
     }
+
+    public static String format(Duration duration) {
+        return format(duration, false);
+    }
 }
