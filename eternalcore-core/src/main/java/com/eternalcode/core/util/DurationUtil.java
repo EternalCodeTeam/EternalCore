@@ -29,7 +29,7 @@ public class DurationUtil {
 
     public static String format(Duration duration, boolean removeMills) {
         if (removeMills) {
-            return WITHOUT_MILLS_FORMAT.format(duration);
+            return WITHOUT_MILLIS_FORMAT.format(duration);
         }
 
         if (duration.toMillis() < ONE_SECOND.toMillis()) {
