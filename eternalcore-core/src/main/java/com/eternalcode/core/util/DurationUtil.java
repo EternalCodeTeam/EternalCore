@@ -27,7 +27,7 @@ public class DurationUtil {
         throw new UnsupportedOperationException("This class cannot be instantiated");
     }
 
-    public static String format(Duration duration, boolean removeMills) {
+    public static String format(Duration duration, boolean removeMillis) {
         if (removeMills) {
             return WITHOUT_MILLIS_FORMAT.format(duration);
         }
