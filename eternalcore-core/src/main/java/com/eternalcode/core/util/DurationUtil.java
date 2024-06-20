@@ -36,7 +36,7 @@ public class DurationUtil {
             return STANDARD_FORMAT.format(duration);
         }
 
-        return WITHOUT_MILLS_FORMAT.format(duration);
+        return WITHOUT_MILLIS_FORMAT.format(duration);
     }
 
     public static String format(Duration duration) {
