@@ -1,44 +1,47 @@
 package com.eternalcode.core.feature.home;
 
-import org.bukkit.Location;
-
 import java.util.Objects;
 import java.util.UUID;
+import org.bukkit.Location;
 
-class Home {
+public class HomeImpl implements Home {
 
     private final UUID uuid;
     private final UUID owner;
     private final String name;
     private final Location location;
 
-    Home(UUID uuid, UUID owner, String name, Location location) {
+    public HomeImpl(UUID uuid, UUID owner, String name, Location location) {
         this.uuid = uuid;
         this.owner = owner;
         this.name = name;
         this.location = location;
     }
 
-    Home(UUID owner, String name, Location location) {
+    public HomeImpl(UUID owner, String name, Location location) {
         this.owner = owner;
         this.uuid = UUID.randomUUID();
         this.name = name;
         this.location = location;
     }
 
-    UUID getUuid() {
+    @Override
+    public UUID getUuid() {
         return this.uuid;
     }
 
-    UUID getOwner() {
+    @Override
+    public UUID getOwner() {
         return this.owner;
     }
 
-    String getName() {
+    @Override
+    public String getName() {
         return this.name;
     }
 
-    Location getLocation() {
+    @Override
+    public Location getLocation() {
         return this.location;
     }
 
@@ -48,16 +51,15 @@ class Home {
             return true;
         }
 
-        if (!(obj instanceof Home home)) {
+        if (!(obj instanceof HomeImpl homeImpl)) {
             return false;
         }
 
-        return this.uuid.equals(home.uuid) && this.name.equals(home.name);
+        return this.uuid.equals(homeImpl.uuid) && this.name.equals(homeImpl.name);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(this.uuid, this.name);
     }
-
 }

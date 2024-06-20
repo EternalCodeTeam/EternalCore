@@ -1,35 +1,41 @@
-package com.eternalcode.core.feature.home;
+package com.eternalcode.core.feature.home.command;
 
+import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
+import com.eternalcode.core.feature.home.Home;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
-import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
-import com.eternalcode.multification.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerService;
+import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
-import org.bukkit.command.CommandSender;
-import panda.std.Option;
-
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.bukkit.command.CommandSender;
 
 @LiteArgument(type = Home.class)
 class HomeArgument extends AbstractViewerArgument<Home> {
 
-    private final HomeManager homeManager;
+    private final HomeService homeService;
     private final NoticeService noticeService;
 
     @Inject
-    HomeArgument(ViewerService viewerService, TranslationManager translationManager, HomeManager homeManager, NoticeService noticeService) {
+    HomeArgument(
+        ViewerService viewerService,
+        TranslationManager translationManager,
+        HomeService homeService,
+        NoticeService noticeService
+    ) {
         super(viewerService, translationManager);
-        this.homeManager = homeManager;
+        this.homeService = homeService;
         this.noticeService = noticeService;
     }
 
@@ -38,13 +44,13 @@ class HomeArgument extends AbstractViewerArgument<Home> {
         Viewer viewer = this.viewerService.any(invocation.sender());
         UUID uniqueId = viewer.getUniqueId();
 
-        Option<Home> homeOption = this.homeManager.getHome(uniqueId, argument);
+        Optional<Home> homeOption = this.homeService.getHome(uniqueId, argument);
 
         if (homeOption.isPresent()) {
             return ParseResult.success(homeOption.get());
         }
 
-        String homes = this.homeManager.getHomes(uniqueId).stream()
+        String homes = this.homeService.getHomes(uniqueId).stream()
             .map(home -> home.getName())
             .collect(Collectors.joining(", "));
 
@@ -56,11 +62,14 @@ class HomeArgument extends AbstractViewerArgument<Home> {
         return ParseResult.failure(homeListNotice);
     }
 
-
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Home> argument, SuggestionContext context) {
+    public SuggestionResult suggest(
+        Invocation<CommandSender> invocation,
+        Argument<Home> argument,
+        SuggestionContext context
+    ) {
         Viewer viewer = this.viewerService.any(invocation.sender());
-        return this.homeManager.getHomes(viewer.getUniqueId()).stream()
+        return this.homeService.getHomes(viewer.getUniqueId()).stream()
             .map(Home::getName)
             .collect(SuggestionResult.collector());
     }

@@ -13,6 +13,7 @@ import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
+import java.util.LinkedHashMap;
 import java.util.Set;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -186,12 +187,17 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Default home name")
         public String defaultHomeName = "home";
 
+        @Description("# Time of teleportation to homes")
+        public Duration teleportTimeToHomes = Duration.ofSeconds(5);
+
         @Description("# Max homes per permission")
-        public Map<String, Integer> maxHomes = Map.of(
-            "eternalcore.home.default", 1,
-            "eternalcore.home.vip", 2,
-            "eternalcore.home.premium", 3
-        );
+        public Map<String, Integer> maxHomes = new LinkedHashMap<>() {
+            {
+                put("eternalcore.home.default", 1);
+                put("eternalcore.home.vip", 2);
+                put("eternalcore.home.premium", 3);
+            }
+        };
     }
 
     @Description({ " ", "# Awesome sounds" })
