@@ -56,7 +56,7 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     static String homesLeft(int homesLimit, int amountOfHomes) {
-        if (homesLimit < -1) {
+        if (homesLimit < -1 || amountOfHomes > homesLimit) {
             return "0";
         }
 
