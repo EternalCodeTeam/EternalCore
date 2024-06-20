@@ -15,7 +15,7 @@ object Versions {
     const val ADVENTURE_PLATFORM = "4.3.3"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.17.0"
     const val ADVENTURE_PLATFORM_FACET = "4.3.3"
-    const val CDN_CONFIGS = "1.14.4"
+    const val CDN_CONFIGS = "1.14.5"
 
     const val MARIA_DB = "3.4.0"
     const val POSTGRESQL = "42.7.3"
