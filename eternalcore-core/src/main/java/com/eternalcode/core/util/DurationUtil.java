@@ -28,7 +28,7 @@ public class DurationUtil {
     }
 
     public static String format(Duration duration, boolean removeMillis) {
-        if (removeMills) {
+        if (removeMillis) {
             return WITHOUT_MILLIS_FORMAT.format(duration);
         }
 
