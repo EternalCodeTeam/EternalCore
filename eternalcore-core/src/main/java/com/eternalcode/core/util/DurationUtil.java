@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 
 public class DurationUtil {
 
-    private static final TemporalAmountParser<Duration> WITHOUT_MILLS_FORMAT = new DurationParser()
+    private static final TemporalAmountParser<Duration> WITHOUT_MILLIS_FORMAT = new DurationParser()
         .withUnit("s", ChronoUnit.SECONDS)
         .withUnit("m", ChronoUnit.MINUTES)
         .withUnit("h", ChronoUnit.HOURS)
