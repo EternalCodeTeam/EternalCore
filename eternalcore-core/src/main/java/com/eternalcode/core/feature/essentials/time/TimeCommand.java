@@ -59,4 +59,28 @@ class TimeCommand {
             .send();
     }
 
+    @Execute(name = "set day")
+    @DescriptionDocs(description = "Sets time to day")
+    void setDay(@Context Player player, @Context Viewer viewer) {
+        this.set(viewer, 1000, player.getWorld());
+    }
+
+    @Execute(name = "set night")
+    @DescriptionDocs(description = "Sets time to night")
+    void setNight(@Context Player player, @Context Viewer viewer) {
+        this.set(viewer, 13000, player.getWorld());
+    }
+
+    @Execute(name = "set noon")
+    @DescriptionDocs(description = "Sets time to noon")
+    void setNoon(@Context Player player, @Context Viewer viewer) {
+        this.set(viewer, 6000, player.getWorld());
+    }
+
+    @Execute(name = "set midnight")
+    @DescriptionDocs(description = "Sets time to midnight")
+    void setMidnight(@Context Player player, @Context Viewer viewer) {
+        this.set(viewer, 18000, player.getWorld());
+    }
+
 }
