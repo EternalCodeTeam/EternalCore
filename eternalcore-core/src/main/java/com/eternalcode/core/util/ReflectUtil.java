@@ -2,6 +2,7 @@ package com.eternalcode.core.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.reflect.ClassPath;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -37,7 +38,7 @@ public final class ReflectUtil {
                     loadedClasses.add(clazz);
                 }
                 catch (NoClassDefFoundError ignored) {
-                    LOGGER.severe("Can not load class: " + info.getName());
+                    LOGGER.severe("Unable to load class: " + info.getName());
                 }
             }
 
