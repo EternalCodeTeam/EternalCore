@@ -1589,6 +1589,60 @@
     ]
   },
   {
+    "name": "tellraw-queue add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Save a message to send it later (in batch)."
+    ],
+    "arguments": [
+      "\u003cnotice_type\u003e \u003cmessage\u003e"
+    ]
+  },
+  {
+    "name": "tellraw-queue clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Clear all saved messages"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "tellraw-queue send",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Send all saved messages to the player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tellraw-queue send -all",
+    "aliases": [
+      "tellraw-queue, send *"
+    ],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Send all saved messages to all players"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "thunder ",
     "aliases": [],
     "permissions": [

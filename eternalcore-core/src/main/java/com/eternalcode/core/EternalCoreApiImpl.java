@@ -2,6 +2,7 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
+import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.jail.JailService;
 import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
@@ -57,6 +58,11 @@ class EternalCoreApiImpl implements EternalCoreApi {
     @Override
     public JailService getJailService() {
         return this.dependencyProvider.getDependency(JailService.class);
+    }
+
+    @Override
+    public HomeService getHomeService() {
+        return this.dependencyProvider.getDependency(HomeService.class);
     }
 
     @Override

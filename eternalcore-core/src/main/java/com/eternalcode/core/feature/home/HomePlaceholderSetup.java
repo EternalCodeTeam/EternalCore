@@ -16,24 +16,23 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 @Controller
 class HomePlaceholderSetup implements Subscriber {
 
-    private final HomeManager homeManager;
+    private final HomeService homeService;
     private final UserManager userManager;
     private final TranslationManager translationManager;
     private final PluginConfiguration pluginConfiguration;
 
     @Inject
     HomePlaceholderSetup(
-        HomeManager homeManager,
+        HomeService homeService,
         UserManager userManager,
         TranslationManager translationManager,
         PluginConfiguration pluginConfiguration
     ) {
-        this.homeManager = homeManager;
+        this.homeService = homeService;
         this.userManager = userManager;
         this.translationManager = translationManager;
         this.pluginConfiguration = pluginConfiguration;
@@ -50,14 +49,14 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String homesLeft(Player targetPlayer) {
-        int homesLimit = this.homeManager.getHomesLimit(targetPlayer, this.pluginConfiguration.homes);
-        int amountOfHomes = this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId());
+        int homesLimit = this.homeService.getHomeLimit(targetPlayer);
+        int amountOfHomes = this.homeService.getAmountOfHomes(targetPlayer.getUniqueId());
 
         return homesLeft(homesLimit, amountOfHomes);
     }
 
     static String homesLeft(int homesLimit, int amountOfHomes) {
-        if (homesLimit < -1) {
+        if (homesLimit < -1 || amountOfHomes > homesLimit) {
             return "0";
         }
 
@@ -67,7 +66,7 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String ownedHomes(Player targetPlayer) {
-        Collection<Home> homes = this.homeManager.getHomes(targetPlayer.getUniqueId());
+        Collection<Home> homes = this.homeService.getHomes(targetPlayer.getUniqueId());
 
         User user = this.userManager.getOrCreate(targetPlayer.getUniqueId(), targetPlayer.getName());
 
@@ -81,10 +80,10 @@ class HomePlaceholderSetup implements Subscriber {
     }
 
     private String homesCount(Player targetPlayer) {
-        return String.valueOf(this.homeManager.getAmountOfHomes(targetPlayer.getUniqueId()));
+        return String.valueOf(this.homeService.getAmountOfHomes(targetPlayer.getUniqueId()));
     }
 
     private String homesLimit(Player targetPlayer) {
-        return String.valueOf(this.homeManager.getHomesLimit(targetPlayer, this.pluginConfiguration.homes));
+        return String.valueOf(this.homeService.getHomeLimit(targetPlayer));
     }
 }
