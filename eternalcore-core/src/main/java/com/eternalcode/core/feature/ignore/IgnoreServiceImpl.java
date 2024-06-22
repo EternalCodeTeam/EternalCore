@@ -5,19 +5,22 @@ import com.eternalcode.core.feature.ignore.event.IgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.IgnoreEvent;
 import com.eternalcode.core.feature.ignore.event.UnIgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.UnIgnoreEvent;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-
+@Service
 public class IgnoreServiceImpl implements IgnoreService {
 
     private final IgnoreRepository ignoreRepository;
     private final Server server;
     private final EventCaller caller;
 
+    @Inject
     public IgnoreServiceImpl(IgnoreRepository ignoreRepository, Server server, EventCaller caller) {
         this.ignoreRepository = ignoreRepository;
         this.server = server;
@@ -26,7 +29,7 @@ public class IgnoreServiceImpl implements IgnoreService {
 
     @Override
     public CompletableFuture<Boolean> isIgnored(UUID by, UUID target) {
-        return null;
+        return this.ignoreRepository.isIgnored(by, target);
     }
 
     @Override
@@ -39,8 +42,7 @@ public class IgnoreServiceImpl implements IgnoreService {
             return CompletableFuture.completedFuture(false);
         }
 
-        this.ignoreRepository.ignore(by, target);
-        return CompletableFuture.completedFuture(true);
+        return this.ignoreRepository.ignore(by, target).thenApply(unused -> true);
     }
 
     @Override
@@ -50,8 +52,7 @@ public class IgnoreServiceImpl implements IgnoreService {
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);
         }
-        this.ignoreRepository.ignoreAll(by);
-        return CompletableFuture.completedFuture(true);
+        return this.ignoreRepository.ignoreAll(by).thenApply(unused -> true);
     }
 
     @Override
@@ -64,8 +65,7 @@ public class IgnoreServiceImpl implements IgnoreService {
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);
         }
-        this.ignoreRepository.unIgnore(by, target);
-        return CompletableFuture.completedFuture(true);
+        return this.ignoreRepository.unIgnore(by, target).thenApply(unused -> true);
     }
 
     @Override
@@ -75,8 +75,7 @@ public class IgnoreServiceImpl implements IgnoreService {
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);
         }
-        this.ignoreRepository.unIgnoreAll(by);
-        return CompletableFuture.completedFuture(true);
+        return this.ignoreRepository.unIgnoreAll(by).thenApply(unused -> true);
     }
 
 }

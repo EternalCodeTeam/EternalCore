@@ -14,7 +14,7 @@ public class IgnoreAllEvent extends Event implements Cancellable {
     private boolean cancelled;
 
     public IgnoreAllEvent(@NotNull Player by) {
-        super(true);
+        super(false);
         this.by = by;
     }
 
