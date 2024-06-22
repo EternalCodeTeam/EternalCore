@@ -160,7 +160,7 @@ public class Dependency {
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupId, artifactId, version);
+        return Objects.hash(this.groupId, this.artifactId, this.version);
     }
 
     public static Dependency of(String groupId, String artifactId, String version) {
