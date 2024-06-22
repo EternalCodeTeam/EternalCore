@@ -1,4 +1,4 @@
-<center>
+<div align="center">
 
 ![readme-banner.png](https://github.com/EternalCodeTeam/EternalCore/blob/master/assets/readme-banner.png?raw=true)
 
@@ -9,7 +9,7 @@
 [![Chat on Discord](https://raw.githubusercontent.com/vLuckyyy/badges/main//chat-with-us-on-discord.svg)](https://discord.com/invite/FQ7jmGBd6c)
 [![Read the Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://docs.eternalcode.pl/eternalcore/introduction)
 [![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/bukkit/EternalCore/13964)
-</center>
+</div>
 
 # Welcome to EternalCore! 🚀
 
