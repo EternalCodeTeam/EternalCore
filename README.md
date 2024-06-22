@@ -23,7 +23,7 @@ EternalCore is your ultimate companion for enhancing your Minecraft server exper
 
 ## :hammer_and_wrench: Development Builds
 
-Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions).
+Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions?query=branch%3Amaster).
 
 <details><summary>🎥 Video Guide</summary>
   <img src="https://i.imgur.com/hmv38VS.gif" alt="Video Guide">
