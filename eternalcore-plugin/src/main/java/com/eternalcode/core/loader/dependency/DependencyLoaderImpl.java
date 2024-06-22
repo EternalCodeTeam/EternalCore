@@ -73,6 +73,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
             Path loaded = this.loaded.get(dependency);
 
             if (loaded != null) {
+                // TODO: jeśli już wcześniej pobrano zależność to można zweryfikować czy relokacja jest poprawna (może jakiś plik z informacjami o relokacjach?)
                 loader.addPath(loaded);
                 paths.add(loaded);
                 continue;
@@ -87,6 +88,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
                 continue;
             }
 
+            // TODO: to jest trochę blocking można to zrobić w parallel streamie
             Path relocatedDependency = this.relocationHandler.relocateDependency(downloadedDependencyPath, dependency, relocations);
 
             this.loaded.put(dependency, relocatedDependency);
