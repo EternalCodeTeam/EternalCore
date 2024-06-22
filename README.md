@@ -1,6 +1,6 @@
-<div align="center">
+<center>
 
-![readme-banner.png](assets/readme-banner.png)
+![readme-banner.png](https://github.com/EternalCodeTeam/EternalCore/blob/master/assets/readme-banner.png?raw=true)
 
 [![Available on SpigotMC](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-spigotmc.svg)](https://www.spigotmc.org/resources/eternalcore-%E2%99%BE%EF%B8%8F-all-the-most-important-server-functions-in-one.112264/)
 [![Available on Modrinth](https://raw.githubusercontent.com/vLuckyyy/badges/main/avaiable-on-modrinth.svg)](https://modrinth.com/plugin/eternalcore)
@@ -9,7 +9,7 @@
 [![Chat on Discord](https://raw.githubusercontent.com/vLuckyyy/badges/main//chat-with-us-on-discord.svg)](https://discord.com/invite/FQ7jmGBd6c)
 [![Read the Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://docs.eternalcode.pl/eternalcore/introduction)
 [![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/bukkit/EternalCore/13964)
-</div>
+</center>
 
 # Welcome to EternalCore! 🚀
 
