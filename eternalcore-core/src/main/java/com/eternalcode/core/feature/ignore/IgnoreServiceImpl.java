@@ -14,14 +14,14 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class IgnoreServiceImpl implements IgnoreService {
+class IgnoreServiceImpl implements IgnoreService {
 
     private final IgnoreRepository ignoreRepository;
     private final Server server;
     private final EventCaller caller;
 
     @Inject
-    public IgnoreServiceImpl(IgnoreRepository ignoreRepository, Server server, EventCaller caller) {
+    IgnoreServiceImpl(IgnoreRepository ignoreRepository, Server server, EventCaller caller) {
         this.ignoreRepository = ignoreRepository;
         this.server = server;
         this.caller = caller;
@@ -36,9 +36,14 @@ public class IgnoreServiceImpl implements IgnoreService {
     public CompletableFuture<Boolean> ignore(UUID by, UUID target) {
         Player senderPlayer = this.server.getPlayer(by);
         Player targetPlayer = this.server.getPlayer(target);
+
+        if (senderPlayer == null) {
+            return CompletableFuture.completedFuture(false);
+        }
+
         IgnoreEvent event = this.caller.callEvent(new IgnoreEvent(senderPlayer, targetPlayer));
 
-        if (event.isCancelled()) {
+        if (event.isCancelled() || targetPlayer == null) {
             return CompletableFuture.completedFuture(false);
         }
 
@@ -47,7 +52,13 @@ public class IgnoreServiceImpl implements IgnoreService {
 
     @Override
     public CompletableFuture<Boolean> ignoreAll(UUID by) {
-        IgnoreAllEvent event = this.caller.callEvent(new IgnoreAllEvent(this.server.getPlayer(by)));
+        Player player = this.server.getPlayer(by);
+
+        if (player == null) {
+            return CompletableFuture.completedFuture(false);
+        }
+
+        IgnoreAllEvent event = this.caller.callEvent(new IgnoreAllEvent(player));
 
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);
@@ -60,6 +71,10 @@ public class IgnoreServiceImpl implements IgnoreService {
         Player senderPlayer = this.server.getPlayer(by);
         Player targetPlayer = this.server.getPlayer(target);
 
+        if (senderPlayer == null) {
+            return CompletableFuture.completedFuture(false);
+        }
+
         UnIgnoreEvent event = this.caller.callEvent(new UnIgnoreEvent(senderPlayer, targetPlayer));
 
         if (event.isCancelled()) {
@@ -70,7 +85,13 @@ public class IgnoreServiceImpl implements IgnoreService {
 
     @Override
     public CompletableFuture<Boolean> unIgnoreAll(UUID by) {
-        UnIgnoreAllEvent event = this.caller.callEvent(new UnIgnoreAllEvent(this.server.getPlayer(by)));
+        Player player = this.server.getPlayer(by);
+
+        if (player == null) {
+            return CompletableFuture.completedFuture(false);
+        }
+
+        UnIgnoreAllEvent event = this.caller.callEvent(new UnIgnoreAllEvent(player));
 
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);

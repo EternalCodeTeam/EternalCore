@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -10,7 +9,6 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.Server;
 
 import java.util.UUID;
 
@@ -21,15 +19,11 @@ class UnIgnoreCommand {
 
     private final IgnoreService ignoreService;
     private final NoticeService noticeService;
-    private final EventCaller eventCaller;
-    private final Server server;
 
     @Inject
-    public UnIgnoreCommand(IgnoreService ignoreService, NoticeService noticeService, EventCaller eventCaller, Server server) {
+    public UnIgnoreCommand(IgnoreService ignoreService, NoticeService noticeService) {
         this.ignoreService = ignoreService;
         this.noticeService = noticeService;
-        this.eventCaller = eventCaller;
-        this.server = server;
     }
 
     @Execute
