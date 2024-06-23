@@ -6,7 +6,7 @@ import com.eternalcode.core.feature.randomteleport.event.PreRandomTeleportEvent;
 import com.eternalcode.core.feature.randomteleport.event.RandomTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

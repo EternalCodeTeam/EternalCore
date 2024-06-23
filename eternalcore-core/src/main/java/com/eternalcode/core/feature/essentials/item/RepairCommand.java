@@ -10,15 +10,14 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
-
-import java.time.Duration;
-import java.util.UUID;
 
 @Command(name = "repair")
 class RepairCommand {
@@ -190,11 +189,11 @@ class RepairCommand {
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
 
-        if (!(itemMeta instanceof Repairable) || !(itemMeta instanceof Damageable damageable) || damageable.getDamage() == 0) {
+        if (!(itemMeta instanceof Repairable) || !(itemMeta instanceof Damageable damageable)
+            || damageable.getDamage() == 0) {
             return;
         }
         damageable.setDamage(0);
         itemStack.setItemMeta(itemMeta);
     }
-
 }

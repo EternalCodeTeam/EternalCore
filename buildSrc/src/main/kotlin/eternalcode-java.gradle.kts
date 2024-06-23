@@ -1,25 +1,39 @@
 plugins {
     `java-library`
-    `checkstyle`
+    checkstyle
 }
 
 group = "com.eternalcode"
-version = "1.1.0"
+version = "1.3.1"
 
 checkstyle {
-    toolVersion = "10.12.5"
+    toolVersion = "10.17.0"
 
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    configProperties["checkstyle.suppressions.file"] = "${rootDir}/config/checkstyle/suppressions.xml"
 
     maxErrors = 0
     maxWarnings = 0
 }
 
+// https://github.com/JabRef/jabref/pull/10812/files#diff-49a96e7eea8a94af862798a45174e6ac43eb4f8b4bd40759b5da63ba31ec3ef7R267
+configurations.named("checkstyle") {
+    resolutionStrategy {
+        capabilitiesResolution {
+            withCapability("com.google.collections:google-collections") {
+                select("com.google.guava:guava:33.2.1-jre")
+            }
+        }
+    }
+}
+
+
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 tasks.withType<JavaCompile>() {
     options.compilerArgs = listOf("-Xlint:deprecation", "-parameters")
     options.encoding = "UTF-8"
+    options.release = 17
 }

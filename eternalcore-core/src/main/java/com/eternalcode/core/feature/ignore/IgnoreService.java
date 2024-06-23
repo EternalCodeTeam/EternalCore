@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import panda.std.reactive.Completable;
+import java.util.concurrent.CompletableFuture;
 
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ public class IgnoreService {
         this.repository = repository;
     }
 
-    public Completable<Boolean> isIgnored(UUID by, UUID target) {
+    public CompletableFuture<Boolean> isIgnored(UUID by, UUID target) {
         return this.repository.isIgnored(by, target);
     }
 

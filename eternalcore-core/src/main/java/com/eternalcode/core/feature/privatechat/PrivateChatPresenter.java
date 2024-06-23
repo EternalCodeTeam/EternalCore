@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.privatechat;
 
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
-import panda.utilities.text.Formatter;
+import com.eternalcode.multification.shared.Formatter;
 
 import java.util.UUID;
 

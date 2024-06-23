@@ -169,6 +169,33 @@
     ]
   },
   {
+    "name": "catboy ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.catboy"
+    ],
+    "descriptions": [
+      "Mark yourself as a catboy."
+    ],
+    "arguments": [
+      "[type]"
+    ]
+  },
+  {
+    "name": "catboy ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.catboy",
+      "eternalcore.catboy.others"
+    ],
+    "descriptions": [
+      "Mark a player as a catboy."
+    ],
+    "arguments": [
+      "\u003cplayer\u003e [type]"
+    ]
+  },
+  {
     "name": "chat clear",
     "aliases": [
       "chat, cc"
@@ -302,10 +329,9 @@
     ]
   },
   {
-    "name": "delwarp",
+    "name": "delwarp ",
     "aliases": [],
     "permissions": [
-      "eternalcore.warp",
       "eternalcore.delwarp"
     ],
     "descriptions": [
@@ -487,10 +513,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives an item to another player"
+      "Gives an item with a custom amount to another player"
     ],
     "arguments": [
-      "\u003citem\u003e \u003cplayer\u003e"
+      "\u003citem\u003e \u003camount\u003e \u003cenchantment\u003e \u003clevel\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -513,10 +539,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives an item with a custom amount to another player"
+      "Gives an item to another player"
     ],
     "arguments": [
-      "\u003citem\u003e \u003camount\u003e \u003cplayer\u003e"
+      "\u003citem\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -530,6 +556,19 @@
     ],
     "arguments": [
       "\u003citem\u003e \u003camount\u003e"
+    ]
+  },
+  {
+    "name": "give ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.give"
+    ],
+    "descriptions": [
+      "Gives an item with a custom amount to another player"
+    ],
+    "arguments": [
+      "\u003citem\u003e \u003camount\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -643,10 +682,10 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
+      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
     ],
     "arguments": [
-      ""
+      "\u003chome\u003e"
     ]
   },
   {
@@ -656,10 +695,10 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
+      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will ignore teleport time"
     ],
     "arguments": [
-      "\u003chome\u003e"
+      ""
     ]
   },
   {
@@ -766,6 +805,138 @@
     ],
     "arguments": [
       ""
+    ]
+  },
+  {
+    "name": "jail detain",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.detain"
+    ],
+    "descriptions": [
+      "Detain a player for some time"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003ctime\u003e"
+    ]
+  },
+  {
+    "name": "jail detain",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.detain"
+    ],
+    "descriptions": [
+      "Detain a player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "jail detain",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.detain"
+    ],
+    "descriptions": [
+      "Detain self"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail list",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.list"
+    ],
+    "descriptions": [
+      "List all jailed players"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail release",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.release"
+    ],
+    "descriptions": [
+      "Release self from jail"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail release",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.release"
+    ],
+    "descriptions": [
+      "Release a player from jail"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "jail release -all",
+    "aliases": [
+      "jail, release *"
+    ],
+    "permissions": [
+      "eternalcore.jail.release"
+    ],
+    "descriptions": [
+      "Release all players from jail"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.setup"
+    ],
+    "descriptions": [
+      "Remove jail spawn area"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail setup",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.setup"
+    ],
+    "descriptions": [
+      "Define jail spawn area"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "jail setup",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.jail.setup"
+    ],
+    "descriptions": [
+      "Define jail spawn area"
+    ],
+    "arguments": [
+      "\u003clocation\u003e"
     ]
   },
   {
@@ -1076,11 +1247,10 @@
     ]
   },
   {
-    "name": "setwarp",
+    "name": "setwarp ",
     "aliases": [],
     "permissions": [
-      "eternalcore.setwarp",
-      "eternalcore.warp"
+      "eternalcore.setwarp"
     ],
     "descriptions": [
       "Create warp"
@@ -1248,6 +1418,32 @@
     ]
   },
   {
+    "name": "sudo ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sudo.player"
+    ],
+    "descriptions": [
+      "Execute command as player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e \u003ccommand\u003e"
+    ]
+  },
+  {
+    "name": "sudo -console",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.sudo.console"
+    ],
+    "descriptions": [
+      "Execute command as console"
+    ],
+    "arguments": [
+      "\u003ccommand\u003e"
+    ]
+  },
+  {
     "name": "sun ",
     "aliases": [],
     "permissions": [
@@ -1393,6 +1589,60 @@
     ]
   },
   {
+    "name": "tellraw-queue add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Save a message to send it later (in batch)."
+    ],
+    "arguments": [
+      "\u003cnotice_type\u003e \u003cmessage\u003e"
+    ]
+  },
+  {
+    "name": "tellraw-queue clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Clear all saved messages"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "tellraw-queue send",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Send all saved messages to the player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "tellraw-queue send -all",
+    "aliases": [
+      "tellraw-queue, send *"
+    ],
+    "permissions": [
+      "eternalcore.tellraw.queue"
+    ],
+    "descriptions": [
+      "Send all saved messages to all players"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "thunder ",
     "aliases": [],
     "permissions": [
@@ -1468,6 +1718,58 @@
     ],
     "arguments": [
       "\u003ctime\u003e \u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "time set day",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to day"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "time set midnight",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to midnight"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "time set night",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to night"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "time set noon",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to noon"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {

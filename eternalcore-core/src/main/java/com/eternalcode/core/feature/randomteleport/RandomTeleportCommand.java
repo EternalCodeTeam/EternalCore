@@ -9,14 +9,13 @@ import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
-import org.bukkit.entity.Player;
-
 import java.time.Duration;
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 @Command(name = "rtp", aliases = "randomteleport")
 class RandomTeleportCommand {
@@ -35,7 +34,11 @@ class RandomTeleportCommand {
     private final Delay<UUID> delay;
 
     @Inject
-    RandomTeleportCommand(NoticeService noticeService, RandomTeleportService randomTeleportService, PluginConfiguration config) {
+    RandomTeleportCommand(
+        NoticeService noticeService,
+        RandomTeleportService randomTeleportService,
+        PluginConfiguration config
+    ) {
         this.noticeService = noticeService;
         this.randomTeleportService = randomTeleportService;
         this.config = config;
@@ -107,13 +110,15 @@ class RandomTeleportCommand {
     }
 
     private void handleTeleportSuccess(Player player) {
-        this.noticeService.player(player.getUniqueId(),
+        this.noticeService.player(
+            player.getUniqueId(),
             translation -> translation.randomTeleport().teleportedToRandomLocation(),
             PLACEHOLDERS.toFormatter(player));
     }
 
     private void handleAdminTeleport(Viewer sender, Player player) {
-        this.noticeService.viewer(sender,
+        this.noticeService.viewer(
+            sender,
             translation -> translation.randomTeleport().teleportedSpecifiedPlayerToRandomLocation(),
             PLACEHOLDERS.toFormatter(player));
     }

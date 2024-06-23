@@ -1,13 +1,13 @@
 plugins {
     `java-library`
 
-    id("com.github.johnrengelman.shadow")
+    id("io.github.goooler.shadow")
     id("net.minecrell.plugin-yml.bukkit")
-    id("xyz.jpenilla.run-paper") version "2.2.3"
+    id("xyz.jpenilla.run-paper") version "2.3.0"
 }
 
 group = "com.eternalcode"
-version = "1.1.0"
+version = "1.3.1"
 
 repositories {
     mavenCentral()
@@ -40,7 +40,7 @@ bukkit {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 tasks.withType<JavaCompile> {

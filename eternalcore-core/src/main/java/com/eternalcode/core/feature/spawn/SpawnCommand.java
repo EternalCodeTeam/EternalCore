@@ -6,8 +6,8 @@ import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.shared.Position;
-import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -65,7 +65,7 @@ class SpawnCommand {
             return;
         }
 
-        if (this.teleportTaskService.inTeleport(sender.getUniqueId())) {
+        if (this.teleportTaskService.isInTeleport(sender.getUniqueId())) {
             this.noticeService.create()
                 .notice(translation -> translation.teleport().teleportTaskAlreadyExist())
                 .player(sender.getUniqueId())

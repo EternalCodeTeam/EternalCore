@@ -26,7 +26,7 @@ public class VanishService {
         return this.isVanished(player);
     }
 
-    private boolean isVanished(Player player) {
+    public boolean isVanished(Player player) {
         for (MetadataValue isVanished : player.getMetadata(METADATA_VANISHED_KEY)) {
             if (isVanished.asBoolean()) {
                 return true;

@@ -5,18 +5,17 @@ import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.DurationUtil;
-import com.eternalcode.core.viewer.ViewerProvider;
+import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
-import org.bukkit.command.CommandSender;
-
 import java.time.Duration;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
+import org.bukkit.command.CommandSender;
 
 @LiteArgument(type = Duration.class)
 class DurationArgument extends AbstractViewerArgument<Duration> {
@@ -33,8 +32,8 @@ class DurationArgument extends AbstractViewerArgument<Duration> {
     );
 
     @Inject
-    DurationArgument(ViewerProvider viewerProvider, TranslationManager translationManager) {
-        super(viewerProvider, translationManager);
+    DurationArgument(ViewerService viewerService, TranslationManager translationManager) {
+        super(viewerService, translationManager);
     }
 
     @Override
@@ -48,10 +47,13 @@ class DurationArgument extends AbstractViewerArgument<Duration> {
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Duration> argument, SuggestionContext context) {
+    public SuggestionResult suggest(
+        Invocation<CommandSender> invocation,
+        Argument<Duration> argument,
+        SuggestionContext context
+    ) {
         return SUGGESTED_DURATIONS.stream()
             .map(DurationUtil::format)
             .collect(SuggestionResult.collector());
     }
-
 }

@@ -1,7 +1,8 @@
 package com.eternalcode.core.bridge.adventure;
 
-import com.eternalcode.core.bridge.adventure.legacy.LegacyColorProcessor;
-import com.eternalcode.core.bridge.adventure.resolver.CenterTagResolver;
+import com.eternalcode.commons.adventure.AdventureLegacyColorPostProcessor;
+import com.eternalcode.commons.adventure.AdventureLegacyColorPreProcessor;
+import com.eternalcode.commons.adventure.AdventureUrlPostProcessor;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import net.kyori.adventure.platform.AudienceProvider;
@@ -13,15 +14,16 @@ import org.bukkit.plugin.Plugin;
 class AdventureSetup {
 
     @Bean
-    AudienceProvider skullAPI(Plugin plugin) {
+    AudienceProvider audienceProvider(Plugin plugin) {
         return BukkitAudiences.create(plugin);
     }
 
     @Bean
     MiniMessage miniMessage() {
         return MiniMessage.builder()
-            .postProcessor(new LegacyColorProcessor())
-            .editTags(builder -> builder.resolver(CenterTagResolver.RESOLVER))
+            .postProcessor(new AdventureLegacyColorPostProcessor())
+            .preProcessor(new AdventureLegacyColorPreProcessor())
+            .postProcessor(new AdventureUrlPostProcessor())
             .build();
     }
 

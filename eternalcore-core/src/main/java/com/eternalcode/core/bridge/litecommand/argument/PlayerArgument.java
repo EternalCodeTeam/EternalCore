@@ -4,7 +4,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.viewer.ViewerProvider;
+import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -14,6 +14,7 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import java.util.Objects;
 
 @LiteArgument(type = Player.class)
 public class PlayerArgument extends AbstractViewerArgument<Player> {
@@ -21,14 +22,14 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
     private final Server server;
 
     @Inject
-    public PlayerArgument(ViewerProvider viewerProvider, TranslationManager translationManager, Server server) {
-        super(viewerProvider, translationManager);
+    public PlayerArgument(ViewerService viewerService, TranslationManager translationManager, Server server) {
+        super(viewerService, translationManager);
         this.server = server;
     }
 
     @Override
     public ParseResult<Player> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        Player target = this.server.getPlayer(argument);
+        Player target = this.server.getPlayerExact(argument);
 
         if (target == null) {
             return ParseResult.failure(translation.argument().offlinePlayer());

@@ -5,8 +5,11 @@ import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.language.LanguageSettings;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.multification.translation.TranslationProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -14,7 +17,7 @@ import java.util.Map.Entry;
     name = "Translations",
     description = "EternalCore can use multiple languages at once, the player can determine which EternalCore language I want to use, or you can determine from above what language all players want to use"
 )
-public class TranslationManager {
+public class TranslationManager implements TranslationProvider<Translation> {
 
     private final Map<Language, Translation> translatedMessages = new HashMap<>();
     private Translation defaultTranslation;
@@ -62,4 +65,9 @@ public class TranslationManager {
         return this.getMessages(viewer.getLanguage());
     }
 
+    @NotNull
+    @Override
+    public Translation provide(Locale locale) {
+        return this.getMessages(Language.fromLocale(locale));
+    }
 }

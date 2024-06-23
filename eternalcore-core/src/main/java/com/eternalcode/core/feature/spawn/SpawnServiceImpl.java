@@ -4,14 +4,16 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.shared.Position;
-import com.eternalcode.core.shared.PositionAdapter;
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Service
 public class SpawnServiceImpl implements SpawnService {
 
+    public static final Logger LOGGER = Logger.getLogger(SpawnServiceImpl.class.getName());
     private final LocationsConfiguration locationsConfiguration;
     private final ConfigurationManager configurationManager;
 
@@ -23,7 +25,15 @@ public class SpawnServiceImpl implements SpawnService {
 
     @Override
     public void teleportToSpawn(Player player) {
-        player.teleport(PositionAdapter.convert(this.locationsConfiguration.spawn));
+        Position spawn = this.locationsConfiguration.spawn;
+
+        if (spawn.isNoneWorld()) {
+            LOGGER.warning("The spawn location is not set, set it with /setspawn!");
+
+            return;
+        }
+
+        player.teleport(PositionAdapter.convert(spawn));
     }
 
     @Override

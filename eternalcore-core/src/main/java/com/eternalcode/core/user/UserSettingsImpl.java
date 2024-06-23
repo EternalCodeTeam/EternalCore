@@ -17,7 +17,7 @@ class UserSettingsImpl implements UserSettings {
     public Language getLanguage() {
         return this.language != Language.DEFAULT
             ? this.language
-            : Language.fromLocate(this.clientSettings.get().getLocate());
+            : Language.fromLocale(this.clientSettings.get().getLocate());
     }
 
     @Override

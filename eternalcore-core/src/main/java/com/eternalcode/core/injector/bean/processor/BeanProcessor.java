@@ -6,19 +6,16 @@ import com.eternalcode.core.util.ReflectUtil;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class BeanProcessor {
 
-    private final Map<Class<? extends Annotation>, Map<Class<?>, Set<Processor<?, ?>>>> processors = new HashMap<>();
+    private final Map<Class<? extends Annotation>, BeanProcessorRegistry> processors = new HashMap<>();
 
     <A extends Annotation, BEAN> BeanProcessor onProcess(Class<A> annotation, Class<BEAN> bean, Processor<BEAN, A> processor) {
-        Map<Class<?>, Set<Processor<?, ?>>> processors = this.processors.computeIfAbsent(annotation, c -> new HashMap<>());
-
-        Set<Processor<?, ?>> beanProcessors = processors.computeIfAbsent(bean, c -> new HashSet<>());
-        beanProcessors.add(processor);
+        BeanProcessorRegistry registry = this.processors.computeIfAbsent(annotation, c -> new BeanProcessorRegistry());
+        registry.register(bean, processor);
         return this;
     }
 
@@ -35,14 +32,14 @@ public class BeanProcessor {
     }
 
     private <A extends Annotation, BEAN> void process(DependencyProvider dependencyProvider, A annotation, BeanHolder<BEAN> bean) {
-        Map<Class<?>, Set<Processor<?, ?>>> processors = this.processors.get(annotation.annotationType());
+        BeanProcessorRegistry registry = this.processors.get(annotation.annotationType());
 
-        if (processors == null) {
+        if (registry == null) {
             return;
         }
 
         for (Class<?> superClass : ReflectUtil.getAllSuperClasses(bean.getType())) {
-            Set<Processor<BEAN, A>> beanProcessors = ReflectUtil.unsafeCast(processors.get(superClass));
+            Set<Processor<BEAN, A>> beanProcessors = ReflectUtil.unsafeCast(registry.getProcessors(superClass));
 
             if (beanProcessors == null) {
                 continue;

@@ -26,4 +26,8 @@ dependencies {
     runtimeOnly("commons-io:commons-io:${Versions.APACHE_COMMONS}")
     runtimeOnly("dev.triumphteam:triumph-gui:${Versions.TRIUMPH_GUI}")
     runtimeOnly("org.bstats:bstats-bukkit:${Versions.BSTATS}")
+    runtimeOnly("com.github.ben-manes.caffeine:caffeine:${Versions.CAFFEINE}")
+    runtimeOnly("com.eternalcode:multification-core:${Versions.MULTIFICATION}")
+    runtimeOnly("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
+    runtimeOnly("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
 }
