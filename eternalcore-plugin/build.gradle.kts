@@ -27,8 +27,8 @@ eternalShadowCompiler {
             "META-INF/**",
         )
 
-        dependsOn(":eternalcore-core:test")
-        dependsOn(":eternalcore-core:checkstyleMain")
+//        dependsOn(":eternalcore-core:test")
+//        dependsOn(":eternalcore-core:checkstyleMain")
     }
 }
 

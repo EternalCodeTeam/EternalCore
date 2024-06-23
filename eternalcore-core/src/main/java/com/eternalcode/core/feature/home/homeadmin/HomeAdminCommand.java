@@ -1,6 +1,8 @@
-package com.eternalcode.core.feature.home;
+package com.eternalcode.core.feature.home.homeadmin;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.home.Home;
+import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -11,6 +13,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,15 +32,19 @@ class HomeAdminCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute(name = "sethome")
+/*    @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
-    void setHome(@Context Player player, @Arg User user, @Arg(HomeUserArgument.KEY) String home, @Arg Optional<Location> location) {
-        Location optionalLocation = location.orElse(player.getLocation());
+    void setHome(@Context Player sender, @Arg PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
+        Location optionalLocation = location.orElse(sender.getLocation());
 
-        boolean hasHome = this.homeManager.hasHomeWithSpecificName(user, home);
+        Home home = playerHomeEntry.home();
+        Player player = playerHomeEntry.player();
+        UUID uniqueId = player.getUniqueId();
+
+        boolean hasHome = this.homeManager.hasHome(uniqueId, home);
 
         if (hasHome) {
-            this.homeManager.createHome(user, home, optionalLocation);
+            this.homeManager.createHome(uniqueId, home, optionalLocation);
             this.noticeService.create()
                 .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
                 .placeholder("{HOME}", home)
@@ -57,8 +64,8 @@ class HomeAdminCommand {
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
-    void deleteHome(@Context Player player, @Arg User user, @Arg(HomeUserArgument.KEY) String name) {
-        boolean hasHome = this.homeManager.hasHomeWithSpecificName(user, name);
+    void deleteHome(@Context Player player, @Arg User user, @Arg(PlayerHomeMultiArgument.KEY) String name) {
+        boolean hasHome = this.homeManager.hasHome(user, name);
 
         if (!hasHome) {
             String homes = this.formattedListUserHomes(user);
@@ -73,19 +80,27 @@ class HomeAdminCommand {
         }
 
         this.homeManager.deleteHome(user, name);
-    }
+    }*/
 
     @Execute(name = "home")
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
-    void home(@Context Player player, @Arg User user, @Arg(HomeUserArgument.KEY) String name) {
-        Option<Home> homeOption = this.homeManager.getHome(user.getUniqueId(), name);
+    void home(@Context Player player, @Arg PlayerHomeEntry playerHomeEntry) {
+        Home home = playerHomeEntry.home();
+        Player user = playerHomeEntry.player();
+
+        Optional<Home> homeOption = this.homeManager.getHome(user.getUniqueId(), home.getName());
 
         if (homeOption.isEmpty()) {
+            this.noticeService.create()
+                .notice(translate -> translate.home().playerNoOwnedHomes())
+                .placeholder("{HOME}", home.getName())
+                .player(player.getUniqueId())
+                .send();
+
             return;
         }
 
-        Home home = homeOption.get();
-        player.teleport(home.getLocation());
+        player.teleport(homeOption.get().getLocation());
     }
 
     @Execute(name = "list")
