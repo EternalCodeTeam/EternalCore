@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.eternalcode"
-version = "1.3.0"
+version = "1.3.1"
 
 checkstyle {
     toolVersion = "10.17.0"
@@ -29,10 +29,11 @@ configurations.named("checkstyle") {
 
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 tasks.withType<JavaCompile>() {
     options.compilerArgs = listOf("-Xlint:deprecation", "-parameters")
     options.encoding = "UTF-8"
+    options.release = 17
 }

@@ -1,6 +1,6 @@
 <div align="center">
 
-![readme-banner.png](assets/readme-banner.png)
+![readme-banner.png](https://github.com/EternalCodeTeam/EternalCore/blob/master/assets/readme-banner.png?raw=true)
 
 [![Available on SpigotMC](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-spigotmc.svg)](https://www.spigotmc.org/resources/eternalcore-%E2%99%BE%EF%B8%8F-all-the-most-important-server-functions-in-one.112264/)
 [![Available on Modrinth](https://raw.githubusercontent.com/vLuckyyy/badges/main/avaiable-on-modrinth.svg)](https://modrinth.com/plugin/eternalcore)
@@ -17,13 +17,13 @@ EternalCore is your ultimate companion for enhancing your Minecraft server exper
 
 ## :information_source: Information
 
-- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`.
+- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`, `1.21`.
 - Requires **Java 17 or later** to work properly. For older versions of Java, this may affect the functionality of the plugin.
 - If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
 ## :hammer_and_wrench: Development Builds
 
-Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions).
+Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions?query=branch%3Amaster).
 
 <details><summary>🎥 Video Guide</summary>
   <img src="https://i.imgur.com/hmv38VS.gif" alt="Video Guide">
@@ -31,7 +31,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 
 ## :sparkles: Features
 
-- :keyboard: Over **60+** useful commands.
+- :keyboard: Over **70+** useful commands.
 - :white_check_mark: Slot Bypass `(eternalcore.bypass.slot)`
 - :zzz: AFK System
 - :speech_balloon: Chat Features, including:
@@ -80,7 +80,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:1.3.0")
+compileOnly("com.eternalcode:eternalcore-api:1.3.1")
 ```
 
 For Maven projects use:
@@ -88,7 +88,7 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <scope>provided</scope>
 </dependency>
 ```

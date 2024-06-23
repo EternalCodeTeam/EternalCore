@@ -526,10 +526,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives an item to another player"
+      "Gives you an item"
     ],
     "arguments": [
-      "\u003citem\u003e \u003cplayer\u003e"
+      "\u003citem\u003e"
     ]
   },
   {
@@ -539,10 +539,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives you an item"
+      "Gives an item to another player"
     ],
     "arguments": [
-      "\u003citem\u003e"
+      "\u003citem\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -682,10 +682,10 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
+      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
     ],
     "arguments": [
-      ""
+      "\u003chome\u003e"
     ]
   },
   {
@@ -695,10 +695,10 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
+      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will ignore teleport time"
     ],
     "arguments": [
-      "\u003chome\u003e"
+      ""
     ]
   },
   {
@@ -1718,6 +1718,58 @@
     ],
     "arguments": [
       "\u003ctime\u003e \u003cworld\u003e"
+    ]
+  },
+  {
+    "name": "time set day",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to day"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "time set midnight",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to midnight"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "time set night",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to night"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "time set noon",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.time"
+    ],
+    "descriptions": [
+      "Sets time to noon"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {
