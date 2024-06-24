@@ -75,7 +75,6 @@ public class DependencyLoaderImpl implements DependencyLoader {
         collector.addScannedDependencies(dependencies);
         this.logger.info("Found " + collector.getScannedDependencies().size() + " dependencies");
 
-        long start = System.currentTimeMillis();
         List<CompletableFuture<DependencyLoadEntry>> futures = new ArrayList<>();
 
         for (Dependency dependency : collector.getScannedDependencies()) {
@@ -109,8 +108,6 @@ public class DependencyLoaderImpl implements DependencyLoader {
             this.loaded.put(dependencyLoadEntry.dependency(), dependencyLoadEntry.path());
         }
 
-        long end = System.currentTimeMillis();
-        this.logger.info("Loaded " + dependencyLoadEntries.size() + " dependencies in " + (end - start) + "ms");
         return new DependencyLoadResult(loader, dependencyLoadEntries);
     }
 
