@@ -5,6 +5,8 @@ import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.core.viewer.ViewerService;
 import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
@@ -28,15 +30,23 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
 
     private static final String HOME_LIST_PLACEHOLDER_PREFIX = "{HOMES}";
     private static final String PLAYER_NAME_PLACEHOLDER_PREFIX = "{PLAYER}";
+    private static final String HOME_DELIMITER = ", ";
 
     private final HomeManager homeManager;
     private final NoticeService noticeService;
+    private final ViewerService viewerService;
     private final Server server;
 
     @Inject
-    PlayerHomeMultiArgument(HomeManager homeManager, NoticeService noticeService, Server server) {
+    PlayerHomeMultiArgument(
+        HomeManager homeManager,
+        NoticeService noticeService,
+        ViewerService viewerService,
+        Server server
+    ) {
         this.homeManager = homeManager;
         this.noticeService = noticeService;
+        this.viewerService = viewerService;
         this.server = server;
     }
 
@@ -46,21 +56,17 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         Argument<PlayerHomeEntry> argument,
         RawInput rawInput
     ) {
+        Viewer viewer = this.viewerService.any(invocation.sender());
+
         NoticeBroadcast offlinePlayer = this.noticeService.create()
-            .notice(translation -> translation.argument().offlinePlayer());
-            // .sender(invocation.sender());
+            .notice(translation -> translation.argument().offlinePlayer())
+            .viewer(viewer);
 
         if (!rawInput.hasNext()) {
             return ParseResult.failure(offlinePlayer);
         }
 
         String playerName = rawInput.next();
-
-        if (!rawInput.hasNext()) {
-            // tutaj zwrocic ze zla nazwa home okoko
-        }
-
-        String homeName = rawInput.next();
         Player player = this.server.getPlayer(playerName);
 
         if (player == null) {
@@ -68,7 +74,16 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         }
 
         UUID uniqueId = player.getUniqueId();
+        if (!rawInput.hasNext()) {
+            NoticeBroadcast home = this.noticeService.create()
+                .notice(translate -> translate.home().playerNoOwnedHomes())
+                .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
+                .player(uniqueId);
 
+            return ParseResult.failure(home);
+        }
+
+        String homeName = rawInput.next();
         Optional<Home> home = this.homeManager.getHome(uniqueId, homeName);
 
         if (home.isEmpty()) {
@@ -80,27 +95,6 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         }
 
         return ParseResult.success(new PlayerHomeEntry(player, home.get()));
-    }
-
-    private NoticeBroadcast homeNotice(Collection<Home> homesCount, Player player, UUID uniqueId) {
-        if (homesCount.isEmpty()) {
-            this.noticeService.create()
-                .notice(translate -> translate.home().playerNoOwnedHomes())
-                .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
-                .player(uniqueId)
-                .send();
-        }
-
-        String homes = homesCount.stream()
-            .map(h -> h.getName())
-            .collect(Collectors.joining(", "));
-
-        NoticeBroadcast homeListNotice = this.noticeService.create()
-            .notice(translate -> translate.home().homeList())
-            .placeholder(HOME_LIST_PLACEHOLDER_PREFIX, homes)
-            .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
-            .player(uniqueId);
-        return homeListNotice;
     }
 
     @Override
@@ -115,27 +109,48 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         SuggestionContext context
     ) {
         Suggestion current = context.getCurrent();
-        int i = current.lengthMultilevel();
+        int index = current.lengthMultilevel();
 
-        if (i == 1) {
+        if (index == 1) {
             return SuggestionResult.of(this.server.getOnlinePlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.toList()));
         }
 
-        if (i == 2) {
+        if (index == 2) {
             String playerName = current.multilevelList().get(0);
             Player player = this.server.getPlayer(playerName);
+
             if (player == null) {
                 return SuggestionResult.empty();
             }
+
             return SuggestionResult.of(this.homeManager.getHomes(player.getUniqueId()).stream()
-                .map(Home::getName)
-                .collect(Collectors.toList()))
+                    .map(Home::getName)
+                    .collect(Collectors.toList()))
                 .appendLeft(playerName);
         }
 
         return SuggestionResult.empty();
     }
 
+    private NoticeBroadcast homeNotice(Collection<Home> homesCount, Player player, UUID uniqueId) {
+        if (homesCount.isEmpty()) {
+            this.noticeService.create()
+                .notice(translate -> translate.home().playerNoOwnedHomes())
+                .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
+                .player(uniqueId)
+                .send();
+        }
+
+        String homes = homesCount.stream()
+            .map(h -> h.getName())
+            .collect(Collectors.joining(HOME_DELIMITER));
+
+        return this.noticeService.create()
+            .notice(translate -> translate.home().homeList())
+            .placeholder(HOME_LIST_PLACEHOLDER_PREFIX, homes)
+            .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
+            .player(uniqueId);
+    }
 }

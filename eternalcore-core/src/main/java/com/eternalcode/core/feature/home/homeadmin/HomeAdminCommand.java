@@ -17,7 +17,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 @Command(name = "homeadmin")
 @Permission("eternalcode.home.admin")
@@ -32,7 +31,7 @@ class HomeAdminCommand {
         this.noticeService = noticeService;
     }
 
-/*    @Execute(name = "sethome")
+    @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
     void setHome(@Context Player sender, @Arg PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
@@ -42,45 +41,50 @@ class HomeAdminCommand {
         UUID uniqueId = player.getUniqueId();
 
         boolean hasHome = this.homeManager.hasHome(uniqueId, home);
+        String name = home.getName();
 
         if (hasHome) {
-            this.homeManager.createHome(uniqueId, home, optionalLocation);
+            this.homeManager.createHome(uniqueId, name, optionalLocation);
             this.noticeService.create()
                 .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
-                .placeholder("{HOME}", home)
+                .placeholder("{HOME}", name)
                 .player(player.getUniqueId())
                 .send();
 
             return;
         }
 
-        this.homeManager.createHome(user, home, optionalLocation);
+        this.homeManager.createHome(uniqueId, name, optionalLocation);
         this.noticeService.create()
             .notice(translate -> translate.home().createAsAdmin())
-            .placeholder("{HOME}", home)
+            .placeholder("{HOME}", name)
             .player(player.getUniqueId())
             .send();
     }
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
-    void deleteHome(@Context Player player, @Arg User user, @Arg(PlayerHomeMultiArgument.KEY) String name) {
-        boolean hasHome = this.homeManager.hasHome(user, name);
+    void deleteHome(@Context Player sender, @Arg PlayerHomeEntry playerHomeEntry) {
+        Home home = playerHomeEntry.home();
+        Player player = playerHomeEntry.player();
+
+        UUID uniqueId = player.getUniqueId();
+        boolean hasHome = this.homeManager.hasHome(uniqueId, home);
 
         if (!hasHome) {
-            String homes = this.formattedListUserHomes(user);
+            String homes = this.formattedListUserHomes(uniqueId);
 
             this.noticeService.create()
                 .notice(translate -> translate.home().homeList())
                 .placeholder("{HOMES}", homes)
-                .player(player.getUniqueId())
+                .player(sender.getUniqueId())
                 .send();
 
             return;
         }
 
-        this.homeManager.deleteHome(user, name);
-    }*/
+        this.homeManager.deleteHome(uniqueId, home.getName());
+    }
 
     @Execute(name = "home")
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
@@ -106,7 +110,7 @@ class HomeAdminCommand {
     @Execute(name = "list")
     @DescriptionDocs(description = "List user homes", arguments = "<user>")
     void list(@Context Viewer viewer, @Arg User user) {
-        String homes = this.formattedListUserHomes(user);
+        String homes = this.formattedListUserHomes(user.getUniqueId());
 
         this.noticeService.create()
             .notice(translate -> translate.home().homeListAsAdmin())
@@ -115,8 +119,8 @@ class HomeAdminCommand {
             .send();
     }
 
-    private String formattedListUserHomes(User user) {
-        return this.homeManager.getHomes(user.getUniqueId()).stream()
+    private String formattedListUserHomes(UUID uniqueId) {
+        return this.homeManager.getHomes(uniqueId).stream()
             .map(home -> home.getName())
             .collect(Collectors.joining(", "));
     }
