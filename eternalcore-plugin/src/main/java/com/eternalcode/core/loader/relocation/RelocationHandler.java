@@ -79,12 +79,11 @@ public class RelocationHandler implements AutoCloseable {
         this.jarRelocatorRunMethod = jarRelocatorRunMethod;
     }
 
-    public Path relocateDependency(Path dependencyPath, Dependency dependency, List<Relocation> relocations) {
+    public Path relocateDependency(Repository localRepository, Path dependencyPath, Dependency dependency, List<Relocation> relocations) {
         if (relocations.isEmpty()) {
             return dependencyPath;
         }
 
-        Repository localRepository = Repository.localRepository(dependencyPath.getParent());
         Path relocatedJar = dependency.toMavenJar(localRepository, "relocated").toPath();
 
         if (Files.exists(relocatedJar)) {

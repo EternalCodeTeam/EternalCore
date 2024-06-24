@@ -29,7 +29,7 @@ public class Dependency {
         String url = String.format(
             JAR_MAVEN_FORMAT_WITH_CLASSIFIER,
             repository.url(),
-            this.groupId,
+            this.groupId.replace(".", "/"),
             this.artifactId,
             this.version,
             this.artifactId,

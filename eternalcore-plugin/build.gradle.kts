@@ -32,6 +32,10 @@ eternalShadowCompiler {
     }
 }
 
+dependencies {
+    implementation("com.spotify:completable-futures:0.3.6")
+}
+
 tasks {
     runServer {
         minecraftVersion("1.20.4")

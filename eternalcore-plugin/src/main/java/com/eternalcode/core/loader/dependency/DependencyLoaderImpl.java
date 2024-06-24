@@ -8,6 +8,7 @@ import com.eternalcode.core.loader.relocation.Relocation;
 import com.eternalcode.core.loader.relocation.RelocationHandler;
 import com.eternalcode.core.loader.repository.Repository;
 
+import com.spotify.futures.CompletableFutures;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -18,27 +19,34 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class DependencyLoaderImpl implements DependencyLoader {
 
     private static final String LOCAL_REPOSITORY_PATH = "localRepository";
 
+    private final Executor executor;
     private final Logger logger;
     private final DependencyDownloader downloadDependency;
     private final RelocationHandler relocationHandler;
     private final DependencyScanner pomXmlScanner;
+    private final Repository localRepository;
 
     private final Map<Dependency, Path> loaded = new HashMap<>();
 
     public DependencyLoaderImpl(Logger logger, File dataFolder, List<Repository> repositories) {
         Path localRepositoryPath = this.setupCacheDirectory(dataFolder);
-        Repository localRepository = Repository.localRepository(localRepositoryPath);
+        this.localRepository = Repository.localRepository(localRepositoryPath);
 
         List<Repository> allRepositories = new ArrayList<>();
         allRepositories.add(localRepository);
         allRepositories.addAll(repositories);
 
+        this.executor = Executors.newCachedThreadPool();
         this.logger = logger;
         this.pomXmlScanner = new PomXmlScanner(allRepositories, localRepository);
         this.downloadDependency = new DependencyDownloader(logger, localRepository, allRepositories);
@@ -64,39 +72,46 @@ public class DependencyLoaderImpl implements DependencyLoader {
             collector = this.pomXmlScanner.findAllChildren(collector, dependency);
         }
 
-        collector.scannedDependencies(dependencies);
-        this.logger.info("Found " + collector.scannedDependencies().size() + " dependencies");
+        collector.addScannedDependencies(dependencies);
+        this.logger.info("Found " + collector.getScannedDependencies().size() + " dependencies");
 
-        List<Path> paths = new ArrayList<>();
+        long start = System.currentTimeMillis();
+        List<CompletableFuture<DependencyLoadEntry>> futures = new ArrayList<>();
 
-        for (Dependency dependency : collector.scannedDependencies()) {
-            Path loaded = this.loaded.get(dependency);
+        for (Dependency dependency : collector.getScannedDependencies()) {
+            CompletableFuture<DependencyLoadEntry> pathToDependency = CompletableFuture.supplyAsync(() -> {
+                Path loaded = this.loaded.get(dependency);
 
-            if (loaded != null) {
-                // TODO: jeśli już wcześniej pobrano zależność to można zweryfikować czy relokacja jest poprawna (może jakiś plik z informacjami o relokacjach?)
-                loader.addPath(loaded);
-                paths.add(loaded);
-                continue;
-            }
+                if (loaded != null) {
+                    return new DependencyLoadEntry(dependency, loaded);
+                }
 
-            Path downloadedDependencyPath = this.downloadDependency.downloadDependency(dependency);
+                Path downloadedDependencyPath = this.downloadDependency.downloadDependency(dependency);
 
-            if (this.relocationHandler == null) {
-                this.loaded.put(dependency, downloadedDependencyPath);
-                loader.addPath(downloadedDependencyPath);
-                paths.add(downloadedDependencyPath);
-                continue;
-            }
+                if (this.relocationHandler == null) {
+                    return new DependencyLoadEntry(dependency, downloadedDependencyPath);
+                }
 
-            // TODO: to jest trochę blocking można to zrobić w parallel streamie
-            Path relocatedDependency = this.relocationHandler.relocateDependency(downloadedDependencyPath, dependency, relocations);
+                Path relocatedDependency = this.relocationHandler.relocateDependency(localRepository, downloadedDependencyPath, dependency, relocations);
 
-            this.loaded.put(dependency, relocatedDependency);
-            loader.addPath(relocatedDependency);
-            paths.add(relocatedDependency);
+                return new DependencyLoadEntry(dependency, relocatedDependency);
+            }, this.executor);
+
+            futures.add(pathToDependency);
         }
 
-        return new DependencyLoadResult(loader, collector.scannedDependencies(), paths);
+        List<DependencyLoadEntry> dependencyLoadEntries = CompletableFutures.allAsList(futures)
+            .orTimeout(60, TimeUnit.MINUTES)
+            .join();
+
+        for (DependencyLoadEntry dependencyLoadEntry : dependencyLoadEntries) {
+            loader.addPath(dependencyLoadEntry.path());
+            this.loaded.put(dependencyLoadEntry.dependency(), dependencyLoadEntry.path());
+        }
+
+        long end = System.currentTimeMillis();
+        this.logger.info("Loaded " + dependencyLoadEntries.size() + " dependencies in " + (end - start) + "ms");
+        return new DependencyLoadResult(loader, dependencyLoadEntries);
     }
 
     @Override
