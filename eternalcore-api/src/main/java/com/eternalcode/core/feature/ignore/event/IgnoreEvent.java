@@ -1,43 +1,39 @@
 package com.eternalcode.core.feature.ignore.event;
 
-import org.bukkit.entity.Player;
+import java.util.UUID;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * This event is called when a player wants to ignore another player.
  */
-
 public class IgnoreEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
-    private final Player by;
-    private final Player target;
+    private final UUID requester;
+    private final UUID target;
     private boolean cancelled;
 
-    public IgnoreEvent(@NotNull Player by, @Nullable Player target) {
+    public IgnoreEvent(UUID requester, UUID target) {
         super(false);
-        this.by = by;
+        this.requester = requester;
         this.target = target;
     }
 
     /**
-     * @return the player executing the ignore action.
+     * @return the player who requested the ignore action.
      */
-
-    public Player getBy() {
-        return this.by;
+    public UUID getRequester() {
+        return this.requester;
     }
 
     /**
-     * @return the player being targeted by the ignore action.
+     * @return the player who is being ignored.
      */
-
-    public Player getTarget() {
+    public UUID getTarget() {
         return this.target;
     }
 
@@ -51,13 +47,13 @@ public class IgnoreEvent extends Event implements Cancellable {
         this.cancelled = cancel;
     }
 
-    @NotNull
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
+
 }

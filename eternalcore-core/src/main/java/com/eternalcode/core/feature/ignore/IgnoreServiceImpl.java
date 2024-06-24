@@ -7,8 +7,6 @@ import com.eternalcode.core.feature.ignore.event.UnIgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.UnIgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -17,86 +15,59 @@ import java.util.concurrent.CompletableFuture;
 class IgnoreServiceImpl implements IgnoreService {
 
     private final IgnoreRepository ignoreRepository;
-    private final Server server;
     private final EventCaller caller;
 
     @Inject
-    IgnoreServiceImpl(IgnoreRepository ignoreRepository, Server server, EventCaller caller) {
+    IgnoreServiceImpl(IgnoreRepository ignoreRepository, EventCaller caller) {
         this.ignoreRepository = ignoreRepository;
-        this.server = server;
         this.caller = caller;
     }
 
     @Override
-    public CompletableFuture<Boolean> isIgnored(UUID by, UUID target) {
-        return this.ignoreRepository.isIgnored(by, target);
+    public CompletableFuture<Boolean> isIgnored(UUID requester, UUID target) {
+        return this.ignoreRepository.isIgnored(requester, target);
     }
 
     @Override
-    public CompletableFuture<Boolean> ignore(UUID by, UUID target) {
-        Player senderPlayer = this.server.getPlayer(by);
-        Player targetPlayer = this.server.getPlayer(target);
-
-        if (senderPlayer == null) {
-            return CompletableFuture.completedFuture(false);
-        }
-
-        IgnoreEvent event = this.caller.callEvent(new IgnoreEvent(senderPlayer, targetPlayer));
-
-        if (event.isCancelled() || targetPlayer == null) {
-            return CompletableFuture.completedFuture(false);
-        }
-
-        return this.ignoreRepository.ignore(by, target).thenApply(unused -> true);
-    }
-
-    @Override
-    public CompletableFuture<Boolean> ignoreAll(UUID by) {
-        Player player = this.server.getPlayer(by);
-
-        if (player == null) {
-            return CompletableFuture.completedFuture(false);
-        }
-
-        IgnoreAllEvent event = this.caller.callEvent(new IgnoreAllEvent(player));
+    public CompletableFuture<Boolean> ignore(UUID requester, UUID target) {
+        IgnoreEvent event = this.caller.callEvent(new IgnoreEvent(requester, target));
 
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);
         }
-        return this.ignoreRepository.ignoreAll(by).thenApply(unused -> true);
+
+        return this.ignoreRepository.ignore(requester, target).thenApply(unused -> true);
     }
 
     @Override
-    public CompletableFuture<Boolean> unIgnore(UUID by, UUID target) {
-        Player senderPlayer = this.server.getPlayer(by);
-        Player targetPlayer = this.server.getPlayer(target);
-
-        if (senderPlayer == null) {
-            return CompletableFuture.completedFuture(false);
-        }
-
-        UnIgnoreEvent event = this.caller.callEvent(new UnIgnoreEvent(senderPlayer, targetPlayer));
+    public CompletableFuture<Boolean> ignoreAll(UUID requester) {
+        IgnoreAllEvent event = this.caller.callEvent(new IgnoreAllEvent(requester));
 
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);
         }
-        return this.ignoreRepository.unIgnore(by, target).thenApply(unused -> true);
+
+        return this.ignoreRepository.ignoreAll(requester).thenApply(unused -> true);
     }
 
     @Override
-    public CompletableFuture<Boolean> unIgnoreAll(UUID by) {
-        Player player = this.server.getPlayer(by);
-
-        if (player == null) {
-            return CompletableFuture.completedFuture(false);
-        }
-
-        UnIgnoreAllEvent event = this.caller.callEvent(new UnIgnoreAllEvent(player));
+    public CompletableFuture<Boolean> unIgnore(UUID requester, UUID target) {
+        UnIgnoreEvent event = this.caller.callEvent(new UnIgnoreEvent(requester, target));
 
         if (event.isCancelled()) {
             return CompletableFuture.completedFuture(false);
         }
-        return this.ignoreRepository.unIgnoreAll(by).thenApply(unused -> true);
+        return this.ignoreRepository.unIgnore(requester, target).thenApply(unused -> true);
+    }
+
+    @Override
+    public CompletableFuture<Boolean> unIgnoreAll(UUID requester) {
+        UnIgnoreAllEvent event = this.caller.callEvent(new UnIgnoreAllEvent(requester));
+
+        if (event.isCancelled()) {
+            return CompletableFuture.completedFuture(false);
+        }
+        return this.ignoreRepository.unIgnoreAll(requester).thenApply(unused -> true);
     }
 
 }
