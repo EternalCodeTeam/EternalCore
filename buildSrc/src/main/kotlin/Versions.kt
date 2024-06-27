@@ -40,6 +40,8 @@ object Versions {
 
     const val CAFFEINE = "3.1.8"
 
+    const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
+
     // tests
     const val EXPRESSIBLE_JUNIT = "1.3.6"
     const val GROOVY_ALL = "3.0.21"

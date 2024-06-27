@@ -12,7 +12,7 @@ public class DependencyCollector {
         return this.fullScannedDependencies.containsKey(dependency.getGroupArtifactId());
     }
 
-    public void scannedDependency(Dependency dependency) {
+    public void addScannedDependency(Dependency dependency) {
         Dependency current = this.fullScannedDependencies.get(dependency.getGroupArtifactId());
 
         if (current == null) {
@@ -25,13 +25,13 @@ public class DependencyCollector {
         }
     }
 
-    public void scannedDependencies(Collection<Dependency> dependencies) {
+    public void addScannedDependencies(Collection<Dependency> dependencies) {
         for (Dependency dependency : dependencies) {
-            this.scannedDependency(dependency);
+            this.addScannedDependency(dependency);
         }
     }
 
-    public Collection<Dependency> scannedDependencies() {
+    public Collection<Dependency> getScannedDependencies() {
         return Collections.unmodifiableCollection(this.fullScannedDependencies.values());
     }
 
