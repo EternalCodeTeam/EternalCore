@@ -33,7 +33,7 @@ eternalShadowCompiler {
 }
 
 dependencies {
-    implementation("com.spotify:completable-futures:0.3.6")
+    implementation("com.spotify:completable-futures:${Versions.SPOTIFY_COMPLETABLE_FUTURES}")
 }
 
 tasks {
