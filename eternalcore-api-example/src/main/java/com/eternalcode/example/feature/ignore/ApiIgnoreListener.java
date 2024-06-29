@@ -16,7 +16,6 @@ public class ApiIgnoreListener implements Listener {
     /**
      * This method is called when a player is ignored.
      **/
-
     @EventHandler
     public void onIgnore(IgnoreEvent event) {
         UUID requesterId = event.getRequester();
@@ -35,7 +34,6 @@ public class ApiIgnoreListener implements Listener {
     /**
      * This method is called when a player ignores all players
      **/
-
     @EventHandler
     public void onIgnoreAll(IgnoreAllEvent event) {
         UUID requesterId = event.getRequester();
@@ -71,7 +69,6 @@ public class ApiIgnoreListener implements Listener {
     /**
      * This method is called when a player unignores all players
      **/
-
     @EventHandler
     public void onUnIgnoreAll(UnIgnoreAllEvent event) {
         UUID requesterId = event.getRequester();
