@@ -13,6 +13,9 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Set;
@@ -20,7 +23,6 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import org.jetbrains.annotations.NotNull;
 
 @Repository
 class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
@@ -34,6 +36,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
     private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
         this.cachedDao = databaseManager.getDao(IgnoreWrapper.class);
+
         this.ignores = CacheBuilder.newBuilder()
             .expireAfterAccess(Duration.ofMinutes(15))
             .refreshAfterWrite(Duration.ofMinutes(3))
@@ -105,6 +108,13 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
             .thenRun(() -> this.ignores.refresh(by));
     }
 
+    @ApiStatus.Internal
+    @Override
+    public CompletableFuture<Void> purgeAll() {
+        return this.deleteAll(IgnoreWrapper.class)
+            .thenRun(this.ignores::invalidateAll);
+    }
+
     @DatabaseTable(tableName = "eternal_core_ignores")
     private static class IgnoreWrapper {
 
@@ -126,6 +136,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
     }
 
     private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
+
         @Override
         public @NotNull Set<UUID> load(@NotNull UUID key) throws SQLException {
             return IgnoreRepositoryOrmLite.this.cachedDao.queryBuilder()

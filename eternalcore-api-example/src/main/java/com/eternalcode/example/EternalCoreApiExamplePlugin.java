@@ -7,6 +7,8 @@ import com.eternalcode.example.feature.afk.ApiAfkListener;
 import com.eternalcode.example.feature.catboy.CatBoyListener;
 import com.eternalcode.example.feature.home.ApiHomeCommand;
 import com.eternalcode.example.feature.home.ApiHomeListener;
+import com.eternalcode.example.feature.ignore.ApiIgnoreCommand;
+import com.eternalcode.example.feature.ignore.ApiIgnoreListener;
 import com.eternalcode.example.feature.jail.ApiJailCommand;
 import com.eternalcode.example.feature.jail.ApiJailListener;
 import com.eternalcode.example.feature.privatechat.ApiPrivateChatListener;
@@ -41,10 +43,11 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             .message(LiteMessages.MISSING_PERMISSIONS, input -> "You don't have permission to execute this command!")
 
             .commands(
-                new ApiSpawnCommand(provide.getSpawnService()),
                 new ApiAfkCommand(provide.getAfkService()),
-                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                new ApiIgnoreCommand(provide.getIgnoreService()),
                 new ApiJailCommand(provide.getJailService()),
+                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                new ApiSpawnCommand(provide.getSpawnService()),
                 new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
                 new ApiHomeCommand(provide.getHomeService())
             )
@@ -57,8 +60,9 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             new ApiRandomTeleportListener(provide.getRandomTeleportService()),
             new ApiPrivateChatListener(server),
             new ApiRandomTeleportListener(provide.getRandomTeleportService()),
+            new ApiHomeListener(server),
             new ApiJailListener(server),
-            new ApiHomeListener(server)
+            new ApiIgnoreListener()
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, this));
     }
 
