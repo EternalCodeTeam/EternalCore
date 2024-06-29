@@ -50,7 +50,6 @@ public class ApiIgnoreListener implements Listener {
     /**
      * This method is called when a player is unignored.
      **/
-
     @EventHandler
     public void onUnIgnore(UnIgnoreEvent event) {
         UUID requesterId = event.getRequester();
