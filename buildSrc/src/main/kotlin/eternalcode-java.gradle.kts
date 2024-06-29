@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.eternalcode"
-version = "1.3.1"
+version = "1.3.2"
 
 checkstyle {
     toolVersion = "10.17.0"
