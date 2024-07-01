@@ -35,7 +35,7 @@ class LiteCommandsSetup implements Subscriber {
             .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
                 .serializer(miniMessage)
             )
-            .exception(Exception.class, new SentryLiteCommandExceptionHandler());
+            .exception(Throwable.class, new SentryLiteCommandExceptionHandler());
     }
 
     @Bean
