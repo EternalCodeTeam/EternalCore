@@ -1,6 +1,7 @@
 package com.eternalcode.annotations.scan.reflect;
 
 import com.google.common.reflect.ClassPath;
+import io.sentry.Sentry;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public final class PackageUtil {
                         continue;
                     }
                     catch (NoClassDefFoundError error) {
+                        Sentry.captureException(error);
                         continue;
                     }
                 }
@@ -46,6 +48,7 @@ public final class PackageUtil {
                     Class.forName(info.getName(), false, classLoader);
                 }
                 catch (NoClassDefFoundError error) {
+                    Sentry.captureException(error);
                     continue;
                 }
 
@@ -65,6 +68,7 @@ public final class PackageUtil {
             return new Result(packageStack, loadedPackages);
         }
         catch (IOException | ClassNotFoundException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }

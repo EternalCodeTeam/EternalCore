@@ -13,6 +13,7 @@ import com.eternalcode.core.injector.scan.DependencyScannerFactory;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
+import io.sentry.Sentry;
 import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;

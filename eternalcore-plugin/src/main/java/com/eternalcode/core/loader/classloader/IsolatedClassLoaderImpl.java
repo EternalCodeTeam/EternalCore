@@ -25,6 +25,8 @@
 
 package com.eternalcode.core.loader.classloader;
 
+import io.sentry.Sentry;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -58,6 +60,7 @@ public class IsolatedClassLoaderImpl extends URLClassLoader implements IsolatedC
             this.addURL(requireNonNull(path, "path").toUri().toURL());
         }
         catch (MalformedURLException e) {
+            Sentry.captureException(e);
             throw new IllegalArgumentException(e);
         }
     }
@@ -68,6 +71,7 @@ public class IsolatedClassLoaderImpl extends URLClassLoader implements IsolatedC
             super.close();
         }
         catch (IOException ioException) {
+            Sentry.captureException(ioException);
             throw new RuntimeException(ioException);
         }
     }
