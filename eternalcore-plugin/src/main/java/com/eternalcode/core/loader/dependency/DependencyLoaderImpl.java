@@ -7,8 +7,9 @@ import com.eternalcode.core.loader.pom.PomXmlScanner;
 import com.eternalcode.core.loader.relocation.Relocation;
 import com.eternalcode.core.loader.relocation.RelocationHandler;
 import com.eternalcode.core.loader.repository.Repository;
-
 import com.spotify.futures.CompletableFutures;
+import io.sentry.Sentry;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -43,13 +44,13 @@ public class DependencyLoaderImpl implements DependencyLoader {
         this.localRepository = Repository.localRepository(localRepositoryPath);
 
         List<Repository> allRepositories = new ArrayList<>();
-        allRepositories.add(localRepository);
+        allRepositories.add(this.localRepository);
         allRepositories.addAll(repositories);
 
         this.executor = Executors.newCachedThreadPool();
         this.logger = logger;
-        this.pomXmlScanner = new PomXmlScanner(allRepositories, localRepository);
-        this.downloadDependency = new DependencyDownloader(logger, localRepository, allRepositories);
+        this.pomXmlScanner = new PomXmlScanner(allRepositories, this.localRepository);
+        this.downloadDependency = new DependencyDownloader(logger, this.localRepository, allRepositories);
         this.relocationHandler = RelocationHandler.create(this);
     }
 
@@ -91,7 +92,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
                     return new DependencyLoadEntry(dependency, downloadedDependencyPath);
                 }
 
-                Path relocatedDependency = this.relocationHandler.relocateDependency(localRepository, downloadedDependencyPath, dependency, relocations);
+                Path relocatedDependency = this.relocationHandler.relocateDependency(this.localRepository, downloadedDependencyPath, dependency, relocations);
 
                 return new DependencyLoadEntry(dependency, relocatedDependency);
             }, this.executor);
@@ -117,6 +118,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
             this.relocationHandler.close();
         }
         catch (Exception exception) {
+            Sentry.captureException(exception);
             throw new DependencyException("Failed to close relocation handler", exception);
         }
     }
@@ -129,6 +131,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
         catch (FileAlreadyExistsException ignored) {
         }
         catch (IOException ioException) {
+            Sentry.captureException(ioException);
             throw new DependencyException("Unable to create " + LOCAL_REPOSITORY_PATH + " directory", ioException);
         }
 

@@ -1,5 +1,7 @@
 package com.eternalcode.core.loader.resource;
 
+import io.sentry.Sentry;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -33,6 +35,7 @@ public class ResourceLocator {
             return new File(this.url.toURI());
         }
         catch (URISyntaxException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
@@ -46,6 +49,7 @@ public class ResourceLocator {
             return new ResourceLocator(uri.toURL());
         }
         catch (MalformedURLException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
@@ -59,6 +63,7 @@ public class ResourceLocator {
             return new ResourceLocator(file.toURI().toURL());
         }
         catch (MalformedURLException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
@@ -68,6 +73,7 @@ public class ResourceLocator {
             return new ResourceLocator(new URL(string));
         }
         catch (MalformedURLException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }

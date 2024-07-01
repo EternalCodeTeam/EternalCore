@@ -3,6 +3,16 @@ package com.eternalcode.core.loader.pom;
 import com.eternalcode.core.loader.dependency.Dependency;
 import com.eternalcode.core.loader.dependency.DependencyCollector;
 import com.eternalcode.core.loader.repository.Repository;
+import io.sentry.Sentry;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,14 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 public class PomXmlScanner implements DependencyScanner {
 
@@ -38,6 +40,7 @@ public class PomXmlScanner implements DependencyScanner {
             DOCUMENT_BUILDER_FACTORY.setExpandEntityReferences(false);
         }
         catch (ParserConfigurationException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException("Failed to configure XML parser", exception);
         }
     }
@@ -85,6 +88,7 @@ public class PomXmlScanner implements DependencyScanner {
             return Optional.of(dependencies);
         }
         catch (IOException | SAXException | ParserConfigurationException | URISyntaxException exception) {
+            Sentry.captureException(exception);
             return Optional.empty();
         }
     }
@@ -112,6 +116,7 @@ public class PomXmlScanner implements DependencyScanner {
             return Files.size(file.toPath()) == 0;
         }
         catch (IOException exception) {
+            Sentry.captureException(exception);
             return true;
         }
     }

@@ -1,5 +1,7 @@
 package com.eternalcode.core.loader.repository;
 
+import io.sentry.Sentry;
+
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 
@@ -33,6 +35,7 @@ public class Repository {
             return Repository.of(repositoryFolder.toUri().toURL().toString());
         }
         catch (MalformedURLException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }

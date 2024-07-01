@@ -2,6 +2,7 @@ package com.eternalcode.core.util;
 
 import com.google.common.base.Preconditions;
 import com.google.common.reflect.ClassPath;
+import io.sentry.Sentry;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public final class ReflectUtil {
             return loadedClasses;
         }
         catch (IOException | ClassNotFoundException exception) {
+    Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }

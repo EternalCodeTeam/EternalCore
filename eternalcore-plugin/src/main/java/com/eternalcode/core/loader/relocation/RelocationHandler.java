@@ -30,8 +30,9 @@ import com.eternalcode.core.loader.dependency.Dependency;
 import com.eternalcode.core.loader.dependency.DependencyException;
 import com.eternalcode.core.loader.dependency.DependencyLoadResult;
 import com.eternalcode.core.loader.dependency.DependencyLoaderImpl;
-
 import com.eternalcode.core.loader.repository.Repository;
+import io.sentry.Sentry;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -108,6 +109,7 @@ public class RelocationHandler implements AutoCloseable {
             this.jarRelocatorRunMethod.invoke(relocator);
         }
         catch (InstantiationException | IllegalAccessException | InvocationTargetException | IOException exception) {
+            Sentry.captureException(exception);
             throw new DependencyException("Failed to create JarRelocator instance", exception);
         }
 
@@ -130,6 +132,7 @@ public class RelocationHandler implements AutoCloseable {
             return new RelocationHandler(classLoader, jarRelocatorConstructor, jarRelocatorRunMethod);
         }
         catch (ClassNotFoundException | NoSuchMethodException exception) {
+            Sentry.captureException(exception);
             throw new DependencyException(exception);
         }
     }

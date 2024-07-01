@@ -2,6 +2,7 @@ package com.eternalcode.core.bridge.sentry;
 
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 
+@BeanSetup
 class SentrySetup implements Subscriber {
 
     private final PluginConfiguration config;
@@ -23,7 +25,7 @@ class SentrySetup implements Subscriber {
 
     @Subscribe(EternalInitializeEvent.class)
     public void onInitialize(Plugin plugin, Server server) {
-        if (config.sentryEnabled){
+        if (this.config.sentryEnabled) {
             Sentry.init(options -> {
                 options.setDsn("https://4bf366d0d9f1da00162b9e629a80be52@o4505014505177088.ingest.us.sentry.io/4506093905051648");
                 options.setTracesSampleRate(0.75);
