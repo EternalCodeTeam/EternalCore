@@ -42,13 +42,22 @@ class WarpCommand {
     }
 
     @Execute(name = "warp")
-    @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps")
+    @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps")
     void warp(@Context Player player, @Context User user) {
         if (!this.config.warp.inventoryEnabled) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().available())
                 .placeholder("{WARPS}", String.join(", ", this.warpService.getNamesOfWarps()))
+                .send();
+
+            return;
+        }
+
+        if (!this.warpService.hasWarps()) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.warp().noWarps())
                 .send();
 
             return;

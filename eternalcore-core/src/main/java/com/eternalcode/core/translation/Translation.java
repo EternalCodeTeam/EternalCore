@@ -6,8 +6,8 @@ import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
-
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -143,14 +143,31 @@ public interface Translation {
         Notice create();
         Notice remove();
         Notice available();
+        Notice itemAdded();
+        Notice noWarps();
+        Notice itemLimit();
 
         WarpInventorySection warpInventory();
 
         interface WarpInventorySection {
             String title();
-            int rows();
 
             Map<String, WarpInventoryItem> items();
+            void setItems(Map<String, WarpInventoryItem> items);
+
+            default void addItem(String name, WarpInventoryItem item) {
+                Map<String, WarpInventoryItem> items = new HashMap<>(this.items());
+                items.put(name, item);
+
+                this.setItems(items);
+            }
+
+            default void removeItem(String name) {
+                Map<String, WarpInventoryItem> items = new HashMap<>(this.items());
+                items.remove(name);
+
+                this.setItems(items);
+            }
 
             BorderSection border();
             DecorationItemsSection decorationItems();
