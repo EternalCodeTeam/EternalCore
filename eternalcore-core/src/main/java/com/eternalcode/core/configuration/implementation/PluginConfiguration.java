@@ -6,15 +6,13 @@ import com.eternalcode.core.delay.DelaySettings;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
-import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
-import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -25,7 +23,9 @@ import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 @ConfigurationFile
 public class PluginConfiguration implements ReloadableConfig {
@@ -42,6 +42,10 @@ public class PluginConfiguration implements ReloadableConfig {
         "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
         "#",
     })
+
+    @Description({ "", "# Whether Sentry - the real-time error tracking system should be enabled",
+        "# We strongly recommend leaving this option on true, as it helps us fixing bugs faster."})
+    public boolean sentryEnabled = true;
 
     @Description("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;

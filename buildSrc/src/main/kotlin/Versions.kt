@@ -42,6 +42,8 @@ object Versions {
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
+    const val SENTRY = "8.0.0-alpha.2"
+
     // tests
     const val EXPRESSIBLE_JUNIT = "1.3.6"
     const val GROOVY_ALL = "3.0.21"
