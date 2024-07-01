@@ -46,7 +46,7 @@ public final class ReflectUtil {
             return loadedClasses;
         }
         catch (IOException | ClassNotFoundException exception) {
-    Sentry.captureException(exception);
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
