@@ -73,9 +73,11 @@ class SentrySetup implements Subscriber {
                     if (throwable != null) {
                         if (LOADER_OR_INJECTOR_EXCEPTIONS.stream().anyMatch(exception -> exception.isInstance(throwable))) {
                             event.setFingerprints(List.of("loader_or_injector"));
-                        } else if (DATABASE_EXCEPTIONS.stream().anyMatch(exception -> exception.isInstance(throwable))) {
+                        }
+                        else if (DATABASE_EXCEPTIONS.stream().anyMatch(exception -> exception.isInstance(throwable))) {
                             event.setFingerprints(List.of("database"));
-                        } else if (LITECOMMANDS_EXCEPTIONS.stream().anyMatch(exception -> exception.isInstance(throwable))) {
+                        }
+                        else if (LITECOMMANDS_EXCEPTIONS.stream().anyMatch(exception -> exception.isInstance(throwable))) {
                             event.setFingerprints(List.of("litecommands"));
                         }
                     }

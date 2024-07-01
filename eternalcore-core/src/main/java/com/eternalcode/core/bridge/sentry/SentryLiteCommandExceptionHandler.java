@@ -20,6 +20,6 @@ public class SentryLiteCommandExceptionHandler implements ExceptionHandler<Comma
     @Override
     public void handle(Invocation<CommandSender> invocation, Throwable t, ResultHandlerChain<CommandSender> resultHandlerChain) {
         Sentry.captureException(t);
-        logger.severe("An error occurred while executing the command: " + t.getMessage());
+        this.logger.severe("An error occurred while executing the command: " + t.getMessage());
     }
 }
