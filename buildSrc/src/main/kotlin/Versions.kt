@@ -4,7 +4,7 @@ object Versions {
     const val PAPER_API = "1.19.4-R0.1-SNAPSHOT"
 
     const val ETERNALCODE_COMMONS = "1.1.3"
-    const val MULTIFICATION = "1.0.2"
+    const val MULTIFICATION = "1.1.2"
 
     const val JETBRAINS_ANNOTATIONS = "24.1.0"
     const val PLACEHOLDER_API = "2.11.6"

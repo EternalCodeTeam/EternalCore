@@ -46,7 +46,7 @@ eternalShadow {
     )
 
     // Multification
-    library("com.eternalcode:multification-core:${Versions.MULTIFICATION}")
+    library("com.eternalcode:multification-bukkit:${Versions.MULTIFICATION}")
     library("com.eternalcode:multification-cdn:${Versions.MULTIFICATION}")
     libraryRelocate(
         "com.eternalcode.multification",

@@ -1,21 +1,21 @@
 package com.eternalcode.core.notice;
 
-import com.eternalcode.multification.notice.NoticeType;
+import com.eternalcode.multification.notice.NoticeKey;
 
 public enum NoticeTextType {
 
-    CHAT(NoticeType.CHAT),
-    ACTION_BAR(NoticeType.ACTION_BAR),
-    TITLE(NoticeType.TITLE_WITH_EMPTY_SUBTITLE),
-    SUBTITLE(NoticeType.SUBTITLE_WITH_EMPTY_TITLE);
+    CHAT(NoticeKey.CHAT),
+    ACTION_BAR(NoticeKey.ACTION_BAR),
+    TITLE(NoticeKey.TITLE),
+    SUBTITLE(NoticeKey.SUBTITLE);
 
-    private final NoticeType type;
+    private final NoticeKey type;
 
-    NoticeTextType(NoticeType type) {
+    NoticeTextType(NoticeKey type) {
         this.type = type;
     }
 
-    public NoticeType getType() {
+    public NoticeKey getType() {
         return this.type;
     }
 }

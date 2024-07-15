@@ -7,9 +7,8 @@ import com.eternalcode.multification.executor.AsyncExecutor;
 import com.eternalcode.multification.locate.LocaleProvider;
 import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.multification.notice.NoticeBroadcastImpl;
-import com.eternalcode.multification.notice.NoticeContent;
-import com.eternalcode.multification.notice.NoticeType;
 import com.eternalcode.multification.notice.provider.TextMessageProvider;
+import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
 import com.eternalcode.multification.platform.PlatformBroadcaster;
 import com.eternalcode.multification.shared.Replacer;
 import com.eternalcode.multification.translation.TranslationProvider;
@@ -31,8 +30,8 @@ public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCore
         PlatformBroadcaster platformBroadcaster,
         LocaleProvider<Viewer> localeProvider,
         AudienceConverter<Viewer> audienceConverter,
-        Replacer<Viewer> replacer
-    ) {
+        Replacer<Viewer> replacer,
+        NoticeResolverRegistry noticeRegistry) {
         super(
             asyncExecutor,
             translationProvider,
@@ -40,21 +39,23 @@ public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCore
             platformBroadcaster,
             localeProvider,
             audienceConverter,
-            replacer
-        );
+            replacer,
+            noticeRegistry);
     }
 
     public <CONTEXT> B placeholders(Placeholders<CONTEXT> placeholders, CONTEXT context) {
         return this.formatter(placeholders.toFormatter(context));
     }
 
+    public B user(User user) {
+        return this.player(user.getUniqueId());
+    }
+
     public B notice(NoticeTextType type, TextMessageProvider<Translation> extractor) {
         this.notifications.add(translation -> {
             List<String> list = Collections.singletonList(extractor.extract(translation));
-            NoticeContent.Text content = new NoticeContent.Text(list);
 
-            NoticeType noticeType = type.getType();
-            return Notice.of(noticeType, content);
+            return Notice.chat(list);
         });
 
         return this.getThis();
@@ -63,10 +64,8 @@ public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCore
     public B notice(NoticeTextType type, String message) {
         this.notifications.add(translation -> {
             List<String> list = Collections.singletonList(message);
-            NoticeContent.Text content = new NoticeContent.Text(list);
 
-            NoticeType noticeType = type.getType();
-            return Notice.of(noticeType, content);
+            return Notice.chat(list);
         });
 
         return this.getThis();
@@ -75,15 +74,10 @@ public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCore
     public B messages(Function<Translation, List<String>> messages) {
         this.notifications.add(translation -> {
             List<String> list = messages.apply(translation);
-            NoticeContent.Text content = new NoticeContent.Text(list);
 
-            return Notice.of(NoticeType.CHAT, content);
+            return Notice.chat(list);
         });
 
         return this.getThis();
-    }
-
-    public B user(User user) {
-        return this.player(user.getUniqueId());
     }
 }
