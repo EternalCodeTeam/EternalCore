@@ -97,4 +97,8 @@ eternalShadow {
     // caffeine
     library("com.github.ben-manes.caffeine:caffeine:${Versions.CAFFEINE}")
     libraryRelocate("com.github.benmanes.caffeine");
+
+    // sentry
+    library("io.sentry:sentry:${Versions.SENTRY}")
+    libraryRelocate("io.sentry")
 }
