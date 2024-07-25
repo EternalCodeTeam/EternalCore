@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
 import java.util.HashMap;
 import lombok.Getter;
@@ -849,12 +850,12 @@ public class PLTranslation extends AbstractTranslation {
             "# za pomocą komendy /papi ecloud download Server",
         })
         public Map<String, Notice> messages = Map.of(
-            "1", Notice.builder()
+            "1", BukkitNotice.builder()
                 .actionBar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
                 .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
                 .build(),
 
-            "2", Notice.builder()
+            "2", BukkitNotice.builder()
                 .chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?")
                 .chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!")
                 .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></green>")
