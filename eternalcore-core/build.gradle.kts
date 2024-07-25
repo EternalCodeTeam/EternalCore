@@ -25,14 +25,18 @@ dependencies {
     // GitCheck
     implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
 
+    implementation("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
+    implementation("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
+
+    implementation("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
+    implementation("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
+
     testImplementation("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
 }
 
 eternalShadow {
     // Paper and Adventure libraries
     library("io.papermc:paperlib:${Versions.PAPERLIB}")
-    library("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
-    library("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
@@ -68,8 +72,6 @@ eternalShadow {
     library("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
 
     // command framework & skull library
-    library("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
-    library("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
     library("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
     libraryRelocate(
         "dev.rollczi.litecommands",

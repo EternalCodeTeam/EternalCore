@@ -13,7 +13,7 @@ object Versions {
 
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_PLATFORM = "4.3.3"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.17.0"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "4.18.0-SNAPSHOT"
     const val ADVENTURE_PLATFORM_FACET = "4.3.3"
     const val CDN_CONFIGS = "1.14.5"
 
@@ -23,7 +23,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "5.1.0"
 
-    const val LITE_COMMANDS = "3.4.2"
+    const val LITE_COMMANDS = "3.4.2-SNAPSHOT"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.2.1-jre"
