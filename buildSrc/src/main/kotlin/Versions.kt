@@ -14,7 +14,7 @@ object Versions {
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_PLATFORM = "4.3.3"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.17.0"
-    const val ADVENTURE_PLATFORM_FACET = "4.3.3"
+    const val ADVENTURE_PLATFORM_FACET = "4.3.4"
     const val CDN_CONFIGS = "1.14.5"
 
     const val MARIA_DB = "3.4.0"
