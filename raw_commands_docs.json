@@ -266,6 +266,19 @@
     "name": "clear ",
     "aliases": [],
     "permissions": [
+      "eternalcore.clear"
+    ],
+    "descriptions": [
+      "Clears your inventory"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "clear ",
+    "aliases": [],
+    "permissions": [
       "eternalcore.clear.other",
       "eternalcore.clear"
     ],
@@ -274,19 +287,6 @@
     ],
     "arguments": [
       "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "clear ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.clear"
-    ],
-    "descriptions": [
-      "Clears your inventory"
-    ],
-    "arguments": [
-      ""
     ]
   },
   {
@@ -552,10 +552,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives you an item with a custom amount"
+      "Gives an item with a custom amount to another player"
     ],
     "arguments": [
-      "\u003citem\u003e \u003camount\u003e"
+      "\u003citem\u003e \u003camount\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -565,10 +565,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives an item with a custom amount to another player"
+      "Gives you an item with a custom amount"
     ],
     "arguments": [
-      "\u003citem\u003e \u003camount\u003e \u003cplayer\u003e"
+      "\u003citem\u003e \u003camount\u003e"
     ]
   },
   {
@@ -682,10 +682,10 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
+      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will ignore teleport time"
     ],
     "arguments": [
-      "\u003chome\u003e"
+      ""
     ]
   },
   {
@@ -695,10 +695,10 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will ignore teleport time"
+      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
     ],
     "arguments": [
-      ""
+      "\u003chome\u003e"
     ]
   },
   {
@@ -1928,10 +1928,10 @@
       "eternalcore.warp"
     ],
     "descriptions": [
-      "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps"
+      "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
     ],
     "arguments": [
-      ""
+      "\u003cwarp\u003e"
     ]
   },
   {
@@ -1941,10 +1941,10 @@
       "eternalcore.warp"
     ],
     "descriptions": [
-      "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
+      "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps"
     ],
     "arguments": [
-      "\u003cwarp\u003e"
+      ""
     ]
   },
   {
