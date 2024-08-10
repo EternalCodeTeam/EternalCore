@@ -19,7 +19,6 @@ public enum NoticeTextType {
     }
 
     public <T extends NoticeContent> NoticeKey<T> getNoticeKey() {
-        // Here be very careful since class cast exceptions may occur at runtime
         return (NoticeKey<T>) this.noticeKey;
     }
 }
