@@ -4,7 +4,7 @@ object Versions {
     const val PAPER_API = "1.19.4-R0.1-SNAPSHOT"
 
     const val ETERNALCODE_COMMONS = "1.1.3"
-    const val MULTIFICATION = "1.0.2"
+    const val MULTIFICATION = "1.1.3"
 
     const val JETBRAINS_ANNOTATIONS = "24.1.0"
     const val PLACEHOLDER_API = "2.11.6"
@@ -12,9 +12,9 @@ object Versions {
     const val GIT_CHECK = "1.0.0"
 
     const val PAPERLIB = "1.0.8"
-    const val ADVENTURE_PLATFORM = "4.3.3"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.17.0"
-    const val ADVENTURE_PLATFORM_FACET = "4.3.3"
+    const val ADVENTURE_PLATFORM = "4.3.4"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "4.18.0-SNAPSHOT"
+    const val ADVENTURE_PLATFORM_FACET = "4.3.4"
     const val CDN_CONFIGS = "1.14.5"
 
     const val MARIA_DB = "3.4.0"
