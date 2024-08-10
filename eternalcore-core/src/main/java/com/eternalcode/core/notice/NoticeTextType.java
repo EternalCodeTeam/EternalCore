@@ -2,9 +2,6 @@ package com.eternalcode.core.notice;
 
 import com.eternalcode.multification.notice.NoticeKey;
 import com.eternalcode.multification.notice.resolver.NoticeContent;
-import com.eternalcode.multification.notice.resolver.actionbar.ActionbarContent;
-import com.eternalcode.multification.notice.resolver.chat.ChatContent;
-import com.eternalcode.multification.notice.resolver.title.TitleContent;
 
 public enum NoticeTextType {
     CHAT(NoticeKey.CHAT),
