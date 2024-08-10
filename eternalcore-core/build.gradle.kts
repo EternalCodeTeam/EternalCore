@@ -25,9 +25,6 @@ dependencies {
     // GitCheck
     implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
 
-    implementation("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
-    implementation("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
-
     implementation("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
     implementation("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
 
@@ -73,6 +70,8 @@ eternalShadow {
 
     // command framework & skull library
     library("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
+    library("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
+    library("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
     libraryRelocate(
         "dev.rollczi.litecommands",
         "dev.rollczi.liteskullapi"
