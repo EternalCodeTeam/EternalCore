@@ -19,6 +19,8 @@ import panda.utilities.StringUtils;
 @Task(delay = 1L, period = 1L, unit = TimeUnit.SECONDS)
 class TeleportTask implements Runnable {
 
+    private static final int SECONDS_OFFSET = 1;
+
     private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
     private final TeleportService teleportService;
@@ -59,7 +61,7 @@ class TeleportTask implements Runnable {
 
                 this.noticeService.create()
                     .notice(translation -> translation.teleport().teleportTimerFormat())
-                    .placeholder("{TIME}", DurationUtil.format(duration, true))
+                    .placeholder("{TIME}", DurationUtil.format(duration.plusSeconds(SECONDS_OFFSET), true))
                     .player(player.getUniqueId())
                     .send();
                 continue;

@@ -18,9 +18,7 @@ public class Teleport {
         this.playerUniqueId = playerUniqueId;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
-
-        // Adds 1 second so that the timer starts counting from 5 instead of 4, when the time in the config is set to 5.
-        this.teleportMoment = Instant.now().plus(time).plusSeconds(1);
+        this.teleportMoment = Instant.now().plus(time);
 
         this.result = new CompletableFuture<>();
     }
