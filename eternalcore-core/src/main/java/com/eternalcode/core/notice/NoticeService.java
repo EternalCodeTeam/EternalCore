@@ -1,7 +1,9 @@
 package com.eternalcode.core.notice;
 
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.translation.Translation;
@@ -11,9 +13,12 @@ import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.multification.Multification;
 import com.eternalcode.multification.adventure.AudienceConverter;
+import com.eternalcode.multification.bukkit.notice.resolver.sound.SoundBukkitResolver;
 import com.eternalcode.multification.executor.AsyncExecutor;
 import com.eternalcode.multification.locate.LocaleProvider;
+import com.eternalcode.multification.notice.resolver.NoticeResolverDefaults;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
+import com.eternalcode.multification.platform.PlatformBroadcaster;
 import com.eternalcode.multification.shared.Replacer;
 import com.eternalcode.multification.translation.TranslationProvider;
 import com.eternalcode.multification.viewer.ViewerProvider;
@@ -36,7 +41,7 @@ public class NoticeService extends Multification<Viewer, Translation> {
     private final PlaceholderRegistry registry;
     private final MiniMessage miniMessage;
 
-    public final NoticeResolverRegistry noticeRegistry;
+    private final NoticeResolverRegistry noticeRegistry;
 
     @Inject
     public NoticeService(
@@ -98,6 +103,11 @@ public class NoticeService extends Multification<Viewer, Translation> {
     @Override
     public NoticeResolverRegistry getNoticeRegistry() {
         return this.noticeRegistry;
+    }
+
+    @Override
+    public PlatformBroadcaster platformBroadcaster() {
+        return PlatformBroadcaster.create(this.serializer(), this.noticeRegistry);
     }
 
     @Override
