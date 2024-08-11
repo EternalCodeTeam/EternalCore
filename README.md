@@ -80,7 +80,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:1.3.3")
+compileOnly("com.eternalcode:eternalcore-api:1.3.4")
 ```
 
 For Maven projects use:
@@ -88,7 +88,7 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>1.3.3</version>
+    <version>1.3.4</version>
     <scope>provided</scope>
 </dependency>
 ```
