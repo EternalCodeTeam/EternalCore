@@ -16,8 +16,10 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import panda.utilities.StringUtils;
 
-@Task(delay = 200L, period = 200L, unit = TimeUnit.MILLISECONDS)
+@Task(delay = 1L, period = 1L, unit = TimeUnit.SECONDS)
 class TeleportTask implements Runnable {
+
+    private static final int SECONDS_OFFSET = 1;
 
     private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
@@ -59,7 +61,7 @@ class TeleportTask implements Runnable {
 
                 this.noticeService.create()
                     .notice(translation -> translation.teleport().teleportTimerFormat())
-                    .placeholder("{TIME}", DurationUtil.format(duration))
+                    .placeholder("{TIME}", DurationUtil.format(duration.plusSeconds(SECONDS_OFFSET), true))
                     .player(player.getUniqueId())
                     .send();
                 continue;
