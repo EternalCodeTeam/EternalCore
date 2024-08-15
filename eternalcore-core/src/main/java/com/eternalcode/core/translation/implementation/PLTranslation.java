@@ -752,7 +752,7 @@ public class PLTranslation extends AbstractTranslation {
             + "Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom zaklęcia"})
         public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
 
-        @Description({" ", "{ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom "
+        @Description({" ", "# {ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom "
             + "zaklęcia"})
         public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
 
