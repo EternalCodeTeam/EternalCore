@@ -53,6 +53,19 @@ class TeleportTask implements Runnable {
                 continue;
             }
 
+            if (this.hasPlayerMovedDuringTeleport(player, teleport)) {
+                this.teleportTaskService.removeTeleport(uuid);
+                teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
+
+                this.noticeService.create()
+                    .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
+                    .notice(translation -> translation.teleport().teleportTaskCanceled())
+                    .player(player.getUniqueId())
+                    .send();
+
+                continue;
+            }
+
             Instant now = Instant.now();
             Instant teleportMoment = teleport.getTeleportMoment();
 
@@ -64,19 +77,6 @@ class TeleportTask implements Runnable {
                     .placeholder("{TIME}", DurationUtil.format(duration.plusSeconds(SECONDS_OFFSET), true))
                     .player(player.getUniqueId())
                     .send();
-                continue;
-            }
-
-            if (this.hasPlayerMovedDuringTeleport(player, teleport)) {
-                this.teleportTaskService.removeTeleport(uuid);
-                teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
-
-                this.noticeService.create()
-                    .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
-                    .notice(translation -> translation.teleport().teleportTaskCanceled())
-                    .player(player.getUniqueId())
-                    .send();
-
                 continue;
             }
 
