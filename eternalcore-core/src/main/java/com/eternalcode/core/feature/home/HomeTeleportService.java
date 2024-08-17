@@ -21,7 +21,7 @@ public class HomeTeleportService {
     private final PluginConfiguration pluginConfiguration;
     private final EventCaller eventCaller;
 
-    public static final String HOME_BYPASS = "eternalcore.teleport.bypass";
+    public static final String HOME_BYPASS = "eternalcore.home.bypass";
 
     @Inject
     public HomeTeleportService(
