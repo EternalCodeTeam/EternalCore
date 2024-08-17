@@ -49,7 +49,7 @@ class RandomTeleportCommand {
 
     @Execute
     @Permission("eternalcore.rtp")
-    @DescriptionDocs(description = "Teleportation of the sender to a random location.")
+    @DescriptionDocs(description = "Teleportation of the sender to a random location, if you want bypass cooldown use eternalcore.rtp.bypass permission")
     void executeSelf(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
