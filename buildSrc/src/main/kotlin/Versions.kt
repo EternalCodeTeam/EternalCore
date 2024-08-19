@@ -35,7 +35,7 @@ object Versions {
 
     const val TRIUMPH_GUI = "3.1.10"
 
-    const val BSTATS = "3.0.2"
+    const val BSTATS = "3.0.3"
     const val PIXEL_WIDTH = "1.1.0"
 
     const val CAFFEINE = "3.1.8"
