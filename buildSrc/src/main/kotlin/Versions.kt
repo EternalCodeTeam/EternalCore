@@ -18,7 +18,7 @@ object Versions {
     const val CDN_CONFIGS = "1.14.5"
 
     const val MARIA_DB = "3.4.1"
-    const val POSTGRESQL = "42.7.3"
+    const val POSTGRESQL = "42.7.4"
     const val H2 = "2.1.214"
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "5.1.0"
