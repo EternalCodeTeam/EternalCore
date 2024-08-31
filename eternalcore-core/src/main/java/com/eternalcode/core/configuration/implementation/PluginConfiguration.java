@@ -84,9 +84,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class TeleportAsk implements TeleportRequestSettings {
-        @Description("# Time of tpa requests expire")
-
-        @Description({ " ", "# Time of tpa requests expire" })
+        @Description({ "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
         @Description({ " ", "# Time of teleportation time in /tpa commands" })
@@ -232,7 +230,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Chat implements ChatSettings {
 
-        @Description({ " ", "# Custom message for unknown command" })
+        @Description({ "# Custom message for unknown command" })
         public boolean replaceStandardHelpMessage = false;
 
         @Description({ " ", "# Chat delay to send next message in chat" })
@@ -296,7 +294,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Repair implements DelaySettings {
 
-        @Description({ " ", "# Repair command cooldown" })
+        @Description({ "# Repair command cooldown" })
         public Duration repairDelay = Duration.ofSeconds(5);
 
         @Override
