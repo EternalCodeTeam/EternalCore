@@ -1,7 +1,7 @@
 plugins {
     `java-library`
 
-    id("io.github.goooler.shadow")
+    id("com.gradleup.shadow")
     id("net.minecrell.plugin-yml.bukkit")
     id("xyz.jpenilla.run-paper") version "2.3.0"
 }

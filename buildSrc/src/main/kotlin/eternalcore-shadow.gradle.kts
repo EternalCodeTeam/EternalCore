@@ -1,7 +1,7 @@
 plugins {
     `java-library`
 
-    id("io.github.goooler.shadow")
+    id("com.gradleup.shadow")
 }
 
 val extension = extensions.create<EternalShadowExtension>("eternalShadow")

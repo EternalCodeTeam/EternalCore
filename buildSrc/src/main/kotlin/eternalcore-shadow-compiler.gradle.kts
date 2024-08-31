@@ -8,7 +8,7 @@ afterEvaluate {
 plugins {
     `java-library`
     id("net.kyori.blossom")
-    id("io.github.goooler.shadow")
+    id("com.gradleup.shadow")
     id("net.minecrell.plugin-yml.bukkit")
 }
 
