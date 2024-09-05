@@ -48,6 +48,6 @@ object Versions {
     const val JUNIT_JUPITER_API = "5.11.0"
     const val JUNIT_JUPITER_PARAMS = "5.11.0"
     const val JUNIT_JUPITER_ENGINE = "5.11.0"
-    const val MOCKITO_CORE = "5.12.0"
+    const val MOCKITO_CORE = "5.13.0"
 
 }
