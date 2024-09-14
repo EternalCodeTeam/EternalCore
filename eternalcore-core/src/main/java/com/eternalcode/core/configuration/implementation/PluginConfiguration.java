@@ -88,9 +88,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class TeleportAsk implements TeleportRequestSettings {
-        @Description("# Time of tpa requests expire")
-
-        @Description({ " ", "# Time of tpa requests expire" })
+        @Description({ "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
         @Description({ " ", "# Time of teleportation time in /tpa commands" })
@@ -236,7 +234,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Chat implements ChatSettings {
 
-        @Description({ " ", "# Custom message for unknown command" })
+        @Description({ "# Custom message for unknown command" })
         public boolean replaceStandardHelpMessage = false;
 
         @Description({ " ", "# Chat delay to send next message in chat" })
@@ -300,7 +298,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Repair implements DelaySettings {
 
-        @Description({ " ", "# Repair command cooldown" })
+        @Description({ "# Repair command cooldown" })
         public Duration repairDelay = Duration.ofSeconds(5);
 
         @Override
@@ -392,7 +390,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public boolean autoAddNewWarps = true;
 
         @Description({"# Options below allow you to customize item representing warp added to GUI, ",
-            "you can change almost everything inside langueage files, after the warp has been added to the inventory."})
+            "# you can change almost everything inside langueage files, after the warp has been added to the inventory."})
         public  String itemNamePrefix = "&8» &6Warp: &f";
 
         public String itemLore = "&7Click to teleport!";

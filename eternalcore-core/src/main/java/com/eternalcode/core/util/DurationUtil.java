@@ -29,14 +29,14 @@ public class DurationUtil {
 
     public static String format(Duration duration, boolean removeMillis) {
         if (removeMillis) {
+            if (duration.toMillis() < ONE_SECOND.toMillis()) {
+                return "0s";
+            }
+
             return WITHOUT_MILLIS_FORMAT.format(duration);
         }
 
-        if (duration.toMillis() < ONE_SECOND.toMillis()) {
-            return STANDARD_FORMAT.format(duration);
-        }
-
-        return WITHOUT_MILLIS_FORMAT.format(duration);
+        return STANDARD_FORMAT.format(duration);
     }
 
     public static String format(Duration duration) {

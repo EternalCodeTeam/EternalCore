@@ -1,26 +1,27 @@
 package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-
 @Command(name = "spawn")
 class SpawnCommand {
+
+    private static final String SPAWN_TELEPORT_BYPASS = "eternalcore.spawn.bypass";
 
     private final LocationsConfiguration locations;
     private final SpawnSettings spawnSettings;
@@ -29,7 +30,12 @@ class SpawnCommand {
     private final NoticeService noticeService;
 
     @Inject
-    SpawnCommand(LocationsConfiguration locations, SpawnSettings spawnSettings, NoticeService noticeService, TeleportTaskService teleportTaskService, TeleportService teleportService) {
+    SpawnCommand(
+        LocationsConfiguration locations,
+        SpawnSettings spawnSettings,
+        NoticeService noticeService,
+        TeleportTaskService teleportTaskService,
+        TeleportService teleportService) {
         this.teleportTaskService = teleportTaskService;
         this.locations = locations;
         this.spawnSettings = spawnSettings;
@@ -39,7 +45,7 @@ class SpawnCommand {
 
     @Execute
     @Permission("eternalcore.spawn")
-    @DescriptionDocs(description = "Teleports you to spawn location")
+    @DescriptionDocs(description = "Teleports you to spawn location, if you want bypass cooldown use eternalcore.spawn.bypass permission")
     void executeSelf(@Context Player sender) {
         Position position = this.locations.spawn;
 
@@ -54,7 +60,7 @@ class SpawnCommand {
 
         Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
 
-        if (sender.hasPermission("eternalcore.teleport.bypass")) {
+        if (sender.hasPermission(SPAWN_TELEPORT_BYPASS)) {
             this.teleportService.teleport(sender, destinationLocation);
 
             this.noticeService.create()

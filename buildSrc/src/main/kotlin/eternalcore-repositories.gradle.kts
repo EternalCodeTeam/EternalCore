@@ -9,4 +9,5 @@ repositories {
     maven { url = uri("https://repo.panda-lang.org/releases/") }
     maven { url = uri("https://repo.eternalcode.pl/releases/") }
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
+    maven("https://repo.stellardrift.ca/repository/snapshots/")
 }

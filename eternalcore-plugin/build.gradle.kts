@@ -2,7 +2,7 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
-    id("xyz.jpenilla.run-paper") version "2.3.0"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 eternalShadowCompiler {
@@ -21,7 +21,7 @@ eternalShadowCompiler {
     }
 
     shadowJar {
-        archiveFileName.set("EternalCore v${project.version} (MC 1.17.x-1.20.x).jar")
+        archiveFileName.set("EternalCore v${project.version} (MC 1.17.x-1.21.x).jar")
 
         exclude(
             "META-INF/**",
@@ -38,6 +38,6 @@ dependencies {
 
 tasks {
     runServer {
-        minecraftVersion("1.20.6")
+        minecraftVersion("1.21.1")
     }
 }

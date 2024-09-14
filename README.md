@@ -17,7 +17,7 @@ EternalCore is your ultimate companion for enhancing your Minecraft server exper
 
 ## :information_source: Information
 
-- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`, `1.21`.
+- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`, `1.21.1`.
 - Requires **Java 17 or later** to work properly. For older versions of Java, this may affect the functionality of the plugin.
 - If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
@@ -59,7 +59,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 ## :construction_worker: Developer API
 
 To use EternalCore API, you first need to add EternalCode to your project. To do that follow these steps:
-You can check the latest release number [here](github.com/EternalCodeTeam/EternalCore/releases/latest).
+You can check the latest release number [here](https://github.com/EternalCodeTeam/EternalCore/releases/latest).
 
 1. Add repository:
 
@@ -80,7 +80,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:1.3.2")
+compileOnly("com.eternalcode:eternalcore-api:1.3.4")
 ```
 
 For Maven projects use:
@@ -88,7 +88,7 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>1.3.2</version>
+    <version>1.3.4</version>
     <scope>provided</scope>
 </dependency>
 ```

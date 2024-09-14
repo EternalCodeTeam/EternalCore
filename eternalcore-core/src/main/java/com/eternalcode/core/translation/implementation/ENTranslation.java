@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
 import java.util.HashMap;
 import lombok.Getter;
@@ -737,7 +738,7 @@ public class ENTranslation extends AbstractTranslation {
             + "{ENCHANTMENT_LEVEL} - enchantment level"})
         public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
 
-        @Description({" ", "{ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
+        @Description({" ", "# {ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
         public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>You have received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
 
         @Description(" ")
@@ -829,12 +830,12 @@ public class ENTranslation extends AbstractTranslation {
             "# like /papi ecloud download Server",
         })
         public Map<String, Notice> messages = Map.of(
-            "1", Notice.builder()
+            "1", BukkitNotice.builder()
                 .actionBar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
                 .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
                 .build(),
 
-            "2", Notice.builder()
+            "2", BukkitNotice.builder()
                 .chat("<dark_gray>» <gold>You need help from an admin?")
                 .chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!")
                 .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Click to execute!</click></green>")
