@@ -1,14 +1,15 @@
 package com.eternalcode.core.feature.essentials.weather;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.time.DurationParser;
 import dev.rollczi.litecommands.time.TemporalAmountParser;
 import org.bukkit.World;
@@ -20,10 +21,12 @@ import java.time.Duration;
 class SunCommand {
 
     private final NoticeService noticeService;
+    private final Scheduler scheduler;
 
     @Inject
-    SunCommand(NoticeService noticeService) {
+    SunCommand(NoticeService noticeService, Scheduler scheduler) {
         this.noticeService = noticeService;
+        this.scheduler = scheduler;
     }
 
     @Execute
@@ -43,9 +46,11 @@ class SunCommand {
     }
 
     private void setSun(Viewer viewer, World world) {
-        world.setClearWeatherDuration(20 * 60 * 10);
-        world.setStorm(false);
-        world.setThundering(false);
+        this.scheduler.sync(() -> {
+            world.setClearWeatherDuration(20 * 60 * 10);
+            world.setStorm(false);
+            world.setThundering(false);
+        });
 
         this.noticeService.create()
             .viewer(viewer)
