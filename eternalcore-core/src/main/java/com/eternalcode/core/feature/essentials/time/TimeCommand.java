@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.essentials.time;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -17,10 +18,12 @@ import org.bukkit.entity.Player;
 class TimeCommand {
 
     private final NoticeService noticeService;
+    private final Scheduler scheduler;
 
     @Inject
-    TimeCommand(NoticeService noticeService) {
+    TimeCommand(NoticeService noticeService, Scheduler scheduler) {
         this.noticeService = noticeService;
+        this.scheduler = scheduler;
     }
 
     @Execute(name = "add")
@@ -32,7 +35,9 @@ class TimeCommand {
     @Execute(name = "add")
     @DescriptionDocs(description = "Add specified amount of time to specified world", arguments = "<time> <world>")
     void add(@Context Viewer viewer, @Arg(TimeArgument.KEY) int time, @Arg World world) {
-        world.setTime(world.getTime() + time);
+        this.scheduler.sync(() -> {
+            world.setTime(world.getTime() + time);
+        });
 
         this.noticeService.create()
             .viewer(viewer)
@@ -50,7 +55,9 @@ class TimeCommand {
     @Execute(name = "set")
     @DescriptionDocs(description = "Sets specified time to specified world", arguments = "<time> <world>")
     void set(@Context Viewer viewer, @Arg(TimeArgument.KEY) int time, @Arg World world) {
-        world.setTime(time);
+        this.scheduler.sync(() -> {
+            world.setTime(time);
+        });
 
         this.noticeService.create()
             .viewer(viewer)

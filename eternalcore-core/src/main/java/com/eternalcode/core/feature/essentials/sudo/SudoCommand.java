@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.essentials.sudo;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -20,18 +21,20 @@ public class SudoCommand {
 
     private final Server server;
     private final NoticeService noticeService;
+    private final Scheduler scheduler;
 
     @Inject
-    public SudoCommand(Server server, NoticeService noticeService) {
+    public SudoCommand(Server server, NoticeService noticeService, Scheduler scheduler) {
         this.server = server;
         this.noticeService = noticeService;
+        this.scheduler = scheduler;
     }
 
     @Execute(name = "-console")
     @Permission("eternalcore.sudo.console")
     @DescriptionDocs(description = "Execute command as console", arguments = "<command>")
     void console(@Context Viewer viewer, @Join String command) {
-        this.server.dispatchCommand(this.server.getConsoleSender(), command);
+        this.scheduler.sync(() -> this.server.dispatchCommand(this.server.getConsoleSender(), command));
         this.sendSudoSpy(viewer, command);
     }
 
@@ -39,7 +42,7 @@ public class SudoCommand {
     @Permission("eternalcore.sudo.player")
     @DescriptionDocs(description = "Execute command as player", arguments = "<player> <command>")
     void player(@Context Viewer viewer, @Arg Player target, @Join String command) {
-        this.server.dispatchCommand(target, command);
+        this.scheduler.sync(() -> this.server.dispatchCommand(target, command));
         this.sendSudoSpy(viewer, command);
     }
 
@@ -53,6 +56,7 @@ public class SudoCommand {
 
         this.server.getOnlinePlayers().stream()
             .filter(player -> player.hasPermission("eternalcore.sudo.spy"))
+            .filter(player -> !player.getUniqueId().equals(viewer.getUniqueId()))
             .forEach(player -> this.noticeService.create()
                 .notice(translation -> translation.sudo().sudoMessage())
                 .placeholder("{COMMAND}", command)
