@@ -1,5 +1,6 @@
 package com.eternalcode.core.loader;
 
+import io.sentry.Sentry;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Constructor;
@@ -25,6 +26,7 @@ class EternalCoreWrapper {
             this.eternalCore = eternalCoreConstructor.newInstance(plugin);
         }
         catch (InvocationTargetException exception) {
+            Sentry.captureException(exception);
             if (exception.getCause() instanceof RuntimeException runtimeException) {
                 throw runtimeException;
             }
@@ -32,6 +34,7 @@ class EternalCoreWrapper {
             throw new RuntimeException("Can not enable EternalCore: ", exception.getCause());
         }
         catch (IllegalAccessException | NoSuchMethodException | InstantiationException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
@@ -47,6 +50,7 @@ class EternalCoreWrapper {
             }
         }
         catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
@@ -58,6 +62,7 @@ class EternalCoreWrapper {
             return new EternalCoreWrapper(eternalCoreClass);
         }
         catch (ClassNotFoundException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
