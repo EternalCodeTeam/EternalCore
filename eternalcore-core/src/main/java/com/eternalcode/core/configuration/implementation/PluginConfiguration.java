@@ -6,15 +6,13 @@ import com.eternalcode.core.delay.DelaySettings;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
-import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
-import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -25,7 +23,9 @@ import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 @ConfigurationFile
 public class PluginConfiguration implements ReloadableConfig {
@@ -396,6 +396,10 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Texture of the item (only for PLAYER_HEAD material)")
         public String itemTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";
 
+        @Description("# Permissions assigned to warp")
+        public Map<String, Set<String>> warpPermissions = Map.of(
+            "default_warp", Set.of("eternalcore.warp.default")
+        );
     }
 
     @Description({ " ", "# Butcher" })
