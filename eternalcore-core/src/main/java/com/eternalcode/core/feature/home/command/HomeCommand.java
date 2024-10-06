@@ -28,7 +28,8 @@ class HomeCommand {
 
     @Inject
     HomeCommand(
-        PluginConfiguration.Homes homesConfig, NoticeService noticeService,
+        PluginConfiguration.Homes homesConfig,
+        NoticeService noticeService,
         HomeService homeService,
         HomeTeleportService homeTeleportService
     ) {
