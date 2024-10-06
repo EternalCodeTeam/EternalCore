@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.home.HomeTeleportService;
@@ -12,22 +13,26 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Collection;
+import java.util.Optional;
+
 import org.bukkit.entity.Player;
 
 @Command(name = "home")
 @Permission("eternalcore.home")
 class HomeCommand {
 
+    private final PluginConfiguration.Homes homesConfig;
     private final NoticeService noticeService;
     private final HomeService homeService;
     private final HomeTeleportService homeTeleportService;
 
     @Inject
     HomeCommand(
-        NoticeService noticeService,
+        PluginConfiguration.Homes homesConfig, NoticeService noticeService,
         HomeService homeService,
         HomeTeleportService homeTeleportService
     ) {
+        this.homesConfig = homesConfig;
         this.noticeService = noticeService;
         this.homeService = homeService;
         this.homeTeleportService = homeTeleportService;
@@ -52,6 +57,17 @@ class HomeCommand {
                 this.homeService.getHomes(player.getUniqueId()).stream()
                     .map(Home::getName)
                     .toList());
+
+            if (this.homesConfig.teleportToDefaultHome) {
+                Optional<Home> mainHome = playerHomes.stream()
+                    .filter(home -> home.getName().equals(this.homesConfig.defaultHomeName))
+                    .findFirst();
+
+                if (mainHome.isPresent()) {
+                    this.homeTeleportService.teleport(player, mainHome.get());
+                    return;
+                }
+            }
 
             this.noticeService.create()
                 .player(player.getUniqueId())
