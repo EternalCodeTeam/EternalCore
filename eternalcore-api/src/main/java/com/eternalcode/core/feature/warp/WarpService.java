@@ -17,7 +17,7 @@ public interface WarpService {
 
     boolean warpExists(String name);
 
-    boolean doestWarpPermissionExist(String warp, String permission);
+    boolean doesWarpPermissionExist(String warp, String permission);
 
     Optional<Warp> findWarp(String name);
 
