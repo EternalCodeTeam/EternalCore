@@ -444,7 +444,7 @@ public class PLTranslation extends AbstractTranslation {
         @Description({
             " ",
             "# Sekcja wiadomości administracyjnych dla domów graczy",
-            "# {HOME} - Nazwa domu, {PLAYER} - Gracz"
+            "# {HOME} - Nazwa domu, {PLAYER} - Gracz, {HOMES} - Lista domów"
         })
         public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
         public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz <dark_red>{PLAYER} <red>nie posiada żadnego domu!");
