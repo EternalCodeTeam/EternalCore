@@ -186,9 +186,6 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Default home name")
         public String defaultHomeName = "home";
 
-        @Description("# When using the /home command with no argument, should the player be teleported to the \"defaultHomeName\" home if it exists?")
-        public boolean teleportToDefaultHome = true;
-
         @Description("# Time of teleportation to homes")
         public Duration teleportTimeToHomes = Duration.ofSeconds(5);
 

@@ -52,22 +52,22 @@ class HomeCommand {
             return;
         }
 
-        if (playerHomes.size() != 1) {
+        Home firstHome = playerHomes.iterator().next();
+
+        if (playerHomes.size() > 1) {
             String homes = String.join(
                 ", ",
-                this.homeService.getHomes(player.getUniqueId()).stream()
+                playerHomes.stream()
                     .map(Home::getName)
                     .toList());
 
-            if (this.homesConfig.teleportToDefaultHome) {
-                Optional<Home> mainHome = playerHomes.stream()
-                    .filter(home -> home.getName().equals(this.homesConfig.defaultHomeName))
-                    .findFirst();
+            Optional<Home> mainHome = playerHomes.stream()
+                .filter(home -> home.getName().equals(this.homesConfig.defaultHomeName))
+                .findFirst();
 
-                if (mainHome.isPresent()) {
-                    this.homeTeleportService.teleport(player, mainHome.get());
-                    return;
-                }
+            if (mainHome.isPresent()) {
+                this.homeTeleportService.teleport(player, mainHome.get());
+                return;
             }
 
             this.noticeService.create()
@@ -77,8 +77,6 @@ class HomeCommand {
                 .send();
             return;
         }
-
-        Home firstHome = playerHomes.iterator().next();
 
         this.homeTeleportService.teleport(player, firstHome);
     }
