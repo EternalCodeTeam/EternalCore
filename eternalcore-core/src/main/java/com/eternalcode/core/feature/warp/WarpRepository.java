@@ -10,6 +10,10 @@ interface WarpRepository {
 
     void removeWarp(String warp);
 
+    void addPermissions(String warp, String... permissions);
+
+    void removePermission(String warp, String permission);
+
     CompletableFuture<Optional<Warp>> getWarp(String name);
 
     CompletableFuture<List<Warp>> getWarps();

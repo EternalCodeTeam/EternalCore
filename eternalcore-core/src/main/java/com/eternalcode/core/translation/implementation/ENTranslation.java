@@ -372,7 +372,10 @@ public class ENTranslation extends AbstractTranslation {
         public Notice noWarps = Notice.chat("<red>✘ <dark_red>There are no warps!");
         public Notice itemLimit = Notice.chat("<red>✘ <dark_red>You have reached the limit of warps! Your limit is <red>{LIMIT}<dark_red>.");
         public Notice noPermission = Notice.chat("<red>✘ <dark_red>You don't have permission to use this warp ({WARP})!");
-
+        public Notice addPermissions = Notice.chat("<green>► <white>Added permissions to warp <green>{WARP}<white>!");
+        public Notice removePermission = Notice.chat("<red>► <white>Removed permission <red>{PERMISSION}</red> <white>from warp <red>{WARP}<white>!");
+        public Notice noPermissionsProvided = Notice.chat("<red>✘ <dark_red>No permissions provided!");
+        public Notice permissionDoesNotExist = Notice.chat("<red>✘ <dark_red>Permission <red>{PERMISSION} <dark_red>doesn't exist!");
         @Description({" ", "# {WARPS} - List of warps (separated by commas)"})
         public Notice available = Notice.chat("<green>► <white>Available warps: <green>{WARPS}");
 

@@ -148,6 +148,10 @@ public interface Translation {
         Notice noWarps();
         Notice itemLimit();
         Notice noPermission();
+        Notice addPermissions();
+        Notice removePermission();
+        Notice permissionDoesNotExist();
+        Notice noPermissionsProvided();
 
         WarpInventorySection warpInventory();
 

@@ -81,7 +81,6 @@ public class WarpInventory {
             }
         }
 
-
         Gui gui = Gui.gui()
             .title(this.miniMessage.deserialize(warpSection.title()))
             .rows(rowsCount)

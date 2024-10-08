@@ -12,14 +12,15 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.multification.cdn.MultificationNoticeCdnComposer;
 import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
-import java.io.File;
-import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.reflect.Visibility;
 import org.bukkit.Material;
+
+import java.io.File;
+import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class ConfigurationManager {

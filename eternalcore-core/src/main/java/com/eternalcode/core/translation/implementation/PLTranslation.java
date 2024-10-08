@@ -375,6 +375,10 @@ public class PLTranslation extends AbstractTranslation {
         public Notice noWarps = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma dostępnych warpów!");
         public Notice itemLimit = Notice.chat("<red>✘ <dark_red>Błąd: <red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
         public Notice noPermission = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie masz uprawnień do skorzystania z tego warpa ({WARP})!");
+        public Notice addPermissions = Notice.chat("<green>► <white>Dodano uprawnienia do warpa <green>{WARP}<white>!");
+        public Notice removePermission = Notice.chat("<red>► <white>Usunięto uprawnienie <red>{PERMISSION}</red> do warpa <red>{WARP}</red>!");
+        public Notice noPermissionsProvided = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie podano żadnych uprawnień!");
+        public Notice permissionDoesNotExist = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podane uprawnienie nie istnieje ({PERMISSION})!");
         @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
         public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
 
@@ -602,6 +606,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# Ta sekcja odpowiada za interakcję z graczami za pomocą komend",
         "# Ta sekcja odpowiada za interakcję z graczami za pomocą komend",
     })
     public PLPlayerSection player = new PLPlayerSection();

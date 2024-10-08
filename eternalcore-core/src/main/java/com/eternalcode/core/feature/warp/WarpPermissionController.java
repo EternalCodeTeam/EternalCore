@@ -10,9 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @FeatureDocs(
@@ -41,19 +40,13 @@ public class WarpPermissionController implements Listener {
     }
 
     private void checkWarpPermission(PreWarpTeleportEvent event, Warp warp, Player player, UUID uniqueId) {
-        Map<String, Set<String>> warpPermissions = this.pluginConfiguration.warp.warpPermissions;
-
-        if (!warpPermissions.containsKey(warp.getName())) {
-            return;
-        }
-
-        Set<String> permissions = warpPermissions.get(warp.getName());
+        List<String> permissions = warp.getPermissions();
         Optional<String> isPlayerAllowedToUseWarp = permissions
             .stream()
             .filter(player::hasPermission)
             .findAny();
 
-        if (isPlayerAllowedToUseWarp.isPresent()) {
+        if (isPlayerAllowedToUseWarp.isPresent() || permissions.isEmpty()) {
             return;
         }
 

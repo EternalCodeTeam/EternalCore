@@ -395,11 +395,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description("# Texture of the item (only for PLAYER_HEAD material)")
         public String itemTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";
-
-        @Description("# Permissions assigned to warp")
-        public Map<String, Set<String>> warpPermissions = Map.of(
-            "default_warp", Set.of("eternalcore.warp.default")
-        );
     }
 
     @Description({ " ", "# Butcher" })
