@@ -21,7 +21,7 @@ public class LocationsConfiguration implements ReloadableConfig {
     @Description("# This is spawn location, for your own safety, please don't touch it.")
     public Position spawn = EMPTY_POSITION;
 
-    @Description("# These are warp locations, for your own safety, please don't touch it.")
+    @Description("# Warps now are stored in warps.yml. This is deprecated.")
     @Deprecated
     public Map<String, Position> warps = new HashMap<>();
 
