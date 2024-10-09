@@ -504,6 +504,9 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({ " " })
         public String afkKickReason = "<red>You have been kicked due to inactivity!";
+
+        public String afkEnabledPlaceholder = "<red><b>AFK";
+        public String afkDisabledPlaceholder = "";
     }
 
     @Description({
