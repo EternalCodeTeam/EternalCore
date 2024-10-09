@@ -511,6 +511,9 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({ " " })
         public String afkKickReason = "<red>Zostałeś wyrzucone z powodu braku aktywności!";
+
+        public String afkEnabledPlaceholder = "<red><b>AFK";
+        public String afkDisabledPlaceholder = "";
     }
 
     @Description({

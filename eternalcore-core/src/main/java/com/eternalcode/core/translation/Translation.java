@@ -258,6 +258,9 @@ public interface Translation {
         Notice afkOff();
         Notice afkDelay();
         String afkKickReason();
+
+        String afkEnabledPlaceholder();
+        String afkDisabledPlaceholder();
     }
 
     // event section
