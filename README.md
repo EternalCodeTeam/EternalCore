@@ -25,6 +25,17 @@ EternalCore is your ultimate companion for enhancing your Minecraft server exper
 
 Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions?query=branch%3Amaster).
 
+<center>
+<video src="/assets/video/clear.mkv" controls></video>
+<video src="/assets/video/heal and god.mkv" controls></video>
+<video src="/assets/video/home.mkv" controls></video>
+<video src="/assets/video/utility.mkv" controls></video>
+<video src="/assets/video/warp.mp4" controls></video>
+<br>
+**This is just a little peek at what eternalcore can do! There are so many more functions that eternalcore has to offer.**
+</center>
+
+
 <details><summary>🎥 Video Guide</summary>
   <img src="https://i.imgur.com/hmv38VS.gif" alt="Video Guide">
 </details>
