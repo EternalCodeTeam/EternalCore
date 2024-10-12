@@ -19,6 +19,7 @@ public interface Translation {
     ArgumentSection argument();
 
     interface ArgumentSection {
+        Notice missingPlayerName();
         Notice permissionMessage();
         Notice usageMessage();
         Notice usageMessageHead();

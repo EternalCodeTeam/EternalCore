@@ -84,6 +84,12 @@ class HomeAdminCommand {
         }
 
         this.homeManager.deleteHome(uniqueId, home.getName());
+        this.noticeService.create()
+            .notice(translate -> translate.home().deleteAsAdmin())
+            .placeholder("{HOME}", home.getName())
+            .placeholder("{PLAYER}", player.getName())
+            .player(sender.getUniqueId())
+            .send();
     }
 
     @Execute(name = "home")

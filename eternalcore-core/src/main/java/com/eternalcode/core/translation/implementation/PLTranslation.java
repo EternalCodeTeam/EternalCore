@@ -103,7 +103,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
         public Notice usageMessageHead = Notice.chat("<gold>✘ <white>Poprawne użycie:");
         public Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
+
         @Description(" ")
+        public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Błąd: <red>Musisz podać nazwę gracza!");
         public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ten gracz jest obecnie offline!");
         public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ta komenda jest dostępna tylko dla graczy!");
         public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Błąd: <red>Liczba musi być równa lub większa od 0!");

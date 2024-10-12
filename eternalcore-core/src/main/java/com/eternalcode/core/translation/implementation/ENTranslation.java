@@ -108,6 +108,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice usageMessageEntry = Notice.chat("<green>► <white>{USAGE}");
 
         @Description(" ")
+        public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>You must provide a player name!");
         public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>This player is currently offline!");
         public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Command is only for players!");
         public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>The number must be greater than or equal to 0!");
