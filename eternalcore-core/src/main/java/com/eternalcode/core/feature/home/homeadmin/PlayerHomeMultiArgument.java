@@ -63,7 +63,10 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
             .viewer(viewer);
 
         if (!rawInput.hasNext()) {
-            return ParseResult.failure(offlinePlayer);
+            NoticeBroadcast missingPlayerName = this.noticeService.create()
+                .notice(translation -> translation.argument().missingPlayerName())
+                .viewer(viewer);
+            return ParseResult.failure(missingPlayerName);
         }
 
         String playerName = rawInput.next();
