@@ -14,7 +14,7 @@
       ]
     },
     {
-      "matchPackageNames": ["h2"],
+      "matchPackagePatterns": ["h2"],
       "enabled": false
     }  
   ],
