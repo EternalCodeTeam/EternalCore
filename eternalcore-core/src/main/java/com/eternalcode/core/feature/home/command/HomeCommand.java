@@ -52,8 +52,6 @@ class HomeCommand {
             return;
         }
 
-        Home firstHome = playerHomes.iterator().next();
-
         if (playerHomes.size() > 1) {
             String homes = String.join(
                 ", ",
@@ -77,6 +75,8 @@ class HomeCommand {
                 .send();
             return;
         }
+
+        Home firstHome = playerHomes.iterator().next();
 
         this.homeTeleportService.teleport(player, firstHome);
     }
