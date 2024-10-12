@@ -1,9 +1,7 @@
 package com.eternalcode.core.feature.ignore;
 
-import java.lang.Void;
-import java.util.concurrent.CompletableFuture;
-
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 interface IgnoreRepository {
 
@@ -16,5 +14,7 @@ interface IgnoreRepository {
     CompletableFuture<Void> unIgnore(UUID by, UUID target);
 
     CompletableFuture<Void> unIgnoreAll(UUID by);
+
+    CompletableFuture<Void> purgeAll();
 
 }

@@ -4,7 +4,9 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
+import java.util.HashMap;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -12,7 +14,6 @@ import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -369,6 +370,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notice create = Notice.chat("<green>► <white>Stworzono warp <green>{WARP}<white>!");
         public Notice remove = Notice.chat("<red>► <white>Usunięto warp <red>{WARP}<white>!");
         public Notice notExist = Notice.chat("<red>► <dark_red>Nie odnaleziono takiego warpu!");
+        public Notice itemAdded = Notice.chat("<green>► <white>Dodano warp do GUI!");
+        public Notice noWarps = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma dostępnych warpów!");
+        public Notice itemLimit = Notice.chat("<red>✘ <dark_red>Błąd: <red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
         @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
         public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
 
@@ -379,18 +383,18 @@ public class PLTranslation extends AbstractTranslation {
         @Contextual
         public static class PLWarpInventory implements WarpInventorySection {
             public String title = "<dark_gray>» <green>Lista dostępnych warpów";
-            public int rows = 3;
 
-            public Map<String, WarpInventoryItem> items = Map.of("default", WarpInventoryItem.builder()
-                .withWarpName("default")
-                .withWarpItem(ConfigItem.builder()
-                    .withName("&8» &6Warp: &fdomyślny")
-                    .withLore(Collections.singletonList("<gray>Kliknij aby się teleportować!"))
-                    .withMaterial(Material.PLAYER_HEAD)
-                    .withTexture("ewogICJ0aW1lc3RhbXAiIDogMTYyMzI3Mjc5NDQ5MSwKICAicHJvZmlsZUlkIiA6ICJiYzRlZGZiNWYzNmM0OGE3YWM5ZjFhMzlkYzIzZjRmOCIsCiAgInByb2ZpbGVOYW1lIiA6ICI4YWNhNjgwYjIyNDYxMzQwIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzEyYzMxODE1N2Y1YzlkYWY4YTc2NzdhMzY2OWY5Nzk4OTQwYWZmMDE0YTY3NGVlMGFmMmE1NzRjYmIyMWI4YzMiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ==")
-                    .withSlot(10)
-                    .build())
-                .build());
+            @Description({
+                " ",
+                "# Poniższa lista określa przedmioty w GUI, które są wyświetlane w liście dostępnych warpów.",
+                "# Możesz edytować przedmioty, a dodawanie kolejnych warpów następuje automatycznie za pomocą komendy /setwarp",
+            })
+            public Map<String, WarpInventoryItem> items = new HashMap<>();
+
+            public void setItems(Map<String, WarpInventoryItem> items) {
+                this.items = items;
+            }
+
 
             public PLBorderSection border = new PLBorderSection();
             public PLDecorationItemsSection decorationItems = new PLDecorationItemsSection();
@@ -398,6 +402,7 @@ public class PLTranslation extends AbstractTranslation {
             @Getter
             @Contextual
             public static class PLBorderSection implements BorderSection {
+                @Description({" ", "# Zmiany w tej sekcji mogą wpłynąć na wygląd GUI, zwróć uwagę na zmiany slotów przedmiotów w GUI."})
                 public boolean enabled = true;
 
                 public Material material = Material.GRAY_STAINED_GLASS_PANE;
@@ -758,7 +763,7 @@ public class PLTranslation extends AbstractTranslation {
             + "Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom zaklęcia"})
         public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
 
-        @Description({" ", "{ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom "
+        @Description({" ", "# {ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom "
             + "zaklęcia"})
         public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
 
@@ -856,12 +861,12 @@ public class PLTranslation extends AbstractTranslation {
             "# za pomocą komendy /papi ecloud download Server",
         })
         public Map<String, Notice> messages = Map.of(
-            "1", Notice.builder()
+            "1", BukkitNotice.builder()
                 .actionBar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
                 .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
                 .build(),
 
-            "2", Notice.builder()
+            "2", BukkitNotice.builder()
                 .chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?")
                 .chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!")
                 .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></green>")

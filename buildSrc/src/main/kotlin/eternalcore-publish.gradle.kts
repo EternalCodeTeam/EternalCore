@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.eternalcode"
-version = "1.3.1"
+version = "1.3.5"
 
 java {
     withSourcesJar()

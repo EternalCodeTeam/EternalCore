@@ -68,7 +68,7 @@ public class PomXmlScanner implements DependencyScanner {
                 }
 
                 collector = this.findAllChildren(collector, firstChild);
-                collector.scannedDependency(firstChild);
+                collector.addScannedDependency(firstChild);
             }
 
             break;

@@ -682,7 +682,7 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time"
+      "Teleport to home, if player has eternalcore.home.bypass permission, eternalcore will be ignore teleport time"
     ],
     "arguments": [
       "\u003chome\u003e"
@@ -695,7 +695,7 @@
       "eternalcore.home"
     ],
     "descriptions": [
-      "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will ignore teleport time"
+      "Teleports to the first home if the player has no other homes set, if player has eternalcore.home.bypass permission, eternalcore will ignore teleport time"
     ],
     "arguments": [
       ""
@@ -1185,6 +1185,19 @@
     "name": "rtp ",
     "aliases": [],
     "permissions": [
+      "eternalcore.rtp"
+    ],
+    "descriptions": [
+      "Teleportation of the sender to a random location, if you want bypass cooldown use eternalcore.rtp.bypass permission"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "rtp ",
+    "aliases": [],
+    "permissions": [
       "eternalcore.rtp.other"
     ],
     "descriptions": [
@@ -1192,19 +1205,6 @@
     ],
     "arguments": [
       "\u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "rtp ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.rtp"
-    ],
-    "descriptions": [
-      "Teleportation of the sender to a random location."
-    ],
-    "arguments": [
-      ""
     ]
   },
   {
@@ -1333,7 +1333,7 @@
       "eternalcore.spawn"
     ],
     "descriptions": [
-      "Teleports you to spawn location"
+      "Teleports you to spawn location, if you want bypass cooldown use eternalcore.spawn.bypass permission"
     ],
     "arguments": [
       ""
@@ -1928,10 +1928,10 @@
       "eternalcore.warp"
     ],
     "descriptions": [
-      "Open warp inventory, optionally you can disable this feature in config, if feature is disable eternalcore show all available warps"
+      "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
     ],
     "arguments": [
-      ""
+      "\u003cwarp\u003e"
     ]
   },
   {
@@ -1941,10 +1941,10 @@
       "eternalcore.warp"
     ],
     "descriptions": [
-      "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant"
+      "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps"
     ],
     "arguments": [
-      "\u003cwarp\u003e"
+      ""
     ]
   },
   {

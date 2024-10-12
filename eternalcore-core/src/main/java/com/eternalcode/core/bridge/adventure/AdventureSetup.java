@@ -21,9 +21,9 @@ class AdventureSetup {
     @Bean
     MiniMessage miniMessage() {
         return MiniMessage.builder()
+            .postProcessor(new AdventureUrlPostProcessor())
             .postProcessor(new AdventureLegacyColorPostProcessor())
             .preProcessor(new AdventureLegacyColorPreProcessor())
-            .postProcessor(new AdventureUrlPostProcessor())
             .build();
     }
 

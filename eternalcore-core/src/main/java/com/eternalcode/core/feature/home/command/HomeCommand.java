@@ -34,7 +34,7 @@ class HomeCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, if player has eternalcore.teleport.bypass permission, eternalcore will ignore teleport time")
+    @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, if player has eternalcore.home.bypass permission, eternalcore will ignore teleport time")
     void execute(@Context Player player) {
         Collection<Home> playerHomes = this.homeService.getHomes(player.getUniqueId());
 
@@ -67,7 +67,7 @@ class HomeCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleport to home, if player has eternalcore.teleport.bypass permission, eternalcore will be ignore teleport time", arguments = "<home>")
+    @DescriptionDocs(description = "Teleport to home, if player has eternalcore.home.bypass permission, eternalcore will be ignore teleport time", arguments = "<home>")
     void execute(@Context Player player, @Arg Home home) {
         this.homeTeleportService.teleport(player, home);
     }

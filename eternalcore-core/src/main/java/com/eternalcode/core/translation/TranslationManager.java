@@ -6,6 +6,8 @@ import com.eternalcode.core.feature.language.LanguageSettings;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.multification.translation.TranslationProvider;
+import java.util.Collections;
+import java.util.Set;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -69,5 +71,11 @@ public class TranslationManager implements TranslationProvider<Translation> {
     @Override
     public Translation provide(Locale locale) {
         return this.getMessages(Language.fromLocale(locale));
+    }
+
+    public Set<Language> getAvailableLanguages() {
+        return Collections.unmodifiableSet(
+            this.translatedMessages.keySet()
+        );
     }
 }

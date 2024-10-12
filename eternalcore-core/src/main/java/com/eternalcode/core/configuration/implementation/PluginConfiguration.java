@@ -20,6 +20,7 @@ import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 
 import java.io.File;
@@ -83,9 +84,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class TeleportAsk implements TeleportRequestSettings {
-        @Description("# Time of tpa requests expire")
-
-        @Description({ " ", "# Time of tpa requests expire" })
+        @Description({ "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
         @Description({ " ", "# Time of teleportation time in /tpa commands" })
@@ -231,7 +230,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Chat implements ChatSettings {
 
-        @Description({ " ", "# Custom message for unknown command" })
+        @Description({ "# Custom message for unknown command" })
         public boolean replaceStandardHelpMessage = false;
 
         @Description({ " ", "# Chat delay to send next message in chat" })
@@ -295,7 +294,7 @@ public class PluginConfiguration implements ReloadableConfig {
     @Contextual
     public static class Repair implements DelaySettings {
 
-        @Description({ " ", "# Repair command cooldown" })
+        @Description({ "# Repair command cooldown" })
         public Duration repairDelay = Duration.ofSeconds(5);
 
         @Override
@@ -377,11 +376,26 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Warp {
-        @Description("# Time of teleportation to warp's")
+        @Description("# Time of teleportation to warp")
         public Duration teleportTimeToWarp = Duration.ofSeconds(5);
 
         @Description("# Warp inventory should be enabled?")
         public boolean inventoryEnabled = true;
+
+        @Description("# Warp inventory auto add new warps")
+        public boolean autoAddNewWarps = true;
+
+        @Description({"# Options below allow you to customize item representing warp added to GUI, ",
+            "# you can change almost everything inside langueage files, after the warp has been added to the inventory."})
+        public  String itemNamePrefix = "&8» &6Warp: &f";
+
+        public String itemLore = "&7Click to teleport!";
+
+        public Material itemMaterial = Material.PLAYER_HEAD;
+
+        @Description("# Texture of the item (only for PLAYER_HEAD material)")
+        public String itemTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";
+
     }
 
     @Description({ " ", "# Butcher" })

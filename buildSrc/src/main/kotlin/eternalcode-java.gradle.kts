@@ -4,10 +4,10 @@ plugins {
 }
 
 group = "com.eternalcode"
-version = "1.3.1"
+version = "1.3.5"
 
 checkstyle {
-    toolVersion = "10.17.0"
+    toolVersion = "10.18.1"
 
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     configProperties["checkstyle.suppressions.file"] = "${rootDir}/config/checkstyle/suppressions.xml"
@@ -21,7 +21,7 @@ configurations.named("checkstyle") {
     resolutionStrategy {
         capabilitiesResolution {
             withCapability("com.google.collections:google-collections") {
-                select("com.google.guava:guava:33.2.1-jre")
+                select("com.google.guava:guava:33.3.0-jre")
             }
         }
     }

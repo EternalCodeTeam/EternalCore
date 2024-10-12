@@ -28,6 +28,8 @@ class RandomTeleportCommand {
         .with("{Z}", player -> String.valueOf(player.getLocation().getBlockZ()))
         .build();
 
+    private static final String RTP_BYPASS_PERMISSION = "eternalcore.rtp.bypass";
+
     private final NoticeService noticeService;
     private final RandomTeleportService randomTeleportService;
     private final PluginConfiguration config;
@@ -47,11 +49,11 @@ class RandomTeleportCommand {
 
     @Execute
     @Permission("eternalcore.rtp")
-    @DescriptionDocs(description = "Teleportation of the sender to a random location.")
+    @DescriptionDocs(description = "Teleportation of the sender to a random location, if you want bypass cooldown use eternalcore.rtp.bypass permission")
     void executeSelf(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.hasRandomTeleportDelay(uuid)) {
+        if (this.hasRandomTeleportDelay(player)) {
             return;
         }
 
@@ -79,7 +81,7 @@ class RandomTeleportCommand {
     void executeOther(@Context Viewer sender, @Arg Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.hasRandomTeleportDelay(uuid)) {
+        if (this.hasRandomTeleportDelay(player)) {
             return;
         }
 
@@ -123,19 +125,25 @@ class RandomTeleportCommand {
             PLACEHOLDERS.toFormatter(player));
     }
 
-    private boolean hasRandomTeleportDelay(UUID uuid) {
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
+    private boolean hasRandomTeleportDelay(Player player) {
+        UUID uniqueId = player.getUniqueId();
 
-            this.noticeService
-                .create()
+        if (player.hasPermission(RTP_BYPASS_PERMISSION) || player.isOp()) {
+            return false;
+        }
+
+        if (this.delay.hasDelay(uniqueId)) {
+            Duration time = this.delay.getDurationToExpire(uniqueId);
+
+            this.noticeService.create()
                 .notice(translation -> translation.randomTeleport().randomTeleportDelay())
                 .placeholder("{TIME}", DurationUtil.format(time))
-                .player(uuid)
+                .player(uniqueId)
                 .send();
 
             return true;
         }
+
         return false;
     }
 }

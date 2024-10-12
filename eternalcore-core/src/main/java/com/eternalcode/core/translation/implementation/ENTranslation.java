@@ -4,7 +4,9 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
+import java.util.HashMap;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -12,7 +14,6 @@ import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -366,9 +367,12 @@ public class ENTranslation extends AbstractTranslation {
         public Notice create = Notice.chat("<green>► <white>Warp <green>{WARP} <white>has been created.");
         public Notice remove = Notice.chat("<red>► <white>Warp <red>{WARP} <white>has been deleted.");
         public Notice notExist = Notice.chat("<red>► <dark_red>This warp doesn't exist");
+        public Notice itemAdded = Notice.chat("<green>► <white>Warp has been added to GUI!");
+        public Notice noWarps = Notice.chat("<red>✘ <dark_red>There are no warps!");
+        public Notice itemLimit = Notice.chat("<red>✘ <dark_red>You have reached the limit of warps! Your limit is <red>{LIMIT}<dark_red>.");
+
         @Description({" ", "# {WARPS} - List of warps (separated by commas)"})
         public Notice available = Notice.chat("<green>► <white>Available warps: <green>{WARPS}");
-
 
         @Description({" ", "# Settings for warp inventory"})
         public ENWarpInventory warpInventory = new ENWarpInventory();
@@ -377,18 +381,14 @@ public class ENTranslation extends AbstractTranslation {
         @Contextual
         public static class ENWarpInventory implements WarpInventorySection {
             public String title = "<dark_gray>» <green>Available warps:";
-            public int rows = 3;
 
-            public Map<String, WarpInventoryItem> items = Map.of("default", WarpInventoryItem.builder()
-                .withWarpName("default")
-                .withWarpItem(ConfigItem.builder()
-                    .withName("&8» &6Warp: &fdefault")
-                    .withLore(Collections.singletonList("<gray>Click to teleport!"))
-                    .withMaterial(Material.ENDER_PEARL)
-                    .withSlot(10)
-                    .withGlow(true)
-                    .build())
-                .build());
+
+            @Description({" ", "# Warps located inside GUI inventory can be customized here. More warps will be added on creation with /setwarp command. "})
+            public Map<String, WarpInventoryItem> items = new HashMap<>();
+
+            public void setItems(Map<String, WarpInventoryItem> items) {
+                this.items = items;
+            }
 
             public ENBorderSection border = new ENBorderSection();
             public ENDecorationItemsSection decorationItems = new ENDecorationItemsSection();
@@ -396,6 +396,8 @@ public class ENTranslation extends AbstractTranslation {
             @Getter
             @Contextual
             public static class ENBorderSection implements BorderSection {
+
+                @Description({" ", "# Changes of border section may affect the appearance of the GUI inventory, after changes adjust slots of existing items."})
                 public boolean enabled = true;
 
                 public Material material = Material.GRAY_STAINED_GLASS_PANE;
@@ -747,7 +749,7 @@ public class ENTranslation extends AbstractTranslation {
             + "{ENCHANTMENT_LEVEL} - enchantment level"})
         public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
 
-        @Description({" ", "{ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
+        @Description({" ", "# {ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
         public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>You have received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
 
         @Description(" ")
@@ -839,12 +841,12 @@ public class ENTranslation extends AbstractTranslation {
             "# like /papi ecloud download Server",
         })
         public Map<String, Notice> messages = Map.of(
-            "1", Notice.builder()
+            "1", BukkitNotice.builder()
                 .actionBar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
                 .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
                 .build(),
 
-            "2", Notice.builder()
+            "2", BukkitNotice.builder()
                 .chat("<dark_gray>» <gold>You need help from an admin?")
                 .chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!")
                 .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Click to execute!</click></green>")

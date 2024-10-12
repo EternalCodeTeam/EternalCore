@@ -5,23 +5,24 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 
 import java.util.UUID;
+
 
 @Command(name = "unignore")
 @Permission("eternalcore.ignore")
 class UnIgnoreCommand {
 
-    private final IgnoreRepository repository;
+    private final IgnoreService ignoreService;
     private final NoticeService noticeService;
 
     @Inject
-    public UnIgnoreCommand(IgnoreRepository ignoreRepository, NoticeService noticeService) {
-        this.repository = ignoreRepository;
+    public UnIgnoreCommand(IgnoreService ignoreService, NoticeService noticeService) {
+        this.ignoreService = ignoreService;
         this.noticeService = noticeService;
     }
 
@@ -36,7 +37,7 @@ class UnIgnoreCommand {
             return;
         }
 
-        this.repository.isIgnored(senderUuid, targetUuid).thenAccept(isIgnored -> {
+        this.ignoreService.isIgnored(senderUuid, targetUuid).thenAccept(isIgnored -> {
             if (!isIgnored) {
                 this.noticeService.create()
                     .user(sender)
@@ -47,11 +48,17 @@ class UnIgnoreCommand {
                 return;
             }
 
-            this.repository.unIgnore(senderUuid, targetUuid).thenAccept(blank -> this.noticeService.create()
-                .player(senderUuid)
-                .placeholder("{PLAYER}", target.getName())
-                .notice(translation -> translation.privateChat().unIgnorePlayer())
-                .send());
+            this.ignoreService.unIgnore(senderUuid, targetUuid).thenAccept(cancelled -> {
+                if (cancelled) {
+                    return;
+                }
+
+                this.noticeService.create()
+                    .player(senderUuid)
+                    .placeholder("{PLAYER}", target.getName())
+                    .notice(translation -> translation.privateChat().unIgnorePlayer())
+                    .send();
+            });
         });
     }
 
@@ -60,10 +67,16 @@ class UnIgnoreCommand {
     void unIgnoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
 
-        this.repository.unIgnoreAll(senderUuid).thenAccept(blank -> this.noticeService.create()
-            .player(senderUuid)
-            .notice(translation -> translation.privateChat().unIgnoreAll())
-            .send());
+        this.ignoreService.unIgnoreAll(senderUuid).thenAccept(cancelled -> {
+            if (cancelled) {
+                return;
+            }
+
+            this.noticeService.create()
+                .player(senderUuid)
+                .notice(translation -> translation.privateChat().unIgnoreAll())
+                .send();
+        });
     }
 
 }

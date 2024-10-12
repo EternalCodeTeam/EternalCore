@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.warp.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.warp.Warp;
+import com.eternalcode.core.feature.warp.WarpInventory;
 import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -18,11 +19,13 @@ class DelWarpCommand {
 
     private final WarpService warpService;
     private final NoticeService noticeService;
+    private final WarpInventory warpInventory;
 
     @Inject
-    DelWarpCommand(WarpService warpService, NoticeService noticeService) {
+    DelWarpCommand(WarpService warpService, NoticeService noticeService, WarpInventory warpInventory) {
         this.warpService = warpService;
         this.noticeService = noticeService;
+        this.warpInventory = warpInventory;
     }
 
     @Execute
@@ -45,10 +48,13 @@ class DelWarpCommand {
         }
 
         this.warpService.removeWarp(name);
+        this.warpInventory.removeWarp(name);
+
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.warp().remove())
             .placeholder("{WARP}", name)
             .send();
+
     }
 }
