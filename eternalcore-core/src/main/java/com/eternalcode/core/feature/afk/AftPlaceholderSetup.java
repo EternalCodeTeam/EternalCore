@@ -29,7 +29,7 @@ class AftPlaceholderSetup implements Subscriber {
             "afk",
             player -> String.valueOf(afkService.isAfk(player.getUniqueId()))));
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
-            "afk_text",
+            "afk_formatted",
             player -> {
                 Translation messages = this.translationManager.getMessages(this.viewerService.player(player.getUniqueId()));
                 return afkService.isAfk(player.getUniqueId()) ?

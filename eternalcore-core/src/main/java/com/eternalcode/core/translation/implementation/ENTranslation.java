@@ -505,6 +505,7 @@ public class ENTranslation extends AbstractTranslation {
         @Description({ " " })
         public String afkKickReason = "<red>You have been kicked due to inactivity!";
 
+        @Description({" ", "# Placeholder used in %eternalcore_afk_formatted% to indicate AFK status"})
         public String afkEnabledPlaceholder = "<red><b>AFK";
         public String afkDisabledPlaceholder = "";
     }
