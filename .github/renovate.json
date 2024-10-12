@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "groupName": "all dependencies",
+  "groupSlug": "all",
+  "packageRules": [
+    {
+      "groupName": "all dependencies",
+      "groupSlug": "all",
+      "matchPackagePatterns": [
+        "*"
+      ]
+    },
+    {
+      "matchPackageNames": ["h2"],
+      "enabled": false
+    }  
+  ],
+  "separateMajorMinor": false
+}
