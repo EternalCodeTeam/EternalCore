@@ -91,8 +91,8 @@ public class GiveService {
         ItemBuilder itemBuilder = ItemBuilder.from(material).amount(amount);
 
         enchantmentLevel.ifPresent(pair -> {
-            if (pair.level > 0) {
-                itemBuilder.enchant(pair.enchantment, pair.level);
+            if (pair.level() > 0) {
+                itemBuilder.enchant(pair.enchantment, pair.level());
             }
         });
 
