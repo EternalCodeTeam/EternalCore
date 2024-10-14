@@ -60,6 +60,10 @@ class AfkServiceImpl implements AfkService {
         return afk;
     }
 
+    @Override
+    public Afk getAfk(UUID playerUniqueId) {
+        return this.afkByPlayer.get(playerUniqueId);
+    }
 
     @Override
     public void markInteraction(UUID playerUniqueId) {

@@ -46,4 +46,12 @@ public interface AfkService {
      * @return Created an Afk object representing player's AFK status.
      */
     Afk markAfk(UUID playerUniqueId, AfkReason reason);
+
+    /**
+     * Gets the AFK status of a uniqueId.
+     *
+     * @param playerUniqueId Unique identifier of the player.
+     * @return Afk object representing player's AFK status.
+     */
+    Afk getAfk(UUID playerUniqueId);
 }
