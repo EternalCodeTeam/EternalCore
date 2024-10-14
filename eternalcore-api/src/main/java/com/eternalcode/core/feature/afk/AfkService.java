@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.afk;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -53,5 +54,5 @@ public interface AfkService {
      * @param playerUniqueId Unique identifier of the player.
      * @return Afk object representing player's AFK status.
      */
-    Afk getAfk(UUID playerUniqueId);
+    Optional<Afk> getAfk(UUID playerUniqueId);
 }

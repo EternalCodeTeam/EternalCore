@@ -13,6 +13,7 @@ import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.ViewerService;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 
 @Controller
 class AftPlaceholderSetup implements Subscriber {
@@ -42,12 +43,12 @@ class AftPlaceholderSetup implements Subscriber {
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "afk_time",
             player -> {
-                Afk afk = afkService.getAfk(player.getUniqueId());
-
-                if (afk == null) {
+                Optional<Afk> afkOptional = afkService.getAfk(player.getUniqueId());
+                if (afkOptional.isEmpty()) {
                     return "";
                 }
 
+                Afk afk = afkOptional.get();
                 Instant start = afk.getStart();
                 Instant now = Instant.now();
                 Duration afkDuration = Duration.between(start, now);
