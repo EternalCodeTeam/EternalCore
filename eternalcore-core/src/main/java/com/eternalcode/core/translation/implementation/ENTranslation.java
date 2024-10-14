@@ -737,6 +737,7 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item"})
         public Notice giveGiven = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
+        public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Not enough space in inventory!");
 
         @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item, {ENCHANTMENT} - enchantment name, "
             + "{ENCHANTMENT_LEVEL} - enchantment level"})
