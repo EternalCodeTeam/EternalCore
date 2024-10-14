@@ -33,7 +33,7 @@ public class GiveService {
             return;
         }
 
-        this.giveItems(player, material, defaultGiveAmount, Optional.empty());
+        this.giveItems(player, material, this.defaultGiveAmount, Optional.empty());
     }
 
     public void giveItem(Player player, Material material, int amount) {
@@ -72,7 +72,7 @@ public class GiveService {
     }
 
     private boolean isInvalidMaterial(Material material, Player player) {
-        if (material.isAir()) {
+        if (material.isItem()) {
             this.noticeService.create()
                 .notice(translation -> translation.item().giveNotItem())
                 .player(player.getUniqueId())
@@ -100,7 +100,7 @@ public class GiveService {
 
         if (!hasSpace(player.getInventory(), itemBuilder.build())) {
             if (dropOnFullInventory) {
-                player.getWorld().dropItem(player.getLocation(), itemBuilder.build());
+                player.getWorld().dropItemNaturally(player.getLocation(), itemBuilder.build());
             }
 
             this.noticeService.create()
