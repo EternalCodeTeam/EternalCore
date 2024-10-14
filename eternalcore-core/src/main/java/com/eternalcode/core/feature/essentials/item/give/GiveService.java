@@ -72,7 +72,7 @@ public class GiveService {
     }
 
     private boolean isInvalidMaterial(Material material, Player player) {
-        if (material.isItem()) {
+        if (!material.isItem()) {
             this.noticeService.create()
                 .notice(translation -> translation.item().giveNotItem())
                 .player(player.getUniqueId())
