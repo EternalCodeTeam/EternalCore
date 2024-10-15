@@ -2,6 +2,7 @@ package com.eternalcode.core.loader.dependency;
 
 import com.eternalcode.core.loader.repository.Repository;
 import com.google.common.io.ByteStreams;
+import io.sentry.Sentry;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class DependencyDownloader {
             return this.tryDownloadDependency(dependency);
         }
         catch (URISyntaxException exception) {
+            Sentry.captureException(exception);
             throw new DependencyException(exception);
         }
     }
@@ -54,6 +56,7 @@ public class DependencyDownloader {
                 return path;
             }
             catch (DependencyException exception) {
+                Sentry.captureException(exception);
                 exceptions.add(exception);
             }
         }
@@ -76,9 +79,11 @@ public class DependencyDownloader {
             Files.write(file, bytes, StandardOpenOption.CREATE);
         }
         catch (FileNotFoundException | NoSuchFileException fileNotFoundException) {
+            Sentry.captureException(fileNotFoundException);
             throw new DependencyException("Dependency not found for repositoru: " + dependency.toMavenJar(repository).toString());
         }
         catch (IOException e) {
+            Sentry.captureException(e);
             throw new DependencyException(e);
         }
 

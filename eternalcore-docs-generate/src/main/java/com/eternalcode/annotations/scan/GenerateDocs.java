@@ -6,6 +6,7 @@ import com.eternalcode.annotations.scan.feature.FeatureResult;
 import com.eternalcode.annotations.scan.feature.FeatureScanResolver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.sentry.Sentry;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class GenerateDocs {
             gson.toJson(featureResults, fileWriter);
         }
         catch (IOException exception) {
+            Sentry.captureException(exception);
             exception.printStackTrace();
         }
 
@@ -45,6 +47,7 @@ public class GenerateDocs {
             gson.toJson(commandResults, fileWriter);
         }
         catch (IOException exception) {
+            Sentry.captureException(exception);
             exception.printStackTrace();
         }
     }
