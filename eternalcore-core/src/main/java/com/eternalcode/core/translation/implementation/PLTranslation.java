@@ -1,12 +1,11 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
-import java.util.HashMap;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -14,9 +13,11 @@ import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -373,6 +374,11 @@ public class PLTranslation extends AbstractTranslation {
         public Notice itemAdded = Notice.chat("<green>► <white>Dodano warp do GUI!");
         public Notice noWarps = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma dostępnych warpów!");
         public Notice itemLimit = Notice.chat("<red>✘ <dark_red>Błąd: <red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
+        public Notice noPermission = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie masz uprawnień do skorzystania z tego warpa ({WARP})!");
+        public Notice addPermissions = Notice.chat("<green>► <white>Dodano uprawnienia do warpa <green>{WARP}<white>!");
+        public Notice removePermission = Notice.chat("<red>► <white>Usunięto uprawnienie <red>{PERMISSION}</red> do warpa <red>{WARP}</red>!");
+        public Notice noPermissionsProvided = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie podano żadnych uprawnień!");
+        public Notice permissionDoesNotExist = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podane uprawnienie nie istnieje ({PERMISSION})!");
         @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
         public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
 
@@ -394,7 +400,6 @@ public class PLTranslation extends AbstractTranslation {
             public void setItems(Map<String, WarpInventoryItem> items) {
                 this.items = items;
             }
-
 
             public PLBorderSection border = new PLBorderSection();
             public PLDecorationItemsSection decorationItems = new PLDecorationItemsSection();
@@ -605,6 +610,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# Ta sekcja odpowiada za interakcję z graczami za pomocą komend",
         "# Ta sekcja odpowiada za interakcję z graczami za pomocą komend",
     })
     public PLPlayerSection player = new PLPlayerSection();
