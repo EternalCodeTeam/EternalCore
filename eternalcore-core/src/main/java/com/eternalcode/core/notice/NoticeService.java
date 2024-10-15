@@ -92,7 +92,7 @@ public class NoticeService extends Multification<Viewer, Translation> {
 
     @Override
     public @NotNull AsyncExecutor asyncExecutor() {
-        return this.scheduler::async;
+        return this.scheduler::runAsync;
     }
 
     @Override

@@ -79,7 +79,7 @@ class AutoMessageService {
     }
 
     private void tick() {
-        this.scheduler.laterAsync(this::tick, this.settings.interval());
+        this.scheduler.runLaterAsync(this::tick, this.settings.interval());
 
         if (this.settings.enabled()) {
             this.broadcastNextMessage();

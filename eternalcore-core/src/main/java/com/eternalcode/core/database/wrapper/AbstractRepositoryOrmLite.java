@@ -55,7 +55,7 @@ public abstract class AbstractRepositoryOrmLite {
     protected <T, ID, R> CompletableFuture<R> action(Class<T> type, ThrowingFunction<Dao<T, ID>, R, SQLException> action) {
         CompletableFuture<R> completableFuture = new CompletableFuture<>();
 
-        this.scheduler.async(() -> {
+        this.scheduler.runAsync(() -> {
             Dao<T, ID> dao = this.databaseManager.getDao(type);
 
             try {
