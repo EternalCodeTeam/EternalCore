@@ -6,7 +6,7 @@ object Versions {
     const val ETERNALCODE_COMMONS = "1.1.3"
     const val MULTIFICATION = "1.1.3"
 
-    const val JETBRAINS_ANNOTATIONS = "24.1.0"
+    const val JETBRAINS_ANNOTATIONS = "26.0.1"
     const val PLACEHOLDER_API = "2.11.6"
     const val LOMBOK = "1.18.34"
     const val GIT_CHECK = "1.0.0"
@@ -21,7 +21,7 @@ object Versions {
     const val POSTGRESQL = "42.7.4"
     const val H2 = "2.1.214"
     const val ORMLITE = "6.1"
-    const val HIKARI_CP = "5.1.0"
+    const val HIKARI_CP = "6.0.0"
 
     const val LITE_COMMANDS = "3.5.0"
     const val LITE_SKULL_API = "1.3.0"
