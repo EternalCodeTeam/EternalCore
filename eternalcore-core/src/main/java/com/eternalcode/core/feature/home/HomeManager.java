@@ -124,6 +124,17 @@ public class HomeManager implements HomeService {
     }
 
     @Override
+    public boolean hasHome(UUID playerUniqueId, Home home) {
+        Map<String, Home> homes = this.userHomes.get(playerUniqueId);
+
+        if (homes == null) {
+            return false;
+        }
+
+        return homes.containsValue(home);
+    }
+
+    @Override
     public Optional<Home> getHome(UUID uniqueId, String name) {
         Map<String, Home> homes = this.userHomes.get(uniqueId);
 
