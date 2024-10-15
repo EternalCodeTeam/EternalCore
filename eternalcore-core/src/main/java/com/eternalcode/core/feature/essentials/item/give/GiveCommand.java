@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.essentials.item.give;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.essentials.item.enchant.EnchantArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -12,23 +11,21 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.triumphteam.gui.builder.item.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 @Command(name = "give", aliases = { "i", "item" })
 @Permission("eternalcore.give")
 class GiveCommand {
 
     private final NoticeService noticeService;
-    private final PluginConfiguration pluginConfig;
+    private final GiveService giveService;
 
     @Inject
-    GiveCommand(NoticeService noticeService, PluginConfiguration pluginConfig) {
+    GiveCommand(NoticeService noticeService, GiveService giveService) {
         this.noticeService = noticeService;
-        this.pluginConfig = pluginConfig;
+        this.giveService = giveService;
     }
 
     @Execute
@@ -36,7 +33,7 @@ class GiveCommand {
     void execute(@Context Player player, @Arg Material material) {
         String formattedMaterial = MaterialUtil.format(material);
 
-        this.giveItem(player, material);
+        this.giveService.giveItem(player, material);
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
@@ -50,7 +47,7 @@ class GiveCommand {
     void execute(@Context Viewer viewer, @Arg Material material, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
-        this.giveItem(target, material);
+        this.giveService.giveItem(target, material);
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
@@ -71,7 +68,7 @@ class GiveCommand {
     void execute(@Context Player player, @Arg Material material, @Arg(GiveArgument.KEY) int amount) {
         String formattedMaterial = MaterialUtil.format(material);
 
-        this.giveItem(player, material, amount);
+        this.giveService.giveItem(player, material, amount);
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
@@ -85,7 +82,7 @@ class GiveCommand {
     void execute(@Context Viewer viewer, @Arg Material material, @Arg(GiveArgument.KEY) int amount, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
-        this.giveItem(target, material, amount);
+        this.giveService.giveItem(target, material, amount);
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
@@ -106,7 +103,7 @@ class GiveCommand {
     void execute(@Context Viewer viewer, @Arg Material material, @Arg(GiveArgument.KEY) int amount, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level, @Arg Player target) {
         String formattedMaterial = MaterialUtil.format(material);
 
-        this.giveItem(target, material, amount, enchantment, level);
+        this.giveService.giveItem(target, material, amount, enchantment, level);
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
@@ -124,41 +121,6 @@ class GiveCommand {
             .notice(translation -> translation.item().giveGivenEnchantment())
             .viewer(viewer)
             .send();
-    }
-
-    private void giveItem(Player player, Material material) {
-        int amount = this.pluginConfig.items.defaultGiveAmount;
-
-        if (!material.isItem()) {
-            this.noticeService.create()
-                .notice(translation -> translation.item().giveNotItem())
-                .player(player.getUniqueId())
-                .send();
-            return;
-        }
-
-        ItemStack item = ItemBuilder.from(material)
-            .amount(amount)
-            .build();
-
-        player.getInventory().addItem(item);
-    }
-
-    private void giveItem(Player player, Material material, int amount) {
-        ItemStack item = ItemBuilder.from(material)
-            .amount(amount)
-            .build();
-
-        player.getInventory().addItem(item);
-    }
-
-    private void giveItem(Player player, Material material, int amount, Enchantment enchantment, int level) {
-        ItemStack item = ItemBuilder.from(material)
-            .amount(amount)
-            .enchant(enchantment, level)
-            .build();
-
-        player.getInventory().addItem(item);
     }
 
 }

@@ -752,6 +752,8 @@ public class PLTranslation extends AbstractTranslation {
         @Description({" ", "# {PLAYER} - Osoba której został przydzielony przedmiot, {ITEM} - Nazwa otrzymanego przedmiotu"})
         public Notice giveGiven = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM}");
 
+        public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Błąd: <red>Brak miejsca w ekwipunku!");
+
         @Description({" ", "# {PLAYER} - Gracz który otrzymał przedmiot, {ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - "
             + "Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom zaklęcia"})
         public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
