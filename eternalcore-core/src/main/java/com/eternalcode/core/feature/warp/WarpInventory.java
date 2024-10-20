@@ -15,14 +15,15 @@ import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WarpInventory {
@@ -79,7 +80,6 @@ public class WarpInventory {
                 default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
             }
         }
-
 
         Gui gui = Gui.gui()
             .title(this.miniMessage.deserialize(warpSection.title()))
@@ -198,13 +198,11 @@ public class WarpInventory {
     }
 
     public void addWarp(Warp warp) {
-
         if (!this.warpManager.warpExists(warp.getName())) {
             return;
         }
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
-
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 

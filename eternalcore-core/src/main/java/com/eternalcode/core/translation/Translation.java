@@ -1,11 +1,12 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -147,6 +148,11 @@ public interface Translation {
         Notice itemAdded();
         Notice noWarps();
         Notice itemLimit();
+        Notice noPermission();
+        Notice addPermissions();
+        Notice removePermission();
+        Notice permissionDoesNotExist();
+        Notice noPermissionsProvided();
 
         WarpInventorySection warpInventory();
 
