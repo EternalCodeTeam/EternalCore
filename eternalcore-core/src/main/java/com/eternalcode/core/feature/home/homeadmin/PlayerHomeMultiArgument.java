@@ -94,9 +94,9 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         Optional<Home> home = this.homeManager.getHome(uniqueId, homeName);
 
         if (home.isEmpty()) {
-            Collection<Home> homesCount = this.homeManager.getHomes(uniqueId);
+            Collection<Home> homes = this.homeManager.getHomes(uniqueId);
 
-            NoticeBroadcast homeListNotice = homeNotice(homesCount, player, uniqueId);
+            NoticeBroadcast homeListNotice = homeNotice(homes, player, uniqueId);
 
             return ParseResult.failure(homeListNotice);
         }
