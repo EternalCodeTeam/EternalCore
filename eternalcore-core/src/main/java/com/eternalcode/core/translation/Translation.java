@@ -19,6 +19,7 @@ public interface Translation {
     ArgumentSection argument();
 
     interface ArgumentSection {
+        Notice missingPlayerName();
         Notice permissionMessage();
         Notice usageMessage();
         Notice usageMessageHead();
@@ -205,6 +206,12 @@ public interface Translation {
         Notice overrideHomeLocation();
         Notice noHomesOwned();
         String noHomesOwnedPlaceholder();
+
+        Notice overrideHomeLocationAsAdmin();
+        Notice playerNoOwnedHomes();
+        Notice createAsAdmin();
+        Notice deleteAsAdmin();
+        Notice homeListAsAdmin();
     }
 
     // tpa section

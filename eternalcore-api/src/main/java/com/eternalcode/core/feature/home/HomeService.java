@@ -18,6 +18,8 @@ public interface HomeService {
 
     boolean hasHome(UUID playerUniqueId, String name);
 
+    boolean hasHome(UUID playerUniqueId, Home home);
+
     void deleteHome(UUID playerUniqueId, String name);
 
     @Nullable
