@@ -25,6 +25,8 @@
 
 package com.eternalcode.core.loader.classloader;
 
+import io.sentry.Sentry;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -60,6 +62,7 @@ abstract class URLClassLoaderAccessor {
             this.addURL(file.toUri().toURL());
         }
         catch (MalformedURLException exception) {
+            Sentry.captureException(exception);
             throw new RuntimeException(exception);
         }
     }
@@ -81,6 +84,7 @@ abstract class URLClassLoaderAccessor {
                 addUrlMethod.setAccessible(true);
             }
             catch (Exception e) {
+                Sentry.captureException(e);
                 addUrlMethod = null;
             }
             ADD_URL_METHOD = addUrlMethod;
@@ -100,6 +104,7 @@ abstract class URLClassLoaderAccessor {
                 ADD_URL_METHOD.invoke(super.classLoader, url);
             }
             catch (ReflectiveOperationException e) {
+                Sentry.captureException(e);
                 URLClassLoaderAccessor.throwError(e);
             }
         }
@@ -123,6 +128,7 @@ abstract class URLClassLoaderAccessor {
                 unsafe = (sun.misc.Unsafe) unsafeField.get(null);
             }
             catch (Throwable throwable) {
+                Sentry.captureException(throwable);
                 unsafe = null;
             }
             UNSAFE = unsafe;
@@ -147,6 +153,7 @@ abstract class URLClassLoaderAccessor {
                 pathURLs = (Collection<URL>) fetchField(ucp.getClass(), ucp, "path");
             }
             catch (Throwable throwable) {
+                Sentry.captureException(throwable);
                 unopenedURLs = null;
                 pathURLs = null;
             }

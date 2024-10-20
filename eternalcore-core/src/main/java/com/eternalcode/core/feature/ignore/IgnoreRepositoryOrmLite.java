@@ -13,6 +13,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
+import io.sentry.Sentry;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,6 +54,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                 return uuids.contains(target) || uuids.contains(IGNORE_ALL);
             }
             catch (ExecutionException exception) {
+                Sentry.captureException(exception);
                 throw new RuntimeException(exception);
             }
         });
@@ -70,6 +72,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                 }
             }
             catch (ExecutionException exception) {
+                Sentry.captureException(exception);
                 throw new RuntimeException(exception);
             }
         });
