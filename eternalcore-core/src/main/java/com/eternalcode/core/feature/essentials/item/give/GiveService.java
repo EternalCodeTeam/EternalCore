@@ -4,17 +4,14 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.InventoryUtil;
-import dev.triumphteam.gui.builder.item.ItemBuilder;
 import java.util.Optional;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 @Service
-public class GiveService {
-
-    private final int defaultGiveAmount;
+class GiveService {
 
     private final PluginConfiguration pluginConfiguration;
     private final NoticeService noticeService;
@@ -23,94 +20,82 @@ public class GiveService {
     public GiveService(PluginConfiguration pluginConfiguration, NoticeService noticeService) {
         this.pluginConfiguration = pluginConfiguration;
         this.noticeService = noticeService;
-
-        this.defaultGiveAmount = this.pluginConfiguration.items.defaultGiveAmount;
     }
 
-    public void giveItem(Player player, Material material) {
-        this.giveItems(player, material, this.defaultGiveAmount, Optional.empty());
-    }
-
-    public void giveItem(Player player, Material material, int amount) {
-        this.giveItems(player, material, amount, Optional.empty());
-    }
-
-    public void giveItem(Player player, Material material, int amount, Enchantment enchantment, int level) {
-        this.giveItems(player, material, amount, Optional.of(new EnchantmentLevelPair(enchantment, level)));
-    }
-
-    private void giveItems(
-            Player player,
-            Material material,
-            int amount,
-            Optional<EnchantmentLevelPair> enchantmentLevel
-    ) {
+    public boolean giveItem(CommandSender sender, Player player, Material material, int amount) {
         if (this.isInvalidMaterial(material)) {
             this.noticeService.create()
-                    .notice(translation -> translation.item().giveNotItem())
-                    .player(player.getUniqueId())
-                    .send();
-            return;
+                .notice(translation -> translation.item().giveNotItem())
+                .sender(sender)
+                .send();
+
+            return false;
         }
 
-        this.giveItemStack(player, material, amount, enchantmentLevel);
+        GiveResult giveResult = this.processGive(player.getInventory().getStorageContents(), new ItemStack(material, amount));
+        Optional<ItemStack> rest = giveResult.rest();
+
+        if (rest.isPresent() && !this.pluginConfiguration.items.dropOnFullInventory) {
+            this.noticeService.create()
+                .notice(translation -> translation.item().giveNoSpace())
+                .sender(sender)
+                .send();
+            return false;
+        }
+
+        player.getInventory().setStorageContents(giveResult.result());
+
+        if (rest.isPresent()) {
+            player.getWorld().dropItemNaturally(player.getLocation(), rest.get());
+        }
+
+        return true;
     }
 
     private boolean isInvalidMaterial(Material material) {
         return !material.isItem();
     }
 
-    private void giveItemStack(
-            Player player,
-            Material material,
-            int amount,
-            Optional<EnchantmentLevelPair> enchantmentLevel
-    ) {
-        int maxStackSize = material.getMaxStackSize();
-        int fullStacks = amount / maxStackSize;
-        int rest = amount % maxStackSize;
-
-        for (int i = 0; i < fullStacks; i++) {
-            this.giveSingleStack(player, material, maxStackSize, enchantmentLevel);
-        }
-
-        if (rest > 0) {
-            this.giveSingleStack(player, material, rest, enchantmentLevel);
-        }
-    }
-
-    private void giveSingleStack(
-            Player player,
-            Material material,
-            int amount,
-            Optional<EnchantmentLevelPair> enchantmentLevel
-    ) {
-        ItemBuilder itemBuilder = ItemBuilder.from(material).amount(amount);
-
-        enchantmentLevel.ifPresent(pair -> {
-            if (pair.level() > 0) {
-                itemBuilder.enchant(pair.enchantment, pair.level());
-            }
-        });
-
-        boolean dropOnFullInventory = this.pluginConfiguration.items.dropOnFullInventory;
-
-        if (!InventoryUtil.hasSpace(player.getInventory(), itemBuilder.build())) {
-            if (dropOnFullInventory) {
-                player.getWorld().dropItemNaturally(player.getLocation(), itemBuilder.build());
-                return;
+    private GiveResult processGive(ItemStack[] contents, ItemStack itemToGive) {
+        for (int i = 0; i < contents.length; i++) {
+            if (itemToGive.getAmount() < 0) {
+                throw new IllegalArgumentException("Item amount cannot be negative");
             }
 
-            this.noticeService.create()
-                    .notice(translation -> translation.item().giveNoSpace())
-                    .player(player.getUniqueId())
-                    .send();
-            return;
+            if (itemToGive.getAmount() == 0) {
+                return new GiveResult(contents, Optional.empty());
+            }
+
+            ItemStack content = contents[i];
+
+            if (content == null) {
+                contents[i] = processContentSlot(itemToGive, 0, itemToGive.clone());
+                continue;
+            }
+
+            if (!content.isSimilar(itemToGive)) {
+                continue;
+            }
+
+            contents[i] = processContentSlot(itemToGive, content.getAmount(), content.clone());
         }
 
-        player.getInventory().addItem(itemBuilder.build());
+        if (itemToGive.getAmount() > 0) {
+            return new GiveResult(contents, Optional.of(itemToGive));
+        }
+
+        return new GiveResult(contents, Optional.empty());
     }
 
-    private record EnchantmentLevelPair(Enchantment enchantment, int level) {
+    private static ItemStack processContentSlot(ItemStack itemToGive, int amount, ItemStack cloned) {
+        int amountToConsume = Math.min(itemToGive.getAmount(), itemToGive.getMaxStackSize() - amount);
+
+        cloned.setAmount(amount + amountToConsume);
+        itemToGive.setAmount(itemToGive.getAmount() - amountToConsume);
+
+        return cloned;
     }
+
+    private record GiveResult(ItemStack[] result, Optional<ItemStack> rest) {}
+
 }
