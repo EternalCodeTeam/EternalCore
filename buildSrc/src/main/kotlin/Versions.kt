@@ -17,13 +17,13 @@ object Versions {
     const val ADVENTURE_PLATFORM_FACET = "4.3.4"
     const val CDN_CONFIGS = "1.14.5"
 
-    const val MARIA_DB = "3.4.1"
+    const val MARIA_DB = "3.5.0"
     const val POSTGRESQL = "42.7.4"
     const val H2 = "2.1.214"
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "6.0.0"
 
-    const val LITE_COMMANDS = "3.7.1"
+    const val LITE_COMMANDS = "3.8.0"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.3.1-jre"
@@ -45,9 +45,9 @@ object Versions {
     // tests
     const val EXPRESSIBLE_JUNIT = "1.3.6"
     const val GROOVY_ALL = "3.0.22"
-    const val JUNIT_JUPITER_API = "5.11.2"
-    const val JUNIT_JUPITER_PARAMS = "5.11.2"
-    const val JUNIT_JUPITER_ENGINE = "5.11.2"
+    const val JUNIT_JUPITER_API = "5.11.3"
+    const val JUNIT_JUPITER_PARAMS = "5.11.3"
+    const val JUNIT_JUPITER_ENGINE = "5.11.3"
     const val MOCKITO_CORE = "5.14.2"
 
 }
