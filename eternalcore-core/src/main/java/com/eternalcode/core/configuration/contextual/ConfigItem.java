@@ -1,9 +1,12 @@
 package com.eternalcode.core.configuration.contextual;
 
 import com.eternalcode.commons.adventure.AdventureUtil;
+import com.google.common.collect.MultimapBuilder;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
+import dev.triumphteam.gui.components.GuiAction;
 import dev.triumphteam.gui.guis.GuiItem;
+import io.papermc.lib.PaperLib;
 import java.util.Arrays;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.kyori.adventure.text.Component;
@@ -13,7 +16,10 @@ import org.bukkit.Material;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @Contextual
 public class ConfigItem {
@@ -73,7 +79,12 @@ public class ConfigItem {
         return flags.toArray(value -> new ItemFlag[value]);
     }
 
-    public BaseItemBuilder<?> createItemBuilder(ComponentSerializer<Component, Component, String> serializer) {
+
+    public GuiItem createItem(ComponentSerializer<Component, Component, String> serializer) {
+        return createItem(serializer, event -> {});
+    }
+
+    public GuiItem createItem(ComponentSerializer<Component, Component, String> serializer, GuiAction<InventoryClickEvent> action) {
         Component name = AdventureUtil.resetItalic(serializer.deserialize(this.name()));
 
         List<Component> lore = this.lore()
@@ -81,6 +92,19 @@ public class ConfigItem {
             .map(entry -> AdventureUtil.resetItalic(serializer.deserialize(entry)))
             .toList();
 
+        GuiItem guiItem = createBuilder(name, lore).asGuiItem(action);
+        ItemStack itemStack = guiItem.getItemStack();
+        ItemMeta meta = itemStack.getItemMeta();
+
+        if (meta != null && PaperLib.isVersion(20, 6)) {
+            meta.setAttributeModifiers(MultimapBuilder.hashKeys().hashSetValues().build());
+        }
+
+        itemStack.setItemMeta(meta);
+        return guiItem;
+    }
+
+    private BaseItemBuilder<?> createBuilder(Component name, List<Component> lore) {
         if (this.material() == Material.PLAYER_HEAD && !this.texture().isEmpty()) {
             return ItemBuilder.skull()
                 .name(name)

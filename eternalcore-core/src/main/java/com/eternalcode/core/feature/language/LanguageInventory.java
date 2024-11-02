@@ -12,17 +12,13 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -94,7 +90,7 @@ class LanguageInventory {
         }
 
         for (LanguageConfigItem languageConfigItem : languageSelector.languageConfigItemMap) {
-            GuiItem guiItem = languageConfigItem.createItemBuilder(miniMessage).asGuiItem(event -> {
+            GuiItem guiItem = languageConfigItem.createItem(miniMessage, event -> {
                 user.getSettings().setLanguage(languageConfigItem.language);
 
                 player.closeInventory();
@@ -109,7 +105,7 @@ class LanguageInventory {
         }
 
         for (ConfigItem item : languageSection.decorationItems()) {
-            GuiItem guiItem = item.createItemBuilder(miniMessage).asGuiItem(event -> {
+            GuiItem guiItem = item.createItem(miniMessage, event -> {
                 if (item.commands.isEmpty()) {
                     return;
                 }

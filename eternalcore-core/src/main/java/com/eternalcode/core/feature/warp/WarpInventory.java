@@ -122,7 +122,7 @@ public class WarpInventory {
 
     private void createDecorations(WarpInventorySection warpSection, Gui gui) {
         for (ConfigItem item : warpSection.decorationItems().items()) {
-            GuiItem guiItem = item.createItemBuilder(this.miniMessage).asGuiItem(event -> {
+            GuiItem guiItem = item.createItem(this.miniMessage, event -> {
                 Player player = (Player) event.getWhoClicked();
 
                 if (item.commands.isEmpty()) {
@@ -151,7 +151,7 @@ public class WarpInventory {
             Warp warp = warpOptional.get();
             ConfigItem warpItem = item.warpItem();
 
-            GuiItem guiItem = warpItem.createItemBuilder(miniMessage).asGuiItem(event -> {
+            GuiItem guiItem = warpItem.createItem(miniMessage, event -> {
                 Player player = (Player) event.getWhoClicked();
 
                 player.closeInventory();
