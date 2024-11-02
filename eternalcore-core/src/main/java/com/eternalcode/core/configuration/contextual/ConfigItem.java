@@ -1,7 +1,6 @@
 package com.eternalcode.core.configuration.contextual;
 
 import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -16,15 +15,17 @@ public class ConfigItem {
     public Material material = Material.PLAYER_HEAD;
     public String texture = "none";
     public boolean glow = false;
+    public boolean attributes = false;
     public int slot = 0;
     public List<String> commands = new ArrayList<>();
 
-    public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, int slot, List<String> commands) {
+    public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, boolean attributes, int slot, List<String> commands) {
         this.name = name;
         this.lore = lore;
         this.material = material;
         this.texture = texture;
         this.glow = glow;
+        this.attributes = attributes;
         this.slot = slot;
         this.commands = commands;
     }
@@ -94,6 +95,12 @@ public class ConfigItem {
 
         public Builder withGlow(boolean glow) {
             this.configItem.glow = glow;
+
+            return this;
+        }
+
+        public Builder withAttributes(boolean attributes) {
+            this.configItem.attributes = attributes;
 
             return this;
         }

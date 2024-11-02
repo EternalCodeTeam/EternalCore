@@ -11,7 +11,6 @@ import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.Translation.WarpSection.WarpInventorySection;
 import com.eternalcode.core.translation.TranslationManager;
-import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
@@ -23,6 +22,9 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @Service
 public class WarpInventory {
@@ -125,8 +127,7 @@ public class WarpInventory {
 
     private void createDecorations(WarpInventorySection warpSection, Gui gui) {
         for (ConfigItem item : warpSection.decorationItems().items()) {
-            BaseItemBuilder baseItemBuilder = this.createItem(item);
-            GuiItem guiItem = baseItemBuilder.asGuiItem();
+            GuiItem guiItem = this.createItem(item);
 
             guiItem.setAction(event -> {
                 Player player = (Player) event.getWhoClicked();
@@ -157,8 +158,8 @@ public class WarpInventory {
             Warp warp = warpOptional.get();
             ConfigItem warpItem = item.warpItem();
 
-            BaseItemBuilder baseItemBuilder = this.createItem(warpItem);
-            GuiItem guiItem = baseItemBuilder.asGuiItem();
+            GuiItem guiItem = this.createItem(warpItem);
+
 
             guiItem.setAction(event -> {
                 Player player = (Player) event.getWhoClicked();
@@ -171,7 +172,7 @@ public class WarpInventory {
         });
     }
 
-    private BaseItemBuilder createItem(ConfigItem item) {
+    private GuiItem createItem(ConfigItem item) {
         Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
 
         List<Component> lore = item.lore()
@@ -184,13 +185,25 @@ public class WarpInventory {
                 .name(name)
                 .lore(lore)
                 .texture(item.texture())
-                .glow(item.glow());
+                .glow(item.glow())
+                .asGuiItem();
         }
 
-        return ItemBuilder.from(item.material())
+        ItemBuilder itemBuilder = ItemBuilder.from(item.material())
             .name(name)
             .lore(lore)
             .glow(item.glow());
+
+        ItemStack build = itemBuilder.build();
+
+        if (!item.attributes) {
+            ItemMeta meta = build.getItemMeta();
+
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            build.setItemMeta(meta);
+        }
+
+        return new GuiItem(build);
     }
 
     public void openInventory(Player player, Language language) {
@@ -235,6 +248,7 @@ public class WarpInventory {
                         .withTexture(this.config.warp.itemTexture)
                         .withSlot(slot)
                         .withGlow(true)
+                        .withAttributes(false)
                         .build())
                     .build());
 
