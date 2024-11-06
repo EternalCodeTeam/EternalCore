@@ -42,13 +42,15 @@ class AlertCommand {
 
     @Execute(name = "add")
     @DescriptionDocs(description = "Adds alert to the queue with specified notice type and messages", arguments = "<type> <message>")
-    void executeAdd(@Arg NoticeTextType type, @Join String text, @Context Player player) {
-        this.alertService.addBroadcast(type, this.noticeService.create()
+    void executeAdd(@Sender Player sender, @Arg NoticeTextType type, @Join String text) {
+
+        this.alertService.addBroadcast(sender.getUniqueId(), type, this.noticeService.create()
             .notice(type, translation -> translation.chat().alertMessageFormat())
             .placeholder("{BROADCAST}", text)
             .onlinePlayers());
+
         this.noticeService.create()
-            .player(player.getUniqueId())
+            .player(sender.getUniqueId())
             .notice(translation -> translation.chat().alertQueueAdded())
             .send();
     }
@@ -56,7 +58,7 @@ class AlertCommand {
     @Execute(name = "remove")
     @DescriptionDocs(description = "Removes all alerts of the given type from the queue", arguments = "<type> all")
     void executeRemoveAll(@Sender Player sender, @Arg NoticeTextType type, @Literal("all") String all) {
-        boolean success = this.alertService.removeBroadcastWithType(type);
+        boolean success = this.alertService.removeBroadcastWithType(sender.getUniqueId(), type);
 
         this.noticeService.create()
             .player(sender.getUniqueId())
@@ -67,7 +69,7 @@ class AlertCommand {
     @Execute(name = "remove")
     @DescriptionDocs(description = "Removes a latest alert of the given type from the queue", arguments = "<type> latest")
     void executeRemove(@Sender Player sender, @Arg NoticeTextType type, @Literal("latest") String latest) {
-        boolean success = this.alertService.removeLatestBroadcastWithType(type);
+        boolean success = this.alertService.removeLatestBroadcastWithType(sender.getUniqueId(), type);
 
         this.noticeService.create()
             .player(sender.getUniqueId())
@@ -77,20 +79,20 @@ class AlertCommand {
 
     @Execute(name = "clear")
     @DescriptionDocs(description = "Clears all alerts from the queue")
-    void executeClear(@Context Player player) {
-        this.alertService.clearBroadcasts();
+    void executeClear(@Sender Player sender) {
+        this.alertService.clearBroadcasts(sender.getUniqueId());
         this.noticeService.create()
-            .player(player.getUniqueId())
+            .player(sender.getUniqueId())
             .notice(translation -> translation.chat().alertQueueCleared())
             .send();
     }
 
     @Execute(name = "send")
     @DescriptionDocs(description = "Sends all alerts from the queue")
-    void executeSend(@Context Player player) {
-        this.alertService.send();
+    void executeSend(@Sender Player sender) {
+        this.alertService.send(sender.getUniqueId());
         this.noticeService.create()
-            .player(player.getUniqueId())
+            .player(sender.getUniqueId())
             .notice(translation -> translation.chat().alertQueueSent())
             .send();
     }
