@@ -6,8 +6,10 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.notice.NoticeTextType;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.literal.Literal;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
@@ -52,28 +54,25 @@ class AlertCommand {
     }
 
     @Execute(name = "remove")
-    @DescriptionDocs(description = "Removes an alert from the queue with the specified notice type. Use the parameter all to remove all alerts of the given type, or latest to remove only the most recently added alert.", arguments = "<type> <param>")
-    void executeRemove(@Arg NoticeTextType type, @Arg RemoveParam param, @Context Player player) {
-        boolean success = false;
-        switch (param) {
-            case all:
-                success = this.alertService.removeBroadcastWithType(type);
-                break;
-            case latest:
-                success = this.alertService.removeLatestBroadcastWithType(type);
-                break;
-        }
-        if (success) {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.chat().alertQueueRemoved())
-                .send();
-        } else {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.chat().alertQueueEmpty())
-                .send();
-        }
+    @DescriptionDocs(description = "Removes all alerts of the given type from the queue", arguments = "<type> all")
+    void executeRemoveAll(@Sender Player sender, @Arg NoticeTextType type, @Literal("all") String all) {
+        boolean success = this.alertService.removeBroadcastWithType(type);
+
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .notice(translation -> success ? translation.chat().alertQueueRemoved() : translation.chat().alertQueueEmpty())
+            .send();
+    }
+
+    @Execute(name = "remove")
+    @DescriptionDocs(description = "Removes a latest alert of the given type from the queue", arguments = "<type> latest")
+    void executeRemove(@Sender Player sender, @Arg NoticeTextType type, @Literal("latest") String latest) {
+        boolean success = this.alertService.removeLatestBroadcastWithType(type);
+
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .notice(translation -> success ? translation.chat().alertQueueRemoved() : translation.chat().alertQueueEmpty())
+            .send();
     }
 
     @Execute(name = "clear")
