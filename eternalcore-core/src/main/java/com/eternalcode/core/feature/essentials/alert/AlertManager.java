@@ -31,21 +31,24 @@ class AlertManager {
     }
 
     boolean removeBroadcastWithType(UUID uuid, NoticeTextType type) {
-        if (this.broadcasts.containsKey(new AlertKey(uuid, type))) {
-            this.broadcasts.remove(new AlertKey(uuid, type));
+        AlertKey key = new AlertKey(uuid, type);
+        if (this.broadcasts.containsKey(key)) {
+            this.broadcasts.remove(key);
             return true;
         }
         return false;
     }
 
     boolean removeLatestBroadcastWithType(UUID uuid, NoticeTextType type) {
-        List<EternalCoreBroadcastImpl<Viewer, Translation, ?>> broadcastList = this.broadcasts.get(new AlertKey(uuid, type));
+        AlertKey key = new AlertKey(uuid, type);
+        List<EternalCoreBroadcastImpl<Viewer, Translation, ?>> broadcastList = this.broadcasts.get(key);
 
         if (broadcastList != null && !broadcastList.isEmpty()) {
             broadcastList.remove(broadcastList.size() - 1);
             if (broadcastList.isEmpty()) {
-                return this.removeBroadcastWithType(uuid, type);
+                this.removeBroadcastWithType(uuid, type);
             }
+            return true;
         }
         return false;
     }
