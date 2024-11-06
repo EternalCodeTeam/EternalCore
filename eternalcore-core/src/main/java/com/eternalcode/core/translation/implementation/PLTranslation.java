@@ -300,6 +300,11 @@ public class PLTranslation extends AbstractTranslation {
         public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma zapisanych wiadomości!");
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Wysłano wszystkie zapisane wiadomości!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
+        public Notice alertQueueAdded = Notice.chat("<green>► <white>Dodano wiadomość do kolejki!");
+        public Notice alertQueueRemoved = Notice.chat("<green>► <white>Usunięto wiadomość z kolejki!");
+        public Notice alertQueueCleared = Notice.chat("<green>► <white>Wyczyszczono kolejkę wiadomości!");
+        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Błąd: <red>Kolejka wiadomości jest pusta!");
+        public Notice alertQueueSent = Notice.chat("<green>► <white>Wysłano wszystkie wiadomości z kolejki!");
     }
 
     @Description({
