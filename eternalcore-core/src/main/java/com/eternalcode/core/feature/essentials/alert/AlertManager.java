@@ -31,7 +31,7 @@ class AlertManager {
     }
 
     boolean removeBroadcastWithType(UUID uuid, NoticeTextType type) {
-        return !this.broadcasts.remove(new AlertKey(uuid, type)).isEmpty();
+        return this.broadcasts.remove(new AlertKey(uuid, type)) != null;
     }
 
     boolean removeLatestBroadcastWithType(UUID uuid, NoticeTextType type) {
