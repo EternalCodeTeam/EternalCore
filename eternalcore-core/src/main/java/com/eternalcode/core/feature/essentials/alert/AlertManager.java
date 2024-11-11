@@ -31,12 +31,7 @@ class AlertManager {
     }
 
     boolean removeBroadcastWithType(UUID uuid, NoticeTextType type) {
-        AlertKey key = new AlertKey(uuid, type);
-        if (this.broadcasts.containsKey(key)) {
-            this.broadcasts.remove(key);
-            return true;
-        }
-        return false;
+        return !this.broadcasts.remove(new AlertKey(uuid, type)).isEmpty();
     }
 
     boolean removeLatestBroadcastWithType(UUID uuid, NoticeTextType type) {
@@ -44,7 +39,7 @@ class AlertManager {
         List<EternalCoreBroadcastImpl<Viewer, Translation, ?>> broadcastList = this.broadcasts.get(key);
 
         if (broadcastList != null && !broadcastList.isEmpty()) {
-            broadcastList.remove(broadcastList.size() - 1);
+            broadcastList.removeLast();
             if (broadcastList.isEmpty()) {
                 this.removeBroadcastWithType(uuid, type);
             }
