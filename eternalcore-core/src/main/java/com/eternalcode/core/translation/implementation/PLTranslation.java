@@ -103,7 +103,9 @@ public class PLTranslation extends AbstractTranslation {
         public Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
         public Notice usageMessageHead = Notice.chat("<gold>✘ <white>Poprawne użycie:");
         public Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
+
         @Description(" ")
+        public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Błąd: <red>Musisz podać nazwę gracza!");
         public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
         public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
         public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
@@ -444,6 +446,17 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({" ", "# Wiadomości placeholderów"})
         public String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
+
+        @Description({
+            " ",
+            "# Sekcja wiadomości administracyjnych dla domów graczy",
+            "# {HOME} - Nazwa domu, {PLAYER} - Gracz, {HOMES} - Lista domów"
+        })
+        public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
+        public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz <dark_red>{PLAYER} <red>nie posiada żadnego domu!");
+        public Notice createAsAdmin = Notice.chat("<green>► <white>Stworzono dom <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
+        public Notice deleteAsAdmin = Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
+        public Notice homeListAsAdmin = Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
     }
 
     @Description({

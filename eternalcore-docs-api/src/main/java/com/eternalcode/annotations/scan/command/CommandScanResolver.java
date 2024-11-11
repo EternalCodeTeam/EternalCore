@@ -7,7 +7,6 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.permission.Permissions;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
 import dev.rollczi.litecommands.annotations.command.Command;
-import panda.std.Blank;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -94,8 +93,8 @@ public class CommandScanResolver implements EternalScanResolver<CommandResult> {
             return permissionsList.toArray(new String[0]);
         })));
 
-        List<String> description = this.scan(DescriptionDocs.class, Blank.class, method, (DescriptionDocs::description));
-        List<String> arguments = this.scan(DescriptionDocs.class, Blank.class, method, (DescriptionDocs::arguments));
+        List<String> description = this.scan(DescriptionDocs.class, Object.class, method, (DescriptionDocs::description));
+        List<String> arguments = this.scan(DescriptionDocs.class, Object.class, method, (DescriptionDocs::arguments));
 
         return new CommandResult(
             name,

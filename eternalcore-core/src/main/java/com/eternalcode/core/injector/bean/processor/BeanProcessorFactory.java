@@ -49,10 +49,10 @@ public final class BeanProcessorFactory {
                 Duration period = Duration.of(task.period(), unit);
 
                 if (period.isZero()) {
-                    scheduler.laterSync(runnable, delay);
+                    scheduler.runLater(runnable, delay);
                 }
                 else {
-                    scheduler.timerSync(runnable, delay, period);
+                    scheduler.timer(runnable, delay, period);
                 }
             })
             .onProcess(Listener.class, (provider, listener, none) -> {

@@ -60,7 +60,7 @@ class CatboyController implements Listener {
             Catboy catboy = optionalCatboy.get();
 
             this.catboyService.unmarkAsCatboy(event.getPlayer());
-            this.scheduler.laterSync(() -> this.catboyService.markAsCatboy(event.getPlayer(), catboy.selectedType()), TICK);
+            this.scheduler.runLater(() -> this.catboyService.markAsCatboy(event.getPlayer(), catboy.selectedType()), TICK);
         }
     }
 
