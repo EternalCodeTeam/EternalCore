@@ -1,9 +1,7 @@
 package com.eternalcode.core.notice;
 
 import com.eternalcode.commons.scheduler.Scheduler;
-import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.translation.Translation;
@@ -13,10 +11,8 @@ import com.eternalcode.core.viewer.BukkitViewerProvider;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.multification.Multification;
 import com.eternalcode.multification.adventure.AudienceConverter;
-import com.eternalcode.multification.bukkit.notice.resolver.sound.SoundBukkitResolver;
 import com.eternalcode.multification.executor.AsyncExecutor;
 import com.eternalcode.multification.locate.LocaleProvider;
-import com.eternalcode.multification.notice.resolver.NoticeResolverDefaults;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
 import com.eternalcode.multification.platform.PlatformBroadcaster;
 import com.eternalcode.multification.shared.Replacer;
