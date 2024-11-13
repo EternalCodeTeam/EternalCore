@@ -369,6 +369,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description({ " ", "# The default item give amount, when no amount is specified in the command." })
         public int defaultGiveAmount = 1;
+
+        @Description({ " ", "# Determines whether items should be dropped on the ground when the player's inventory is full" })
+        public boolean dropOnFullInventory = true;
     }
 
     @Description({ " ", "# Warp Section" })

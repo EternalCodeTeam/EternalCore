@@ -97,7 +97,7 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLArgumentSection implements ArgumentSection {
         @Description("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
-        public Notice permissionMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
+        public Notice permissionMessage = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
 
         @Description({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
         public Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
@@ -106,21 +106,20 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description(" ")
         public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Błąd: <red>Musisz podać nazwę gracza!");
-        public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ten gracz jest obecnie offline!");
-        public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ta komenda jest dostępna tylko dla graczy!");
-        public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Błąd: <red>Liczba musi być równa lub większa od 0!");
-        public Notice noItem = Notice.chat("<red>✘ <dark_red>Błąd: <red>Musisz trzymać przedmiot w dłoni!");
-        public Notice noMaterial = Notice.chat("<red>✘ <dark_red>Błąd: <red>Taki materiał nie istnieje!");
-        public Notice noArgument = Notice.chat("<red>✘ <dark_red>Błąd: <red>Taki argument nie istnieje!");
-        public Notice noDamaged = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ten przedmiot nie może być naprawiony!");
-        public Notice noDamagedItems = Notice.chat("<red>✘ <dark_red>Błąd: <red>Musisz posiadać uszkodzone przedmioty!");
-        public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>Błąd: <red>Takie zaklęcie nie istnieje!");
-        public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ten poziom zaklęcia nie jest wspierany!");
-        public Notice invalidTimeFormat = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nieprawidłowy format czasu!");
-        public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Błąd: <red>Taki świat nie istnieje!");
-        public Notice youMustGiveWorldName = Notice.chat("<red>✘ <dark_red>Błąd: <red>Musisz podać nazwę świata!");
-        public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nieprawidłowa lokalizacja!");
-        public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Błąd: <red>Niepoprawna liczba chunków!");
+        public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
+        public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
+        public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
+        public Notice noItem = Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w dłoni!");
+        public Notice noMaterial = Notice.chat("<red>✘ <dark_red>Taki materiał nie istnieje!");
+        public Notice noArgument = Notice.chat("<red>✘ <dark_red>Taki argument nie istnieje!");
+        public Notice noDamaged = Notice.chat("<red>✘ <dark_red>Ten przedmiot nie może być naprawiony!");
+        public Notice noDamagedItems = Notice.chat("<red>✘ <dark_red>Musisz posiadać uszkodzone przedmioty!");
+        public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>Takie zaklęcie nie istnieje!");
+        public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>Ten poziom zaklęcia nie jest wspierany!");
+        public Notice invalidTimeFormat = Notice.chat("<red>✘ <dark_red>Nieprawidłowy format czasu!");
+        public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Świat <dark_red>{WORLD} <red>nie istnieje!");
+        public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Niepoprawna liczba chunków!");
+        public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
     }
 
     @Description({
@@ -210,8 +209,8 @@ public class PLTranslation extends AbstractTranslation {
             .build();
 
         public Notice teleporting = Notice.chat("<green>► <white>Teleportowanie...");
-        public Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ruszyłeś się, teleportacja została przerwana!");
-        public Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>Błąd: <red>Teleportujesz się już!");
+        public Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>Ruszyłeś się, teleportacja została przerwana!");
+        public Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>Teleportujesz się już!");
 
         // Coordinates XYZ
         @Description({" ", "# {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
@@ -244,7 +243,7 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLRandomTeleportSection implements RandomTeleportSection {
         @Description(" ")
         public Notice randomTeleportStarted = Notice.chat("<green>► <white>Rozpoczynanie procesu losowania lokalizacji...");
-        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!");
+        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!");
 
         public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
 
@@ -252,7 +251,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokalizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
 
         @Description({" ", "# {TIME} - Czas do następnego użycia komendy (cooldown)"})
-        public Notice randomTeleportDelay = Notice.chat("<red>✘ <dark_red>Błąd: <red>Możesz skorzystać z losowej teleportacji dopiero za <dark_red>{TIME}!");
+        public Notice randomTeleportDelay = Notice.chat("<red>✘ <dark_red>Możesz skorzystać z losowej teleportacji dopiero za <dark_red>{TIME}!");
     }
 
     @Description({
@@ -270,8 +269,8 @@ public class PLTranslation extends AbstractTranslation {
         public Notice cleared = Notice.chat("<green>► <white>Czat został wyczyszczony przez <green>{PLAYER}<white>!");
 
         @Description(" ")
-        public Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Błąd: <red>Czat jest już wyłączony!");
-        public Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Błąd: <red>Czat jest już włączony!");
+        public Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Czat jest już wyłączony!");
+        public Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Czat jest już włączony!");
 
         @Description({" ", "# {SLOWMODE} - Czas powolnego wysyłania wiadomości"})
         public Notice slowModeSet = Notice.chat("<green>► <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
@@ -297,7 +296,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice tellrawAllInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>wszystkich <white>o treści: {MESSAGE}");
 
         public Notice tellrawSaved = Notice.chat("<green>► <white>Zapisano wiadomość w kolejce!");
-        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma zapisanych wiadomości!");
+        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>Nie ma zapisanych wiadomości!");
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Wysłano wszystkie zapisane wiadomości!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
         public Notice alertQueueAdded = Notice.chat("<green>► <white>Dodano wiadomość do kolejki!");
@@ -317,8 +316,8 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLTpaSection implements TpaSection {
-        public Notice tpaSelfMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie możesz teleportować się samodzielnie!");
-        public Notice tpaAlreadySentMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Już wysłałeś prośbę o teleportację!");
+        public Notice tpaSelfMessage = Notice.chat("<red>✘ <dark_red>Nie możesz teleportować się samodzielnie!");
+        public Notice tpaAlreadySentMessage = Notice.chat("<red>✘ <dark_red>Już wysłałeś prośbę o teleportację!");
         @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportację"})
         public Notice tpaSentMessage = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!");
 
@@ -336,7 +335,7 @@ public class PLTranslation extends AbstractTranslation {
             .build();
 
         @Description(" ")
-        public Notice tpaDenyNoRequestMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie otrzymałeś prośby o teleportację od tego gracza!");
+        public Notice tpaDenyNoRequestMessage = Notice.chat("<red>✘ <dark_red>Nie otrzymałeś prośby o teleportację od tego gracza!");
 
         @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
         public Notice tpaDenyDoneMessage = Notice.chat("<red>✘ <dark_red>Odrzuciłeś prośbę o teleportację od gracza: <red>{PLAYER}<dark_red>!");
@@ -351,7 +350,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice tpaAcceptMessage = Notice.chat("<green>► <white>Zaakceptowałeś prośbę o teleportację od gracza: <green>{PLAYER}<white>!");
 
         @Description(" ")
-        public Notice tpaAcceptNoRequestMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ten gracz nie wysłał do ciebie prośby o teleportację!");
+        public Notice tpaAcceptNoRequestMessage = Notice.chat("<red>✘ <dark_red>Ten gracz nie wysłał do ciebie prośby o teleportację!");
 
         @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
         public Notice tpaAcceptReceivedMessage = Notice.chat("<green>► <white>Gracz: <green>{PLAYER} <white>zaakceptował twoją prośbę o teleportację!");
@@ -373,13 +372,13 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLWarpSection implements WarpSection {
         @Description("# {WARP} - Nazwa warpu")
-        public Notice warpAlreadyExists = Notice.chat("<red>✘ <dark_red>Błąd: <red>Warp o nazwie <dark_red>{WARP} <red>już istnieje!");
+        public Notice warpAlreadyExists = Notice.chat("<red>✘ <dark_red>Warp o nazwie <dark_red>{WARP} <red>już istnieje!");
         public Notice create = Notice.chat("<green>► <white>Stworzono warp <green>{WARP}<white>!");
         public Notice remove = Notice.chat("<red>► <white>Usunięto warp <red>{WARP}<white>!");
         public Notice notExist = Notice.chat("<red>► <dark_red>Nie odnaleziono takiego warpu!");
         public Notice itemAdded = Notice.chat("<green>► <white>Dodano warp do GUI!");
-        public Notice noWarps = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie ma dostępnych warpów!");
-        public Notice itemLimit = Notice.chat("<red>✘ <dark_red>Błąd: <red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
+        public Notice noWarps = Notice.chat("<red>✘ <dark_red>Nie ma dostępnych warpów!");
+        public Notice itemLimit = Notice.chat("<red>✘ <dark_red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
         @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
         public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
 
@@ -448,7 +447,7 @@ public class PLTranslation extends AbstractTranslation {
 
         @Description({" ", "# {LIMIT} - Limit domów"})
         public Notice limit = Notice.chat("<green>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
-        public Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie posiadasz żadnego domu!");
+        public Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Nie posiadasz żadnego domu!");
 
         @Description({" ", "# Wiadomości placeholderów"})
         public String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
@@ -645,8 +644,8 @@ public class PLTranslation extends AbstractTranslation {
         public Notice killedMessage = Notice.chat("<red>► <dark_red>Zabito gracza <red>{PLAYER}");
 
         @Description(" ")
-        public Notice speedBetweenZeroAndTen = Notice.chat("<red>✘ <dark_red>Błąd: <red>Ustaw prędkość w zakresie 0-10!");
-        public Notice speedTypeNotCorrect = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nieprawidłowy typ prędkości");
+        public Notice speedBetweenZeroAndTen = Notice.chat("<red>✘ <dark_red>Ustaw prędkość w zakresie 0-10!");
+        public Notice speedTypeNotCorrect = Notice.chat("<red>✘ <dark_red>Nieprawidłowy typ prędkości");
 
         @Description("# {SPEED} - Ustawiona prędkość chodzenia lub latania")
         public Notice speedWalkSet = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
@@ -677,7 +676,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice pingOtherMessage = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>ma ping: <green>{PING}<white>ms");
 
         @Description(" ")
-        public Notice gameModeNotCorrect = Notice.chat("<red>✘ <dark_red>Błąd: <red>Niepoprawny typ!");
+        public Notice gameModeNotCorrect = Notice.chat("<red>✘ <dark_red>Niepoprawny typ!");
         @Description("# {GAMEMODE} - Ustawiony tryb gry")
         public Notice gameModeMessage = Notice.chat("<green>► <white>Ustawiono tryb gry na: <green>{GAMEMODE}");
         @Description("# {PLAYER} - Gracz któremu został ustawiony tryb gry, {GAMEMODE} - Ustawiony tryb gry dla gracza")
@@ -721,7 +720,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice butcherCommand = Notice.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>mobów!");
 
         @Description({" ", "# {SAFE_CHUNKS} - Liczba bezpiecznych chunków"})
-        public Notice safeChunksMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
+        public Notice safeChunksMessage = Notice.chat("<red>✘ <dark_red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
     }
 
     @Description({" ", "# Ta sekcja odpowiada za zmianę punktu spawn oraz teleportację graczy na spawn"})
@@ -731,7 +730,7 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLSpawnSection implements SpawnSection {
         public Notice spawnSet = Notice.chat("<green>► <white>Ustawiono spawn!");
-        public Notice spawnNoSet = Notice.chat("<red>✘ <dark_red>Błąd: <red>Spawn nie został ustawiony!");
+        public Notice spawnNoSet = Notice.chat("<red>✘ <dark_red>Spawn nie został ustawiony!");
         @Description({" ", "# {PLAYER} - Gracz który teleportował cię na spawn"})
         public Notice spawnTeleportedBy = Notice.chat("<green>► <white>Zostałeś przeteleportowany na spawn przez gracza <green>{PLAYER}<white>!");
         @Description("# {PLAYER} - Gracz który został przeteleportowany na spawn")
@@ -770,21 +769,15 @@ public class PLTranslation extends AbstractTranslation {
         @Description({" ", "# {PLAYER} - Osoba której został przydzielony przedmiot, {ITEM} - Nazwa otrzymanego przedmiotu"})
         public Notice giveGiven = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM}");
 
-        @Description({" ", "# {PLAYER} - Gracz który otrzymał przedmiot, {ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - "
-            + "Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom zaklęcia"})
-        public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
-
-        @Description({" ", "# {ITEM} - Nazwa przedmiotu, {ENCHANTMENT} - Nazwa zaklęcia, {ENCHANTMENT_LEVEL} - Poziom "
-            + "zaklęcia"})
-        public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM} <white>z zaklęciem: <green>{ENCHANTMENT}");
+        public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Brak miejsca w ekwipunku!");
 
         @Description(" ")
-        public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Błąd: <red>Podany przedmiot nie istnieje!");
+        public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Podany przedmiot nie istnieje!");
         public Notice repairMessage = Notice.chat("<green>► <white>Naprawiono trzymany przedmiot!");
         public Notice repairAllMessage = Notice.chat("<green>► <white>Naprawiono wszystkie przedmioty!");
 
         @Description({" ", "# {TIME} - Czas przed wysłaniem następnej wiadomości (cooldown)"})
-        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>Błąd: <red>Możesz użyć tej komendy za <dark_red>{TIME}!");
+        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>Możesz użyć tej komendy za <dark_red>{TIME}!");
 
         @Description({" ", "# {SKULL} - Nazwa gracza do którego należy głowa"})
         public Notice skullMessage = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: {SKULL}");
@@ -913,12 +906,12 @@ public class PLTranslation extends AbstractTranslation {
         @Description({" ", "# Sekcja odpowiedzialna za ustawianie lokalizacji jail'a"})
         public Notice jailLocationSet = Notice.chat("<green>► <white>Ustawiono lokalizację jail'a!");
         public Notice jailLocationRemove = Notice.chat("<red>✘ <dark_red>Usunięto lokalizację jail'a!");
-        public Notice jailLocationNotSet = Notice.chat("<red>✘ <dark_red>Błąd: <red>Lokalizacja jail'a nie została ustawiona!");
+        public Notice jailLocationNotSet = Notice.chat("<red>✘ <dark_red>Lokalizacja jail'a nie została ustawiona!");
         public Notice jailLocationOverride = Notice.chat("<green>► <white>Nadpisałeś lokalizację jail'a!");
 
         @Description({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące uwięzienia gracza"})
         public Notice jailDetainPrivate = Notice.chat("<green>► <white>Zostałeś uwięziony!");
-        public Notice jailCannotUseCommand = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nie możesz użyć tej komendy!");
+        public Notice jailCannotUseCommand = Notice.chat("<red>✘ <dark_red>Nie możesz użyć tej komendy!");
         @Description({" ", "# {PLAYER} - Gracz który został uwięziony"})
         public Notice jailDetainBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony!");
         @Description({" ", "# {PLAYER} - Gracz który został uwięziony"})
@@ -933,13 +926,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notice jailReleaseBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwolniony!");
         public Notice jailReleasePrivate = Notice.actionbar("<green>► <white>Zostałeś uwolniony!");
         public Notice jailReleaseAll = Notice.chat("<green>► <white>Wszyscy gracze zostali uwolnieni!");
-        public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nikt nie jest uwięziony!");
+        public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>Nikt nie jest uwięziony!");
         @Description({" ", "# {PLAYER} - Nazwa gracza"})
-        public Notice jailIsNotPrisoner = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz {PLAYER} nie jest uwięziony!");
+        public Notice jailIsNotPrisoner = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest uwięziony!");
 
         @Description({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące listy graczy w jail'u"})
         public Notice jailListHeader = Notice.chat("<green>► <white>Lista graczy w jail'u:");
-        public Notice jailListEmpty = Notice.chat("<red>✘ <dark_red>Błąd: <red>Nikt nie jest uwięziony!");
+        public Notice jailListEmpty = Notice.chat("<red>✘ <dark_red>Nikt nie jest uwięziony!");
         @Description({" ", "# {PLAYER} - Gracz który jest uwięziony, {DETAINED_BY} - Gracz który uwięził gracza, {REMAINING_TIME} - Czas pozostały do uwolnienia"})
         public Notice jailListPlayerEntry = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{REMAINING_TIME} <white>!");
     }

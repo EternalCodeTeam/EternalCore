@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * This class is an extension of {@link NoticeBroadcastImpl} that provides more methods for creating notices.
@@ -49,6 +51,14 @@ public class EternalCoreBroadcast<Viewer, Translation, B extends EternalCoreBroa
 
     public <CONTEXT> B placeholders(Placeholders<CONTEXT> placeholders, CONTEXT context) {
         return this.formatter(placeholders.toFormatter(context));
+    }
+
+    public B sender(CommandSender sender) {
+        if (sender instanceof Player player) {
+            return this.player(player.getUniqueId());
+        }
+
+        return this.console();
     }
 
     public B user(User user) {
