@@ -513,10 +513,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives an item with a custom amount to another player"
+      "Gives an item to another player"
     ],
     "arguments": [
-      "\u003citem\u003e \u003camount\u003e \u003cenchantment\u003e \u003clevel\u003e \u003cplayer\u003e"
+      "\u003citem\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -539,10 +539,10 @@
       "eternalcore.give"
     ],
     "descriptions": [
-      "Gives an item to another player"
+      "Gives an item with a custom amount to another player"
     ],
     "arguments": [
-      "\u003citem\u003e \u003cplayer\u003e"
+      "\u003citem\u003e \u003camount\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -556,19 +556,6 @@
     ],
     "arguments": [
       "\u003citem\u003e \u003camount\u003e"
-    ]
-  },
-  {
-    "name": "give ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.give"
-    ],
-    "descriptions": [
-      "Gives an item with a custom amount to another player"
-    ],
-    "arguments": [
-      "\u003citem\u003e \u003camount\u003e \u003cplayer\u003e"
     ]
   },
   {
@@ -699,6 +686,58 @@
     ],
     "arguments": [
       ""
+    ]
+  },
+  {
+    "name": "homeadmin delhome",
+    "aliases": [],
+    "permissions": [
+      "eternalcode.home.admin"
+    ],
+    "descriptions": [
+      "Delete home for user"
+    ],
+    "arguments": [
+      "\u003cuser\u003e \u003chome\u003e"
+    ]
+  },
+  {
+    "name": "homeadmin home",
+    "aliases": [],
+    "permissions": [
+      "eternalcode.home.admin"
+    ],
+    "descriptions": [
+      "Teleport to user home"
+    ],
+    "arguments": [
+      "\u003cuser\u003e \u003chome\u003e"
+    ]
+  },
+  {
+    "name": "homeadmin list",
+    "aliases": [],
+    "permissions": [
+      "eternalcode.home.admin"
+    ],
+    "descriptions": [
+      "List user homes"
+    ],
+    "arguments": [
+      "\u003cuser\u003e"
+    ]
+  },
+  {
+    "name": "homeadmin sethome",
+    "aliases": [],
+    "permissions": [
+      "eternalcode.home.admin"
+    ],
+    "descriptions": [
+      "Set home for user"
+    ],
+    "arguments": [
+      "\u003cuser\u003e \u003chome\u003e [location]"
     ]
   },
   {
