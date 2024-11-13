@@ -35,7 +35,6 @@ public interface Translation {
         Notice noValidEnchantmentLevel();
         Notice invalidTimeFormat();
         Notice worldDoesntExist();
-        Notice youMustGiveWorldName();
         Notice incorrectNumberOfChunks();
         Notice incorrectLocation();
     }
@@ -385,10 +384,8 @@ public interface Translation {
 
         // give
         Notice giveReceived();
-        Notice giveReceivedEnchantment();
         Notice giveGiven();
-        Notice giveGivenEnchantment();
-
+        Notice giveNoSpace();
         Notice giveNotItem();
 
         // others

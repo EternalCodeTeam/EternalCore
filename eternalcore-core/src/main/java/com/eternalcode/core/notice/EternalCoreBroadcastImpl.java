@@ -7,11 +7,8 @@ import com.eternalcode.multification.executor.AsyncExecutor;
 import com.eternalcode.multification.locate.LocaleProvider;
 import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.multification.notice.NoticeBroadcastImpl;
-import com.eternalcode.multification.notice.NoticeKey;
 import com.eternalcode.multification.notice.provider.TextMessageProvider;
-import com.eternalcode.multification.notice.resolver.NoticeContent;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
-import com.eternalcode.multification.notice.resolver.chat.ChatContent;
 import com.eternalcode.multification.notice.resolver.text.TextContent;
 import com.eternalcode.multification.platform.PlatformBroadcaster;
 import com.eternalcode.multification.shared.Replacer;
@@ -21,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * This class is an extension of {@link NoticeBroadcastImpl} that provides more methods for creating notices.
@@ -52,6 +51,14 @@ public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCore
 
     public <CONTEXT> B placeholders(Placeholders<CONTEXT> placeholders, CONTEXT context) {
         return this.formatter(placeholders.toFormatter(context));
+    }
+
+    public B sender(CommandSender sender) {
+        if (sender instanceof Player player) {
+            return this.player(player.getUniqueId());
+        }
+
+        return this.console();
     }
 
     public B user(User user) {

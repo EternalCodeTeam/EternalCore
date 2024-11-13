@@ -120,10 +120,9 @@ public class ENTranslation extends AbstractTranslation {
         public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>This enchantment doesn't exist");
         public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>This enchantment level is not supported!");
         public Notice invalidTimeFormat = Notice.chat("<red>✘ <dark_red>Invalid time format!");
-        public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>This world doesn't exist!");
-        public Notice youMustGiveWorldName = Notice.chat("<red>✘ <dark_red>You must provide a world name!");
-        public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location!");
+        public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>World <red>{WORLD} <dark_red>doesn't exist!");
         public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
+        public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location format! <red>({LOCATION})");
     }
 
     @Description({
@@ -749,13 +748,7 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item"})
         public Notice giveGiven = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
-
-        @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item, {ENCHANTMENT} - enchantment name, "
-            + "{ENCHANTMENT_LEVEL} - enchantment level"})
-        public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
-
-        @Description({" ", "# {ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
-        public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>You have received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
+        public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Not enough space in inventory!");
 
         @Description(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
