@@ -1,5 +1,6 @@
 package com.eternalcode.core.bridge.litecommand;
 
+import com.eternalcode.core.bridge.sentry.SentryLiteCommandExceptionHandler;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.BeanSetup;
 import com.eternalcode.core.injector.bean.BeanFactory;
@@ -46,7 +47,8 @@ class LiteCommandsSetup implements Subscriber {
             )
             .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
                 .serializer(miniMessage)
-            );
+            )
+            .exception(Throwable.class, new SentryLiteCommandExceptionHandler(server.getLogger()));
     }
 
     @Bean
