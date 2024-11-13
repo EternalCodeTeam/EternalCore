@@ -16,7 +16,7 @@ import org.bukkit.entity.Player;
 import java.time.Duration;
 import java.util.Optional;
 
-@Command(name = "alert-queue", aliases = { "alertq", "aq" })
+@Command(name = "alert-queue", aliases = { "alert-q" })
 @Permission("eternalcore.alert.queue")
 class AlertQueueCommand {
 
