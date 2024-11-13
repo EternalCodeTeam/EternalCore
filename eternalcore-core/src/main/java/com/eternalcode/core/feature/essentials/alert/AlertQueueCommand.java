@@ -13,6 +13,9 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
+import java.util.Optional;
+
 @Command(name = "alert-queue", aliases = { "alertq", "aq" })
 @Permission("eternalcore.alert.queue")
 class AlertQueueCommand {
@@ -78,8 +81,8 @@ class AlertQueueCommand {
 
     @Execute(name = "send")
     @DescriptionDocs(description = "Sends all alerts from the queue")
-    void executeSend(@Sender Player sender) {
-        this.alertService.send(sender.getUniqueId());
+    void executeSend(@Sender Player sender, @Arg Optional<Duration> duration) {
+        this.alertService.send(sender.getUniqueId(), duration.orElse(Duration.ofSeconds(2)));
         this.noticeService.create()
             .player(sender.getUniqueId())
             .notice(translation -> translation.chat().alertQueueSent())

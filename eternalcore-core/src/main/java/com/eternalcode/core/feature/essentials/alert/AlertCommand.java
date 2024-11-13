@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 
 @Command(name = "alert", aliases = { "broadcast", "bc" })
 @Permission("eternalcore.alert")
-public class AlertCommand {
+class AlertCommand {
 
     private final NoticeService noticeService;
 

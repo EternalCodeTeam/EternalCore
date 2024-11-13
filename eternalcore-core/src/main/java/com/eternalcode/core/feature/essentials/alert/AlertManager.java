@@ -7,6 +7,7 @@ import com.eternalcode.core.notice.EternalCoreBroadcastImpl;
 import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.viewer.Viewer;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ class AlertManager {
         List<EternalCoreBroadcastImpl<Viewer, Translation, ?>> broadcastList = this.broadcasts.get(key);
 
         if (broadcastList != null && !broadcastList.isEmpty()) {
-            broadcastList.removeLast();
+            broadcastList.remove(broadcastList.size() - 1);
             if (broadcastList.isEmpty()) {
                 this.removeBroadcastWithType(uuid, type);
             }
@@ -52,17 +53,18 @@ class AlertManager {
         this.broadcasts.entrySet().removeIf(entry -> entry.getKey().uuid().equals(uuid));
     }
 
-    void send(UUID uuid) {
+    void send(UUID uuid, Duration delay) {
         this.broadcasts.forEach((alertKey, broadcastList) -> {
             if (!alertKey.uuid().equals(uuid)) {
                 return;
             }
 
+
             NoticeTextType type = alertKey.type();
             if (type == NoticeTextType.TITLE || type == NoticeTextType.SUBTITLE || type == NoticeTextType.ACTIONBAR) {
                 for (int i = 0; i < broadcastList.size(); i++) {
                     EternalCoreBroadcastImpl<Viewer, Translation, ?> broadcast = broadcastList.get(i);
-                    scheduler.runLater(broadcast::send, Duration.ofSeconds(i * 2L));
+                    scheduler.runLater(broadcast::send, delay.multipliedBy(i));
                 }
             } else {
                 for (EternalCoreBroadcastImpl<Viewer, Translation, ?> broadcast : broadcastList) {
