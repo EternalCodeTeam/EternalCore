@@ -3,23 +3,26 @@ package com.eternalcode.core.feature.essentials.alert;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.notice.EternalCoreBroadcastImpl;
+import com.eternalcode.core.notice.EternalCoreBroadcast;
 import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.viewer.Viewer;
-import org.jetbrains.annotations.Nullable;
 
+import com.eternalcode.multification.notice.NoticeBroadcast;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
 class AlertManager {
 
-    private final Map<AlertKey, List<EternalCoreBroadcastImpl<Viewer, Translation, ?>>> broadcasts = new HashMap<>();
+    private final static Set<NoticeTextType> DELAYED_TYPES = Set.of(NoticeTextType.TITLE, NoticeTextType.SUBTITLE, NoticeTextType.ACTIONBAR);
+
+    private final Map<AlertKey, List<NoticeBroadcast<Viewer, Translation, ?>>> broadcasts = new HashMap<>();
     private final Scheduler scheduler;
 
     @Inject
@@ -27,7 +30,7 @@ class AlertManager {
         this.scheduler = scheduler;
     }
 
-    void addBroadcast(UUID uuid, NoticeTextType type, EternalCoreBroadcastImpl<Viewer, Translation, ?> broadcast) {
+    void addBroadcast(UUID uuid, NoticeTextType type, NoticeBroadcast<Viewer, Translation, ?> broadcast) {
         this.broadcasts.computeIfAbsent(new AlertKey(uuid, type), k -> new ArrayList<>()).add(broadcast);
     }
 
@@ -37,15 +40,16 @@ class AlertManager {
 
     boolean removeLatestBroadcastWithType(UUID uuid, NoticeTextType type) {
         AlertKey key = new AlertKey(uuid, type);
-        List<EternalCoreBroadcastImpl<Viewer, Translation, ?>> broadcastList = this.broadcasts.get(key);
+        List<NoticeBroadcast<Viewer, Translation, ?>> broadcasts = this.broadcasts.get(key);
 
-        if (broadcastList != null && !broadcastList.isEmpty()) {
-            broadcastList.remove(broadcastList.size() - 1);
-            if (broadcastList.isEmpty()) {
+        if (broadcasts != null && !broadcasts.isEmpty()) {
+            broadcasts.remove(broadcasts.size() - 1);
+            if (broadcasts.isEmpty()) {
                 this.removeBroadcastWithType(uuid, type);
             }
             return true;
         }
+
         return false;
     }
 
@@ -54,24 +58,26 @@ class AlertManager {
     }
 
     void send(UUID uuid, Duration delay) {
-        this.broadcasts.forEach((alertKey, broadcastList) -> {
+        this.broadcasts.forEach((alertKey, broadcasts) -> {
             if (!alertKey.uuid().equals(uuid)) {
                 return;
             }
 
-
             NoticeTextType type = alertKey.type();
-            if (type == NoticeTextType.TITLE || type == NoticeTextType.SUBTITLE || type == NoticeTextType.ACTIONBAR) {
-                for (int i = 0; i < broadcastList.size(); i++) {
-                    EternalCoreBroadcastImpl<Viewer, Translation, ?> broadcast = broadcastList.get(i);
+            if (DELAYED_TYPES.contains(type)) {
+                for (int i = 0; i < broadcasts.size(); i++) {
+                    NoticeBroadcast<Viewer, Translation, ?> broadcast = broadcasts.get(i);
                     scheduler.runLater(broadcast::send, delay.multipliedBy(i));
                 }
-            } else {
-                for (EternalCoreBroadcastImpl<Viewer, Translation, ?> broadcast : broadcastList) {
-                    broadcast.send();
-                }
+
+                return;
+            }
+
+            for (NoticeBroadcast<Viewer, Translation, ?> broadcast : broadcasts) {
+                broadcast.send();
             }
         });
+
         clearBroadcasts(uuid);
     }
 
