@@ -24,10 +24,10 @@ import org.bukkit.entity.Player;
 /**
  * This class is an extension of {@link NoticeBroadcastImpl} that provides more methods for creating notices.
  */
-public class EternalCoreBroadcastImpl<Viewer, Translation, B extends EternalCoreBroadcastImpl<Viewer, Translation, B>>
+public class EternalCoreBroadcast<Viewer, Translation, B extends EternalCoreBroadcast<Viewer, Translation, B>>
     extends NoticeBroadcastImpl<Viewer, Translation, B> {
 
-    public EternalCoreBroadcastImpl(
+    public EternalCoreBroadcast(
         AsyncExecutor asyncExecutor,
         TranslationProvider<Translation> translationProvider,
         ViewerProvider<Viewer> viewerProvider,

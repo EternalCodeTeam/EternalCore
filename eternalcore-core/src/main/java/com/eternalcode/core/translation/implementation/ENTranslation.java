@@ -296,6 +296,12 @@ public class ENTranslation extends AbstractTranslation {
         public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>No messages saved in queue!");
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
+        public Notice alertQueueAdded = Notice.chat("<green>► <white>Message added to the queue!");
+        public Notice alertQueueRemoved = Notice.chat("<green>► <white>Message removed from the queue!");
+        public Notice alertQueueCleared = Notice.chat("<green>► <white>Message queue cleared!");
+        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Error: <red>The message queue is empty!");
+        public Notice alertQueueSent = Notice.chat("<green>► <white>All messages sent from the queue!");
+
     }
 
     @Description({
