@@ -1,13 +1,16 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.randomteleport.event.PreRandomTeleportEvent;
 import com.eternalcode.core.feature.randomteleport.event.RandomTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import io.papermc.lib.PaperLib;
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,32 +21,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.EnumSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-
 @Service
 class RandomTeleportServiceImpl implements RandomTeleportService {
-
-    private static final Set<Material> UNSAFE_BLOCKS = EnumSet.of(
-        Material.LAVA,
-        Material.WATER,
-        Material.CACTUS,
-        Material.FIRE,
-        Material.COBWEB,
-        Material.SWEET_BERRY_BUSH,
-        Material.MAGMA_BLOCK
-    );
-
-    private static final Set<Material> AIR_BLOCKS = EnumSet.of(
-        Material.AIR,
-        Material.CAVE_AIR,
-        Material.VOID_AIR,
-        Material.GRASS,
-        Material.TALL_GRASS,
-        Material.VINE
-    );
 
     private static final int DEFAULT_NETHER_HEIGHT = 125;
     private static final int NETHER_MAX_HEIGHT = 127;
@@ -55,7 +34,12 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     private final Random random = new Random();
 
     @Inject
-    RandomTeleportServiceImpl(RandomTeleportSettings randomTeleportSettings, LocationsConfiguration locationsConfiguration, EventCaller eventCaller, Server server) {
+    RandomTeleportServiceImpl(
+        RandomTeleportSettings randomTeleportSettings,
+        LocationsConfiguration locationsConfiguration,
+        EventCaller eventCaller,
+        Server server
+    ) {
         this.randomTeleportSettings = randomTeleportSettings;
         this.locationsConfiguration = locationsConfiguration;
         this.eventCaller = eventCaller;
@@ -70,10 +54,10 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
             world = this.server.getWorld(this.randomTeleportSettings.randomTeleportWorld());
 
             if (world == null) {
-                throw new IllegalStateException("World " + this.randomTeleportSettings.randomTeleportWorld() + " is not exists!");
+                throw new IllegalStateException(
+                    "World " + this.randomTeleportSettings.randomTeleportWorld() + " is not exists!");
             }
         }
-
 
         return this.teleport(player, world);
     }
@@ -100,29 +84,45 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     @Override
     public CompletableFuture<Location> getSafeRandomLocation(World world, int attemptCount) {
         RandomTeleportType type = this.randomTeleportSettings.randomTeleportType();
-        int radius = this.randomTeleportSettings.randomTeleportRadius();
+        RandomTeleportRadiusRepresenter radius = this.randomTeleportSettings.randomTeleportRadius();
 
         return this.getSafeRandomLocation(world, type, radius, attemptCount);
     }
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocation(World world, int radius, int attemptCount) {
+        RandomTeleportRadiusRepresenter radiusRepresenter =
+            new RandomTeleportRadiusRepresenterImpl(-radius, radius, -radius, radius);
+        return this.getSafeRandomLocation(world, RandomTeleportType.STATIC_RADIUS, radiusRepresenter, attemptCount);
+    }
+
+    @Override
+    public CompletableFuture<Location> getSafeRandomLocation(
+        World world,
+        RandomTeleportRadiusRepresenter radius,
+        int attemptCount) {
         return this.getSafeRandomLocation(world, RandomTeleportType.STATIC_RADIUS, radius, attemptCount);
     }
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount) {
-        return this.getSafeRandomLocation(world, RandomTeleportType.WORLD_BORDER_RADIUS, 0, attemptCount);
+        return this.getSafeRandomLocation(world, RandomTeleportType.WORLD_BORDER_RADIUS, null, attemptCount);
     }
 
-    private CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportType type, int radius, int attemptCount) {
+    private CompletableFuture<Location> getSafeRandomLocation(
+        World world,
+        RandomTeleportType type,
+        RandomTeleportRadiusRepresenter radius,
+        int attemptCount
+    ) {
         if (attemptCount < 0) {
             return CompletableFuture.failedFuture(new RuntimeException("Cannot find safe location"));
         }
 
         if (type == RandomTeleportType.WORLD_BORDER_RADIUS) {
             WorldBorder worldBorder = world.getWorldBorder();
-            radius = (int) worldBorder.getSize() / 2;
+            int borderRadius = (int) worldBorder.getSize() / 2;
+            radius = new RandomTeleportRadiusRepresenterImpl(-borderRadius, borderRadius, -borderRadius, borderRadius);
         }
 
         boolean noneWorld = this.locationsConfiguration.spawn.isNoneWorld();
@@ -133,14 +133,20 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         int spawnX = spawnLocation.getBlockX();
         int spawnZ = spawnLocation.getBlockZ();
 
-        int randomX = spawnX + this.random.nextInt(-radius, radius);
-        int randomZ = spawnZ + this.random.nextInt(-radius, radius);
+        int randomX = spawnX + this.random.nextInt(radius.getMinX(), radius.getMaxX());
+        int randomZ = spawnZ + this.random.nextInt(radius.getMinZ(), radius.getMaxZ());
 
+        RandomTeleportRadiusRepresenter finalRadius = radius;
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
 
             if (world.getEnvironment() == World.Environment.NETHER) {
                 randomY = this.random.nextInt(DEFAULT_NETHER_HEIGHT);
+            }
+
+            int minHeight = this.randomTeleportSettings.minHeight();
+            if (randomY < minHeight) {
+                randomY = minHeight;
             }
 
             Location generatedLocation = new Location(world, randomX, randomY, randomZ).add(0.5, 1, 0.5);
@@ -149,7 +155,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
                 return CompletableFuture.completedFuture(generatedLocation);
             }
 
-            return this.getSafeRandomLocation(world, attemptCount - 1);
+            return this.getSafeRandomLocation(world, type, finalRadius, attemptCount - 1);
         });
     }
 
@@ -163,11 +169,12 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         Block blockAbove = block.getRelative(BlockFace.UP);
         Block blockFloor = block.getRelative(BlockFace.DOWN);
 
-        if (UNSAFE_BLOCKS.contains(blockFloor.getType())) {
+        if (this.randomTeleportSettings.unsafeBlocks().contains(blockFloor.getType())) {
             return false;
         }
 
-        if (!AIR_BLOCKS.contains(block.getType()) || !AIR_BLOCKS.contains(blockAbove.getType())) {
+        Set<Material> airBlocks = this.randomTeleportSettings.airBlocks();
+        if (!airBlocks.contains(block.getType()) || !airBlocks.contains(blockAbove.getType())) {
             return false;
         }
 
