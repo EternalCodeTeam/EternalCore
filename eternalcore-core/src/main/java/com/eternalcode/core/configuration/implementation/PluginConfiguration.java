@@ -146,9 +146,8 @@ public class PluginConfiguration implements ReloadableConfig {
         })
         public RandomTeleportRadiusRepresenterImpl randomTeleportStaticRadius =
             new RandomTeleportRadiusRepresenterImpl(5000, 5000, 5000, 5000);
-        // For compatibility issues it must be named something other than “randomTeleportRadius” the config library we
-        // use is so handicapped that when
-        // it uses the old name with a new value of a different type, the plugin simply won't enable.
+        // For compatibility reasons, it must be named differently than "randomTeleportRadius".
+        // Due to limitations in the configuration library, changing the type of an existing field prevents the plugin from enabling.
 
         @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
         public String randomTeleportWorld = "world";

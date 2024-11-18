@@ -15,6 +15,13 @@ public class RandomTeleportRadiusRepresenterImpl implements RandomTeleportRadius
         this.maxX = maxX;
         this.minZ = minZ;
         this.maxZ = maxZ;
+
+        if (minX >= maxX) {
+            throw new IllegalArgumentException("minX must be less than maxX");
+        }
+        if (minZ >= maxZ) {
+            throw new IllegalArgumentException("minZ must be less than maxZ");
+        }
     }
 
     public RandomTeleportRadiusRepresenterImpl() {

@@ -55,7 +55,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
             if (world == null) {
                 throw new IllegalStateException(
-                    "World " + this.randomTeleportSettings.randomTeleportWorld() + " is not exists!");
+                    "World " + this.randomTeleportSettings.randomTeleportWorld() + " does not exists!");
             }
         }
 
@@ -121,7 +121,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
         if (type == RandomTeleportType.WORLD_BORDER_RADIUS) {
             WorldBorder worldBorder = world.getWorldBorder();
-            int borderRadius = (int) worldBorder.getSize() / 2;
+            int borderRadius = (int) (worldBorder.getSize() / 2);
             radius = new RandomTeleportRadiusRepresenterImpl(-borderRadius, borderRadius, -borderRadius, borderRadius);
         }
 
@@ -145,8 +145,13 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
             }
 
             int minHeight = this.randomTeleportSettings.minHeight();
+            int maxHeight = world.getMaxHeight() - 1;
             if (randomY < minHeight) {
                 randomY = minHeight;
+            }
+
+            if (randomY > maxHeight) {
+                randomY = maxHeight;
             }
 
             Location generatedLocation = new Location(world, randomX, randomY, randomZ).add(0.5, 1, 0.5);

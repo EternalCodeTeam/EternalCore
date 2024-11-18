@@ -38,6 +38,9 @@ public interface RandomTeleportService {
     /**
      * Asynchronously retrieves a safe random location within the specified world, using radius.
      *
+     * @deprecated Use {@link #getSafeRandomLocation(World, RandomTeleportRadiusRepresenter, int)}
+     * instead with an appropriate RandomTeleportRadiusRepresenter implementation for your border shape.
+     *
      * @param world        The world in which to find a random location.
      * @param radius       The radius around the player to search for a safe location.
      * @param attemptCount The number of attempts to find a safe location.
