@@ -133,8 +133,8 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         int spawnX = spawnLocation.getBlockX();
         int spawnZ = spawnLocation.getBlockZ();
 
-        int randomX = spawnX + this.random.nextInt(radius.getMinX(), radius.getMaxX());
-        int randomZ = spawnZ + this.random.nextInt(radius.getMinZ(), radius.getMaxZ());
+        int randomX = spawnX + (int) (this.random.nextDouble() * (radius.getMaxX() - radius.getMinX()) + radius.getMinX());
+        int randomZ = spawnZ + (int) (this.random.nextDouble() * (radius.getMaxZ() - radius.getMinZ()) + radius.getMinZ());
 
         RandomTeleportRadiusRepresenter finalRadius = radius;
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
