@@ -91,9 +91,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocation(World world, int radius, int attemptCount) {
-        RandomTeleportRadiusRepresenter radiusRepresenter =
-            new RandomTeleportRadiusRepresenterImpl(-radius, radius, -radius, radius);
-        return this.getSafeRandomLocation(world, RandomTeleportType.STATIC_RADIUS, radiusRepresenter, attemptCount);
+        return this.getSafeRandomLocation(world, RandomTeleportType.STATIC_RADIUS, RandomTeleportRadiusRepresenterImpl.of(radius), attemptCount);
     }
 
     @Override
@@ -122,7 +120,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         if (type == RandomTeleportType.WORLD_BORDER_RADIUS) {
             WorldBorder worldBorder = world.getWorldBorder();
             int borderRadius = (int) (worldBorder.getSize() / 2);
-            radius = new RandomTeleportRadiusRepresenterImpl(-borderRadius, borderRadius, -borderRadius, borderRadius);
+            radius = RandomTeleportRadiusRepresenterImpl.of(-borderRadius, borderRadius, -borderRadius, borderRadius);
         }
 
         boolean noneWorld = this.locationsConfiguration.spawn.isNoneWorld();
