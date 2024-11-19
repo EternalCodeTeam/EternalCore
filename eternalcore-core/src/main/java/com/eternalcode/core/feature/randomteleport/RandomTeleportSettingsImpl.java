@@ -92,24 +92,13 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         Material.REPEATER,
         Material.LEVER,
         Material.STRING,
-        Material.STONE_BUTTON,
-        Material.OAK_BUTTON,
-        Material.SPRUCE_BUTTON,
-        Material.BIRCH_BUTTON,
-        Material.JUNGLE_BUTTON,
-        Material.ACACIA_BUTTON,
-        Material.DARK_OAK_BUTTON,
-        Material.MANGROVE_BUTTON,
-        Material.CRIMSON_BUTTON,
-        Material.WARPED_BUTTON,
         Material.SNOW
     );
 
     @Description("# Delay to request next random teleportation")
     public Duration randomTeleportDelay = Duration.ofSeconds(60);
 
-    @Description("# Minimum height for random teleportation")
-    public int minHeight = 60;
+    public RandomTeleportHeightRangeRepresenter heightRange = RandomTeleportHeightRangeRepresenter.of(-64, 256);
 
     @Override
     public RandomTeleportRadiusRepresenter randomTeleportRadius() {
@@ -142,8 +131,8 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     }
 
     @Override
-    public int minHeight() {
-        return minHeight;
+    public RandomTeleportHeightRangeRepresenter heightRange() {
+        return this.heightRange;
     }
 
     @Override

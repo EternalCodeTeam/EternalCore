@@ -17,7 +17,7 @@ public interface RandomTeleportSettings {
 
     Set<Material> airBlocks();
 
-    int minHeight();
+    RandomTeleportHeightRangeRepresenter heightRange();
 
 
 }

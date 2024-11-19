@@ -142,8 +142,10 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
                 randomY = this.random.nextInt(DEFAULT_NETHER_HEIGHT);
             }
 
-            int minHeight = this.randomTeleportSettings.minHeight();
-            int maxHeight = world.getMaxHeight() - 1;
+            RandomTeleportHeightRangeRepresenter randomTeleportHeightRangeRepresenter =
+                this.randomTeleportSettings.heightRange();
+            int minHeight = randomTeleportHeightRangeRepresenter.getMinY();
+            int maxHeight = randomTeleportHeightRangeRepresenter.getMaxY() - 1;
             if (randomY < minHeight) {
                 randomY = minHeight;
             }
