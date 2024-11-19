@@ -11,6 +11,9 @@ public class RandomTeleportRadiusRepresenterImpl implements RandomTeleportRadius
     public int maxZ;
 
     public RandomTeleportRadiusRepresenterImpl(int minX, int maxX, int minZ, int maxZ) {
+        if (minX < 0 || maxX < 0 || minZ < 0 || maxZ < 0) {
+            throw new IllegalArgumentException("Coordinates cannot be negative");
+        }
         if (minX >= maxX) {
             throw new IllegalArgumentException("minX must be less than maxX");
         }
