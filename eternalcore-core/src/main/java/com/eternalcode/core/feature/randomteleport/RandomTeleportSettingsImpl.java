@@ -132,12 +132,12 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
 
     @Override
     public Set<Material> unsafeBlocks() {
-        return unsafeBlocks;
+        return Collections.unmodifiableSet(unsafeBlocks);
     }
 
     @Override
     public Set<Material> airBlocks() {
-        return airBlocks;
+        return Collections.unmodifiableSet(airBlocks);
     }
 
     @Override
