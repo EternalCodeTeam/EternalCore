@@ -98,7 +98,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     @Description("# Delay to request next random teleportation")
     public Duration randomTeleportDelay = Duration.ofSeconds(60);
 
-    public RandomTeleportHeightRangeRepresenter heightRange = RandomTeleportHeightRangeRepresenter.of(-64, 256);
+    public RandomTeleportHeightRangeRepresenter heightRange = RandomTeleportHeightRangeRepresenter.of(60, 160);
 
     @Override
     public RandomTeleportRadiusRepresenter randomTeleportRadius() {
