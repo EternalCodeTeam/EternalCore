@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.randomteleport;
 
 import com.eternalcode.core.delay.DelaySettings;
 import java.time.Duration;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 import net.dzikoysk.cdn.entity.Contextual;
