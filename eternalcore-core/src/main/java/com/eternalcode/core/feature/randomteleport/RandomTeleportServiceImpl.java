@@ -55,7 +55,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
             if (world == null) {
                 throw new IllegalStateException(
-                    "World " + this.randomTeleportSettings.randomTeleportWorld() + " does not exists!");
+                    "World " + this.randomTeleportSettings.randomTeleportWorld() + " does not exist!");
             }
         }
 
