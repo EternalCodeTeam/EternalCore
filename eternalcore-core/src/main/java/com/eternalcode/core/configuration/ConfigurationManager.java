@@ -6,6 +6,7 @@ import com.eternalcode.core.configuration.composer.LanguageComposer;
 import com.eternalcode.core.configuration.composer.MaterialComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.configuration.composer.SetComposer;
+import com.eternalcode.core.configuration.composer.SoundComposer;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -21,6 +22,7 @@ import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.reflect.Visibility;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 
 @Service
 public class ConfigurationManager {
@@ -50,6 +52,7 @@ public class ConfigurationManager {
             .withComposer(Position.class, new PositionComposer())
             .withComposer(Notice.class, new MultificationNoticeCdnComposer(resolverRegistry))
             .withComposer(Material.class, new MaterialComposer())
+            .withComposer(Sound.class, new SoundComposer())
             .withMemberResolver(Visibility.PACKAGE_PRIVATE)
             .build();
     }
