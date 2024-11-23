@@ -1,5 +1,8 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_BYPASS_PERMISSION;
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPlaceholders.PLACEHOLDERS;
+
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
@@ -19,16 +22,6 @@ import org.bukkit.entity.Player;
 
 @Command(name = "rtp", aliases = "randomteleport")
 class RandomTeleportCommand {
-
-    private static final Placeholders<Player> PLACEHOLDERS = Placeholders.<Player>builder()
-        .with("{PLAYER}", Player::getName)
-        .with("{WORLD}", player -> player.getWorld().getName())
-        .with("{X}", player -> String.valueOf(player.getLocation().getBlockX()))
-        .with("{Y}", player -> String.valueOf(player.getLocation().getBlockY()))
-        .with("{Z}", player -> String.valueOf(player.getLocation().getBlockZ()))
-        .build();
-
-    private static final String RTP_BYPASS_PERMISSION = "eternalcore.rtp.bypass";
 
     private final NoticeService noticeService;
     private final RandomTeleportService randomTeleportService;
@@ -69,7 +62,6 @@ class RandomTeleportCommand {
                     return;
                 }
 
-                this.handleTeleportSuccess(player);
             });
 
         this.delay.markDelay(uuid, this.config.randomTeleport.delay());
@@ -97,7 +89,6 @@ class RandomTeleportCommand {
                     return;
                 }
 
-                this.handleTeleportSuccess(player);
                 this.handleAdminTeleport(sender, player);
             });
 
@@ -109,13 +100,6 @@ class RandomTeleportCommand {
             .notice(translation -> translation.randomTeleport().randomTeleportFailed())
             .player(player.getUniqueId())
             .send();
-    }
-
-    private void handleTeleportSuccess(Player player) {
-        this.noticeService.player(
-            player.getUniqueId(),
-            translation -> translation.randomTeleport().teleportedToRandomLocation(),
-            PLACEHOLDERS.toFormatter(player));
     }
 
     private void handleAdminTeleport(Viewer sender, Player player) {

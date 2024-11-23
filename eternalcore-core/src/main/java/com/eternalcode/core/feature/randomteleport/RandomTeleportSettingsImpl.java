@@ -11,10 +11,14 @@ import org.bukkit.Material;
 
 @Contextual
 public class RandomTeleportSettingsImpl implements RandomTeleportSettings, DelaySettings {
+
+    @Description("# Time to wait for the random teleportation")
+    public Duration randomTeleportTime = Duration.ofSeconds(5);
+
     @Description({
         "# Type of random teleportation,",
         "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
-        "# STATIC_RADIUS - radius based on the manually value."
+        "# STATIC_RADIUS - static radius based on the configuration.",
     })
     public RandomTeleportType randomTeleportType = RandomTeleportType.WORLD_BORDER_RADIUS;
 
@@ -23,8 +27,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
         "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
     })
-    public RandomTeleportRadiusRepresenterImpl
-        randomTeleportStaticRadius = RandomTeleportRadiusRepresenterImpl.of(5000, 5000, 5000, 5000);
+    public RandomTeleportRadiusRepresenterImpl randomTeleportStaticRadius = RandomTeleportRadiusRepresenterImpl.of(5000, 5000, 5000, 5000);
     // For compatibility reasons, it must be named differently than "randomTeleportRadius".
     // Due to limitations in the configuration library, changing the type of an existing field prevents the plugin from enabling.
 
@@ -34,8 +37,14 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     @Description("# Number of attempts to teleport to a random location")
     public int randomTeleportAttempts = 10;
 
-    @Description("# Unsafe blocks for random teleportation")
-    public Set<Material> unsafeBlocks = EnumSet.of(
+    @Description({
+        "# Unsafe blocks for random teleportation",
+        "# These blocks are considered unsafe for players to be teleported onto.",
+        "# The list includes blocks that can cause damage, suffocation, or other",
+        "# undesirable effects. Ensure that the list is comprehensive to avoid",
+        "# teleporting players to hazardous locations."
+    })
+    public Set<Material> randomTeleportUnsafeBlocks = EnumSet.of(
         Material.LAVA,
         Material.WATER,
         Material.CACTUS,
@@ -52,8 +61,14 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         Material.WITHER_ROSE
     );
 
-    @Description("# Air blocks for random teleportation")
-    public Set<Material> airBlocks = EnumSet.of(
+    @Description({
+        "# Air blocks for random teleportation",
+        "# These blocks are considered safe for players to be teleported into.",
+        "# The list includes blocks that do not cause damage or impede movement.",
+        "# Ensure that the list is comprehensive to avoid teleporting players",
+        "# into solid or hazardous blocks."
+    })
+    public Set<Material> randomTeleportAirBlocks = EnumSet.of(
         Material.AIR,
         Material.CAVE_AIR,
         Material.VOID_AIR,
@@ -101,6 +116,11 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     public RandomTeleportHeightRangeRepresenter heightRange = RandomTeleportHeightRangeRepresenter.of(60, 160);
 
     @Override
+    public Duration randomTeleportTime() {
+        return this.randomTeleportTime;
+    }
+
+    @Override
     public RandomTeleportRadiusRepresenter randomTeleportRadius() {
         return this.randomTeleportStaticRadius;
     }
@@ -122,12 +142,12 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
 
     @Override
     public Set<Material> unsafeBlocks() {
-        return Collections.unmodifiableSet(unsafeBlocks);
+        return Collections.unmodifiableSet(randomTeleportUnsafeBlocks);
     }
 
     @Override
     public Set<Material> airBlocks() {
-        return Collections.unmodifiableSet(airBlocks);
+        return Collections.unmodifiableSet(randomTeleportAirBlocks);
     }
 
     @Override

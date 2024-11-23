@@ -46,7 +46,6 @@ public interface RandomTeleportService {
      * @param attemptCount The number of attempts to find a safe location.
      * @return A CompletableFuture containing the random Location that is deemed safe.
      */
-    @Deprecated(forRemoval = true)
     CompletableFuture<Location> getSafeRandomLocation(World world, int radius, int attemptCount);
 
     /**
