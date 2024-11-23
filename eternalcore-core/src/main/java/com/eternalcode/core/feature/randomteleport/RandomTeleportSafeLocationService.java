@@ -57,8 +57,8 @@ class RandomTeleportSafeLocationService {
         int spawnX = spawnLocation.getBlockX();
         int spawnZ = spawnLocation.getBlockZ();
 
-        int randomX = spawnX + (int) (random.nextDouble() * (radius.getMaxX() - radius.getMinX() + 1)) + radius.getMinX();
-        int randomZ = spawnZ + (int) (random.nextDouble() * (radius.getMaxZ() - radius.getMinZ() + 1)) + radius.getMinZ();
+        int randomX = spawnX + this.random.nextInt(radius.getMaxX() - radius.getMinX() + 1) + radius.getMinX();
+        int randomZ = spawnZ + this.random.nextInt(radius.getMaxZ() - radius.getMinZ() + 1) + radius.getMinZ();
 
         RandomTeleportRadiusRepresenter finalRadius = radius;
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
