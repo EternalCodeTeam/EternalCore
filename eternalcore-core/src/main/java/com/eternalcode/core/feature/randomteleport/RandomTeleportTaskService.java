@@ -40,7 +40,7 @@ class RandomTeleportTaskService {
     CompletableFuture<TeleportResult> createTeleport(Player player, Location location) {
         if (player.hasPermission(RTP_BYPASS_PERMISSION)) {
             PreRandomTeleportEvent preRandomTeleportEvent = new PreRandomTeleportEvent(player);
-
+            this.eventCaller.callEvent(preRandomTeleportEvent);
             if (preRandomTeleportEvent.isCancelled()) {
                 return CompletableFuture.completedFuture(new TeleportResult(false, player.getLocation()));
             }
