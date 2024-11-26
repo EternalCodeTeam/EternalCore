@@ -36,17 +36,9 @@ class RandomTeleportSafeLocationService {
         this.locationsConfiguration = locationsConfiguration;
     }
 
-    public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportType type,
-        RandomTeleportRadiusRepresenter radius,
-        int attemptCount) {
+    public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadius radius, int attemptCount) {
         if (attemptCount < 0) {
             return CompletableFuture.failedFuture(new RuntimeException("Cannot find safe location"));
-        }
-
-        if (type == RandomTeleportType.WORLD_BORDER_RADIUS) {
-            WorldBorder worldBorder = world.getWorldBorder();
-            int borderRadius = (int) (worldBorder.getSize() / 2);
-            radius = RandomTeleportRadiusRepresenterImpl.of(-borderRadius, borderRadius, -borderRadius, borderRadius);
         }
 
         boolean noneWorld = this.locationsConfiguration.spawn.isNoneWorld();
@@ -57,10 +49,9 @@ class RandomTeleportSafeLocationService {
         int spawnX = spawnLocation.getBlockX();
         int spawnZ = spawnLocation.getBlockZ();
 
-        int randomX = spawnX + this.random.nextInt(radius.getMaxX() - radius.getMinX() + 1) + radius.getMinX();
-        int randomZ = spawnZ + this.random.nextInt(radius.getMaxZ() - radius.getMinZ() + 1) + radius.getMinZ();
+        int randomX = spawnX + this.random.nextInt(radius.maxX() - radius.minX() + 1) + radius.minX();
+        int randomZ = spawnZ + this.random.nextInt(radius.maxZ() - radius.minZ() + 1) + radius.minZ();
 
-        RandomTeleportRadiusRepresenter finalRadius = radius;
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
 
@@ -68,7 +59,7 @@ class RandomTeleportSafeLocationService {
                 randomY = this.random.nextInt(DEFAULT_NETHER_HEIGHT);
             }
 
-            RandomTeleportHeightRangeRepresenter heightRange = this.randomTeleportSettings.heightRange();
+            RandomTeleportHeightRange heightRange = this.randomTeleportSettings.heightRange();
             int minHeight = heightRange.getMinY();
             int maxHeight = heightRange.getMaxY() - 1;
             randomY = Math.min(Math.max(randomY, minHeight), maxHeight);
@@ -79,12 +70,12 @@ class RandomTeleportSafeLocationService {
                 return CompletableFuture.completedFuture(generatedLocation);
             }
 
-            return this.getSafeRandomLocation(world, type, finalRadius, attemptCount - 1);
+            return this.getSafeRandomLocation(world, radius, attemptCount - 1);
         });
     }
 
     private boolean isSafeLocation(Chunk chunk, Location location) {
-        if (location == null || location.getWorld() == null) {
+        if (location.getWorld() == null) {
             return false;
         }
 
@@ -113,9 +104,8 @@ class RandomTeleportSafeLocationService {
         }
 
         return switch (world.getEnvironment()) {
-            case NORMAL, THE_END -> true;
+            case NORMAL, THE_END, CUSTOM -> true;
             case NETHER -> location.getY() <= NETHER_MAX_HEIGHT;
-            default -> false;
         };
     }
 }

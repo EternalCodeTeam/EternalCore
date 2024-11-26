@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 
 @Service
@@ -30,7 +31,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<TeleportResult> teleport(Player player) {
+    public CompletableFuture<RandomTeleportResult> teleport(Player player) {
         World world = player.getWorld();
 
         if (!this.randomTeleportSettings.randomTeleportWorld().isBlank()) {
@@ -46,51 +47,41 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<TeleportResult> teleport(Player player, World world) {
-        this.getSafeRandomLocation(world, this.randomTeleportSettings.randomTeleportAttempts())
+    public CompletableFuture<RandomTeleportResult> teleport(Player player, World world) {
+        return this.getSafeRandomLocation(world, this.randomTeleportSettings.randomTeleportAttempts())
             .thenCompose(location -> this.randomTeleportTaskService.createTeleport(player, location));
-
-        return CompletableFuture.completedFuture(new TeleportResult(true, player.getLocation()));
     }
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocation(World world, int attemptCount) {
-        RandomTeleportType type = this.randomTeleportSettings.randomTeleportType();
-        RandomTeleportRadiusRepresenter radius = this.randomTeleportSettings.randomTeleportRadius();
-        return this.safeLocationService.getSafeRandomLocation(world, type, radius, attemptCount);
+        RandomTeleportRadius radius = switch (this.randomTeleportSettings.randomTeleportType()) {
+            case STATIC_RADIUS -> this.randomTeleportSettings.randomTeleportRadius();
+            case WORLD_BORDER_RADIUS -> this.getWorldBorderRadius(world);
+        };
+
+        return this.safeLocationService.getSafeRandomLocation(world, radius, attemptCount);
     }
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocation(World world, int radius, int attemptCount) {
-        return this.safeLocationService.getSafeRandomLocation(
-            world,
-            RandomTeleportType.STATIC_RADIUS,
-            RandomTeleportRadiusRepresenterImpl.of(radius),
-            attemptCount
-        );
+        return this.safeLocationService.getSafeRandomLocation(world, RandomTeleportRadius.of(radius), attemptCount);
     }
 
     @Override
-    public CompletableFuture<Location> getSafeRandomLocation(
-        World world,
-        RandomTeleportRadiusRepresenter radius,
-        int attemptCount
-    ) {
-        return this.safeLocationService.getSafeRandomLocation(
-            world,
-            RandomTeleportType.STATIC_RADIUS,
-            radius,
-            attemptCount
-        );
+    public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadius radius, int attemptCount) {
+        return this.safeLocationService.getSafeRandomLocation(world, radius, attemptCount);
     }
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount) {
-        return this.safeLocationService.getSafeRandomLocation(
-            world,
-            RandomTeleportType.WORLD_BORDER_RADIUS,
-            null,
-            attemptCount
-        );
+        return this.safeLocationService.getSafeRandomLocation(world, this.getWorldBorderRadius(world), attemptCount);
     }
+
+    private RandomTeleportRadius getWorldBorderRadius(World world) {
+        WorldBorder worldBorder = world.getWorldBorder();
+        int borderRadius = (int) (worldBorder.getSize() / 2);
+
+        return RandomTeleportRadius.of(-borderRadius, borderRadius, -borderRadius, borderRadius);
+    }
+
 }

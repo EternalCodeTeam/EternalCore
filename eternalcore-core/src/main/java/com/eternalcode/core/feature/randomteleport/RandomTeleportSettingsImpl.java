@@ -27,8 +27,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
         "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
     })
-    public RandomTeleportRadiusRepresenterImpl randomTeleportStaticRadius =
-        RandomTeleportRadiusRepresenterImpl.of(5000, 5000, 5000, 5000);
+    public RandomTeleportRadiusConfig randomTeleportStaticRadius = new RandomTeleportRadiusConfig(5000, 5000, 5000, 5000);
     // For compatibility reasons, it must be named differently than "randomTeleportRadius".
     // Due to limitations in the configuration library, changing the type of an existing field prevents the plugin from enabling.
 
@@ -121,7 +120,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         "# - Default range: 60-160 blocks",
         "# Note: Values are automatically capped to world height limits"
     })
-    public RandomTeleportHeightRangeRepresenter heightRange = RandomTeleportHeightRangeRepresenter.of(60, 160);
+    public RandomTeleportHeightRange heightRange = RandomTeleportHeightRange.of(60, 160);
 
     @Override
     public Duration randomTeleportTime() {
@@ -129,7 +128,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     }
 
     @Override
-    public RandomTeleportRadiusRepresenter randomTeleportRadius() {
+    public RandomTeleportRadius randomTeleportRadius() {
         return this.randomTeleportStaticRadius;
     }
 
@@ -159,7 +158,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     }
 
     @Override
-    public RandomTeleportHeightRangeRepresenter heightRange() {
+    public RandomTeleportHeightRange heightRange() {
         return this.heightRange;
     }
 

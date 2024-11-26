@@ -14,7 +14,7 @@ public interface RandomTeleportService {
      * @param player The player to teleport.
      * @return A CompletableFuture containing the TeleportResult indicating the success or failure of the teleportation.
      */
-    CompletableFuture<TeleportResult> teleport(Player player);
+    CompletableFuture<RandomTeleportResult> teleport(Player player);
 
     /**
      * Asynchronously teleports the specified player to a random location within the specified world.
@@ -23,7 +23,7 @@ public interface RandomTeleportService {
      * @param world  The world to which the player should be teleported.
      * @return A CompletableFuture containing the TeleportResult indicating the success or failure of the teleportation.
      */
-    CompletableFuture<TeleportResult> teleport(Player player, World world);
+    CompletableFuture<RandomTeleportResult> teleport(Player player, World world);
 
     /**
      * Asynchronously retrieves a safe random location within the specified world.
@@ -37,9 +37,6 @@ public interface RandomTeleportService {
 
     /**
      * Asynchronously retrieves a safe random location within the specified world, using radius.
-     *
-     * @deprecated Use {@link #getSafeRandomLocation(World, RandomTeleportRadiusRepresenter, int)}
-     * instead with an appropriate RandomTeleportRadiusRepresenter implementation for your border shape.
      *
      * @param world        The world in which to find a random location.
      * @param radius       The radius around the player to search for a safe location.
@@ -56,7 +53,7 @@ public interface RandomTeleportService {
      * @param attemptCount The number of attempts to find a safe location.
      * @return A CompletableFuture containing the random Location that is deemed safe.
      */
-    CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadiusRepresenter radius, int attemptCount);
+    CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadius radius, int attemptCount);
 
     /**
      * Asynchronously retrieves a safe random location within the border in specified world.

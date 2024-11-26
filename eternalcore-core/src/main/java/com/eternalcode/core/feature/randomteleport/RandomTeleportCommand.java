@@ -8,7 +8,6 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -59,9 +58,7 @@ class RandomTeleportCommand {
             .whenCompleteAsync((result, error) -> {
                 if (error != null || !result.success()) {
                     this.handleTeleportFailure(player);
-                    return;
                 }
-
             });
 
         this.delay.markDelay(uuid, this.config.randomTeleport.delay());

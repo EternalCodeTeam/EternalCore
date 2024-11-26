@@ -4,11 +4,11 @@ import java.time.Duration;
 import java.util.Set;
 import org.bukkit.Material;
 
-public interface RandomTeleportSettings {
+interface RandomTeleportSettings {
 
     Duration randomTeleportTime();
 
-    RandomTeleportRadiusRepresenter randomTeleportRadius();
+    RandomTeleportRadius randomTeleportRadius();
 
     RandomTeleportType randomTeleportType();
 
@@ -20,7 +20,7 @@ public interface RandomTeleportSettings {
 
     Set<Material> airBlocks();
 
-    RandomTeleportHeightRangeRepresenter heightRange();
+    RandomTeleportHeightRange heightRange();
 
 
 }
