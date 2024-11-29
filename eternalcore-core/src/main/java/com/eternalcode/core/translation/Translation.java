@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -132,6 +133,11 @@ public interface Translation {
         Notice tellrawNoSaved();
         Notice tellrawMultipleSent();
         Notice tellrawCleared();
+        Notice alertQueueAdded();
+        Notice alertQueueRemoved();
+        Notice alertQueueCleared();
+        Notice alertQueueEmpty();
+        Notice alertQueueSent();
     }
 
     // Warp Section

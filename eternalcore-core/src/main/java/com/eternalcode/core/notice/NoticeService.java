@@ -112,8 +112,8 @@ public class NoticeService extends Multification<Viewer, Translation> {
     }
 
     @Override
-    public EternalCoreBroadcastImpl<Viewer, Translation, ?> create() {
-        return new EternalCoreBroadcastImpl<>(
+    public EternalCoreBroadcast<Viewer, Translation, ?> create() {
+        return new EternalCoreBroadcast<>(
             this.asyncExecutor(),
             this.translationProvider(),
             this.viewerProvider(),
