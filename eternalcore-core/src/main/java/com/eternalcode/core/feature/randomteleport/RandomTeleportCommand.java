@@ -1,11 +1,15 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_BYPASS_PERMISSION;
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_COMMAND_OTHER;
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_COMMAND_SELF;
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPlaceholders.PLACEHOLDERS;
+
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -20,18 +24,9 @@ import org.bukkit.entity.Player;
 @Command(name = "rtp", aliases = "randomteleport")
 class RandomTeleportCommand {
 
-    private static final Placeholders<Player> PLACEHOLDERS = Placeholders.<Player>builder()
-        .with("{PLAYER}", Player::getName)
-        .with("{WORLD}", player -> player.getWorld().getName())
-        .with("{X}", player -> String.valueOf(player.getLocation().getBlockX()))
-        .with("{Y}", player -> String.valueOf(player.getLocation().getBlockY()))
-        .with("{Z}", player -> String.valueOf(player.getLocation().getBlockZ()))
-        .build();
-
-    private static final String RTP_BYPASS_PERMISSION = "eternalcore.rtp.bypass";
-
     private final NoticeService noticeService;
     private final RandomTeleportService randomTeleportService;
+    private final RandomTeleportTaskService randomTeleportTaskService;
     private final PluginConfiguration config;
     private final Delay<UUID> delay;
 
@@ -39,16 +34,18 @@ class RandomTeleportCommand {
     RandomTeleportCommand(
         NoticeService noticeService,
         RandomTeleportService randomTeleportService,
+        RandomTeleportTaskService randomTeleportTaskService,
         PluginConfiguration config
     ) {
         this.noticeService = noticeService;
         this.randomTeleportService = randomTeleportService;
+        this.randomTeleportTaskService = randomTeleportTaskService;
         this.config = config;
         this.delay = new Delay<>(this.config.randomTeleport);
     }
 
     @Execute
-    @Permission("eternalcore.rtp")
+    @Permission(RTP_COMMAND_SELF)
     @DescriptionDocs(description = "Teleportation of the sender to a random location, if you want bypass cooldown use eternalcore.rtp.bypass permission")
     void executeSelf(@Context Player player) {
         UUID uuid = player.getUniqueId();
@@ -62,7 +59,7 @@ class RandomTeleportCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.randomTeleportService.teleport(player)
+        this.randomTeleportTaskService.createTeleport(player)
             .whenCompleteAsync((result, error) -> {
                 if (error != null || !result.success()) {
                     this.handleTeleportFailure(player);
@@ -76,7 +73,7 @@ class RandomTeleportCommand {
     }
 
     @Execute
-    @Permission("eternalcore.rtp.other")
+    @Permission(RTP_COMMAND_OTHER)
     @DescriptionDocs(description = "Teleportation of a player to a random location.", arguments = "<player>")
     void executeOther(@Context Viewer sender, @Arg Player player) {
         UUID uuid = player.getUniqueId();
@@ -97,11 +94,18 @@ class RandomTeleportCommand {
                     return;
                 }
 
-                this.handleTeleportSuccess(player);
                 this.handleAdminTeleport(sender, player);
             });
 
         this.delay.markDelay(uuid, this.config.randomTeleport.delay());
+    }
+
+    private void handleTeleportSuccess(Player player) {
+        this.noticeService.player(
+            player.getUniqueId(),
+            translation -> translation.randomTeleport().teleportedToRandomLocation(),
+            RandomTeleportPlaceholders.PLACEHOLDERS.toFormatter(player)
+        );
     }
 
     private void handleTeleportFailure(Player player) {
@@ -109,13 +113,6 @@ class RandomTeleportCommand {
             .notice(translation -> translation.randomTeleport().randomTeleportFailed())
             .player(player.getUniqueId())
             .send();
-    }
-
-    private void handleTeleportSuccess(Player player) {
-        this.noticeService.player(
-            player.getUniqueId(),
-            translation -> translation.randomTeleport().teleportedToRandomLocation(),
-            PLACEHOLDERS.toFormatter(player));
     }
 
     private void handleAdminTeleport(Viewer sender, Player player) {
