@@ -16,9 +16,9 @@ interface RandomTeleportSettings {
 
     int randomTeleportAttempts();
 
-    Set<Material> unsafeBlocks();
+    Set<Material> randomTeleportUnsafeBlocks();
 
-    Set<Material> airBlocks();
+    Set<Material> randomTeleportAirBlocks();
 
     RandomTeleportHeightRange heightRange();
 

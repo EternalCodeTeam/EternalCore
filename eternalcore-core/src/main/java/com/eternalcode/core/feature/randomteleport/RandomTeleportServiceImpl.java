@@ -1,10 +1,15 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportResolveWorldUtil.resolveWorld;
+
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.randomteleport.event.PreRandomTeleportEvent;
+import com.eternalcode.core.feature.randomteleport.event.RandomTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import io.papermc.lib.PaperLib;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
@@ -13,43 +18,42 @@ import org.bukkit.entity.Player;
 class RandomTeleportServiceImpl implements RandomTeleportService {
 
     private final RandomTeleportSettings randomTeleportSettings;
-    private final Server server;
     private final RandomTeleportSafeLocationService safeLocationService;
-    private final RandomTeleportTaskService randomTeleportTaskService;
+    private final EventCaller eventCaller;
 
     @Inject
     RandomTeleportServiceImpl(
         RandomTeleportSettings randomTeleportSettings,
-        Server server,
-        RandomTeleportSafeLocationService safeLocationService,
-        RandomTeleportTaskService randomTeleportTaskService
+        RandomTeleportSafeLocationService safeLocationService, EventCaller eventCaller
     ) {
         this.randomTeleportSettings = randomTeleportSettings;
-        this.server = server;
         this.safeLocationService = safeLocationService;
-        this.randomTeleportTaskService = randomTeleportTaskService;
+        this.eventCaller = eventCaller;
     }
 
     @Override
     public CompletableFuture<RandomTeleportResult> teleport(Player player) {
-        World world = player.getWorld();
-
-        if (!this.randomTeleportSettings.randomTeleportWorld().isBlank()) {
-            world = this.server.getWorld(this.randomTeleportSettings.randomTeleportWorld());
-
-            if (world == null) {
-                throw new IllegalStateException(
-                    "World " + this.randomTeleportSettings.randomTeleportWorld() + " does not exist!");
-            }
-        }
-
+        World world = resolveWorld(player, randomTeleportSettings);
         return this.teleport(player, world);
     }
 
     @Override
     public CompletableFuture<RandomTeleportResult> teleport(Player player, World world) {
+        PreRandomTeleportEvent preRandomTeleportEvent = this.eventCaller.callEvent(new PreRandomTeleportEvent(player));
+
+        if (preRandomTeleportEvent.isCancelled()) {
+            return CompletableFuture.completedFuture(new RandomTeleportResult(false, player.getLocation()));
+        }
+
         return this.getSafeRandomLocation(world, this.randomTeleportSettings.randomTeleportAttempts())
-            .thenCompose(location -> this.randomTeleportTaskService.createTeleport(player, location));
+            .thenCompose(location -> PaperLib.teleportAsync(player, location).thenApply(success -> {
+                RandomTeleportResult teleportResult = new RandomTeleportResult(success, location);
+
+                RandomTeleportEvent event = new RandomTeleportEvent(player, location);
+                this.eventCaller.callEvent(event);
+
+                return teleportResult;
+            }));
     }
 
     @Override
@@ -68,20 +72,22 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadius radius, int attemptCount) {
+    public CompletableFuture<Location> getSafeRandomLocation(
+        World world,
+        RandomTeleportRadius radius,
+        int attemptCount
+    ) {
         return this.safeLocationService.getSafeRandomLocation(world, radius, attemptCount);
     }
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount) {
-        return this.safeLocationService.getSafeRandomLocation(world, this.getWorldBorderRadius(world), attemptCount);
+        return this.getSafeRandomLocation(world, this.getWorldBorderRadius(world), attemptCount);
     }
 
     private RandomTeleportRadius getWorldBorderRadius(World world) {
         WorldBorder worldBorder = world.getWorldBorder();
         int borderRadius = (int) (worldBorder.getSize() / 2);
-
         return RandomTeleportRadius.of(-borderRadius, borderRadius, -borderRadius, borderRadius);
     }
-
 }

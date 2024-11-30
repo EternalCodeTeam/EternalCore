@@ -71,11 +71,9 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     public Set<Material> randomTeleportAirBlocks = EnumSet.of(
         Material.AIR,
         Material.CAVE_AIR,
-        Material.VOID_AIR,
         Material.GRASS,
         Material.TALL_GRASS,
         Material.VINE,
-        Material.LEGACY_AIR,
         Material.STRUCTURE_VOID,
         Material.DEAD_BUSH,
         Material.DANDELION,
@@ -148,12 +146,12 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     }
 
     @Override
-    public Set<Material> unsafeBlocks() {
+    public Set<Material> randomTeleportUnsafeBlocks() {
         return Collections.unmodifiableSet(randomTeleportUnsafeBlocks);
     }
 
     @Override
-    public Set<Material> airBlocks() {
+    public Set<Material> randomTeleportAirBlocks() {
         return Collections.unmodifiableSet(randomTeleportAirBlocks);
     }
 
