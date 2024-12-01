@@ -37,11 +37,6 @@ public class VanishService {
         return false;
     }
 
-    @FeatureDocs(
-        name = "Vanish tabulation",
-        description = "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa."
-            + " To re-enable this feature for specific players, grant them the eternalcore.vanish.see permission."
-    )
     public boolean canSeeVanished(CommandSender sender) {
         return sender.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION);
     }
