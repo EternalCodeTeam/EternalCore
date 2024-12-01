@@ -1,9 +1,11 @@
 package com.eternalcode.core.feature.vanish;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.UUID;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 
@@ -33,5 +35,14 @@ public class VanishService {
             }
         }
         return false;
+    }
+
+    @FeatureDocs(
+        name = "Vanish tabulation",
+        description = "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa."
+            + " To re-enable this feature for specific players, grant them the eternalcore.vanish.see permission."
+    )
+    public boolean canSeeVanished(CommandSender sender) {
+        return sender.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION);
     }
 }

@@ -50,9 +50,10 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
         Argument<Player> argument,
         SuggestionContext context
     ) {
+        CommandSender sender = invocation.sender();
         return this.server.getOnlinePlayers().stream()
-            .filter(player -> !this.vanishService.isVanished(player.getUniqueId()))
-            .map(player -> player.getName())
+            .filter(player -> this.vanishService.canSeeVanished(sender) || !this.vanishService.isVanished(player.getUniqueId()))
+            .map(Player::getName)
             .collect(SuggestionResult.collector());
     }
 }
