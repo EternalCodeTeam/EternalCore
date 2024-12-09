@@ -171,7 +171,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
     public boolean migrate() {
         boolean migrated = false;
         if (randomTeleportDelay != null) {
-            delay = randomTeleportDelay;
+            cooldown = randomTeleportDelay;
             randomTeleportDelay = null;
             migrated = true;
         }
