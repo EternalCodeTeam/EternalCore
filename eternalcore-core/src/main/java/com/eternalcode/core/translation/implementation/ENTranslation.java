@@ -241,7 +241,12 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENRandomTeleportSection implements RandomTeleportSection {
-        public Notice randomTeleportStarted = Notice.chat("<green>► <white>Teleportation to a random location has started!");
+        public Notice randomTeleportStarted = Notice.builder()
+            .chat("<green>► <white>Teleportation to a random location has started!")
+            .title("<green>Random teleport")
+            .subtitle("<white>Searching, please wait...")
+            .build();
+
         public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>A safe location could not be found, please try again!");
 
 

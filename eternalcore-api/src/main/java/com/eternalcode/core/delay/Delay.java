@@ -5,18 +5,24 @@ import com.google.common.cache.CacheBuilder;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.function.Supplier;
 
 public class Delay<T> {
 
     private final Cache<T, Instant> delays;
 
-    private final DelaySettings delaySettings;
+    private final Supplier<Duration> delaySettings;
 
+    @Deprecated
     public Delay(DelaySettings delaySettings) {
-        this.delaySettings = delaySettings;
+        this((Supplier<Duration>) () -> delaySettings.delay());
+    }
+
+    public Delay(Supplier<Duration> delayProvider) {
+        this.delaySettings = delayProvider;
 
         this.delays = CacheBuilder.newBuilder()
-            .expireAfterWrite(delaySettings.delay())
+            .expireAfterWrite(delayProvider.get())
             .build();
     }
 
@@ -25,7 +31,7 @@ public class Delay<T> {
     }
 
     public void markDelay(T key) {
-        this.markDelay(key, this.delaySettings.delay());
+        this.markDelay(key, this.delaySettings.get());
     }
 
     public void unmarkDelay(T key) {

@@ -1,12 +1,27 @@
 package com.eternalcode.core.feature.randomteleport;
 
-public interface RandomTeleportSettings {
+import java.time.Duration;
+import java.util.Set;
+import org.bukkit.Material;
 
-    int randomTeleportRadius();
+interface RandomTeleportSettings {
 
-    RandomTeleportType randomTeleportType();
+    RandomTeleportRadius radius();
 
-    String randomTeleportWorld();
+    RandomTeleportType radiusType();
 
-    int randomTeleportAttempts();
+    String world();
+
+    int teleportAttempts();
+
+    Set<Material> unsafeBlocks();
+
+    Set<Material> airBlocks();
+
+    RandomTeleportHeightRange heightRange();
+
+    Duration delay();
+
+    Duration cooldown();
+
 }

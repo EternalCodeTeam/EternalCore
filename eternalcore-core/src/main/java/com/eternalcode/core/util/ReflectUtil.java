@@ -4,7 +4,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.reflect.ClassPath;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -70,4 +72,26 @@ public final class ReflectUtil {
         return (T) object;
     }
 
+    public static List<Field> getAllSuperFields(Class<?> aClass) {
+        List<Field> fields = new ArrayList<>();
+        Class<?> currentClass = aClass;
+
+        while (currentClass != null && currentClass != Object.class) {
+            Collections.addAll(fields, currentClass.getDeclaredFields());
+
+            currentClass = currentClass.getSuperclass();
+        }
+
+        return fields;
+    }
+
+    public static <T> T getFieldValue(Field declaredField, Object object) {
+        try {
+            declaredField.setAccessible(true);
+            return unsafeCast(declaredField.get(object));
+        }
+        catch (IllegalAccessException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
 }

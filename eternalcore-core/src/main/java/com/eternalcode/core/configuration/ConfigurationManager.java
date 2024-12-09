@@ -14,6 +14,7 @@ import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
 import java.io.File;
 import java.time.Duration;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import net.dzikoysk.cdn.Cdn;
@@ -77,4 +78,9 @@ public class ConfigurationManager {
             this.load(config);
         }
     }
+
+    public Set<ReloadableConfig> getConfigs() {
+        return Collections.unmodifiableSet(this.configs);
+    }
+
 }

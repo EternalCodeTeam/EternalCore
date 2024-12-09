@@ -242,7 +242,12 @@ public class PLTranslation extends AbstractTranslation {
     @Contextual
     public static class PLRandomTeleportSection implements RandomTeleportSection {
         @Description(" ")
-        public Notice randomTeleportStarted = Notice.chat("<green>► <white>Rozpoczynanie procesu losowania lokalizacji...");
+        public Notice randomTeleportStarted = Notice.builder()
+            .chat("<green>► <white>Rozpoczynanie procesu losowania lokalizacji...")
+            .title("<green>Losowy teleport")
+            .subtitle("<white>Wyszukiwanie lokalizacji, proszę czekać...")
+            .build();
+
         public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!");
 
         public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
