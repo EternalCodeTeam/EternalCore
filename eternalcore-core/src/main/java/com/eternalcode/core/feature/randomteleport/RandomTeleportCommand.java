@@ -19,6 +19,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
 import java.util.UUID;
+import java.util.function.Supplier;
 import org.bukkit.entity.Player;
 
 @Command(name = "rtp", aliases = "randomteleport")
@@ -28,7 +29,7 @@ class RandomTeleportCommand {
     private final RandomTeleportService randomTeleportService;
     private final RandomTeleportTaskService randomTeleportTaskService;
     private final PluginConfiguration config;
-    private final Delay<UUID> delay;
+    private final Delay<UUID> cooldown;
 
     @Inject
     RandomTeleportCommand(
@@ -41,7 +42,7 @@ class RandomTeleportCommand {
         this.randomTeleportService = randomTeleportService;
         this.randomTeleportTaskService = randomTeleportTaskService;
         this.config = config;
-        this.delay = new Delay<>(this.config.randomTeleport);
+        this.cooldown = new Delay<>((Supplier<Duration>) () -> this.config.randomTeleport.cooldown());
     }
 
     @Execute
@@ -69,7 +70,7 @@ class RandomTeleportCommand {
                 this.handleTeleportSuccess(player);
             });
 
-        this.delay.markDelay(uuid, this.config.randomTeleport.delay());
+        this.cooldown.markDelay(uuid, this.config.randomTeleport.delay());
     }
 
     @Execute
@@ -97,7 +98,7 @@ class RandomTeleportCommand {
                 this.handleAdminTeleport(sender, player);
             });
 
-        this.delay.markDelay(uuid, this.config.randomTeleport.delay());
+        this.cooldown.markDelay(uuid, this.config.randomTeleport.delay());
     }
 
     private void handleTeleportSuccess(Player player) {
@@ -129,8 +130,8 @@ class RandomTeleportCommand {
             return false;
         }
 
-        if (this.delay.hasDelay(uniqueId)) {
-            Duration time = this.delay.getDurationToExpire(uniqueId);
+        if (this.cooldown.hasDelay(uniqueId)) {
+            Duration time = this.cooldown.getDurationToExpire(uniqueId);
 
             this.noticeService.create()
                 .notice(translation -> translation.randomTeleport().randomTeleportDelay())

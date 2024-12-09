@@ -1,8 +1,7 @@
 package com.eternalcode.core.feature.randomteleport;
 
-import com.eternalcode.core.delay.DelaySettings;
+import com.eternalcode.core.configuration.migration.Migration;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -10,32 +9,38 @@ import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 
 @Contextual
-public class RandomTeleportSettingsImpl implements RandomTeleportSettings, DelaySettings {
+public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migration {
 
-    @Description("# Time to wait for the random teleportation")
-    public Duration randomTeleportTime = Duration.ofSeconds(5);
+    @Description("# Delay to wait for the random teleportation")
+    public Duration delay = Duration.ofSeconds(5);
+
+    @Description("# Cooldown for random teleportation")
+    public Duration cooldown = Duration.ofSeconds(60);
+    @Deprecated public Duration randomTeleportDelay = null;
 
     @Description({
-        "# Type of random teleportation,",
+        "# Type of radius for random teleportation",
         "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
         "# STATIC_RADIUS - static radius based on the configuration.",
     })
-    public RandomTeleportType randomTeleportType = RandomTeleportType.WORLD_BORDER_RADIUS;
+    public RandomTeleportType radiusType = RandomTeleportType.WORLD_BORDER_RADIUS;
+    @Deprecated public RandomTeleportType randomTeleportType = null;
 
     @Description({
         "# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.",
         "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
         "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
     })
-    public RandomTeleportRadiusConfig randomTeleportStaticRadius = new RandomTeleportRadiusConfig(5000, 5000, 5000, 5000);
-    // For compatibility reasons, it must be named differently than "randomTeleportRadius".
-    // Due to limitations in the configuration library, changing the type of an existing field prevents the plugin from enabling.
+    public RandomTeleportRadiusConfig radius = new RandomTeleportRadiusConfig(5000, 5000, 5000, 5000);
+    @Deprecated public Integer randomTeleportRadius = null;
 
     @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
-    public String randomTeleportWorld = "world";
+    public String world = "world";
+    @Deprecated public String randomTeleportWorld = null;
 
-    @Description("# Number of attempts to teleport to a random location")
-    public int randomTeleportAttempts = 10;
+    @Description("# Number of attempts to find a safe location for random teleportation")
+    public int teleportAttempts = 10;
+    @Deprecated  public Integer randomTeleportAttempts = null;
 
     @Description({
         "# Unsafe blocks for random teleportation",
@@ -44,7 +49,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         "# undesirable effects. Ensure that the list is comprehensive to avoid",
         "# teleporting players to hazardous locations."
     })
-    public Set<Material> randomTeleportUnsafeBlocks = EnumSet.of(
+    public Set<Material> unsafeBlocks = EnumSet.of(
         Material.LAVA,
         Material.WATER,
         Material.CACTUS,
@@ -68,7 +73,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         "# Ensure that the list is comprehensive to avoid teleporting players",
         "# into solid or hazardous blocks."
     })
-    public Set<Material> randomTeleportAirBlocks = EnumSet.of(
+    public Set<Material> airBlocks = EnumSet.of(
         Material.AIR,
         Material.CAVE_AIR,
         Material.GRASS,
@@ -108,9 +113,6 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
         Material.SNOW
     );
 
-    @Description("# Delay to request next random teleportation")
-    public Duration randomTeleportDelay = Duration.ofSeconds(60);
-
     @Description({
         "# Height range for random teleportation",
         "# - Minimum: -64 (1.18+) or 0 (older versions)",
@@ -121,38 +123,38 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     public RandomTeleportHeightRange heightRange = RandomTeleportHeightRange.of(60, 160);
 
     @Override
-    public Duration randomTeleportTime() {
-        return this.randomTeleportTime;
+    public Duration delay() {
+        return this.delay;
     }
 
     @Override
-    public RandomTeleportRadius randomTeleportRadius() {
-        return this.randomTeleportStaticRadius;
+    public RandomTeleportRadius radius() {
+        return this.radius;
     }
 
     @Override
-    public RandomTeleportType randomTeleportType() {
-        return this.randomTeleportType;
+    public RandomTeleportType radiusType() {
+        return this.radiusType;
     }
 
     @Override
-    public String randomTeleportWorld() {
-        return this.randomTeleportWorld;
+    public String world() {
+        return this.world;
     }
 
     @Override
-    public int randomTeleportAttempts() {
-        return this.randomTeleportAttempts;
+    public int teleportAttempts() {
+        return this.teleportAttempts;
     }
 
     @Override
-    public Set<Material> randomTeleportUnsafeBlocks() {
-        return Collections.unmodifiableSet(randomTeleportUnsafeBlocks);
+    public Set<Material> unsafeBlocks() {
+        return unsafeBlocks;
     }
 
     @Override
-    public Set<Material> randomTeleportAirBlocks() {
-        return Collections.unmodifiableSet(randomTeleportAirBlocks);
+    public Set<Material> airBlocks() {
+        return airBlocks;
     }
 
     @Override
@@ -161,8 +163,40 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Delay
     }
 
     @Override
-    public Duration delay() {
-        return this.randomTeleportDelay;
+    public Duration cooldown() {
+        return this.cooldown;
     }
+
+    @Override
+    public boolean migrate() {
+        boolean migrated = false;
+        if (randomTeleportDelay != null) {
+            delay = randomTeleportDelay;
+            randomTeleportDelay = null;
+            migrated = true;
+        }
+        if (randomTeleportType != null) {
+            radiusType = randomTeleportType;
+            randomTeleportType = null;
+            migrated = true;
+        }
+        if (randomTeleportRadius != null) {
+            radius = new RandomTeleportRadiusConfig(-randomTeleportRadius, randomTeleportRadius, -randomTeleportRadius, randomTeleportRadius);
+            randomTeleportRadius = null;
+            migrated = true;
+        }
+        if (randomTeleportWorld != null) {
+            world = randomTeleportWorld;
+            randomTeleportWorld = null;
+            migrated = true;
+        }
+        if (randomTeleportAttempts != null) {
+            teleportAttempts = randomTeleportAttempts;
+            randomTeleportAttempts = null;
+            migrated = true;
+        }
+        return migrated;
+    }
+
 }
 

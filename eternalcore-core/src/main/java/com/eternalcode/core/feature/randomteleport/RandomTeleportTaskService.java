@@ -42,11 +42,11 @@ class RandomTeleportTaskService {
 
     CompletableFuture<RandomTeleportResult> createTeleport(Player player) {
         World world = resolveWorld(player, randomTeleportSettings);
-        RandomTeleportRadius radius = this.randomTeleportSettings.randomTeleportRadius();
+        RandomTeleportRadius radius = this.randomTeleportSettings.radius();
         return this.randomTeleportSafeLocationService.getSafeRandomLocation(
             world,
             radius,
-            this.randomTeleportSettings.randomTeleportAttempts()
+            this.randomTeleportSettings.teleportAttempts()
         ).thenCompose(location -> this.createTeleport(player, location));
     }
 
@@ -68,7 +68,7 @@ class RandomTeleportTaskService {
         Position playerPosition = PositionAdapter.convert(playerLocation);
         Position destination = PositionAdapter.convert(location);
 
-        Duration time = this.randomTeleportSettings.randomTeleportTime();
+        Duration time = this.randomTeleportSettings.delay();
         Teleport teleport =
             this.teleportTaskService.createTeleport(player.getUniqueId(), playerPosition, destination, time);
 

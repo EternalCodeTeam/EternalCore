@@ -6,21 +6,22 @@ import org.bukkit.Material;
 
 interface RandomTeleportSettings {
 
-    Duration randomTeleportTime();
+    RandomTeleportRadius radius();
 
-    RandomTeleportRadius randomTeleportRadius();
+    RandomTeleportType radiusType();
 
-    RandomTeleportType randomTeleportType();
+    String world();
 
-    String randomTeleportWorld();
+    int teleportAttempts();
 
-    int randomTeleportAttempts();
+    Set<Material> unsafeBlocks();
 
-    Set<Material> randomTeleportUnsafeBlocks();
-
-    Set<Material> randomTeleportAirBlocks();
+    Set<Material> airBlocks();
 
     RandomTeleportHeightRange heightRange();
 
+    Duration delay();
+
+    Duration cooldown();
 
 }

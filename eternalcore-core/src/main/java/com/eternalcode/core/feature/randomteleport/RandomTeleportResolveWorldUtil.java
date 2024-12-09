@@ -10,12 +10,12 @@ final class RandomTeleportResolveWorldUtil {
     static World resolveWorld(Player player, RandomTeleportSettings settings) {
         World world = player.getWorld();
 
-        if (!settings.randomTeleportWorld().isBlank()) {
-            world = getWorld(settings.randomTeleportWorld());
+        if (!settings.world().isBlank()) {
+            world = getWorld(settings.world());
 
             if (world == null) {
                 throw new IllegalStateException(
-                    "World " + settings.randomTeleportWorld() + " does not exist!");
+                    "World " + settings.world() + " does not exist!");
             }
         }
 

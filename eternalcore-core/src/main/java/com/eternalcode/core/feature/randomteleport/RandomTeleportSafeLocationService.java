@@ -84,11 +84,11 @@ class RandomTeleportSafeLocationService {
         Block blockAbove = block.getRelative(BlockFace.UP);
         Block blockFloor = block.getRelative(BlockFace.DOWN);
 
-        if (this.randomTeleportSettings.randomTeleportUnsafeBlocks().contains(blockFloor.getType())) {
+        if (this.randomTeleportSettings.unsafeBlocks().contains(blockFloor.getType())) {
             return false;
         }
 
-        Set<Material> airBlocks = this.randomTeleportSettings.randomTeleportAirBlocks();
+        Set<Material> airBlocks = this.randomTeleportSettings.airBlocks();
         if (!airBlocks.contains(block.getType()) || !airBlocks.contains(blockAbove.getType())) {
             return false;
         }

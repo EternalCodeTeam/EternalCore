@@ -45,7 +45,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
             return CompletableFuture.completedFuture(new RandomTeleportResult(false, player.getLocation()));
         }
 
-        return this.getSafeRandomLocation(world, this.randomTeleportSettings.randomTeleportAttempts())
+        return this.getSafeRandomLocation(world, this.randomTeleportSettings.teleportAttempts())
             .thenCompose(location -> PaperLib.teleportAsync(player, location).thenApply(success -> {
                 RandomTeleportResult teleportResult = new RandomTeleportResult(success, location);
 
@@ -58,8 +58,8 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocation(World world, int attemptCount) {
-        RandomTeleportRadius radius = switch (this.randomTeleportSettings.randomTeleportType()) {
-            case STATIC_RADIUS -> this.randomTeleportSettings.randomTeleportRadius();
+        RandomTeleportRadius radius = switch (this.randomTeleportSettings.radiusType()) {
+            case STATIC_RADIUS -> this.randomTeleportSettings.radius();
             case WORLD_BORDER_RADIUS -> this.getWorldBorderRadius(world);
         };
 
