@@ -56,7 +56,11 @@ public final class BeanProcessorFactory {
                 }
             })
             .onProcess(Listener.class, (provider, listener, none) -> {
-                pluginManager.registerEvents(listener, plugin);
+                try { //todo handle it
+                    pluginManager.registerEvents(listener, plugin);
+                } catch (NoClassDefFoundError error) {
+                    error.printStackTrace();
+                }
             })
             .onProcess(Subscriber.class, (provider, potentialSubscriber, none) -> {
                 Publisher publisher = provider.getDependency(Publisher.class);

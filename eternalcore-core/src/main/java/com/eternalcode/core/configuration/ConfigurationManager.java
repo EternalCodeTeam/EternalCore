@@ -13,6 +13,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.multification.cdn.MultificationNoticeCdnComposer;
 import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
+import io.papermc.lib.PaperLib;
 import java.io.File;
 import java.time.Duration;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
+import net.dzikoysk.cdn.CdnSettings;
 import net.dzikoysk.cdn.reflect.Visibility;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -43,7 +45,7 @@ public class ConfigurationManager {
         this.configurationBackupService = configurationBackupService;
         this.dataFolder = dataFolder;
 
-        this.cdn = CdnFactory
+        CdnSettings cdnSettings = CdnFactory
             .createYamlLike()
             .getSettings()
             .withComposer(Duration.class, new DurationComposer())
@@ -51,9 +53,15 @@ public class ConfigurationManager {
             .withComposer(Language.class, new LanguageComposer())
             .withComposer(Position.class, new PositionComposer())
             .withComposer(Notice.class, new MultificationNoticeCdnComposer(resolverRegistry))
-            .withComposer(Material.class, new MaterialComposer())
-            .withComposer(Sound.class, new SoundComposer())
-            .withMemberResolver(Visibility.PACKAGE_PRIVATE)
+            .withMemberResolver(Visibility.PACKAGE_PRIVATE);
+
+        if (PaperLib.isVersion(21, 2)) { // move to xserise
+            cdnSettings = cdnSettings
+                .withComposer(Sound.class, new SoundComposer())
+                .withComposer(Material.class, new MaterialComposer());
+        }
+
+        this.cdn = cdnSettings
             .build();
     }
 
