@@ -76,7 +76,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
     public Set<Material> airBlocks = EnumSet.of(
         Material.AIR,
         Material.CAVE_AIR,
-        Material.GRASS,
+//        Material.GRASS,
         Material.TALL_GRASS,
         Material.VINE,
         Material.STRUCTURE_VOID,

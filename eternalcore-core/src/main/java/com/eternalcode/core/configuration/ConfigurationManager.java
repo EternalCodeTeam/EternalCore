@@ -3,17 +3,15 @@ package com.eternalcode.core.configuration;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
-import com.eternalcode.core.configuration.composer.MaterialComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.configuration.composer.SetComposer;
-import com.eternalcode.core.configuration.composer.SoundComposer;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.multification.cdn.MultificationNoticeCdnComposer;
 import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
-import io.papermc.lib.PaperLib;
 import java.io.File;
 import java.time.Duration;
 import java.util.Collections;
@@ -23,8 +21,6 @@ import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.CdnSettings;
 import net.dzikoysk.cdn.reflect.Visibility;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 
 @Service
 public class ConfigurationManager {
@@ -40,11 +36,15 @@ public class ConfigurationManager {
     public ConfigurationManager(
         ConfigurationBackupService configurationBackupService,
         NoticeResolverRegistry resolverRegistry,
+        Publisher publisher,
         File dataFolder
     ) {
         this.configurationBackupService = configurationBackupService;
         this.dataFolder = dataFolder;
+        this.cdn = createCdn(publisher, resolverRegistry);
+    }
 
+    private static Cdn createCdn(Publisher publisher, NoticeResolverRegistry resolverRegistry) {
         CdnSettings cdnSettings = CdnFactory
             .createYamlLike()
             .getSettings()
@@ -55,13 +55,9 @@ public class ConfigurationManager {
             .withComposer(Notice.class, new MultificationNoticeCdnComposer(resolverRegistry))
             .withMemberResolver(Visibility.PACKAGE_PRIVATE);
 
-        if (PaperLib.isVersion(21, 2)) { // move to xserise
-            cdnSettings = cdnSettings
-                .withComposer(Sound.class, new SoundComposer())
-                .withComposer(Material.class, new MaterialComposer());
-        }
+        ConfigurationSettingsSetupEvent event = publisher.publish(new ConfigurationSettingsSetupEvent(cdnSettings));
 
-        this.cdn = cdnSettings
+        return event.getSettings()
             .build();
     }
 
