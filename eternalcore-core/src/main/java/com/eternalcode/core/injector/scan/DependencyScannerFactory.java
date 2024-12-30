@@ -1,7 +1,7 @@
 package com.eternalcode.core.injector.scan;
 
 import com.eternalcode.core.injector.DependencyInjector;
-import com.eternalcode.core.injector.annotations.component.BeanSetup;
+import com.eternalcode.core.injector.annotations.component.Setup;
 import com.eternalcode.core.injector.annotations.component.Component;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -29,7 +29,7 @@ public final class DependencyScannerFactory {
                 Task.class,
                 Controller.class,
                 ConfigurationFile.class,
-                BeanSetup.class,
+                Setup.class,
 
                 Command.class,
                 RootCommand.class,

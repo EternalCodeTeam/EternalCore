@@ -1,11 +1,10 @@
 package com.eternalcode.core.bridge.litecommand;
 
 import com.eternalcode.core.injector.annotations.Bean;
-import com.eternalcode.core.injector.annotations.component.BeanSetup;
+import com.eternalcode.core.injector.annotations.component.Setup;
 import com.eternalcode.core.injector.bean.BeanFactory;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.publish.Subscribe;
-import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import dev.rollczi.litecommands.LiteCommands;
@@ -20,8 +19,8 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
-@BeanSetup
-class LiteCommandsSetup implements Subscriber {
+@Setup
+class LiteCommandsSetup {
 
     @Bean
     public LiteCommandsBuilder<CommandSender, ?, ?> liteCommandsBuilder(

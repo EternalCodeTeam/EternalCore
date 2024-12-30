@@ -5,7 +5,6 @@ import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import com.eternalcode.core.publish.Subscribe;
-import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -16,7 +15,7 @@ import java.time.Instant;
 import java.util.Optional;
 
 @Controller
-class AftPlaceholderSetup implements Subscriber {
+class AftPlaceholderSetup {
 
     private final TranslationManager translationManager;
     private final ViewerService viewerService;
