@@ -1,7 +1,19 @@
 package com.eternalcode.core;
 
+import com.eternalcode.core.compatibility.CompatibilityService;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.DependencyInjector;
+import com.eternalcode.core.injector.annotations.component.Component;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.injector.annotations.component.Repository;
+import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.injector.annotations.component.Setup;
+import com.eternalcode.core.injector.annotations.component.Task;
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
+import com.eternalcode.core.injector.annotations.lite.LiteContextual;
+import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.injector.bean.BeanCandidate;
 import com.eternalcode.core.injector.bean.BeanFactory;
 import com.eternalcode.core.injector.bean.BeanHolder;
@@ -9,10 +21,11 @@ import com.eternalcode.core.injector.bean.LazyFieldBeanCandidate;
 import com.eternalcode.core.injector.bean.processor.BeanProcessor;
 import com.eternalcode.core.injector.bean.processor.BeanProcessorFactory;
 import com.eternalcode.core.injector.scan.DependencyScanner;
-import com.eternalcode.core.injector.scan.DependencyScannerFactory;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.command.RootCommand;
 import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
@@ -32,6 +45,7 @@ class EternalCore {
     public EternalCore(Plugin plugin) {
         this.eternalCoreEnvironment = new EternalCoreEnvironment(plugin.getLogger());
 
+        CompatibilityService compatibilityService = new CompatibilityService();
         BeanProcessor beanProcessor = BeanProcessorFactory.defaultProcessors(plugin);
         BeanFactory beanFactory = new BeanFactory(beanProcessor)
             .withCandidateSelf()
@@ -42,10 +56,27 @@ class EternalCore {
             .addCandidate(File.class,                  () -> plugin.getDataFolder())
             .addCandidate(PluginManager.class,         () -> plugin.getServer().getPluginManager());
 
-        DependencyInjector dependencyInjector = new DependencyInjector(beanFactory);
-        DependencyScanner scanner = DependencyScannerFactory.createDefault(dependencyInjector);
+        DependencyInjector injector = new DependencyInjector(beanFactory);
+        DependencyScanner scanner = new DependencyScanner(injector)
+            .includeType(type -> compatibilityService.isCompatible(type))
+            .includeAnnotations(
+                Component.class,
+                Service.class,
+                Repository.class,
+                Task.class,
+                Controller.class,
+                ConfigurationFile.class,
+                Setup.class,
 
-        beanFactory.addCandidate(DependencyInjector.class, () -> dependencyInjector);
+                Command.class,
+                RootCommand.class,
+                LiteArgument.class,
+                LiteHandler.class,
+                LiteContextual.class,
+                LiteCommandEditor.class
+            );
+
+        beanFactory.addCandidate(DependencyInjector.class, () -> injector);
 
         for (BeanCandidate beanCandidate : scanner.scan(EternalCore.class.getPackage())) {
             beanFactory.addCandidate(beanCandidate);

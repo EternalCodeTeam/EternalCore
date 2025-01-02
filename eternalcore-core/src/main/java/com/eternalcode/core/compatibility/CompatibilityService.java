@@ -4,8 +4,12 @@ import io.papermc.lib.PaperLib;
 
 public class CompatibilityService {
 
-    public boolean isCompatible(Object instance) {
-        Compatibility compatibility = instance.getClass().getAnnotation(Compatibility.class);
+    public boolean isCompatible(Class<?> type) {
+        Compatibility compatibility = type.getAnnotation(Compatibility.class);
+        if (compatibility == null) {
+            return true;
+        }
+
         Version from = compatibility.from();
         Version to = compatibility.to();
 
