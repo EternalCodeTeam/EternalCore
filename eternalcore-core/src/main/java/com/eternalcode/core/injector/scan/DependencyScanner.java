@@ -35,8 +35,8 @@ public class DependencyScanner {
         return this;
     }
 
-    public DependencyScanner includeType(Predicate<Class<?>> filter) {
-        this.includedTypes.add(filter.negate());
+    public DependencyScanner includeType(Predicate<Class<?>> predicate) {
+        this.includedTypes.add(predicate);
         return this;
     }
 
