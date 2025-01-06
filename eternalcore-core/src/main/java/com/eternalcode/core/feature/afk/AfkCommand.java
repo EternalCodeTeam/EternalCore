@@ -34,7 +34,7 @@ class AfkCommand {
         this.noticeService = noticeService;
         this.pluginConfiguration = pluginConfiguration;
         this.afkService = afkService;
-        this.delay = new Delay<>(this.pluginConfiguration.afk);
+        this.delay = new Delay<>(() -> this.pluginConfiguration.afk.getAfkDelay());
     }
 
     @Execute
@@ -61,6 +61,6 @@ class AfkCommand {
             return;
         }
 
-        this.delay.markDelay(uuid, this.pluginConfiguration.afk.delay());
+        this.delay.markDelay(uuid, this.pluginConfiguration.afk.getAfkDelay());
     }
 }

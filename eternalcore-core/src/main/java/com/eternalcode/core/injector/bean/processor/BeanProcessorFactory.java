@@ -9,6 +9,7 @@ import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.publish.Publisher;
+import com.eternalcode.core.publish.SubscriberUtil;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -60,6 +61,9 @@ public final class BeanProcessorFactory {
                 }
             })
             .onProcess(Object.class, (provider, potentialSubscriber, none) -> {
+                if (!SubscriberUtil.isSubscriber(potentialSubscriber.getClass())) {
+                    return;
+                }
                 Publisher publisher = provider.getDependency(Publisher.class);
                 publisher.subscribe(potentialSubscriber);
             })

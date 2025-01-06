@@ -29,6 +29,11 @@ class MethodBeanCandidate implements BeanCandidate {
     }
 
     @Override
+    public Class<?> getType() {
+        return this.method.getReturnType();
+    }
+
+    @Override
     public <T> BeanHolder<T> createBean(Class<T> clazz) {
         if (!this.isCandidate(clazz)) {
             throw new IllegalArgumentException("Class " + clazz.getName() + " is not a candidate for " + this.method.getReturnType().getName());

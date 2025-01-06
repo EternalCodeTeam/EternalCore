@@ -12,6 +12,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
 import java.util.UUID;
+import java.util.function.Supplier;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -30,7 +31,7 @@ class RepairCommand {
     RepairCommand(NoticeService noticeService, PluginConfiguration config) {
         this.noticeService = noticeService;
         this.config = config;
-        this.delay = new Delay<>(this.config.repair);
+        this.delay = new Delay<>(() -> this.config.repair.repairDelay());
     }
 
     @Execute
@@ -74,7 +75,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.delay());
+        this.delay.markDelay(uuid, this.config.repair.repairDelay());
     }
 
     @Execute(name = "all")
@@ -101,7 +102,7 @@ class RepairCommand {
             exists = true;
             this.repairItem(itemStack);
 
-            this.delay.markDelay(uuid, this.config.repair.delay());
+            this.delay.markDelay(uuid, this.config.repair.repairDelay());
         }
 
         if (!exists) {
@@ -120,7 +121,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.delay());
+        this.delay.markDelay(uuid, this.config.repair.repairDelay());
     }
 
     @Execute(name = "armor")
@@ -164,7 +165,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.delay());
+        this.delay.markDelay(uuid, this.config.repair.repairDelay());
     }
 
     private boolean hasRepairDelay(UUID uuid) {

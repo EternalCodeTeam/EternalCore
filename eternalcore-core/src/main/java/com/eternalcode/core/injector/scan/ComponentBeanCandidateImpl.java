@@ -27,6 +27,11 @@ class ComponentBeanCandidateImpl<COMPONENT extends Annotation> implements BeanCa
     }
 
     @Override
+    public Class<?> getType() {
+        return this.componentClass;
+    }
+
+    @Override
     public <T> BeanHolder<T> createBean(Class<T> clazz) {
         Class<T> typed = this.toTypedCandidate(clazz);
 

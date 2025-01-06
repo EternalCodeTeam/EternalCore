@@ -21,6 +21,7 @@ import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.CdnSettings;
 import net.dzikoysk.cdn.reflect.Visibility;
+import org.bukkit.Sound;
 
 @Service
 public class ConfigurationManager {

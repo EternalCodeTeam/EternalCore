@@ -4,7 +4,7 @@ object Versions {
     const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
 
     const val ETERNALCODE_COMMONS = "1.1.4"
-    const val MULTIFICATION = "1.1.4"
+    const val MULTIFICATION = "1.2.0"
 
     const val JETBRAINS_ANNOTATIONS = "26.0.1"
     const val PLACEHOLDER_API = "2.11.6"
@@ -23,7 +23,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "6.0.0"
 
-    const val LITE_COMMANDS = "3.8.0"
+    const val LITE_COMMANDS = "3.9.7"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.3.1-jre"

@@ -2,6 +2,7 @@ package com.eternalcode.core.bridge.litecommand.configurator.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
+import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @ConfigurationFile
 public class CommandConfiguration implements ReloadableConfig {
 
+    @Bean
     public Argument argument = new Argument();
 
     @Contextual

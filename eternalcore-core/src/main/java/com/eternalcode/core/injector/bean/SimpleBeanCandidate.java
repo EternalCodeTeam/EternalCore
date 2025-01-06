@@ -20,6 +20,11 @@ class SimpleBeanCandidate implements BeanCandidate {
     }
 
     @Override
+    public Class<?> getType() {
+        return this.type;
+    }
+
+    @Override
     public <T> BeanHolder<T> createBean(Class<T> clazz) {
         if (!this.isCandidate(clazz)) {
             throw new IllegalArgumentException("Cannot create bean of type " + clazz.getName() + " from " + this.type.getName() + "!");
