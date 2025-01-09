@@ -1,5 +1,7 @@
 package com.eternalcode.core.bridge.litecommand.argument;
 
+import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
@@ -44,15 +46,25 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
         return ParseResult.success(target);
     }
 
+    @FeatureDocs(
+        name = "Vanish tabulation",
+        description = "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa."
+            + " To re-enable this feature for specific players, grant them the eternalcore.vanish.tabulation.see permission."
+    )
     @Override
     public SuggestionResult suggest(
         Invocation<CommandSender> invocation,
         Argument<Player> argument,
         SuggestionContext context
     ) {
+        CommandSender sender = invocation.sender();
         return this.server.getOnlinePlayers().stream()
-            .filter(player -> !this.vanishService.isVanished(player.getUniqueId()))
-            .map(player -> player.getName())
+            .filter(player -> this.canSeeVanished(sender) || !this.vanishService.isVanished(player.getUniqueId()))
+            .map(Player::getName)
             .collect(SuggestionResult.collector());
+    }
+
+    public boolean canSeeVanished(CommandSender sender) {
+        return sender.hasPermission(VanishPermissionConstant.VANISH_SEE_TABULATION_PERMISSION);
     }
 }
