@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.home.homeadmin;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -24,11 +25,17 @@ class HomeAdminCommand {
 
     private final HomeManager homeManager;
     private final NoticeService noticeService;
+    private final PluginConfiguration pluginConfiguration;
 
     @Inject
-    public HomeAdminCommand(HomeManager homeManager, NoticeService noticeService) {
+    public HomeAdminCommand(
+        HomeManager homeManager,
+        NoticeService noticeService,
+        PluginConfiguration pluginConfiguration
+    ) {
         this.homeManager = homeManager;
         this.noticeService = noticeService;
+        this.pluginConfiguration = pluginConfiguration;
     }
 
     @Execute(name = "sethome")
@@ -48,6 +55,7 @@ class HomeAdminCommand {
             this.noticeService.create()
                 .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
                 .placeholder("{HOME}", name)
+                .placeholder("{PLAYER}", player.getName())
                 .player(player.getUniqueId())
                 .send();
 
@@ -58,6 +66,7 @@ class HomeAdminCommand {
         this.noticeService.create()
             .notice(translate -> translate.home().createAsAdmin())
             .placeholder("{HOME}", name)
+            .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .send();
     }
@@ -77,6 +86,7 @@ class HomeAdminCommand {
             this.noticeService.create()
                 .notice(translate -> translate.home().homeList())
                 .placeholder("{HOMES}", homes)
+                .placeholder("{PLAYER}", player.getName())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -104,6 +114,7 @@ class HomeAdminCommand {
             this.noticeService.create()
                 .notice(translate -> translate.home().playerNoOwnedHomes())
                 .placeholder("{HOME}", home.getName())
+                .placeholder("{PLAYER}", user.getName())
                 .player(player.getUniqueId())
                 .send();
 
@@ -121,6 +132,7 @@ class HomeAdminCommand {
         this.noticeService.create()
             .notice(translate -> translate.home().homeListAsAdmin())
             .placeholder("{HOMES}", homes)
+            .placeholder("{PLAYER}", user.getName())
             .viewer(viewer)
             .send();
     }
@@ -128,7 +140,7 @@ class HomeAdminCommand {
     private String formattedListUserHomes(UUID uniqueId) {
         return this.homeManager.getHomes(uniqueId).stream()
             .map(home -> home.getName())
-            .collect(Collectors.joining(", "));
+            .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
 }
 
