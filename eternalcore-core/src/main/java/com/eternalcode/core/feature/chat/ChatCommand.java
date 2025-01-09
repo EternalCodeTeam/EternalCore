@@ -137,7 +137,7 @@ class ChatCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
-            .placeholder("{SLOWMODE}", DurationUtil.format(duration))
+            .placeholder("{SLOWMODE}", DurationUtil.format(duration, true))
             .onlinePlayers()
             .send();
     }

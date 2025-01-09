@@ -174,7 +174,7 @@ class RepairCommand {
             this.noticeService
                 .create()
                 .notice(translation -> translation.item().repairDelayMessage())
-                .placeholder("{TIME}", DurationUtil.format(time))
+                .placeholder("{TIME}", DurationUtil.format(time, true))
                 .player(uuid)
                 .send();
 

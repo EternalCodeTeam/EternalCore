@@ -220,7 +220,7 @@ class JailCommand {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailListPlayerEntry())
                 .placeholder("{PLAYER}", this.server.getOfflinePlayer(jailedPlayer.getPlayerUniqueId()).getName())
-                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.getRemainingTime()))
+                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.getRemainingTime(), true))
                 .placeholder("{DETAINED_BY}", jailedPlayer.getDetainedBy())
                 .player(player.getUniqueId())
                 .send();

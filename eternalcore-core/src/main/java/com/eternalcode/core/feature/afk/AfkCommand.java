@@ -48,7 +48,7 @@ class AfkCommand {
             this.noticeService
                 .create()
                 .notice(translation -> translation.afk().afkDelay())
-                .placeholder("{TIME}", DurationUtil.format(time))
+                .placeholder("{TIME}", DurationUtil.format(time, true))
                 .player(uuid)
                 .send();
 
