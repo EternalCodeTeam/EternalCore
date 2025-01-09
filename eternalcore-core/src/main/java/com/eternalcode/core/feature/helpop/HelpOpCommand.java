@@ -56,7 +56,7 @@ class HelpOpCommand {
 
             this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
-                .placeholder("{TIME}", DurationUtil.format(time))
+                .placeholder("{TIME}", DurationUtil.format(time, true))
                 .player(uuid)
                 .send();
 

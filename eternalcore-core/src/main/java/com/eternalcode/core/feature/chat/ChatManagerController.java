@@ -77,7 +77,7 @@ class ChatManagerController implements Listener {
                     .create()
                     .player(uniqueId)
                     .notice(translation -> translation.chat().slowMode())
-                    .placeholder("{TIME}", DurationUtil.format(remainingDuration))
+                    .placeholder("{TIME}", DurationUtil.format(remainingDuration, true))
                     .send();
 
                 event.setCancelled(true);
