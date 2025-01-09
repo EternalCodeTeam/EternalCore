@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.vanish;
 
-class VanishPermissionConstant {
+public class VanishPermissionConstant {
 
-    static final String VANISH_SEE_PERMISSION = "eternalcore.vanish.see";
+    public static final String VANISH_SEE_TABULATION_PERMISSION = "eternalcore.vanish.tabulation.see";
 }

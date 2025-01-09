@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.vanish;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.UUID;
@@ -35,9 +34,5 @@ public class VanishService {
             }
         }
         return false;
-    }
-
-    public boolean canSeeVanished(CommandSender sender) {
-        return sender.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION);
     }
 }
