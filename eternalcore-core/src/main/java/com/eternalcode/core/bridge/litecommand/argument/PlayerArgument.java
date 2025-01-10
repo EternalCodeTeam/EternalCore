@@ -1,5 +1,6 @@
 package com.eternalcode.core.bridge.litecommand.argument;
 
+import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
@@ -12,19 +13,24 @@ import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import java.util.Objects;
 
 @LiteArgument(type = Player.class)
 public class PlayerArgument extends AbstractViewerArgument<Player> {
 
     private final Server server;
+    private final VanishService vanishService;
 
     @Inject
-    public PlayerArgument(ViewerService viewerService, TranslationManager translationManager, Server server) {
+    public PlayerArgument(
+        ViewerService viewerService,
+        TranslationManager translationManager,
+        Server server,
+        VanishService vanishService
+    ) {
         super(viewerService, translationManager);
         this.server = server;
+        this.vanishService = vanishService;
     }
 
     @Override
@@ -39,9 +45,14 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Player> argument, SuggestionContext context) {
+    public SuggestionResult suggest(
+        Invocation<CommandSender> invocation,
+        Argument<Player> argument,
+        SuggestionContext context
+    ) {
         return this.server.getOnlinePlayers().stream()
-            .map(HumanEntity::getName)
+            .filter(player -> !this.vanishService.isVanished(player.getUniqueId()))
+            .map(player -> player.getName())
             .collect(SuggestionResult.collector());
     }
 }

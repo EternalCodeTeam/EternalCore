@@ -7,6 +7,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import java.util.Optional;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.time.Duration;
@@ -60,6 +61,10 @@ class AfkServiceImpl implements AfkService {
         return afk;
     }
 
+    @Override
+    public Optional<Afk> getAfk(UUID playerUniqueId) {
+        return Optional.ofNullable(this.afkByPlayer.get(playerUniqueId));
+    }
 
     @Override
     public void markInteraction(UUID playerUniqueId) {

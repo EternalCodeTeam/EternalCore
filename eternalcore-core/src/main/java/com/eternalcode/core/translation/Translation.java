@@ -20,6 +20,7 @@ public interface Translation {
     ArgumentSection argument();
 
     interface ArgumentSection {
+        Notice missingPlayerName();
         Notice permissionMessage();
         Notice usageMessage();
         Notice usageMessageHead();
@@ -35,7 +36,6 @@ public interface Translation {
         Notice noValidEnchantmentLevel();
         Notice invalidTimeFormat();
         Notice worldDoesntExist();
-        Notice youMustGiveWorldName();
         Notice incorrectNumberOfChunks();
         Notice incorrectLocation();
     }
@@ -133,6 +133,11 @@ public interface Translation {
         Notice tellrawNoSaved();
         Notice tellrawMultipleSent();
         Notice tellrawCleared();
+        Notice alertQueueAdded();
+        Notice alertQueueRemoved();
+        Notice alertQueueCleared();
+        Notice alertQueueEmpty();
+        Notice alertQueueSent();
     }
 
     // Warp Section
@@ -211,6 +216,12 @@ public interface Translation {
         Notice overrideHomeLocation();
         Notice noHomesOwned();
         String noHomesOwnedPlaceholder();
+
+        Notice overrideHomeLocationAsAdmin();
+        Notice playerNoOwnedHomes();
+        Notice createAsAdmin();
+        Notice deleteAsAdmin();
+        Notice homeListAsAdmin();
     }
 
     // tpa section
@@ -264,6 +275,9 @@ public interface Translation {
         Notice afkOff();
         Notice afkDelay();
         String afkKickReason();
+
+        String afkEnabledPlaceholder();
+        String afkDisabledPlaceholder();
     }
 
     // event section
@@ -381,10 +395,8 @@ public interface Translation {
 
         // give
         Notice giveReceived();
-        Notice giveReceivedEnchantment();
         Notice giveGiven();
-        Notice giveGivenEnchantment();
-
+        Notice giveNoSpace();
         Notice giveNotItem();
 
         // others

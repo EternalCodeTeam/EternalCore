@@ -8,8 +8,7 @@ import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
-import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
-import com.eternalcode.core.feature.randomteleport.RandomTeleportType;
+import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
@@ -125,58 +124,7 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Description({ "", "# Random Teleport Section" })
-    public RandomTeleport randomTeleport = new RandomTeleport();
-
-    @Contextual
-    public static class RandomTeleport implements RandomTeleportSettings, DelaySettings {
-        @Description({
-            "# Type of random teleportation,",
-            "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
-            "# STATIC_RADIUS - radius based on the manually value."
-        })
-        public RandomTeleportType randomTeleportType = RandomTeleportType.WORLD_BORDER_RADIUS;
-
-        @Description({
-            "# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.",
-            "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
-            "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
-        })
-        public int randomTeleportRadius = 1000;
-
-        @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
-        public String randomTeleportWorld = "world";
-
-        @Description("# Number of attempts to teleport to a random location")
-        public int randomTeleportAttempts = 10;
-
-        @Override
-        public int randomTeleportRadius() {
-            return this.randomTeleportRadius;
-        }
-
-        @Override
-        public RandomTeleportType randomTeleportType() {
-            return this.randomTeleportType;
-        }
-
-        @Override
-        public String randomTeleportWorld() {
-            return this.randomTeleportWorld;
-        }
-
-        @Override
-        public int randomTeleportAttempts() {
-            return this.randomTeleportAttempts;
-        }
-
-        @Description("# Delay to request next random teleportation")
-        public Duration randomTeleportDelay = Duration.ofSeconds(60);
-
-        @Override
-        public Duration delay() {
-            return this.randomTeleportDelay;
-        }
-    }
+    public RandomTeleportSettingsImpl randomTeleport = new RandomTeleportSettingsImpl();
 
     @Description({ " ", "# Homes Section" })
     public Homes homes = new Homes();
@@ -369,6 +317,9 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description({ " ", "# The default item give amount, when no amount is specified in the command." })
         public int defaultGiveAmount = 1;
+
+        @Description({ " ", "# Determines whether items should be dropped on the ground when the player's inventory is full" })
+        public boolean dropOnFullInventory = true;
     }
 
     @Description({ " ", "# Warp Section" })

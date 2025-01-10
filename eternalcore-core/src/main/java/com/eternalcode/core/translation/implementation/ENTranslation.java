@@ -109,6 +109,7 @@ public class ENTranslation extends AbstractTranslation {
         public Notice usageMessageEntry = Notice.chat("<green>► <white>{USAGE}");
 
         @Description(" ")
+        public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>You must provide a player name!");
         public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>This player is currently offline!");
         public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Command is only for players!");
         public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>The number must be greater than or equal to 0!");
@@ -120,10 +121,9 @@ public class ENTranslation extends AbstractTranslation {
         public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>This enchantment doesn't exist");
         public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>This enchantment level is not supported!");
         public Notice invalidTimeFormat = Notice.chat("<red>✘ <dark_red>Invalid time format!");
-        public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>This world doesn't exist!");
-        public Notice youMustGiveWorldName = Notice.chat("<red>✘ <dark_red>You must provide a world name!");
-        public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location!");
+        public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>World <red>{WORLD} <dark_red>doesn't exist!");
         public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
+        public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location format! <red>({LOCATION})");
     }
 
     @Description({
@@ -242,7 +242,12 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENRandomTeleportSection implements RandomTeleportSection {
-        public Notice randomTeleportStarted = Notice.chat("<green>► <white>Teleportation to a random location has started!");
+        public Notice randomTeleportStarted = Notice.builder()
+            .chat("<green>► <white>Teleportation to a random location has started!")
+            .title("<green>Random teleport")
+            .subtitle("<white>Searching, please wait...")
+            .build();
+
         public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>A safe location could not be found, please try again!");
 
 
@@ -297,6 +302,12 @@ public class ENTranslation extends AbstractTranslation {
         public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>No messages saved in queue!");
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
+        public Notice alertQueueAdded = Notice.chat("<green>► <white>Message added to the queue!");
+        public Notice alertQueueRemoved = Notice.chat("<green>► <white>Message removed from the queue!");
+        public Notice alertQueueCleared = Notice.chat("<green>► <white>Message queue cleared!");
+        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Error: <red>The message queue is empty!");
+        public Notice alertQueueSent = Notice.chat("<green>► <white>All messages sent from the queue!");
+
     }
 
     @Description({
@@ -443,6 +454,17 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({" ", "# Placeholders messages"})
         public String noHomesOwnedPlaceholder = "You don't have any homes.";
+
+        @Description({
+            " ",
+            "# Home Admin Section, you can edit player homes as admin",
+            "# {HOME} - Home name, {PLAYER} - Player name, {HOMES} - List of homes (separated by commas)"
+        })
+        public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been overridden for <green>{PLAYER}<white>.");
+        public Notice playerNoOwnedHomes = Notice.chat("<dark_red>✘ <red>Player <dark_red>{PLAYER} <red>doesn't have any homes.");
+        public Notice createAsAdmin = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been created for <green>{PLAYER}<white>.");
+        public Notice deleteAsAdmin = Notice.chat("<red>► <white>Home <red>{HOME} <white>has been deleted for <red>{PLAYER}<white>.");
+        public Notice homeListAsAdmin = Notice.chat("<green>► <white>Available homes for <green>{PLAYER}<white>: <green>{HOMES}");
     }
 
     @Description({
@@ -508,6 +530,10 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({ " " })
         public String afkKickReason = "<red>You have been kicked due to inactivity!";
+
+        @Description({" ", "# Placeholder used in %eternalcore_afk_formatted% to indicate AFK status"})
+        public String afkEnabledPlaceholder = "<red><b>AFK";
+        public String afkDisabledPlaceholder = "";
     }
 
     @Description({
@@ -737,13 +763,7 @@ public class ENTranslation extends AbstractTranslation {
 
         @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item"})
         public Notice giveGiven = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
-
-        @Description({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item, {ENCHANTMENT} - enchantment name, "
-            + "{ENCHANTMENT_LEVEL} - enchantment level"})
-        public Notice giveGivenEnchantment = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
-
-        @Description({" ", "# {ITEM} - the item, {ENCHANTMENT} - enchantment name, {ENCHANTMENT_LEVEL} - enchantment level"})
-        public Notice giveReceivedEnchantment = Notice.chat("<green>► <white>You have received <green>{ITEM} <white>with enchantment: <green>{ENCHANTMENT}");
+        public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Not enough space in inventory!");
 
         @Description(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
