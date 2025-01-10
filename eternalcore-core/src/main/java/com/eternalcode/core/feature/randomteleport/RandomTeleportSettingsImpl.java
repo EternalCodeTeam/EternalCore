@@ -98,6 +98,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
         Material.ROSE_BUSH,
         Material.PEONY,
         Material.LARGE_FERN,
+        Material.LEGACY_GRASS,
         Material.LEGACY_LONG_GRASS,
         Material.LEGACY_DEAD_BUSH,
         Material.RAIL,
