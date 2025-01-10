@@ -19,7 +19,7 @@ public class LazyFieldBeanCandidate extends LazyBeanCandidate {
                 return field.get(instance.get());
             }
             catch (IllegalAccessException exception) {
-                throw new BeanException("Cannot access field " + field.getName() + " of " + instance.getClass().getName(), exception, field.getType());
+                throw new BeanException("Cannot access field " + field.getName() + " of " + field.getType().getName(), exception, field.getType());
             }
         });
         this.field = field;
