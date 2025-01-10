@@ -23,7 +23,7 @@ public class LazyFieldBeanCandidate extends LazyBeanCandidate {
             }
         });
         this.field = field;
-        this.instance = () -> instance;
+        this.instance = instance;
         this.instanceType = field.getType();
     }
 
