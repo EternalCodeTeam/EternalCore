@@ -101,8 +101,6 @@ class RepairCommand {
 
             exists = true;
             this.repairItem(itemStack);
-
-            this.delay.markDelay(uuid, this.config.repair.repairDelay());
         }
 
         if (!exists) {
