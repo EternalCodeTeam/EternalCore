@@ -39,6 +39,71 @@
     ]
   },
   {
+    "name": "alert-queue add",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.alert.queue"
+    ],
+    "descriptions": [
+      "Adds alert to the queue with specified notice type and messages"
+    ],
+    "arguments": [
+      "\u003ctype\u003e \u003cmessage\u003e"
+    ]
+  },
+  {
+    "name": "alert-queue clear",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.alert.queue"
+    ],
+    "descriptions": [
+      "Clears all alerts from the queue"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "alert-queue remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.alert.queue"
+    ],
+    "descriptions": [
+      "Removes all alerts of the given type from the queue"
+    ],
+    "arguments": [
+      "\u003ctype\u003e all"
+    ]
+  },
+  {
+    "name": "alert-queue remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.alert.queue"
+    ],
+    "descriptions": [
+      "Removes a latest alert of the given type from the queue"
+    ],
+    "arguments": [
+      "\u003ctype\u003e latest"
+    ]
+  },
+  {
+    "name": "alert-queue send",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.alert.queue"
+    ],
+    "descriptions": [
+      "Sends all alerts from the queue"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "anvil ",
     "aliases": [],
     "permissions": [
