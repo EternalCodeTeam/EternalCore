@@ -40,8 +40,8 @@ class DelWarpCommand {
         if (!this.warpService.warpExists(name)) {
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .placeholder("{WARP}", name)
                 .notice(translation -> translation.warp().notExist())
+                .placeholder("{WARP}", name)
                 .send();
 
             return;

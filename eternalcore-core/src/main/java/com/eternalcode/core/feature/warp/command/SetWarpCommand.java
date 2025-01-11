@@ -46,8 +46,8 @@ class SetWarpCommand {
         if (this.warpService.warpExists(warp)) {
             this.noticeService.create()
                 .player(uniqueId)
-                .placeholder("{WARP}", warp)
                 .notice(translation -> translation.warp().warpAlreadyExists())
+                .placeholder("{WARP}", warp)
                 .send();
 
             return;
@@ -62,9 +62,7 @@ class SetWarpCommand {
             .send();
 
         if (this.config.warp.autoAddNewWarps) {
-
             if (this.warpService.getNamesOfWarps().size() <= MAX_WARPS_IN_GUI) {
-
                 this.warpInventory.addWarp(createdWarp);
 
                 this.noticeService.create()
@@ -80,7 +78,6 @@ class SetWarpCommand {
                 .notice(translation -> translation.warp().itemLimit())
                 .placeholder("{LIMIT}", String.valueOf(MAX_WARPS_IN_GUI))
                 .send();
-
         }
     }
 }
