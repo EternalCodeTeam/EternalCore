@@ -2,13 +2,13 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.injector.annotations.Bean;
-import com.eternalcode.core.injector.annotations.component.BeanSetup;
+import com.eternalcode.core.injector.annotations.component.Setup;
 import com.eternalcode.core.feature.language.config.LanguageConfiguration;
 import com.eternalcode.core.translation.implementation.TranslationFactory;
 import java.util.List;
 import panda.std.stream.PandaStream;
 
-@BeanSetup
+@Setup
 class TranslationManagerSetup {
 
     @Bean

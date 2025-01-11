@@ -1,13 +1,13 @@
 package com.eternalcode.core.bridge;
 
 import com.eternalcode.core.injector.annotations.Bean;
-import com.eternalcode.core.injector.annotations.component.BeanSetup;
+import com.eternalcode.core.injector.annotations.component.Setup;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-@BeanSetup
+@Setup
 class BridgeManagerInitializer {
 
     @Bean

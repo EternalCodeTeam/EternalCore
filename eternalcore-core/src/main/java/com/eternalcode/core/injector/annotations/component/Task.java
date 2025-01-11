@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @see Repository
  * @see Controller
  * @see ConfigurationFile
- * @see BeanSetup
+ * @see Setup
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

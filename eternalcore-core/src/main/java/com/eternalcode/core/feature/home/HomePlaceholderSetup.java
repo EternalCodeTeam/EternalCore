@@ -6,7 +6,6 @@ import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import com.eternalcode.core.publish.Subscribe;
-import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
@@ -18,7 +17,7 @@ import java.util.stream.Stream;
 import org.bukkit.entity.Player;
 
 @Controller
-class HomePlaceholderSetup implements Subscriber {
+class HomePlaceholderSetup {
 
     private final HomeService homeService;
     private final UserManager userManager;

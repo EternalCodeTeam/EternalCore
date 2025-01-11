@@ -1,4 +1,4 @@
-package com.eternalcode.core.injector.annotations;
+package com.eternalcode.core.compatibility;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,9 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD, ElementType.FIELD})
-public @interface Bean {
+@Target(ElementType.FIELD)
+public @interface Version {
 
-    String value() default "";
+    int minor();
+    int patch();
 
 }

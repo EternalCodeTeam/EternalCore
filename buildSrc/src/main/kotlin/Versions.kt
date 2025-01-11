@@ -1,7 +1,7 @@
 object Versions {
 
-    const val SPIGOT_API = "1.19.4-R0.1-SNAPSHOT"
-    const val PAPER_API = "1.19.4-R0.1-SNAPSHOT"
+    const val SPIGOT_API = "1.21.3-R0.1-SNAPSHOT"
+    const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
 
     const val ETERNALCODE_COMMONS = "1.1.5"
     const val MULTIFICATION = "1.2.1"
@@ -36,7 +36,6 @@ object Versions {
     const val TRIUMPH_GUI = "3.1.10"
 
     const val BSTATS = "3.1.0"
-    const val PIXEL_WIDTH = "1.1.0"
 
     const val CAFFEINE = "3.1.8"
 

@@ -5,12 +5,11 @@ import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.publish.Subscribe;
-import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import java.util.logging.Logger;
 
 @Controller
-class MigrationController implements Subscriber {
+class MigrationController {
 
     private final MigrationService migrationService;
     private final ConfigurationManager configurationManager;
