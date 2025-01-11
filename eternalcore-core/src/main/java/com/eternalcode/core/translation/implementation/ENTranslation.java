@@ -922,4 +922,15 @@ public class ENTranslation extends AbstractTranslation {
         @Description({" ", "# {PLAYER} - Player who has been detained", "# {REMAINING_TIME} - Time of detention", "# {DETAINED_BY} - Player who detained the player"})
         public Notice jailListPlayerEntry = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{REMAINING_TIME}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
     }
+
+    @Description({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące edycji tabliczek"})
+    public PLTranslation.SignEditor signEditor = new PLTranslation.SignEditor();
+
+    @Getter
+    @Contextual
+    public static class SignEditor {
+        public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Sign not found!");
+        public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>Invalid index!");
+        public Notice lineSet = Notice.chat("<green>► <white>Line <green>{LINE} <white>set to <green>{TEXT}");
+    }
 }

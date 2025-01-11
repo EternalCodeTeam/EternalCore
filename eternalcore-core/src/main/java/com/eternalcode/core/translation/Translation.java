@@ -473,4 +473,12 @@ public interface Translation {
         Notice jailCannotUseCommand();
     }
 
+
+    SignEditSection signEdit();
+
+    interface SignEditSection {
+        Notice noSignFound();
+        Notice invalidIndex();
+        Notice lineSet();
+    }
 }

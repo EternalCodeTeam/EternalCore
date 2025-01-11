@@ -941,4 +941,15 @@ public class PLTranslation extends AbstractTranslation {
         @Description({" ", "# {PLAYER} - Gracz który jest uwięziony, {DETAINED_BY} - Gracz który uwięził gracza, {REMAINING_TIME} - Czas pozostały do uwolnienia"})
         public Notice jailListPlayerEntry = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{REMAINING_TIME} <white>!");
     }
+
+    @Description({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące edycji tabliczek"})
+    public SignEditor signEditor = new SignEditor();
+
+    @Getter
+    @Contextual
+    public static class SignEditor {
+        public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Nie odnaleziono tabliczki!");
+        public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>Nieprawidłowy indeks!");
+        public Notice lineSet = Notice.chat("<green>► <white>Ustawiono linię <green>{LINE} <white>na <green>{TEXT}");
+    }
 }
