@@ -28,7 +28,7 @@ class WarpConfig implements ReloadableConfig {
     }
 
     @Contextual
-    static class WarpConfigEntry {
+    public static class WarpConfigEntry {
         public Position position;
         public List<String> permissions;
 
