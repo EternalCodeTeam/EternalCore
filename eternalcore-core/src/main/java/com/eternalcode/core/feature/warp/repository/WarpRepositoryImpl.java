@@ -97,17 +97,17 @@ class WarpRepositoryImpl implements WarpRepository {
         }
     }
 
-    private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpDataConfigRepresenter>> editor) {
+    private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpConfigRepresenter>> editor) {
         return transactionalSupply(warps -> {
             editor.accept(warps);
             return null;
         });
     }
 
-    private <T> CompletableFuture<T> transactionalSupply(Function<Map<String, WarpDataConfigRepresenter>, T> editor) {
+    private <T> CompletableFuture<T> transactionalSupply(Function<Map<String, WarpConfigRepresenter>, T> editor) {
         return scheduler.completeAsync(() -> {
             synchronized (READ_WRITE_LOCK) {
-                Map<String, WarpDataConfigRepresenter> warps = new HashMap<>(this.warpDataConfig.warps);
+                Map<String, WarpConfigRepresenter> warps = new HashMap<>(this.warpDataConfig.warps);
                 T result = editor.apply(warps);
                 this.warpDataConfig.warps.putAll(warps);
                 this.configurationManager.save(this.warpDataConfig);

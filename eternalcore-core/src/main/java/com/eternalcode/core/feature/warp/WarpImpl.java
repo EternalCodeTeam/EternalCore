@@ -8,12 +8,11 @@ import org.bukkit.Location;
 import java.util.Collections;
 import java.util.List;
 
-@SuppressWarnings("LombokSetterMayBeUsed")
 public class WarpImpl implements Warp {
 
     private final String name;
     private final Position position;
-    private List<String> permissions;
+    private final List<String> permissions;
 
     public WarpImpl(String name, Position position, List<String> permissions) {
         this.name = name;
