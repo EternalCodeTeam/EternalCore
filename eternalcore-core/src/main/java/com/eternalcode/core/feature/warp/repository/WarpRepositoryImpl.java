@@ -44,12 +44,12 @@ class WarpRepositoryImpl implements WarpRepository {
 
     @Override
     public CompletableFuture<Void> saveWarp(Warp warp) {
-        WarpConfigRepresenter warpConfigRepresenter = new WarpConfigRepresenter(
+        WarpDataConfig.WarpConfigEntry warpConfigEntry = new WarpDataConfig.WarpConfigEntry(
             PositionAdapter.convert(warp.getLocation()),
             warp.getPermissions()
         );
 
-        return this.transactionalRun(warps -> warps.put(warp.getName(), warpConfigRepresenter));
+        return this.transactionalRun(warps -> warps.put(warp.getName(), warpConfigEntry));
     }
 
     @Override
@@ -60,10 +60,10 @@ class WarpRepositoryImpl implements WarpRepository {
     @Override
     public CompletableFuture<Optional<Warp>> getWarp(String name) {
         return transactionalSupply(warps -> Optional.ofNullable(this.warpDataConfig.warps.get(name))
-            .map(warpConfigRepresenter -> new WarpImpl(
+            .map(warpConfigEntry -> new WarpImpl(
                 name,
-                warpConfigRepresenter.position,
-                warpConfigRepresenter.permissions)
+                warpConfigEntry.position,
+                warpConfigEntry.permissions)
             ));
     }
 
@@ -71,7 +71,7 @@ class WarpRepositoryImpl implements WarpRepository {
     public CompletableFuture<List<Warp>> getWarps() {
         return transactionalSupply(warps -> warps.entrySet().stream()
             .map(warpConfigEntry -> {
-                WarpConfigRepresenter warpContextual = warpConfigEntry.getValue();
+                WarpDataConfig.WarpConfigEntry warpContextual = warpConfigEntry.getValue();
                 return new WarpImpl(warpConfigEntry.getKey(), warpContextual.position, warpContextual.permissions);
             })
             .collect(Collectors.toList()));
@@ -88,7 +88,7 @@ class WarpRepositoryImpl implements WarpRepository {
                 .stream()
                 .collect(Collectors.toMap(
                     entry -> entry.getKey(),
-                    entry -> new WarpConfigRepresenter(entry.getValue(), new ArrayList<>()))
+                    entry -> new WarpDataConfig.WarpConfigEntry(entry.getValue(), new ArrayList<>()))
                 )
             ));
 
@@ -97,17 +97,17 @@ class WarpRepositoryImpl implements WarpRepository {
         }
     }
 
-    private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpConfigRepresenter>> editor) {
+    private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpDataConfig.WarpConfigEntry>> editor) {
         return transactionalSupply(warps -> {
             editor.accept(warps);
             return null;
         });
     }
 
-    private <T> CompletableFuture<T> transactionalSupply(Function<Map<String, WarpConfigRepresenter>, T> editor) {
+    private <T> CompletableFuture<T> transactionalSupply(Function<Map<String, WarpDataConfig.WarpConfigEntry>, T> editor) {
         return scheduler.completeAsync(() -> {
             synchronized (READ_WRITE_LOCK) {
-                Map<String, WarpConfigRepresenter> warps = new HashMap<>(this.warpDataConfig.warps);
+                Map<String, WarpDataConfig.WarpConfigEntry> warps = new HashMap<>(this.warpDataConfig.warps);
                 T result = editor.apply(warps);
                 this.warpDataConfig.warps.putAll(warps);
                 this.configurationManager.save(this.warpDataConfig);

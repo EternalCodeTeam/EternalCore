@@ -65,7 +65,7 @@ class WarpServiceImpl implements WarpService {
 
     @Override
     public Warp removePermissions(String warpName, String... permissions) {
-        Warp warp = this.modifyPermissions(warpName, perms -> perms.addAll(List.of(permissions)));
+        Warp warp = this.modifyPermissions(warpName, perms -> perms.removeAll(List.of(permissions)));
         this.warpRepository.saveWarp(warp);
         return warp;
     }
