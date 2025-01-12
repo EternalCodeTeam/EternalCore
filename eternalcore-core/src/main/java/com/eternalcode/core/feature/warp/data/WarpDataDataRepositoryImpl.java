@@ -95,7 +95,7 @@ public class WarpDataDataRepositoryImpl implements WarpDataRepository {
 
     @Override
     public CompletableFuture<Optional<Warp>> getWarp(String name) {
-        return CompletableFuture.completedFuture(Optional.of(this.warpDataConfig.warps.get(name))
+        return CompletableFuture.completedFuture(Optional.ofNullable(this.warpDataConfig.warps.get(name))
             .map(warpDataConfigRepresenter -> new WarpImpl(name, warpDataConfigRepresenter.position, warpDataConfigRepresenter.permissions)));
     }
 
