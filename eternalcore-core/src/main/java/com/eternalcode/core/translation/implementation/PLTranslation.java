@@ -473,7 +473,7 @@ public class PLTranslation extends AbstractTranslation {
             "# {HOME} - Nazwa domu, {PLAYER} - Gracz, {HOMES} - Lista domów"
         })
         public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
-        public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <red>Gracz <dark_red>{PLAYER} <red>nie posiada żadnego domu!");
+        public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <dark_red>Gracz <red>{PLAYER} <dark_red>nie posiada żadnego domu!");
         public Notice createAsAdmin = Notice.chat("<green>► <white>Stworzono dom <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
         public Notice deleteAsAdmin = Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
         public Notice homeListAsAdmin = Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
