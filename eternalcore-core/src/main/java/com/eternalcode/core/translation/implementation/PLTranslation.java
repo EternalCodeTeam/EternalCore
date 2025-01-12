@@ -308,7 +308,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice alertQueueAdded = Notice.chat("<green>► <white>Dodano wiadomość do kolejki!");
         public Notice alertQueueRemoved = Notice.chat("<green>► <white>Usunięto wiadomość z kolejki!");
         public Notice alertQueueCleared = Notice.chat("<green>► <white>Wyczyszczono kolejkę wiadomości!");
-        public Notice alertQueueEmpty = Notice.chat("<red>✘ <red>Kolejka wiadomości jest pusta!");
+        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Kolejka wiadomości jest pusta!");
         public Notice alertQueueSent = Notice.chat("<green>► <white>Wysłano wszystkie wiadomości z kolejki!");
     }
 
