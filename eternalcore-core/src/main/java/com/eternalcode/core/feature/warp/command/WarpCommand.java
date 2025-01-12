@@ -48,13 +48,13 @@ class WarpCommand {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().available())
-                .placeholder("{WARPS}", String.join(", ", this.warpService.getNamesOfWarps()))
+                .placeholder("{WARPS}", String.join(", ", this.warpService.getAllNames()))
                 .send();
 
             return;
         }
 
-        if (!this.warpService.hasWarps()) {
+        if (!this.warpService.isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().noWarps())

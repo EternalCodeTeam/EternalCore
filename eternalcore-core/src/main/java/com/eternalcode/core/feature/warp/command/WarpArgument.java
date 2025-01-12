@@ -58,7 +58,7 @@ class WarpArgument extends AbstractViewerArgument<Warp> {
         Argument<Warp> argument,
         SuggestionContext context
     ) {
-        return this.warpService.getNamesOfWarps().stream()
+        return this.warpService.getAllNames().stream()
             .collect(SuggestionResult.collector());
     }
 }

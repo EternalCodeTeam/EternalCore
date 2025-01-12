@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.warp.command;
+package com.eternalcode.core.feature.warp.command.permission;
 
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpService;
@@ -13,39 +13,37 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-@Command(name = "removewarp-permission")
+@Command(name = "warp-permission add")
 @Permission("eternalcore.warp.changepermissions")
-public class RemoveWarpPermissionCommand {
+public class WarpAddPermissionCommand {
 
     private final WarpService warpService;
     private final NoticeService noticeService;
 
     @Inject
-    public RemoveWarpPermissionCommand(WarpService warpService, NoticeService noticeService) {
+    public WarpAddPermissionCommand(WarpService warpService, NoticeService noticeService) {
         this.warpService = warpService;
         this.noticeService = noticeService;
     }
 
     @Execute
-    void removePermission(@Context Player player, @Arg Warp warp, @Arg String permission) {
+    void addPermission(@Context Player player, @Arg Warp warp, @Arg String... permissions) {
         UUID uniqueId = player.getUniqueId();
 
-        if (!warp.getPermissions().contains(permission)) {
+        if (permissions.length == 0) {
             this.noticeService.create()
                 .player(uniqueId)
-                .placeholder("{PERMISSION}", permission)
-                .notice(translation -> translation.warp().permissionDoesNotExist())
+                .notice(translation -> translation.warp().noPermissionsProvided())
                 .send();
             return;
         }
 
-        this.warpService.removePermission(warp.getName(), permission);
+        this.warpService.addPermissions(warp.getName(), permissions);
 
         this.noticeService.create()
             .player(uniqueId)
             .placeholder("{WARP}", warp.getName())
-            .placeholder("{PERMISSION}", permission)
-            .notice(translation -> translation.warp().removePermission())
+            .notice(translation -> translation.warp().addPermissions())
             .send();
     }
 

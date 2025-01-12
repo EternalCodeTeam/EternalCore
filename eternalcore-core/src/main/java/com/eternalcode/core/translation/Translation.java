@@ -157,6 +157,9 @@ public interface Translation {
         Notice removePermission();
         Notice permissionDoesNotExist();
         Notice noPermissionsProvided();
+        Notice noPermissionAssigned();
+        Notice missingWarpName();
+        Notice listPermission();
 
         WarpInventorySection warpInventory();
 

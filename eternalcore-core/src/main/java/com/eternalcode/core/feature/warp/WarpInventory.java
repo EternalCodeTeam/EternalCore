@@ -198,7 +198,7 @@ public class WarpInventory {
     }
 
     public void addWarp(Warp warp) {
-        if (!this.warpManager.warpExists(warp.getName())) {
+        if (!this.warpManager.exists(warp.getName())) {
             return;
         }
 
@@ -243,7 +243,7 @@ public class WarpInventory {
 
     public boolean removeWarp(String warpName) {
 
-        if (!this.warpManager.warpExists(warpName)) {
+        if (!this.warpManager.exists(warpName)) {
             return false;
         }
 

@@ -37,7 +37,7 @@ class DelWarpCommand {
     }
 
     private void removeWarp(Player player, String name) {
-        if (!this.warpService.warpExists(name)) {
+        if (!this.warpService.exists(name)) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().notExist())
@@ -47,7 +47,7 @@ class DelWarpCommand {
             return;
         }
 
-        this.warpService.removeWarp(name);
+        this.warpService.delete(name);
         this.warpInventory.removeWarp(name);
 
         this.noticeService.create()

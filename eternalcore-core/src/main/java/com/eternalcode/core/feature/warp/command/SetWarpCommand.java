@@ -44,7 +44,7 @@ class SetWarpCommand {
     }
 
     private void createWarp(Player player, String warp, UUID uniqueId) {
-        if (this.warpService.warpExists(warp)) {
+        if (this.warpService.exists(warp)) {
             this.noticeService.create()
                 .player(uniqueId)
                 .notice(translation -> translation.warp().warpAlreadyExists())
@@ -54,7 +54,7 @@ class SetWarpCommand {
             return;
         }
 
-        Warp createdWarp = this.warpService.createWarp(warp, player.getLocation());
+        Warp createdWarp = this.warpService.create(warp, player.getLocation());
 
         this.noticeService.create()
             .player(uniqueId)
@@ -63,7 +63,7 @@ class SetWarpCommand {
             .send();
 
         if (this.config.warp.autoAddNewWarps) {
-            if (this.warpService.getNamesOfWarps().size() <= MAX_WARPS_IN_GUI) {
+            if (this.warpService.getAllNames().size() <= MAX_WARPS_IN_GUI) {
                 this.warpInventory.addWarp(createdWarp);
 
                 this.noticeService.create()

@@ -22,12 +22,12 @@ import java.util.UUID;
 public class WarpPermissionController implements Listener {
 
     private final NoticeService noticeService;
-    private final PluginConfiguration pluginConfiguration;
+    private final PluginConfiguration config;
 
     @Inject
-    public WarpPermissionController(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
+    public WarpPermissionController(NoticeService noticeService, PluginConfiguration config) {
         this.noticeService = noticeService;
-        this.pluginConfiguration = pluginConfiguration;
+        this.config = config;
     }
 
     @EventHandler
@@ -55,6 +55,7 @@ public class WarpPermissionController implements Listener {
         this.noticeService.create()
             .player(uniqueId)
             .placeholder("{WARP}", warp.getName())
+            .placeholder("{PERMISSIONS}", String.join(this.config.format.separator, permissions))
             .notice(translation -> translation.warp().noPermission())
             .send();
     }

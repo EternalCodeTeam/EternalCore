@@ -12,6 +12,4 @@ public interface Warp {
 
     List<String> getPermissions();
 
-    void setPermissions(List<String> permissions);
-
 }

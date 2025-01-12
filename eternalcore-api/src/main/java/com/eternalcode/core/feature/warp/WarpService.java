@@ -7,21 +7,21 @@ import java.util.Optional;
 
 public interface WarpService {
 
-    Warp createWarp(String name, Location location);
+    Warp create(String name, Location location);
 
-    void removeWarp(String warp);
+    void delete(String warp);
 
     void addPermissions(String warp, String... permissions);
 
     void removePermission(String warp, String permission);
 
-    boolean warpExists(String name);
+    boolean exists(String name);
 
-    boolean doesWarpPermissionExist(String warp, String permission);
+    boolean hasPermission(String warp, String permission);
 
     Optional<Warp> findWarp(String name);
 
-    Collection<String> getNamesOfWarps();
+    Collection<String> getAllNames();
 
-    boolean hasWarps();
+    boolean isEmpty();
 }
