@@ -14,17 +14,14 @@ import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 
 @ConfigurationFile
-class WarpConfig implements ReloadableConfig {
-
-    @Exclude
-    public static final String WARP_DATA_FILE_PATH = "data" + File.separator + "warps.yml";
+public class WarpConfig implements ReloadableConfig {
 
     @Description({"# Warps data", "# These are warp locations, for your own safety, please don't touch it."})
     public Map<String, WarpConfigEntry> warps = new HashMap<>();
 
     @Override
     public Resource resource(File folder) {
-        return Source.of(folder, WARP_DATA_FILE_PATH);
+        return Source.of(folder, "data" + File.separator + "warps.yml");
     }
 
     @Contextual
