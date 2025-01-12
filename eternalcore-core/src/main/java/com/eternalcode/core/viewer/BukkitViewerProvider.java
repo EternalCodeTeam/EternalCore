@@ -1,6 +1,5 @@
 package com.eternalcode.core.viewer;
 
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.User;
@@ -61,12 +60,12 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
     public Viewer player(UUID uuid) {
         return this.userManager.getUser(uuid)
             .map(Viewer.class::cast)
-            .orElseGet(() -> BukkitViewerImpl.player(uuid, Language.DEFAULT));
+            .orElseGet(() -> BukkitViewerImpl.player(uuid));
     }
 
     @Override
     public Viewer user(User user) {
-        return BukkitViewerImpl.player(user.getUniqueId(), user.getSettings().getLanguage());
+        return BukkitViewerImpl.player(user.getUniqueId());
     }
 
     public Viewer sender(CommandSender commandSender) {
@@ -82,7 +81,7 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
                 return userOption.get();
             }
 
-            return BukkitViewerImpl.player(player.getUniqueId(), Language.DEFAULT);
+            return BukkitViewerImpl.player(player.getUniqueId());
         }
 
         if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender || any instanceof BlockCommandSender) {

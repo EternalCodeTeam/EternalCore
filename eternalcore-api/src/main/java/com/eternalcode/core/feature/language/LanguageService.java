@@ -1,11 +1,25 @@
 package com.eternalcode.core.feature.language;
 
 import java.util.Locale;
-import org.bukkit.entity.Player;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public interface LanguageService {
 
-    Locale getPlayerLanguage(Player player);
+    void setDefaultProvider(LanguageProvider defaultProvider);
 
-    void setPlayerLanguage(Player player, Locale locale);
+    LanguageProvider getDefaultProvider();
+
+    CompletableFuture<Language> getLanguage(UUID player);
+
+    Language getLanguageNow(UUID player);
+
+    CompletableFuture<Void> setLanguage(UUID player, Language language);
+
+    default void setLanguage(UUID player, Locale locale) {
+        this.setLanguage(player, Language.fromLocale(locale));
+    }
+
+    CompletableFuture<Void> setDefaultLanguage(UUID player);
+
 }

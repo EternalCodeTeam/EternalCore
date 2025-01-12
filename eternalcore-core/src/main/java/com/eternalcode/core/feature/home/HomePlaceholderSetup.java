@@ -69,7 +69,7 @@ class HomePlaceholderSetup {
 
         User user = this.userManager.getOrCreate(targetPlayer.getUniqueId(), targetPlayer.getName());
 
-        Translation translation = this.translationManager.getMessages(user);
+        Translation translation = this.translationManager.getMessages(user.getUniqueId());
 
         if (homes.isEmpty()) {
             return translation.home().noHomesOwnedPlaceholder();

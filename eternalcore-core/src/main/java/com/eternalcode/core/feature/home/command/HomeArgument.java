@@ -26,6 +26,7 @@ class HomeArgument extends AbstractViewerArgument<Home> {
 
     private final HomeService homeService;
     private final NoticeService noticeService;
+    private final ViewerService viewerService;
 
     @Inject
     HomeArgument(
@@ -34,9 +35,10 @@ class HomeArgument extends AbstractViewerArgument<Home> {
         HomeService homeService,
         NoticeService noticeService
     ) {
-        super(viewerService, translationManager);
+        super(translationManager);
         this.homeService = homeService;
         this.noticeService = noticeService;
+        this.viewerService = viewerService;
     }
 
     @Override
