@@ -89,8 +89,8 @@ public class WarpDataDataRepositoryImpl implements WarpDataRepository {
             Map<String, WarpDataConfigRepresenter> warps = new HashMap<>(this.warpDataConfig.warps);
             editor.accept(warps);
             this.warpDataConfig.warps.putAll(warps);
+            this.configurationManager.save(this.warpDataConfig);
         }
-        this.configurationManager.save(this.warpDataConfig);
     }
 
     @Override
