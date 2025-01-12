@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.warp.command.permission.argument;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -26,21 +25,16 @@ public class WarpPermissionMultiArgumentResolver
     implements MultipleArgumentResolver<CommandSender, WarpPermissionEntry> {
 
     private static final String WARP_PLACEHOLDER_PREFIX = "{WARP}";
-    private static final String PERMISSION_PLACEHOLDER_PREFIX = "{PERMISSION}";
-
-    private final PluginConfiguration config;
     private final WarpService warpService;
     private final NoticeService noticeService;
     private final ViewerService viewerService;
 
     @Inject
     public WarpPermissionMultiArgumentResolver(
-        PluginConfiguration config,
         WarpService warpService,
         NoticeService noticeService,
         ViewerService viewerService
     ) {
-        this.config = config;
         this.warpService = warpService;
         this.noticeService = noticeService;
         this.viewerService = viewerService;
@@ -56,7 +50,7 @@ public class WarpPermissionMultiArgumentResolver
 
         if (!rawInput.hasNext()) {
             return ParseResult.failure(this.noticeService.create()
-                .notice(translation -> translation.warp().missingWarpName())
+                .notice(translation -> translation.warp().missingWarpArgument())
                 .viewer(viewer)
             );
         }
@@ -74,26 +68,13 @@ public class WarpPermissionMultiArgumentResolver
         }
 
         if (!rawInput.hasNext()) {
-            Collection<String> permissions = warp.get().getPermissions();
-
-            if (permissions.isEmpty()) {
-                return ParseResult.failure(this.noticeService.create()
-                    .notice(translation -> translation.warp().noPermissionAssigned())
-                    .placeholder(WARP_PLACEHOLDER_PREFIX, warpName)
-                    .viewer(viewer)
-                );
-            }
-
             return ParseResult.failure(this.noticeService.create()
-                .notice(translation -> translation.warp().listPermission())
-                .placeholder(WARP_PLACEHOLDER_PREFIX, warpName)
-                .placeholder(PERMISSION_PLACEHOLDER_PREFIX, String.join(this.config.format.separator, permissions))
+                .notice(translation -> translation.warp().missingPermissionArgument())
                 .viewer(viewer)
             );
         }
 
         String permission = rawInput.next();
-
         return ParseResult.success(new WarpPermissionEntry(warp.get(), permission));
     }
 
@@ -120,7 +101,7 @@ public class WarpPermissionMultiArgumentResolver
         }
 
         if (index == 2) {
-            String warpName = current.multilevelList().get(0);
+            String warpName = current.multilevelList().getFirst();
             Optional<Warp> warpOptional = this.warpService.findWarp(warpName);
 
             if (warpOptional.isEmpty()) {
