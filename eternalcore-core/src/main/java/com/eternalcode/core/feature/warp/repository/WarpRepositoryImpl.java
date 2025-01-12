@@ -24,7 +24,7 @@ class WarpRepositoryImpl implements WarpRepository {
     private static final Object READ_WRITE_LOCK = new Object();
 
     private final LocationsConfiguration locationsConfiguration;
-    private final WarpDataConfig warpDataConfig;
+    private final WarpConfig warpConfig;
     private final ConfigurationManager configurationManager;
     private final Scheduler scheduler;
 
@@ -32,11 +32,11 @@ class WarpRepositoryImpl implements WarpRepository {
     WarpRepositoryImpl(
         ConfigurationManager configurationManager,
         LocationsConfiguration locationsConfiguration,
-        WarpDataConfig warpDataConfig, Scheduler scheduler
+        WarpConfig warpConfig, Scheduler scheduler
     ) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
-        this.warpDataConfig = warpDataConfig;
+        this.warpConfig = warpConfig;
         this.scheduler = scheduler;
 
         this.migrateWarps();
@@ -44,7 +44,7 @@ class WarpRepositoryImpl implements WarpRepository {
 
     @Override
     public CompletableFuture<Void> saveWarp(Warp warp) {
-        WarpDataConfig.WarpConfigEntry warpConfigEntry = new WarpDataConfig.WarpConfigEntry(
+        WarpConfig.WarpConfigEntry warpConfigEntry = new WarpConfig.WarpConfigEntry(
             PositionAdapter.convert(warp.getLocation()),
             warp.getPermissions()
         );
@@ -59,7 +59,7 @@ class WarpRepositoryImpl implements WarpRepository {
 
     @Override
     public CompletableFuture<Optional<Warp>> getWarp(String name) {
-        return transactionalSupply(warps -> Optional.ofNullable(this.warpDataConfig.warps.get(name))
+        return transactionalSupply(warps -> Optional.ofNullable(this.warpConfig.warps.get(name))
             .map(warpConfigEntry -> new WarpImpl(
                 name,
                 warpConfigEntry.position,
@@ -71,7 +71,7 @@ class WarpRepositoryImpl implements WarpRepository {
     public CompletableFuture<List<Warp>> getWarps() {
         return transactionalSupply(warps -> warps.entrySet().stream()
             .map(warpConfigEntry -> {
-                WarpDataConfig.WarpConfigEntry warpContextual = warpConfigEntry.getValue();
+                WarpConfig.WarpConfigEntry warpContextual = warpConfigEntry.getValue();
                 return new WarpImpl(warpConfigEntry.getKey(), warpContextual.position, warpContextual.permissions);
             })
             .collect(Collectors.toList()));
@@ -88,7 +88,7 @@ class WarpRepositoryImpl implements WarpRepository {
                 .stream()
                 .collect(Collectors.toMap(
                     entry -> entry.getKey(),
-                    entry -> new WarpDataConfig.WarpConfigEntry(entry.getValue(), new ArrayList<>()))
+                    entry -> new WarpConfig.WarpConfigEntry(entry.getValue(), new ArrayList<>()))
                 )
             ));
 
@@ -97,20 +97,20 @@ class WarpRepositoryImpl implements WarpRepository {
         }
     }
 
-    private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpDataConfig.WarpConfigEntry>> editor) {
+    private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpConfig.WarpConfigEntry>> editor) {
         return transactionalSupply(warps -> {
             editor.accept(warps);
             return null;
         });
     }
 
-    private <T> CompletableFuture<T> transactionalSupply(Function<Map<String, WarpDataConfig.WarpConfigEntry>, T> editor) {
+    private <T> CompletableFuture<T> transactionalSupply(Function<Map<String, WarpConfig.WarpConfigEntry>, T> editor) {
         return scheduler.completeAsync(() -> {
             synchronized (READ_WRITE_LOCK) {
-                Map<String, WarpDataConfig.WarpConfigEntry> warps = new HashMap<>(this.warpDataConfig.warps);
+                Map<String, WarpConfig.WarpConfigEntry> warps = new HashMap<>(this.warpConfig.warps);
                 T result = editor.apply(warps);
-                this.warpDataConfig.warps.putAll(warps);
-                this.configurationManager.save(this.warpDataConfig);
+                this.warpConfig.warps.putAll(warps);
+                this.configurationManager.save(this.warpConfig);
                 return result;
             }
         });

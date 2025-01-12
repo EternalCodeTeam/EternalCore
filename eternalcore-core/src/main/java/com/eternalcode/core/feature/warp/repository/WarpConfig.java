@@ -14,7 +14,7 @@ import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 
 @ConfigurationFile
-class WarpDataConfig implements ReloadableConfig {
+class WarpConfig implements ReloadableConfig {
 
     @Exclude
     public static final String WARP_DATA_FILE_PATH = "data" + File.separator + "warps.yml";
@@ -32,7 +32,7 @@ class WarpDataConfig implements ReloadableConfig {
         public Position position;
         public List<String> permissions;
 
-        WarpConfigEntry() {
+        public WarpConfigEntry() {
         }
 
         public WarpConfigEntry(Position position, List<String> permissions) {
