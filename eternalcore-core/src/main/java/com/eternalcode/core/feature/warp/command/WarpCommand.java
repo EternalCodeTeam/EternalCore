@@ -6,7 +6,6 @@ import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpInventory;
 import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.feature.warp.WarpTeleportService;
-import com.eternalcode.core.feature.warp.event.PreWarpTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -16,8 +15,6 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @RootCommand
@@ -75,7 +72,7 @@ class WarpCommand {
     @Execute(name = "warp")
     @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant", arguments = "<warp>")
     void warp(@Context Player player, @Arg Warp warp) {
-        if (!this.hasPermission(player, warp)) {
+        if (!warp.hasPermissions(player)) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .placeholder("{WARP}", warp.getName())
@@ -86,17 +83,6 @@ class WarpCommand {
         }
 
         this.warpTeleportService.teleport(player, warp);
-    }
-
-    private boolean hasPermission(Player player, Warp warp) {
-        List<String> permissions = warp.getPermissions();
-        if (permissions.isEmpty()) {
-            return true;
-        }
-
-        return permissions
-            .stream()
-            .anyMatch(permission -> player.hasPermission(permission));
     }
 
 }
