@@ -1,10 +1,14 @@
 package com.eternalcode.core.feature.warp.event;
 
 import com.eternalcode.core.feature.warp.Warp;
+import com.google.common.base.Preconditions;
+import java.time.Duration;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Called before teleportation to warp.
@@ -16,12 +20,15 @@ public class PreWarpTeleportEvent extends Event implements Cancellable {
     private final Player player;
     private Warp warp;
     private boolean cancelled;
+    private Duration teleportTime;
+    private @Nullable Location destination;
 
-    public PreWarpTeleportEvent(Player player, Warp warp) {
+    public PreWarpTeleportEvent(Player player, Warp warp, Duration teleportTime) {
         super(false);
 
         this.player = player;
         this.warp = warp;
+        this.teleportTime = teleportTime;
     }
 
     public Player getPlayer() {
@@ -33,7 +40,26 @@ public class PreWarpTeleportEvent extends Event implements Cancellable {
     }
 
     public void setWarp(Warp warp) {
+        Preconditions.checkNotNull(warp, "Warp cannot be null");
         this.warp = warp;
+    }
+
+    public Duration getTeleportTime() {
+        return this.teleportTime;
+    }
+
+    public void setTeleportTime(Duration teleportTime) {
+        Preconditions.checkNotNull(teleportTime, "Teleport time cannot be null");
+        this.teleportTime = teleportTime;
+    }
+
+    public Location getDestination() {
+        return this.destination != null ? this.destination : this.warp.getLocation();
+    }
+
+    public void setDestination(Location destination) {
+        Preconditions.checkNotNull(destination, "Destination cannot be null");
+        this.destination = destination;
     }
 
     @Override

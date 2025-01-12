@@ -17,6 +17,7 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.bukkit.command.CommandSender;
 
 @LiteArgument(type = Warp.class)
@@ -58,8 +59,11 @@ class WarpArgument extends AbstractViewerArgument<Warp> {
         Argument<Warp> argument,
         SuggestionContext context
     ) {
-        return this.warpService.getNamesOfWarps().stream()
-            .collect(SuggestionResult.collector());
+        return SuggestionResult.of(
+            this.warpService.getWarps().stream()
+                .map(Warp::getName)
+                .collect(Collectors.toList())
+        );
     }
 }
 

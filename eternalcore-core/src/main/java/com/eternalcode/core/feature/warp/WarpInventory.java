@@ -15,14 +15,15 @@ import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WarpInventory {
@@ -62,7 +63,12 @@ public class WarpInventory {
         this.config = config;
     }
 
-    private Gui createInventory(Language language) {
+    public void openInventory(Player player, Language language) {
+        this.createInventory(player, language)
+            .open(player);
+    }
+
+    private Gui createInventory(Player player, Language language) {
         Translation translation = this.translationManager.getMessages(language);
         Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 
@@ -80,14 +86,13 @@ public class WarpInventory {
             }
         }
 
-
         Gui gui = Gui.gui()
             .title(this.miniMessage.deserialize(warpSection.title()))
             .rows(rowsCount)
             .disableAllInteractions()
             .create();
 
-        this.createWarpItems(warpSection, gui);
+        this.createWarpItems(player, warpSection, gui);
         this.createBorder(warpSection, gui);
         this.createDecorations(warpSection, gui);
 
@@ -146,7 +151,7 @@ public class WarpInventory {
         }
     }
 
-    private void createWarpItems(WarpInventorySection warpSection, Gui gui) {
+    private void createWarpItems(Player player, WarpInventorySection warpSection, Gui gui) {
         warpSection.items().values().forEach(item -> {
             Optional<Warp> warpOptional = this.warpManager.findWarp(item.warpName());
 
@@ -157,11 +162,17 @@ public class WarpInventory {
             Warp warp = warpOptional.get();
             ConfigItem warpItem = item.warpItem();
 
+            if (!warp.hasPermissions(player)) {
+                return;
+            }
+
             BaseItemBuilder baseItemBuilder = this.createItem(warpItem);
             GuiItem guiItem = baseItemBuilder.asGuiItem();
 
             guiItem.setAction(event -> {
-                Player player = (Player) event.getWhoClicked();
+                if (!warp.hasPermissions(player)) {
+                    return;
+                }
 
                 player.closeInventory();
                 this.warpTeleportService.teleport(player, warp);
@@ -193,18 +204,12 @@ public class WarpInventory {
             .glow(item.glow());
     }
 
-    public void openInventory(Player player, Language language) {
-        this.createInventory(language).open(player);
-    }
-
     public void addWarp(Warp warp) {
-
-        if (!this.warpManager.warpExists(warp.getName())) {
+        if (!this.warpManager.isExist(warp.getName())) {
             return;
         }
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
-
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 
@@ -245,7 +250,7 @@ public class WarpInventory {
 
     public boolean removeWarp(String warpName) {
 
-        if (!this.warpManager.warpExists(warpName)) {
+        if (!this.warpManager.isExist(warpName)) {
             return false;
         }
 

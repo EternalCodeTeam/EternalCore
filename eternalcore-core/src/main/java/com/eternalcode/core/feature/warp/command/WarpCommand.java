@@ -14,6 +14,7 @@ import dev.rollczi.litecommands.annotations.command.RootCommand;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.List;
 import org.bukkit.entity.Player;
 
 @RootCommand
@@ -45,16 +46,18 @@ class WarpCommand {
     @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps")
     void warp(@Context Player player, @Context User user) {
         if (!this.config.warp.inventoryEnabled) {
+            List<String> list = this.warpService.getWarps().stream().map(Warp::getName).toList();
+
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().available())
-                .placeholder("{WARPS}", String.join(", ", this.warpService.getNamesOfWarps()))
+                .placeholder("{WARPS}", String.join(this.config.format.separator, list))
                 .send();
 
             return;
         }
 
-        if (!this.warpService.hasWarps()) {
+        if (this.warpService.getWarps().isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().noWarps())
@@ -69,6 +72,17 @@ class WarpCommand {
     @Execute(name = "warp")
     @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant", arguments = "<warp>")
     void warp(@Context Player player, @Arg Warp warp) {
+        if (!warp.hasPermissions(player)) {
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .placeholder("{WARP}", warp.getName())
+                .placeholder("{PERMISSIONS}", String.join(this.config.format.separator, warp.getPermissions()))
+                .notice(translation -> translation.warp().noPermission())
+                .send();
+            return;
+        }
+
         this.warpTeleportService.teleport(player, warp);
     }
+
 }
