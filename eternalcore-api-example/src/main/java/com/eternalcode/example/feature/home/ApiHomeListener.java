@@ -100,7 +100,7 @@ public class ApiHomeListener implements Listener {
 
         player.sendMessage("Teleporting to home...");
 
-        if (player.hasPotionEffect(PotionEffectType.SLOW)) {
+        if (player.hasPotionEffect(PotionEffectType.SLOWNESS)) {
             player.sendMessage("You are slowed down!");
             player.teleport(player.getWorld().getSpawnLocation());
         }

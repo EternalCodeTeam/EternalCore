@@ -1,14 +1,13 @@
 package com.eternalcode.core.bridge.metrics;
 
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.core.publish.Subscriber;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.Subscribe;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Controller
-class BStatsMetricsSetup implements Subscriber {
+class BStatsMetricsSetup {
 
     @Subscribe(EternalInitializeEvent.class)
     public void onInitialize(JavaPlugin javaPlugin) {

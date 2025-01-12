@@ -109,7 +109,7 @@ public class UserCommand {
 #### 7. Subscriber
 ```java
 @Controller // <- marks a class that will be registered as an event subscriber.
-public class UserSubscriber implements Subscriber {
+public class UserSubscriber {
     
     private final UserService exampleService;
     
@@ -126,12 +126,12 @@ public class UserSubscriber implements Subscriber {
 }
 ```
 
-#### 8. BeanSetup
-BeanSetup is a class that allows you to register beans in the bean container.
+#### 8. Setup
+Setup is an annotation that allows you to register beans in the bean container.
 It is used to register dependencies that are cannot be registered in the bean container using annotations. e.g. MiniMessage, AdventureProvider, HikariDataSource, etc.
 ```java
 
-@BeanSetup // <- marks a class that will be registered as a bean holder.
+@Setup // <- marks a class that will be registered as a bean holder.
 public class UserBeanSetup {
 
     @Bean // <- marks a method that will be registered as a bean. (dependency)

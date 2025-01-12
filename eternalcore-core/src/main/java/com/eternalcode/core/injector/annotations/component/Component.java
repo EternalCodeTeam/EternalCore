@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * @see Task
  * @see Controller
  * @see ConfigurationFile
- * @see BeanSetup
+ * @see Setup
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

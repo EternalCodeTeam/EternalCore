@@ -42,7 +42,7 @@ class RandomTeleportCommand {
         this.randomTeleportService = randomTeleportService;
         this.randomTeleportTaskService = randomTeleportTaskService;
         this.config = config;
-        this.cooldown = new Delay<>((Supplier<Duration>) () -> this.config.randomTeleport.cooldown());
+        this.cooldown = new Delay<>(() -> this.config.randomTeleport.cooldown());
     }
 
     @Execute

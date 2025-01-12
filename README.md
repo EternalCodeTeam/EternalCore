@@ -17,8 +17,8 @@ EternalCore is your ultimate companion for enhancing your Minecraft server exper
 
 ## :information_source: Information
 
-- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`, `1.21.1`.
-- Requires **Java 17 or later** to work properly. For older versions of Java, this may affect the functionality of the plugin.
+- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`, `1.21.4`.
+- Requires **Java 21 or later** to work properly. For older versions of Java, this may affect the functionality of the plugin.
 - If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
 ## :hammer_and_wrench: Development Builds
@@ -80,7 +80,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:1.4.0")
+compileOnly("com.eternalcode:eternalcore-api:1.5.0")
 ```
 
 For Maven projects use:
@@ -88,7 +88,7 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -97,7 +97,7 @@ For Maven projects use:
 
 ## :building_construction: Building
 
-To build EternalCore, follow these steps (Make sure you have **JDK 17 or higher**):
+To build EternalCore, follow these steps (Make sure you have **JDK 21 or higher**):
 
 ```shell
 ./gradlew clean eternalcore-plugin:shadowJar

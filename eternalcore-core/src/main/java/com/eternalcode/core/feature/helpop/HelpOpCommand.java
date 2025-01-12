@@ -36,7 +36,7 @@ class HelpOpCommand {
         this.config = config;
         this.eventCaller = eventCaller;
         this.server = server;
-        this.delay = new Delay<>(this.config.helpOp);
+        this.delay = new Delay<>(() -> this.config.helpOp.getHelpOpDelay());
     }
 
     @Execute

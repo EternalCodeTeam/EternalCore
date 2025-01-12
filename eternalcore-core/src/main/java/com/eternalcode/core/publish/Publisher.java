@@ -4,6 +4,6 @@ public interface Publisher {
 
     void subscribe(Object subscriber);
 
-    void publish(PublishEvent publishEvent);
+    <E extends PublishEvent> E publish(E publishEvent);
 
 }

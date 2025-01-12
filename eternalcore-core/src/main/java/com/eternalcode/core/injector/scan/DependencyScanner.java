@@ -4,40 +4,50 @@ import com.eternalcode.core.injector.DependencyInjector;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.bean.BeanCandidate;
 import com.eternalcode.core.injector.bean.BeanHolder;
+import com.eternalcode.core.injector.bean.LazyFieldBeanCandidate;
 import com.eternalcode.core.util.ReflectUtil;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+import org.jetbrains.annotations.Nullable;
 
 public class DependencyScanner {
 
     private final DependencyInjector dependencyInjector;
     private final Map<Class<? extends Annotation>, ComponentNameProvider<?>> annotations = new HashMap<>();
+    private final List<Predicate<Class<?>>> includedTypes = new ArrayList<>();
 
     public DependencyScanner(DependencyInjector dependencyInjector) {
         this.dependencyInjector = dependencyInjector;
     }
 
     @SafeVarargs
-    final DependencyScanner onAnnotations(Class<? extends Annotation>... annotationTypes) {
+    public final DependencyScanner includeAnnotations(Class<? extends Annotation>... annotationTypes) {
         for (Class<? extends Annotation> annotationType : annotationTypes) {
-            this.onAnnotation(annotationType);
+            this.includeAnnotation(annotationType);
         }
 
         return this;
     }
 
-    private DependencyScanner onAnnotation(Class<? extends Annotation> annotationType) {
+    public DependencyScanner includeType(Predicate<Class<?>> predicate) {
+        this.includedTypes.add(predicate);
+        return this;
+    }
+
+    private DependencyScanner includeAnnotation(Class<? extends Annotation> annotationType) {
         this.annotations.put(annotationType, annotation -> BeanHolder.DEFAULT_NAME);
         return this;
     }
 
-    <A extends Annotation> DependencyScanner onAnnotation(Class<A> annotationType, ComponentNameProvider<A> componentNameProvider) {
+    public <A extends Annotation> DependencyScanner includeAnnotation(Class<A> annotationType, ComponentNameProvider<A> componentNameProvider) {
         this.annotations.put(annotationType, componentNameProvider);
         return this;
     }
@@ -56,6 +66,11 @@ public class DependencyScanner {
         List<BeanCandidate> beanCandidates = new ArrayList<>();
 
         for (Class<?> clazz : classes) {
+            boolean isIncluded = this.includedTypes.stream().allMatch(filter -> filter.test(clazz));
+            if (!isIncluded) {
+                continue;
+            }
+
             beanCandidates.addAll(this.createBeanCandidates(clazz));
         }
 
@@ -69,8 +84,8 @@ public class DependencyScanner {
         if (beanCandidate != null) {
             beanCandidates.add(beanCandidate);
 
-            List<BeanCandidate> methodBeanCandidates = this.getMethodBeanCandidates(clazz);
-            beanCandidates.addAll(methodBeanCandidates);
+            List<BeanCandidate> otherCandidates = this.getFieldAndMethodCandidates(clazz);
+            beanCandidates.addAll(otherCandidates);
         }
 
         return beanCandidates;
@@ -98,7 +113,7 @@ public class DependencyScanner {
         return new ComponentBeanCandidateImpl<>(this.dependencyInjector, clazz, annotation, componentNameProvider);
     }
 
-    private List<BeanCandidate> getMethodBeanCandidates(Class<?> componentClass) {
+    private List<BeanCandidate> getFieldAndMethodCandidates(Class<?> componentClass) {
         List<BeanCandidate> beanCandidates = new ArrayList<>();
 
         for (Method method : componentClass.getDeclaredMethods()) {
@@ -112,10 +127,22 @@ public class DependencyScanner {
             beanCandidates.add(beanCandidate);
         }
 
+        for (Field field : ReflectUtil.getAllSuperFields(componentClass)) {
+            if (!field.isAnnotationPresent(Bean.class)) {
+                continue;
+            }
+
+            Bean bean = field.getAnnotation(Bean.class);
+            BeanCandidate beanCandidate = new LazyFieldBeanCandidate(this.dependencyInjector, componentClass, field, bean);
+
+            beanCandidates.add(beanCandidate);
+        }
+
         return beanCandidates;
     }
 
     @SuppressWarnings("unchecked")
+    @Nullable
     private <A extends Annotation> ComponentNameProvider<A> getComponentNameProvider(A annotation) {
         return (ComponentNameProvider<A>) this.annotations.get(annotation.annotationType());
     }

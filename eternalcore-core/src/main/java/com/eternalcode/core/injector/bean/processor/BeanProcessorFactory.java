@@ -9,13 +9,11 @@ import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import com.eternalcode.core.injector.annotations.lite.LiteContextual;
 import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.publish.Publisher;
-import com.eternalcode.core.publish.Subscribe;
-import com.eternalcode.core.publish.Subscriber;
+import com.eternalcode.core.publish.SubscriberUtil;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
-import java.lang.reflect.Method;
 
 import dev.rollczi.litecommands.argument.ArgumentKey;
 import dev.rollczi.litecommands.argument.resolver.MultipleArgumentResolver;
@@ -58,20 +56,12 @@ public final class BeanProcessorFactory {
             .onProcess(Listener.class, (provider, listener, none) -> {
                 pluginManager.registerEvents(listener, plugin);
             })
-            .onProcess(Subscriber.class, (provider, potentialSubscriber, none) -> {
-                Publisher publisher = provider.getDependency(Publisher.class);
-                publisher.subscribe(potentialSubscriber);
-            })
-            .onProcess(Object.class, (dependencyProvider, instance, none) -> {
-                if (instance instanceof Subscriber) {
+            .onProcess(Object.class, (provider, potentialSubscriber, none) -> {
+                if (!SubscriberUtil.isSubscriber(potentialSubscriber.getClass())) {
                     return;
                 }
-
-                for (Method method : instance.getClass().getDeclaredMethods()) {
-                    if (method.isAnnotationPresent(Subscribe.class)) {
-                        throw new IllegalStateException("Missing 'implements Subscriber' in declaration of class " + instance.getClass());
-                    }
-                }
+                Publisher publisher = provider.getDependency(Publisher.class);
+                publisher.subscribe(potentialSubscriber);
             })
             .onProcess(ReloadableConfig.class, (provider, config, configurationFile) -> {
                 ConfigurationManager configurationManager = provider.getDependency(ConfigurationManager.class);

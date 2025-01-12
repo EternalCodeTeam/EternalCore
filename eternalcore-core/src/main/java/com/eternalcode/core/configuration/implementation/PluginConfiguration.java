@@ -2,7 +2,6 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
-import com.eternalcode.core.delay.DelaySettings;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
@@ -10,8 +9,9 @@ import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
-import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
+import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -78,6 +78,8 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
+
+    @Bean
     @Description({ " ", "# Teleport request section" })
     public TeleportAsk teleportAsk = new TeleportAsk();
 
@@ -100,6 +102,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Bean
     @Description({ " ", "# Teleport section" })
     public Teleport teleport = new Teleport();
 
@@ -123,9 +126,11 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Bean
     @Description({ "", "# Random Teleport Section" })
     public RandomTeleportSettingsImpl randomTeleport = new RandomTeleportSettingsImpl();
 
+    @Bean
     @Description({ " ", "# Homes Section" })
     public Homes homes = new Homes();
 
@@ -172,6 +177,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
+    @Bean
     @Description({ " ", "# Chat Section" })
     public Chat chat = new Chat();
 
@@ -240,13 +246,12 @@ public class PluginConfiguration implements ReloadableConfig {
     public Repair repair = new Repair();
 
     @Contextual
-    public static class Repair implements DelaySettings {
+    public static class Repair {
 
         @Description({ "# Repair command cooldown" })
         public Duration repairDelay = Duration.ofSeconds(5);
 
-        @Override
-        public Duration delay() {
+        public Duration repairDelay() {
             return this.repairDelay;
         }
     }
@@ -259,6 +264,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public String separator = "&7, ";
     }
 
+    @Bean
     @Description({ " ", "# AFK Section" })
     public Afk afk = new Afk();
 
@@ -357,6 +363,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public int safeChunkNumber = 5;
     }
 
+    @Bean
     @Description({ " ", "# AutoMessage Section" })
     public AutoMessage autoMessage = new AutoMessage();
 
@@ -390,6 +397,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Bean
     @Description({ " ", "# Jail Section" })
     public Jail jail = new Jail();
 

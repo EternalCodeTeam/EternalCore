@@ -3,9 +3,11 @@ package com.eternalcode.core.injector.bean;
 import com.eternalcode.core.injector.DependencyProvider;
 import com.eternalcode.core.injector.bean.processor.BeanProcessor;
 
+import dev.rollczi.litecommands.priority.PriorityLevel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,11 @@ public class BeanFactory implements DependencyProvider {
     @Override
     public <T> T getDependency(Class<T> clazz) {
         return this.getSingletonBean(clazz).get();
+    }
+
+    public BeanFactory priorityProvider(Function<BeanCandidate, PriorityLevel> priorityProvider) {
+        this.candidateContainer.setPriorityProvider(priorityProvider);
+        return this;
     }
 
     private <T> BeanHolder<T> getSingletonBean(Class<T> type) {
