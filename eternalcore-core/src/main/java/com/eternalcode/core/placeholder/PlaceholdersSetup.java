@@ -1,6 +1,7 @@
 package com.eternalcode.core.placeholder;
 
 import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
+import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.Subscribe;
@@ -16,10 +17,14 @@ class PlaceholdersSetup {
         });
     }
 
-
     @Subscribe(EternalInitializeEvent.class)
-    void setUpPlaceholders(PlaceholderRegistry placeholderRegistry, Server server) {
-        placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("online", player -> String.valueOf(server.getOnlinePlayers().size())));
+    void setUpPlaceholders(PlaceholderRegistry placeholderRegistry, Server server, VanishService vanishService) {
+        placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of("online", player -> String.valueOf(
+            server.getOnlinePlayers()
+                .stream()
+                .filter(onlinePlayer -> !vanishService.isVanished(onlinePlayer))
+                .count())
+            )
+        );
     }
-
 }
