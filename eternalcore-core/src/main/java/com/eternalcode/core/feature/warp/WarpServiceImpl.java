@@ -135,6 +135,6 @@ class WarpServiceImpl implements WarpService {
 
     @Override
     public boolean isEmpty() {
-        return !this.warps.isEmpty();
+        return this.warps.isEmpty();
     }
 }
