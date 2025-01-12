@@ -12,4 +12,6 @@ public interface Warp {
 
     List<String> getPermissions();
 
+    boolean hasPermission(String permission);
+
 }

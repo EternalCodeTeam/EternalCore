@@ -21,9 +21,9 @@ import java.util.Collection;
 import java.util.Optional;
 import org.bukkit.command.CommandSender;
 
-@LiteArgument(type = WarpPermissionMultipleResolverEntry.class)
+@LiteArgument(type = WarpPermissionEntry.class)
 public class WarpPermissionMultiArgumentResolver
-    implements MultipleArgumentResolver<CommandSender, WarpPermissionMultipleResolverEntry> {
+    implements MultipleArgumentResolver<CommandSender, WarpPermissionEntry> {
 
     private static final String WARP_PLACEHOLDER_PREFIX = "{WARP}";
     private static final String PERMISSION_PLACEHOLDER_PREFIX = "{PERMISSION}";
@@ -47,9 +47,9 @@ public class WarpPermissionMultiArgumentResolver
     }
 
     @Override
-    public ParseResult<WarpPermissionMultipleResolverEntry> parse(
+    public ParseResult<WarpPermissionEntry> parse(
         Invocation<CommandSender> invocation,
-        Argument<WarpPermissionMultipleResolverEntry> argument,
+        Argument<WarpPermissionEntry> argument,
         RawInput rawInput
     ) {
         Viewer viewer = this.viewerService.any(invocation.sender());
@@ -94,25 +94,29 @@ public class WarpPermissionMultiArgumentResolver
 
         String permission = rawInput.next();
 
-        return ParseResult.success(new WarpPermissionMultipleResolverEntry(warp.get(), permission));
+        return ParseResult.success(new WarpPermissionEntry(warp.get(), permission));
     }
 
     @Override
-    public Range getRange(Argument<WarpPermissionMultipleResolverEntry> argument) {
+    public Range getRange(Argument<WarpPermissionEntry> argument) {
         return Range.of(2);
     }
 
     @Override
     public SuggestionResult suggest(
         Invocation<CommandSender> invocation,
-        Argument<WarpPermissionMultipleResolverEntry> argument,
+        Argument<WarpPermissionEntry> argument,
         SuggestionContext context
     ) {
         Suggestion current = context.getCurrent();
         int index = current.lengthMultilevel();
 
         if (index == 1) {
-            return SuggestionResult.of(this.warpService.getAllNames());
+            return SuggestionResult.of(
+                this.warpService.getWarps().stream()
+                    .map(Warp::getName)
+                    .toList()
+            );
         }
 
         if (index == 2) {

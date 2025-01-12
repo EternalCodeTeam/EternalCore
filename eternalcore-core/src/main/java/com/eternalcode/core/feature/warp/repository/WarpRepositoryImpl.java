@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.warp.data;
+package com.eternalcode.core.feature.warp.repository;
 
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.ConfigurationManager;
@@ -6,7 +6,7 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpImpl;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.injector.annotations.component.Repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,15 +16,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-@Service
-public class WarpDataRepositoryImpl implements WarpDataRepository {
+@Repository
+class WarpRepositoryImpl implements WarpRepository {
 
     private final LocationsConfiguration locationsConfiguration;
     private final WarpDataConfig warpDataConfig;
     private final ConfigurationManager configurationManager;
 
     @Inject
-    WarpDataRepositoryImpl(
+    WarpRepositoryImpl(
         ConfigurationManager configurationManager,
         LocationsConfiguration locationsConfiguration,
         WarpDataConfig warpDataConfig
@@ -39,12 +39,12 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
     @Override
     public CompletableFuture<Void> addWarp(Warp warp) {
         return CompletableFuture.runAsync(() -> {
-            WarpDataConfigRepresenter warpDataConfigRepresenter = new WarpDataConfigRepresenter(
+            WarpConfigRepresenter warpConfigRepresenter = new WarpConfigRepresenter(
                 PositionAdapter.convert(warp.getLocation()),
                 warp.getPermissions()
             );
 
-            this.edit(warps -> warps.put(warp.getName(), warpDataConfigRepresenter));
+            this.edit(warps -> warps.put(warp.getName(), warpConfigRepresenter));
         });
     }
 
@@ -56,31 +56,31 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
     @Override
     public CompletableFuture<Void> addPermissions(String warp, String... permissions) {
         return CompletableFuture.runAsync(() -> this.edit(warps -> {
-            WarpDataConfigRepresenter warpDataConfigRepresenter = warps.get(warp);
-            if (warpDataConfigRepresenter == null) {
+            WarpConfigRepresenter warpConfigRepresenter = warps.get(warp);
+            if (warpConfigRepresenter == null) {
                 return;
             }
 
-            warpDataConfigRepresenter.permissions.addAll(List.of(permissions));
+            warpConfigRepresenter.permissions.addAll(List.of(permissions));
         }));
     }
 
     @Override
     public CompletableFuture<Void> removePermission(String warp, String permission) {
         return CompletableFuture.runAsync(() -> this.edit(warps -> {
-            WarpDataConfigRepresenter warpDataConfigRepresenter = warps.get(warp);
+            WarpConfigRepresenter warpConfigRepresenter = warps.get(warp);
 
-            if (warpDataConfigRepresenter == null) {
+            if (warpConfigRepresenter == null) {
                 return;
             }
 
-            warpDataConfigRepresenter.permissions.remove(permission);
+            warpConfigRepresenter.permissions.remove(permission);
         }));
     }
 
-    private void edit(Consumer<Map<String, WarpDataConfigRepresenter>> editor) {
+    private void edit(Consumer<Map<String, WarpConfigRepresenter>> editor) {
         synchronized (warpDataConfig.warps) {
-            Map<String, WarpDataConfigRepresenter> warps = new HashMap<>(this.warpDataConfig.warps);
+            Map<String, WarpConfigRepresenter> warps = new HashMap<>(this.warpDataConfig.warps);
             editor.accept(warps);
             this.warpDataConfig.warps.putAll(warps);
             this.configurationManager.save(this.warpDataConfig);
@@ -90,17 +90,17 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
     @Override
     public CompletableFuture<Optional<Warp>> getWarp(String name) {
         return CompletableFuture.completedFuture(Optional.ofNullable(this.warpDataConfig.warps.get(name))
-            .map(warpDataConfigRepresenter -> new WarpImpl(
+            .map(warpConfigRepresenter -> new WarpImpl(
                 name,
-                warpDataConfigRepresenter.position,
-                warpDataConfigRepresenter.permissions)));
+                warpConfigRepresenter.position,
+                warpConfigRepresenter.permissions)));
     }
 
     @Override
     public CompletableFuture<List<Warp>> getWarps() {
         return CompletableFuture.completedFuture(this.warpDataConfig.warps.entrySet().stream()
             .map(warpConfigEntry -> {
-                WarpDataConfigRepresenter warpContextual = warpConfigEntry.getValue();
+                WarpConfigRepresenter warpContextual = warpConfigEntry.getValue();
                 return new WarpImpl(warpConfigEntry.getKey(), warpContextual.position, warpContextual.permissions);
             })
             .collect(Collectors.toList()));
@@ -116,7 +116,7 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
             .stream()
             .collect(Collectors.toMap(
                 Map.Entry::getKey, entry ->
-                    new WarpDataConfigRepresenter(entry.getValue(), new ArrayList<>()))
+                    new WarpConfigRepresenter(entry.getValue(), new ArrayList<>()))
             )
         ));
 

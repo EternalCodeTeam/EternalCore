@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.feature.warp.data.WarpDataRepository;
+import com.eternalcode.core.feature.warp.repository.WarpRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.ArrayList;
@@ -23,10 +23,10 @@ import org.bukkit.Location;
 class WarpServiceImpl implements WarpService {
 
     private final Map<String, Warp> warps = new ConcurrentHashMap<>();
-    private final WarpDataRepository warpRepository;
+    private final WarpRepository warpRepository;
 
     @Inject
-    private WarpServiceImpl(WarpDataRepository warpRepository) {
+    private WarpServiceImpl(WarpRepository warpRepository) {
         this.warpRepository = warpRepository;
 
         warpRepository.getWarps().thenAcceptAsync(warps -> {
@@ -37,7 +37,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public Warp create(String name, Location location) {
+    public Warp createWarp(String name, Location location) {
         Warp warp = new WarpImpl(name, PositionAdapter.convert(location), new ArrayList<>());
 
         this.warps.put(name, warp);
@@ -47,7 +47,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public void delete(String warp) {
+    public void removeWarp(String warp) {
         Warp remove = this.warps.remove(warp);
 
         if (remove == null) {
@@ -108,19 +108,8 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public boolean exists(String name) {
+    public boolean isExist(String name) {
         return this.warps.containsKey(name);
-    }
-
-    @Override
-    public boolean hasPermission(String warpName, String permission) {
-        Warp warp = this.warps.get(warpName);
-
-        if (warp == null) {
-            return false;
-        }
-
-        return warp.getPermissions().contains(permission);
     }
 
     @Override
@@ -129,12 +118,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public Collection<String> getAllNames() {
-        return Collections.unmodifiableCollection(this.warps.keySet());
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.warps.isEmpty();
+    public Collection<Warp> getWarps() {
+        return Collections.unmodifiableCollection(this.warps.values());
     }
 }
