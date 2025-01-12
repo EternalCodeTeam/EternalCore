@@ -158,9 +158,8 @@ public interface Translation {
         Notice permissionDoesNotExist();
         Notice permissionAlreadyExist();
         Notice noPermissionsProvided();
-        Notice noPermissionAssigned();
-        Notice missingWarpName();
-        Notice listPermission();
+        Notice missingWarpArgument();
+        Notice missingPermissionArgument();
 
         WarpInventorySection warpInventory();
 

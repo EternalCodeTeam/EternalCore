@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.warp.data;
+package com.eternalcode.core.feature.warp.repository;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
@@ -11,13 +11,13 @@ import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 
 @ConfigurationFile
-public class WarpDataConfig implements ReloadableConfig {
+class WarpDataConfig implements ReloadableConfig {
 
     @Exclude
     public static final String WARP_DATA_FILE_PATH = "data" + File.separator + "warps.yml";
 
     @Description({"# Warps data", "# These are warp locations, for your own safety, please don't touch it."})
-    public Map<String, WarpDataConfigRepresenter> warps = new HashMap<>();
+    public Map<String, WarpConfigRepresenter> warps = new HashMap<>();
 
     @Override
     public Resource resource(File folder) {

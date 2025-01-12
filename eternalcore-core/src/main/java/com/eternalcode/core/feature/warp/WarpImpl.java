@@ -35,4 +35,10 @@ public class WarpImpl implements Warp {
     public List<String> getPermissions() {
         return Collections.unmodifiableList(this.permissions);
     }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return this.permissions.contains(permission);
+    }
+
 }

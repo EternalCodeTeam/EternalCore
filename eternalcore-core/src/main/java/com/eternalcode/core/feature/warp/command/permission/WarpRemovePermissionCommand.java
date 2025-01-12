@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.warp.command.permission;
 
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpService;
-import com.eternalcode.core.feature.warp.command.permission.argument.WarpPermissionMultipleResolverEntry;
+import com.eternalcode.core.feature.warp.command.permission.argument.WarpPermissionEntry;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -28,7 +28,7 @@ public class WarpRemovePermissionCommand {
     @Execute
     void removePermission(
         @Context Player player,
-        @Arg WarpPermissionMultipleResolverEntry entry
+        @Arg WarpPermissionEntry entry
     ) {
         Warp warp = entry.warp();
         String permission = entry.permission();

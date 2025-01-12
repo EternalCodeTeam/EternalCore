@@ -4,24 +4,23 @@ import org.bukkit.Location;
 
 import java.util.Collection;
 import java.util.Optional;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 public interface WarpService {
 
-    Warp create(String name, Location location);
+    Warp createWarp(String name, Location location);
 
-    void delete(String warp);
+    void removeWarp(String warp);
 
+    @Experimental
     Warp addPermissions(String warp, String... permissions);
 
+    @Experimental
     Warp removePermissions(String warp, String... permissions);
 
-    boolean exists(String name);
-
-    boolean hasPermission(String warp, String permission);
+    boolean isExist(String name);
 
     Optional<Warp> findWarp(String name);
 
-    Collection<String> getAllNames();
-
-    boolean isEmpty();
+    Collection<Warp> getWarps();
 }

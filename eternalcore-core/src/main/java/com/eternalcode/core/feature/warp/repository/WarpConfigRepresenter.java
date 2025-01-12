@@ -1,18 +1,18 @@
-package com.eternalcode.core.feature.warp.data;
+package com.eternalcode.core.feature.warp.repository;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import java.util.List;
 import net.dzikoysk.cdn.entity.Contextual;
 
 @Contextual
-class WarpDataConfigRepresenter {
+class WarpConfigRepresenter {
     public Position position;
     public List<String> permissions;
 
-    public WarpDataConfigRepresenter() {
+    WarpConfigRepresenter() {
     }
 
-    public WarpDataConfigRepresenter(Position position, List<String> permissions) {
+    public WarpConfigRepresenter(Position position, List<String> permissions) {
         this.position = position;
         this.permissions = permissions;
     }

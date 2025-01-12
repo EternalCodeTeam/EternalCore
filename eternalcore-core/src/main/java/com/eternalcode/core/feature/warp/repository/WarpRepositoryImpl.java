@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.warp.data;
+package com.eternalcode.core.feature.warp.repository;
 
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.commons.scheduler.Scheduler;
@@ -7,7 +7,7 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpImpl;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.injector.annotations.component.Repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Service
-public class WarpDataRepositoryImpl implements WarpDataRepository {
+@Repository
+class WarpRepositoryImpl implements WarpRepository {
 
     private static final Object READ_WRITE_LOCK = new Object();
 
@@ -29,7 +29,7 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
     private final Scheduler scheduler;
 
     @Inject
-    WarpDataRepositoryImpl(
+    WarpRepositoryImpl(
         ConfigurationManager configurationManager,
         LocationsConfiguration locationsConfiguration,
         WarpDataConfig warpDataConfig, Scheduler scheduler
@@ -44,12 +44,12 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
 
     @Override
     public CompletableFuture<Void> saveWarp(Warp warp) {
-        WarpDataConfigRepresenter warpDataConfigRepresenter = new WarpDataConfigRepresenter(
+        WarpConfigRepresenter warpConfigRepresenter = new WarpConfigRepresenter(
             PositionAdapter.convert(warp.getLocation()),
             warp.getPermissions()
         );
 
-        return this.transactionalRun(warps -> warps.put(warp.getName(), warpDataConfigRepresenter));
+        return this.transactionalRun(warps -> warps.put(warp.getName(), warpConfigRepresenter));
     }
 
     @Override
@@ -60,10 +60,10 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
     @Override
     public CompletableFuture<Optional<Warp>> getWarp(String name) {
         return transactionalSupply(warps -> Optional.ofNullable(this.warpDataConfig.warps.get(name))
-            .map(warpDataConfigRepresenter -> new WarpImpl(
+            .map(warpConfigRepresenter -> new WarpImpl(
                 name,
-                warpDataConfigRepresenter.position,
-                warpDataConfigRepresenter.permissions)
+                warpConfigRepresenter.position,
+                warpConfigRepresenter.permissions)
             ));
     }
 
@@ -71,7 +71,7 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
     public CompletableFuture<List<Warp>> getWarps() {
         return transactionalSupply(warps -> warps.entrySet().stream()
             .map(warpConfigEntry -> {
-                WarpDataConfigRepresenter warpContextual = warpConfigEntry.getValue();
+                WarpConfigRepresenter warpContextual = warpConfigEntry.getValue();
                 return new WarpImpl(warpConfigEntry.getKey(), warpContextual.position, warpContextual.permissions);
             })
             .collect(Collectors.toList()));
@@ -88,7 +88,7 @@ public class WarpDataRepositoryImpl implements WarpDataRepository {
                 .stream()
                 .collect(Collectors.toMap(
                     entry -> entry.getKey(),
-                    entry -> new WarpDataConfigRepresenter(entry.getValue(), new ArrayList<>()))
+                    entry -> new WarpConfigRepresenter(entry.getValue(), new ArrayList<>()))
                 )
             ));
 
