@@ -390,6 +390,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice removePermission = Notice.chat("<red>► <white>Usunięto uprawnienie <red>{PERMISSION}</red> z warpa <red>{WARP}</red>!");
         public Notice noPermissionsProvided = Notice.chat("<red>✘ <red>Nie podano żadnych uprawnień!");
         public Notice permissionDoesNotExist = Notice.chat("<red>✘ <red>Podane uprawnienie nie istnieje ({PERMISSION})!");
+        public Notice permissionAlreadyExist = Notice.chat("<red>✘ <red>Podane uprawnienie już istnieje ({PERMISSION})!");
         public Notice noPermissionAssigned = Notice.chat("<red>✘ <red>Ten warp nie ma przypisanych żadnych permisji");
         public Notice missingWarpName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę warpu!");
         public Notice listPermission = Notice.chat("<green>► <white>Lista uprawnień dla warpa <green>{WARP}<white>: <green>{PERMISSIONS}!");

@@ -7,7 +7,6 @@ import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpImpl;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +17,14 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
-public class WarpDataDataRepositoryImpl implements WarpDataRepository {
+public class WarpDataRepositoryImpl implements WarpDataRepository {
 
     private final LocationsConfiguration locationsConfiguration;
     private final WarpDataConfig warpDataConfig;
     private final ConfigurationManager configurationManager;
 
     @Inject
-    WarpDataDataRepositoryImpl(
+    WarpDataRepositoryImpl(
         ConfigurationManager configurationManager,
         LocationsConfiguration locationsConfiguration,
         WarpDataConfig warpDataConfig
@@ -53,6 +52,7 @@ public class WarpDataDataRepositoryImpl implements WarpDataRepository {
     public CompletableFuture<Void> removeWarp(String warp) {
         return CompletableFuture.runAsync(() -> this.edit(warps -> warps.remove(warp)));
     }
+
     @Override
     public CompletableFuture<Void> addPermissions(String warp, String... permissions) {
         return CompletableFuture.runAsync(() -> this.edit(warps -> {
@@ -61,10 +61,7 @@ public class WarpDataDataRepositoryImpl implements WarpDataRepository {
                 return;
             }
 
-            List<String> newPermissions = new ArrayList<>(warpDataConfigRepresenter.permissions);
-            newPermissions.addAll(List.of(permissions));
-
-            warpDataConfigRepresenter.permissions = newPermissions;
+            warpDataConfigRepresenter.permissions.addAll(List.of(permissions));
         }));
     }
 
@@ -77,10 +74,7 @@ public class WarpDataDataRepositoryImpl implements WarpDataRepository {
                 return;
             }
 
-            List<String> newPermissions = new ArrayList<>(warpDataConfigRepresenter.permissions);
-            newPermissions.remove(permission);
-
-            warpDataConfigRepresenter.permissions = newPermissions;
+            warpDataConfigRepresenter.permissions.remove(permission);
         }));
     }
 
@@ -96,7 +90,10 @@ public class WarpDataDataRepositoryImpl implements WarpDataRepository {
     @Override
     public CompletableFuture<Optional<Warp>> getWarp(String name) {
         return CompletableFuture.completedFuture(Optional.ofNullable(this.warpDataConfig.warps.get(name))
-            .map(warpDataConfigRepresenter -> new WarpImpl(name, warpDataConfigRepresenter.position, warpDataConfigRepresenter.permissions)));
+            .map(warpDataConfigRepresenter -> new WarpImpl(
+                name,
+                warpDataConfigRepresenter.position,
+                warpDataConfigRepresenter.permissions)));
     }
 
     @Override
@@ -117,8 +114,9 @@ public class WarpDataDataRepositoryImpl implements WarpDataRepository {
         this.edit(warps -> warps.putAll(this.locationsConfiguration.warps
             .entrySet()
             .stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, entry ->
-                new WarpDataConfigRepresenter(entry.getValue(), new ArrayList<>()))
+            .collect(Collectors.toMap(
+                Map.Entry::getKey, entry ->
+                    new WarpDataConfigRepresenter(entry.getValue(), new ArrayList<>()))
             )
         ));
 
