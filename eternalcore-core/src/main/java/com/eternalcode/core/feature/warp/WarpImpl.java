@@ -35,8 +35,4 @@ public class WarpImpl implements Warp {
     public List<String> getPermissions() {
         return Collections.unmodifiableList(this.permissions);
     }
-
-    public void setPermissions(List<String> permissions) {
-        this.permissions = permissions;
-    }
 }

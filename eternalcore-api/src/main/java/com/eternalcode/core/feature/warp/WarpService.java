@@ -11,9 +11,9 @@ public interface WarpService {
 
     void delete(String warp);
 
-    void addPermissions(String warp, String... permissions);
+    Warp addPermissions(String warp, String... permissions);
 
-    void removePermission(String warp, String permission);
+    Warp removePermissions(String warp, String... permissions);
 
     boolean exists(String name);
 

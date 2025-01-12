@@ -7,13 +7,9 @@ import java.util.concurrent.CompletableFuture;
 
 public interface WarpDataRepository {
 
-    CompletableFuture<Void> addWarp(Warp warp);
+    CompletableFuture<Void> saveWarp(Warp warp);
 
     CompletableFuture<Void> removeWarp(String warp);
-
-    CompletableFuture<Void> addPermissions(String warp, String... permissions);
-
-    CompletableFuture<Void> removePermission(String warp, String permission);
 
     CompletableFuture<Optional<Warp>> getWarp(String name);
 

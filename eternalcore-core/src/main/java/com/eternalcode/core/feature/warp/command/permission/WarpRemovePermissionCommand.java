@@ -43,7 +43,7 @@ public class WarpRemovePermissionCommand {
             return;
         }
 
-        this.warpService.removePermission(warp.getName(), permission);
+        this.warpService.removePermissions(warp.getName(), permission);
 
         this.noticeService.create()
             .placeholder("{WARP}", warp.getName())

@@ -5,7 +5,7 @@ import java.util.List;
 import net.dzikoysk.cdn.entity.Contextual;
 
 @Contextual
-public class WarpDataConfigRepresenter {
+class WarpDataConfigRepresenter {
     public Position position;
     public List<String> permissions;
 

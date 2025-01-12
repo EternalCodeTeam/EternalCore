@@ -41,7 +41,7 @@ class WarpServiceImpl implements WarpService {
         Warp warp = new WarpImpl(name, PositionAdapter.convert(location), new ArrayList<>());
 
         this.warps.put(name, warp);
-        this.warpRepository.addWarp(warp);
+        this.warpRepository.saveWarp(warp);
 
         return warp;
     }
@@ -49,7 +49,6 @@ class WarpServiceImpl implements WarpService {
     @Override
     public void delete(String warp) {
         Warp remove = this.warps.remove(warp);
-
         if (remove == null) {
             return;
         }
@@ -58,41 +57,23 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public void addPermissions(String warpName, String... permissions) {
-        Warp warp = this.warps.get(warpName);
-
-        if (warp == null) {
-            return;
-        }
-
-        if (permissions == null) {
-            return;
-        }
-
-        List<String> updatedPermissions = new ArrayList<>(warp.getPermissions());
-        updatedPermissions.addAll(List.of(permissions));
-
-        this.modifyPermissions(warpName, perms -> perms.addAll(List.of(permissions)));
-        this.warpRepository.addPermissions(warpName, permissions);
+    public Warp addPermissions(String warpName, String... permissions) {
+        Warp warp = this.modifyPermissions(warpName, perms -> perms.addAll(List.of(permissions)));
+        this.warpRepository.saveWarp(warp);
+        return warp;
     }
 
     @Override
-    public void removePermission(String warpName, String permission) {
-        Warp warp = this.warps.get(warpName);
-
-        if (warp == null) {
-            return;
-        }
-
-        this.modifyPermissions(warpName, perms -> perms.remove(permission));
-        this.warpRepository.removePermission(warpName, permission);
+    public Warp removePermissions(String warpName, String... permissions) {
+        Warp warp = this.modifyPermissions(warpName, perms -> perms.addAll(List.of(permissions)));
+        this.warpRepository.saveWarp(warp);
+        return warp;
     }
 
-    private void modifyPermissions(String warpName, Consumer<List<String>> modifier) {
+    private Warp modifyPermissions(String warpName, Consumer<List<String>> modifier) {
         Warp warp = this.warps.get(warpName);
-
         if (warp == null) {
-            return;
+            throw new IllegalArgumentException("Warp " + warpName + " does not exist");
         }
 
         List<String> updatedPermissions = new ArrayList<>(warp.getPermissions());
@@ -105,6 +86,7 @@ class WarpServiceImpl implements WarpService {
         );
 
         this.warps.put(warpName, updatedWarp);
+        return updatedWarp;
     }
 
     @Override
