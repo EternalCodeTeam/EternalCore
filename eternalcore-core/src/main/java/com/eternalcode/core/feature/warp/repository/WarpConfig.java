@@ -14,7 +14,7 @@ import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 
 @ConfigurationFile
-public class WarpConfig implements ReloadableConfig {
+class WarpConfig implements ReloadableConfig {
 
     @Description({"# Warps data", "# These are warp locations, for your own safety, please don't touch it."})
     public Map<String, WarpConfigEntry> warps = new HashMap<>();
@@ -25,7 +25,7 @@ public class WarpConfig implements ReloadableConfig {
     }
 
     @Contextual
-    public static class WarpConfigEntry {
+    static class WarpConfigEntry {
         public Position position;
         public List<String> permissions;
 
