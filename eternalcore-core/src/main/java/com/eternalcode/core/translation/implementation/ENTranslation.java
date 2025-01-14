@@ -487,6 +487,18 @@ public class ENTranslation extends AbstractTranslation {
         public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy has been {STATE}<white>!");
         public Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy has been {STATE}<white>!");
 
+
+        public Notice msgToggledOff = Notice.chat("<red>► <dark_red> This player has disabled private messages!");
+
+        public Notice msgToggleSelfOff = Notice.chat("<green>► <white>Private messages have been disabled!");
+        public Notice msgToggleSelfOn = Notice.chat("<green>► <white>Private messages have been enabled!");
+
+        @Description("# {PLAYER} - Player")
+        public Notice msgTogglePlayerOff = Notice.chat("<green>► <white>Private messages have been disabled for <green>{PLAYER}<white>!");
+        public Notice msgTogglePlayerOn = Notice.chat("<green>► <white>Private messages have been enabled for <green>{PLAYER}<white>!");
+
+
+
         @Description({" ", "# {PLAYER} - Ignored player"})
         public Notice ignorePlayer = Notice.chat("<green>► {PLAYER} <white>player has been ignored!");
 

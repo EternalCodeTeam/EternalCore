@@ -252,6 +252,12 @@ public interface Translation {
         Notice socialSpyEnable();
         Notice socialSpyDisable();
 
+        Notice msgToggledOff();
+        Notice msgToggleSelfOff();
+        Notice msgToggleSelfOn();
+        Notice msgTogglePlayerOff();
+        Notice msgTogglePlayerOn();
+
         Notice ignorePlayer();
         Notice ignoreAll();
         Notice unIgnorePlayer();

@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.privatechat;
 
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
+import com.eternalcode.core.feature.msgtoggle.MsgToggleService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -24,6 +25,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
     private final UserManager userManager;
     private final PrivateChatPresenter presenter;
     private final EventCaller eventCaller;
+    private final MsgToggleService msgToggleService;
 
     private final Cache<UUID, UUID> replies = CacheBuilder.newBuilder()
         .expireAfterWrite(Duration.ofHours(1))
@@ -36,12 +38,14 @@ class PrivateChatServiceImpl implements PrivateChatService {
         NoticeService noticeService,
         IgnoreService ignoreService,
         UserManager userManager,
-        EventCaller eventCaller
+        EventCaller eventCaller,
+        MsgToggleService msgToggleService
     ) {
         this.noticeService = noticeService;
         this.ignoreService = ignoreService;
         this.userManager = userManager;
         this.eventCaller = eventCaller;
+        this.msgToggleService = msgToggleService;
 
         this.presenter = new PrivateChatPresenter(noticeService);
     }
@@ -53,13 +57,21 @@ class PrivateChatServiceImpl implements PrivateChatService {
             return;
         }
 
-        this.ignoreService.isIgnored(target.getUniqueId(), sender.getUniqueId()).thenAccept(isIgnored -> {
+        UUID uniqueId = target.getUniqueId();
+
+        if (this.msgToggleService.hasMsgToggledOff(uniqueId)) {
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().msgToggledOff());
+
+            return;
+        }
+
+        this.ignoreService.isIgnored(uniqueId, sender.getUniqueId()).thenAccept(isIgnored -> {
             if (!isIgnored) {
-                this.replies.put(target.getUniqueId(), sender.getUniqueId());
-                this.replies.put(sender.getUniqueId(), target.getUniqueId());
+                this.replies.put(uniqueId, sender.getUniqueId());
+                this.replies.put(sender.getUniqueId(), uniqueId);
             }
 
-            PrivateChatEvent event = new PrivateChatEvent(sender.getUniqueId(), target.getUniqueId(), message);
+            PrivateChatEvent event = new PrivateChatEvent(sender.getUniqueId(), uniqueId, message);
             this.eventCaller.callEvent(event);
             this.presenter.onPrivate(new PrivateMessage(sender, target, event.getContent(), this.socialSpy, isIgnored));
         });

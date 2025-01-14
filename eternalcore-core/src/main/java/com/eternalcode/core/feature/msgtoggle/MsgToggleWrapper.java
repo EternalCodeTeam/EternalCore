@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "msgtoggle")
-class MsgToggle {
+class MsgToggleWrapper {
 
     @DatabaseField(columnName = "id", id = true)
     private UUID id;
@@ -13,12 +13,16 @@ class MsgToggle {
     @DatabaseField(columnName = "enabled")
     private boolean enabled;
 
-    MsgToggle() {
+    MsgToggleWrapper() {
     }
 
-    MsgToggle(UUID id, boolean enabled) {
+    MsgToggleWrapper(UUID id, boolean enabled) {
         this.id = id;
         this.enabled = enabled;
+    }
+
+    static MsgToggleWrapper from(MsgToggleWrapper msgToggle) {
+        return new MsgToggleWrapper(msgToggle.id, msgToggle.enabled);
     }
 
 }

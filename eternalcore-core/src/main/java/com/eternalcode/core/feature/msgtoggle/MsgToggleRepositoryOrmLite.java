@@ -15,17 +15,20 @@ class MsgToggleRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ms
     @Inject
     private MsgToggleRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
-        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), MsgToggle.class);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), MsgToggleWrapper.class);
     }
 
     @Override
     public boolean isToggledOff(UUID uuid) {
-        this.selectSafe(MsgToggle.class, uuid).thenApply(optional -> optional.isEmpty())
+//        this.selectSafe(MsgToggle.class, uuid).thenApply(msgToggle -> {
+//            msgToggle.isEmpty();
+//        });
+        return false;
     }
 
     @Override
     public void setToggledOff(UUID uuid, boolean toggledOff) {
-
+        this.save(MsgToggle.class, new MsgToggle(uuid, false));
     }
 
     @Override
