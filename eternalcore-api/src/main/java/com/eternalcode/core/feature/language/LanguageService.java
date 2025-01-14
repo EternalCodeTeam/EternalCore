@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.language;
 
-import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -15,10 +14,6 @@ public interface LanguageService {
     Language getLanguageNow(UUID player);
 
     CompletableFuture<Void> setLanguage(UUID player, Language language);
-
-    default void setLanguage(UUID player, Locale locale) {
-        this.setLanguage(player, Language.fromLocale(locale));
-    }
 
     CompletableFuture<Void> setDefaultLanguage(UUID player);
 
