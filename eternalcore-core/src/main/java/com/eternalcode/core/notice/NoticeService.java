@@ -1,6 +1,8 @@
 package com.eternalcode.core.notice;
 
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
@@ -38,6 +40,7 @@ public class NoticeService extends Multification<Viewer, Translation> {
     private final MiniMessage miniMessage;
 
     private final NoticeResolverRegistry noticeRegistry;
+    private final LanguageService languageService;
 
     @Inject
     public NoticeService(
@@ -48,7 +51,7 @@ public class NoticeService extends Multification<Viewer, Translation> {
         TranslationManager translationManager,
         PlaceholderRegistry registry,
         MiniMessage miniMessage,
-        NoticeResolverRegistry noticeRegistry
+        NoticeResolverRegistry noticeRegistry, LanguageService languageService
     ) {
         this.userManager = userManager;
         this.scheduler = scheduler;
@@ -58,6 +61,7 @@ public class NoticeService extends Multification<Viewer, Translation> {
         this.registry = registry;
         this.miniMessage = miniMessage;
         this.noticeRegistry = noticeRegistry;
+        this.languageService = languageService;
     }
 
     @Override
@@ -83,7 +87,13 @@ public class NoticeService extends Multification<Viewer, Translation> {
 
     @Override
     public @NotNull LocaleProvider<Viewer> localeProvider() {
-        return viewer -> viewer.getLanguage().toLocale();
+        return viewer -> {
+            if (viewer.isConsole()) {
+                return Language.DEFAULT.toLocale();
+            }
+
+            return languageService.getLanguageNow(viewer.getUniqueId()).toLocale();
+        };
     }
 
     @Override

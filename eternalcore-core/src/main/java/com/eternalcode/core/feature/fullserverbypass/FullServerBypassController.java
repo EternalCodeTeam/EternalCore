@@ -47,14 +47,14 @@ class FullServerBypassController implements Listener {
                 return;
             }
 
-            String serverFullMessage = this.extractServerFullMessage(player);
+            String serverFullMessage = this.getServerFullMessage(player);
             Component serverFullMessageComponent = this.miniMessage.deserialize(serverFullMessage);
 
             event.disallow(PlayerLoginEvent.Result.KICK_FULL, AdventureUtil.SECTION_SERIALIZER.serialize(serverFullMessageComponent));
         }
     }
 
-    private String extractServerFullMessage(Player player) {
+    private String getServerFullMessage(Player player) {
         Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
         if (userOption.isEmpty()) {
@@ -66,7 +66,7 @@ class FullServerBypassController implements Listener {
         User user = userOption.get();
 
         return Joiner.on("\n")
-            .join(this.translationManager.getMessages(user).player().fullServerSlots())
+            .join(this.translationManager.getMessages(user.getUniqueId()).player().fullServerSlots())
             .toString();
     }
 }

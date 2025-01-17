@@ -20,6 +20,11 @@ class UserClientBukkitSettings implements UserClientSettings {
         this.playerReference = new WeakReference<>(server.getPlayer(uuid));
     }
 
+    @Override
+    public boolean isOnline() {
+        return this.getPlayer().isPresent();
+    }
+
     private Option<Player> getPlayer() {
         Player player = this.playerReference.get();
 
@@ -37,17 +42,4 @@ class UserClientBukkitSettings implements UserClientSettings {
         return Option.of(player);
     }
 
-    private Player getPlayerOrThrow() {
-        return this.getPlayer().orThrow(() -> new IllegalStateException("Player is offline"));
-    }
-
-    @Override
-    public Locale getLocate() {
-        return new Locale(this.getPlayerOrThrow().getLocale());
-    }
-
-    @Override
-    public boolean isOnline() {
-        return this.getPlayer().isPresent();
-    }
 }

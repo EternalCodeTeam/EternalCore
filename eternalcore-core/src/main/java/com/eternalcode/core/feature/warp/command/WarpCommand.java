@@ -44,7 +44,7 @@ class WarpCommand {
 
     @Execute(name = "warp")
     @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps")
-    void warp(@Context Player player, @Context User user) {
+    void warp(@Context Player player) {
         if (!this.config.warp.inventoryEnabled) {
             List<String> list = this.warpService.getWarps().stream().map(Warp::getName).toList();
 
@@ -66,7 +66,7 @@ class WarpCommand {
             return;
         }
 
-        this.warpInventory.openInventory(player, user.getLanguage());
+        this.warpInventory.openInventory(player);
     }
 
     @Execute(name = "warp")

@@ -67,8 +67,8 @@ public class LanguageConfiguration implements ReloadableConfig {
                 false,
                 20,
                 Collections.emptyList(),
-                Language.EN)
-            )
+                Language.EN
+            ))
             .add(new LanguageConfigItem(
                 "&c&lAuto",
                 Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"),
@@ -77,8 +77,8 @@ public class LanguageConfiguration implements ReloadableConfig {
                 false,
                 22,
                 Collections.emptyList(),
-                Language.DEFAULT)
-            )
+                Language.DEFAULT
+            ))
             .add(new LanguageConfigItem(
                 "&c&lPolish",
                 Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij aby zmienić język!"),
@@ -87,8 +87,8 @@ public class LanguageConfiguration implements ReloadableConfig {
                 false,
                 24,
                 Collections.emptyList(),
-                Language.PL)
-            )
+                Language.PL
+            ))
             .build();
     }
 
