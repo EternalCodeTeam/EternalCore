@@ -1,6 +1,7 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
+import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.multification.notice.Notice;
@@ -271,17 +272,7 @@ public interface Translation {
     }
 
     // afk section
-    AfkSection afk();
-
-    interface AfkSection {
-        Notice afkOn();
-        Notice afkOff();
-        Notice afkDelay();
-        String afkKickReason();
-
-        String afkEnabledPlaceholder();
-        String afkDisabledPlaceholder();
-    }
+    AfkMessages afk();
 
     // event section
     EventSection event();

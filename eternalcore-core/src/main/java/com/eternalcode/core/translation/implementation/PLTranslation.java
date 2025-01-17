@@ -1,6 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
+import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
@@ -530,25 +531,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Ta sekcja odpowiada za ustawianie i edycję wiadomości AFK",
     })
-    public PLAfkSection afk = new PLAfkSection();
-
-    @Getter
-    @Contextual
-    public static class PLAfkSection implements AfkSection {
-        @Description("# {PLAYER} - Gracz ")
-        public Notice afkOn = Notice.chat("<green>► <white>{PLAYER} jest AFK!");
-        public Notice afkOff = Notice.chat("<green>► <white>{PLAYER} już nie jest AFK!");
-
-        @Description({" ", "# {TIME} - Czas po którym gracz może użyć komendy"})
-        public Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
-
-        @Description({ " " })
-        public String afkKickReason = "<red>Zostałeś wyrzucone z powodu braku aktywności!";
-
-        @Description({" ", "# Używane w %eternalcore_afk_formatted% do wskazania statusu AFK"})
-        public String afkEnabledPlaceholder = "<red><b>AFK";
-        public String afkDisabledPlaceholder = "";
-    }
+    public PLAfkMessages afk = new PLAfkMessages();
 
     @Description({
         " ",
