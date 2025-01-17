@@ -25,11 +25,17 @@ class CatboyServiceImpl implements CatboyService {
     private final EventCaller eventCaller;
 
     private final CatBoyPersistentDataKey catBoyPersistentDataKey;
+    private final CatBoySettings catBoySettings;
 
     @Inject
-    CatboyServiceImpl(EventCaller eventCaller, CatBoyPersistentDataKey catBoyPersistentDataKey) {
+    CatboyServiceImpl(
+        EventCaller eventCaller,
+        CatBoyPersistentDataKey catBoyPersistentDataKey,
+        CatBoySettings catBoySettings
+    ) {
         this.eventCaller = eventCaller;
         this.catBoyPersistentDataKey = catBoyPersistentDataKey;
+        this.catBoySettings = catBoySettings;
     }
 
     @Override
@@ -44,7 +50,7 @@ class CatboyServiceImpl implements CatboyService {
         entity.setCatType(type);
 
         player.addPassenger(entity);
-        player.setWalkSpeed(0.4F);
+        player.setWalkSpeed(this.catBoySettings.getCatboyWalkSpeed());
 
         PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
         persistentDataContainer.set(this.catBoyPersistentDataKey.getCatboyDataKey(), PersistentDataType.STRING, "catboy");
