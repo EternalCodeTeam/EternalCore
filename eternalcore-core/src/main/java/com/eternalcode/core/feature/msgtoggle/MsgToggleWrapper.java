@@ -4,25 +4,24 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.UUID;
 
-@DatabaseTable(tableName = "msgtoggle")
+@DatabaseTable(tableName = "eternal_core_msg_toggles")
 class MsgToggleWrapper {
 
     @DatabaseField(columnName = "id", id = true)
-    private UUID id;
+    private UUID uniqueId;
 
     @DatabaseField(columnName = "enabled")
     private boolean enabled;
 
-    MsgToggleWrapper() {
-    }
-
     MsgToggleWrapper(UUID id, boolean enabled) {
-        this.id = id;
+        this.uniqueId = id;
         this.enabled = enabled;
     }
 
-    static MsgToggleWrapper from(MsgToggleWrapper msgToggle) {
-        return new MsgToggleWrapper(msgToggle.id, msgToggle.enabled);
+    MsgToggleWrapper() {}
+
+    static MsgToggleWrapper from(MsgToggle msgToggle) {
+        return new MsgToggleWrapper(msgToggle.uuid, msgToggle.toggle);
     }
 
     boolean isEnabled() {
@@ -32,5 +31,4 @@ class MsgToggleWrapper {
     void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
 }

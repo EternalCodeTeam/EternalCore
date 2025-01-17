@@ -11,6 +11,9 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.entity.Player;
 
+// To clarify:
+// ON - true - means that the player has turned on msgToggle and has blocked getting private messages
+// OFF - false - means that the player has turned off msgToggle and has allowed getting private messages
 @Command(name = "msgtoggle")
 @Permission("eternalcore.msgtoggle")
 public class MsgToggleCommand {
@@ -31,7 +34,7 @@ public class MsgToggleCommand {
         CompletableFuture<Boolean> hasMsgToggledOff = this.msgToggleService.hasMsgToggledOff(context.getUniqueId());
 
         hasMsgToggledOff.thenAccept(toggledOff -> {
-            if (toggledOff) {
+            if (!toggledOff) {
                 this.on(context);
             } else {
                 this.off(context);
@@ -39,7 +42,7 @@ public class MsgToggleCommand {
         });
     }
 
-    @Execute(name = "on")
+    @Execute(name = "off")
     @DescriptionDocs(description = "Enable private messages")
     public void on(@Context Player context) {
         this.msgToggleService.toggleMsg(context.getUniqueId(), true);
@@ -50,7 +53,7 @@ public class MsgToggleCommand {
             .send();
     }
 
-    @Execute(name = "off")
+    @Execute(name = "on")
     @DescriptionDocs(description = "Disable private messages")
     public void off(@Context Player context) {
         this.msgToggleService.toggleMsg(context.getUniqueId(), false);
@@ -67,7 +70,7 @@ public class MsgToggleCommand {
     public void other(@Context Player context, @Arg("player") Player player) {
         CompletableFuture<Boolean> hasMsgToggledOff = this.msgToggleService.hasMsgToggledOff(player.getUniqueId());
 
-        hasMsgToggledOff.thenAccept(toggledOff -> this.other(context, player, toggledOff ? STATE.ON : STATE.OFF));
+        hasMsgToggledOff.thenAccept(toggledOff -> this.other(context, player, !toggledOff ? STATE.ON : STATE.OFF));
     }
 
     @Execute
@@ -82,7 +85,8 @@ public class MsgToggleCommand {
                     translation.privateChat().msgTogglePlayerOn() :
                     translation.privateChat().msgTogglePlayerOff()
             )
-            .player(player.getUniqueId())
+            .player(context.getUniqueId())
+            .placeholder("{PLAYER}", player.getName())
             .send();
 
     }

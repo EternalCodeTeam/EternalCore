@@ -28,7 +28,8 @@ class MsgToggleRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ms
     }
 
     @Override
-    public void setToggledOff(UUID uuid, boolean toggledOff) {
-        this.save(MsgToggle.class, new MsgToggle(uuid, toggledOff));
+    public CompletableFuture<Void> setToggledOff(UUID uuid, boolean toggledOff) {
+        return this.save(MsgToggleWrapper.class, new MsgToggleWrapper(uuid, toggledOff))
+            .thenApply(status -> null);
     }
 }

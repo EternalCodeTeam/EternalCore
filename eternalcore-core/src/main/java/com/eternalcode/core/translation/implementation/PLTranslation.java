@@ -507,12 +507,12 @@ public class PLTranslation extends AbstractTranslation {
 
         public Notice msgToggledOff = Notice.chat("<red>► <dark_red>Wiadomości prywatne zostały wyłączone!");
 
-        public Notice msgToggleSelfOff = Notice.chat("<green>► <white>Wiadomości prywatne zostały wyłączone!");
-        public Notice msgToggleSelfOn = Notice.chat("<green>► <white>Wiadomości prywatne zostały włączone!");
+        public Notice msgToggleSelfOff = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone!");
+        public Notice msgToggleSelfOn = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone!");
 
         @Description({" ", "# {PLAYER} - Gracz któremu wyłączono wiadomości prywatne"})
-        public Notice msgTogglePlayerOff = Notice.chat("<green>► <white>Wiadomości prywatne zostały wyłączone dla gracza <green>{PLAYER}<white>!");
-        public Notice msgTogglePlayerOn = Notice.chat("<green>► <white>Wiadomości prywatne zostały włączone dla gracza <green>{PLAYER}<white>!");
+        public Notice msgTogglePlayerOff = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
+        public Notice msgTogglePlayerOn = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone <white>dla gracza <green>{PLAYER}<white>!");
 
         @Description({" ", "# {PLAYER} - Gracz który jest zignorowany"})
         public Notice ignorePlayer = Notice.chat("<green>► <white>Zignorowano gracza <red>{PLAYER}<white>!");

@@ -7,6 +7,6 @@ public interface MsgToggleRepository {
 
     CompletableFuture<Boolean> isToggledOff(UUID uuid);
 
-    void setToggledOff(UUID uuid, boolean toggledOff);
+    CompletableFuture<Void> setToggledOff(UUID uuid, boolean toggledOff);
 
 }
