@@ -12,10 +12,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.entity.Cat;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 @Service
 class CatboyServiceImpl implements CatboyService {
@@ -24,17 +21,17 @@ class CatboyServiceImpl implements CatboyService {
     private final Map<UUID, Catboy> catboys = new HashMap<>();
     private final EventCaller eventCaller;
 
-    private final CatBoyPersistentDataKey catBoyPersistentDataKey;
+    private final CatBoyEntityService catBoyEntityService;
     private final CatBoySettings catBoySettings;
 
     @Inject
     CatboyServiceImpl(
         EventCaller eventCaller,
-        CatBoyPersistentDataKey catBoyPersistentDataKey,
+        CatBoyEntityService catBoyEntityService,
         CatBoySettings catBoySettings
     ) {
         this.eventCaller = eventCaller;
-        this.catBoyPersistentDataKey = catBoyPersistentDataKey;
+        this.catBoyEntityService = catBoyEntityService;
         this.catBoySettings = catBoySettings;
     }
 
@@ -43,17 +40,9 @@ class CatboyServiceImpl implements CatboyService {
         Catboy catboy = new Catboy(player.getUniqueId(), type);
         this.catboys.put(player.getUniqueId(), catboy);
 
-        Cat entity = (Cat) player.getWorld().spawnEntity(player.getLocation(), EntityType.CAT);
-        entity.setInvulnerable(true);
-        entity.setOwner(player);
-        entity.setAI(false);
-        entity.setCatType(type);
-
-        player.addPassenger(entity);
+        Cat cat = this.catBoyEntityService.createCatboyEntity(player, type);
+        player.addPassenger(cat);
         player.setWalkSpeed(this.catBoySettings.getCatboyWalkSpeed());
-
-        PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
-        persistentDataContainer.set(this.catBoyPersistentDataKey.getCatboyDataKey(), PersistentDataType.STRING, "catboy");
 
         this.eventCaller.callEvent(new CatboySwitchEvent(player, true));
     }

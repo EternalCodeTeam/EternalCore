@@ -27,19 +27,19 @@ class CatboyController implements Listener {
     private static final Duration TICK = Duration.ofMillis(50L);
 
     private final CatboyService catboyService;
-    private final CatBoyPersistentDataKey catBoyPersistentDataKey;
+    private final CatBoyEntityService catBoyEntityService;
     private final Scheduler scheduler;
     private final Server server;
 
     @Inject
     CatboyController(
         CatboyService catboyService,
-        CatBoyPersistentDataKey catBoyPersistentDataKey,
+        CatBoyEntityService catBoyEntityService,
         Scheduler scheduler,
         Server server
     ) {
         this.catboyService = catboyService;
-        this.catBoyPersistentDataKey = catBoyPersistentDataKey;
+        this.catBoyEntityService = catBoyEntityService;
         this.scheduler = scheduler;
         this.server = server;
     }
@@ -105,9 +105,7 @@ class CatboyController implements Listener {
             return;
         }
 
-        boolean isCatBoy = cat.getPersistentDataContainer().has(this.catBoyPersistentDataKey.getCatboyDataKey());
-
-        if (isCatBoy) {
+        if (this.catBoyEntityService.isCatboy(cat)) {
             event.setCancelled(true);
         }
     }
