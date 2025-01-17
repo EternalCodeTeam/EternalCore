@@ -62,13 +62,13 @@ public class MockServer {
     }
 
     public void kickPlayer(Player player) {
-        this.onlinePlayers.remove(player.getUniqueId());
-
         PlayerKickEvent event = new PlayerKickEvent(player, "Player " + player.getName() + " has been kicked!", "Kicked!");
 
         for (Consumer<PlayerKickEvent> kickListener : this.kickListeners) {
             kickListener.accept(event);
         }
+
+        this.quitPlayer(player);
     }
 
     public void listenJoin(Consumer<PlayerJoinEvent> joinListener) {

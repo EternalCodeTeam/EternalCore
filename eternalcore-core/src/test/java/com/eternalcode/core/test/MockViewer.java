@@ -31,11 +31,6 @@ public class MockViewer implements Viewer {
     }
 
     @Override
-    public Language getLanguage() {
-        return Language.EN;
-    }
-
-    @Override
     public String getName() {
         return this.name;
     }

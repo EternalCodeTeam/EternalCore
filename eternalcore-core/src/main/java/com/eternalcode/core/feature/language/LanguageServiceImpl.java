@@ -31,50 +31,50 @@ class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public Language getLanguageNow(UUID player) {
-        Language language = cachedLanguages.get(player);
+    public Language getLanguageNow(UUID playerUniqueId) {
+        Language language = cachedLanguages.get(playerUniqueId);
         if (language != null) {
             return language;
         }
 
-        return defaultProvider.getDefaultLanguage(player);
+        return defaultProvider.getDefaultLanguage(playerUniqueId);
     }
 
     @Override
-    public CompletableFuture<Language> getLanguage(UUID player) {
-        Language language = cachedLanguages.get(player);
+    public CompletableFuture<Language> getLanguage(UUID playerUniqueId) {
+        Language language = cachedLanguages.get(playerUniqueId);
         if (language != null) {
             return CompletableFuture.completedFuture(language);
         }
 
-        return this.languageRepository.findLanguage(player)
-            .thenApply(optional -> optional.orElseGet(() -> this.defaultProvider.getDefaultLanguage(player)));
+        return this.languageRepository.findLanguage(playerUniqueId)
+            .thenApply(optional -> optional.orElseGet(() -> this.defaultProvider.getDefaultLanguage(playerUniqueId)));
     }
 
     @Override
-    public CompletableFuture<Void> setLanguage(UUID player, Language language) {
+    public CompletableFuture<Void> setLanguage(UUID playerUniqueId, Language language) {
         if (language.equals(Language.DEFAULT)) {
-            return setDefaultLanguage(player);
+            return setDefaultLanguage(playerUniqueId);
         }
 
-        cachedLanguages.put(player, language);
-        return languageRepository.saveLanguage(player, language);
+        cachedLanguages.put(playerUniqueId, language);
+        return languageRepository.saveLanguage(playerUniqueId, language);
     }
 
     @Override
-    public CompletableFuture<Void> setDefaultLanguage(UUID player) {
-        cachedLanguages.remove(player);
-        return languageRepository.deleteLanguage(player);
+    public CompletableFuture<Void> setDefaultLanguage(UUID playerUniqueId) {
+        cachedLanguages.remove(playerUniqueId);
+        return languageRepository.deleteLanguage(playerUniqueId);
     }
 
-    CompletableFuture<Void> loadLanguage(UUID uniqueId) {
-        return languageRepository.findLanguage(uniqueId)
-            .thenAccept(language -> language.ifPresent(lang -> cachedLanguages.put(uniqueId, lang)));
+    CompletableFuture<Void> loadLanguage(UUID playerUniqueId) {
+        return languageRepository.findLanguage(playerUniqueId)
+            .thenAccept(language -> language.ifPresent(lang -> cachedLanguages.put(playerUniqueId, lang)));
     }
 
-    CompletableFuture<Void> unloadLanguage(UUID uniqueId) {
-        return languageRepository.findLanguage(uniqueId)
-            .thenAccept(language -> cachedLanguages.remove(uniqueId));
+    CompletableFuture<Void> unloadLanguage(UUID playerUniqueId) {
+        return languageRepository.findLanguage(playerUniqueId)
+            .thenAccept(language -> cachedLanguages.remove(playerUniqueId));
     }
 
 }

@@ -51,7 +51,8 @@ public class NoticeService extends Multification<Viewer, Translation> {
         TranslationManager translationManager,
         PlaceholderRegistry registry,
         MiniMessage miniMessage,
-        NoticeResolverRegistry noticeRegistry, LanguageService languageService
+        NoticeResolverRegistry noticeRegistry,
+        LanguageService languageService
     ) {
         this.userManager = userManager;
         this.scheduler = scheduler;
