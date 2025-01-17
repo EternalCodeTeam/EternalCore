@@ -8,6 +8,7 @@ import com.eternalcode.core.injector.annotations.component.Repository;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Repository
 class MsgToggleRepositoryOrmLite extends AbstractRepositoryOrmLite implements MsgToggleRepository {
@@ -19,25 +20,15 @@ class MsgToggleRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ms
     }
 
     @Override
-    public boolean isToggledOff(UUID uuid) {
-//        this.selectSafe(MsgToggle.class, uuid).thenApply(msgToggle -> {
-//            msgToggle.isEmpty();
-//        });
-        return false;
+    public CompletableFuture<Boolean> isToggledOff(UUID uuid) {
+        return this.selectSafe(MsgToggleWrapper.class, uuid)
+            .thenApply(
+                optional -> optional.map(MsgToggleWrapper::isEnabled).orElse(true)
+            );
     }
 
     @Override
     public void setToggledOff(UUID uuid, boolean toggledOff) {
-        this.save(MsgToggle.class, new MsgToggle(uuid, false));
-    }
-
-    @Override
-    public void remove(UUID uuid) {
-
-    }
-
-    @Override
-    public void removeAll() {
-
+        this.save(MsgToggle.class, new MsgToggle(uuid, toggledOff));
     }
 }

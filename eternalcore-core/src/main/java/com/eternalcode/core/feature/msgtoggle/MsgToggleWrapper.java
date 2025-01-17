@@ -25,4 +25,12 @@ class MsgToggleWrapper {
         return new MsgToggleWrapper(msgToggle.id, msgToggle.enabled);
     }
 
+    boolean isEnabled() {
+        return this.enabled;
+    }
+
+    void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
 }

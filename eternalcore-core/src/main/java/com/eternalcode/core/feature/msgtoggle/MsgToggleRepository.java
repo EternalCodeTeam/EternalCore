@@ -1,15 +1,12 @@
 package com.eternalcode.core.feature.msgtoggle;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
-interface MsgToggleRepository {
+public interface MsgToggleRepository {
 
-    boolean isToggledOff(UUID uuid);
+    CompletableFuture<Boolean> isToggledOff(UUID uuid);
 
     void setToggledOff(UUID uuid, boolean toggledOff);
-
-    void remove(UUID uuid);
-
-    void removeAll();
 
 }

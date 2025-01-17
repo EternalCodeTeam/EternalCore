@@ -59,21 +59,23 @@ class PrivateChatServiceImpl implements PrivateChatService {
 
         UUID uniqueId = target.getUniqueId();
 
-        if (this.msgToggleService.hasMsgToggledOff(uniqueId)) {
-            this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().msgToggledOff());
+        this.msgToggleService.hasMsgToggledOff(uniqueId).thenAccept(hasToggledOff -> {
+            if (hasToggledOff) {
+                this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().msgToggledOff());
 
-            return;
-        }
-
-        this.ignoreService.isIgnored(uniqueId, sender.getUniqueId()).thenAccept(isIgnored -> {
-            if (!isIgnored) {
-                this.replies.put(uniqueId, sender.getUniqueId());
-                this.replies.put(sender.getUniqueId(), uniqueId);
+                return;
             }
 
-            PrivateChatEvent event = new PrivateChatEvent(sender.getUniqueId(), uniqueId, message);
-            this.eventCaller.callEvent(event);
-            this.presenter.onPrivate(new PrivateMessage(sender, target, event.getContent(), this.socialSpy, isIgnored));
+            this.ignoreService.isIgnored(uniqueId, sender.getUniqueId()).thenAccept(isIgnored -> {
+                if (!isIgnored) {
+                    this.replies.put(uniqueId, sender.getUniqueId());
+                    this.replies.put(sender.getUniqueId(), uniqueId);
+                }
+
+                PrivateChatEvent event = new PrivateChatEvent(sender.getUniqueId(), uniqueId, message);
+                this.eventCaller.callEvent(event);
+                this.presenter.onPrivate(new PrivateMessage(sender, target, event.getContent(), this.socialSpy, isIgnored));
+            });
         });
     }
 
