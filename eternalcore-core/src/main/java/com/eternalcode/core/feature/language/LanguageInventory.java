@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.language;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.config.LanguageConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -10,8 +11,6 @@ import com.eternalcode.core.feature.language.config.LanguageConfigItem;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.user.UserManager;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -23,7 +22,6 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @FeatureDocs(
@@ -36,21 +34,33 @@ class LanguageInventory {
     private final LanguageConfiguration languageConfiguration;
     private final TranslationManager translationManager;
     private final NoticeService noticeService;
-    private final UserManager userManager;
     private final Server server;
+    private final Scheduler scheduler;
     private final MiniMessage miniMessage;
+    private final LanguageService languageService;
 
     @Inject
-    LanguageInventory(LanguageConfiguration languageConfiguration, TranslationManager translationManager, NoticeService noticeService, UserManager userManager, Server server, MiniMessage miniMessage) {
+    LanguageInventory(LanguageConfiguration languageConfiguration, TranslationManager translationManager, NoticeService noticeService, Server server, Scheduler scheduler, MiniMessage miniMessage, LanguageService languageService) {
         this.languageConfiguration = languageConfiguration;
         this.translationManager = translationManager;
         this.noticeService = noticeService;
-        this.userManager = userManager;
         this.server = server;
+        this.scheduler = scheduler;
         this.miniMessage = miniMessage;
+        this.languageService = languageService;
     }
 
-    void open(Player player, Language language) {
+    void open(Player player) {
+        this.languageService.getLanguage(player.getUniqueId()).whenComplete((language, throwable) -> {
+            if (language == null) {
+                language = Language.DEFAULT;
+            }
+
+            this.open(player, language);
+        });
+    }
+
+    private void open(Player player, Language language) {
         LanguageConfiguration.LanguageSelector languageSelector = this.languageConfiguration.languageSelector;
         Translation translation = this.translationManager.getMessages(language);
         Translation.LanguageSection languageSection = translation.language();
@@ -61,18 +71,10 @@ class LanguageInventory {
             .disableAllInteractions()
             .create();
 
-        Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
-
-        if (userOption.isEmpty()) {
-            return;
-        }
-
-        User user = userOption.get();
-
         if (languageSelector.border.fill) {
             ItemBuilder borderItem = ItemBuilder.from(languageSelector.border.material);
 
-            if (!languageSelector.border.name.equals("")) {
+            if (!languageSelector.border.name.isEmpty()) {
                 borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(languageSelector.border.name)));
             }
 
@@ -94,11 +96,11 @@ class LanguageInventory {
         }
 
         for (LanguageConfigItem languageConfigItem : languageSelector.languageConfigItemMap) {
-            BaseItemBuilder baseItemBuilder = this.createItem(languageConfigItem);
+            BaseItemBuilder<?> baseItemBuilder = this.createItem(languageConfigItem);
             GuiItem guiItem = baseItemBuilder.asGuiItem();
 
             guiItem.setAction(event -> {
-                user.getSettings().setLanguage(languageConfigItem.language);
+                languageService.setLanguage(player.getUniqueId(), languageConfigItem.language);
 
                 player.closeInventory();
 
@@ -112,7 +114,7 @@ class LanguageInventory {
         }
 
         for (ConfigItem item : languageSection.decorationItems()) {
-            BaseItemBuilder baseItemBuilder = this.createItem(item);
+            BaseItemBuilder<?> baseItemBuilder = this.createItem(item);
             GuiItem guiItem = baseItemBuilder.asGuiItem();
 
             guiItem.setAction(event -> {
@@ -130,10 +132,10 @@ class LanguageInventory {
             gui.setItem(item.slot(), guiItem);
         }
 
-        gui.open(player);
+        scheduler.run(() -> gui.open(player));
     }
 
-    private BaseItemBuilder createItem(ConfigItem item) {
+    private BaseItemBuilder<?> createItem(ConfigItem item) {
         Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
         List<Component> lore = item.lore()
             .stream()

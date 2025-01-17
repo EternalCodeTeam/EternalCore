@@ -2,12 +2,13 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.language.LanguageSettings;
+import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.multification.translation.TranslationProvider;
 import java.util.Collections;
 import java.util.Set;
+import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -21,15 +22,22 @@ import java.util.Map.Entry;
 )
 public class TranslationManager implements TranslationProvider<Translation> {
 
+    private final LanguageService languageService;
+
     private final Map<Language, Translation> translatedMessages = new HashMap<>();
     private Translation defaultTranslation;
 
-    TranslationManager(Translation defaultTranslation) {
+    TranslationManager(LanguageService languageService, Translation defaultTranslation) {
+        this.languageService = languageService;
         this.defaultTranslation = defaultTranslation;
     }
 
     public void loadLanguage(Language language, Translation translated) {
         this.translatedMessages.put(language, translated);
+    }
+
+    public Translation getMessages(UUID uniqueId) {
+        return getMessages(this.languageService.getLanguageNow(uniqueId));
     }
 
     public Translation getMessages(Language language) {
@@ -48,23 +56,12 @@ public class TranslationManager implements TranslationProvider<Translation> {
         return this.defaultTranslation;
     }
 
-    public Translation getMessages(User user) {
-        LanguageSettings settings = user.getSettings();
-        Language language = settings.getLanguage();
-
-        return this.getMessages(language);
-    }
-
     public Translation getDefaultMessages() {
         return this.defaultTranslation;
     }
 
     public void setDefaultMessages(Translation defaultTranslation) {
         this.defaultTranslation = defaultTranslation;
-    }
-
-    public Translation getMessages(Viewer viewer) {
-        return this.getMessages(viewer.getLanguage());
     }
 
     @NotNull
@@ -74,8 +71,7 @@ public class TranslationManager implements TranslationProvider<Translation> {
     }
 
     public Set<Language> getAvailableLanguages() {
-        return Collections.unmodifiableSet(
-            this.translatedMessages.keySet()
-        );
+        return Collections.unmodifiableSet(this.translatedMessages.keySet());
     }
+
 }

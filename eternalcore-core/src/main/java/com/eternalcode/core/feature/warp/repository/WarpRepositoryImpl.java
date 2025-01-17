@@ -109,7 +109,7 @@ class WarpRepositoryImpl implements WarpRepository {
             synchronized (READ_WRITE_LOCK) {
                 Map<String, WarpConfig.WarpConfigEntry> warps = new HashMap<>(this.warpConfig.warps);
                 T result = editor.apply(warps);
-                this.warpConfig.warps.putAll(warps);
+                this.warpConfig.warps = warps;
                 this.configurationManager.save(this.warpConfig);
                 return result;
             }

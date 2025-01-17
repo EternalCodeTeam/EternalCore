@@ -22,7 +22,7 @@ public class LocationsConfiguration implements ReloadableConfig {
     public Position spawn = EMPTY_POSITION;
 
     @Description("# Warps now are stored in warps.yml. This is deprecated.")
-    @Deprecated
+    @Deprecated(since = "1.5.1", forRemoval = true)
     public Map<String, Position> warps = new HashMap<>();
 
     @Description("# This is jail location, for your own safety, please don't touch it.")

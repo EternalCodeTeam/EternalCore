@@ -22,8 +22,8 @@ class LanguageCommand {
 
     @Execute
     @DescriptionDocs(description = "Open language inventory")
-    void execute(@Context Player player, @Context User user) {
-        this.languageInventory.open(player, user.getLanguage());
+    void execute(@Context Player player) {
+        this.languageInventory.open(player);
     }
 
 }
