@@ -13,7 +13,11 @@ import panda.std.stream.PandaStream;
 class TranslationManagerSetup {
 
     @Bean
-    TranslationManager translationManager(ConfigurationManager configurationManager, LanguageService languageService, LanguageConfiguration languageConfiguration) {
+    TranslationManager translationManager(
+        ConfigurationManager configurationManager,
+        LanguageService languageService,
+        LanguageConfiguration languageConfiguration
+    ) {
         List<AbstractTranslation> usedMessagesList = PandaStream.of(languageConfiguration.languages)
             .map(TranslationFactory::create)
             .toList();

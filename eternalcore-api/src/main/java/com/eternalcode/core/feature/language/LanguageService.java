@@ -9,12 +9,12 @@ public interface LanguageService {
 
     LanguageProvider getDefaultProvider();
 
-    CompletableFuture<Language> getLanguage(UUID player);
+    CompletableFuture<Language> getLanguage(UUID playerUniqueId);
 
-    Language getLanguageNow(UUID player);
+    Language getLanguageNow(UUID playerUniqueId);
 
-    CompletableFuture<Void> setLanguage(UUID player, Language language);
+    CompletableFuture<Void> setLanguage(UUID playerUniqueId, Language language);
 
-    CompletableFuture<Void> setDefaultLanguage(UUID player);
+    CompletableFuture<Void> setDefaultLanguage(UUID playerUniqueId);
 
 }

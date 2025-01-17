@@ -40,7 +40,15 @@ class LanguageInventory {
     private final LanguageService languageService;
 
     @Inject
-    LanguageInventory(LanguageConfiguration languageConfiguration, TranslationManager translationManager, NoticeService noticeService, Server server, Scheduler scheduler, MiniMessage miniMessage, LanguageService languageService) {
+    LanguageInventory(
+        LanguageConfiguration languageConfiguration,
+        TranslationManager translationManager,
+        NoticeService noticeService,
+        Server server,
+        Scheduler scheduler,
+        MiniMessage miniMessage,
+        LanguageService languageService
+    ) {
         this.languageConfiguration = languageConfiguration;
         this.translationManager = translationManager;
         this.noticeService = noticeService;

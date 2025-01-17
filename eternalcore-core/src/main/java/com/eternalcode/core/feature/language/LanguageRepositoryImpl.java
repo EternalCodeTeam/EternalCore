@@ -57,7 +57,7 @@ class LanguageRepositoryImpl extends AbstractRepositoryOrmLite implements Langua
             this.language = language.getLang();
         }
 
-        public Language toLanguage() {
+        Language toLanguage() {
             return Language.fromLocale(Locale.of(language));
         }
     }
