@@ -5,26 +5,31 @@ import com.eternalcode.core.feature.catboy.event.CatboyChangeTypeEvent;
 import com.eternalcode.core.feature.catboy.event.CatboySwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import org.bukkit.entity.Cat;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import org.bukkit.entity.Cat;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 @Service
 class CatboyServiceImpl implements CatboyService {
 
+    private static final float DEFAULT_WALK_SPEED = 0.2F;
     private final Map<UUID, Catboy> catboys = new HashMap<>();
     private final EventCaller eventCaller;
 
+    private final CatBoyPersistentDataKey catBoyPersistentDataKey;
+
     @Inject
-    CatboyServiceImpl(EventCaller eventCaller) {
+    CatboyServiceImpl(EventCaller eventCaller, CatBoyPersistentDataKey catBoyPersistentDataKey) {
         this.eventCaller = eventCaller;
+        this.catBoyPersistentDataKey = catBoyPersistentDataKey;
     }
 
     @Override
@@ -35,10 +40,14 @@ class CatboyServiceImpl implements CatboyService {
         Cat entity = (Cat) player.getWorld().spawnEntity(player.getLocation(), EntityType.CAT);
         entity.setInvulnerable(true);
         entity.setOwner(player);
+        entity.setAI(false);
         entity.setCatType(type);
 
         player.addPassenger(entity);
         player.setWalkSpeed(0.4F);
+
+        PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
+        persistentDataContainer.set(this.catBoyPersistentDataKey.getCatboyDataKey(), PersistentDataType.STRING, "catboy");
 
         this.eventCaller.callEvent(new CatboySwitchEvent(player, true));
     }
@@ -48,7 +57,7 @@ class CatboyServiceImpl implements CatboyService {
         this.catboys.remove(player.getUniqueId());
         player.getPassengers().forEach(entity -> entity.remove());
         player.getPassengers().clear();
-        player.setWalkSpeed(0.2F);
+        player.setWalkSpeed(DEFAULT_WALK_SPEED);
 
         this.eventCaller.callEvent(new CatboySwitchEvent(player, false));
     }
@@ -90,5 +99,4 @@ class CatboyServiceImpl implements CatboyService {
     public Collection<Catboy> getCatboys() {
         return Collections.unmodifiableCollection(this.catboys.values());
     }
-
 }
