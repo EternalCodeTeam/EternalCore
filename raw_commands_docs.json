@@ -2052,6 +2052,24 @@
     ]
   },
   {
+    "name": "warp-permission add ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp.changepermissions"
+    ],
+    "descriptions": [],
+    "arguments": []
+  },
+  {
+    "name": "warp-permission remove ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.warp.changepermissions"
+    ],
+    "descriptions": [],
+    "arguments": []
+  },
+  {
     "name": "whois ",
     "aliases": [],
     "permissions": [

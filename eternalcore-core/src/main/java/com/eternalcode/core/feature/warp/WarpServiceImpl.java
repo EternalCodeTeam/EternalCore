@@ -2,13 +2,17 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.feature.warp.repository.WarpRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 import org.bukkit.Location;
 
 @FeatureDocs(
@@ -18,7 +22,7 @@ import org.bukkit.Location;
 @Service
 class WarpServiceImpl implements WarpService {
 
-    private final Map<String, Warp> warpMap = new HashMap<>();
+    private final Map<String, Warp> warps = new ConcurrentHashMap<>();
     private final WarpRepository warpRepository;
 
     @Inject
@@ -27,26 +31,24 @@ class WarpServiceImpl implements WarpService {
 
         warpRepository.getWarps().thenAcceptAsync(warps -> {
             for (Warp warp : warps) {
-                this.warpMap.put(warp.getName(), warp);
+                this.warps.put(warp.getName(), warp);
             }
         });
     }
 
     @Override
     public Warp createWarp(String name, Location location) {
-        Warp warp = new WarpImpl(name, PositionAdapter.convert(location));
+        Warp warp = new WarpImpl(name, PositionAdapter.convert(location), new ArrayList<>());
 
-        this.warpMap.put(name, warp);
-
-        this.warpRepository.addWarp(warp);
+        this.warps.put(name, warp);
+        this.warpRepository.saveWarp(warp);
 
         return warp;
     }
 
     @Override
     public void removeWarp(String warp) {
-        Warp remove = this.warpMap.remove(warp);
-
+        Warp remove = this.warps.remove(warp);
         if (remove == null) {
             return;
         }
@@ -55,22 +57,50 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public boolean warpExists(String name) {
-        return this.warpMap.containsKey(name);
+    public Warp addPermissions(String warpName, String... permissions) {
+        Warp warp = this.modifyPermissions(warpName, perms -> perms.addAll(List.of(permissions)));
+        this.warpRepository.saveWarp(warp);
+        return warp;
+    }
+
+    @Override
+    public Warp removePermissions(String warpName, String... permissions) {
+        Warp warp = this.modifyPermissions(warpName, perms -> perms.removeAll(List.of(permissions)));
+        this.warpRepository.saveWarp(warp);
+        return warp;
+    }
+
+    private Warp modifyPermissions(String warpName, Consumer<List<String>> modifier) {
+        Warp warp = this.warps.get(warpName);
+        if (warp == null) {
+            throw new IllegalArgumentException("Warp " + warpName + " does not exist");
+        }
+
+        List<String> updatedPermissions = new ArrayList<>(warp.getPermissions());
+        modifier.accept(updatedPermissions);
+
+        Warp updatedWarp = new WarpImpl(
+            warp.getName(),
+            PositionAdapter.convert(warp.getLocation()),
+            updatedPermissions
+        );
+
+        this.warps.put(warpName, updatedWarp);
+        return updatedWarp;
+    }
+
+    @Override
+    public boolean isExist(String name) {
+        return this.warps.containsKey(name);
     }
 
     @Override
     public Optional<Warp> findWarp(String name) {
-        return Optional.ofNullable(this.warpMap.get(name));
+        return Optional.ofNullable(this.warps.get(name));
     }
 
     @Override
-    public Collection<String> getNamesOfWarps() {
-        return Collections.unmodifiableCollection(this.warpMap.keySet());
-    }
-
-    @Override
-    public boolean hasWarps() {
-        return !this.warpMap.isEmpty();
+    public Collection<Warp> getWarps() {
+        return Collections.unmodifiableCollection(this.warps.values());
     }
 }

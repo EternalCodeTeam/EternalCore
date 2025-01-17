@@ -12,8 +12,9 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import java.util.UUID;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 @Command(name = "setwarp")
 @Permission("eternalcore.setwarp")
@@ -43,7 +44,7 @@ class SetWarpCommand {
     }
 
     private void createWarp(Player player, String warp, UUID uniqueId) {
-        if (this.warpService.warpExists(warp)) {
+        if (this.warpService.isExist(warp)) {
             this.noticeService.create()
                 .player(uniqueId)
                 .notice(translation -> translation.warp().warpAlreadyExists())
@@ -62,7 +63,7 @@ class SetWarpCommand {
             .send();
 
         if (this.config.warp.autoAddNewWarps) {
-            if (this.warpService.getNamesOfWarps().size() <= MAX_WARPS_IN_GUI) {
+            if (this.warpService.getWarps().size() <= MAX_WARPS_IN_GUI) {
                 this.warpInventory.addWarp(createdWarp);
 
                 this.noticeService.create()
