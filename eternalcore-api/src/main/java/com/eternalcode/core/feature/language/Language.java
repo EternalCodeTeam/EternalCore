@@ -1,10 +1,11 @@
 package com.eternalcode.core.feature.language;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 public class Language {
 
@@ -13,19 +14,19 @@ public class Language {
     public static final Language DEFAULT = Language.fromLocale(Locale.ROOT);
 
     private final String lang;
-    private final List<String> aliases;
+    private final Set<String> aliases;
 
     public Language(String lang, List<String> aliases) {
         this.lang = lang;
-        this.aliases = new ArrayList<>(aliases);
+        this.aliases = new LinkedHashSet<>(aliases);
     }
 
     public String getLang() {
         return this.lang;
     }
 
-    public List<String> getAliases() {
-        return Collections.unmodifiableList(this.aliases);
+    public Set<String> getAliases() {
+        return Collections.unmodifiableSet(this.aliases);
     }
 
     public boolean isEquals(Language other) {
@@ -33,15 +34,17 @@ public class Language {
             return true;
         }
 
-        for (String alias : this.aliases) {
-            if (alias.equals(other.lang)) {
-                return true;
-            }
+        if (this.lang.startsWith(other.lang) || other.lang.startsWith(this.lang)) {
+            return true;
+        }
 
-            for (String otherAlias : other.aliases) {
-                if (alias.equals(otherAlias)) {
-                    return true;
-                }
+        if (this.aliases.contains(other.lang)) {
+            return true;
+        }
+
+        for (String otherAlias : other.aliases) {
+            if (this.aliases.contains(otherAlias)) {
+                return true;
             }
         }
 
@@ -71,7 +74,7 @@ public class Language {
     }
 
     public Locale toLocale() {
-        return new Locale(this.lang);
+        return Locale.of(this.lang);
     }
 
 }

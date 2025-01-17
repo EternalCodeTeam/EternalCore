@@ -25,12 +25,14 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
     static final String KEY = "chunks";
     private final PluginConfiguration pluginConfiguration;
     private final NoticeService noticeService;
+    private final ViewerService viewerService;
 
     @Inject
-    ButcherArgument(ViewerService viewerService, TranslationManager translationManager, PluginConfiguration pluginConfiguration, NoticeService noticeService) {
-        super(viewerService, translationManager);
+    ButcherArgument(TranslationManager translationManager, PluginConfiguration pluginConfiguration, NoticeService noticeService, ViewerService viewerService) {
+        super(translationManager);
         this.pluginConfiguration = pluginConfiguration;
         this.noticeService = noticeService;
+        this.viewerService = viewerService;
     }
 
     @Override

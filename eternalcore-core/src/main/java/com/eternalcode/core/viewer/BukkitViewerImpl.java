@@ -1,37 +1,28 @@
 package com.eternalcode.core.viewer;
 
-import com.eternalcode.core.feature.language.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
 class BukkitViewerImpl implements Viewer {
 
-    private static final BukkitViewerImpl CONSOLE = new BukkitViewerImpl(UUID.nameUUIDFromBytes("CONSOLE".getBytes()), true, Language.DEFAULT);
+    private static final BukkitViewerImpl CONSOLE = new BukkitViewerImpl(UUID.nameUUIDFromBytes("CONSOLE".getBytes()), true);
 
     private final UUID uuid;
     private final boolean console;
 
-    private final Supplier<Language> language;
-
-    private BukkitViewerImpl(UUID uuid, boolean console, Language language) {
-        this(uuid, console, () -> language);
-    }
-
-    private BukkitViewerImpl(UUID uuid, boolean console, Supplier<Language> language) {
+    private BukkitViewerImpl(UUID uuid, boolean console) {
         this.uuid = uuid;
         this.console = console;
-        this.language = language;
     }
 
-    public static BukkitViewerImpl console() {
+    static BukkitViewerImpl console() {
         return CONSOLE;
     }
 
-    public static BukkitViewerImpl player(UUID uuid, Language language) {
-        return new BukkitViewerImpl(uuid, false, language);
+    static BukkitViewerImpl player(UUID uuid) {
+        return new BukkitViewerImpl(uuid, false);
     }
 
     @Override
@@ -57,11 +48,6 @@ class BukkitViewerImpl implements Viewer {
         }
         
         return player.getName();
-    }
-
-    @Override
-    public Language getLanguage() {
-        return this.language.get();
     }
 
 }

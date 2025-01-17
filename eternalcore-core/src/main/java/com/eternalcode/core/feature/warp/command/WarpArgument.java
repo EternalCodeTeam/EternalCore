@@ -10,7 +10,6 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -30,10 +29,9 @@ class WarpArgument extends AbstractViewerArgument<Warp> {
     WarpArgument(
         WarpService warpService,
         TranslationManager translationManager,
-        ViewerService viewerService,
         NoticeService noticeService
     ) {
-        super(viewerService, translationManager);
+        super(translationManager);
         this.warpService = warpService;
         this.noticeService = noticeService;
     }

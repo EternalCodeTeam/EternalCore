@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.translation.AbstractTranslation;
@@ -37,6 +38,7 @@ public class WarpInventory {
     private static final int GUI_ROW_SIZE_WITH_BORDER = 7;
 
     private final TranslationManager translationManager;
+    private final LanguageService languageService;
     private final WarpService warpManager;
     private final Server server;
     private final MiniMessage miniMessage;
@@ -47,6 +49,7 @@ public class WarpInventory {
     @Inject
     WarpInventory(
         TranslationManager translationManager,
+        LanguageService languageService,
         WarpService warpManager,
         Server server,
         MiniMessage miniMessage,
@@ -55,6 +58,7 @@ public class WarpInventory {
         PluginConfiguration config
     ) {
         this.translationManager = translationManager;
+        this.languageService = languageService;
         this.warpManager = warpManager;
         this.server = server;
         this.miniMessage = miniMessage;
@@ -63,9 +67,15 @@ public class WarpInventory {
         this.config = config;
     }
 
-    public void openInventory(Player player, Language language) {
-        this.createInventory(player, language)
-            .open(player);
+    public void openInventory(Player player) {
+        this.languageService.getLanguage(player.getUniqueId()).whenComplete((language, throwable) -> {
+            if (language == null) {
+                language = Language.DEFAULT;
+            }
+
+            this.createInventory(player, language)
+                .open(player);
+        });
     }
 
     private Gui createInventory(Player player, Language language) {

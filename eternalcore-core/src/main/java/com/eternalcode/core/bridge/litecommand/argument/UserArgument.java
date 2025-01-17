@@ -6,7 +6,6 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -23,8 +22,8 @@ class UserArgument extends AbstractViewerArgument<User> {
     private final UserManager userManager;
 
     @Inject
-    UserArgument(ViewerService viewerService, TranslationManager translationManager, Server server, UserManager userManager) {
-        super(viewerService, translationManager);
+    UserArgument(TranslationManager translationManager, Server server, UserManager userManager) {
+        super(translationManager);
         this.server = server;
         this.userManager = userManager;
     }
