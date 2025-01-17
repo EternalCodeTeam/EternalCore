@@ -261,7 +261,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Format {
-        public String separator = "&7, ";
+        public String separator = "<gray>,</gray> ";
     }
 
     @Bean
