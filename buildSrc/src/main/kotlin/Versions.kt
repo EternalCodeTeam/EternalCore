@@ -18,7 +18,7 @@ object Versions {
     const val CDN_CONFIGS = "1.14.6"
 
     const val MARIA_DB = "3.5.1"
-    const val POSTGRESQL = "42.7.4"
+    const val POSTGRESQL = "42.7.5"
     const val H2 = "2.3.232"
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "6.2.1"
@@ -37,7 +37,7 @@ object Versions {
 
     const val BSTATS = "3.1.0"
 
-    const val CAFFEINE = "3.1.8"
+    const val CAFFEINE = "3.2.0"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
