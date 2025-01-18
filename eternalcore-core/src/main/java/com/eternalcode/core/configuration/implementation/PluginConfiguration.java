@@ -343,9 +343,6 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Warp inventory auto add new warps")
         public boolean autoAddNewWarps = true;
 
-        @Description("# Should item slots be recalculated after warp deletion")
-        public boolean recalculateWarpSlots = false;
-
         @Description({"# Options below allow you to customize item representing warp added to GUI, ",
             "# you can change almost everything inside langueage files, after the warp has been added to the inventory."})
         public String itemNamePrefix = "&8» &6Warp: &f";
