@@ -22,7 +22,6 @@ import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -38,6 +37,9 @@ public class WarpInventory {
 
     private static final int GUI_ROW_SIZE_WITHOUT_BORDER = 9;
     private static final int GUI_ROW_SIZE_WITH_BORDER = 7;
+
+    private static final int BORDER_ROW_COUNT = 2;
+    private static final int UGLY_BORDER_ROW_COUNT = 1;
 
     private final TranslationManager translationManager;
     private final LanguageService languageService;
@@ -92,8 +94,8 @@ public class WarpInventory {
         }
         else {
             switch (warpSection.border().fillType()) {
-                case BORDER, ALL -> rowsCount = (size + 1) / GUI_ROW_SIZE_WITH_BORDER + 3;
-                case TOP, BOTTOM -> rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 2;
+                case BORDER, ALL -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITH_BORDER + 1 + BORDER_ROW_COUNT;
+                case TOP, BOTTOM -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1 + UGLY_BORDER_ROW_COUNT;
                 default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
             }
         }
@@ -263,10 +265,6 @@ public class WarpInventory {
             return;
         }
 
-        if (!this.warpService.exists(warpName)) {
-            return;
-        }
-
         for (Language language : this.translationManager.getAvailableLanguages()) {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
@@ -284,6 +282,7 @@ public class WarpInventory {
         int removedSlot = removed.warpItem.slot;
         List<WarpInventoryItem> itemsToShift = warpSection.items().values().stream()
             .filter(item -> item.warpItem.slot > removedSlot)
+            .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
             .toList();
 
         int currentShift = removedSlot;
