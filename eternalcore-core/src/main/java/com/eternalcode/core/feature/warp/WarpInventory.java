@@ -37,7 +37,7 @@ public class WarpInventory {
     private static final int GUI_ROW_SIZE_WITH_BORDER = 7;
 
     private final TranslationManager translationManager;
-    private final WarpService warpManager;
+    private final WarpService warpService;
     private final Server server;
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
@@ -47,7 +47,7 @@ public class WarpInventory {
     @Inject
     WarpInventory(
         TranslationManager translationManager,
-        WarpService warpManager,
+        WarpService warpService,
         Server server,
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
@@ -55,7 +55,7 @@ public class WarpInventory {
         PluginConfiguration config
     ) {
         this.translationManager = translationManager;
-        this.warpManager = warpManager;
+        this.warpService = warpService;
         this.server = server;
         this.miniMessage = miniMessage;
         this.warpTeleportService = warpTeleportService;
@@ -153,7 +153,7 @@ public class WarpInventory {
 
     private void createWarpItems(Player player, WarpInventorySection warpSection, Gui gui) {
         warpSection.items().values().forEach(item -> {
-            Optional<Warp> warpOptional = this.warpManager.findWarp(item.warpName());
+            Optional<Warp> warpOptional = this.warpService.findWarp(item.warpName());
 
             if (warpOptional.isEmpty()) {
                 return;
@@ -205,30 +205,14 @@ public class WarpInventory {
     }
 
     public void addWarp(Warp warp) {
-        if (!this.warpManager.isExist(warp.getName())) {
+        if (!this.warpService.isExist(warp.getName())) {
             return;
         }
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
-
-            int size = warpSection.items().size();
-            int slot;
-
-            if (!warpSection.border().enabled()) {
-                slot = GUI_ITEM_SLOT_WITHOUT_BORDER + size;
-            }
-            else {
-                switch (warpSection.border().fillType()) {
-                    case BORDER -> slot = GUI_ITEM_SLOT_WITH_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
-                    case ALL -> slot = GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
-                    case TOP -> slot = GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
-                    case BOTTOM -> slot = size;
-                    default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
-                }
-            }
-
+            int slot = getSlot(warpSection);
 
             warpSection.addItem(warp.getName(),
                 WarpInventoryItem.builder()
@@ -248,23 +232,54 @@ public class WarpInventory {
         }
     }
 
-    public boolean removeWarp(String warpName) {
+    private int getSlot(Translation.WarpSection.WarpInventorySection warpSection) {
+        int size = warpSection.items().size();
+        if (!warpSection.border().enabled()) {
+            return GUI_ITEM_SLOT_WITHOUT_BORDER + size;
+        }
 
-        if (!this.warpManager.isExist(warpName)) {
-            return false;
+        return switch (warpSection.border().fillType()) {
+            case BORDER -> GUI_ITEM_SLOT_WITH_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
+            case ALL -> GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
+            case TOP -> GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
+            case BOTTOM -> size;
+        };
+    }
+
+    public void removeWarp(String warpName) {
+        if (!this.config.warp.autoAddNewWarps) {
+            return;
+        }
+
+        if (!this.warpService.isExist(warpName)) {
+            return;
         }
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
-
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+            WarpInventoryItem removed = warpSection.removeItem(warpName);
 
-            warpSection.removeItem(warpName);
+            if (removed != null) {
+                this.shiftWarpItems(removed, warpSection);
+            }
 
             this.configurationManager.save(translation);
-
         }
-
-        return true;
     }
+
+    private void shiftWarpItems(WarpInventoryItem removed, Translation.WarpSection.WarpInventorySection warpSection) {
+        int removedSlot = removed.warpItem.slot;
+        List<WarpInventoryItem> iterator = warpSection.items().values().stream()
+            .filter(item -> item.warpItem.slot > removedSlot)
+            .toList();
+
+        int currentShift = removedSlot;
+        for (WarpInventoryItem item : iterator) {
+            int nextShift = item.warpItem.slot;
+            item.warpItem.slot = currentShift;
+            currentShift = nextShift;
+        }
+    }
+
 }

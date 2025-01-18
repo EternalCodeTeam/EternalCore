@@ -176,11 +176,12 @@ public interface Translation {
                 this.setItems(items);
             }
 
-            default void removeItem(String name) {
+            default WarpInventoryItem removeItem(String name) {
                 Map<String, WarpInventoryItem> items = new HashMap<>(this.items());
-                items.remove(name);
+                WarpInventoryItem removed = items.remove(name);
 
                 this.setItems(items);
+                return removed;
             }
 
             BorderSection border();
