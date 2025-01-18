@@ -37,7 +37,7 @@ object Versions {
 
     const val BSTATS = "3.1.0"
 
-    const val CAFFEINE = "3.1.8"
+    const val CAFFEINE = "3.2.0"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
