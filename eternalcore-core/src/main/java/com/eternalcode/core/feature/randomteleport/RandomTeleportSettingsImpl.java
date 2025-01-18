@@ -169,6 +169,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
     }
 
     @Override
+    @Deprecated(since = "1.5.0", forRemoval = true)
     public boolean migrate() {
         boolean migrated = false;
         if (randomTeleportDelay != null) {
