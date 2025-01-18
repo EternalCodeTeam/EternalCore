@@ -91,13 +91,13 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public boolean exists(String name) {
-        return this.warps.containsKey(name);
+    public boolean exists(String warp) {
+        return this.warps.containsKey(warp);
     }
 
     @Override
-    public Optional<Warp> findWarp(String name) {
-        return Optional.ofNullable(this.warps.get(name));
+    public Optional<Warp> findWarp(String warp) {
+        return Optional.ofNullable(this.warps.get(warp));
     }
 
     @Override

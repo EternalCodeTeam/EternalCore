@@ -282,12 +282,12 @@ public class WarpInventory {
 
     private void shiftWarpItems(WarpInventoryItem removed, Translation.WarpSection.WarpInventorySection warpSection) {
         int removedSlot = removed.warpItem.slot;
-        List<WarpInventoryItem> iterator = warpSection.items().values().stream()
+        List<WarpInventoryItem> itemsToShift = warpSection.items().values().stream()
             .filter(item -> item.warpItem.slot > removedSlot)
             .toList();
 
         int currentShift = removedSlot;
-        for (WarpInventoryItem item : iterator) {
+        for (WarpInventoryItem item : itemsToShift) {
             int nextShift = item.warpItem.slot;
             item.warpItem.slot = currentShift;
             currentShift = nextShift;

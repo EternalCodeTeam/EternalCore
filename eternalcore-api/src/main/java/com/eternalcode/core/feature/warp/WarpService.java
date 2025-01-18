@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface WarpService {
 
-    Warp createWarp(String name, Location location);
+    Warp createWarp(String warp, Location location);
 
     void removeWarp(String warp);
 
@@ -18,9 +18,9 @@ public interface WarpService {
     @Experimental
     Warp removePermissions(String warp, String... permissions);
 
-    boolean exists(String name);
+    boolean exists(String warp);
 
-    Optional<Warp> findWarp(String name);
+    Optional<Warp> findWarp(String warp);
 
     Collection<Warp> getWarps();
 }
