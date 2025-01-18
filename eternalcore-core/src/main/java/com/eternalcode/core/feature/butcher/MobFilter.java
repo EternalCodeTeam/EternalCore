@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.mob;
+package com.eternalcode.core.feature.butcher;
 
 import org.bukkit.entity.Entity;
 

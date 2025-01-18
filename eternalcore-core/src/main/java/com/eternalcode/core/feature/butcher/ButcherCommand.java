@@ -1,7 +1,7 @@
-package com.eternalcode.core.feature.essentials.mob;
+package com.eternalcode.core.feature.butcher;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -25,10 +25,12 @@ import java.util.List;
 class ButcherCommand {
 
     private final NoticeService noticeService;
+    private final EventCaller eventCaller;
 
     @Inject
-    ButcherCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
+    ButcherCommand(NoticeService noticeService, EventCaller eventCaller) {
         this.noticeService = noticeService;
+        this.eventCaller = eventCaller;
     }
 
     @Execute
@@ -51,13 +53,18 @@ class ButcherCommand {
 
     private void killMobs(Player player, int chunksNumber, MobFilter mobFilter) {
         Collection<Chunk> chunks = this.getChunksNearPlayer(player, chunksNumber);
-
         int killedMobs = 0;
 
         for (Chunk chunk : chunks) {
             for (Entity entity : chunk.getEntities()) {
-
                 if (!mobFilter.filterMob(entity)) {
+                    continue;
+                }
+
+                ButcherEntityRemoveEvent event = new ButcherEntityRemoveEvent(entity);
+                this.eventCaller.callEvent(event);
+
+                if (event.isCancelled()) {
                     continue;
                 }
 

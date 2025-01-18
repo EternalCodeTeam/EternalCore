@@ -4,6 +4,7 @@ import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
+import com.eternalcode.core.feature.catboy.CatBoySettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
@@ -418,6 +419,24 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public Set<String> allowedCommands() {
             return this.allowedCommands;
+        }
+    }
+
+    @Bean
+    @Description({ " ", "# 4fun Section" })
+    FunSection fun = new FunSection();
+
+    @Contextual
+    public static class FunSection implements CatBoySettings {
+        @Description({
+            "# Speed of player walk speed while using /catboy feature",
+            "# Default minecraft walk speed is 0.2"
+        })
+        public float catboyWalkSpeed = 0.4F;
+
+        @Override
+        public float getCatboyWalkSpeed() {
+            return this.catboyWalkSpeed;
         }
     }
 

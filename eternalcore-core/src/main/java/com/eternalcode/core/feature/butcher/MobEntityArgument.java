@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.mob;
+package com.eternalcode.core.feature.butcher;
 
 import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;

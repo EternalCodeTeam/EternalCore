@@ -1,9 +1,15 @@
 package com.eternalcode.core.feature.catboy;
 
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.feature.butcher.ButcherEntityRemoveEvent;
 import com.eternalcode.core.feature.teleport.event.EternalTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.publish.Subscribe;
+import com.eternalcode.core.publish.event.EternalShutdownEvent;
+import java.time.Duration;
+import java.util.Optional;
+import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Cat;
@@ -15,21 +21,27 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.time.Duration;
-import java.util.Optional;
-
 @Controller
 class CatboyController implements Listener {
 
     private static final Duration TICK = Duration.ofMillis(50L);
 
     private final CatboyService catboyService;
+    private final CatBoyEntityService catBoyEntityService;
     private final Scheduler scheduler;
+    private final Server server;
 
     @Inject
-    CatboyController(CatboyService catboyService, Scheduler scheduler) {
+    CatboyController(
+        CatboyService catboyService,
+        CatBoyEntityService catBoyEntityService,
+        Scheduler scheduler,
+        Server server
+    ) {
         this.catboyService = catboyService;
+        this.catBoyEntityService = catBoyEntityService;
         this.scheduler = scheduler;
+        this.server = server;
     }
 
     @EventHandler
@@ -60,7 +72,9 @@ class CatboyController implements Listener {
             Catboy catboy = optionalCatboy.get();
 
             this.catboyService.unmarkAsCatboy(event.getPlayer());
-            this.scheduler.runLater(() -> this.catboyService.markAsCatboy(event.getPlayer(), catboy.selectedType()), TICK);
+            this.scheduler.runLater(
+                () -> this.catboyService.markAsCatboy(event.getPlayer(), catboy.selectedType()),
+                TICK);
         }
     }
 
@@ -85,4 +99,25 @@ class CatboyController implements Listener {
         }
     }
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    void onEntityRemoveFromWorld(ButcherEntityRemoveEvent event) {
+        if (!(event.getEntity() instanceof Cat cat)) {
+            return;
+        }
+
+        if (this.catBoyEntityService.isCatboy(cat)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @Subscribe
+    void onServerShutdown(EternalShutdownEvent event) {
+        for (Player onlinePlayer : this.server.getOnlinePlayers()) {
+            boolean catboy = this.catboyService.isCatboy(onlinePlayer.getUniqueId());
+
+            if (catboy) {
+                this.catboyService.unmarkAsCatboy(onlinePlayer);
+            }
+        }
+    }
 }
