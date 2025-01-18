@@ -10,9 +10,9 @@ import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -343,9 +343,12 @@ public class PluginConfiguration implements ReloadableConfig {
         @Description("# Warp inventory auto add new warps")
         public boolean autoAddNewWarps = true;
 
+        @Description("# Should item slots be recalculated after warp deletion")
+        public boolean recalculateWarpSlots = false;
+
         @Description({"# Options below allow you to customize item representing warp added to GUI, ",
             "# you can change almost everything inside langueage files, after the warp has been added to the inventory."})
-        public  String itemNamePrefix = "&8» &6Warp: &f";
+        public String itemNamePrefix = "&8» &6Warp: &f";
 
         public String itemLore = "&7Click to teleport!";
 

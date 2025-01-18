@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.warp;
 
 import org.bukkit.Location;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 import java.util.Collection;
 import java.util.Optional;
-import org.jetbrains.annotations.ApiStatus.Experimental;
 
 public interface WarpService {
 
@@ -18,7 +18,7 @@ public interface WarpService {
     @Experimental
     Warp removePermissions(String warp, String... permissions);
 
-    boolean isExist(String name);
+    boolean exists(String name);
 
     Optional<Warp> findWarp(String name);
 

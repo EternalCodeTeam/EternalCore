@@ -22,7 +22,9 @@ import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +47,8 @@ public class WarpInventory {
     private final WarpTeleportService warpTeleportService;
     private final ConfigurationManager configurationManager;
     private final PluginConfiguration config;
+
+    private Gui gui;
 
     @Inject
     WarpInventory(
@@ -96,17 +100,17 @@ public class WarpInventory {
             }
         }
 
-        Gui gui = Gui.gui()
+        this.gui = Gui.gui()
             .title(this.miniMessage.deserialize(warpSection.title()))
             .rows(rowsCount)
             .disableAllInteractions()
             .create();
 
-        this.createWarpItems(player, warpSection, gui);
-        this.createBorder(warpSection, gui);
-        this.createDecorations(warpSection, gui);
+        this.createWarpItems(player, warpSection, this.gui);
+        this.createBorder(warpSection, this.gui);
+        this.createDecorations(warpSection, this.gui);
 
-        return gui;
+        return this.gui;
     }
 
     private void createBorder(WarpInventorySection warpSection, Gui gui) {
@@ -215,7 +219,7 @@ public class WarpInventory {
     }
 
     public void addWarp(Warp warp) {
-        if (!this.warpManager.isExist(warp.getName())) {
+        if (!this.warpManager.exists(warp.getName())) {
             return;
         }
 
@@ -260,9 +264,10 @@ public class WarpInventory {
 
     public boolean removeWarp(String warpName) {
 
-        if (!this.warpManager.isExist(warpName)) {
+        /*if (!this.warpManager.exists(warpName)) {
+            System.out.println("Warp does not exist");
             return false;
-        }
+        }*/
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
 
@@ -270,11 +275,35 @@ public class WarpInventory {
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
 
             warpSection.removeItem(warpName);
-
             this.configurationManager.save(translation);
 
-        }
+            if (this.config.warp.recalculateWarpSlots) {
+                List<WarpInventoryItem> toAdd = new ArrayList<>();
+                List<WarpInventoryItem> toRemove = new ArrayList<>();
+                // Recalculate slots, decrement the slot of each item and replace the items in the GUI
+                warpSection.items().values().stream()
+                    .sorted(Comparator.comparingInt(item -> item.warpItem().slot()))
+                    .forEach(item -> {
+                        WarpInventoryItem clonedItem = new WarpInventoryItem(item.warpName(), item.warpItem());
+                        toRemove.add(item);
 
+                        while (this.gui.getGuiItem(clonedItem.warpItem().slot() - 1) == null) {
+                            clonedItem.warpItem().slot -= 1;
+                        }
+                        toAdd.add(clonedItem);
+                    });
+
+                for (WarpInventoryItem warp : toRemove) {
+                    warpSection.removeItem(warp.warpName());
+                }
+
+                for (WarpInventoryItem warp : toAdd) {
+                    warpSection.addItem(warp.warpName(), warp);
+                }
+
+            }
+            this.configurationManager.save(translation);
+        }
         return true;
     }
 }
