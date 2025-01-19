@@ -8,11 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 
 @Getter
+@Accessors(fluent = true)
 @Contextual
 public class PLWarpMessages implements WarpMessages {
     @Description("# {WARP} - Nazwa warpu")
@@ -42,6 +44,7 @@ public class PLWarpMessages implements WarpMessages {
     public PLWarpInventory warpInventory = new PLWarpInventory();
 
     @Getter
+    @Accessors(fluent = true)
     @Contextual
     public static class PLWarpInventory implements WarpInventorySection {
         public String title = "<dark_gray>» <green>Lista dostępnych warpów";
