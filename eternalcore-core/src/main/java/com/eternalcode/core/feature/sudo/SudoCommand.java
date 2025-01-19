@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials;
+package com.eternalcode.core.feature.sudo;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
@@ -54,7 +54,7 @@ class SudoCommand {
         this.server.getOnlinePlayers().stream()
             .filter(player -> player.hasPermission("eternalcore.sudo.spy"))
             .forEach(player -> this.noticeService.create()
-                .notice(translation -> translation.sudo().sudoMessage())
+                .notice(translation -> translation.sudo().sudoMessageSpy())
                 .placeholder("{COMMAND}", command)
                 .placeholder("{PLAYER}", viewer.getName())
                 .player(player.getUniqueId())

@@ -10,7 +10,8 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
-import com.eternalcode.core.translation.Translation.WarpSection.WarpInventorySection;
+import com.eternalcode.core.feature.warp.messages.WarpMessages;
+import com.eternalcode.core.feature.warp.messages.WarpMessages.WarpInventorySection;
 import com.eternalcode.core.translation.TranslationManager;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
@@ -80,7 +81,7 @@ public class WarpInventory {
 
     private Gui createInventory(Player player, Language language) {
         Translation translation = this.translationManager.getMessages(language);
-        Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
 
         int rowsCount;
         int size = warpSection.items().size();
@@ -221,7 +222,7 @@ public class WarpInventory {
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
 
             int size = warpSection.items().size();
             int slot;
@@ -267,7 +268,7 @@ public class WarpInventory {
         for (Language language : this.translationManager.getAvailableLanguages()) {
 
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
 
             warpSection.removeItem(warpName);
 
