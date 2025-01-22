@@ -11,9 +11,6 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.entity.Player;
 
-// To clarify:
-// ON - true - means that the player has turned on msgToggle and has blocked getting private messages
-// OFF - false - means that the player has turned off msgToggle and has allowed getting private messages
 @Command(name = "msgtoggle")
 @Permission("eternalcore.msgtoggle")
 public class MsgToggleCommand {
@@ -38,7 +35,7 @@ public class MsgToggleCommand {
         CompletableFuture<Boolean> hasMsgToggledOff = this.msgToggleService.hasMsgToggled(context.getUniqueId());
 
         hasMsgToggledOff.thenAccept(toggledOff -> {
-            if (!toggledOff) {
+            if (toggledOff) {
                 this.toggleOff(context);
             } else {
                 this.toggleOn(context);
