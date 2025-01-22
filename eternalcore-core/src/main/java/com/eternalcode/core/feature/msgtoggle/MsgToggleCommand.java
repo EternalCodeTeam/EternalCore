@@ -27,39 +27,43 @@ public class MsgToggleCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
-    @DescriptionDocs(description = "Toggle private messages")
-    public void execute(@Context Player context) {
+    public enum STATE {
+        ON,
+        OFF
+    }
 
-        CompletableFuture<Boolean> hasMsgToggledOff = this.msgToggleService.hasMsgToggledOff(context.getUniqueId());
+    @Execute
+    @DescriptionDocs(description = "Toggle receiving private messages on and off")
+    public void execute(@Context Player context) {
+        CompletableFuture<Boolean> hasMsgToggledOff = this.msgToggleService.hasMsgToggled(context.getUniqueId());
 
         hasMsgToggledOff.thenAccept(toggledOff -> {
             if (!toggledOff) {
-                this.on(context);
+                this.toggleOff(context);
             } else {
-                this.off(context);
+                this.toggleOn(context);
             }
         });
     }
 
-    @Execute(name = "off")
-    @DescriptionDocs(description = "Enable private messages")
-    public void on(@Context Player context) {
+    @Execute(name = "on")
+    @DescriptionDocs(description = "Block incoming private messages")
+    public void toggleOn(@Context Player context) {
         this.msgToggleService.toggleMsg(context.getUniqueId(), true);
 
         this.noticeService.create()
-            .notice(translation -> translation.privateChat().msgToggleSelfOn())
+            .notice(translation -> translation.privateChat().msgToggledSelf())
             .player(context.getUniqueId())
             .send();
     }
 
-    @Execute(name = "on")
-    @DescriptionDocs(description = "Disable private messages")
-    public void off(@Context Player context) {
+    @Execute(name = "off")
+    @DescriptionDocs(description = "Unblock incoming private messages")
+    public void toggleOff(@Context Player context) {
         this.msgToggleService.toggleMsg(context.getUniqueId(), false);
 
         this.noticeService.create()
-            .notice(translation -> translation.privateChat().msgToggleSelfOff())
+            .notice(translation -> translation.privateChat().msgUntoggleSelf())
             .player(context.getUniqueId())
             .send();
     }
@@ -68,7 +72,7 @@ public class MsgToggleCommand {
     @Permission("eternalcore.msgtoggle.other")
     @DescriptionDocs(description = "Toggle private messages for other player", arguments = "<player>")
     public void other(@Context Player context, @Arg("player") Player player) {
-        CompletableFuture<Boolean> hasMsgToggledOff = this.msgToggleService.hasMsgToggledOff(player.getUniqueId());
+        CompletableFuture<Boolean> hasMsgToggledOff = this.msgToggleService.hasMsgToggled(player.getUniqueId());
 
         hasMsgToggledOff.thenAccept(toggledOff -> this.other(context, player, !toggledOff ? STATE.ON : STATE.OFF));
     }
@@ -82,8 +86,8 @@ public class MsgToggleCommand {
         this.noticeService.create()
             .notice(
                 translation -> toggle == STATE.ON ?
-                    translation.privateChat().msgTogglePlayerOn() :
-                    translation.privateChat().msgTogglePlayerOff()
+                    translation.privateChat().msgUntogglePlayer() :
+                    translation.privateChat().msgToggledPlayer()
             )
             .player(context.getUniqueId())
             .placeholder("{PLAYER}", player.getName())
@@ -91,8 +95,4 @@ public class MsgToggleCommand {
 
     }
 
-    public enum STATE {
-        ON,
-        OFF
-    }
 }

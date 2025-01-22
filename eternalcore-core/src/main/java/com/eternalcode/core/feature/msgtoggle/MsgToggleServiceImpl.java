@@ -18,8 +18,8 @@ public class MsgToggleServiceImpl implements MsgToggleService{
 
 
     @Override
-    public CompletableFuture<Boolean> hasMsgToggledOff(UUID uuid) {
-        return this.msgToggleRepository.isToggledOff(uuid);
+    public CompletableFuture<Boolean> hasMsgToggled(UUID uuid) {
+        return this.msgToggleRepository.isToggled(uuid);
     }
 
     @Override

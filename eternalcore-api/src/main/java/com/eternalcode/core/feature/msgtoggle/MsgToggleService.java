@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface MsgToggleService {
 
-    CompletableFuture<Boolean> hasMsgToggledOff(UUID uuid);
+    CompletableFuture<Boolean> hasMsgToggled(UUID uuid);
 
     void toggleMsg(UUID uuid, boolean toggle);
 

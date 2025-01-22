@@ -20,7 +20,7 @@ class MsgToggleRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ms
     }
 
     @Override
-    public CompletableFuture<Boolean> isToggledOff(UUID uuid) {
+    public CompletableFuture<Boolean> isToggled(UUID uuid) {
         return this.selectSafe(MsgToggleWrapper.class, uuid)
             .thenApply(
                 optional -> optional.map(MsgToggleWrapper::isEnabled).orElse(true)

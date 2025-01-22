@@ -499,12 +499,12 @@ public class ENTranslation extends AbstractTranslation {
 
         public Notice msgToggledOff = Notice.chat("<red>► <dark_red>This player has disabled private messages!");
 
-        public Notice msgToggleSelfOff = Notice.chat("<green>► <white>Private messages have been <red>disabled<white>!");
-        public Notice msgToggleSelfOn = Notice.chat("<green>► <white>Private messages have been <green>enabled<white>!");
+        public Notice msgToggledSelf = Notice.chat("<green>► <white>Private messages have been <red>disabled<white>!");
+        public Notice msgUntoggleSelf = Notice.chat("<green>► <white>Private messages have been <green>enabled<white>!");
 
         @Description("# {PLAYER} - Player")
-        public Notice msgTogglePlayerOff = Notice.chat("<green>► <white>Private messages have been disabled for <green>{PLAYER}<white>!");
-        public Notice msgTogglePlayerOn = Notice.chat("<green>► <white>Private messages have been enabled for <green>{PLAYER}<white>!");
+        public Notice msgToggledPlayer = Notice.chat("<green>► <white>Private messages have been disabled for <green>{PLAYER}<white>!");
+        public Notice msgUntogglePlayer = Notice.chat("<green>► <white>Private messages have been enabled for <green>{PLAYER}<white>!");
 
 
 

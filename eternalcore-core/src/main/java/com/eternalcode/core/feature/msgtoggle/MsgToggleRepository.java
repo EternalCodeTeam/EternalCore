@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface MsgToggleRepository {
 
-    CompletableFuture<Boolean> isToggledOff(UUID uuid);
+    CompletableFuture<Boolean> isToggled(UUID uuid);
 
     CompletableFuture<Void> setToggledOff(UUID uuid, boolean toggledOff);
 

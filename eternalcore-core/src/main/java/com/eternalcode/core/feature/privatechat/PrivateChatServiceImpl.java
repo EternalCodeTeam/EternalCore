@@ -59,8 +59,8 @@ class PrivateChatServiceImpl implements PrivateChatService {
 
         UUID uniqueId = target.getUniqueId();
 
-        this.msgToggleService.hasMsgToggledOff(uniqueId).thenAccept(hasToggledOff -> {
-            if (hasToggledOff) {
+        this.msgToggleService.hasMsgToggled(uniqueId).thenAccept(hasMsgToggled -> {
+            if (hasMsgToggled) {
                 this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().msgToggledOff());
 
                 return;
