@@ -14,7 +14,7 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 
-@Command(name = "signedit setline")
+@Command(name = "signedit")
 @Permission("eternalcode.signedit")
 public class SignEditCommand {
 
