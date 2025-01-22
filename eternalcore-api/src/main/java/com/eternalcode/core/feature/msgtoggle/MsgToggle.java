@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public class MsgToggle {
 
-    private final UUID uuid;
-    private final boolean toggle;
+    UUID uuid;
+    boolean toggle;
 
     public MsgToggle() {
 
