@@ -84,7 +84,7 @@ public class MsgToggleCommand {
             this.toggleOff(player);
         }
 
-        if (context.equals(player)) {
+        if (player.getUniqueId().equals(context.getUniqueId())) {
             return;
         }
 
