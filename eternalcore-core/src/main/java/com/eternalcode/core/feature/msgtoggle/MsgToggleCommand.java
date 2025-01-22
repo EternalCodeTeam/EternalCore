@@ -78,7 +78,15 @@ public class MsgToggleCommand {
     @Permission("eternalcore.msgtoggle.other")
     @DescriptionDocs(description = "Toggle private messages for other player", arguments = "<player> <toggle>")
     public void other(@Context Player context, @Arg("player") Player player, @Arg("<on/off>") STATE toggle) {
-        this.msgToggleService.toggleMsg(player.getUniqueId(), toggle == STATE.ON);
+        if (toggle == STATE.ON) {
+            this.toggleOn(player);
+        } else {
+            this.toggleOff(player);
+        }
+
+        if (context.equals(player)) {
+            return;
+        }
 
         this.noticeService.create()
             .notice(
