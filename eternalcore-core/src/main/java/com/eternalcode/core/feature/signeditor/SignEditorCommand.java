@@ -29,7 +29,7 @@ public class SignEditorCommand {
 
     @Execute(name = "setline")
     void execute(@Context Player player, @Arg int index, @Join String text) {
-        Block targetBlock = player.getTargetBlock(null, 5);
+        Block targetBlock = player.getTargetBlockExact(5);
 
         if (!(targetBlock.getState() instanceof Sign sign)) {
             this.noticeService.create()
