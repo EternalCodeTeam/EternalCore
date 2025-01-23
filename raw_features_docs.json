@@ -175,6 +175,20 @@
     ]
   },
   {
+    "name": "Vanish tabulation",
+    "permissions": [],
+    "descriptions": [
+      "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa. To re-enable this feature for specific players, grant them the eternalcore.vanish.tabulation.see permission."
+    ]
+  },
+  {
+    "name": "Vanish tabulation",
+    "permissions": [],
+    "descriptions": [
+      "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa. To re-enable this feature for specific players, grant them the eternalcore.vanish.tabulation.see permission."
+    ]
+  },
+  {
     "name": "Warp System",
     "permissions": [],
     "descriptions": [

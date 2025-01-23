@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.mob;
+package com.eternalcode.core.feature.butcher;
 
 import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -6,7 +6,6 @@ import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.EntityUtil;
-import com.eternalcode.core.viewer.ViewerService;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -23,8 +22,8 @@ class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
     static final String KEY = "mobType";
 
     @Inject
-    MobEntityArgument(ViewerService viewerService, TranslationManager translationManager) {
-        super(viewerService, translationManager);
+    MobEntityArgument(TranslationManager translationManager) {
+        super(translationManager);
     }
 
     @Override

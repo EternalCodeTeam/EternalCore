@@ -1,8 +1,8 @@
 package com.eternalcode.core.configuration.implementation;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import com.eternalcode.commons.bukkit.position.Position;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
 import net.dzikoysk.cdn.source.Resource;
@@ -21,7 +21,8 @@ public class LocationsConfiguration implements ReloadableConfig {
     @Description("# This is spawn location, for your own safety, please don't touch it.")
     public Position spawn = EMPTY_POSITION;
 
-    @Description("# These are warp locations, for your own safety, please don't touch it.")
+    @Description("# Warps now are stored in warps.yml. This is deprecated.")
+    @Deprecated(since = "1.5.1", forRemoval = true)
     public Map<String, Position> warps = new HashMap<>();
 
     @Description("# This is jail location, for your own safety, please don't touch it.")

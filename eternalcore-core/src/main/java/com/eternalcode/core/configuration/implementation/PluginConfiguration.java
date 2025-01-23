@@ -2,14 +2,15 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.database.DatabaseType;
-import com.eternalcode.core.delay.DelaySettings;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
+import com.eternalcode.core.feature.catboy.CatBoySettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
-import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
+import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
+import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import java.util.LinkedHashMap;
@@ -26,7 +27,9 @@ import org.bukkit.Sound;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 @ConfigurationFile
 public class PluginConfiguration implements ReloadableConfig {
@@ -80,6 +83,8 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
+
+    @Bean
     @Description({ " ", "# Teleport request section" })
     public TeleportAsk teleportAsk = new TeleportAsk();
 
@@ -102,6 +107,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Bean
     @Description({ " ", "# Teleport section" })
     public Teleport teleport = new Teleport();
 
@@ -125,9 +131,11 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Bean
     @Description({ "", "# Random Teleport Section" })
     public RandomTeleportSettingsImpl randomTeleport = new RandomTeleportSettingsImpl();
 
+    @Bean
     @Description({ " ", "# Homes Section" })
     public Homes homes = new Homes();
 
@@ -174,6 +182,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
+    @Bean
     @Description({ " ", "# Chat Section" })
     public Chat chat = new Chat();
 
@@ -242,13 +251,12 @@ public class PluginConfiguration implements ReloadableConfig {
     public Repair repair = new Repair();
 
     @Contextual
-    public static class Repair implements DelaySettings {
+    public static class Repair {
 
         @Description({ "# Repair command cooldown" })
         public Duration repairDelay = Duration.ofSeconds(5);
 
-        @Override
-        public Duration delay() {
+        public Duration repairDelay() {
             return this.repairDelay;
         }
     }
@@ -258,9 +266,10 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Contextual
     public static class Format {
-        public String separator = "&7, ";
+        public String separator = "<gray>,</gray> ";
     }
 
+    @Bean
     @Description({ " ", "# AFK Section" })
     public Afk afk = new Afk();
 
@@ -348,7 +357,6 @@ public class PluginConfiguration implements ReloadableConfig {
 
         @Description("# Texture of the item (only for PLAYER_HEAD material)")
         public String itemTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";
-
     }
 
     @Description({ " ", "# Butcher" })
@@ -360,6 +368,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public int safeChunkNumber = 5;
     }
 
+    @Bean
     @Description({ " ", "# AutoMessage Section" })
     public AutoMessage autoMessage = new AutoMessage();
 
@@ -393,6 +402,7 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
+    @Bean
     @Description({ " ", "# Jail Section" })
     public Jail jail = new Jail();
 
@@ -413,6 +423,24 @@ public class PluginConfiguration implements ReloadableConfig {
         @Override
         public Set<String> allowedCommands() {
             return this.allowedCommands;
+        }
+    }
+
+    @Bean
+    @Description({ " ", "# 4fun Section" })
+    FunSection fun = new FunSection();
+
+    @Contextual
+    public static class FunSection implements CatBoySettings {
+        @Description({
+            "# Speed of player walk speed while using /catboy feature",
+            "# Default minecraft walk speed is 0.2"
+        })
+        public float catboyWalkSpeed = 0.4F;
+
+        @Override
+        public float getCatboyWalkSpeed() {
+            return this.catboyWalkSpeed;
         }
     }
 

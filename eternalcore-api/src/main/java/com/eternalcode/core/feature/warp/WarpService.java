@@ -4,6 +4,7 @@ import org.bukkit.Location;
 
 import java.util.Collection;
 import java.util.Optional;
+import org.jetbrains.annotations.ApiStatus.Experimental;
 
 public interface WarpService {
 
@@ -11,11 +12,15 @@ public interface WarpService {
 
     void removeWarp(String warp);
 
-    boolean warpExists(String name);
+    @Experimental
+    Warp addPermissions(String warp, String... permissions);
+
+    @Experimental
+    Warp removePermissions(String warp, String... permissions);
+
+    boolean isExist(String name);
 
     Optional<Warp> findWarp(String name);
 
-    Collection<String> getNamesOfWarps();
-
-    boolean hasWarps();
+    Collection<Warp> getWarps();
 }

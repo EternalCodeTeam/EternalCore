@@ -1,12 +1,11 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
-import java.util.HashMap;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -14,9 +13,11 @@ import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -381,6 +382,15 @@ public class ENTranslation extends AbstractTranslation {
         public Notice itemAdded = Notice.chat("<green>► <white>Warp has been added to GUI!");
         public Notice noWarps = Notice.chat("<red>✘ <dark_red>There are no warps!");
         public Notice itemLimit = Notice.chat("<red>✘ <dark_red>You have reached the limit of warps! Your limit is <red>{LIMIT}<dark_red>.");
+        public Notice noPermission = Notice.chat("<red>✘ <dark_red>You don't have permission to use this warp ({WARP})!");
+        public Notice addPermissions = Notice.chat("<green>► <white>Added permissions to warp <green>{WARP}<white>!");
+        public Notice removePermission = Notice.chat("<red>► <white>Removed permission <red>{PERMISSION}</red> <white>from warp <red>{WARP}<white>!");
+        public Notice noPermissionsProvided = Notice.chat("<red>✘ <dark_red>No permissions provided!");
+        public Notice permissionDoesNotExist = Notice.chat("<red>✘ <dark_red>Permission <red>{PERMISSION} <dark_red>doesn't exist!");
+        public Notice permissionAlreadyExist = Notice.chat("<red>✘ <dark_red>Permission <red>{PERMISSION} <dark_red>already exists!");
+        public Notice noPermissionAssigned = Notice.chat("<red>✘ <red>There are no permissions assigned to this warp!");
+        public Notice missingWarpArgument = Notice.chat("<red>✘ <dark_red>You must provide a warp name!");
+        public Notice missingPermissionArgument = Notice.chat("<red>✘ <dark_red>You must provide a permission!");
 
         @Description({" ", "# {WARPS} - List of warps (separated by commas)"})
         public Notice available = Notice.chat("<green>► <white>Available warps: <green>{WARPS}");
@@ -392,7 +402,6 @@ public class ENTranslation extends AbstractTranslation {
         @Contextual
         public static class ENWarpInventory implements WarpInventorySection {
             public String title = "<dark_gray>» <green>Available warps:";
-
 
             @Description({" ", "# Warps located inside GUI inventory can be customized here. More warps will be added on creation with /setwarp command. "})
             public Map<String, WarpInventoryItem> items = new HashMap<>();

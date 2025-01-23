@@ -13,11 +13,6 @@ public class Delay<T> {
 
     private final Supplier<Duration> delaySettings;
 
-    @Deprecated
-    public Delay(DelaySettings delaySettings) {
-        this((Supplier<Duration>) () -> delaySettings.delay());
-    }
-
     public Delay(Supplier<Duration> delayProvider) {
         this.delaySettings = delayProvider;
 

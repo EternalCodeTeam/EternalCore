@@ -60,11 +60,11 @@ final class LocalPublisher implements Publisher {
     }
 
     @Override
-    public void publish(PublishEvent publishEvent) {
+    public <E extends PublishEvent> E publish(E publishEvent) {
         Set<NativeSubscriber> nativeSubscribers = this.subscribersByType.get(publishEvent.getClass());
 
         if (nativeSubscribers == null) {
-            return;
+            return publishEvent;
         }
 
         for (NativeSubscriber nativeSubscriber : nativeSubscribers) {
@@ -73,6 +73,8 @@ final class LocalPublisher implements Publisher {
 
             this.dependencyInjector.invokeMethod(instance, method, publishEvent);
         }
+
+        return publishEvent;
     }
 
     private record NativeSubscriber(Object subscriber, Method method) {

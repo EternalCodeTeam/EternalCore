@@ -1,12 +1,11 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
-import java.util.HashMap;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
@@ -14,9 +13,11 @@ import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,7 +106,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
 
         @Description(" ")
-        public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Błąd: <red>Musisz podać nazwę gracza!");
+        public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę gracza!");
         public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
         public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
         public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
@@ -307,7 +308,7 @@ public class PLTranslation extends AbstractTranslation {
         public Notice alertQueueAdded = Notice.chat("<green>► <white>Dodano wiadomość do kolejki!");
         public Notice alertQueueRemoved = Notice.chat("<green>► <white>Usunięto wiadomość z kolejki!");
         public Notice alertQueueCleared = Notice.chat("<green>► <white>Wyczyszczono kolejkę wiadomości!");
-        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Błąd: <red>Kolejka wiadomości jest pusta!");
+        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Kolejka wiadomości jest pusta!");
         public Notice alertQueueSent = Notice.chat("<green>► <white>Wysłano wszystkie wiadomości z kolejki!");
     }
 
@@ -383,9 +384,20 @@ public class PLTranslation extends AbstractTranslation {
         public Notice notExist = Notice.chat("<red>► <dark_red>Nie odnaleziono takiego warpu!");
         public Notice itemAdded = Notice.chat("<green>► <white>Dodano warp do GUI!");
         public Notice noWarps = Notice.chat("<red>✘ <dark_red>Nie ma dostępnych warpów!");
-        public Notice itemLimit = Notice.chat("<red>✘ <dark_red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
+        public Notice itemLimit = Notice.chat("<red>✘ <red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
+        public Notice noPermission = Notice.chat("<red>✘ <red>Nie masz uprawnień do skorzystania z tego warpa <dark_red>{WARP}<red>!");
+        public Notice addPermissions = Notice.chat("<green>► <white>Dodano uprawnienia do warpa <green>{WARP}<white>!");
+        public Notice removePermission = Notice.chat("<red>► <white>Usunięto uprawnienie <red>{PERMISSION}</red> z warpa <red>{WARP}</red>!");
+        public Notice noPermissionsProvided = Notice.chat("<red>✘ <red>Nie podano żadnych uprawnień!");
+        public Notice permissionDoesNotExist = Notice.chat("<red>✘ <red>Podane uprawnienie nie istnieje ({PERMISSION})!");
+        public Notice permissionAlreadyExist = Notice.chat("<red>✘ <red>Podane uprawnienie już istnieje ({PERMISSION})!");
+        public Notice noPermissionAssigned = Notice.chat("<red>✘ <red>Ten warp nie ma przypisanych żadnych permisji");
+        public Notice missingWarpArgument = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę warpu!");
+        public Notice missingPermissionArgument = Notice.chat("<red>✘ <dark_red>Musisz podać uprawnienie!");
+
         @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
         public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
+
 
         @Description({" ", "# Ustawienia gui listy dostępnych warpów"})
         public PLWarpInventory warpInventory = new PLWarpInventory();
@@ -405,7 +417,6 @@ public class PLTranslation extends AbstractTranslation {
             public void setItems(Map<String, WarpInventoryItem> items) {
                 this.items = items;
             }
-
 
             public PLBorderSection border = new PLBorderSection();
             public PLDecorationItemsSection decorationItems = new PLDecorationItemsSection();
@@ -463,7 +474,7 @@ public class PLTranslation extends AbstractTranslation {
             "# {HOME} - Nazwa domu, {PLAYER} - Gracz, {HOMES} - Lista domów"
         })
         public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
-        public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <dark_red>Błąd: <red>Gracz <dark_red>{PLAYER} <red>nie posiada żadnego domu!");
+        public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <dark_red>Gracz <red>{PLAYER} <dark_red>nie posiada żadnego domu!");
         public Notice createAsAdmin = Notice.chat("<green>► <white>Stworzono dom <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
         public Notice deleteAsAdmin = Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
         public Notice homeListAsAdmin = Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
@@ -627,6 +638,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# Ta sekcja odpowiada za interakcję z graczami za pomocą komend",
         "# Ta sekcja odpowiada za interakcję z graczami za pomocą komend",
     })
     public PLPlayerSection player = new PLPlayerSection();

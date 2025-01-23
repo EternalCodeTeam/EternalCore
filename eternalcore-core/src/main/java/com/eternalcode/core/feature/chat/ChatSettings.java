@@ -1,10 +1,8 @@
 package com.eternalcode.core.feature.chat;
 
-import com.eternalcode.core.delay.DelaySettings;
-
 import java.time.Duration;
 
-public interface ChatSettings extends DelaySettings {
+public interface ChatSettings {
 
     boolean isChatEnabled();
 
@@ -15,10 +13,5 @@ public interface ChatSettings extends DelaySettings {
     void setChatDelay(Duration chatDelay);
 
     int linesToClear();
-
-    @Override
-    default Duration delay() {
-        return this.getChatDelay();
-    }
 
 }

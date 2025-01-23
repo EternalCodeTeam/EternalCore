@@ -4,10 +4,12 @@ import java.util.function.Supplier;
 
 public class LazyBeanCandidate implements BeanCandidate {
 
+    private final String name;
     private final Supplier<Object> instanceSupplier;
     private Object instance;
 
-    public LazyBeanCandidate(Supplier<Object> instanceSupplier) {
+    public LazyBeanCandidate(String name, Supplier<Object> instanceSupplier) {
+        this.name = name;
         this.instanceSupplier = instanceSupplier;
     }
 
@@ -19,12 +21,17 @@ public class LazyBeanCandidate implements BeanCandidate {
     }
 
     @Override
+    public Class<?> getType() {
+        return this.getInstance().getClass();
+    }
+
+    @Override
     public <T> BeanHolder<T> createBean(Class<T> clazz) {
         if (!this.isCandidate(clazz)) {
             throw new IllegalArgumentException("Class " + clazz.getName() + " is not a candidate for " + this.getInstance().getClass().getName());
         }
 
-        return BeanHolder.of(clazz.cast(this.getInstance()));
+        return BeanHolder.of(name, clazz.cast(this.getInstance()));
     }
 
     private Object getInstance() {

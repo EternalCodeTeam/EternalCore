@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.warp.event;
 
 import com.eternalcode.core.feature.warp.Warp;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -15,12 +15,14 @@ public class WarpTeleportEvent extends Event {
 
     private final Player player;
     private final Warp warp;
+    private final Location destination;
 
-    public WarpTeleportEvent(Player player, Warp warp) {
+    public WarpTeleportEvent(Player player, Warp warp, Location destination) {
         super(false);
 
         this.player = player;
         this.warp = warp;
+        this.destination = destination;
     }
 
     public Player getPlayer() {
@@ -29,6 +31,10 @@ public class WarpTeleportEvent extends Event {
 
     public Warp getWarp() {
         return this.warp;
+    }
+
+    public Location getDestination() {
+        return this.destination;
     }
 
     @Override
