@@ -5,7 +5,6 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
-import lombok.extern.slf4j.Slf4j;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,7 +17,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-@Slf4j
 @Service
 class RandomTeleportSafeLocationService {
 
@@ -51,9 +49,8 @@ class RandomTeleportSafeLocationService {
         int spawnX = spawnLocation.getBlockX();
         int spawnZ = spawnLocation.getBlockZ();
 
-        int randomX = this.random.nextInt(-radius.minX(), radius.maxX());
-        int randomZ = this.random.nextInt(-radius.minZ(), radius.maxZ());
-
+        int randomX = spawnX + Math.random() < 0.5 ? 1 : -1 * this.random.nextInt(radius.minX(), radius.maxX());
+        int randomZ = spawnZ + Math.random() < 0.5 ? 1 : -1 * this.random.nextInt(radius.minZ(), radius.maxX());
 
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
