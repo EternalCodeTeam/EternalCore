@@ -2,6 +2,7 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
@@ -482,11 +483,5 @@ public interface Translation {
     }
 
 
-    SignEditSection signEdit();
-
-    interface SignEditSection {
-        Notice noSignFound();
-        Notice invalidIndex();
-        Notice lineSet();
-    }
+    SignEditorMessages signEditor();
 }

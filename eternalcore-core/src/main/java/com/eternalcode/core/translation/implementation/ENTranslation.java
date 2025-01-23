@@ -2,6 +2,8 @@ package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
+import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
@@ -933,13 +935,5 @@ public class ENTranslation extends AbstractTranslation {
     }
 
     @Description({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące edycji tabliczek"})
-    public PLTranslation.SignEditor signEditor = new PLTranslation.SignEditor();
-
-    @Getter
-    @Contextual
-    public static class SignEditor {
-        public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Sign not found!");
-        public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>Invalid index!");
-        public Notice lineSet = Notice.chat("<green>► <white>Line <green>{LINE} <white>set to <green>{TEXT}");
-    }
+    public PLSignEditorMessages signEditor = new PLSignEditorMessages();
 }
