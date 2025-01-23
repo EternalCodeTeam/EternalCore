@@ -11,5 +11,5 @@ import net.dzikoysk.cdn.entity.Contextual;
 public class ENSignEditorMessages implements SignEditorMessages {
     public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Sign not found, please look at the sign!");
     public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>Invalid index!");
-    public Notice lineSet = Notice.chat("<green>► <white>Line <green>{LINE} <white>set to <green>{TEXT}");
+    public Notice lineSet = Notice.chat("<green>► <white>Line <green>{INDEX} <white>set to <green>{TEXT}");
 }
