@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.randomteleport;
 
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
@@ -50,8 +49,8 @@ class RandomTeleportSafeLocationService {
         int spawnX = spawnLocation.getBlockX();
         int spawnZ = spawnLocation.getBlockZ();
 
-        int randomX = spawnX + (Math.random() < 0.5 ? 1 : -1) * this.random.nextInt(radius.minX(), radius.maxX());
-        int randomZ = spawnZ + (Math.random() < 0.5 ? 1 : -1) * this.random.nextInt(radius.minZ(), radius.maxZ());
+        int randomX = spawnX + this.random.nextInt(radius.maxX() - radius.minX() + 1) + radius.minX();
+        int randomZ = spawnZ + this.random.nextInt(radius.maxZ() - radius.minZ() + 1) + radius.minZ();
 
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
