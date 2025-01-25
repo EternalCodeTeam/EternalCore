@@ -2,6 +2,8 @@ package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
+import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
@@ -931,4 +933,7 @@ public class ENTranslation extends AbstractTranslation {
         @Description({" ", "# {PLAYER} - Player who has been detained", "# {REMAINING_TIME} - Time of detention", "# {DETAINED_BY} - Player who detained the player"})
         public Notice jailListPlayerEntry = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{REMAINING_TIME}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
     }
+
+    @Description({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące edycji tabliczek"})
+    public PLSignEditorMessages signEditor = new PLSignEditorMessages();
 }
