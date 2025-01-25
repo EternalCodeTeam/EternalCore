@@ -29,12 +29,9 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
     @Description({
         "# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.",
         "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
-        "# Radius is defined as space from the world spawn. Example minX=0, maxX=1000 means that the player will be teleported to random X from 0 to 1000 blocks from spawn.",
-        "# Ex. minX=1000, maxX=10000 means X coordinate will be random from 1000 to 10000 blocks from spawn.",
-        "# Please use positive values!",
         "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
     })
-    public RandomTeleportRadiusConfig radius = new RandomTeleportRadiusConfig(0, 5000, 0, 5000);
+    public RandomTeleportRadiusConfig radius = new RandomTeleportRadiusConfig(-5000, 5000, -5000, 5000);
     @Deprecated public Integer randomTeleportRadius = null;
 
     @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
