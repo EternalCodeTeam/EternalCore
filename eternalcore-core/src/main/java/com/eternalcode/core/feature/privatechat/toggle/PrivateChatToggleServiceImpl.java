@@ -5,16 +5,17 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class PrivateChatToggleServiceImpl implements PrivateChatToggleService {
 
     private final PrivateChatToggleRepository msgToggleRepository;
-    private final HashMap<UUID, PrivateChatToggleState> cachedToggleStates;
+    private final ConcurrentHashMap<UUID, PrivateChatToggleState> cachedToggleStates;
 
     @Inject
     public PrivateChatToggleServiceImpl(PrivateChatToggleRepository msgToggleRepository) {
-        this.cachedToggleStates = new HashMap<>();
+        this.cachedToggleStates = new ConcurrentHashMap<>();
         this.msgToggleRepository = msgToggleRepository;
     }
 
