@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @Command(name = "msgtoggle")
 @Permission("eternalcore.msgtoggle")
@@ -64,31 +65,15 @@ public class PrivateChatToggleCommand {
 
         if (state == null) {
             CompletableFuture<PrivateChatToggleState> privateChatToggleState = this.privateChatToggleService.getPrivateChatToggleState(uniqueId);
-
-            privateChatToggleState.thenAccept(toggleState -> {
-                if (toggleState.equals(PrivateChatToggleState.OFF)) {
-                    this.toggleOn(uniqueId);
-
-                    this.noticeService.create()
-                        .notice( translation -> translation.privateChat().otherMessagesEnabled())
-                        .sender(context)
-                        .placeholder("{PLAYER}", player.getName())
-                        .send();
-                }
-                else {
-                    this.toggleOff(uniqueId);
-
-                    this.noticeService.create()
-                        .notice( translation -> translation.privateChat().otherMessagesDisabled())
-                        .sender(context)
-                        .placeholder("{PLAYER}", player.getName())
-                        .send();
-                }
-            });
+            privateChatToggleState.thenAccept(toggleState -> handleToggle(context, player, toggleState, uniqueId));
 
             return;
         }
 
+        handleToggle(context, player, state, uniqueId);
+    }
+
+    private void handleToggle(CommandSender context, Player player, @NotNull PrivateChatToggleState state, UUID uniqueId) {
         if (state.equals(PrivateChatToggleState.OFF)) {
             this.toggleOn(uniqueId);
 
