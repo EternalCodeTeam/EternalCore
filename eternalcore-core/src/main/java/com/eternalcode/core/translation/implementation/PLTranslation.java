@@ -505,14 +505,14 @@ public class PLTranslation extends AbstractTranslation {
         public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy został {STATE}<white>!");
         public Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy został {STATE}<white>!");
 
-        public Notice msgToggledOff = Notice.chat("<red>► <dark_red>Wiadomości prywatne zostały wyłączone!");
+        public Notice receiverDisabledMessages = Notice.chat("<red>► <dark_red>Wiadomości prywatne zostały wyłączone!");
 
-        public Notice msgToggledSelf = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone!");
-        public Notice msgUntoggleSelf = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone!");
+        public Notice selfMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone!");
+        public Notice selfMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone!");
 
         @Description({" ", "# {PLAYER} - Gracz któremu wyłączono wiadomości prywatne"})
-        public Notice msgToggledPlayer = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
-        public Notice msgUntogglePlayer = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone <white>dla gracza <green>{PLAYER}<white>!");
+        public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
+        public Notice otherMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone <white>dla gracza <green>{PLAYER}<white>!");
 
         @Description({" ", "# {PLAYER} - Gracz który jest zignorowany"})
         public Notice ignorePlayer = Notice.chat("<green>► <white>Zignorowano gracza <red>{PLAYER}<white>!");

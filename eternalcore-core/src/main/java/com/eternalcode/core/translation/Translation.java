@@ -260,11 +260,11 @@ public interface Translation {
         Notice socialSpyEnable();
         Notice socialSpyDisable();
 
-        Notice msgToggledOff();
-        Notice msgToggledSelf();
-        Notice msgUntoggleSelf();
-        Notice msgToggledPlayer();
-        Notice msgUntogglePlayer();
+        Notice receiverDisabledMessages();
+        Notice selfMessagesDisabled();
+        Notice selfMessagesEnabled();
+        Notice otherMessagesDisabled();
+        Notice otherMessagesEnabled();
 
         Notice ignorePlayer();
         Notice ignoreAll();
