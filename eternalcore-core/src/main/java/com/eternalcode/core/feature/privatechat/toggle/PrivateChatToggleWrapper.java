@@ -21,7 +21,7 @@ class PrivateChatToggleWrapper {
     PrivateChatToggleWrapper() {}
 
     static PrivateChatToggleWrapper from(PrivateChatToggle msgToggle) {
-        return new PrivateChatToggleWrapper(msgToggle.uuid, msgToggle.state);
+        return new PrivateChatToggleWrapper(msgToggle.getUuid(), msgToggle.getState());
     }
 
     PrivateChatToggleState isEnabled() {
