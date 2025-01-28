@@ -2,38 +2,79 @@ package com.eternalcode.core.feature.language;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.user.UserManager;
-import java.util.Locale;
-import java.util.Optional;
-import org.bukkit.entity.Player;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class LanguageServiceImpl implements LanguageService {
+class LanguageServiceImpl implements LanguageService {
 
-    private final UserManager userManager;
+    private final LanguageRepository languageRepository;
+    private final Map<UUID, Language> cachedLanguages = new ConcurrentHashMap<>();
+    private LanguageProvider defaultProvider;
 
     @Inject
-    public LanguageServiceImpl(UserManager userManager) {
-        this.userManager = userManager;
+    LanguageServiceImpl(LanguageRepository languageRepository, LanguageProvider defaultProvider) {
+        this.languageRepository = languageRepository;
+        this.defaultProvider = defaultProvider;
     }
 
     @Override
-    public Locale getPlayerLanguage(Player player) {
-        Optional<User> user = this.userManager.getUser(player.getUniqueId());
+    public void setDefaultProvider(LanguageProvider defaultProvider) {
+        this.defaultProvider = defaultProvider;
+    }
 
-        if (user.isPresent()) {
-            Language language = user.get().getLanguage();
-            return language.toLocale();
+    @Override
+    public LanguageProvider getDefaultProvider() {
+        return defaultProvider;
+    }
+
+    @Override
+    public Language getLanguageNow(UUID playerUniqueId) {
+        Language language = cachedLanguages.get(playerUniqueId);
+        if (language != null) {
+            return language;
         }
 
-        return Language.DEFAULT.toLocale();
+        return defaultProvider.getDefaultLanguage(playerUniqueId);
     }
 
     @Override
-    public void setPlayerLanguage(Player player, Locale locale) {
-        Optional<User> user = this.userManager.getUser(player.getUniqueId());
+    public CompletableFuture<Language> getLanguage(UUID playerUniqueId) {
+        Language language = cachedLanguages.get(playerUniqueId);
+        if (language != null) {
+            return CompletableFuture.completedFuture(language);
+        }
 
-        user.ifPresent(value -> value.getSettings().setLanguage(Language.fromLocale(locale)));
+        return this.languageRepository.findLanguage(playerUniqueId)
+            .thenApply(optional -> optional.orElseGet(() -> this.defaultProvider.getDefaultLanguage(playerUniqueId)));
     }
+
+    @Override
+    public CompletableFuture<Void> setLanguage(UUID playerUniqueId, Language language) {
+        if (language.equals(Language.DEFAULT)) {
+            return setDefaultLanguage(playerUniqueId);
+        }
+
+        cachedLanguages.put(playerUniqueId, language);
+        return languageRepository.saveLanguage(playerUniqueId, language);
+    }
+
+    @Override
+    public CompletableFuture<Void> setDefaultLanguage(UUID playerUniqueId) {
+        cachedLanguages.remove(playerUniqueId);
+        return languageRepository.deleteLanguage(playerUniqueId);
+    }
+
+    CompletableFuture<Void> loadLanguage(UUID playerUniqueId) {
+        return languageRepository.findLanguage(playerUniqueId)
+            .thenAccept(language -> language.ifPresent(lang -> cachedLanguages.put(playerUniqueId, lang)));
+    }
+
+    CompletableFuture<Void> unloadLanguage(UUID playerUniqueId) {
+        return languageRepository.findLanguage(playerUniqueId)
+            .thenAccept(language -> cachedLanguages.remove(playerUniqueId));
+    }
+
 }

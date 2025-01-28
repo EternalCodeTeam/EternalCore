@@ -31,7 +31,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
         "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
         "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
     })
-    public RandomTeleportRadiusConfig radius = new RandomTeleportRadiusConfig(5000, 5000, 5000, 5000);
+    public RandomTeleportRadiusConfig radius = new RandomTeleportRadiusConfig(-5000, 5000, -5000, 5000);
     @Deprecated public Integer randomTeleportRadius = null;
 
     @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
@@ -169,6 +169,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
     }
 
     @Override
+    @Deprecated(since = "1.5.0", forRemoval = true)
     public boolean migrate() {
         boolean migrated = false;
         if (randomTeleportDelay != null) {

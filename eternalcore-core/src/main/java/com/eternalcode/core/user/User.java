@@ -1,6 +1,5 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.viewer.Viewer;
 
 import java.util.Objects;
@@ -8,7 +7,6 @@ import java.util.UUID;
 
 public class User implements Viewer {
 
-    private UserSettings userSettings = new UserSettingsImpl(() -> this.userClientSettings);
     private UserClientSettings userClientSettings = UserClientSettings.NONE;
 
     private final String name;
@@ -30,11 +28,6 @@ public class User implements Viewer {
     }
 
     @Override
-    public Language getLanguage() {
-        return this.userSettings.getLanguage();
-    }
-
-    @Override
     public boolean isConsole() {
         return false;
     }
@@ -45,14 +38,6 @@ public class User implements Viewer {
 
     public void setClientSettings(UserClientSettings userClientSettings) {
         this.userClientSettings = userClientSettings;
-    }
-
-    public UserSettings getSettings() {
-        return this.userSettings;
-    }
-
-    public void setSettings(UserSettings userSettings) {
-        this.userSettings = userSettings;
     }
 
     @Override
