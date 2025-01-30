@@ -23,6 +23,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +38,12 @@ public class WarpInventory {
     private static final int GUI_ROW_SIZE_WITHOUT_BORDER = 9;
     private static final int GUI_ROW_SIZE_WITH_BORDER = 7;
 
+    private static final int BORDER_ROW_COUNT = 2;
+    private static final int UGLY_BORDER_ROW_COUNT = 1;
+
     private final TranslationManager translationManager;
     private final LanguageService languageService;
-    private final WarpService warpManager;
+    private final WarpService warpService;
     private final Server server;
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
@@ -50,7 +54,7 @@ public class WarpInventory {
     WarpInventory(
         TranslationManager translationManager,
         LanguageService languageService,
-        WarpService warpManager,
+        WarpService warpService,
         Server server,
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
@@ -59,7 +63,7 @@ public class WarpInventory {
     ) {
         this.translationManager = translationManager;
         this.languageService = languageService;
-        this.warpManager = warpManager;
+        this.warpService = warpService;
         this.server = server;
         this.miniMessage = miniMessage;
         this.warpTeleportService = warpTeleportService;
@@ -90,8 +94,8 @@ public class WarpInventory {
         }
         else {
             switch (warpSection.border().fillType()) {
-                case BORDER, ALL -> rowsCount = (size + 1) / GUI_ROW_SIZE_WITH_BORDER + 3;
-                case TOP, BOTTOM -> rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 2;
+                case BORDER, ALL -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITH_BORDER + 1 + BORDER_ROW_COUNT;
+                case TOP, BOTTOM -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1 + UGLY_BORDER_ROW_COUNT;
                 default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
             }
         }
@@ -163,7 +167,7 @@ public class WarpInventory {
 
     private void createWarpItems(Player player, WarpInventorySection warpSection, Gui gui) {
         warpSection.items().values().forEach(item -> {
-            Optional<Warp> warpOptional = this.warpManager.findWarp(item.warpName());
+            Optional<Warp> warpOptional = this.warpService.findWarp(item.warpName());
 
             if (warpOptional.isEmpty()) {
                 return;
@@ -215,30 +219,14 @@ public class WarpInventory {
     }
 
     public void addWarp(Warp warp) {
-        if (!this.warpManager.isExist(warp.getName())) {
+        if (!this.warpService.exists(warp.getName())) {
             return;
         }
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
-
-            int size = warpSection.items().size();
-            int slot;
-
-            if (!warpSection.border().enabled()) {
-                slot = GUI_ITEM_SLOT_WITHOUT_BORDER + size;
-            }
-            else {
-                switch (warpSection.border().fillType()) {
-                    case BORDER -> slot = GUI_ITEM_SLOT_WITH_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
-                    case ALL -> slot = GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
-                    case TOP -> slot = GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
-                    case BOTTOM -> slot = size;
-                    default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
-                }
-            }
-
+            int slot = getSlot(warpSection);
 
             warpSection.addItem(warp.getName(),
                 WarpInventoryItem.builder()
@@ -258,23 +246,51 @@ public class WarpInventory {
         }
     }
 
-    public boolean removeWarp(String warpName) {
+    private int getSlot(Translation.WarpSection.WarpInventorySection warpSection) {
+        int size = warpSection.items().size();
+        if (!warpSection.border().enabled()) {
+            return GUI_ITEM_SLOT_WITHOUT_BORDER + size;
+        }
 
-        if (!this.warpManager.isExist(warpName)) {
-            return false;
+        return switch (warpSection.border().fillType()) {
+            case BORDER -> GUI_ITEM_SLOT_WITH_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
+            case ALL -> GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
+            case TOP -> GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
+            case BOTTOM -> size;
+        };
+    }
+
+    public void removeWarp(String warpName) {
+        if (!this.config.warp.autoAddNewWarps) {
+            return;
         }
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
-
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
             Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+            WarpInventoryItem removed = warpSection.removeItem(warpName);
 
-            warpSection.removeItem(warpName);
+            if (removed != null) {
+                this.shiftWarpItems(removed, warpSection);
+            }
 
             this.configurationManager.save(translation);
-
         }
-
-        return true;
     }
+
+    private void shiftWarpItems(WarpInventoryItem removed, Translation.WarpSection.WarpInventorySection warpSection) {
+        int removedSlot = removed.warpItem.slot;
+        List<WarpInventoryItem> itemsToShift = warpSection.items().values().stream()
+            .filter(item -> item.warpItem.slot > removedSlot)
+            .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
+            .toList();
+
+        int currentShift = removedSlot;
+        for (WarpInventoryItem item : itemsToShift) {
+            int nextShift = item.warpItem.slot;
+            item.warpItem.slot = currentShift;
+            currentShift = nextShift;
+        }
+    }
+
 }
