@@ -40,8 +40,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
   - Chat On/Off Switch
   - Chat Slow Mode
   - /ignore and /unignore (with -all option)
-  - /msgtoggle
-  - /msg, /socialspy, and /reply commands
+  - /msg, /msgtoggle, /socialspy, and /reply commands
   - /helpop command
   - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
 - :hammer: Open Utility Blocks with simple commands like `/workbench`
