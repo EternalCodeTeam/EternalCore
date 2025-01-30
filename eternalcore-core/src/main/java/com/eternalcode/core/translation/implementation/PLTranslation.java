@@ -2,6 +2,7 @@ package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.servercapacity.messages.PLServerCapacityMessages;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
@@ -868,6 +869,9 @@ public class PLTranslation extends AbstractTranslation {
                 .build()
         );
     }
+
+    @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
+    public PLServerCapacityMessages serverCapacity  = new PLServerCapacityMessages();
 
     @Description({" ", "# Automatyczne wiadomości "})
     public PLAutoMessageSection autoMessage = new PLAutoMessageSection();

@@ -2,6 +2,7 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.servercapacity.messages.ServerCapacityMessages;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.Material;
@@ -444,6 +445,8 @@ public interface Translation {
         Notice genericContainerOpenedBy();
         Notice genericContainerOpenedFor();
     }
+
+    ServerCapacityMessages serverCapacity();
 
     AutoMessageSection autoMessage();
 
