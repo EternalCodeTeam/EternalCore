@@ -54,7 +54,7 @@ class GameModeCommand {
     }
 
     @Execute
-    @Permission("eternalcore.gamemode.others")
+    @Permission("eternalcore.gamemode.other")
     @DescriptionDocs(description = "Sets gamemode of another player", arguments = "<gamemode> <player>")
     void execute(@Context Viewer sender, @Arg GameMode gameMode, @Arg Player player) {
         player.setGameMode(gameMode);
