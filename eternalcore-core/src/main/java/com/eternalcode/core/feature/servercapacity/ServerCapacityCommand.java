@@ -31,6 +31,14 @@ public class ServerCapacityCommand {
     @Async
     @DescriptionDocs(description = "Set the server capacity")
     public void execute(@Context Viewer viewer, @Arg int slots) {
+        if (slots <= 0) {
+            this.noticeService.create()
+                .notice(notice -> notice.argument().numberBiggerThanOrEqualZero())
+                .viewer(viewer)
+                .send();
+            return;
+        }
+
         this.serverCapacityService.setCapacity(slots);
         this.noticeService.create()
             .notice(notice -> notice.serverCapacity().slotSaved())
