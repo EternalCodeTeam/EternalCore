@@ -41,7 +41,7 @@ class GameModeCommand {
     }
 
     @Execute
-    @Permission("eternalcore.gamemode.self")
+    @Permission("eternalcore.gamemode")
     @DescriptionDocs(description = "Sets your gamemode", arguments = "<gamemode>")
     void execute(@Context Player sender, @Arg GameMode gameMode) {
         sender.setGameMode(gameMode);
