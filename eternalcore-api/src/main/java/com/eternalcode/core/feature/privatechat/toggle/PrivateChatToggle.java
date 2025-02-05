@@ -8,9 +8,9 @@ import java.util.UUID;
 public class PrivateChatToggle {
 
     UUID uuid;
-    PrivateChatToggleState state;
+    PrivateChatState state;
 
-    public PrivateChatToggle(UUID uuid, PrivateChatToggleState toggle) {
+    public PrivateChatToggle(UUID uuid, PrivateChatState toggle) {
         this.uuid = uuid;
         this.state = toggle;
     }
@@ -19,7 +19,7 @@ public class PrivateChatToggle {
         return uuid;
     }
 
-    public PrivateChatToggleState getState() {
+    public PrivateChatState getState() {
         return state;
     }
 }

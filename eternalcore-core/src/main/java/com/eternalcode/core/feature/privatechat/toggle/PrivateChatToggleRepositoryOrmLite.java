@@ -20,15 +20,15 @@ class PrivateChatToggleRepositoryOrmLite extends AbstractRepositoryOrmLite imple
     }
 
     @Override
-    public CompletableFuture<PrivateChatToggleState> getPrivateChatToggleState(UUID uuid) {
+    public CompletableFuture<PrivateChatState> getPrivateChatToggleState(UUID uuid) {
         return this.selectSafe(PrivateChatToggleWrapper.class, uuid)
             .thenApply(
-                optional -> optional.map(PrivateChatToggleWrapper::isEnabled).orElse(PrivateChatToggleState.ENABLE)
+                optional -> optional.map(PrivateChatToggleWrapper::isEnabled).orElse(PrivateChatState.ENABLE)
             );
     }
 
     @Override
-    public CompletableFuture<Void> setPrivateChatToggle(UUID uuid, PrivateChatToggleState toggledOff) {
+    public CompletableFuture<Void> setPrivateChatToggle(UUID uuid, PrivateChatState toggledOff) {
         return this.save(PrivateChatToggleWrapper.class, new PrivateChatToggleWrapper(uuid, toggledOff))
             .thenApply(status -> null);
     }

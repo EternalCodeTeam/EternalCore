@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.privatechat.toggle;
 /**
  * Enum representing state of blocking incoming private messages by the player.
  */
-public enum PrivateChatToggleState {
+public enum PrivateChatState {
 
     /**
      * Player can receive private messages.

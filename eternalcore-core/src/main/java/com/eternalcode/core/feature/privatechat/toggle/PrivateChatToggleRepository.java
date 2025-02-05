@@ -6,8 +6,8 @@ import java.util.concurrent.CompletableFuture;
 
 interface PrivateChatToggleRepository {
 
-    CompletableFuture<PrivateChatToggleState> getPrivateChatToggleState(UUID uuid);
+    CompletableFuture<PrivateChatState> getPrivateChatToggleState(UUID uuid);
 
-    CompletableFuture<Void> setPrivateChatToggle(UUID uuid, PrivateChatToggleState toggledOff);
+    CompletableFuture<Void> setPrivateChatToggle(UUID uuid, PrivateChatState toggledOff);
 
 }

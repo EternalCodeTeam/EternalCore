@@ -11,9 +11,9 @@ class PrivateChatToggleWrapper {
     private UUID uniqueId;
 
     @DatabaseField(columnName = "enabled")
-    private PrivateChatToggleState state;
+    private PrivateChatState state;
 
-    PrivateChatToggleWrapper(UUID id, PrivateChatToggleState enabled) {
+    PrivateChatToggleWrapper(UUID id, PrivateChatState enabled) {
         this.uniqueId = id;
         this.state = enabled;
     }
@@ -24,11 +24,11 @@ class PrivateChatToggleWrapper {
         return new PrivateChatToggleWrapper(msgToggle.getUuid(), msgToggle.getState());
     }
 
-    PrivateChatToggleState isEnabled() {
+    PrivateChatState isEnabled() {
         return this.state;
     }
 
-    void setState(PrivateChatToggleState state) {
+    void setState(PrivateChatState state) {
         this.state = state;
     }
 }

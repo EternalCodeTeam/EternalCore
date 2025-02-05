@@ -30,14 +30,14 @@ public class PrivateChatToggleCommand {
 
     @Execute
     @DescriptionDocs(description = "Switch receiving private messages", arguments = "<toggle>")
-    public void execute(@Context Player sender, @OptionalArg PrivateChatToggleState state) {
+    public void execute(@Context Player sender, @OptionalArg PrivateChatState state) {
         UUID uniqueId = sender.getUniqueId();
 
         if (state == null) {
-            CompletableFuture<PrivateChatToggleState> completablePresentState = this.privateChatToggleService.getPrivateChatToggleState(sender.getUniqueId());
+            CompletableFuture<PrivateChatState> completablePresentState = this.privateChatToggleService.getPrivateChatToggleState(sender.getUniqueId());
 
             completablePresentState.thenAccept(presentState -> {
-                if (presentState == PrivateChatToggleState.DISABLE) {
+                if (presentState == PrivateChatState.DISABLE) {
                     this.enable(uniqueId);
                 }
                 else {
@@ -48,7 +48,7 @@ public class PrivateChatToggleCommand {
             return;
         }
 
-        if (state == PrivateChatToggleState.DISABLE) {
+        if (state == PrivateChatState.DISABLE) {
             this.disable(uniqueId);
         }
         else {
@@ -59,18 +59,18 @@ public class PrivateChatToggleCommand {
     @Execute
     @Permission("eternalcore.msgtoggle.other")
     @DescriptionDocs(description = "Switch receiving private messages for other player", arguments = "<player>  <toggle>")
-    public void other(@Context CommandSender sender, @Arg("player") Player target, @OptionalArg PrivateChatToggleState state) {
+    public void other(@Context CommandSender sender, @Arg("player") Player target, @OptionalArg PrivateChatState state) {
 
         UUID uniqueId = target.getUniqueId();
 
         if (state == null) {
-            CompletableFuture<PrivateChatToggleState> completablePresentState = this.privateChatToggleService.getPrivateChatToggleState(uniqueId);
+            CompletableFuture<PrivateChatState> completablePresentState = this.privateChatToggleService.getPrivateChatToggleState(uniqueId);
             completablePresentState.thenAccept(presentState -> {
-                if (presentState == PrivateChatToggleState.DISABLE) {
-                    handleToggle(sender, target, PrivateChatToggleState.ENABLE);
+                if (presentState == PrivateChatState.DISABLE) {
+                    handleToggle(sender, target, PrivateChatState.ENABLE);
                 }
                 else {
-                    handleToggle(sender, target, PrivateChatToggleState.DISABLE);
+                    handleToggle(sender, target, PrivateChatState.DISABLE);
                 }
             });
 
@@ -80,10 +80,10 @@ public class PrivateChatToggleCommand {
         handleToggle(sender, target, state);
     }
 
-    private void handleToggle(CommandSender sender, Player target, @NotNull PrivateChatToggleState desiredState) {
+    private void handleToggle(CommandSender sender, Player target, @NotNull PrivateChatState desiredState) {
         UUID uniqueId = target.getUniqueId();
 
-        if (desiredState == PrivateChatToggleState.DISABLE) {
+        if (desiredState == PrivateChatState.DISABLE) {
             this.disable(uniqueId);
 
             if (!this.isCommandSenderSameAsTarget(sender, target)) {
@@ -108,7 +108,7 @@ public class PrivateChatToggleCommand {
     }
 
     private void enable(UUID uniqueId) {
-        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.ENABLE);
+        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatState.ENABLE);
 
         this.noticeService.create()
             .notice(translation -> translation.privateChat().selfMessagesEnabled())
@@ -117,7 +117,7 @@ public class PrivateChatToggleCommand {
     }
 
     private void disable(UUID uniqueId) {
-        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.DISABLE);
+        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatState.DISABLE);
 
         this.noticeService.create()
             .notice(translation -> translation.privateChat().selfMessagesDisabled())

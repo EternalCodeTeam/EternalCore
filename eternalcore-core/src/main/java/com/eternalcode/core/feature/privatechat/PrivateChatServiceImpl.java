@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.privatechat;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.privatechat.toggle.PrivateChatToggleService;
-import com.eternalcode.core.feature.privatechat.toggle.PrivateChatToggleState;
+import com.eternalcode.core.feature.privatechat.toggle.PrivateChatState;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -61,7 +61,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
         UUID uniqueId = target.getUniqueId();
 
         this.privateChatToggleService.getPrivateChatToggleState(uniqueId).thenAccept(privateChatToggleState -> {
-            if (privateChatToggleState == PrivateChatToggleState.DISABLE) {
+            if (privateChatToggleState == PrivateChatState.DISABLE) {
                 this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().receiverDisabledMessages());
 
                 return;
