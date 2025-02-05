@@ -34,6 +34,4 @@ public class PrivateChatToggleServiceImpl implements PrivateChatToggleService {
         this.cachedToggleStates.put(uuid, toggle);
         this.msgToggleRepository.setPrivateChatToggle(uuid, toggle);
     }
-
-
 }

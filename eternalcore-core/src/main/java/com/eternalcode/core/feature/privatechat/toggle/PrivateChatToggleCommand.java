@@ -34,10 +34,10 @@ public class PrivateChatToggleCommand {
         UUID uniqueId = sender.getUniqueId();
 
         if (state == null) {
-            CompletableFuture<PrivateChatToggleState> privateChatToggleState = this.privateChatToggleService.getPrivateChatToggleState(sender.getUniqueId());
+            CompletableFuture<PrivateChatToggleState> completablePresentState = this.privateChatToggleService.getPrivateChatToggleState(sender.getUniqueId());
 
-            privateChatToggleState.thenAccept(toggleState -> {
-                if (toggleState == PrivateChatToggleState.DISABLED) {
+            completablePresentState.thenAccept(presentState -> {
+                if (presentState == PrivateChatToggleState.DISABLE) {
                     this.enable(uniqueId);
                 }
                 else {
@@ -48,11 +48,11 @@ public class PrivateChatToggleCommand {
             return;
         }
 
-        if (state == PrivateChatToggleState.DISABLED) {
-            this.enable(uniqueId);
+        if (state == PrivateChatToggleState.DISABLE) {
+            this.disable(uniqueId);
         }
         else {
-            this.disable(uniqueId);
+            this.enable(uniqueId);
         }
     }
 
@@ -64,8 +64,15 @@ public class PrivateChatToggleCommand {
         UUID uniqueId = target.getUniqueId();
 
         if (state == null) {
-            CompletableFuture<PrivateChatToggleState> privateChatToggleState = this.privateChatToggleService.getPrivateChatToggleState(uniqueId);
-            privateChatToggleState.thenAccept(toggleState -> handleToggle(sender, target, toggleState));
+            CompletableFuture<PrivateChatToggleState> completablePresentState = this.privateChatToggleService.getPrivateChatToggleState(uniqueId);
+            completablePresentState.thenAccept(presentState -> {
+                if (presentState == PrivateChatToggleState.DISABLE) {
+                    handleToggle(sender, target, PrivateChatToggleState.ENABLE);
+                }
+                else {
+                    handleToggle(sender, target, PrivateChatToggleState.DISABLE);
+                }
+            });
 
             return;
         }
@@ -73,26 +80,26 @@ public class PrivateChatToggleCommand {
         handleToggle(sender, target, state);
     }
 
-    private void handleToggle(CommandSender sender, Player target, @NotNull PrivateChatToggleState state) {
+    private void handleToggle(CommandSender sender, Player target, @NotNull PrivateChatToggleState desiredState) {
         UUID uniqueId = target.getUniqueId();
 
-        if (state == PrivateChatToggleState.DISABLED) {
-            this.enable(uniqueId);
+        if (desiredState == PrivateChatToggleState.DISABLE) {
+            this.disable(uniqueId);
 
-            if (this.isCommandSenderSameAsTarget(sender, target)) {
+            if (!this.isCommandSenderSameAsTarget(sender, target)) {
                 this.noticeService.create()
-                    .notice(translation -> translation.privateChat().otherMessagesEnabled())
+                    .notice(translation -> translation.privateChat().otherMessagesDisabled())
                     .sender(sender)
                     .placeholder("{PLAYER}", target.getName())
                     .send();
             }
         }
         else {
-            this.disable(uniqueId);
+            this.enable(uniqueId);
 
-            if (this.isCommandSenderSameAsTarget(sender, target)) {
+            if (!this.isCommandSenderSameAsTarget(sender, target)) {
                 this.noticeService.create()
-                    .notice(translation -> translation.privateChat().otherMessagesDisabled())
+                    .notice(translation -> translation.privateChat().otherMessagesEnabled())
                     .sender(sender)
                     .placeholder("{PLAYER}", target.getName())
                     .send();
@@ -101,7 +108,7 @@ public class PrivateChatToggleCommand {
     }
 
     private void enable(UUID uniqueId) {
-        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.ENABLED);
+        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.ENABLE);
 
         this.noticeService.create()
             .notice(translation -> translation.privateChat().selfMessagesEnabled())
@@ -110,7 +117,7 @@ public class PrivateChatToggleCommand {
     }
 
     private void disable(UUID uniqueId) {
-        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.DISABLED);
+        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.DISABLE);
 
         this.noticeService.create()
             .notice(translation -> translation.privateChat().selfMessagesDisabled())

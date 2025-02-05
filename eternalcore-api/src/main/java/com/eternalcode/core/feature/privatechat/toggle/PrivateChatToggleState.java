@@ -8,10 +8,10 @@ public enum PrivateChatToggleState {
     /**
      * Player can receive private messages.
      */
-    ENABLED,
+    ENABLE,
 
     /**
      * Player cannot receive private messages.
      */
-    DISABLED
+    DISABLE
 }
