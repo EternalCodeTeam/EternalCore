@@ -37,22 +37,22 @@ public class PrivateChatToggleCommand {
             CompletableFuture<PrivateChatToggleState> privateChatToggleState = this.privateChatToggleService.getPrivateChatToggleState(context.getUniqueId());
 
             privateChatToggleState.thenAccept(toggleState -> {
-                if (toggleState.equals(PrivateChatToggleState.OFF)) {
-                    this.toggleOn(uniqueId);
+                if (toggleState == PrivateChatToggleState.DISABLED) {
+                    this.enable(uniqueId);
                 }
                 else {
-                    this.toggleOff(uniqueId);
+                    this.disable(uniqueId);
                 }
             });
 
             return;
         }
 
-        if (state.equals(PrivateChatToggleState.OFF)) {
-            this.toggleOn(uniqueId);
+        if (state == PrivateChatToggleState.DISABLED) {
+            this.enable(uniqueId);
         }
         else {
-            this.toggleOff(uniqueId);
+            this.disable(uniqueId);
         }
     }
 
@@ -74,19 +74,8 @@ public class PrivateChatToggleCommand {
     }
 
     private void handleToggle(CommandSender context, Player player, @NotNull PrivateChatToggleState state, UUID uniqueId) {
-        if (state.equals(PrivateChatToggleState.OFF)) {
-            this.toggleOn(uniqueId);
-
-            if (this.isCommandSenderSameAsTarget(context, player)) {
-                this.noticeService.create()
-                    .notice(translation -> translation.privateChat().otherMessagesDisabled())
-                    .sender(context)
-                    .placeholder("{PLAYER}", player.getName())
-                    .send();
-            }
-        }
-        else {
-            this.toggleOff(uniqueId);
+        if (state.equals(PrivateChatToggleState.DISABLED)) {
+            this.enable(uniqueId);
 
             if (this.isCommandSenderSameAsTarget(context, player)) {
                 this.noticeService.create()
@@ -96,22 +85,33 @@ public class PrivateChatToggleCommand {
                     .send();
             }
         }
+        else {
+            this.disable(uniqueId);
+
+            if (this.isCommandSenderSameAsTarget(context, player)) {
+                this.noticeService.create()
+                    .notice(translation -> translation.privateChat().otherMessagesDisabled())
+                    .sender(context)
+                    .placeholder("{PLAYER}", player.getName())
+                    .send();
+            }
+        }
     }
 
-    private void toggleOn(UUID uniqueId) {
-        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.ON);
+    private void enable(UUID uniqueId) {
+        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.ENABLED);
 
         this.noticeService.create()
-            .notice(translation -> translation.privateChat().selfMessagesDisabled())
+            .notice(translation -> translation.privateChat().selfMessagesEnabled())
             .player(uniqueId)
             .send();
     }
 
-    private void toggleOff(UUID uniqueId) {
-        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.OFF);
+    private void disable(UUID uniqueId) {
+        this.privateChatToggleService.togglePrivateChat(uniqueId, PrivateChatToggleState.DISABLED);
 
         this.noticeService.create()
-            .notice(translation -> translation.privateChat().selfMessagesEnabled())
+            .notice(translation -> translation.privateChat().selfMessagesDisabled())
             .player(uniqueId)
             .send();
     }

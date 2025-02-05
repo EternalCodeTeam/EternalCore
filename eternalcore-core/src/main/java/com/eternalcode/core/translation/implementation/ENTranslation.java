@@ -503,8 +503,8 @@ public class ENTranslation extends AbstractTranslation {
         public Notice selfMessagesEnabled = Notice.chat("<green>► <white>Private messages have been <green>enabled<white>!");
 
         @Description("# {PLAYER} - Player")
-        public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Private messages have been disabled for <green>{PLAYER}<white>!");
-        public Notice otherMessagesEnabled = Notice.chat("<green>► <white>Private messages have been enabled for <green>{PLAYER}<white>!");
+        public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Private messages have been <red>disabled <white>for <green>{PLAYER}<white>!");
+        public Notice otherMessagesEnabled = Notice.chat("<green>► <white>Private messages have been <green>enabled <white>for <green>{PLAYER}<white>!");
 
 
 
