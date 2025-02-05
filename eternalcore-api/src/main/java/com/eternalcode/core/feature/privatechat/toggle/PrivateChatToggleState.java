@@ -6,12 +6,12 @@ package com.eternalcode.core.feature.privatechat.toggle;
 public enum PrivateChatToggleState {
 
     /**
-     * State that represents that the player can be messaged by other players.
+     * Player can receive private messages.
      */
     ENABLED,
 
     /**
-     * State that represents that the player has disabled incoming private messages.
+     * Player cannot receive private messages.
      */
     DISABLED
 }

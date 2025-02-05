@@ -29,12 +29,12 @@ public class PrivateChatToggleCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Toggle receiving private messages on and off")
-    public void execute(@Context Player context, @OptionalArg PrivateChatToggleState state) {
-        UUID uniqueId = context.getUniqueId();
+    @DescriptionDocs(description = "Switch receiving private messages", arguments = "<toggle>")
+    public void execute(@Context Player sender, @OptionalArg PrivateChatToggleState state) {
+        UUID uniqueId = sender.getUniqueId();
 
         if (state == null) {
-            CompletableFuture<PrivateChatToggleState> privateChatToggleState = this.privateChatToggleService.getPrivateChatToggleState(context.getUniqueId());
+            CompletableFuture<PrivateChatToggleState> privateChatToggleState = this.privateChatToggleService.getPrivateChatToggleState(sender.getUniqueId());
 
             privateChatToggleState.thenAccept(toggleState -> {
                 if (toggleState == PrivateChatToggleState.DISABLED) {
@@ -58,41 +58,43 @@ public class PrivateChatToggleCommand {
 
     @Execute
     @Permission("eternalcore.msgtoggle.other")
-    @DescriptionDocs(description = "Toggle private messages for other player", arguments = "<player>  <toggle>")
-    public void other(@Context CommandSender context, @Arg("player") Player player, @OptionalArg PrivateChatToggleState state) {
+    @DescriptionDocs(description = "Switch receiving private messages for other player", arguments = "<player>  <toggle>")
+    public void other(@Context CommandSender sender, @Arg("player") Player target, @OptionalArg PrivateChatToggleState state) {
 
-        UUID uniqueId = player.getUniqueId();
+        UUID uniqueId = target.getUniqueId();
 
         if (state == null) {
             CompletableFuture<PrivateChatToggleState> privateChatToggleState = this.privateChatToggleService.getPrivateChatToggleState(uniqueId);
-            privateChatToggleState.thenAccept(toggleState -> handleToggle(context, player, toggleState, uniqueId));
+            privateChatToggleState.thenAccept(toggleState -> handleToggle(sender, target, toggleState));
 
             return;
         }
 
-        handleToggle(context, player, state, uniqueId);
+        handleToggle(sender, target, state);
     }
 
-    private void handleToggle(CommandSender context, Player player, @NotNull PrivateChatToggleState state, UUID uniqueId) {
-        if (state.equals(PrivateChatToggleState.DISABLED)) {
+    private void handleToggle(CommandSender sender, Player target, @NotNull PrivateChatToggleState state) {
+        UUID uniqueId = target.getUniqueId();
+
+        if (state == PrivateChatToggleState.DISABLED) {
             this.enable(uniqueId);
 
-            if (this.isCommandSenderSameAsTarget(context, player)) {
+            if (this.isCommandSenderSameAsTarget(sender, target)) {
                 this.noticeService.create()
                     .notice(translation -> translation.privateChat().otherMessagesEnabled())
-                    .sender(context)
-                    .placeholder("{PLAYER}", player.getName())
+                    .sender(sender)
+                    .placeholder("{PLAYER}", target.getName())
                     .send();
             }
         }
         else {
             this.disable(uniqueId);
 
-            if (this.isCommandSenderSameAsTarget(context, player)) {
+            if (this.isCommandSenderSameAsTarget(sender, target)) {
                 this.noticeService.create()
                     .notice(translation -> translation.privateChat().otherMessagesDisabled())
-                    .sender(context)
-                    .placeholder("{PLAYER}", player.getName())
+                    .sender(sender)
+                    .placeholder("{PLAYER}", target.getName())
                     .send();
             }
         }
