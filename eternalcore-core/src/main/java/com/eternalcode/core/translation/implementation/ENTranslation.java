@@ -2,6 +2,7 @@ package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
@@ -844,6 +845,9 @@ public class ENTranslation extends AbstractTranslation {
                 .build()
         );
     }
+
+    @Description({" ", "# Set's max players on the server, the messages for the /setslot command"})
+    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
 
     @Description({" ", "# Auto message"})
     public ENAutoMessageSection autoMessage = new ENAutoMessageSection();
