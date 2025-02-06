@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.servercapacity;
+package com.eternalcode.core.feature.setslot;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -11,25 +11,25 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
-@Command(name = "servercapacity")
-@Permission("eternalcore.servercapacity")
-public class ServerCapacityCommand {
+@Command(name = "setslot")
+@Permission("eternalcore.setslot")
+public class SetSlotCommand {
 
-    private final ServerCapacityService serverCapacityService;
+    private final SetSlotService setSlotService;
     private final NoticeService noticeService;
 
     @Inject
-    public ServerCapacityCommand(
-        ServerCapacityService serverCapacityService,
+    public SetSlotCommand(
+        SetSlotService setSlotService,
         NoticeService noticeService
     ) {
-        this.serverCapacityService = serverCapacityService;
+        this.setSlotService = setSlotService;
         this.noticeService = noticeService;
     }
 
     @Execute
     @Async
-    @DescriptionDocs(description = "Set the server capacity")
+    @DescriptionDocs(description = "Set the max players on the server")
     public void execute(@Context Viewer viewer, @Arg int slots) {
         if (slots <= 0) {
             this.noticeService.create()
@@ -39,9 +39,9 @@ public class ServerCapacityCommand {
             return;
         }
 
-        this.serverCapacityService.setCapacity(slots);
+        this.setSlotService.setCapacity(slots);
         this.noticeService.create()
-            .notice(notice -> notice.serverCapacity().slotSaved())
+            .notice(notice -> notice.setSlot().slotSaved())
             .placeholder("{SLOTS}", String.valueOf(slots))
             .viewer(viewer)
             .send();

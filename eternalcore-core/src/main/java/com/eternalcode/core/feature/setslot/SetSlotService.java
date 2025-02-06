@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.servercapacity;
+package com.eternalcode.core.feature.setslot;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -9,31 +9,31 @@ import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
 @Service
-public class ServerCapacityService {
+public class SetSlotService {
 
     private final Plugin plugin;
     private Field maxPlayersField;
-    private final ServerCapacitySaver serverCapacitySaver;
+    private final SetSlotSaver setSlotSaver;
 
     @Inject
-    public ServerCapacityService(Plugin plugin, ServerCapacitySaver serverCapacitySaver) {
+    public SetSlotService(Plugin plugin, SetSlotSaver setSlotSaver) {
         this.plugin = plugin;
-        this.serverCapacitySaver = serverCapacitySaver;
+        this.setSlotSaver = setSlotSaver;
     }
 
     public void setCapacity(int slots) {
         Object playerList = getPlayerList();
 
-        if (maxPlayersField == null) {
-            maxPlayersField = findMaxPlayersField(playerList);
+        if (this.maxPlayersField == null) {
+            this.maxPlayersField = findMaxPlayersField(playerList);
         }
 
         this.setMaxPlayers(playerList, slots);
-        this.serverCapacitySaver.save();
+        this.setSlotSaver.save();
     }
 
     private Object getPlayerList() {
-        Server server = plugin.getServer();
+        Server server = this.plugin.getServer();
         Method serverGetHandle = ReflectUtil.getDeclaredMethod(server.getClass(), "getHandle");
 
         return ReflectUtil.invokeMethod(serverGetHandle, server);
@@ -46,7 +46,7 @@ public class ServerCapacityService {
             if (field.getType() == int.class) {
                 field.setAccessible(true);
                 try {
-                    if (field.getInt(playerList) == plugin.getServer().getMaxPlayers()) {
+                    if (field.getInt(playerList) == this.plugin.getServer().getMaxPlayers()) {
                         return field;
                     }
                 }

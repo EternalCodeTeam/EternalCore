@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.servercapacity.messages;
+package com.eternalcode.core.feature.setslot.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import lombok.Getter;
@@ -8,6 +8,6 @@ import net.dzikoysk.cdn.entity.Contextual;
 @Getter
 @Accessors(fluent = true)
 @Contextual
-public class ENServerCapacityMessages implements ServerCapacityMessages {
+public class ENSetSlotMessages implements SetSlotMessages {
     public Notice slotSaved = Notice.chat("<green>► <white>Server slots have been set to <green>{SLOTS} <white>and saved!");
 }

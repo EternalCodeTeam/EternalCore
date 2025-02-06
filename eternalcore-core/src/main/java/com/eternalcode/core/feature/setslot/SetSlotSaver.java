@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.servercapacity;
+package com.eternalcode.core.feature.setslot;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -13,13 +13,13 @@ import java.util.logging.Level;
 import org.bukkit.Server;
 
 @Service
-public class ServerCapacitySaver {
+public class SetSlotSaver {
 
     private static final String MAX_PLAYERS_PROPERTY = "max-players";
     private final Server server;
 
     @Inject
-    public ServerCapacitySaver(Server server) {
+    public SetSlotSaver(Server server) {
         this.server = server;
     }
 
