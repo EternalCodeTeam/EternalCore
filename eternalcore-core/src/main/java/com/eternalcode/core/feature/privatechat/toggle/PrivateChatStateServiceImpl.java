@@ -7,30 +7,30 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class PrivateChatToggleServiceImpl implements PrivateChatToggleService {
+public class PrivateChatStateServiceImpl implements PrivateChatStateService {
 
-    private final PrivateChatToggleRepository msgToggleRepository;
+    private final PrivateChatStateRepository msgToggleRepository;
     private final ConcurrentHashMap<UUID, PrivateChatState> cachedToggleStates;
 
     @Inject
-    public PrivateChatToggleServiceImpl(PrivateChatToggleRepository msgToggleRepository) {
+    public PrivateChatStateServiceImpl(PrivateChatStateRepository msgToggleRepository) {
         this.cachedToggleStates = new ConcurrentHashMap<>();
         this.msgToggleRepository = msgToggleRepository;
     }
 
 
     @Override
-    public CompletableFuture<PrivateChatState> getPrivateChatToggleState(UUID uuid) {
+    public CompletableFuture<PrivateChatState> getPrivateChatState(UUID uuid) {
         if (this.cachedToggleStates.containsKey(uuid)) {
             return CompletableFuture.completedFuture(this.cachedToggleStates.get(uuid));
         }
 
-        return this.msgToggleRepository.getPrivateChatToggleState(uuid);
+        return this.msgToggleRepository.getPrivateChatState(uuid);
     }
 
     @Override
     public void togglePrivateChat(UUID uuid, PrivateChatState toggle) {
         this.cachedToggleStates.put(uuid, toggle);
-        this.msgToggleRepository.setPrivateChatToggle(uuid, toggle);
+        this.msgToggleRepository.setPrivateChatState(uuid, toggle);
     }
 }

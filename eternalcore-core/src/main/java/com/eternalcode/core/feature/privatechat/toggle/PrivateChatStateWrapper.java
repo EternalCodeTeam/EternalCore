@@ -4,8 +4,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.UUID;
 
-@DatabaseTable(tableName = "eternal_core_private_chat_toggle")
-class PrivateChatToggleWrapper {
+@DatabaseTable(tableName = "eternal_core_private_chat_state")
+class PrivateChatStateWrapper {
 
     @DatabaseField(columnName = "id", id = true)
     private UUID uniqueId;
@@ -13,15 +13,15 @@ class PrivateChatToggleWrapper {
     @DatabaseField(columnName = "enabled")
     private PrivateChatState state;
 
-    PrivateChatToggleWrapper(UUID id, PrivateChatState enabled) {
+    PrivateChatStateWrapper(UUID id, PrivateChatState enabled) {
         this.uniqueId = id;
         this.state = enabled;
     }
 
-    PrivateChatToggleWrapper() {}
+    PrivateChatStateWrapper() {}
 
-    static PrivateChatToggleWrapper from(PrivateChatToggle msgToggle) {
-        return new PrivateChatToggleWrapper(msgToggle.getUuid(), msgToggle.getState());
+    static PrivateChatStateWrapper from(PrivateChatToggle msgToggle) {
+        return new PrivateChatStateWrapper(msgToggle.getUuid(), msgToggle.getState());
     }
 
     PrivateChatState isEnabled() {

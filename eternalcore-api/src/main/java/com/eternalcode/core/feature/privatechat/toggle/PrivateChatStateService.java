@@ -4,9 +4,9 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * This Service manages the state of player's private chat messages blocking
+ * This Service manages player's receiving of private messages
  */
-public interface PrivateChatToggleService {
+public interface PrivateChatStateService {
 
     /**
      * Checks status of player's private chat messages blocking.
@@ -14,7 +14,7 @@ public interface PrivateChatToggleService {
      * @param uuid player's UUID.
      * @return state of player's private chat messages blocking.
      */
-    CompletableFuture<PrivateChatState> getPrivateChatToggleState(UUID uuid);
+    CompletableFuture<PrivateChatState> getPrivateChatState(UUID uuid);
 
     /**
      * Sets blocking of incoming private messages.

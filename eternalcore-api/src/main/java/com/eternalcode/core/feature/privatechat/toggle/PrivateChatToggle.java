@@ -3,12 +3,12 @@ package com.eternalcode.core.feature.privatechat.toggle;
 import java.util.UUID;
 
 /**
- * Represents a player's private chat toggle state.
+ * Represents a player's private chat state.
  */
 public class PrivateChatToggle {
 
-    UUID uuid;
-    PrivateChatState state;
+    private final UUID uuid;
+    private final PrivateChatState state;
 
     public PrivateChatToggle(UUID uuid, PrivateChatState toggle) {
         this.uuid = uuid;
