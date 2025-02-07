@@ -2,15 +2,19 @@ package com.eternalcode.core.feature.serverlinks;
 
 import net.dzikoysk.cdn.entity.Contextual;
 
+@SuppressWarnings("unused")
 @Contextual
 public class ServerLinksEntry {
 
-    public final String name;
-    public final String address;
+    public String name;
+    public String address;
 
     public ServerLinksEntry(String name, String address) {
         this.name = name;
         this.address = address;
+    }
+
+    public ServerLinksEntry() {
     }
 
     public static ServerLinksEntry of(String name, String address) {
@@ -18,7 +22,7 @@ public class ServerLinksEntry {
     }
 
     public String name() {
-        return name;
+        return this.name;
     }
 
     public String address() {
