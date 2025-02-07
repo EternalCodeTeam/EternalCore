@@ -51,6 +51,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 - :house: Home, Warp, and Spawn System
 - :page_facing_up: PlaceholderAPI Support
 - :memo: Customizable and Translatable Messages (Player language selection available)
+- <details><summary>Server links feature (Click to see how it works)</summary><img src="assets/server-links-showcase.gif" alt="Server Links Showcase"></details>
 - :gear: Advanced Configuration System for customization
 - :card_index: Database Integration (PostgreSQL, SQLite, MySQL, MariaDB, H2)
 - :rainbow: Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing (e.g., &7, &e)

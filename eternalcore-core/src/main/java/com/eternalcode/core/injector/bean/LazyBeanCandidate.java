@@ -15,9 +15,7 @@ public class LazyBeanCandidate implements BeanCandidate {
 
     @Override
     public boolean isCandidate(Class<?> clazz) {
-        Class<?> type = this.getInstance().getClass();
-
-        return clazz.isAssignableFrom(type);
+        return clazz.isAssignableFrom(getType());
     }
 
     @Override

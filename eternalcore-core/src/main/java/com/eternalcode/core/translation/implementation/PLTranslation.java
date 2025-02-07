@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
@@ -566,6 +567,9 @@ public class PLTranslation extends AbstractTranslation {
                 .build()
         );
     }
+
+    @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
+    public PLSetSlotMessages setSlot  = new PLSetSlotMessages();
 
     @Description({" ", "# Automatyczne wiadomości "})
     public PLAutoMessageMessages autoMessage = new PLAutoMessageMessages();

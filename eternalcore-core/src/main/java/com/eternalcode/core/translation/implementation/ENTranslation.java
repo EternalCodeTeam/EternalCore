@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.ENPrivateMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
@@ -546,6 +547,9 @@ public class ENTranslation extends AbstractTranslation {
                 .build()
         );
     }
+
+    @Description({" ", "# Set's max players on the server, the messages for the /setslot command"})
+    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
 
     @Description({" ", "# Auto message"})
     public ENAutoMessageMessages autoMessage = new ENAutoMessageMessages();

@@ -6,7 +6,7 @@ object Versions {
     const val ETERNALCODE_COMMONS = "1.1.5"
     const val MULTIFICATION = "1.2.1"
 
-    const val JETBRAINS_ANNOTATIONS = "26.0.1"
+    const val JETBRAINS_ANNOTATIONS = "26.0.2"
     const val PLACEHOLDER_API = "2.11.6"
     const val LOMBOK = "1.18.36"
     const val GIT_CHECK = "1.0.0"
@@ -27,7 +27,7 @@ object Versions {
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.4.0-jre"
-    const val GSON = "2.11.0"
+    const val GSON = "2.12.0"
 
     const val EXPRESSIBLE = "1.3.6"
     const val PANDA_UTILITIES = "0.5.3-alpha"

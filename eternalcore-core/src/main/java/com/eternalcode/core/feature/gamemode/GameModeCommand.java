@@ -18,7 +18,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command(name = "gamemode", aliases = "gm")
-@Permission("eternalcore.gamemode")
 class GameModeCommand {
 
     private final CommandConfiguration commandConfiguration;
@@ -42,6 +41,7 @@ class GameModeCommand {
     }
 
     @Execute
+    @Permission("eternalcore.gamemode")
     @DescriptionDocs(description = "Sets your gamemode", arguments = "<gamemode>")
     void execute(@Context Player sender, @Arg GameMode gameMode) {
         sender.setGameMode(gameMode);
@@ -54,6 +54,7 @@ class GameModeCommand {
     }
 
     @Execute
+    @Permission("eternalcore.gamemode.other")
     @DescriptionDocs(description = "Sets gamemode of another player", arguments = "<gamemode> <player>")
     void execute(@Context Viewer sender, @Arg GameMode gameMode, @Arg Player player) {
         player.setGameMode(gameMode);
