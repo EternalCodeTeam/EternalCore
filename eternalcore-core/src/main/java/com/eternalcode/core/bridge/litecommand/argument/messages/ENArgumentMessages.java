@@ -1,0 +1,37 @@
+package com.eternalcode.core.bridge.litecommand.argument.messages;
+
+import com.eternalcode.multification.notice.Notice;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import net.dzikoysk.cdn.entity.Contextual;
+import net.dzikoysk.cdn.entity.Description;
+
+@Getter
+@Accessors(fluent = true)
+@Contextual
+public class ENArgumentMessages implements ArgumentMessages {
+    @Description("# {PERMISSIONS} - Required permission")
+    public Notice permissionMessage = Notice.chat("<red>✘ <dark_red>You don't have permission to perform this command! <red>({PERMISSIONS})");
+
+    @Description({" ", "# {USAGE} - Correct usage"})
+    public Notice usageMessage = Notice.chat("<gold>✘ <white>Correct usage: <gold>{USAGE}");
+    public Notice usageMessageHead = Notice.chat("<green>► <white>Correct usage:");
+    public Notice usageMessageEntry = Notice.chat("<green>► <white>{USAGE}");
+
+    @Description(" ")
+    public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>You must provide a player name!");
+    public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>This player is currently offline!");
+    public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Command is only for players!");
+    public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>The number must be greater than or equal to 0!");
+    public Notice noItem = Notice.chat("<red>✘ <dark_red>You need item to use this command!");
+    public Notice noMaterial = Notice.chat("<red>✘ <dark_red>This item doesn't exist");
+    public Notice noArgument = Notice.chat("<red>✘ <dark_red>This argument doesn't exist");
+    public Notice noDamaged = Notice.chat("<red>✘ <dark_red>This item can't be repaired");
+    public Notice noDamagedItems = Notice.chat("<red>✘ <dark_red>You need damaged items to use this command!");
+    public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>This enchantment doesn't exist");
+    public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>This enchantment level is not supported!");
+    public Notice invalidTimeFormat = Notice.chat("<red>✘ <dark_red>Invalid time format!");
+    public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>World <red>{WORLD} <dark_red>doesn't exist!");
+    public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
+    public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location format! <red>({LOCATION})");
+}

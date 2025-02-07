@@ -10,7 +10,8 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
-import com.eternalcode.core.translation.Translation.WarpSection.WarpInventorySection;
+import com.eternalcode.core.feature.warp.messages.WarpMessages;
+import com.eternalcode.core.feature.warp.messages.WarpMessages.WarpInventorySection;
 import com.eternalcode.core.translation.TranslationManager;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
@@ -84,7 +85,7 @@ public class WarpInventory {
 
     private Gui createInventory(Player player, Language language) {
         Translation translation = this.translationManager.getMessages(language);
-        Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
 
         int rowsCount;
         int size = warpSection.items().size();
@@ -225,7 +226,7 @@ public class WarpInventory {
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
             int slot = getSlot(warpSection);
 
             warpSection.addItem(warp.getName(),
@@ -246,7 +247,7 @@ public class WarpInventory {
         }
     }
 
-    private int getSlot(Translation.WarpSection.WarpInventorySection warpSection) {
+    private int getSlot(WarpMessages.WarpInventorySection warpSection) {
         int size = warpSection.items().size();
         if (!warpSection.border().enabled()) {
             return GUI_ITEM_SLOT_WITHOUT_BORDER + size;
@@ -267,7 +268,7 @@ public class WarpInventory {
 
         for (Language language : this.translationManager.getAvailableLanguages()) {
             AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            Translation.WarpSection.WarpInventorySection warpSection = translation.warp().warpInventory();
+            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
             WarpInventoryItem removed = warpSection.removeItem(warpName);
 
             if (removed != null) {
@@ -278,7 +279,7 @@ public class WarpInventory {
         }
     }
 
-    private void shiftWarpItems(WarpInventoryItem removed, Translation.WarpSection.WarpInventorySection warpSection) {
+    private void shiftWarpItems(WarpInventoryItem removed, WarpMessages.WarpInventorySection warpSection) {
         int removedSlot = removed.warpItem.slot;
         List<WarpInventoryItem> itemsToShift = warpSection.items().values().stream()
             .filter(item -> item.warpItem.slot > removedSlot)

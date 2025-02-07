@@ -3,8 +3,6 @@ package com.eternalcode.core.translation;
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.language.LanguageService;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.multification.translation.TranslationProvider;
 import java.util.Collections;
 import java.util.Set;
