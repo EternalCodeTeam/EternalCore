@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
+import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Bean;
@@ -439,6 +440,10 @@ public class PluginConfiguration implements ReloadableConfig {
             return this.catboyWalkSpeed;
         }
     }
+
+    @Bean
+    @Description({ " ", "# ServerLinks Section" })
+    ServerLinksConfig serverLinks = new ServerLinksConfig();
 
     @Override
     public Resource resource(File folder) {
