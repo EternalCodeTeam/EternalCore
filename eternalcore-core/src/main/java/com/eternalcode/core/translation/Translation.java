@@ -11,6 +11,7 @@ import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
+import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
@@ -230,6 +231,8 @@ public interface Translation {
     PlayerSection player();
     // spawn section
     SpawnMessages spawn();
+    // set slot section
+    SetSlotMessages setSlot();
     // item section
     ItemSection item();
     // time and weather
@@ -238,7 +241,8 @@ public interface Translation {
     LanguageSection language();
     // container section
     ContainerSection container();
+    // auto message section
     AutoMessageMessages autoMessage();
-
+    // jail section
     JailMessages jailSection();
 }
