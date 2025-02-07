@@ -22,6 +22,6 @@ public class ServerLinksEntry {
     }
 
     public String address() {
-        return address;
+        return this.address;
     }
 }
