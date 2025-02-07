@@ -247,7 +247,7 @@ public class WarpInventory {
         }
     }
 
-    private int getSlot(Translation.WarpSection.WarpInventorySection warpSection) {
+    private int getSlot(WarpMessages.WarpInventorySection warpSection) {
         int size = warpSection.items().size();
         if (!warpSection.border().enabled()) {
             return GUI_ITEM_SLOT_WITHOUT_BORDER + size;
@@ -279,7 +279,7 @@ public class WarpInventory {
         }
     }
 
-    private void shiftWarpItems(WarpInventoryItem removed, Translation.WarpSection.WarpInventorySection warpSection) {
+    private void shiftWarpItems(WarpInventoryItem removed, WarpMessages.WarpInventorySection warpSection) {
         int removedSlot = removed.warpItem.slot;
         List<WarpInventoryItem> itemsToShift = warpSection.items().values().stream()
             .filter(item -> item.warpItem.slot > removedSlot)

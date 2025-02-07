@@ -41,32 +41,30 @@ public interface WarpMessages {
             this.setItems(items);
         }
 
-        default void removeItem(String name) {
+        default WarpInventoryItem removeItem(String name) {
             Map<String, WarpInventoryItem> items = new HashMap<>(this.items());
-            items.remove(name);
+            WarpInventoryItem removed = items.remove(name);
 
             this.setItems(items);
+            return removed;
         }
 
-        WarpInventorySection.BorderSection border();
-        WarpInventorySection.DecorationItemsSection decorationItems();
+        BorderSection border();
+        DecorationItemsSection decorationItems();
 
         interface BorderSection {
             boolean enabled();
 
             Material material();
 
-            WarpInventorySection.BorderSection.FillType fillType();
+            FillType fillType();
 
             String name();
 
             List<String> lore();
 
             enum FillType {
-                TOP,
-                BOTTOM,
-                BORDER,
-                ALL
+                TOP, BOTTOM, BORDER, ALL
             }
         }
 
