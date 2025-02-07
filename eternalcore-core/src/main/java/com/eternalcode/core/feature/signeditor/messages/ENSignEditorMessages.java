@@ -9,7 +9,7 @@ import net.dzikoysk.cdn.entity.Contextual;
 @Accessors(fluent = true)
 @Contextual
 public class ENSignEditorMessages implements SignEditorMessages {
-    public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Sign not found, please look at the sign!");
-    public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>Invalid index!");
-    public Notice lineSet = Notice.chat("<green>► <white>Line <green>{INDEX} <white>set to <green>{TEXT}");
+    public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Look at the sign to edit it!");
+    public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>The value {LINE} is invalid! <red>Please select a number between 1 and 4!");
+    public Notice lineSet = Notice.chat("<green>► <white>Line <green>{LINE} <white>set to <green>{TEXT}");
 }

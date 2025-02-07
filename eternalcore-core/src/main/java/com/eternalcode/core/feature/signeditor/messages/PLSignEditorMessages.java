@@ -9,7 +9,7 @@ import net.dzikoysk.cdn.entity.Contextual;
 @Accessors(fluent = true)
 @Contextual
 public class PLSignEditorMessages implements SignEditorMessages{
-    public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Nie odnaleziono tabliczki, proszę spojrzeć na tabliczkę!");
-    public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>Nieprawidłowy indeks!");
-    public Notice lineSet = Notice.chat("<green>► <white>Ustawiono linię <green>{INDEX} <white>na <green>{TEXT}");
+    public Notice noSignFound = Notice.chat("<red>✘ <dark_red>Spójrz na tabliczkę, aby ją edytować!");
+    public Notice invalidIndex = Notice.chat("<red>✘ <dark_red>Wartość {LINE} jest nieprawidłowa! <red>Wybierz numer od 1 do 4!");
+    public Notice lineSet = Notice.chat("<green>► <white>Wartość <green>{LINE}</green> została ustawiona na <green>{TEXT}");
 }
