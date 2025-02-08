@@ -56,12 +56,13 @@ class GodCommand {
 
 
         this.noticeService.create()
+            .notice(translation -> target.isInvulnerable()
+                ? translation.player().godSetEnable()
+                : translation.player().godSetDisable())
+            .placeholder("{PLAYER}", target.getDisplayName())
             .placeholder("{STATE}", translation -> target.isInvulnerable()
                 ? translation.format().enable()
                 : translation.format().disable())
-            .notice(translation -> target.isInvulnerable()
-                ? translation.player().godEnable()
-                : translation.player().godDisable())
             .viewer(viewer)
             .send();
     }

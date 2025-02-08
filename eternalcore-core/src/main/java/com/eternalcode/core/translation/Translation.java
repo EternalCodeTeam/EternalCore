@@ -2,7 +2,7 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.bridge.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.adminchat.messages.AdminChatSection;
+import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
@@ -205,7 +205,7 @@ public interface Translation {
     // HelpOp Section
     HelpOpSection helpOp();
     // AdminChat Section
-    AdminChatSection adminChat();
+    AdminChatMessages adminChat();
     SudoMessages sudo();
     // Teleport Section
     TeleportSection teleport();
