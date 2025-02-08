@@ -9,7 +9,7 @@ import net.dzikoysk.cdn.entity.Description;
 @Getter
 @Accessors(fluent = true)
 @Contextual
-public class ENAdminChatMessages implements AdminChatSection {
+public class ENAdminChatMessages implements AdminChatMessages {
     @Description({"# {PLAYER} - Player who sent message on adminchat, {TEXT} - message"})
     public Notice format =
         Notice.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
