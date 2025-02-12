@@ -82,6 +82,14 @@ class AlertQueueCommand {
     @DescriptionDocs(description = "Sends all alerts from the queue")
     void executeSend(@Sender Player sender, @Arg Optional<Duration> duration) {
         Duration actualDuration = duration.filter(d -> !d.isNegative()).orElse(Duration.ofSeconds(2));
+
+        if (this.alertService.hasBroadcasts(sender.getUniqueId())) {
+            this.noticeService.create()
+                .player(sender.getUniqueId())
+                .notice(translation -> translation.chat().alertQueueEmpty())
+                .send();
+        }
+
         this.alertService.send(sender.getUniqueId(), actualDuration);
         this.noticeService.create()
             .player(sender.getUniqueId())

@@ -85,5 +85,9 @@ class AlertManager {
         clearBroadcasts(uuid);
     }
 
+    boolean hasBroadcasts(UUID uuid) {
+        return this.broadcasts.keySet().stream().anyMatch(key -> key.uuid().equals(uuid));
+    }
+
     private record AlertKey(UUID uuid, NoticeTextType type) {}
 }
