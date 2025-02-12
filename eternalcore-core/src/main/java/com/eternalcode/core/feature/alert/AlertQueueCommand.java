@@ -35,7 +35,6 @@ class AlertQueueCommand {
     @Execute(name = "add")
     @DescriptionDocs(description = "Adds alert to the queue with specified notice type and messages", arguments = "<type> <message>")
     void executeAdd(@Sender Player sender, @Arg NoticeTextType type, @Join String text) {
-
         this.alertService.addBroadcast(sender.getUniqueId(), type, this.noticeService.create()
             .notice(type, translation -> translation.chat().alertMessageFormat())
             .placeholder("{BROADCAST}", text)
@@ -54,7 +53,7 @@ class AlertQueueCommand {
 
         this.noticeService.create()
             .player(sender.getUniqueId())
-            .notice(translation -> success ? translation.chat().alertQueueRemoved() : translation.chat().alertQueueEmpty())
+            .notice(translation -> success ? translation.chat().alertQueueRemovedAll() : translation.chat().alertQueueEmpty())
             .send();
     }
 
@@ -65,7 +64,7 @@ class AlertQueueCommand {
 
         this.noticeService.create()
             .player(sender.getUniqueId())
-            .notice(translation -> success ? translation.chat().alertQueueRemoved() : translation.chat().alertQueueEmpty())
+            .notice(translation -> success ? translation.chat().alertQueueRemovedSingle() : translation.chat().alertQueueEmpty())
             .send();
     }
 
@@ -82,7 +81,8 @@ class AlertQueueCommand {
     @Execute(name = "send")
     @DescriptionDocs(description = "Sends all alerts from the queue")
     void executeSend(@Sender Player sender, @Arg Optional<Duration> duration) {
-        this.alertService.send(sender.getUniqueId(), duration.orElse(Duration.ofSeconds(2)));
+        Duration actualDuration = duration.filter(d -> !d.isNegative()).orElse(Duration.ofSeconds(2));
+        this.alertService.send(sender.getUniqueId(), actualDuration);
         this.noticeService.create()
             .player(sender.getUniqueId())
             .notice(translation -> translation.chat().alertQueueSent())
