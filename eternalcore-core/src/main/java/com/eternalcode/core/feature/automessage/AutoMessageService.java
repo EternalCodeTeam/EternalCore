@@ -1,13 +1,12 @@
 package com.eternalcode.core.feature.automessage;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.multification.notice.Notice;
 import java.util.Collection;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 import org.bukkit.Server;
 import org.bukkit.entity.Entity;
 
-@FeatureDocs(name = "AutoMessage", description = "Automatically sends messages to players at a given time interval.")
 @Service
 class AutoMessageService {
 
@@ -55,6 +53,15 @@ class AutoMessageService {
         return this.repository.switchReceiving(uniqueId);
     }
 
+    private void tick() {
+        this.scheduler.timerAsync(
+            () -> {
+                if (this.settings.enabled()) {
+                    this.broadcastNextMessage();
+                }
+            }, this.settings.interval(), this.settings.interval());
+    }
+
     public void broadcastNextMessage() {
         Set<UUID> onlineUniqueIds = this.server.getOnlinePlayers().stream()
             .map(Entity::getUniqueId)
@@ -76,15 +83,6 @@ class AutoMessageService {
                 .send();
         });
     }
-
-    private void tick() {
-        this.scheduler.runLaterAsync(this::tick, this.settings.interval());
-
-        if (this.settings.enabled()) {
-            this.broadcastNextMessage();
-        }
-    }
-
     private Optional<Notice> nextAutoMessage(AutoMessageMessages messageSection) {
         Collection<Notice> messages = messageSection.messages();
 
@@ -97,7 +95,6 @@ class AutoMessageService {
         }
 
         int index = this.broadcastCount.getAndIncrement() % messages.size();
-
         return messages.stream().skip(index).findFirst();
     }
 }

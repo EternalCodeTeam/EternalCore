@@ -5,12 +5,9 @@ import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
-import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.Where;
-import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -24,7 +21,7 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     @Inject
     private AutoMessageRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
-        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), AutoMessageIgnoreWrapper.class);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), AutoMessageTable.class);
     }
 
     @Override
@@ -33,16 +30,11 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             return CompletableFuture.completedFuture(onlineUniqueIds);
         }
 
-        CompletableFuture<List<AutoMessageIgnoreWrapper>> wrapperList =
-            this.action(AutoMessageIgnoreWrapper.class, dao -> {
-                Where<AutoMessageIgnoreWrapper, Object> where = dao.queryBuilder().where();
-
-                for (UUID onlineUniqueId : onlineUniqueIds) {
-                    where.eq("unique_id", onlineUniqueId);
-                }
-
-                where.or(onlineUniqueIds.size());
-
+        CompletableFuture<List<AutoMessageTable>> wrapperList =
+            this.action(
+                AutoMessageTable.class, dao -> {
+                Where<AutoMessageTable, Object> where = dao.queryBuilder().where();
+                where.in("unique_id", onlineUniqueIds);
                 return where.query();
             });
 
@@ -51,47 +43,27 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
                 .map(wrapper -> wrapper.uniqueId)
                 .collect(Collectors.toSet());
 
-            Set<UUID> onlineUniqueIdsWithoutIgnores = new HashSet<>();
-
-            for (UUID onlineUniqueId : onlineUniqueIds) {
-                if (!ignoredIds.contains(onlineUniqueId)) {
-                    onlineUniqueIdsWithoutIgnores.add(onlineUniqueId);
-                }
-            }
-
-            return onlineUniqueIdsWithoutIgnores;
+            return onlineUniqueIds.stream()
+                .filter(onlineUniqueId -> !ignoredIds.contains(onlineUniqueId))
+                .collect(Collectors.toSet());
         });
     }
 
     @Override
     public CompletableFuture<Boolean> isReceiving(UUID uniqueId) {
-        return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenApply(Optional::isEmpty);
+        return this.selectSafe(AutoMessageTable.class, uniqueId).thenApply(Optional::isEmpty);
     }
 
     @Override
     public CompletableFuture<Boolean> switchReceiving(UUID uniqueId) {
-        return this.selectSafe(AutoMessageIgnoreWrapper.class, uniqueId).thenCompose(optional -> {
+        return this.selectSafe(AutoMessageTable.class, uniqueId).thenCompose(optional -> {
             if (optional.isEmpty()) {
-                return this.save(AutoMessageIgnoreWrapper.class, new AutoMessageIgnoreWrapper(uniqueId))
+                return this.save(AutoMessageTable.class, new AutoMessageTable(uniqueId))
                     .thenApply(result -> false);
             }
 
-            AutoMessageIgnoreWrapper wrapper = optional.get();
-
-            return this.delete(AutoMessageIgnoreWrapper.class, wrapper).thenApply(state -> true);
+            AutoMessageTable wrapper = optional.get();
+            return this.delete(AutoMessageTable.class, wrapper).thenApply(state -> true);
         });
-    }
-
-    @DatabaseTable(tableName = "eternal_core_auto_message_ignore")
-    private static class AutoMessageIgnoreWrapper {
-
-        @DatabaseField(columnName = "unique_id", id = true)
-        UUID uniqueId;
-
-        AutoMessageIgnoreWrapper() {}
-
-        AutoMessageIgnoreWrapper(UUID uniqueId) {
-            this.uniqueId = uniqueId;
-        }
     }
 }
