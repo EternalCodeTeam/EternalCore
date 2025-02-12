@@ -24,6 +24,8 @@ import org.bukkit.entity.Player;
 )
 class AfkCommand {
 
+    private static final String AFK_BYPASS_PERMISSION = "eternalcore.afk.bypass";
+
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
     private final AfkService afkService;
@@ -42,7 +44,7 @@ class AfkCommand {
     void execute(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (player.hasPermission("eternalcore.afk.bypass")) {
+        if (player.hasPermission(AFK_BYPASS_PERMISSION)) {
             this.afkService.switchAfk(uuid, AfkReason.COMMAND);
             return;
         }
