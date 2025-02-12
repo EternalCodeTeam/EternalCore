@@ -9,7 +9,7 @@ interface AutoMessageRepository {
 
     CompletableFuture<Set<UUID>> findReceivers(Set<UUID> onlineUniqueIds);
 
-    // for nearby feafure like placeholders etc
+    // for nearby feature like placeholders etc
     CompletableFuture<Boolean> isReceiving(UUID uniqueId);
 
     CompletableFuture<Boolean> switchReceiving(UUID uniqueId);

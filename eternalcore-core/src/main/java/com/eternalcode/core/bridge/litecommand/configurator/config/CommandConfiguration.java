@@ -1,7 +1,7 @@
 package com.eternalcode.core.bridge.litecommand.configurator.config;
 
 import com.eternalcode.core.configuration.ReloadableConfig;
-import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
+import com.eternalcode.core.feature.gamemode.GameModeArgumentSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import net.dzikoysk.cdn.entity.Contextual;

@@ -5,6 +5,8 @@ import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.warp.repository.WarpRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import org.bukkit.Location;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,7 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
-import org.bukkit.Location;
 
 @FeatureDocs(
     name = "Warp System",
@@ -90,13 +91,13 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public boolean isExist(String name) {
-        return this.warps.containsKey(name);
+    public boolean exists(String warp) {
+        return this.warps.containsKey(warp);
     }
 
     @Override
-    public Optional<Warp> findWarp(String name) {
-        return Optional.ofNullable(this.warps.get(name));
+    public Optional<Warp> findWarp(String warp) {
+        return Optional.ofNullable(this.warps.get(warp));
     }
 
     @Override

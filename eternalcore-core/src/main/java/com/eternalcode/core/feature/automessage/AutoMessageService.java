@@ -7,7 +7,7 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.multification.notice.Notice;
 import java.util.Collection;
 import java.util.Optional;
@@ -18,7 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.bukkit.Server;
 import org.bukkit.entity.Entity;
-import panda.std.reactive.Completable;
 
 @FeatureDocs(name = "AutoMessage", description = "Automatically sends messages to players at a given time interval.")
 @Service
@@ -86,7 +85,7 @@ class AutoMessageService {
         }
     }
 
-    private Optional<Notice> nextAutoMessage(Translation.AutoMessageSection messageSection) {
+    private Optional<Notice> nextAutoMessage(AutoMessageMessages messageSection) {
         Collection<Notice> messages = messageSection.messages();
 
         if (messages.isEmpty()) {

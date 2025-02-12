@@ -1,23 +1,33 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.bridge.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
+import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
+import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
+import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
+import com.eternalcode.core.feature.home.messages.PLHomeMessages;
+import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.warp.WarpInventoryItem;
+import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
+import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
+import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
+import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
+import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
+import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
+import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
+import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
-import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,36 +102,7 @@ public class PLTranslation extends AbstractTranslation {
     })
 
     @Description("# Ta sekcja odpowiada za wszystkie wiadomości wykorzystywane podczas złego użycia argumentu komendy")
-    public PLArgumentSection argument = new PLArgumentSection();
-
-    @Getter
-    @Contextual
-    public static class PLArgumentSection implements ArgumentSection {
-        @Description("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
-        public Notice permissionMessage = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
-
-        @Description({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
-        public Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
-        public Notice usageMessageHead = Notice.chat("<gold>✘ <white>Poprawne użycie:");
-        public Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
-
-        @Description(" ")
-        public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę gracza!");
-        public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
-        public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
-        public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
-        public Notice noItem = Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w dłoni!");
-        public Notice noMaterial = Notice.chat("<red>✘ <dark_red>Taki materiał nie istnieje!");
-        public Notice noArgument = Notice.chat("<red>✘ <dark_red>Taki argument nie istnieje!");
-        public Notice noDamaged = Notice.chat("<red>✘ <dark_red>Ten przedmiot nie może być naprawiony!");
-        public Notice noDamagedItems = Notice.chat("<red>✘ <dark_red>Musisz posiadać uszkodzone przedmioty!");
-        public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>Takie zaklęcie nie istnieje!");
-        public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>Ten poziom zaklęcia nie jest wspierany!");
-        public Notice invalidTimeFormat = Notice.chat("<red>✘ <dark_red>Nieprawidłowy format czasu!");
-        public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Świat <dark_red>{WORLD} <red>nie istnieje!");
-        public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Niepoprawna liczba chunków!");
-        public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
-    }
+    public PLArgumentMessages argument = new PLArgumentMessages();
 
     @Description({
         " ",
@@ -141,45 +122,19 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Ta sekcja odpowiada za czat pomocy dla graczy, który jest widoczny dla administracji"
     })
-    public PLHelpOpSection helpOp = new PLHelpOpSection();
-
-    @Getter
-    @Contextual
-    public static class PLHelpOpSection implements HelpOpSection {
-        @Description({"# {PLAYER} - Gracz który wysłał wiadomość na helpop, {TEXT} - Treść wysłanej wiadomości"})
-        public Notice format = Notice.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{PLAYER}<white>: <white>{TEXT}");
-        @Description(" ")
-        public Notice send = Notice.chat("<green>► <white>Wiadomość została wysłana do administracji");
-        @Description("# {TIME} - Czas do końca blokady (cooldown)")
-        public Notice helpOpDelay = Notice.chat("<white>► <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
-    }
+    public PLHelpOpMessages helpOp = new PLHelpOpMessages();
 
     @Description({
         " ",
         "# Ta sekcja odpowiada za czat komunikacji między administracją"
     })
-    public PLAdminChatSection adminChat = new PLAdminChatSection();
-
-    @Getter
-    @Contextual
-    public static class PLAdminChatSection implements AdminChatSection {
-        @Description({"# {PLAYER} - Gracz który wysłał wiadomość na czacie administracji, {TEXT} - Treść wysłanej wiadomości"})
-        public Notice format = Notice.chat("<dark_gray>[<dark_red>Administracja<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
-    }
+    public PLAdminChatMessages adminChat = new PLAdminChatMessages();
 
     @Description({
         " ",
         "# Ta sekcja odpowiada za wiadmości komendy /sudo"
     })
-    public PLSudoSection sudo = new PLSudoSection();
-
-    @Getter
-    @Contextual
-    public static class PLSudoSection implements SudoSection {
-        @Description({"# {PLAYER} - Gracz który wykonał komendę, {COMMAND} - Komenda, którą wykonał gracz"})
-        public Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> wykonał komendę: <white>{COMMAND}");
-        public Notice sudoMessage = Notice.chat("<green>► <white>Wykonałeś komendę: <green>{COMMAND} <white>na graczu: <green>{PLAYER}");
-    }
+    public PLSudoMessages sudo = new PLSudoMessages();
 
     @Description({
         " ",
@@ -237,28 +192,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Ta sekcja odpowiada za edycję komunikatów losowej teleportacji",
     })
-    public PLRandomTeleportSection randomTeleport = new PLRandomTeleportSection();
-
-    @Getter
-    @Contextual
-    public static class PLRandomTeleportSection implements RandomTeleportSection {
-        @Description(" ")
-        public Notice randomTeleportStarted = Notice.builder()
-            .chat("<green>► <white>Rozpoczynanie procesu losowania lokalizacji...")
-            .title("<green>Losowy teleport")
-            .subtitle("<white>Wyszukiwanie lokalizacji, proszę czekać...")
-            .build();
-
-        public Notice randomTeleportFailed = Notice.chat("<red>✘ <dark_red>Nie udało się znaleźć bezpiecznej lokalizacji, spróbuj ponownie!");
-
-        public Notice teleportedToRandomLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany na losową lokalizację!");
-
-        @Description({"# {PLAYER} - Gracz który został teleportowany, {WORLD} - Świat, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
-        public Notice teleportedSpecifiedPlayerToRandomLocation = Notice.chat("<green>► <white>Przeteleportowałeś gracza <green>{PLAYER} <white>na losową lokalizację! Jego aktualna lokalizacja to: świat: {WORLD} x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}.");
-
-        @Description({" ", "# {TIME} - Czas do następnego użycia komendy (cooldown)"})
-        public Notice randomTeleportDelay = Notice.chat("<red>✘ <dark_red>Możesz skorzystać z losowej teleportacji dopiero za <dark_red>{TIME}!");
-    }
+    public PLRandomTeleportMessages randomTeleport = new PLRandomTeleportMessages();
 
     @Description({
         " ",
@@ -317,247 +251,31 @@ public class PLTranslation extends AbstractTranslation {
         "# Ta sekcja odpowiada za obsługę zapytań tpa,",
         "# Daje możliwość edycji dotyczących tego typu zapytań ",
     })
-    public PLTpaSection tpa = new PLTpaSection();
-
-    @Getter
-    @Contextual
-    public static class PLTpaSection implements TpaSection {
-        public Notice tpaSelfMessage = Notice.chat("<red>✘ <dark_red>Nie możesz teleportować się samodzielnie!");
-        public Notice tpaAlreadySentMessage = Notice.chat("<red>✘ <dark_red>Już wysłałeś prośbę o teleportację!");
-        @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportację"})
-        public Notice tpaSentMessage = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!");
-
-        @Description({
-            " ",
-            "# W tych wiadomościach użyliśmy formatowania MiniMessages",
-            "# Obecna wiadomość od akceptacji prośby umożliwia graczowi kliknięcie w nią, aby zaakceptować prośbę o teleportację dzięki MiniMessages!",
-            "# Więcej informacji znajdziesz na stronie: https://docs.adventure.kyori.net/minimessage/format.html",
-        })
-        @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-        public Notice tpaReceivedMessage = Notice.builder()
-            .chat("<green>► <white>Otrzymałeś prośbę o teleportację od gracza: <green>{PLAYER}<white>!")
-            .chat("<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>")
-            .chat("<hover:show_text:'<red>Odrzucić prośbę o teleportacje?</red>'><gold><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpdeny {PLAYER} <red>by ją odrzucić! <gray>(Kliknij)</gray></click></gold></hover>")
-            .build();
-
-        @Description(" ")
-        public Notice tpaDenyNoRequestMessage = Notice.chat("<red>✘ <dark_red>Nie otrzymałeś prośby o teleportację od tego gracza!");
-
-        @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-        public Notice tpaDenyDoneMessage = Notice.chat("<red>✘ <dark_red>Odrzuciłeś prośbę o teleportację od gracza: <red>{PLAYER}<dark_red>!");
-
-        @Description({" ", "# {PLAYER} - Gracz który odrzucił prośbę o teleportacje"})
-        public Notice tpaDenyReceivedMessage = Notice.chat("<red>► <dark_red>Gracz: <red>{PLAYER} <dark_red>odrzucił twoją prośbę o teleportację!");
-
-        @Description(" ")
-        public Notice tpaDenyAllDenied = Notice.chat("<red>► <dark_red>Odrzucono wszystkie prośby o teleportację!");
-
-        @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-        public Notice tpaAcceptMessage = Notice.chat("<green>► <white>Zaakceptowałeś prośbę o teleportację od gracza: <green>{PLAYER}<white>!");
-
-        @Description(" ")
-        public Notice tpaAcceptNoRequestMessage = Notice.chat("<red>✘ <dark_red>Ten gracz nie wysłał do ciebie prośby o teleportację!");
-
-        @Description({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-        public Notice tpaAcceptReceivedMessage = Notice.chat("<green>► <white>Gracz: <green>{PLAYER} <white>zaakceptował twoją prośbę o teleportację!");
-
-        @Description(" ")
-        public Notice tpaAcceptAllAccepted = Notice.chat("<green>► <white>Zaakceptowano wszystkie prośby o teleportację!");
-
-        @Description(" ")
-        public Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>ignoruje Cię!");
-    }
+    public PLTeleportRequestMessages tpa = new PLTeleportRequestMessages();
 
     @Description({
         " ",
         "# Ta sekcja odpowiada za ustawianie i edycję punktów szybkiej podróży - warp",
     })
-    public PLWarpSection warp = new PLWarpSection();
-
-    @Getter
-    @Contextual
-    public static class PLWarpSection implements WarpSection {
-        @Description("# {WARP} - Nazwa warpu")
-        public Notice warpAlreadyExists = Notice.chat("<red>✘ <dark_red>Warp o nazwie <dark_red>{WARP} <red>już istnieje!");
-        public Notice create = Notice.chat("<green>► <white>Stworzono warp <green>{WARP}<white>!");
-        public Notice remove = Notice.chat("<red>► <white>Usunięto warp <red>{WARP}<white>!");
-        public Notice notExist = Notice.chat("<red>► <dark_red>Nie odnaleziono takiego warpu!");
-        public Notice itemAdded = Notice.chat("<green>► <white>Dodano warp do GUI!");
-        public Notice noWarps = Notice.chat("<red>✘ <dark_red>Nie ma dostępnych warpów!");
-        public Notice itemLimit = Notice.chat("<red>✘ <red>Osiągnąłeś limit warpów w GUI! Limit to: {LIMIT}!");
-        public Notice noPermission = Notice.chat("<red>✘ <red>Nie masz uprawnień do skorzystania z tego warpa <dark_red>{WARP}<red>!");
-        public Notice addPermissions = Notice.chat("<green>► <white>Dodano uprawnienia do warpa <green>{WARP}<white>!");
-        public Notice removePermission = Notice.chat("<red>► <white>Usunięto uprawnienie <red>{PERMISSION}</red> z warpa <red>{WARP}</red>!");
-        public Notice noPermissionsProvided = Notice.chat("<red>✘ <red>Nie podano żadnych uprawnień!");
-        public Notice permissionDoesNotExist = Notice.chat("<red>✘ <red>Podane uprawnienie nie istnieje ({PERMISSION})!");
-        public Notice permissionAlreadyExist = Notice.chat("<red>✘ <red>Podane uprawnienie już istnieje ({PERMISSION})!");
-        public Notice noPermissionAssigned = Notice.chat("<red>✘ <red>Ten warp nie ma przypisanych żadnych permisji");
-        public Notice missingWarpArgument = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę warpu!");
-        public Notice missingPermissionArgument = Notice.chat("<red>✘ <dark_red>Musisz podać uprawnienie!");
-
-        @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
-        public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
-
-
-        @Description({" ", "# Ustawienia gui listy dostępnych warpów"})
-        public PLWarpInventory warpInventory = new PLWarpInventory();
-
-        @Getter
-        @Contextual
-        public static class PLWarpInventory implements WarpInventorySection {
-            public String title = "<dark_gray>» <green>Lista dostępnych warpów";
-
-            @Description({
-                " ",
-                "# Poniższa lista określa przedmioty w GUI, które są wyświetlane w liście dostępnych warpów.",
-                "# Możesz edytować przedmioty, a dodawanie kolejnych warpów następuje automatycznie za pomocą komendy /setwarp",
-            })
-            public Map<String, WarpInventoryItem> items = new HashMap<>();
-
-            public void setItems(Map<String, WarpInventoryItem> items) {
-                this.items = items;
-            }
-
-            public PLBorderSection border = new PLBorderSection();
-            public PLDecorationItemsSection decorationItems = new PLDecorationItemsSection();
-
-            @Getter
-            @Contextual
-            public static class PLBorderSection implements BorderSection {
-                @Description({" ", "# Zmiany w tej sekcji mogą wpłynąć na wygląd GUI, zwróć uwagę na zmiany slotów przedmiotów w GUI."})
-                public boolean enabled = true;
-
-                public Material material = Material.GRAY_STAINED_GLASS_PANE;
-
-                public BorderSection.FillType fillType = BorderSection.FillType.BORDER;
-
-                public String name = "";
-
-                public List<String> lore = Collections.emptyList();
-            }
-
-            @Getter
-            @Contextual
-            public static class PLDecorationItemsSection implements DecorationItemsSection {
-                public List<ConfigItem> items = List.of();
-            }
-        }
-    }
+    public PLWarpMessages warp = new PLWarpMessages();
 
     @Description({
         " ",
         "# Poniższa sekcja odpowiada za ustawianie i edycję osobistych punktów szybkiej podróży - home",
     })
-    public PLHomeSection home = new PLHomeSection();
-
-    @Getter
-    @Contextual
-    public static class PLHomeSection implements HomeSection {
-        @Description({" ", "# {HOMES} - Lista domów"})
-        public Notice homeList = Notice.chat("<green>► <white>Lista domów: <green>{HOMES}!");
-
-        @Description({" ", "# {HOME} - Nazwa domu"})
-        public Notice create = Notice.chat("<green>► <white>Stworzono dom o nazwie <green>{HOME}<white>!");
-        public Notice delete = Notice.chat("<red>► <white>Usunięto dom o nazwie <red>{HOME}<white>!");
-        public Notice overrideHomeLocation = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME}<white>!");
-
-        @Description({" ", "# {LIMIT} - Limit domów"})
-        public Notice limit = Notice.chat("<green>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
-        public Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Nie posiadasz żadnego domu!");
-
-        @Description({" ", "# Wiadomości placeholderów"})
-        public String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
-
-        @Description({
-            " ",
-            "# Sekcja wiadomości administracyjnych dla domów graczy",
-            "# {HOME} - Nazwa domu, {PLAYER} - Gracz, {HOMES} - Lista domów"
-        })
-        public Notice overrideHomeLocationAsAdmin = Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
-        public Notice playerNoOwnedHomes = Notice.chat("<red>✘ <dark_red>Gracz <red>{PLAYER} <dark_red>nie posiada żadnego domu!");
-        public Notice createAsAdmin = Notice.chat("<green>► <white>Stworzono dom <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
-        public Notice deleteAsAdmin = Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
-        public Notice homeListAsAdmin = Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
-    }
+    public PLHomeMessages home = new PLHomeMessages();
 
     @Description({
         " ",
         "# Ta sekcja odpowiada za ustawianie i edycję wiadomości prywatnych",
     })
-    public PLPrivateChatSection privateChat = new PLPrivateChatSection();
-
-    @Getter
-    @Contextual
-    public static class PLPrivateChatSection implements PrivateChatSection {
-        public Notice noReply = Notice.chat("<red>► <dark_red>Nie możesz nikomu odpowiadać, ponieważ nie otrzymałeś żadnej wiadomości prywatnej!");
-
-        @Description("# {TARGET} - Gracz do którego chcesz wysłać wiadomość, {MESSAGE} - Treść wiadomości")
-        public Notice privateMessageYouToTarget = Notice.chat("<dark_gray>[<gray>Ty -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
-
-        @Description({" ", "# {SENDER} - Gracz który wysłał wiadomość, {MESSAGE} - Treść wiadomości"})
-        public Notice privateMessageTargetToYou = Notice.chat("<dark_gray>[<gray>{SENDER} -> <white>Ty<dark_gray>]<gray>: <white>{MESSAGE}");
-
-
-        @Description("# {SENDER} - Gracz który wysłał wiadomość, {TARGET} - Gracz do którego wysłał wiadomość, {MESSAGE} - Treść wiadomości")
-        public Notice socialSpyMessage = Notice.chat("<dark_gray>[<red>ss<dark_gray>] <dark_gray>[<gray>{SENDER} -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
-
-        @Description(" ")
-        public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy został {STATE}<white>!");
-        public Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy został {STATE}<white>!");
-
-        public Notice receiverDisabledMessages = Notice.chat("<red>► <dark_red>Wiadomości prywatne zostały wyłączone!");
-
-        public Notice selfMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone!");
-        public Notice selfMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone!");
-
-        @Description({" ", "# {PLAYER} - Gracz któremu wyłączono wiadomości prywatne"})
-        public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
-        public Notice otherMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone <white>dla gracza <green>{PLAYER}<white>!");
-
-        @Description({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-        public Notice ignorePlayer = Notice.chat("<green>► <white>Zignorowano gracza <red>{PLAYER}<white>!");
-
-        @Description(" ")
-        public Notice ignoreAll = Notice.chat("<red>► <dark_red>Zignorowano wszystkich graczy!");
-        public Notice cantIgnoreYourself = Notice.chat("<red>► <dark_red>Nie możesz zignorować samego siebie!");
-
-        @Description({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-        public Notice alreadyIgnorePlayer = Notice.chat("<red>► <dark_red>Gracz <red>{PLAYER} jest już zignorowany!");
-
-        @Description({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-        public Notice unIgnorePlayer = Notice.chat("<red>► <dark_red>Od ignorowano gracza <red>{PLAYER}<dark_red>!");
-
-        @Description(" ")
-        public Notice unIgnoreAll = Notice.chat("<red>► <dark_red>Od ignorowano wszystkich graczy!");
-        public Notice cantUnIgnoreYourself = Notice.chat("<red>► <dark_red>Nie możesz od ignorować samego siebie!");
-
-        @Description({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-        public Notice notIgnorePlayer = Notice.chat("<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!");
-    }
+    public PLPrivateChatMessages privateChat = new PLPrivateChatMessages();
 
     @Description({
         " ",
         "# Ta sekcja odpowiada za ustawianie i edycję wiadomości AFK",
     })
-    public PLAfkSection afk = new PLAfkSection();
-
-    @Getter
-    @Contextual
-    public static class PLAfkSection implements AfkSection {
-        @Description("# {PLAYER} - Gracz ")
-        public Notice afkOn = Notice.chat("<green>► <white>{PLAYER} jest AFK!");
-        public Notice afkOff = Notice.chat("<green>► <white>{PLAYER} już nie jest AFK!");
-
-        @Description({" ", "# {TIME} - Czas po którym gracz może użyć komendy"})
-        public Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
-
-        @Description({ " " })
-        public String afkKickReason = "<red>Zostałeś wyrzucone z powodu braku aktywności!";
-
-        @Description({" ", "# Używane w %eternalcore_afk_formatted% do wskazania statusu AFK"})
-        public String afkEnabledPlaceholder = "<red><b>AFK";
-        public String afkDisabledPlaceholder = "";
-    }
+    public PLAfkMessages afk = new PLAfkMessages();
 
     @Description({
         " ",
@@ -750,18 +468,7 @@ public class PLTranslation extends AbstractTranslation {
     }
 
     @Description({" ", "# Ta sekcja odpowiada za zmianę punktu spawn oraz teleportację graczy na spawn"})
-    public PLSpawnSection spawn = new PLSpawnSection();
-
-    @Getter
-    @Contextual
-    public static class PLSpawnSection implements SpawnSection {
-        public Notice spawnSet = Notice.chat("<green>► <white>Ustawiono spawn!");
-        public Notice spawnNoSet = Notice.chat("<red>✘ <dark_red>Spawn nie został ustawiony!");
-        @Description({" ", "# {PLAYER} - Gracz który teleportował cię na spawn"})
-        public Notice spawnTeleportedBy = Notice.chat("<green>► <white>Zostałeś przeteleportowany na spawn przez gracza <green>{PLAYER}<white>!");
-        @Description("# {PLAYER} - Gracz który został przeteleportowany na spawn")
-        public Notice spawnTeleportedOther = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został przeteleportowany na spawn!");
-    }
+    public PLSpawnMessages spawn = new PLSpawnMessages();
 
     @Description({
         " ",
@@ -818,24 +525,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Komunikaty odpowiedzialne za ustawianie czasu i pogody",
     })
-    public PLTimeAndWeatherMessageSection timeAndWeather = new PLTimeAndWeatherMessageSection();
-
-    @Getter
-    @Contextual
-    public static class PLTimeAndWeatherMessageSection implements TimeAndWeatherSection {
-        @Description("# {WORLD} - Nazwa świata w którym zmieniono czas")
-        public Notice timeSetDay = Notice.chat("<green>► <white>Ustawiono dzień w świecie <green>{WORLD}<white>!");
-        public Notice timeSetNight = Notice.chat("<green>► <white>Ustawiono noc w świecie <green>{WORLD}<white>!");
-
-        @Description({" ", "# {TIME} - Czas"})
-        public Notice timeSet = Notice.chat("<green>► <white>Ustawiono czas na <green>{TIME}<white>!");
-        public Notice timeAdd = Notice.chat("<green>► <white>Zmieniono czas o <green>{TIME}<white>!");
-
-        @Description({" ", "# {WORLD} - Świat w którym ustawiono pogode"})
-        public Notice weatherSetRain = Notice.chat("<green>► <white>Ustawiono deszcz w świecie <green>{WORLD}<white>!");
-        public Notice weatherSetSun = Notice.chat("<green>► <white>Ustawiono słoneczną pogodę w świecie <green>{WORLD}<white>!");
-        public Notice weatherSetThunder = Notice.chat("<green>► <white>Ustawiono burze w świecie <green>{WORLD}<white>!");
-    }
+    public PLTimeAndWeatherMessages timeAndWeather = new PLTimeAndWeatherMessages();
 
     @Description({
         " ",
@@ -878,88 +568,12 @@ public class PLTranslation extends AbstractTranslation {
         );
     }
 
+    @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
+    public PLSetSlotMessages setSlot  = new PLSetSlotMessages();
+
     @Description({" ", "# Automatyczne wiadomości "})
-    public PLAutoMessageSection autoMessage = new PLAutoMessageSection();
-
-    @Getter
-    @Contextual
-    public static class PLAutoMessageSection implements AutoMessageSection {
-        @Description({
-            "",
-            "# Jeżeli chcesz użyć placeholder'a %server_online% musisz zainstalować plugin",
-            "# PlaceholderAPI oraz pobrać placeholdery dla Server'a",
-            "# za pomocą komendy /papi ecloud download Server",
-        })
-        public Map<String, Notice> messages = Map.of(
-            "1", BukkitNotice.builder()
-                .actionBar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
-                .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
-                .build(),
-
-            "2", BukkitNotice.builder()
-                .chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?")
-                .chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!")
-                .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></green>")
-                .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
-                .build()
-        );
-
-        public Notice enabled = Notice.chat("<green>► <white>Włączono automatyczne wiadomości!");
-        public Notice disabled = Notice.chat("<green>► <white>Wyłączono automatyczne wiadomości!");
-
-        @Override
-        public Collection<Notice> messages() {
-            return this.messages.values();
-        }
-
-        @Override
-        public Notice enabled() {
-            return this.enabled;
-        }
-
-        @Override
-        public Notice disabled() {
-            return this.disabled;
-        }
-    }
+    public PLAutoMessageMessages autoMessage = new PLAutoMessageMessages();
 
     @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
-    public PLJailSection jailSection = new PLJailSection();
-
-    @Getter
-    @Contextual
-    public static class PLJailSection implements JailSection {
-        @Description({" ", "# Sekcja odpowiedzialna za ustawianie lokalizacji jail'a"})
-        public Notice jailLocationSet = Notice.chat("<green>► <white>Ustawiono lokalizację jail'a!");
-        public Notice jailLocationRemove = Notice.chat("<red>✘ <dark_red>Usunięto lokalizację jail'a!");
-        public Notice jailLocationNotSet = Notice.chat("<red>✘ <dark_red>Lokalizacja jail'a nie została ustawiona!");
-        public Notice jailLocationOverride = Notice.chat("<green>► <white>Nadpisałeś lokalizację jail'a!");
-
-        @Description({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące uwięzienia gracza"})
-        public Notice jailDetainPrivate = Notice.chat("<green>► <white>Zostałeś uwięziony!");
-        public Notice jailCannotUseCommand = Notice.chat("<red>✘ <dark_red>Nie możesz użyć tej komendy!");
-        @Description({" ", "# {PLAYER} - Gracz który został uwięziony"})
-        public Notice jailDetainBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony!");
-        @Description({" ", "# {PLAYER} - Gracz który został uwięziony"})
-        public Notice jailDetainOverride = Notice.chat("<green>► <white>Napisałeś nadaną karę graczowi <green>{PLAYER}<white>!");
-        @Description({" ", "# {REMAINING_TIME} - Pozostały czas do uwolnienia"})
-        public Notice jailDetainCountdown = Notice.actionbar("<red>Pozostało <green>{REMAINING_TIME} <red>do uwolnienia!");
-        @Description({" ", "# {PLAYER} - Administrator którego nie możesz uwięzić"})
-        public Notice jailDetainAdmin = Notice.chat("<red>✘ <dark_red>Nie możesz uwięzić administratora <red>{PLAYER}!");
-
-        @Description({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące uwolnienia gracza"})
-        @Description({" ", "# {PLAYER} - Gracz który został uwolniony"})
-        public Notice jailReleaseBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwolniony!");
-        public Notice jailReleasePrivate = Notice.actionbar("<green>► <white>Zostałeś uwolniony!");
-        public Notice jailReleaseAll = Notice.chat("<green>► <white>Wszyscy gracze zostali uwolnieni!");
-        public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>Nikt nie jest uwięziony!");
-        @Description({" ", "# {PLAYER} - Nazwa gracza"})
-        public Notice jailIsNotPrisoner = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest uwięziony!");
-
-        @Description({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące listy graczy w jail'u"})
-        public Notice jailListHeader = Notice.chat("<green>► <white>Lista graczy w jail'u:");
-        public Notice jailListEmpty = Notice.chat("<red>✘ <dark_red>Nikt nie jest uwięziony!");
-        @Description({" ", "# {PLAYER} - Gracz który jest uwięziony, {DETAINED_BY} - Gracz który uwięził gracza, {REMAINING_TIME} - Czas pozostały do uwolnienia"})
-        public Notice jailListPlayerEntry = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony przez <green>{DETAINED_BY} <white>na czas <green>{REMAINING_TIME} <white>!");
-    }
+    public PLJailMessages jailSection = new PLJailMessages();
 }
