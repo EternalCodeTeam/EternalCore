@@ -286,27 +286,34 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLEventSection implements EventSection {
-        @Description("# {PLAYER} - Gracz który został uśmiercony, {KILLER} - Gracz który zabił gracza")
+        @Description({
+            "# {PLAYER} - Gracz, który zginął",
+            "# {KILLER} - Gracz, który zabił (tylko w przypadku PvP)"
+        })
         public List<Notice> deathMessage = List.of(
             Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął przez {KILLER}!"),
-            Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął tragicznie podczas cieżkiej walki!")
+            Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął tragicznie podczas ciężkiej walki!")
         );
 
         @Description({
-            "# EternalCore będzie losować losową wiadomość z poniższej listy, za każdym razem gdy gracz zginie.",
-            "# Jeżeli {KILLER} nie będzie uwzględniony to wiadomość zostanie pobrana z tej listy.",
-            "# Lista powodów zgonu: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
+            "# Wiadomości wyświetlane gdy gracz ginie od konkretnego typu obrażeń",
+            "# {PLAYER} - Gracz, który zginął",
+            "# {CAUSE} - Przyczyna śmierci (np. UPADEK, VOID)",
+            "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
         })
         public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(Notice.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł z naszego świata!")),
+            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
+                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł w otchłań!")
+            ),
             EntityDamageEvent.DamageCause.FALL, Arrays.asList(
                 Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z wysokości!"),
                 Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
             )
         );
 
+        @Description("# {PLAYER} - Gracz, który zginął z nieznanej przyczyny")
         public List<Notice> unknownDeathCause = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt bojowy!")
+            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt!")
         );
 
         @Description({
