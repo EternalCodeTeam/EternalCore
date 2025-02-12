@@ -71,6 +71,14 @@ class AlertQueueCommand {
     @Execute(name = "clear")
     @DescriptionDocs(description = "Clears all alerts from the queue")
     void executeClear(@Sender Player sender) {
+        if (!this.alertService.hasBroadcasts(sender.getUniqueId())) {
+            this.noticeService.create()
+                .player(sender.getUniqueId())
+                .notice(translation -> translation.chat().alertQueueEmpty())
+                .send();
+            return;
+        }
+
         this.alertService.clearBroadcasts(sender.getUniqueId());
         this.noticeService.create()
             .player(sender.getUniqueId())
@@ -83,11 +91,12 @@ class AlertQueueCommand {
     void executeSend(@Sender Player sender, @Arg Optional<Duration> duration) {
         Duration actualDuration = duration.filter(d -> !d.isNegative()).orElse(Duration.ofSeconds(2));
 
-        if (this.alertService.hasBroadcasts(sender.getUniqueId())) {
+        if (!this.alertService.hasBroadcasts(sender.getUniqueId())) {
             this.noticeService.create()
                 .player(sender.getUniqueId())
                 .notice(translation -> translation.chat().alertQueueEmpty())
                 .send();
+            return;
         }
 
         this.alertService.send(sender.getUniqueId(), actualDuration);
