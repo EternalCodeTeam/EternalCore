@@ -24,7 +24,7 @@ class PrivateChatStateRepositoryOrmLite extends AbstractRepositoryOrmLite implem
         return this.selectSafe(PrivateChatStateWrapper.class, uuid)
             .thenApply(
                 optional -> optional.map(PrivateChatStateWrapper::isEnabled).orElse(PrivateChatState.ENABLE)
-            );
+            ).exceptionally(throwable -> PrivateChatState.ENABLE);
     }
 
     @Override

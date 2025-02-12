@@ -29,8 +29,13 @@ public class PrivateChatStateServiceImpl implements PrivateChatStateService {
     }
 
     @Override
-    public void togglePrivateChat(UUID uuid, PrivateChatState toggle) {
+    public CompletableFuture<Void> togglePrivateChat(UUID uuid, PrivateChatState toggle) {
         this.cachedToggleStates.put(uuid, toggle);
-        this.msgToggleRepository.setPrivateChatState(uuid, toggle);
+
+        return this.msgToggleRepository.setPrivateChatState(uuid, toggle)
+            .exceptionally(throwable -> {
+                this.cachedToggleStates.remove(uuid);
+                return null;
+            });
     }
 }

@@ -48,10 +48,10 @@ public class ENPrivateMessages implements PrivateChatMessages {
     public Notice alreadyIgnorePlayer = Notice.chat("<red>► <dark_red>You already ignore this player!");
 
     @Description("# {PLAYER} - Unignored player")
-    public Notice unIgnorePlayer = Notice.chat("<red>► <dark_red>{PLAYER} <red>player has been uningored!");
+    public Notice unIgnorePlayer = Notice.chat("<red>► <dark_red>{PLAYER} <red>player has been unignored!");
 
     @Description(" ")
-    public Notice unIgnoreAll = Notice.chat("<red>► <dark_red>All players have been uningored!");
+    public Notice unIgnoreAll = Notice.chat("<red>► <dark_red>All players have been unignored!");
     public Notice cantUnIgnoreYourself = Notice.chat("<red>► <dark_red>You can't unignore yourself!");
 
     @Description({" ", "# {PLAYER} - Ignored player"})
