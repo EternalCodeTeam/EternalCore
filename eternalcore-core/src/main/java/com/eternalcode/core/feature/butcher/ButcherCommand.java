@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -92,11 +93,12 @@ class ButcherCommand {
 
         for (int x = chunkX - chunks; x <= chunkX + chunks; x++) {
             for (int z = chunkZ - chunks; z <= chunkZ + chunks; z++) {
-                chunkList.add(world.getChunkAt(x, z));
+                if (world.isChunkLoaded(x, z)) {
+                    chunkList.add(world.getChunkAt(x, z));
+                }
             }
         }
 
         return chunkList;
     }
-
 }

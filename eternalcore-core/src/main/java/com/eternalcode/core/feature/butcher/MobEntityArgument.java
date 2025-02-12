@@ -12,6 +12,7 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.util.stream.Stream;
@@ -34,20 +35,19 @@ class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
             if (mobType.isParseable()) {
                 return ParseResult.success(new MobEntity(mobType));
             }
-        }
-        catch (IllegalArgumentException ignore) {
-            /* ignore */
+        } catch (IllegalArgumentException ignore) {
+            // Ignore and try EntityType
         }
 
         try {
             EntityType entityType = EntityType.valueOf(argument.toUpperCase());
+            Class<? extends Entity> entityClass = entityType.getEntityClass();
 
-            if (EntityUtil.isMob(entityType)) {
-                return ParseResult.success(new MobEntity(MobType.OTHER, entityType.getEntityClass()));
+            if (entityClass != null && EntityUtil.isMob(entityType)) {
+                return ParseResult.success(new MobEntity(MobType.OTHER, entityClass));
             }
-        }
-        catch (IllegalArgumentException ignore) {
-            /* ignore */
+        } catch (IllegalArgumentException ignore) {
+            // Ignore
         }
 
         return ParseResult.failure(translation.argument().noArgument());
@@ -63,5 +63,4 @@ class MobEntityArgument extends AbstractViewerArgument<MobEntity> {
             .map(String::toLowerCase)
             .collect(SuggestionResult.collector());
     }
-
 }

@@ -68,10 +68,9 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
     public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Integer> argument, SuggestionContext context) {
         int safeChunkNumber = this.pluginConfiguration.butcher.safeChunkNumber;
 
-        int range = (safeChunkNumber / 5) + 1;
-
-        return IntStream.range(1, range)
+        return IntStream.rangeClosed(1, (safeChunkNumber + 4) / 5)
             .map(i -> Math.min(i * 5, safeChunkNumber))
+            .distinct()
             .mapToObj(String::valueOf)
             .collect(SuggestionResult.collector());
     }
