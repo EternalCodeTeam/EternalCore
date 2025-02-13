@@ -11,17 +11,17 @@ public interface PrivateChatStateService {
     /**
      * Checks status of player's private chat messages blocking.
      *
-     * @param uuid player's UUID.
+     * @param playerUniqueId player's UUID.
      * @return state of player's private chat messages blocking.
      */
-    CompletableFuture<PrivateChatState> getPrivateChatState(UUID uuid);
+    CompletableFuture<PrivateChatState> getChatState(UUID playerUniqueId);
 
     /**
      * Sets blocking of incoming private messages.
      *
-     * @param uuid player's UUID.
-     * @param toggle desired state of player's private chat messages blocking.
+     * @param playerUniqueId player's UUID.
+     * @param state desired state of player's private chat messages blocking.
      */
-    CompletableFuture<Void> togglePrivateChat(UUID uuid, PrivateChatState toggle);
+    CompletableFuture<Void> setChatState(UUID playerUniqueId, PrivateChatState state);
 
 }

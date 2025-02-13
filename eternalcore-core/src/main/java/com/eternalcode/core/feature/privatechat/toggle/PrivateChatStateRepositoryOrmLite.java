@@ -28,8 +28,8 @@ class PrivateChatStateRepositoryOrmLite extends AbstractRepositoryOrmLite implem
     }
 
     @Override
-    public CompletableFuture<Void> setPrivateChatState(UUID uuid, PrivateChatState toggledOff) {
-        return this.save(PrivateChatStateWrapper.class, new PrivateChatStateWrapper(uuid, toggledOff))
+    public CompletableFuture<Void> setPrivateChatState(UUID uuid, PrivateChatState state) {
+        return this.save(PrivateChatStateWrapper.class, new PrivateChatStateWrapper(uuid, state))
             .thenApply(status -> null);
     }
 }

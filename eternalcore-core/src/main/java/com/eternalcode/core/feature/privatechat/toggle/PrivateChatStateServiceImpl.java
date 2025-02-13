@@ -20,21 +20,21 @@ public class PrivateChatStateServiceImpl implements PrivateChatStateService {
 
 
     @Override
-    public CompletableFuture<PrivateChatState> getPrivateChatState(UUID uuid) {
-        if (this.cachedToggleStates.containsKey(uuid)) {
-            return CompletableFuture.completedFuture(this.cachedToggleStates.get(uuid));
+    public CompletableFuture<PrivateChatState> getChatState(UUID playerUniqueId) {
+        if (this.cachedToggleStates.containsKey(playerUniqueId)) {
+            return CompletableFuture.completedFuture(this.cachedToggleStates.get(playerUniqueId));
         }
 
-        return this.msgToggleRepository.getPrivateChatState(uuid);
+        return this.msgToggleRepository.getPrivateChatState(playerUniqueId);
     }
 
     @Override
-    public CompletableFuture<Void> togglePrivateChat(UUID uuid, PrivateChatState toggle) {
-        this.cachedToggleStates.put(uuid, toggle);
+    public CompletableFuture<Void> setChatState(UUID playerUniqueId, PrivateChatState state) {
+        this.cachedToggleStates.put(playerUniqueId, state);
 
-        return this.msgToggleRepository.setPrivateChatState(uuid, toggle)
+        return this.msgToggleRepository.setPrivateChatState(playerUniqueId, state)
             .exceptionally(throwable -> {
-                this.cachedToggleStates.remove(uuid);
+                this.cachedToggleStates.remove(playerUniqueId);
                 return null;
             });
     }

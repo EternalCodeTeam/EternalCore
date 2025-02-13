@@ -60,7 +60,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
 
         UUID uniqueId = target.getUniqueId();
 
-        this.privateChatStateService.getPrivateChatState(uniqueId).thenAccept(privateChatState -> {
+        this.privateChatStateService.getChatState(uniqueId).thenAccept(privateChatState -> {
             if (privateChatState == PrivateChatState.DISABLE) {
                 this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().receiverDisabledMessages());
 
