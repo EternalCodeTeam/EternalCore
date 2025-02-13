@@ -5,17 +5,19 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 @Service
-public class PrivateChatStateServiceImpl implements PrivateChatStateService {
+class PrivateChatStateServiceImpl implements PrivateChatStateService {
 
     private final PrivateChatStateRepository msgToggleRepository;
     private final ConcurrentHashMap<UUID, PrivateChatState> cachedToggleStates;
 
     @Inject
-    public PrivateChatStateServiceImpl(PrivateChatStateRepository msgToggleRepository) {
+    PrivateChatStateServiceImpl(PrivateChatStateRepository msgToggleRepository) {
         this.cachedToggleStates = new ConcurrentHashMap<>();
         this.msgToggleRepository = msgToggleRepository;
+
     }
 
 
@@ -37,5 +39,14 @@ public class PrivateChatStateServiceImpl implements PrivateChatStateService {
                 this.cachedToggleStates.remove(playerUniqueId);
                 return null;
             });
+    }
+
+    @Override
+    public CompletableFuture<PrivateChatState> toggleChatState(UUID playerUniqueId) {
+        return this.getChatState(playerUniqueId).thenCompose(state -> {
+            PrivateChatState newState = state.invert();
+            return this.setChatState(playerUniqueId, newState)
+                .thenApply(aVoid -> newState);
+        });
     }
 }

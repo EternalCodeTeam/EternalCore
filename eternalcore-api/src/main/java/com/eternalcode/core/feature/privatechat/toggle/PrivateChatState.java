@@ -13,5 +13,10 @@ public enum PrivateChatState {
     /**
      * Player cannot receive private messages.
      */
-    DISABLE
+    DISABLE;
+
+    PrivateChatState invert() {
+        return this == ENABLE ? DISABLE : ENABLE;
+    }
+
 }

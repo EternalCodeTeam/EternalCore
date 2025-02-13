@@ -24,4 +24,13 @@ public interface PrivateChatStateService {
      */
     CompletableFuture<Void> setChatState(UUID playerUniqueId, PrivateChatState state);
 
+
+    /**
+     * Toggle blocking of incoming private messages.
+     *
+     * @param playerUniqueId player's UUID.
+     * @return new state of player's private chat messages blocking.
+     */
+    CompletableFuture<PrivateChatState> toggleChatState(UUID playerUniqueId);
+
 }
