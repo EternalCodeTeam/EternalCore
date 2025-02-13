@@ -17,7 +17,7 @@ public class ENAutoMessageMessages implements AutoMessageMessages {
 
     @Description({
         "",
-        "# If you want to useplaceholder %server_online% you need to install",
+        "# If you want to use placeholder %server_online% you need to install",
         "# PlaceholderAPI plugin and download placeholders for Server",
         "# like /papi ecloud download Server",
     })
