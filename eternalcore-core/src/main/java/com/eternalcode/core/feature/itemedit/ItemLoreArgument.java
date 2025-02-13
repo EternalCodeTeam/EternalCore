@@ -17,8 +17,11 @@ import java.util.List;
 @LiteArgument(type = int.class, name = ItemLoreArgument.KEY)
 class ItemLoreArgument extends AbstractViewerArgument<Integer> {
 
-    private static final List<Integer> suggestions = List.of(1, 2, 3, 4, 5, 6); // Sugeruj numery od 1 do 6
     static final String KEY = "item-lore";
+
+    // Suggests numbers from 1 to 6, because in the command we add +1
+    // so that users who are not aware that programming counts from zero understand it.
+    private static final List<Integer> suggestions = List.of(1, 2, 3, 4, 5, 6);
 
     @Inject
     public ItemLoreArgument(TranslationManager translationManager) {
@@ -42,9 +45,12 @@ class ItemLoreArgument extends AbstractViewerArgument<Integer> {
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Integer> argument, SuggestionContext context) {
+    public SuggestionResult suggest(
+            Invocation<CommandSender> invocation,
+            Argument<Integer> argument,
+            SuggestionContext context) {
         return suggestions.stream()
-            .map(String::valueOf)
-            .collect(SuggestionResult.collector());
+                .map(String::valueOf)
+                .collect(SuggestionResult.collector());
     }
 }
