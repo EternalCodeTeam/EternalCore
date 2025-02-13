@@ -1,10 +1,9 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.essentials.item.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.commons.adventure.AdventureUtil;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -48,7 +47,7 @@ class ItemNameCommand {
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .notice(translation -> translation.item().itemChangeNameMessage())
+            .notice(translation -> translation.itemEdit().itemChangeNameMessage())
             .placeholder("{ITEM_NAME}", name)
             .player(player.getUniqueId())
             .send();
@@ -68,7 +67,7 @@ class ItemNameCommand {
         itemMeta.setDisplayName(null);
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemClearNameMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemClearNameMessage());
     }
 
     private ItemStack validateItemFromMainHand(Player player) {

@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.essentials.item.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -43,13 +43,14 @@ class ItemFlagCommand {
 
         if (meta.hasItemFlag(flag)) {
             meta.removeItemFlags(flag);
-            this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagRemovedMessage(), formatter);
+            this.noticeService.player(player.getUniqueId(),
+                translation -> translation.itemEdit().itemFlagRemovedMessage(), formatter);
             return;
         }
 
         meta.addItemFlags(flag);
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagAddedMessage(), formatter);
+        this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemFlagAddedMessage(), formatter);
     }
 
     @Execute(name = "clear")
@@ -65,7 +66,7 @@ class ItemFlagCommand {
 
         meta.removeItemFlags(ItemFlag.values());
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagClearedMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemFlagClearedMessage());
     }
 
 }

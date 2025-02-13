@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
+import com.eternalcode.core.feature.essentials.item.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
@@ -158,18 +159,6 @@ public interface Translation {
     }
 
     interface ItemSection {
-        // item name & lore
-        Notice itemClearNameMessage();
-        Notice itemClearLoreMessage();
-
-        Notice itemChangeNameMessage();
-        Notice itemChangeLoreMessage();
-
-        // item flags
-        Notice itemFlagRemovedMessage();
-        Notice itemFlagAddedMessage();
-        Notice itemFlagClearedMessage();
-
         // give
         Notice giveReceived();
         Notice giveGiven();
@@ -235,6 +224,8 @@ public interface Translation {
     SetSlotMessages setSlot();
     // item section
     ItemSection item();
+    // itemedit
+    ItemEditMessages itemEdit();
     // time and weather
     TimeAndWeatherMessages timeAndWeather();
     // language section

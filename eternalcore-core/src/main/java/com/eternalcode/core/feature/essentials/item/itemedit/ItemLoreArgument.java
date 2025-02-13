@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item.lore;
+package com.eternalcode.core.feature.essentials.item.itemedit;
 
 import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;

@@ -464,25 +464,6 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENItemSection implements ItemSection {
-        @Description("# {ITEM_NAME} - New item name")
-        public Notice itemChangeNameMessage = Notice.chat("<green>► <white>Name has been changed to: <green>{ITEM_NAME}");
-
-        @Description(" ")
-        public Notice itemClearNameMessage = Notice.chat("<green>► <white>Name has been cleared!");
-
-        @Description({" ", "# {ITEM_LORE} - New item lore"})
-        public Notice itemChangeLoreMessage = Notice.chat("<green>► <white>Lore has been changed to: <green>{ITEM_LORE}");
-
-        @Description(" ")
-        public Notice itemClearLoreMessage = Notice.chat("<green>► <white>Lore has been cleared!");
-
-        @Description({" ", "# {ITEM_FLAG} - Flag name"})
-        public Notice itemFlagRemovedMessage = Notice.chat("<green>► <white>Flag <green>{ITEM_FLAG} <white>has been removed!");
-        public Notice itemFlagAddedMessage = Notice.chat("<green>► <white>Flag <green>{ITEM_FLAG} <white>has been added!");
-
-        @Description(" ")
-        public Notice itemFlagClearedMessage = Notice.chat("<green>► <white>Flags have been cleared!");
-
         @Description({" ", "# {ITEM} - Name of received item"})
         public Notice giveReceived = Notice.chat("<green>► <white>You have received: <green>{ITEM}");
 
@@ -506,7 +487,6 @@ public class ENTranslation extends AbstractTranslation {
         public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
-
 
     @Description({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
