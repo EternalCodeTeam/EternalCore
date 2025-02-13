@@ -11,6 +11,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.literal.Literal;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -89,17 +90,18 @@ class AlertQueueCommand {
     @Execute(name = "send")
     @DescriptionDocs(description = "Sends all alerts from the queue")
     void executeSend(@Sender Player sender, @Arg Optional<Duration> duration) {
+        UUID uniqueId = sender.getUniqueId();
         Duration actualDuration = duration.filter(d -> !d.isNegative()).orElse(Duration.ofSeconds(2));
 
         if (!this.alertService.hasBroadcasts(sender.getUniqueId())) {
             this.noticeService.create()
-                .player(sender.getUniqueId())
+                .player(uniqueId)
                 .notice(translation -> translation.chat().alertQueueEmpty())
                 .send();
             return;
         }
 
-        this.alertService.send(sender.getUniqueId(), actualDuration);
+        this.alertService.send(uniqueId, actualDuration);
         this.noticeService.create()
             .player(sender.getUniqueId())
             .notice(translation -> translation.chat().alertQueueSent())
