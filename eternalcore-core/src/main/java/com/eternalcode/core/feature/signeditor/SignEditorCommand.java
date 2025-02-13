@@ -56,7 +56,7 @@ public class SignEditorCommand {
             return;
         }
 
-        sign.getTargetSide(player).setLine(line, AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(text)));
+        sign.getTargetSide(player).setLine(line - 1, AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(text)));
         sign.update();
 
         this.noticeService.create()
