@@ -36,17 +36,14 @@ class DeathMessageController implements Listener {
 
         EntityDamageEvent damageCause = player.getLastDamageCause();
 
-        if (damageCause instanceof EntityDamageByEntityEvent) {
-            Entity damaged = ((EntityDamageByEntityEvent) damageCause).getDamager();
-            if (damaged instanceof Player killer) {
-                this.noticeService.create()
-                    .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().deathMessage()))
-                    .placeholder("{PLAYER}", player.getName())
-                    .placeholder("{KILLER}", killer.getName())
-                    .onlinePlayers()
-                    .send();
-                return;
-            }
+        if (damageCause instanceof EntityDamageByEntityEvent causeByEntity && causeByEntity.getDamager() instanceof Player killer) {
+            this.noticeService.create()
+                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().deathMessage()))
+                .placeholder("{PLAYER}", player.getName())
+                .placeholder("{KILLER}", killer.getName())
+                .onlinePlayers()
+                .send();
+            return;
         }
 
         if (damageCause != null) {
