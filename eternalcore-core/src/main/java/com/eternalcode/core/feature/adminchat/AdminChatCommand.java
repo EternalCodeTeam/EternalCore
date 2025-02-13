@@ -6,18 +6,19 @@ import com.eternalcode.core.feature.adminchat.event.AdminChatEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.multification.notice.NoticeBroadcast;
-import dev.rollczi.litecommands.annotations.context.Context;
-import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 @Command(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
 class AdminChatCommand {
+
+    private static final String ADMIN_CHAT_SPY_PERMISSION = "eternalcore.adminchat.spy";
 
     private final NoticeService noticeService;
     private final EventCaller eventCaller;
@@ -39,21 +40,18 @@ class AdminChatCommand {
             return;
         }
 
+        String eventMessage = event.getContent();
+
         NoticeBroadcast notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())
             .placeholder("{PLAYER}", sender.getName())
-            .placeholder("{TEXT}", message);
+            .placeholder("{TEXT}", eventMessage);
 
-        for (Player player : this.server.getOnlinePlayers()) {
-            if (!player.hasPermission("eternalcore.adminchat.spy")) {
-                continue;
-            }
-
-            notice = notice.player(player.getUniqueId());
-        }
+        this.server.getOnlinePlayers().stream()
+            .filter(player -> player.hasPermission(ADMIN_CHAT_SPY_PERMISSION))
+            .forEach(player -> notice.player(player.getUniqueId()));
 
         notice.send();
     }
-    
 }
