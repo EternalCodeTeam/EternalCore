@@ -44,9 +44,7 @@ class AdminChatCommand {
 
         NoticeBroadcast notice = this.noticeService.create()
             .console()
-            .notice(translation -> {
-                return translation.adminChat().format();
-            })
+            .notice(translation -> translation.adminChat().format())
             .placeholder("{PLAYER}", sender.getName())
             .placeholder("{TEXT}", eventMessage);
 
