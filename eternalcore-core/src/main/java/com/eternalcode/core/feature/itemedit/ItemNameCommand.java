@@ -1,16 +1,16 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.commons.adventure.AdventureUtil;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,22 +33,20 @@ class ItemNameCommand {
     @DescriptionDocs(description = "Sets name of item in hand", arguments = "<name>")
     void execute(@Context Player player, @Join String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
-        
+
         if (itemStack == null) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
-
             return;
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-
         String serialized = AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(name));
 
         itemMeta.setDisplayName(serialized);
         itemStack.setItemMeta(itemMeta);
 
         this.noticeService.create()
-            .notice(translation -> translation.item().itemChangeNameMessage())
+            .notice(translation -> translation.itemEdit().itemChangeNameMessage())
             .placeholder("{ITEM_NAME}", name)
             .player(player.getUniqueId())
             .send();
@@ -60,15 +58,15 @@ class ItemNameCommand {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
             return;
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-
         itemMeta.setDisplayName(null);
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemClearNameMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemClearNameMessage());
     }
 
     private ItemStack validateItemFromMainHand(Player player) {
@@ -80,5 +78,4 @@ class ItemNameCommand {
 
         return itemStack;
     }
-
 }

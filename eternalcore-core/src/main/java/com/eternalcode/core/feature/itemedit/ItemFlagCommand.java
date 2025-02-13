@@ -1,19 +1,19 @@
-package com.eternalcode.core.feature.essentials.item;
+package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
+import com.eternalcode.multification.shared.Formatter;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import com.eternalcode.multification.shared.Formatter;
 
 @Command(name = "itemflag")
 @Permission("eternalcore.itemflag")
@@ -43,13 +43,14 @@ class ItemFlagCommand {
 
         if (meta.hasItemFlag(flag)) {
             meta.removeItemFlags(flag);
-            this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagRemovedMessage(), formatter);
+            hand.setItemMeta(meta);
+            this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemFlagRemovedMessage(), formatter);
             return;
         }
 
         meta.addItemFlags(flag);
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagAddedMessage(), formatter);
+        this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemFlagAddedMessage(), formatter);
     }
 
     @Execute(name = "clear")
@@ -65,7 +66,6 @@ class ItemFlagCommand {
 
         meta.removeItemFlags(ItemFlag.values());
         hand.setItemMeta(meta);
-        this.noticeService.player(player.getUniqueId(), translation -> translation.item().itemFlagClearedMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemFlagClearedMessage());
     }
-
 }

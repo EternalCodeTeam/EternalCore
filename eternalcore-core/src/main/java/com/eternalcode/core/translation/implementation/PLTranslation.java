@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
@@ -110,6 +111,9 @@ public class PLTranslation extends AbstractTranslation {
         "# Celem sekcji jest ograniczenie powtarzania się niektórych wiadomości."
     })
     public PLFormatSection format = new PLFormatSection();
+
+    @Description("# Ta sekcja odpowiada za wiadomości dotyczące edytowanie itemow")
+    public PLItemEditMessages itemEdit = new PLItemEditMessages();
 
     @Getter
     @Contextual
@@ -480,22 +484,6 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class PLItemSection implements ItemSection {
-        @Description("# {ITEM_NAME} - Nowa nazwa itemu")
-        public Notice itemChangeNameMessage = Notice.chat("<green>► <white>Nowa nazwa itemu: <green>{ITEM_NAME}");
-        @Description(" ")
-        public Notice itemClearNameMessage = Notice.chat("<green>► <white>Wyczyszczono nazwę itemu!");
-
-        @Description({" ", "# {ITEM_LORE} - Nowe linia opisu"})
-        public Notice itemChangeLoreMessage = Notice.chat("<green>► <white>Nowa linia opisu: <green>{ITEM_LORE}");
-        @Description(" ")
-        public Notice itemClearLoreMessage = Notice.chat("<green>► <white>Wyczyszczono linie opisu!");
-
-        @Description({" ", "# {ITEM_FLAG} - Nowa flaga itemu"})
-        public Notice itemFlagRemovedMessage = Notice.chat("<green>► <white>Usunięto flagę: <green>{ITEM_FLAG}");
-        public Notice itemFlagAddedMessage = Notice.chat("<green>► <white>Dodano flagę: <green>{ITEM_FLAG}");
-        @Description(" ")
-        public Notice itemFlagClearedMessage = Notice.chat("<green>► <white>Wyczyszczono flagi!");
-
         @Description({" ", "# {ITEM} - Nazwa otrzymanego itemu"})
         public Notice giveReceived = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM}");
 

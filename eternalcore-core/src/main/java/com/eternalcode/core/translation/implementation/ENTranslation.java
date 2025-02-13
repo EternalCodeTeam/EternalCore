@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
@@ -113,6 +114,9 @@ public class ENTranslation extends AbstractTranslation {
         "# The purpose of the section is to reduce the repetition of some messages."
     })
     public ENFormatSection format = new ENFormatSection();
+
+    @Description("# This section is responsible for all messages related to item editing.")
+    public ENItemEditMessages itemEdit = new ENItemEditMessages();
 
     @Getter
     @Contextual
@@ -464,25 +468,6 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENItemSection implements ItemSection {
-        @Description("# {ITEM_NAME} - New item name")
-        public Notice itemChangeNameMessage = Notice.chat("<green>► <white>Name has been changed to: <green>{ITEM_NAME}");
-
-        @Description(" ")
-        public Notice itemClearNameMessage = Notice.chat("<green>► <white>Name has been cleared!");
-
-        @Description({" ", "# {ITEM_LORE} - New item lore"})
-        public Notice itemChangeLoreMessage = Notice.chat("<green>► <white>Lore has been changed to: <green>{ITEM_LORE}");
-
-        @Description(" ")
-        public Notice itemClearLoreMessage = Notice.chat("<green>► <white>Lore has been cleared!");
-
-        @Description({" ", "# {ITEM_FLAG} - Flag name"})
-        public Notice itemFlagRemovedMessage = Notice.chat("<green>► <white>Flag <green>{ITEM_FLAG} <white>has been removed!");
-        public Notice itemFlagAddedMessage = Notice.chat("<green>► <white>Flag <green>{ITEM_FLAG} <white>has been added!");
-
-        @Description(" ")
-        public Notice itemFlagClearedMessage = Notice.chat("<green>► <white>Flags have been cleared!");
-
         @Description({" ", "# {ITEM} - Name of received item"})
         public Notice giveReceived = Notice.chat("<green>► <white>You have received: <green>{ITEM}");
 
@@ -506,7 +491,6 @@ public class ENTranslation extends AbstractTranslation {
         public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
-
 
     @Description({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
