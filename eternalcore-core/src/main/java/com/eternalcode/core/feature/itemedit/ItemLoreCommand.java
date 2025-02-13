@@ -1,24 +1,22 @@
-package com.eternalcode.core.feature.essentials.item.itemedit;
+package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
-import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Command(name = "itemlore")
 @Permission("eternalcore.itemlore")
@@ -44,7 +42,6 @@ class ItemLoreCommand {
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-
         List<String> lore = itemMeta.getLore();
         lore = lore == null ? new ArrayList<>() : new ArrayList<>(lore);
 
@@ -52,11 +49,7 @@ class ItemLoreCommand {
             lore.add("");
         }
 
-        // Serialize using GsonComponentSerializer for modern Minecraft versions
-        String json = GsonComponentSerializer.gson().serialize(
-            AdventureUtil.resetItalic(this.miniMessage.deserialize(text))
-        );
-        lore.set(line, json);
+        lore.set(line, AdventureUtil.SECTION_SERIALIZER.serialize(AdventureUtil.resetItalic(this.miniMessage.deserialize(text))));
 
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
@@ -95,7 +88,11 @@ class ItemLoreCommand {
         itemMeta.setLore(lore);
         itemStack.setItemMeta(itemMeta);
 
-        this.noticeService.player(player.getUniqueId(), translation -> translation.itemEdit().itemLoreLineRemoved());
+        this.noticeService.create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.itemEdit().itemLoreLineRemoved())
+            .placeholder("{LINE}", String.valueOf(line + 1))
+            .send();
     }
 
     @Execute(name = "clear")

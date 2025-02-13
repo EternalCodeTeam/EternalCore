@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item.itemedit.messages;
+package com.eternalcode.core.feature.itemedit.messages;
 
 import com.eternalcode.multification.notice.Notice;
 

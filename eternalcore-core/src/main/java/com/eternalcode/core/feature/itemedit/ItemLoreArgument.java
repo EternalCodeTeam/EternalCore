@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item.itemedit;
+package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -17,7 +17,7 @@ import java.util.List;
 @LiteArgument(type = int.class, name = ItemLoreArgument.KEY)
 class ItemLoreArgument extends AbstractViewerArgument<Integer> {
 
-    private static final List<Integer> suggestions = List.of(0, 1, 2, 3, 4, 5);
+    private static final List<Integer> suggestions = List.of(1, 2, 3, 4, 5, 6); // Sugeruj numery od 1 do 6
     static final String KEY = "item-lore";
 
     @Inject
@@ -30,11 +30,11 @@ class ItemLoreArgument extends AbstractViewerArgument<Integer> {
         try {
             int value = Integer.parseInt(argument);
 
-            if (value < 0) {
+            if (value < 1) {
                 return ParseResult.failure(translation.argument().numberBiggerThanOrEqualZero());
             }
 
-            return ParseResult.success(value);
+            return ParseResult.success(value - 1);
         }
         catch (NumberFormatException exception) {
             return ParseResult.failure(translation.argument().numberBiggerThanOrEqualZero());

@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
@@ -113,6 +114,9 @@ public class ENTranslation extends AbstractTranslation {
         "# The purpose of the section is to reduce the repetition of some messages."
     })
     public ENFormatSection format = new ENFormatSection();
+
+    @Description("# This section is responsible for all messages related to item editing.")
+    public ENItemEditMessages itemEdit = new ENItemEditMessages();
 
     @Getter
     @Contextual

@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
@@ -110,6 +111,9 @@ public class PLTranslation extends AbstractTranslation {
         "# Celem sekcji jest ograniczenie powtarzania się niektórych wiadomości."
     })
     public PLFormatSection format = new PLFormatSection();
+
+    @Description("# Ta sekcja odpowiada za wiadomości dotyczące edytowanie itemow")
+    public PLItemEditMessages itemEdit = new PLItemEditMessages();
 
     @Getter
     @Contextual

@@ -5,7 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
-import com.eternalcode.core.feature.essentials.item.itemedit.messages.ItemEditMessages;
+import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;

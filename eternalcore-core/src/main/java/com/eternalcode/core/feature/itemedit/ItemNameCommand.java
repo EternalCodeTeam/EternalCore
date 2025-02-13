@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.essentials.item.itemedit;
+package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -32,15 +33,13 @@ class ItemNameCommand {
     @DescriptionDocs(description = "Sets name of item in hand", arguments = "<name>")
     void execute(@Context Player player, @Join String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
-        
+
         if (itemStack == null) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
-
             return;
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-
         String serialized = AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(name));
 
         itemMeta.setDisplayName(serialized);
@@ -59,11 +58,11 @@ class ItemNameCommand {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
             return;
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
-
         itemMeta.setDisplayName(null);
         itemStack.setItemMeta(itemMeta);
 
@@ -79,5 +78,4 @@ class ItemNameCommand {
 
         return itemStack;
     }
-
 }
