@@ -11,24 +11,23 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.UUID;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 @Command(name = "msgtoggle")
 @Permission("eternalcore.msgtoggle")
-public class PrivateChatStateCommand {
+class PrivateChatStateCommand {
 
     private final PrivateChatStateService privateChatStateService;
     private final NoticeService noticeService;
 
     @Inject
-    public PrivateChatStateCommand(PrivateChatStateService privateChatStateService, NoticeService noticeService) {
+    PrivateChatStateCommand(PrivateChatStateService privateChatStateService, NoticeService noticeService) {
         this.privateChatStateService = privateChatStateService;
         this.noticeService = noticeService;
     }
 
     @Execute
     @DescriptionDocs(description = "Toggle receiving private messages")
-    public void execute(@Context Player sender) {
+    void execute(@Context Player sender) {
         UUID player = sender.getUniqueId();
         this.privateChatStateService.toggleChatState(player)
             .thenAccept(toggledState -> noticePlayer(toggledState, player));
@@ -36,7 +35,7 @@ public class PrivateChatStateCommand {
 
     @Execute
     @DescriptionDocs(description = "Switch receiving private messages", arguments = "<state>")
-    public void execute(@Context Player sender, @Arg PrivateChatState state) {
+    void execute(@Context Player sender, @Arg PrivateChatState state) {
         UUID player = sender.getUniqueId();
         this.privateChatStateService.setChatState(player, state)
             .thenAccept(ignored -> noticePlayer(state, player));
@@ -45,7 +44,7 @@ public class PrivateChatStateCommand {
     @Execute
     @Permission("eternalcore.msgtoggle.other")
     @DescriptionDocs(description = "Switch receiving private messages for other player", arguments = "<player>")
-    public void other(@Context CommandSender sender, @Arg Player target) {
+    void other(@Context CommandSender sender, @Arg Player target) {
         UUID player = target.getUniqueId();
         this.privateChatStateService.toggleChatState(player)
             .thenAccept(toggledState -> noticeOtherPlayer(sender, toggledState, target));
@@ -54,13 +53,14 @@ public class PrivateChatStateCommand {
     @Execute
     @Permission("eternalcore.msgtoggle.other")
     @DescriptionDocs(description = "Switch receiving private messages for other player", arguments = "<player>  <toggle>")
-    public void other(@Context CommandSender sender, @Arg Player target, @Arg PrivateChatState state) {
+    void other(@Context CommandSender sender, @Arg Player target, @Arg PrivateChatState state) {
         UUID player = target.getUniqueId();
         this.privateChatStateService.setChatState(player, state)
             .thenAccept(ignored -> noticeOtherPlayer(sender, state, target));
     }
 
     private void noticeOtherPlayer(CommandSender sender, PrivateChatState state, Player target) {
+        this.noticePlayer(state, target.getUniqueId());
         if (sender.equals(target)) {
             return;
         }
