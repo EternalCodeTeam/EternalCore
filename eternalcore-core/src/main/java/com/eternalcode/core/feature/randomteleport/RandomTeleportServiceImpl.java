@@ -87,15 +87,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
     private RandomTeleportRadius getWorldBorderRadius(World world) {
         WorldBorder worldBorder = world.getWorldBorder();
-        double size = worldBorder.getSize();
-        double centerX = worldBorder.getCenter().getX();
-        double centerZ = worldBorder.getCenter().getZ();
-
-        int minX = (int) (centerX - size/2);
-        int maxX = (int) (centerX + size/2);
-        int minZ = (int) (centerZ - size/2);
-        int maxZ = (int) (centerZ + size/2);
-
-        return RandomTeleportRadius.of(minX, maxX, minZ, maxZ);
+        int borderRadius = (int) (worldBorder.getSize() / 2);
+        return RandomTeleportRadius.of(-borderRadius, borderRadius, -borderRadius, borderRadius);
     }
 }

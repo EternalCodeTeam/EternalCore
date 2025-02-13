@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 class RandomTeleportSafeLocationService {
 
+    private static final int DEFAULT_NETHER_HEIGHT = 125;
     private static final int NETHER_MAX_HEIGHT = 127;
 
     private final RandomTeleportSettings randomTeleportSettings;
@@ -36,11 +37,14 @@ class RandomTeleportSafeLocationService {
     }
 
     public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadius radius, int attemptCount) {
-        if (attemptCount <= 0) {
+        if (attemptCount < 0) {
             return CompletableFuture.failedFuture(new RuntimeException("Cannot find safe location"));
         }
 
-        Location spawnLocation = getSpawnLocation(world);
+        boolean noneWorld = this.locationsConfiguration.spawn.isNoneWorld();
+        Location spawnLocation = !noneWorld
+            ? PositionAdapter.convert(this.locationsConfiguration.spawn)
+            : world.getSpawnLocation();
 
         int spawnX = spawnLocation.getBlockX();
         int spawnZ = spawnLocation.getBlockZ();
@@ -50,6 +54,10 @@ class RandomTeleportSafeLocationService {
 
         return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
+
+            if (world.getEnvironment() == World.Environment.NETHER) {
+                randomY = this.random.nextInt(DEFAULT_NETHER_HEIGHT);
+            }
 
             RandomTeleportHeightRange heightRange = this.randomTeleportSettings.heightRange();
             int minHeight = heightRange.getMinY();
@@ -64,19 +72,6 @@ class RandomTeleportSafeLocationService {
 
             return this.getSafeRandomLocation(world, radius, attemptCount - 1);
         });
-    }
-
-    private Location getSpawnLocation(World targetWorld) {
-        if (this.locationsConfiguration.spawn.isNoneWorld()) {
-            return targetWorld.getSpawnLocation();
-        }
-
-        Location configSpawn = PositionAdapter.convert(this.locationsConfiguration.spawn);
-        if (configSpawn.getWorld().getName().equals(targetWorld.getName())) {
-            return configSpawn;
-        }
-
-        return targetWorld.getSpawnLocation();
     }
 
     private boolean isSafeLocation(Chunk chunk, Location location) {
