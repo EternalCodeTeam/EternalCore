@@ -66,10 +66,7 @@ class DeathMessageController implements Listener {
         }
 
         this.noticeService.create()
-            .noticeOptional(translation -> {
-                List<Notice> messages = translation.event().unknownDeathCause();
-                return RandomElementUtil.randomElement(messages);
-            })
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().unknownDeathCause()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();
