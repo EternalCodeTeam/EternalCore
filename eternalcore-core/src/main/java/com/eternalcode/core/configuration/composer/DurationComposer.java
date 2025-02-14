@@ -1,11 +1,9 @@
 package com.eternalcode.core.configuration.composer;
 
-import dev.rollczi.litecommands.time.DurationParser;
-import panda.std.Result;
-
+import com.eternalcode.commons.time.DurationParser;
 import java.time.Duration;
 import java.time.format.DateTimeParseException;
-import java.util.Locale;
+import panda.std.Result;
 
 public class DurationComposer implements SimpleComposer<Duration> {
 
@@ -18,5 +16,4 @@ public class DurationComposer implements SimpleComposer<Duration> {
     public Result<String, Exception> serialize(Duration entity) {
         return Result.ok(DurationParser.TIME_UNITS.format(entity));
     }
-
 }

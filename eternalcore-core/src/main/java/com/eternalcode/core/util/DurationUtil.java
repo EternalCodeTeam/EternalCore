@@ -2,6 +2,7 @@ package com.eternalcode.core.util;
 
 import com.eternalcode.commons.time.DurationParser;
 import com.eternalcode.commons.time.TemporalAmountParser;
+import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
@@ -12,7 +13,7 @@ public class DurationUtil {
         .withUnit("m", ChronoUnit.MINUTES)
         .withUnit("h", ChronoUnit.HOURS)
         .withUnit("d", ChronoUnit.DAYS)
-        .roundOff(ChronoUnit.MILLIS);
+        .withRounded(ChronoUnit.MILLIS, RoundingMode.UP);
 
     private static final TemporalAmountParser<Duration> STANDARD_FORMAT = new DurationParser()
         .withUnit("d", ChronoUnit.DAYS)
