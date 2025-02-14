@@ -14,12 +14,12 @@ import java.time.Instant;
 import java.util.Optional;
 
 @Controller
-class AftPlaceholderSetup {
+class AfkPlaceholderSetup {
 
     private final TranslationManager translationManager;
 
     @Inject
-    AftPlaceholderSetup(TranslationManager translationManager) {
+    AfkPlaceholderSetup(TranslationManager translationManager) {
         this.translationManager = translationManager;
     }
 
