@@ -49,7 +49,15 @@ class DeathMessageController implements Listener {
         if (damageCause != null) {
             EntityDamageEvent.DamageCause cause = damageCause.getCause();
             this.noticeService.create()
-                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().unknownDeathCause()))
+                .noticeOptional(translation -> {
+                    List<Notice> notifications = translation.event().deathMessageByDamageCause().get(cause);
+
+                    if (notifications == null) {
+                        return RandomElementUtil.randomElement(translation.event().unknownDeathCause());
+                    }
+
+                    return RandomElementUtil.randomElement(notifications);
+                })
                 .placeholder("{PLAYER}", player.getName())
                 .placeholder("{CAUSE}", cause.name())
                 .onlinePlayers()
