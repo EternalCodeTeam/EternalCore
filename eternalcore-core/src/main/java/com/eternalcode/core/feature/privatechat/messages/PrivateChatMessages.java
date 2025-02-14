@@ -11,6 +11,12 @@ public interface PrivateChatMessages {
     Notice socialSpyEnable();
     Notice socialSpyDisable();
 
+    Notice receiverDisabledMessages();
+    Notice selfMessagesDisabled();
+    Notice selfMessagesEnabled();
+    Notice otherMessagesDisabled();
+    Notice otherMessagesEnabled();
+
     Notice ignorePlayer();
     Notice ignoreAll();
     Notice unIgnorePlayer();
