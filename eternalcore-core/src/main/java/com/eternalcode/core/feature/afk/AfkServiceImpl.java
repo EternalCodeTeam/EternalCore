@@ -7,12 +7,12 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import java.util.HashMap;
 import java.util.Optional;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,9 +24,9 @@ class AfkServiceImpl implements AfkService {
     private final UserManager userManager;
     private final EventCaller eventCaller;
 
-    private final Map<UUID, Afk> afkByPlayer = new ConcurrentHashMap<>();
-    private final Map<UUID, Integer> interactionsCount = new ConcurrentHashMap<>();
-    private final Map<UUID, Instant> lastInteraction = new ConcurrentHashMap<>();
+    private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
+    private final Map<UUID, Integer> interactionsCount = new HashMap<>();
+    private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
     @Inject
     AfkServiceImpl(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
