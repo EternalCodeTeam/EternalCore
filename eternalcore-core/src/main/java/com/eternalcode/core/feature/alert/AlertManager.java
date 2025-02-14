@@ -10,18 +10,18 @@ import com.eternalcode.multification.notice.NoticeBroadcast;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 class AlertManager {
 
     private final static Set<NoticeTextType> DELAYED_TYPES = Set.of(NoticeTextType.TITLE, NoticeTextType.SUBTITLE, NoticeTextType.ACTIONBAR);
 
-    private final Map<AlertKey, List<NoticeBroadcast<Viewer, Translation, ?>>> broadcasts = new ConcurrentHashMap<>();
+    private final Map<AlertKey, List<NoticeBroadcast<Viewer, Translation, ?>>> broadcasts = new HashMap<>();
     private final Scheduler scheduler;
 
     @Inject
@@ -85,8 +85,8 @@ class AlertManager {
         clearBroadcasts(uuid);
     }
 
-    boolean hasBroadcasts(UUID uuid) {
-        return this.broadcasts.keySet().stream().anyMatch(key -> key.uuid().equals(uuid));
+    boolean hasNoBroadcasts(UUID uuid) {
+        return this.broadcasts.keySet().stream().noneMatch(key -> key.uuid().equals(uuid));
     }
 
     private record AlertKey(UUID uuid, NoticeTextType type) {}
