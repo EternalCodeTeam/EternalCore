@@ -30,10 +30,6 @@ class AlertManager {
     }
 
     void addBroadcast(UUID uuid, NoticeTextType type, NoticeBroadcast<Viewer, Translation, ?> broadcast) {
-        if (uuid == null || type == null || broadcast == null) {
-            throw new IllegalArgumentException("Parameters cannot be null");
-        }
-
         this.broadcasts.computeIfAbsent(new AlertKey(uuid, type), k -> new ArrayList<>()).add(broadcast);
     }
 
