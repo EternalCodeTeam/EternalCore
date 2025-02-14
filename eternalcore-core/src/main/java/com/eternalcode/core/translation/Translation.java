@@ -76,7 +76,8 @@ public interface Translation {
         Notice tellrawMultipleSent();
         Notice tellrawCleared();
         Notice alertQueueAdded();
-        Notice alertQueueRemoved();
+        Notice alertQueueRemovedSingle();
+        Notice alertQueueRemovedAll();
         Notice alertQueueCleared();
         Notice alertQueueEmpty();
         Notice alertQueueSent();

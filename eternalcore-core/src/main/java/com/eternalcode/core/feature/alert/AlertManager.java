@@ -3,12 +3,11 @@ package com.eternalcode.core.feature.alert;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.notice.EternalCoreBroadcast;
 import com.eternalcode.core.notice.NoticeTextType;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.viewer.Viewer;
-
 import com.eternalcode.multification.notice.NoticeBroadcast;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,6 +57,8 @@ class AlertManager {
     }
 
     void send(UUID uuid, Duration delay) {
+        Duration actualDelay = delay.isNegative() ? Duration.ofSeconds(2) : delay;
+
         this.broadcasts.forEach((alertKey, broadcasts) -> {
             if (!alertKey.uuid().equals(uuid)) {
                 return;
@@ -67,9 +68,8 @@ class AlertManager {
             if (DELAYED_TYPES.contains(type)) {
                 for (int i = 0; i < broadcasts.size(); i++) {
                     NoticeBroadcast<Viewer, Translation, ?> broadcast = broadcasts.get(i);
-                    scheduler.runLater(broadcast::send, delay.multipliedBy(i));
+                    scheduler.runLater(broadcast::send, actualDelay.multipliedBy(i + 1));
                 }
-
                 return;
             }
 
@@ -79,6 +79,10 @@ class AlertManager {
         });
 
         clearBroadcasts(uuid);
+    }
+
+    boolean hasNoBroadcasts(UUID uuid) {
+        return this.broadcasts.keySet().stream().noneMatch(key -> key.uuid().equals(uuid));
     }
 
     private record AlertKey(UUID uuid, NoticeTextType type) {}
