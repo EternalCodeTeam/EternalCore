@@ -10,7 +10,8 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -19,23 +20,37 @@ import java.time.Instant;
 @Permission("eternalcore.seen")
 class SeenCommand {
 
+    private final Server server;
     private final NoticeService noticeService;
 
     @Inject
-    public SeenCommand(NoticeService noticeService) {
+    public SeenCommand(Server server, NoticeService noticeService) {
+        this.server = server;
         this.noticeService = noticeService;
     }
 
     @Execute
     @DescriptionDocs(description = "Shows when the player was last seen on the server")
-    void execute(@Context User sender, @Arg Player target) {
-        long lastPlayed = target.getLastPlayed();
+    void execute(@Context User sender, @Arg User target) {
+        OfflinePlayer targetPlayer = this.server.getOfflinePlayer(target.getUniqueId());
 
-        // If the time is 0, it means the player has never joined before, indicating their first join.
+        if (targetPlayer.isOnline()) {
+            this.noticeService.create()
+                .user(sender)
+                .notice(translation -> translation.seen().nowOnline())
+                .placeholder("{PLAYER}", target.getName())
+                .send();
+
+            return;
+        }
+
+        long lastPlayed = targetPlayer.getLastPlayed();
+
+        // If the time is 0, it means the player has never joined before
         if (lastPlayed == 0) {
             this.noticeService.create()
                 .user(sender)
-                .notice(translation -> translation.seen().firstJoin())
+                .notice(translation -> translation.seen().neverPlayedBefore())
                 .placeholder("{PLAYER}", target.getName())
                 .send();
 
@@ -43,7 +58,7 @@ class SeenCommand {
         }
 
         Duration lastPlayedBetween = Duration.between(Instant.ofEpochMilli(lastPlayed), Instant.now());
-        String lastPlayedFormatted = DurationUtil.format(lastPlayedBetween);
+        String lastPlayedFormatted = DurationUtil.format(lastPlayedBetween, true);
 
         this.noticeService.create()
             .user(sender)
