@@ -133,6 +133,23 @@ public class ENTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# This section is responsible for the messages of the /seen command"
+    })
+    public ENSeenSection seen = new ENSeenSection();
+
+    @Getter
+    @Contextual
+    public static class ENSeenSection implements SeenSection {
+
+        @Description("# {PLAYER} - The player who is joining the server for the first time")
+        public Notice firstJoin = Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} is joining the server for the first time, so there is no last login time.");
+
+        @Description("# {PLAYER} - The player who was last seen on the server, {SEEN} - Time since last login")
+        public Notice lastSeen =  Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} was last seen {SEEN} ago.");
+    }
+
+    @Description({
+        " ",
         "# This section is responsible for the communication between administration",
     })
     public ENAdminChatMessages adminChat = new ENAdminChatMessages();

@@ -142,6 +142,23 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({
         " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /seen"
+    })
+    public PLSeenSection seen = new PLSeenSection();
+
+    @Getter
+    @Contextual
+    public static class PLSeenSection implements SeenSection {
+
+        @Description("# {PLAYER} - Gracz który jest pierwszy raz na serwerze")
+        public Notice firstJoin = Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} pierwszy raz jest na serwerze, więc nie ma ostatniego czasu zalogowania.");
+
+        @Description("# {PLAYER} - Gracz który ostatnio był widziany na serwerze, {SEEN} - Czas od ostatniego logowania")
+        public Notice lastSeen =  Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} był ostatnio widziany {SEEN}.");
+    }
+
+    @Description({
+        " ",
         "# Ta sekcja odpowiada za komunikaty związane z teleportacją",
     })
     public PLTeleportSection teleport = new PLTeleportSection();
