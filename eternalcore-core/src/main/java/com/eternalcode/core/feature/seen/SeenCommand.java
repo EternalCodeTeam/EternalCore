@@ -16,7 +16,7 @@ import org.bukkit.Server;
 import java.time.Duration;
 import java.time.Instant;
 
-@Command(name = "seen")
+@Command(name = "seen", aliases = { "lastonline" })
 @Permission("eternalcore.seen")
 class SeenCommand {
 

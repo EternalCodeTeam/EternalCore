@@ -10,6 +10,7 @@ import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.seen.messages.EnSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.ENPrivateMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
@@ -135,21 +136,7 @@ public class ENTranslation extends AbstractTranslation {
         " ",
         "# This section is responsible for the messages of the /seen command"
     })
-    public ENSeenSection seen = new ENSeenSection();
-
-    @Getter
-    @Contextual
-    public static class ENSeenSection implements SeenSection {
-
-        @Description("# {PLAYER} - The player who is never played before on the server")
-        public Notice neverPlayedBefore = Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} has not played before on this server.");
-
-        @Description("# {PLAYER} - The player who was last seen on the server, {SEEN} - Time since last login")
-        public Notice lastSeen =  Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} was last seen {SEEN} ago.");
-
-        @Description("# {PLAYER} - The player who is now online")
-        public Notice nowOnline = Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} is now online!");
-    }
+    public EnSeenMessages seen = new EnSeenMessages();
 
     @Description({
         " ",
