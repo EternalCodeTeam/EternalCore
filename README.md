@@ -59,7 +59,7 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
 
 ## 👷 Developer API
 
-To use EternalCore API, you first need to add EternalCode to your project.
+To use the EternalCore API, you first need to add EternalCode to your project.
 To do that, follow these steps:
 You can check the latest release number [here](https://github.com/EternalCodeTeam/EternalCore/releases/latest).
 
