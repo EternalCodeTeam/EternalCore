@@ -9,7 +9,7 @@ import net.dzikoysk.cdn.entity.Description;
 @Getter
 @Accessors(fluent = true)
 @Contextual
-public class EnSeenMessages {
+public class EnSeenMessages implements SeenMessages {
 
     @Description("# {PLAYER} - The player who is never played before on the server")
     public Notice neverPlayedBefore = Notice.chat("<dark_gray>[<dark_red>Seen<dark_gray>] <green>{PLAYER} has not played before on this server.");
