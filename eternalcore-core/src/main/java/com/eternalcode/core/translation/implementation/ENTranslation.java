@@ -286,27 +286,34 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     @Contextual
     public static class ENEventSection implements EventSection {
-        @Description("# {PLAYER} - Killed player, {KILLER} - Killer")
+        @Description({
+            "# {PLAYER} - Killed player",
+            "# {KILLER} - Killer (only for PvP deaths)"
+        })
         public List<Notice> deathMessage = List.of(
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!"),
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <dark_red>{KILLER}!")
         );
 
         @Description({
-            "# EternalCore will pick a random message for the list below, every time the player do a various action.",
-            "# If the {KILLER} not be found, the message will be picked from list if contains cause.",
+            "# Messages shown when a player dies from specific damage causes",
+            "# {PLAYER} - Killed player",
+            "# {CAUSE} - Death cause (e.g., FALL, VOID)",
             "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
         })
         public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell into the void!")),
+            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
+                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell into the void!")
+            ),
             EntityDamageEvent.DamageCause.FALL, Arrays.asList(
                 Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell from a high place!"),
                 Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell off a deadly cliff!")
             )
         );
 
+        @Description("# {PLAYER} - Player who died from an unknown cause")
         public List<Notice> unknownDeathCause = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!")
+            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died under mysterious circumstances!")
         );
 
         @Description({"", "# {PLAYER} - Player who joined"})
