@@ -12,6 +12,7 @@ import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
+import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
@@ -219,6 +220,8 @@ public interface Translation {
     InventorySection inventory();
     // player section
     PlayerSection player();
+    //Seen section
+    SeenMessages seen();
     // spawn section
     SpawnMessages spawn();
     // set slot section

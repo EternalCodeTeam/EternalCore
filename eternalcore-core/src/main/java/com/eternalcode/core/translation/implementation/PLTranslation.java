@@ -10,6 +10,7 @@ import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
@@ -139,6 +140,12 @@ public class PLTranslation extends AbstractTranslation {
         "# Ta sekcja odpowiada za wiadmości komendy /sudo"
     })
     public PLSudoMessages sudo = new PLSudoMessages();
+
+    @Description({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /seen"
+    })
+    public PLSeenMessages seen = new PLSeenMessages();
 
     @Description({
         " ",
