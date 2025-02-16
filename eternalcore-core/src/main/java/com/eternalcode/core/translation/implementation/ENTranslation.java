@@ -10,7 +10,7 @@ import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.seen.messages.EnSeenMessages;
+import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.ENPrivateMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
@@ -136,7 +136,7 @@ public class ENTranslation extends AbstractTranslation {
         " ",
         "# This section is responsible for the messages of the /seen command"
     })
-    public EnSeenMessages seen = new EnSeenMessages();
+    public ENSeenMessages seen = new ENSeenMessages();
 
     @Description({
         " ",
