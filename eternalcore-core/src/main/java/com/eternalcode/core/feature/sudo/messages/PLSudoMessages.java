@@ -10,9 +10,9 @@ import net.dzikoysk.cdn.entity.Description;
 @Accessors(fluent = true)
 @Contextual
 public class PLSudoMessages implements SudoMessages {
-    @Description({"# {PLAYER} - Gracz który wykonał komendę, {COMMAND} - Komenda, którą wykonał gracz"})
-    public Notice sudoMessageSpy =
-        Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> wykonał komendę: <white>{COMMAND}");
-    public Notice sudoMessage =
-        Notice.chat("<green>► <white>Wykonałeś komendę: <green>{COMMAND} <white>na graczu: <green>{PLAYER}");
+    @Description({"# {PLAYER} - Gracz, który wykonał komendę, {TARGET} - Gracz lub konsola, na której wykonano komendę, {COMMAND} - Komenda"})
+    public Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> wykonał komendę: <white>{COMMAND} <dark_gray>na: <white>{TARGET}");
+
+    @Description({"# {TARGET} - Gracz lub konsola, na której wykonano komendę, {COMMAND} - Komenda"})
+    public Notice sudoMessage = Notice.chat("<green>► <white>Wykonałeś komendę: <green>{COMMAND} <white>na: <green>{TARGET}");
 }
