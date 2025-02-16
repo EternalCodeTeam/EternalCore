@@ -7,6 +7,7 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -16,6 +17,7 @@ import org.bukkit.Server;
 
 import java.time.Duration;
 import java.time.Instant;
+import org.bukkit.entity.Player;
 
 @Command(name = "seen", aliases = { "lastonline" })
 @Permission("eternalcore.seen")
@@ -33,7 +35,7 @@ class SeenCommand {
 
     @Execute
     @DescriptionDocs(description = "Shows when the player was last seen on the server")
-    void execute(@Context Viewer sender, @Arg User target) {
+    void execute(@Context Viewer sender, @Arg @Async OfflinePlayer target) {
         OfflinePlayer targetPlayer = this.server.getOfflinePlayer(target.getUniqueId());
 
         if (targetPlayer.isOnline()) {
