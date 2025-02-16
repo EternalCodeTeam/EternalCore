@@ -12,6 +12,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @FeatureDocs(name = "Spy sudo", description = "Allows you to spy on other players' sudo commands execution, permission to spy: eternalcore.sudo.spy")
@@ -32,7 +33,7 @@ class SudoCommand {
     @DescriptionDocs(description = "Execute command as console", arguments = "<command>")
     void console(@Context Viewer viewer, @Join String command) {
         this.server.dispatchCommand(this.server.getConsoleSender(), command);
-        this.sendSudoSpy(viewer, command);
+        this.sendSudoSpy(viewer, this.server.getConsoleSender(), command);
     }
 
     @Execute
@@ -40,14 +41,15 @@ class SudoCommand {
     @DescriptionDocs(description = "Execute command as player", arguments = "<player> <command>")
     void player(@Context Viewer viewer, @Arg Player target, @Join String command) {
         this.server.dispatchCommand(target, command);
-        this.sendSudoSpy(viewer, command);
+        this.sendSudoSpy(viewer, target, command);
     }
 
-    private void sendSudoSpy(Viewer viewer, String command) {
+    private void sendSudoSpy(Viewer viewer, CommandSender target, String command) {
         this.noticeService.create()
             .notice(translation -> translation.sudo().sudoMessage())
             .placeholder("{COMMAND}", command)
             .placeholder("{PLAYER}", viewer.getName())
+            .placeholder("{TARGET}", target.getName())
             .viewer(viewer)
             .send();
 
@@ -57,6 +59,7 @@ class SudoCommand {
                 .notice(translation -> translation.sudo().sudoMessageSpy())
                 .placeholder("{COMMAND}", command)
                 .placeholder("{PLAYER}", viewer.getName())
+                .placeholder("{TARGET}", target.getName())
                 .player(player.getUniqueId())
                 .send());
     }

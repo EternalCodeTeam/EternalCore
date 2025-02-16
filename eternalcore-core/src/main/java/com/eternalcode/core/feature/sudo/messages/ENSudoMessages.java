@@ -10,9 +10,9 @@ import net.dzikoysk.cdn.entity.Description;
 @Accessors(fluent = true)
 @Contextual
 public class ENSudoMessages implements SudoMessages {
-    @Description({"# {PLAYER} - Player who executed the command, {COMMAND} - Command that the player executed"})
-    public Notice sudoMessageSpy =
-        Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> executed command: <white>{COMMAND}");
-    public Notice sudoMessage =
-        Notice.chat("<green>► <white>You executed command: <green>{COMMAND} <white>on player: <green>{PLAYER}");
+    @Description({"# {PLAYER} - Player who executed the command, {TARGET} - Player or console on which the command was executed, {COMMAND} - Command"})
+    public Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> executed command: <white>{COMMAND} <dark_gray>on: <white>{TARGET}");
+
+    @Description({"# {TARGET} - Player or console on which the command was executed, {COMMAND} - Command"})
+    public Notice sudoMessage = Notice.chat("<green>► <white>You executed command: <green>{COMMAND} <white>on: <green>{TARGET}");
 }
