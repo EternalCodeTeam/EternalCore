@@ -13,7 +13,7 @@ object Versions {
 
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_PLATFORM = "4.3.4"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.18.0"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "4.19.0"
     const val ADVENTURE_PLATFORM_FACET = "4.3.4"
     const val CDN_CONFIGS = "1.14.6"
 
@@ -44,9 +44,9 @@ object Versions {
     // tests
     const val EXPRESSIBLE_JUNIT = "1.3.6"
     const val GROOVY_ALL = "3.0.23"
-    const val JUNIT_JUPITER_API = "5.11.4"
-    const val JUNIT_JUPITER_PARAMS = "5.11.4"
-    const val JUNIT_JUPITER_ENGINE = "5.11.4"
+    const val JUNIT_JUPITER_API = "5.12.0"
+    const val JUNIT_JUPITER_PARAMS = "5.12.0"
+    const val JUNIT_JUPITER_ENGINE = "5.12.0"
     const val MOCKITO_CORE = "5.15.2"
 
 }
