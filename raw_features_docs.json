@@ -10,13 +10,6 @@
     ]
   },
   {
-    "name": "AutoMessage",
-    "permissions": [],
-    "descriptions": [
-      "Automatically sends messages to players at a given time interval."
-    ]
-  },
-  {
     "name": "Bypass Full Server",
     "permissions": [
       "eternalcore.slot.bypass"
@@ -133,6 +126,13 @@
     "permissions": [],
     "descriptions": [
       "Play a sound after a player quits the server"
+    ]
+  },
+  {
+    "name": "ServerLinks",
+    "permissions": [],
+    "descriptions": [
+      "Server links to players allow to display link\u0027s dedicated to server social media. Displayed under the pause menu (ESC)."
     ]
   },
   {
