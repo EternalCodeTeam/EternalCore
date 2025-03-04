@@ -43,7 +43,7 @@ object Versions {
 
     // tests
     const val EXPRESSIBLE_JUNIT = "1.3.6"
-    const val GROOVY_ALL = "3.0.23"
+    const val GROOVY_ALL = "3.0.24"
     const val JUNIT_JUPITER_API = "5.12.0"
     const val JUNIT_JUPITER_PARAMS = "5.12.0"
     const val JUNIT_JUPITER_ENGINE = "5.12.0"
