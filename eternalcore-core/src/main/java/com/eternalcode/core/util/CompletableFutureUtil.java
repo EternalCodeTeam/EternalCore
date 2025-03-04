@@ -12,7 +12,7 @@ public final class CompletableFutureUtil {
     }
 
     public static <T> T handleCaughtException(Throwable cause) {
-        LOGGER.log(Level.SEVERE, "Caught an exception in future execution: {0}", cause);
+        LOGGER.log(Level.SEVERE, "Caught an exception in future execution: " + cause.getMessage(), cause);
         return null;
     }
 }
