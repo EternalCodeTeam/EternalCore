@@ -1,32 +1,33 @@
 package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.commons.adventure.AdventureUtil;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.language.LanguageService;
+import com.eternalcode.core.feature.warp.messages.WarpMessages;
+import com.eternalcode.core.feature.warp.messages.WarpMessages.WarpInventorySection;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
-import com.eternalcode.core.feature.warp.messages.WarpMessages;
-import com.eternalcode.core.feature.warp.messages.WarpMessages.WarpInventorySection;
 import com.eternalcode.core.translation.TranslationManager;
+import static com.eternalcode.core.util.FutureHandler.whenSuccess;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WarpInventory {
@@ -50,6 +51,7 @@ public class WarpInventory {
     private final WarpTeleportService warpTeleportService;
     private final ConfigurationManager configurationManager;
     private final PluginConfiguration config;
+    private final Scheduler scheduler;
 
     @Inject
     WarpInventory(
@@ -60,7 +62,8 @@ public class WarpInventory {
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
         ConfigurationManager configurationManager,
-        PluginConfiguration config
+        PluginConfiguration config,
+        Scheduler scheduler
     ) {
         this.translationManager = translationManager;
         this.languageService = languageService;
@@ -70,17 +73,13 @@ public class WarpInventory {
         this.warpTeleportService = warpTeleportService;
         this.configurationManager = configurationManager;
         this.config = config;
+        this.scheduler = scheduler;
     }
 
     public void openInventory(Player player) {
-        this.languageService.getLanguage(player.getUniqueId()).whenComplete((language, throwable) -> {
-            if (language == null) {
-                language = Language.DEFAULT;
-            }
-
-            this.createInventory(player, language)
-                .open(player);
-        });
+        this.languageService.getLanguage(player.getUniqueId())
+            .thenApply(language -> this.createInventory(player, language))
+            .whenComplete(whenSuccess(gui -> this.scheduler.run(() -> gui.open(player))));
     }
 
     private Gui createInventory(Player player, Language language) {
@@ -229,7 +228,8 @@ public class WarpInventory {
             WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
             int slot = getSlot(warpSection);
 
-            warpSection.addItem(warp.getName(),
+            warpSection.addItem(
+                warp.getName(),
                 WarpInventoryItem.builder()
                     .withWarpName(warp.getName())
                     .withWarpItem(ConfigItem.builder()
@@ -243,7 +243,6 @@ public class WarpInventory {
                     .build());
 
             this.configurationManager.save(translation);
-
         }
     }
 
@@ -293,5 +292,4 @@ public class WarpInventory {
             currentShift = nextShift;
         }
     }
-
 }
