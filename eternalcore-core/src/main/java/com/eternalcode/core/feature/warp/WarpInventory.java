@@ -14,7 +14,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.core.util.CompletableFutureUtil;
+import static com.eternalcode.core.util.FutureHandler.whenSuccess;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
@@ -78,23 +77,9 @@ public class WarpInventory {
     }
 
     public void openInventory(Player player) {
-        CompletableFuture<Gui> guiFuture = this.createInventoryAsync(player);
-
-        guiFuture.thenAccept(gui -> this.scheduler.run(() -> gui.open(player))).exceptionally(throwable -> {
-            CompletableFutureUtil.handleCaughtException(throwable);
-            return null;
-        });
-    }
-
-    private CompletableFuture<Gui> createInventoryAsync(Player player) {
-        return this.languageService.getLanguage(player.getUniqueId())
-            .thenApply(language -> {
-                if (language == null) {
-                    language = Language.DEFAULT;
-                }
-                return this.createInventory(player, language);
-            })
-            .exceptionally(throwable -> CompletableFutureUtil.handleCaughtException(throwable));
+        this.languageService.getLanguage(player.getUniqueId())
+            .thenApply(language -> this.createInventory(player, language))
+            .whenComplete(whenSuccess(gui -> this.scheduler.run(() -> gui.open(player))));
     }
 
     private Gui createInventory(Player player, Language language) {
