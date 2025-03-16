@@ -16,6 +16,15 @@ public class ENTeleportRequestMessages implements TeleportRequestMessages {
     public Notice tpaSentMessage =
         Notice.chat("<green>► <white>You have sent a request for teleportation to a player: <green>{PLAYER}<white>!");
 
+    public Notice tpaHereSentMessage = Notice.chat("<green>► <white>You have sent a request for teleportation to you for a player: <green>{PLAYER}<white>!");
+    public Notice tpaHereReceivedMessage = Notice.builder()
+        .chat("<green>► <white>You have received a request for teleportation TO a player: <gray>{PLAYER}<green>!")
+        .chat(
+            "<hover:show_text:'<green>Teleport to the player?</green>'><gold><click:suggest_command:'/tpahereaccept {PLAYER}'><dark_gray>» <gold>/tpahereaccept {PLAYER} <green>to accept! <gray>(Click)</gray></click></gold></hover>")
+        .chat(
+            "<hover:show_text:'<red>Decline a teleportation request?</red>'><gold><click:suggest_command:'/tpaheredeny {PLAYER}'><dark_gray>» <gold>/tpaheredeny {PLAYER} <red><green>to deny! <gray>(Click)</gray></click></gold></hover>")
+        .build();
+
     @Description({
         " ",
         "# We used MiniMessages formatting in these messages",

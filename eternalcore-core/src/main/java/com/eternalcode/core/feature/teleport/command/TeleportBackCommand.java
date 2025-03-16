@@ -1,15 +1,18 @@
 package com.eternalcode.core.feature.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -18,12 +21,17 @@ import java.util.Optional;
 @Command(name = "back")
 class TeleportBackCommand {
 
+    private static final String TIMER_BYPASS_PERMISSION = "eternalcore.teleport.bypass";
     private final TeleportService teleportService;
+    private final TeleportTaskService teleportTaskService;
+    private final TeleportRequestSettings settings;
     private final NoticeService noticeService;
 
     @Inject
-    TeleportBackCommand(TeleportService teleportService, NoticeService noticeService) {
+    TeleportBackCommand(TeleportService teleportService, TeleportTaskService teleportTaskService, TeleportRequestSettings settings, NoticeService noticeService) {
         this.teleportService = teleportService;
+        this.teleportTaskService = teleportTaskService;
+        this.settings = settings;
         this.noticeService = noticeService;
     }
 
@@ -39,7 +47,12 @@ class TeleportBackCommand {
             return;
         }
 
-        this.teleportService.teleport(player, location.get());
+        if (player.hasPermission(TIMER_BYPASS_PERMISSION)) {
+            this.teleportService.teleport(player, location.get());
+        } else {
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.teleportTime());
+        }
+
         this.noticeService.player(player.getUniqueId(), translation -> translation.teleport().teleportedToLastLocation());
     }
 
@@ -55,7 +68,11 @@ class TeleportBackCommand {
             return;
         }
 
-        this.teleportService.teleport(player, location.get());
+        if (player.hasPermission(TIMER_BYPASS_PERMISSION)){
+            this.teleportService.teleport(player, location.get());
+        } else {
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.teleportTime());
+        }
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.teleport().teleportedToLastLocation());
 

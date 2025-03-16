@@ -16,6 +16,14 @@ public class PLTeleportRequestMessages implements TeleportRequestMessages {
     public Notice tpaSentMessage =
         Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!");
 
+    public Notice tpaHereSentMessage = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do ciebie dla gracza: <green>{PLAYER}<white>!");
+    public Notice tpaHereReceivedMessage = Notice.builder()
+        .chat("<green>► <white>Otrzymałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!")
+        .chat(
+            "<hover:show_text:'<green>Teleportować się do gracza?</green>'><gold><click:suggest_command:'/tpahereaccept {PLAYER}'><dark_gray>» <gold>/tpahereaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>")
+        .chat(
+            "<hover:show_text:'<red>Odrzucić prośbę o teleportacje?</red>'><gold><click:suggest_command:'/tpaheredeny {PLAYER}'><dark_gray>» <gold>/tpaheredeny {PLAYER} <red>by ją odrzucić! <gray>(Kliknij)</gray></click></gold></hover>")
+        .build();
     @Description({
         " ",
         "# W tych wiadomościach użyliśmy formatowania MiniMessages",
