@@ -39,5 +39,6 @@ dependencies {
 tasks {
     runServer {
         minecraftVersion("1.21.4")
+        downloadPlugins.url("https://ci.lucko.me/job/LuckPerms/lastBuild/artifact/bukkit/loader/build/libs/LuckPerms-Bukkit-${Versions.LUCKPERMS}.jar")
     }
 }
