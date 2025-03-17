@@ -17,6 +17,9 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
+import static com.eternalcode.core.feature.teleportrequest.TeleportRequestPermissionConstant.TELEPORT_REQUEST_ACCEPT_PERMISSION;
+import static com.eternalcode.core.feature.teleportrequest.TeleportRequestPermissionConstant.TELEPORT_REQUEST_HERE_DENY_PERMISSION;
+
 @RootCommand
 public class TpaHereActionCommand {
 
@@ -36,7 +39,7 @@ public class TpaHereActionCommand {
     }
 
     @Execute(name = "tpahereaccept")
-    @Permission("eternalcore.tpahere.accept")
+    @Permission(TELEPORT_REQUEST_ACCEPT_PERMISSION)
     void accept(@Context Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         this.teleportTaskService.createTeleport(
             player.getUniqueId(),
@@ -63,7 +66,7 @@ public class TpaHereActionCommand {
     }
 
     @Execute(name = "tpaheredeny")
-    @Permission("eternalcore.tpahere.deny")
+    @Permission(TELEPORT_REQUEST_HERE_DENY_PERMISSION)
     @DescriptionDocs(description = "Deny a teleport here request")
     void executeTarget(@Context Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         this.requestService.removeRequest(target.getUniqueId());
@@ -84,7 +87,7 @@ public class TpaHereActionCommand {
     }
 
     @Execute(name = "tpaheredeny -all")
-    @Permission("eternalcore.tpahere.deny")
+    @Permission(TELEPORT_REQUEST_HERE_DENY_PERMISSION)
     @DescriptionDocs(description = "Deny all teleport here requests")
     void executeAll(@Context Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());

@@ -12,8 +12,10 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.CompletableFuture;
 
+import static com.eternalcode.core.feature.teleportrequest.TeleportRequestPermissionConstant.TELEPORT_REQUEST_HERE_PERMISSION;
+
 @Command(name = "tpahere")
-@Permission("eternalcore.tpahere")
+@Permission(TELEPORT_REQUEST_HERE_PERMISSION)
 public class TpaHereCommand {
 
     private final TeleportHereRequestService requestService;

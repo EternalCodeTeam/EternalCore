@@ -18,10 +18,11 @@ import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
+import static com.eternalcode.core.feature.teleportrequest.TeleportRequestPermissionConstant.TELEPORT_TIMER_BYPASS_PERMISSION;
+
 @Command(name = "back")
 class TeleportBackCommand {
 
-    private static final String TIMER_BYPASS_PERMISSION = "eternalcore.teleport.bypass";
     private final TeleportService teleportService;
     private final TeleportTaskService teleportTaskService;
     private final TeleportRequestSettings settings;
@@ -47,7 +48,7 @@ class TeleportBackCommand {
             return;
         }
 
-        if (player.hasPermission(TIMER_BYPASS_PERMISSION)) {
+        if (player.hasPermission(TELEPORT_TIMER_BYPASS_PERMISSION)) {
             this.teleportService.teleport(player, location.get());
         } else {
             this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.teleportTime());
@@ -68,7 +69,7 @@ class TeleportBackCommand {
             return;
         }
 
-        if (player.hasPermission(TIMER_BYPASS_PERMISSION)){
+        if (player.hasPermission(TELEPORT_TIMER_BYPASS_PERMISSION)){
             this.teleportService.teleport(player, location.get());
         } else {
             this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.teleportTime());
