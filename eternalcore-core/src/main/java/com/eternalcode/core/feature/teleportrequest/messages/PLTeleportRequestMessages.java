@@ -16,7 +16,7 @@ public class PLTeleportRequestMessages implements TeleportRequestMessages {
     public Notice tpaSentMessage =
         Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!");
 
-    public Notice tpaHereSentMessage = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do ciebie dla gracza: <green>{PLAYER}<white>!");
+    public Notice tpaHereSentMessage = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację gracza <green>{PLAYER}<white> do twojej lokalizacji!");
     public Notice tpaHereReceivedMessage = Notice.builder()
         .chat("<green>► <white>Otrzymałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!")
         .chat(

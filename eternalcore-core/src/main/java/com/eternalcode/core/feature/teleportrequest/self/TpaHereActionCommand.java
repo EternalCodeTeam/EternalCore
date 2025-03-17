@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -35,6 +36,7 @@ public class TpaHereActionCommand {
     }
 
     @Execute(name = "tpahereaccept")
+    @Permission("eternalcore.tpahere.accept")
     void accept(@Context Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         this.teleportTaskService.createTeleport(
             player.getUniqueId(),
@@ -61,6 +63,7 @@ public class TpaHereActionCommand {
     }
 
     @Execute(name = "tpaheredeny")
+    @Permission("eternalcore.tpahere.deny")
     @DescriptionDocs(description = "Deny a teleport here request")
     void executeTarget(@Context Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         this.requestService.removeRequest(target.getUniqueId());
@@ -81,6 +84,7 @@ public class TpaHereActionCommand {
     }
 
     @Execute(name = "tpaheredeny -all")
+    @Permission("eternalcore.tpahere.deny")
     @DescriptionDocs(description = "Deny all teleport here requests")
     void executeAll(@Context Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());

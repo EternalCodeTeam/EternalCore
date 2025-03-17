@@ -14,7 +14,7 @@ public class ENTeleportRequestMessages implements TeleportRequestMessages {
     public Notice tpaAlreadySentMessage =
         Notice.chat("<red>✘ <dark_red>You have already sent a teleportation request!");
     public Notice tpaSentMessage =
-        Notice.chat("<green>► <white>You have sent a request for teleportation to a player: <green>{PLAYER}<white>!");
+        Notice.chat("<green>► <white>You have sent a request for player <green>{PLAYER}<white>{PLAYER} to teleport to you!");
 
     public Notice tpaHereSentMessage = Notice.chat("<green>► <white>You have sent a request for teleportation to you for a player: <green>{PLAYER}<white>!");
     public Notice tpaHereReceivedMessage = Notice.builder()
