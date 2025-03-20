@@ -26,7 +26,7 @@ object Versions {
     const val LITE_COMMANDS = "3.9.7"
     const val LITE_SKULL_API = "1.3.0"
 
-    const val GUAVA = "33.4.0-jre"
+    const val GUAVA = "33.4.5-jre"
     const val GSON = "2.12.1"
 
     const val EXPRESSIBLE = "1.3.6"
@@ -44,9 +44,9 @@ object Versions {
     // tests
     const val EXPRESSIBLE_JUNIT = "1.3.6"
     const val GROOVY_ALL = "3.0.24"
-    const val JUNIT_JUPITER_API = "5.12.0"
-    const val JUNIT_JUPITER_PARAMS = "5.12.0"
-    const val JUNIT_JUPITER_ENGINE = "5.12.0"
-    const val MOCKITO_CORE = "5.16.0"
+    const val JUNIT_JUPITER_API = "5.12.1"
+    const val JUNIT_JUPITER_PARAMS = "5.12.1"
+    const val JUNIT_JUPITER_ENGINE = "5.12.1"
+    const val MOCKITO_CORE = "5.16.1"
 
 }
