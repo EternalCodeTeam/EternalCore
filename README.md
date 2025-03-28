@@ -15,13 +15,13 @@
 
 EternalCore is your ultimate companion for enhancing your Minecraft server experience. 💎 Crafted with care, EternalCore is dedicated to incorporating essential and highly practical server functions into a single plugin.
 
-## :information_source: Information
+## ℹ️ Information
 
 - EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`, `1.21.4`.
 - Requires **Java 21 or later** to work properly. For older versions of Java, this may affect the functionality of the plugin.
 - If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
-## :hammer_and_wrench: Development Builds
+## 🛠️ Development Builds
 
 Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions?query=branch%3Amaster).
 
@@ -29,36 +29,38 @@ Get the latest development builds from our [GitHub Actions](https://github.com/E
   <img src="https://i.imgur.com/hmv38VS.gif" alt="Video Guide">
 </details>
 
-## :sparkles: Features
+## ✨ Features
 
-- :keyboard: Over **70+** useful commands.
-- :white_check_mark: Slot Bypass `(eternalcore.bypass.slot)`
-- :zzz: AFK System
-- :speech_balloon: Chat Features, including:
+- ⌨️ Over **80+** useful commands.
+- ✅ Slot Bypass `(eternalcore.bypass.slot)`
+- 💤 AFK System
+- 💬 Chat Features, including:
   - Admin Chat
-  - Auto Messages System (with sequence or random options)
+  - Auto Messages System (with a sequence or random options)
   - Chat On/Off Switch
   - Chat Slow Mode
-  - /ignore and /unignore (with -all option)
-  - /msg, /socialspy, and /reply commands
+  - /ignore and /unignore (with `-all` option)
+  - /msg, /msgtoggle, /socialspy, and /reply commands
   - /helpop command
   - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
-- :hammer: Open Utility Blocks with simple commands like `/workbench`
-- :briefcase: ~~Player Inventory Viewer~~ (We recommend to use: [OpenInv](https://github.com/Jikoo/OpenInv))
-- :heart: Player Attribute Management, including heal, feed, teleportation, and godmode modification
-- :ping_pong: Ping Command to check client-server connectivity
-- :bust_in_silhouette: Player Information Command (`/whois`)
-- :house: Home, Warp, and Spawn System
-- :page_facing_up: PlaceholderAPI Support
-- :memo: Customizable and Translatable Messages (Player language selection available)
-- :gear: Advanced Configuration System for customization
-- :card_index: Database Integration (PostgreSQL, SQLite, MySQL, MariaDB, H2)
-- :rainbow: Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing (e.g., &7, &e)
+- 🔨 Open Utility Blocks with simple commands like `/workbench`
+- 💼 ~~Player Inventory Viewer~~ (We recommend using: [OpenInv](https://github.com/Jikoo/OpenInv))
+- ❤️ Player Attribute Management, including healing, feed, teleportation, and godmode modification
+- 🏓 Ping Command to check client-server connectivity
+- 👤 Player Information Command (`/whois`)
+- 🏠 Home, Warp, and Spawn System
+- 📄 PlaceholderAPI Support
+- 📝 Customizable and Translatable Messages (Player language selection available)
+- <details><summary>Server links feature (Click to see how it works)</summary><img src="assets/server-links-showcase.gif" alt="Server Links Showcase"></details>
+- ⚙️ Advanced Configuration System for customization
+- 🗂️ Database Integration (PostgresSQL, SQLite, MySQL, MariaDB, H2)
+- 🌈 Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing (e.g., &7, &e)
 - [...and much more!](https://docs.eternalcode.pl/eternalcore/features.html)
 
-## :construction_worker: Developer API
+## 👷 Developer API
 
-To use EternalCore API, you first need to add EternalCode to your project. To do that follow these steps:
+To use the EternalCore API, you first need to add EternalCode to your project.
+To do that, follow these steps:
 You can check the latest release number [here](https://github.com/EternalCodeTeam/EternalCore/releases/latest).
 
 1. Add repository:
@@ -80,7 +82,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:1.5.2")
+compileOnly("com.eternalcode:eternalcore-api:1.6.0")
 ```
 
 For Maven projects use:
@@ -88,14 +90,14 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>1.5.2</version>
+    <version>1.6.0</version>
     <scope>provided</scope>
 </dependency>
 ```
 
 3. You are ready to use EternalCoreAPI in your project.
 
-## :building_construction: Building
+## 🏗️ Building
 
 To build EternalCore, follow these steps (Make sure you have **JDK 21 or higher**):
 
@@ -105,7 +107,7 @@ To build EternalCore, follow these steps (Make sure you have **JDK 21 or higher*
 - The output file will be located at `eternalcore-plugin/libs`.
 
 
-## :octocat: Contributing
+## 🐙 Contributing
 
 Create a public fork of EternalCore, make changes and then create
 a [Pull Request](https://github.com/EternalCodeTeam/EternalCore/pulls) with your appropriate changes.
@@ -113,7 +115,7 @@ See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master
 more.
 
 
-## :bookmark_tabs: Other Dependencies
+## 📑 Other Dependencies
 
 EternalCore uses various dependencies for its functionality, including:
 - [LiteCommands (by Rollczi ❤️)](https://github.com/Rollczi/LiteCommands)
@@ -128,7 +130,7 @@ EternalCore uses various dependencies for its functionality, including:
 - [Ormlite JDBC](https://github.com/j256/ormlite-jdbc)
 - [TriumphGUI](https://github.com/TriumphTeam/triumph-gui)
 
-## :heart: Special Thanks
+## ❤️ Special Thanks
 
 [<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="JetBrains" width="150">](https://www.jetbrains.com)
 

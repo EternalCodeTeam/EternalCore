@@ -5,6 +5,8 @@ import com.google.common.reflect.ClassPath;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -92,6 +94,24 @@ public final class ReflectUtil {
         }
         catch (IllegalAccessException exception) {
             throw new RuntimeException(exception);
+        }
+    }
+
+    public static Method getDeclaredMethod(Class<?> clazz, String methodName) {
+        try {
+            return clazz.getDeclaredMethod(methodName);
+        }
+        catch (NoSuchMethodException exception) {
+            throw new IllegalArgumentException("Method " + methodName + " not found in class " + clazz.getName(), exception);
+        }
+    }
+
+    public static Object invokeMethod(Method method, Object target, Object... args) {
+        try {
+            return method.invoke(target, args);
+        }
+        catch (IllegalAccessException | InvocationTargetException e) {
+            throw new IllegalStateException("Failed to invoke method " + method.getName(), e);
         }
     }
 }

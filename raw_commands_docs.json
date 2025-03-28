@@ -19,7 +19,7 @@
       "eternalcore.afk"
     ],
     "descriptions": [
-      "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will be ignore afk delay"
+      "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will ignore afk delay"
     ],
     "arguments": [
       ""
@@ -543,19 +543,6 @@
       "eternalcore.gamemode"
     ],
     "descriptions": [
-      "Sets gamemode of another player"
-    ],
-    "arguments": [
-      "\u003cgamemode\u003e \u003cplayer\u003e"
-    ]
-  },
-  {
-    "name": "gamemode ",
-    "aliases": [],
-    "permissions": [
-      "eternalcore.gamemode"
-    ],
-    "descriptions": [
       "Sets your gamemode"
     ],
     "arguments": [
@@ -565,11 +552,22 @@
   {
     "name": "gamemode ",
     "aliases": [],
-    "permissions": [
-      "eternalcore.gamemode"
-    ],
+    "permissions": [],
     "descriptions": [],
     "arguments": []
+  },
+  {
+    "name": "gamemode ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.gamemode.other"
+    ],
+    "descriptions": [
+      "Sets gamemode of another player"
+    ],
+    "arguments": [
+      "\u003cgamemode\u003e \u003cplayer\u003e"
+    ]
   },
   {
     "name": "give ",
@@ -879,10 +877,23 @@
       "eternalcore.itemlore"
     ],
     "descriptions": [
-      "Clears lore of item in hand"
+      "Clears all lore from the item in hand"
     ],
     "arguments": [
       ""
+    ]
+  },
+  {
+    "name": "itemlore remove",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.itemlore"
+    ],
+    "descriptions": [
+      "Removes a specific line of lore from the item in hand"
+    ],
+    "arguments": [
+      "\u003cline\u003e"
     ]
   },
   {
@@ -1141,6 +1152,60 @@
     ]
   },
   {
+    "name": "msgtoggle ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.msgtoggle"
+    ],
+    "descriptions": [
+      "Toggle receiving private messages"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
+    "name": "msgtoggle ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.msgtoggle",
+      "eternalcore.msgtoggle.other"
+    ],
+    "descriptions": [
+      "Switch receiving private messages for other player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e"
+    ]
+  },
+  {
+    "name": "msgtoggle ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.msgtoggle"
+    ],
+    "descriptions": [
+      "Switch receiving private messages"
+    ],
+    "arguments": [
+      "\u003cstate\u003e"
+    ]
+  },
+  {
+    "name": "msgtoggle ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.msgtoggle",
+      "eternalcore.msgtoggle.other"
+    ],
+    "descriptions": [
+      "Switch receiving private messages for other player"
+    ],
+    "arguments": [
+      "\u003cplayer\u003e  \u003ctoggle\u003e"
+    ]
+  },
+  {
     "name": "night ",
     "aliases": [],
     "permissions": [
@@ -1312,6 +1377,19 @@
     ]
   },
   {
+    "name": "seen ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.seen"
+    ],
+    "descriptions": [
+      "Shows when the player was last seen on the server"
+    ],
+    "arguments": [
+      ""
+    ]
+  },
+  {
     "name": "sethome ",
     "aliases": [],
     "permissions": [
@@ -1335,6 +1413,19 @@
     ],
     "arguments": [
       "\u003chome\u003e"
+    ]
+  },
+  {
+    "name": "setslot ",
+    "aliases": [],
+    "permissions": [
+      "eternalcore.setslot"
+    ],
+    "descriptions": [
+      "Set the max players on the server"
+    ],
+    "arguments": [
+      ""
     ]
   },
   {

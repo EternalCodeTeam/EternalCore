@@ -1,6 +1,9 @@
 package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.configuration.ConfigurationManager;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.chat.event.ClearChatEvent;
 import com.eternalcode.core.feature.chat.event.DisableChatEvent;
@@ -28,19 +31,33 @@ class ChatCommand {
     private final ChatSettings chatSettings;
     private final EventCaller eventCaller;
 
+    private final PluginConfiguration config;
+    private final ConfigurationManager configManager;
+    private final Scheduler scheduler;
+
     private final Supplier<Notice> clear;
 
     @Inject
     ChatCommand(
         NoticeService noticeService,
         ChatSettings chatSettings,
-        EventCaller eventCaller
+        EventCaller eventCaller,
+        PluginConfiguration config,
+        ConfigurationManager configManager, Scheduler scheduler
     ) {
         this.noticeService = noticeService;
         this.chatSettings = chatSettings;
+        this.eventCaller = eventCaller;
+
+        this.config = config;
+        this.configManager = configManager;
+        this.scheduler = scheduler;
 
         this.clear = create(chatSettings);
-        this.eventCaller = eventCaller;
+    }
+
+    private static Supplier<Notice> create(ChatSettings settings) {
+        return () -> Notice.chat("<newline>".repeat(Math.max(0, settings.linesToClear())));
     }
 
     @Execute(name = "clear", aliases = "cc")
@@ -111,9 +128,19 @@ class ChatCommand {
     void slowmode(@Context Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
-
             return;
         }
+
+        Duration currentDelay = this.chatSettings.getChatDelay();
+        EditSlowModeEvent event =
+            this.eventCaller.callEvent(new EditSlowModeEvent(currentDelay, duration, viewer.getUniqueId()));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
+        this.chatSettings.setChatDelay(duration);
+        this.scheduler.runAsync(() -> this.configManager.save(this.config));
 
         if (duration.isZero()) {
             this.noticeService.create()
@@ -122,18 +149,8 @@ class ChatCommand {
                 .onlinePlayers()
                 .send();
 
-            this.chatSettings.setChatDelay(duration);
             return;
         }
-
-        Duration chatDelay = this.chatSettings.getChatDelay();
-        EditSlowModeEvent event = this.eventCaller.callEvent(new EditSlowModeEvent(chatDelay, duration, viewer.getUniqueId()));
-
-        if (event.isCancelled()) {
-            return;
-        }
-
-        this.chatSettings.setChatDelay(duration);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().slowModeSet())
@@ -147,10 +164,6 @@ class ChatCommand {
     void slowmodeOff(@Context Viewer viewer) {
         Duration noSlowMode = Duration.ZERO;
         this.slowmode(viewer, noSlowMode);
-    }
-
-    private static Supplier<Notice> create(ChatSettings settings) {
-        return () -> Notice.chat("<newline>".repeat(Math.max(0, settings.linesToClear())));
     }
 }
 

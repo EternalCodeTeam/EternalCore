@@ -1,6 +1,6 @@
 package com.eternalcode.core.bridge.litecommand.argument;
 
-import com.eternalcode.core.feature.essentials.gamemode.GameModeArgumentSettings;
+import com.eternalcode.core.feature.gamemode.GameModeArgumentSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;

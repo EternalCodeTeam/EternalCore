@@ -44,7 +44,7 @@ class SetWarpCommand {
     }
 
     private void createWarp(Player player, String warp, UUID uniqueId) {
-        if (this.warpService.isExist(warp)) {
+        if (this.warpService.exists(warp)) {
             this.noticeService.create()
                 .player(uniqueId)
                 .notice(translation -> translation.warp().warpAlreadyExists())

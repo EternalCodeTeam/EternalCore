@@ -24,6 +24,8 @@ import org.bukkit.entity.Player;
 )
 class AfkCommand {
 
+    private static final String AFK_BYPASS_PERMISSION = "eternalcore.afk.bypass";
+
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
     private final AfkService afkService;
@@ -38,9 +40,14 @@ class AfkCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will be ignore afk delay")
+    @DescriptionDocs(description = "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will ignore afk delay")
     void execute(@Context Player player) {
         UUID uuid = player.getUniqueId();
+
+        if (player.hasPermission(AFK_BYPASS_PERMISSION)) {
+            this.afkService.switchAfk(uuid, AfkReason.COMMAND);
+            return;
+        }
 
         if (this.delay.hasDelay(uuid)) {
             Duration time = this.delay.getDurationToExpire(uuid);
@@ -56,11 +63,6 @@ class AfkCommand {
         }
 
         this.afkService.switchAfk(uuid, AfkReason.COMMAND);
-
-        if (player.hasPermission("eternalcore.afk.bypass")) {
-            return;
-        }
-
         this.delay.markDelay(uuid, this.pluginConfiguration.afk.getAfkDelay());
     }
 }

@@ -28,7 +28,7 @@ public class LazyFieldBeanCandidate extends LazyBeanCandidate {
     }
 
     public LazyFieldBeanCandidate(DependencyInjector dependencyInjector, Class<?> componentClass, Field field, Bean bean) {
-        this(() -> dependencyInjector.newInstance(componentClass), field, bean);
+        this(() -> dependencyInjector.getDependencyProvider().getDependency(componentClass), field, bean);
     }
 
     @Override

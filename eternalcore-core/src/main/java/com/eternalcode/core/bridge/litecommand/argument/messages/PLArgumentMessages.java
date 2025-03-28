@@ -1,0 +1,38 @@
+package com.eternalcode.core.bridge.litecommand.argument.messages;
+
+import com.eternalcode.multification.notice.Notice;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import net.dzikoysk.cdn.entity.Contextual;
+import net.dzikoysk.cdn.entity.Description;
+
+@Getter
+@Accessors(fluent = true)
+@Contextual
+public class PLArgumentMessages implements ArgumentMessages {
+    @Description("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
+    public Notice permissionMessage =
+        Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
+
+    @Description({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
+    public Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
+    public Notice usageMessageHead = Notice.chat("<gold>✘ <white>Poprawne użycie:");
+    public Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
+
+    @Description(" ")
+    public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę gracza!");
+    public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
+    public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
+    public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
+    public Notice noItem = Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w dłoni!");
+    public Notice noMaterial = Notice.chat("<red>✘ <dark_red>Taki materiał nie istnieje!");
+    public Notice noArgument = Notice.chat("<red>✘ <dark_red>Taki argument nie istnieje!");
+    public Notice noDamaged = Notice.chat("<red>✘ <dark_red>Ten przedmiot nie może być naprawiony!");
+    public Notice noDamagedItems = Notice.chat("<red>✘ <dark_red>Musisz posiadać uszkodzone przedmioty!");
+    public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>Takie zaklęcie nie istnieje!");
+    public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>Ten poziom zaklęcia nie jest wspierany!");
+    public Notice invalidTimeFormat = Notice.chat("<red>✘ <dark_red>Nieprawidłowy format czasu!");
+    public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Świat <dark_red>{WORLD} <red>nie istnieje!");
+    public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Niepoprawna liczba chunków!");
+    public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
+}
