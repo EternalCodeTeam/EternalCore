@@ -31,6 +31,7 @@ public class SignEditorCommand {
     }
 
     @Execute(name = "set")
+    @Deprecated(since = "1.20")
     void execute(@Context Player player, @Arg int line, @Join String text) {
         Block targetBlock = player.getTargetBlockExact(5);
 
@@ -56,7 +57,7 @@ public class SignEditorCommand {
             return;
         }
 
-        sign.getTargetSide(player).setLine(line - 1, AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(text)));
+        sign.setLine(line - 1, AdventureUtil.SECTION_SERIALIZER.serialize(this.miniMessage.deserialize(text)));
         sign.update();
 
         this.noticeService.create()
