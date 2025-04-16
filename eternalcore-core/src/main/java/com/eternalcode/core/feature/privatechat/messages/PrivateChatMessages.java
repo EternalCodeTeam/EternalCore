@@ -25,4 +25,8 @@ public interface PrivateChatMessages {
     Notice notIgnorePlayer();
     Notice cantIgnoreYourself();
     Notice cantUnIgnoreYourself();
+
+    String privateMessageEnabledPlaceholder();
+
+    String privateMessageDisabledPlaceholder();
 }
