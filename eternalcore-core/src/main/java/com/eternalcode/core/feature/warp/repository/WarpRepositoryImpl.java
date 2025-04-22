@@ -32,7 +32,8 @@ class WarpRepositoryImpl implements WarpRepository {
     WarpRepositoryImpl(
         ConfigurationManager configurationManager,
         LocationsConfiguration locationsConfiguration,
-        WarpConfig warpConfig, Scheduler scheduler
+        WarpConfig warpConfig,
+        Scheduler scheduler
     ) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
