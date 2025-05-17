@@ -226,7 +226,16 @@ public class PluginConfiguration implements ReloadableConfig {
         public int linesToClear() {
             return this.linesToClear;
         }
+    }
 
+    @Bean
+    @Description({ " ", "# Private Chat Section" })
+    public PrivateChat privateChat = new PrivateChat();
+
+    @Contextual
+    public static class PrivateChat {
+        @Description({ "# Whether players can send private messages to themselves" })
+        public boolean allowSelfMessages = false;
     }
 
     @Description({ " ", "# HelpOp Section" })

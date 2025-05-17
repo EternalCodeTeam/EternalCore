@@ -9,6 +9,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import java.time.Duration;
@@ -27,6 +28,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
     private final PrivateChatPresenter presenter;
     private final EventCaller eventCaller;
     private final PrivateChatStateService privateChatStateService;
+    private final PluginConfiguration pluginConfiguration;
 
     private final Cache<UUID, UUID> replies = CacheBuilder.newBuilder()
         .expireAfterWrite(Duration.ofHours(1))
@@ -40,18 +42,25 @@ class PrivateChatServiceImpl implements PrivateChatService {
         IgnoreService ignoreService,
         UserManager userManager,
         EventCaller eventCaller,
-        PrivateChatStateService privateChatStateService
+        PrivateChatStateService privateChatStateService,
+        PluginConfiguration pluginConfiguration
     ) {
         this.noticeService = noticeService;
         this.ignoreService = ignoreService;
         this.userManager = userManager;
         this.eventCaller = eventCaller;
         this.privateChatStateService = privateChatStateService;
+        this.pluginConfiguration = pluginConfiguration;
 
         this.presenter = new PrivateChatPresenter(noticeService);
     }
 
     void privateMessage(User sender, User target, String message) {
+        if (sender.getUniqueId().equals(target.getUniqueId()) && !this.pluginConfiguration.privateChat.allowSelfMessages) {
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().selfMessagesError());
+            return;
+        }
+
         if (target.getClientSettings().isOffline()) {
             this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
 

@@ -33,6 +33,7 @@ public class PLPrivateChatMessages implements PrivateChatMessages {
 
     public Notice selfMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone!");
     public Notice selfMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone!");
+    public Notice selfMessagesError = Notice.chat("<red>► <white>Nie możesz wysyłać wiadomości prywatnych do samego siebie!");
 
     @Description({" ", "# {PLAYER} - Gracz któremu wyłączono wiadomości prywatne"})
     public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
