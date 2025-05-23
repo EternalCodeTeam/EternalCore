@@ -16,7 +16,15 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.function.Predicate;
+
 @LiteArgument(type = Player.class)
+
+@FeatureDocs(
+    name = "Vanish tabulation",
+    description = "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa."
+        + " To re-enable this feature for specific players, grant them the eternalcore.vanish.tabulation.see permission."
+)
 public class PlayerArgument extends AbstractViewerArgument<Player> {
 
     private final Server server;
@@ -41,14 +49,13 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
             return ParseResult.failure(translation.argument().offlinePlayer());
         }
 
+        if (this.vanishService.isVanished(target) && !this.canSeeVanished(invocation.sender())) {
+            return ParseResult.failure(translation.argument().offlinePlayer());
+        }
+
         return ParseResult.success(target);
     }
 
-    @FeatureDocs(
-        name = "Vanish tabulation",
-        description = "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa."
-            + " To re-enable this feature for specific players, grant them the eternalcore.vanish.tabulation.see permission."
-    )
     @Override
     public SuggestionResult suggest(
         Invocation<CommandSender> invocation,
@@ -56,8 +63,14 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
         SuggestionContext context
     ) {
         CommandSender sender = invocation.sender();
+        boolean canSeeVanished = this.canSeeVanished(sender);
+        
+        Predicate<Player> visibilityFilter = canSeeVanished 
+            ? player -> true 
+            : player -> !this.vanishService.isVanished(player.getUniqueId());
+            
         return this.server.getOnlinePlayers().stream()
-            .filter(player -> this.canSeeVanished(sender) || !this.vanishService.isVanished(player.getUniqueId()))
+            .filter(visibilityFilter)
             .map(Player::getName)
             .collect(SuggestionResult.collector());
     }
