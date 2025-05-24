@@ -101,8 +101,11 @@ class TeleportTask implements Runnable {
 
     private boolean hasPlayerMovedDuringTeleport(Player player, Teleport teleport) {
         Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
-
-        return player.getLocation().distance(startLocation) > 0.5;
+        Location currentLocation = player.getLocation();
+        if (!currentLocation.getWorld().equals(startLocation.getWorld())) {
+            return true; 
+        }
+        return currentLocation.distance(startLocation) > 0.5;
     }
 
 }
