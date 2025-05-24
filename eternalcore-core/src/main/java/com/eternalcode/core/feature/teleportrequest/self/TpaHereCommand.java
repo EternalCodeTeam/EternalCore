@@ -12,11 +12,9 @@ import org.bukkit.entity.Player;
 
 import java.util.concurrent.CompletableFuture;
 
-import static com.eternalcode.core.feature.teleportrequest.TeleportRequestPermissionConstant.TELEPORT_REQUEST_HERE_PERMISSION;
-
 @Command(name = "tpahere")
-@Permission(TELEPORT_REQUEST_HERE_PERMISSION)
-public class TpaHereCommand {
+@Permission("eternalcore.tpahere")
+class TpaHereCommand {
 
     private final TeleportHereRequestService requestService;
     private final IgnoreService ignoreService;
@@ -69,7 +67,7 @@ public class TpaHereCommand {
         });
     }
 
-    CompletableFuture<Boolean> isIgnoring(Player target, Player sender) {
+    private CompletableFuture<Boolean> isIgnoring(Player target, Player sender) {
         return this.ignoreService.isIgnored(target.getUniqueId(), sender.getUniqueId());
     }
 }
