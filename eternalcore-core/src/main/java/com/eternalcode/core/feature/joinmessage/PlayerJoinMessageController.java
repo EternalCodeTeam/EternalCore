@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.joinmessage;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.commons.RandomElementUtil;
+import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -19,15 +20,22 @@ import panda.utilities.StringUtils;
 class PlayerJoinMessageController implements Listener {
 
     private final NoticeService noticeService;
+    private final VanishService vanishService;
 
     @Inject
-    PlayerJoinMessageController(NoticeService noticeService) {
+    PlayerJoinMessageController(NoticeService noticeService, VanishService vanishService) {
         this.noticeService = noticeService;
+        this.vanishService = vanishService;
     }
 
     @EventHandler
     void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
+        if (this.vanishService.isVanished(player)) {
+            event.setJoinMessage(StringUtils.EMPTY);
+            return;
+        }
 
         if (!player.hasPlayedBefore()) {
             this.noticeService.create()
