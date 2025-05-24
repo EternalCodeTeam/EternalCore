@@ -34,6 +34,7 @@ public class TeleportRandomPlayerService {
     public Player findLeastRecentlyTeleportedPlayer(Player sender) {
         UUID senderId = sender.getUniqueId();
         return this.server.getOnlinePlayers().stream()
+            .filter(target -> !target.equals(sender))
             .filter(target -> this.pluginConfiguration.teleport.includeOpPlayersInRandomTeleport || !target.isOp())
             .min(Comparator.comparing(target -> getTeleportationHistory(target, senderId)))
             .orElse(null);
