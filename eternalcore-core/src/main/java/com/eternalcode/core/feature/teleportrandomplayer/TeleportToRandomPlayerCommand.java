@@ -39,7 +39,7 @@ public class TeleportToRandomPlayerCommand {
             return;
         }
 
-        this.teleportRandomPlayerService.updateTeleportationHistory(targetPlayer);
+        this.teleportRandomPlayerService.updateTeleportationHistory(player, targetPlayer);
 
         player.teleport(targetPlayer);
 
