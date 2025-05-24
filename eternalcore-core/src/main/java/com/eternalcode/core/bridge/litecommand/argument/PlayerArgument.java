@@ -63,19 +63,20 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
         SuggestionContext context
     ) {
         CommandSender sender = invocation.sender();
-        boolean canSeeVanished = this.canSeeVanished(sender);
-        
-        Predicate<Player> visibilityFilter = canSeeVanished 
-            ? player -> true 
-            : player -> !this.vanishService.isVanished(player.getUniqueId());
-            
         return this.server.getOnlinePlayers().stream()
-            .filter(visibilityFilter)
+            .filter(player -> canSee(sender, player))
             .map(Player::getName)
             .collect(SuggestionResult.collector());
     }
 
-    public boolean canSeeVanished(CommandSender sender) {
+    private boolean canSee(CommandSender sender, Player player) {
+        if (this.canSeeVanished(sender)) {
+            return true;
+        }
+        return !this.vanishService.isVanished(player.getUniqueId());
+    }
+
+    private boolean canSeeVanished(CommandSender sender) {
         return sender.hasPermission(VanishPermissionConstant.VANISH_SEE_TABULATION_PERMISSION);
     }
 }
