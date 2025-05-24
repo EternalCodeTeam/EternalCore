@@ -14,6 +14,7 @@ import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
+import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
@@ -222,6 +223,8 @@ public interface Translation {
     PlayerSection player();
     //Seen section
     SeenMessages seen();
+    // sign editor section
+    SignEditorMessages signEditor();
     // spawn section
     SpawnMessages spawn();
     // set slot section
