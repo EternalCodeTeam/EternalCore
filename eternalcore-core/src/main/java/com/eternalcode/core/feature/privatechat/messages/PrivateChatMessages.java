@@ -16,6 +16,7 @@ public interface PrivateChatMessages {
     Notice selfMessagesEnabled();
     Notice otherMessagesDisabled();
     Notice otherMessagesEnabled();
+    Notice selfMessagesError();
 
     Notice ignorePlayer();
     Notice ignoreAll();

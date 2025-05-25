@@ -28,6 +28,7 @@ public class ENPrivateMessages implements PrivateChatMessages {
 
     public Notice selfMessagesDisabled = Notice.chat("<green>► <white>Private messages have been <red>disabled<white>!");
     public Notice selfMessagesEnabled = Notice.chat("<green>► <white>Private messages have been <green>enabled<white>!");
+    public Notice selfMessagesError = Notice.chat("<red>► <white>You cannot send private messages to yourself!");
 
     @Description("# {PLAYER} - Player")
     public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Private messages have been <red>disabled <white>for <green>{PLAYER}<white>!");
