@@ -36,16 +36,16 @@ public class TeleportRandomPlayerService {
         return this.server.getOnlinePlayers().stream()
             .filter(target -> !target.equals(sender))
             .filter(target -> this.pluginConfiguration.teleport.includeOpPlayersInRandomTeleport || !target.isOp())
-            .min(Comparator.comparing(target -> getTeleportationHistory(target, senderId)))
+            .min(Comparator.comparing(target -> this.getTeleportationHistory(target, senderId)))
             .orElse(null);
     }
 
     private Instant getTeleportationHistory(Player target, UUID senderId) {
-        return teleportationHistory.get(new HistoryKey(senderId, target.getUniqueId()), key -> Instant.EPOCH);
+        return this.teleportationHistory.get(new HistoryKey(senderId, target.getUniqueId()), key -> Instant.EPOCH);
     }
 
     public void updateTeleportationHistory(Player sender, Player target) {
-        teleportationHistory.put(new HistoryKey(sender.getUniqueId(), target.getUniqueId()), Instant.now());
+        this.teleportationHistory.put(new HistoryKey(sender.getUniqueId(), target.getUniqueId()), Instant.now());
     }
 
     private record HistoryKey(UUID sender, UUID target) {

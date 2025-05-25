@@ -29,7 +29,7 @@ public class TeleportToRandomPlayerCommand {
     @Execute
     @DescriptionDocs(description = "Teleport to a player who hasn't been teleported to recently, ensuring fair distribution")
     void execute(@Context Player player) {
-        Player targetPlayer = this.teleportRandomPlayerService.findLeastRecentlyTeleportedPlayer();
+        Player targetPlayer = this.teleportRandomPlayerService.findLeastRecentlyTeleportedPlayer(player);
         
         if (targetPlayer == null) {
             this.noticeService.create()
