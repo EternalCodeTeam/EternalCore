@@ -11,9 +11,10 @@ public class Dependency {
 
     private static final Pattern VERSION_PATTERN = Pattern.compile("(?<major>[0-9]+)\\.(?<minor>[0-9]+)\\.?(?<patch>[0-9]?)(-(?<label>[-+.a-zA-Z0-9]+))?");
 
-    private static final String JAR_MAVEN_FORMAT = "%s/%s/%s/%s/%s-%s.jar";
-    private static final String JAR_MAVEN_FORMAT_WITH_CLASSIFIER = "%s/%s/%s/%s/%s-%s-%s.jar";
-    private static final String POM_XML_FORMAT = "%s/%s/%s/%s/%s-%s.pom";
+    private static final String PATH_FORMAT = "%s/%s/%s/%s/%s";
+    private static final String JAR_MAVEN_FORMAT = "%s-%s.jar";
+    private static final String JAR_MAVEN_FORMAT_WITH_CLASSIFIER = "%s-%s-%s.jar";
+    private static final String POM_XML_FORMAT = "%s-%s.pom";
 
     private final String groupId;
     private final String artifactId;
@@ -25,45 +26,28 @@ public class Dependency {
         this.version = version;
     }
 
-    public ResourceLocator toMavenJar(Repository repository, String classifier) {
-        String url = String.format(
-            JAR_MAVEN_FORMAT_WITH_CLASSIFIER,
-            repository.url(),
-            this.groupId.replace(".", "/"),
-            this.artifactId,
-            this.version,
-            this.artifactId,
-            this.version,
-            classifier
-        );
-
-        return ResourceLocator.fromString(url);
+    public ResourceLocator toMavenJar(Repository repository) {
+        return toResource(repository, JAR_MAVEN_FORMAT.formatted(this.artifactId, this.version));
     }
 
-    public ResourceLocator toMavenJar(Repository repository) {
-        String url = String.format(JAR_MAVEN_FORMAT,
-            repository.url(),
-            this.groupId.replace(".", "/"),
-            this.artifactId,
-            this.version,
-            this.artifactId,
-            this.version
-        );
-
-        return ResourceLocator.fromString(url);
+    public ResourceLocator toMavenJar(Repository repository, String classifier) {
+        return toResource(repository, JAR_MAVEN_FORMAT_WITH_CLASSIFIER.formatted(this.artifactId, this.version, classifier));
     }
 
     public ResourceLocator toPomXml(Repository repository) {
-        String url = String.format(POM_XML_FORMAT,
+        return toResource(repository, POM_XML_FORMAT.formatted(this.artifactId, this.version));
+    }
+
+    public ResourceLocator toResource(Repository repository, String fileName) {
+        String url = String.format(PATH_FORMAT,
             repository.url(),
             this.groupId.replace(".", "/"),
             this.artifactId,
             this.version,
-            this.artifactId,
-            this.version
+            fileName
         );
 
-        return ResourceLocator.fromString(url);
+        return ResourceLocator.from(url);
     }
 
     public String getGroupId() {

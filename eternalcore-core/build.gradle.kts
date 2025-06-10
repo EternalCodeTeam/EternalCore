@@ -72,7 +72,7 @@ eternalShadow {
         "com.j256.ormlite",
         "org.mariadb.jdbc",
         "org.postgresql",
-        "com.h2database",
+        "com.h2",
     )
 
     // command framework & skull library
