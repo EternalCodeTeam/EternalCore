@@ -10,6 +10,7 @@ import com.eternalcode.core.loader.relocation.RelocationHandler;
 import com.eternalcode.core.loader.repository.LocalRepository;
 import com.eternalcode.core.loader.repository.Repository;
 
+import com.google.common.base.Stopwatch;
 import com.spotify.futures.CompletableFutures;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -33,7 +34,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
     private static final String LOCAL_REPOSITORY_PATH = "localRepository";
 
     private final Logger logger;
-    private final Executor executor;
+    private final ExecutorService executor;
 
     private final DependencyDownloader dependencyDownloader;
     private final RelocationHandler relocationHandler;
@@ -100,10 +101,13 @@ public class DependencyLoaderImpl implements DependencyLoader {
     }
 
     private DependencyLoadResult loadDependencies(IsolatedClassLoader loader, List<DependencyLoadEntry> downloaded) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         for (DependencyLoadEntry dependencyLoadEntry : downloaded) {
             loader.addPath(dependencyLoadEntry.path());
             this.loaded.put(dependencyLoadEntry.dependency(), dependencyLoadEntry.path());
         }
+        stopwatch.stop();
+        this.logger.info("Loaded " + downloaded.size() + " dependencies in " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
 
         return new DependencyLoadResult(loader, downloaded);
     }
@@ -121,6 +125,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
     @Override
     public void close() {
         try {
+            this.executor.shutdown();
             this.relocationHandler.close();
         } catch (Exception exception) {
             throw new DependencyException("Failed to close relocation handler", exception);
