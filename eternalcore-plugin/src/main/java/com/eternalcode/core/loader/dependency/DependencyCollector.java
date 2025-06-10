@@ -7,7 +7,7 @@ public class DependencyCollector {
 
     private final LinkedHashMap<String, Dependency> fullScannedDependencies = new LinkedHashMap<>();
 
-    public boolean hasScannedDependency(Dependency dependency) {
+    public synchronized boolean hasScannedDependency(Dependency dependency) {
         Dependency scanned = this.fullScannedDependencies.get(dependency.getGroupArtifactId());
         if (scanned == null) {
             return false;
@@ -20,7 +20,7 @@ public class DependencyCollector {
         return scanned.getVersion().equals(dependency.getVersion()) || scanned.isNewerThan(dependency);
     }
 
-    public Dependency addScannedDependency(Dependency dependency) {
+    public synchronized Dependency addScannedDependency(Dependency dependency) {
         Dependency current = this.fullScannedDependencies.get(dependency.getGroupArtifactId());
 
         if (current == null) {
@@ -44,7 +44,7 @@ public class DependencyCollector {
         }
     }
 
-    public Collection<Dependency> getScannedDependencies() {
+    public synchronized Collection<Dependency> getScannedDependencies() {
         return this.fullScannedDependencies.values().stream()
             .filter(dependency -> !dependency.isBom())
             .toList();

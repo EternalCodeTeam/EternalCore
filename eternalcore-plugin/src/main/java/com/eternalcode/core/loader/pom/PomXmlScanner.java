@@ -53,27 +53,16 @@ public class PomXmlScanner implements DependencyScanner {
     @Override
     public DependencyCollector findAllChildren(DependencyCollector collector, Dependency dependency) {
         for (Repository repository : this.repositories) {
-            Optional<List<Dependency>> optionalFirstChildren = this.tryReadDependency(dependency, repository);
-
-            if (optionalFirstChildren.isEmpty()) {
+            Optional<List<Dependency>> subDependencies = this.tryReadDependency(dependency, repository);
+            if (subDependencies.isEmpty()) {
                 continue;
             }
 
-            List<Dependency> firstChildren = optionalFirstChildren.get();
-
-            for (Dependency firstChild : firstChildren) {
-                if (collector.hasScannedDependency(firstChild)) {
-                    continue;
-                }
-
-                Dependency updatedChild = collector.addScannedDependency(firstChild);
-                if (updatedChild.isBom()) {
-                    continue;
-                }
-
-                collector = this.findAllChildren(collector, updatedChild);
-            }
-
+            subDependencies.get().stream()
+                .filter(subdependency -> !collector.hasScannedDependency(subdependency))
+                .map(subdependency -> collector.addScannedDependency(subdependency))
+                .filter(updatedDependency -> !updatedDependency.isBom())
+                .forEach(updatedDependency -> this.findAllChildren(collector, updatedDependency));
             break;
         }
 
