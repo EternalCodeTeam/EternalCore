@@ -22,18 +22,14 @@ dependencies {
     compileOnly("org.projectlombok:lombok:${Versions.LOMBOK}")
     annotationProcessor("org.projectlombok:lombok:${Versions.LOMBOK}")
 
-    // GitCheck
-    implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
-
-    implementation("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
-    implementation("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
-
     testImplementation("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
 }
 
 eternalShadow {
     // Paper and Adventure libraries
     library("io.papermc:paperlib:${Versions.PAPERLIB}")
+    library("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
+    library("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
@@ -53,11 +49,13 @@ eternalShadow {
         "com.eternalcode.multification",
     )
 
-    // EternalCode Commons
+    // EternalCode Commons & GitCheck
     library("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
+    library("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
     libraryRelocate(
         "com.eternalcode.commons",
+        "com.eternalcode.gitcheck",
     )
 
     // database

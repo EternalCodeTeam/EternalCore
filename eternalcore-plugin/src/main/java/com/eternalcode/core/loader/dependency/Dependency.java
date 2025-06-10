@@ -19,11 +19,21 @@ public class Dependency {
     private final String groupId;
     private final String artifactId;
     private final String version;
+    private final boolean isBom;
 
     private Dependency(String groupId, String artifactId, String version) {
+        this(groupId, artifactId, version, false);
+    }
+
+    private Dependency(String groupId, String artifactId, String version, boolean isBom) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
+        this.isBom = isBom;
+    }
+
+    public boolean isBom() {
+        return this.isBom;
     }
 
     public ResourceLocator toMavenJar(Repository repository) {
@@ -70,22 +80,22 @@ public class Dependency {
         int thisMajor = this.getMajorVersion();
         int dependencyMajor = dependency.getMajorVersion();
 
-        if (thisMajor > dependencyMajor) {
-            return true;
+        if (thisMajor != dependencyMajor) {
+            return thisMajor > dependencyMajor;
         }
 
         int thisMinor = this.getMinorVersion();
         int dependencyMinor = dependency.getMinorVersion();
 
-        if (thisMinor > dependencyMinor) {
-            return true;
+        if (thisMinor != dependencyMinor) {
+            return thisMinor > dependencyMinor;
         }
 
         int thisPatch = this.getPatchVersion();
         int dependencyPatch = dependency.getPatchVersion();
 
-        if (thisPatch > dependencyPatch) {
-            return true;
+        if (thisPatch != dependencyPatch) {
+            return thisPatch > dependencyPatch;
         }
 
         return false;
@@ -151,12 +161,19 @@ public class Dependency {
         if (version.contains("${")) {
             throw new IllegalArgumentException("Version contains a property placeholder: " + version);
         }
-
         return new Dependency(rewriteEscaping(groupId), rewriteEscaping(artifactId), rewriteEscaping(version));
     }
 
     private static String rewriteEscaping(String value) {
         return value.replace("{}", ".");
+    }
+
+    public Dependency asNotBom() {
+        return new Dependency(this.groupId, this.artifactId, this.version, false);
+    }
+
+    public Dependency asBom() {
+        return new Dependency(this.groupId, this.artifactId, this.version, true);
     }
 
 }

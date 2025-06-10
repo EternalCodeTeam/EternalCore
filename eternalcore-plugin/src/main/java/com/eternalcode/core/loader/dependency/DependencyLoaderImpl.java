@@ -50,7 +50,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
         allRepositories.add(localRepository);
         allRepositories.addAll(repositories);
 
-        this.executor = Executors.newFixedThreadPool(allRepositories.size() * 2);
+        this.executor = Executors.newFixedThreadPool(allRepositories.size() * 5);
         this.dependencyScanner = new PomXmlScanner(allRepositories, localRepository);
         this.dependencyDownloader = new DependencyDownloader(logger, localRepository, allRepositories);
 
@@ -66,7 +66,7 @@ public class DependencyLoaderImpl implements DependencyLoader {
     public DependencyLoadResult load(IsolatedClassLoader loader, List<Dependency> dependencies, List<Relocation> relocations) {
         DependencyCollector collector = new DependencyCollector();
 
-        this.logger.info("Searching for dependencies");
+        this.logger.info("Resolving dependencies...");
         for (Dependency dependency : dependencies) {
             collector = this.dependencyScanner.findAllChildren(collector, dependency);
         }

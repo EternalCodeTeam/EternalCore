@@ -54,7 +54,7 @@ class PomXmlProperties {
     }
 
     @Nullable
-    public String replaceProperties(String value) {
+    public String replaceProperties(@Nullable String value) {
         if (value == null) {
             return null;
         }
