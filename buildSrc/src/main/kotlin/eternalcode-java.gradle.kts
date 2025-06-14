@@ -21,7 +21,7 @@ configurations.named("checkstyle") {
     resolutionStrategy {
         capabilitiesResolution {
             withCapability("com.google.collections:google-collections") {
-                select("com.google.guava:guava:33.4.0-jre")
+                select("com.google.guava:guava:33.4.8-jre")
             }
         }
     }
