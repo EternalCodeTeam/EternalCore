@@ -1,28 +1,41 @@
 package com.eternalcode.core.loader.dependency;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 
 public class DependencyCollector {
 
     private final LinkedHashMap<String, Dependency> fullScannedDependencies = new LinkedHashMap<>();
 
-    public boolean hasScannedDependency(Dependency dependency) {
-        return this.fullScannedDependencies.containsKey(dependency.getGroupArtifactId());
+    public synchronized boolean hasScannedDependency(Dependency dependency) {
+        Dependency scanned = this.fullScannedDependencies.get(dependency.getGroupArtifactId());
+        if (scanned == null) {
+            return false;
+        }
+
+        if (scanned.isBom() && !dependency.isBom()) {
+            return false;
+        }
+
+        return scanned.getVersion().equals(dependency.getVersion()) || scanned.isNewerThan(dependency);
     }
 
-    public void addScannedDependency(Dependency dependency) {
+    public synchronized Dependency addScannedDependency(Dependency dependency) {
         Dependency current = this.fullScannedDependencies.get(dependency.getGroupArtifactId());
 
         if (current == null) {
             this.fullScannedDependencies.put(dependency.getGroupArtifactId(), dependency);
-            return;
+            return dependency;
         }
 
-        if (dependency.isNewerThan(current)) {
-            this.fullScannedDependencies.put(dependency.getGroupArtifactId(), dependency);
+        if (!current.isBom() || !dependency.isBom()) {
+            current = current.asNotBom();
+            dependency = dependency.asNotBom();
         }
+
+        Dependency resolved = dependency.isNewerThan(current) ? dependency : current;
+        this.fullScannedDependencies.put(dependency.getGroupArtifactId(), resolved);
+        return resolved;
     }
 
     public void addScannedDependencies(Collection<Dependency> dependencies) {
@@ -31,8 +44,10 @@ public class DependencyCollector {
         }
     }
 
-    public Collection<Dependency> getScannedDependencies() {
-        return Collections.unmodifiableCollection(this.fullScannedDependencies.values());
+    public synchronized Collection<Dependency> getScannedDependencies() {
+        return this.fullScannedDependencies.values().stream()
+            .filter(dependency -> !dependency.isBom())
+            .toList();
     }
 
 }

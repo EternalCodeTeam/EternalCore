@@ -26,9 +26,6 @@ eternalShadowCompiler {
         exclude(
             "META-INF/**",
         )
-
-//        dependsOn(":eternalcore-core:test")
-//        dependsOn(":eternalcore-core:checkstyleMain")
     }
 }
 

@@ -19,10 +19,6 @@ public class ResourceLocator {
         return this.url;
     }
 
-    public URI toURI() {
-        return URI.create(this.url.toString());
-    }
-
     public Path toPath() {
         File file = this.toFile();
         return file.toPath();
@@ -37,35 +33,9 @@ public class ResourceLocator {
         }
     }
 
-    public static ResourceLocator fromURL(URL url) {
-        return new ResourceLocator(url);
-    }
-
-    public static ResourceLocator fromURI(URI uri) {
+    public static ResourceLocator from(String uri) {
         try {
-            return new ResourceLocator(uri.toURL());
-        }
-        catch (MalformedURLException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    public static ResourceLocator fromPath(Path path) {
-        return fromFile(path.toFile());
-    }
-
-    public static ResourceLocator fromFile(File file) {
-        try {
-            return new ResourceLocator(file.toURI().toURL());
-        }
-        catch (MalformedURLException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    public static ResourceLocator fromString(String string) {
-        try {
-            return new ResourceLocator(new URL(string));
+            return new ResourceLocator(URI.create(uri).toURL());
         }
         catch (MalformedURLException exception) {
             throw new RuntimeException(exception);

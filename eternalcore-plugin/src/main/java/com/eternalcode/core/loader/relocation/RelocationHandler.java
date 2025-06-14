@@ -29,7 +29,7 @@ import com.eternalcode.core.loader.classloader.IsolatedClassLoader;
 import com.eternalcode.core.loader.dependency.Dependency;
 import com.eternalcode.core.loader.dependency.DependencyException;
 import com.eternalcode.core.loader.dependency.DependencyLoadResult;
-import com.eternalcode.core.loader.dependency.DependencyLoaderImpl;
+import com.eternalcode.core.loader.dependency.DependencyLoader;
 
 import com.eternalcode.core.loader.repository.Repository;
 import java.io.File;
@@ -49,21 +49,9 @@ import java.util.Map;
 public class RelocationHandler implements AutoCloseable {
 
     private static final List<Dependency> DEPENDENCIES = List.of(
-            Dependency.of(
-                    "org.ow2.asm",
-                    "asm",
-                    "9.7.1"
-            ),
-            Dependency.of(
-                    "org.ow2.asm",
-                    "asm-commons",
-                    "9.7.1"
-            ),
-            Dependency.of(
-                    "me.lucko",
-                    "jar-relocator",
-                    "1.7"
-            )
+        Dependency.of("org.ow2.asm", "asm", "9.7.1"),
+        Dependency.of("org.ow2.asm", "asm-commons", "9.7.1"),
+        Dependency.of("me.lucko", "jar-relocator", "1.7")
     );
 
     private static final String JAR_RELOCATOR_CLASS = "me.lucko.jarrelocator.JarRelocator";
@@ -72,11 +60,13 @@ public class RelocationHandler implements AutoCloseable {
     private final IsolatedClassLoader classLoader;
     private final Constructor<?> jarRelocatorConstructor;
     private final Method jarRelocatorRunMethod;
+    private final RelocationCacheResolver cacheResolver;
 
-    private RelocationHandler(IsolatedClassLoader classLoader, Constructor<?> jarRelocatorConstructor, Method jarRelocatorRunMethod) {
+    private RelocationHandler(IsolatedClassLoader classLoader, Constructor<?> jarRelocatorConstructor, Method jarRelocatorRunMethod, RelocationCacheResolver cacheResolver) {
         this.classLoader = classLoader;
         this.jarRelocatorConstructor = jarRelocatorConstructor;
         this.jarRelocatorRunMethod = jarRelocatorRunMethod;
+        this.cacheResolver = cacheResolver;
     }
 
     public Path relocateDependency(Repository localRepository, Path dependencyPath, Dependency dependency, List<Relocation> relocations) {
@@ -86,36 +76,36 @@ public class RelocationHandler implements AutoCloseable {
 
         Path relocatedJar = dependency.toMavenJar(localRepository, "relocated").toPath();
 
-        if (Files.exists(relocatedJar)) {
+        if (Files.exists(relocatedJar) && !this.cacheResolver.shouldForceRelocate(dependency, relocations)) {
             return relocatedJar;
         }
 
-        return this.relocate(dependencyPath, relocatedJar, relocations);
+        return this.relocate(dependency, dependencyPath, relocatedJar, relocations);
     }
 
-    private Path relocate(Path input, Path output, List<Relocation> relocations) {
+    private Path relocate(Dependency dependency, Path input, Path output, List<Relocation> relocations) {
         Map<String, String> mappings = new HashMap<>();
 
         for (Relocation relocation : relocations) {
-            mappings.put(relocation.getPattern(), relocation.getRelocatedPattern());
+            mappings.put(relocation.pattern(), relocation.relocatedPattern());
         }
 
         try {
             Files.createDirectories(output.getParent());
+            Files.deleteIfExists(output);
             Files.createFile(output);
             Object relocator = this.jarRelocatorConstructor.newInstance(input.toFile(), output.toFile(), mappings);
-
             this.jarRelocatorRunMethod.invoke(relocator);
-        }
-        catch (InstantiationException | IllegalAccessException | InvocationTargetException | IOException exception) {
+            this.cacheResolver.markAsRelocated(dependency, relocations);
+
+            return output;
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | IOException exception) {
             throw new DependencyException("Failed to create JarRelocator instance", exception);
         }
-
-        return output;
     }
 
-    public static RelocationHandler create(DependencyLoaderImpl dependencyLoaderImpl) {
-        DependencyLoadResult result = dependencyLoaderImpl.load(DEPENDENCIES, List.of());
+    public static RelocationHandler create(DependencyLoader dependencyLoader, RelocationCacheResolver cacheResolver) {
+        DependencyLoadResult result = dependencyLoader.load(DEPENDENCIES, List.of());
         IsolatedClassLoader classLoader = result.loader();
 
         try {
@@ -127,9 +117,8 @@ public class RelocationHandler implements AutoCloseable {
             Method jarRelocatorRunMethod = jarRelocatorClass.getDeclaredMethod(JAR_RELOCATOR_RUN_METHOD);
             jarRelocatorRunMethod.setAccessible(true);
 
-            return new RelocationHandler(classLoader, jarRelocatorConstructor, jarRelocatorRunMethod);
-        }
-        catch (ClassNotFoundException | NoSuchMethodException exception) {
+            return new RelocationHandler(classLoader, jarRelocatorConstructor, jarRelocatorRunMethod, cacheResolver);
+        } catch (ClassNotFoundException | NoSuchMethodException exception) {
             throw new DependencyException(exception);
         }
     }
