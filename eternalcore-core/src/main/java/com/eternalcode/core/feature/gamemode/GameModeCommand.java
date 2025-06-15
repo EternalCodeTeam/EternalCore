@@ -30,6 +30,7 @@ class GameModeCommand {
     }
 
     @Execute
+    @Permission("eternalcore.gamemode")
     void executeAlias(@Context Invocation<CommandSender> invocation, @Context Player player) {
         GameMode gameMode = this.commandConfiguration.getGameMode(invocation.label());
 
