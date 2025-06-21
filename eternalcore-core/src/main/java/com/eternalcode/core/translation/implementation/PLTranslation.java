@@ -14,6 +14,8 @@ import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
+import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
+import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
@@ -115,6 +117,12 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description("# Ta sekcja odpowiada za wiadomości dotyczące edytowanie itemow")
     public PLItemEditMessages itemEdit = new PLItemEditMessages();
+
+    @Description({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /signeditor"
+    })
+    public PLSignEditorMessages signEditor = new PLSignEditorMessages();
 
     @Getter
     @Contextual
