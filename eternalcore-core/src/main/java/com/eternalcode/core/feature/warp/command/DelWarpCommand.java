@@ -47,9 +47,6 @@ class DelWarpCommand {
             return;
         }
 
-        this.warpService.removeWarp(name);
-        this.warpInventory.removeWarp(name);
-
         this.noticeService.create()
             .player(player.getUniqueId())
             .notice(translation -> translation.warp().remove())

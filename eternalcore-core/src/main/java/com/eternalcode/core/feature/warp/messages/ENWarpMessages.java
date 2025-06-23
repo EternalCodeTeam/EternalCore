@@ -42,16 +42,21 @@ public class ENWarpMessages implements WarpMessages {
     @Description({" ", "# {WARPS} - List of warps (separated by commas)"})
     public Notice available = Notice.chat("<green>► <white>Available warps: <green>{WARPS}");
 
-    @Description({" ", "# Settings for warp inventory"})
+    @Description({" ", 
+                 "# DEPRECATED: These settings have been moved to warps.yml",
+                 "# Settings for warp inventory"})
+    @Deprecated
     public ENWarpInventory warpInventory = new ENWarpInventory();
 
     @Getter
     @Accessors(fluent = true)
     @Contextual
+    @Deprecated
     public static class ENWarpInventory implements WarpInventorySection {
         public String title = "<dark_gray>» <green>Available warps:";
 
         @Description({" ",
+                      "# DEPRECATED: These settings have been moved to warps.yml",
                       "# Warps located inside GUI inventory can be customized here. More warps will be added on creation with /setwarp command. "})
         public Map<String, WarpInventoryItem> items = new HashMap<>();
 
@@ -65,9 +70,11 @@ public class ENWarpMessages implements WarpMessages {
 
         @Getter
         @Contextual
+        @Deprecated
         public static class ENBorderSection implements BorderSection {
 
             @Description({" ",
+                          "# DEPRECATED: These settings have been moved to warps.yml",
                           "# Changes of border section may affect the appearance of the GUI inventory, after changes adjust slots of existing items."})
             public boolean enabled = true;
 
@@ -82,6 +89,7 @@ public class ENWarpMessages implements WarpMessages {
 
         @Getter
         @Contextual
+        @Deprecated
         public static class ENDecorationItemsSection implements DecorationItemsSection {
             public List<ConfigItem> items = List.of();
         }

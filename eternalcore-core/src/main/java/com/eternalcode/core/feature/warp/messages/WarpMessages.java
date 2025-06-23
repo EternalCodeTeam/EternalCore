@@ -26,8 +26,17 @@ public interface WarpMessages {
     Notice missingWarpArgument();
     Notice missingPermissionArgument();
 
+    /**
+     * @deprecated This method is deprecated. Warp inventory settings have been moved to warps.yml.
+     * @return The warp inventory section
+     */
+    @Deprecated
     WarpInventorySection warpInventory();
 
+    /**
+     * @deprecated This interface is deprecated. Warp inventory settings have been moved to warps.yml.
+     */
+    @Deprecated
     interface WarpInventorySection {
         String title();
 
@@ -52,6 +61,10 @@ public interface WarpMessages {
         BorderSection border();
         DecorationItemsSection decorationItems();
 
+        /**
+         * @deprecated This interface is deprecated. Warp inventory settings have been moved to warps.yml.
+         */
+        @Deprecated
         interface BorderSection {
             boolean enabled();
 
@@ -68,6 +81,10 @@ public interface WarpMessages {
             }
         }
 
+        /**
+         * @deprecated This interface is deprecated. Warp inventory settings have been moved to warps.yml.
+         */
+        @Deprecated
         interface DecorationItemsSection {
             List<ConfigItem> items();
         }

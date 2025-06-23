@@ -8,7 +8,7 @@ import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpImpl;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
-import java.util.ArrayList;
+import com.eternalcode.core.translation.TranslationManager;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,27 +19,43 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Repository
-class WarpRepositoryImpl implements WarpRepository {
+public class WarpRepositoryImpl implements WarpRepository {
 
     private static final Object READ_WRITE_LOCK = new Object();
 
-    private final LocationsConfiguration locationsConfiguration;
     private final WarpConfig warpConfig;
     private final ConfigurationManager configurationManager;
     private final Scheduler scheduler;
+    private final TranslationManager translationManager;
+    private final LocationsConfiguration locationsConfiguration;
 
     @Inject
     WarpRepositoryImpl(
         ConfigurationManager configurationManager,
-        LocationsConfiguration locationsConfiguration,
-        WarpConfig warpConfig, Scheduler scheduler
+        WarpConfig warpConfig,
+        Scheduler scheduler,
+        TranslationManager translationManager,
+        LocationsConfiguration locationsConfiguration
     ) {
-        this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
         this.warpConfig = warpConfig;
         this.scheduler = scheduler;
+        this.translationManager = translationManager;
+        this.locationsConfiguration = locationsConfiguration;
+    }
 
-        this.migrateWarps();
+    @Deprecated(since = "1.6.1", forRemoval = true)
+    public CompletableFuture<Boolean> migrateWarps() {
+        return scheduler.completeAsync(() -> {
+            synchronized (READ_WRITE_LOCK) {
+                return WarpMigrationUtil.migrateWarps(
+                    this.translationManager,
+                    this.warpConfig,
+                    this.configurationManager,
+                    this.locationsConfiguration
+                );
+            }
+        });
     }
 
     @Override
@@ -77,26 +93,6 @@ class WarpRepositoryImpl implements WarpRepository {
             .collect(Collectors.toList()));
     }
 
-    private void migrateWarps() {
-        synchronized (READ_WRITE_LOCK) {
-            if (this.locationsConfiguration.warps.isEmpty()) {
-                return;
-            }
-
-            this.transactionalRun(warps -> warps.putAll(this.locationsConfiguration.warps
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                    entry -> entry.getKey(),
-                    entry -> new WarpConfig.WarpConfigEntry(entry.getValue(), new ArrayList<>()))
-                )
-            ));
-
-            this.locationsConfiguration.warps.clear();
-            this.configurationManager.save(this.locationsConfiguration);
-        }
-    }
-
     private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpConfig.WarpConfigEntry>> editor) {
         return transactionalSupply(warps -> {
             editor.accept(warps);
@@ -115,5 +111,4 @@ class WarpRepositoryImpl implements WarpRepository {
             }
         });
     }
-
 }

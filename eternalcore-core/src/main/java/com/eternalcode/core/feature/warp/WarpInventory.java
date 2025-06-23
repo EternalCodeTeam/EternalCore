@@ -2,30 +2,22 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.commons.scheduler.Scheduler;
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.language.LanguageService;
-import com.eternalcode.core.feature.warp.messages.WarpMessages;
-import com.eternalcode.core.feature.warp.messages.WarpMessages.WarpInventorySection;
+import com.eternalcode.core.feature.warp.repository.WarpConfig;
+import com.eternalcode.core.feature.warp.repository.WarpConfig.WarpGuiSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.translation.AbstractTranslation;
-import com.eternalcode.core.translation.Translation;
-import com.eternalcode.core.translation.TranslationManager;
+
 import static com.eternalcode.core.util.FutureHandler.whenSuccess;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -43,37 +35,31 @@ public class WarpInventory {
     private static final int BORDER_ROW_COUNT = 2;
     private static final int UGLY_BORDER_ROW_COUNT = 1;
 
-    private final TranslationManager translationManager;
     private final LanguageService languageService;
     private final WarpService warpService;
     private final Server server;
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
-    private final ConfigurationManager configurationManager;
-    private final PluginConfiguration config;
     private final Scheduler scheduler;
+    private final WarpConfig warpConfig;
 
     @Inject
     WarpInventory(
-        TranslationManager translationManager,
         LanguageService languageService,
         WarpService warpService,
         Server server,
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
-        ConfigurationManager configurationManager,
-        PluginConfiguration config,
-        Scheduler scheduler
+        Scheduler scheduler,
+        WarpConfig warpConfig
     ) {
-        this.translationManager = translationManager;
         this.languageService = languageService;
         this.warpService = warpService;
         this.server = server;
         this.miniMessage = miniMessage;
         this.warpTeleportService = warpTeleportService;
-        this.configurationManager = configurationManager;
-        this.config = config;
         this.scheduler = scheduler;
+        this.warpConfig = warpConfig;
     }
 
     public void openInventory(Player player) {
@@ -83,48 +69,50 @@ public class WarpInventory {
     }
 
     private Gui createInventory(Player player, Language language) {
-        Translation translation = this.translationManager.getMessages(language);
-        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
+        WarpConfig.WarpGuiSettings guiSettings = this.warpConfig.guiSettings;
 
-        int rowsCount;
-        int size = warpSection.items().size();
-
-        if (!warpSection.border().enabled()) {
-            rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1;
-        }
-        else {
-            switch (warpSection.border().fillType()) {
-                case BORDER, ALL -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITH_BORDER + 1 + BORDER_ROW_COUNT;
-                case TOP, BOTTOM -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1 + UGLY_BORDER_ROW_COUNT;
-                default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
-            }
-        }
+        int rowsCount = createrBorder(guiSettings);
 
         Gui gui = Gui.gui()
-            .title(this.miniMessage.deserialize(warpSection.title()))
+            .title(this.miniMessage.deserialize(guiSettings.title))
             .rows(rowsCount)
             .disableAllInteractions()
             .create();
 
-        this.createWarpItems(player, warpSection, gui);
-        this.createBorder(warpSection, gui);
-        this.createDecorations(warpSection, gui);
+        this.createWarpItems(player, gui);
+        this.createBorder(guiSettings, gui);
+        this.createDecorations(guiSettings, gui);
 
         return gui;
     }
 
-    private void createBorder(WarpInventorySection warpSection, Gui gui) {
-        if (warpSection.border().enabled()) {
-            WarpInventorySection.BorderSection borderSection = warpSection.border();
+    private int createrBorder(WarpGuiSettings guiSettings) {
+        int rowsCount;
+        int size = this.warpService.getWarps().size();
 
-            ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
+        if (!guiSettings.borderEnabled) {
+            rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1;
+        }
+        else {
+            switch (guiSettings.borderFillType) {
+                case BORDER, ALL -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITH_BORDER + 1 + BORDER_ROW_COUNT;
+                case TOP, BOTTOM -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1 + UGLY_BORDER_ROW_COUNT;
+                default -> throw new IllegalStateException("Unexpected value: " + guiSettings.borderFillType);
+            }
+        }
+        return rowsCount;
+    }
 
-            if (!borderSection.name().isBlank()) {
-                borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(borderSection.name())));
+    private void createBorder(WarpConfig.WarpGuiSettings guiSettings, Gui gui) {
+        if (guiSettings.borderEnabled) {
+            ItemBuilder borderItem = ItemBuilder.from(guiSettings.borderMaterial);
+
+            if (!guiSettings.borderName.isBlank()) {
+                borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(guiSettings.borderName)));
             }
 
-            if (!borderSection.lore().isEmpty()) {
-                borderItem.lore(borderSection.lore()
+            if (!guiSettings.borderLore.isEmpty()) {
+                borderItem.lore(guiSettings.borderLore
                     .stream()
                     .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
                     .toList());
@@ -132,18 +120,18 @@ public class WarpInventory {
 
             GuiItem guiItem = new GuiItem(borderItem.build());
 
-            switch (borderSection.fillType()) {
+            switch (guiSettings.borderFillType) {
                 case BORDER -> gui.getFiller().fillBorder(guiItem);
                 case ALL -> gui.getFiller().fill(guiItem);
                 case TOP -> gui.getFiller().fillTop(guiItem);
                 case BOTTOM -> gui.getFiller().fillBottom(guiItem);
-                default -> throw new IllegalStateException("Unexpected value: " + borderSection.fillType());
+                default -> throw new IllegalStateException("Unexpected value: " + guiSettings.borderFillType);
             }
         }
     }
 
-    private void createDecorations(WarpInventorySection warpSection, Gui gui) {
-        for (ConfigItem item : warpSection.decorationItems().items()) {
+    private void createDecorations(WarpConfig.WarpGuiSettings guiSettings, Gui gui) {
+        for (ConfigItem item : guiSettings.decorationItems) {
             BaseItemBuilder baseItemBuilder = this.createItem(item);
             GuiItem guiItem = baseItemBuilder.asGuiItem();
 
@@ -165,25 +153,33 @@ public class WarpInventory {
         }
     }
 
-    private void createWarpItems(Player player, WarpInventorySection warpSection, Gui gui) {
-        warpSection.items().values().forEach(item -> {
-            Optional<Warp> warpOptional = this.warpService.findWarp(item.warpName());
+    private void createWarpItems(Player player, Gui gui) {
+        List<Warp> warps = this.warpService.getWarps().stream()
+            .filter(warp -> warp.hasPermissions(player))
+            .sorted(Comparator.comparing(Warp::getName))
+            .toList();
 
-            if (warpOptional.isEmpty()) {
-                return;
-            }
+        int slot = getStartingSlot();
+        
+        for (Warp warp : warps) {
+            WarpConfig.WarpConfigEntry warpEntry = this.warpConfig.warps.get(warp.getName());
+            if (warpEntry == null) continue;
+            
+            WarpConfig.WarpGuiItem guiItem = warpEntry.guiItem;
+            
+            ConfigItem configItem = ConfigItem.builder()
+                .withName(guiItem.name.replace("{WARP_NAME}", warp.getName()))
+                .withLore(guiItem.lore)
+                .withMaterial(guiItem.material)
+                .withTexture(guiItem.texture)
+                .withSlot(slot++)
+                .withGlow(guiItem.glow)
+                .build();
+            
+            BaseItemBuilder baseItemBuilder = this.createItem(configItem);
+            GuiItem item = baseItemBuilder.asGuiItem();
 
-            Warp warp = warpOptional.get();
-            ConfigItem warpItem = item.warpItem();
-
-            if (!warp.hasPermissions(player)) {
-                return;
-            }
-
-            BaseItemBuilder baseItemBuilder = this.createItem(warpItem);
-            GuiItem guiItem = baseItemBuilder.asGuiItem();
-
-            guiItem.setAction(event -> {
+            item.setAction(event -> {
                 if (!warp.hasPermissions(player)) {
                     return;
                 }
@@ -192,104 +188,47 @@ public class WarpInventory {
                 this.warpTeleportService.teleport(player, warp);
             });
 
-            gui.setItem(warpItem.slot(), guiItem);
-        });
-    }
-
-    private BaseItemBuilder createItem(ConfigItem item) {
-        Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
-
-        List<Component> lore = item.lore()
-            .stream()
-            .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
-            .toList();
-
-        if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {
-            return ItemBuilder.skull()
-                .name(name)
-                .lore(lore)
-                .texture(item.texture())
-                .glow(item.glow());
-        }
-
-        return ItemBuilder.from(item.material())
-            .name(name)
-            .lore(lore)
-            .glow(item.glow());
-    }
-
-    public void addWarp(Warp warp) {
-        if (!this.warpService.exists(warp.getName())) {
-            return;
-        }
-
-        for (Language language : this.translationManager.getAvailableLanguages()) {
-            AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
-            int slot = getSlot(warpSection);
-
-            warpSection.addItem(
-                warp.getName(),
-                WarpInventoryItem.builder()
-                    .withWarpName(warp.getName())
-                    .withWarpItem(ConfigItem.builder()
-                        .withName(this.config.warp.itemNamePrefix + warp.getName())
-                        .withLore(Collections.singletonList(this.config.warp.itemLore))
-                        .withMaterial(this.config.warp.itemMaterial)
-                        .withTexture(this.config.warp.itemTexture)
-                        .withSlot(slot)
-                        .withGlow(true)
-                        .build())
-                    .build());
-
-            this.configurationManager.save(translation);
+            gui.setItem(configItem.slot(), item);
         }
     }
 
-    private int getSlot(WarpMessages.WarpInventorySection warpSection) {
-        int size = warpSection.items().size();
-        if (!warpSection.border().enabled()) {
-            return GUI_ITEM_SLOT_WITHOUT_BORDER + size;
+    private int getStartingSlot() {
+        WarpConfig.WarpGuiSettings guiSettings = this.warpConfig.guiSettings;
+        
+        if (!guiSettings.borderEnabled) {
+            return GUI_ITEM_SLOT_WITHOUT_BORDER;
         }
-
-        return switch (warpSection.border().fillType()) {
-            case BORDER -> GUI_ITEM_SLOT_WITH_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
-            case ALL -> GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
-            case TOP -> GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
-            case BOTTOM -> size;
+        
+        return switch (guiSettings.borderFillType) {
+            case TOP -> GUI_ITEM_SLOT_WITH_TOP_BORDER;
+            case ALL -> GUI_ITEM_SLOT_WITH_ALL_BORDER;
+            case BORDER, BOTTOM -> GUI_ITEM_SLOT_WITH_BORDER;
         };
     }
 
-    public void removeWarp(String warpName) {
-        if (!this.config.warp.autoAddNewWarps) {
-            return;
+    private BaseItemBuilder createItem(ConfigItem item) {
+        BaseItemBuilder baseItemBuilder = ItemBuilder.from(item.material());
+
+        if (item.texture() != null && !item.texture().isBlank()) {
+            baseItemBuilder = ItemBuilder.skull()
+                .texture(item.texture());
         }
 
-        for (Language language : this.translationManager.getAvailableLanguages()) {
-            AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
-            WarpInventoryItem removed = warpSection.removeItem(warpName);
-
-            if (removed != null) {
-                this.shiftWarpItems(removed, warpSection);
-            }
-
-            this.configurationManager.save(translation);
+        if (item.name() != null && !item.name().isBlank()) {
+            baseItemBuilder.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name())));
         }
-    }
 
-    private void shiftWarpItems(WarpInventoryItem removed, WarpMessages.WarpInventorySection warpSection) {
-        int removedSlot = removed.warpItem.slot;
-        List<WarpInventoryItem> itemsToShift = warpSection.items().values().stream()
-            .filter(item -> item.warpItem.slot > removedSlot)
-            .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
-            .toList();
-
-        int currentShift = removedSlot;
-        for (WarpInventoryItem item : itemsToShift) {
-            int nextShift = item.warpItem.slot;
-            item.warpItem.slot = currentShift;
-            currentShift = nextShift;
+        if (item.lore() != null && !item.lore().isEmpty()) {
+            baseItemBuilder.lore(item.lore()
+                .stream()
+                .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
+                .toList());
         }
+
+        if (item.glow()) {
+            baseItemBuilder.glow();
+        }
+
+        return baseItemBuilder;
     }
 }

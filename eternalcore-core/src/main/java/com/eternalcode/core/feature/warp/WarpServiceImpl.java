@@ -2,7 +2,9 @@ package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.feature.warp.repository.WarpConfig;
 import com.eternalcode.core.feature.warp.repository.WarpRepository;
+import com.eternalcode.core.feature.warp.repository.WarpRepositoryImpl;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Location;
@@ -13,8 +15,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
 
 @FeatureDocs(
     name = "Warp System",
@@ -25,16 +29,38 @@ class WarpServiceImpl implements WarpService {
 
     private final Map<String, Warp> warps = new ConcurrentHashMap<>();
     private final WarpRepository warpRepository;
+    private final WarpConfig warpConfig;
 
     @Inject
-    private WarpServiceImpl(WarpRepository warpRepository) {
+    private WarpServiceImpl(WarpRepository warpRepository, WarpConfig warpConfig) {
         this.warpRepository = warpRepository;
+        this.warpConfig = warpConfig;
 
         warpRepository.getWarps().thenAcceptAsync(warps -> {
             for (Warp warp : warps) {
                 this.warps.put(warp.getName(), warp);
             }
         });
+    }
+
+    @Deprecated(since = "1.6.1", forRemoval = true)
+    public CompletableFuture<Boolean> migrateWarps() {
+        if (warpRepository instanceof WarpRepositoryImpl) {
+            return ((WarpRepositoryImpl) warpRepository).migrateWarps()
+                .thenApply(success -> {
+                    if (success) {
+                        // Reload warps after migration
+                        warpRepository.getWarps().thenAcceptAsync(warps -> {
+                            this.warps.clear();
+                            for (Warp warp : warps) {
+                                this.warps.put(warp.getName(), warp);
+                            }
+                        });
+                    }
+                    return success;
+                });
+        }
+        return CompletableFuture.completedFuture(false);
     }
 
     @Override

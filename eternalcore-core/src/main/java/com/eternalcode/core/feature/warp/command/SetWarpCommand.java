@@ -54,31 +54,12 @@ class SetWarpCommand {
             return;
         }
 
-        Warp createdWarp = this.warpService.createWarp(warp, player.getLocation());
+        this.warpService.createWarp(warp, player.getLocation());
 
         this.noticeService.create()
             .player(uniqueId)
             .notice(translation -> translation.warp().create())
             .placeholder("{WARP}", warp)
             .send();
-
-        if (this.config.warp.autoAddNewWarps) {
-            if (this.warpService.getWarps().size() <= MAX_WARPS_IN_GUI) {
-                this.warpInventory.addWarp(createdWarp);
-
-                this.noticeService.create()
-                    .player(uniqueId)
-                    .notice(translation -> translation.warp().itemAdded())
-                    .send();
-
-                return;
-            }
-
-            this.noticeService.create()
-                .player(uniqueId)
-                .notice(translation -> translation.warp().itemLimit())
-                .placeholder("{LIMIT}", String.valueOf(MAX_WARPS_IN_GUI))
-                .send();
-        }
     }
 }
