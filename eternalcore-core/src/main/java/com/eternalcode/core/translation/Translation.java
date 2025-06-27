@@ -178,18 +178,12 @@ public interface Translation {
         Notice enchantedMessageBy();
     }
 
-    interface LanguageSection {
-        Notice languageChanged();
-
-        List<ConfigItem> decorationItems();
-    }
-
     interface ContainerSection {
         Notice genericContainerOpened();
         Notice genericContainerOpenedBy();
         Notice genericContainerOpenedFor();
     }
-    Language getLanguage();
+    String getLanguage();
     // argument section
     ArgumentMessages argument();
     // format section
@@ -235,8 +229,6 @@ public interface Translation {
     ItemEditMessages itemEdit();
     // time and weather
     TimeAndWeatherMessages timeAndWeather();
-    // language section
-    LanguageSection language();
     // container section
     ContainerSection container();
     // auto message section

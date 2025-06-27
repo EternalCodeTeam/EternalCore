@@ -47,6 +47,9 @@ public class PluginConfiguration implements ReloadableConfig {
     @Description("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
+    @Description("# Language, currently supported languages: en, pl")
+    public String language = "en";
+
     @Description({ " ", "# Database Section" })
     public Database database = new Database();
 

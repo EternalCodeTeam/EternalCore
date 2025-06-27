@@ -21,11 +21,11 @@ public abstract class AbstractViewerArgument<T> extends ArgumentResolver<Command
     @Override
     protected ParseResult<T> parse(Invocation<CommandSender> invocation, Argument<T> context, String argument) {
         if (invocation.sender() instanceof Player player) {
-            Translation translation = this.translationManager.getMessages(player.getUniqueId());
+            Translation translation = this.translationManager.getMessages();
             return this.parse(invocation, argument, translation);
         }
 
-        Translation translation = this.translationManager.getMessages(Language.DEFAULT);
+        Translation translation = this.translationManager.getMessages();
         return this.parse(invocation, argument, translation);
     }
 
