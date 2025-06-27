@@ -54,7 +54,7 @@ class HomePlaceholderSetup {
 
     private String ownedHomes(Player targetPlayer) {
         Collection<Home> homes = this.homeService.getHomes(targetPlayer.getUniqueId());
-        Translation translation = this.translationManager.getMessages(targetPlayer.getUniqueId());
+        Translation translation = this.translationManager.getMessages();
 
         if (homes.isEmpty()) {
             return translation.home().noHomesOwnedPlaceholder();

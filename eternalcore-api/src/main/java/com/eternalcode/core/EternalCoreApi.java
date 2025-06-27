@@ -4,7 +4,6 @@ import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.jail.JailService;
-import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.feature.privatechat.PrivateChatService;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
@@ -23,8 +22,6 @@ public interface EternalCoreApi {
     HomeService getHomeService();
 
     JailService getJailService();
-
-    LanguageService getLanguageService();
 
     PrivateChatService getPrivateChatService();
 

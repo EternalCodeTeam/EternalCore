@@ -5,8 +5,6 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages.WarpInventorySection;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -14,7 +12,6 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import static com.eternalcode.core.util.FutureHandler.whenSuccess;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -44,7 +41,6 @@ public class WarpInventory {
     private static final int UGLY_BORDER_ROW_COUNT = 1;
 
     private final TranslationManager translationManager;
-    private final LanguageService languageService;
     private final WarpService warpService;
     private final Server server;
     private final MiniMessage miniMessage;
@@ -56,7 +52,6 @@ public class WarpInventory {
     @Inject
     WarpInventory(
         TranslationManager translationManager,
-        LanguageService languageService,
         WarpService warpService,
         Server server,
         MiniMessage miniMessage,
@@ -66,7 +61,6 @@ public class WarpInventory {
         Scheduler scheduler
     ) {
         this.translationManager = translationManager;
-        this.languageService = languageService;
         this.warpService = warpService;
         this.server = server;
         this.miniMessage = miniMessage;
@@ -77,13 +71,12 @@ public class WarpInventory {
     }
 
     public void openInventory(Player player) {
-        this.languageService.getLanguage(player.getUniqueId())
-            .thenApply(language -> this.createInventory(player, language))
-            .whenComplete(whenSuccess(gui -> this.scheduler.run(() -> gui.open(player))));
+        Gui gui = this.createInventory(player);
+        this.scheduler.run(() -> gui.open(player));
     }
 
-    private Gui createInventory(Player player, Language language) {
-        Translation translation = this.translationManager.getMessages(language);
+    private Gui createInventory(Player player) {
+        Translation translation = this.translationManager.getMessages();
         WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
 
         int rowsCount;
@@ -222,28 +215,23 @@ public class WarpInventory {
         if (!this.warpService.exists(warp.getName())) {
             return;
         }
-
-        for (Language language : this.translationManager.getAvailableLanguages()) {
-            AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
-            int slot = getSlot(warpSection);
-
-            warpSection.addItem(
-                warp.getName(),
-                WarpInventoryItem.builder()
-                    .withWarpName(warp.getName())
-                    .withWarpItem(ConfigItem.builder()
-                        .withName(this.config.warp.itemNamePrefix + warp.getName())
-                        .withLore(Collections.singletonList(this.config.warp.itemLore))
-                        .withMaterial(this.config.warp.itemMaterial)
-                        .withTexture(this.config.warp.itemTexture)
-                        .withSlot(slot)
-                        .withGlow(true)
-                        .build())
-                    .build());
-
-            this.configurationManager.save(translation);
-        }
+        AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages();
+        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
+        int slot = getSlot(warpSection);
+        warpSection.addItem(
+            warp.getName(),
+            WarpInventoryItem.builder()
+                .withWarpName(warp.getName())
+                .withWarpItem(ConfigItem.builder()
+                    .withName(this.config.warp.itemNamePrefix + warp.getName())
+                    .withLore(Collections.singletonList(this.config.warp.itemLore))
+                    .withMaterial(this.config.warp.itemMaterial)
+                    .withTexture(this.config.warp.itemTexture)
+                    .withSlot(slot)
+                    .withGlow(true)
+                    .build())
+                .build());
+        this.configurationManager.save(translation);
     }
 
     private int getSlot(WarpMessages.WarpInventorySection warpSection) {
@@ -264,18 +252,13 @@ public class WarpInventory {
         if (!this.config.warp.autoAddNewWarps) {
             return;
         }
-
-        for (Language language : this.translationManager.getAvailableLanguages()) {
-            AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages(language);
-            WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
-            WarpInventoryItem removed = warpSection.removeItem(warpName);
-
-            if (removed != null) {
-                this.shiftWarpItems(removed, warpSection);
-            }
-
-            this.configurationManager.save(translation);
+        AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages();
+        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
+        WarpInventoryItem removed = warpSection.removeItem(warpName);
+        if (removed != null) {
+            this.shiftWarpItems(removed, warpSection);
         }
+        this.configurationManager.save(translation);
     }
 
     private void shiftWarpItems(WarpInventoryItem removed, WarpMessages.WarpInventorySection warpSection) {

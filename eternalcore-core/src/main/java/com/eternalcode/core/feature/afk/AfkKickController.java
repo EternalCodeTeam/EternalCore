@@ -60,7 +60,7 @@ class AfkKickController implements Listener {
         }
 
         User user = this.userManager.getOrCreate(playerUUID, player.getName());
-        Translation translation = this.translationManager.getMessages(user.getUniqueId());
+        Translation translation = this.translationManager.getMessages();
 
         Component component = this.miniMessage.deserialize(translation.afk().afkKickReason());
         player.kickPlayer(legacySection().serialize(component));

@@ -9,7 +9,6 @@ import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
@@ -39,8 +38,8 @@ import java.util.Map;
 @Accessors(fluent = true)
 public class PLTranslation extends AbstractTranslation {
 
-    PLTranslation() {
-        super(Language.PL);
+    public PLTranslation(String languageCode) {
+        super(languageCode);
     }
 
     @Description({
@@ -560,25 +559,6 @@ public class PLTranslation extends AbstractTranslation {
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>Otwarto kontener dla gracza <green>{PLAYER}<white>!");
     }
 
-    @Description({" ", "# Informacja zwrotna, gdy gracz zmienia język pluginu na polski"})
-    public PLLanguageSection language = new PLLanguageSection();
-
-    @Getter
-    @Contextual
-    public static class PLLanguageSection implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Nasz discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
-    }
-
     @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
     public PLSetSlotMessages setSlot  = new PLSetSlotMessages();
 
@@ -587,4 +567,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
     public PLJailMessages jailSection = new PLJailMessages();
+
+    @Override
+    public String getLanguage() {
+        return this.languageCode;
+    }
 }
