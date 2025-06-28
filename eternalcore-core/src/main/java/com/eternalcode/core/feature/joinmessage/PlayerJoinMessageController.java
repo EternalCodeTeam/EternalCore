@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.joinmessage;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -12,10 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import panda.utilities.StringUtils;
 
-@FeatureDocs(
-    description = "Send a random welcome message from config to a player when they join the server",
-    name = "Player Join Message"
-)
 @Controller
 class PlayerJoinMessageController implements Listener {
 

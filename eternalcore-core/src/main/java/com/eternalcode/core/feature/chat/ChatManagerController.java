@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.chat;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.event.EventCaller;
 import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_BYPASS_PERMISSION;
 import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_SLOWMODE_BYPASS_PERMISSION;
@@ -18,10 +18,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-@FeatureDocs(
-    name = "ChatManager",
-    description = "It allows you to manage chat, with slowmode, chat clear, chat on/off etc.",
-    permission = {CHAT_SLOWMODE_BYPASS_PERMISSION, CHAT_BYPASS_PERMISSION}
+@PermissionDocs(
+    name = "Bypass chat slowmode or disabled chat",
+    description = "Allows you to bypass chat restrictions such as slowmode or disabled chat.",
+    permission = { CHAT_SLOWMODE_BYPASS_PERMISSION, CHAT_BYPASS_PERMISSION }
 )
 @Controller
 class ChatManagerController implements Listener {

@@ -1,6 +1,6 @@
 package com.eternalcode.core.bridge.litecommand.argument;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -16,14 +16,12 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.function.Predicate;
-
 @LiteArgument(type = Player.class)
 
-@FeatureDocs(
-    name = "Vanish tabulation",
-    description = "EternalCore prevents non-admin players from seeing vanished players in the commands like /tpa."
-        + " To re-enable this feature for specific players, grant them the eternalcore.vanish.tabulation.see permission."
+@PermissionDocs(
+    name = "Afk tabulation",
+    permission = VanishPermissionConstant.VANISH_SEE_TABULATION_PERMISSION,
+    description = "Allows the player to see vanished players in tabulation."
 )
 public class PlayerArgument extends AbstractViewerArgument<Player> {
 

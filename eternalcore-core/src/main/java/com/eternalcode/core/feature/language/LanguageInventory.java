@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.language;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
@@ -24,10 +24,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@FeatureDocs(
-    name = "Language Inventory",
-    description = "This feature allows you to create a language selector inventory"
-)
 @Service
 class LanguageInventory {
 
