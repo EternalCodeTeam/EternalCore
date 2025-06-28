@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.spawn;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -16,10 +16,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@FeatureDocs(
-    description = "Teleport to spawn on first join or spawn on join",
-    name = "Player Join"
-)
 @Controller
 public class SpawnTeleportJoinController implements Listener {
 

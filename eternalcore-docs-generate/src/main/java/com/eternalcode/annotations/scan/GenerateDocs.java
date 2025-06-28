@@ -2,11 +2,10 @@ package com.eternalcode.annotations.scan;
 
 import com.eternalcode.annotations.scan.command.CommandResult;
 import com.eternalcode.annotations.scan.command.CommandScanResolver;
-import com.eternalcode.annotations.scan.feature.FeatureResult;
-import com.eternalcode.annotations.scan.feature.FeatureScanResolver;
+import com.eternalcode.annotations.scan.permission.PermissionResult;
+import com.eternalcode.annotations.scan.permission.PermissionScanResolver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
@@ -24,29 +23,29 @@ public class GenerateDocs {
             .distinct()
             .toList();
 
-        List<FeatureResult> featureResults = scanner.scan(new FeatureScanResolver())
+        List<PermissionResult> permissionResults = scanner.scan(new PermissionScanResolver())
             .stream()
-            .sorted(Comparator.comparing(FeatureResult::name))
+            .sorted(Comparator.comparing(PermissionResult::name))
             .distinct()
             .toList();
 
         Gson gson = new GsonBuilder()
             .setPrettyPrinting()
+            .disableHtmlEscaping()
             .create();
 
-        try (FileWriter fileWriter = new FileWriter("raw_features_docs.json")) {
-            gson.toJson(featureResults, fileWriter);
-        }
-        catch (IOException exception) {
-            exception.printStackTrace();
-        }
+        DocumentationResult combinedDocs = new DocumentationResult(commandResults, permissionResults);
 
-        try (FileWriter fileWriter = new FileWriter("raw_commands_docs.json")) {
-            gson.toJson(commandResults, fileWriter);
+        try (FileWriter fileWriter = new FileWriter("raw_eternalcore_documentation.json")) {
+            gson.toJson(combinedDocs, fileWriter);
         }
         catch (IOException exception) {
             exception.printStackTrace();
         }
     }
 
+    public record DocumentationResult(
+        List<CommandResult> commands,
+        List<PermissionResult> permissions
+    ) {}
 }

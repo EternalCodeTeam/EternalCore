@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.home;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.database.HomeRepository;
@@ -9,8 +8,6 @@ import com.eternalcode.core.feature.home.event.HomeDeleteEvent;
 import com.eternalcode.core.feature.home.event.HomeOverrideEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.user.UserManager;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,10 +18,6 @@ import java.util.stream.Stream;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-@FeatureDocs(
-    name = "Home",
-    description = "This feature allows players to set homes and teleport to them. Additionally, eternalcore allows to set limits for the amount of homes with permission"
-)
 @Service
 public class HomeManager implements HomeService {
 

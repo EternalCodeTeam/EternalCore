@@ -1,6 +1,6 @@
 package com.eternalcode.core.database;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.google.common.base.Stopwatch;
 import com.j256.ormlite.dao.Dao;
@@ -16,10 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-@FeatureDocs(
-    name = "Database",
-    description = "Adds support for MySQL, MariaDB, PostgreSQL, SQLite and H2 databases"
-)
 public class DatabaseManager {
 
     private final PluginConfiguration config;

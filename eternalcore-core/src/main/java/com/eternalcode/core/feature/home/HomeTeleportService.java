@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home;
 
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
@@ -15,13 +16,18 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @Service
+@PermissionDocs(
+    name = "Home teleport bypass",
+    description = "Allows player to bypass home teleport time.",
+    permission = HomeTeleportService.HOME_BYPASS
+)
 public class HomeTeleportService {
 
     private final TeleportTaskService teleportTaskService;
     private final PluginConfiguration pluginConfiguration;
     private final EventCaller eventCaller;
 
-    public static final String HOME_BYPASS = "eternalcore.home.bypass";
+    static final String HOME_BYPASS = "eternalcore.home.bypass";
 
     @Inject
     public HomeTeleportService(

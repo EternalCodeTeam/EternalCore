@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.fullserverbypass;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.translation.TranslationManager;
@@ -17,13 +18,15 @@ import panda.utilities.text.Joiner;
 
 import java.util.Optional;
 
-@FeatureDocs(
+@PermissionDocs(
     name = "Bypass Full Server",
     description = "This feature allows you to bypass the full server, example for vip rank.",
-    permission = "eternalcore.slot.bypass"
+    permission = FullServerBypassController.SLOT_BYPASS
 )
 @Controller
 class FullServerBypassController implements Listener {
+
+    static final String SLOT_BYPASS = "eternalcore.slot.bypass";
 
     private final TranslationManager translationManager;
     private final UserManager userManager;
@@ -41,7 +44,7 @@ class FullServerBypassController implements Listener {
         if (event.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
             Player player = event.getPlayer();
 
-            if (player.hasPermission("eternalcore.slot.bypass")) {
+            if (player.hasPermission(SLOT_BYPASS)) {
                 event.allow();
 
                 return;

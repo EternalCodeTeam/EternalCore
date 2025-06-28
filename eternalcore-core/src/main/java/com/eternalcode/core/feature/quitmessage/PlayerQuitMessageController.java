@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.quitmessage;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -24,10 +24,6 @@ class PlayerQuitMessageController implements Listener {
         this.vanishService = vanishService;
     }
 
-    @FeatureDocs(
-        description = "Send a random goodbye message from config to a player when they quit the server",
-        name = "Player Quit Message"
-    )
     @EventHandler
     void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
