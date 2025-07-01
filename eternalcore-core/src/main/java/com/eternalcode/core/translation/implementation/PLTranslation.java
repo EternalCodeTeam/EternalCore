@@ -1,7 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.bridge.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
@@ -14,19 +13,18 @@ import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
-import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
-import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
@@ -38,8 +36,8 @@ import java.util.Map;
 @Accessors(fluent = true)
 public class PLTranslation extends AbstractTranslation {
 
-    public PLTranslation(String languageCode) {
-        super(languageCode);
+    public PLTranslation(Language language) {
+        super(Language.PL);
     }
 
     @Description({
@@ -567,9 +565,4 @@ public class PLTranslation extends AbstractTranslation {
 
     @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
     public PLJailMessages jailSection = new PLJailMessages();
-
-    @Override
-    public String getLanguage() {
-        return this.languageCode;
-    }
 }

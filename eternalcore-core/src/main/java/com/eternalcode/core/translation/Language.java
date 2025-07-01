@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.language;
+package com.eternalcode.core.translation;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -19,6 +19,26 @@ public class Language {
     public Language(String lang, List<String> aliases) {
         this.lang = lang;
         this.aliases = new LinkedHashSet<>(aliases);
+    }
+
+    public static Language fromLocale(Locale locale) {
+        return new Language(locale.getLanguage(), List.of());
+    }
+
+    public static Language fromString(String lang) {
+        if (lang == null || lang.isBlank()) {
+            return DEFAULT;
+        }
+
+        String lower = lang.toLowerCase();
+
+        for (Language language : List.of(PL, EN)) {
+            if (language.lang.equalsIgnoreCase(lower) || language.aliases.contains(lower)) {
+                return language;
+            }
+        }
+
+        return new Language(lower, List.of());
     }
 
     public String getLang() {
@@ -69,12 +89,7 @@ public class Language {
         return Objects.hash(this.lang);
     }
 
-    public static Language fromLocale(Locale locale) {
-        return new Language(locale.getLanguage(), List.of());
-    }
-
     public Locale toLocale() {
         return Locale.of(this.lang);
     }
-
 }

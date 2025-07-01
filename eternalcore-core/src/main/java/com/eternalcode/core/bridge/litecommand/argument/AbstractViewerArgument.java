@@ -1,6 +1,5 @@
 package com.eternalcode.core.bridge.litecommand.argument;
 
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import dev.rollczi.litecommands.argument.Argument;

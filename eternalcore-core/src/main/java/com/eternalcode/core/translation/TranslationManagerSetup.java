@@ -11,8 +11,8 @@ class TranslationManagerSetup {
 
     @Bean
     TranslationManager translationManager(ConfigurationManager configurationManager, PluginConfiguration pluginConfiguration) {
-        String languageCode = pluginConfiguration.language;
-        Translation translation = TranslationFactory.create(languageCode);
+        Language language = Language.fromString(pluginConfiguration.language);
+        Translation translation = TranslationFactory.create(language);
         configurationManager.load((ReloadableTranslation) translation);
         return new TranslationManager(translation);
     }

@@ -20,6 +20,7 @@ import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMe
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import java.util.Locale;
 import lombok.Getter;
@@ -38,8 +39,8 @@ import java.util.Map;
 @Accessors(fluent = true)
 public class ENTranslation extends AbstractTranslation {
 
-    public ENTranslation(String languageCode) {
-        super(languageCode);
+    public ENTranslation(Language language) {
+        super(Language.EN);
     }
 
     @Description({
@@ -121,11 +122,6 @@ public class ENTranslation extends AbstractTranslation {
         "# This section is responsible for the messages of the /signeditor command",
     })
     public ENSignEditorMessages signEditor = new ENSignEditorMessages();
-
-    @Override
-    public String getLanguage() {
-        return this.languageCode;
-    }
 
     @Getter
     @Contextual
