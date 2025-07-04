@@ -14,7 +14,7 @@ public class LanguageComposer implements SimpleComposer<Language> {
     public Result<Language, Exception> deserialize(String source) {
         List<String> arguments = Arrays.asList(source.split("\\|"));
 
-        return Result.ok(new Language(arguments.get(0), arguments.subList(1, arguments.size())));
+        return Result.ok(new Language(arguments.getFirst(), arguments.subList(1, arguments.size())));
     }
 
     @Override

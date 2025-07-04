@@ -14,6 +14,7 @@ import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.translation.Language;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.entity.Exclude;
@@ -47,8 +48,11 @@ public class PluginConfiguration implements ReloadableConfig {
     @Description("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
-    @Description("# Language, currently supported languages: en, pl")
-    public String language = "en";
+    @Description({
+        "# Language, currently supported languages: en, pl",
+        "# You need restart server after change."
+    })
+    public Language language = Language.EN;
 
     @Description({ " ", "# Database Section" })
     public Database database = new Database();

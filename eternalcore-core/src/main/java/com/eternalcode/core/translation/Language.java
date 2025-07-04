@@ -25,22 +25,6 @@ public class Language {
         return new Language(locale.getLanguage(), List.of());
     }
 
-    public static Language fromString(String lang) {
-        if (lang == null || lang.isBlank()) {
-            return DEFAULT;
-        }
-
-        String lower = lang.toLowerCase();
-
-        for (Language language : List.of(PL, EN)) {
-            if (language.lang.equalsIgnoreCase(lower) || language.aliases.contains(lower)) {
-                return language;
-            }
-        }
-
-        return new Language(lower, List.of());
-    }
-
     public String getLang() {
         return this.lang;
     }

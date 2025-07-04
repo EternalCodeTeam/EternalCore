@@ -10,10 +10,13 @@ import com.eternalcode.core.translation.implementation.TranslationFactory;
 class TranslationManagerSetup {
 
     @Bean
-    TranslationManager translationManager(ConfigurationManager configurationManager, PluginConfiguration pluginConfiguration) {
-        Language language = Language.fromString(pluginConfiguration.language);
-        Translation translation = TranslationFactory.create(language);
-        configurationManager.load((ReloadableTranslation) translation);
+    TranslationManager translationManager(
+        ConfigurationManager configurationManager,
+        PluginConfiguration pluginConfiguration
+    ) {
+        Language language = pluginConfiguration.language;
+        ReloadableTranslation translation = TranslationFactory.create(language);
+        configurationManager.load(translation);
         return new TranslationManager(translation);
     }
 }
