@@ -114,22 +114,6 @@ a [Pull Request](https://github.com/EternalCodeTeam/EternalCore/pulls) with your
 See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master/.github/CONTRIBUTING.md) to find out
 more.
 
-
-## 📑 Other Dependencies
-
-EternalCore uses various dependencies for its functionality, including:
-- [LiteCommands (by Rollczi ❤️)](https://github.com/Rollczi/LiteCommands)
-- [Lombok (Only for configs)](https://projectlombok.org/)
-- [PaperLib](https://github.com/PaperMC/PaperLib)
-- [Spigot API](https://www.spigotmc.org/wiki/spigot-gradle/)
-- [Kyori Adventure](https://docs.adventure.kyori.net/)
-- [CDN Configs](https://github.com/dzikoysk/cdn)
-- [Expressible](https://github.com/panda-lang/expressible)
-- [bStats](https://bstats.org/)
-- [HikariCP](https://github.com/brettwooldridge/HikariCP)
-- [Ormlite JDBC](https://github.com/j256/ormlite-jdbc)
-- [TriumphGUI](https://github.com/TriumphTeam/triumph-gui)
-
 ## ❤️ Special Thanks
 
 [<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="JetBrains" width="150">](https://www.jetbrains.com)
