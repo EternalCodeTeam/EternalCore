@@ -1,20 +1,23 @@
 ---
-name: Feature request
-about: Suggest an idea for EternalCore <3
-title: ''
-labels: ''
+name: 💡 Feature Request
+about: Suggest a new idea or improvement for EternalCore!
+title: '[FEATURE] Short description of your idea'
+labels: '🆕 feature'
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### Problem Description
+Is your feature request related to a specific problem? Please describe it clearly.
+For example, "I always find it frustrating when [...]" or "Feature X could work better if [...]".
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+### Proposed Solution
+Clearly describe what you want to achieve and how the feature should work.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### Considered Alternatives
+Have you considered other ways to solve this problem? If yes, describe these alternative solutions or features.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+### Additional Context
+Add any other relevant information or files (e.g., links, screenshots, diagrams) to explain your idea.
+
+---
