@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import org.bukkit.command.CommandSender;
 
 @LiteHandler(Notice.class)
-public class NoticeHandler implements ResultHandler<CommandSender, Notice> {
+class NoticeHandler implements ResultHandler<CommandSender, Notice> {
 
     private final ViewerService viewerService;
     private final NoticeService noticeService;

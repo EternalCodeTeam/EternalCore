@@ -16,8 +16,6 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.function.Predicate;
-
 @LiteArgument(type = Player.class)
 
 @FeatureDocs(
