@@ -31,7 +31,7 @@ class AfkPlaceholderSetup {
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "afk_formatted",
             player -> {
-                Translation messages = this.translationManager.getMessages(player.getUniqueId());
+                Translation messages = this.translationManager.getMessages();
                 return afkService.isAfk(player.getUniqueId()) ?
                     messages.afk().afkEnabledPlaceholder() : messages.afk().afkDisabledPlaceholder();
             }));

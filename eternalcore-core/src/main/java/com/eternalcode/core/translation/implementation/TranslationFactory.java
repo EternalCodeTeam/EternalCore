@@ -1,19 +1,17 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.AbstractTranslation;
-
+import com.eternalcode.core.translation.Language;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class TranslationFactory {
-
     private static final Function<Language, AbstractTranslation> OTHER_LANG_TRANSLATION = ENTranslation::new;
 
     private static final Map<Language, Supplier<AbstractTranslation>> DEFAULT_TRANSLATIONS = Map.of(
-        Language.EN, ENTranslation::new,
-        Language.PL, PLTranslation::new
+        Language.EN, () -> new ENTranslation(Language.EN),
+        Language.PL, () -> new PLTranslation(Language.PL)
     );
 
     private TranslationFactory() {
@@ -28,5 +26,4 @@ public final class TranslationFactory {
 
         return OTHER_LANG_TRANSLATION.apply(language);
     }
-
 }
