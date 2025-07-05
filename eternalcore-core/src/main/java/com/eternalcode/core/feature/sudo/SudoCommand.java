@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.sudo;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -15,9 +15,15 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@FeatureDocs(name = "Spy sudo", description = "Allows you to spy on other players' sudo commands execution, permission to spy: eternalcore.sudo.spy")
+@PermissionDocs(
+    name = "Sudo spy",
+    permission = SudoCommand.SUDO_SPY,
+    description = "Allows you to spy on other players' sudo commands execution"
+)
 @Command(name = "sudo")
 class SudoCommand {
+
+    static final String SUDO_SPY = "eternalcore.sudo.spy";
 
     private final Server server;
     private final NoticeService noticeService;
@@ -54,7 +60,7 @@ class SudoCommand {
             .send();
 
         this.server.getOnlinePlayers().stream()
-            .filter(player -> player.hasPermission("eternalcore.sudo.spy"))
+            .filter(player -> player.hasPermission(SUDO_SPY))
             .forEach(player -> this.noticeService.create()
                 .notice(translation -> translation.sudo().sudoMessageSpy())
                 .placeholder("{COMMAND}", command)

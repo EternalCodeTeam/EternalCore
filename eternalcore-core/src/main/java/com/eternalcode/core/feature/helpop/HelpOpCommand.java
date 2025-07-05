@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.helpop;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.event.EventCaller;
@@ -22,7 +23,14 @@ import java.util.UUID;
 
 @Command(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
+@PermissionDocs(
+    name = "HelpOp Spy",
+    description = "Allows player to see helpop messages sent by other players",
+    permission = HelpOpCommand.HELPOP_SPY
+)
 class HelpOpCommand {
+
+    static final String HELPOP_SPY = "eternalcore.helpop.spy";
 
     private final NoticeService noticeService;
     private final PluginConfiguration config;
@@ -70,7 +78,7 @@ class HelpOpCommand {
             .placeholder("{TEXT}", message);
 
         for (Player admin : this.server.getOnlinePlayers()) {
-            if (!admin.hasPermission("eternalcore.helpop.spy")) {
+            if (!admin.hasPermission(HELPOP_SPY)) {
                 continue;
             }
 

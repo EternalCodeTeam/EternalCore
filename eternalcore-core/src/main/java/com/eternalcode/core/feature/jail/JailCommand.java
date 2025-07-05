@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -17,12 +17,14 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 @Command(name = "jail")
-@FeatureDocs(
+@PermissionDocs(
     name = "Jail Bypass",
-    permission = { "eternalcore.jail.bypass" },
+    permission = JailCommand.JAIL_BYPASS,
     description = "Permission allows to bypass jail punishment"
 )
 class JailCommand {
+
+    static final String JAIL_BYPASS = "eternalcore.jail.bypass";
 
     private final JailService jailService;
     private final NoticeService noticeService;
@@ -112,7 +114,7 @@ class JailCommand {
             return;
         }
 
-        if (target.hasPermission("eternalcore.jail.bypass")) {
+        if (target.hasPermission(JAIL_BYPASS)) {
             this.noticeService.create()
                 .notice(translation -> translation.jailSection().jailDetainAdmin())
                 .placeholder("{PLAYER}", target.getName())

@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.warp;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.warp.repository.WarpRepository;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -16,10 +15,6 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-@FeatureDocs(
-    name = "Warp System",
-    description = "Allows you to create warps, optionally you can enable warp inventory"
-)
 @Service
 class WarpServiceImpl implements WarpService {
 

@@ -70,7 +70,7 @@ class WarpCommand {
     }
 
     @Execute(name = "warp")
-    @DescriptionDocs(description = "Teleport to warp, if player has permission eternalcore.warp.bypass teleport will be instant", arguments = "<warp>")
+    @DescriptionDocs(description = "Teleport to warp", arguments = "<warp>")
     void warp(@Context Player player, @Arg Warp warp) {
         if (!warp.hasPermissions(player)) {
             this.noticeService.create()

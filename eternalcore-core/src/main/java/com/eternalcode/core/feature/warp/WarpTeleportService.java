@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.warp;
 
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
@@ -16,9 +17,14 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Service
+@PermissionDocs(
+    name = "Warp bypass",
+    description = "Allows player to bypass warp teleport time.",
+    permission = WarpTeleportService.WARP_BYPASS
+)
 public class WarpTeleportService {
 
-    private static final String WARP_BYPASS = "eternalcore.warp.bypass";
+    static final String WARP_BYPASS = "eternalcore.warp.bypass";
 
     private final TeleportTaskService teleportTaskService;
     private final PluginConfiguration pluginConfiguration;
