@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command(name = "anvil")
@@ -36,7 +37,7 @@ class AnvilCommand {
     @Execute
     @Permission("eternalcore.anvil.other")
     @DescriptionDocs(description = "Opens an anvil for another player", arguments = "<player>")
-    void execute(@Context Player sender, @Arg Player target) {
+    void execute(@Context CommandSender sender, @Arg Player target) {
         AdditionalContainerPaper.ANVIL.open(target);
 
         this.noticeService.create()
@@ -47,7 +48,7 @@ class AnvilCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())
-            .player(sender.getUniqueId())
+            .sender(sender)
             .placeholder("{PLAYER}", target.getName())
             .send();
     }
