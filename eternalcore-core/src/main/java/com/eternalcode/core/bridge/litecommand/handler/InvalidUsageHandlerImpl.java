@@ -14,7 +14,7 @@ import dev.rollczi.litecommands.schematic.Schematic;
 import org.bukkit.command.CommandSender;
 
 @LiteHandler(InvalidUsage.class)
-public class InvalidUsageHandlerImpl implements InvalidUsageHandler<CommandSender> {
+class InvalidUsageHandlerImpl implements InvalidUsageHandler<CommandSender> {
 
     private static final Placeholders<String> SCHEME = Placeholders.of("{USAGE}", scheme -> scheme);
 
@@ -22,7 +22,7 @@ public class InvalidUsageHandlerImpl implements InvalidUsageHandler<CommandSende
     private final NoticeService noticeService;
 
     @Inject
-    public InvalidUsageHandlerImpl(ViewerService viewerService, NoticeService noticeService) {
+    InvalidUsageHandlerImpl(ViewerService viewerService, NoticeService noticeService) {
         this.viewerService = viewerService;
         this.noticeService = noticeService;
     }

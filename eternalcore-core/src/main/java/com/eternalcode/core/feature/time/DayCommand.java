@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.time;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -16,10 +17,12 @@ import org.bukkit.World;
 class DayCommand {
 
     private final NoticeService noticeService;
+    private final MinecraftScheduler scheduler;
 
     @Inject
-    DayCommand(NoticeService noticeService) {
+    DayCommand(NoticeService noticeService, MinecraftScheduler scheduler) {
         this.noticeService = noticeService;
+        this.scheduler = scheduler;
     }
 
     @Execute
@@ -35,7 +38,7 @@ class DayCommand {
     }
 
     private void setDay(Viewer viewer, World world) {
-        world.setTime(100);
+        scheduler.run(() -> world.setTime(100));
 
         this.noticeService.create()
             .viewer(viewer)

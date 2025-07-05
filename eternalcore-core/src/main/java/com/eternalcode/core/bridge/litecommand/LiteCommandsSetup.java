@@ -13,6 +13,7 @@ import dev.rollczi.litecommands.adventure.bukkit.platform.LiteAdventurePlatformE
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
+import dev.rollczi.litecommands.folia.FoliaExtension;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
@@ -32,6 +33,7 @@ class LiteCommandsSetup {
         LiteCommandsAnnotations<CommandSender> liteCommandsAnnotations
     ) {
         return LiteBukkitFactory.builder("eternalcore", plugin, server)
+            .extension(new FoliaExtension(plugin))
             .commands(liteCommandsAnnotations)
             .message(LiteBukkitMessages.WORLD_NOT_EXIST, (invocation, world) -> noticeService.create()
                 .sender(invocation.sender())

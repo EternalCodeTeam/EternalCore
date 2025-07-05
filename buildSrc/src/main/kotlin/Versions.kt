@@ -3,7 +3,7 @@ object Versions {
     const val SPIGOT_API = "1.21.3-R0.1-SNAPSHOT"
     const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
 
-    const val ETERNALCODE_COMMONS = "1.1.6"
+    const val ETERNALCODE_COMMONS = "1.1.7"
     const val MULTIFICATION = "1.2.1"
 
     const val JETBRAINS_ANNOTATIONS = "26.0.2"
@@ -22,7 +22,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "6.2.1"
 
-    const val LITE_COMMANDS = "3.9.7"
+    const val LITE_COMMANDS = "3.10.2"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.4.0-jre"

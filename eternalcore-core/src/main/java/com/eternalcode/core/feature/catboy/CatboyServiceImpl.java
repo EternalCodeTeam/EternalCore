@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.catboy;
 
+import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.catboy.event.CatboyChangeTypeEvent;
 import com.eternalcode.core.feature.catboy.event.CatboySwitchEvent;
@@ -23,16 +24,19 @@ class CatboyServiceImpl implements CatboyService {
 
     private final CatBoyEntityService catBoyEntityService;
     private final CatBoySettings catBoySettings;
+    private final MinecraftScheduler scheduler;
 
     @Inject
     CatboyServiceImpl(
         EventCaller eventCaller,
         CatBoyEntityService catBoyEntityService,
-        CatBoySettings catBoySettings
+        CatBoySettings catBoySettings,
+        MinecraftScheduler scheduler
     ) {
         this.eventCaller = eventCaller;
         this.catBoyEntityService = catBoyEntityService;
         this.catBoySettings = catBoySettings;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -43,17 +47,16 @@ class CatboyServiceImpl implements CatboyService {
         Cat cat = this.catBoyEntityService.createCatboyEntity(player, type);
         player.addPassenger(cat);
         player.setWalkSpeed(this.catBoySettings.getCatboyWalkSpeed());
-
         this.eventCaller.callEvent(new CatboySwitchEvent(player, true));
     }
 
     @Override
     public void unmarkAsCatboy(Player player) {
         this.catboys.remove(player.getUniqueId());
+
         player.getPassengers().forEach(entity -> entity.remove());
         player.getPassengers().clear();
         player.setWalkSpeed(DEFAULT_WALK_SPEED);
-
         this.eventCaller.callEvent(new CatboySwitchEvent(player, false));
     }
 
