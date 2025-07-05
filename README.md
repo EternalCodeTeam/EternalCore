@@ -11,6 +11,17 @@
 [![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/bukkit/EternalCore/13964)
 </div>
 
+> [!WARNING]
+> **This branch is currently under active development for EternalCore 2.0.**
+> 
+> This is a major update that includes breaking changes, configuration refactors, translation cleanup, and UX improvements.
+> 
+> ⚠️ Features may be incomplete or unstable. Avoid using in production unless you're contributing or testing the new version.
+> 
+> 🔗 See the full roadmap and discussion: https://github.com/EternalCodeTeam/EternalCore/issues/952
+
+
+
 # Welcome to EternalCore! 🚀
 
 EternalCore is your ultimate companion for enhancing your Minecraft server experience. 💎 Crafted with care, EternalCore is dedicated to incorporating essential and highly practical server functions into a single plugin.
