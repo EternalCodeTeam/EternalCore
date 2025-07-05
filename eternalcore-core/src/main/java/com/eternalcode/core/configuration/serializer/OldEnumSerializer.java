@@ -32,7 +32,7 @@ public class OldEnumSerializer implements ObjectSerializer<OldEnum<?>> {
 
         try {
             Method valueOfMethod = VALUE_OF_METHODS.computeIfAbsent(enumClass, this::findValueOfMethod);
-            return (OldEnum<?>) ReflectUtil.invokeStaticMethod(valueOfMethod, value);
+            return ReflectUtil.invokeStaticMethod(valueOfMethod, value);
         }
         catch (Exception exception) {
             throw new IllegalArgumentException("Cannot deserialize OldEnum", exception);

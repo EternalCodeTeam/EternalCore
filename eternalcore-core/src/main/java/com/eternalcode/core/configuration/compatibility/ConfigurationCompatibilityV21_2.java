@@ -13,7 +13,7 @@ public class ConfigurationCompatibilityV21_2 {
 
     @Subscribe
     void onConfigSerdesSetup(ConfigurationSerdesSetupEvent event) {
-        event.getRegistry().register(new OldEnumSerializer());
+        event.registry().register(new OldEnumSerializer());
     }
 
 }

@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.warp.repository;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
-import com.eternalcode.core.configuration.EternalConfigurationFile;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
