@@ -28,8 +28,8 @@ class TranslationManagerSetup {
 
         TranslationManager translationManager = new TranslationManager(languageService, defaultTranslation);
 
-        for (ReloadableTranslation message : usedMessagesList) {
-            configurationManager.load(message);
+        for (AbstractTranslation message : usedMessagesList) {
+            configurationManager.load(message.getClass(), message.getConfigFile(configurationManager.getDataFolder()));
             translationManager.loadLanguage(message.getLanguage(), message);
         }
 

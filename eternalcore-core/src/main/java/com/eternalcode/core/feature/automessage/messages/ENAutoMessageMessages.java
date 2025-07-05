@@ -2,20 +2,19 @@ package com.eternalcode.core.feature.automessage.messages;
 
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import java.util.Collection;
 import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Sound;
 
 @Getter
 @Accessors(fluent = true)
-@Contextual
-public class ENAutoMessageMessages implements AutoMessageMessages {
+public class ENAutoMessageMessages extends OkaeriConfig implements AutoMessageMessages {
 
-    @Description({
+    @Comment({
         "",
         "# If you want to use placeholder %server_online% you need to install",
         "# PlaceholderAPI plugin and download placeholders for Server",

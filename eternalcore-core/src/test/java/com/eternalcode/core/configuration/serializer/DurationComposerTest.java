@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.composer;
+package com.eternalcode.core.configuration.serializer;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

@@ -1,4 +1,4 @@
-package com.eternalcode.core.configuration.composer;
+package com.eternalcode.core.configuration.serializer;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import org.junit.jupiter.api.Test;
@@ -7,9 +7,9 @@ import panda.std.Result;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class PositionComposerTest {
+class PositionSerializerTest {
 
-    PositionComposer composer = new PositionComposer();
+    PositionSerializer composer = new PositionSerializer();
 
     @Test
     void testDeserialize() {

@@ -1,7 +1,10 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.configuration.ReloadableConfig;
+import com.eternalcode.core.configuration.AbstractConfigurationFile;
+import com.eternalcode.core.feature.language.Language;
 
-interface ReloadableTranslation extends ReloadableConfig, Translation {
+public interface ReloadableTranslation extends Translation {
+
+    Language getLanguage();
 
 }
