@@ -66,10 +66,10 @@ public final class BeanProcessorFactory {
                 publisher.subscribe(potentialSubscriber);
             })
             .onProcess(
-                EternalConfigurationFile.class, (provider, config, configurationFile) -> {
+                AbstractConfigurationFile.class, (provider, config, configurationFile) -> {
                     ConfigurationManager configurationManager = provider.getDependency(ConfigurationManager.class);
                     File dataFolder = provider.getDependency(File.class);
-                    configurationManager.load(config.getClass(), config.getConfigFile(dataFolder));
+                    configurationManager.load(config, config.getConfigFile(dataFolder));
                 })
             .onProcess(Command.class, Object.class, (provider, command, none) -> {
                 LiteCommandsAnnotations<?> commandsBuilder = provider.getDependency(LiteCommandsAnnotations.class);

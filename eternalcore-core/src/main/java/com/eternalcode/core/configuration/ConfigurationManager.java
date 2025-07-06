@@ -42,9 +42,7 @@ public class ConfigurationManager {
         this.dataFolder = dataFolder;
     }
 
-    public <T extends OkaeriConfig & EternalConfigurationFile> T load(Class<? extends EternalConfigurationFile> configClass, File file) {
-        T config = ConfigManager.create((Class<T>) configClass);
-
+    public <T extends OkaeriConfig & EternalConfigurationFile> T load(T config, File file) {
         YamlSnakeYamlConfigurer yamlConfigurer = new YamlSnakeYamlConfigurer(this.createYaml());
 
         OkaeriSerdesPack serdesPack = registry -> {
