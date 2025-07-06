@@ -64,7 +64,7 @@ public class LocationPersister extends BaseDataType {
     }
 
     public static LocationPersister getSingleton() {
-        return instance;
+            return instance;
     }
 
 }

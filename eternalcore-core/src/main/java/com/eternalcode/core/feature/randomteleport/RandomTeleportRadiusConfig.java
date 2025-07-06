@@ -1,9 +1,8 @@
 package com.eternalcode.core.feature.randomteleport;
 
-import net.dzikoysk.cdn.entity.Contextual;
+import java.io.Serializable;
 
-@Contextual
-class RandomTeleportRadiusConfig implements RandomTeleportRadius {
+public class RandomTeleportRadiusConfig implements RandomTeleportRadius, Serializable {
 
     int minX;
     int maxX;

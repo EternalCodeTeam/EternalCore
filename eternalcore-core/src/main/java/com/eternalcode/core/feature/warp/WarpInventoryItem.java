@@ -1,12 +1,11 @@
 package com.eternalcode.core.feature.warp;
 
 import com.eternalcode.core.configuration.contextual.ConfigItem;
+import java.io.Serializable;
 import java.util.Collections;
-import net.dzikoysk.cdn.entity.Contextual;
 import org.bukkit.Material;
 
-@Contextual
-public class WarpInventoryItem {
+public class WarpInventoryItem implements Serializable {
 
     public String warpName = "default";
 

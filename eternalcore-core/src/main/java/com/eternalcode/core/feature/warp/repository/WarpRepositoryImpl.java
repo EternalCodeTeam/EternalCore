@@ -23,7 +23,6 @@ class WarpRepositoryImpl implements WarpRepository {
 
     private static final Object READ_WRITE_LOCK = new Object();
 
-    private final LocationsConfiguration locationsConfiguration;
     private final WarpConfig warpConfig;
     private final ConfigurationManager configurationManager;
     private final Scheduler scheduler;
@@ -31,15 +30,11 @@ class WarpRepositoryImpl implements WarpRepository {
     @Inject
     WarpRepositoryImpl(
         ConfigurationManager configurationManager,
-        LocationsConfiguration locationsConfiguration,
         WarpConfig warpConfig, Scheduler scheduler
     ) {
-        this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
         this.warpConfig = warpConfig;
         this.scheduler = scheduler;
-
-        this.migrateWarps();
     }
 
     @Override
@@ -75,26 +70,6 @@ class WarpRepositoryImpl implements WarpRepository {
                 return new WarpImpl(warpConfigEntry.getKey(), warpContextual.position, warpContextual.permissions);
             })
             .collect(Collectors.toList()));
-    }
-
-    private void migrateWarps() {
-        synchronized (READ_WRITE_LOCK) {
-            if (this.locationsConfiguration.warps.isEmpty()) {
-                return;
-            }
-
-            this.transactionalRun(warps -> warps.putAll(this.locationsConfiguration.warps
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                    entry -> entry.getKey(),
-                    entry -> new WarpConfig.WarpConfigEntry(entry.getValue(), new ArrayList<>()))
-                )
-            ));
-
-            this.locationsConfiguration.warps.clear();
-            this.configurationManager.save(this.locationsConfiguration);
-        }
     }
 
     private CompletableFuture<Void> transactionalRun(Consumer<Map<String, WarpConfig.WarpConfigEntry>> editor) {

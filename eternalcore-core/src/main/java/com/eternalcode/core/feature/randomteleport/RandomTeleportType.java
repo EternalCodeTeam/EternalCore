@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.randomteleport;
 
-enum RandomTeleportType {
+public enum RandomTeleportType {
 
     WORLD_BORDER_RADIUS,
     STATIC_RADIUS,

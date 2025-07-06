@@ -1,24 +1,23 @@
 package com.eternalcode.core.bridge.litecommand.argument.messages;
 
 import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
 @Getter
 @Accessors(fluent = true)
-@Contextual
-public class ENArgumentMessages implements ArgumentMessages {
-    @Description("# {PERMISSIONS} - Required permission")
+public class ENArgumentMessages extends OkaeriConfig implements ArgumentMessages {
+    @Comment("# {PERMISSIONS} - Required permission")
     public Notice permissionMessage = Notice.chat("<red>✘ <dark_red>You don't have permission to perform this command! <red>({PERMISSIONS})");
 
-    @Description({" ", "# {USAGE} - Correct usage"})
+    @Comment({" ", "# {USAGE} - Correct usage"})
     public Notice usageMessage = Notice.chat("<gold>✘ <white>Correct usage: <gold>{USAGE}");
     public Notice usageMessageHead = Notice.chat("<green>► <white>Correct usage:");
     public Notice usageMessageEntry = Notice.chat("<green>► <white>{USAGE}");
 
-    @Description(" ")
+    @Comment(" ")
     public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>You must provide a player name!");
     public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>This player is currently offline!");
     public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Command is only for players!");
