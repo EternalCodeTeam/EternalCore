@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "dependencyDashboard": true,
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "lockFileMaintenance": {
     "enabled": false
@@ -13,31 +13,53 @@
   "separateMultipleMajor": true,
   "packageRules": [
     {
-      "matchPackagePatterns": ["*"],
-      "excludePackagePatterns": ["org.spigotmc*"],
-      "updateTypes": ["patch"],
+      "matchUpdateTypes": [
+        "patch"
+      ],
       "automerge": true,
-      "labels": ["🔄 dependencies"]
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
     },
     {
-      "matchPackagePatterns": ["*"],
-      "excludePackagePatterns": ["org.spigotmc*"],
-      "updateTypes": ["minor"],
+      "matchUpdateTypes": [
+        "minor"
+      ],
       "automerge": true,
-      "labels": ["🔄 dependencies"]
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
     },
     {
-      "matchPackagePatterns": ["*"],
-      "excludePackagePatterns": ["org.spigotmc*"],
-      "updateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false,
-      "labels": ["🔄 dependencies"]
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
     },
     {
-      "matchPackagePatterns": ["org.spigotmc*"],
       "allowedVersions": "/^\\d+\\.\\d+(\\.\\d+)?-R\\d+\\.\\d+-SNAPSHOT$/",
       "automerge": false,
-      "labels": ["🔄 dependencies"]
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "/org.spigotmc*/"
+      ]
     }
   ]
 }
