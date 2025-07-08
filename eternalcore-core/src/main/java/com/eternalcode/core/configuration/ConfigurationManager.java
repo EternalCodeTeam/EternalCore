@@ -5,7 +5,7 @@ import com.eternalcode.core.configuration.composer.DurationComposer;
 import com.eternalcode.core.configuration.composer.LanguageComposer;
 import com.eternalcode.core.configuration.composer.PositionComposer;
 import com.eternalcode.core.configuration.composer.SetComposer;
-import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.translation.Language;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.publish.Publisher;
@@ -21,7 +21,6 @@ import net.dzikoysk.cdn.Cdn;
 import net.dzikoysk.cdn.CdnFactory;
 import net.dzikoysk.cdn.CdnSettings;
 import net.dzikoysk.cdn.reflect.Visibility;
-import org.bukkit.Sound;
 
 @Service
 public class ConfigurationManager {

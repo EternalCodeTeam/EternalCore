@@ -1,6 +1,5 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.feature.language.Language;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 
@@ -14,7 +13,6 @@ public abstract class AbstractTranslation implements ReloadableTranslation {
         this.language = language;
     }
 
-    @Override
     public Language getLanguage() {
         return this.language;
     }
@@ -23,5 +21,4 @@ public abstract class AbstractTranslation implements ReloadableTranslation {
     public Resource resource(File folder) {
         return Source.of(folder, "lang" + File.separator + this.language.getLang() + "_messages.yml");
     }
-
 }

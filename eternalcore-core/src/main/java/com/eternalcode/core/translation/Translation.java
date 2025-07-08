@@ -1,7 +1,6 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.core.bridge.litecommand.argument.messages.ArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
@@ -9,7 +8,6 @@ import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -178,18 +176,11 @@ public interface Translation {
         Notice enchantedMessageBy();
     }
 
-    interface LanguageSection {
-        Notice languageChanged();
-
-        List<ConfigItem> decorationItems();
-    }
-
     interface ContainerSection {
         Notice genericContainerOpened();
         Notice genericContainerOpenedBy();
         Notice genericContainerOpenedFor();
     }
-    Language getLanguage();
     // argument section
     ArgumentMessages argument();
     // format section
@@ -235,8 +226,6 @@ public interface Translation {
     ItemEditMessages itemEdit();
     // time and weather
     TimeAndWeatherMessages timeAndWeather();
-    // language section
-    LanguageSection language();
     // container section
     ContainerSection container();
     // auto message section

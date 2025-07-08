@@ -1,7 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.bridge.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
@@ -9,25 +8,23 @@ import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
-import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.dzikoysk.cdn.entity.Contextual;
 import net.dzikoysk.cdn.entity.Description;
-import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Arrays;
@@ -39,7 +36,7 @@ import java.util.Map;
 @Accessors(fluent = true)
 public class PLTranslation extends AbstractTranslation {
 
-    PLTranslation() {
+    public PLTranslation(Language language) {
         super(Language.PL);
     }
 
@@ -558,25 +555,6 @@ public class PLTranslation extends AbstractTranslation {
         public Notice genericContainerOpened = Notice.empty();
         public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>Otwarto kontener przez gracza <green>{PLAYER}<white>!");
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>Otwarto kontener dla gracza <green>{PLAYER}<white>!");
-    }
-
-    @Description({" ", "# Informacja zwrotna, gdy gracz zmienia język pluginu na polski"})
-    public PLLanguageSection language = new PLLanguageSection();
-
-    @Getter
-    @Contextual
-    public static class PLLanguageSection implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Nasz discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
     }
 
     @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
