@@ -18,11 +18,6 @@ import org.bukkit.entity.Player;
 
 @LiteArgument(type = Player.class)
 
-@PermissionDocs(
-    name = "Afk tabulation",
-    permission = VanishPermissionConstant.VANISH_SEE_TABULATION_PERMISSION,
-    description = "Allows the player to see vanished players in tabulation."
-)
 public class PlayerArgument extends AbstractViewerArgument<Player> {
 
     private final Server server;

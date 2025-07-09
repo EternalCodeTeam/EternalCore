@@ -2232,24 +2232,6 @@
       ]
     },
     {
-      "name": "Afk tabulation",
-      "permissions": [
-        "eternalcore.vanish.tabulation.see"
-      ],
-      "descriptions": [
-        "Allows the player to see vanished players in tabulation."
-      ]
-    },
-    {
-      "name": "Afk tabulation",
-      "permissions": [
-        "eternalcore.vanish.tabulation.see"
-      ],
-      "descriptions": [
-        "Allows the player to see vanished players in tabulation."
-      ]
-    },
-    {
       "name": "Bypass Full Server",
       "permissions": [
         "eternalcore.slot.bypass"
@@ -2338,6 +2320,15 @@
       ],
       "descriptions": [
         "Allows you to spy on other players' sudo commands execution"
+      ]
+    },
+    {
+      "name": "Vanish tabulation",
+      "permissions": [
+        "eternalcore.vanish.tabulation.see"
+      ],
+      "descriptions": [
+        "Allows the player to see vanished players in tabulation."
       ]
     },
     {
