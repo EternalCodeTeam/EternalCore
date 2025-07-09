@@ -1,0 +1,2344 @@
+{
+  "commands": [
+    {
+      "name": "adminchat ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.adminchat"
+      ],
+      "descriptions": [
+        "Sends a message to all staff members with eternalcore.adminchat.spy permissions"
+      ],
+      "arguments": [
+        "<message>"
+      ]
+    },
+    {
+      "name": "afk ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.afk"
+      ],
+      "descriptions": [
+        "Toggles AFK status for the player."
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "alert ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.alert"
+      ],
+      "descriptions": [
+        "Sends alert to all players with specified notice type and messages"
+      ],
+      "arguments": [
+        "<type> <message>"
+      ]
+    },
+    {
+      "name": "alert-queue add",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.alert.queue"
+      ],
+      "descriptions": [
+        "Adds alert to the queue with specified notice type and messages"
+      ],
+      "arguments": [
+        "<type> <message>"
+      ]
+    },
+    {
+      "name": "alert-queue clear",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.alert.queue"
+      ],
+      "descriptions": [
+        "Clears all alerts from the queue"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "alert-queue remove",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.alert.queue"
+      ],
+      "descriptions": [
+        "Removes all alerts of the given type from the queue"
+      ],
+      "arguments": [
+        "<type> all"
+      ]
+    },
+    {
+      "name": "alert-queue remove",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.alert.queue"
+      ],
+      "descriptions": [
+        "Removes a latest alert of the given type from the queue"
+      ],
+      "arguments": [
+        "<type> latest"
+      ]
+    },
+    {
+      "name": "alert-queue send",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.alert.queue"
+      ],
+      "descriptions": [
+        "Sends all alerts from the queue"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "anvil ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.anvil"
+      ],
+      "descriptions": [
+        "Opens an anvil for you"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "anvil ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.anvil.other"
+      ],
+      "descriptions": [
+        "Opens an anvil for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "automessage ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.automessage"
+      ],
+      "descriptions": [
+        "Toggles the display of automatic messages."
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "back ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.back"
+      ],
+      "descriptions": [
+        "Teleport to last location"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "back ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.back.other"
+      ],
+      "descriptions": [
+        "Teleport specified player to last location"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "butcher ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.butcher"
+      ],
+      "descriptions": [
+        "Kills all mobs in 2 chunks around you"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "butcher ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.butcher"
+      ],
+      "descriptions": [
+        "Kills all mobs in specified chunks around you"
+      ],
+      "arguments": [
+        "<chunks>"
+      ]
+    },
+    {
+      "name": "butcher ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.butcher"
+      ],
+      "descriptions": [
+        "Kills specified mob in specified chunks around you"
+      ],
+      "arguments": [
+        "<chunks> <mobType>"
+      ]
+    },
+    {
+      "name": "cartography ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.cartography.other"
+      ],
+      "descriptions": [
+        "Opens a cartography table for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "cartography ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.cartography"
+      ],
+      "descriptions": [
+        "Opens a cartography table for you"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "catboy ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.catboy"
+      ],
+      "descriptions": [
+        "Mark yourself as a catboy."
+      ],
+      "arguments": [
+        "[type]"
+      ]
+    },
+    {
+      "name": "catboy ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.catboy",
+        "eternalcore.catboy.others"
+      ],
+      "descriptions": [
+        "Mark a player as a catboy."
+      ],
+      "arguments": [
+        "<player> [type]"
+      ]
+    },
+    {
+      "name": "chat clear",
+      "aliases": [
+        "chat, cc"
+      ],
+      "permissions": [
+        "eternalcore.chat"
+      ],
+      "descriptions": [
+        "Clears chat"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "chat off",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.chat"
+      ],
+      "descriptions": [
+        "Disables chat"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "chat on",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.chat"
+      ],
+      "descriptions": [
+        "Enables chat"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "chat slowmode",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.chat"
+      ],
+      "descriptions": [
+        "Sets slowmode for chat"
+      ],
+      "arguments": [
+        "<time>"
+      ]
+    },
+    {
+      "name": "chat slowmode 0",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.chat"
+      ],
+      "descriptions": [
+        "Disable SlowMode for chat"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "clear ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.clear.other",
+        "eternalcore.clear"
+      ],
+      "descriptions": [
+        "Clears inventory of player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "clear ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.clear"
+      ],
+      "descriptions": [
+        "Clears your inventory"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "day ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.day"
+      ],
+      "descriptions": [
+        "Sets time to day in current world"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "day ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.day"
+      ],
+      "descriptions": [
+        "Sets time to day in specified world"
+      ],
+      "arguments": [
+        "<world>"
+      ]
+    },
+    {
+      "name": "delhome ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.delhome"
+      ],
+      "descriptions": [
+        "Delete home"
+      ],
+      "arguments": [
+        "<home>"
+      ]
+    },
+    {
+      "name": "delwarp ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.delwarp"
+      ],
+      "descriptions": [
+        "Remove warp"
+      ],
+      "arguments": [
+        "<warp>"
+      ]
+    },
+    {
+      "name": "disposal ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.disposal"
+      ],
+      "descriptions": [
+        "Opens a disposal"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "enchant ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.enchant"
+      ],
+      "descriptions": [
+        "Enchants item in hand"
+      ],
+      "arguments": [
+        "<enchantment> <level> <player>"
+      ]
+    },
+    {
+      "name": "enchant ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.enchant"
+      ],
+      "descriptions": [
+        "Enchants item in hand"
+      ],
+      "arguments": [
+        "<enchantment> <level>"
+      ]
+    },
+    {
+      "name": "enderchest ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.enderchest.other"
+      ],
+      "descriptions": [
+        "Opens another player his enderchest"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "enderchest ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.enderchest"
+      ],
+      "descriptions": [
+        "Opens your enderchest"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "eternalcore reload",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.eternalcore"
+      ],
+      "descriptions": [
+        "Reloads EternalCore configuration"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "feed ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.feed"
+      ],
+      "descriptions": [
+        "Feed yourself"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "feed ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.feed.other"
+      ],
+      "descriptions": [
+        "Feed other player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "fly ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.fly"
+      ],
+      "descriptions": [
+        "Toggle fly mode"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "fly ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.fly.other"
+      ],
+      "descriptions": [
+        "Toggle fly mode for specified player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "gamemode ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.gamemode"
+      ],
+      "descriptions": [
+        "Sets your gamemode"
+      ],
+      "arguments": [
+        "<gamemode>"
+      ]
+    },
+    {
+      "name": "gamemode ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.gamemode.other"
+      ],
+      "descriptions": [
+        "Sets gamemode of another player"
+      ],
+      "arguments": [
+        "<gamemode> <player>"
+      ]
+    },
+    {
+      "name": "gamemode ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.gamemode"
+      ],
+      "descriptions": [],
+      "arguments": []
+    },
+    {
+      "name": "give ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.give"
+      ],
+      "descriptions": [
+        "Gives an item to another player"
+      ],
+      "arguments": [
+        "<item> <player>"
+      ]
+    },
+    {
+      "name": "give ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.give"
+      ],
+      "descriptions": [
+        "Gives you an item"
+      ],
+      "arguments": [
+        "<item>"
+      ]
+    },
+    {
+      "name": "give ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.give"
+      ],
+      "descriptions": [
+        "Gives an item with a custom amount to another player"
+      ],
+      "arguments": [
+        "<item> <amount> <player>"
+      ]
+    },
+    {
+      "name": "give ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.give"
+      ],
+      "descriptions": [
+        "Gives you an item with a custom amount"
+      ],
+      "arguments": [
+        "<item> <amount>"
+      ]
+    },
+    {
+      "name": "god ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.god"
+      ],
+      "descriptions": [
+        "Toggle god mode"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "god ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.god.other"
+      ],
+      "descriptions": [
+        "Toggle god mode for specified player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "grindstone ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.grindstone"
+      ],
+      "descriptions": [
+        "Opens a grindstone for you"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "grindstone ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.grindstone.other"
+      ],
+      "descriptions": [
+        "Opens a grindstone for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "hat ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.hat"
+      ],
+      "descriptions": [
+        "Puts item in hand on head"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "heal ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.heal"
+      ],
+      "descriptions": [
+        "Heal yourself"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "heal ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.heal.other"
+      ],
+      "descriptions": [
+        "Heal other player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "helpop ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.helpop"
+      ],
+      "descriptions": [
+        "Send helpop message to all administrator with eternalcore.helpop.spy permission"
+      ],
+      "arguments": [
+        "<message>"
+      ]
+    },
+    {
+      "name": "home ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.home"
+      ],
+      "descriptions": [
+        "Teleport to home, if player has eternalcore.home.bypass permission, eternalcore will be ignore teleport time"
+      ],
+      "arguments": [
+        "<home>"
+      ]
+    },
+    {
+      "name": "home ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.home"
+      ],
+      "descriptions": [
+        "Teleports to the first home if the player has no other homes set, if player has eternalcore.home.bypass permission, eternalcore will ignore teleport time"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "homeadmin delhome",
+      "aliases": [],
+      "permissions": [
+        "eternalcode.home.admin"
+      ],
+      "descriptions": [
+        "Delete home for user"
+      ],
+      "arguments": [
+        "<user> <home>"
+      ]
+    },
+    {
+      "name": "homeadmin home",
+      "aliases": [],
+      "permissions": [
+        "eternalcode.home.admin"
+      ],
+      "descriptions": [
+        "Teleport to user home"
+      ],
+      "arguments": [
+        "<user> <home>"
+      ]
+    },
+    {
+      "name": "homeadmin list",
+      "aliases": [],
+      "permissions": [
+        "eternalcode.home.admin"
+      ],
+      "descriptions": [
+        "List user homes"
+      ],
+      "arguments": [
+        "<user>"
+      ]
+    },
+    {
+      "name": "homeadmin sethome",
+      "aliases": [],
+      "permissions": [
+        "eternalcode.home.admin"
+      ],
+      "descriptions": [
+        "Set home for user"
+      ],
+      "arguments": [
+        "<user> <home> [location]"
+      ]
+    },
+    {
+      "name": "ignore ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.ignore"
+      ],
+      "descriptions": [
+        "Ignore specified player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "ignore -all",
+      "aliases": [
+        "ignore, *"
+      ],
+      "permissions": [
+        "eternalcore.ignore"
+      ],
+      "descriptions": [
+        "Ignore all players"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "itemflag ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.itemflag"
+      ],
+      "descriptions": [
+        "Adds or removes item flag from item in hand"
+      ],
+      "arguments": [
+        "<item-flag>"
+      ]
+    },
+    {
+      "name": "itemflag clear",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.itemflag"
+      ],
+      "descriptions": [
+        "Clears all item flags from item in hand"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "itemlore ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.itemlore"
+      ],
+      "descriptions": [
+        "Sets lore of item in hand"
+      ],
+      "arguments": [
+        "<line> <text>"
+      ]
+    },
+    {
+      "name": "itemlore clear",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.itemlore"
+      ],
+      "descriptions": [
+        "Clears all lore from the item in hand"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "itemlore remove",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.itemlore"
+      ],
+      "descriptions": [
+        "Removes a specific line of lore from the item in hand"
+      ],
+      "arguments": [
+        "<line>"
+      ]
+    },
+    {
+      "name": "itemname ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.itemname"
+      ],
+      "descriptions": [
+        "Sets name of item in hand"
+      ],
+      "arguments": [
+        "<name>"
+      ]
+    },
+    {
+      "name": "itemname clear",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.itemname"
+      ],
+      "descriptions": [
+        "Clears name of item in hand"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "jail detain",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.detain"
+      ],
+      "descriptions": [
+        "Detain a player for some time"
+      ],
+      "arguments": [
+        "<player> <time>"
+      ]
+    },
+    {
+      "name": "jail detain",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.detain"
+      ],
+      "descriptions": [
+        "Detain a player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "jail detain",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.detain"
+      ],
+      "descriptions": [
+        "Detain self"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "jail list",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.list"
+      ],
+      "descriptions": [
+        "List all jailed players"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "jail release",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.release"
+      ],
+      "descriptions": [
+        "Release self from jail"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "jail release",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.release"
+      ],
+      "descriptions": [
+        "Release a player from jail"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "jail release -all",
+      "aliases": [
+        "jail, release *"
+      ],
+      "permissions": [
+        "eternalcore.jail.release"
+      ],
+      "descriptions": [
+        "Release all players from jail"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "jail remove",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.setup"
+      ],
+      "descriptions": [
+        "Remove jail spawn area"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "jail setup",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.setup"
+      ],
+      "descriptions": [
+        "Define jail spawn area"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "jail setup",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.jail.setup"
+      ],
+      "descriptions": [
+        "Define jail spawn area"
+      ],
+      "arguments": [
+        "<location>"
+      ]
+    },
+    {
+      "name": "kill ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.kill"
+      ],
+      "descriptions": [
+        "Kill yourself"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "kill ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.kill"
+      ],
+      "descriptions": [
+        "Kill specified player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "language ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.language"
+      ],
+      "descriptions": [
+        "Open language inventory"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "list ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.list"
+      ],
+      "descriptions": [
+        "Shows online players list"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "loom ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.loom"
+      ],
+      "descriptions": [
+        "Opens a loom for you"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "loom ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.loom.other"
+      ],
+      "descriptions": [
+        "Opens a loom for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "msg",
+      "aliases": [
+        "message",
+        "m",
+        "whisper",
+        "tell",
+        "t"
+      ],
+      "permissions": [
+        "eternalcore.msg"
+      ],
+      "descriptions": [
+        "Send private message to specified player"
+      ],
+      "arguments": [
+        "<player> <message>"
+      ]
+    },
+    {
+      "name": "msgtoggle ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.msgtoggle"
+      ],
+      "descriptions": [
+        "Toggle receiving private messages"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "msgtoggle ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.msgtoggle",
+        "eternalcore.msgtoggle.other"
+      ],
+      "descriptions": [
+        "Switch receiving private messages for other player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "msgtoggle ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.msgtoggle"
+      ],
+      "descriptions": [
+        "Switch receiving private messages"
+      ],
+      "arguments": [
+        "<state>"
+      ]
+    },
+    {
+      "name": "msgtoggle ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.msgtoggle",
+        "eternalcore.msgtoggle.other"
+      ],
+      "descriptions": [
+        "Switch receiving private messages for other player"
+      ],
+      "arguments": [
+        "<player>  <toggle>"
+      ]
+    },
+    {
+      "name": "night ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.night"
+      ],
+      "descriptions": [
+        "Sets time to night in current world"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "night ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.night"
+      ],
+      "descriptions": [
+        "Sets time to night in specified world"
+      ],
+      "arguments": [
+        "<world>"
+      ]
+    },
+    {
+      "name": "online ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.online"
+      ],
+      "descriptions": [
+        "Shows online players count"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "ping ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.ping.other"
+      ],
+      "descriptions": [
+        "Shows ping of other player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "ping ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.ping"
+      ],
+      "descriptions": [
+        "Shows your ping"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "rain ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.rain"
+      ],
+      "descriptions": [
+        "Sets weather to rain in specified world"
+      ],
+      "arguments": [
+        "<world>"
+      ]
+    },
+    {
+      "name": "rain ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.rain"
+      ],
+      "descriptions": [
+        "Sets weather to rain in current world"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "repair ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.repair"
+      ],
+      "descriptions": [
+        "Repairs item in hand"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "repair all",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.repair.all"
+      ],
+      "descriptions": [
+        "Repairs all items in inventory"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "repair armor",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.repair.armor"
+      ],
+      "descriptions": [
+        "Repairs all items in armor"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "reply",
+      "aliases": [
+        "r"
+      ],
+      "permissions": [
+        "eternalcore.reply"
+      ],
+      "descriptions": [
+        "Reply to last private message"
+      ],
+      "arguments": [
+        "<message>"
+      ]
+    },
+    {
+      "name": "rtp ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.rtp"
+      ],
+      "descriptions": [
+        "Teleportation of the sender to a random location, if you want bypass cooldown use eternalcore.rtp.bypass permission"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "rtp ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.rtp.other"
+      ],
+      "descriptions": [
+        "Teleportation of a player to a random location."
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "seen ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.seen"
+      ],
+      "descriptions": [
+        "Shows when the player was last seen on the server"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "sethome ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.sethome"
+      ],
+      "descriptions": [
+        "Set home location"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "sethome ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.sethome"
+      ],
+      "descriptions": [
+        "Set home location with specified name"
+      ],
+      "arguments": [
+        "<home>"
+      ]
+    },
+    {
+      "name": "setslot ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.setslot"
+      ],
+      "descriptions": [
+        "Set the max players on the server"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "setspawn ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.setspawn"
+      ],
+      "descriptions": [
+        "Set spawn location"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "setwarp ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.setwarp"
+      ],
+      "descriptions": [
+        "Create warp"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "signedit set",
+      "aliases": [],
+      "permissions": [
+        "eternalcode.signedit"
+      ],
+      "descriptions": [],
+      "arguments": []
+    },
+    {
+      "name": "skull ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.skull"
+      ],
+      "descriptions": [
+        "Gives you a skull of player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "smithingtable ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.smithingtable.other"
+      ],
+      "descriptions": [
+        "Opens a smithing table for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "smithingtable ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.smithingtable"
+      ],
+      "descriptions": [
+        "Opens a smithing table for you"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "socialspy",
+      "aliases": [
+        "spy"
+      ],
+      "permissions": [
+        "eternalcore.spy"
+      ],
+      "descriptions": [
+        "Enable or disable social spy"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "spawn ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.spawn.other"
+      ],
+      "descriptions": [
+        "Teleports specified player to spawn location"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "spawn ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.spawn"
+      ],
+      "descriptions": [
+        "Teleports you to spawn location"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "speed ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.speed"
+      ],
+      "descriptions": [
+        "Set speed depending on whether you flying or walking by specified amount"
+      ],
+      "arguments": [
+        "<speed>"
+      ]
+    },
+    {
+      "name": "speed ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.speed"
+      ],
+      "descriptions": [
+        "Set speed depending on whether the player is flying or walking by specified amount"
+      ],
+      "arguments": [
+        "<speed> <player>"
+      ]
+    },
+    {
+      "name": "speed ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.speed"
+      ],
+      "descriptions": [
+        "Set speed of walking or flying to specified amount"
+      ],
+      "arguments": [
+        "<type> <speed>"
+      ]
+    },
+    {
+      "name": "speed ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.speed"
+      ],
+      "descriptions": [
+        "Set speed of walking or flying to specified amount and player"
+      ],
+      "arguments": [
+        "<type> <speed> <player>"
+      ]
+    },
+    {
+      "name": "stonecutter ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.stonecutter"
+      ],
+      "descriptions": [
+        "Opens a stonecutter for you"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "stonecutter ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.stonecutter.other"
+      ],
+      "descriptions": [
+        "Opens a stonecutter for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "sudo ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.sudo.player"
+      ],
+      "descriptions": [
+        "Execute command as player"
+      ],
+      "arguments": [
+        "<player> <command>"
+      ]
+    },
+    {
+      "name": "sudo -console",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.sudo.console"
+      ],
+      "descriptions": [
+        "Execute command as console"
+      ],
+      "arguments": [
+        "<command>"
+      ]
+    },
+    {
+      "name": "sun ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.sun"
+      ],
+      "descriptions": [
+        "Sets weather to sun in specified world"
+      ],
+      "arguments": [
+        "<world>"
+      ]
+    },
+    {
+      "name": "sun ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.sun"
+      ],
+      "descriptions": [
+        "Sets weather to sun in current world"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport"
+      ],
+      "descriptions": [
+        "Teleport to specified location"
+      ],
+      "arguments": [
+        "<x> <y> <z>"
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport"
+      ],
+      "descriptions": [
+        "Teleport player to specified player, location and world"
+      ],
+      "arguments": [
+        "<player> <x> <y> <z> <world>"
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport"
+      ],
+      "descriptions": [
+        "Teleport to specified player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport"
+      ],
+      "descriptions": [
+        "Teleport to specified location and world"
+      ],
+      "arguments": [
+        "<x> <y> <z> <world>"
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport"
+      ],
+      "descriptions": [
+        "Teleport player to player"
+      ],
+      "arguments": [
+        "<player> <target-player>"
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport"
+      ],
+      "descriptions": [
+        "Teleport player to specified location and world"
+      ],
+      "arguments": [
+        "<player> <x> <y> <z>"
+      ]
+    },
+    {
+      "name": "teleportorandomplayer ",
+      "aliases": [],
+      "permissions": [
+        "eternalcode.tprp"
+      ],
+      "descriptions": [
+        "Teleport to a player who hasn't been teleported to recently, ensuring fair distribution"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "tellraw ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tellraw"
+      ],
+      "descriptions": [
+        "Send a message to the player without any prefixes etc."
+      ],
+      "arguments": [
+        "<player> <notice_type> <message>"
+      ]
+    },
+    {
+      "name": "tellraw -all",
+      "aliases": [
+        "tellraw, *"
+      ],
+      "permissions": [
+        "eternalcore.tellraw"
+      ],
+      "descriptions": [
+        "Broadcast a message without any prefixes etc."
+      ],
+      "arguments": [
+        "<notice_type> <message>"
+      ]
+    },
+    {
+      "name": "tellraw-queue add",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tellraw.queue"
+      ],
+      "descriptions": [
+        "Save a message to send it later (in batch)."
+      ],
+      "arguments": [
+        "<notice_type> <message>"
+      ]
+    },
+    {
+      "name": "tellraw-queue clear",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tellraw.queue"
+      ],
+      "descriptions": [
+        "Clear all saved messages"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "tellraw-queue send",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tellraw.queue"
+      ],
+      "descriptions": [
+        "Send all saved messages to the player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "tellraw-queue send -all",
+      "aliases": [
+        "tellraw-queue, send *"
+      ],
+      "permissions": [
+        "eternalcore.tellraw.queue"
+      ],
+      "descriptions": [
+        "Send all saved messages to all players"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "thunder ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.thunder"
+      ],
+      "descriptions": [
+        "Sets weather to thunder in current world"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "thunder ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.thunder"
+      ],
+      "descriptions": [
+        "Sets weather to thunder in specified world"
+      ],
+      "arguments": [
+        "<world>"
+      ]
+    },
+    {
+      "name": "time add",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Adds specified amount of time to specified world"
+      ],
+      "arguments": [
+        "<time>"
+      ]
+    },
+    {
+      "name": "time add",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Add specified amount of time to specified world"
+      ],
+      "arguments": [
+        "<time> <world>"
+      ]
+    },
+    {
+      "name": "time set",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Sets specified time"
+      ],
+      "arguments": [
+        "<time>"
+      ]
+    },
+    {
+      "name": "time set",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Sets specified time to specified world"
+      ],
+      "arguments": [
+        "<time> <world>"
+      ]
+    },
+    {
+      "name": "time set day",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Sets time to day"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "time set midnight",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Sets time to midnight"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "time set night",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Sets time to night"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "time set noon",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.time"
+      ],
+      "descriptions": [
+        "Sets time to noon"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "tpa ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tpa"
+      ],
+      "descriptions": [
+        "Send teleport request to player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "tpaaccept ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tpaccept"
+      ],
+      "descriptions": [
+        "Accept teleport request"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "tpaaccept -all",
+      "aliases": [
+        "tpaaccept, *"
+      ],
+      "permissions": [
+        "eternalcore.tpaccept"
+      ],
+      "descriptions": [
+        "Accept all teleport requests"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "tpadeny ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tpadeny"
+      ],
+      "descriptions": [
+        "Deny teleport request"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "tpadeny -all",
+      "aliases": [
+        "tpadeny, *"
+      ],
+      "permissions": [
+        "eternalcore.tpadeny"
+      ],
+      "descriptions": [
+        "Deny all teleport requests"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "tphere ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tphere"
+      ],
+      "descriptions": [
+        "Teleport player to you"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "tppos ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tppos"
+      ],
+      "descriptions": [
+        "Teleport specified player to specified coordinates"
+      ],
+      "arguments": [
+        "<x> <y> <z> <player>"
+      ]
+    },
+    {
+      "name": "tppos ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tppos"
+      ],
+      "descriptions": [
+        "Teleport to specified coordinates"
+      ],
+      "arguments": [
+        "<x> <y> <z>"
+      ]
+    },
+    {
+      "name": "tpup ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.tpup"
+      ],
+      "descriptions": [
+        "Teleport you to the highest block"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "unignore ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.ignore"
+      ],
+      "descriptions": [
+        "Unignore specified player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "unignore -all",
+      "aliases": [
+        "unignore, *"
+      ],
+      "permissions": [
+        "eternalcore.ignore"
+      ],
+      "descriptions": [
+        "Unignore all players"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "warp",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.warp"
+      ],
+      "descriptions": [
+        "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "warp",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.warp"
+      ],
+      "descriptions": [
+        "Teleport to warp"
+      ],
+      "arguments": [
+        "<warp>"
+      ]
+    },
+    {
+      "name": "warp-permission add ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.warp.changepermissions"
+      ],
+      "descriptions": [],
+      "arguments": []
+    },
+    {
+      "name": "warp-permission remove ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.warp.changepermissions"
+      ],
+      "descriptions": [],
+      "arguments": []
+    },
+    {
+      "name": "whois ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.whois"
+      ],
+      "descriptions": [
+        "Shows information about player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "workbench ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.workbench.other"
+      ],
+      "descriptions": [
+        "Opens a workbench for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "workbench ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.workbench"
+      ],
+      "descriptions": [
+        "Opens a workbench for you"
+      ],
+      "arguments": [
+        ""
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "name": "Admin Chat spy",
+      "permissions": [
+        "eternalcore.adminchat.spy"
+      ],
+      "descriptions": [
+        "Allows the player to see messages sent in admin chat by other players."
+      ]
+    },
+    {
+      "name": "Afk bypass",
+      "permissions": [
+        "eternalcore.afk.bypass"
+      ],
+      "descriptions": [
+        "Allows player to bypass AFK delay when using /afk command."
+      ]
+    },
+    {
+      "name": "Bypass Full Server",
+      "permissions": [
+        "eternalcore.slot.bypass"
+      ],
+      "descriptions": [
+        "This feature allows you to bypass the full server, example for vip rank."
+      ]
+    },
+    {
+      "name": "Bypass Unknown Command Message",
+      "permissions": [
+        "eternalcore.commandblocker.bypass"
+      ],
+      "descriptions": [
+        "Bypass replaced unknown command message, and keep the original message."
+      ]
+    },
+    {
+      "name": "Bypass chat slowmode or disabled chat",
+      "permissions": [
+        "eternalcore.chat.noslowmode",
+        "eternalcore.chat.bypass"
+      ],
+      "descriptions": [
+        "Allows you to bypass chat restrictions such as slowmode or disabled chat."
+      ]
+    },
+    {
+      "name": "HelpOp Spy",
+      "permissions": [
+        "eternalcore.helpop.spy"
+      ],
+      "descriptions": [
+        "Allows player to see helpop messages sent by other players"
+      ]
+    },
+    {
+      "name": "Home teleport bypass",
+      "permissions": [
+        "eternalcore.home.bypass"
+      ],
+      "descriptions": [
+        "Allows player to bypass home teleport time."
+      ]
+    },
+    {
+      "name": "Jail Bypass",
+      "permissions": [
+        "eternalcore.jail.bypass"
+      ],
+      "descriptions": [
+        "Permission allows to bypass jail punishment"
+      ]
+    },
+    {
+      "name": "Random Teleport",
+      "permissions": [
+        "eternalcore.rtp.bypass"
+      ],
+      "descriptions": [
+        "Allows you to bypass random teleport delay."
+      ]
+    },
+    {
+      "name": "Receive Updates",
+      "permissions": [
+        "eternalcore.receiveupdates"
+      ],
+      "descriptions": [
+        "Sends a message to the player when a new plugin update is available after joining the server."
+      ]
+    },
+    {
+      "name": "Spawn teleport bypass",
+      "permissions": [
+        "eternalcore.spawn.bypass"
+      ],
+      "descriptions": [
+        "Allows you to bypass spawn teleportation time"
+      ]
+    },
+    {
+      "name": "Sudo spy",
+      "permissions": [
+        "eternalcore.sudo.spy"
+      ],
+      "descriptions": [
+        "Allows you to spy on other players' sudo commands execution"
+      ]
+    },
+    {
+      "name": "Vanish tabulation",
+      "permissions": [
+        "eternalcore.vanish.tabulation.see"
+      ],
+      "descriptions": [
+        "Allows the player to see vanished players in tabulation."
+      ]
+    },
+    {
+      "name": "Warp bypass",
+      "permissions": [
+        "eternalcore.warp.bypass"
+      ],
+      "descriptions": [
+        "Allows player to bypass warp teleport time."
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.adminchat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.adminchat.event.AdminChatEvent;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -16,9 +17,14 @@ import org.bukkit.command.CommandSender;
 
 @Command(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
+@PermissionDocs(
+    name = "Admin Chat spy",
+    permission = AdminChatCommand.ADMIN_CHAT_SPY_PERMISSION,
+    description = "Allows the player to see messages sent in admin chat by other players."
+)
 class AdminChatCommand {
 
-    private static final String ADMIN_CHAT_SPY_PERMISSION = "eternalcore.adminchat.spy";
+    static final String ADMIN_CHAT_SPY_PERMISSION = "eternalcore.adminchat.spy";
 
     private final NoticeService noticeService;
     private final EventCaller eventCaller;

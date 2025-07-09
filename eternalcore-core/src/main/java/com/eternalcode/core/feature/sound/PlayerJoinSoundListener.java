@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.sound;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -10,10 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-@FeatureDocs(
-    description = "Play a sound after a player joins the server",
-    name = "Player Join Sound"
-)
 @Controller
 class PlayerJoinSoundListener implements Listener {
 

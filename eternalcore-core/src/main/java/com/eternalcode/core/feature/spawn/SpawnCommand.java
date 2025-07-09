@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
@@ -45,7 +46,12 @@ class SpawnCommand {
 
     @Execute
     @Permission("eternalcore.spawn")
-    @DescriptionDocs(description = "Teleports you to spawn location, if you want bypass cooldown use eternalcore.spawn.bypass permission")
+    @DescriptionDocs(description = "Teleports you to spawn location")
+    @PermissionDocs(
+        name = "Spawn teleport bypass",
+        permission = SPAWN_TELEPORT_BYPASS,
+        description = "Allows you to bypass spawn teleportation time"
+    )
     void executeSelf(@Context Player sender) {
         Position position = this.locations.spawn;
 

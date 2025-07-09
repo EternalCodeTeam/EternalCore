@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.serverlinks;
 
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.core.compatibility.Compatibility;
 import com.eternalcode.core.compatibility.Version;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -17,7 +17,6 @@ import org.bukkit.plugin.Plugin;
 
 @Service
 @Compatibility(from = @Version(minor = 21, patch = 0))
-@FeatureDocs(name = "ServerLinks", description = "Server links to players allow to display link's dedicated to server social media. Displayed under the pause menu (ESC).")
 public class ServerLinksService {
 
     private final Plugin plugin;
