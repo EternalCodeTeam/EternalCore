@@ -11,6 +11,17 @@
 [![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/bukkit/EternalCore/13964)
 </div>
 
+> [!WARNING]
+> **This branch is currently under active development for EternalCore 2.0.**
+> 
+> This is a major update that includes breaking changes, configuration refactors, translation cleanup, and UX improvements.
+> 
+> ⚠️ Features may be incomplete or unstable. Avoid using in production unless you're contributing or testing the new version.
+> 
+> 🔗 See the full roadmap and discussion: https://github.com/EternalCodeTeam/EternalCore/issues/952
+
+
+
 # Welcome to EternalCore! 🚀
 
 EternalCore is your ultimate companion for enhancing your Minecraft server experience. 💎 Crafted with care, EternalCore is dedicated to incorporating essential and highly practical server functions into a single plugin.
@@ -113,22 +124,6 @@ Create a public fork of EternalCore, make changes and then create
 a [Pull Request](https://github.com/EternalCodeTeam/EternalCore/pulls) with your appropriate changes.
 See [CONTRIBUTING.md](https://github.com/EternalCodeTeam/EternalCore/blob/master/.github/CONTRIBUTING.md) to find out
 more.
-
-
-## 📑 Other Dependencies
-
-EternalCore uses various dependencies for its functionality, including:
-- [LiteCommands (by Rollczi ❤️)](https://github.com/Rollczi/LiteCommands)
-- [Lombok (Only for configs)](https://projectlombok.org/)
-- [PaperLib](https://github.com/PaperMC/PaperLib)
-- [Spigot API](https://www.spigotmc.org/wiki/spigot-gradle/)
-- [Kyori Adventure](https://docs.adventure.kyori.net/)
-- [CDN Configs](https://github.com/dzikoysk/cdn)
-- [Expressible](https://github.com/panda-lang/expressible)
-- [bStats](https://bstats.org/)
-- [HikariCP](https://github.com/brettwooldridge/HikariCP)
-- [Ormlite JDBC](https://github.com/j256/ormlite-jdbc)
-- [TriumphGUI](https://github.com/TriumphTeam/triumph-gui)
 
 ## ❤️ Special Thanks
 
