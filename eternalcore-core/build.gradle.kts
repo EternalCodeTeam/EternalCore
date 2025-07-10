@@ -37,14 +37,15 @@ eternalShadow {
     )
 
     // configuration
-    library("net.dzikoysk:cdn:${Versions.CDN_CONFIGS}")
+    library("eu.okaeri:okaeri-configs-yaml-snakeyaml:${Versions.OKAERI_CONFIGS}")
+    library("eu.okaeri:okaeri-configs-serdes-commons:${Versions.OKAERI_CONFIGS}")
     libraryRelocate(
-        "net.dzikoysk.cdn"
+        "eu.okaeri",
     )
 
     // Multification
     library("com.eternalcode:multification-bukkit:${Versions.MULTIFICATION}")
-    library("com.eternalcode:multification-cdn:${Versions.MULTIFICATION}")
+    library("com.eternalcode:multification-okaeri:${Versions.MULTIFICATION}")
     libraryRelocate(
         "com.eternalcode.multification",
     )

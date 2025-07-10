@@ -1,15 +1,13 @@
 package com.eternalcode.core.configuration.contextual;
 
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
+import java.io.Serializable;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Contextual
-public class ConfigItem {
+public class ConfigItem implements Serializable {
 
     public String name = "&6Item";
     public List<String> lore = Collections.singletonList("&7Default lore");

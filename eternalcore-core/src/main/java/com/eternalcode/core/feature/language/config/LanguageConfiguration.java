@@ -1,63 +1,42 @@
 package com.eternalcode.core.feature.language.config;
 
-import com.eternalcode.core.configuration.ReloadableConfig;
-import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.google.common.collect.ImmutableList;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
-import net.dzikoysk.cdn.source.Resource;
-import net.dzikoysk.cdn.source.Source;
-import org.bukkit.Material;
-
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.Material;
 
 @ConfigurationFile
-public class LanguageConfiguration implements ReloadableConfig {
+public class LanguageConfiguration extends AbstractConfigurationFile {
 
-    @Description(" ")
+    @Comment(" ")
     public Language defaultLanguage = Language.EN;
     public List<Language> languages = Arrays.asList(Language.EN, Language.PL);
 
-    @Description(" ")
+    @Comment(" ")
     public LanguageSelector languageSelector = new LanguageSelector();
 
-    @Contextual
-    public static class LanguageSelector  {
-        @Description("# Name of inventory")
+    @Override
+    public File getConfigFile(File folder) {
+        return new File(folder, "language.yml");
+    }
+
+    public static class LanguageSelector extends OkaeriConfig {
+        @Comment("# Name of inventory")
         public String title = "&6Select a language";
 
-        @Description({ " ", "# Size of inventory" })
+        @Comment({" ", "# Size of inventory"})
         public int rows = 5;
 
-        @Description({ " ", "# Border settings" })
+        @Comment({" ", "# Border settings"})
         public Border border = new Border();
-
-        @Contextual
-        public static class Border {
-            public boolean fill = true;
-
-            @Description(" ")
-            public Material material = Material.GRAY_STAINED_GLASS_PANE;
-
-            @Description({ " ", "# TOP, BOTTOM, BORDER, ALL" })
-            public Border.FillType type = Border.FillType.BORDER;
-
-            @Description({ " ", "# Name (If you don't want name just set \"\")" })
-            public String name = " ";
-
-            @Description({ " ", "# Lore (If you don't want lore just set [])" })
-            public List<String> lore = Collections.emptyList();
-
-            public enum FillType {
-                TOP, BOTTOM, BORDER, ALL
-            }
-        }
-
-        @Description({ " ", "# List of languages" })
+        @Comment({" ", "# List of languages"})
         public List<LanguageConfigItem> languageConfigItemMap = new ImmutableList.Builder<LanguageConfigItem>()
             .add(new LanguageConfigItem(
                 "&c&lEnglish",
@@ -71,7 +50,8 @@ public class LanguageConfiguration implements ReloadableConfig {
             ))
             .add(new LanguageConfigItem(
                 "&c&lAuto",
-                Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"),
+                Collections.singletonList(
+                    "&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"),
                 Material.REPEATER,
                 "none",
                 false,
@@ -90,11 +70,28 @@ public class LanguageConfiguration implements ReloadableConfig {
                 Language.PL
             ))
             .build();
-    }
 
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "language.yml");
-    }
+        public static class Border extends OkaeriConfig {
+            public boolean fill = true;
 
+            @Comment(" ")
+            public Material material = Material.GRAY_STAINED_GLASS_PANE;
+
+            @Comment({" ", "# TOP, BOTTOM, BORDER, ALL"})
+            public Border.FillType type = Border.FillType.BORDER;
+
+            @Comment({" ", "# Name (If you don't want name just set \"\")"})
+            public String name = " ";
+
+            @Comment({" ", "# Lore (If you don't want lore just set [])"})
+            public List<String> lore = Collections.emptyList();
+
+            public enum FillType {
+                TOP,
+                BOTTOM,
+                BORDER,
+                ALL
+            }
+        }
+    }
 }

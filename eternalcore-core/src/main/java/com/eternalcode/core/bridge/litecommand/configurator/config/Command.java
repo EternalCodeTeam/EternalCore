@@ -1,14 +1,13 @@
 package com.eternalcode.core.bridge.litecommand.configurator.config;
 
-import net.dzikoysk.cdn.entity.Contextual;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Contextual
-public class Command {
+public class Command implements Serializable {
 
     public String name;
     public boolean enabled;
