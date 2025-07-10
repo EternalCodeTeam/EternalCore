@@ -14,8 +14,8 @@ public class PositionTransformer extends BidirectionalTransformer<Position, Stri
     }
 
     @Override
-    public String leftToRight(@NonNull Position data, @NonNull SerdesContext context) {
-        return data.toString();
+    public String leftToRight(@NonNull Position position, @NonNull SerdesContext context) {
+        return position.toString();
     }
 
     @Override

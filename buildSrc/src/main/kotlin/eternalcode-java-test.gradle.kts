@@ -3,14 +3,15 @@ plugins {
 }
 
 dependencies {
-    testImplementation("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
+    testImplementation(platform("org.junit:junit-bom:${Versions.JUNIT_BOM}")) // lub najnowsza wersja
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${Versions.JUNIT_JUPITER_API}")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:${Versions.JUNIT_JUPITER_PARAMS}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Versions.JUNIT_JUPITER_ENGINE}")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
     testImplementation("org.mockito:mockito-core:${Versions.MOCKITO_CORE}")
     testImplementation("net.kyori:adventure-platform-facet:${Versions.ADVENTURE_PLATFORM}")
+    testImplementation("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
 }
 
 tasks.getByName<Test>("test") {

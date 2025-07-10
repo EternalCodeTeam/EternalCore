@@ -41,11 +41,7 @@ object Versions {
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
     // tests
-    const val EXPRESSIBLE_JUNIT = "1.3.6"
-    const val GROOVY_ALL = "3.0.25"
-    const val JUNIT_JUPITER_API = "5.13.3"
-    const val JUNIT_JUPITER_PARAMS = "5.13.3"
-    const val JUNIT_JUPITER_ENGINE = "5.13.3"
+    const val JUNIT_BOM = "5.10.2"
     const val MOCKITO_CORE = "5.18.0"
 
 }
