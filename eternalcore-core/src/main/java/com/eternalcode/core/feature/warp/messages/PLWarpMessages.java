@@ -40,17 +40,22 @@ public class PLWarpMessages implements WarpMessages {
     @Description({" ", "# {WARPS} - Lista dostępnych warpów"})
     public Notice available = Notice.chat("<green>► <white>Dostepne warpy: <green>{WARPS}!");
 
-    @Description({" ", "# Ustawienia gui listy dostępnych warpów"})
+    @Description({" ", 
+                 "# PRZESTARZAŁE: Te ustawienia zostały przeniesione do pliku warps.yml",
+                 "# Ustawienia gui listy dostępnych warpów"})
+    @Deprecated
     public PLWarpInventory warpInventory = new PLWarpInventory();
 
     @Getter
     @Accessors(fluent = true)
     @Contextual
+    @Deprecated
     public static class PLWarpInventory implements WarpInventorySection {
         public String title = "<dark_gray>» <green>Lista dostępnych warpów";
 
         @Description({
             " ",
+            "# PRZESTARZAŁE: Te ustawienia zostały przeniesione do pliku warps.yml",
             "# Poniższa lista określa przedmioty w GUI, które są wyświetlane w liście dostępnych warpów.",
             "# Możesz edytować przedmioty, a dodawanie kolejnych warpów następuje automatycznie za pomocą komendy /setwarp",
         })
@@ -66,8 +71,10 @@ public class PLWarpMessages implements WarpMessages {
 
         @Getter
         @Contextual
+        @Deprecated
         public static class PLBorderSection implements BorderSection {
             @Description({" ",
+                          "# PRZESTARZAŁE: Te ustawienia zostały przeniesione do pliku warps.yml",
                           "# Zmiany w tej sekcji mogą wpłynąć na wygląd GUI, zwróć uwagę na zmiany slotów przedmiotów w GUI."})
             public boolean enabled = true;
 
@@ -82,6 +89,7 @@ public class PLWarpMessages implements WarpMessages {
 
         @Getter
         @Contextual
+        @Deprecated
         public static class PLDecorationItemsSection implements DecorationItemsSection {
             public List<ConfigItem> items = List.of();
         }
