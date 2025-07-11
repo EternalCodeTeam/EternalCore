@@ -1,6 +1,7 @@
 package com.eternalcode.annotations.scan;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,14 @@ public abstract class SingleAnnotationScanResolver<A extends Annotation, RESULT>
 
             if (methodAnnotation != null) {
                 annotations.add(methodAnnotation);
+            }
+        }
+
+        for (Field field : classToScan.getDeclaredFields()) {
+            A fieldAnnotation = field.getAnnotation(annotationClass);
+
+            if (fieldAnnotation != null) {
+                annotations.add(fieldAnnotation);
             }
         }
 
