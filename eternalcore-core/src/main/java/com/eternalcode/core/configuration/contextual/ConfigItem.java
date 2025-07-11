@@ -16,7 +16,7 @@ public class ConfigItem implements Serializable {
     public boolean glow = false;
     public int slot = 0;
     public List<String> commands = new ArrayList<>();
-
+    
     public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, int slot, List<String> commands) {
         this.name = name;
         this.lore = lore;

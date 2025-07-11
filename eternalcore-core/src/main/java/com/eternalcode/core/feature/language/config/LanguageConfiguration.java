@@ -37,8 +37,8 @@ public class LanguageConfiguration extends AbstractConfigurationFile {
         @Comment({" ", "# Border settings"})
         public Border border = new Border();
         @Comment({" ", "# List of languages"})
-        public List<LanguageConfigItem> languageConfigItemMap = new ImmutableList.Builder<LanguageConfigItem>()
-            .add(new LanguageConfigItem(
+        public List<LanguageConfigItem> languageConfigItemMap = List.of(
+            new LanguageConfigItem(
                 "&c&lEnglish",
                 Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Click to change language!"),
                 Material.PLAYER_HEAD,
@@ -47,19 +47,18 @@ public class LanguageConfiguration extends AbstractConfigurationFile {
                 20,
                 Collections.emptyList(),
                 Language.EN
-            ))
-            .add(new LanguageConfigItem(
+            ),
+            new LanguageConfigItem(
                 "&c&lAuto",
-                Collections.singletonList(
-                    "&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"),
+                Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij, aby pobierać język z ustawień klienta!"),
                 Material.REPEATER,
                 "none",
                 false,
                 22,
                 Collections.emptyList(),
                 Language.DEFAULT
-            ))
-            .add(new LanguageConfigItem(
+            ),
+            new LanguageConfigItem(
                 "&c&lPolish",
                 Collections.singletonList("&7▪ <gradient:#66ff99:#00ffff>Kliknij aby zmienić język!"),
                 Material.PLAYER_HEAD,
@@ -68,8 +67,8 @@ public class LanguageConfiguration extends AbstractConfigurationFile {
                 24,
                 Collections.emptyList(),
                 Language.PL
-            ))
-            .build();
+            )
+        );
 
         public static class Border extends OkaeriConfig {
             public boolean fill = true;
