@@ -1,10 +1,9 @@
 package com.eternalcode.core.feature.serverlinks;
 
-import net.dzikoysk.cdn.entity.Contextual;
+import java.io.Serializable;
 
 @SuppressWarnings("unused")
-@Contextual
-public class ServerLinksEntry {
+public class ServerLinksEntry implements Serializable {
 
     public String name;
     public String address;

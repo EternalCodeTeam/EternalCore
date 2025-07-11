@@ -189,6 +189,7 @@ public interface Translation {
         Notice genericContainerOpenedBy();
         Notice genericContainerOpenedFor();
     }
+
     Language getLanguage();
     // argument section
     ArgumentMessages argument();
@@ -198,6 +199,7 @@ public interface Translation {
     HelpOpSection helpOp();
     // AdminChat Section
     AdminChatMessages adminChat();
+    // sudo
     SudoMessages sudo();
     // Teleport Section
     TeleportSection teleport();
