@@ -34,7 +34,7 @@ jobs:
           body: |
             ### 🚧 Build in progress...
 
-            > [!INFO]
+            > [!NOTE]
             > A development build of **EternalCore** will be available here after the workflow completes.
           edit-mode: replace
 
