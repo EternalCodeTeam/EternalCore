@@ -5,37 +5,37 @@ on:
     branches:
       - master
   pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java:
-          - 21
+        java: [17]
       fail-fast: false
+
     steps:
-      - name: Find existing build comment
+      - name: Find existing comment
         uses: peter-evans/find-comment@v3
         if: github.event_name == 'pull_request'
-        id: init-find-comment
+        id: find-comment
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
 
-      - name: Create placeholder comment
+      - name: Set progress comment
         uses: peter-evans/create-or-update-comment@v4
-        if: |
-          github.event_name == 'pull_request' &&
-          steps.init-find-comment.outputs.comment-id == ''
-        id: create-comment
+        if: github.event_name == 'pull_request'
+        id: update-progress
         with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ### 🚧 Build in progress...
 
             > [!NOTE]
-            > A development build of **EternalCore** will be available here after the workflow completes.
+            > A new commit has been pushed. A development build of **EternalCore** will be available here once the workflow completes.
           edit-mode: replace
 
       - name: Checkout
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-java@v4.7.1
         with:
           distribution: adopt
-          java-version: '${{ matrix.java }}'
+          java-version: ${{ matrix.java }}
 
       - name: Cache Gradle
         uses: actions/cache@v4.2.3
@@ -70,14 +70,6 @@ jobs:
           retention-days: 14
           overwrite: true
 
-      - name: Find final comment again
-        uses: peter-evans/find-comment@v3
-        if: github.event_name == 'pull_request'
-        id: find-comment
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
-
       - name: Update comment with download link
         uses: peter-evans/create-or-update-comment@v4
         if: github.event_name == 'pull_request'
@@ -86,12 +78,12 @@ jobs:
           body: |
             ### 📦 Development Build Ready
 
-            > [!INFO]
-            > A test build of **EternalCore** with the changes from this pull request is ready.
+            > [!NOTE]
+            > A test build of **EternalCore** with the latest changes from this pull request is ready to download.
 
             👉 [**Click here to download the JAR**](${{ steps.upload-artifact.outputs.artifact-url }})
 
             > [!WARNING]
-            > **Do not use this build in production.** It is meant for testing purposes only and may be unstable.
+            > **Do not use this build in production.** It is for testing purposes only and may be unstable.
           edit-mode: replace
           reactions: rocket
