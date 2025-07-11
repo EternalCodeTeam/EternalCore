@@ -52,6 +52,7 @@ eternalShadow {
     // EternalCode Commons & GitCheck
     library("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
+    library("com.eternalcode:eternalcode-commons-folia:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
     libraryRelocate(
         "com.eternalcode.commons",
@@ -76,6 +77,7 @@ eternalShadow {
     // command framework & skull library
     library("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
     library("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
+    library("dev.rollczi:litecommands-folia:${Versions.LITE_COMMANDS}")
     library("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
     libraryRelocate(
         "dev.rollczi.litecommands",

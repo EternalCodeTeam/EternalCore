@@ -6,6 +6,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import io.papermc.lib.PaperLib;
 import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -33,7 +34,7 @@ public class SpawnServiceImpl implements SpawnService {
             return;
         }
 
-        player.teleport(PositionAdapter.convert(spawn));
+        PaperLib.teleportAsync(player, PositionAdapter.convert(spawn));
     }
 
     @Override

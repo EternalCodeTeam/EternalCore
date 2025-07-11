@@ -9,6 +9,9 @@ import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import dev.rollczi.litecommands.command.builder.CommandBuilder;
 import dev.rollczi.litecommands.editor.Editor;
 import dev.rollczi.litecommands.meta.Meta;
+import dev.rollczi.litecommands.permission.PermissionSet;
+import java.util.List;
+import java.util.function.UnaryOperator;
 import org.bukkit.command.CommandSender;
 
 @LiteCommandEditor
@@ -34,7 +37,7 @@ class CommandConfigurator implements Editor<CommandSender> {
 
             context = context.editChild(child, editor -> editor.name(subCommand.name())
                 .aliases(subCommand.aliases())
-                .applyMeta(meta -> meta.list(Meta.PERMISSIONS, permissions -> permissions.addAll(command.permissions())))
+                .applyMeta(editPermissions(command.permissions()))
                 .enabled(subCommand.isEnabled())
             );
         }
@@ -42,8 +45,15 @@ class CommandConfigurator implements Editor<CommandSender> {
         return context
             .name(command.name())
             .aliases(command.aliases())
-            .applyMeta(meta -> meta.list(Meta.PERMISSIONS, permissions -> permissions.addAll(command.permissions())))
+            .applyMeta(editPermissions(command.permissions()))
             .enabled(command.isEnabled());
+    }
+
+    private static UnaryOperator<Meta> editPermissions(List<String> permissions) {
+        return meta -> meta.listEditor(Meta.PERMISSIONS)
+            .clear()
+            .add(new PermissionSet(permissions))
+            .apply();
     }
 
 }
