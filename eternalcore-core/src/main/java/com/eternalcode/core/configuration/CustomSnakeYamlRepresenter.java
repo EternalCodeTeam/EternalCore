@@ -34,8 +34,8 @@ class CustomSnakeYamlRepresenter extends Representer {
         this.representers.put(List.of().getClass(), data ->
             representList(data)
         );
-        this.representers.put(Collections.emptyList().getClass(), data ->
-            representList(data)
+        this.representers.put(Collections.emptyMap().getClass(), data ->
+            representMap(Collections.emptyMap())
         );
 
         this.representers.put(Map.class, data ->
