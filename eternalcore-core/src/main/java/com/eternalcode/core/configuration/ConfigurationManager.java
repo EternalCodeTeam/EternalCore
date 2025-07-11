@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.DumperOptions.FlowStyle;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
@@ -71,10 +70,10 @@ public class ConfigurationManager {
         Constructor constructor = new Constructor(loaderOptions);
 
         DumperOptions dumperOptions = new DumperOptions();
-        dumperOptions.setDefaultFlowStyle(FlowStyle.AUTO);
+        dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        dumperOptions.setDefaultScalarStyle(DumperOptions.ScalarStyle.PLAIN);
         dumperOptions.setIndent(4);
         dumperOptions.setIndicatorIndent(2);
-        dumperOptions.setPrettyFlow(true);
         dumperOptions.setSplitLines(false);
 
         Representer representer = new CustomSnakeYamlRepresenter(dumperOptions);
