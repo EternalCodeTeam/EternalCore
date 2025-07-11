@@ -1,8 +1,6 @@
 package com.eternalcode.core;
 
 import com.eternalcode.core.compatibility.CompatibilityService;
-import com.eternalcode.core.configuration.EternalConfigurationFile;
-import com.eternalcode.core.configuration.compatibility.ConfigurationCompatibilityV21_2;
 import com.eternalcode.core.injector.DependencyInjector;
 import com.eternalcode.core.injector.annotations.component.Component;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
@@ -80,8 +78,6 @@ class EternalCore {
             beanFactory.addCandidate(beanCandidate);
         }
 
-        beanFactory.initializeCandidates(ConfigurationCompatibilityV21_2.class);
-        beanFactory.initializeCandidates(EternalConfigurationFile.class);
         beanFactory.initializeCandidates();
 
         this.publisher = beanFactory.getDependency(Publisher.class);
