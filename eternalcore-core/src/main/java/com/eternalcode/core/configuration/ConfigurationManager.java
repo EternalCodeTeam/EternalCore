@@ -72,8 +72,7 @@ public class ConfigurationManager {
         DumperOptions dumperOptions = new DumperOptions();
         dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         dumperOptions.setDefaultScalarStyle(DumperOptions.ScalarStyle.PLAIN);
-        dumperOptions.setIndent(4);
-        dumperOptions.setIndicatorIndent(2);
+        dumperOptions.setIndent(2);
         dumperOptions.setSplitLines(false);
 
         Representer representer = new CustomSnakeYamlRepresenter(dumperOptions);
