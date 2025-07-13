@@ -1,0 +1,6 @@
+# This is spawn location, for your own safety, please don't touch it.
+spawn: "Position{x=0.0, y=0.0, z=0.0, yaw=0.0, pitch=0.0, world='__NONE__'}"
+# Warps now are stored in warps.yml. This is deprecated.
+warps: []
+# This is jail location, for your own safety, please don't touch it.
+jail: "Position{x=0.0, y=0.0, z=0.0, yaw=0.0, pitch=0.0, world='__NONE__'}"
