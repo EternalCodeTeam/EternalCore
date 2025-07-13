@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.permission.MissingPermissionsHandler;
 import org.bukkit.command.CommandSender;
 
 @LiteHandler(MissingPermissions.class)
-public class PermissionMessage implements MissingPermissionsHandler<CommandSender> {
+class PermissionMessage implements MissingPermissionsHandler<CommandSender> {
 
     private final ViewerService viewerService;
     private final NoticeService noticeService;

@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command(name = "grindstone")
@@ -37,13 +38,13 @@ class GrindstoneCommand {
     @Execute
     @Permission("eternalcore.grindstone.other")
     @DescriptionDocs(description = "Opens a grindstone for another player", arguments = "<player>")
-    void execute(@Context Player sender, @Arg Player target) {
+    void execute(@Context CommandSender sender, @Arg Player target) {
         AdditionalContainerPaper.GRINDSTONE.open(target);
 
         this.announcer.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())
             .placeholder("{PLAYER}", target.getName())
-            .player(sender.getUniqueId())
+            .sender(sender)
             .send();
 
         this.announcer.create()

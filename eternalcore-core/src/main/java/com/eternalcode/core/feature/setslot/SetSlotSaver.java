@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.setslot;
 
+import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import org.bukkit.Server;
+import org.jetbrains.annotations.Blocking;
 
 @Service
 public class SetSlotSaver {
@@ -23,6 +25,7 @@ public class SetSlotSaver {
         this.server = server;
     }
 
+    @Blocking
     public void save() {
         File propertiesFile = new File("server.properties");
         Properties properties = new Properties();

@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.catboy;
 
+import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import net.md_5.bungee.api.ChatColor;
@@ -22,11 +23,13 @@ class CatboyTask implements Runnable {
 
     private final CatboyService catboyService;
     private final Server server;
+    private final MinecraftScheduler scheduler;
 
     @Inject
-    CatboyTask(CatboyService catboyService, Server server) {
+    CatboyTask(CatboyService catboyService, Server server, MinecraftScheduler scheduler) {
         this.catboyService = catboyService;
         this.server = server;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -61,9 +64,11 @@ class CatboyTask implements Runnable {
             DyeColor dyeColor = this.randomDyeColor();
             Color color = new Color(dyeColor.getColor().asRGB());
 
-            cat.setCollarColor(dyeColor);
-            cat.setCustomName(ChatColor.of(color) + CATBOY_NAME);
-            cat.setRotation(player.getLocation().getYaw(), cat.getLocation().getPitch());
+            scheduler.run(cat, () -> {
+                cat.setCollarColor(dyeColor);
+                cat.setCustomName(ChatColor.of(color) + CATBOY_NAME);
+                cat.setRotation(player.getLocation().getYaw(), cat.getLocation().getPitch());
+            });
             break;
         }
     }
