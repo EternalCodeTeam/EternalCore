@@ -29,7 +29,7 @@ jobs:
         if: github.event_name == 'pull_request'
         id: update-progress
         with:
-          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          comment-id: ${{ steps.update-progress.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ### 🚧 Build in progress...
@@ -78,12 +78,10 @@ jobs:
           body: |
             ### 📦 Development Build Ready
 
-            > [!NOTE]
-            > A test build of **EternalCore** with the latest changes from this pull request is ready to download.
-
-            👉 [**Click here to download the JAR**](${{ steps.upload-artifact.outputs.artifact-url }})
-
             > [!WARNING]
             > **Do not use this build in production.** It is for testing purposes only and may be unstable.
+
+            👉 [**Click here to download the JAR**](${{ steps.upload-artifact.outputs.artifact-url }})
+            
           edit-mode: replace
           reactions: rocket
