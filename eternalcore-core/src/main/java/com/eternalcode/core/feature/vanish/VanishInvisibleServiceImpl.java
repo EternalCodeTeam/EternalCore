@@ -52,7 +52,7 @@ public class VanishInvisibleServiceImpl implements VanishInvisibleService {
     @Override
     public void hideHiddenForPlayer(Player player) {
         for (Player onlinePlayer : this.server.getOnlinePlayers()) {
-            if (this.vanishedPlayers.contains(player.getUniqueId())) {
+            if (this.vanishedPlayers.contains(onlinePlayer.getUniqueId())) {
                 player.hidePlayer(this.plugin, onlinePlayer);
             }
         }
