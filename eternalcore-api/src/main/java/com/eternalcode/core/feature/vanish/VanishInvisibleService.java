@@ -11,7 +11,7 @@ public interface VanishInvisibleService {
 
     void showPlayer(Player player);
 
-    void hideHiddenForPlayer(Player player);
+    void hideAdminForPlayer(Player player);
 
     Set<UUID> getVanishedPlayers();
 }

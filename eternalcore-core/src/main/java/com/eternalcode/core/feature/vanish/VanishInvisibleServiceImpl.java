@@ -31,7 +31,6 @@ public class VanishInvisibleServiceImpl implements VanishInvisibleService {
             if (online.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION)) {
                 continue;
             }
-
             if (!online.equals(player)) {
                 online.hidePlayer(this.plugin, player);
                 this.vanishedPlayers.add(player.getUniqueId());
@@ -50,11 +49,15 @@ public class VanishInvisibleServiceImpl implements VanishInvisibleService {
     }
 
     @Override
-    public void hideHiddenForPlayer(Player player) {
-        for (Player onlinePlayer : this.server.getOnlinePlayers()) {
-            if (this.vanishedPlayers.contains(onlinePlayer.getUniqueId())) {
-                player.hidePlayer(this.plugin, onlinePlayer);
+    public void hideAdminForPlayer(Player player) {
+        for (UUID uuid : this.vanishedPlayers) {
+            Player vanishedPlayer = this.server.getPlayer(uuid);
+
+            if (vanishedPlayer == null || vanishedPlayer.equals(player)) {
+                continue;
             }
+
+            player.hidePlayer(this.plugin, vanishedPlayer);
         }
     }
 

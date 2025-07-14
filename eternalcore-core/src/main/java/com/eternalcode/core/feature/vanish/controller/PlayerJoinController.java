@@ -45,6 +45,6 @@ public class PlayerJoinController implements Listener {
             return;
         }
 
-        this.vanishService.hideHiddenForPlayer(player);
+        this.vanishService.hideAdminForPlayer(player);
     }
 }

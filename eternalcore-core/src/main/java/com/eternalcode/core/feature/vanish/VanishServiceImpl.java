@@ -7,6 +7,8 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 @Service
 public class VanishServiceImpl implements VanishService {
 
@@ -43,7 +45,12 @@ public class VanishServiceImpl implements VanishService {
     }
 
     @Override
-    public void hideHiddenForPlayer(Player player) {
-        this.vanishInvisibleService.hideHiddenForPlayer(player);
+    public boolean isVanished(UUID uniqueId) {
+        return this.vanishMetaDataService.hasMetadata(uniqueId);
+    }
+
+    @Override
+    public void hideAdminForPlayer(Player player) {
+        this.vanishInvisibleService.hideAdminForPlayer(player);
     }
 }

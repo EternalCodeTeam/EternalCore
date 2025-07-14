@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.vanish;
 
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public interface VanishService {
 
     void enableVanish(Player player);
@@ -10,6 +12,8 @@ public interface VanishService {
 
     boolean isVanished(Player player);
 
-    void hideHiddenForPlayer(Player player);
+    boolean isVanished(UUID uniqueId);
+
+    void hideAdminForPlayer(Player player);
 
 }
