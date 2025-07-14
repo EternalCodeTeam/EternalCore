@@ -38,15 +38,15 @@ public class VanishInvisibleServiceImpl implements VanishInvisibleService {
         }
     }
 
-    @Override
-    public void showPlayer(Player player) {
-        for (Player online : this.server.getOnlinePlayers()) {
-            if (!online.equals(player)) {
-                online.showPlayer(this.plugin, player);
-                this.vanishedPlayers.remove(player.getUniqueId());
-            }
+@Override
+public void showPlayer(Player player) {
+    for (Player online : this.server.getOnlinePlayers()) {
+        if (!online.equals(player)) {
+            online.showPlayer(this.plugin, player);
         }
     }
+    this.vanishedPlayers.remove(player.getUniqueId());
+}
 
     @Override
     public void hideAdminForPlayer(Player player) {
