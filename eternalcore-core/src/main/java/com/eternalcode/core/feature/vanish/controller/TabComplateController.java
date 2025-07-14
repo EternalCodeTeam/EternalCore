@@ -26,7 +26,7 @@ public class TabComplateController implements Listener {
     }
 
     @EventHandler
-    void onVanish(TabCompleteEvent event) {
+    void onTabComplete(TabCompleteEvent event) {
         if (!(event.getSender() instanceof Player)) {
             return;
         }
