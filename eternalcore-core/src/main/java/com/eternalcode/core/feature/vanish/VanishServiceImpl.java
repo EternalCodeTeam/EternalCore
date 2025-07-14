@@ -50,7 +50,7 @@ public class VanishServiceImpl implements VanishService {
     }
 
     @Override
-    public void hideAdminForPlayer(Player player) {
-        this.vanishInvisibleService.hideAdminForPlayer(player);
+    public void hideVanishedPlayersFrom(Player player) {
+        this.vanishInvisibleService.hideVanishedPlayersFrom(player);
     }
 }

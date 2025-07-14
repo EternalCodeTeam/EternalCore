@@ -14,6 +14,6 @@ public interface VanishService {
 
     boolean isVanished(UUID uniqueId);
 
-    void hideAdminForPlayer(Player player);
+    void hideVanishedPlayersFrom(Player player);
 
 }

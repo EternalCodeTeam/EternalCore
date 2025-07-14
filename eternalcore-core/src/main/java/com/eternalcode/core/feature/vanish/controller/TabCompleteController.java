@@ -14,13 +14,13 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-public class TabComplateController implements Listener {
+public class TabCompleteController implements Listener {
 
     private final VanishService vanishService;
     private final Server server;
 
     @Inject
-    public TabComplateController(VanishService vanishService, Server server) {
+    public TabCompleteController(VanishService vanishService, Server server) {
         this.vanishService = vanishService;
         this.server = server;
     }

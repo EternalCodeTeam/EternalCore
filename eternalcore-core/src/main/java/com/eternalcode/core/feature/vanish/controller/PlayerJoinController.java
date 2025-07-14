@@ -22,30 +22,25 @@ public class PlayerJoinController implements Listener {
         this.server = server;
     }
 
-    @EventHandler
--    void onJoinAdmin(PlayerJoinEvent event) {
-+    void onJoinWithVanishPermission(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-
-        if (!player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
-            return;
-        }
-
-        event.setJoinMessage(null);
-        this.vanishService.enableVanish(player);
-
-        player.sendMessage("You have been automatically vanished upon joining the server.");
-        this.server.broadcast(player.getName() + " has joined the server in vanish mode.", VanishPermissionConstant.VANISH_JOIN_PERMISSION);
-    }
 
     @EventHandler
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        if (player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
+            event.setJoinMessage(null);
+            this.vanishService.enableVanish(player);
+
+            player.sendMessage("You have been automatically vanished upon joining the server.");
+            this.server.broadcast(player.getName() + " has joined the server in vanish mode.", VanishPermissionConstant.VANISH_JOIN_PERMISSION);
+
+            return;
+        }
+
         if (player.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION)) {
             return;
         }
 
-        this.vanishService.hideAdminForPlayer(player);
+        this.vanishService.hideVanishedPlayersFrom(player);
     }
 }

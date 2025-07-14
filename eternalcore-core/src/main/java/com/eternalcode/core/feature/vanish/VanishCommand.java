@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.vanish;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -20,6 +21,7 @@ public class VanishCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Toggles vanish on your self.")
     void vanishSelf(@Context Player player) {
         if (this.vanishService.isVanished(player)) {
             this.vanishService.disableVanish(player);
@@ -33,6 +35,7 @@ public class VanishCommand {
 
     @Execute
     @Permission(VanishPermissionConstant.VANISH_COMMAND_PERMISSION_OTHER)
+    @DescriptionDocs(description = "Toggles vanish on other player.")
     void vanishOther(@Context Player player, @Arg Player target) {
         if (this.vanishService.isVanished(target)) {
             this.vanishService.disableVanish(target);
