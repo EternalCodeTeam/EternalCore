@@ -23,7 +23,8 @@ public class PlayerJoinController implements Listener {
     }
 
     @EventHandler
-    void onJoinAdmin(PlayerJoinEvent event) {
+-    void onJoinAdmin(PlayerJoinEvent event) {
++    void onJoinWithVanishPermission(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         if (!player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
