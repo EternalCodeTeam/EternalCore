@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
+import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 import com.google.common.cache.CacheBuilder;
@@ -29,19 +29,19 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     private static final UUID IGNORE_ALL = UUID.nameUUIDFromBytes("*".getBytes());
 
-    private final Dao<IgnoreWrapper, Long> cachedDao;
+    private final Dao<IgnoreTable, Long> cachedDao;
     private final LoadingCache<UUID, Set<UUID>> ignores;
 
     @Inject
     private IgnoreRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
-        this.cachedDao = databaseManager.getDao(IgnoreWrapper.class);
+        this.cachedDao = databaseManager.getDao(IgnoreTable.class);
 
         this.ignores = CacheBuilder.newBuilder()
             .expireAfterAccess(Duration.ofMinutes(15))
             .refreshAfterWrite(Duration.ofMinutes(3))
             .build(new IgnoreLoader());
-        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreWrapper.class);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreTable.class);
     }
 
     @Override
@@ -65,7 +65,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                 Set<UUID> uuids = this.ignores.get(by);
 
                 if (!uuids.contains(target)) {
-                    this.save(IgnoreWrapper.class, new IgnoreWrapper(by, target))
+                    this.save(IgnoreTable.class, new IgnoreTable(by, target))
                         .thenRun(() -> this.ignores.refresh(by));
                 }
             }
@@ -82,8 +82,8 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     @Override
     public CompletableFuture<Void> unIgnore(UUID by, UUID target) {
-        return this.action(IgnoreWrapper.class, dao -> {
-                DeleteBuilder<IgnoreWrapper, Object> builder = dao.deleteBuilder();
+        return this.action(IgnoreTable.class, dao -> {
+                DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
 
                 builder.where()
                     .eq("player_id", by)
@@ -97,8 +97,8 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     @Override
     public CompletableFuture<Void> unIgnoreAll(UUID by) {
-        return this.action(IgnoreWrapper.class, dao -> {
-                DeleteBuilder<IgnoreWrapper, Object> builder = dao.deleteBuilder();
+        return this.action(IgnoreTable.class, dao -> {
+                DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
 
                 builder.where()
                     .eq("player_id", by);
@@ -111,25 +111,25 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
     @ApiStatus.Internal
     @Override
     public CompletableFuture<Void> purgeAll() {
-        return this.deleteAll(IgnoreWrapper.class)
+        return this.deleteAll(IgnoreTable.class)
             .thenRun(this.ignores::invalidateAll);
     }
 
     @DatabaseTable(tableName = "eternal_core_ignores")
-    private static class IgnoreWrapper {
+    private static class IgnoreTable {
 
         @DatabaseField(id = true)
         Long id;
 
-        @DatabaseField(columnName = "player_id")
+        @DatabaseField(columnName = "player_id", uniqueCombo = true)
         UUID playerUuid;
 
-        @DatabaseField(columnName = "ignored_id")
+        @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
         UUID ignoredUuid;
 
-        IgnoreWrapper() {}
+        IgnoreTable() {}
 
-        IgnoreWrapper(UUID playerUuid, UUID ignoredUuid) {
+        IgnoreTable(UUID playerUuid, UUID ignoredUuid) {
             this.playerUuid = playerUuid;
             this.ignoredUuid = ignoredUuid;
         }
@@ -143,7 +143,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                 .where().eq("player_id", key)
                 .query()
                 .stream()
-                .map(ignoreWrapper -> ignoreWrapper.ignoredUuid)
+                .map(ignoreTable -> ignoreTable.ignoredUuid)
                 .collect(Collectors.toSet());
         }
     }

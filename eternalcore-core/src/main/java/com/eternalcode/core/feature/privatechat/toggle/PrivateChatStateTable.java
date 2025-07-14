@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "eternal_core_private_chat_state")
-class PrivateChatStateWrapper {
+class PrivateChatStateTable {
 
     @DatabaseField(columnName = "id", id = true)
     private UUID uniqueId;
@@ -13,12 +13,12 @@ class PrivateChatStateWrapper {
     @DatabaseField(columnName = "enabled")
     private PrivateChatState state;
 
-    PrivateChatStateWrapper(UUID id, PrivateChatState enabled) {
+    PrivateChatStateTable(UUID id, PrivateChatState enabled) {
         this.uniqueId = id;
         this.state = enabled;
     }
 
-    PrivateChatStateWrapper() {}
+    PrivateChatStateTable() {}
 
     PrivateChatState isEnabled() {
         return this.state;
