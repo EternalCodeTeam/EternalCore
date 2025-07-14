@@ -118,13 +118,13 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
     @DatabaseTable(tableName = "eternal_core_ignores")
     private static class IgnoreWrapper {
 
-        @DatabaseField(generatedId = true)
+        @DatabaseField(id = true)
         Long id;
 
-        @DatabaseField(columnName = "player_id", uniqueCombo = true)
+        @DatabaseField(columnName = "player_id")
         UUID playerUuid;
 
-        @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
+        @DatabaseField(columnName = "ignored_id")
         UUID ignoredUuid;
 
         IgnoreWrapper() {}
