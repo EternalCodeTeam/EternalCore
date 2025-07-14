@@ -24,10 +24,23 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
 
-      - name: Set progress comment
+      - name: Create progress comment if not exists
         uses: peter-evans/create-or-update-comment@v4
-        if: github.event_name == 'pull_request'
-        id: update-progress
+        if: github.event_name == 'pull_request' && steps.find-comment.outputs.comment-id == ''
+        id: create-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### 🚧 Build in progress...
+
+            > [!NOTE]
+            > A new commit has been pushed. A development build of **EternalCore** will be available here once the workflow completes.
+          edit-mode: replace
+
+      - name: Update progress comment if exists
+        uses: peter-evans/create-or-update-comment@v4
+        if: github.event_name == 'pull_request' && steps.find-comment.outputs.comment-id != ''
+        id: update-comment
         with:
           comment-id: ${{ steps.find-comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -37,6 +50,11 @@ jobs:
             > [!NOTE]
             > A new commit has been pushed. A development build of **EternalCore** will be available here once the workflow completes.
           edit-mode: replace
+
+      - name: Set comment-id output
+        id: comment
+        run: |
+          echo "comment-id=${{ steps.find-comment.outputs.comment-id != '' && steps.find-comment.outputs.comment-id || steps.create-comment.outputs.comment-id }}" >> $GITHUB_OUTPUT
 
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -74,7 +92,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v4
         if: github.event_name == 'pull_request'
         with:
-          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          comment-id: ${{ steps.comment.outputs.comment-id }}
           body: |
             ### 📦 Development Build Ready
 
@@ -82,6 +100,6 @@ jobs:
             > **Do not use this build in production.** It is for testing purposes only and may be unstable.
 
             👉 [**Click here to download the JAR**](${{ steps.upload-artifact.outputs.artifact-url }})
-            
+
           edit-mode: replace
           reactions: rocket
