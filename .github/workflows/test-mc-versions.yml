@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         mc_version: [1.18.2, 1.19.4, 1.20.6, 1.21.7]
-    # Expose MC_VERSION for every step:
     env:
       MC_VERSION: ${{ matrix.mc_version }}
       PLUGIN_GLOB: "eternalcore-plugin/build/libs/EternalCore*.jar"
@@ -50,13 +49,11 @@ jobs:
           BUILD_NUMBER=$(curl -s "https://api.papermc.io/v2/projects/paper/versions/${MC_VERSION}/builds" \
             | jq '.builds | max_by(.build) | .build')
           echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
-          echo "→ PaperMC ${MC_VERSION} build #$BUILD_NUMBER"
 
       - name: Setup PaperMC server for $MC_VERSION
         run: |
           mkdir mc-server
           cd mc-server
-          echo "Downloading PaperMC ${MC_VERSION} build #${{ steps.get_build_number.outputs.build_number }}"
           wget "https://api.papermc.io/v2/projects/paper/versions/${MC_VERSION}/builds/${{ steps.get_build_number.outputs.build_number }}/downloads/paper-${MC_VERSION}-${{ steps.get_build_number.outputs.build_number }}.jar" \
             -O paper.jar
           mkdir plugins
@@ -87,7 +84,7 @@ jobs:
           PID=$!
           echo "Server PID: $PID"
           sleep 60
-          kill $PID
+          kill $PID || true
           wait $PID || true
           if grep -iE 'error|exception|failed' server.log; then
             echo "❌ Errors in server.log"
