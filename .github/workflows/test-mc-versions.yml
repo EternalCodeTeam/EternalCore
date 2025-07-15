@@ -42,13 +42,18 @@ jobs:
             exit 1
           fi
 
+      - name: Get latest PaperMC build number
+        id: get_build_number
+        run: |
+          BUILD_NUMBER=$(curl -s "https://api.papermc.io/v2/projects/paper/versions/${{ matrix.mc_version }}/builds" | jq '.builds | max_by(.build) | .build')
+          echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
+
       - name: Setup PaperMC server for version ${{ matrix.mc_version }}
         run: |
           mkdir mc-server
           cd mc-server
-          BUILD_NUMBER=$(curl -s "https://api.papermc.io/v2/projects/paper/versions/${{ matrix.mc_version }}/builds" | jq '.builds | max_by(.build) | .build')
-          echo "Downloading Paper ${{ matrix.mc_version }} build $BUILD_NUMBER"
-          wget https://api.papermc.io/v2/projects/paper/versions/${{ matrix.mc_version }}/builds/${BUILD_NUMBER}/downloads/paper-${{ matrix.mc_version }}-${BUILD_NUMBER}.jar -O paper.jar
+          echo "Downloading Paper ${{ matrix.mc_version }} build ${{ steps.get_build_number.outputs.build_number }}"
+          wget "https://api.papermc.io/v2/projects/paper/versions/${{ matrix.mc_version }}/builds/${{ steps.get_build_number.outputs.build_number }}/downloads/paper-${{ matrix.mc_version }}-${{ steps.get_build_number.outputs.build_number }}.jar" -O paper.jar
           mkdir plugins
           cp ../${{ env.PLUGIN_JAR }} plugins/
 
