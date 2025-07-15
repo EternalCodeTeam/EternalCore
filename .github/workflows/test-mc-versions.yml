@@ -11,8 +11,10 @@ jobs:
   test-minecraft-versions:
     runs-on: self-hosted
     strategy:
+      fail-fast: false        
       matrix:
         mc_version: [1.18.2, 1.19.4, 1.20.6, 1.21.7]
+
     env:
       MC_VERSION: ${{ matrix.mc_version }}
       PLUGIN_GLOB: "eternalcore-plugin/build/libs/EternalCore*.jar"
