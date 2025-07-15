@@ -13,8 +13,9 @@ jobs:
     strategy:
       matrix:
         mc_version: [1.18.2, 1.19.4, 1.20.6, 1.21.7]
+    # Expose MC_VERSION for every step:
     env:
-      # We'll find this JAR locally and export it into GITHUB_ENV
+      MC_VERSION: ${{ matrix.mc_version }}
       PLUGIN_GLOB: "eternalcore-plugin/build/libs/EternalCore*.jar"
 
     steps:
@@ -33,12 +34,11 @@ jobs:
       - name: Build the plugin JAR
         run: ./gradlew clean eternalcore-plugin:shadowJar
 
-      - name: Find plugin JAR file
+      - name: Find plugin JAR
         id: find-jar
         run: |
           PLUGIN_JAR=$(find ./eternalcore-plugin/build/libs -name 'EternalCore*.jar' | head -n1)
           echo "PLUGIN_JAR=$PLUGIN_JAR" >> $GITHUB_ENV
-          echo "Found plugin JAR: $PLUGIN_JAR"
           if [ -z "$PLUGIN_JAR" ]; then
             echo "❌ Plugin JAR not found!"
             exit 1
@@ -46,15 +46,13 @@ jobs:
 
       - name: Get latest PaperMC build number
         id: get_build_number
-        env:
-          MC_VERSION: ${{ matrix.mc_version }}
         run: |
           BUILD_NUMBER=$(curl -s "https://api.papermc.io/v2/projects/paper/versions/${MC_VERSION}/builds" \
             | jq '.builds | max_by(.build) | .build')
           echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
-          echo "Using PaperMC ${MC_VERSION} build #$BUILD_NUMBER"
+          echo "→ PaperMC ${MC_VERSION} build #$BUILD_NUMBER"
 
-      - name: Setup PaperMC server for version ${{ matrix.mc_version }}
+      - name: Setup PaperMC server for $MC_VERSION
         run: |
           mkdir mc-server
           cd mc-server
@@ -62,7 +60,6 @@ jobs:
           wget "https://api.papermc.io/v2/projects/paper/versions/${MC_VERSION}/builds/${{ steps.get_build_number.outputs.build_number }}/downloads/paper-${MC_VERSION}-${{ steps.get_build_number.outputs.build_number }}.jar" \
             -O paper.jar
           mkdir plugins
-          # Use the Bash variable, not GitHub expression
           cp "../$PLUGIN_JAR" plugins/
 
       - name: Agree to EULA
@@ -83,7 +80,7 @@ jobs:
             allow-end: false
           EOF
 
-      - name: Run MC server and fail on errors
+      - name: Run server and fail on errors
         working-directory: mc-server
         run: |
           java -Xmx1G -jar paper.jar nogui > server.log 2>&1 &
