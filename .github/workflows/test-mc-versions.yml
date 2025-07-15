@@ -16,6 +16,7 @@ jobs:
     env:
       MC_VERSION: ${{ matrix.mc_version }}
       PLUGIN_GLOB: "eternalcore-plugin/build/libs/EternalCore*.jar"
+      MC_PORT: 25560
 
     steps:
       - name: Checkout repo
@@ -65,6 +66,7 @@ jobs:
       - name: Configure server.properties
         run: |
           cat > mc-server/server.properties <<EOF
+          server-port=${MC_PORT}
           allow-nether=false
           level-type=FLAT
           max-world-size=16
@@ -82,14 +84,14 @@ jobs:
         run: |
           java -Xmx1G -jar paper.jar nogui > server.log 2>&1 &
           PID=$!
-          echo "Server PID: $PID"
+          echo "Started MC ${MC_VERSION} on port ${MC_PORT} (PID=${PID})"
           sleep 60
           kill $PID || true
           wait $PID || true
           if grep -iE 'error|exception|failed' server.log; then
-            echo "❌ Errors in server.log"
+            echo "❌ Errors detected in server.log"
             cat server.log
             exit 1
           else
-            echo "✅ No errors detected"
+            echo "✅ No errors detected for MC ${MC_VERSION}"
           fi
