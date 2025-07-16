@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -19,11 +20,13 @@ class IgnoreCommand {
 
     private final IgnoreService ignoreService;
     private final NoticeService noticeService;
+    private final Scheduler scheduler;
 
     @Inject
-    IgnoreCommand(IgnoreService ignoreService, NoticeService noticeService) {
+    IgnoreCommand(IgnoreService ignoreService, NoticeService noticeService, Scheduler scheduler) {
         this.ignoreService = ignoreService;
         this.noticeService = noticeService;
+        this.scheduler = scheduler;
     }
 
     @Execute
@@ -48,10 +51,9 @@ class IgnoreCommand {
                 return;
             }
 
-            this.ignoreService.ignore(senderUuid, targetUuid).thenAccept(cancelled -> {
-                if (cancelled) {
-                    return;
-                }
+
+            this.scheduler.run(() -> {
+                this.ignoreService.ignore(senderUuid, targetUuid);
 
                 this.noticeService.create()
                     .player(senderUuid)
@@ -62,21 +64,19 @@ class IgnoreCommand {
         });
     }
 
+
     @Execute(name = "-all", aliases = "*")
     @DescriptionDocs(description = "Ignore all players")
     void ignoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
 
-        this.ignoreService.ignoreAll(senderUuid).thenAccept(cancelled -> {
-            if (cancelled) {
-                return;
-            }
+        this.ignoreService.ignoreAll(senderUuid);
 
-            this.noticeService.create()
-                .player(senderUuid)
-                .notice(translation -> translation.privateChat().ignoreAll())
-                .send();
-        });
+        this.noticeService.create()
+            .player(senderUuid)
+            .notice(translation -> translation.privateChat().ignoreAll())
+            .send();
+
     }
 
 }

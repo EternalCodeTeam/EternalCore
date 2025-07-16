@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -19,11 +20,13 @@ class UnIgnoreCommand {
 
     private final IgnoreService ignoreService;
     private final NoticeService noticeService;
+    private final Scheduler scheduler;
 
     @Inject
-    public UnIgnoreCommand(IgnoreService ignoreService, NoticeService noticeService) {
+    public UnIgnoreCommand(IgnoreService ignoreService, NoticeService noticeService, Scheduler scheduler) {
         this.ignoreService = ignoreService;
         this.noticeService = noticeService;
+        this.scheduler = scheduler;
     }
 
     @Execute
@@ -48,10 +51,9 @@ class UnIgnoreCommand {
                 return;
             }
 
-            this.ignoreService.unIgnore(senderUuid, targetUuid).thenAccept(cancelled -> {
-                if (cancelled) {
-                    return;
-                }
+
+            this.scheduler.run(() -> {
+                this.ignoreService.unIgnore(senderUuid, targetUuid);
 
                 this.noticeService.create()
                     .player(senderUuid)
@@ -67,16 +69,12 @@ class UnIgnoreCommand {
     void unIgnoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
 
-        this.ignoreService.unIgnoreAll(senderUuid).thenAccept(cancelled -> {
-            if (cancelled) {
-                return;
-            }
+        this.ignoreService.unIgnoreAll(senderUuid);
 
-            this.noticeService.create()
-                .player(senderUuid)
-                .notice(translation -> translation.privateChat().unIgnoreAll())
-                .send();
-        });
+        this.noticeService.create()
+            .player(senderUuid)
+            .notice(translation -> translation.privateChat().unIgnoreAll())
+            .send();
+
     }
-
 }
