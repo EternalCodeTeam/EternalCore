@@ -7,7 +7,7 @@ import com.eternalcode.core.feature.ignore.event.UnIgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.UnIgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-
+import com.eternalcode.core.util.FutureHandler;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -36,7 +36,7 @@ class IgnoreServiceImpl implements IgnoreService {
             return;
         }
 
-        this.ignoreRepository.ignore(requester, target);
+        this.ignoreRepository.ignore(requester, target).thenApply(unused -> FutureHandler.whenSuccess(null));
     }
 
     @Override
@@ -47,7 +47,7 @@ class IgnoreServiceImpl implements IgnoreService {
             return;
         }
 
-        this.ignoreRepository.ignoreAll(requester).thenApply(unused -> true);
+        this.ignoreRepository.ignoreAll(requester).thenApply(unused -> FutureHandler.whenSuccess(null));
     }
 
     @Override
@@ -58,7 +58,7 @@ class IgnoreServiceImpl implements IgnoreService {
             return;
         }
 
-        this.ignoreRepository.unIgnore(requester, target).thenApply(unused -> true);
+        this.ignoreRepository.unIgnore(requester, target).thenApply(unused -> FutureHandler.whenSuccess(null));
     }
 
     @Override
@@ -69,6 +69,6 @@ class IgnoreServiceImpl implements IgnoreService {
             return;
         }
 
-        this.ignoreRepository.unIgnoreAll(requester).thenApply(unused -> true);
+        this.ignoreRepository.unIgnoreAll(requester).thenApply(unused -> FutureHandler.whenSuccess(null));
     }
 }
