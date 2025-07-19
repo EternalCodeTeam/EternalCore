@@ -23,7 +23,7 @@ object Versions {
     const val HIKARI_CP = "6.3.0"
 
     const val LITE_COMMANDS = "3.10.2"
-    const val LITE_SKULL_API = "1.3.0"
+    const val LITE_SKULL_API = "2.0.0"
 
     const val GUAVA = "33.4.8-jre"
     const val GSON = "2.13.1"
