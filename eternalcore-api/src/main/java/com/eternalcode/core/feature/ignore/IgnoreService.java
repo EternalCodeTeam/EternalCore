@@ -7,12 +7,12 @@ public interface IgnoreService {
 
     CompletableFuture<Boolean> isIgnored(UUID requester, UUID target);
 
-    CompletableFuture<Boolean> ignore(UUID requester, UUID target);
+    void ignore(UUID requester, UUID target);
 
-    CompletableFuture<Boolean> ignoreAll(UUID requester);
+    void ignoreAll(UUID requester);
 
-    CompletableFuture<Boolean> unIgnore(UUID requester, UUID target);
+    void unIgnore(UUID requester, UUID target);
 
-    CompletableFuture<Boolean> unIgnoreAll(UUID requester);
+    void unIgnoreAll(UUID requester);
 
 }
