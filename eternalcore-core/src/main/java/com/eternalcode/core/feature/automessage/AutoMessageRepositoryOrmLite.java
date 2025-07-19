@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.automessage;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
+import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 import com.j256.ormlite.stmt.Where;
@@ -30,7 +30,7 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
             return CompletableFuture.completedFuture(onlineUniqueIds);
         }
 
-        CompletableFuture<List<AutoMessageTable>> wrapperList =
+        CompletableFuture<List<AutoMessageTable>> tableList =
             this.action(
                 AutoMessageTable.class, dao -> {
                 Where<AutoMessageTable, Object> where = dao.queryBuilder().where();
@@ -38,9 +38,9 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
                 return where.query();
             });
 
-        return wrapperList.thenApply(ignores -> {
+        return tableList.thenApply(ignores -> {
             Set<UUID> ignoredIds = ignores.stream()
-                .map(wrapper -> wrapper.uniqueId)
+                .map(autoMessageTable -> autoMessageTable.uniqueId)
                 .collect(Collectors.toSet());
 
             return onlineUniqueIds.stream()
@@ -62,8 +62,8 @@ class AutoMessageRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
                     .thenApply(result -> false);
             }
 
-            AutoMessageTable wrapper = optional.get();
-            return this.delete(AutoMessageTable.class, wrapper).thenApply(state -> true);
+            AutoMessageTable autoMessageTable = optional.get();
+            return this.delete(AutoMessageTable.class, autoMessageTable).thenApply(state -> true);
         });
     }
 }

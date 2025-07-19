@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
+import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 
@@ -22,49 +22,49 @@ class PrisonerRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pri
     @Inject
     private PrisonerRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
-        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), PrisonerWrapper.class);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), PrisonerTable.class);
     }
 
     @Override
     public CompletableFuture<Optional<JailedPlayer>> getPrisoner(UUID uuid) {
-        return this.selectSafe(PrisonerWrapper.class, uuid)
-            .thenApply(optional -> optional.map(prisonerWrapper -> prisonerWrapper.toPrisoner()));
+        return this.selectSafe(PrisonerTable.class, uuid)
+            .thenApply(optional -> optional.map(prisonerTable -> prisonerTable.toPrisoner()));
     }
 
     @Override
     public CompletableFuture<Set<JailedPlayer>> getPrisoners() {
-        return this.selectAll(PrisonerWrapper.class)
-            .thenApply(prisonerWrappers -> prisonerWrappers.stream()
-                .map(PrisonerWrapper::toPrisoner)
+        return this.selectAll(PrisonerTable.class)
+            .thenApply(prisonerTables -> prisonerTables.stream()
+                .map(PrisonerTable::toPrisoner)
                 .collect(Collectors.toSet()));
     }
 
     @Override
     public void deletePrisoner(UUID uuid) {
-        this.deleteById(PrisonerWrapper.class, uuid);
+        this.deleteById(PrisonerTable.class, uuid);
     }
 
     @Override
     public void editPrisoner(JailedPlayer jailedPlayer) {
-        this.save(PrisonerWrapper.class, PrisonerWrapper.from(jailedPlayer));
+        this.save(PrisonerTable.class, PrisonerTable.from(jailedPlayer));
     }
 
     @Override
     public void deleteAllPrisoners() {
-        this.delete(PrisonerWrapper.class, new PrisonerWrapper());
+        this.delete(PrisonerTable.class, new PrisonerTable());
     }
 
     @Override
     public CompletableFuture<List<JailedPlayer>> getAllPrisoners() {
-        return this.selectAll(PrisonerWrapper.class)
-            .thenApply(prisonerWrappers -> prisonerWrappers.stream()
-                .map(PrisonerWrapper::toPrisoner)
+        return this.selectAll(PrisonerTable.class)
+            .thenApply(prisonerTables -> prisonerTables.stream()
+                .map(PrisonerTable::toPrisoner)
                 .toList());
     }
 
     @Override
     public void savePrisoner(JailedPlayer jailedPlayer) {
-        this.save(PrisonerWrapper.class, PrisonerWrapper.from(jailedPlayer));
+        this.save(PrisonerTable.class, PrisonerTable.from(jailedPlayer));
     }
 
 }

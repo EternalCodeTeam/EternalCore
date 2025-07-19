@@ -9,7 +9,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "eternal_core_prisoners")
-class PrisonerWrapper {
+class PrisonerTable {
 
     @DatabaseField(columnName = "id", id = true)
     private UUID uuid;
@@ -24,10 +24,10 @@ class PrisonerWrapper {
     @DatabaseField(columnName = "detained_by")
     private String detainedBy;
 
-    PrisonerWrapper() {
+    PrisonerTable() {
     }
 
-    PrisonerWrapper(UUID uuid, Instant detainedAt, Duration duration, String detainedBy) {
+    PrisonerTable(UUID uuid, Instant detainedAt, Duration duration, String detainedBy) {
         this.uuid = uuid;
         this.detainedAt = detainedAt;
         this.duration = duration;
@@ -38,8 +38,8 @@ class PrisonerWrapper {
         return new JailedPlayer(this.uuid, this.detainedAt, this.duration, this.detainedBy);
     }
 
-    static PrisonerWrapper from(JailedPlayer jailedPlayer) {
-        return new PrisonerWrapper(
+    static PrisonerTable from(JailedPlayer jailedPlayer) {
+        return new PrisonerTable(
             jailedPlayer.getPlayerUniqueId(),
             jailedPlayer.getDetainedAt(),
             jailedPlayer.getPrisonTime(),

@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.home.database;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.database.wrapper.AbstractRepositoryOrmLite;
+import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
@@ -25,50 +25,50 @@ class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRep
     @Inject
     private HomeRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
-        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeWrapper.class);
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), HomeTable.class);
     }
 
     @Override
     public CompletableFuture<Optional<Home>> getHome(UUID playerUniqueId) {
-        return this.select(HomeWrapper.class, playerUniqueId)
+        return this.select(HomeTable.class, playerUniqueId)
             .thenApply(Optional::of)
-            .thenApply(home -> home.map(HomeWrapper::toHome));
+            .thenApply(home -> home.map(HomeTable::toHome));
     }
 
     @Override
     public CompletableFuture<Optional<Home>> getHome(User user, String homeName) {
-        return this.action(HomeWrapper.class, dao -> Optional.ofNullable(dao.queryBuilder()
+        return this.action(HomeTable.class, dao -> Optional.ofNullable(dao.queryBuilder()
             .where()
             .eq(OWNER_COLUMN, user.getUniqueId())
             .and()
             .eq(NAME_COLUMN, homeName)
-            .queryForFirst()).map(HomeWrapper::toHome));
+            .queryForFirst()).map(HomeTable::toHome));
     }
 
     @Override
     public CompletableFuture<Optional<Home>> getHome(UUID playerUniqueId, String homeName) {
-        return this.action(HomeWrapper.class, dao -> Optional.ofNullable(dao.queryBuilder()
+        return this.action(HomeTable.class, dao -> Optional.ofNullable(dao.queryBuilder()
             .where()
             .eq(OWNER_COLUMN, playerUniqueId)
             .and()
             .eq(NAME_COLUMN, homeName)
-            .queryForFirst()).map(HomeWrapper::toHome));
+            .queryForFirst()).map(HomeTable::toHome));
     }
 
     @Override
     public CompletableFuture<Void> saveHome(Home home) {
-        return this.save(HomeWrapper.class, HomeWrapper.from(home)).thenApply(result -> null);
+        return this.save(HomeTable.class, HomeTable.from(home)).thenApply(result -> null);
     }
 
     @Override
     public CompletableFuture<Integer> deleteHome(UUID playerUniqueId) {
-        return this.deleteById(HomeWrapper.class, playerUniqueId);
+        return this.deleteById(HomeTable.class, playerUniqueId);
     }
 
     @Override
     public CompletableFuture<Integer> deleteHome(User user, String homeName) {
-        return this.action(HomeWrapper.class, dao -> {
-            DeleteBuilder<HomeWrapper, Object> builder = dao.deleteBuilder();
+        return this.action(HomeTable.class, dao -> {
+            DeleteBuilder<HomeTable, Object> builder = dao.deleteBuilder();
             builder.where()
                 .eq(OWNER_COLUMN, user.getUniqueId())
                 .and()
@@ -79,8 +79,8 @@ class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRep
 
     @Override
     public CompletableFuture<Integer> deleteHome(UUID playerUniqueId, String homeName) {
-        return this.action(HomeWrapper.class, dao -> {
-            DeleteBuilder<HomeWrapper, Object> builder = dao.deleteBuilder();
+        return this.action(HomeTable.class, dao -> {
+            DeleteBuilder<HomeTable, Object> builder = dao.deleteBuilder();
             builder.where()
                 .eq(OWNER_COLUMN, playerUniqueId)
                 .and()
@@ -91,27 +91,27 @@ class HomeRepositoryOrmLite extends AbstractRepositoryOrmLite implements HomeRep
 
     @Override
     public CompletableFuture<Set<Home>> getHomes() {
-        return this.selectAll(HomeWrapper.class)
-            .thenApply(homeOrmLites -> homeOrmLites.stream().map(HomeWrapper::toHome).collect(Collectors.toSet()));
+        return this.selectAll(HomeTable.class)
+            .thenApply(homeOrmLites -> homeOrmLites.stream().map(HomeTable::toHome).collect(Collectors.toSet()));
     }
 
     @Override
     public CompletableFuture<Set<Home>> getHomes(User user) {
-        return this.action(HomeWrapper.class, dao -> dao.queryBuilder()
+        return this.action(HomeTable.class, dao -> dao.queryBuilder()
             .where()
             .eq(OWNER_COLUMN, user.getUniqueId())
             .query()).thenApply(homes -> homes.stream()
-            .map(HomeWrapper::toHome)
+            .map(HomeTable::toHome)
             .collect(Collectors.toSet()));
     }
 
     @Override
     public CompletableFuture<Set<Home>> getHomes(UUID playerUniqueId) {
-        return this.action(HomeWrapper.class, dao -> dao.queryBuilder()
+        return this.action(HomeTable.class, dao -> dao.queryBuilder()
             .where()
             .eq(OWNER_COLUMN, playerUniqueId)
             .query()).thenApply(homes -> homes.stream()
-            .map(HomeWrapper::toHome)
+            .map(HomeTable::toHome)
             .collect(Collectors.toSet()));
     }
 }
