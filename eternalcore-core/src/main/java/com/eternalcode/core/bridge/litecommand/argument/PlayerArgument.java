@@ -1,6 +1,5 @@
 package com.eternalcode.core.bridge.litecommand.argument;
 
-import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -70,6 +69,6 @@ public class PlayerArgument extends AbstractViewerArgument<Player> {
     }
 
     private boolean canSeeVanished(CommandSender sender) {
-        return sender.hasPermission(VanishPermissionConstant.VANISH_SEE_TABULATION_PERMISSION);
+        return sender.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION);
     }
 }
