@@ -21,43 +21,40 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
 import java.util.function.Supplier;
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 @Command(name = "chat")
 @Permission("eternalcore.chat")
 class ChatCommand {
 
+    private static final String EMPTY_CHAT_STRING = " ";
+
     private final NoticeService noticeService;
     private final ChatSettings chatSettings;
     private final EventCaller eventCaller;
+    private final Server server;
 
     private final PluginConfiguration config;
     private final ConfigurationManager configManager;
     private final Scheduler scheduler;
 
-    private final Supplier<Notice> clear;
-
     @Inject
     ChatCommand(
         NoticeService noticeService,
         ChatSettings chatSettings,
-        EventCaller eventCaller,
+        EventCaller eventCaller, Server server,
         PluginConfiguration config,
         ConfigurationManager configManager, Scheduler scheduler
     ) {
         this.noticeService = noticeService;
         this.chatSettings = chatSettings;
         this.eventCaller = eventCaller;
+        this.server = server;
 
         this.config = config;
         this.configManager = configManager;
         this.scheduler = scheduler;
-
-        this.clear = create(chatSettings);
-    }
-
-    private static Supplier<Notice> create(ChatSettings settings) {
-        return () -> Notice.chat("<newline>".repeat(Math.max(0, settings.linesToClear())));
     }
 
     @Execute(name = "clear", aliases = "cc")
@@ -69,8 +66,13 @@ class ChatCommand {
             return;
         }
 
+        this.server.getOnlinePlayers().forEach(player -> {
+            for (int i = 0; i < this.chatSettings.linesToClear(); i++) {
+                player.sendMessage(EMPTY_CHAT_STRING);
+            }
+        });
+
         this.noticeService.create()
-            .notice(this.clear.get())
             .notice(translation -> translation.chat().cleared())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
