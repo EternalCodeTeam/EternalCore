@@ -7,7 +7,6 @@ import com.eternalcode.core.injector.annotations.component.Setup;
 import com.eternalcode.core.feature.language.config.LanguageConfiguration;
 import com.eternalcode.core.translation.implementation.TranslationFactory;
 import java.util.List;
-import panda.std.stream.PandaStream;
 
 @Setup
 class TranslationManagerSetup {
@@ -18,17 +17,18 @@ class TranslationManagerSetup {
         LanguageService languageService,
         LanguageConfiguration languageConfiguration
     ) {
-        List<AbstractTranslation> usedMessagesList = PandaStream.of(languageConfiguration.languages)
+        List<AbstractTranslation> usedMessagesList = languageConfiguration.languages.stream()
             .map(TranslationFactory::create)
             .toList();
 
-        Translation defaultTranslation = PandaStream.of(usedMessagesList)
-            .find(usedMessages -> usedMessages.getLanguage().equals(languageConfiguration.defaultLanguage))
-            .orThrow(() -> new RuntimeException("Default language not found!"));
+        Translation defaultTranslation = usedMessagesList.stream()
+            .filter(usedMessages -> usedMessages.getLanguage().equals(languageConfiguration.defaultLanguage))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Default language not found!"));
 
         TranslationManager translationManager = new TranslationManager(languageService, defaultTranslation);
 
-        for (ReloadableTranslation message : usedMessagesList) {
+        for (AbstractTranslation message : usedMessagesList) {
             configurationManager.load(message);
             translationManager.loadLanguage(message.getLanguage(), message);
         }

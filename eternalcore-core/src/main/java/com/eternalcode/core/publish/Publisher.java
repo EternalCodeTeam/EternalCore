@@ -6,4 +6,8 @@ public interface Publisher {
 
     <E extends PublishEvent> E publish(E publishEvent);
 
+    static Publisher empty() {
+        return new EmptyPublisher();
+    }
+
 }

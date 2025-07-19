@@ -1,13 +1,11 @@
 package com.eternalcode.core.bridge.litecommand.configurator.config;
 
-import com.eternalcode.core.configuration.ReloadableConfig;
+import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.feature.gamemode.GameModeArgumentSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
-import net.dzikoysk.cdn.source.Resource;
-import net.dzikoysk.cdn.source.Source;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import org.bukkit.GameMode;
 
 import java.io.File;
@@ -18,15 +16,19 @@ import java.util.Map;
 import java.util.Optional;
 
 @ConfigurationFile
-public class CommandConfiguration implements ReloadableConfig {
+public class CommandConfiguration extends AbstractConfigurationFile {
 
     @Bean
     public Argument argument = new Argument();
 
-    @Contextual
-    public static class Argument implements GameModeArgumentSettings {
+    @Override
+    public File getConfigFile(File dataFolder) {
+        return new File(dataFolder, "commands.yml");
+    }
 
-        @Description("# List of aliases for gamemode argument")
+    public static class Argument extends OkaeriConfig implements GameModeArgumentSettings {
+
+        @Comment("# List of aliases for gamemode argument")
         public Map<GameMode, List<String>> gameModeAliases = Map.of(
                 GameMode.SURVIVAL, List.of("survival", "0"),
                 GameMode.CREATIVE, List.of("creative", "1"),
@@ -53,7 +55,7 @@ public class CommandConfiguration implements ReloadableConfig {
 
     }
 
-    @Description("# List of shortcuts for gamemode command")
+    @Comment("# List of shortcuts for gamemode command")
     public Map<GameMode, List<String>> gameModeShortCuts = Map.of(
                 GameMode.SURVIVAL, Collections.singletonList("gms"),
                 GameMode.CREATIVE, Collections.singletonList("gmc"),
@@ -77,7 +79,7 @@ public class CommandConfiguration implements ReloadableConfig {
                 .orElse(null);
     }
 
-    @Description({
+    @Comment({
         "# This file allows you to configure commands.",
         "# You can change command name, aliases and permissions.",
         "# You can edit the commands as follows this template:",
@@ -106,10 +108,5 @@ public class CommandConfiguration implements ReloadableConfig {
             Map.of("reload", new SubCommand("reload", true, List.of("rl"), List.of("eternalcore.reload"))),
             true)
     );
-
-    @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "commands.yml");
-    }
 
 }

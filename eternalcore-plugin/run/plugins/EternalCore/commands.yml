@@ -1,0 +1,59 @@
+argument:
+  # List of aliases for gamemode argument
+  gameModeAliases:
+    SURVIVAL:
+      - "survival"
+      - 0
+    ADVENTURE:
+      - "adventure"
+      - 2
+    SPECTATOR:
+      - "spectator"
+      - 3
+    CREATIVE:
+      - "creative"
+      - 1
+# List of shortcuts for gamemode command
+gameModeShortCuts:
+  SURVIVAL:
+    - "gms"
+  ADVENTURE:
+    - "gma"
+  SPECTATOR:
+    - "gmsp"
+  CREATIVE:
+    - "gmc"
+# This file allows you to configure commands.
+# You can change command name, aliases and permissions.
+# You can edit the commands as follows this template:
+# commands:
+#   <command_name>:
+#     name: "<new_command_name>"
+#     aliases:
+#       - "<new_command_aliases>"
+#     permissions:
+#       - "<new_command_permission>"
+#     subCommands:
+#       <default_sub_command_name>:
+#         name: <new_sub_command_name>
+#         disabled: false/true
+#         aliases:
+#           - "<new_sub_command_aliases>"
+#         permissions:
+#           - "<new_sub_command_permission>"
+commands:
+  eternalcore:
+    name: "eternal-core"
+    enabled: true
+    aliases:
+      - "eternal"
+    permissions:
+      - "eternalcore.eternalcore"
+    subCommands:
+      reload:
+        name: "reload"
+        enabled: true
+        aliases:
+          - "rl"
+        permissions:
+          - "eternalcore.reload"

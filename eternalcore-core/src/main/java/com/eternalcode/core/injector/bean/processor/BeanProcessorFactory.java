@@ -1,8 +1,8 @@
 package com.eternalcode.core.injector.bean.processor;
 
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.configuration.ConfigurationManager;
-import com.eternalcode.core.configuration.ReloadableConfig;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
@@ -21,6 +21,7 @@ import dev.rollczi.litecommands.context.ContextProvider;
 import dev.rollczi.litecommands.editor.Editor;
 import dev.rollczi.litecommands.handler.result.ResultHandler;
 import dev.rollczi.litecommands.scope.Scope;
+import java.io.File;
 import org.bukkit.Server;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -63,10 +64,11 @@ public final class BeanProcessorFactory {
                 Publisher publisher = provider.getDependency(Publisher.class);
                 publisher.subscribe(potentialSubscriber);
             })
-            .onProcess(ReloadableConfig.class, (provider, config, configurationFile) -> {
-                ConfigurationManager configurationManager = provider.getDependency(ConfigurationManager.class);
-                configurationManager.load(config);
-            })
+            .onProcess(
+                AbstractConfigurationFile.class, (provider, config, configurationFile) -> {
+                    ConfigurationManager configurationManager = provider.getDependency(ConfigurationManager.class);
+                    configurationManager.load(config);
+                })
             .onProcess(Command.class, Object.class, (provider, command, none) -> {
                 LiteCommandsAnnotations<?> commandsBuilder = provider.getDependency(LiteCommandsAnnotations.class);
                 commandsBuilder.load(command);
