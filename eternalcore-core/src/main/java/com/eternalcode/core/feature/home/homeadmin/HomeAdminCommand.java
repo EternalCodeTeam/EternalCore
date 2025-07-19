@@ -21,7 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Command(name = "homeadmin")
-@Permission("eternalcode.home.admin")
+@Permission("eternalcore.home.admin")
 class HomeAdminCommand {
 
     private final HomeManager homeManager;
