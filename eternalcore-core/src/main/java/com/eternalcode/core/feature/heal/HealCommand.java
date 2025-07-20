@@ -68,11 +68,6 @@ class HealCommand {
         player.setFireTicks(0);
         player.setRemainingAir(player.getMaximumAir());
 
-        player.setHealth(maxHealth);
-        player.setFoodLevel(20);
-        player.setFireTicks(0);
-        player.setRemainingAir(player.getMaximumAir());
-
         for (PotionEffect effect : player.getActivePotionEffects()) {
             if (healConfiguration.removeOnlyNegativeEffects) {
                 if (!PotionEffectUtil.isNegativeEffect(effect.getType())) {
