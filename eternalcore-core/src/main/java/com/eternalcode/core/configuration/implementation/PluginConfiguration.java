@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.catboy.CatBoySettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.heal.HealConfiguration;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
@@ -153,6 +154,10 @@ public class PluginConfiguration implements ReloadableConfig {
             }
         };
     }
+
+    @Bean
+    @Description({ " ", "# Settings controlling how player healing works and which potion effects get cleared" })
+    public HealConfiguration heal = new HealConfiguration();
 
     @Description({ " ", "# Awesome sounds" })
     public Sounds sound = new Sounds();

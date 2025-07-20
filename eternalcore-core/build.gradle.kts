@@ -49,6 +49,12 @@ eternalShadow {
         "com.eternalcode.multification",
     )
 
+    // XSeries
+    library("com.github.cryptomorin:XSeries:${Versions.XSERIES}")
+    libraryRelocate(
+        "com.cryptomorin.xseries",
+    )
+
     // EternalCode Commons & GitCheck
     library("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")

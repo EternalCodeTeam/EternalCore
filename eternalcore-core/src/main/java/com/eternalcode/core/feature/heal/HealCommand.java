@@ -1,8 +1,10 @@
 package com.eternalcode.core.feature.heal;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.PotionEffectUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -16,10 +18,12 @@ import org.bukkit.potion.PotionEffect;
 class HealCommand {
 
     private final NoticeService noticeService;
+    private final HealConfiguration healConfiguration;
 
     @Inject
-    HealCommand(NoticeService noticeService) {
+    HealCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration) {
         this.noticeService = noticeService;
+        this.healConfiguration = pluginConfiguration.heal;
     }
 
     @Execute
@@ -65,6 +69,11 @@ class HealCommand {
         player.setRemainingAir(player.getMaximumAir());
 
         for (PotionEffect effect : player.getActivePotionEffects()) {
+            if (healConfiguration.removeOnlyNegativeEffects) {
+                if (!PotionEffectUtil.isNegativeEffect(effect.getType())) {
+                    continue;
+                }
+            }
             player.removePotionEffect(effect.getType());
         }
     }
