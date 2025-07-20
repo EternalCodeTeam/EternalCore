@@ -386,7 +386,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public DrawMode drawMode = DrawMode.RANDOM;
 
         @Description("# Minimum number of players on the server to send an auto message.")
-        public int minPlayers = 3;
+        public int minPlayers = 1;
 
         @Override
         public boolean enabled() {
