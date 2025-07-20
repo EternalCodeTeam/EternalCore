@@ -34,6 +34,8 @@ object Versions {
 
     const val TRIUMPH_GUI = "3.1.12"
 
+    const val XSERIES = "13.3.3"
+
     const val BSTATS = "3.1.0"
 
     const val CAFFEINE = "3.2.2"
