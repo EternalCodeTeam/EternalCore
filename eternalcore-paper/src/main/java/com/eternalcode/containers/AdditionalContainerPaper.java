@@ -17,9 +17,6 @@ public class AdditionalContainerPaper {
     public static final AdditionalContainerPaper LOOM = new AdditionalContainerPaper(player -> player.openLoom(null, true));
     public static final AdditionalContainerPaper SMITHING_TABLE = new AdditionalContainerPaper(player -> player.openSmithingTable(null, true));
 
-    public static final AdditionalContainerPaper ELDER_GUARDIAN = new AdditionalContainerPaper(player -> player.showElderGuardian(false));
-    public static final AdditionalContainerPaper ELDER_GUARDIAN_SILENT = new AdditionalContainerPaper(player -> player.showElderGuardian(true));
-
     private static final Environment ENVIRONMENT = PaperLib.getEnvironment();
     private static final Logger LOGGER = Logger.getLogger("AdditionalContainerPaper");
 
@@ -33,7 +30,7 @@ public class AdditionalContainerPaper {
     public void open(Player player) {
         if (!ENVIRONMENT.isPaper()) {
             player.sendMessage(ChatColor.RED + "This feature is not supported on this server. Please contact the server administrator and check console!");
-            LOGGER.warning("This feature is only available on paper, use paper or other paper 1-17-1.19x forks");
+            LOGGER.warning("This feature is only available on paper, use Paper or its 1.17.x+ forks");
 
             return;
         }

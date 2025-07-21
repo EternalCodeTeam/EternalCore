@@ -1,10 +1,11 @@
 package com.eternalcode.core.feature.troll;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.containers.AdditionalContainerPaper;
+import com.eternalcode.core.compatibility.Compatibility;
+import com.eternalcode.core.compatibility.Version;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.overlays.AdditionalOverlayPaper;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -15,10 +16,7 @@ import org.bukkit.entity.Player;
 
 @Command(name = "elderguardian", aliases = {"elder-guardian"})
 @Permission("eternalcore.troll.elderguardian")
-@PermissionDocs(
-    name = "Elder Guardian",
-    permission = "eternalcore.troll.elderguardian",
-    description = "Allows you to show an elder guardian to a player")
+@Compatibility(from = @Version(minor = 19, patch = 2)) // Requires Minecraft 1.19.2 or higher
 public class ElderGuardianCommand {
 
     private final NoticeService noticeService;
@@ -32,7 +30,7 @@ public class ElderGuardianCommand {
     @DescriptionDocs(description = {"Show an elder guardian to a player"}, arguments = {"<player>", "[-s]"})
     void execute(@Context Player sender, @Arg Player target, @Flag("-s") boolean silent) {
         if (silent) {
-            AdditionalContainerPaper.ELDER_GUARDIAN_SILENT.open(target);
+            AdditionalOverlayPaper.ELDER_GUARDIAN_SILENT.show(target);
 
             this.noticeService.create()
                 .notice(translation -> translation.troll().elderGuardianShownSilently())
@@ -40,7 +38,7 @@ public class ElderGuardianCommand {
                 .placeholder("{PLAYER}", target.getName())
                 .send();
         } else {
-            AdditionalContainerPaper.ELDER_GUARDIAN.open(target);
+            AdditionalOverlayPaper.ELDER_GUARDIAN.show(target);
 
             this.noticeService.create()
                 .notice(translation -> translation.troll().elderGuardianShown())
