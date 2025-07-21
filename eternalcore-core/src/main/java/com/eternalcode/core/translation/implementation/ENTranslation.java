@@ -19,6 +19,7 @@ import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
+import com.eternalcode.core.feature.troll.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -570,7 +571,7 @@ public class ENTranslation extends AbstractTranslation {
     @Contextual
     public static class ENTrollSection implements TrollSection {
 
-        public Notice elderGuardianShown = Notice.chat("<green>► <white>Shown elder guardian to player <green>{PLAYER}<white>!");
-        public Notice elderGuardianShownSilently = Notice.chat("<green>► <white>Shown elder guardian to player <green>{PLAYER}<white> silently!");
+        @Description({" ", "# This section is responsible for elder guardian messages."})
+        public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
     }
 }
