@@ -13,4 +13,15 @@ public class ENAdminChatMessages implements AdminChatMessages {
     @Description({"# {PLAYER} - Player who sent message on adminchat, {TEXT} - message"})
     public Notice format =
         Notice.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
+
+    public Notice enableSpy =
+        Notice.chat("<green>► <white>Enabled persistent admin chat!");
+
+    public Notice disableSpy =
+        Notice.chat("<green>► <white>Disabled persistent admin chat!");
+
+    public Notice notifyHasSpyEnabled =
+        Notice.actionbar("<white>[AdminChat] <gray>> <green>enabled");
+
+
 }
