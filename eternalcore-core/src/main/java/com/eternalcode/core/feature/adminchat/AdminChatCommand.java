@@ -42,13 +42,12 @@ class AdminChatCommand {
 
     @Execute
     @DescriptionDocs(description = "Toggles persistent admin chat mode.", arguments = "<message>")
-    void execute(@Context CommandSender sender) {
-        Player player = (Player) sender;
-        boolean persistent = this.adminChatService.changeAdminChatSpy(player.getUniqueId());
+    void execute(@Context Player sender) {
+        boolean persistent = this.adminChatService.changeAdminChatSpy(sender.getUniqueId());
 
         this.noticeService.create()
             .notice(translation -> persistent ? translation.adminChat().enableSpy() : translation.adminChat().disableSpy())
-            .player(player.getUniqueId())
+            .player(sender.getUniqueId())
             .send();
 
     }
