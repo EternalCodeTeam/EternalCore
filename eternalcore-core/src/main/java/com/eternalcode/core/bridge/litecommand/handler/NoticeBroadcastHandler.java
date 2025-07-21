@@ -8,7 +8,7 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import org.bukkit.command.CommandSender;
 
 @LiteHandler(NoticeBroadcast.class)
-public class NoticeBroadcastHandler implements ResultHandler<CommandSender, NoticeBroadcast> {
+class NoticeBroadcastHandler implements ResultHandler<CommandSender, NoticeBroadcast> {
 
     @Override
     public void handle(Invocation<CommandSender> invocation, NoticeBroadcast result, ResultHandlerChain<CommandSender> chain) {

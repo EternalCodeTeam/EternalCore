@@ -1,7 +1,10 @@
 package com.eternalcode.core.feature.afk;
 
+import static com.eternalcode.core.feature.afk.AfkCommand.AFK_BYPASS_PERMISSION;
+
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -17,14 +20,14 @@ import org.bukkit.entity.Player;
 
 @Command(name = "afk")
 @Permission("eternalcore.afk")
-@FeatureDocs(
-    name = "Afk",
-    permission = { "eternalcore.afk", "eternalcore.afk.bypass" },
-    description = "It allows you to mark yourself as AFK, or if you are AFK, eternalcore will mark you as AFK after some time"
+@PermissionDocs(
+    name = "Afk bypass",
+    permission = AFK_BYPASS_PERMISSION,
+    description = "Allows player to bypass AFK delay when using /afk command."
 )
 class AfkCommand {
 
-    private static final String AFK_BYPASS_PERMISSION = "eternalcore.afk.bypass";
+    static final String AFK_BYPASS_PERMISSION = "eternalcore.afk.bypass";
 
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
@@ -40,7 +43,7 @@ class AfkCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Marks you as AFK, if player has eternalcore.afk.bypass permission, eternalcore will ignore afk delay")
+    @DescriptionDocs(description = "Toggles AFK status for the player.")
     void execute(@Context Player player) {
         UUID uuid = player.getUniqueId();
 

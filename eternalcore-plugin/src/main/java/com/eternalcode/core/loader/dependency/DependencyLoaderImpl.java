@@ -5,52 +5,57 @@ import com.eternalcode.core.loader.classloader.IsolatedClassLoaderImpl;
 import com.eternalcode.core.loader.pom.DependencyScanner;
 import com.eternalcode.core.loader.pom.PomXmlScanner;
 import com.eternalcode.core.loader.relocation.Relocation;
+import com.eternalcode.core.loader.relocation.RelocationCacheResolver;
 import com.eternalcode.core.loader.relocation.RelocationHandler;
+import com.eternalcode.core.loader.repository.LocalRepository;
 import com.eternalcode.core.loader.repository.Repository;
 
+import com.google.common.base.Stopwatch;
 import com.spotify.futures.CompletableFutures;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class DependencyLoaderImpl implements DependencyLoader {
 
     private static final String LOCAL_REPOSITORY_PATH = "localRepository";
 
-    private final Executor executor;
     private final Logger logger;
-    private final DependencyDownloader downloadDependency;
+    private final ExecutorService executor;
+
+    private final DependencyDownloader dependencyDownloader;
     private final RelocationHandler relocationHandler;
-    private final DependencyScanner pomXmlScanner;
-    private final Repository localRepository;
+    private final DependencyScanner dependencyScanner;
+    private final LocalRepository localRepository;
 
     private final Map<Dependency, Path> loaded = new HashMap<>();
 
     public DependencyLoaderImpl(Logger logger, File dataFolder, List<Repository> repositories) {
-        Path localRepositoryPath = this.setupCacheDirectory(dataFolder);
-        this.localRepository = Repository.localRepository(localRepositoryPath);
+        this.logger = logger;
+        this.localRepository = new LocalRepository(setupCacheDirectory(dataFolder));
 
         List<Repository> allRepositories = new ArrayList<>();
         allRepositories.add(localRepository);
         allRepositories.addAll(repositories);
 
-        this.executor = Executors.newCachedThreadPool();
-        this.logger = logger;
-        this.pomXmlScanner = new PomXmlScanner(allRepositories, localRepository);
-        this.downloadDependency = new DependencyDownloader(logger, localRepository, allRepositories);
-        this.relocationHandler = RelocationHandler.create(this);
+        this.executor = Executors.newFixedThreadPool(allRepositories.size() * 5);
+        this.dependencyScanner = new PomXmlScanner(allRepositories, localRepository);
+        this.dependencyDownloader = new DependencyDownloader(logger, localRepository, allRepositories);
+
+        this.relocationHandler = RelocationHandler.create(this, new RelocationCacheResolver(this.localRepository));
     }
 
     @Override
@@ -59,76 +64,80 @@ public class DependencyLoaderImpl implements DependencyLoader {
     }
 
     @Override
-    public DependencyLoadResult load(ClassLoader loader, List<Dependency> dependencies, List<Relocation> relocations, URL... urls) {
-        return this.load(new IsolatedClassLoaderImpl(loader, urls), dependencies, relocations);
+    public DependencyLoadResult load(IsolatedClassLoader loader, List<Dependency> dependencies, List<Relocation> relocations) {
+        DependencyCollector resolved = resolveDependencies(dependencies);
+        List<DependencyLoadEntry> downloaded = downloadDependencies(relocations, resolved);
+        return loadDependencies(loader, downloaded);
     }
 
-    @Override
-    public DependencyLoadResult load(IsolatedClassLoader loader, List<Dependency> dependencies, List<Relocation> relocations) {
+    private DependencyCollector resolveDependencies(List<Dependency> dependencies) {
         DependencyCollector collector = new DependencyCollector();
+        this.logger.info("Resolving dependencies...");
 
-        this.logger.info("Searching for dependencies");
-        for (Dependency dependency : dependencies) {
-            collector = this.pomXmlScanner.findAllChildren(collector, dependency);
-        }
-
+        runParallel(dependencies, dependency -> this.dependencyScanner.findAllChildren(collector, dependency));
         collector.addScannedDependencies(dependencies);
-        this.logger.info("Found " + collector.getScannedDependencies().size() + " dependencies");
 
-        List<CompletableFuture<DependencyLoadEntry>> futures = new ArrayList<>();
+        this.logger.info("Resolved " + collector.getScannedDependencies().size() + " dependencies");
+        return collector;
+    }
 
-        for (Dependency dependency : collector.getScannedDependencies()) {
-            CompletableFuture<DependencyLoadEntry> pathToDependency = CompletableFuture.supplyAsync(() -> {
-                Path loaded = this.loaded.get(dependency);
+    private List<DependencyLoadEntry> downloadDependencies(List<Relocation> relocations, DependencyCollector collector) {
+        return runParallel(collector.getScannedDependencies(), dependency -> {
+            Path loaded = this.loaded.get(dependency);
 
-                if (loaded != null) {
-                    return new DependencyLoadEntry(dependency, loaded);
-                }
+            if (loaded != null) {
+                return new DependencyLoadEntry(dependency, loaded);
+            }
 
-                Path downloadedDependencyPath = this.downloadDependency.downloadDependency(dependency);
+            Path downloadedDependencyPath = this.dependencyDownloader.downloadDependency(dependency);
+            if (this.relocationHandler == null) {
+                return new DependencyLoadEntry(dependency, downloadedDependencyPath);
+            }
 
-                if (this.relocationHandler == null) {
-                    return new DependencyLoadEntry(dependency, downloadedDependencyPath);
-                }
+            Path relocatedDependency = this.relocationHandler.relocateDependency(localRepository, downloadedDependencyPath, dependency, relocations);
 
-                Path relocatedDependency = this.relocationHandler.relocateDependency(localRepository, downloadedDependencyPath, dependency, relocations);
+            return new DependencyLoadEntry(dependency, relocatedDependency);
+        });
+    }
 
-                return new DependencyLoadEntry(dependency, relocatedDependency);
-            }, this.executor);
-
-            futures.add(pathToDependency);
-        }
-
-        List<DependencyLoadEntry> dependencyLoadEntries = CompletableFutures.allAsList(futures)
-            .orTimeout(60, TimeUnit.MINUTES)
-            .join();
-
-        for (DependencyLoadEntry dependencyLoadEntry : dependencyLoadEntries) {
+    private DependencyLoadResult loadDependencies(IsolatedClassLoader loader, List<DependencyLoadEntry> downloaded) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        for (DependencyLoadEntry dependencyLoadEntry : downloaded) {
             loader.addPath(dependencyLoadEntry.path());
             this.loaded.put(dependencyLoadEntry.dependency(), dependencyLoadEntry.path());
         }
+        stopwatch.stop();
+        this.logger.info("Loaded " + downloaded.size() + " dependencies in " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
 
-        return new DependencyLoadResult(loader, dependencyLoadEntries);
+        return new DependencyLoadResult(loader, downloaded);
+    }
+
+    private <E, R> List<R> runParallel(Collection<E> list, Function<E, R> function) {
+        List<CompletableFuture<R>> futures = list.stream()
+            .map(dependency -> CompletableFuture.supplyAsync(() -> function.apply(dependency), this.executor))
+            .toList();
+
+        return CompletableFutures.allAsList(futures)
+            .orTimeout(60, TimeUnit.MINUTES)
+            .join();
     }
 
     @Override
     public void close() {
         try {
+            this.executor.shutdown();
             this.relocationHandler.close();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             throw new DependencyException("Failed to close relocation handler", exception);
         }
     }
 
-    private Path setupCacheDirectory(File dataFolder) {
+    private static Path setupCacheDirectory(File dataFolder) {
         Path cacheDirectory = dataFolder.toPath().resolve(LOCAL_REPOSITORY_PATH);
         try {
             Files.createDirectories(cacheDirectory);
-        }
-        catch (FileAlreadyExistsException ignored) {
-        }
-        catch (IOException ioException) {
+        } catch (FileAlreadyExistsException ignored) {
+        } catch (IOException ioException) {
             throw new DependencyException("Unable to create " + LOCAL_REPOSITORY_PATH + " directory", ioException);
         }
 

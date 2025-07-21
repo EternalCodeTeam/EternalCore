@@ -5,15 +5,16 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
-import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
+import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
-import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.ENPrivateMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
+import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
+import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
+import com.eternalcode.core.feature.signeditor.messages.ENSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
@@ -118,6 +119,12 @@ public class ENTranslation extends AbstractTranslation {
 
     @Description("# This section is responsible for all messages related to item editing.")
     public ENItemEditMessages itemEdit = new ENItemEditMessages();
+
+    @Description({
+        " ",
+        "# This section is responsible for the messages of the /signeditor command",
+    })
+    public ENSignEditorMessages signEditor = new ENSignEditorMessages();
 
     @Getter
     @Contextual

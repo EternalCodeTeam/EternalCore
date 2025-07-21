@@ -55,11 +55,7 @@ final class EternalCoreLoaderConstants {
 
     private static List<Relocation> createRelocations() {
         return Arrays.stream(RELOCATIONS_HOLDER.split("\\|"))
-            .map(rawRelocation -> Relocation.builder()
-                    .pattern(rawRelocation)
-                    .relocatedPattern(RELOCATION_PREFIX + rawRelocation)
-                    .build()
-            )
+            .map(rawRelocation -> new Relocation(rawRelocation, RELOCATION_PREFIX + rawRelocation))
             .toList();
     }
 

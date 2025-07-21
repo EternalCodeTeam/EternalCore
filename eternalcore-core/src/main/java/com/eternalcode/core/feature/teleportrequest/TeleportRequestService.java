@@ -32,15 +32,8 @@ class TeleportRequestService {
     }
 
     boolean hasRequest(UUID requester, UUID target) {
-        Map<UUID, UUID> map = this.requests.asMap();
-
-        for (Map.Entry<UUID, UUID> entry : map.entrySet()) {
-            if (entry.getKey().equals(requester) && entry.getValue().equals(target)) {
-                return true;
-            }
-        }
-
-        return false;
+        UUID foundTarget = this.requests.getIfPresent(requester);
+        return foundTarget != null && foundTarget.equals(target);
     }
 
     List<UUID> findRequests(UUID target) {

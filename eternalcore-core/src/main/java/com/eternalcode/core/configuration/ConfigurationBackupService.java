@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.apache.commons.io.FileUtils;
@@ -13,10 +13,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
-@FeatureDocs(
-    name = "Configuration Backup",
-    description = "Backs up the full configuration to prevent config destruction, backup is only 3 days back"
-)
 @Service
 public class ConfigurationBackupService {
 

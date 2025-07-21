@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.Blocking;
 
 @Service
 public class SetSlotService {
@@ -21,6 +22,7 @@ public class SetSlotService {
         this.setSlotSaver = setSlotSaver;
     }
 
+    @Blocking
     public void setCapacity(int slots) {
         Object playerList = getPlayerList();
 

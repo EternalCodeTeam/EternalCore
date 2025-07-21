@@ -22,18 +22,14 @@ dependencies {
     compileOnly("org.projectlombok:lombok:${Versions.LOMBOK}")
     annotationProcessor("org.projectlombok:lombok:${Versions.LOMBOK}")
 
-    // GitCheck
-    implementation("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
-
-    implementation("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
-    implementation("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
-
     testImplementation("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
 }
 
 eternalShadow {
     // Paper and Adventure libraries
     library("io.papermc:paperlib:${Versions.PAPERLIB}")
+    library("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
+    library("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
@@ -53,11 +49,20 @@ eternalShadow {
         "com.eternalcode.multification",
     )
 
-    // EternalCode Commons
+    // XSeries
+    library("com.github.cryptomorin:XSeries:${Versions.XSERIES}")
+    libraryRelocate(
+        "com.cryptomorin.xseries",
+    )
+
+    // EternalCode Commons & GitCheck
     library("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
+    library("com.eternalcode:eternalcode-commons-folia:${Versions.ETERNALCODE_COMMONS}")
+    library("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
     libraryRelocate(
         "com.eternalcode.commons",
+        "com.eternalcode.gitcheck",
     )
 
     // database
@@ -67,10 +72,18 @@ eternalShadow {
     library("com.j256.ormlite:ormlite-core:${Versions.ORMLITE}")
     library("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
     library("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
+    libraryRelocate(
+        "com.zaxxer.hikari",
+        "com.j256.ormlite",
+        "org.mariadb.jdbc",
+        "org.postgresql",
+        "com.h2",
+    )
 
     // command framework & skull library
     library("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
     library("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
+    library("dev.rollczi:litecommands-folia:${Versions.LITE_COMMANDS}")
     library("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
     libraryRelocate(
         "dev.rollczi.litecommands",

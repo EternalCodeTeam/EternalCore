@@ -1,52 +1,65 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "dependencyDashboard": true,
-    "extends": [
-        "config:base"
-    ],
-    "groupName": "all dependencies",
-    "groupSlug": "all",
-    "lockFileMaintenance": {
-        "enabled": false
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dependencyDashboard": true,
+  "extends": [
+    "config:recommended"
+  ],
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "pruneStaleBranches": true,
+  "commitMessagePrefix": "dependency:",
+  "separateMinorPatch": true,
+  "separateMultipleMajor": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true,
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
     },
-    "separateMajorMinor": true,
-    "pruneStaleBranches": true,
-    "commitMessagePrefix": "dependency:",
-    "packageRules": [
-        {
-            "groupName": "patch",
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "excludePackagePatterns": ["org.spigotmc*"],
-            "updateTypes": ["patch"],
-            "automerge": true
-        },
-        {
-            "groupName": "minor",
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "excludePackagePatterns": ["org.spigotmc*"],
-            "updateTypes": ["minor"],
-            "automerge": true
-        },
-        {
-            "groupName": "all-major",
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "updateTypes": ["major"],
-            "excludePackagePatterns": ["org.spigotmc*"],
-            "automerge": false
-        },
-        {
-            "groupName": "spigotmc",
-            "matchPackagePatterns": [
-                "org.spigotmc*"
-            ],
-            "allowedVersions": "/^\\d+\\.\\d+(\\.\\d+)?-R\\d+\\.\\d+-SNAPSHOT$/",
-            "automerge": false
-        }
-    ]
+    {
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "automerge": true,
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false,
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "*",
+        "!/org.spigotmc*/"
+      ]
+    },
+    {
+      "allowedVersions": "/^\\d+\\.\\d+(\\.\\d+)?-R\\d+\\.\\d+-SNAPSHOT$/",
+      "automerge": false,
+      "labels": [
+        "🔄 dependencies"
+      ],
+      "matchPackageNames": [
+        "/org.spigotmc*/"
+      ]
+    }
+  ]
 }

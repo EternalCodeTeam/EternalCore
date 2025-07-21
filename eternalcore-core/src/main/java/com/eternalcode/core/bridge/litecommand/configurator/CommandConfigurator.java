@@ -1,6 +1,6 @@
 package com.eternalcode.core.bridge.litecommand.configurator;
 
-import com.eternalcode.annotations.scan.feature.FeatureDocs;
+
 import com.eternalcode.core.bridge.litecommand.configurator.config.Command;
 import com.eternalcode.core.bridge.litecommand.configurator.config.CommandConfiguration;
 import com.eternalcode.core.bridge.litecommand.configurator.config.SubCommand;
@@ -9,6 +9,9 @@ import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
 import dev.rollczi.litecommands.command.builder.CommandBuilder;
 import dev.rollczi.litecommands.editor.Editor;
 import dev.rollczi.litecommands.meta.Meta;
+import dev.rollczi.litecommands.permission.PermissionSet;
+import java.util.List;
+import java.util.function.UnaryOperator;
 import org.bukkit.command.CommandSender;
 
 @LiteCommandEditor
@@ -20,11 +23,6 @@ class CommandConfigurator implements Editor<CommandSender> {
     CommandConfigurator(CommandConfiguration commandConfiguration) {
         this.commandConfiguration = commandConfiguration;
     }
-
-    @FeatureDocs(
-        name = "CommandConfigurator",
-        description = "Adds support for command configuration, which allows you to change the name, aliases, permissions and disable the command"
-    )
 
     @Override
     public CommandBuilder<CommandSender> edit(CommandBuilder<CommandSender> context) {
@@ -39,7 +37,7 @@ class CommandConfigurator implements Editor<CommandSender> {
 
             context = context.editChild(child, editor -> editor.name(subCommand.name())
                 .aliases(subCommand.aliases())
-                .applyMeta(meta -> meta.list(Meta.PERMISSIONS, permissions -> permissions.addAll(command.permissions())))
+                .applyMeta(editPermissions(command.permissions()))
                 .enabled(subCommand.isEnabled())
             );
         }
@@ -47,8 +45,15 @@ class CommandConfigurator implements Editor<CommandSender> {
         return context
             .name(command.name())
             .aliases(command.aliases())
-            .applyMeta(meta -> meta.list(Meta.PERMISSIONS, permissions -> permissions.addAll(command.permissions())))
+            .applyMeta(editPermissions(command.permissions()))
             .enabled(command.isEnabled());
+    }
+
+    private static UnaryOperator<Meta> editPermissions(List<String> permissions) {
+        return meta -> meta.listEditor(Meta.PERMISSIONS)
+            .clear()
+            .add(new PermissionSet(permissions))
+            .apply();
     }
 
 }

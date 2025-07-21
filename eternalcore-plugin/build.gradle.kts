@@ -18,6 +18,7 @@ eternalShadowCompiler {
         website = "www.eternalcode.pl"
         version = "${project.version}"
         softDepend = listOf("PlaceholderAPI")
+        foliaSupported = true
     }
 
     shadowJar {
@@ -26,9 +27,6 @@ eternalShadowCompiler {
         exclude(
             "META-INF/**",
         )
-
-//        dependsOn(":eternalcore-core:test")
-//        dependsOn(":eternalcore-core:checkstyleMain")
     }
 }
 
@@ -38,7 +36,7 @@ dependencies {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.4")
+        minecraftVersion("1.21.6")
         downloadPlugins.url("https://ci.lucko.me/job/LuckPerms/lastBuild/artifact/bukkit/loader/build/libs/LuckPerms-Bukkit-${Versions.LUCKPERMS}.jar")
     }
 }

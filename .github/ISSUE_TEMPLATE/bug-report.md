@@ -1,31 +1,33 @@
 ---
-name: Bug report
-about: Create a bug report to help us improve EternalCore <3
-title: ''
-labels: ''
+name: 🐞 Bug Report
+about: Report a problem to help us fix and improve EternalCore!
+title: '[BUG] Short description of the issue'
+labels: '🐛 bug'
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+### Bug Description
+Please provide a clear and concise description of what the bug is.
+For example: "When I try to [...], the system behaves unexpectedly."
 
-**To Reproduce**
-Steps to reproduce the behavior:
+### Steps to Reproduce
+List the steps to reproduce the issue:
 1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+2. Click on '...'
+3. See the error: [...]
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### Expected Behavior
+What did you expect to happen instead of the described issue?
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+### Screenshots
+If applicable, add screenshots that help explain the problem.
 
-**Platform (please complete the following information):**
- - Java Version: [e.g. JDK Temurin 17]
- - Server software: PaperMC#111 1.19.3
+### Platform Details (please complete):
+- **Java Version**: (e.g., JDK Temurin 17)
+- **Server Software**: (e.g., PaperMC#111 1.19.3)
 
-**Additional notes**
-Add any other context about the problem here.
+### Additional Notes
+Add any other relevant information, such as environment details, configurations, logs, etc., that may help in diagnosing the issue.
+
+---

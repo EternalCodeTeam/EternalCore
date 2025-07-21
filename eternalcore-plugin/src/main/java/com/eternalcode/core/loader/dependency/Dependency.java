@@ -11,59 +11,53 @@ public class Dependency {
 
     private static final Pattern VERSION_PATTERN = Pattern.compile("(?<major>[0-9]+)\\.(?<minor>[0-9]+)\\.?(?<patch>[0-9]?)(-(?<label>[-+.a-zA-Z0-9]+))?");
 
-    private static final String JAR_MAVEN_FORMAT = "%s/%s/%s/%s/%s-%s.jar";
-    private static final String JAR_MAVEN_FORMAT_WITH_CLASSIFIER = "%s/%s/%s/%s/%s-%s-%s.jar";
-    private static final String POM_XML_FORMAT = "%s/%s/%s/%s/%s-%s.pom";
+    private static final String PATH_FORMAT = "%s/%s/%s/%s/%s";
+    private static final String JAR_MAVEN_FORMAT = "%s-%s.jar";
+    private static final String JAR_MAVEN_FORMAT_WITH_CLASSIFIER = "%s-%s-%s.jar";
+    private static final String POM_XML_FORMAT = "%s-%s.pom";
 
     private final String groupId;
     private final String artifactId;
     private final String version;
+    private final boolean isBom;
 
     private Dependency(String groupId, String artifactId, String version) {
+        this(groupId, artifactId, version, false);
+    }
+
+    private Dependency(String groupId, String artifactId, String version, boolean isBom) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
+        this.isBom = isBom;
     }
 
-    public ResourceLocator toMavenJar(Repository repository, String classifier) {
-        String url = String.format(
-            JAR_MAVEN_FORMAT_WITH_CLASSIFIER,
-            repository.url(),
-            this.groupId.replace(".", "/"),
-            this.artifactId,
-            this.version,
-            this.artifactId,
-            this.version,
-            classifier
-        );
-
-        return ResourceLocator.fromString(url);
+    public boolean isBom() {
+        return this.isBom;
     }
 
     public ResourceLocator toMavenJar(Repository repository) {
-        String url = String.format(JAR_MAVEN_FORMAT,
-            repository.url(),
-            this.groupId.replace(".", "/"),
-            this.artifactId,
-            this.version,
-            this.artifactId,
-            this.version
-        );
+        return toResource(repository, JAR_MAVEN_FORMAT.formatted(this.artifactId, this.version));
+    }
 
-        return ResourceLocator.fromString(url);
+    public ResourceLocator toMavenJar(Repository repository, String classifier) {
+        return toResource(repository, JAR_MAVEN_FORMAT_WITH_CLASSIFIER.formatted(this.artifactId, this.version, classifier));
     }
 
     public ResourceLocator toPomXml(Repository repository) {
-        String url = String.format(POM_XML_FORMAT,
+        return toResource(repository, POM_XML_FORMAT.formatted(this.artifactId, this.version));
+    }
+
+    public ResourceLocator toResource(Repository repository, String fileName) {
+        String url = String.format(PATH_FORMAT,
             repository.url(),
             this.groupId.replace(".", "/"),
             this.artifactId,
             this.version,
-            this.artifactId,
-            this.version
+            fileName
         );
 
-        return ResourceLocator.fromString(url);
+        return ResourceLocator.from(url);
     }
 
     public String getGroupId() {
@@ -86,22 +80,22 @@ public class Dependency {
         int thisMajor = this.getMajorVersion();
         int dependencyMajor = dependency.getMajorVersion();
 
-        if (thisMajor > dependencyMajor) {
-            return true;
+        if (thisMajor != dependencyMajor) {
+            return thisMajor > dependencyMajor;
         }
 
         int thisMinor = this.getMinorVersion();
         int dependencyMinor = dependency.getMinorVersion();
 
-        if (thisMinor > dependencyMinor) {
-            return true;
+        if (thisMinor != dependencyMinor) {
+            return thisMinor > dependencyMinor;
         }
 
         int thisPatch = this.getPatchVersion();
         int dependencyPatch = dependency.getPatchVersion();
 
-        if (thisPatch > dependencyPatch) {
-            return true;
+        if (thisPatch != dependencyPatch) {
+            return thisPatch > dependencyPatch;
         }
 
         return false;
@@ -167,12 +161,19 @@ public class Dependency {
         if (version.contains("${")) {
             throw new IllegalArgumentException("Version contains a property placeholder: " + version);
         }
-
         return new Dependency(rewriteEscaping(groupId), rewriteEscaping(artifactId), rewriteEscaping(version));
     }
 
     private static String rewriteEscaping(String value) {
         return value.replace("{}", ".");
+    }
+
+    public Dependency asNotBom() {
+        return new Dependency(this.groupId, this.artifactId, this.version, false);
+    }
+
+    public Dependency asBom() {
+        return new Dependency(this.groupId, this.artifactId, this.version, true);
     }
 
 }

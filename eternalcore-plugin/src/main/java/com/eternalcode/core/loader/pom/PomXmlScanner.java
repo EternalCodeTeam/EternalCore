@@ -52,25 +52,17 @@ public class PomXmlScanner implements DependencyScanner {
 
     @Override
     public DependencyCollector findAllChildren(DependencyCollector collector, Dependency dependency) {
-
         for (Repository repository : this.repositories) {
-            Optional<List<Dependency>> optionalFirstChildren = this.tryReadDependency(dependency, repository);
-
-            if (optionalFirstChildren.isEmpty()) {
+            Optional<List<Dependency>> subDependencies = this.tryReadDependency(dependency, repository);
+            if (subDependencies.isEmpty()) {
                 continue;
             }
 
-            List<Dependency> firstChildren = optionalFirstChildren.get();
-
-            for (Dependency firstChild : firstChildren) {
-                if (collector.hasScannedDependency(firstChild)) {
-                    continue;
-                }
-
-                collector = this.findAllChildren(collector, firstChild);
-                collector.addScannedDependency(firstChild);
-            }
-
+            subDependencies.get().stream()
+                .filter(subdependency -> !collector.hasScannedDependency(subdependency))
+                .map(subdependency -> collector.addScannedDependency(subdependency))
+                .filter(updatedDependency -> !updatedDependency.isBom())
+                .forEach(updatedDependency -> this.findAllChildren(collector, updatedDependency));
             break;
         }
 
@@ -122,15 +114,15 @@ public class PomXmlScanner implements DependencyScanner {
 
         Element root = doc.getDocumentElement();
         PomXmlProperties properties = PomXmlProperties.from(root);
-        Element dependenciesElement = (Element) XmlUtil.getChildNode(root, "dependencies");
+        List<Dependency> dependencies = new ArrayList<>();
+        dependencies.addAll(readBomDependencies(root, properties));
 
+        Element dependenciesElement = (Element) XmlUtil.getChildNode(root, "dependencies");
         if (dependenciesElement == null) {
-            throw new SAXException("Dependencies element not found");
+            return dependencies;
         }
 
         NodeList dependencyList = dependenciesElement.getElementsByTagName("dependency");
-
-        List<Dependency> dependencies = new ArrayList<>();
 
         for (int elementIndex = 0; elementIndex < dependencyList.getLength(); elementIndex++) {
             Element dependencyElement = (Element) dependencyList.item(elementIndex);
@@ -144,17 +136,16 @@ public class PomXmlScanner implements DependencyScanner {
             }
 
             String scope = XmlUtil.getElementContent(dependencyElement, "scope");
-            if (scope != null && !scope.equals("compile") && !scope.equals("runtime")) {
+            if (isUnexpectedScope(scope)) {
                 continue;
             }
 
             String optional = XmlUtil.getElementContent(dependencyElement, "optional");
-            if (optional != null && optional.equals("true")) {
+            if ("true".equals(optional)) {
                 continue;
             }
 
             version = properties.replaceProperties(version);
-
             if (version == null) {
                 continue;
             }
@@ -164,4 +155,61 @@ public class PomXmlScanner implements DependencyScanner {
 
         return Collections.unmodifiableList(dependencies);
     }
+
+    private List<Dependency> readBomDependencies(Element root, PomXmlProperties properties) {
+        List<Dependency> dependencies = new ArrayList<>();
+        Element dependencyManagementElement = (Element) XmlUtil.getChildNode(root, "dependencyManagement");
+        if (dependencyManagementElement == null) {
+            return dependencies;
+        }
+
+        Element dependenciesXml = (Element) XmlUtil.getChildNode(dependencyManagementElement, "dependencies");
+        if (dependenciesXml == null) {
+            return dependencies;
+        }
+
+        NodeList dependenciesListXml = dependenciesXml.getElementsByTagName("dependency");
+        for (int i = 0; i < dependenciesListXml.getLength(); i++) {
+            Element depElement = (Element) dependenciesListXml.item(i);
+            String scope = XmlUtil.getElementContent(depElement, "scope");
+            if (isUnexpectedScope(scope)) {
+                continue;
+            }
+
+            String groupId = XmlUtil.getElementContent(depElement, "groupId");
+            String artifactId = XmlUtil.getElementContent(depElement, "artifactId");
+            String version = properties.replaceProperties(XmlUtil.getElementContent(depElement, "version"));
+
+            if (groupId != null && artifactId != null && version != null) {
+                if ("import".equals(scope)) {
+                    dependencies.addAll(readBomDependencies((Dependency.of(groupId, artifactId, version).asBom())));
+                }
+
+                dependencies.add(Dependency.of(groupId, artifactId, version).asBom());
+            }
+        }
+
+        return dependencies;
+    }
+
+    private List<Dependency> readBomDependencies(Dependency dependency) {
+        for (Repository repository : this.repositories) {
+            Optional<List<Dependency>> optionalFirstChildren = this.tryReadDependency(dependency, repository);
+
+            if (optionalFirstChildren.isEmpty()) {
+                continue;
+            }
+
+            return optionalFirstChildren.get().stream()
+                .map(subdependency -> subdependency.asBom())
+                .toList();
+        }
+
+        return Collections.emptyList();
+    }
+
+    private static boolean isUnexpectedScope(String scope) {
+        return scope != null && !scope.equals("compile") && !scope.equals("runtime") && !scope.equals("import");
+    }
+
 }

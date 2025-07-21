@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.catboy.CatBoySettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.heal.HealConfiguration;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
@@ -154,6 +155,10 @@ public class PluginConfiguration implements ReloadableConfig {
         };
     }
 
+    @Bean
+    @Description({ " ", "# Settings controlling how player healing works and which potion effects get cleared" })
+    public HealConfiguration heal = new HealConfiguration();
+
     @Description({ " ", "# Awesome sounds" })
     public Sounds sound = new Sounds();
 
@@ -193,7 +198,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public Duration chatDelay = Duration.ofSeconds(5);
 
         @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
-        public int linesToClear = 128;
+        public int linesToClear = 256;
 
         @Description({ " ", "# Chat should be enabled?" })
         public boolean chatEnabled = true;
@@ -381,7 +386,7 @@ public class PluginConfiguration implements ReloadableConfig {
         public DrawMode drawMode = DrawMode.RANDOM;
 
         @Description("# Minimum number of players on the server to send an auto message.")
-        public int minPlayers = 3;
+        public int minPlayers = 1;
 
         @Override
         public boolean enabled() {

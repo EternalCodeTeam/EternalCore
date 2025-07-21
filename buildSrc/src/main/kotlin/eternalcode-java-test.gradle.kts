@@ -15,7 +15,7 @@ dependencies {
 
     testImplementation("org.mockito:mockito-core:${Versions.MOCKITO_CORE}")
     testImplementation("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
-    testImplementation("net.kyori:adventure-platform-facet:${Versions.ADVENTURE_PLATFORM_FACET}")
+    testImplementation("net.kyori:adventure-platform-facet:${Versions.ADVENTURE_PLATFORM}")
     testImplementation("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
 }
 

@@ -17,9 +17,9 @@ public class EternalCoreLoader extends JavaPlugin {
 
         this.dependencyLoader = new DependencyLoaderImpl(this.getLogger(), this.getDataFolder(), EternalCoreLoaderConstants.repositories());
         this.dependencyLoader.load(
-                new IsolatedClassAccessorLoader(pluginLoader),
-                EternalCoreLoaderConstants.dependencies(),
-                EternalCoreLoaderConstants.relocations()
+            new IsolatedClassAccessorLoader(pluginLoader),
+            EternalCoreLoaderConstants.dependencies(),
+            EternalCoreLoaderConstants.relocations()
         );
 
         this.eternalCore = EternalCoreWrapper.create(pluginLoader);
