@@ -17,6 +17,9 @@ public class AdditionalContainerPaper {
     public static final AdditionalContainerPaper LOOM = new AdditionalContainerPaper(player -> player.openLoom(null, true));
     public static final AdditionalContainerPaper SMITHING_TABLE = new AdditionalContainerPaper(player -> player.openSmithingTable(null, true));
 
+    public static final AdditionalContainerPaper ELDER_GUARDIAN = new AdditionalContainerPaper(player -> player.showElderGuardian(false));
+    public static final AdditionalContainerPaper ELDER_GUARDIAN_SILENT = new AdditionalContainerPaper(player -> player.showElderGuardian(true));
+
     private static final Environment ENVIRONMENT = PaperLib.getEnvironment();
     private static final Logger LOGGER = Logger.getLogger("AdditionalContainerPaper");
 

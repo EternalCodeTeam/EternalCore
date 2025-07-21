@@ -562,4 +562,15 @@ public class ENTranslation extends AbstractTranslation {
 
     @Description({" ", "# This section is responsible for handling jail-related stuff."})
     public ENJailMessages jailSection = new ENJailMessages();
+
+    @Description({" ", "# This section is responsible for troll-related stuff."})
+    public ENTrollSection troll = new ENTrollSection();
+
+    @Getter
+    @Contextual
+    public static class ENTrollSection implements TrollSection {
+
+        public Notice elderGuardianShown = Notice.chat("<green>► <white>Shown elder guardian to player <green>{PLAYER}<white>!");
+        public Notice elderGuardianShownSilently = Notice.chat("<green>► <white>Shown elder guardian to player <green>{PLAYER}<white> silently!");
+    }
 }
