@@ -54,7 +54,7 @@ class AdminChatManagerController implements Listener {
 
         this.server.getOnlinePlayers().stream()
             .filter(p -> p.hasPermission(AdminChatCommand.ADMIN_CHAT_SPY_PERMISSION))
-            .forEach(p -> notice.player(player.getUniqueId()));
+            .forEach(p -> notice.player(p.getUniqueId()));
 
         notice.send();
     }
