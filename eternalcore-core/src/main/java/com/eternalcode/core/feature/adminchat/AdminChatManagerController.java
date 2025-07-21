@@ -37,20 +37,26 @@ class AdminChatManagerController implements Listener {
     @EventHandler
     void onAdminChat (AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
+        String message = event.getMessage();
+
+        AdminChatEvent adminChatEvent = this.eventCaller.callEvent(new AdminChatEvent(player, message));
+        if (adminChatEvent.isCancelled()) {
+            return;
+        }
 
         if (!this.adminChatService.isAdminChatSpy(player.getUniqueId())) {
             return;
         }
 
-        String message = event.getMessage();
-
         event.setCancelled(true);
+
+        String eventMessage = adminChatEvent.getContent();
 
         NoticeBroadcast notice = this.noticeService.create()
             .console()
             .notice(translation -> translation.adminChat().format())
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{TEXT}", message);
+            .placeholder("{TEXT}", eventMessage);
 
         this.server.getOnlinePlayers().stream()
             .filter(p -> p.hasPermission(AdminChatCommand.ADMIN_CHAT_SPY_PERMISSION))
@@ -58,6 +64,4 @@ class AdminChatManagerController implements Listener {
 
         notice.send();
     }
-
-
 }
