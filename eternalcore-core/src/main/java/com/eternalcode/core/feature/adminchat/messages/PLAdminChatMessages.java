@@ -10,18 +10,14 @@ import net.dzikoysk.cdn.entity.Description;
 @Accessors(fluent = true)
 @Contextual
 public class PLAdminChatMessages implements AdminChatMessages {
-    @Description({
-        "# {PLAYER} - Gracz który wysłał wiadomość na czacie administracji, {TEXT} - Treść wysłanej wiadomości"})
-    public Notice format =
-        Notice.chat("<dark_gray>[<dark_red>Administracja<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
 
-    public Notice enabledPersistentChat =
-        Notice.chat("<green>► <white>Włączono trwały czat administracji!");
+    @Description({"# {PLAYER} - Gracz który wysłał wiadomość na czacie administracji, {TEXT} - Treść wysłanej wiadomości"})
+    public Notice format = Notice.chat("<dark_gray>[<dark_red>Administracja<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
 
-    public Notice disabledPersistentChat =
-        Notice.chat("<green>► <white>Wyłączono trwały czat administracji!");
+    public Notice enabled = Notice.chat("<green>► <white>Włączono trwały czat administracji!");
 
-    public Notice actionbarPersistentChatNotify =
-        Notice.actionbar("<white>[AdminChat] <gray>> <green>włączony");
+    public Notice disabled = Notice.chat("<green>► <white>Wyłączono trwały czat administracji!");
+
+    public Notice enabledReminder = Notice.actionbar("<white>[AdminChat] <gray>> <green>włączony");
 
 }

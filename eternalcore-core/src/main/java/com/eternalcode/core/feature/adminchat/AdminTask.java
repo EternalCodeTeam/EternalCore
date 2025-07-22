@@ -25,14 +25,14 @@ class AdminTask implements Runnable {
 
     @Override
     public void run() {
-        for (UUID enabledChatPlayerUUID : this.adminChatService.getAdminChatEnabledPlayers()) {
+        for (UUID enabledChatPlayerUUID : this.adminChatService.getPlayersWithEnabledChat()) {
 
             if (this.server.getPlayer(enabledChatPlayerUUID) == null) {
                 continue;
             }
 
             this.noticeService.create()
-                .notice(translation -> translation.adminChat().actionbarPersistentChatNotify())
+                .notice(translation -> translation.adminChat().enabledReminder())
                 .player(enabledChatPlayerUUID)
                 .send();
         }

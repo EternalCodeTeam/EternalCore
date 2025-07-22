@@ -10,18 +10,14 @@ import net.dzikoysk.cdn.entity.Description;
 @Accessors(fluent = true)
 @Contextual
 public class ENAdminChatMessages implements AdminChatMessages {
+
     @Description({"# {PLAYER} - Player who sent message on adminchat, {TEXT} - message"})
-    public Notice format =
-        Notice.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
+    public Notice format = Notice.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
 
-    public Notice enabledPersistentChat =
-        Notice.chat("<green>► <white>Enabled persistent admin chat!");
+    public Notice enabled = Notice.chat("<green>► <white>Enabled persistent admin chat!");
 
-    public Notice disabledPersistentChat =
-        Notice.chat("<green>► <white>Disabled persistent admin chat!");
+    public Notice disabled = Notice.chat("<green>► <white>Disabled persistent admin chat!");
 
-    public Notice actionbarPersistentChatNotify =
-        Notice.actionbar("<white>[AdminChat] <gray>> <green>enabled");
-
+    public Notice enabledReminder = Notice.actionbar("<white>[AdminChat] <gray>> <green>enabled");
 
 }

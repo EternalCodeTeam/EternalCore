@@ -4,7 +4,7 @@ import com.eternalcode.multification.notice.Notice;
 
 public interface AdminChatMessages {
     Notice format();
-    Notice enabledPersistentChat();
-    Notice disabledPersistentChat();
-    Notice actionbarPersistentChatNotify ();
+    Notice enabled();
+    Notice disabled();
+    Notice enabledReminder();
 }
