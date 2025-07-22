@@ -14,13 +14,13 @@ public class ENAdminChatMessages implements AdminChatMessages {
     public Notice format =
         Notice.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
 
-    public Notice enableSpy =
+    public Notice enabledPersistentChat =
         Notice.chat("<green>► <white>Enabled persistent admin chat!");
 
-    public Notice disableSpy =
+    public Notice disabledPersistentChat =
         Notice.chat("<green>► <white>Disabled persistent admin chat!");
 
-    public Notice notifyHasSpyEnabled =
+    public Notice actionbarPersistentChatNotify =
         Notice.actionbar("<white>[AdminChat] <gray>> <green>enabled");
 
 

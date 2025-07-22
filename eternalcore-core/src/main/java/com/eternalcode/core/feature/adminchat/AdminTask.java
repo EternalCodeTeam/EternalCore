@@ -22,15 +22,6 @@ class AdminTask implements Runnable {
         this.noticeService = noticeService;
         this.server = server;
     }
-    private final Server server;
-    private final NoticeService noticeService;
-
-    @Inject
-    public AdminTask(AdminChatService adminChatService, Server server, NoticeService noticeService) {
-        this.adminChatService = adminChatService;
-        this.server = server;
-        this.noticeService = noticeService;
-    }
 
     @Override
     public void run() {
@@ -41,7 +32,7 @@ class AdminTask implements Runnable {
             }
 
             this.noticeService.create()
-                .notice(translation -> translation.adminChat().notifyHasSpyEnabled())
+                .notice(translation -> translation.adminChat().actionbarPersistentChatNotify())
                 .player(enabledChatPlayerUUID)
                 .send();
         }

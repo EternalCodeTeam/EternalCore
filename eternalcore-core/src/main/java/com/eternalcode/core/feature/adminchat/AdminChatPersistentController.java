@@ -14,24 +14,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 @Controller
-class AdminChatManagerController implements Listener {
+class AdminChatPersistentController implements Listener {
 
     private final AdminChatService adminChatService;
-    private final NoticeService noticeService;
     private final EventCaller eventCaller;
-    private final Server server;
 
     @Inject
-    AdminChatManagerController (
+    AdminChatPersistentController(
         AdminChatService adminChatService,
-        NoticeService noticeService,
-        EventCaller eventCaller,
-        Server server
+        EventCaller eventCaller
     ) {
         this.adminChatService = adminChatService;
-        this.noticeService = noticeService;
         this.eventCaller = eventCaller;
-        this.server = server;
     }
 
     @EventHandler
@@ -39,29 +33,18 @@ class AdminChatManagerController implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
+        if (!this.adminChatService.isPersistentChat(player.getUniqueId())) {
+            return;
+        }
+        event.setCancelled(true);
+
         AdminChatEvent adminChatEvent = this.eventCaller.callEvent(new AdminChatEvent(player, message));
         if (adminChatEvent.isCancelled()) {
             return;
         }
 
-        if (!this.adminChatService.isAdminChatSpy(player.getUniqueId())) {
-            return;
-        }
-
-        event.setCancelled(true);
-
         String eventMessage = adminChatEvent.getContent();
 
-        NoticeBroadcast notice = this.noticeService.create()
-            .console()
-            .notice(translation -> translation.adminChat().format())
-            .placeholder("{PLAYER}", player.getName())
-            .placeholder("{TEXT}", eventMessage);
-
-        this.server.getOnlinePlayers().stream()
-            .filter(p -> p.hasPermission(AdminChatCommand.ADMIN_CHAT_SPY_PERMISSION))
-            .forEach(p -> notice.player(p.getUniqueId()));
-
-        notice.send();
+        this.adminChatService.sendAdminChatMessage(eventMessage, player.getName());
     }
 }

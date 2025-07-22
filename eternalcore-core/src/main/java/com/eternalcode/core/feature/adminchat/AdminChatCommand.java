@@ -19,34 +19,25 @@ import org.bukkit.entity.Player;
 
 @Command(name = "adminchat", aliases = "ac")
 @Permission("eternalcore.adminchat")
-@PermissionDocs(
-    name = "Admin Chat spy",
-    permission = AdminChatCommand.ADMIN_CHAT_SPY_PERMISSION,
-    description = "Allows the player to see messages sent in admin chat by other players."
-)
 class AdminChatCommand {
-    static final String ADMIN_CHAT_SPY_PERMISSION = "eternalcore.adminchat.spy";
-
     private final AdminChatService adminChatService;
     private final NoticeService noticeService;
     private final EventCaller eventCaller;
-    private final Server server;
 
     @Inject
-    AdminChatCommand(AdminChatService adminChatService, NoticeService noticeService, EventCaller eventCaller, Server server) {
+    AdminChatCommand(AdminChatService adminChatService, NoticeService noticeService, EventCaller eventCaller) {
         this.adminChatService = adminChatService;
         this.noticeService = noticeService;
         this.eventCaller = eventCaller;
-        this.server = server;
     }
 
     @Execute
     @DescriptionDocs(description = "Toggles persistent admin chat mode.", arguments = "<message>")
     void execute(@Context Player sender) {
-        boolean persistent = this.adminChatService.changeAdminChatSpy(sender.getUniqueId());
+        boolean persistent = this.adminChatService.toggleChatPersistent(sender.getUniqueId());
 
         this.noticeService.create()
-            .notice(translation -> persistent ? translation.adminChat().enableSpy() : translation.adminChat().disableSpy())
+            .notice(translation -> persistent ? translation.adminChat().enabledPersistentChat() : translation.adminChat().disabledPersistentChat())
             .player(sender.getUniqueId())
             .send();
 
@@ -63,16 +54,6 @@ class AdminChatCommand {
 
         String eventMessage = event.getContent();
 
-        NoticeBroadcast notice = this.noticeService.create()
-            .console()
-            .notice(translation -> translation.adminChat().format())
-            .placeholder("{PLAYER}", sender.getName())
-            .placeholder("{TEXT}", eventMessage);
-
-        this.server.getOnlinePlayers().stream()
-            .filter(player -> player.hasPermission(ADMIN_CHAT_SPY_PERMISSION))
-            .forEach(player -> notice.player(player.getUniqueId()));
-
-        notice.send();
+        this.adminChatService.sendAdminChatMessage(eventMessage, sender.getName());
     }
 }

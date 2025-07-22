@@ -15,13 +15,13 @@ public class PLAdminChatMessages implements AdminChatMessages {
     public Notice format =
         Notice.chat("<dark_gray>[<dark_red>Administracja<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
 
-    public Notice enableSpy =
+    public Notice enabledPersistentChat =
         Notice.chat("<green>► <white>Włączono trwały czat administracji!");
 
-    public Notice disableSpy =
+    public Notice disabledPersistentChat =
         Notice.chat("<green>► <white>Wyłączono trwały czat administracji!");
 
-    public Notice notifyHasSpyEnabled =
+    public Notice actionbarPersistentChatNotify =
         Notice.actionbar("<white>[AdminChat] <gray>> <green>włączony");
 
 }
