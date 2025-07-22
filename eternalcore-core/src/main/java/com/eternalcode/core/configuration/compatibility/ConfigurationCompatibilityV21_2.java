@@ -9,7 +9,7 @@ import com.eternalcode.core.publish.Subscribe;
 
 @Controller
 @Compatibility(from = @Version(minor = 21, patch = 2))
-class ConfigurationCompatibilityV21_2 {
+public class ConfigurationCompatibilityV21_2 {
 
     @Subscribe
     void onConfigSerdesSetup(ConfigurationSerdesSetupEvent event) {
