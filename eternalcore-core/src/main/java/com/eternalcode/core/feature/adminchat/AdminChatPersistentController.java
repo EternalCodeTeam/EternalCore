@@ -5,9 +5,6 @@ import com.eternalcode.core.feature.adminchat.event.AdminChatEvent;
 import com.eternalcode.core.feature.adminchat.event.AdminChatService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.multification.notice.NoticeBroadcast;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,7 +30,7 @@ class AdminChatPersistentController implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        if (!this.adminChatService.isPersistentChat(player.getUniqueId())) {
+        if (!this.adminChatService.hasPersistentChat(player.getUniqueId())) {
             return;
         }
         event.setCancelled(true);

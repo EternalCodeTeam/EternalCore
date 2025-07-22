@@ -35,7 +35,7 @@ class AdminChatServiceImpl implements AdminChatService {
     }
 
     @Override
-    public boolean isPersistentChat(UUID playerUuid) {
+    public boolean hasPersistentChat(UUID playerUuid) {
         return this.persistentAdminChatPlayers.contains(playerUuid);
     }
 

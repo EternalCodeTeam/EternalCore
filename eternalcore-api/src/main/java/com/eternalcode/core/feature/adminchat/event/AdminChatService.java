@@ -19,7 +19,7 @@ public interface AdminChatService {
      * @param playerUuid the UUID of the player
      * @return true if persistent chat is enabled, false otherwise
      */
-    boolean isPersistentChat(UUID playerUuid);
+    boolean hasPersistentChat(UUID playerUuid);
 
     /**
      * Retrieves a collection of UUIDs of players who have admin chat spying enabled.
