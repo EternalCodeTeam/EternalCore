@@ -43,7 +43,11 @@ public class ConfigurationManager {
     }
 
     public <T extends OkaeriConfig & EternalConfigurationFile> T load(T config) {
-        YamlSnakeYamlConfigurer yamlConfigurer = new YamlSnakeYamlConfigurer(this.createYaml());
+        File file = config.getConfigFile(this.dataFolder);
+        Yaml yaml = this.createYaml();
+        YamlSnakeYamlConfigurer yamlConfigurer = new YamlSnakeYamlConfigurer(yaml);
+        CdnConfigMigrator migrator = new CdnConfigMigrator(yaml);
+        migrator.runMigrations(file);
 
         OkaeriSerdesPack serdesPack = registry -> {
             registry.register(new PositionTransformer());
@@ -56,7 +60,7 @@ public class ConfigurationManager {
 
         config.withConfigurer(yamlConfigurer)
             .withSerdesPack(serdesPack)
-            .withBindFile(config.getConfigFile(dataFolder))
+            .withBindFile(file)
             .withRemoveOrphans(true)
             .saveDefaults()
             .load(true);
@@ -73,6 +77,7 @@ public class ConfigurationManager {
         dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         dumperOptions.setDefaultScalarStyle(DumperOptions.ScalarStyle.PLAIN);
         dumperOptions.setIndent(2);
+        dumperOptions.setIndicatorIndent(0);
         dumperOptions.setSplitLines(false);
 
         Representer representer = new CustomSnakeYamlRepresenter(dumperOptions);
