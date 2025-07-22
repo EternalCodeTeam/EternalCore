@@ -7,6 +7,7 @@ import java.io.File;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import net.dzikoysk.cdn.entity.Description;
 import net.dzikoysk.cdn.source.Resource;
 import net.dzikoysk.cdn.source.Source;
 import net.kyori.adventure.bossbar.BossBar.Color;
@@ -15,6 +16,31 @@ import net.kyori.adventure.bossbar.BossBar.Overlay;
 @ConfigurationFile
 public class CustomCommandConfig implements ReloadableConfig {
 
+    @Description({
+        "# Custom commands configuration",
+        "#",
+        "# This file allows you to define your own commands using simple YAML configuration.",
+        "# Each command entry supports multiple display formats: chat, title, subtitle, action bar, bossbar and sound.",
+        "#",
+        "# Example usage:",
+        "#   - Display your Discord link with a title and chat message (/discord)",
+        "#   - Promote your store using a bossbar (/store)",
+        "#   - Show server rules with a subtitle and timed title (/rules)",
+        "#",
+        "# You can test and generate these easily using:",
+        "# https://www.eternalcode.pl/notification-generator"
+    })
+
+    @Description({
+        " ",
+        "# Custom commands",
+        "#",
+        "# The key is the command name (e.g. \"discord\", \"rules\")",
+        "# Each entry can define aliases, title/subtitle with fade in/out, action bars, chat messages and more.",
+        "#",
+        "# You can define multiple commands freely.",
+        "# Example: /vote, /help, /rules, /discord"
+    })
     public Map<String, CustomCommand> commands = Map.of(
         "help", new CustomCommand(
             "help",
