@@ -13,6 +13,15 @@ import java.util.concurrent.TimeUnit;
 class AdminTask implements Runnable {
 
     private final AdminChatService adminChatService;
+    private final NoticeService noticeService;
+    private final Server server;
+
+    @Inject
+    public AdminTask(AdminChatService adminChatService, NoticeService noticeService,  Server server) {
+        this.adminChatService = adminChatService;
+        this.noticeService = noticeService;
+        this.server = server;
+    }
     private final Server server;
     private final NoticeService noticeService;
 
