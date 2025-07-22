@@ -1,13 +1,13 @@
 package com.eternalcode.core.configuration.contextual;
 
-import java.io.Serializable;
+import eu.okaeri.configs.OkaeriConfig;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ConfigItem implements Serializable {
+public class ConfigItem extends OkaeriConfig {
 
     public String name = "&6Item";
     public List<String> lore = Collections.singletonList("&7Default lore");

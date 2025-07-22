@@ -16,10 +16,6 @@ public class LocationPersister extends BaseDataType {
         super(SqlType.LONG_STRING, new Class<?>[] {LocationPersister.class});
     }
 
-    public static LocationPersister getSingleton() {
-        return instance;
-    }
-
     @Override
     public Object javaToSqlArg(FieldType fieldType, Object javaObject) {
         if (javaObject == null) {
@@ -33,8 +29,7 @@ public class LocationPersister extends BaseDataType {
             worldName = loc.getWorld().getName();
         }
 
-        return worldName + "/" + loc.getX() + "/" + loc.getY() + "/" + loc.getZ() + "/" + loc.getYaw() + "/"
-            + loc.getPitch();
+        return worldName + "/" + loc.getX() + "/" + loc.getY() + "/" + loc.getZ() + "/" + loc.getYaw() + "/" + loc.getPitch();
     }
 
     @Override
@@ -66,4 +61,9 @@ public class LocationPersister extends BaseDataType {
             Float.parseFloat(params[5])
         );
     }
+
+    public static LocationPersister getSingleton() {
+        return instance;
+    }
+
 }

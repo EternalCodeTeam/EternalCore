@@ -80,8 +80,9 @@ class EternalCore {
             beanFactory.addCandidate(beanCandidate);
         }
 
-        beanFactory.initializeCandidates(ConfigurationCompatibilityV21_2.class); // TODO: Remove this when the cdn will be fixed
-        beanFactory.initializeCandidates(EternalConfigurationFile.class); // TODO: Remove this when the cdn will be fixed
+        // TODO: Remove this when we resolve problem with DI - classes with @Subscribe annotation should be loaded first or when event is called
+        beanFactory.initializeCandidates(ConfigurationCompatibilityV21_2.class);
+        beanFactory.initializeCandidates(EternalConfigurationFile.class);
         beanFactory.initializeCandidates();
 
         this.publisher = beanFactory.getDependency(Publisher.class);

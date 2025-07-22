@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:${Versions.JUNIT_BOM}")) // lub najnowsza wersja
+    testImplementation(platform("org.junit:junit-bom:${Versions.JUNIT_BOM}"))
 
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
