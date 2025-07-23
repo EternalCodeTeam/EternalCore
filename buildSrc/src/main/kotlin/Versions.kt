@@ -43,7 +43,7 @@ object Versions {
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
     // tests
-    const val JUNIT_BOM = "5.10.2"
+    const val JUNIT_BOM = "5.10.5"
     const val MOCKITO_CORE = "5.18.0"
 
 }
