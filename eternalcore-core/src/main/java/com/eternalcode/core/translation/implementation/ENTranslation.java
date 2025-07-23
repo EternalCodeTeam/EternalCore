@@ -25,12 +25,12 @@ import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import java.io.File;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -561,14 +561,13 @@ public class ENTranslation extends AbstractTranslation {
     @Comment({" ", "# This section is responsible for handling jail-related stuff."})
     public ENJailMessages jailSection = new ENJailMessages();
 
-    @Description({" ", "# This section is responsible for troll-related stuff."})
+    @Comment({" ", "# This section is responsible for troll-related stuff."})
     public ENTrollSection troll = new ENTrollSection();
 
     @Getter
-    @Contextual
     public static class ENTrollSection implements TrollSection {
 
-        @Description({" ", "# This section is responsible for elder guardian messages."})
+        @Comment({" ", "# This section is responsible for elder guardian messages."})
         public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
     }
 }

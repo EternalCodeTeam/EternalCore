@@ -25,12 +25,12 @@ import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import java.io.File;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -585,14 +585,13 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
     public PLJailMessages jailSection = new PLJailMessages();
 
-    @Description({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące trollowania graczy" })
+    @Comment({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące trollowania graczy" })
     public PLTrollSection troll = new PLTrollSection();
 
     @Getter
-    @Contextual
     public static class PLTrollSection implements TrollSection {
 
-        @Description({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
+        @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
         public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
     }
 }
