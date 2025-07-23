@@ -11,18 +11,18 @@ import org.jetbrains.annotations.NotNull;
 public class CustomCommandBukkitWrapper extends Command {
 
     private static final String EMPTY_USAGE_MESSAGE = StringUtil.EMPTY;
+    private static final String EMPTY_DESCRIPTION_MESSAGE = StringUtil.EMPTY;
 
     private final NoticeService noticeService;
     private final Notice message;
 
     protected CustomCommandBukkitWrapper(
             @NotNull String name,
-            @NotNull String description,
             @NotNull List<String> aliases,
             NoticeService noticeService,
             Notice message
     ) {
-        super(name, description, EMPTY_USAGE_MESSAGE, aliases);
+        super(name, EMPTY_DESCRIPTION_MESSAGE, EMPTY_USAGE_MESSAGE, aliases);
 
         this.noticeService = noticeService;
         this.message = message;

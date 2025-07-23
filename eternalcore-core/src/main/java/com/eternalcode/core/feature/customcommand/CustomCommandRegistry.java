@@ -12,7 +12,6 @@ import org.bukkit.command.CommandMap;
 public class CustomCommandRegistry {
 
     private static final String FALLBACK_PREFIX = "eternalcore";
-    private static final String EMPTY_USAGE_MESSAGE = StringUtil.EMPTY;
 
     private final CustomCommandConfig customCommandConfig;
     private final NoticeService noticeService;
@@ -38,7 +37,6 @@ public class CustomCommandRegistry {
     private void registerCustomCommand(CustomCommand customCommand) {
         CustomCommandBukkitWrapper customCommandBukkitWrapper = new CustomCommandBukkitWrapper(
             customCommand.getName(),
-            EMPTY_USAGE_MESSAGE,
             customCommand.getAliases(),
             this.noticeService,
             customCommand.getMessage()
