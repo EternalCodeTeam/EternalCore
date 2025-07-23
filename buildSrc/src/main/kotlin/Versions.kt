@@ -20,9 +20,9 @@ object Versions {
     const val POSTGRESQL = "42.7.7"
     const val H2 = "2.3.232"
     const val ORMLITE = "6.1"
-    const val HIKARI_CP = "6.3.0"
+    const val HIKARI_CP = "6.3.1"
 
-    const val LITE_COMMANDS = "3.9.7"
+    const val LITE_COMMANDS = "3.10.2"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.4.8-jre"
@@ -30,13 +30,15 @@ object Versions {
 
     const val EXPRESSIBLE = "1.3.6"
     const val PANDA_UTILITIES = "0.5.3-alpha"
-    const val APACHE_COMMONS = "2.19.0"
+    const val APACHE_COMMONS = "2.20.0"
 
     const val TRIUMPH_GUI = "3.1.12"
 
+    const val XSERIES = "13.3.3"
+
     const val BSTATS = "3.1.0"
 
-    const val CAFFEINE = "3.2.1"
+    const val CAFFEINE = "3.2.2"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 

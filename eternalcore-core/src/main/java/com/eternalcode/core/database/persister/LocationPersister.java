@@ -29,7 +29,7 @@ public class LocationPersister extends BaseDataType {
             worldName = loc.getWorld().getName();
         }
 
-        return worldName + "/" + loc.getX() + "/" + loc.getY() + "/" + loc.getZ() + "/" + loc.getYaw() + "/" + loc.getPitch();
+        return worldName + "/" + loc.getBlockX() + "/" + loc.getBlockY() + "/" + loc.getBlockZ() + "/" + loc.getYaw() + "/" + loc.getPitch();
     }
 
     @Override

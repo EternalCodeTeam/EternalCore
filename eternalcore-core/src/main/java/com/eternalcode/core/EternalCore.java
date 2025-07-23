@@ -36,11 +36,10 @@ import java.util.logging.Logger;
 
 class EternalCore {
 
-    private final EternalCoreEnvironment eternalCoreEnvironment;
     private final Publisher publisher;
 
     public EternalCore(Plugin plugin) {
-        this.eternalCoreEnvironment = new EternalCoreEnvironment(plugin.getLogger());
+        EternalCoreEnvironment environment = new EternalCoreEnvironment(plugin.getLogger());
 
         CompatibilityService compatibilityService = new CompatibilityService();
         BeanProcessor beanProcessor = BeanProcessorFactory.defaultProcessors(plugin);
@@ -88,7 +87,7 @@ class EternalCore {
         this.publisher = beanFactory.getDependency(Publisher.class);
 
         EternalCoreApiProvider.initialize(new EternalCoreApiImpl(beanFactory));
-        this.eternalCoreEnvironment.initialize();
+        environment.initialize();
         this.publisher.publish(new EternalInitializeEvent());
     }
 

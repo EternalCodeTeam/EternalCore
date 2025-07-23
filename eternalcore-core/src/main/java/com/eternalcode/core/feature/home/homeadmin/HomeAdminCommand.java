@@ -13,6 +13,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import io.papermc.lib.PaperLib;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Command(name = "homeadmin")
-@Permission("eternalcode.home.admin")
+@Permission("eternalcore.home.admin")
 class HomeAdminCommand {
 
     private final HomeManager homeManager;
@@ -40,7 +41,7 @@ class HomeAdminCommand {
 
     @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
-    void setHome(@Context Player sender, @Arg PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
+    void setHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
 
         Home home = playerHomeEntry.home();
@@ -73,7 +74,7 @@ class HomeAdminCommand {
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
-    void deleteHome(@Context Player sender, @Arg PlayerHomeEntry playerHomeEntry) {
+    void deleteHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
         Player player = playerHomeEntry.player();
 
@@ -104,7 +105,7 @@ class HomeAdminCommand {
 
     @Execute(name = "home")
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
-    void home(@Context Player player, @Arg PlayerHomeEntry playerHomeEntry) {
+    void home(@Context Player player, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
         Player user = playerHomeEntry.player();
 
@@ -121,7 +122,7 @@ class HomeAdminCommand {
             return;
         }
 
-        player.teleport(homeOption.get().getLocation());
+        PaperLib.teleportAsync(player, homeOption.get().getLocation());
     }
 
     @Execute(name = "list")
