@@ -31,7 +31,7 @@ class SkullCommand {
     @Execute
     @DescriptionDocs(description = "Gives you a skull of player", arguments = "<player>")
     void execute(@Context Player sender, @Arg(SkullNicknameArgument.KEY) String name) {
-        this.skullAPI.acceptSyncSkullData(name, skull -> {
+        this.skullAPI.acceptSkullData(name, skull -> {
             ItemStack namedSkull = ItemBuilder.skull()
                 .name(Component.text(name))
                 .texture(skull.getValue())
