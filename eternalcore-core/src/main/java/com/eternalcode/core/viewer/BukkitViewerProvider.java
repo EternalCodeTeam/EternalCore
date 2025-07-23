@@ -5,6 +5,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.multification.viewer.ViewerProvider;
+import java.util.List;
 import org.bukkit.Server;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
@@ -46,6 +47,19 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
 
         for (Player player : this.server.getOnlinePlayers()) {
             audiences.add(this.player(player.getUniqueId()));
+        }
+
+        return audiences;
+    }
+
+    @Override
+    public Collection<Viewer> onlinePlayers(String permission) {
+        Set<Viewer> audiences = new HashSet<>();
+
+        for (Player player : this.server.getOnlinePlayers()) {
+            if (player.hasPermission(permission)) {
+                audiences.add(this.player(player.getUniqueId()));
+            }
         }
 
         return audiences;
