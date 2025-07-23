@@ -1,14 +1,19 @@
 package com.eternalcode.core.feature.heal;
 
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
+import eu.okaeri.configs.annotation.Header;
 
-@Contextual
-public class HealConfiguration {
+@Header({
+    " ",
+    "# Settings for player healing behavior and potion effect removal"
+})
+public class HealConfiguration extends OkaeriConfig {
 
-    @Description({
-        "If true, only negative potion effects will be removed on heal",
-        "If false, all potion effects will be removed on heal"
+    @Comment({
+        "Whether to remove only negative potion effects when healing.",
+        "if true, remove only negative effects like poison or slowness",
+        "if false, remove all effects including positive ones like strength or speed"
     })
     public boolean removeOnlyNegativeEffects = true;
 }

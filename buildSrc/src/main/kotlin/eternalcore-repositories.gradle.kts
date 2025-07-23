@@ -10,4 +10,5 @@ repositories {
     maven { url = uri("https://repo.eternalcode.pl/releases/") }
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
     maven("https://repo.stellardrift.ca/repository/snapshots/")
+    maven("https://storehouse.okaeri.eu/repository/maven-public/")
 }

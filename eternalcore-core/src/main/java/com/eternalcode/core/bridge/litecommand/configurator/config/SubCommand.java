@@ -1,12 +1,11 @@
 package com.eternalcode.core.bridge.litecommand.configurator.config;
 
-import net.dzikoysk.cdn.entity.Contextual;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Contextual
-public class SubCommand {
+public class SubCommand implements Serializable {
 
     public String name;
     public boolean enabled;

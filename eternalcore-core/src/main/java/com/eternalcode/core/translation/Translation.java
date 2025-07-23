@@ -205,6 +205,7 @@ public interface Translation {
     HelpOpSection helpOp();
     // AdminChat Section
     AdminChatMessages adminChat();
+    // sudo
     SudoMessages sudo();
     // Teleport Section
     TeleportSection teleport();
