@@ -54,7 +54,7 @@ class TpaHereCommand {
            this.noticeService
                .create()
                .player(sender.getUniqueId())
-               .notice(translation -> translation.tpa().tpaSentMessage())
+               .notice(translation -> translation.tpa().tpaHereSentMessage())
                .placeholder("{PLAYER}", target.getName())
                .send();
 
