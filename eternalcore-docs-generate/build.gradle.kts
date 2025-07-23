@@ -17,7 +17,6 @@ dependencies {
     runtimeOnly("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
     runtimeOnly("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
     runtimeOnly("io.papermc:paperlib:${Versions.PAPERLIB}")
-    runtimeOnly("net.dzikoysk:cdn:${Versions.CDN_CONFIGS}")
     runtimeOnly("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
     runtimeOnly("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
     runtimeOnly("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")

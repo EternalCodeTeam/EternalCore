@@ -1,32 +1,31 @@
 package com.eternalcode.core.feature.home.messages;
 
 import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
 @Getter
 @Accessors(fluent = true)
-@Contextual
-public class PLHomeMessages implements HomeMessages {
-    @Description({" ", "# {HOMES} - Lista domów"})
+public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
+    @Comment({" ", "# {HOMES} - Lista domów"})
     public Notice homeList = Notice.chat("<green>► <white>Lista domów: <green>{HOMES}!");
 
-    @Description({" ", "# {HOME} - Nazwa domu"})
+    @Comment({" ", "# {HOME} - Nazwa domu"})
     public Notice create = Notice.chat("<green>► <white>Stworzono dom o nazwie <green>{HOME}<white>!");
     public Notice delete = Notice.chat("<red>► <white>Usunięto dom o nazwie <red>{HOME}<white>!");
     public Notice overrideHomeLocation =
         Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME}<white>!");
 
-    @Description({" ", "# {LIMIT} - Limit domów"})
+    @Comment({" ", "# {LIMIT} - Limit domów"})
     public Notice limit = Notice.chat("<green>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
     public Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Nie posiadasz żadnego domu!");
 
-    @Description({" ", "# Wiadomości placeholderów"})
+    @Comment({" ", "# Wiadomości placeholderów"})
     public String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
 
-    @Description({
+    @Comment({
         " ",
         "# Sekcja wiadomości administracyjnych dla domów graczy",
         "# {HOME} - Nazwa domu, {PLAYER} - Gracz, {HOMES} - Lista domów"
