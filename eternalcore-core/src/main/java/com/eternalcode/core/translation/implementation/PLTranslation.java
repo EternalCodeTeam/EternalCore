@@ -589,7 +589,7 @@ public class PLTranslation extends AbstractTranslation {
     public PLTrollSection troll = new PLTrollSection();
 
     @Getter
-    public static class PLTrollSection implements TrollSection {
+    public static class PLTrollSection extends OkaeriConfig implements TrollSection {
 
         @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
         public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();

@@ -565,7 +565,7 @@ public class ENTranslation extends AbstractTranslation {
     public ENTrollSection troll = new ENTrollSection();
 
     @Getter
-    public static class ENTrollSection implements TrollSection {
+    public static class ENTrollSection extends OkaeriConfig implements TrollSection {
 
         @Comment({" ", "# This section is responsible for elder guardian messages."})
         public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
