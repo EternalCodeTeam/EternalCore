@@ -1,6 +1,6 @@
 package com.eternalcode.core.configuration.implementation;
 
-import com.eternalcode.core.configuration.ReloadableConfig;
+import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
@@ -15,11 +15,8 @@ import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
-import net.dzikoysk.cdn.entity.Exclude;
-import net.dzikoysk.cdn.source.Resource;
-import net.dzikoysk.cdn.source.Source;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 
@@ -30,9 +27,9 @@ import java.util.Map;
 import java.util.Set;
 
 @ConfigurationFile
-public class PluginConfiguration implements ReloadableConfig {
+public class PluginConfiguration extends AbstractConfigurationFile {
 
-    @Description({
+    @Comment({
         "#",
         "# This is the main configuration file for EternalCore.",
         "#",
@@ -45,15 +42,14 @@ public class PluginConfiguration implements ReloadableConfig {
         "#",
     })
 
-    @Description("# Whether the player should receive information about new plugin updates upon joining the server")
+    @Comment("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
-    @Description({ " ", "# Database Section" })
+    @Comment({ " ", "# Database Section" })
     public Database database = new Database();
 
-    @Contextual
-    public static class Database {
-        @Description({
+    public static class Database extends OkaeriConfig {
+        @Comment({
             "# SQL Drivers and ports:",
             "# MySQL (3306), MariaDB (3306), PostgresQL (5432)",
             "# SQLite, H2"
@@ -67,31 +63,27 @@ public class PluginConfiguration implements ReloadableConfig {
         public int port = 3306;
     }
 
-    @Description({ "", "# Join settings" })
+    @Comment({ "", "# Join settings" })
     public Join join = new Join();
 
-    @Contextual
-    public static class Join {
-
-        @Description("# Teleport to spawn on first join")
+    public static class Join extends OkaeriConfig {
+        @Comment("# Teleport to spawn on first join")
         public boolean teleportToSpawnOnFirstJoin = true;
 
-        @Description("# Teleport to spawn on join")
+        @Comment("# Teleport to spawn on join")
         public boolean teleportToSpawnOnJoin = false;
-
     }
 
 
     @Bean
-    @Description({ " ", "# Teleport request section" })
+    @Comment({ " ", "# Teleport request section" })
     public TeleportAsk teleportAsk = new TeleportAsk();
 
-    @Contextual
-    public static class TeleportAsk implements TeleportRequestSettings {
-        @Description({ "# Time of tpa requests expire" })
+    public static class TeleportAsk extends OkaeriConfig implements TeleportRequestSettings {
+        @Comment({ "# Time of tpa requests expire" })
         public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
-        @Description({ " ", "# Time of teleportation time in /tpa commands" })
+        @Comment({ " ", "# Time of teleportation time in /tpa commands" })
         public Duration tpaTimer = Duration.ofSeconds(10);
 
         @Override
@@ -106,21 +98,20 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Bean
-    @Description({ " ", "# Teleport section" })
+    @Comment({ " ", "# Teleport section" })
     public Teleport teleport = new Teleport();
 
-    @Contextual
-    public static class Teleport implements SpawnSettings {
-        @Description("# Teleports the player to spawn after death")
+    public static class Teleport extends OkaeriConfig implements SpawnSettings {
+        @Comment("# Teleports the player to spawn after death")
         public boolean teleportToSpawnOnDeath = true;
 
-        @Description("# Teleports the player to respawn point after death")
+        @Comment("# Teleports the player to respawn point after death")
         public boolean teleportToRespawnPoint = true;
 
-        @Description("# Time of teleportation to spawn")
+        @Comment("# Time of teleportation to spawn")
         public Duration teleportTimeToSpawn = Duration.ofSeconds(5);
 
-        @Description("# Include players with op in teleport to random player")
+        @Comment("# Include players with op in teleport to random player")
         public boolean includeOpPlayersInRandomTeleport = false;
 
         @Override
@@ -130,22 +121,21 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Bean
-    @Description({ "", "# Random Teleport Section" })
+    @Comment({ "", "# Random Teleport Section" })
     public RandomTeleportSettingsImpl randomTeleport = new RandomTeleportSettingsImpl();
 
     @Bean
-    @Description({ " ", "# Homes Section" })
+    @Comment({ " ", "# Homes Section" })
     public Homes homes = new Homes();
 
-    @Contextual
-    public static class Homes {
-        @Description("# Default home name")
+    public static class Homes extends OkaeriConfig {
+        @Comment("# Default home name")
         public String defaultHomeName = "home";
 
-        @Description("# Time of teleportation to homes")
+        @Comment("# Time of teleportation to homes")
         public Duration teleportTimeToHomes = Duration.ofSeconds(5);
 
-        @Description("# Max homes per permission")
+        @Comment("# Max homes per permission")
         public Map<String, Integer> maxHomes = new LinkedHashMap<>() {
             {
                 put("eternalcore.home.default", 1);
@@ -156,27 +146,26 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Bean
-    @Description({ " ", "# Settings controlling how player healing works and which potion effects get cleared" })
     public HealConfiguration heal = new HealConfiguration();
 
-    @Description({ " ", "# Awesome sounds" })
+    @Comment({ " ", "# Awesome sounds" })
+    @Bean
     public Sounds sound = new Sounds();
 
-    @Contextual
-    public static class Sounds {
-        @Description("# Do you want to enable sound after player join to server?")
+    public static class Sounds extends OkaeriConfig {
+        @Comment("# Do you want to enable sound after player join to server?")
         public boolean enabledAfterJoin = true;
         public Sound afterJoin = Sound.BLOCK_NOTE_BLOCK_PLING;
         public float afterJoinVolume = 1.8F;
         public float afterJoinPitch = 1F;
 
-        @Description({ " ", "# Do you want to enable sound after player quit server?" })
+        @Comment({ " ", "# Do you want to enable sound after player quit server?" })
         public boolean enableAfterQuit = true;
         public Sound afterQuit = Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
         public float afterQuitVolume = 1.8F;
         public float afterQuitPitch = 1F;
 
-        @Description({ " ", "# Do you want to enable sound after player send message on chat server?" })
+        @Comment({ " ", "# Do you want to enable sound after player send message on chat server?" })
         public boolean enableAfterChatMessage = true;
         public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
         public float afterChatMessageVolume = 1.8F;
@@ -185,44 +174,39 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Bean
-    @Description({ " ", "# Chat Section" })
+    @Comment({ " ", "# Chat Section" })
     public Chat chat = new Chat();
 
-    @Contextual
-    public static class Chat implements ChatSettings {
+    public static class Chat extends OkaeriConfig implements ChatSettings {
 
-        @Description({ "# Custom message for unknown command" })
+        @Comment({ "# Custom message for unknown command" })
         public boolean replaceStandardHelpMessage = false;
 
-        @Description({ " ", "# Chat delay to send next message in chat" })
+        @Comment({ " ", "# Chat delay to send next message in chat" })
         public Duration chatDelay = Duration.ofSeconds(5);
 
-        @Description({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
+        @Comment({ " ", "# Number of lines that will be cleared when using the /chat clear command" })
         public int linesToClear = 256;
 
-        @Description({ " ", "# Chat should be enabled?" })
+        @Comment({ " ", "# Chat should be enabled?" })
         public boolean chatEnabled = true;
 
         @Override
-        @Exclude
         public boolean isChatEnabled() {
             return this.chatEnabled;
         }
 
         @Override
-        @Exclude
         public void setChatEnabled(boolean chatEnabled) {
             this.chatEnabled = chatEnabled;
         }
 
         @Override
-        @Exclude
         public Duration getChatDelay() {
             return this.chatDelay;
         }
 
         @Override
-        @Exclude
         public void setChatDelay(Duration chatDelay) {
             this.chatDelay = chatDelay;
         }
@@ -234,13 +218,12 @@ public class PluginConfiguration implements ReloadableConfig {
 
     }
 
-    @Description({ " ", "# HelpOp Section" })
+    @Comment({ " ", "# HelpOp Section" })
     public HelpOp helpOp = new HelpOp();
 
-    @Contextual
-    public static class HelpOp implements HelpOpSettings {
+    public static class HelpOp extends OkaeriConfig implements HelpOpSettings {
 
-        @Description("# Delay to send the next message under /helpop")
+        @Comment("# Delay to send the next message under /helpop")
         public Duration helpOpDelay = Duration.ofSeconds(60);
 
         @Override
@@ -249,13 +232,12 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
-    @Description({ " ", "# Repair Section" })
+    @Comment({ " ", "# Repair Section" })
     public Repair repair = new Repair();
 
-    @Contextual
-    public static class Repair {
+    public static class Repair extends OkaeriConfig {
 
-        @Description({ "# Repair command cooldown" })
+        @Comment({ "# Repair command cooldown" })
         public Duration repairDelay = Duration.ofSeconds(5);
 
         public Duration repairDelay() {
@@ -263,40 +245,38 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
-    @Description({ " ", "# Additional formatting options" })
+    @Comment({ " ", "# Additional formatting options" })
     public Format format = new Format();
 
-    @Contextual
-    public static class Format {
+    public static class Format extends OkaeriConfig {
         public String separator = "<gray>,</gray> ";
     }
 
     @Bean
-    @Description({ " ", "# AFK Section" })
+    @Comment({ " ", "# AFK Section" })
     public Afk afk = new Afk();
 
-    @Contextual
-    public static class Afk implements AfkSettings {
-        @Description({
+    public static class Afk extends OkaeriConfig implements AfkSettings {
+        @Comment({
             "# Number of interactions a player must make to have AFK status removed",
             "# This is for so that stupid miss-click doesn't disable AFK status"
         })
         public int interactionsCountDisableAfk = 20;
 
-        @Description({ " ", "# Time before using the /afk command again" })
+        @Comment({ " ", "# Time before using the /afk command again" })
         public Duration afkCommandDelay = Duration.ofSeconds(60);
 
-        @Description({
+        @Comment({
             "# Should a player be marked as AFK automatically?",
             "# If set to true, the player will be marked as AFK after a certain amount of time of inactivity",
             "# If set to false, the player will have to use the /afk command to be marked as AFK"
         })
         public boolean autoAfk = true;
 
-        @Description({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
+        @Comment({ " ", "# The amount of time a player must be inactive to be marked as AFK" })
         public Duration afkInactivityTime = Duration.ofMinutes(10);
 
-        @Description({ " ", "# Should a player be kicked from the game when marked as AFK?" })
+        @Comment({ " ", "# Should a player be kicked from the game when marked as AFK?" })
         public boolean kickOnAfk = false;
 
         @Override
@@ -320,36 +300,34 @@ public class PluginConfiguration implements ReloadableConfig {
         }
     }
 
-    @Description({ " ", "# Items" })
+    @Comment({ " ", "# Items" })
     public Items items = new Items();
 
-    @Contextual
-    public static class Items {
-        @Description("# Use unsafe enchantments? Allows you to apply custom enchants to various items")
+    public static class Items extends OkaeriConfig {
+        @Comment("# Use unsafe enchantments? Allows you to apply custom enchants to various items")
         public boolean unsafeEnchantments = true;
 
-        @Description({ " ", "# The default item give amount, when no amount is specified in the command." })
+        @Comment({ " ", "# The default item give amount, when no amount is specified in the command." })
         public int defaultGiveAmount = 1;
 
-        @Description({ " ", "# Determines whether items should be dropped on the ground when the player's inventory is full" })
+        @Comment({ " ", "# Determines whether items should be dropped on the ground when the player's inventory is full" })
         public boolean dropOnFullInventory = true;
     }
 
-    @Description({ " ", "# Warp Section" })
+    @Comment({ " ", "# Warp Section" })
     public Warp warp = new Warp();
 
-    @Contextual
-    public static class Warp {
-        @Description("# Time of teleportation to warp")
+    public static class Warp extends OkaeriConfig {
+        @Comment("# Time of teleportation to warp")
         public Duration teleportTimeToWarp = Duration.ofSeconds(5);
 
-        @Description("# Warp inventory should be enabled?")
+        @Comment("# Warp inventory should be enabled?")
         public boolean inventoryEnabled = true;
 
-        @Description("# Warp inventory auto add new warps")
+        @Comment("# Warp inventory auto add new warps")
         public boolean autoAddNewWarps = true;
 
-        @Description({"# Options below allow you to customize item representing warp added to GUI, ",
+        @Comment({"# Options below allow you to customize item representing warp added to GUI, ",
             "# you can change almost everything inside langueage files, after the warp has been added to the inventory."})
         public String itemNamePrefix = "&8» &6Warp: &f";
 
@@ -357,35 +335,33 @@ public class PluginConfiguration implements ReloadableConfig {
 
         public Material itemMaterial = Material.PLAYER_HEAD;
 
-        @Description("# Texture of the item (only for PLAYER_HEAD material)")
+        @Comment("# Texture of the item (only for PLAYER_HEAD material)")
         public String itemTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";
     }
 
-    @Description({ " ", "# Butcher" })
+    @Comment({ " ", "# Butcher" })
     public Butcher butcher = new Butcher();
 
-    @Contextual
-    public static class Butcher {
-        @Description("# Safe number of chunks for command execution (above this number it will not be possible to execute the command)")
+    public static class Butcher extends OkaeriConfig {
+        @Comment("# Safe number of chunks for command execution (above this number it will not be possible to execute the command)")
         public int safeChunkNumber = 5;
     }
 
     @Bean
-    @Description({ " ", "# AutoMessage Section" })
+    @Comment({ " ", "# AutoMessage Section" })
     public AutoMessage autoMessage = new AutoMessage();
 
-    @Contextual
-    public static class AutoMessage implements AutoMessageSettings {
-        @Description("# AutoMessage should be enabled?")
+    public static class AutoMessage extends OkaeriConfig implements AutoMessageSettings {
+        @Comment("# AutoMessage should be enabled?")
         public boolean enabled = true;
 
-        @Description("# Interval between messages")
+        @Comment("# Interval between messages")
         public Duration interval = Duration.ofSeconds(60);
 
-        @Description("# Draw mode (RANDOM, SEQUENTIAL)")
+        @Comment("# Draw mode (RANDOM, SEQUENTIAL)")
         public DrawMode drawMode = DrawMode.RANDOM;
 
-        @Description("# Minimum number of players on the server to send an auto message.")
+        @Comment("# Minimum number of players on the server to send an auto message.")
         public int minPlayers = 1;
 
         @Override
@@ -405,16 +381,15 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Bean
-    @Description({ " ", "# Jail Section" })
+    @Comment({ " ", "# Jail Section" })
     public Jail jail = new Jail();
 
-    @Contextual
-    public static class Jail implements JailSettings {
+    public static class Jail extends OkaeriConfig implements JailSettings {
 
-        @Description("# Default jail duration, set if no duration is specified")
+        @Comment("# Default jail duration, set if no duration is specified")
         public Duration defaultJailDuration = Duration.ofMinutes(30);
 
-        @Description("# Allowed commands in jail")
+        @Comment("# Allowed commands in jail")
         public Set<String> allowedCommands = Set.of("help", "msg", "r", "tell", "me", "helpop");
 
         @Override
@@ -429,12 +404,11 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Bean
-    @Description({ " ", "# 4fun Section" })
+    @Comment({ " ", "# 4fun Section" })
     FunSection fun = new FunSection();
 
-    @Contextual
-    public static class FunSection implements CatBoySettings {
-        @Description({
+    public static class FunSection extends OkaeriConfig implements CatBoySettings {
+        @Comment({
             "# Speed of player walk speed while using /catboy feature",
             "# Default minecraft walk speed is 0.2"
         })
@@ -447,11 +421,11 @@ public class PluginConfiguration implements ReloadableConfig {
     }
 
     @Bean
-    @Description({ " ", "# ServerLinks Section" })
+    @Comment({ " ", "# ServerLinks Section" })
     ServerLinksConfig serverLinks = new ServerLinksConfig();
 
     @Override
-    public Resource resource(File folder) {
-        return Source.of(folder, "config.yml");
+    public File getConfigFile(File dataFolder) {
+        return new File(dataFolder, "config.yml");
     }
 }

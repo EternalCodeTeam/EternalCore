@@ -14,7 +14,7 @@ object Versions {
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.23.0"
     const val ADVENTURE_PLATFORM = "4.4.0"
-    const val CDN_CONFIGS = "1.14.9"
+    const val OKAERI_CONFIGS = "5.0.5"
 
     const val MARIA_DB = "3.5.4"
     const val POSTGRESQL = "42.7.7"
@@ -43,11 +43,7 @@ object Versions {
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
     // tests
-    const val EXPRESSIBLE_JUNIT = "1.3.6"
-    const val GROOVY_ALL = "3.0.25"
-    const val JUNIT_JUPITER_API = "5.13.4"
-    const val JUNIT_JUPITER_PARAMS = "5.13.4"
-    const val JUNIT_JUPITER_ENGINE = "5.13.4"
+    const val JUNIT_BOM = "5.10.2"
     const val MOCKITO_CORE = "5.18.0"
 
 }
