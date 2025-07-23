@@ -30,5 +30,5 @@ public interface AdminChatService {
      * @param message the message to send
      * @param playerName the name of the player who sent the message
      */
-    void sendAdminChatMessage(String message, CommandSender playerName);
+    void sendAdminChatMessage(String message, CommandSender sender);
 }
