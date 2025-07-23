@@ -54,13 +54,13 @@ class TpaHereCommand {
            this.noticeService
                .create()
                .player(sender.getUniqueId())
-               .notice(translation -> translation.tpa().tpaHereSentMessage())
+               .notice(translation -> translation.tpa().tpaHereSent())
                .placeholder("{PLAYER}", target.getName())
                .send();
 
            this.noticeService.create()
                 .player(target.getUniqueId())
-                .notice(translation -> translation.tpa().tpaHereReceivedMessage())
+                .notice(translation -> translation.tpa().tpaHereReceived())
                 .placeholder("{PLAYER}", sender.getName())
                 .send();
 

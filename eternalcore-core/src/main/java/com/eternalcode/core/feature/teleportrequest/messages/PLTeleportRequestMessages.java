@@ -15,8 +15,8 @@ public class PLTeleportRequestMessages extends OkaeriConfig implements TeleportR
     public Notice tpaSentMessage =
         Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!");
 
-    public Notice tpaHereSentMessage = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację gracza <green>{PLAYER}<white> do twojej lokalizacji!");
-    public Notice tpaHereReceivedMessage = Notice.builder()
+    public Notice tpaHereSent = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację gracza <green>{PLAYER}<white> do twojej lokalizacji!");
+    public Notice tpaHereReceived = Notice.builder()
         .chat("<green>► <white>Otrzymałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!")
         .chat(
             "<hover:show_text:'<green>Teleportować się do gracza?</green>'><gold><click:suggest_command:'/tpahereaccept {PLAYER}'><dark_gray>» <gold>/tpahereaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>")
