@@ -13,7 +13,16 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
     public Notice tpaAlreadySentMessage =
         Notice.chat("<red>✘ <dark_red>You have already sent a teleportation request!");
     public Notice tpaSentMessage =
-        Notice.chat("<green>► <white>You have sent a request for teleportation to a player: <green>{PLAYER}<white>!");
+        Notice.chat("<green>► <white>You have sent a request for player <green>{PLAYER}<white>{PLAYER} to teleport to you!");
+
+    public Notice tpaHereSent = Notice.chat("<green>► <white>You have sent a request for teleportation to you for a player: <green>{PLAYER}<white>!");
+    public Notice tpaHereReceived = Notice.builder()
+        .chat("<green>► <white>You have received a request for teleportation TO a player: <gray>{PLAYER}<green>!")
+        .chat(
+            "<hover:show_text:'<green>Teleport to the player?</green>'><gold><click:suggest_command:'/tpahereaccept {PLAYER}'><dark_gray>» <gold>/tpahereaccept {PLAYER} <green>to accept! <gray>(Click)</gray></click></gold></hover>")
+        .chat(
+            "<hover:show_text:'<red>Decline a teleportation request?</red>'><gold><click:suggest_command:'/tpaheredeny {PLAYER}'><dark_gray>» <gold>/tpaheredeny {PLAYER} <red><green>to deny! <gray>(Click)</gray></click></gold></hover>")
+        .build();
 
     @Comment({
         " ",
