@@ -34,7 +34,7 @@ public class CustomCommandRegistry {
 
     private void registerCustomCommand(CustomCommand customCommand) {
         CustomCommandBukkitWrapper customCommandBukkitWrapper = new CustomCommandBukkitWrapper(
-            customCommand.getCommandName(),
+            customCommand.getName(),
             StringUtil.EMPTY, // empty is description message
             customCommand.getAliases(),
             this.noticeService,
