@@ -6,9 +6,9 @@ import java.util.List;
 
 public class CustomCommand implements Serializable {
 
-    public String name;
-    public List<String> aliases;
-    public Notice message;
+    private String name;
+    private List<String> aliases;
+    private Notice message;
 
     public CustomCommand() {}
 

@@ -8,7 +8,6 @@ import eu.okaeri.configs.annotation.Header;
 import java.io.File;
 import java.time.Duration;
 import java.util.List;
-import java.util.Map;
 import net.kyori.adventure.bossbar.BossBar.Color;
 import net.kyori.adventure.bossbar.BossBar.Overlay;
 
@@ -34,14 +33,12 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
             " ",
             "# Custom commands",
             "#",
-            "# The key is the command name (e.g. \"discord\", \"rules\")",
-            "# Each entry can define aliases, title/subtitle with fade in/out, action bars, chat messages and more.",
+            "# Each command defines its name, aliases and message configuration.",
             "#",
-            "# You can define multiple commands freely.",
-            "# Example: /vote, /help, /rules, /discord"
+            "# WARNING: You must restart the server after editing this file for changes to take effect.",
     })
-    public Map<String, CustomCommand> commands = Map.of(
-            "help", CustomCommand.of(
+    public List<CustomCommand> commands = List.of(
+            CustomCommand.of(
                     "help",
                     List.of("info"),
                     Notice.builder()
@@ -56,8 +53,7 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                                     "<aqua>https://www.eternalcode.pl/notification-generator</aqua>"
                             ).build()
             ),
-
-            "discord", CustomCommand.of(
+            CustomCommand.of(
                     "discord",
                     List.of("dc"),
                     Notice.builder()
@@ -72,8 +68,7 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                                     "<gray>Talk with the team, suggest features, get help.</gray>"
                             ).build()
             ),
-
-            "store", CustomCommand.of(
+            CustomCommand.of(
                     "store",
                     List.of("shop"),
                     Notice.builder()
@@ -88,8 +83,7 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                                     "<gray>Your support keeps us alive ❤</gray>"
                             ).build()
             ),
-
-            "vote", CustomCommand.of(
+            CustomCommand.of(
                     "vote",
                     List.of("votes"),
                     Notice.builder()
@@ -102,8 +96,7 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                                     "<gray>Each vote helps us grow!</gray>"
                             ).build()
             ),
-
-            "rules", CustomCommand.of(
+            CustomCommand.of(
                     "rules",
                     List.of(),
                     Notice.builder()
@@ -119,8 +112,7 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                                     "<gray>Breaking rules may result in a ban.</gray>"
                             ).build()
             ),
-
-            "map", CustomCommand.of(
+            CustomCommand.of(
                     "map",
                     List.of("dynmap"),
                     Notice.builder()

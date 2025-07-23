@@ -12,6 +12,7 @@ import org.bukkit.command.CommandMap;
 public class CustomCommandRegistry {
 
     private static final String FALLBACK_PREFIX = "eternalcore";
+    private static final String EMPTY_USAGE_MESSAGE = StringUtil.EMPTY;
 
     private final CustomCommandConfig customCommandConfig;
     private final NoticeService noticeService;
@@ -24,10 +25,12 @@ public class CustomCommandRegistry {
         this.customCommandConfig = customCommandConfig;
         this.noticeService = noticeService;
         this.server = server;
+
+        this.registerCustomCommands();
     }
 
     public void registerCustomCommands() {
-        for (CustomCommand customCommand : this.customCommandConfig.commands.values()) {
+        for (CustomCommand customCommand : this.customCommandConfig.commands) {
             this.registerCustomCommand(customCommand);
         }
     }
@@ -35,7 +38,7 @@ public class CustomCommandRegistry {
     private void registerCustomCommand(CustomCommand customCommand) {
         CustomCommandBukkitWrapper customCommandBukkitWrapper = new CustomCommandBukkitWrapper(
             customCommand.getName(),
-            StringUtil.EMPTY, // empty is description message
+            EMPTY_USAGE_MESSAGE,
             customCommand.getAliases(),
             this.noticeService,
             customCommand.getMessage()
@@ -53,10 +56,10 @@ public class CustomCommandRegistry {
                 this.commandMap = (CommandMap) commandMapField.get(this.server);
             }
             catch (NoSuchFieldException | IllegalAccessException exception) {
-                throw new RuntimeException(exception);
+                throw new RuntimeException(
+                    "Failed to get CommandMap from the server, this might be due to a server version incompatibility.",
+                    exception);
             }
-
-            return this.commandMap;
         }
 
         return this.commandMap;
