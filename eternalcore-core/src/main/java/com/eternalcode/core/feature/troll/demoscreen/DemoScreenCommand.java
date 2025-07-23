@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.troll.demoscreen;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.compatibility.Compatibility;
+import com.eternalcode.core.compatibility.Version;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -12,6 +14,7 @@ import org.bukkit.entity.Player;
 
 @Command(name = "demoscreen", aliases = {"demo"})
 @Permission("eternalcore.troll.demoscreen")
+@Compatibility(from = @Version(minor = 18, patch = 2))
 public class DemoScreenCommand {
 
     private final NoticeService noticeService;
