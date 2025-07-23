@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.heal;
 
+import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Header;
 
@@ -7,7 +8,7 @@ import eu.okaeri.configs.annotation.Header;
     " ",
     "# Settings for player healing behavior and potion effect removal"
 })
-public class HealConfiguration {
+public class HealConfiguration extends OkaeriConfig {
 
     @Comment({
         "Whether to remove only negative potion effects when healing.",
