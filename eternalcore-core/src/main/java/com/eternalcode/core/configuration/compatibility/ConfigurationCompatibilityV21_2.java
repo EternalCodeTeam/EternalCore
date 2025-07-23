@@ -1,8 +1,8 @@
 package com.eternalcode.core.configuration.compatibility;
 
 import com.eternalcode.core.compatibility.Version;
-import com.eternalcode.core.configuration.ConfigurationSettingsSetupEvent;
-import com.eternalcode.core.configuration.composer.OldEnumComposer;
+import com.eternalcode.core.configuration.ConfigurationSerdesSetupEvent;
+import com.eternalcode.core.configuration.serializer.OldEnumSerializer;
 import com.eternalcode.core.compatibility.Compatibility;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.publish.Subscribe;
@@ -13,9 +13,8 @@ import com.eternalcode.core.publish.Subscribe;
 public class ConfigurationCompatibilityV21_2 {
 
     @Subscribe
-    void onConfigSettingsSetup(ConfigurationSettingsSetupEvent event) {
-        event.getSettings()
-            .withDynamicComposer(OldEnumComposer.IS_OLD_ENUM, new OldEnumComposer());
+    void onConfigSerdesSetup(ConfigurationSerdesSetupEvent event) {
+        event.registry().register(new OldEnumSerializer());
     }
 
 }

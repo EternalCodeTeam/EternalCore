@@ -2,14 +2,14 @@ package com.eternalcode.core.feature.container;
 
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.paper.PaperContainer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -27,7 +27,7 @@ class GrindstoneCommand {
     @Permission("eternalcore.grindstone")
     @DescriptionDocs(description = "Opens a grindstone for you")
     void executeSelf(@Context Player player) {
-        AdditionalContainerPaper.GRINDSTONE.open(player);
+        PaperContainer.GRINDSTONE.open(player);
 
         this.announcer.create()
             .notice(translation -> translation.container().genericContainerOpened())
@@ -39,7 +39,7 @@ class GrindstoneCommand {
     @Permission("eternalcore.grindstone.other")
     @DescriptionDocs(description = "Opens a grindstone for another player", arguments = "<player>")
     void execute(@Context CommandSender sender, @Arg Player target) {
-        AdditionalContainerPaper.GRINDSTONE.open(target);
+        PaperContainer.GRINDSTONE.open(target);
 
         this.announcer.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())

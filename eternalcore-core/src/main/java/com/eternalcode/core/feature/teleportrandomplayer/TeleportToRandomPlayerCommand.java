@@ -47,7 +47,7 @@ public class TeleportToRandomPlayerCommand {
             return;
         }
 
-        this.teleportRandomPlayerService.updateTeleportationHistory(targetPlayer, player);
+        this.teleportRandomPlayerService.updateTeleportationHistory(player, targetPlayer);
 
         PaperLib.teleportAsync(player, targetPlayer.getLocation());
 
