@@ -146,7 +146,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     }
 
     @Bean
-    @Comment({ " ", "# Settings controlling how player healing works and which potion effects get cleared" })
     public HealConfiguration heal = new HealConfiguration();
 
     @Comment({ " ", "# Awesome sounds" })
