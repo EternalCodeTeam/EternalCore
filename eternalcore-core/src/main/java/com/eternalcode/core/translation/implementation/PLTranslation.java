@@ -5,31 +5,32 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
-import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
+import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
-import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
+import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
+import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
+import com.eternalcode.core.feature.troll.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import java.io.File;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -583,4 +584,14 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
     public PLJailMessages jailSection = new PLJailMessages();
+
+    @Comment({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące trollowania graczy" })
+    public PLTrollSection troll = new PLTrollSection();
+
+    @Getter
+    public static class PLTrollSection extends OkaeriConfig implements TrollSection {
+
+        @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
+        public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
+    }
 }
