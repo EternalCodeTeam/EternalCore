@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.vanish.controller;
 
+import com.eternalcode.core.feature.vanish.VanishConfiguration;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -13,14 +14,20 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 public class FoodController implements Listener {
 
     private final VanishService vanishService;
+    private final VanishConfiguration config;
 
     @Inject
-    public FoodController(VanishService vanishService) {
+    public FoodController(VanishService vanishService, VanishConfiguration config) {
         this.vanishService = vanishService;
+        this.config = config;
     }
 
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
+        if (!this.config.blockFood) {
+            return;
+        }
+
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }

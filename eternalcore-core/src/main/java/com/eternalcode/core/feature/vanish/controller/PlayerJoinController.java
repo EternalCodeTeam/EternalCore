@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.vanish.controller;
 
+import com.eternalcode.core.feature.vanish.VanishConfiguration;
 import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -14,11 +15,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoinController implements Listener {
 
     private final VanishService vanishService;
+    private final VanishConfiguration config;
     private final Server server;
 
     @Inject
-    public PlayerJoinController(VanishService vanishService, Server server) {
+    public PlayerJoinController(VanishService vanishService, VanishConfiguration config, Server server) {
         this.vanishService = vanishService;
+        this.config = config;
         this.server = server;
     }
 
@@ -27,7 +30,7 @@ public class PlayerJoinController implements Listener {
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
+        if (this.config.onJoinWithPerm && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
             event.setJoinMessage(null);
             this.vanishService.enableVanish(player);
 
