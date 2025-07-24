@@ -10,6 +10,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command(name = "stonecutter")
@@ -37,7 +38,7 @@ class StonecutterCommand {
     @Execute
     @Permission("eternalcore.stonecutter.other")
     @DescriptionDocs(description = "Opens a stonecutter for another player", arguments = "<player>")
-    void execute(@Context Player sender, @Arg Player target) {
+    void execute(@Context CommandSender sender, @Arg Player target) {
         AdditionalContainerPaper.STONE_CUTTER.open(target);
 
         this.noticeService.create()
@@ -48,7 +49,7 @@ class StonecutterCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedFor())
-            .player(sender.getUniqueId())
+            .sender(sender)
             .placeholder("{PLAYER}", target.getName())
             .send();
     }

@@ -18,6 +18,7 @@ eternalShadowCompiler {
         website = "www.eternalcode.pl"
         version = "${project.version}"
         softDepend = listOf("PlaceholderAPI")
+        foliaSupported = true
     }
 
     shadowJar {
@@ -35,6 +36,6 @@ dependencies {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.4")
+        minecraftVersion("1.21.6")
     }
 }

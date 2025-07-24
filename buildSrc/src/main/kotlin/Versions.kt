@@ -22,7 +22,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "6.3.0"
 
-    const val LITE_COMMANDS = "3.9.7"
+    const val LITE_COMMANDS = "3.10.2"
     const val LITE_SKULL_API = "1.3.0"
 
     const val GUAVA = "33.4.8-jre"
@@ -36,7 +36,7 @@ object Versions {
 
     const val BSTATS = "3.1.0"
 
-    const val CAFFEINE = "3.2.1"
+    const val CAFFEINE = "3.2.2"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
