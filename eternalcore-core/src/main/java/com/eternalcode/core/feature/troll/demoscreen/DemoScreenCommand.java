@@ -37,7 +37,7 @@ public class DemoScreenCommand {
 
     @Execute
     @DescriptionDocs(description = {"Show a demo screen to a player"}, arguments = {"<player>"})
-    void execute(@Context Player sender, @Arg Player target) {
+    void other(@Context Player sender, @Arg Player target) {
         target.showDemoScreen();
 
         this.noticeService.create()
