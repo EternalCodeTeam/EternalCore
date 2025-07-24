@@ -6,7 +6,6 @@ import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.catboy.CatBoySettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
-import com.eternalcode.core.feature.heal.HealConfiguration;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
@@ -144,9 +143,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
             }
         };
     }
-
-    @Bean
-    public HealConfiguration heal = new HealConfiguration();
 
     @Comment({ " ", "# Awesome sounds" })
     @Bean
