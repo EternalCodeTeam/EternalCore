@@ -4,17 +4,16 @@ import com.j256.ormlite.field.FieldType;
 import com.j256.ormlite.field.SqlType;
 import com.j256.ormlite.field.types.BaseDataType;
 import com.j256.ormlite.support.DatabaseResults;
+import java.sql.SQLException;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-
-import java.sql.SQLException;
 
 public class LocationPersister extends BaseDataType {
 
     private static final LocationPersister instance = new LocationPersister();
 
     private LocationPersister() {
-        super(SqlType.LONG_STRING, new Class<?>[] { LocationPersister.class });
+        super(SqlType.LONG_STRING, new Class<?>[] {LocationPersister.class});
     }
 
     @Override

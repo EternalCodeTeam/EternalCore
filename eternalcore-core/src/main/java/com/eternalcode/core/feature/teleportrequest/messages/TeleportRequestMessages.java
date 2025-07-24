@@ -9,6 +9,9 @@ public interface TeleportRequestMessages {
     Notice tpaReceivedMessage();
     Notice tpaTargetIgnoresYou();
 
+    Notice tpaHereSent();
+    Notice tpaHereReceived();
+
     Notice tpaDenyNoRequestMessage();
     Notice tpaDenyDoneMessage();
     Notice tpaDenyReceivedMessage();

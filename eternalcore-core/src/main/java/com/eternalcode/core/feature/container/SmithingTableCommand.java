@@ -1,14 +1,14 @@
 package com.eternalcode.core.feature.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.containers.AdditionalContainerPaper;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.paper.PaperContainer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -26,7 +26,7 @@ class SmithingTableCommand {
     @Permission("eternalcore.smithingtable")
     @DescriptionDocs(description = "Opens a smithing table for you")
     void executeSelf(@Context Player player) {
-        AdditionalContainerPaper.SMITHING_TABLE.open(player);
+        PaperContainer.SMITHING_TABLE.open(player);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpened())
@@ -38,7 +38,7 @@ class SmithingTableCommand {
     @Permission("eternalcore.smithingtable.other")
     @DescriptionDocs(description = "Opens a smithing table for another player", arguments = "<player>")
     void execute(@Context CommandSender sender, @Arg Player target) {
-        AdditionalContainerPaper.SMITHING_TABLE.open(target);
+        PaperContainer.SMITHING_TABLE.open(target);
 
         this.noticeService.create()
             .notice(translation -> translation.container().genericContainerOpenedBy())

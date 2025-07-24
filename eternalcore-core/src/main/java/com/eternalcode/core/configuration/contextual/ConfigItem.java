@@ -1,15 +1,13 @@
 package com.eternalcode.core.configuration.contextual;
 
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
+import eu.okaeri.configs.OkaeriConfig;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Contextual
-public class ConfigItem {
+public class ConfigItem extends OkaeriConfig {
 
     public String name = "&6Item";
     public List<String> lore = Collections.singletonList("&7Default lore");
@@ -18,7 +16,7 @@ public class ConfigItem {
     public boolean glow = false;
     public int slot = 0;
     public List<String> commands = new ArrayList<>();
-
+    
     public ConfigItem(String name, List<String> lore, Material material, String texture, boolean glow, int slot, List<String> commands) {
         this.name = name;
         this.lore = lore;

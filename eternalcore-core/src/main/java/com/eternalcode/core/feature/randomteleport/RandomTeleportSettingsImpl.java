@@ -1,48 +1,41 @@
 package com.eternalcode.core.feature.randomteleport;
 
-import com.eternalcode.core.configuration.migration.Migration;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import java.time.Duration;
 import java.util.EnumSet;
 import java.util.Set;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 
-@Contextual
-public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migration {
+public class RandomTeleportSettingsImpl extends OkaeriConfig implements RandomTeleportSettings {
 
-    @Description("# Delay to wait for the random teleportation")
+    @Comment("# Delay to wait for the random teleportation")
     public Duration delay = Duration.ofSeconds(5);
 
-    @Description("# Cooldown for random teleportation")
+    @Comment("# Cooldown for random teleportation")
     public Duration cooldown = Duration.ofSeconds(60);
-    @Deprecated public Duration randomTeleportDelay = null;
 
-    @Description({
+    @Comment({
         "# Type of radius for random teleportation",
         "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
         "# STATIC_RADIUS - static radius based on the configuration.",
     })
     public RandomTeleportType radiusType = RandomTeleportType.WORLD_BORDER_RADIUS;
-    @Deprecated public RandomTeleportType randomTeleportType = null;
 
-    @Description({
+    @Comment({
         "# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.",
         "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
         "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
     })
     public RandomTeleportRadiusConfig radius = new RandomTeleportRadiusConfig(-5000, 5000, -5000, 5000);
-    @Deprecated public Integer randomTeleportRadius = null;
 
-    @Description("# Teleport to a specific world, if left empty it will teleport to the player's current world")
+    @Comment("# Teleport to a specific world, if left empty it will teleport to the player's current world")
     public String world = "world";
-    @Deprecated public String randomTeleportWorld = null;
 
-    @Description("# Number of attempts to find a safe location for random teleportation")
+    @Comment("# Number of attempts to find a safe location for random teleportation")
     public int teleportAttempts = 10;
-    @Deprecated  public Integer randomTeleportAttempts = null;
 
-    @Description({
+    @Comment({
         "# Unsafe blocks for random teleportation",
         "# These blocks are considered unsafe for players to be teleported onto.",
         "# The list includes blocks that can cause damage, suffocation, or other",
@@ -66,7 +59,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
         Material.WITHER_ROSE
     );
 
-    @Description({
+    @Comment({
         "# Air blocks for random teleportation",
         "# These blocks are considered safe for players to be teleported into.",
         "# The list includes blocks that do not cause damage or impede movement.",
@@ -114,7 +107,7 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
         Material.SNOW
     );
 
-    @Description({
+    @Comment({
         "# Height range for random teleportation",
         "# - Minimum: -64 (1.18+) or 0 (older versions)",
         "# - Maximum: 320 (1.18+) or 256 (older versions)",
@@ -166,38 +159,6 @@ public class RandomTeleportSettingsImpl implements RandomTeleportSettings, Migra
     @Override
     public Duration cooldown() {
         return this.cooldown;
-    }
-
-    @Override
-    @Deprecated(since = "1.5.0", forRemoval = true)
-    public boolean migrate() {
-        boolean migrated = false;
-        if (randomTeleportDelay != null) {
-            cooldown = randomTeleportDelay;
-            randomTeleportDelay = null;
-            migrated = true;
-        }
-        if (randomTeleportType != null) {
-            radiusType = randomTeleportType;
-            randomTeleportType = null;
-            migrated = true;
-        }
-        if (randomTeleportRadius != null) {
-            radius = new RandomTeleportRadiusConfig(-randomTeleportRadius, randomTeleportRadius, -randomTeleportRadius, randomTeleportRadius);
-            randomTeleportRadius = null;
-            migrated = true;
-        }
-        if (randomTeleportWorld != null) {
-            world = randomTeleportWorld;
-            randomTeleportWorld = null;
-            migrated = true;
-        }
-        if (randomTeleportAttempts != null) {
-            teleportAttempts = randomTeleportAttempts;
-            randomTeleportAttempts = null;
-            migrated = true;
-        }
-        return migrated;
     }
 
 }

@@ -1,94 +1,106 @@
 package com.eternalcode.core.configuration;
 
-import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.core.configuration.composer.DurationComposer;
-import com.eternalcode.core.configuration.composer.LanguageComposer;
-import com.eternalcode.core.configuration.composer.PositionComposer;
-import com.eternalcode.core.configuration.composer.SetComposer;
-import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.configuration.serializer.LanguageSerializer;
+import com.eternalcode.core.configuration.transformer.PositionTransformer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.publish.Publisher;
-import com.eternalcode.multification.cdn.MultificationNoticeCdnComposer;
-import com.eternalcode.multification.notice.Notice;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
+import com.eternalcode.multification.okaeri.MultificationNoticeSerializer;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.serdes.OkaeriSerdesPack;
+import eu.okaeri.configs.serdes.commons.SerdesCommons;
+import eu.okaeri.configs.yaml.snakeyaml.YamlSnakeYamlConfigurer;
 import java.io.File;
-import java.time.Duration;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import net.dzikoysk.cdn.Cdn;
-import net.dzikoysk.cdn.CdnFactory;
-import net.dzikoysk.cdn.CdnSettings;
-import net.dzikoysk.cdn.reflect.Visibility;
-import org.bukkit.Sound;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.representer.Representer;
+import org.yaml.snakeyaml.resolver.Resolver;
 
 @Service
 public class ConfigurationManager {
 
-    private final ConfigurationBackupService configurationBackupService;
+    private final Set<OkaeriConfig> configs = new HashSet<>();
 
-    private final Cdn cdn;
-
-    private final Set<ReloadableConfig> configs = new HashSet<>();
+    private final Publisher publisher;
+    private final NoticeResolverRegistry resolverRegistry;
     private final File dataFolder;
 
     @Inject
     public ConfigurationManager(
-        ConfigurationBackupService configurationBackupService,
         NoticeResolverRegistry resolverRegistry,
         Publisher publisher,
         File dataFolder
     ) {
-        this.configurationBackupService = configurationBackupService;
+        this.resolverRegistry = resolverRegistry;
+        this.publisher = publisher;
         this.dataFolder = dataFolder;
-        this.cdn = createCdn(publisher, resolverRegistry);
     }
 
-    private static Cdn createCdn(Publisher publisher, NoticeResolverRegistry resolverRegistry) {
-        CdnSettings cdnSettings = CdnFactory
-            .createYamlLike()
-            .getSettings()
-            .withComposer(Duration.class, new DurationComposer())
-            .withComposer(Set.class, new SetComposer())
-            .withComposer(Language.class, new LanguageComposer())
-            .withComposer(Position.class, new PositionComposer())
-            .withComposer(Notice.class, new MultificationNoticeCdnComposer(resolverRegistry))
-            .withMemberResolver(Visibility.PACKAGE_PRIVATE);
+    public <T extends OkaeriConfig & EternalConfigurationFile> T load(T config) {
+        File file = config.getConfigFile(this.dataFolder);
+        Yaml yaml = this.createYaml();
+        YamlSnakeYamlConfigurer yamlConfigurer = new YamlSnakeYamlConfigurer(yaml);
+        CdnConfigMigrator migrator = new CdnConfigMigrator(yaml);
+        migrator.runMigrations(file);
 
-        ConfigurationSettingsSetupEvent event = publisher.publish(new ConfigurationSettingsSetupEvent(cdnSettings));
+        OkaeriSerdesPack serdesPack = registry -> {
+            registry.register(new PositionTransformer());
+            registry.register(new LanguageSerializer());
+            registry.register(new MultificationNoticeSerializer(this.resolverRegistry));
+            registry.register(new SerdesCommons());
 
-        return event.getSettings()
-            .build();
-    }
+            this.publisher.publish(new ConfigurationSerdesSetupEvent(registry));
+        };
 
-    public <T extends ReloadableConfig> T load(T config) {
-        this.cdn.load(config.resource(this.dataFolder), config)
-            .orThrow(RuntimeException::new);
-
-        this.cdn.render(config, config.resource(this.dataFolder))
-            .orThrow(RuntimeException::new);
+        config.withConfigurer(yamlConfigurer)
+            .withSerdesPack(serdesPack)
+            .withBindFile(file)
+            .withRemoveOrphans(true)
+            .saveDefaults()
+            .load(true);
 
         this.configs.add(config);
-
         return config;
     }
 
-    public <T extends ReloadableConfig> void save(T config) {
-        this.cdn.render(config, config.resource(this.dataFolder))
-            .orThrow(RuntimeException::new);
+    private Yaml createYaml() {
+        LoaderOptions loaderOptions = new LoaderOptions();
+        Constructor constructor = new Constructor(loaderOptions);
+
+        DumperOptions dumperOptions = new DumperOptions();
+        dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        dumperOptions.setDefaultScalarStyle(DumperOptions.ScalarStyle.PLAIN);
+        dumperOptions.setIndent(2);
+        dumperOptions.setIndicatorIndent(0);
+        dumperOptions.setSplitLines(false);
+
+        Representer representer = new CustomSnakeYamlRepresenter(dumperOptions);
+        Resolver resolver = new Resolver();
+
+        return new Yaml(constructor, representer, dumperOptions, loaderOptions, resolver);
     }
 
     public void reload() {
-        this.configurationBackupService.createBackup();
-
-        for (ReloadableConfig config : this.configs) {
-            this.load(config);
+        for (OkaeriConfig config : this.configs) {
+            config.load();
         }
     }
 
-    public Set<ReloadableConfig> getConfigs() {
+    public void save(OkaeriConfig config) {
+        config.save();
+    }
+
+    public Set<OkaeriConfig> getConfigs() {
         return Collections.unmodifiableSet(this.configs);
     }
 
+    public File getDataFolder() {
+        return this.dataFolder;
+    }
 }
