@@ -22,7 +22,7 @@ public class DatabaseConfig extends OkaeriConfig implements DatabaseSettings {
     public int port = 3306;
 
     @Comment("Name of the database to connect to. This is the name of the specific database instance.")
-    public String database = "eternal_economy";
+    public String database = "eternalcore";
 
     @Comment("Username for the database connection. This is the user account used to authenticate with the database.")
     public String username = "root";
