@@ -57,4 +57,7 @@ public class PLPrivateChatMessages extends OkaeriConfig implements PrivateChatMe
     @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
     public Notice notIgnorePlayer = Notice.chat(
         "<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!");
+
+    public String privateMessageEnabledPlaceholder = "<green>Włączone";
+    public String privateMessageDisabledPlaceholder = "<red>Wyłączone";
 }
