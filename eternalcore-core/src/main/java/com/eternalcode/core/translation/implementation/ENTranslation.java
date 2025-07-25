@@ -19,6 +19,7 @@ import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
+import com.eternalcode.core.feature.troll.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.troll.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
@@ -569,5 +570,8 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment({" ", "# This section is responsible for elder guardian messages."})
         public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
+
+        @Comment({" ", "# This section is responsible for demo screen messages."})
+        public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
     }
 }
