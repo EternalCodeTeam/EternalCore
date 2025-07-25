@@ -20,6 +20,8 @@ import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.troll.elderguardian.messages.ENElderGuardianMessages;
+import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
+import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -570,4 +572,8 @@ public class ENTranslation extends AbstractTranslation {
         @Comment({" ", "# This section is responsible for elder guardian messages."})
         public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
     }
+
+    @Comment({" ", "# This section is responsible for vanish-related stuff."})
+    public ENVanishMessages vanish = new ENVanishMessages();
+
 }
