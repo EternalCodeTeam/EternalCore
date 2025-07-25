@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.vanish;
 
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import org.bukkit.ChatColor;
@@ -15,7 +16,7 @@ public class VanishConfiguration extends OkaeriConfig {
     @Comment("Should the player has nightVision effect while vanished?")
     public boolean nightVision = true;
 
-    @Comment("Should the player be able to open silent inventory while vanished?")
+    @Comment("Should the player be able to open silent inventory (only preview) while vanished?")
     public boolean silentOpen = true;
 
     @Comment("Should the player glowing to other players while vanished?")
@@ -32,9 +33,5 @@ public class VanishConfiguration extends OkaeriConfig {
     public boolean blockUsingChat = true;
     public boolean blockBreak = true;
     public boolean blockPlace = true;
-
-    // to implement
-    public boolean blockInteract = true;
-    public boolean blockAttack = true;
 
 }

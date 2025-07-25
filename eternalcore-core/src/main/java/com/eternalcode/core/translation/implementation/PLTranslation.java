@@ -20,6 +20,7 @@ import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
 import com.eternalcode.core.feature.troll.elderguardian.messages.PLElderGuardianMessages;
+import com.eternalcode.core.feature.vanish.messages.PLVanishMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -594,4 +595,8 @@ public class PLTranslation extends AbstractTranslation {
         @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
         public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
     }
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidzialności graczy"})
+    public PLVanishMessages vanish = new PLVanishMessages();
+
 }

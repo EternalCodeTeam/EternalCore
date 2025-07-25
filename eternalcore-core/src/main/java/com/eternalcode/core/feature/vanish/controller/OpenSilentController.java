@@ -65,7 +65,6 @@ public class OpenSilentController implements Listener {
             inventory = player.getEnderChest();
         }
 
-
         if (inventory == null) {
             return;
         }

@@ -5,7 +5,7 @@ import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import org.bukkit.Server;
+import com.eternalcode.core.notice.NoticeService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,16 +15,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoinController implements Listener {
 
     private final VanishService vanishService;
+    private final NoticeService noticeService;
     private final VanishConfiguration config;
-    private final Server server;
 
     @Inject
-    public PlayerJoinController(VanishService vanishService, VanishConfiguration config, Server server) {
+    public PlayerJoinController(VanishService vanishService, NoticeService noticeService, VanishConfiguration config) {
         this.vanishService = vanishService;
+        this.noticeService = noticeService;
         this.config = config;
-        this.server = server;
     }
-
 
     @EventHandler
     void onJoin(PlayerJoinEvent event) {
@@ -34,8 +33,13 @@ public class PlayerJoinController implements Listener {
             event.setJoinMessage(null);
             this.vanishService.enableVanish(player);
 
-            player.sendMessage("You have been automatically vanished upon joining the server.");
-            this.server.broadcast(player.getName() + " has joined the server in vanish mode.", VanishPermissionConstant.VANISH_JOIN_PERMISSION);
+            this.noticeService.player(player.getUniqueId(), messages -> messages.vanish().joinedInVanishMode());
+
+            this.noticeService.create()
+                .onlinePlayers(VanishPermissionConstant.VANISH_JOIN_PERMISSION)
+                .notice(messages -> messages.vanish().playerJoinedInVanishMode())
+                .placeholder("{PLAYER}", player.getName())
+                .send();
 
             return;
         }
