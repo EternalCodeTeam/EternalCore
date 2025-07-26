@@ -4,7 +4,7 @@ class DatabaseConnectionDriverConstant {
 
     // mysql
     static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String MYSQL_JDBC_URL = "jdbc:mysql://%s:%s/%s?useSSL=%s&requireSSL=%s";
+    static final String MYSQL_JDBC_URL = "jdbc:mysql://%s:%s/%s?sslMode=%s";
 
     // maria db
     static final String MARIADB_DRIVER = "org.mariadb.jdbc.Driver";
