@@ -8,7 +8,7 @@ class DatabaseConnectionDriverConstant {
 
     // maria db
     static final String MARIADB_DRIVER = "org.mariadb.jdbc.Driver";
-    static final String MARIADB_JDBC_URL = "jdbc:mariadb://%s:%s/%s?useSSL=%s&requireSSL=%s";
+    static final String MARIADB_JDBC_URL = "jdbc:mariadb://%s:%s/%s?sslMode=%s";
 
     // h2
     static final String H2_DRIVER = "org.h2.Driver";
