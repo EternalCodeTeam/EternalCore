@@ -49,8 +49,24 @@ public class DatabaseManager {
 
             String jdbcUrl = switch (type) {
                 case H2, SQLITE -> type.formatUrl(dataFolder);
-                case POSTGRESQL -> type.formatUrl(settings.getHostname(), settings.getPort(), settings.getDatabase(), settings.isSSL());
-                default -> type.formatUrl(settings.getHostname(), settings.getPort(), settings.getDatabase(), settings.isSSL(), settings.isSSL());
+                case POSTGRESQL -> type.formatUrl(
+                    settings.getHostname(),
+                    settings.getPort(),
+                    settings.getDatabase(),
+                    DatabaseConnectionDriverConstant.sslParamForPostgreSQL(settings.isSSL())
+                );
+                case MYSQL -> type.formatUrl(
+                    settings.getHostname(),
+                    settings.getPort(),
+                    settings.getDatabase(),
+                    DatabaseConnectionDriverConstant.sslParamForMySQL(settings.isSSL())
+                );
+                case MARIADB -> type.formatUrl(
+                    settings.getHostname(),
+                    settings.getPort(),
+                    settings.getDatabase(),
+                    String.valueOf(settings.isSSL())
+                );
             };
 
             this.dataSource.setJdbcUrl(jdbcUrl);
