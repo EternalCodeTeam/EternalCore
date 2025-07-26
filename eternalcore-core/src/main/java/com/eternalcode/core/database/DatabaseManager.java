@@ -49,7 +49,7 @@ public class DatabaseManager {
 
             String jdbcUrl = switch (type) {
                 case H2, SQLITE -> type.formatUrl(dataFolder);
-                case POSTGRE_SQL -> type.formatUrl(settings.getHostname(), settings.getPort(), settings.getDatabase(), settings.isSSL());
+                case POSTGRESQL -> type.formatUrl(settings.getHostname(), settings.getPort(), settings.getDatabase(), settings.isSSL());
                 default -> type.formatUrl(settings.getHostname(), settings.getPort(), settings.getDatabase(), settings.isSSL(), settings.isSSL());
             };
 
