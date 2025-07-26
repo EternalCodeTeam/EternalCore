@@ -6,7 +6,7 @@ import eu.okaeri.configs.annotation.Comment;
 @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
 public class DatabaseConfig extends OkaeriConfig implements DatabaseSettings {
 
-    @Comment({"Type of the database driver (e.g., SQLITE, H2, MY_SQL, MARIA_DB, POSTGRE_SQL).", "Determines the "
+    @Comment({"Type of the database driver (e.g., SQLITE, H2, MYSQL, MARIADB, POSTGRESQL).", "Determines the "
         + "database type "
         + "to be used."})
     public DatabaseDriverType databaseType = DatabaseDriverType.SQLITE;
