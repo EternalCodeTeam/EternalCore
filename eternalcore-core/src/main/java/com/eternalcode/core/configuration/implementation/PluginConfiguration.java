@@ -1,6 +1,7 @@
 package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
+import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
@@ -16,6 +17,7 @@ import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import eu.okaeri.configs.annotation.Header;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 
@@ -25,42 +27,31 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+@Header({
+    "#",
+    "# This is the main configuration file for EternalCore.",
+    "#",
+    "# If you need help with the configuration or have any questions related to EternalCore, join us in our discord, or create an issue on our GitHub.",
+    "#",
+    "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
+    "# Discord: https://discord.gg/FQ7jmGBd6c",
+    "# Website: https://eternalcode.pl/",
+    "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
+    "#",
+})
+
 @ConfigurationFile
 public class PluginConfiguration extends AbstractConfigurationFile {
-
-    @Comment({
-        "#",
-        "# This is the main configuration file for EternalCore.",
-        "#",
-        "# If you need help with the configuration or have any questions related to EternalCore, join us in our discord, or create an issue on our GitHub.",
-        "#",
-        "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
-        "# Discord: https://discord.gg/FQ7jmGBd6c",
-        "# Website: https://eternalcode.pl/",
-        "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
-        "#",
-    })
 
     @Comment("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
-    @Comment({ " ", "# Database Section" })
-    public Database database = new Database();
+    @Comment
+    @Comment({
+        "Settings responsible for the database connection."
+    })
+    public DatabaseConfig database = new DatabaseConfig();
 
-    public static class Database extends OkaeriConfig {
-        @Comment({
-            "# SQL Drivers and ports:",
-            "# MySQL (3306), MariaDB (3306), PostgresQL (5432)",
-            "# SQLite, H2"
-        })
-        public DatabaseType databaseType = DatabaseType.SQLITE;
-
-        public String hostname = "127.0.0.1";
-        public String database = "database";
-        public String username = "root";
-        public String password = "U5eStr0ngP4ssw0rd";
-        public int port = 3306;
-    }
 
     @Comment({ "", "# Join settings" })
     public Join join = new Join();

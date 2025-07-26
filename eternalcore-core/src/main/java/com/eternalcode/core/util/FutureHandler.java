@@ -16,6 +16,18 @@ public final class FutureHandler<T> implements BiConsumer<T, @Nullable Throwable
         this.success = success;
     }
 
+    public static <T> FutureHandler<T> whenSuccess(Consumer<T> success) {
+        return new FutureHandler<>(success);
+    }
+
+    public static <T> T handleException(Throwable cause) {
+        LOGGER.log(
+            Level.SEVERE,
+            String.format("Caught an exception in future execution: %s", cause.getMessage()),
+            cause);
+        return null;
+    }
+
     @Override
     public void accept(T value, @Nullable Throwable cause) {
         if (cause != null) {
@@ -25,9 +37,4 @@ public final class FutureHandler<T> implements BiConsumer<T, @Nullable Throwable
 
         success.accept(value);
     }
-
-    public static <T> FutureHandler<T> whenSuccess(Consumer<T> success) {
-        return new FutureHandler<>(success);
-    }
-
 }

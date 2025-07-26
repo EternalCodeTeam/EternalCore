@@ -1,9 +1,8 @@
 package com.eternalcode.core.database;
 
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.util.ThrowingFunction;
 import com.j256.ormlite.dao.Dao;
-import panda.std.function.ThrowingFunction;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -51,21 +50,32 @@ public abstract class AbstractRepositoryOrmLite {
         return this.action(type, Dao::queryForAll);
     }
 
-    protected <T, ID, R> CompletableFuture<R> action(Class<T> type, ThrowingFunction<Dao<T, ID>, R, SQLException> action) {
-        CompletableFuture<R> completableFuture = new CompletableFuture<>();
+    protected <T, ID, R> CompletableFuture<R> action(
+        Class<T> type,
+        ThrowingFunction<Dao<T, ID>, R, SQLException> action
+    ) {
+        CompletableFuture<R> future = new CompletableFuture<>();
 
         this.scheduler.runAsync(() -> {
-            Dao<T, ID> dao = this.databaseManager.getDao(type);
+            Dao<T, ID> dao;
+            try {
+                dao = this.databaseManager.getDao(type);
+            }
+            catch (Exception exception) {
+                future.completeExceptionally(new DatabaseException(
+                    "Failed to get DAO for class: " + type.getName(), exception));
+                return;
+            }
 
             try {
-                completableFuture.complete(action.apply(dao));
+                future.complete(action.apply(dao));
             }
             catch (Throwable throwable) {
-                completableFuture.completeExceptionally(throwable);
+                future.completeExceptionally(new DatabaseException(
+                    "Database action failed for: " + type.getSimpleName(), throwable));
             }
         });
 
-        return completableFuture;
+        return future;
     }
-
 }
