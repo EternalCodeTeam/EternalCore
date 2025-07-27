@@ -4,6 +4,6 @@ import com.eternalcode.multification.notice.Notice;
 
 public interface DemoScreenMessages {
 
-    Notice demoScreenShownToSelf();
-    Notice demoScreenShownToPlayer();
+    Notice shownToSelf();
+    Notice shownToOtherPlayer();
 }

@@ -10,6 +10,6 @@ import lombok.experimental.Accessors;
 
 public class ENDemoScreenMessages extends OkaeriConfig implements DemoScreenMessages {
 
-    public Notice demoScreenShownToSelf = Notice.chat("<green>► <white>You have shown the demo screen to yourself!");
-    public Notice demoScreenShownToPlayer = Notice.chat("<green>► <white>You have shown the demo screen to player <green>{PLAYER}!");
+    public Notice shownToSelf = Notice.chat("<green>► <white>You have shown the demo screen to yourself!");
+    public Notice shownToOtherPlayer = Notice.chat("<green>► <white>You have shown the demo screen to player <green>{PLAYER}!");
 }

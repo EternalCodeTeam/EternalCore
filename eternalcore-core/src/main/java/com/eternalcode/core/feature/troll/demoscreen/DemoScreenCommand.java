@@ -30,7 +30,7 @@ public class DemoScreenCommand {
         sender.showDemoScreen();
 
         this.noticeService.create()
-            .notice(translation -> translation.troll().demoScreen().demoScreenShownToSelf())
+            .notice(translation -> translation.troll().demoScreen().shownToSelf())
             .player(sender.getUniqueId())
             .send();
     }
@@ -41,7 +41,7 @@ public class DemoScreenCommand {
         target.showDemoScreen();
 
         this.noticeService.create()
-            .notice(translation -> translation.troll().demoScreen().demoScreenShownToPlayer())
+            .notice(translation -> translation.troll().demoScreen().shownToOtherPlayer())
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
             .send();
