@@ -73,9 +73,4 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
 
     @Comment(" ")
     public Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>is ignoring you!");
-
-    @Override
-    public Notice tpaHereSentToAll() {
-        return null;
-    }
 }

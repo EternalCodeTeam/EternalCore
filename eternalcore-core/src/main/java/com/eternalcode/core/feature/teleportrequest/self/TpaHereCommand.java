@@ -98,12 +98,13 @@ class TpaHereCommand {
 
                 this.requestService.createRequest(sender.getUniqueId(), target.getUniqueId());
 
-                this.noticeService.create()
-                    .player(sender.getUniqueId())
-                    .notice(translation -> translation.tpa().tpaHereSentToAll())
-                    .send();
             });
         }
+
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .notice(translation -> translation.tpa().tpaHereSentToAll())
+            .send();
     }
 
 
