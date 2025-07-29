@@ -16,6 +16,7 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
         Notice.chat("<green>► <white>You have sent a request for player <green>{PLAYER}<white>{PLAYER} to teleport to you!");
 
     public Notice tpaHereSent = Notice.chat("<green>► <white>You have sent a request for teleportation to you for a player: <green>{PLAYER}<white>!");
+    public Notice tpaHereSentToAll = Notice.chat("<green>► <white>You have sent a request for teleportation to all players!");
     public Notice tpaHereReceived = Notice.builder()
         .chat("<green>► <white>You have received a request for teleportation TO a player: <gray>{PLAYER}<green>!")
         .chat(
@@ -72,4 +73,9 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
 
     @Comment(" ")
     public Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>is ignoring you!");
+
+    @Override
+    public Notice tpaHereSentToAll() {
+        return null;
+    }
 }

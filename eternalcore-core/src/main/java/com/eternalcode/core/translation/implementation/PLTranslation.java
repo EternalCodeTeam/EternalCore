@@ -179,6 +179,9 @@ public class PLTranslation extends AbstractTranslation {
         @Comment({"# {Y} - Koordynat Y najwyżej położonego bloku"})
         public Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
 
+        @Comment(" ")
+        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>Przeteleportowano wszystkich graczy do ciebie!");
+
         // Task
         @Comment({"# {TIME} - Czas teleportacji"})
         public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleportacja za <green>{TIME}");

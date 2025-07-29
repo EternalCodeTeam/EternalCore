@@ -182,6 +182,9 @@ public class ENTranslation extends AbstractTranslation {
         @Comment({"# {Y} - Y coordinate of the highest block"})
         public Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Teleported successfully to the highest block! (Y: {Y})");
 
+        @Comment(" ")
+        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>All players have been teleported to you!");
+
         // Task
         @Comment({"# {TIME} - Teleportation time"})
         public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleporting in <green>{TIME}");
