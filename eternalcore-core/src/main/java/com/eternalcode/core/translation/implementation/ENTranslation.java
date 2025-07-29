@@ -17,6 +17,7 @@ import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.ENSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
+import com.eternalcode.core.feature.teleportrandomplayer.messages.ENTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.troll.demoscreen.messages.ENDemoScreenMessages;
@@ -210,6 +211,12 @@ public class ENTranslation extends AbstractTranslation {
         @Comment({" ", "# {PLAYER} - The player you were teleported"})
         public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Teleported to random player <green>{PLAYER}<white>!");
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /tprp command",
+    })
+    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
 
     @Comment({
         " ",

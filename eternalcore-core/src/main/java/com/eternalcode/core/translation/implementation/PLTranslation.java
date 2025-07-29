@@ -17,6 +17,7 @@ import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
+import com.eternalcode.core.feature.teleportrandomplayer.messages.PLTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
 import com.eternalcode.core.feature.troll.demoscreen.messages.PLDemoScreenMessages;
@@ -205,12 +206,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
-
-        @Comment(" ")
-        public Notice randomPlayerNotFound = Notice.chat("<red>✘ <dark_red>Nie można odnaleźć gracza do teleportacji!");
-        @Comment({" ", "# {PLAYER} - Gracz do którego cię teleportowano"})
-        public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Zostałeś losowo teleportowany do <green>{PLAYER}<white>!");
     }
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /tprp"
+    })
+    public PLTeleportToRandomPlayerMessages teleportToRandomPlayer = new PLTeleportToRandomPlayerMessages();
 
     @Comment({
         " ",

@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration;
 
+import com.eternalcode.core.configuration.migration.M0001_MoveRandomPlayerTeleportToOwnSection;
 import com.eternalcode.core.configuration.serializer.LanguageSerializer;
 import com.eternalcode.core.configuration.transformer.PositionTransformer;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -61,6 +62,9 @@ public class ConfigurationManager {
         config.withConfigurer(yamlConfigurer)
             .withSerdesPack(serdesPack)
             .withBindFile(file)
+            .migrate(
+                new M0001_MoveRandomPlayerTeleportToOwnSection()
+            )
             .withRemoveOrphans(true)
             .saveDefaults()
             .load(true);
