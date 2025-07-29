@@ -1,6 +1,7 @@
-package com.eternalcode.core.feature.catboy;
+package com.eternalcode.core.feature.troll.catboy;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.injector.annotations.Inject;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;

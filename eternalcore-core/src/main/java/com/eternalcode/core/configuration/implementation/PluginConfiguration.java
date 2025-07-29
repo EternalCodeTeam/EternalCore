@@ -4,7 +4,6 @@ import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
-import com.eternalcode.core.feature.catboy.CatBoySettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
@@ -12,6 +11,7 @@ import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
+import com.eternalcode.core.feature.troll.IFunSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.OkaeriConfig;
@@ -401,9 +401,9 @@ public class PluginConfiguration extends AbstractConfigurationFile {
 
     @Bean
     @Comment({ " ", "# 4fun Section" })
-    FunSection fun = new FunSection();
+    public FunSection fun = new FunSection();
 
-    public static class FunSection extends OkaeriConfig implements CatBoySettings {
+    public static class FunSection extends OkaeriConfig implements IFunSettings {
         @Comment({
             "# Speed of player walk speed while using /catboy feature",
             "# Default minecraft walk speed is 0.2"
@@ -413,6 +413,22 @@ public class PluginConfiguration extends AbstractConfigurationFile {
         @Override
         public float getCatboyWalkSpeed() {
             return this.catboyWalkSpeed;
+        }
+
+        @Comment({" ", "# Maximum distance for the lightning strike block when using /lightning."})
+        @Comment("# If you will look at a block that is further than this distance, the lightning will strike at the player.")
+        public int maxLightningBlockDistance = 100;
+
+        public int maxLightningBlockDistance() {
+            return maxLightningBlockDistance;
+        }
+
+        @Comment({ " ", "# If there is no block in the range of lightning strike, should the lightning strike the player?" })
+        public boolean lightningStrikePlayerIfNoBlock = true;
+
+        @Override
+        public boolean lightningStrikePlayerIfNoBlock() {
+            return lightningStrikePlayerIfNoBlock;
         }
     }
 

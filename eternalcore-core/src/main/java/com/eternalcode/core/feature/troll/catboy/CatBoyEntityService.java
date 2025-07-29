@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.catboy;
+package com.eternalcode.core.feature.troll.catboy;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
