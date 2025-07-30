@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 @Command(name = "lightning", aliases = { "strike" })
 @Permission("eternalcore.lightning")
-public class LightningCommand {
+class LightningCommand {
 
     private final LightningSettings settings;
 
