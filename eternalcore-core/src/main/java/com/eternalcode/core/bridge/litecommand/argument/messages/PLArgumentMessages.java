@@ -1,25 +1,24 @@
 package com.eternalcode.core.bridge.litecommand.argument.messages;
 
 import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
 @Getter
 @Accessors(fluent = true)
-@Contextual
-public class PLArgumentMessages implements ArgumentMessages {
-    @Description("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
+public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages {
+    @Comment("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
     public Notice permissionMessage =
         Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
 
-    @Description({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
+    @Comment({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
     public Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
     public Notice usageMessageHead = Notice.chat("<gold>✘ <white>Poprawne użycie:");
     public Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
 
-    @Description(" ")
+    @Comment(" ")
     public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę gracza!");
     public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
     public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");

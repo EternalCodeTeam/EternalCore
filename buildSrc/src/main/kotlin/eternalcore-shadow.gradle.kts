@@ -10,6 +10,7 @@ afterEvaluate {
     dependencies {
         extension.compileOnlyDependencies.forEach {
             compileOnlyApi(it)
+            testImplementation(it)
         }
     }
 }

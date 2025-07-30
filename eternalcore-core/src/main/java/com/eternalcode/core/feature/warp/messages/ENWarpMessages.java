@@ -3,21 +3,20 @@ package com.eternalcode.core.feature.warp.messages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 import org.bukkit.Material;
 
 @Getter
 @Accessors(fluent = true)
-@Contextual
-public class ENWarpMessages implements WarpMessages {
-    @Description("# {WARP} - Warp name")
+public class ENWarpMessages extends OkaeriConfig implements WarpMessages {
+    @Comment("# {WARP} - Warp name")
     public Notice warpAlreadyExists = Notice.chat("<red>✘ <dark_red>Warp <red>{WARP} <dark_red>already exists!");
     public Notice create = Notice.chat("<green>► <white>Warp <green>{WARP} <white>has been created.");
     public Notice remove = Notice.chat("<red>► <white>Warp <red>{WARP} <white>has been deleted.");
@@ -39,19 +38,18 @@ public class ENWarpMessages implements WarpMessages {
     public Notice missingWarpArgument = Notice.chat("<red>✘ <dark_red>You must provide a warp name!");
     public Notice missingPermissionArgument = Notice.chat("<red>✘ <dark_red>You must provide a permission!");
 
-    @Description({" ", "# {WARPS} - List of warps (separated by commas)"})
+    @Comment({" ", "# {WARPS} - List of warps (separated by commas)"})
     public Notice available = Notice.chat("<green>► <white>Available warps: <green>{WARPS}");
 
-    @Description({" ", "# Settings for warp inventory"})
+    @Comment({" ", "# Settings for warp inventory"})
     public ENWarpInventory warpInventory = new ENWarpInventory();
 
     @Getter
     @Accessors(fluent = true)
-    @Contextual
-    public static class ENWarpInventory implements WarpInventorySection {
+    public static class ENWarpInventory extends OkaeriConfig implements WarpInventorySection {
         public String title = "<dark_gray>» <green>Available warps:";
 
-        @Description({" ",
+        @Comment({" ",
                       "# Warps located inside GUI inventory can be customized here. More warps will be added on creation with /setwarp command. "})
         public Map<String, WarpInventoryItem> items = new HashMap<>();
 
@@ -64,10 +62,9 @@ public class ENWarpMessages implements WarpMessages {
             new ENWarpInventory.ENDecorationItemsSection();
 
         @Getter
-        @Contextual
-        public static class ENBorderSection implements BorderSection {
+        public static class ENBorderSection extends OkaeriConfig implements BorderSection {
 
-            @Description({" ",
+            @Comment({" ",
                           "# Changes of border section may affect the appearance of the GUI inventory, after changes adjust slots of existing items."})
             public boolean enabled = true;
 
@@ -81,8 +78,7 @@ public class ENWarpMessages implements WarpMessages {
         }
 
         @Getter
-        @Contextual
-        public static class ENDecorationItemsSection implements DecorationItemsSection {
+        public static class ENDecorationItemsSection extends OkaeriConfig implements DecorationItemsSection {
             public List<ConfigItem> items = List.of();
         }
     }

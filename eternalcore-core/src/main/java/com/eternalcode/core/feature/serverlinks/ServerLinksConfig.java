@@ -1,13 +1,12 @@
 package com.eternalcode.core.feature.serverlinks;
 
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import java.util.List;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
-@Contextual
-public class ServerLinksConfig {
+public class ServerLinksConfig extends OkaeriConfig {
 
-    @Description({
+    @Comment({
         "# Configuration of server links displayed in the ESC/pause menu",
         "# Links will be visible in the game's pause menu under server information",
         "# Note: This feature requires Minecraft version 1.21 or newer to work properly"

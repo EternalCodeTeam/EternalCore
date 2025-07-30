@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.adminchat.messages;
 
 import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.dzikoysk.cdn.entity.Contextual;
-import net.dzikoysk.cdn.entity.Description;
 
 @Getter
 @Accessors(fluent = true)
@@ -19,5 +19,4 @@ public class ENAdminChatMessages implements AdminChatMessages {
     public Notice disabled = Notice.chat("<green>► <white>Disabled persistent admin chat!");
 
     public Notice enabledReminder = Notice.actionbar("<white>[AdminChat] <gray>> <green>enabled");
-
 }
