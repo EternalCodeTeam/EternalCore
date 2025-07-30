@@ -1,6 +1,5 @@
-package com.eternalcode.core.feature.troll.lightning;
+package com.eternalcode.core.feature.lightning;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -13,18 +12,18 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.lightning")
 public class LightningCommand {
 
-    private final PluginConfiguration config;
+    private final LightningSettings settings;
 
     @Inject
-    public LightningCommand(PluginConfiguration config) {
-        this.config = config;
+    public LightningCommand(LightningSettings settings) {
+        this.settings = settings;
     }
 
     @Execute
     void execute(@Context Player player) {
-        Block block = player.getTargetBlockExact(this.config.fun.maxLightningBlockDistance);
+        Block block = player.getTargetBlockExact(this.settings.maxLightningBlockDistance());
         if (block == null) {
-            if (this.config.fun.lightningStrikePlayerIfNoBlock) {
+            if (this.settings.lightningStrikePlayerIfNoBlock()) {
                 player.getWorld().strikeLightning(player.getLocation());
                 return;
             }

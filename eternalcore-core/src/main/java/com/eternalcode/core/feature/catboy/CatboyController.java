@@ -1,9 +1,7 @@
-package com.eternalcode.core.feature.troll.catboy;
+package com.eternalcode.core.feature.catboy;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.butcher.ButcherEntityRemoveEvent;
-import com.eternalcode.core.feature.catboy.Catboy;
-import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.teleport.event.EternalTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;

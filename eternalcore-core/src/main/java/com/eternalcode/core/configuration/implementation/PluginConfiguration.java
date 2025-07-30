@@ -4,14 +4,15 @@ import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
+import com.eternalcode.core.feature.catboy.CatboySettings;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
+import com.eternalcode.core.feature.lightning.LightningSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
-import com.eternalcode.core.feature.troll.IFunSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.OkaeriConfig;
@@ -401,9 +402,9 @@ public class PluginConfiguration extends AbstractConfigurationFile {
 
     @Bean
     @Comment({ " ", "# 4fun Section" })
-    public FunSection fun = new FunSection();
+    public CatboySection fun = new CatboySection();
 
-    public static class FunSection extends OkaeriConfig implements IFunSettings {
+    public static class CatboySection extends OkaeriConfig implements CatboySettings {
         @Comment({
             "# Speed of player walk speed while using /catboy feature",
             "# Default minecraft walk speed is 0.2"
@@ -411,14 +412,19 @@ public class PluginConfiguration extends AbstractConfigurationFile {
         public float catboyWalkSpeed = 0.4F;
 
         @Override
-        public float getCatboyWalkSpeed() {
+        public float catboyWalkSpeed() {
             return this.catboyWalkSpeed;
         }
+    }
 
+    public LightningSection lightning = new LightningSection();
+
+    public static class LightningSection extends OkaeriConfig implements LightningSettings {
         @Comment({" ", "# Maximum distance for the lightning strike block when using /lightning."})
         @Comment("# If you will look at a block that is further than this distance, the lightning will strike at the player.")
         public int maxLightningBlockDistance = 100;
 
+        @Override
         public int maxLightningBlockDistance() {
             return maxLightningBlockDistance;
         }
