@@ -12,7 +12,7 @@ object Versions {
     const val GIT_CHECK = "1.0.0"
 
     const val PAPERLIB = "1.0.8"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.23.0"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "4.24.0"
     const val ADVENTURE_PLATFORM = "4.4.1"
     const val OKAERI_CONFIGS = "5.0.9"
 
