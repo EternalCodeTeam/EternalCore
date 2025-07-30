@@ -6,7 +6,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.shortcut.Shortcut;
@@ -27,7 +27,7 @@ class TeleportHereCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport player to you", arguments = "<player>")
-    void tpHere(@Context Player sender, @Arg Player target) {
+    void tpHere(@Sender Player sender, @Arg Player target) {
         this.teleportService.teleport(target, sender.getLocation());
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleportedPlayerToPlayer())
@@ -41,7 +41,7 @@ class TeleportHereCommand {
     @Shortcut("tpall")
     @Permission("eternalcore.tphere.all")
     @DescriptionDocs(description = "Teleport all players to you")
-    void tpHereAll(@Context Player sender) {
+    void tpHereAll(@Sender Player sender) {
         for (Player player : sender.getServer().getOnlinePlayers()) {
             if (player.getUniqueId().equals(sender.getUniqueId())) {
                 continue;
