@@ -40,6 +40,7 @@ public interface Translation {
         Notice teleportedToPlayer();
         Notice teleportedPlayerToPlayer();
         Notice teleportedToHighestBlock();
+        Notice teleportedAllToPlayer();
 
         // Task
         Notice teleportTimerFormat();
