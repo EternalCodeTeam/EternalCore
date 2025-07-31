@@ -70,7 +70,7 @@ class RandomTeleportCommand {
                 this.handleTeleportSuccess(player);
             });
 
-        this.cooldown.markDelay(uuid, this.config.randomTeleport.delay());
+        this.cooldown.markDelay(uuid, this.config.randomTeleport.cooldown());
     }
 
     @Execute
@@ -98,7 +98,7 @@ class RandomTeleportCommand {
                 this.handleAdminTeleport(sender, player);
             });
 
-        this.cooldown.markDelay(uuid, this.config.randomTeleport.delay());
+        this.cooldown.markDelay(uuid, this.config.randomTeleport.cooldown());
     }
 
     private void handleTeleportSuccess(Player player) {
