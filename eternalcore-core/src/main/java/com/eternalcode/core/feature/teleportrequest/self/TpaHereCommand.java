@@ -70,7 +70,7 @@ class TpaHereCommand {
         });
     }
 
-    @Execute(name = "-all")
+    @Execute(name = "-all", aliases = { "*" })
     @Permission("eternalcore.tpahere.all")
     @DescriptionDocs(description = "Send teleport request to all online players to teleport to you")
     void executeAll(@Sender Player sender) {
