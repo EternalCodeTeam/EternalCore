@@ -37,7 +37,7 @@ class TeleportHereCommand {
             .send();
     }
 
-    @Execute(name = "all")
+    @Execute(name = "-all", aliases = { "*" })
     @Shortcut("tpall")
     @Permission("eternalcore.tphere.all")
     @DescriptionDocs(description = "Teleport all players to you")
