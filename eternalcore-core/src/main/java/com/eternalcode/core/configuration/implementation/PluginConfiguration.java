@@ -31,7 +31,7 @@ import java.util.Set;
     "#",
     "# This is the main configuration file for EternalCore.",
     "#",
-    "# If you need help with the configuration or have any questions related to EternalCore, join us in our discord, or create an issue on our GitHub.",
+    "# If you need help with the configuration or have any questions related to EternalCore, join our discord, or create an issue on our GitHub.",
     "#",
     "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
     "# Discord: https://discord.gg/FQ7jmGBd6c",
