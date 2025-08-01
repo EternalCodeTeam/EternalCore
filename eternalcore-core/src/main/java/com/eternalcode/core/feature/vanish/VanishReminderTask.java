@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.vanish;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
 
@@ -12,6 +13,7 @@ public class VanishReminderTask implements Runnable {
     private final NoticeService noticeService;
     private final VanishService vanishService;
 
+    @Inject
     public VanishReminderTask(VanishService vanishService, NoticeService noticeService) {
         this.vanishService = vanishService;
         this.noticeService = noticeService;
