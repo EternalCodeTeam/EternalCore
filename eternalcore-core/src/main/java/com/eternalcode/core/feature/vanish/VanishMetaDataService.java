@@ -11,29 +11,26 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 @Service
-public class VanishMetaDataServiceImpl implements VanishMetaDataService {
+public class VanishMetaDataService {
 
     private static final String METADATA_VANISHED_KEY = "vanished";
     private final Plugin plugin;
     private final Server server;
 
     @Inject
-    public VanishMetaDataServiceImpl(Plugin plugin) {
+    public VanishMetaDataService(Plugin plugin) {
         this.server = plugin.getServer();
         this.plugin = plugin;
     }
 
-    @Override
     public void addMetadata(Player player) {
         player.setMetadata(METADATA_VANISHED_KEY, new FixedMetadataValue(this.plugin, true));
     }
 
-    @Override
     public void removeMetadata(Player player) {
         player.removeMetadata(METADATA_VANISHED_KEY, this.plugin);
     }
 
-    @Override
     public boolean hasMetadata(UUID playerUniqueId) {
         Player player = this.server.getPlayer(playerUniqueId);
         if (player == null) {
@@ -42,7 +39,6 @@ public class VanishMetaDataServiceImpl implements VanishMetaDataService {
         return this.hasMetadata(player);
     }
 
-    @Override
     public boolean hasMetadata(Player player) {
         for (MetadataValue isVanished : player.getMetadata(METADATA_VANISHED_KEY)) {
             if (isVanished.asBoolean()) {

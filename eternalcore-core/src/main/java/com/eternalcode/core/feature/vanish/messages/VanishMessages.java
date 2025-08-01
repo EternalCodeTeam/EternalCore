@@ -13,4 +13,12 @@ public interface VanishMessages {
     Notice joinedInVanishMode();
     Notice playerJoinedInVanishMode();
 
+    Notice cantBlockPlaceWhileVanished();
+    Notice cantBlockBreakWhileVanished();
+    Notice cantUseChatWhileVanished();
+    Notice cantDropItemsWhileVanished();
+    Notice cantPickupItemsWhileVanished();
+    Notice cantOpenInventoryWhileVanished();
+
+
 }

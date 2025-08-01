@@ -1,9 +1,10 @@
 package com.eternalcode.core.feature.vanish;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.multification.shared.Formatter;
+import com.eternalcode.multification.notice.Notice;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -11,9 +12,20 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
 @Command(name = "vanish", aliases = {"v"})
 @Permission(VanishPermissionConstant.VANISH_COMMAND_PERMISSION)
 public class VanishCommand {
+
+    private static final Map<List<Boolean>, Function<VanishMessages, Notice>> MESSAGE_BY_STATE = Map.of(
+        List.of(true, true), VanishMessages::vanishDisabledOther,
+        List.of(true, false), VanishMessages::vanishDisabled,
+        List.of(false, true), VanishMessages::vanishEnabledOther,
+        List.of(false, false), VanishMessages::vanishEnabled
+    );
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
@@ -25,35 +37,33 @@ public class VanishCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Toggles vanish on your self.")
+    @DescriptionDocs(description = "Toggle your vanish state")
     void vanishSelf(@Context Player player) {
-        if (this.vanishService.isVanished(player)) {
-            this.vanishService.disableVanish(player);
-            this.noticeService.player(player.getUniqueId(), messages -> messages.vanish().vanishDisabled());
-            return;
-        }
-
-        this.vanishService.enableVanish(player);
-        this.noticeService.player(player.getUniqueId(), messages -> messages.vanish().vanishEnabled());
+        this.toggleVanish(player, player, false);
     }
 
     @Execute
     @Permission(VanishPermissionConstant.VANISH_COMMAND_PERMISSION_OTHER)
-    @DescriptionDocs(description = "Toggles vanish on other player.")
+    @DescriptionDocs(description = "Toggle vanish state for another player")
     void vanishOther(@Context Player player, @Arg Player target) {
-        Formatter formatter = new Formatter()
-            .register("{PLAYER}", target.getName());
-
-        if (this.vanishService.isVanished(target)) {
-            this.vanishService.disableVanish(target);
-
-            this.noticeService.player(player.getUniqueId(), messages -> messages.vanish().vanishDisabledOther(), formatter);
-            return;
-        }
-
-        this.vanishService.enableVanish(target);
-
-        this.noticeService.player(player.getUniqueId(), messages -> messages.vanish().vanishEnabledOther(), formatter);
+        this.toggleVanish(player, target, true);
     }
 
+    private void toggleVanish(Player sender, Player target, boolean isOther) {
+        boolean vanished = this.vanishService.isVanished(target);
+
+        if (vanished) {
+            this.vanishService.disableVanish(target);
+        } else {
+            this.vanishService.enableVanish(target);
+        }
+
+        Function<VanishMessages, Notice> noticeFunction = MESSAGE_BY_STATE.get(List.of(vanished, isOther));
+
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .placeholder("{PLAYER}", target.getName())
+            .notice(messages -> noticeFunction.apply(messages.vanish()))
+            .send();
+    }
 }

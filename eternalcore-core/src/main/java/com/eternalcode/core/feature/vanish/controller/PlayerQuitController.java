@@ -5,6 +5,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -18,7 +19,7 @@ public class PlayerQuitController implements Listener {
         this.vanishService = vanishService;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 

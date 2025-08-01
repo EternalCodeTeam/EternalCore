@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 @Controller
-// TODO: if-check
 public class FoodController implements Listener {
 
     private final VanishService vanishService;
@@ -24,7 +23,7 @@ public class FoodController implements Listener {
 
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
-        if (!this.config.blockFood) {
+        if (!this.config.blockFoodConsumption) {
             return;
         }
 

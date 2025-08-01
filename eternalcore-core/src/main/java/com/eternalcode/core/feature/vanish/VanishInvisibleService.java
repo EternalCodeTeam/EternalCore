@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class VanishInvisibleServiceImpl implements VanishInvisibleService {
+public class VanishInvisibleService {
 
     private final Plugin plugin;
     private final Server server;
@@ -20,25 +20,25 @@ public class VanishInvisibleServiceImpl implements VanishInvisibleService {
     private final Set<UUID> vanishedPlayers = new HashSet<>();
 
     @Inject
-    public VanishInvisibleServiceImpl(Plugin plugin) {
+    public VanishInvisibleService(Plugin plugin) {
         this.plugin = plugin;
         this.server = plugin.getServer();
     }
 
-    @Override
     public void hidePlayer(Player player) {
+        this.vanishedPlayers.add(player.getUniqueId());
         for (Player online : this.server.getOnlinePlayers()) {
             if (online.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION)) {
                 continue;
             }
             if (!online.equals(player)) {
                 online.hidePlayer(this.plugin, player);
-                this.vanishedPlayers.add(player.getUniqueId());
             }
         }
+
+        this.vanishedPlayers.add(player.getUniqueId());
     }
 
-    @Override
     public void showPlayer(Player player) {
         for (Player online : this.server.getOnlinePlayers()) {
             if (!online.equals(player)) {
@@ -48,7 +48,6 @@ public class VanishInvisibleServiceImpl implements VanishInvisibleService {
         this.vanishedPlayers.remove(player.getUniqueId());
     }
 
-    @Override
     public void hideVanishedPlayersFrom(Player player) {
         for (UUID uuid : this.vanishedPlayers) {
             Player vanishedPlayer = this.server.getPlayer(uuid);
@@ -61,7 +60,6 @@ public class VanishInvisibleServiceImpl implements VanishInvisibleService {
         }
     }
 
-    @Override
     public Set<UUID> getVanishedPlayers() {
         return Collections.unmodifiableSet(this.vanishedPlayers);
     }

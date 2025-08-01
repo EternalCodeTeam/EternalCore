@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.vanish.controller;
 
+import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -27,7 +28,11 @@ public class TabCompleteController implements Listener {
 
     @EventHandler
     void onTabComplete(TabCompleteEvent event) {
-        if (!(event.getSender() instanceof Player)) {
+        if (!(event.getSender() instanceof Player player)) {
+            return;
+        }
+
+        if (player.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION)) {
             return;
         }
 
@@ -37,21 +42,6 @@ public class TabCompleteController implements Listener {
             Player target = this.server.getPlayerExact(suggestion);
 
             return target != null && this.vanishService.isVanished(target);
-        });
-    }
-
-    @EventHandler
-    void onCommand(PlayerCommandSendEvent event) {
-        Collection<String> commands = event.getCommands();
-
-        commands.removeIf(command -> {
-            for (Player target : this.server.getOnlinePlayers()) {
-                if (this.vanishService.isVanished(target) && command.contains(target.getName())) {
-                    return true;
-                }
-            }
-
-            return false;
         });
     }
 }

@@ -8,6 +8,7 @@ import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -25,11 +26,11 @@ public class PlayerJoinController implements Listener {
         this.config = config;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (this.config.onJoinWithPerm && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
+        if (this.config.markVanishOnJoin && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
             event.setJoinMessage(null);
             this.vanishService.enableVanish(player);
 

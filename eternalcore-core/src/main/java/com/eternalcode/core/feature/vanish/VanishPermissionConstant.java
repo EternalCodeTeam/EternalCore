@@ -11,8 +11,8 @@ public class VanishPermissionConstant {
     )
     public static final String VANISH_SEE_PERMISSION = "eternalcore.vanish.see";
 
-    public static final String VANISH_COMMAND_PERMISSION = "eternalcore.vanish.command";
-    public static final String VANISH_COMMAND_PERMISSION_OTHER = "eternalcore.vanish.command.other";
+    public static final String VANISH_COMMAND_PERMISSION = "eternalcore.vanish";
+    public static final String VANISH_COMMAND_PERMISSION_OTHER = "eternalcore.vanish.other";
 
     @PermissionDocs(
         name = "Vanish Join",

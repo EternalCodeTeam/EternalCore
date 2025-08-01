@@ -29,7 +29,7 @@ public class GlowingController implements Listener {
 
     @EventHandler
     void onEnable(EnableVanishEvent event) {
-        if (!this.config.glowing) {
+        if (!this.config.glowEffect) {
             return;
         }
 
@@ -41,7 +41,7 @@ public class GlowingController implements Listener {
 
     @EventHandler
     void onDisable(DisableVanishEvent event) {
-        if (!this.config.glowing) {
+        if (!this.config.glowEffect) {
             return;
         }
         Player player = event.getPlayer();
@@ -50,7 +50,7 @@ public class GlowingController implements Listener {
         player.setGlowing(false);
     }
 
-    Team borrowTeam() {
+    private Team borrowTeam() {
         Team team = this.scoreboard.getTeam(GLOWING_TEAM_NAME);
 
         if (team == null) {
