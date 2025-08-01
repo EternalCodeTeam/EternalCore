@@ -31,8 +31,8 @@ public class VanishMetaDataService {
         player.removeMetadata(METADATA_VANISHED_KEY, this.plugin);
     }
 
-    public boolean hasMetadata(UUID playerUniqueId) {
-        Player player = this.server.getPlayer(playerUniqueId);
+    public boolean hasMetadata(UUID playerUuid) {
+        Player player = this.server.getPlayer(playerUuid);
         if (player == null) {
             return false;
         }

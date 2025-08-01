@@ -426,7 +426,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     ServerLinksConfig serverLinks = new ServerLinksConfig();
 
     @Bean
-    @Comment({ " ", "# Vanish Section" })
+    @Comment({ " ", "# Settings responsible for player vanish functionality" })
     VanishConfiguration vanish = new VanishConfiguration();
 
     @Override
