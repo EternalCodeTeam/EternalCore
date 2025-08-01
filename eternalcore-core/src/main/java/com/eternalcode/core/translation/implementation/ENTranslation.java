@@ -19,6 +19,7 @@ import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
+import com.eternalcode.core.feature.troll.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.troll.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
@@ -181,6 +182,9 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment({"# {Y} - Y coordinate of the highest block"})
         public Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Teleported successfully to the highest block! (Y: {Y})");
+
+        @Comment(" ")
+        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>All players have been teleported to you!");
 
         // Task
         @Comment({"# {TIME} - Teleportation time"})
@@ -570,6 +574,9 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment({" ", "# This section is responsible for elder guardian messages."})
         public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
+
+        @Comment({" ", "# This section is responsible for demo screen messages."})
+        public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
     }
 
     @Comment({" ", "# This section is responsible for vanish-related stuff."})

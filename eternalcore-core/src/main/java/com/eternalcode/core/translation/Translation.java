@@ -19,6 +19,7 @@ import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
+import com.eternalcode.core.feature.troll.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.troll.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
@@ -40,6 +41,7 @@ public interface Translation {
         Notice teleportedToPlayer();
         Notice teleportedPlayerToPlayer();
         Notice teleportedToHighestBlock();
+        Notice teleportedAllToPlayer();
 
         // Task
         Notice teleportTimerFormat();
@@ -195,6 +197,7 @@ public interface Translation {
 
     interface TrollSection {
         ElderGuardianMessages elderGuardian();
+        DemoScreenMessages demoScreen();
     }
 
     Language getLanguage();

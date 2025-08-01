@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 public class DependencyLoaderImpl implements DependencyLoader {
 
-    private static final String LOCAL_REPOSITORY_PATH = "localRepository";
+    private static final String LOCAL_REPOSITORY_PATH = "libs";
 
     private final Logger logger;
     private final ExecutorService executor;
