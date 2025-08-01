@@ -7,6 +7,8 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -52,5 +54,10 @@ public class VanishServiceImpl implements VanishService {
     @Override
     public void hideVanishedPlayersFrom(Player player) {
         this.vanishInvisibleService.hideVanishedPlayersFrom(player);
+    }
+
+    @Override
+    public Set<UUID> getVanishedPlayers() {
+        return Collections.unmodifiableSet(this.vanishInvisibleService.getVanishedPlayers());
     }
 }

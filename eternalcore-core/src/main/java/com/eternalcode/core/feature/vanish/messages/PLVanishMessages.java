@@ -15,6 +15,8 @@ public class PLVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice vanishEnabledOther = Notice.chat("<green>► <white>{PLAYER} włączył tryb niewidoczności!");
     public Notice vanishDisabledOther = Notice.chat("<red>► <white>{PLAYER} wyłączył tryb niewidoczności!");
 
+    public Notice youAreVanished = Notice.actionbar("<green>► <aqua>Jesteś niewidoczny!");
+
     public Notice joinedInVanishMode = Notice.chat("<green>► <white>Dołączyłeś do serwera w trybie niewidoczności.");
     public Notice playerJoinedInVanishMode = Notice.chat("<green>► <white>{PLAYER} dołączył do serwera w trybie niewidoczności.");
 
@@ -24,5 +26,6 @@ public class PLVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice cantDropItemsWhileVanished = Notice.chat("<red>Nie możesz upuszczać przedmiotów będąc niewidocznym.");
     public Notice cantPickupItemsWhileVanished = Notice.chat("<red>Nie możesz zbierać przedmiotów będąc niewidocznym.");
     public Notice cantOpenInventoryWhileVanished = Notice.chat("<red>Nie możesz otwierać ekwipunku będąc niewidocznym.");
+
 
 }

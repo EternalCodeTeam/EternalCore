@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.vanish;
 
 import org.bukkit.entity.Player;
 
+import java.util.Set;
 import java.util.UUID;
 
 public interface VanishService {
@@ -42,5 +43,12 @@ public interface VanishService {
      * @param observer The player from whom vanished players should be hidden.
      */
     void hideVanishedPlayersFrom(Player observer);
+
+    /**
+     * Gets a set of UUIDs of all vanished players.
+     *
+     * @return A set containing the unique IDs of all vanished players.
+     */
+    Set<UUID> getVanishedPlayers();
 
 }

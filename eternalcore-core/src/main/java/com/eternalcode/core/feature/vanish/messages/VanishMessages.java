@@ -10,6 +10,8 @@ public interface VanishMessages {
     Notice vanishEnabledOther();
     Notice vanishDisabledOther();
 
+    Notice youAreVanished();
+
     Notice joinedInVanishMode();
     Notice playerJoinedInVanishMode();
 
