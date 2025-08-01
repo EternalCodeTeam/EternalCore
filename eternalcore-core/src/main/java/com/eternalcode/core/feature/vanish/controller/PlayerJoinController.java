@@ -34,11 +34,11 @@ public class PlayerJoinController implements Listener {
             event.setJoinMessage(null);
             this.vanishService.enableVanish(player);
 
-            this.noticeService.player(player.getUniqueId(), messages -> messages.vanish().joinedInVanishMode());
+            this.noticeService.player(player.getUniqueId(), messages -> messages.vanish().joinedInVanish());
 
             this.noticeService.create()
                 .onlinePlayers(VanishPermissionConstant.VANISH_JOIN_PERMISSION)
-                .notice(messages -> messages.vanish().playerJoinedInVanishMode())
+                .notice(messages -> messages.vanish().playerJoinedInVanish())
                 .placeholder("{PLAYER}", player.getName())
                 .send();
 
