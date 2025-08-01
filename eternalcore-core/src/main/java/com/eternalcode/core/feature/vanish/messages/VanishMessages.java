@@ -10,10 +10,10 @@ public interface VanishMessages {
     Notice vanishEnabledOther();
     Notice vanishDisabledOther();
 
-    Notice youAreVanished();
+    Notice currentlyInVanish();
 
-    Notice joinedInVanishMode();
-    Notice playerJoinedInVanishMode();
+    Notice joinedInVanish();
+    Notice playerJoinedInVanish();
 
     Notice cantBlockPlaceWhileVanished();
     Notice cantBlockBreakWhileVanished();

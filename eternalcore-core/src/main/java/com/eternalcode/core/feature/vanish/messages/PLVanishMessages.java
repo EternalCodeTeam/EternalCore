@@ -15,10 +15,10 @@ public class PLVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice vanishEnabledOther = Notice.chat("<green>► <white>{PLAYER} włączył tryb niewidoczności!");
     public Notice vanishDisabledOther = Notice.chat("<red>► <white>{PLAYER} wyłączył tryb niewidoczności!");
 
-    public Notice youAreVanished = Notice.actionbar("<green>► <aqua>Jesteś niewidoczny!");
+    public Notice currentlyInVanish = Notice.actionbar("<green>► <aqua>Jesteś niewidoczny!");
 
-    public Notice joinedInVanishMode = Notice.chat("<green>► <white>Dołączyłeś do serwera w trybie niewidoczności.");
-    public Notice playerJoinedInVanishMode = Notice.chat("<green>► <white>{PLAYER} dołączył do serwera w trybie niewidoczności.");
+    public Notice joinedInVanish = Notice.chat("<green>► <white>Dołączyłeś do serwera w trybie niewidoczności.");
+    public Notice playerJoinedInVanish = Notice.chat("<green>► <white>{PLAYER} dołączył do serwera w trybie niewidoczności.");
 
     public Notice cantBlockPlaceWhileVanished = Notice.chat("<red>Nie możesz stawiać bloków będąc niewidocznym.");
     public Notice cantBlockBreakWhileVanished = Notice.chat("<red>Nie możesz niszczyć bloków będąc niewidocznym.");

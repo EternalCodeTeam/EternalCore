@@ -15,10 +15,10 @@ public class ENVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice vanishEnabledOther = Notice.chat("<green>► <white>{PLAYER} has enabled vanish mode!");
     public Notice vanishDisabledOther = Notice.chat("<red>► <white>{PLAYER} has disabled vanish mode!");
 
-    public Notice youAreVanished = Notice.actionbar("<green>► <aqua>You are now vanished!");
+    public Notice currentlyInVanish = Notice.actionbar("<green>► <aqua>You are now vanished!");
 
-    public Notice joinedInVanishMode = Notice.chat("<green>► <white>You have joined the server in vanish mode.");
-    public Notice playerJoinedInVanishMode = Notice.chat("<green>► <white>{PLAYER} has joined the server in vanish mode.");
+    public Notice joinedInVanish = Notice.chat("<green>► <white>You have joined the server in vanish mode.");
+    public Notice playerJoinedInVanish = Notice.chat("<green>► <white>{PLAYER} has joined the server in vanish mode.");
 
     public Notice cantBlockPlaceWhileVanished = Notice.chat("<red>You cannot place blocks while vanished.");
     public Notice cantBlockBreakWhileVanished = Notice.chat("<red>You cannot break blocks while vanished.");

@@ -22,7 +22,7 @@ public class VanishReminderTask implements Runnable {
     @Override
     public void run() {
         for (UUID vanishedPlayer : this.vanishService.getVanishedPlayers()) {
-            this.noticeService.player(vanishedPlayer, message -> message.vanish().youAreVanished());
+            this.noticeService.player(vanishedPlayer, message -> message.vanish().currentlyInVanish());
         }
     }
 }
