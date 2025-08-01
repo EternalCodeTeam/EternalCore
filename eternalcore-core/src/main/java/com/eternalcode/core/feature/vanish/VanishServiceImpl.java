@@ -58,6 +58,6 @@ public class VanishServiceImpl implements VanishService {
 
     @Override
     public Set<UUID> getVanishedPlayers() {
-        return Collections.unmodifiableSet(this.vanishInvisibleService.getVanishedPlayers());
+        return this.vanishInvisibleService.getVanishedPlayers();
     }
 }

@@ -20,16 +20,16 @@ import java.util.function.Function;
 @Permission(VanishPermissionConstant.VANISH_COMMAND_PERMISSION)
 public class VanishCommand {
 
-    private static final Map<List<Boolean>, Function<VanishMessages, Notice>> MESSAGE_BY_STATE = Map.of(
-        List.of(true, true), VanishMessages::vanishDisabledOther,
-        List.of(true, false), VanishMessages::vanishDisabled,
-        List.of(false, true), VanishMessages::vanishEnabledOther,
-        List.of(false, false), VanishMessages::vanishEnabled
+    private static final Map<VanishState, Function<VanishMessages, Notice>> MESSAGE_BY_STATE = Map.of(
+        new VanishState(true, true), VanishMessages::vanishDisabledOther,
+        new VanishState(true, false), VanishMessages::vanishDisabled,
+        new VanishState(false, true), VanishMessages::vanishEnabledOther,
+        new VanishState(false, false), VanishMessages::vanishEnabled
     );
 
     private final NoticeService noticeService;
-    private final VanishService vanishService;
 
+    private final VanishService vanishService;
     @Inject
     public VanishCommand(NoticeService noticeService, VanishService vanishService) {
         this.noticeService = noticeService;
@@ -58,7 +58,7 @@ public class VanishCommand {
             this.vanishService.enableVanish(target);
         }
 
-        Function<VanishMessages, Notice> noticeFunction = MESSAGE_BY_STATE.get(List.of(vanished, isOther));
+        Function<VanishMessages, Notice> noticeFunction = MESSAGE_BY_STATE.get(new VanishState(vanished, isOther));
 
         this.noticeService.create()
             .player(sender.getUniqueId())
@@ -66,4 +66,8 @@ public class VanishCommand {
             .notice(messages -> noticeFunction.apply(messages.vanish()))
             .send();
     }
+
+    private record VanishState(boolean vanished, boolean isOther) {
+    }
 }
+

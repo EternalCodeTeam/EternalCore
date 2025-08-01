@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class VanishInvisibleService {
@@ -17,7 +17,7 @@ public class VanishInvisibleService {
     private final Plugin plugin;
     private final Server server;
 
-    private final Set<UUID> vanishedPlayers = new HashSet<>();
+    private final Set<UUID> vanishedPlayers = ConcurrentHashMap.newKeySet();
 
     @Inject
     public VanishInvisibleService(Plugin plugin) {
@@ -26,7 +26,6 @@ public class VanishInvisibleService {
     }
 
     public void hidePlayer(Player player) {
-        this.vanishedPlayers.add(player.getUniqueId());
         for (Player online : this.server.getOnlinePlayers()) {
             if (online.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION)) {
                 continue;
