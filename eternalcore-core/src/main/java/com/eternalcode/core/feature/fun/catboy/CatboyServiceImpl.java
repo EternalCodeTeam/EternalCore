@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.catboy;
+package com.eternalcode.core.feature.fun.catboy;
 
 import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.event.EventCaller;

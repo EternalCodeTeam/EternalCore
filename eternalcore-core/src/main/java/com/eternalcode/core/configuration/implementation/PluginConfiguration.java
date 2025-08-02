@@ -5,7 +5,7 @@ import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
-import com.eternalcode.core.feature.catboy.CatboyConfig;
+import com.eternalcode.core.feature.fun.catboy.CatboyConfig;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
 import com.eternalcode.core.feature.home.HomesConfig;

@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.catboy;
+package com.eternalcode.core.feature.fun.catboy;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;

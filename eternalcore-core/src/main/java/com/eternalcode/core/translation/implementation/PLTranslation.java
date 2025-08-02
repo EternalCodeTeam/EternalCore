@@ -19,8 +19,8 @@ import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
-import com.eternalcode.core.feature.troll.demoscreen.messages.PLDemoScreenMessages;
-import com.eternalcode.core.feature.troll.elderguardian.messages.PLElderGuardianMessages;
+import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
+import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -589,16 +589,9 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
     public PLJailMessages jailSection = new PLJailMessages();
 
-    @Comment({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące trollowania graczy" })
-    public PLTrollSection troll = new PLTrollSection();
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
+    public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
 
-    @Getter
-    public static class PLTrollSection extends OkaeriConfig implements TrollSection {
-
-        @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
-        public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
-
-        @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
-        public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
-    }
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
+    public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
 }

@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.catboy;
+package com.eternalcode.core.feature.fun.catboy;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
