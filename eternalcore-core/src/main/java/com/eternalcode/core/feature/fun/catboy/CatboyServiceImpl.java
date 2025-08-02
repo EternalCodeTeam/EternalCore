@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.fun.catboy;
 
 import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.catboy.Catboy;
+import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.catboy.event.CatboyChangeTypeEvent;
 import com.eternalcode.core.feature.catboy.event.CatboySwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
