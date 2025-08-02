@@ -56,4 +56,7 @@ public class ENPrivateMessages extends OkaeriConfig implements PrivateChatMessag
     @Comment({" ", "# {PLAYER} - Ignored player"})
     public Notice notIgnorePlayer =
         Notice.chat("<red>► <dark_red>You don't ignore this player, so you can unignore him!");
+
+    public String privateMessageEnabledPlaceholder = "<green>Enabled";
+    public String privateMessageDisabledPlaceholder = "<red>Disabled";
 }
