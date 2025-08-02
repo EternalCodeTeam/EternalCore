@@ -8,7 +8,6 @@ public class TeleportRequestConfig extends OkaeriConfig implements TeleportReque
     @Comment("# Time of tpa requests expire")
     public Duration tpaRequestExpire = Duration.ofSeconds(80);
 
-    @Comment("")
     @Comment("# Time of teleportation time in /tpa commands")
     public Duration tpaTimer = Duration.ofSeconds(10);
 

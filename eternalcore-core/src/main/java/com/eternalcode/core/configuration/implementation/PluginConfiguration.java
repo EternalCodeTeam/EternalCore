@@ -118,14 +118,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
         public float afterJoinVolume = 1.8F;
         public float afterJoinPitch = 1F;
 
-        @Comment("")
         @Comment("# Enable sound when player leaves the server")
         public boolean enableAfterQuit = true;
         public Sound afterQuit = Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
         public float afterQuitVolume = 1.8F;
         public float afterQuitPitch = 1F;
 
-        @Comment("")
         @Comment("# Enable sound when player sends a chat message")
         public boolean enableAfterChatMessage = true;
         public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
@@ -178,11 +176,9 @@ public class PluginConfiguration extends AbstractConfigurationFile {
         @Comment("# Allow unsafe enchantments (enables custom enchants on various items)")
         public boolean unsafeEnchantments = true;
 
-        @Comment("")
         @Comment("# Default amount of items to give when no amount is specified")
         public int defaultGiveAmount = 1;
 
-        @Comment("")
         @Comment("# Drop items on ground when player's inventory is full")
         public boolean dropOnFullInventory = true;
     }

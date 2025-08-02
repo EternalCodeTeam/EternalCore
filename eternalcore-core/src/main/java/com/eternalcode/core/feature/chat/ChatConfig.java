@@ -13,15 +13,12 @@ public class ChatConfig extends OkaeriConfig implements ChatSettings {
     @Comment("# Custom message for unknown command")
     public boolean replaceStandardHelpMessage = false;
 
-    @Comment("")
     @Comment("# Chat delay to send next message in chat")
     public Duration chatDelay = Duration.ofSeconds(5);
 
-    @Comment("")
     @Comment("# Number of lines that will be cleared when using the /chat clear command")
     public int linesToClear = 256;
 
-    @Comment("")
     @Comment("# Chat should be enabled?")
     public boolean chatEnabled = true;
 

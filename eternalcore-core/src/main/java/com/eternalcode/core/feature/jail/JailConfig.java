@@ -14,7 +14,6 @@ public class JailConfig extends OkaeriConfig implements JailSettings {
     @Comment("# Default jail duration, set if no duration is specified")
     public Duration defaultJailDuration = Duration.ofMinutes(30);
 
-    @Comment("")
     @Comment("# Allowed commands in jail")
     public Set<String> allowedCommands = Set.of("help", "msg", "r", "tell", "me", "helpop");
 }
