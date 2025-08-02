@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.home.HomesConfig;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.home.HomeTeleportService;
@@ -21,14 +21,14 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.home")
 class HomeCommand {
 
-    private final PluginConfiguration.Homes homesConfig;
+    private final HomesConfig homesConfig;
     private final NoticeService noticeService;
     private final HomeService homeService;
     private final HomeTeleportService homeTeleportService;
 
     @Inject
     HomeCommand(
-        PluginConfiguration.Homes homesConfig,
+        HomesConfig homesConfig,
         NoticeService noticeService,
         HomeService homeService,
         HomeTeleportService homeTeleportService
