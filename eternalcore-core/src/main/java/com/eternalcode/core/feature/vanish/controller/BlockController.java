@@ -13,14 +13,14 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 @Controller
-public class BlockController implements Listener {
+class BlockController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
     private final VanishConfiguration config;
 
     @Inject
-    public BlockController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
+    BlockController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
         this.config = config;

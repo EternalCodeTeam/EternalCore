@@ -13,14 +13,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 @Controller
-public class PlayerJoinController implements Listener {
+class PlayerJoinController implements Listener {
 
     private final VanishService vanishService;
     private final NoticeService noticeService;
     private final VanishConfiguration config;
 
     @Inject
-    public PlayerJoinController(VanishService vanishService, NoticeService noticeService, VanishConfiguration config) {
+    PlayerJoinController(VanishService vanishService, NoticeService noticeService, VanishConfiguration config) {
         this.vanishService = vanishService;
         this.noticeService = noticeService;
         this.config = config;

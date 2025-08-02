@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 @Controller
-public class NightVisionController implements Listener {
+class NightVisionController implements Listener {
 
     private static final PotionEffect NIGHT_VISION_EFFECT = new PotionEffect(
             PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false, false
@@ -21,7 +21,7 @@ public class NightVisionController implements Listener {
     private final VanishConfiguration config;
 
     @Inject
-    public NightVisionController(VanishConfiguration config) {
+    NightVisionController(VanishConfiguration config) {
         this.config = config;
     }
 
