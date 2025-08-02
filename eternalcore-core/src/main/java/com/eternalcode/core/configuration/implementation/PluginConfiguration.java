@@ -5,10 +5,11 @@ import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseType;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
-import com.eternalcode.core.feature.catboy.CatBoySettings;
+import com.eternalcode.core.feature.catboy.CatboyConfig;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.jail.JailSettings;
+import com.eternalcode.core.feature.lightning.LightningConfig;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
@@ -391,21 +392,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     }
 
     @Bean
-    @Comment({ " ", "# 4fun Section" })
-    FunSection fun = new FunSection();
+    @Comment({ " ", "# Settings for catboy feature" })
+    public CatboyConfig catboy = new CatboyConfig();
 
-    public static class FunSection extends OkaeriConfig implements CatBoySettings {
-        @Comment({
-            "# Speed of player walk speed while using /catboy feature",
-            "# Default minecraft walk speed is 0.2"
-        })
-        public float catboyWalkSpeed = 0.4F;
-
-        @Override
-        public float getCatboyWalkSpeed() {
-            return this.catboyWalkSpeed;
-        }
-    }
+    @Bean
+    @Comment({ " ", "# Settings for lightning strike" })
+    public LightningConfig lightning = new LightningConfig();
 
     @Bean
     @Comment({ " ", "# ServerLinks Section" })

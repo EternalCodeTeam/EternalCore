@@ -7,8 +7,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
-import java.time.Duration;
-import java.util.Optional;
 import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -20,6 +18,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.time.Duration;
+import java.util.Optional;
 
 @Controller
 class CatboyController implements Listener {
