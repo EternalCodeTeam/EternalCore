@@ -1,5 +1,6 @@
 package com.eternalcode.core.configuration;
 
+import com.eternalcode.core.configuration.migrations.Migrations;
 import com.eternalcode.core.configuration.serializer.LanguageSerializer;
 import com.eternalcode.core.configuration.transformer.PositionTransformer;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -7,6 +8,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
 import com.eternalcode.multification.okaeri.MultificationNoticeSerializer;
+import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.serdes.OkaeriSerdesPack;
 import eu.okaeri.configs.serdes.commons.SerdesCommons;
@@ -61,7 +63,7 @@ public class ConfigurationManager {
         config.withConfigurer(yamlConfigurer)
             .withSerdesPack(serdesPack)
             .withBindFile(file)
-            .withRemoveOrphans(true)
+            .migrate(Migrations.ALL)
             .saveDefaults()
             .load(true);
 

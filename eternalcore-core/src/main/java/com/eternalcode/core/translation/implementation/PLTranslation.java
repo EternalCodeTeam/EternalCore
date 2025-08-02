@@ -10,7 +10,7 @@ import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
+import com.eternalcode.core.feature.msg.messages.PLMsgChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
@@ -292,7 +292,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Ta sekcja odpowiada za ustawianie i edycję wiadomości prywatnych",
     })
-    public PLPrivateChatMessages privateChat = new PLPrivateChatMessages();
+    public PLMsgChatMessages msg = new PLMsgChatMessages();
 
     @Comment({
         " ",

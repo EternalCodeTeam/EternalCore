@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.privatechat.toggle;
+package com.eternalcode.core.feature.msg.toggle;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -14,14 +14,14 @@ import org.bukkit.entity.Player;
 
 @Command(name = "msgtoggle")
 @Permission("eternalcore.msgtoggle")
-class PrivateChatStateCommand {
+class MsgToggleCommand {
 
-    private final PrivateChatStateService privateChatStateService;
+    private final MsgToggleService msgToggleService;
     private final NoticeService noticeService;
 
     @Inject
-    PrivateChatStateCommand(PrivateChatStateService privateChatStateService, NoticeService noticeService) {
-        this.privateChatStateService = privateChatStateService;
+    MsgToggleCommand(MsgToggleService msgToggleService, NoticeService noticeService) {
+        this.msgToggleService = msgToggleService;
         this.noticeService = noticeService;
     }
 
@@ -29,16 +29,24 @@ class PrivateChatStateCommand {
     @DescriptionDocs(description = "Toggle receiving private messages")
     void execute(@Context Player sender) {
         UUID player = sender.getUniqueId();
-        this.privateChatStateService.toggleChatState(player)
+        this.msgToggleService.toggleState(player)
             .thenAccept(toggledState -> noticePlayer(toggledState, player));
     }
 
-    @Execute
-    @DescriptionDocs(description = "Switch receiving private messages", arguments = "<state>")
-    void execute(@Context Player sender, @Arg PrivateChatState state) {
+    @Execute(name = "enable")
+    @DescriptionDocs(description = "Enable receiving private messages")
+    void executeEnable(@Context Player sender, @Arg MsgState state) {
         UUID player = sender.getUniqueId();
-        this.privateChatStateService.setChatState(player, state)
-            .thenAccept(ignored -> noticePlayer(state, player));
+        this.msgToggleService.setState(player, MsgState.ENABLED)
+            .thenAccept(ignored -> noticePlayer(MsgState.ENABLED, player));
+    }
+
+    @Execute(name = "disable")
+    @DescriptionDocs(description = "Disable receiving private messages")
+    void executeDisable(@Context Player sender) {
+        UUID player = sender.getUniqueId();
+        this.msgToggleService.setState(player, MsgState.DISABLED)
+            .thenAccept(ignored -> noticePlayer(MsgState.DISABLED, player));
     }
 
     @Execute
@@ -46,20 +54,20 @@ class PrivateChatStateCommand {
     @DescriptionDocs(description = "Switch receiving private messages for other player", arguments = "<player>")
     void other(@Context CommandSender sender, @Arg Player target) {
         UUID player = target.getUniqueId();
-        this.privateChatStateService.toggleChatState(player)
+        this.msgToggleService.toggleState(player)
             .thenAccept(toggledState -> noticeOtherPlayer(sender, toggledState, target));
     }
 
     @Execute
     @Permission("eternalcore.msgtoggle.other")
     @DescriptionDocs(description = "Switch receiving private messages for other player", arguments = "<player>  <toggle>")
-    void other(@Context CommandSender sender, @Arg Player target, @Arg PrivateChatState state) {
+    void other(@Context CommandSender sender, @Arg Player target, @Arg MsgState state) {
         UUID player = target.getUniqueId();
-        this.privateChatStateService.setChatState(player, state)
+        this.msgToggleService.setState(player, state)
             .thenAccept(ignored -> noticeOtherPlayer(sender, state, target));
     }
 
-    private void noticeOtherPlayer(CommandSender sender, PrivateChatState state, Player target) {
+    private void noticeOtherPlayer(CommandSender sender, MsgState state, Player target) {
         this.noticePlayer(state, target.getUniqueId());
         if (sender.equals(target)) {
             return;
@@ -67,20 +75,20 @@ class PrivateChatStateCommand {
 
         this.noticeService.create()
             .sender(sender)
-            .notice(translation -> state == PrivateChatState.DISABLE
-                ? translation.privateChat().otherMessagesDisabled()
-                : translation.privateChat().otherMessagesEnabled()
+            .notice(translation -> state == MsgState.DISABLED
+                ? translation.msg().otherMessagesDisabled()
+                : translation.msg().otherMessagesEnabled()
             )
             .placeholder("{PLAYER}", target.getName())
             .send();
     }
 
-    private void noticePlayer(PrivateChatState state, UUID player) {
+    private void noticePlayer(MsgState state, UUID player) {
         this.noticeService.create()
             .player(player)
-            .notice(translation -> state == PrivateChatState.ENABLE
-                ? translation.privateChat().selfMessagesEnabled()
-                : translation.privateChat().selfMessagesDisabled()
+            .notice(translation -> state == MsgState.ENABLED
+                ? translation.msg().selfMessagesEnabled()
+                : translation.msg().selfMessagesDisabled()
             )
             .send();
     }

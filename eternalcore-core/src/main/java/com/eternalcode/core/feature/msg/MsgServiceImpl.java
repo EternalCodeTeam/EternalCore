@@ -1,9 +1,9 @@
-package com.eternalcode.core.feature.privatechat;
+package com.eternalcode.core.feature.msg;
 
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
-import com.eternalcode.core.feature.privatechat.toggle.PrivateChatStateService;
-import com.eternalcode.core.feature.privatechat.toggle.PrivateChatState;
+import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
+import com.eternalcode.core.feature.msg.toggle.MsgState;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -19,14 +19,14 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @Service
-class PrivateChatServiceImpl implements PrivateChatService {
+class MsgServiceImpl implements MsgService {
 
     private final NoticeService noticeService;
     private final IgnoreService ignoreService;
     private final UserManager userManager;
-    private final PrivateChatPresenter presenter;
+    private final MsgPresenter presenter;
     private final EventCaller eventCaller;
-    private final PrivateChatStateService privateChatStateService;
+    private final MsgToggleService msgToggleService;
 
     private final Cache<UUID, UUID> replies = CacheBuilder.newBuilder()
         .expireAfterWrite(Duration.ofHours(1))
@@ -35,20 +35,20 @@ class PrivateChatServiceImpl implements PrivateChatService {
     private final Set<UUID> socialSpy = new HashSet<>();
 
     @Inject
-    PrivateChatServiceImpl(
+    MsgServiceImpl(
         NoticeService noticeService,
         IgnoreService ignoreService,
         UserManager userManager,
         EventCaller eventCaller,
-        PrivateChatStateService privateChatStateService
+        MsgToggleService msgToggleService
     ) {
         this.noticeService = noticeService;
         this.ignoreService = ignoreService;
         this.userManager = userManager;
         this.eventCaller = eventCaller;
-        this.privateChatStateService = privateChatStateService;
+        this.msgToggleService = msgToggleService;
 
-        this.presenter = new PrivateChatPresenter(noticeService);
+        this.presenter = new MsgPresenter(noticeService);
     }
 
     void privateMessage(User sender, User target, String message) {
@@ -60,9 +60,9 @@ class PrivateChatServiceImpl implements PrivateChatService {
 
         UUID uniqueId = target.getUniqueId();
 
-        this.privateChatStateService.getChatState(uniqueId).thenAccept(privateChatState -> {
-            if (privateChatState == PrivateChatState.DISABLE) {
-                this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().receiverDisabledMessages());
+        this.msgToggleService.getState(uniqueId).thenAccept(msgState -> {
+            if (msgState == MsgState.DISABLED) {
+                this.noticeService.player(sender.getUniqueId(), translation -> translation.msg().receiverDisabledMessages());
 
                 return;
             }
@@ -73,9 +73,9 @@ class PrivateChatServiceImpl implements PrivateChatService {
                     this.replies.put(sender.getUniqueId(), uniqueId);
                 }
 
-                PrivateChatEvent event = new PrivateChatEvent(sender.getUniqueId(), uniqueId, message);
+                MsgEvent event = new MsgEvent(sender.getUniqueId(), uniqueId, message);
                 this.eventCaller.callEvent(event);
-                this.presenter.onPrivate(new PrivateMessage(sender, target, event.getContent(), this.socialSpy, isIgnored));
+                this.presenter.onPrivate(new Message(sender, target, event.getContent(), this.socialSpy, isIgnored));
             });
         });
     }
@@ -84,7 +84,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
         UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
 
         if (uuid == null) {
-            this.noticeService.player(sender.getUniqueId(), translation -> translation.privateChat().noReply());
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.msg().noReply());
 
             return;
         }
@@ -123,7 +123,7 @@ class PrivateChatServiceImpl implements PrivateChatService {
     }
 
     @Override
-    public void privateMessage(Player sender, Player target, String message) {
+    public void sendMessage(Player sender, Player target, String message) {
         User user = this.userManager.getOrCreate(target.getUniqueId(), target.getName());
         this.privateMessage(this.userManager.getOrCreate(sender.getUniqueId(), sender.getName()), user, message);
     }

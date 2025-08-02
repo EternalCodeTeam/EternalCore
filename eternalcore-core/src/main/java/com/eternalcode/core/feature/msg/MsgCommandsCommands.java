@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.privatechat;
+package com.eternalcode.core.feature.msg;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -13,17 +13,17 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @RootCommand
-class PrivateChatCommands {
+class MsgCommandsCommands {
 
-    private final PrivateChatService privateChatService;
+    private final MsgService msgService;
     private final NoticeService noticeService;
 
     @Inject
-    PrivateChatCommands(
-        PrivateChatService privateChatService,
+    MsgCommandsCommands(
+        MsgService msgService,
         NoticeService noticeService
     ) {
-        this.privateChatService = privateChatService;
+        this.msgService = msgService;
         this.noticeService = noticeService;
     }
 
@@ -31,14 +31,14 @@ class PrivateChatCommands {
     @Permission("eternalcore.msg")
     @DescriptionDocs(description = "Send private message to specified player", arguments = "<player> <message>")
     void execute(@Context Player sender, @Arg Player target, @Join String message) {
-        this.privateChatService.privateMessage(sender, target, message);
+        this.msgService.sendMessage(sender, target, message);
     }
 
     @Execute(name = "reply", aliases = { "r" })
     @Permission("eternalcore.reply")
     @DescriptionDocs(description = "Reply to last private message", arguments = "<message>")
     void execute(@Context Player sender, @Join String message) {
-        this.privateChatService.reply(sender, message);
+        this.msgService.reply(sender, message);
     }
 
     @Execute(name = "socialspy", aliases = { "spy" })
@@ -47,23 +47,23 @@ class PrivateChatCommands {
     void socialSpy(@Context Player player) {
         UUID uuid = player.getUniqueId();
 
-        if (this.privateChatService.isSpy(uuid)) {
-            this.privateChatService.disableSpy(uuid);
+        if (this.msgService.isSpy(uuid)) {
+            this.msgService.disableSpy(uuid);
             this.notifyAboutSocialSpy(uuid);
             return;
         }
 
-        this.privateChatService.enableSpy(uuid);
+        this.msgService.enableSpy(uuid);
         this.notifyAboutSocialSpy(uuid);
     }
 
     private void notifyAboutSocialSpy(UUID uuid) {
         this.noticeService.create()
             .player(uuid)
-            .notice(translation -> this.privateChatService.isSpy(uuid)
-                ? translation.privateChat().socialSpyEnable()
-                : translation.privateChat().socialSpyDisable())
-            .placeholder("{STATE}", translation -> this.privateChatService.isSpy(uuid)
+            .notice(translation -> this.msgService.isSpy(uuid)
+                ? translation.msg().socialSpyEnable()
+                : translation.msg().socialSpyDisable())
+            .placeholder("{STATE}", translation -> this.msgService.isSpy(uuid)
                 ? translation.format().enable()
                 : translation.format().disable())
             .send();

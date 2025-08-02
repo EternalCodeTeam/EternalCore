@@ -10,7 +10,7 @@ import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
+import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
@@ -220,7 +220,7 @@ public interface Translation {
     // tpa section
     TeleportRequestMessages tpa();
     // private section
-    PrivateChatMessages privateChat();
+    MsgMessages msg();
     // afk section
     AfkMessages afk();
     // event section
