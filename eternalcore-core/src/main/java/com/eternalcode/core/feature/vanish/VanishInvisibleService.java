@@ -12,7 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class VanishInvisibleService {
+class VanishInvisibleService {
 
     private final Plugin plugin;
     private final Server server;
@@ -20,12 +20,12 @@ public class VanishInvisibleService {
     private final Set<UUID> vanishedPlayers = ConcurrentHashMap.newKeySet();
 
     @Inject
-    public VanishInvisibleService(Plugin plugin) {
+    VanishInvisibleService(Plugin plugin) {
         this.plugin = plugin;
         this.server = plugin.getServer();
     }
 
-    public void hidePlayer(Player player) {
+    void hidePlayer(Player player) {
         for (Player online : this.server.getOnlinePlayers()) {
             if (online.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION)) {
                 continue;
@@ -38,7 +38,7 @@ public class VanishInvisibleService {
         this.vanishedPlayers.add(player.getUniqueId());
     }
 
-    public void showPlayer(Player player) {
+    void showPlayer(Player player) {
         for (Player online : this.server.getOnlinePlayers()) {
             if (!online.equals(player)) {
                 online.showPlayer(this.plugin, player);
@@ -47,7 +47,7 @@ public class VanishInvisibleService {
         this.vanishedPlayers.remove(player.getUniqueId());
     }
 
-    public void hideVanishedPlayersFrom(Player player) {
+    void hideVanishedPlayersFrom(Player player) {
         for (UUID uuid : this.vanishedPlayers) {
             Player vanishedPlayer = this.server.getPlayer(uuid);
 
@@ -59,7 +59,7 @@ public class VanishInvisibleService {
         }
     }
 
-    public Set<UUID> getVanishedPlayers() {
+    Set<UUID> getVanishedPlayers() {
         return Collections.unmodifiableSet(this.vanishedPlayers);
     }
 }

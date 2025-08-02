@@ -7,19 +7,18 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class VanishServiceImpl implements VanishService {
+class VanishServiceImpl implements VanishService {
 
     private final VanishInvisibleService vanishInvisibleService;
     private final VanishMetaDataService vanishMetaDataService;
     private final EventCaller eventCaller;
 
     @Inject
-    public VanishServiceImpl(VanishInvisibleService vanishInvisibleService, VanishMetaDataService vanishMetaDataService, EventCaller eventCaller) {
+    VanishServiceImpl(VanishInvisibleService vanishInvisibleService, VanishMetaDataService vanishMetaDataService, EventCaller eventCaller) {
         this.vanishInvisibleService = vanishInvisibleService;
         this.vanishMetaDataService = vanishMetaDataService;
         this.eventCaller = eventCaller;

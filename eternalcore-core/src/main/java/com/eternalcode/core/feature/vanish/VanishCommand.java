@@ -12,13 +12,12 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 @Command(name = "vanish", aliases = {"v"})
 @Permission(VanishPermissionConstant.VANISH_COMMAND_PERMISSION)
-public class VanishCommand {
+class VanishCommand {
 
     private static final Map<VanishState, Function<VanishMessages, Notice>> MESSAGE_BY_STATE = Map.of(
         new VanishState(true, true), VanishMessages::vanishDisabledOther,
