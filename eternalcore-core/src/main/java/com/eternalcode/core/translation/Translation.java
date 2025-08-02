@@ -21,6 +21,7 @@ import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMess
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
 import com.eternalcode.core.feature.troll.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.troll.elderguardian.messages.ElderGuardianMessages;
+import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -256,4 +257,6 @@ public interface Translation {
     JailMessages jailSection();
     // troll section
     TrollSection troll();
+    // vanish section
+    VanishMessages vanish();
 }

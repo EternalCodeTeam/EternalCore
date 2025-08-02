@@ -21,6 +21,7 @@ import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMe
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.troll.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.troll.elderguardian.messages.ENElderGuardianMessages;
+import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -577,4 +578,8 @@ public class ENTranslation extends AbstractTranslation {
         @Comment({" ", "# This section is responsible for demo screen messages."})
         public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
     }
+
+    @Comment({" ", "# This section is responsible for vanish-related stuff."})
+    public ENVanishMessages vanish = new ENVanishMessages();
+
 }

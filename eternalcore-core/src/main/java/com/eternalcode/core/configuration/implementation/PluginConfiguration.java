@@ -14,6 +14,7 @@ import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
+import com.eternalcode.core.feature.vanish.VanishConfiguration;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.OkaeriConfig;
@@ -402,6 +403,10 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Bean
     @Comment({ " ", "# ServerLinks Section" })
     ServerLinksConfig serverLinks = new ServerLinksConfig();
+
+    @Bean
+    @Comment({ " ", "# Settings responsible for player vanish functionality" })
+    VanishConfiguration vanish = new VanishConfiguration();
 
     @Override
     public File getConfigFile(File dataFolder) {
