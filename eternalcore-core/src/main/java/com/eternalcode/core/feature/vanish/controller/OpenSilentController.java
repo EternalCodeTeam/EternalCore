@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.vanish.controller;
 
 import com.eternalcode.core.feature.vanish.VanishConfiguration;
-import com.eternalcode.core.feature.vanish.VanishPreviewInventoryHolder;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -23,6 +22,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.jetbrains.annotations.NotNull;
 
 @Controller
 public class OpenSilentController implements Listener {
@@ -119,5 +119,19 @@ public class OpenSilentController implements Listener {
             return shulkerBox.getInventory();
         }
         return null;
+    }
+
+    private static class VanishPreviewInventoryHolder implements InventoryHolder {
+
+        private final Inventory inventory;
+
+        public VanishPreviewInventoryHolder(Inventory inventory) {
+            this.inventory = inventory;
+        }
+
+        @Override
+        public @NotNull Inventory getInventory() {
+            return this.inventory;
+        }
     }
 }

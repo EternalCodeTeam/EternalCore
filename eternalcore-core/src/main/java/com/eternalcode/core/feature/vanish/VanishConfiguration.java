@@ -2,8 +2,12 @@ package com.eternalcode.core.feature.vanish;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import org.bukkit.ChatColor;
 
+@Getter
+@Accessors(fluent = true)
 public class VanishConfiguration extends OkaeriConfig {
 
     @Comment("Should players with vanish permission automatically join in vanish mode?")

@@ -423,7 +423,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
 
     @Bean
     @Comment({ " ", "# Settings responsible for player vanish functionality" })
-    VanishConfiguration vanish = new VanishConfiguration();
+    public VanishConfiguration vanish = new VanishConfiguration();
 
     @Override
     public File getConfigFile(File dataFolder) {

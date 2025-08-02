@@ -603,7 +603,7 @@ public class PLTranslation extends AbstractTranslation {
         public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
     }
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidzialności graczy"})
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
     public PLVanishMessages vanish = new PLVanishMessages();
 
 }

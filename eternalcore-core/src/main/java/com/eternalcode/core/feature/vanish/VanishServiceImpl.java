@@ -1,11 +1,13 @@
 package com.eternalcode.core.feature.vanish;
 
 import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.vanish.event.AbstractVanishEvent;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 
 import java.util.Collections;
 import java.util.Set;
@@ -30,7 +32,7 @@ public class VanishServiceImpl implements VanishService {
         this.vanishInvisibleService.hidePlayer(player);
         this.vanishMetaDataService.addMetadata(player);
 
-        this.eventCaller.callEvent(new EnableVanishEvent(player));
+        this.callCancellableEvent(new  EnableVanishEvent(player));
     }
 
     @Override
@@ -38,7 +40,7 @@ public class VanishServiceImpl implements VanishService {
         this.vanishInvisibleService.showPlayer(player);
         this.vanishMetaDataService.removeMetadata(player);
 
-        this.eventCaller.callEvent(new DisableVanishEvent(player));
+        this.callCancellableEvent(new DisableVanishEvent(player));
     }
 
     @Override
@@ -59,5 +61,12 @@ public class VanishServiceImpl implements VanishService {
     @Override
     public Set<UUID> getVanishedPlayers() {
         return this.vanishInvisibleService.getVanishedPlayers();
+    }
+
+    private void callCancellableEvent(AbstractVanishEvent event) {
+        if (event instanceof Cancellable cancellable && cancellable.isCancelled()) {
+            return;
+        }
+        this.eventCaller.callEvent(event);
     }
 }

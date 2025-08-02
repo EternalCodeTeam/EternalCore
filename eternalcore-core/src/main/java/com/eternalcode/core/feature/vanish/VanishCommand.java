@@ -28,8 +28,8 @@ public class VanishCommand {
     );
 
     private final NoticeService noticeService;
-
     private final VanishService vanishService;
+
     @Inject
     public VanishCommand(NoticeService noticeService, VanishService vanishService) {
         this.noticeService = noticeService;
@@ -54,7 +54,8 @@ public class VanishCommand {
 
         if (vanished) {
             this.vanishService.disableVanish(target);
-        } else {
+        }
+        else {
             this.vanishService.enableVanish(target);
         }
 
