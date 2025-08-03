@@ -29,6 +29,15 @@ public interface VanishService {
      */
     boolean isVanished(Player player);
 
+    default boolean toggleVanish(Player player) {
+        if (isVanished(player)) {
+            disableVanish(player);
+            return false;
+        }
+        enableVanish(player);
+        return true;
+    }
+
     /**
      * Checks if the player with the specified unique ID is vanished.
      *
