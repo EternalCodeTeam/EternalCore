@@ -5,6 +5,8 @@ import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.publish.Subscribe;
+import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -48,6 +50,15 @@ class GlowingController implements Listener {
 
         this.borrowTeam().removeEntry(player.getName());
         player.setGlowing(false);
+    }
+
+    @Subscribe(EternalShutdownEvent.class)
+    void onShutdown(EternalShutdownEvent event) {
+        Team team = this.scoreboard.getTeam(GLOWING_TEAM_NAME);
+
+        if (team != null) {
+            team.unregister();
+        }
     }
 
     private Team borrowTeam() {
