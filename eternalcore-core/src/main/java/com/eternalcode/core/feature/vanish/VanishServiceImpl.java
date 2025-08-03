@@ -28,18 +28,26 @@ class VanishServiceImpl implements VanishService {
 
     @Override
     public void enableVanish(Player player) {
+        EnableVanishEvent event = this.eventCaller.callEvent(new EnableVanishEvent(player));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         this.vanishInvisibleService.hidePlayer(player);
         this.vanishMetaDataService.addMetadata(player);
-
-        this.callCancellableEvent(new  EnableVanishEvent(player));
     }
 
     @Override
     public void disableVanish(Player player) {
+        DisableVanishEvent event = this.eventCaller.callEvent(new DisableVanishEvent(player));
+
+        if (event.isCancelled()) {
+            return;
+        }
+
         this.vanishInvisibleService.showPlayer(player);
         this.vanishMetaDataService.removeMetadata(player);
-
-        this.callCancellableEvent(new DisableVanishEvent(player));
     }
 
     @Override
@@ -60,12 +68,5 @@ class VanishServiceImpl implements VanishService {
     @Override
     public Set<UUID> getVanishedPlayers() {
         return this.vanishInvisibleService.getVanishedPlayers();
-    }
-
-    private void callCancellableEvent(AbstractVanishEvent event) {
-        if (event instanceof Cancellable cancellable && cancellable.isCancelled()) {
-            return;
-        }
-        this.eventCaller.callEvent(event);
     }
 }
