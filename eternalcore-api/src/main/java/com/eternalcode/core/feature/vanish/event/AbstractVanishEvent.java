@@ -12,6 +12,6 @@ public abstract class AbstractVanishEvent extends Event {
     }
 
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
 }
