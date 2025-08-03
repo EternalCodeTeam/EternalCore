@@ -6,10 +6,11 @@ import com.eternalcode.gitcheck.GitCheck;
 import com.eternalcode.gitcheck.GitCheckResult;
 import com.eternalcode.gitcheck.git.GitRepository;
 import com.eternalcode.gitcheck.git.GitTag;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.logging.Logger;
 import org.bukkit.plugin.PluginDescriptionFile;
 import panda.std.Lazy;
-
-import java.util.concurrent.CompletableFuture;
 
 @Service
 class UpdaterService {
@@ -22,17 +23,25 @@ class UpdaterService {
     @Inject
     UpdaterService(PluginDescriptionFile pluginDescriptionFile) {
         this.gitCheckResult = new Lazy<>(() -> {
-            String version = pluginDescriptionFile.getVersion();
-
-            return this.gitCheck.checkRelease(GIT_REPOSITORY, GitTag.of("v" + version));
+            try {
+                String version = pluginDescriptionFile.getVersion();
+                return this.gitCheck.checkRelease(GIT_REPOSITORY, GitTag.of("v" + version));
+            }
+            catch (Exception exception) {
+                return null;
+            }
         });
     }
 
     CompletableFuture<Boolean> isUpToDate() {
         return CompletableFuture.supplyAsync(() -> {
-            GitCheckResult checkResult = this.gitCheckResult.get();
-
-            return checkResult.isUpToDate();
+            try {
+                GitCheckResult checkResult = this.gitCheckResult.get();
+                return checkResult == null || checkResult.isUpToDate();
+            }
+            catch (Exception exception) {
+                return true;
+            }
         });
     }
 }

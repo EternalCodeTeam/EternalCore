@@ -4,15 +4,14 @@ import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.platform.AudienceProvider;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.multification.notice.Notice;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import java.util.concurrent.CompletableFuture;
 
 @PermissionDocs(
     name = "Receive Updates",
@@ -24,19 +23,33 @@ class UpdaterController implements Listener {
 
     static final String RECEIVE_UPDATES = "eternalcore.receiveupdates";
 
-    private static final String NEW_VERSION_AVAILABLE = "<b><gradient:#8a1212:#fc6b03>EternalCore:</gradient></b> <color:#fce303>New version of EternalCore is available, please update!";
+    private static final Notice UPDATE_MESSAGES = Notice.chat(
+        "",
+        " <gradient:#9d6eef:#A1AAFF:#9d6eef>EternalCore Update Available</gradient>",
+        "    <i><gray>New version is ready to download</gray></i>",
+        " ",
+        " Download new version from:",
+        "  <click:open_url:'https://modrinth.com/plugin/eternalcore'><hover:show_text:'Modrinth'><b><color:#00ffcc>• "
+            + "Modrinth</color></b></hover></click>",
+        "  <click:open_url:'https://hangar.papermc.io/EternalCodeTeam/EternalCore'><hover:show_text:'Hangar'><b><color"
+            + ":#00ffcc>• Hangar</color></b></hover></click>",
+        "  <click:open_url:'https://www.spigotmc.org/resources/eternalcore-%E2%99%BE%EF%B8%8F-all-the-most-important-server-functions-in-one.112264/'><hover:show_text:'SpigotMC'><b><color:#00ffcc>• SpigotMC</color></b></hover></click>",
+        ""
+    );
 
     private final PluginConfiguration pluginConfiguration;
     private final UpdaterService updaterService;
-    private final AudienceProvider audienceProvider;
-    private final MiniMessage miniMessage;
+    private final NoticeService noticeService;
 
     @Inject
-    UpdaterController(PluginConfiguration pluginConfiguration, UpdaterService updaterService, AudienceProvider audienceProvider, MiniMessage miniMessage) {
+    UpdaterController(
+        PluginConfiguration pluginConfiguration,
+        UpdaterService updaterService,
+        NoticeService noticeService
+    ) {
         this.pluginConfiguration = pluginConfiguration;
         this.updaterService = updaterService;
-        this.audienceProvider = audienceProvider;
-        this.miniMessage = miniMessage;
+        this.noticeService = noticeService;
     }
 
     @EventHandler
@@ -51,20 +64,19 @@ class UpdaterController implements Listener {
             return;
         }
 
-        Audience playerAudience = this.audienceProvider.player(player.getUniqueId());
+        CompletableFuture<Boolean> future = this.updaterService.isUpToDate();
 
-        CompletableFuture<Boolean> isUpToDate = this.updaterService.isUpToDate();
-
-        isUpToDate.whenComplete((isUpToUpdate, throwable) -> {
+        future.whenComplete((upToDate, throwable) -> {
             if (throwable != null) {
-                throwable.printStackTrace();
                 return;
             }
 
-            if (!isUpToUpdate) {
-                playerAudience.sendMessage(this.miniMessage.deserialize(NEW_VERSION_AVAILABLE));
+            if (!upToDate) {
+                this.noticeService.create()
+                    .player(player.getUniqueId())
+                    .notice(UPDATE_MESSAGES)
+                    .sendAsync();
             }
         });
     }
-
 }
