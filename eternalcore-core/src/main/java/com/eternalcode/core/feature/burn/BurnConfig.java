@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.burn;
+package com.eternalcode.core.feature.burn;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;

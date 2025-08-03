@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.burn.messages;
+package com.eternalcode.core.feature.burn.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;

@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.burn;
+package com.eternalcode.core.feature.burn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;

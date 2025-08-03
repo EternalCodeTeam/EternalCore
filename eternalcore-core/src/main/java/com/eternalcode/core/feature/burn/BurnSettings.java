@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.burn;
+package com.eternalcode.core.feature.burn;
 
 public interface BurnSettings {
     /**
