@@ -22,28 +22,28 @@ public class VanishConfiguration extends OkaeriConfig {
     @Comment("Should vanished players be able to silently view other players' inventories?")
     public boolean silentInventoryAccess = true;
 
-    @Comment("Should vanished players glow to make them visible to other staff members?")
+    @Comment("Should vanished players glow to make them visible to other staff members? (needs restart to apply)")
     public boolean glowEffect = true;
 
-    @Comment("Color of the glow effect for vanished players")
-    public ChatColor color = ChatColor.AQUA;
+    @Comment("Color of the glow effect for vanished players (needs restart to apply)")
+    public ChatColor color = ChatColor.LIGHT_PURPLE;
 
     @Comment("Prevent vanished players from dropping items")
-    public boolean blockItemDropping = true;
+    public boolean blockItemDropping = false;
 
     @Comment("Prevent vanished players from picking up items")
     public boolean blockItemPickup = true;
 
-    @Comment("Prevent vanished players from eating food")
-    public boolean blockFoodConsumption = true;
+    @Comment("Prevent vanished players from hunger loss")
+    public boolean blockHungerLoss = true;
 
     @Comment("Prevent vanished players from using public chat")
-    public boolean blockChatUsage = true;
+    public boolean blockChatUsage = false;
 
     @Comment("Prevent vanished players from breaking blocks")
-    public boolean blockBlockBreaking = true;
+    public boolean blockBlockBreaking = false;
 
     @Comment("Prevent vanished players from placing blocks")
-    public boolean blockBlockPlacing = true;
+    public boolean blockBlockPlacing = false;
 
 }

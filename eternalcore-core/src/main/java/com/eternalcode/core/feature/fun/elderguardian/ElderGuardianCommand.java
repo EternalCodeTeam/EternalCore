@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.elderguardian;
+package com.eternalcode.core.feature.fun.elderguardian;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.compatibility.Compatibility;
@@ -33,7 +33,7 @@ public class ElderGuardianCommand {
             PaperOverlay.ELDER_GUARDIAN_SILENT.show(target);
 
             this.noticeService.create()
-                .notice(translation -> translation.troll().elderGuardian().elderGuardianShownSilently())
+                .notice(translation -> translation.elderGuardian().elderGuardianShownSilently())
                 .player(sender.getUniqueId())
                 .placeholder("{PLAYER}", target.getName())
                 .send();
@@ -42,7 +42,7 @@ public class ElderGuardianCommand {
 
         PaperOverlay.ELDER_GUARDIAN.show(target);
         this.noticeService.create()
-            .notice(translation -> translation.troll().elderGuardian().elderGuardianShown())
+            .notice(translation -> translation.elderGuardian().elderGuardianShown())
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
             .send();

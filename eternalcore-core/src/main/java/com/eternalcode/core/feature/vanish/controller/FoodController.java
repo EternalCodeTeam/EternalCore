@@ -23,7 +23,7 @@ class FoodController implements Listener {
 
     @EventHandler
     void onFoodLevelChange(FoodLevelChangeEvent event) {
-        if (!this.config.blockFoodConsumption) {
+        if (!this.config.blockHungerLoss) {
             return;
         }
 

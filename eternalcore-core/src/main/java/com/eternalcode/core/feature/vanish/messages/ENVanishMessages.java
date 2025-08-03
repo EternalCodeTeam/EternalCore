@@ -15,7 +15,8 @@ public class ENVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice vanishEnabledOther = Notice.chat("<green>► <white>{PLAYER} has enabled vanish mode!");
     public Notice vanishDisabledOther = Notice.chat("<red>► <white>{PLAYER} has disabled vanish mode!");
 
-    public Notice currentlyInVanish = Notice.actionbar("<green>► <aqua>You are now vanished!");
+    public Notice currentlyInVanish = Notice.actionbar("<gradient:#9d6eef:#A1AAFF:#9d6eef>You are currently invisible!</gradient> <dark_gray>(<gray>/vanish</gray>)</dark_gray>");
+
 
     public Notice joinedInVanish = Notice.chat("<green>► <white>You have joined the server in vanish mode.");
     public Notice playerJoinedInVanish = Notice.chat("<green>► <white>{PLAYER} has joined the server in vanish mode.");

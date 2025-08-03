@@ -1,19 +1,22 @@
-package com.eternalcode.core.feature.catboy;
+package com.eternalcode.core.feature.fun.catboy;
 
 import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.catboy.Catboy;
+import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.catboy.event.CatboyChangeTypeEvent;
 import com.eternalcode.core.feature.catboy.event.CatboySwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import org.bukkit.entity.Cat;
+import org.bukkit.entity.Player;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import org.bukkit.entity.Cat;
-import org.bukkit.entity.Player;
 
 @Service
 class CatboyServiceImpl implements CatboyService {
@@ -23,19 +26,19 @@ class CatboyServiceImpl implements CatboyService {
     private final EventCaller eventCaller;
 
     private final CatBoyEntityService catBoyEntityService;
-    private final CatBoySettings catBoySettings;
+    private final CatboySettings catboySettings;
     private final MinecraftScheduler scheduler;
 
     @Inject
     CatboyServiceImpl(
         EventCaller eventCaller,
         CatBoyEntityService catBoyEntityService,
-        CatBoySettings catBoySettings,
+        CatboySettings catboySettings,
         MinecraftScheduler scheduler
     ) {
         this.eventCaller = eventCaller;
         this.catBoyEntityService = catBoyEntityService;
-        this.catBoySettings = catBoySettings;
+        this.catboySettings = catboySettings;
         this.scheduler = scheduler;
     }
 
@@ -46,7 +49,7 @@ class CatboyServiceImpl implements CatboyService {
 
         Cat cat = this.catBoyEntityService.createCatboyEntity(player, type);
         player.addPassenger(cat);
-        player.setWalkSpeed(this.catBoySettings.getCatboyWalkSpeed());
+        player.setWalkSpeed(this.catboySettings.catboyWalkSpeed());
         this.eventCaller.callEvent(new CatboySwitchEvent(player, true));
     }
 
