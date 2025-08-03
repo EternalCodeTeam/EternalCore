@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.demoscreen;
+package com.eternalcode.core.feature.fun.demoscreen;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.compatibility.Compatibility;
@@ -30,7 +30,7 @@ public class DemoScreenCommand {
         sender.showDemoScreen();
 
         this.noticeService.create()
-            .notice(translation -> translation.troll().demoScreen().shownToSelf())
+            .notice(translation -> translation.demoScreen().shownToSelf())
             .player(sender.getUniqueId())
             .send();
     }
@@ -41,7 +41,7 @@ public class DemoScreenCommand {
         target.showDemoScreen();
 
         this.noticeService.create()
-            .notice(translation -> translation.troll().demoScreen().shownToOtherPlayer())
+            .notice(translation -> translation.demoScreen().shownToOtherPlayer())
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
             .send();

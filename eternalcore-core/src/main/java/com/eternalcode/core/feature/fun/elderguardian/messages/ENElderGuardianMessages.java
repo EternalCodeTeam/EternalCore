@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.elderguardian.messages;
+package com.eternalcode.core.feature.fun.elderguardian.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;

@@ -3,7 +3,7 @@ object Versions {
     const val SPIGOT_API = "1.21.3-R0.1-SNAPSHOT"
     const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
 
-    const val ETERNALCODE_COMMONS = "1.1.7"
+    const val ETERNALCODE_COMMONS = "1.2.0"
     const val MULTIFICATION = "1.2.2"
 
     const val JETBRAINS_ANNOTATIONS = "26.0.2"
@@ -13,7 +13,7 @@ object Versions {
 
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.24.0"
-    const val ADVENTURE_PLATFORM = "4.4.1"
+    const val ADVENTURE_PLATFORM = "4.4.0"
     const val OKAERI_CONFIGS = "5.0.9"
 
     const val MARIA_DB = "3.5.4"
@@ -22,7 +22,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "6.3.2"
 
-    const val LITE_COMMANDS = "3.10.2"
+    const val LITE_COMMANDS = "3.10.3"
     const val LITE_SKULL_API = "2.0.0"
 
     const val GUAVA = "33.4.8-jre"

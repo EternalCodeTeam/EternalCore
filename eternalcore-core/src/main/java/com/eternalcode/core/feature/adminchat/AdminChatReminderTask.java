@@ -1,9 +1,9 @@
 package com.eternalcode.core.feature.adminchat;
 
+import com.eternalcode.commons.bukkit.runnable.OnlinePlayersRunnable;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.shared.OnlinePlayersRunnable;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.entity.Player;
 

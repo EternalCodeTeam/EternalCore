@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.troll.demoscreen.messages;
+package com.eternalcode.core.feature.fun.demoscreen.messages;
 
 import com.eternalcode.multification.notice.Notice;
 

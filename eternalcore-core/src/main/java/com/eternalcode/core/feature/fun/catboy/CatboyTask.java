@@ -1,6 +1,8 @@
-package com.eternalcode.core.feature.catboy;
+package com.eternalcode.core.feature.fun.catboy;
 
 import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
+import com.eternalcode.core.feature.catboy.Catboy;
+import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import net.md_5.bungee.api.ChatColor;
