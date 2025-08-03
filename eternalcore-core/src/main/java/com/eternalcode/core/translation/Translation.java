@@ -21,11 +21,13 @@ import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
+import com.eternalcode.core.feature.troll.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.multification.notice.Notice;
+import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.List;
 import java.util.Map;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public interface Translation {
 
@@ -251,4 +253,6 @@ public interface Translation {
     AutoMessageMessages autoMessage();
     // jail section
     JailMessages jailSection();
+    // burn section
+    BurnMessages burn();
 }

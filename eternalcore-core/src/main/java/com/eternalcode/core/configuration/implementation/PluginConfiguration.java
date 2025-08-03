@@ -5,8 +5,8 @@ import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
-import com.eternalcode.core.feature.fun.catboy.CatboyConfig;
 import com.eternalcode.core.feature.chat.ChatConfig;
+import com.eternalcode.core.feature.fun.catboy.CatboyConfig;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
 import com.eternalcode.core.feature.home.HomesConfig;
 import com.eternalcode.core.feature.jail.JailConfig;
@@ -17,6 +17,7 @@ import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.spawn.SpawnJoinConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestConfig;
+import com.eternalcode.core.feature.troll.burn.BurnConfig;
 import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
@@ -221,7 +222,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("")
     @Comment("# Server Links Configuration")
     @Comment("# Settings for server link management")
-    ServerLinksConfig serverLinks = new ServerLinksConfig();
+    public ServerLinksConfig serverLinks = new ServerLinksConfig();
+
+    @Bean
+    @Comment("")
+    @Comment("# Burn /command Configuration")
+    public BurnConfig burn = new BurnConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {

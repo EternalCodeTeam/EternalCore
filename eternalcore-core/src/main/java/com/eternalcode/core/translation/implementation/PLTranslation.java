@@ -5,6 +5,8 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
+import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
@@ -19,8 +21,7 @@ import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
-import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
-import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
+import com.eternalcode.core.feature.troll.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -594,4 +595,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
     public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące komendy /burn"})
+    public PLBurnMessages burn = new PLBurnMessages();
 }
