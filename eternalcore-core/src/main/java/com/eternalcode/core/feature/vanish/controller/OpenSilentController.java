@@ -25,14 +25,14 @@ import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
 @Controller
-public class OpenSilentController implements Listener {
+class OpenSilentController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
     private final VanishConfiguration config;
 
     @Inject
-    public OpenSilentController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
+    OpenSilentController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
         this.config = config;

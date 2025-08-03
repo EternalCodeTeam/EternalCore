@@ -13,14 +13,14 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 @Controller
-public class ItemController implements Listener {
+class ItemController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
     private final VanishConfiguration config;
 
     @Inject
-    public ItemController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
+    ItemController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
         this.config = config;

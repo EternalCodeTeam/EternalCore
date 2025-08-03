@@ -10,12 +10,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 @Controller
-public class GodModeController implements Listener {
+class GodModeController implements Listener {
 
     private final VanishConfiguration config;
 
     @Inject
-    public GodModeController(VanishConfiguration config) {
+    GodModeController(VanishConfiguration config) {
         this.config = config;
     }
 

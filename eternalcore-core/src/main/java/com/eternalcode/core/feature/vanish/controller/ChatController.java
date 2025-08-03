@@ -11,14 +11,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 @Controller
-public class ChatController implements Listener {
+class ChatController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
     private final VanishConfiguration config;
 
     @Inject
-    public ChatController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
+    ChatController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
         this.config = config;

@@ -8,13 +8,13 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Task(period = 1, delay = 1, unit = TimeUnit.SECONDS)
-public class VanishReminderTask implements Runnable {
+class VanishReminderTask implements Runnable {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
 
     @Inject
-    public VanishReminderTask(VanishService vanishService, NoticeService noticeService) {
+    VanishReminderTask(VanishService vanishService, NoticeService noticeService) {
         this.vanishService = vanishService;
         this.noticeService = noticeService;
     }

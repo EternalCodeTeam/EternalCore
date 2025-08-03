@@ -14,7 +14,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 @Controller
-public class GlowingController implements Listener {
+class GlowingController implements Listener {
 
     private static final String GLOWING_TEAM_NAME = "eternalcore_vanish_glowing";
 
@@ -22,7 +22,7 @@ public class GlowingController implements Listener {
     private final Scoreboard scoreboard;
 
     @Inject
-    public GlowingController(VanishConfiguration config, Server server) {
+    GlowingController(VanishConfiguration config, Server server) {
         this.config = config;
         this.scoreboard = server.getScoreboardManager().getMainScoreboard();
     }

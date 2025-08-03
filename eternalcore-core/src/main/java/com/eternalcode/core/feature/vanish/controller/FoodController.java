@@ -10,19 +10,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 @Controller
-public class FoodController implements Listener {
+class FoodController implements Listener {
 
     private final VanishService vanishService;
     private final VanishConfiguration config;
 
     @Inject
-    public FoodController(VanishService vanishService, VanishConfiguration config) {
+    FoodController(VanishService vanishService, VanishConfiguration config) {
         this.vanishService = vanishService;
         this.config = config;
     }
 
     @EventHandler
-    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+    void onFoodLevelChange(FoodLevelChangeEvent event) {
         if (!this.config.blockFoodConsumption) {
             return;
         }

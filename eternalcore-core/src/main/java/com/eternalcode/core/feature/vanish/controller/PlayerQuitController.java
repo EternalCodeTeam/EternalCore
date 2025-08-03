@@ -10,12 +10,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 @Controller
-public class PlayerQuitController implements Listener {
+class PlayerQuitController implements Listener {
 
     private final VanishService vanishService;
 
     @Inject
-    public PlayerQuitController(VanishService vanishService) {
+    PlayerQuitController(VanishService vanishService) {
         this.vanishService = vanishService;
     }
 
