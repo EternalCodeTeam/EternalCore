@@ -26,8 +26,8 @@ class GlowingController implements Listener {
     private final Scoreboard scoreboard;
 
     @Inject
-    GlowingController(PluginConfiguration pluginConfiguration, Server server) {
-        this.vanishSettings = pluginConfiguration.vanish;
+    GlowingController(VanishSettings vanishSettings, Server server) {
+        this.vanishSettings = vanishSettings;
         this.scoreboard = server.getScoreboardManager().getMainScoreboard();
     }
 

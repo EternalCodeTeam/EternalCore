@@ -18,6 +18,7 @@ import com.eternalcode.core.feature.spawn.SpawnJoinConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestConfig;
 import com.eternalcode.core.feature.vanish.VanishConfig;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
@@ -224,8 +225,9 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings for server link management")
     ServerLinksConfig serverLinks = new ServerLinksConfig();
 
+    @Bean(proxied = VanishSettings.class)
     @Comment({ " ", "# Settings responsible for player vanish functionality" })
-    public VanishConfig vanish = new VanishConfig();
+    VanishConfig vanish = new VanishConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
