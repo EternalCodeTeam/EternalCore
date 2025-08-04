@@ -26,7 +26,7 @@ class BlockController implements Listener {
         this.config = config;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     void onBreak(BlockBreakEvent event) {
         if (!this.config.blockBlockBreaking) {
             return;

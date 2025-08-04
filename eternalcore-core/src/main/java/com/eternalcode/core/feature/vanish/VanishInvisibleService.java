@@ -18,6 +18,7 @@ class VanishInvisibleService {
     private final Server server;
 
     private final Set<UUID> vanishedPlayers = ConcurrentHashMap.newKeySet();
+    private final Set<String> vanishedPlayerNames = ConcurrentHashMap.newKeySet();
 
     @Inject
     VanishInvisibleService(Plugin plugin) {
@@ -36,6 +37,7 @@ class VanishInvisibleService {
         }
 
         this.vanishedPlayers.add(player.getUniqueId());
+        this.vanishedPlayerNames.add(player.getName());
     }
 
     void showPlayer(Player player) {
@@ -45,6 +47,7 @@ class VanishInvisibleService {
             }
         }
         this.vanishedPlayers.remove(player.getUniqueId());
+        this.vanishedPlayerNames.remove(player.getName());
     }
 
     void hideVanishedPlayersFrom(Player player) {
@@ -61,5 +64,9 @@ class VanishInvisibleService {
 
     Set<UUID> getVanishedPlayers() {
         return Collections.unmodifiableSet(this.vanishedPlayers);
+    }
+
+    Set<String> getVanishedPlayerNames() {
+        return Collections.unmodifiableSet(this.vanishedPlayerNames);
     }
 }

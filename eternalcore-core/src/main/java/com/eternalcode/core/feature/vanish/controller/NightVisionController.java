@@ -25,7 +25,7 @@ class NightVisionController implements Listener {
         this.config = config;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     void onEnable(EnableVanishEvent event) {
         if (!this.config.nightVision) {
             return;
@@ -36,7 +36,7 @@ class NightVisionController implements Listener {
         player.addPotionEffect(NIGHT_VISION_EFFECT);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
         if (!this.config.nightVision) {
             return;

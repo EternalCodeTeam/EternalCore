@@ -26,7 +26,7 @@ class PlayerJoinController implements Listener {
         this.config = config;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 

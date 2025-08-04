@@ -19,7 +19,7 @@ class PlayerQuitController implements Listener {
         this.vanishService = vanishService;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 

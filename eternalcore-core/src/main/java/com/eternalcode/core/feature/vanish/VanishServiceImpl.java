@@ -69,4 +69,9 @@ class VanishServiceImpl implements VanishService {
     public Set<UUID> getVanishedPlayers() {
         return this.vanishInvisibleService.getVanishedPlayers();
     }
+
+    @Override
+    public Set<String> getVanishedPlayerNames() {
+        return this.vanishInvisibleService.getVanishedPlayerNames();
+    }
 }

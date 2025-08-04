@@ -7,6 +7,7 @@ import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.event.server.TabCompleteEvent;
@@ -18,15 +19,13 @@ import java.util.List;
 class TabCompleteController implements Listener {
 
     private final VanishService vanishService;
-    private final Server server;
 
     @Inject
-    TabCompleteController(VanishService vanishService, Server server) {
+    TabCompleteController(VanishService vanishService) {
         this.vanishService = vanishService;
-        this.server = server;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     void onTabComplete(TabCompleteEvent event) {
         if (!(event.getSender() instanceof Player player)) {
             return;
@@ -36,12 +35,6 @@ class TabCompleteController implements Listener {
             return;
         }
 
-        List<String> completions = event.getCompletions();
-
-        completions.removeIf(suggestion -> {
-            Player target = this.server.getPlayerExact(suggestion);
-
-            return target != null && this.vanishService.isVanished(target);
-        });
+        event.getCompletions().removeIf(this.vanishService.getVanishedPlayerNames()::contains);
     }
 }

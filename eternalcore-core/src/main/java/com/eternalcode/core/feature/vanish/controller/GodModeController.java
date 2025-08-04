@@ -19,7 +19,7 @@ class GodModeController implements Listener {
         this.config = config;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     void onEnable(EnableVanishEvent event) {
         if (!this.config.godMode) {
             return;
@@ -29,7 +29,7 @@ class GodModeController implements Listener {
         player.setInvulnerable(true);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
         if (!this.config.godMode) {
             return;
