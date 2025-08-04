@@ -89,7 +89,6 @@ public class ConfigurationManager {
     public void reload() {
         for (OkaeriConfig config : this.configs) {
             config.load();
-            System.out.println("Reloaded configuration: " + config.getClass().getSimpleName());
         }
     }
 
