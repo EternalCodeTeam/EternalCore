@@ -41,7 +41,7 @@ class GlowingController implements Listener {
         player.setGlowing(true);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
         if (!this.config.glowEffect) {
             return;
