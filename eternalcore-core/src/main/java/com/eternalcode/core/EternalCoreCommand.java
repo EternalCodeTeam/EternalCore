@@ -28,16 +28,15 @@ class EternalCoreCommand {
     private final ConfigurationManager configurationManager;
     private final MiniMessage miniMessage;
     private final Publisher publisher;
-    private final Scheduler scheduler;
 
     @Inject
-    EternalCoreCommand(ConfigurationManager configurationManager, MiniMessage miniMessage, Publisher publisher, Scheduler scheduler) {
+    EternalCoreCommand(ConfigurationManager configurationManager, MiniMessage miniMessage, Publisher publisher) {
         this.configurationManager = configurationManager;
         this.miniMessage = miniMessage;
         this.publisher = publisher;
-        this.scheduler = scheduler;
     }
 
+    @Async
     @Execute(name = "reload")
     @DescriptionDocs(description = "Reloads EternalCore configuration")
     void reload(@Context Audience audience) {
@@ -51,8 +50,7 @@ class EternalCoreCommand {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         this.configurationManager.reload();
-        this.scheduler.runLater(() -> this.publisher.publish(new EternalReloadEvent()), Duration.ofSeconds(1));
-        //this.publisher.publish(new EternalReloadEvent());
+        this.publisher.publish(new EternalReloadEvent());
 
         return stopwatch.elapsed(TimeUnit.MILLISECONDS);
     }

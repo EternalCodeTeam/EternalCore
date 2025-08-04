@@ -1,9 +1,8 @@
 package com.eternalcode.core.feature.vanish.controller;
 
 import com.eternalcode.commons.scheduler.Scheduler;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishService;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -45,7 +44,7 @@ class OpenSilentController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishConfig config;
+    private final VanishSettings config;
     private final Scheduler scheduler;
 
     private final Map<UUID, ContainerWrapper> containerCache = new HashMap<>();
@@ -54,12 +53,11 @@ class OpenSilentController implements Listener {
     OpenSilentController(
         NoticeService noticeService,
         VanishService vanishService,
-        PluginConfiguration config,
-        Scheduler scheduler
-    ) {
+        VanishSettings config,
+        Scheduler scheduler) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = config.vanish;
+        this.config = config;
         this.scheduler = scheduler;
     }
 
@@ -75,7 +73,7 @@ class OpenSilentController implements Listener {
             return;
         }
 
-        if (!this.config.silentInventoryAccess) {
+        if (!this.config.silentInventoryAccess()) {
             event.setCancelled(true);
             this.noticeService.player(
                 player.getUniqueId(),
@@ -100,11 +98,8 @@ class OpenSilentController implements Listener {
             return;
         }
 
-        ContainerWrapper playerData = new ContainerWrapper(
-            player.getGameMode(),
-            player.getAllowFlight(),
-            player.isFlying()
-        );
+        ContainerWrapper playerData =
+            new ContainerWrapper(player.getGameMode(), player.getAllowFlight(), player.isFlying());
         this.containerCache.put(player.getUniqueId(), playerData);
 
         this.switchToSpectator(player);
@@ -121,8 +116,8 @@ class OpenSilentController implements Listener {
             return;
         }
 
-        if (!this.containerCache.containsKey(player.getUniqueId()) &&
-            cause != PlayerTeleportEvent.TeleportCause.SPECTATE) {
+        if (!this.containerCache.containsKey(player.getUniqueId())
+            && cause != PlayerTeleportEvent.TeleportCause.SPECTATE) {
             return;
         }
 
@@ -155,11 +150,8 @@ class OpenSilentController implements Listener {
             return;
         }
 
-        ContainerWrapper playerData = new ContainerWrapper(
-            player.getGameMode(),
-            player.getAllowFlight(),
-            player.isFlying()
-        );
+        ContainerWrapper playerData =
+            new ContainerWrapper(player.getGameMode(), player.getAllowFlight(), player.isFlying());
         this.containerCache.put(player.getUniqueId(), playerData);
 
         this.switchToSpectator(player);
@@ -190,11 +182,7 @@ class OpenSilentController implements Listener {
         };
     }
 
-    public record ContainerWrapper(
-        GameMode gameMode,
-        boolean allowFlight,
-        boolean isFlying
-    ) {
+    public record ContainerWrapper(GameMode gameMode, boolean allowFlight, boolean isFlying) {
         public void apply(Player player) {
             player.setGameMode(gameMode);
             player.setAllowFlight(allowFlight);

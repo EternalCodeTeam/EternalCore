@@ -1,8 +1,7 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishService;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -18,18 +17,18 @@ class BlockController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishConfig config;
+    private final VanishSettings config;
 
     @Inject
-    BlockController(NoticeService noticeService, VanishService vanishService, PluginConfiguration pluginConfiguration) {
+    BlockController(NoticeService noticeService, VanishService vanishService, VanishSettings config) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = pluginConfiguration.vanish;
+        this.config = config;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     void onBreak(BlockBreakEvent event) {
-        if (!this.config.blockBlockBreaking) {
+        if (!this.config.blockBlockBreaking()) {
             return;
         }
 
@@ -46,7 +45,7 @@ class BlockController implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     void onPlace(BlockPlaceEvent event) {
-        if (!this.config.blockBlockPlacing) {
+        if (!this.config.blockBlockPlacing()) {
             return;
         }
 

@@ -1,9 +1,8 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -18,20 +17,20 @@ class PlayerJoinController implements Listener {
 
     private final VanishService vanishService;
     private final NoticeService noticeService;
-    private final VanishConfig config;
+    private final VanishSettings config;
 
     @Inject
-    PlayerJoinController(VanishService vanishService, NoticeService noticeService, PluginConfiguration config) {
+    PlayerJoinController(VanishService vanishService, NoticeService noticeService, VanishSettings config) {
         this.vanishService = vanishService;
         this.noticeService = noticeService;
-        this.config = config.vanish;
+        this.config = config;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (this.config.silentJoin && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
+        if (this.config.silentJoin() && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
             event.setJoinMessage(null);
             this.vanishService.enableVanish(player);
 

@@ -1,7 +1,5 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;

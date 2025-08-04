@@ -24,6 +24,5 @@ public class PLVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice cantBlockBreakWhileVanished = Notice.chat("<red>Nie możesz niszczyć bloków będąc niewidocznym.");
     public Notice cantUseChatWhileVanished = Notice.chat("<red>Nie możesz używać czatu będąc niewidocznym.");
     public Notice cantDropItemsWhileVanished = Notice.chat("<red>Nie możesz upuszczać przedmiotów będąc niewidocznym.");
-    public Notice cantPickupItemsWhileVanished = Notice.chat("<red>Nie możesz zbierać przedmiotów będąc niewidocznym.");
     public Notice cantOpenInventoryWhileVanished = Notice.chat("<red>Nie możesz otwierać ekwipunku będąc niewidocznym.");
 }

@@ -17,7 +17,6 @@ public class ENVanishMessages extends OkaeriConfig implements VanishMessages {
 
     public Notice currentlyInVanish = Notice.actionbar("<gradient:#9d6eef:#A1AAFF:#9d6eef>You are currently invisible!</gradient> <dark_gray>(<gray>/vanish</gray>)</dark_gray>");
 
-
     public Notice joinedInVanish = Notice.chat("<green>► <white>You have joined the server in vanish mode.");
     public Notice playerJoinedInVanish = Notice.chat("<green>► <white>{PLAYER} has joined the server in vanish mode.");
 
@@ -25,7 +24,5 @@ public class ENVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice cantBlockBreakWhileVanished = Notice.chat("<red>You cannot break blocks while vanished.");
     public Notice cantUseChatWhileVanished = Notice.chat("<red>You cannot use chat while vanished.");
     public Notice cantDropItemsWhileVanished = Notice.chat("<red>You cannot drop items while vanished.");
-    public Notice cantPickupItemsWhileVanished = Notice.chat("<red>You cannot pick up items while vanished.");
     public Notice cantOpenInventoryWhileVanished = Notice.chat("<red>You cannot open your inventory while vanished.");
-
 }

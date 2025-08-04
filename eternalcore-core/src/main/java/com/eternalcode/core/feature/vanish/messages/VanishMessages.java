@@ -19,7 +19,6 @@ public interface VanishMessages {
     Notice cantBlockBreakWhileVanished();
     Notice cantUseChatWhileVanished();
     Notice cantDropItemsWhileVanished();
-    Notice cantPickupItemsWhileVanished();
     Notice cantOpenInventoryWhileVanished();
 
 

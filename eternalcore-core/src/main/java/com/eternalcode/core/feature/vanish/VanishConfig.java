@@ -10,13 +10,13 @@ import org.bukkit.ChatColor;
 @Accessors(fluent = true)
 public class VanishConfig extends OkaeriConfig implements VanishSettings {
 
-    @Comment("Should players with eternalcore.vanish.join permission automatically join in vanish mode?")
+    @Comment("Should players with eternalcore.vanish.join permission join in vanish mode without join message")
     public boolean silentJoin = false;
 
-    @Comment("Should vanished players be invulnerable to damage from other players?")
+    @Comment("Should vanished players be invulnerable to damage from other players")
     public boolean godMode = true;
 
-    @Comment("Should the player has nightVision effect while vanished?")
+    @Comment("Give night vision effect to vanished players")
     public boolean nightVision = true;
 
     @Comment("Should vanished players be able to silently view other players' inventories?")

@@ -1,8 +1,7 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishService;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -17,18 +16,18 @@ class ItemController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishConfig config;
+    private final VanishSettings config;
 
     @Inject
-    ItemController(NoticeService noticeService, VanishService vanishService, PluginConfiguration config) {
+    ItemController(NoticeService noticeService, VanishService vanishService, VanishSettings config) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = config.vanish;
+        this.config = config;
     }
-    
+
     @EventHandler
     void onPickUp(EntityPickupItemEvent event) {
-        if (!this.config.blockItemPickup) {
+        if (!this.config.blockItemPickup()) {
             return;
         }
         if (!(event.getEntity() instanceof Player player)) {
@@ -38,15 +37,13 @@ class ItemController implements Listener {
         if (!this.vanishService.isVanished(player)) {
             return;
         }
-        
-        event.setCancelled(true);
 
-        this.noticeService.player(player.getUniqueId(), message -> message.vanish().cantPickupItemsWhileVanished());
+        event.setCancelled(true);
     }
 
     @EventHandler
     void onDrop(PlayerDropItemEvent event) {
-        if (!this.config.blockItemDropping) {
+        if (!this.config.blockItemDropping()) {
             return;
         }
         Player player = event.getPlayer();

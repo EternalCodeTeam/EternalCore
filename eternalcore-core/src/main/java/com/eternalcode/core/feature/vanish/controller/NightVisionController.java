@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.vanish.VanishConfig;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -15,20 +14,19 @@ import org.bukkit.potion.PotionEffectType;
 @Controller
 class NightVisionController implements Listener {
 
-    private static final PotionEffect NIGHT_VISION_EFFECT = new PotionEffect(
-            PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false, false
-    );
+    private static final PotionEffect NIGHT_VISION_EFFECT =
+        new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false, false);
 
-    private final VanishConfig config;
+    private final VanishSettings config;
 
     @Inject
-    NightVisionController(PluginConfiguration config) {
-        this.config = config.vanish;
+    NightVisionController(VanishSettings config) {
+        this.config = config;
     }
 
     @EventHandler(ignoreCancelled = true)
     void onEnable(EnableVanishEvent event) {
-        if (!this.config.nightVision) {
+        if (!this.config.nightVision()) {
             return;
         }
 
@@ -39,7 +37,7 @@ class NightVisionController implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
-        if (!this.config.nightVision) {
+        if (!this.config.nightVision()) {
             return;
         }
 
