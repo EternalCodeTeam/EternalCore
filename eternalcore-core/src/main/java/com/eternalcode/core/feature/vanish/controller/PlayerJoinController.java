@@ -30,7 +30,7 @@ class PlayerJoinController implements Listener {
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (this.config.markVanishOnJoin && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
+        if (this.config.silentJoin && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
             event.setJoinMessage(null);
             this.vanishService.enableVanish(player);
 
