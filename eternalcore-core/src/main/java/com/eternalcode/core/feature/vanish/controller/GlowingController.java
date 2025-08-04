@@ -69,13 +69,7 @@ class GlowingController implements Listener {
             return;
         }
 
-        Team team = this.scoreboard.getTeam(GLOWING_TEAM_NAME);
-
-        if (team == null) {
-            return;
-        }
-
-        team.setColor(this.vanishSettings.color());
+        this.borrowTeam();
     }
 
     private Team borrowTeam() {
@@ -83,9 +77,9 @@ class GlowingController implements Listener {
 
         if (team == null) {
             team = this.scoreboard.registerNewTeam(GLOWING_TEAM_NAME);
-            team.setColor(this.vanishSettings.color());
         }
 
+        team.setColor(this.vanishSettings.color());
         return team;
     }
 }
