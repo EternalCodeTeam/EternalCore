@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.vanish.controller;
 
 import com.eternalcode.core.feature.vanish.VanishConfiguration;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -15,27 +16,25 @@ import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.util.Set;
-
 @Controller
 class GlowingController implements Listener {
 
     private static final String GLOWING_TEAM_NAME = "eternalcore_vanish_glowing";
 
-    private final VanishConfiguration config;
+    private final VanishSettings vanishSettings;
     private final Scoreboard scoreboard;
     private final Server server;
 
     @Inject
-    GlowingController(VanishConfiguration config, Server server) {
-        this.config = config;
+    GlowingController(VanishConfiguration vanishSettings, Server server) {
+        this.vanishSettings = vanishSettings;
         this.scoreboard = server.getScoreboardManager().getMainScoreboard();
         this.server = server;
     }
 
     @EventHandler(ignoreCancelled = true)
     void onEnable(EnableVanishEvent event) {
-        if (!this.config.glowEffect) {
+        if (!this.vanishSettings.glowEffect()) {
             return;
         }
 
@@ -47,7 +46,7 @@ class GlowingController implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
-        if (!this.config.glowEffect) {
+        if (!this.vanishSettings.glowEffect()) {
             return;
         }
         Player player = event.getPlayer();
@@ -67,84 +66,37 @@ class GlowingController implements Listener {
 
     @Subscribe(EternalReloadEvent.class)
     void onReload(EternalReloadEvent event) {
-        if (!this.config.glowEffect) {
+        System.out.println("=== RELOAD START ===");
+        System.out.println("Config glow effect: " + this.vanishSettings.glowEffect());
+        System.out.println("Config color: " + this.vanishSettings.color().name());
+
+        if (!this.vanishSettings.glowEffect()) {
+            System.out.println("Glow effect disabled, returning");
             return;
         }
 
         Team team = this.scoreboard.getTeam(GLOWING_TEAM_NAME);
+        System.out.println("Team found: " + (team != null));
 
         if (team == null) {
+            System.out.println("No team found, returning");
             return;
         }
 
-        Set<String> playersToReAdd = Set.copyOf(team.getEntries());
+        System.out.println("Team entries: " + team.getEntries());
+        System.out.println("Old team color: " + team.getColor().name());
 
-        for (String playerName : playersToReAdd) {
-            Player player = this.server.getPlayer(playerName);
-            if (player != null) {
-                player.setGlowing(false);
-            }
-        }
-        team.unregister();
-
-        Team newTeam = this.scoreboard.registerNewTeam(GLOWING_TEAM_NAME);
-        newTeam.setColor(this.config.color);
-
-        for (String playerName : playersToReAdd) {
-            Player player = this.server.getPlayer(playerName);
-            if (player != null) {
-                newTeam.addEntry(playerName);
-                player.setGlowing(true);
-            }
-        }
+        team.setColor(this.vanishSettings.color());
+        System.out.println("New team color set to: " + team.getColor().name());
+        System.out.println("=== RELOAD END ===");
     }
-
-//    @Subscribe(EternalReloadEvent.class)
-//    void onReload(EternalReloadEvent event) {
-//        Team team = this.scoreboard.getTeam(GLOWING_TEAM_NAME);
-//
-//        if (!this.config.glowEffect) {
-//            if (team != null) {
-//                Set<String> entries = Set.copyOf(team.getEntries());
-//
-//                for (String playerName : entries) {
-//                    Player player = this.server.getPlayerExact(playerName);
-//                    if (player != null) {
-//                        player.setGlowing(false);
-//                    }
-//                }
-//
-//                team.unregister();
-//            }
-//            return;
-//        }
-//
-//        // Jeśli glow effect jest włączony
-//        if (team != null) {
-//            // Zapisz graczy przed usunięciem teamu
-//            Set<String> playersToReAdd = Set.copyOf(team.getEntries());
-//
-//            // Usuń stary team
-//            team.unregister();
-//
-//            // Stwórz nowy team z nowym kolorem
-//            team = this.scoreboard.registerNewTeam(GLOWING_TEAM_NAME);
-//            team.setColor(this.config.color);
-//
-//            // Dodaj z powrotem wszystkich graczy
-//            for (String playerName : playersToReAdd) {
-//                team.addEntry(playerName);
-//            }
-//        }
-//        // Jeśli team nie istnieje, zostanie utworzony z nowym kolorem przy następnym użyciu borrowTeam()
-//    }
 
     private Team borrowTeam() {
         Team team = this.scoreboard.getTeam(GLOWING_TEAM_NAME);
 
         if (team == null) {
             team = this.scoreboard.registerNewTeam(GLOWING_TEAM_NAME);
-            team.setColor(this.config.color);
+            team.setColor(this.vanishSettings.color());
         }
 
         return team;

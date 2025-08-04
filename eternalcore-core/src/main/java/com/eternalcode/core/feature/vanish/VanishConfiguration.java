@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.vanish;
 
+import com.eternalcode.core.injector.annotations.Bean;
+import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
@@ -8,7 +10,7 @@ import org.bukkit.ChatColor;
 
 @Getter
 @Accessors(fluent = true)
-public class VanishConfiguration extends OkaeriConfig {
+public class VanishConfiguration extends OkaeriConfig implements VanishSettings {
 
     @Comment("Should players with eternalcore.vanish.join permission automatically join in vanish mode?")
     public boolean silentJoin = false;
