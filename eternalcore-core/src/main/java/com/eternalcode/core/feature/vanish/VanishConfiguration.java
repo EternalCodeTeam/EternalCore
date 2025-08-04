@@ -10,8 +10,8 @@ import org.bukkit.ChatColor;
 @Accessors(fluent = true)
 public class VanishConfiguration extends OkaeriConfig {
 
-    @Comment("Should players with vanish permission automatically join in vanish mode?")
-    public boolean markVanishOnJoin = true;
+    @Comment("Should players with eternalcore.vanish.join permission automatically join in vanish mode?")
+    public boolean silentJoin = false;
 
     @Comment("Should vanished players be invulnerable to damage from other players?")
     public boolean godMode = true;
