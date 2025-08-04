@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.feature.vanish.VanishConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
@@ -23,13 +24,11 @@ class GlowingController implements Listener {
 
     private final VanishSettings vanishSettings;
     private final Scoreboard scoreboard;
-    private final Server server;
 
     @Inject
-    GlowingController(VanishConfiguration vanishSettings, Server server) {
-        this.vanishSettings = vanishSettings;
+    GlowingController(PluginConfiguration pluginConfiguration, Server server) {
+        this.vanishSettings = pluginConfiguration.vanish;
         this.scoreboard = server.getScoreboardManager().getMainScoreboard();
-        this.server = server;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -66,29 +65,17 @@ class GlowingController implements Listener {
 
     @Subscribe(EternalReloadEvent.class)
     void onReload(EternalReloadEvent event) {
-        System.out.println("=== RELOAD START ===");
-        System.out.println("Config glow effect: " + this.vanishSettings.glowEffect());
-        System.out.println("Config color: " + this.vanishSettings.color().name());
-
         if (!this.vanishSettings.glowEffect()) {
-            System.out.println("Glow effect disabled, returning");
             return;
         }
 
         Team team = this.scoreboard.getTeam(GLOWING_TEAM_NAME);
-        System.out.println("Team found: " + (team != null));
 
         if (team == null) {
-            System.out.println("No team found, returning");
             return;
         }
 
-        System.out.println("Team entries: " + team.getEntries());
-        System.out.println("Old team color: " + team.getColor().name());
-
         team.setColor(this.vanishSettings.color());
-        System.out.println("New team color set to: " + team.getColor().name());
-        System.out.println("=== RELOAD END ===");
     }
 
     private Team borrowTeam() {

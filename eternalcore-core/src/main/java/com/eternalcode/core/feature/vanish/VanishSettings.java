@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.vanish;
 
+import org.bukkit.ChatColor;
+
 public interface VanishSettings {
 
     boolean silentJoin();
@@ -12,7 +14,7 @@ public interface VanishSettings {
 
     boolean glowEffect();
 
-    org.bukkit.ChatColor color();
+    ChatColor color();
 
     boolean blockItemDropping();
 

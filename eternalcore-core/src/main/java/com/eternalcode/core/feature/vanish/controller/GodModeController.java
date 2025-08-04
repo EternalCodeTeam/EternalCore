@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.feature.vanish.VanishConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -12,11 +13,11 @@ import org.bukkit.event.Listener;
 @Controller
 class GodModeController implements Listener {
 
-    private final VanishConfiguration config;
+    private final VanishConfig config;
 
     @Inject
-    GodModeController(VanishConfiguration config) {
-        this.config = config;
+    GodModeController(PluginConfiguration config) {
+        this.config = config.vanish;
     }
 
     @EventHandler(ignoreCancelled = true)

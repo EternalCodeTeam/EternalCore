@@ -1,7 +1,8 @@
 package com.eternalcode.core.feature.vanish.controller;
 
 import com.eternalcode.commons.scheduler.Scheduler;
-import com.eternalcode.core.feature.vanish.VanishConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -44,7 +45,7 @@ class OpenSilentController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishConfiguration config;
+    private final VanishConfig config;
     private final Scheduler scheduler;
 
     private final Map<UUID, ContainerWrapper> containerCache = new HashMap<>();
@@ -53,12 +54,12 @@ class OpenSilentController implements Listener {
     OpenSilentController(
         NoticeService noticeService,
         VanishService vanishService,
-        VanishConfiguration config,
+        PluginConfiguration config,
         Scheduler scheduler
     ) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = config;
+        this.config = config.vanish;
         this.scheduler = scheduler;
     }
 

@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.feature.vanish.VanishConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -15,15 +16,14 @@ class ChatController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishConfiguration config;
+    private final VanishConfig config;
 
     @Inject
-    ChatController(NoticeService noticeService, VanishService vanishService, VanishConfiguration config) {
+    ChatController(NoticeService noticeService, VanishService vanishService, PluginConfiguration pluginConfiguration) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = config;
+        this.config = pluginConfiguration.vanish;
     }
-
     @EventHandler
     void onChat(AsyncPlayerChatEvent event) {
         if (!this.config.blockChatUsage) {

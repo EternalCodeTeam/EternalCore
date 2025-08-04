@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.vanish.controller;
 
-import com.eternalcode.core.feature.vanish.VanishConfiguration;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishPermissionConstant;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -17,13 +18,13 @@ class PlayerJoinController implements Listener {
 
     private final VanishService vanishService;
     private final NoticeService noticeService;
-    private final VanishConfiguration config;
+    private final VanishConfig config;
 
     @Inject
-    PlayerJoinController(VanishService vanishService, NoticeService noticeService, VanishConfiguration config) {
+    PlayerJoinController(VanishService vanishService, NoticeService noticeService, PluginConfiguration config) {
         this.vanishService = vanishService;
         this.noticeService = noticeService;
-        this.config = config;
+        this.config = config.vanish;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
