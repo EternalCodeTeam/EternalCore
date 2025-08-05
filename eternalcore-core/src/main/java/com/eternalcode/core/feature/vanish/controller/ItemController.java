@@ -16,18 +16,18 @@ class ItemController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishSettings config;
+    private final VanishSettings settings;
 
     @Inject
-    ItemController(NoticeService noticeService, VanishService vanishService, VanishSettings config) {
+    ItemController(NoticeService noticeService, VanishService vanishService, VanishSettings settings) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = config;
+        this.settings = settings;
     }
 
     @EventHandler
     void onPickUp(EntityPickupItemEvent event) {
-        if (!this.config.blockItemPickup()) {
+        if (!this.settings.blockItemPickup()) {
             return;
         }
         if (!(event.getEntity() instanceof Player player)) {
@@ -43,7 +43,7 @@ class ItemController implements Listener {
 
     @EventHandler
     void onDrop(PlayerDropItemEvent event) {
-        if (!this.config.blockItemDropping()) {
+        if (!this.settings.blockItemDropping()) {
             return;
         }
         Player player = event.getPlayer();

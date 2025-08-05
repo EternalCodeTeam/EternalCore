@@ -17,20 +17,20 @@ class PlayerJoinController implements Listener {
 
     private final VanishService vanishService;
     private final NoticeService noticeService;
-    private final VanishSettings config;
+    private final VanishSettings settings;
 
     @Inject
-    PlayerJoinController(VanishService vanishService, NoticeService noticeService, VanishSettings config) {
+    PlayerJoinController(VanishService vanishService, NoticeService noticeService, VanishSettings settings) {
         this.vanishService = vanishService;
         this.noticeService = noticeService;
-        this.config = config;
+        this.settings = settings;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (this.config.silentJoin() && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
+        if (this.settings.silentJoin() && player.hasPermission(VanishPermissionConstant.VANISH_JOIN_PERMISSION)) {
             event.setJoinMessage(null);
             this.vanishService.enableVanish(player);
 

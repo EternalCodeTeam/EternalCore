@@ -182,7 +182,7 @@ class OpenSilentController implements Listener {
         };
     }
 
-    public record ContainerWrapper(GameMode gameMode, boolean allowFlight, boolean isFlying) {
+    private record ContainerWrapper(GameMode gameMode, boolean allowFlight, boolean isFlying) {
         public void apply(Player player) {
             player.setGameMode(gameMode);
             player.setAllowFlight(allowFlight);

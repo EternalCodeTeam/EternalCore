@@ -17,18 +17,18 @@ class BlockController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishSettings config;
+    private final VanishSettings settings;
 
     @Inject
-    BlockController(NoticeService noticeService, VanishService vanishService, VanishSettings config) {
+    BlockController(NoticeService noticeService, VanishService vanishService, VanishSettings settings) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = config;
+        this.settings = settings;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     void onBreak(BlockBreakEvent event) {
-        if (!this.config.blockBlockBreaking()) {
+        if (!this.settings.blockBlockBreaking()) {
             return;
         }
 
@@ -45,7 +45,7 @@ class BlockController implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     void onPlace(BlockPlaceEvent event) {
-        if (!this.config.blockBlockPlacing()) {
+        if (!this.settings.blockBlockPlacing()) {
             return;
         }
 

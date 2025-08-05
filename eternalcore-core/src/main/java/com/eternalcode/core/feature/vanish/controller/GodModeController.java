@@ -12,16 +12,16 @@ import org.bukkit.event.Listener;
 @Controller
 class GodModeController implements Listener {
 
-    private final VanishSettings config;
+    private final VanishSettings settings;
 
     @Inject
-    GodModeController(VanishSettings config) {
-        this.config = config;
+    GodModeController(VanishSettings settings) {
+        this.settings = settings;
     }
 
     @EventHandler(ignoreCancelled = true)
     void onEnable(EnableVanishEvent event) {
-        if (!this.config.godMode()) {
+        if (!this.settings.godMode()) {
             return;
         }
         Player player = event.getPlayer();
@@ -31,7 +31,7 @@ class GodModeController implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
-        if (!this.config.godMode()) {
+        if (!this.settings.godMode()) {
             return;
         }
         Player player = event.getPlayer();

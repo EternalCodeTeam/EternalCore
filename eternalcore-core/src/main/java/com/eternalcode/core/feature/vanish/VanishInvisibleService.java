@@ -14,11 +14,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 class VanishInvisibleService {
 
-    private final Plugin plugin;
-    private final Server server;
-
     private final Set<UUID> vanishedPlayers = ConcurrentHashMap.newKeySet();
     private final Set<String> vanishedPlayerNames = ConcurrentHashMap.newKeySet();
+
+    private final Plugin plugin;
+    private final Server server;
 
     @Inject
     VanishInvisibleService(Plugin plugin) {

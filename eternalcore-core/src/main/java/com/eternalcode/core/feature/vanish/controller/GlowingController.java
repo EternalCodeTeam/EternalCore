@@ -20,18 +20,18 @@ class GlowingController implements Listener {
 
     private static final String GLOWING_TEAM_NAME = "eternalcore_vanish_glowing";
 
-    private final VanishSettings vanishSettings;
+    private final VanishSettings settings;
     private final Scoreboard scoreboard;
 
     @Inject
-    GlowingController(VanishSettings vanishSettings, Server server) {
-        this.vanishSettings = vanishSettings;
+    GlowingController(VanishSettings settings, Server server) {
+        this.settings = settings;
         this.scoreboard = server.getScoreboardManager().getMainScoreboard();
     }
 
     @EventHandler(ignoreCancelled = true)
     void onEnable(EnableVanishEvent event) {
-        if (!this.vanishSettings.glowEffect()) {
+        if (!this.settings.glowEffect()) {
             return;
         }
 
@@ -43,7 +43,7 @@ class GlowingController implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
-        if (!this.vanishSettings.glowEffect()) {
+        if (!this.settings.glowEffect()) {
             return;
         }
         Player player = event.getPlayer();
@@ -63,7 +63,7 @@ class GlowingController implements Listener {
 
     @Subscribe(EternalReloadEvent.class)
     void onReload(EternalReloadEvent event) {
-        if (!this.vanishSettings.glowEffect()) {
+        if (!this.settings.glowEffect()) {
             return;
         }
 
@@ -77,7 +77,7 @@ class GlowingController implements Listener {
             team = this.scoreboard.registerNewTeam(GLOWING_TEAM_NAME);
         }
 
-        team.setColor(this.vanishSettings.color());
+        team.setColor(this.settings.color());
         return team;
     }
 }

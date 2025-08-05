@@ -15,18 +15,18 @@ class ChatController implements Listener {
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
-    private final VanishSettings config;
+    private final VanishSettings settings;
 
     @Inject
-    ChatController(NoticeService noticeService, VanishService vanishService, VanishSettings config) {
+    ChatController(NoticeService noticeService, VanishService vanishService, VanishSettings settings) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
-        this.config = config;
+        this.settings = settings;
     }
 
     @EventHandler
     void onChat(AsyncPlayerChatEvent event) {
-        if (!this.config.blockChatUsage()) {
+        if (!this.settings.blockChatUsage()) {
             return;
         }
 

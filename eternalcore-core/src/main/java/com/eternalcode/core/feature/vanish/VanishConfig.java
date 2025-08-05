@@ -22,10 +22,10 @@ public class VanishConfig extends OkaeriConfig implements VanishSettings {
     @Comment("Should vanished players be able to silently view other players' inventories?")
     public boolean silentInventoryAccess = true;
 
-    @Comment("Should vanished players glow to make them visible to other staff members? (needs restart to apply)")
+    @Comment("Should vanished players glow to make them visible to other staff members?")
     public boolean glowEffect = true;
 
-    @Comment("Color of the glow effect for vanished players (needs restart to apply)")
+    @Comment("Color of the glow effect for vanished players")
     public ChatColor color = ChatColor.LIGHT_PURPLE;
 
     @Comment("Prevent vanished players from dropping items")

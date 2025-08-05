@@ -13,17 +13,17 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 class FoodController implements Listener {
 
     private final VanishService vanishService;
-    private final VanishSettings config;
+    private final VanishSettings settings;
 
     @Inject
-    FoodController(VanishService vanishService, VanishSettings config) {
+    FoodController(VanishService vanishService, VanishSettings settings) {
         this.vanishService = vanishService;
-        this.config = config;
+        this.settings = settings;
     }
 
     @EventHandler
     void onFoodLevelChange(FoodLevelChangeEvent event) {
-        if (!this.config.blockHungerLoss()) {
+        if (!this.settings.blockHungerLoss()) {
             return;
         }
 

@@ -1,13 +1,11 @@
 package com.eternalcode.core.feature.vanish;
 
 import com.eternalcode.core.event.EventCaller;
-import com.eternalcode.core.feature.vanish.event.AbstractVanishEvent;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 
 import java.util.Set;
 import java.util.UUID;

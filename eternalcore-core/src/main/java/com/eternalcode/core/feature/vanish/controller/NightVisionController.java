@@ -17,16 +17,16 @@ class NightVisionController implements Listener {
     private static final PotionEffect NIGHT_VISION_EFFECT =
         new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, 0, false, false, false);
 
-    private final VanishSettings config;
+    private final VanishSettings settings;
 
     @Inject
-    NightVisionController(VanishSettings config) {
-        this.config = config;
+    NightVisionController(VanishSettings settings) {
+        this.settings = settings;
     }
 
     @EventHandler(ignoreCancelled = true)
     void onEnable(EnableVanishEvent event) {
-        if (!this.config.nightVision()) {
+        if (!this.settings.nightVision()) {
             return;
         }
 
@@ -37,7 +37,7 @@ class NightVisionController implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     void onDisable(DisableVanishEvent event) {
-        if (!this.config.nightVision()) {
+        if (!this.settings.nightVision()) {
             return;
         }
 
