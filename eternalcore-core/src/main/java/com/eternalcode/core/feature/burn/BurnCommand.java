@@ -10,52 +10,72 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
+
 @Command(name = "burn", aliases = {"fire"})
-@Permission("eternalcore.troll.burn")
+@Permission("eternalcore.burn")
 public class BurnCommand {
 
-    private final BurnSettings settings;
+    private static final int DEFAULT_BURN_DURATION = 100; // in ticks
     private final NoticeService noticeService;
 
     @Inject
-    public BurnCommand(BurnSettings settings, NoticeService noticeService) {
-        this.settings = settings;
+    public BurnCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
     @Execute
-    void self(@Context Player sender) {
-        this.self(sender, this.settings.defaultBurnDuration());
-    }
-
-    @Execute
     @DescriptionDocs(description = "Burns yourself for a specified amount of ticks.", arguments = "[ticks]")
-    void self(@Context Player sender, @Arg int ticks) {
-        sender.setFireTicks(ticks);
-
-        this.noticeService.create()
-            .player(sender.getUniqueId())
-            .placeholder("{TICKS}", String.valueOf(ticks))
-            .notice(translation -> translation.burn().burnedSelf())
-            .send();
+    void self(@Context Player sender, @Arg Optional<Integer> ticks) {
+        this.burn(sender, sender, ticks);
     }
 
     @Execute
-    void other(@Context Player sender, @Arg Player target) {
-        this.other(sender, target, this.settings.defaultBurnDuration());
-    }
-
-    @Execute
+    @Permission("eternalcore.burn.other")
     @DescriptionDocs(description = "Burns target for a specified amount of ticks.", arguments = "<target> [ticks]")
-    void other(@Context Player sender, @Arg Player target, @Arg int ticks) {
-        target.setFireTicks(ticks);
+    void other(@Context Player sender, @Arg Player target, @Arg Optional<Integer> ticks) {
+        this.burn(sender, target, ticks);
+    }
+
+    private void burn(Player sender, Player target, Optional<Integer> ticks) {
+        int actualTicks = ticks.orElse(DEFAULT_BURN_DURATION);
+
+        if (actualTicks <= 0) {
+            this.sendError(sender);
+            return;
+        }
+
+        target.setFireTicks(actualTicks);
+
+        String ticksString = String.valueOf(actualTicks);
+
+        if (sender.equals(target)) {
+            this.noticeService.create()
+                .player(sender.getUniqueId())
+                .placeholder("{TICKS}", ticksString)
+                .notice(translation -> translation.burn().burnedSelf())
+                .send();
+            return;
+        }
 
         this.noticeService.create()
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
-            .placeholder("{TICKS}", String.valueOf(ticks))
+            .placeholder("{TICKS}", ticksString)
             .notice(translation -> translation.burn().burnedOther())
+            .send();
+
+        this.noticeService.create()
+            .player(target.getUniqueId())
+            .placeholder("{TICKS}", ticksString)
+            .notice(translation -> translation.burn().burnedSelf())
             .send();
     }
 
+    private void sendError(Player sender) {
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .notice(translation -> translation.argument().numberBiggerThanZero())
+            .send();
+    }
 }

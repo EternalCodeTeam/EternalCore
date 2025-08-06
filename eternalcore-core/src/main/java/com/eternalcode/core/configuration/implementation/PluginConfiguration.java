@@ -4,7 +4,6 @@ import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
-import com.eternalcode.core.feature.burn.BurnConfig;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.fun.catboy.CatboyConfig;
@@ -223,11 +222,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Server Links Configuration")
     @Comment("# Settings for server link management")
     public ServerLinksConfig serverLinks = new ServerLinksConfig();
-
-    @Bean
-    @Comment("")
-    @Comment("# Burn /command Configuration")
-    public BurnConfig burn = new BurnConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
