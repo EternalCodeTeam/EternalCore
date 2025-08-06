@@ -5,7 +5,6 @@ import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
-import com.eternalcode.core.feature.fun.catboy.CatboyConfig;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
 import com.eternalcode.core.feature.home.HomesConfig;
@@ -204,12 +203,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Jail Configuration")
     @Comment("# Settings for player jail system")
     public JailConfig jail = new JailConfig();
-
-    @Bean
-    @Comment("")
-    @Comment("# Catboy Configuration")
-    @Comment("# Settings for catboy feature")
-    public CatboyConfig catboy = new CatboyConfig();
 
     @Bean
     @Comment("")
