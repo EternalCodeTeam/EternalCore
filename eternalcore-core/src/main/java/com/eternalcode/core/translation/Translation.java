@@ -21,6 +21,7 @@ import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
+import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.multification.notice.Notice;
 import java.util.List;
@@ -251,4 +252,6 @@ public interface Translation {
     AutoMessageMessages autoMessage();
     // jail section
     JailMessages jailSection();
+    // vanish section
+    VanishMessages vanish();
 }
