@@ -35,6 +35,6 @@ class LightningCommand {
 
     @Execute
     void player(@Sender Player sender, @Arg Player target) {
-        target.getWorld().strikeLightning(sender.getLocation());
+        target.getWorld().strikeLightning(target.getLocation());
     }
 }
