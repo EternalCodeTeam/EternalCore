@@ -164,6 +164,10 @@ class OpenSilentController implements Listener {
     private void switchForOneTick(Player player) {
         UUID playerId = player.getUniqueId();
 
+        if (this.containerCache.getIfPresent(playerId) != null) {
+            return;
+        }
+
         ContainerWrapper playerData = new ContainerWrapper(
             player.getGameMode(),
             player.getAllowFlight(),
