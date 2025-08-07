@@ -38,7 +38,7 @@ public class BurnCommand {
     }
 
     private void burn(Player sender, Player target, Optional<Integer> ticks) {
-        int actualTicks = ticks.orElse(DEFAULT_BURN_DURATION);
+        int actualTicks = ticks.orElse(DEFAULT_BURN_TICK_DURATION);
 
         if (actualTicks <= 0) {
             this.sendError(sender);
