@@ -31,8 +31,7 @@ class CatboyServiceImpl implements CatboyService {
     @Inject
     CatboyServiceImpl(
         EventCaller eventCaller,
-        CatBoyEntityService catBoyEntityService,
-        CatboySettings catboySettings
+        CatBoyEntityService catBoyEntityService
     ) {
         this.eventCaller = eventCaller;
         this.catBoyEntityService = catBoyEntityService;
