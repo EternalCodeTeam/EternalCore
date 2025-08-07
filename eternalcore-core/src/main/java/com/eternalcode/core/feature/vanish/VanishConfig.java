@@ -1,0 +1,49 @@
+package com.eternalcode.core.feature.vanish;
+
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import org.bukkit.ChatColor;
+
+@Getter
+@Accessors(fluent = true)
+public class VanishConfig extends OkaeriConfig implements VanishSettings {
+
+    @Comment("Should players with eternalcore.vanish.join permission join in vanish mode without join message")
+    public boolean silentJoin = false;
+
+    @Comment("Should vanished players be invulnerable to damage from other players")
+    public boolean godMode = true;
+
+    @Comment("Give night vision effect to vanished players")
+    public boolean nightVision = true;
+
+    @Comment("Should vanished players be able to silently view other players' inventories?")
+    public boolean silentInventoryAccess = true;
+
+    @Comment("Should vanished players glow to make them visible to other staff members?")
+    public boolean glowEffect = true;
+
+    @Comment("Color of the glow effect for vanished players")
+    public ChatColor color = ChatColor.LIGHT_PURPLE;
+
+    @Comment("Prevent vanished players from dropping items")
+    public boolean blockItemDropping = false;
+
+    @Comment("Prevent vanished players from picking up items")
+    public boolean blockItemPickup = true;
+
+    @Comment("Prevent vanished players from hunger loss")
+    public boolean blockHungerLoss = true;
+
+    @Comment("Prevent vanished players from using public chat")
+    public boolean blockChatUsage = false;
+
+    @Comment("Prevent vanished players from breaking blocks")
+    public boolean blockBlockBreaking = false;
+
+    @Comment("Prevent vanished players from placing blocks")
+    public boolean blockBlockPlacing = false;
+
+}

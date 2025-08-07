@@ -6,7 +6,6 @@ import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.chat.ChatConfig;
-import com.eternalcode.core.feature.fun.catboy.CatboyConfig;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
 import com.eternalcode.core.feature.home.HomesConfig;
 import com.eternalcode.core.feature.jail.JailConfig;
@@ -17,6 +16,8 @@ import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.spawn.SpawnJoinConfig;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestConfig;
+import com.eternalcode.core.feature.vanish.VanishConfig;
+import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
@@ -207,12 +208,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
 
     @Bean
     @Comment("")
-    @Comment("# Catboy Configuration")
-    @Comment("# Settings for catboy feature")
-    public CatboyConfig catboy = new CatboyConfig();
-
-    @Bean
-    @Comment("")
     @Comment("# Lightning Configuration")
     @Comment("# Settings for lightning strike effects")
     public LightningConfig lightning = new LightningConfig();
@@ -222,6 +217,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Server Links Configuration")
     @Comment("# Settings for server link management")
     public ServerLinksConfig serverLinks = new ServerLinksConfig();
+
+    @Bean(proxied = VanishSettings.class)
+    @Comment("")
+    @Comment("# Vanish Configuration")
+    @Comment("# Settings responsible for player vanish functionality")
+    VanishConfig vanish = new VanishConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
