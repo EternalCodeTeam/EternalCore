@@ -6,10 +6,14 @@ import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.RemovalCause;
+import com.github.benmanes.caffeine.cache.RemovalListener;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -27,11 +31,14 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Controller allowing vanished players to silently access containers
  * without triggering animations/sounds for other players.
  * Temporarily switches player to Spectator mode for 1 tick.
+ * <p>
+ * Uses Caffeine cache for automatic cleanup and state management.
  * <p>
  * Implementation based on SayanVanish plugin approach.
  * Original idea: <a href="https://github.com/Syrent/SayanVanish/blob/master/sayanvanish-bukkit/src/main/kotlin/org/sayandev/sayanvanish/bukkit/feature/features/FeatureSilentContainer.kt">...</a>
@@ -41,24 +48,31 @@ class OpenSilentController implements Listener {
 
     private static final Vector ZERO_VELOCITY = new Vector(0.0, 0.0, 0.0);
     private static final int TICK_DURATION_MILLIS = 50;
+    private static final int CACHE_EXPIRE_SECONDS = 5;
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
     private final VanishSettings config;
     private final Scheduler scheduler;
 
-    private final Map<UUID, ContainerWrapper> containerCache = new HashMap<>();
+    private final Cache<UUID, ContainerWrapper> containerCache;
 
     @Inject
     OpenSilentController(
         NoticeService noticeService,
         VanishService vanishService,
         VanishSettings config,
-        Scheduler scheduler) {
+        Scheduler scheduler
+    ) {
         this.noticeService = noticeService;
         this.vanishService = vanishService;
         this.config = config;
         this.scheduler = scheduler;
+
+        this.containerCache = Caffeine.newBuilder()
+            .expireAfterWrite(CACHE_EXPIRE_SECONDS, TimeUnit.SECONDS)
+            .removalListener(new PlayerRestoreListener(scheduler))
+            .build();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -77,7 +91,8 @@ class OpenSilentController implements Listener {
             event.setCancelled(true);
             this.noticeService.player(
                 player.getUniqueId(),
-                message -> message.vanish().cantOpenInventoryWhileVanished());
+                message -> message.vanish().cantOpenInventoryWhileVanished()
+            );
             return;
         }
 
@@ -98,15 +113,9 @@ class OpenSilentController implements Listener {
             return;
         }
 
-        ContainerWrapper playerData =
-            new ContainerWrapper(player.getGameMode(), player.getAllowFlight(), player.isFlying());
-        this.containerCache.put(player.getUniqueId(), playerData);
-
-        this.switchToSpectator(player);
-        this.restoreAfterTick(player);
+        this.switchForOneTick(player);
     }
 
-    // Blocks unwanted teleports while in temporary spectator mode
     @EventHandler(priority = EventPriority.HIGHEST)
     private void handlePlayerTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
@@ -116,27 +125,24 @@ class OpenSilentController implements Listener {
             return;
         }
 
-        if (!this.containerCache.containsKey(player.getUniqueId())
-            && cause != PlayerTeleportEvent.TeleportCause.SPECTATE) {
-            return;
+        if (this.containerCache.getIfPresent(player.getUniqueId()) != null) {
+            event.setCancelled(true);
         }
-
-        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     private void handlePlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        ContainerWrapper data = this.containerCache.get(player.getUniqueId());
+        UUID playerId = player.getUniqueId();
 
+        ContainerWrapper data = this.containerCache.getIfPresent(playerId);
         if (data != null) {
+            this.containerCache.invalidate(playerId);
             data.apply(player);
         }
-
-        this.containerCache.remove(player.getUniqueId());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     private void handleInventoryClose(InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof Player player)) {
             return;
@@ -150,29 +156,38 @@ class OpenSilentController implements Listener {
             return;
         }
 
-        ContainerWrapper playerData =
-            new ContainerWrapper(player.getGameMode(), player.getAllowFlight(), player.isFlying());
-        this.containerCache.put(player.getUniqueId(), playerData);
-
-        this.switchToSpectator(player);
-        this.restoreAfterTick(player);
+        if (this.containerCache.getIfPresent(player.getUniqueId()) == null) {
+            this.switchForOneTick(player);
+        }
     }
 
-    private void switchToSpectator(Player player) {
+    private void switchForOneTick(Player player) {
+        UUID playerId = player.getUniqueId();
+
+        ContainerWrapper playerData = new ContainerWrapper(
+            player.getGameMode(),
+            player.getAllowFlight(),
+            player.isFlying()
+        );
+        this.containerCache.put(playerId, playerData);
+
         player.setAllowFlight(true);
         player.setFlying(true);
         player.setVelocity(ZERO_VELOCITY);
         player.setGameMode(GameMode.SPECTATOR);
+        this.scheduler.runLater(() -> this.restorePlayer(playerId), Duration.ofMillis(TICK_DURATION_MILLIS));
     }
 
-    private void restoreAfterTick(Player player) {
-        this.scheduler.runLater(
-            () -> {
-                ContainerWrapper data = this.containerCache.remove(player.getUniqueId());
-                if (data != null) {
-                    data.apply(player);
-                }
-            }, Duration.ofMillis(TICK_DURATION_MILLIS));
+    private void restorePlayer(UUID playerId) {
+        ContainerWrapper data = this.containerCache.getIfPresent(playerId);
+        if (data != null) {
+            this.containerCache.invalidate(playerId);
+
+            Player player = Bukkit.getPlayer(playerId);
+            if (player != null && player.isOnline()) {
+                data.apply(player);
+            }
+        }
     }
 
     private boolean isContainerType(Material type) {
@@ -182,11 +197,29 @@ class OpenSilentController implements Listener {
         };
     }
 
+    private record PlayerRestoreListener(Scheduler scheduler) implements RemovalListener<UUID, ContainerWrapper> {
+
+        @Override
+        public void onRemoval(UUID playerId, ContainerWrapper data, @NotNull RemovalCause cause) {
+            if (cause == RemovalCause.EXPIRED && data != null) {
+
+                this.scheduler.run(() -> {
+                    Player player = Bukkit.getPlayer(playerId);
+                    if (player != null && player.isOnline()) {
+                        data.apply(player);
+                    }
+                });
+            }
+        }
+    }
+
     private record ContainerWrapper(GameMode gameMode, boolean allowFlight, boolean isFlying) {
         public void apply(Player player) {
-            player.setGameMode(gameMode);
-            player.setAllowFlight(allowFlight);
-            player.setFlying(isFlying);
+            if (player.isOnline()) {
+                player.setGameMode(gameMode);
+                player.setAllowFlight(allowFlight);
+                player.setFlying(isFlying);
+            }
         }
     }
 }
