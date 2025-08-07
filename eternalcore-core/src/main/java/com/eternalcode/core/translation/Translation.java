@@ -22,6 +22,7 @@ import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
+import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -255,4 +256,6 @@ public interface Translation {
     JailMessages jailSection();
     // burn section
     BurnMessages burn();
+    // vanish section
+    VanishMessages vanish();
 }
