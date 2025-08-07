@@ -18,8 +18,8 @@ public class MotdConfig extends OkaeriConfig implements MotdSettings {
     public Notice motdContent = Notice.chat(
         List.of("<green>Welcome to the server,</green> <gradient:#ee1d1d:#f1b722>{PLAYER}</gradient>",
             "<green>Have a good time playing!</green>",
-            "<green>The current time in {WORLD} is: </green><gradient:#2c60d5:#742ccf>{TIME}</gradient>",
-            "<green>If you need any help, don't hesitate to ask our staff using the </green><dark_green><click:suggest_command:'/helpop'></click> command!</dark_green>"
+            "<green>The current time in {WORLD} is: </green><gradient:#2c60d5:#742ccf>{TIME}</gradient> <green>ticks",
+            "<green>If you need any help, don't hesitate to ask our staff using the </green><dark_green><click:suggest_command:'/helpop'>/helpop</click> command!</dark_green>"
         )
     );
 
