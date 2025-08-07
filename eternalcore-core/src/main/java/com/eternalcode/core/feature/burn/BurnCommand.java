@@ -16,7 +16,7 @@ import java.util.Optional;
 @Permission("eternalcore.burn")
 public class BurnCommand {
 
-    private static final int DEFAULT_BURN_DURATION = 100; // in ticks
+    private static final int DEFAULT_BURN_TICK_DURATION = 5 * 20;
     private final NoticeService noticeService;
 
     @Inject
