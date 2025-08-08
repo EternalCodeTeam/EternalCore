@@ -477,6 +477,16 @@ public class PLTranslation extends AbstractTranslation {
                     .sound(Sound.BLOCK_SWEET_BERRY_BUSH_BREAK)
                     .chat("<white>☠ <dark_red>{PLAYER} <red>został zadrapany na śmierć przez krzak jagód!")
                     .build()
+            ),
+            "PRIMED_TNT", Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_GENERIC_EXPLODE)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>wysadził sie w powietrze!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_GENERIC_EXPLODE)
+                    .chat("<white>☠ <red>Piroman <dark_red>{PLAYER} <red>nie przeżył!")
+                    .build()
             )
         );
 

@@ -533,7 +533,7 @@ public class ENTranslation extends AbstractTranslation {
                     .chat("<white>☠ <dark_red>{PLAYER} <red>was annihilated by <dark_red>{KILLER}<red>'s netherite sword!")
                     .build()
             ),
-            "TNT", Collections.singletonList(
+            "PRIMED_TNT", Collections.singletonList(
                 BukkitNotice.builder()
                     .sound(Sound.ENTITY_GENERIC_EXPLODE)
                     .chat("<white>☠ <dark_red>{PLAYER} <red>was blown up by <dark_red>{KILLER} <red>using TNT!")
