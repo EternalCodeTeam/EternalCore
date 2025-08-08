@@ -4,8 +4,8 @@ import java.time.Duration;
 
 public interface TeleportRequestSettings {
 
-    Duration teleportExpire();
+    Duration tpaRequestExpire();
 
-    Duration teleportTime();
+    Duration tpaTimer();
 
 }

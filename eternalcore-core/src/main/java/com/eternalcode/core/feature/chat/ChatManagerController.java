@@ -1,9 +1,10 @@
 package com.eternalcode.core.feature.chat;
 
-import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.event.EventCaller;
 import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_BYPASS_PERMISSION;
 import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_SLOWMODE_BYPASS_PERMISSION;
+
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.chat.event.restrict.ChatRestrictCause;
 import com.eternalcode.core.feature.chat.event.restrict.ChatRestrictEvent;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -53,7 +54,7 @@ class ChatManagerController implements Listener {
 
         UUID uniqueId = player.getUniqueId();
 
-        if (!this.chatSettings.isChatEnabled() && !player.hasPermission(CHAT_BYPASS_PERMISSION)) {
+        if (!this.chatSettings.chatEnabled() && !player.hasPermission(CHAT_BYPASS_PERMISSION)) {
             this.noticeService.create()
                 .notice(translation -> translation.chat().disabledChatInfo())
                 .player(uniqueId)

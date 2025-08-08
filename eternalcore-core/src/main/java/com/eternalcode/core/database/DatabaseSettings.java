@@ -2,19 +2,19 @@ package com.eternalcode.core.database;
 
 public interface DatabaseSettings {
 
-    DatabaseDriverType getDriverType();
+    DatabaseDriverType databaseType();
 
-    String getHostname();
+    String hostname();
 
-    int getPort();
+    int port();
 
-    String getDatabase();
+    String database();
 
-    String getUsername();
+    String username();
 
-    String getPassword();
+    String password();
 
-    boolean isSSL();
+    boolean ssl();
 
     int poolSize();
 

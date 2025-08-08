@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.home;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.database.HomeRepository;
 import com.eternalcode.core.feature.home.event.HomeCreateEvent;
@@ -25,17 +24,17 @@ public class HomeManager implements HomeService {
     private final HomeRepository repository;
     private final EventCaller eventCaller;
 
-    private final PluginConfiguration pluginConfiguration;
+    private final HomesSettings homesSettings;
 
     @Inject
     private HomeManager(
         HomeRepository repository,
         EventCaller eventCaller,
-        PluginConfiguration pluginConfiguration
+        HomesSettings homesSettings
     ) {
         this.repository = repository;
         this.eventCaller = eventCaller;
-        this.pluginConfiguration = pluginConfiguration;
+        this.homesSettings = homesSettings;
 
         repository.getHomes().thenAccept(homes -> {
             for (Home home : homes) {
@@ -156,7 +155,7 @@ public class HomeManager implements HomeService {
 
     @Override
     public int getHomeLimit(Player player) {
-        Map<String, Integer> maxHomes = this.pluginConfiguration.homes.maxHomes;
+        Map<String, Integer> maxHomes = this.homesSettings.maxHomes();
 
         return maxHomes.entrySet().stream()
             .flatMap(entry -> {

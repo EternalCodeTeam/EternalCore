@@ -5,7 +5,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ class TeleportHereRequestService {
     TeleportHereRequestService(TeleportRequestSettings settings) {
         this.requests = CacheBuilder
             .newBuilder()
-            .expireAfterWrite(settings.teleportExpire())
+            .expireAfterWrite(settings.tpaRequestExpire())
             .build();
     }
 

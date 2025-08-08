@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.feature.home.HomesConfig;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.home.HomeTeleportService;
+import com.eternalcode.core.feature.home.HomesSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -14,26 +14,25 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Collection;
 import java.util.Optional;
-
 import org.bukkit.entity.Player;
 
 @Command(name = "home")
 @Permission("eternalcore.home")
 class HomeCommand {
 
-    private final HomesConfig homesConfig;
+    private final HomesSettings homesSettings;
     private final NoticeService noticeService;
     private final HomeService homeService;
     private final HomeTeleportService homeTeleportService;
 
     @Inject
     HomeCommand(
-        HomesConfig homesConfig,
+        HomesSettings homesSettings,
         NoticeService noticeService,
         HomeService homeService,
         HomeTeleportService homeTeleportService
     ) {
-        this.homesConfig = homesConfig;
+        this.homesSettings = homesSettings;
         this.noticeService = noticeService;
         this.homeService = homeService;
         this.homeTeleportService = homeTeleportService;
@@ -60,7 +59,7 @@ class HomeCommand {
                     .toList());
 
             Optional<Home> mainHome = playerHomes.stream()
-                .filter(home -> home.getName().equals(this.homesConfig.defaultHomeName))
+                .filter(home -> home.getName().equals(this.homesSettings.defaultHomeName()))
                 .findFirst();
 
             if (mainHome.isPresent()) {

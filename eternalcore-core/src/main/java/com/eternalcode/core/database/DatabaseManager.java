@@ -41,31 +41,31 @@ public class DatabaseManager {
 
             this.dataSource.setMaximumPoolSize(settings.poolSize());
             this.dataSource.setConnectionTimeout(settings.timeout());
-            this.dataSource.setUsername(settings.getUsername());
-            this.dataSource.setPassword(settings.getPassword());
+            this.dataSource.setUsername(settings.username());
+            this.dataSource.setPassword(settings.password());
 
-            DatabaseDriverType type = settings.getDriverType();
+            DatabaseDriverType type = settings.databaseType();
             this.dataSource.setDriverClassName(type.getDriver());
 
             String jdbcUrl = switch (type) {
                 case H2, SQLITE -> type.formatUrl(dataFolder);
                 case POSTGRESQL -> type.formatUrl(
-                    settings.getHostname(),
-                    settings.getPort(),
-                    settings.getDatabase(),
-                    DatabaseConnectionDriverConstant.sslParamForPostgreSQL(settings.isSSL())
+                    settings.hostname(),
+                    settings.port(),
+                    settings.database(),
+                    DatabaseConnectionDriverConstant.sslParamForPostgreSQL(settings.ssl())
                 );
                 case MYSQL -> type.formatUrl(
-                    settings.getHostname(),
-                    settings.getPort(),
-                    settings.getDatabase(),
-                    DatabaseConnectionDriverConstant.sslParamForMySQL(settings.isSSL())
+                    settings.hostname(),
+                    settings.port(),
+                    settings.database(),
+                    DatabaseConnectionDriverConstant.sslParamForMySQL(settings.ssl())
                 );
                 case MARIADB -> type.formatUrl(
-                    settings.getHostname(),
-                    settings.getPort(),
-                    settings.getDatabase(),
-                    String.valueOf(settings.isSSL())
+                    settings.hostname(),
+                    settings.port(),
+                    settings.database(),
+                    String.valueOf(settings.ssl())
                 );
             };
 

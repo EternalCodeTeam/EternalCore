@@ -4,10 +4,12 @@ import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.time.Duration;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Getter
-@Accessors(fluent = true)
+@Setter
+@Accessors(fluent = true, chain = true)
 public class ChatConfig extends OkaeriConfig implements ChatSettings {
 
     @Comment("# Custom message for unknown command")
@@ -21,24 +23,4 @@ public class ChatConfig extends OkaeriConfig implements ChatSettings {
 
     @Comment("# Chat should be enabled?")
     public boolean chatEnabled = true;
-
-    @Override
-    public boolean isChatEnabled() {
-        return this.chatEnabled;
-    }
-
-    @Override
-    public void setChatEnabled(boolean chatEnabled) {
-        this.chatEnabled = chatEnabled;
-    }
-
-    @Override
-    public Duration getChatDelay() {
-        return this.chatDelay;
-    }
-
-    @Override
-    public void setChatDelay(Duration chatDelay) {
-        this.chatDelay = chatDelay;
-    }
 }

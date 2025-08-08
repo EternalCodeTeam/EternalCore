@@ -1,12 +1,10 @@
 package com.eternalcode.core.feature.spawn;
 
-
-import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,17 +21,19 @@ public class SpawnTeleportJoinController implements Listener {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpawnTeleportJoinController.class);
 
     private final LocationsConfiguration locationsConfiguration;
-    private final PluginConfiguration pluginConfiguration;
+    private final SpawnJoinSettings spawnJoinSettings;
 
     @Inject
-    public SpawnTeleportJoinController(LocationsConfiguration locationsConfiguration, PluginConfiguration pluginConfiguration) {
+    public SpawnTeleportJoinController(
+        LocationsConfiguration locationsConfiguration,
+        SpawnJoinSettings spawnJoinSettings) {
         this.locationsConfiguration = locationsConfiguration;
-        this.pluginConfiguration = pluginConfiguration;
+        this.spawnJoinSettings = spawnJoinSettings;
     }
 
     @EventHandler
     void onFirstJoin(PlayerJoinEvent event) {
-        if (!this.pluginConfiguration.join.teleportToSpawnOnFirstJoin) {
+        if (!this.spawnJoinSettings.teleportToSpawnOnFirstJoin()) {
             return;
         }
 
@@ -48,7 +48,7 @@ public class SpawnTeleportJoinController implements Listener {
 
     @EventHandler
     void onJoin(PlayerJoinEvent event) {
-        if (!this.pluginConfiguration.join.teleportToSpawnOnJoin) {
+        if (!this.spawnJoinSettings.teleportToSpawnOnJoin()) {
             return;
         }
         Player player = event.getPlayer();

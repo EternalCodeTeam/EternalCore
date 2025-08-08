@@ -1,11 +1,9 @@
 package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
-import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeService;
-import com.eternalcode.core.feature.home.event.HomeCreateEvent;
+import com.eternalcode.core.feature.home.HomesSettings;
 import com.eternalcode.core.feature.home.event.HomeLimitReachedEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -24,19 +22,19 @@ class SetHomeCommand {
 
     private final HomeService homeService;
     private final NoticeService noticeService;
-    private final PluginConfiguration pluginConfiguration;
+    private final HomesSettings homesSettings;
     private final EventCaller eventCaller;
 
     @Inject
     SetHomeCommand(
         HomeService homeService,
         NoticeService noticeService,
-        PluginConfiguration pluginConfiguration,
+        HomesSettings homesSettings,
         EventCaller eventCaller
     ) {
         this.homeService = homeService;
         this.noticeService = noticeService;
-        this.pluginConfiguration = pluginConfiguration;
+        this.homesSettings = homesSettings;
         this.eventCaller = eventCaller;
     }
 
@@ -49,7 +47,7 @@ class SetHomeCommand {
     @Execute
     @DescriptionDocs(description = "Set home location")
     void execute(@Context User user, @Context Player player) {
-        this.setOrOverrideHome(user, player, this.pluginConfiguration.homes.defaultHomeName);
+        this.setOrOverrideHome(user, player, this.homesSettings.defaultHomeName());
     }
 
     private void setOrOverrideHome(User user, Player player, String homeName) {

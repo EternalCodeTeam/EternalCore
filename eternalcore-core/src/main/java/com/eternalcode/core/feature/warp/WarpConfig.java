@@ -9,7 +9,7 @@ import org.bukkit.Material;
 
 @Getter
 @Accessors(fluent = true)
-public class WarpConfig extends OkaeriConfig {
+public class WarpConfig extends OkaeriConfig implements WarpSettings {
     @Comment("# Time of teleportation to warp")
     public Duration teleportTimeToWarp = Duration.ofSeconds(5);
 
@@ -28,6 +28,5 @@ public class WarpConfig extends OkaeriConfig {
     public Material itemMaterial = Material.PLAYER_HEAD;
 
     @Comment("# Texture of the item (only for PLAYER_HEAD material)")
-    public String itemTexture =
-        "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";
+    public String itemTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";
 }
