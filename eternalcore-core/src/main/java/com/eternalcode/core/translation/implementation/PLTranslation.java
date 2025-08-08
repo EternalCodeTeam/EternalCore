@@ -375,9 +375,6 @@ public class PLTranslation extends AbstractTranslation {
             Notice.actionbar("<red>► {PLAYER} <white>wylogował się z serwera!"),
             Notice.actionbar("<red>► {PLAYER} <white>opuścił serwer!")
         );
-
-        @Comment({" ", "# {PLAYER} - Gracz który dołączył do serwera"})
-        public Notice welcome = Notice.title("<yellow>{PLAYER}", "<yellow>Witaj ponownie na serwerze!");
     }
 
     @Comment({

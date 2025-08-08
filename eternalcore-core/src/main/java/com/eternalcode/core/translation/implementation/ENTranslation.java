@@ -355,9 +355,6 @@ public class ENTranslation extends AbstractTranslation {
             Notice.actionbar("<red>► {PLAYER} <white>logged off the server!"),
             Notice.actionbar("<red>► {PLAYER} <white>left the server!")
         );
-
-        @Comment({" ", "# {PLAYER} - Player who joined"})
-        public Notice welcome = Notice.title("<yellow>EternalCode.pl", "<yellow>Welcome back to the server!");
     }
 
 

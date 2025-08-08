@@ -97,8 +97,6 @@ public interface Translation {
         List<Notice> firstJoinMessage();
 
         Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
-
-        Notice welcome();
     }
 
     interface InventorySection {
