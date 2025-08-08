@@ -120,10 +120,10 @@ class DeathMessageController implements Listener {
         String weaponType = this.getWeaponType(killer.getInventory().getItemInMainHand());
         this.noticeService.create()
             .noticeOptional(translation -> {
-                List<Notice> weaponMessages = translation.event().deathMessageByWeapon().get(weaponType);
-                return weaponMessages != null
-                    ? RandomElementUtil.randomElement(weaponMessages)
-                    : RandomElementUtil.randomElement(translation.event().deathMessage());
+                return java.util.Optional.ofNullable(translation.event().deathMessageByWeapon().get(weaponType))
+                    .filter(list -> !list.isEmpty())
+                    .map(RandomElementUtil::randomElement)
+                    .orElseGet(() -> RandomElementUtil.randomElement(translation.event().deathMessage()));
             })
             .placeholder("{PLAYER}", victim.getName())
             .placeholder("{KILLER}", killer.getName())
