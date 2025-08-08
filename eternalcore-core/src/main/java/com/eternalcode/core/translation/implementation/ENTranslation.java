@@ -409,7 +409,6 @@ public class ENTranslation extends AbstractTranslation {
             "# {KILLER} - Entity that killed the player"
         })
         public Map<String, List<Notice>> deathMessageByEntity = Map.of(
-            // Hostile Mobs
             "ZOMBIE", Arrays.asList(
                 BukkitNotice.builder()
                     .sound(Sound.ENTITY_ZOMBIE_DEATH)
