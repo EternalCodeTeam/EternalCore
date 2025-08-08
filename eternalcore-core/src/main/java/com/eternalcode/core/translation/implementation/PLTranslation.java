@@ -24,12 +24,14 @@ import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMe
 import com.eternalcode.core.feature.vanish.messages.PLVanishMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.io.File;
@@ -330,11 +332,201 @@ public class PLTranslation extends AbstractTranslation {
         })
         public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
             EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł w otchłań!")
+                BukkitNotice.builder()
+                    .actionBar("<white>☠ <dark_red>{PLAYER} <red>wypadł w otchłań!")
+                    .sound(Sound.BLOCK_PORTAL_TRAVEL)
+                    .build()
             ),
             EntityDamageEvent.DamageCause.FALL, Arrays.asList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z wysokości!"),
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_ANVIL_LAND)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>spadł z wysokości!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_ANVIL_LAND)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
+                    .build()
+            ),
+
+            EntityDamageEvent.DamageCause.FIRE, Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ITEM_FIRECHARGE_USE)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>spłonął żywcem!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ITEM_FIRECHARGE_USE)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został pochłonięty przez płomienie!")
+                    .build()
+            ),
+
+            EntityDamageEvent.DamageCause.FIRE_TICK, Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ITEM_FIRECHARGE_USE)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>dogasał w płomieniach...")
+                    .build()
+            ),
+
+            EntityDamageEvent.DamageCause.LAVA, Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_LAVA_POP)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>wpadł do lawy!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_LAVA_EXTINGUISH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>zniknął w morzu lawy!")
+                    .build()
+            ),
+
+            EntityDamageEvent.DamageCause.DROWNING, Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_DROWNED_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>utonął!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_DROWNED_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>zginął pod falami!")
+                    .build()
+            ),
+
+            EntityDamageEvent.DamageCause.POISON, Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_SPIDER_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>zmarł od trucizny!")
+                    .build()
+            ),
+
+            EntityDamageEvent.DamageCause.MAGIC, Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_WITCH_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>zginął od czarnej magii!")
+                    .build()
+            )
+        );
+
+        @Comment({
+            "# Rozszerzone wiadomości śmierci według typu entity",
+            "# {PLAYER} - Zabity gracz",
+            "# {KILLER} - Entity które zabiło gracza"
+        })
+        public Map<String, List<Notice>> deathMessageByEntity = Map.of(
+            // Wrogie moby
+            "ZOMBIE", Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_ZOMBIE_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został pożarty przez zombie!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_ZOMBIE_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>nie przetrwał ataku zombie!")
+                    .build()
+            ),
+            "SKELETON", Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_SKELETON_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został przeszyty strzałą szkieleta!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_SKELETON_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>padł ofiarą szkieleta łucznika!")
+                    .build()
+            ),
+            "SPIDER", Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_SPIDER_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został ugryziony przez pająka!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_SPIDER_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>wpadł w pajęczą sieć!")
+                    .build()
+            ),
+            "CREEPER", Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_GENERIC_EXPLODE)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został wysadzony przez creepera!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_GENERIC_EXPLODE)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>nie zdążył uciec przed eksplozją!")
+                    .build()
+            ),
+            "ENDERMAN", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_ENDERMAN_DEATH)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został teleportowany w nicość przez Endermana!")
+                    .build()
+            ),
+
+            "CACTUS", Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_GRASS_BREAK)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>ukłuł się na kaktusie!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_GRASS_BREAK)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został przebity przez kolce kaktusa!")
+                    .build()
+            ),
+            "MAGMA_BLOCK", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_LAVA_POP)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został spalony przez magma block!")
+                    .build()
+            ),
+            "SWEET_BERRY_BUSH", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.BLOCK_SWEET_BERRY_BUSH_BREAK)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został zadrapany na śmierć przez krzak jagód!")
+                    .build()
+            )
+        );
+
+        @Comment({
+            "# Wiadomości śmierci PvP według typu broni",
+            "# {PLAYER} - Zabity gracz",
+            "# {KILLER} - Zabójca",
+            "# {WEAPON} - Używana broń"
+        })
+        public Map<String, List<Notice>> deathMessageByWeapon = Map.of(
+            "BOW", Arrays.asList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_ARROW_HIT_PLAYER)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został zastrzelony przez <dark_red>{KILLER} <red>z łuku!")
+                    .build(),
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_ARROW_HIT_PLAYER)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>padł od strzały gracza <dark_red>{KILLER}!")
+                    .build()
+            ),
+            "CROSSBOW", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ITEM_CROSSBOW_HIT)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został przebity bełtem <dark_red>{KILLER}!")
+                    .build()
+            ),
+            "TRIDENT", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ITEM_TRIDENT_HIT)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został przebity trójzębem przez <dark_red>{KILLER}!")
+                    .build()
+            ),
+            "DIAMOND_SWORD", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_PLAYER_ATTACK_CRIT)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został pokrojony diamentowym mieczem przez <dark_red>{KILLER}!")
+                    .build()
+            ),
+            "NETHERITE_SWORD", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_PLAYER_ATTACK_CRIT)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został unicestwiony netheritowym mieczem gracza <dark_red>{KILLER}!")
+                    .build()
+            ),
+            "HAND", Collections.singletonList(
+                BukkitNotice.builder()
+                    .sound(Sound.ENTITY_PLAYER_ATTACK_WEAK)
+                    .chat("<white>☠ <dark_red>{PLAYER} <red>został zmasakrowany gołymi rękami przez <dark_red>{KILLER}!")
+                    .build()
             )
         );
 
@@ -350,8 +542,14 @@ public class PLTranslation extends AbstractTranslation {
             "# {PLAYER} - Gracz który dołączył do serwera",
         })
         public List<Notice> joinMessage = List.of(
-            Notice.actionbar("<green>► <green>{PLAYER} <white>dołączył do serwera!"),
-            Notice.actionbar("<green>► <white>Witaj na serwerze <green>{PLAYER}<white>!")
+            BukkitNotice.builder()
+                .actionBar("<green>► <green>{PLAYER} <white>dołączył do serwera!")
+                .sound(Sound.BLOCK_BEACON_ACTIVATE, 1.8F, 1F)
+                .build(),
+            BukkitNotice.builder()
+                .actionBar("<green>► <white>Witaj na serwerze <green>{PLAYER}<white>!")
+                .sound(Sound.BLOCK_BEACON_ACTIVATE, 1.8F, 1F)
+                .build()
         );
 
         @Comment({
@@ -361,8 +559,14 @@ public class PLTranslation extends AbstractTranslation {
             "# {PLAYER} - Gracz który dołączył do serwera po raz pierwszy"
         })
         public List<Notice> firstJoinMessage = List.of(
-            Notice.actionbar("<green>► {PLAYER} <white>dołączył do serwera po raz pierwszy!"),
-            Notice.actionbar("<green>► {PLAYER} <white>zawitał u nas po raz pierwszy!")
+            BukkitNotice.builder()
+                .sound(Sound.ENTITY_VILLAGER_CELEBRATE)
+                .actionBar("<green>► {PLAYER} <white>dołączył do serwera po raz pierwszy!")
+                .build(),
+            BukkitNotice.builder()
+                .sound(Sound.ENTITY_VILLAGER_CELEBRATE)
+                .actionBar("<green>► {PLAYER} <white>zawitał u nas po raz pierwszy!")
+                .build()
         );
 
         @Comment({
@@ -372,8 +576,14 @@ public class PLTranslation extends AbstractTranslation {
             "# {PLAYER} - Gracz który opuścił serwer"
         })
         public List<Notice> quitMessage = List.of(
-            Notice.actionbar("<red>► {PLAYER} <white>wylogował się z serwera!"),
-            Notice.actionbar("<red>► {PLAYER} <white>opuścił serwer!")
+            BukkitNotice.builder()
+                .actionBar("<red>► {PLAYER} <white>opuścił serwer!")
+                .sound(Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1.8F, 1F)
+                .build(),
+            BukkitNotice.builder()
+                .actionBar("<red>► {PLAYER} <white>wylogował się z serwera!")
+                .sound(Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1.8F, 1F)
+                .build()
         );
 
         @Comment({" ", "# {PLAYER} - Gracz który dołączył do serwera"})
