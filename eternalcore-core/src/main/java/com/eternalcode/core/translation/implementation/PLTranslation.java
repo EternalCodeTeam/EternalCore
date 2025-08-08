@@ -5,11 +5,14 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
+import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
@@ -19,8 +22,6 @@ import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
-import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
-import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.vanish.messages.PLVanishMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
@@ -598,5 +599,8 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
     public PLVanishMessages vanish = new PLVanishMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
+    public PLMotdMessages motd = new PLMotdMessages();
 
 }

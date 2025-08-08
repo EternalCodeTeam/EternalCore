@@ -12,6 +12,7 @@ import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -24,9 +25,10 @@ import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.multification.notice.Notice;
+import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.util.List;
 import java.util.Map;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public interface Translation {
 
@@ -254,4 +256,6 @@ public interface Translation {
     JailMessages jailSection();
     // vanish section
     VanishMessages vanish();
+    // motd section
+    MotdMessages motd();
 }

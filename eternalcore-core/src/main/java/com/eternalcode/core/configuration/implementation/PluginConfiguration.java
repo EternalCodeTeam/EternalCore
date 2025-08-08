@@ -10,8 +10,6 @@ import com.eternalcode.core.feature.helpop.HelpOpConfig;
 import com.eternalcode.core.feature.home.HomesConfig;
 import com.eternalcode.core.feature.jail.JailConfig;
 import com.eternalcode.core.feature.lightning.LightningConfig;
-import com.eternalcode.core.feature.motd.MotdConfig;
-import com.eternalcode.core.feature.motd.MotdSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
 import com.eternalcode.core.feature.repair.RepairConfig;
 import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
@@ -225,11 +223,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Vanish Configuration")
     @Comment("# Settings responsible for player vanish functionality")
     VanishConfig vanish = new VanishConfig();
-
-    @Bean(proxied = MotdSettings.class)
-    @Comment("")
-    @Comment("# Message of the Day (MOTD) Configuration")
-    MotdConfig motd = new MotdConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {

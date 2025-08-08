@@ -1,17 +1,18 @@
-package com.eternalcode.core.feature.motd;
+package com.eternalcode.core.feature.motd.messages;
 
 import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import java.util.List;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.bukkit.Sound;
 
+import java.util.List;
+
 @Getter
 @Accessors(fluent = true)
-public class MotdConfig extends OkaeriConfig implements MotdSettings {
+public class ENMotdMessages extends OkaeriConfig implements MotdMessages {
 
     @Comment("# Message of the Day (MOTD) content that will be sent to players when they join the server.")
     @Comment("# Out of the box supported placeholders: {PLAYER}, {WORLD}, {TIME}")
