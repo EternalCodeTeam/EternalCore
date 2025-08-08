@@ -27,7 +27,6 @@ public class ENMotdMessages extends OkaeriConfig implements MotdMessages {
             )
         )
         .title("<gradient:#9d6eef:#A1AAFF:#9d6eef>EternalCore</gradient>", "<white>Welcome back to the server!")
-        .title("<gradient:#9d6eef:#A1AAFF:#9d6eef>EternalCore</gradient>", "<white>Welcome back to the server!")
         .sound(Sound.BLOCK_NOTE_BLOCK_PLING)
         .build();
 }
