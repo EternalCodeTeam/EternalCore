@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENBurnMessages extends OkaeriConfig implements BurnMessages {
 
-    @Comment(" ")
+    @Comment("# Available placeholders: {PLAYER} - burned player, {TICKS} - number of ticks the player is on fire")
     public Notice burnedSelf = Notice.chat("<green>► <white>You have been set on fire for <green>{TICKS}<white> ticks!");
 
     @Comment(" ")

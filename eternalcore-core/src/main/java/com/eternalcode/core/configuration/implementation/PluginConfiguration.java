@@ -216,7 +216,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("")
     @Comment("# Server Links Configuration")
     @Comment("# Settings for server link management")
-    public ServerLinksConfig serverLinks = new ServerLinksConfig();
+    ServerLinksConfig serverLinks = new ServerLinksConfig();
 
     @Bean(proxied = VanishSettings.class)
     @Comment("")

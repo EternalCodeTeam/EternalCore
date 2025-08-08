@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Optional;
 
-@Command(name = "burn", aliases = {"fire"})
+@Command(name = "burn", aliases = {"ignite"})
 @Permission("eternalcore.burn")
 public class BurnCommand {
 
@@ -41,7 +41,10 @@ public class BurnCommand {
         int actualTicks = ticks.orElse(DEFAULT_BURN_TICK_DURATION);
 
         if (actualTicks <= 0) {
-            this.sendError(sender);
+            this.noticeService.create()
+                .player(sender.getUniqueId())
+                .notice(translation -> translation.argument().numberBiggerThanZero())
+                .send();
             return;
         }
 
@@ -69,13 +72,6 @@ public class BurnCommand {
             .player(target.getUniqueId())
             .placeholder("{TICKS}", ticksString)
             .notice(translation -> translation.burn().burnedSelf())
-            .send();
-    }
-
-    private void sendError(Player sender) {
-        this.noticeService.create()
-            .player(sender.getUniqueId())
-            .notice(translation -> translation.argument().numberBiggerThanZero())
             .send();
     }
 }
