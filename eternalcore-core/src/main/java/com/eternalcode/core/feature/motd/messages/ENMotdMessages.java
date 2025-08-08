@@ -24,9 +24,9 @@ public class ENMotdMessages extends OkaeriConfig implements MotdMessages {
                 "<green>Have a good time playing!</green>",
                 "<green>The current time in {WORLD} is: </green><gradient:#2c60d5:#742ccf>{TIME}</gradient> <green>ticks",
                 "<green>If you need any help, don't hesitate to ask our staff using the </green><dark_green><click:suggest_command:'/helpop'>/helpop</click> command!</dark_green>"
-
             )
         )
+        .title("<gradient:#9d6eef:#A1AAFF:#9d6eef>EternalCore</gradient>", "<white>Welcome back to the server!")
         .sound(Sound.BLOCK_NOTE_BLOCK_PLING)
         .build();
 }
