@@ -8,6 +8,9 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 
 import java.time.Instant;
 import java.util.Comparator;
@@ -40,6 +43,22 @@ public class TeleportRandomPlayerService {
             .orElse(null);
     }
 
+    @Nullable
+    public Player findLeastRecentlyTeleportedPlayerByY(Player sender, int minY, int maxY) {
+        UUID senderId = sender.getUniqueId();
+        return this.server.getOnlinePlayers().stream()
+            .filter(target -> !target.equals(sender))
+            .filter(target -> this.pluginConfiguration.teleport.includeOpPlayersInRandomTeleport || !target.isOp())
+            .filter(target -> this.isPlayerInYRange(target, minY, maxY))
+            .min(Comparator.comparing(target -> this.getTeleportationHistory(target, senderId)))
+            .orElse(null);
+    }
+
+    private boolean isPlayerInYRange(Player player, int minY, int maxY) {
+        double playerY = player.getLocation().getY();
+        return playerY >= minY && playerY <= maxY;
+    }
+
     private Instant getTeleportationHistory(Player target, UUID senderId) {
         return this.teleportationHistory.get(new HistoryKey(senderId, target.getUniqueId()), key -> Instant.EPOCH);
     }
@@ -50,5 +69,4 @@ public class TeleportRandomPlayerService {
 
     private record HistoryKey(UUID sender, UUID target) {
     }
-
-} 
+}

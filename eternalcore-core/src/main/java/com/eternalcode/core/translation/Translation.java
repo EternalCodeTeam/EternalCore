@@ -20,6 +20,7 @@ import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
+import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.VanishMessages;
@@ -59,10 +60,6 @@ public interface Translation {
         Notice teleportedToLastLocation();
         Notice teleportedSpecifiedPlayerLastLocation();
         Notice lastLocationNoExist();
-
-        // teleport to random player command
-        Notice randomPlayerNotFound();
-        Notice teleportedToRandomPlayer();
     }
 
     interface ChatSection {
@@ -212,6 +209,8 @@ public interface Translation {
     SudoMessages sudo();
     // Teleport Section
     TeleportSection teleport();
+    // teleport to random player section.
+    TeleportToRandomPlayerMessages teleportToRandomPlayer();
     // Random Teleport Section
     RandomTeleportMessages randomTeleport();
     // Chat Section
