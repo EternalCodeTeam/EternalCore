@@ -2,12 +2,20 @@ package com.eternalcode.core.feature.spawn;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.time.Duration;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
 public class SpawnJoinConfig extends OkaeriConfig implements SpawnJoinSettings {
+
+
+    @Comment({
+        "# Delay before teleporting player to spawn (in seconds)",
+        "# Set to 0 to teleport instantly"
+    })
+    public Duration spawnTeleportTime = Duration.ofSeconds(5);
 
     @Comment({
         "# Teleport to spawn on first join (only once, when the player joins the server for the first time)",
