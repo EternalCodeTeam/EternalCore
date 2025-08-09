@@ -34,7 +34,7 @@ public class ApiPrivateChatListener implements Listener {
     }
 
     @EventHandler
-    public void overridePrivateChat(MsgEvent event) {
+    public void overrideMsg(MsgEvent event) {
         String content = event.getContent();
 
         if (content.contains("kurła!")) {
