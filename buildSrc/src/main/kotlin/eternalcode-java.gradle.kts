@@ -4,10 +4,10 @@ plugins {
 }
 
 group = "com.eternalcode"
-version = "1.7.0-SNAPSHOT"
+version = "2.0.0-SNAPSHOT"
 
 checkstyle {
-    toolVersion = "10.26.1"
+    toolVersion = "11.0.0"
 
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     configProperties["checkstyle.suppressions.file"] = "${rootDir}/config/checkstyle/suppressions.xml"

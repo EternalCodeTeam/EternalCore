@@ -4,6 +4,6 @@ import java.time.Duration;
 
 public interface HelpOpSettings {
 
-    Duration getHelpOpDelay();
+    Duration helpOpDelay();
 
 }

@@ -13,9 +13,10 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
     public Notice tpaAlreadySentMessage =
         Notice.chat("<red>✘ <dark_red>You have already sent a teleportation request!");
     public Notice tpaSentMessage =
-        Notice.chat("<green>► <white>You have sent a request for player <green>{PLAYER}<white>{PLAYER} to teleport to you!");
+        Notice.chat("<green>► <white>You have sent a request for player <green>{PLAYER}<white> to teleport to you!");
 
     public Notice tpaHereSent = Notice.chat("<green>► <white>You have sent a request for teleportation to you for a player: <green>{PLAYER}<white>!");
+    public Notice tpaHereSentToAll = Notice.chat("<green>► <white>You have sent a request for teleportation to all players!");
     public Notice tpaHereReceived = Notice.builder()
         .chat("<green>► <white>You have received a request for teleportation TO a player: <gray>{PLAYER}<green>!")
         .chat(

@@ -1,30 +1,21 @@
 package com.eternalcode.core.database;
 
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.Setup;
 import com.eternalcode.core.publish.Subscribe;
-
+import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import java.io.File;
-import java.sql.SQLException;
 import java.util.logging.Logger;
 
 @Setup
 class DatabaseManagerSetup {
 
     @Bean
-    DatabaseManager databaseManager(PluginConfiguration pluginConfiguration, Logger logger, File dataFolder) {
-        DatabaseManager databaseManager = new DatabaseManager(pluginConfiguration, logger, dataFolder);
+    DatabaseManager databaseManager(DatabaseSettings databaseSettings, Logger logger, File dataFolder) {
+        DatabaseManager databaseManager = new DatabaseManager(logger, dataFolder, databaseSettings);
 
-        try {
-            databaseManager.connect();
-        }
-        catch (SQLException exception) {
-            logger.severe("Could not connect to database! Some functions may not work properly!");
-            throw new RuntimeException(exception);
-        }
-
+        databaseManager.connect();
         return databaseManager;
     }
 
@@ -32,5 +23,4 @@ class DatabaseManagerSetup {
     void onShutdown(DatabaseManager databaseManager) {
         databaseManager.close();
     }
-
 }

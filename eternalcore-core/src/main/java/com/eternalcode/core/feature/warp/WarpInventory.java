@@ -1,10 +1,11 @@
 package com.eternalcode.core.feature.warp;
 
+import static com.eternalcode.commons.concurrent.FutureHandler.whenSuccess;
+
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.language.LanguageService;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
@@ -14,7 +15,6 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import static com.eternalcode.core.util.FutureHandler.whenSuccess;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -50,7 +50,7 @@ public class WarpInventory {
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
     private final ConfigurationManager configurationManager;
-    private final PluginConfiguration config;
+    private final WarpSettings warpSettings;
     private final Scheduler scheduler;
 
     @Inject
@@ -62,7 +62,7 @@ public class WarpInventory {
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
         ConfigurationManager configurationManager,
-        PluginConfiguration config,
+        WarpSettings warpSettings,
         Scheduler scheduler
     ) {
         this.translationManager = translationManager;
@@ -72,7 +72,7 @@ public class WarpInventory {
         this.miniMessage = miniMessage;
         this.warpTeleportService = warpTeleportService;
         this.configurationManager = configurationManager;
-        this.config = config;
+        this.warpSettings = warpSettings;
         this.scheduler = scheduler;
     }
 
@@ -233,10 +233,10 @@ public class WarpInventory {
                 WarpInventoryItem.builder()
                     .withWarpName(warp.getName())
                     .withWarpItem(ConfigItem.builder()
-                        .withName(this.config.warp.itemNamePrefix + warp.getName())
-                        .withLore(Collections.singletonList(this.config.warp.itemLore))
-                        .withMaterial(this.config.warp.itemMaterial)
-                        .withTexture(this.config.warp.itemTexture)
+                        .withName(this.warpSettings.itemNamePrefix() + warp.getName())
+                        .withLore(Collections.singletonList(this.warpSettings.itemLore()))
+                        .withMaterial(this.warpSettings.itemMaterial())
+                        .withTexture(this.warpSettings.itemTexture())
                         .withSlot(slot)
                         .withGlow(true)
                         .build())
@@ -261,7 +261,7 @@ public class WarpInventory {
     }
 
     public void removeWarp(String warpName) {
-        if (!this.config.warp.autoAddNewWarps) {
+        if (!this.warpSettings.autoAddNewWarps()) {
             return;
         }
 

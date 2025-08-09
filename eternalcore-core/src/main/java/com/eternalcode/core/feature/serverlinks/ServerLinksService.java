@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.serverlinks;
 
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
-
 import com.eternalcode.core.compatibility.Compatibility;
 import com.eternalcode.core.compatibility.Version;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -21,19 +20,22 @@ public class ServerLinksService {
 
     private final Plugin plugin;
     private final MiniMessage miniMessage;
-    private final ServerLinksConfig config;
+    private final ServerLinksSettings serverLinksSettings;
 
     @Inject
-    public ServerLinksService(Plugin plugin, MiniMessage miniMessage, ServerLinksConfig config) {
+    public ServerLinksService(
+        Plugin plugin,
+        MiniMessage miniMessage,
+        ServerLinksSettings serverLinksSettings) {
         this.plugin = plugin;
         this.miniMessage = miniMessage;
-        this.config = config;
+        this.serverLinksSettings = serverLinksSettings;
     }
 
     public void sendServerLinks(Player player) {
         ServerLinks serverLinks = this.plugin.getServer().getServerLinks().copy();
 
-        for (ServerLinksEntry serverLink : this.config.serverLinks) {
+        for (ServerLinksEntry serverLink : this.serverLinksSettings.serverLinks()) {
             this.parseLinks(serverLinks, serverLink);
         }
 

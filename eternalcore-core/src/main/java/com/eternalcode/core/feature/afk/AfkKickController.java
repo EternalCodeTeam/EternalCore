@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.afk;
 
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.afk.event.AfkSwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -10,16 +9,14 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
-import java.util.UUID;
 
 @Controller
 class AfkKickController implements Listener {
@@ -27,7 +24,7 @@ class AfkKickController implements Listener {
     private final MiniMessage miniMessage;
     private final Server server;
     private final UserManager userManager;
-    private final PluginConfiguration configuration;
+    private final AfkSettings afkSettings;
     private final TranslationManager translationManager;
 
     @Inject
@@ -35,13 +32,13 @@ class AfkKickController implements Listener {
         MiniMessage miniMessage,
         Server server,
         UserManager userManager,
-        PluginConfiguration configuration,
+        AfkSettings afkSettings,
         TranslationManager translationManager
     ) {
         this.miniMessage = miniMessage;
         this.server = server;
         this.userManager = userManager;
-        this.configuration = configuration;
+        this.afkSettings = afkSettings;
         this.translationManager = translationManager;
     }
 
@@ -49,7 +46,7 @@ class AfkKickController implements Listener {
     void onAfkSwitch(AfkSwitchEvent event) {
         UUID playerUUID = event.getAfk().getPlayer();
 
-        if (!event.isAfk() || !this.configuration.afk.kickOnAfk) {
+        if (!event.isAfk() || !this.afkSettings.kickOnAfk()) {
             return;
         }
 
