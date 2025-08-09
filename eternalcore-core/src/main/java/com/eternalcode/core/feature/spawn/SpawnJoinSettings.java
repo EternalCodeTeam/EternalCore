@@ -1,6 +1,9 @@
 package com.eternalcode.core.feature.spawn;
 
 public interface SpawnJoinSettings {
-    boolean teleportToSpawnOnJoin();
-    boolean teleportToSpawnOnFirstJoin();
+    boolean teleportNewPlayersToSpawn();
+    boolean teleportPlayersToSpawnOnJoin();
+    boolean teleportToSpawnAfterDeath();
+    boolean teleportToPersonalRespawnPoint();
+    boolean alwaysTeleportToSpawnAfterDeath();
 }
