@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.privatechat;
+package com.eternalcode.core.feature.msg;
 
 import java.util.UUID;
 import org.bukkit.event.Event;
@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Event that is called when a player sends a private message to another player.
  */
-public class PrivateChatEvent extends Event {
+public class MsgEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
@@ -15,7 +15,7 @@ public class PrivateChatEvent extends Event {
     private final UUID receiver;
     private String content;
 
-    public PrivateChatEvent(UUID sender, UUID receiver, String content) {
+    public MsgEvent(UUID sender, UUID receiver, String content) {
         super(true);
 
         this.sender = sender;
