@@ -6,12 +6,14 @@ import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
+import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
+import com.eternalcode.core.feature.joinquitmessage.messages.ENJoinQuitMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
@@ -25,12 +27,14 @@ import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.io.File;
@@ -301,6 +305,9 @@ public class ENTranslation extends AbstractTranslation {
     })
     public ENAfkMessages afk = new ENAfkMessages();
 
+    @Comment("# This section is responsible for the messages of join/quit events.")
+    public ENJoinQuitMessages joinQuit = new ENJoinQuitMessages();
+
     @Comment({
         " ",
         "# Section responsible for various server events."
@@ -309,53 +316,6 @@ public class ENTranslation extends AbstractTranslation {
 
     @Getter
     public static class ENEventSection extends OkaeriConfig implements EventSection {
-        @Comment({
-            "# {PLAYER} - Killed player",
-            "# {KILLER} - Killer (only for PvP deaths)"
-        })
-        public List<Notice> deathMessage = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!"),
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <dark_red>{KILLER}!")
-        );
-
-        @Comment({
-            "# Messages shown when a player dies from specific damage causes",
-            "# {PLAYER} - Killed player",
-            "# {CAUSE} - Death cause (e.g., FALL, VOID)",
-            "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
-        })
-        public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell into the void!")
-            ),
-            EntityDamageEvent.DamageCause.FALL, Arrays.asList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell from a high place!"),
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell off a deadly cliff!")
-            )
-        );
-
-        @Comment("# {PLAYER} - Player who died from an unknown cause")
-        public List<Notice> unknownDeathCause = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died under mysterious circumstances!")
-        );
-
-        @Comment({"", "# {PLAYER} - Player who joined"})
-        public List<Notice> joinMessage = List.of(
-            Notice.actionbar("<green>► <green>{PLAYER} <white>joined the server!"),
-            Notice.actionbar("<green>► <white>Welcome to the server <green>{PLAYER}<white>!")
-        );
-
-        @Comment("# {PLAYER} - Player who joined.")
-        public List<Notice> firstJoinMessage = List.of(
-            Notice.chat("<green>► {PLAYER} <white>joined the server for the first time!"),
-            Notice.chat("<green>► {PLAYER} <white>welcome to the server for the first time!")
-        );
-
-        @Comment("# {PLAYER} - Player who left")
-        public List<Notice> quitMessage = List.of(
-            Notice.actionbar("<red>► {PLAYER} <white>logged off the server!"),
-            Notice.actionbar("<red>► {PLAYER} <white>left the server!")
-        );
 
         @Comment({" ", "# {PLAYER} - Player who joined"})
         public Notice welcome = Notice.title("<yellow>EternalCode.pl", "<yellow>Welcome back to the server!");
@@ -578,4 +538,7 @@ public class ENTranslation extends AbstractTranslation {
   
     @Comment({" ", "# This section is responsible for vanish-related stuff."})
     public ENVanishMessages vanish = new ENVanishMessages();
+
+    @Comment({" ", "# This section is responsible for death messages."})
+    public ENDeathMessages death = new ENDeathMessages();
 }

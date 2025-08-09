@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.chat;
 
+import com.eternalcode.multification.notice.Notice;
+
 import java.time.Duration;
 
 public interface ChatSettings {
@@ -17,4 +19,6 @@ public interface ChatSettings {
     ChatSettings chatDelay(Duration delay);
 
     ChatSettings linesToClear(int lines);
+
+    Notice chatNotice();
 }

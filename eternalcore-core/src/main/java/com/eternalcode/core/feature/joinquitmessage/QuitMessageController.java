@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.quitmessage;
+package com.eternalcode.core.feature.joinquitmessage;
 
 
 import com.eternalcode.commons.RandomElementUtil;
@@ -13,30 +13,23 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import panda.utilities.StringUtils;
 
 @Controller
-class PlayerQuitMessageController implements Listener {
+class QuitMessageController implements Listener {
 
     private final NoticeService noticeService;
-    private final VanishService vanishService;
 
     @Inject
-    PlayerQuitMessageController(NoticeService noticeService, VanishService vanishService) {
+    QuitMessageController(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.vanishService = vanishService;
     }
 
     @EventHandler
     void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (this.vanishService.isVanished(player)) {
-            event.setQuitMessage(StringUtils.EMPTY);
-            return;
-        }
-
         event.setQuitMessage(StringUtils.EMPTY);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().quitMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.joinQuit().quitMessage()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();

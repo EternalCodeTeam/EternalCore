@@ -1,11 +1,14 @@
 package com.eternalcode.core.feature.chat;
 
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
+import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.time.Duration;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.bukkit.Sound;
 
 @Getter
 @Setter
@@ -23,4 +26,10 @@ public class ChatConfig extends OkaeriConfig implements ChatSettings {
 
     @Comment("# Chat should be enabled?")
     public boolean chatEnabled = true;
+
+    @Comment({
+        "# Sound played when a player sends a chat message.",
+        "# To disable, set this to: chatNotice: []"
+    })
+    public Notice chatNotice = BukkitNotice.sound(Sound.ENTITY_ITEM_PICKUP, 1.8F, 1F);
 }
