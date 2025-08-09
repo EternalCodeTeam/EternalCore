@@ -6,12 +6,14 @@ import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
+import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
+import com.eternalcode.core.feature.joinquitmessage.messages.JoinQuitMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
@@ -91,18 +93,13 @@ public interface Translation {
         Notice alertQueueSent();
     }
 
-    interface EventSection {
-        List<Notice> deathMessage();
-        List<Notice> unknownDeathCause();
-        List<Notice> joinMessage();
-        List<Notice> quitMessage();
-        List<Notice> firstJoinMessage();
+    // join quit messages
+    JoinQuitMessages joinQuit();
 
-        Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
-        Map<String, List<Notice>> deathMessageByEntity();
-        Map<String, List<Notice>> deathMessageByWeapon();
+    interface EventSection {
 
         Notice welcome();
+
     }
 
     interface InventorySection {
@@ -260,4 +257,6 @@ public interface Translation {
     BurnMessages burn();
     // vanish section
     VanishMessages vanish();
+    // death section
+    DeathMessages death();
 }

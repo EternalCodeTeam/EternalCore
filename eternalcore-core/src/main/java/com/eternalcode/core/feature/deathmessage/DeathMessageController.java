@@ -7,6 +7,8 @@ import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.multification.notice.Notice;
 import java.util.List;
+import java.util.Optional;
+
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -66,10 +68,10 @@ class DeathMessageController implements Listener {
             String weaponType = this.getProjectileWeaponType(projectile);
             this.noticeService.create()
                 .noticeOptional(translation -> {
-                    List<Notice> weaponMessages = translation.event().deathMessageByWeapon().get(weaponType);
+                    List<Notice> weaponMessages = translation.death().deathMessageByWeapon().get(weaponType);
                     return weaponMessages != null
                         ? RandomElementUtil.randomElement(weaponMessages)
-                        : RandomElementUtil.randomElement(translation.event().deathMessage());
+                        : RandomElementUtil.randomElement(translation.death().deathMessage());
                 })
                 .placeholder("{PLAYER}", victim.getName())
                 .placeholder("{KILLER}", killerPlayer.getName())
@@ -84,15 +86,15 @@ class DeathMessageController implements Listener {
             String projectileType = projectile.getType().name();
             this.noticeService.create()
                 .noticeOptional(translation -> {
-                    List<Notice> entityMessages = translation.event().deathMessageByEntity().get(entityType);
+                    List<Notice> entityMessages = translation.death().deathMessageByEntity().get(entityType);
                     if (entityMessages != null) {
                         return RandomElementUtil.randomElement(entityMessages);
                     }
-                    List<Notice> projectileMessages = translation.event().deathMessageByEntity().get(projectileType);
+                    List<Notice> projectileMessages = translation.death().deathMessageByEntity().get(projectileType);
                     if (projectileMessages != null) {
                         return RandomElementUtil.randomElement(projectileMessages);
                     }
-                    return RandomElementUtil.randomElement(translation.event().deathMessage());
+                    return RandomElementUtil.randomElement(translation.death().deathMessage());
                 })
                 .placeholder("{PLAYER}", victim.getName())
                 .placeholder("{KILLER}", shooterEntity.getName())
@@ -105,10 +107,10 @@ class DeathMessageController implements Listener {
         String projectileType = projectile.getType().name();
         this.noticeService.create()
             .noticeOptional(translation -> {
-                List<Notice> projectileMessages = translation.event().deathMessageByEntity().get(projectileType);
+                List<Notice> projectileMessages = translation.death().deathMessageByEntity().get(projectileType);
                 return projectileMessages != null
                     ? RandomElementUtil.randomElement(projectileMessages)
-                    : RandomElementUtil.randomElement(translation.event().unknownDeathCause());
+                    : RandomElementUtil.randomElement(translation.death().unknownDeathCause());
             })
             .placeholder("{PLAYER}", victim.getName())
             .placeholder("{KILLER}", projectileType.toLowerCase().replace("_", " "))
@@ -119,12 +121,10 @@ class DeathMessageController implements Listener {
     private void handlePvPDeath(Player victim, Player killer) {
         String weaponType = this.getWeaponType(killer.getInventory().getItemInMainHand());
         this.noticeService.create()
-            .noticeOptional(translation -> {
-                return java.util.Optional.ofNullable(translation.event().deathMessageByWeapon().get(weaponType))
-                    .filter(list -> !list.isEmpty())
-                    .map(RandomElementUtil::randomElement)
-                    .orElseGet(() -> RandomElementUtil.randomElement(translation.event().deathMessage()));
-            })
+            .noticeOptional(translation -> Optional.ofNullable(translation.death().deathMessageByWeapon().get(weaponType))
+                .filter(list -> !list.isEmpty())
+                .map(RandomElementUtil::randomElement)
+                .orElseGet(() -> RandomElementUtil.randomElement(translation.death().deathMessage())))
             .placeholder("{PLAYER}", victim.getName())
             .placeholder("{KILLER}", killer.getName())
             .placeholder("{WEAPON}", weaponType.toLowerCase().replace("_", " "))
@@ -136,10 +136,10 @@ class DeathMessageController implements Listener {
         String entityType = damager.getType().name();
         this.noticeService.create()
             .noticeOptional(translation -> {
-                List<Notice> entityMessages = translation.event().deathMessageByEntity().get(entityType);
+                List<Notice> entityMessages = translation.death().deathMessageByEntity().get(entityType);
                 return entityMessages != null
                     ? RandomElementUtil.randomElement(entityMessages)
-                    : RandomElementUtil.randomElement(translation.event().deathMessage());
+                    : RandomElementUtil.randomElement(translation.death().deathMessage());
             })
             .placeholder("{PLAYER}", victim.getName())
             .placeholder("{KILLER}", damager.getName())
@@ -159,10 +159,10 @@ class DeathMessageController implements Listener {
             if (blockType != null) {
                 this.noticeService.create()
                     .noticeOptional(translation -> {
-                        List<Notice> blockMessages = translation.event().deathMessageByEntity().get(blockType);
+                        List<Notice> blockMessages = translation.death().deathMessageByEntity().get(blockType);
                         return blockMessages != null
                             ? RandomElementUtil.randomElement(blockMessages)
-                            : RandomElementUtil.randomElement(translation.event().unknownDeathCause());
+                            : RandomElementUtil.randomElement(translation.death().unknownDeathCause());
                     })
                     .placeholder("{PLAYER}", victim.getName())
                     .onlinePlayers()
@@ -173,10 +173,10 @@ class DeathMessageController implements Listener {
 
         this.noticeService.create()
             .noticeOptional(translation -> {
-                List<Notice> notifications = translation.event().deathMessageByDamageCause().get(cause);
+                List<Notice> notifications = translation.death().deathMessageByDamageCause().get(cause);
                 return notifications != null
                     ? RandomElementUtil.randomElement(notifications)
-                    : RandomElementUtil.randomElement(translation.event().unknownDeathCause());
+                    : RandomElementUtil.randomElement(translation.death().unknownDeathCause());
             })
             .placeholder("{PLAYER}", victim.getName())
             .placeholder("{CAUSE}", cause.name())
@@ -186,7 +186,7 @@ class DeathMessageController implements Listener {
 
     private void handleUnknownDeath(Player victim) {
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().unknownDeathCause()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.death().unknownDeathCause()))
             .placeholder("{PLAYER}", victim.getName())
             .onlinePlayers()
             .send();
