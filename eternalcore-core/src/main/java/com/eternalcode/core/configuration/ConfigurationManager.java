@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -63,9 +64,10 @@ public class ConfigurationManager {
         config.withConfigurer(yamlConfigurer)
             .withSerdesPack(serdesPack)
             .withBindFile(file)
-            .migrate(Migrations.ALL)
             .saveDefaults()
-            .load(true);
+            .load(true)
+            .migrate(Migrations.ALL); // Remember: migration should be launched after the #load method.
+
 
         this.configs.add(config);
         return config;
