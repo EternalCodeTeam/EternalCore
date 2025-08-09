@@ -1,6 +1,6 @@
 package com.eternalcode.example.feature.privatechat;
 
-import com.eternalcode.core.feature.privatechat.PrivateChatEvent;
+import com.eternalcode.core.feature.msg.MsgEvent;
 import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ public class ApiPrivateChatListener implements Listener {
     }
 
     @EventHandler
-    public void onPrivateChat(PrivateChatEvent event) {
+    public void onMsg(MsgEvent event) {
         UUID sender = event.getSender();
         UUID receiver = event.getReceiver();
         String content = event.getContent();
@@ -34,7 +34,7 @@ public class ApiPrivateChatListener implements Listener {
     }
 
     @EventHandler
-    public void overridePrivateChat(PrivateChatEvent event) {
+    public void overrideMsg(MsgEvent event) {
         String content = event.getContent();
 
         if (content.contains("kurła!")) {

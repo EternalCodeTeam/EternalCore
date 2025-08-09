@@ -1,11 +1,11 @@
-package com.eternalcode.core.feature.privatechat.messages;
+package com.eternalcode.core.feature.msg.messages;
 
 import com.eternalcode.multification.notice.Notice;
 
-public interface PrivateChatMessages {
+public interface MsgMessages {
     Notice noReply();
-    Notice privateMessageYouToTarget();
-    Notice privateMessageTargetToYou();
+    Notice msgYouToTarget();
+    Notice msgTargetToYou();
 
     Notice socialSpyMessage();
     Notice socialSpyEnable();

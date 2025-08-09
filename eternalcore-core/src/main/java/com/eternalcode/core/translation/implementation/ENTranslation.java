@@ -13,7 +13,7 @@ import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.privatechat.messages.ENPrivateMessages;
+import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
@@ -293,7 +293,7 @@ public class ENTranslation extends AbstractTranslation {
         " ",
         "# This section is responsible for setting and editing private messages."
     })
-    public ENPrivateMessages privateChat = new ENPrivateMessages();
+    public ENMsgMessages msg = new ENMsgMessages();
 
     @Comment({
         " ",
