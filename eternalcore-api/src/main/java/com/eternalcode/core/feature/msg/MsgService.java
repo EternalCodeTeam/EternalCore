@@ -1,9 +1,9 @@
-package com.eternalcode.core.feature.privatechat;
+package com.eternalcode.core.feature.msg;
 
 import java.util.UUID;
 import org.bukkit.entity.Player;
 
-public interface PrivateChatService {
+public interface MsgService {
 
     void enableSpy(UUID uuid);
 
@@ -13,5 +13,5 @@ public interface PrivateChatService {
 
     void reply(Player sender, String message);
 
-    void privateMessage(Player sender, Player target, String message);
+    void sendMessage(Player sender, Player target, String message);
 }

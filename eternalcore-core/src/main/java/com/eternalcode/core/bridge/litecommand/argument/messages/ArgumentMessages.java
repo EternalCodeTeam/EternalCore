@@ -10,6 +10,7 @@ public interface ArgumentMessages {
     Notice usageMessageEntry();
     Notice offlinePlayer();
     Notice onlyPlayer();
+    Notice numberBiggerThanZero();
     Notice numberBiggerThanOrEqualZero();
     Notice noItem();
     Notice noArgument();

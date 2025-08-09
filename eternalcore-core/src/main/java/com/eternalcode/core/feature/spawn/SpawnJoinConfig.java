@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
-public class SpawnJoinConfig extends OkaeriConfig {
+public class SpawnJoinConfig extends OkaeriConfig implements SpawnJoinSettings {
     @Comment("# Teleport to spawn on first join")
     public boolean teleportToSpawnOnFirstJoin = true;
 

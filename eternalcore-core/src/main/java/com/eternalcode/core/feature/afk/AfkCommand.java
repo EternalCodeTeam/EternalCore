@@ -3,9 +3,7 @@ package com.eternalcode.core.feature.afk;
 import static com.eternalcode.core.feature.afk.AfkCommand.AFK_BYPASS_PERMISSION;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -30,16 +28,16 @@ class AfkCommand {
     static final String AFK_BYPASS_PERMISSION = "eternalcore.afk.bypass";
 
     private final NoticeService noticeService;
-    private final PluginConfiguration pluginConfiguration;
+    private final AfkSettings afkSettings;
     private final AfkService afkService;
     private final Delay<UUID> delay;
 
     @Inject
-    AfkCommand(NoticeService noticeService, PluginConfiguration pluginConfiguration, AfkService afkService) {
+    AfkCommand(NoticeService noticeService, AfkSettings afkSettings, AfkService afkService) {
         this.noticeService = noticeService;
-        this.pluginConfiguration = pluginConfiguration;
+        this.afkSettings = afkSettings;
         this.afkService = afkService;
-        this.delay = new Delay<>(() -> this.pluginConfiguration.afk.getAfkDelay());
+        this.delay = new Delay<>(() -> this.afkSettings.afkCommandDelay());
     }
 
     @Execute
@@ -66,6 +64,6 @@ class AfkCommand {
         }
 
         this.afkService.switchAfk(uuid, AfkReason.COMMAND);
-        this.delay.markDelay(uuid, this.pluginConfiguration.afk.getAfkDelay());
+        this.delay.markDelay(uuid, this.afkSettings.afkCommandDelay());
     }
 }

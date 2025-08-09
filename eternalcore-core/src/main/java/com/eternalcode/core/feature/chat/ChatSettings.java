@@ -4,14 +4,17 @@ import java.time.Duration;
 
 public interface ChatSettings {
 
-    boolean isChatEnabled();
+    boolean replaceStandardHelpMessage();
 
-    void setChatEnabled(boolean chatEnabled);
+    boolean chatEnabled();
 
-    Duration getChatDelay();
-
-    void setChatDelay(Duration chatDelay);
+    Duration chatDelay();
 
     int linesToClear();
 
+    ChatSettings chatEnabled(boolean enabled);
+
+    ChatSettings chatDelay(Duration delay);
+
+    ChatSettings linesToClear(int lines);
 }

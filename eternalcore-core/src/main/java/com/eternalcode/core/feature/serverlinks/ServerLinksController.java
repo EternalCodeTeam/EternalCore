@@ -13,17 +13,20 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class ServerLinksController implements Listener {
 
     private final ServerLinksService serverLinksService;
-    private final ServerLinksConfig serverLinksConfig;
+    private final ServerLinksSettings serverLinksSettings;
 
     @Inject
-    public ServerLinksController(ServerLinksService serverLinksService, ServerLinksConfig serverLinksConfig) {
+    public ServerLinksController(
+        ServerLinksService serverLinksService,
+        ServerLinksSettings serverLinksSettings
+    ) {
         this.serverLinksService = serverLinksService;
-        this.serverLinksConfig = serverLinksConfig;
+        this.serverLinksSettings = serverLinksSettings;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if (this.serverLinksConfig.sendLinksOnJoin) {
+        if (this.serverLinksSettings.sendLinksOnJoin()) {
             this.serverLinksService.sendServerLinks(event.getPlayer());
         }
     }

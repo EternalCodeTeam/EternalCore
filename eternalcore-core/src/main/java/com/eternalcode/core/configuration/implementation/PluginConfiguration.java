@@ -2,23 +2,38 @@ package com.eternalcode.core.configuration.implementation;
 
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
+import com.eternalcode.core.database.DatabaseSettings;
 import com.eternalcode.core.feature.afk.AfkConfig;
+import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
+import com.eternalcode.core.feature.automessage.AutoMessageSettings;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
+import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
+import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
+import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.home.HomesConfig;
+import com.eternalcode.core.feature.home.HomesSettings;
 import com.eternalcode.core.feature.jail.JailConfig;
+import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.lightning.LightningConfig;
-import com.eternalcode.core.feature.randomteleport.RandomTeleportSettingsImpl;
+import com.eternalcode.core.feature.lightning.LightningSettings;
+import com.eternalcode.core.feature.randomteleport.RandomTeleportConfig;
+import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.repair.RepairConfig;
+import com.eternalcode.core.feature.repair.RepairSettings;
 import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
+import com.eternalcode.core.feature.serverlinks.ServerLinksSettings;
 import com.eternalcode.core.feature.spawn.SpawnJoinConfig;
+import com.eternalcode.core.feature.spawn.SpawnJoinSettings;
 import com.eternalcode.core.feature.spawn.SpawnSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestConfig;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.feature.vanish.VanishConfig;
 import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.feature.warp.WarpConfig;
+import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.OkaeriConfig;
@@ -41,28 +56,29 @@ import java.time.Duration;
     "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
     "#",
 })
-
 @ConfigurationFile
 public class PluginConfiguration extends AbstractConfigurationFile {
 
     @Comment("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
+    @Bean(proxied = DatabaseSettings.class)
     @Comment("")
     @Comment("# Database Configuration")
     @Comment("# Settings responsible for the database connection")
-    public DatabaseConfig database = new DatabaseConfig();
+    DatabaseConfig database = new DatabaseConfig();
 
+    @Bean(proxied = SpawnJoinSettings.class)
     @Comment("")
     @Comment("# Spawn & Join Configuration")
     @Comment("# Settings responsible for player spawn and join behavior")
-    public SpawnJoinConfig join = new SpawnJoinConfig();
+    SpawnJoinConfig join = new SpawnJoinConfig();
 
-    @Bean
+    @Bean(proxied = TeleportRequestSettings.class)
     @Comment("")
     @Comment("# Teleport Request Configuration")
     @Comment("# Settings for teleport requests between players")
-    public TeleportRequestConfig teleportAsk = new TeleportRequestConfig();
+    TeleportRequestConfig teleportAsk = new TeleportRequestConfig();
 
     @Bean
     @Comment("")
@@ -94,33 +110,35 @@ public class PluginConfiguration extends AbstractConfigurationFile {
         }
     }
 
-    @Bean
+    @Bean(proxied = RandomTeleportSettings.class)
     @Comment("")
     @Comment("# Random Teleport Configuration")
     @Comment("# Settings for random teleportation feature")
-    public RandomTeleportSettingsImpl randomTeleport = new RandomTeleportSettingsImpl();
+    RandomTeleportConfig randomTeleport = new RandomTeleportConfig();
 
-    @Bean
+    @Bean(proxied = HomesSettings.class)
     @Comment("")
     @Comment("# Homes Configuration")
     @Comment("# Settings for player home management")
-    public HomesConfig homes = new HomesConfig();
+    HomesConfig homes = new HomesConfig();
 
-    @Bean
+    @Bean(proxied = ChatSettings.class)
     @Comment("")
     @Comment("# Chat Configuration")
     @Comment("# Settings for chat management and formatting")
-    public ChatConfig chat = new ChatConfig();
+    ChatConfig chat = new ChatConfig();
 
+    @Bean(proxied = HelpOpSettings.class)
     @Comment("")
     @Comment("# HelpOp Configuration")
     @Comment("# Settings for the help operator system")
-    public HelpOpConfig helpOp = new HelpOpConfig();
+    HelpOpConfig helpOp = new HelpOpConfig();
 
+    @Bean(proxied = RepairSettings.class)
     @Comment("")
     @Comment("# Repair Configuration")
     @Comment("# Settings for item repair functionality")
-    public RepairConfig repair = new RepairConfig();
+    RepairConfig repair = new RepairConfig();
 
     @Comment("")
     @Comment("# Format Configuration")
@@ -132,11 +150,11 @@ public class PluginConfiguration extends AbstractConfigurationFile {
         public String separator = "<gray>,</gray> ";
     }
 
-    @Bean
+    @Bean(proxied = AfkSettings.class)
     @Comment("")
     @Comment("# AFK Configuration")
     @Comment("# Settings for Away From Keyboard detection and management")
-    public AfkConfig afk = new AfkConfig();
+    AfkConfig afk = new AfkConfig();
 
     @Comment("")
     @Comment("# Items Configuration")
@@ -158,35 +176,37 @@ public class PluginConfiguration extends AbstractConfigurationFile {
         public boolean dropOnFullInventory = true;
     }
 
+    @Bean(proxied = WarpSettings.class)
     @Comment("")
     @Comment("# Warp Configuration")
     @Comment("# Settings for warp points management")
-    public WarpConfig warp = new WarpConfig();
+    WarpConfig warp = new WarpConfig();
 
+    @Bean(proxied = ButcherSettings.class)
     @Comment("")
     @Comment("# Butcher Configuration")
     @Comment("# Settings for entity removal functionality")
-    public ButcherConfig butcher = new ButcherConfig();
+    ButcherConfig butcher = new ButcherConfig();
 
-    @Bean
+    @Bean(proxied = AutoMessageSettings.class)
     @Comment("")
     @Comment("# Auto Message Configuration")
     @Comment("# Settings for automatic message broadcasting")
-    public AutoMessageConfig autoMessage = new AutoMessageConfig();
+    AutoMessageConfig autoMessage = new AutoMessageConfig();
 
-    @Bean
+    @Bean(proxied = JailSettings.class)
     @Comment("")
     @Comment("# Jail Configuration")
     @Comment("# Settings for player jail system")
-    public JailConfig jail = new JailConfig();
+    JailConfig jail = new JailConfig();
 
-    @Bean
+    @Bean(proxied = LightningSettings.class)
     @Comment("")
     @Comment("# Lightning Configuration")
     @Comment("# Settings for lightning strike effects")
-    public LightningConfig lightning = new LightningConfig();
+    LightningConfig lightning = new LightningConfig();
 
-    @Bean
+    @Bean(proxied = ServerLinksSettings.class)
     @Comment("")
     @Comment("# Server Links Configuration")
     @Comment("# Settings for server link management")

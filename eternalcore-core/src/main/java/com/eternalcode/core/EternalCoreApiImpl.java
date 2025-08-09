@@ -6,7 +6,7 @@ import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.jail.JailService;
 import com.eternalcode.core.feature.language.LanguageService;
-import com.eternalcode.core.feature.privatechat.PrivateChatService;
+import com.eternalcode.core.feature.msg.MsgService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
@@ -52,8 +52,8 @@ class EternalCoreApiImpl implements EternalCoreApi {
     }
 
     @Override
-    public PrivateChatService getPrivateChatService() {
-        return this.dependencyProvider.getDependency(PrivateChatService.class);
+    public MsgService getMsgService() {
+        return this.dependencyProvider.getDependency(MsgService.class);
     }
 
     @Override

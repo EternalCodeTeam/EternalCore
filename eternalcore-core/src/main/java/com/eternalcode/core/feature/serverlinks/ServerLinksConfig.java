@@ -3,8 +3,12 @@ package com.eternalcode.core.feature.serverlinks;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.util.List;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
-public class ServerLinksConfig extends OkaeriConfig {
+@Getter
+@Accessors(fluent = true)
+public class ServerLinksConfig extends OkaeriConfig implements ServerLinksSettings {
 
     @Comment({
         "# Configuration of server links displayed in the ESC/pause menu",

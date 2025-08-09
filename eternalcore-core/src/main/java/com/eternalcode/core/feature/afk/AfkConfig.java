@@ -30,14 +30,4 @@ public class AfkConfig extends OkaeriConfig implements AfkSettings {
 
     @Comment("# Should a player be kicked from the game when marked as AFK?")
     public boolean kickOnAfk = false;
-
-    @Override
-    public Duration getAfkDelay() {
-        return this.afkCommandDelay;
-    }
-
-    @Override
-    public Duration getAfkInactivityTime() {
-        return this.afkInactivityTime;
-    }
 }

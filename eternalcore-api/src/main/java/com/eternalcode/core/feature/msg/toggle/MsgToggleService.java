@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.privatechat.toggle;
+package com.eternalcode.core.feature.msg.toggle;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -6,7 +6,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * This Service manages player's receiving of private messages
  */
-public interface PrivateChatStateService {
+public interface MsgToggleService {
 
     /**
      * Checks status of player's private chat messages blocking.
@@ -14,7 +14,7 @@ public interface PrivateChatStateService {
      * @param playerUniqueId player's UUID.
      * @return state of player's private chat messages blocking.
      */
-    CompletableFuture<PrivateChatState> getChatState(UUID playerUniqueId);
+    CompletableFuture<MsgState> getState(UUID playerUniqueId);
 
     /**
      * Sets blocking of incoming private messages.
@@ -22,7 +22,7 @@ public interface PrivateChatStateService {
      * @param playerUniqueId player's UUID.
      * @param state desired state of player's private chat messages blocking.
      */
-    CompletableFuture<Void> setChatState(UUID playerUniqueId, PrivateChatState state);
+    CompletableFuture<Void> setState(UUID playerUniqueId, MsgState state);
 
 
     /**
@@ -31,6 +31,6 @@ public interface PrivateChatStateService {
      * @param playerUniqueId player's UUID.
      * @return new state of player's private chat messages blocking.
      */
-    CompletableFuture<PrivateChatState> toggleChatState(UUID playerUniqueId);
+    CompletableFuture<MsgState> toggleState(UUID playerUniqueId);
 
 }

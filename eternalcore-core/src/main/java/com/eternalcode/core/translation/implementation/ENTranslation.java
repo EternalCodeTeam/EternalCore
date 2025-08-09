@@ -5,12 +5,15 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
+import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
+import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.privatechat.messages.ENPrivateMessages;
+import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
@@ -19,8 +22,6 @@ import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
-import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
-import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
@@ -294,7 +295,7 @@ public class ENTranslation extends AbstractTranslation {
         " ",
         "# This section is responsible for setting and editing private messages."
     })
-    public ENPrivateMessages privateChat = new ENPrivateMessages();
+    public ENMsgMessages msg = new ENMsgMessages();
 
     @Comment({
         " ",
@@ -798,7 +799,9 @@ public class ENTranslation extends AbstractTranslation {
     @Comment({" ", "# This section is responsible for demo screen messages."})
     public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
 
+    @Comment({" ", "# This section is responsible for '/burn' command messages."})
+    public ENBurnMessages burn = new ENBurnMessages();
+  
     @Comment({" ", "# This section is responsible for vanish-related stuff."})
     public ENVanishMessages vanish = new ENVanishMessages();
-
 }

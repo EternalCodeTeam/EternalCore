@@ -5,9 +5,13 @@ import eu.okaeri.configs.annotation.Comment;
 import java.time.Duration;
 import java.util.EnumSet;
 import java.util.Set;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import org.bukkit.Material;
 
-public class RandomTeleportSettingsImpl extends OkaeriConfig implements RandomTeleportSettings {
+@Getter
+@Accessors(fluent = true)
+public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleportSettings {
 
     @Comment("# Delay to wait for the random teleportation")
     public Duration delay = Duration.ofSeconds(5);
@@ -115,51 +119,6 @@ public class RandomTeleportSettingsImpl extends OkaeriConfig implements RandomTe
         "# Note: Values are automatically capped to world height limits"
     })
     public RandomTeleportHeightRange heightRange = RandomTeleportHeightRange.of(60, 160);
-
-    @Override
-    public Duration delay() {
-        return this.delay;
-    }
-
-    @Override
-    public RandomTeleportRadius radius() {
-        return this.radius;
-    }
-
-    @Override
-    public RandomTeleportType radiusType() {
-        return this.radiusType;
-    }
-
-    @Override
-    public String world() {
-        return this.world;
-    }
-
-    @Override
-    public int teleportAttempts() {
-        return this.teleportAttempts;
-    }
-
-    @Override
-    public Set<Material> unsafeBlocks() {
-        return unsafeBlocks;
-    }
-
-    @Override
-    public Set<Material> airBlocks() {
-        return airBlocks;
-    }
-
-    @Override
-    public RandomTeleportHeightRange heightRange() {
-        return this.heightRange;
-    }
-
-    @Override
-    public Duration cooldown() {
-        return this.cooldown;
-    }
 
 }
 

@@ -16,11 +16,11 @@ object Versions {
     const val ADVENTURE_PLATFORM = "4.4.0"
     const val OKAERI_CONFIGS = "5.0.9"
 
-    const val MARIA_DB = "3.5.4"
+    const val MARIA_DB = "3.5.5"
     const val POSTGRESQL = "42.7.7"
     const val H2 = "2.3.232"
     const val ORMLITE = "6.1"
-    const val HIKARI_CP = "6.3.2"
+    const val HIKARI_CP = "7.0.1"
 
     const val LITE_COMMANDS = "3.10.4"
     const val LITE_SKULL_API = "2.0.0"
