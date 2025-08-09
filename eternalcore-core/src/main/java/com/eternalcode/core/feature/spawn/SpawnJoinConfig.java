@@ -43,7 +43,7 @@ public class SpawnJoinConfig extends OkaeriConfig implements SpawnJoinSettings {
 
     @Comment({
         "# Forces teleport to spawn even if player has a personal respawn point",
-        "# This overrides 'teleportToRespawnPoint' setting"
+        "# This overrides 'teleportToPersonalRespawnPoint' setting"
     })
     public boolean alwaysTeleportToSpawnAfterDeath = false;
 }
