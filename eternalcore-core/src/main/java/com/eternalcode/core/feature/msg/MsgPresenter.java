@@ -10,8 +10,8 @@ class MsgPresenter {
 
     private static final Placeholders<Message> PLACEHOLDERS = Placeholders.<Message>builder()
         .with("{MESSAGE}", Message::message)
-        .with("{TARGET}", privateMessage -> privateMessage.target().getName())
-        .with("{SENDER}", privateMessage -> privateMessage.sender().getName())
+        .with("{TARGET}", message -> message.target().getName())
+        .with("{SENDER}", message -> message.sender().getName())
         .build();
 
     private final NoticeService notice;
@@ -20,7 +20,7 @@ class MsgPresenter {
         this.notice = noticeService;
     }
 
-    void onPrivate(Message event) {
+    void onMessage(Message event) {
         Formatter formatter = PLACEHOLDERS.toFormatter(event);
         UUID sender = event.sender().getUniqueId();
         UUID target = event.target().getUniqueId();

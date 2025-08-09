@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
-public class PLMsgChatMessages extends OkaeriConfig implements MsgMessages {
+public class PLMsgMessages extends OkaeriConfig implements MsgMessages {
     public Notice noReply = Notice.chat(
         "<red>► <dark_red>Nie możesz nikomu odpowiadać, ponieważ nie otrzymałeś żadnej wiadomości prywatnej!");
 

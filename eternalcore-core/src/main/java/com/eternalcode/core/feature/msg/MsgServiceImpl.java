@@ -75,7 +75,7 @@ class MsgServiceImpl implements MsgService {
 
                 MsgEvent event = new MsgEvent(sender.getUniqueId(), uniqueId, message);
                 this.eventCaller.callEvent(event);
-                this.presenter.onPrivate(new Message(sender, target, event.getContent(), this.socialSpy, isIgnored));
+                this.presenter.onMessage(new Message(sender, target, event.getContent(), this.socialSpy, isIgnored));
             });
         });
     }

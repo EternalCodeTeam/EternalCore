@@ -52,7 +52,7 @@ class EternalCoreApiImpl implements EternalCoreApi {
     }
 
     @Override
-    public MsgService getPrivateChatService() {
+    public MsgService getMsgService() {
         return this.dependencyProvider.getDependency(MsgService.class);
     }
 

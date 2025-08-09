@@ -13,13 +13,13 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @RootCommand
-class MsgCommandsCommands {
+class MsgCommands {
 
     private final MsgService msgService;
     private final NoticeService noticeService;
 
     @Inject
-    MsgCommandsCommands(
+    MsgCommands(
         MsgService msgService,
         NoticeService noticeService
     ) {

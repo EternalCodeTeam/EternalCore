@@ -26,7 +26,7 @@ public interface EternalCoreApi {
 
     LanguageService getLanguageService();
 
-    MsgService getPrivateChatService();
+    MsgService getMsgService();
 
     RandomTeleportService getRandomTeleportService();
 
