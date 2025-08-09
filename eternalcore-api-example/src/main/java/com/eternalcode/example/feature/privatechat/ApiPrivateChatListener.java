@@ -16,7 +16,7 @@ public class ApiPrivateChatListener implements Listener {
     }
 
     @EventHandler
-    public void onPrivateChat(MsgEvent event) {
+    public void onMsg(MsgEvent event) {
         UUID sender = event.getSender();
         UUID receiver = event.getReceiver();
         String content = event.getContent();
