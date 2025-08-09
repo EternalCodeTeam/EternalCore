@@ -31,9 +31,10 @@ class SpawnRespawnController implements Listener {
     void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
-        if (!this.spawnJoinSettings.alwaysTeleportToSpawnAfterDeath()
-            && this.spawnJoinSettings.teleportToPersonalRespawnPoint()
-            && this.hasRespawnPoint(player)) {
+        final boolean forceSpawn = this.spawnJoinSettings.alwaysTeleportToSpawnAfterDeath();
+        final boolean usePersonalRespawn = this.spawnJoinSettings.teleportToPersonalRespawnPoint() && this.hasRespawnPoint(player);
+
+        if (usePersonalRespawn && !forceSpawn) {
             return;
         }
 
