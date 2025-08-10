@@ -14,13 +14,16 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.setspawn")
 class SetSpawnCommand {
 
-    private final SpawnService spawnService;
     private final NoticeService noticeService;
+    private final SpawnService spawnService;
 
     @Inject
-    SetSpawnCommand(SpawnService spawnService, NoticeService noticeService) {
-        this.spawnService = spawnService;
+    SetSpawnCommand(
+        NoticeService noticeService,
+        SpawnService spawnService
+    ) {
         this.noticeService = noticeService;
+        this.spawnService = spawnService;
     }
 
     @Async

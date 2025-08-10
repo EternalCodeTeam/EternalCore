@@ -27,7 +27,8 @@ import com.eternalcode.core.feature.serverlinks.ServerLinksConfig;
 import com.eternalcode.core.feature.serverlinks.ServerLinksSettings;
 import com.eternalcode.core.feature.spawn.SpawnJoinConfig;
 import com.eternalcode.core.feature.spawn.SpawnJoinSettings;
-import com.eternalcode.core.feature.spawn.SpawnSettings;
+import com.eternalcode.core.feature.teleportrandomplayer.TeleportToRandomPlayerConfig;
+import com.eternalcode.core.feature.teleportrandomplayer.TeleportToRandomPlayerSettings;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestConfig;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.feature.vanish.VanishConfig;
@@ -42,7 +43,6 @@ import eu.okaeri.configs.annotation.Header;
 import org.bukkit.Sound;
 
 import java.io.File;
-import java.time.Duration;
 
 @Header({
     "#",
@@ -72,7 +72,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("")
     @Comment("# Spawn & Join Configuration")
     @Comment("# Settings responsible for player spawn and join behavior")
-    SpawnJoinConfig join = new SpawnJoinConfig();
+    SpawnJoinConfig spawn = new SpawnJoinConfig();
 
     @Bean(proxied = TeleportRequestSettings.class)
     @Comment("")
@@ -80,35 +80,11 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings for teleport requests between players")
     TeleportRequestConfig teleportAsk = new TeleportRequestConfig();
 
-    @Bean
+    @Bean(proxied = TeleportToRandomPlayerSettings.class)
     @Comment("")
-    @Comment("# Teleport Configuration")
-    @Comment("# General teleportation settings")
-    public Teleport teleport = new Teleport();
-
-    // TODO: Add migration, move option's to domain-specific configuration classes
-    // teleportToSpawnOnDeath -> com.eternalcode.core.feature.spawn.SpawnConfig
-    // teleportToRespawnPoint -> com.eternalcode.core.feature.spawn.SpawnConfig
-    // teleportTimeToSpawn -> com.eternalcode.core.feature.spawn.SpawnConfig
-    // includeOpPlayersInRandomTeleport -> com.eternalcode.core.feature.teleportrandomplayer.TeleportRandomPlayerConfig
-    public static class Teleport extends OkaeriConfig implements SpawnSettings {
-        @Comment("# Teleports the player to spawn after death")
-        public boolean teleportToSpawnOnDeath = true;
-
-        @Comment("# Teleports the player to respawn point after death")
-        public boolean teleportToRespawnPoint = true;
-
-        @Comment("# Time delay before teleporting to spawn")
-        public Duration teleportTimeToSpawn = Duration.ofSeconds(5);
-
-        @Comment("# Include players with OP permission in random teleport selection")
-        public boolean includeOpPlayersInRandomTeleport = false;
-
-        @Override
-        public Duration teleportationTimeToSpawn() {
-            return this.teleportTimeToSpawn;
-        }
-    }
+    @Comment("# Configuration for teleporting to a random player")
+    @Comment("# Settings for the /tprp command, allowing you to randomly teleport to any player on the server")
+    TeleportToRandomPlayerConfig teleportToRandomPlayer = new TeleportToRandomPlayerConfig();
 
     @Bean(proxied = RandomTeleportSettings.class)
     @Comment("")

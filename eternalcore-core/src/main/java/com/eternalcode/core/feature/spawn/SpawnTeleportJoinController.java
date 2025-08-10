@@ -18,50 +18,48 @@ import org.slf4j.LoggerFactory;
 public class SpawnTeleportJoinController implements Listener {
 
     private static final String WARNING = "Spawn is not set! Set it using the /setspawn command";
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpawnTeleportJoinController.class);
+    private final Logger logger;
 
     private final LocationsConfiguration locationsConfiguration;
     private final SpawnJoinSettings spawnJoinSettings;
 
+    private boolean warningShown = false;
+
     @Inject
     public SpawnTeleportJoinController(
         LocationsConfiguration locationsConfiguration,
-        SpawnJoinSettings spawnJoinSettings) {
+        SpawnJoinSettings spawnJoinSettings,
+        Logger logger
+    ) {
         this.locationsConfiguration = locationsConfiguration;
         this.spawnJoinSettings = spawnJoinSettings;
-    }
-
-    @EventHandler
-    void onFirstJoin(PlayerJoinEvent event) {
-        if (!this.spawnJoinSettings.teleportToSpawnOnFirstJoin()) {
-            return;
-        }
-
-        Player player = event.getPlayer();
-
-        if (player.hasPlayedBefore()) {
-            return;
-        }
-
-        this.teleportToSpawn(player);
+        this.logger = logger;
     }
 
     @EventHandler
     void onJoin(PlayerJoinEvent event) {
-        if (!this.spawnJoinSettings.teleportToSpawnOnJoin()) {
-            return;
-        }
         Player player = event.getPlayer();
 
-        this.teleportToSpawn(player);
+        if (!player.hasPlayedBefore()) {
+            if (this.spawnJoinSettings.teleportNewPlayersToSpawn()) {
+                this.teleportToSpawn(player);
+            }
+            return;
+        }
+
+        if (this.spawnJoinSettings.teleportPlayersToSpawnOnJoin()) {
+            this.teleportToSpawn(player);
+        }
     }
 
     void teleportToSpawn(Player player) {
         Position spawnPosition = this.locationsConfiguration.spawn;
 
         if (spawnPosition == null || spawnPosition.isNoneWorld()) {
-            LOGGER.warn(WARNING);
-
+            if (!this.warningShown) {
+                this.logger.warn(WARNING);
+                this.warningShown = true;
+            }
             return;
         }
 

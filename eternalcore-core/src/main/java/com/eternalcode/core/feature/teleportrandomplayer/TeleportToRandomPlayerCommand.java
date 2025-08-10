@@ -14,22 +14,22 @@ import org.bukkit.entity.Player;
 @Permission("eternalcode.tprp")
 public class TeleportToRandomPlayerCommand {
 
-    private final TeleportRandomPlayerService teleportRandomPlayerService;
+    private final TeleportRandomPlayerService randomPlayerService;
     private final NoticeService noticeService;
 
     @Inject
     public TeleportToRandomPlayerCommand(
-        TeleportRandomPlayerService teleportRandomPlayerService,
+        TeleportRandomPlayerService randomPlayerService,
         NoticeService noticeService
     ) {
-        this.teleportRandomPlayerService = teleportRandomPlayerService;
+        this.randomPlayerService = randomPlayerService;
         this.noticeService = noticeService;
     }
 
     @Execute
     @DescriptionDocs(description = "Teleport to a player who hasn't been teleported to recently, ensuring fair distribution")
     void execute(@Context Player player) {
-        Player targetPlayer = this.teleportRandomPlayerService.findLeastRecentlyTeleportedPlayer(player);
+        Player targetPlayer = this.randomPlayerService.findLeastRecentlyTeleportedPlayer(player);
 
         if (targetPlayer != null && targetPlayer.equals(player)) {
             this.noticeService.create()
@@ -47,7 +47,7 @@ public class TeleportToRandomPlayerCommand {
             return;
         }
 
-        this.teleportRandomPlayerService.updateTeleportationHistory(player, targetPlayer);
+        this.randomPlayerService.updateTeleportationHistory(player, targetPlayer);
 
         PaperLib.teleportAsync(player, targetPlayer.getLocation());
 
