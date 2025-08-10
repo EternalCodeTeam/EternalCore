@@ -15,8 +15,8 @@ import org.jetbrains.annotations.Nullable;
 @Service
 public class TeleportRandomPlayerService {
 
+    private final TeleportToRandomPlayerSettings randomPlayerSettings;
     private final Server server;
-    private final TeleportToRandomPlayerSettings teleportToRandomPlayerSettings;
 
     private final Cache<HistoryKey, Instant> teleportationHistory = Caffeine.newBuilder()
         .expireAfterWrite(30, TimeUnit.MINUTES)
@@ -24,11 +24,11 @@ public class TeleportRandomPlayerService {
 
     @Inject
     public TeleportRandomPlayerService(
-        Server server,
-        TeleportToRandomPlayerSettings teleportToRandomPlayerSettings
+        TeleportToRandomPlayerSettings randomPlayerSettings,
+        Server server
     ) {
+        this.randomPlayerSettings = randomPlayerSettings;
         this.server = server;
-        this.teleportToRandomPlayerSettings = teleportToRandomPlayerSettings;
     }
 
     @Nullable
@@ -36,7 +36,7 @@ public class TeleportRandomPlayerService {
         UUID senderId = sender.getUniqueId();
         return this.server.getOnlinePlayers().stream()
             .filter(target -> !target.equals(sender))
-            .filter(target -> this.teleportToRandomPlayerSettings.teleportToOpPlayers() || !target.isOp())
+            .filter(target -> this.randomPlayerSettings.teleportToOpPlayers() || !target.isOp())
             .min(Comparator.comparing(target -> this.getTeleportationHistory(target, senderId)))
             .orElse(null);
     }

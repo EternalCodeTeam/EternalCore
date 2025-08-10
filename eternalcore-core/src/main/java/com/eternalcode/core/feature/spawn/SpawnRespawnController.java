@@ -12,18 +12,18 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 @Controller
 class SpawnRespawnController implements Listener {
 
-    private final TeleportService teleportService;
     private final SpawnJoinSettings spawnJoinSettings;
+    private final TeleportService teleportService;
     private final SpawnService spawnService;
 
     @Inject
     SpawnRespawnController(
-        TeleportService teleportService,
         SpawnJoinSettings spawnJoinSettings,
+        TeleportService teleportService,
         SpawnService spawnService
     ) {
-        this.teleportService = teleportService;
         this.spawnJoinSettings = spawnJoinSettings;
+        this.teleportService = teleportService;
         this.spawnService = spawnService;
     }
 
@@ -31,8 +31,8 @@ class SpawnRespawnController implements Listener {
     void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
-        final boolean forceSpawn = this.spawnJoinSettings.alwaysTeleportToSpawnAfterDeath();
-        final boolean usePersonalRespawn = this.spawnJoinSettings.teleportToPersonalRespawnPoint() && this.hasRespawnPoint(player);
+        boolean forceSpawn = this.spawnJoinSettings.alwaysTeleportToSpawnAfterDeath();
+        boolean usePersonalRespawn = this.spawnJoinSettings.teleportToPersonalRespawnPoint() && this.hasRespawnPoint(player);
 
         if (usePersonalRespawn && !forceSpawn) {
             return;

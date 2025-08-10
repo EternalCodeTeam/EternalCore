@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class SpawnTeleportJoinController implements Listener {
 
     private static final String WARNING = "Spawn is not set! Set it using the /setspawn command";
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpawnTeleportJoinController.class);
+    private final Logger logger;
 
     private final LocationsConfiguration locationsConfiguration;
     private final SpawnJoinSettings spawnJoinSettings;
@@ -28,10 +28,12 @@ public class SpawnTeleportJoinController implements Listener {
     @Inject
     public SpawnTeleportJoinController(
         LocationsConfiguration locationsConfiguration,
-        SpawnJoinSettings spawnJoinSettings
+        SpawnJoinSettings spawnJoinSettings,
+        Logger logger
     ) {
         this.locationsConfiguration = locationsConfiguration;
         this.spawnJoinSettings = spawnJoinSettings;
+        this.logger = logger;
     }
 
     @EventHandler
@@ -55,7 +57,7 @@ public class SpawnTeleportJoinController implements Listener {
 
         if (spawnPosition == null || spawnPosition.isNoneWorld()) {
             if (!this.warningShown) {
-                LOGGER.warn(WARNING);
+                this.logger.warn(WARNING);
                 this.warningShown = true;
             }
             return;

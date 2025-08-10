@@ -23,25 +23,25 @@ class SpawnCommand {
 
     private static final String SPAWN_TELEPORT_BYPASS = "eternalcore.spawn.bypass";
 
-    private final SpawnJoinSettings spawnJoinSettings;
-    private final SpawnService spawnService;
     private final TeleportTaskService teleportTaskService;
+    private final SpawnJoinSettings spawnJoinSettings;
     private final TeleportService teleportService;
     private final NoticeService noticeService;
+    private final SpawnService spawnService;
 
     @Inject
     SpawnCommand(
-        SpawnJoinSettings spawnJoinSettings,
-        SpawnService spawnService,
-        NoticeService noticeService,
         TeleportTaskService teleportTaskService,
-        TeleportService teleportService
+        SpawnJoinSettings spawnJoinSettings,
+        TeleportService teleportService,
+        NoticeService noticeService,
+        SpawnService spawnService
     ) {
-        this.spawnJoinSettings = spawnJoinSettings;
-        this.spawnService = spawnService;
         this.teleportTaskService = teleportTaskService;
-        this.noticeService = noticeService;
+        this.spawnJoinSettings = spawnJoinSettings;
         this.teleportService = teleportService;
+        this.noticeService = noticeService;
+        this.spawnService = spawnService;
     }
 
     @Execute

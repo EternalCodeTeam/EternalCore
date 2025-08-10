@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class TeleportToRandomPlayerConfig extends OkaeriConfig implements TeleportToRandomPlayerSettings {
+
     @Comment("# Should random teleport pick OP players too?")
     public boolean teleportToOpPlayers = false;
+
 }
