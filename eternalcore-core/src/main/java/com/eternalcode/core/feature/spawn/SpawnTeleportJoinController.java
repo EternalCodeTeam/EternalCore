@@ -6,13 +6,12 @@ import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import io.papermc.lib.PaperLib;
+import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class SpawnTeleportJoinController implements Listener {
@@ -57,7 +56,7 @@ public class SpawnTeleportJoinController implements Listener {
 
         if (spawnPosition == null || spawnPosition.isNoneWorld()) {
             if (!this.warningShown) {
-                this.logger.warn(WARNING);
+                this.logger.warning(WARNING);
                 this.warningShown = true;
             }
             return;

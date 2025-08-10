@@ -9,7 +9,7 @@ import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.slf4j.Logger;
+import java.util.logging.Logger;
 
 @Service
 public class SpawnServiceImpl implements SpawnService {
@@ -32,7 +32,7 @@ public class SpawnServiceImpl implements SpawnService {
         Position spawn = this.locationsConfiguration.spawn;
 
         if (spawn.isNoneWorld()) {
-            this.logger.warn(WARNING);
+            this.logger.warning(WARNING);
 
             return;
         }
