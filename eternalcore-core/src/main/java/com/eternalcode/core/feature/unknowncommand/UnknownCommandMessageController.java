@@ -1,8 +1,7 @@
 package com.eternalcode.core.feature.unknowncommand;
 
-
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -24,13 +23,17 @@ class UnknownCommandMessageController implements Listener {
     static final String COMMANDBLOCKER_BYPASS = "eternalcore.commandblocker.bypass";
 
     private final NoticeService noticeService;
-    private final PluginConfiguration config;
+    private final ChatSettings chatSettings;
     private final Server server;
 
     @Inject
-    UnknownCommandMessageController(NoticeService noticeService, PluginConfiguration config, Server server) {
+    UnknownCommandMessageController(
+        NoticeService noticeService,
+        ChatSettings chatSettings,
+        Server server
+    ) {
         this.noticeService = noticeService;
-        this.config = config;
+        this.chatSettings = chatSettings;
         this.server = server;
     }
 
@@ -44,7 +47,7 @@ class UnknownCommandMessageController implements Listener {
             return;
         }
 
-        if (!this.config.chat.replaceStandardHelpMessage) {
+        if (!this.chatSettings.replaceStandardHelpMessage()) {
             return;
         }
 

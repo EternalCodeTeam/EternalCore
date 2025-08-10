@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
+import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
@@ -13,7 +14,7 @@ import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
-import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
+import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
@@ -221,7 +222,7 @@ public interface Translation {
     // tpa section
     TeleportRequestMessages tpa();
     // private section
-    PrivateChatMessages privateChat();
+    MsgMessages msg();
     // afk section
     AfkMessages afk();
     // event section
@@ -252,6 +253,8 @@ public interface Translation {
     AutoMessageMessages autoMessage();
     // jail section
     JailMessages jailSection();
+    // burn section
+    BurnMessages burn();
     // vanish section
     VanishMessages vanish();
     // motd section

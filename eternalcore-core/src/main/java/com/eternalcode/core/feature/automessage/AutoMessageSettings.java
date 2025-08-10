@@ -10,6 +10,8 @@ public interface AutoMessageSettings {
 
     DrawMode drawMode();
 
+    int minPlayers();
+
     enum DrawMode {
         RANDOM,
         SEQUENTIAL

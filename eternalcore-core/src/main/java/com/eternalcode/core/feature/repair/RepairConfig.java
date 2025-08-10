@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
-public class RepairConfig extends OkaeriConfig {
+public class RepairConfig extends OkaeriConfig implements RepairSettings {
 
     @Comment("# Repair command cooldown")
     public Duration repairDelay = Duration.ofSeconds(5);

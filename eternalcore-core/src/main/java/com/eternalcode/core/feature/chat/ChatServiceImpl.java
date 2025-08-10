@@ -18,13 +18,13 @@ class ChatServiceImpl implements ChatService {
     ChatServiceImpl(ChatSettings chatSettings) {
         this.chatSettings = chatSettings;
         this.slowdown = Caffeine.newBuilder()
-            .expireAfterWrite(this.chatSettings.getChatDelay().plus(Duration.ofSeconds(10)))
+            .expireAfterWrite(this.chatSettings.chatDelay().plus(Duration.ofSeconds(10)))
             .build();
     }
 
     @Override
     public void markUseChat(UUID userUuid) {
-        Duration chatDelay = this.chatSettings.getChatDelay();
+        Duration chatDelay = this.chatSettings.chatDelay();
 
         this.slowdown.put(userUuid, Instant.now().plus(chatDelay));
     }

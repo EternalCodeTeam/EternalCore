@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.warp;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.teleport.Teleport;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
@@ -27,24 +26,24 @@ public class WarpTeleportService {
     static final String WARP_BYPASS = "eternalcore.warp.bypass";
 
     private final TeleportTaskService teleportTaskService;
-    private final PluginConfiguration pluginConfiguration;
+    private final WarpSettings warpSettings;
     private final EventCaller eventCaller;
 
     @Inject
     public WarpTeleportService(
         TeleportTaskService teleportTaskService,
-        PluginConfiguration pluginConfiguration,
+        WarpSettings warpSettings,
         EventCaller eventCaller
     ) {
         this.teleportTaskService = teleportTaskService;
-        this.pluginConfiguration = pluginConfiguration;
+        this.warpSettings = warpSettings;
         this.eventCaller = eventCaller;
     }
 
     public void teleport(Player player, Warp warp) {
         Duration teleportTime = player.hasPermission(WARP_BYPASS)
             ? Duration.ZERO
-            : this.pluginConfiguration.warp.teleportTimeToWarp;
+            : this.warpSettings.teleportTimeToWarp();
 
         PreWarpTeleportEvent pre = this.eventCaller.callEvent(new PreWarpTeleportEvent(player, warp, teleportTime));
 

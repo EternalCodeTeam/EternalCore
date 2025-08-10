@@ -7,21 +7,24 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import io.papermc.lib.PaperLib;
-import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.slf4j.Logger;
 
 @Service
 public class SpawnServiceImpl implements SpawnService {
 
-    public static final Logger LOGGER = Logger.getLogger(SpawnServiceImpl.class.getName());
+    private static final String WARNING = "The spawn location is not set, set it with /setspawn!";
+
     private final LocationsConfiguration locationsConfiguration;
     private final ConfigurationManager configurationManager;
+    private final Logger logger;
 
     @Inject
-    public SpawnServiceImpl(LocationsConfiguration locationsConfiguration, ConfigurationManager configurationManager) {
+    public SpawnServiceImpl(LocationsConfiguration locationsConfiguration, ConfigurationManager configurationManager, Logger logger) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
+        this.logger = logger;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class SpawnServiceImpl implements SpawnService {
         Position spawn = this.locationsConfiguration.spawn;
 
         if (spawn.isNoneWorld()) {
-            LOGGER.warning("The spawn location is not set, set it with /setspawn!");
+            this.logger.warn(WARNING);
 
             return;
         }

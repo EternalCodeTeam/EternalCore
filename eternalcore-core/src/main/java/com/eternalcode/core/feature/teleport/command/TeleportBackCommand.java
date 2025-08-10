@@ -13,10 +13,9 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.Optional;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.util.Optional;
 
 @Command(name = "back")
 class TeleportBackCommand {
@@ -49,7 +48,7 @@ class TeleportBackCommand {
         if (player.hasPermission("eternalcore.teleport.bypass")) {
             this.teleportService.teleport(player, location.get());
         } else {
-            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.teleportTime());
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.tpaTimer());
         }
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.teleport().teleportedToLastLocation());
@@ -70,7 +69,7 @@ class TeleportBackCommand {
         if (player.hasPermission("eternalcore.teleport.bypass")){
             this.teleportService.teleport(player, location.get());
         } else {
-            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.teleportTime());
+            this.teleportTaskService.createTeleport(player.getUniqueId(), PositionAdapter.convert(player.getLocation()), PositionAdapter.convert(location.get()), this.settings.tpaTimer());
         }
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.teleport().teleportedToLastLocation());

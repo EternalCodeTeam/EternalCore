@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.warp.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpInventory;
 import com.eternalcode.core.feature.warp.WarpService;
+import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -12,9 +12,8 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.entity.Player;
-
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 @Command(name = "setwarp")
 @Permission("eternalcore.setwarp")
@@ -25,14 +24,19 @@ class SetWarpCommand {
     private final WarpService warpService;
     private final WarpInventory warpInventory;
     private final NoticeService noticeService;
-    private final PluginConfiguration config;
+    private final WarpSettings warpSettings;
 
     @Inject
-    SetWarpCommand(WarpService warpService, WarpInventory warpInventory, NoticeService noticeService, PluginConfiguration config) {
+    SetWarpCommand(
+        WarpService warpService,
+        WarpInventory warpInventory,
+        NoticeService noticeService,
+        WarpSettings warpSettings
+    ) {
         this.warpService = warpService;
         this.warpInventory = warpInventory;
         this.noticeService = noticeService;
-        this.config = config;
+        this.warpSettings = warpSettings;
     }
 
     @Execute
@@ -62,7 +66,7 @@ class SetWarpCommand {
             .placeholder("{WARP}", warp)
             .send();
 
-        if (this.config.warp.autoAddNewWarps) {
+        if (this.warpSettings.autoAddNewWarps()) {
             if (this.warpService.getWarps().size() <= MAX_WARPS_IN_GUI) {
                 this.warpInventory.addWarp(createdWarp);
 

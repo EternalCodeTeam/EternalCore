@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
-public class HomesConfig extends OkaeriConfig {
+public class HomesConfig extends OkaeriConfig implements HomesSettings {
     @Comment("# Default home name")
     public String defaultHomeName = "home";
 

@@ -2,8 +2,12 @@ package com.eternalcode.core.database;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
+@Getter
+@Accessors(fluent = true)
 public class DatabaseConfig extends OkaeriConfig implements DatabaseSettings {
 
     @Comment({"Type of the database driver (e.g., SQLITE, H2, MYSQL, MARIADB, POSTGRESQL).", "Determines the "
@@ -38,49 +42,4 @@ public class DatabaseConfig extends OkaeriConfig implements DatabaseSettings {
 
     @Comment("Connection timeout in milliseconds. This is the maximum time to wait for a connection from the pool.")
     public int timeout = 30000;
-
-    @Override
-    public DatabaseDriverType getDriverType() {
-        return this.databaseType;
-    }
-
-    @Override
-    public String getHostname() {
-        return this.hostname;
-    }
-
-    @Override
-    public int getPort() {
-        return this.port;
-    }
-
-    @Override
-    public String getDatabase() {
-        return this.database;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public boolean isSSL() {
-        return this.ssl;
-    }
-
-    @Override
-    public int poolSize() {
-        return this.poolSize;
-    }
-
-    @Override
-    public int timeout() {
-        return this.timeout;
-    }
 }

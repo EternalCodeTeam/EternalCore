@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 class DatabaseManagerSetup {
 
     @Bean
-    DatabaseManager databaseManager(PluginConfiguration pluginConfiguration, Logger logger, File dataFolder) {
-        DatabaseManager databaseManager = new DatabaseManager(logger, dataFolder, pluginConfiguration.database);
+    DatabaseManager databaseManager(DatabaseSettings databaseSettings, Logger logger, File dataFolder) {
+        DatabaseManager databaseManager = new DatabaseManager(logger, dataFolder, databaseSettings);
 
         databaseManager.connect();
         return databaseManager;

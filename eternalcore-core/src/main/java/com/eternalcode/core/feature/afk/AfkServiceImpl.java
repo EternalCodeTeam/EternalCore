@@ -7,14 +7,13 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
-import java.util.HashMap;
-import java.util.Optional;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.time.Duration;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.ApiStatus;
 
 @Service
 class AfkServiceImpl implements AfkService {
@@ -115,7 +114,7 @@ class AfkServiceImpl implements AfkService {
         Instant now = Instant.now();
         Instant lastMovement = this.lastInteraction.get(playerUniqueId);
 
-        return lastMovement != null && Duration.between(lastMovement, now).compareTo(this.afkSettings.getAfkInactivityTime()) >= 0;
+        return lastMovement != null && Duration.between(lastMovement, now).compareTo(this.afkSettings.afkInactivityTime()) >= 0;
     }
 
     private void sendAfkNotification(UUID playerUniqueId, boolean afk) {

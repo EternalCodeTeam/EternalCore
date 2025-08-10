@@ -1,20 +1,19 @@
-package com.eternalcode.core.feature.privatechat.toggle;
+package com.eternalcode.core.feature.msg.toggle;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 @Service
-class PrivateChatStateServiceImpl implements PrivateChatStateService {
+class MsgToggleServiceImpl implements MsgToggleService {
 
-    private final PrivateChatStateRepository msgToggleRepository;
-    private final ConcurrentHashMap<UUID, PrivateChatState> cachedToggleStates;
+    private final MsgToggleRepository msgToggleRepository;
+    private final ConcurrentHashMap<UUID, MsgState> cachedToggleStates;
 
     @Inject
-    PrivateChatStateServiceImpl(PrivateChatStateRepository msgToggleRepository) {
+    MsgToggleServiceImpl(MsgToggleRepository msgToggleRepository) {
         this.cachedToggleStates = new ConcurrentHashMap<>();
         this.msgToggleRepository = msgToggleRepository;
 
@@ -22,7 +21,7 @@ class PrivateChatStateServiceImpl implements PrivateChatStateService {
 
 
     @Override
-    public CompletableFuture<PrivateChatState> getChatState(UUID playerUniqueId) {
+    public CompletableFuture<MsgState> getState(UUID playerUniqueId) {
         if (this.cachedToggleStates.containsKey(playerUniqueId)) {
             return CompletableFuture.completedFuture(this.cachedToggleStates.get(playerUniqueId));
         }
@@ -31,7 +30,7 @@ class PrivateChatStateServiceImpl implements PrivateChatStateService {
     }
 
     @Override
-    public CompletableFuture<Void> setChatState(UUID playerUniqueId, PrivateChatState state) {
+    public CompletableFuture<Void> setState(UUID playerUniqueId, MsgState state) {
         this.cachedToggleStates.put(playerUniqueId, state);
 
         return this.msgToggleRepository.setPrivateChatState(playerUniqueId, state)
@@ -42,10 +41,10 @@ class PrivateChatStateServiceImpl implements PrivateChatStateService {
     }
 
     @Override
-    public CompletableFuture<PrivateChatState> toggleChatState(UUID playerUniqueId) {
-        return this.getChatState(playerUniqueId).thenCompose(state -> {
-            PrivateChatState newState = state.invert();
-            return this.setChatState(playerUniqueId, newState)
+    public CompletableFuture<MsgState> toggleState(UUID playerUniqueId) {
+        return this.getState(playerUniqueId).thenCompose(state -> {
+            MsgState newState = state.invert();
+            return this.setState(playerUniqueId, newState)
                 .thenApply(aVoid -> newState);
         });
     }

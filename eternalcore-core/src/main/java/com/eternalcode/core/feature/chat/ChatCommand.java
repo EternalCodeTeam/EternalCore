@@ -13,14 +13,12 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
-import com.eternalcode.multification.notice.Notice;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
-import java.util.function.Supplier;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
@@ -82,7 +80,7 @@ class ChatCommand {
     @Execute(name = "on")
     @DescriptionDocs(description = "Enables chat")
     void enable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (this.chatSettings.isChatEnabled()) {
+        if (this.chatSettings.chatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
         }
@@ -93,7 +91,7 @@ class ChatCommand {
             return;
         }
 
-        this.chatSettings.setChatEnabled(true);
+        this.chatSettings.chatEnabled(true);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().enabled())
@@ -105,7 +103,7 @@ class ChatCommand {
     @Execute(name = "off")
     @DescriptionDocs(description = "Disables chat")
     void disable(@Context Viewer viewer, @Context CommandSender sender) {
-        if (!this.chatSettings.isChatEnabled()) {
+        if (!this.chatSettings.chatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;
         }
@@ -116,7 +114,7 @@ class ChatCommand {
             return;
         }
 
-        this.chatSettings.setChatEnabled(false);
+        this.chatSettings.chatEnabled(false);
 
         this.noticeService.create()
             .notice(translation -> translation.chat().disabled())
@@ -133,7 +131,7 @@ class ChatCommand {
             return;
         }
 
-        Duration currentDelay = this.chatSettings.getChatDelay();
+        Duration currentDelay = this.chatSettings.chatDelay();
         EditSlowModeEvent event =
             this.eventCaller.callEvent(new EditSlowModeEvent(currentDelay, duration, viewer.getUniqueId()));
 
@@ -141,7 +139,7 @@ class ChatCommand {
             return;
         }
 
-        this.chatSettings.setChatDelay(duration);
+        this.chatSettings.chatDelay(duration);
         this.scheduler.runAsync(() -> this.configManager.save(this.config));
 
         if (duration.isZero()) {

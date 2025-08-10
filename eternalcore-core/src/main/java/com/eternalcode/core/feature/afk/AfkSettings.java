@@ -8,8 +8,10 @@ public interface AfkSettings {
 
     int interactionsCountDisableAfk();
 
-    Duration getAfkDelay();
+    Duration afkCommandDelay();
 
-    Duration getAfkInactivityTime();
+    Duration afkInactivityTime();
+
+    boolean kickOnAfk();
 
 }

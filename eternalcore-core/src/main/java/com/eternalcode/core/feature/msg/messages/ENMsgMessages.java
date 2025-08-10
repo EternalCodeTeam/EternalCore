@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.privatechat.messages;
+package com.eternalcode.core.feature.msg.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
@@ -8,15 +8,15 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
-public class ENPrivateMessages extends OkaeriConfig implements PrivateChatMessages {
+public class ENMsgMessages extends OkaeriConfig implements MsgMessages {
     public Notice noReply = Notice.chat("<red>► <dark_red>You have no one to reply!");
 
     @Comment("# {TARGET} - Player that you want to send messages, {MESSAGE} - Message")
-    public Notice privateMessageYouToTarget =
+    public Notice msgYouToTarget =
         Notice.chat("<dark_gray>[<gray>You -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
 
     @Comment({" ", "# {SENDER} - Message sender, {MESSAGE} - Message"})
-    public Notice privateMessageTargetToYou =
+    public Notice msgTargetToYou =
         Notice.chat("<dark_gray>[<gray>{SENDER} -> <white>You<dark_gray>]<gray>: <white>{MESSAGE}");
 
     @Comment("# {SENDER} - Sender, {TARGET} - Target, {MESSAGE} - Message")

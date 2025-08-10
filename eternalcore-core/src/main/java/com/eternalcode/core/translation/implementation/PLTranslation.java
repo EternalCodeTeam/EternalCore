@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
@@ -13,7 +14,7 @@ import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
-import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
+import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
@@ -298,7 +299,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Ta sekcja odpowiada za ustawianie i edycję wiadomości prywatnych",
     })
-    public PLPrivateChatMessages privateChat = new PLPrivateChatMessages();
+    public PLMsgMessages msg = new PLMsgMessages();
 
     @Comment({
         " ",
@@ -594,10 +595,12 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
     public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
 
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące komendy /burn"})
+    public PLBurnMessages burn = new PLBurnMessages();
+  
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
     public PLVanishMessages vanish = new PLVanishMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
     public PLMotdMessages motd = new PLMotdMessages();
-
 }
