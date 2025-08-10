@@ -27,6 +27,11 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <dark_red>{KILLER}!")
     );
 
+    @Comment("# {PLAYER} - Player who died from an unknown cause")
+    public List<Notice> unknownDeathCause = List.of(
+        Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died under mysterious circumstances!")
+    );
+
     @Comment({
         "# Messages shown when a player dies from specific damage causes",
         "# {PLAYER} - Killed player",
@@ -106,11 +111,6 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
         )
     );
 
-    @Comment("# {PLAYER} - Player who died from an unknown cause")
-    public List<Notice> unknownDeathCause = List.of(
-        Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died under mysterious circumstances!")
-    );
-
     @Comment({
         "# Enhanced death messages by entity type",
         "# {PLAYER} - Killed player",
@@ -163,12 +163,6 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
                 .chat("<white>☠ <dark_red>{PLAYER} <red>was teleported into nothingness by an Enderman!")
                 .build()
         ),
-        "WITCH", Collections.singletonList(
-            BukkitNotice.builder()
-                .sound(Sound.ENTITY_WITCH_DEATH)
-                .chat("<white>☠ <dark_red>{PLAYER} <red>was cursed by a witch!")
-                .build()
-        ),
 
         "CACTUS", Arrays.asList(
             BukkitNotice.builder()
@@ -192,10 +186,10 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
                 .chat("<white>☠ <dark_red>{PLAYER} <red>was scratched to death by a berry bush!")
                 .build()
         ),
-        "WITHER_SKULL", Collections.singletonList(
+        "PRIMED_TNT", Collections.singletonList(
             BukkitNotice.builder()
-                .sound(Sound.ENTITY_WITHER_DEATH)
-                .chat("<white>☠ <dark_red>{PLAYER} <red>was annihilated by a wither skull!")
+                .sound(Sound.ENTITY_GENERIC_EXPLODE)
+                .chat("<white>☠ <dark_red>{PLAYER} <red>was blown up by <dark_red>{KILLER} <red>using TNT!")
                 .build()
         )
     );
@@ -239,12 +233,6 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
             BukkitNotice.builder()
                 .sound(Sound.ENTITY_PLAYER_ATTACK_CRIT)
                 .chat("<white>☠ <dark_red>{PLAYER} <red>was annihilated by <dark_red>{KILLER}<red>'s netherite sword!")
-                .build()
-        ),
-        "PRIMED_TNT", Collections.singletonList(
-            BukkitNotice.builder()
-                .sound(Sound.ENTITY_GENERIC_EXPLODE)
-                .chat("<white>☠ <dark_red>{PLAYER} <red>was blown up by <dark_red>{KILLER} <red>using TNT!")
                 .build()
         ),
         "HAND", Collections.singletonList(

@@ -27,6 +27,11 @@ public class PLDeathMessages extends OkaeriConfig implements DeathMessages {
         Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął tragicznie podczas ciężkiej walki!")
     );
 
+    @Comment("# {PLAYER} - Gracz, który zginął z nieznanej przyczyny")
+    public List<Notice> unknownDeathCause = List.of(
+        Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt!")
+    );
+
     @Comment({
         "# Wiadomości wyświetlane gdy gracz ginie od konkretnego typu obrażeń",
         "# {PLAYER} - Gracz, który zginął",
@@ -240,10 +245,5 @@ public class PLDeathMessages extends OkaeriConfig implements DeathMessages {
                 .chat("<white>☠ <dark_red>{PLAYER} <red>został zmasakrowany gołymi rękami przez <dark_red>{KILLER}!")
                 .build()
         )
-    );
-
-    @Comment("# {PLAYER} - Gracz, który zginął z nieznanej przyczyny")
-    public List<Notice> unknownDeathCause = List.of(
-        Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt!")
     );
 }
