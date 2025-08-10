@@ -1,52 +1,52 @@
 package com.eternalcode.core.feature.spawn;
 
-import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
+import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.feature.teleport.TeleportService;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import java.util.Objects;
-
 @Controller
 class SpawnRespawnController implements Listener {
 
+    private final SpawnJoinSettings spawnJoinSettings;
     private final TeleportService teleportService;
-    private final PluginConfiguration config;
-    private final LocationsConfiguration locations;
+    private final SpawnService spawnService;
 
     @Inject
-    SpawnRespawnController(TeleportService teleportService, PluginConfiguration config, LocationsConfiguration locations) {
+    SpawnRespawnController(
+        SpawnJoinSettings spawnJoinSettings,
+        TeleportService teleportService,
+        SpawnService spawnService
+    ) {
+        this.spawnJoinSettings = spawnJoinSettings;
         this.teleportService = teleportService;
-        this.config = config;
-        this.locations = locations;
+        this.spawnService = spawnService;
     }
 
     @EventHandler
     void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
-        if (this.config.teleport.teleportToRespawnPoint && this.hasRespawnPoint(player)) {
+        boolean forceSpawn = this.spawnJoinSettings.alwaysTeleportToSpawnAfterDeath();
+        boolean usePersonalRespawn = this.spawnJoinSettings.teleportToPersonalRespawnPoint() && this.hasRespawnPoint(player);
+
+        if (usePersonalRespawn && !forceSpawn) {
             return;
         }
 
-        Position spawnPosition = this.locations.spawn;
-
-        if (this.config.teleport.teleportToSpawnOnDeath && !Objects.equals(spawnPosition.world(), Position.NONE_WORLD)) {
-            Location destinationLocation = PositionAdapter.convert(spawnPosition);
-            this.teleportService.teleport(player, destinationLocation);
+        if (this.spawnJoinSettings.teleportToSpawnAfterDeath()) {
+            Location spawnLocation = this.spawnService.getSpawnLocation();
+            if (spawnLocation != null) {
+                this.teleportService.teleport(player, spawnLocation);
+            }
         }
     }
 
-    boolean hasRespawnPoint(Player player) {
-        return player.getBedSpawnLocation() != null;
+    private boolean hasRespawnPoint(Player player) {
+        return player.getRespawnLocation() != null;
     }
-
 }

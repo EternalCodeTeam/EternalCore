@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.repair;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -24,13 +23,13 @@ class RepairCommand {
 
     private final NoticeService noticeService;
     private final Delay<UUID> delay;
-    private final PluginConfiguration config;
+    private final RepairSettings repairSettings;
 
     @Inject
-    RepairCommand(NoticeService noticeService, PluginConfiguration config) {
+    RepairCommand(NoticeService noticeService, RepairSettings repairSettings) {
         this.noticeService = noticeService;
-        this.config = config;
-        this.delay = new Delay<>(() -> this.config.repair.repairDelay());
+        this.repairSettings = repairSettings;
+        this.delay = new Delay<>(() -> this.repairSettings.repairDelay());
     }
 
     @Execute
@@ -74,7 +73,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.repairDelay());
+        this.delay.markDelay(uuid, this.repairSettings.repairDelay());
     }
 
     @Execute(name = "all")
@@ -118,7 +117,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.repairDelay());
+        this.delay.markDelay(uuid, this.repairSettings.repairDelay());
     }
 
     @Execute(name = "armor")
@@ -162,7 +161,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.config.repair.repairDelay());
+        this.delay.markDelay(uuid, this.repairSettings.repairDelay());
     }
 
     private boolean hasRepairDelay(UUID uuid) {

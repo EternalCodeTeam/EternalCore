@@ -1,20 +1,19 @@
 package com.eternalcode.core.feature.teleportrequest;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-
 import java.util.List;
 import java.util.UUID;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 @Command(name = "tpaaccept", aliases = "tpaccept")
 @Permission("eternalcore.tpaccept")
@@ -42,7 +41,7 @@ class TpaAcceptCommand {
             target.getUniqueId(),
             PositionAdapter.convert(target.getLocation()),
             PositionAdapter.convert(player.getLocation()),
-            this.settings.teleportTime()
+            this.settings.tpaTimer()
         );
 
         this.requestService.removeRequest(target.getUniqueId());
@@ -84,7 +83,7 @@ class TpaAcceptCommand {
                     requester.getUniqueId(),
                     PositionAdapter.convert(requester.getLocation()),
                     PositionAdapter.convert(player.getLocation()),
-                    this.settings.teleportTime()
+                    this.settings.tpaTimer()
                 );
 
                 this.noticeService

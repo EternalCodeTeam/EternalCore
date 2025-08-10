@@ -1,36 +1,34 @@
 package com.eternalcode.core.feature.butcher;
 
 import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
-import com.eternalcode.core.viewer.ViewerService;
-import com.eternalcode.multification.notice.NoticeBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.core.viewer.ViewerService;
+import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
-import org.bukkit.command.CommandSender;
-
 import java.util.stream.IntStream;
+import org.bukkit.command.CommandSender;
 
 @LiteArgument(type = int.class, name = ButcherArgument.KEY)
 class ButcherArgument extends AbstractViewerArgument<Integer> {
 
     static final String KEY = "chunks";
-    private final PluginConfiguration pluginConfiguration;
+    private final ButcherSettings butcherSettings;
     private final NoticeService noticeService;
     private final ViewerService viewerService;
 
     @Inject
-    ButcherArgument(TranslationManager translationManager, PluginConfiguration pluginConfiguration, NoticeService noticeService, ViewerService viewerService) {
+    ButcherArgument(TranslationManager translationManager, ButcherSettings butcherSettings, NoticeService noticeService, ViewerService viewerService) {
         super(translationManager);
-        this.pluginConfiguration = pluginConfiguration;
+        this.butcherSettings = butcherSettings;
         this.noticeService = noticeService;
         this.viewerService = viewerService;
     }
@@ -42,7 +40,7 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
         try {
             int value = Integer.parseInt(argument);
 
-            int safeChunkNumber = this.pluginConfiguration.butcher.safeChunkNumber;
+            int safeChunkNumber = this.butcherSettings.safeChunkNumber();
 
             if (value <= 0) {
                 return ParseResult.failure(translation.argument().incorrectNumberOfChunks());
@@ -66,7 +64,7 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
 
     @Override
     public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Integer> argument, SuggestionContext context) {
-        int safeChunkNumber = this.pluginConfiguration.butcher.safeChunkNumber;
+        int safeChunkNumber = this.butcherSettings.safeChunkNumber();
 
         int range = (safeChunkNumber / 5) + 1;
 

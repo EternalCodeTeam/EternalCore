@@ -5,12 +5,15 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
+import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
+import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.privatechat.messages.ENPrivateMessages;
+import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
@@ -20,8 +23,7 @@ import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.ENTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
-import com.eternalcode.core.feature.troll.demoscreen.messages.ENDemoScreenMessages;
-import com.eternalcode.core.feature.troll.elderguardian.messages.ENElderGuardianMessages;
+import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -183,6 +185,9 @@ public class ENTranslation extends AbstractTranslation {
         @Comment({"# {Y} - Y coordinate of the highest block"})
         public Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Teleported successfully to the highest block! (Y: {Y})");
 
+        @Comment(" ")
+        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>All players have been teleported to you!");
+
         // Task
         @Comment({"# {TIME} - Teleportation time"})
         public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleporting in <green>{TIME}");
@@ -295,7 +300,7 @@ public class ENTranslation extends AbstractTranslation {
         " ",
         "# This section is responsible for setting and editing private messages."
     })
-    public ENPrivateMessages privateChat = new ENPrivateMessages();
+    public ENMsgMessages msg = new ENMsgMessages();
 
     @Comment({
         " ",
@@ -569,16 +574,15 @@ public class ENTranslation extends AbstractTranslation {
     @Comment({" ", "# This section is responsible for handling jail-related stuff."})
     public ENJailMessages jailSection = new ENJailMessages();
 
-    @Comment({" ", "# This section is responsible for troll-related stuff."})
-    public ENTrollSection troll = new ENTrollSection();
+    @Comment({" ", "# This section is responsible for elder guardian messages."})
+    public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
 
-    @Getter
-    public static class ENTrollSection extends OkaeriConfig implements TrollSection {
+    @Comment({" ", "# This section is responsible for demo screen messages."})
+    public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
 
-        @Comment({" ", "# This section is responsible for elder guardian messages."})
-        public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
-
-        @Comment({" ", "# This section is responsible for demo screen messages."})
-        public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
-    }
+    @Comment({" ", "# This section is responsible for '/burn' command messages."})
+    public ENBurnMessages burn = new ENBurnMessages();
+  
+    @Comment({" ", "# This section is responsible for vanish-related stuff."})
+    public ENVanishMessages vanish = new ENVanishMessages();
 }

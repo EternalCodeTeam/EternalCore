@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.home;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.event.HomeTeleportEvent;
 import com.eternalcode.core.feature.home.event.PreHomeTeleportEvent;
@@ -24,7 +23,7 @@ import org.bukkit.entity.Player;
 public class HomeTeleportService {
 
     private final TeleportTaskService teleportTaskService;
-    private final PluginConfiguration pluginConfiguration;
+    private final HomesSettings homesSettings;
     private final EventCaller eventCaller;
 
     static final String HOME_BYPASS = "eternalcore.home.bypass";
@@ -32,11 +31,11 @@ public class HomeTeleportService {
     @Inject
     public HomeTeleportService(
         TeleportTaskService teleportTaskService,
-        PluginConfiguration pluginConfiguration,
+        HomesSettings homesSettings,
         EventCaller eventCaller
     ) {
         this.teleportTaskService = teleportTaskService;
-        this.pluginConfiguration = pluginConfiguration;
+        this.homesSettings = homesSettings;
         this.eventCaller = eventCaller;
     }
 
@@ -51,7 +50,7 @@ public class HomeTeleportService {
 
         Duration teleportTime = player.hasPermission(HOME_BYPASS)
             ? Duration.ZERO
-            : this.pluginConfiguration.homes.teleportTimeToHomes;
+            : this.homesSettings.teleportTimeToHomes();
 
         Position playerLocation = PositionAdapter.convert(player.getLocation());
         Position homeLocation = PositionAdapter.convert(pre.getLocation());

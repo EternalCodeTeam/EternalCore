@@ -1,63 +1,59 @@
 package com.eternalcode.core.feature.adminchat;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.event.EventCaller;
-import com.eternalcode.core.feature.adminchat.event.AdminChatEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-@Command(name = "adminchat", aliases = "ac")
-@Permission("eternalcore.adminchat")
-@PermissionDocs(
-    name = "Admin Chat spy",
-    permission = AdminChatCommand.ADMIN_CHAT_SPY_PERMISSION,
-    description = "Allows the player to see messages sent in admin chat by other players."
-)
-class AdminChatCommand {
+@Command(name = "adminchat", aliases = {"ac"})
+@Permission(AdminChatPermissionConstant.ADMIN_CHAT_PERMISSION)
+final class AdminChatCommand {
 
-    static final String ADMIN_CHAT_SPY_PERMISSION = "eternalcore.adminchat.spy";
-
+    private final AdminChatService adminChatService;
     private final NoticeService noticeService;
-    private final EventCaller eventCaller;
-    private final Server server;
 
     @Inject
-    AdminChatCommand(NoticeService noticeService, EventCaller eventCaller, Server server) {
+    AdminChatCommand(@NotNull AdminChatService adminChatService, @NotNull NoticeService noticeService) {
+        this.adminChatService = adminChatService;
         this.noticeService = noticeService;
-        this.eventCaller = eventCaller;
-        this.server = server;
     }
 
     @Execute
-    @DescriptionDocs(description = "Sends a message to all staff members with eternalcore.adminchat.spy permissions", arguments = "<message>")
-    void execute(@Context CommandSender sender, @Join String message) {
-        AdminChatEvent event = this.eventCaller.callEvent(new AdminChatEvent(sender, message));
+    @DescriptionDocs(
+        description = "Toggles persistent admin chat mode. When enabled, all your messages will be sent to admin chat."
+    )
+    void executeToggle(@Context @NotNull Player sender) {
+        boolean enabled = this.adminChatService.toggleChat(sender.getUniqueId());
 
-        if (event.isCancelled()) {
+        this.noticeService.create()
+            .notice(translation -> enabled
+                ? translation.adminChat().enabled()
+                : translation.adminChat().disabled())
+            .player(sender.getUniqueId())
+            .send();
+    }
+
+    @Execute
+    @DescriptionDocs(
+        description = "Sends a message to all staff members with admin chat permissions.",
+        arguments = "<message>"
+    )
+    void executeSendMessage(@Context @NotNull CommandSender sender, @Join @NotNull String message) {
+        if (message.trim().isEmpty()) {
+            this.noticeService.create()
+                .notice(translation -> translation.argument().noArgument())
+                .sender(sender)
+                .send();
             return;
         }
 
-        String eventMessage = event.getContent();
-
-        NoticeBroadcast notice = this.noticeService.create()
-            .console()
-            .notice(translation -> translation.adminChat().format())
-            .placeholder("{PLAYER}", sender.getName())
-            .placeholder("{TEXT}", eventMessage);
-
-        this.server.getOnlinePlayers().stream()
-            .filter(player -> player.hasPermission(ADMIN_CHAT_SPY_PERMISSION))
-            .forEach(player -> notice.player(player.getUniqueId()));
-
-        notice.send();
+        this.adminChatService.sendAdminChatMessage(message, sender);
     }
 }

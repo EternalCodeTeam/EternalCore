@@ -11,11 +11,10 @@ import dev.rollczi.litecommands.annotations.command.RootCommand;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-
 import java.util.List;
 import java.util.UUID;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 @RootCommand
 class TpaHereActionCommand {
@@ -42,7 +41,7 @@ class TpaHereActionCommand {
             player.getUniqueId(),
             PositionAdapter.convert(player.getLocation()),
             PositionAdapter.convert(target.getLocation()),
-            this.settings.teleportTime()
+            this.settings.tpaTimer()
         );
 
         this.requestService.removeRequest(target.getUniqueId());

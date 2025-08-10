@@ -5,12 +5,15 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
+import com.eternalcode.core.feature.burn.messages.BurnMessages;
+import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
+import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.privatechat.messages.PrivateChatMessages;
+import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
@@ -20,8 +23,7 @@ import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
-import com.eternalcode.core.feature.troll.demoscreen.messages.DemoScreenMessages;
-import com.eternalcode.core.feature.troll.elderguardian.messages.ElderGuardianMessages;
+import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.multification.notice.Notice;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -41,6 +43,7 @@ public interface Translation {
         Notice teleportedToPlayer();
         Notice teleportedPlayerToPlayer();
         Notice teleportedToHighestBlock();
+        Notice teleportedAllToPlayer();
 
         // Task
         Notice teleportTimerFormat();
@@ -190,10 +193,8 @@ public interface Translation {
         Notice genericContainerOpenedFor();
     }
 
-    interface TrollSection {
-        ElderGuardianMessages elderGuardian();
-        DemoScreenMessages demoScreen();
-    }
+    ElderGuardianMessages elderGuardian();
+    DemoScreenMessages demoScreen();
 
     Language getLanguage();
     // argument section
@@ -221,7 +222,7 @@ public interface Translation {
     // tpa section
     TeleportRequestMessages tpa();
     // private section
-    PrivateChatMessages privateChat();
+    MsgMessages msg();
     // afk section
     AfkMessages afk();
     // event section
@@ -252,6 +253,8 @@ public interface Translation {
     AutoMessageMessages autoMessage();
     // jail section
     JailMessages jailSection();
-    // troll section
-    TrollSection troll();
+    // burn section
+    BurnMessages burn();
+    // vanish section
+    VanishMessages vanish();
 }

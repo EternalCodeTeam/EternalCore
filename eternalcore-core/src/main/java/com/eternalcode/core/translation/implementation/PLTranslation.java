@@ -5,12 +5,15 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
+import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
+import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
-import com.eternalcode.core.feature.privatechat.messages.PLPrivateChatMessages;
+import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
@@ -20,8 +23,7 @@ import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.PLTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
-import com.eternalcode.core.feature.troll.demoscreen.messages.PLDemoScreenMessages;
-import com.eternalcode.core.feature.troll.elderguardian.messages.PLElderGuardianMessages;
+import com.eternalcode.core.feature.vanish.messages.PLVanishMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.multification.notice.Notice;
@@ -180,6 +182,9 @@ public class PLTranslation extends AbstractTranslation {
         @Comment({"# {Y} - Koordynat Y najwyżej położonego bloku"})
         public Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
 
+        @Comment(" ")
+        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>Przeteleportowano wszystkich graczy do ciebie!");
+
         // Task
         @Comment({"# {TIME} - Czas teleportacji"})
         public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleportacja za <green>{TIME}");
@@ -295,7 +300,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Ta sekcja odpowiada za ustawianie i edycję wiadomości prywatnych",
     })
-    public PLPrivateChatMessages privateChat = new PLPrivateChatMessages();
+    public PLMsgMessages msg = new PLMsgMessages();
 
     @Comment({
         " ",
@@ -588,16 +593,15 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
     public PLJailMessages jailSection = new PLJailMessages();
 
-    @Comment({ " ", "# Ta sekcja odpowiada za wiadomości dotyczące trollowania graczy" })
-    public PLTrollSection troll = new PLTrollSection();
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
+    public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
 
-    @Getter
-    public static class PLTrollSection extends OkaeriConfig implements TrollSection {
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
+    public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
 
-        @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
-        public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
-
-        @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
-        public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
-    }
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące komendy /burn"})
+    public PLBurnMessages burn = new PLBurnMessages();
+  
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
+    public PLVanishMessages vanish = new PLVanishMessages();
 }

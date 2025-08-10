@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.util.Set;
 import org.bukkit.Material;
 
-interface RandomTeleportSettings {
+public interface RandomTeleportSettings {
 
     RandomTeleportRadius radius();
 

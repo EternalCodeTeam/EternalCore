@@ -1,12 +1,10 @@
 package com.eternalcode.core.feature.spawn;
 
-
-import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Controller;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -20,48 +18,48 @@ import org.slf4j.LoggerFactory;
 public class SpawnTeleportJoinController implements Listener {
 
     private static final String WARNING = "Spawn is not set! Set it using the /setspawn command";
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpawnTeleportJoinController.class);
+    private final Logger logger;
 
     private final LocationsConfiguration locationsConfiguration;
-    private final PluginConfiguration pluginConfiguration;
+    private final SpawnJoinSettings spawnJoinSettings;
+
+    private boolean warningShown = false;
 
     @Inject
-    public SpawnTeleportJoinController(LocationsConfiguration locationsConfiguration, PluginConfiguration pluginConfiguration) {
+    public SpawnTeleportJoinController(
+        LocationsConfiguration locationsConfiguration,
+        SpawnJoinSettings spawnJoinSettings,
+        Logger logger
+    ) {
         this.locationsConfiguration = locationsConfiguration;
-        this.pluginConfiguration = pluginConfiguration;
-    }
-
-    @EventHandler
-    void onFirstJoin(PlayerJoinEvent event) {
-        if (!this.pluginConfiguration.join.teleportToSpawnOnFirstJoin) {
-            return;
-        }
-
-        Player player = event.getPlayer();
-
-        if (player.hasPlayedBefore()) {
-            return;
-        }
-
-        this.teleportToSpawn(player);
+        this.spawnJoinSettings = spawnJoinSettings;
+        this.logger = logger;
     }
 
     @EventHandler
     void onJoin(PlayerJoinEvent event) {
-        if (!this.pluginConfiguration.join.teleportToSpawnOnJoin) {
-            return;
-        }
         Player player = event.getPlayer();
 
-        this.teleportToSpawn(player);
+        if (!player.hasPlayedBefore()) {
+            if (this.spawnJoinSettings.teleportNewPlayersToSpawn()) {
+                this.teleportToSpawn(player);
+            }
+            return;
+        }
+
+        if (this.spawnJoinSettings.teleportPlayersToSpawnOnJoin()) {
+            this.teleportToSpawn(player);
+        }
     }
 
     void teleportToSpawn(Player player) {
         Position spawnPosition = this.locationsConfiguration.spawn;
 
         if (spawnPosition == null || spawnPosition.isNoneWorld()) {
-            LOGGER.warn(WARNING);
-
+            if (!this.warningShown) {
+                this.logger.warn(WARNING);
+                this.warningShown = true;
+            }
             return;
         }
 

@@ -4,7 +4,6 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -24,24 +23,25 @@ class SpawnCommand {
 
     private static final String SPAWN_TELEPORT_BYPASS = "eternalcore.spawn.bypass";
 
-    private final LocationsConfiguration locations;
-    private final SpawnSettings spawnSettings;
     private final TeleportTaskService teleportTaskService;
+    private final SpawnJoinSettings spawnJoinSettings;
     private final TeleportService teleportService;
     private final NoticeService noticeService;
+    private final SpawnService spawnService;
 
     @Inject
     SpawnCommand(
-        LocationsConfiguration locations,
-        SpawnSettings spawnSettings,
-        NoticeService noticeService,
         TeleportTaskService teleportTaskService,
-        TeleportService teleportService) {
+        SpawnJoinSettings spawnJoinSettings,
+        TeleportService teleportService,
+        NoticeService noticeService,
+        SpawnService spawnService
+    ) {
         this.teleportTaskService = teleportTaskService;
-        this.locations = locations;
-        this.spawnSettings = spawnSettings;
-        this.noticeService = noticeService;
+        this.spawnJoinSettings = spawnJoinSettings;
         this.teleportService = teleportService;
+        this.noticeService = noticeService;
+        this.spawnService = spawnService;
     }
 
     @Execute
@@ -53,21 +53,18 @@ class SpawnCommand {
         description = "Allows you to bypass spawn teleportation time"
     )
     void executeSelf(@Context Player sender) {
-        Position position = this.locations.spawn;
+        Location spawnLocation = this.spawnService.getSpawnLocation();
 
-        if (position.isNoneWorld()) {
+        if (spawnLocation == null) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
                 .player(sender.getUniqueId())
                 .send();
-
             return;
         }
 
-        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
-
         if (sender.hasPermission(SPAWN_TELEPORT_BYPASS)) {
-            this.teleportService.teleport(sender, destinationLocation);
+            this.teleportService.teleport(sender, spawnLocation);
 
             this.noticeService.create()
                 .notice(translation -> translation.teleport().teleported())
@@ -82,15 +79,17 @@ class SpawnCommand {
                 .notice(translation -> translation.teleport().teleportTaskAlreadyExist())
                 .player(sender.getUniqueId())
                 .send();
-
             return;
         }
 
-        Position convert = PositionAdapter.convert(destinationLocation);
-        Duration time = this.spawnSettings.teleportationTimeToSpawn();
+        Duration teleportDelay = this.spawnJoinSettings.spawnTeleportTime();
 
-        this.teleportTaskService.createTeleport(sender.getUniqueId(), PositionAdapter.convert(sender.getLocation()),
-            convert, time);
+        this.teleportTaskService.createTeleport(
+            sender.getUniqueId(),
+            PositionAdapter.convert(sender.getLocation()),
+            PositionAdapter.convert(spawnLocation),
+            teleportDelay
+        );
 
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleporting())
@@ -102,20 +101,17 @@ class SpawnCommand {
     @Permission("eternalcore.spawn.other")
     @DescriptionDocs(description = "Teleports specified player to spawn location", arguments = "<player>")
     void execute(@Context Viewer sender, @Arg Player player) {
-        Position position = this.locations.spawn;
+        Location spawnLocation = this.spawnService.getSpawnLocation();
 
-        if (position.isNoneWorld()) {
+        if (spawnLocation == null) {
             this.noticeService.create()
                 .notice(translation -> translation.spawn().spawnNoSet())
                 .viewer(sender)
                 .send();
-
             return;
         }
 
-        Location destinationLocation = PositionAdapter.convert(this.locations.spawn);
-
-        this.teleportService.teleport(player, destinationLocation);
+        this.teleportService.teleport(player, spawnLocation);
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedBy())

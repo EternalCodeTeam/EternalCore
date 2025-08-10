@@ -5,10 +5,10 @@ import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpInventory;
 import com.eternalcode.core.feature.warp.WarpService;
+import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.feature.warp.WarpTeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -21,37 +21,39 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.warp")
 class WarpCommand {
 
-    private final PluginConfiguration config;
+    private final WarpSettings warpSettings;
     private final WarpInventory warpInventory;
     private final WarpService warpService;
     private final NoticeService noticeService;
     private final WarpTeleportService warpTeleportService;
+    private final PluginConfiguration pluginConfiguration;
 
     @Inject
     WarpCommand(
-        PluginConfiguration config,
+        WarpSettings warpSettings,
         WarpInventory warpInventory,
         WarpService warpService,
         NoticeService noticeService,
-        WarpTeleportService warpTeleportService
+        WarpTeleportService warpTeleportService, PluginConfiguration pluginConfiguration
     ) {
-        this.config = config;
+        this.warpSettings = warpSettings;
         this.warpInventory = warpInventory;
         this.warpService = warpService;
         this.noticeService = noticeService;
         this.warpTeleportService = warpTeleportService;
+        this.pluginConfiguration = pluginConfiguration;
     }
 
     @Execute(name = "warp")
     @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps")
     void warp(@Context Player player) {
-        if (!this.config.warp.inventoryEnabled) {
+        if (!this.warpSettings.inventoryEnabled()) {
             List<String> list = this.warpService.getWarps().stream().map(Warp::getName).toList();
 
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.warp().available())
-                .placeholder("{WARPS}", String.join(this.config.format.separator, list))
+                .placeholder("{WARPS}", String.join(this.pluginConfiguration.format.separator, list))
                 .send();
 
             return;
@@ -76,7 +78,7 @@ class WarpCommand {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .placeholder("{WARP}", warp.getName())
-                .placeholder("{PERMISSIONS}", String.join(this.config.format.separator, warp.getPermissions()))
+                .placeholder("{PERMISSIONS}", String.join(this.pluginConfiguration.format.separator, warp.getPermissions()))
                 .notice(translation -> translation.warp().noPermission())
                 .send();
             return;
