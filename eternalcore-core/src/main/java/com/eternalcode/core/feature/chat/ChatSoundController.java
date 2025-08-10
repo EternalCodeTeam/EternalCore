@@ -18,7 +18,7 @@ class ChatSoundController implements Listener {
     }
 
     @EventHandler
-    void onSound(AsyncPlayerChatEvent event) {
+    void onChat(AsyncPlayerChatEvent event) {
         this.noticeService.create()
             .notice(this.settings.chatNotice())
             .onlinePlayers()
