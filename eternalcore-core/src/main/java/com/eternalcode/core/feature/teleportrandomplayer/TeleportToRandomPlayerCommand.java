@@ -32,15 +32,7 @@ public class TeleportToRandomPlayerCommand {
     void execute(@Context Player player) {
         Player targetPlayer = this.randomPlayerService.findLeastRecentlyTeleportedPlayer(player);
 
-        if (targetPlayer != null && targetPlayer.equals(player)) {
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.teleportToRandomPlayer().randomPlayerNotFound())
-                .send();
-            return;
-        }
-
-        if (targetPlayer == null) {
+        if (targetPlayer == null || !targetPlayer.isOnline()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.teleportToRandomPlayer().randomPlayerNotFound())
@@ -49,7 +41,6 @@ public class TeleportToRandomPlayerCommand {
         }
 
         this.randomPlayerService.updateTeleportationHistory(player, targetPlayer);
-
         PaperLib.teleportAsync(player, targetPlayer.getLocation());
 
         this.noticeService.create()
@@ -67,9 +58,7 @@ public class TeleportToRandomPlayerCommand {
     @Execute
     @DescriptionDocs(description = "Teleport to a player who is within specified Y range and hasn't been teleported to recently")
     void executeWithYRange(@Context Player player, @Arg int minY, @Arg int maxY) {
-        Player targetPlayer = this.teleportRandomPlayerService.findLeastRecentlyTeleportedPlayerByY(player, minY, maxY);
-
-        if (targetPlayer != null && targetPlayer.equals(player)) {
+        if (minY > maxY) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.teleportToRandomPlayer().randomPlayerInRangeNotFound())
@@ -77,7 +66,9 @@ public class TeleportToRandomPlayerCommand {
             return;
         }
 
-        if (targetPlayer == null) {
+        Player targetPlayer = this.randomPlayerService.findLeastRecentlyTeleportedPlayerByY(player, minY, maxY);
+
+        if (targetPlayer == null || !targetPlayer.isOnline()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.teleportToRandomPlayer().randomPlayerInRangeNotFound())
@@ -85,8 +76,7 @@ public class TeleportToRandomPlayerCommand {
             return;
         }
 
-        this.teleportRandomPlayerService.updateTeleportationHistory(player, targetPlayer);
-
+        this.randomPlayerService.updateTeleportationHistory(player, targetPlayer);
         PaperLib.teleportAsync(player, targetPlayer.getLocation());
 
         this.noticeService.create()

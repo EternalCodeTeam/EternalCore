@@ -20,6 +20,4 @@ public class ENTeleportToRandomPlayerMessages extends OkaeriConfig implements Te
     public Notice teleportedToRandomPlayerInRange =
         Notice.chat("<green>► <white>Teleported to a random player in range: <green>{PLAYER}<white>!");
 
-    public Notice teleportedToRandomPlayerInRangeNotFound =
-        Notice.chat("<red>✘ <dark_red>No player found in range to teleport!");
 }

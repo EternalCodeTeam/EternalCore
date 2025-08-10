@@ -65,6 +65,7 @@ public class ConfigurationManager {
             .withSerdesPack(serdesPack)
             .withBindFile(file)
             .saveDefaults()
+            .withRemoveOrphans(true)
             .load(true)
             .migrate(Migrations.ALL); // Remember: migration should be launched after the #load method.
 
