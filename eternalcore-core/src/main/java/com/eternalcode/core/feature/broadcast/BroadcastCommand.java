@@ -68,7 +68,7 @@ class BroadcastCommand {
         ), text, raw);
     }
 
-     private void sendBroadcast(Function<String, Notice> converter, String text, boolean raw) {
+    private void sendBroadcast(Function<String, Notice> converter, String text, boolean raw) {
         this.noticeService.create()
             .notice(translation -> converter.apply(raw ? text : translation.broadcast().messageFormat()))
             .placeholder("{BROADCAST}", text)
