@@ -5,6 +5,8 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
+import com.eternalcode.core.feature.broadcast.messages.ENBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
@@ -260,6 +262,12 @@ public class ENTranslation extends AbstractTranslation {
         public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
 
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /broadcast command",
+    })
+    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
 
     @Comment({
         " ",

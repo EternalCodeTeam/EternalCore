@@ -65,30 +65,6 @@ public class EternalCoreBroadcast<Viewer, Translation, B extends EternalCoreBroa
         return this.player(user.getUniqueId());
     }
 
-    public B notice(NoticeTextType type, TextMessageProvider<Translation> extractor) {
-        this.notifications.add(translation -> {
-            List<String> list = Collections.singletonList(extractor.extract(translation));
-
-            TextContent content = noticeRegistry.createTextNotice(type.getNoticeKey(), new ArrayList<>(list));
-
-            return Notice.of(type.getNoticeKey(), content);
-        });
-
-        return this.getThis();
-    }
-
-    public B notice(NoticeTextType type, String message) {
-        this.notifications.add(translation -> {
-            List<String> list = Collections.singletonList(message);
-
-            TextContent content = noticeRegistry.createTextNotice(type.getNoticeKey(), new ArrayList<>(list));
-
-            return Notice.of(type.getNoticeKey(), content);
-        });
-
-        return this.getThis();
-    }
-
     public B messages(Function<Translation, List<String>> messages) {
         this.notifications.add(translation -> {
             List<String> list = messages.apply(translation);

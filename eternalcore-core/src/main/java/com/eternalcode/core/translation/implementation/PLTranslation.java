@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
@@ -266,6 +267,12 @@ public class PLTranslation extends AbstractTranslation {
         public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
 
     }
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /broadcast",
+    })
+    public PLBroadcastMessages broadcast = new PLBroadcastMessages();
 
     @Comment({
         " ",
