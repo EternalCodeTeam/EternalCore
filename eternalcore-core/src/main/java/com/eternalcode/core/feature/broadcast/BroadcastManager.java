@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.alert;
+package com.eternalcode.core.feature.broadcast;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-class AlertManager {
+class BroadcastManager {
 
     private final static Set<NoticeTextType> DELAYED_TYPES = Set.of(NoticeTextType.TITLE, NoticeTextType.SUBTITLE, NoticeTextType.ACTIONBAR);
 
@@ -25,7 +25,7 @@ class AlertManager {
     private final Scheduler scheduler;
 
     @Inject
-    AlertManager(Scheduler scheduler) {
+    BroadcastManager(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 
