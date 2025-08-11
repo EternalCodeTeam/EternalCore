@@ -1,18 +1,17 @@
 package com.eternalcode.core.updater;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.commons.concurrent.FutureHandler;
+import com.eternalcode.commons.updater.UpdateResult;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.platform.AudienceProvider;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.multification.notice.Notice;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import java.util.concurrent.CompletableFuture;
 
 @PermissionDocs(
     name = "Receive Updates",
@@ -24,47 +23,58 @@ class UpdaterController implements Listener {
 
     static final String RECEIVE_UPDATES = "eternalcore.receiveupdates";
 
-    private static final String NEW_VERSION_AVAILABLE = "<b><gradient:#8a1212:#fc6b03>EternalCore:</gradient></b> <color:#fce303>New version of EternalCore is available, please update!";
+    private static final Notice UPDATE_NOTICE = Notice.chat(
+        "<gradient:#9d6eef:#A1AAFF:#9d6eef>ᴇᴛᴇʀɴᴀʟᴄᴏʀᴇ</gradient> <white>- Update available!</white>",
+        " ",
+        "<color:#CFCFCF>New version <b>{NEW_VERSION}</b> is ready to download!</color>",
+        "<color:#CFCFCF>Download: <click:open_url:'{DOWNLOAD_URL}'><u>{DOWNLOAD_URL}</u></click></color>"
+    );
 
     private final PluginConfiguration pluginConfiguration;
     private final UpdaterService updaterService;
-    private final AudienceProvider audienceProvider;
-    private final MiniMessage miniMessage;
+    private final NoticeService noticeService;
 
     @Inject
-    UpdaterController(PluginConfiguration pluginConfiguration, UpdaterService updaterService, AudienceProvider audienceProvider, MiniMessage miniMessage) {
+    UpdaterController(
+        PluginConfiguration pluginConfiguration,
+        UpdaterService updaterService,
+        NoticeService noticeService
+    ) {
         this.pluginConfiguration = pluginConfiguration;
         this.updaterService = updaterService;
-        this.audienceProvider = audienceProvider;
-        this.miniMessage = miniMessage;
+        this.noticeService = noticeService;
     }
 
     @EventHandler
     void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (!player.hasPermission(RECEIVE_UPDATES)) {
+        if (!shouldNotifyPlayer(player)) {
             return;
         }
 
-        if (!this.pluginConfiguration.shouldReceivePluginUpdates) {
-            return;
-        }
-
-        Audience playerAudience = this.audienceProvider.player(player.getUniqueId());
-
-        CompletableFuture<Boolean> isUpToDate = this.updaterService.isUpToDate();
-
-        isUpToDate.whenComplete((isUpToUpdate, throwable) -> {
-            if (throwable != null) {
-                throwable.printStackTrace();
-                return;
-            }
-
-            if (!isUpToUpdate) {
-                playerAudience.sendMessage(this.miniMessage.deserialize(NEW_VERSION_AVAILABLE));
-            }
-        });
+        this.updaterService.checkForUpdate()
+            .thenAccept(result -> notifyIfUpdateAvailable(player, result))
+            .exceptionally(FutureHandler::handleException);
     }
 
+    private boolean shouldNotifyPlayer(Player player) {
+        return player.hasPermission(RECEIVE_UPDATES) && this.pluginConfiguration.shouldReceivePluginUpdates;
+    }
+
+    private void notifyIfUpdateAvailable(Player player, UpdateResult result) {
+        if (!result.isUpdateAvailable()) {
+            return;
+        }
+
+        String downloadUrl = result.downloadUrl();
+        String string = result.latestVersion().toString();
+
+        this.noticeService.create()
+            .notice(UPDATE_NOTICE)
+            .player(player.getUniqueId())
+            .placeholder("{NEW_VERSION}", downloadUrl)
+            .placeholder("{DOWNLOAD_URL}", string)
+            .sendAsync();
+    }
 }

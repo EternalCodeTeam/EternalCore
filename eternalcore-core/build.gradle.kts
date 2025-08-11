@@ -60,6 +60,7 @@ eternalShadow {
     library("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-folia:${Versions.ETERNALCODE_COMMONS}")
+    library("com.eternalcode:eternalcode-commons-updater:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
     libraryRelocate(
         "com.eternalcode.commons",
