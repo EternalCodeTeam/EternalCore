@@ -1,6 +1,6 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.bridge.litecommand.argument.messages.ArgumentMessages;
+import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;

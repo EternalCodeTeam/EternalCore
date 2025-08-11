@@ -16,5 +16,4 @@ public class ConfigurationCompatibilityV21_2 {
     void onConfigSerdesSetup(ConfigurationSerdesSetupEvent event) {
         event.registry().register(new OldEnumSerializer());
     }
-
 }
