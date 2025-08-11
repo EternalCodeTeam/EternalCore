@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.motd;
 
-import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -21,12 +20,10 @@ class MotdJoinController implements Listener {
         .build();
 
     private final NoticeService noticeService;
-    private final MotdMessages motdMessages;
 
     @Inject
-    MotdJoinController(NoticeService noticeService, MotdMessages motdMessages) {
+    MotdJoinController(NoticeService noticeService) {
         this.noticeService = noticeService;
-        this.motdMessages = motdMessages;
     }
 
     @EventHandler
@@ -34,7 +31,7 @@ class MotdJoinController implements Listener {
         Player player = event.getPlayer();
 
         this.noticeService.create()
-            .notice(this.motdMessages.motdContent())
+            .notice(translation -> translation.motd().motdContent())
             .player(player.getUniqueId())
             .formatter(PLACEHOLDERS.toFormatter(player))
             .send();
