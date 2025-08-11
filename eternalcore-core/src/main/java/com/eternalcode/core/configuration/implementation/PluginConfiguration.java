@@ -7,6 +7,8 @@ import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
+import com.eternalcode.core.feature.broadcast.BroadcastConfig;
+import com.eternalcode.core.feature.broadcast.BroadcastSettings;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
@@ -129,6 +131,11 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Chat Configuration")
     @Comment("# Settings for chat management and formatting")
     ChatConfig chat = new ChatConfig();
+
+    @Bean(proxied = BroadcastSettings.class)
+    @Comment("")
+    @Comment("# Broadcast Configuration")
+    BroadcastConfig broadcast = new BroadcastConfig();
 
     @Bean(proxied = HelpOpSettings.class)
     @Comment("")

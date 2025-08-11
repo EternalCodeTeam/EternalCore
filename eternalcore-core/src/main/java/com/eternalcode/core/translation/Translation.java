@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
@@ -77,19 +78,12 @@ public interface Translation {
         Notice slowMode();
         Notice disabledChatInfo();
         Notice commandNotFound();
-        String alertMessageFormat();
         Notice tellrawInfo();
         Notice tellrawAllInfo();
         Notice tellrawSaved();
         Notice tellrawNoSaved();
         Notice tellrawMultipleSent();
         Notice tellrawCleared();
-        Notice alertQueueAdded();
-        Notice alertQueueRemovedSingle();
-        Notice alertQueueRemovedAll();
-        Notice alertQueueCleared();
-        Notice alertQueueEmpty();
-        Notice alertQueueSent();
     }
 
     interface EventSection {
@@ -215,6 +209,8 @@ public interface Translation {
     RandomTeleportMessages randomTeleport();
     // Chat Section
     ChatSection chat();
+    // Broadcast Section
+    BroadcastMessages broadcast();
     // Warp Section
     WarpMessages warp();
     // Home section

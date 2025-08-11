@@ -5,6 +5,8 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
+import com.eternalcode.core.feature.broadcast.messages.ENBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
@@ -260,16 +262,13 @@ public class ENTranslation extends AbstractTranslation {
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
 
-        @Comment({" ", "# {BROADCAST} - Broadcast"})
-        public String alertMessageFormat = "<red><bold>BROADCAST:</bold> <gray>{BROADCAST}";
-        public Notice alertQueueAdded = Notice.chat("<green>► <white>Message added to the queue!");
-        public Notice alertQueueRemovedSingle = Notice.chat("<green>► <white>Removed latest message!");
-        public Notice alertQueueRemovedAll = Notice.chat("<green>► <white>Removed all messages!");
-        public Notice alertQueueCleared = Notice.chat("<green>► <white>Message queue cleared!");
-        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>The message queue is empty!");
-        public Notice alertQueueSent = Notice.chat("<green>► <white>All messages sent from the queue!");
-
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /broadcast command",
+    })
+    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
 
     @Comment({
         " ",

@@ -5,6 +5,7 @@ import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
@@ -266,15 +267,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Wysłano wszystkie zapisane wiadomości!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
 
-        @Comment({" ", "# {BROADCAST} - Ogłoszenie"})
-        public String alertMessageFormat = "<red><bold>OGŁOSZENIE:</bold> <gray>{BROADCAST}";
-        public Notice alertQueueAdded = Notice.chat("<green>► <white>Dodano wiadomość do kolejki!");
-        public Notice alertQueueRemovedSingle = Notice.chat("<green>► <white>Usunięto ostatnią wiadomość z kolejki!");
-        public Notice alertQueueRemovedAll = Notice.chat("<green>► <white>Usunięto wszystkie wiadomości z kolejki!");
-        public Notice alertQueueCleared = Notice.chat("<green>► <white>Wyczyszczono kolejkę wiadomości!");
-        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Kolejka wiadomości jest pusta!");
-        public Notice alertQueueSent = Notice.chat("<green>► <white>Wysłano wszystkie wiadomości z kolejki!");
     }
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /broadcast",
+    })
+    public PLBroadcastMessages broadcast = new PLBroadcastMessages();
 
     @Comment({
         " ",
