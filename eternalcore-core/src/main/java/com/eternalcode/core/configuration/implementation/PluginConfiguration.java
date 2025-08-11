@@ -50,7 +50,7 @@ public class PluginConfiguration implements ReloadableConfig {
 
     @Description({
         "# Language, currently supported languages: en, pl",
-        "# You need restart server after change."
+        "# You need to restart the server after changes."
     })
     public Language language = Language.EN;
 
