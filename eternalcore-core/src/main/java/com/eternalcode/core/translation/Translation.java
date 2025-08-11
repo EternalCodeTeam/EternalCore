@@ -13,6 +13,7 @@ import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -99,8 +100,6 @@ public interface Translation {
         List<Notice> firstJoinMessage();
 
         Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
-
-        Notice welcome();
     }
 
     interface InventorySection {
@@ -258,4 +257,6 @@ public interface Translation {
     BurnMessages burn();
     // vanish section
     VanishMessages vanish();
+    // motd section
+    MotdMessages motd();
 }

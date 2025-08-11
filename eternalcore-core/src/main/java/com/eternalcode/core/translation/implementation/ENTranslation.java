@@ -13,6 +13,7 @@ import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
@@ -356,9 +357,6 @@ public class ENTranslation extends AbstractTranslation {
             Notice.actionbar("<red>► {PLAYER} <white>logged off the server!"),
             Notice.actionbar("<red>► {PLAYER} <white>left the server!")
         );
-
-        @Comment({" ", "# {PLAYER} - Player who joined"})
-        public Notice welcome = Notice.title("<yellow>EternalCode.pl", "<yellow>Welcome back to the server!");
     }
 
 
@@ -578,4 +576,7 @@ public class ENTranslation extends AbstractTranslation {
   
     @Comment({" ", "# This section is responsible for vanish-related stuff."})
     public ENVanishMessages vanish = new ENVanishMessages();
+
+    @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
+    public ENMotdMessages motd = new ENMotdMessages();
 }

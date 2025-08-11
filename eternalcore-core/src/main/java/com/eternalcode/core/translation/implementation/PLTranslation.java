@@ -13,6 +13,7 @@ import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
@@ -376,9 +377,6 @@ public class PLTranslation extends AbstractTranslation {
             Notice.actionbar("<red>► {PLAYER} <white>wylogował się z serwera!"),
             Notice.actionbar("<red>► {PLAYER} <white>opuścił serwer!")
         );
-
-        @Comment({" ", "# {PLAYER} - Gracz który dołączył do serwera"})
-        public Notice welcome = Notice.title("<yellow>{PLAYER}", "<yellow>Witaj ponownie na serwerze!");
     }
 
     @Comment({
@@ -602,4 +600,7 @@ public class PLTranslation extends AbstractTranslation {
   
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
     public PLVanishMessages vanish = new PLVanishMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
+    public PLMotdMessages motd = new PLMotdMessages();
 }
