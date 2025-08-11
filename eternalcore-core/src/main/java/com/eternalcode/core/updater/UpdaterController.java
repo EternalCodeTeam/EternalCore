@@ -24,10 +24,9 @@ class UpdaterController implements Listener {
     static final String RECEIVE_UPDATES = "eternalcore.receiveupdates";
 
     private static final Notice UPDATE_NOTICE = Notice.chat(
-        "<gradient:#9d6eef:#A1AAFF:#9d6eef>ᴇᴛᴇʀɴᴀʟᴄᴏʀᴇ</gradient> <white>- Update available!</white>",
-        " ",
-        "<color:#CFCFCF>New version <b>{NEW_VERSION}</b> is ready to download!</color>",
-        "<color:#CFCFCF>Download: <click:open_url:'{DOWNLOAD_URL}'><u>{DOWNLOAD_URL}</u></click></color>"
+        "<gradient:#9d6eef:#A1AAFF:#9d6eef>EternalCore:</gradient> <white>New release <dark_gray>"
+            + "(<gray>{NEW_VERSION}</gray>)</dark_gray> is available, download it! <dark_gray>"
+            + "(<gray><click:open_url:'{DOWNLOAD_URL}'><u>Click here</u></click></gray>) </dark_gray>"
     );
 
     private final PluginConfiguration pluginConfiguration;
@@ -67,14 +66,11 @@ class UpdaterController implements Listener {
             return;
         }
 
-        String downloadUrl = result.downloadUrl();
-        String string = result.latestVersion().toString();
-
         this.noticeService.create()
             .notice(UPDATE_NOTICE)
             .player(player.getUniqueId())
-            .placeholder("{NEW_VERSION}", downloadUrl)
-            .placeholder("{DOWNLOAD_URL}", string)
+            .placeholder("{NEW_VERSION}", result.latestVersion().toString())
+            .placeholder("{DOWNLOAD_URL}", result.downloadUrl())
             .sendAsync();
     }
 }
