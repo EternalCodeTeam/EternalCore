@@ -8,6 +8,7 @@ import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
+import com.eternalcode.core.feature.fun.endscreen.messages.ENEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
@@ -572,6 +573,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for demo screen messages."})
     public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
+
+    @Comment({" ", "# This section is responsible for end screen messages."})
+    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
 
     @Comment({" ", "# This section is responsible for '/burn' command messages."})
     public ENBurnMessages burn = new ENBurnMessages();
