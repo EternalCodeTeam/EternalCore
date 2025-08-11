@@ -54,7 +54,7 @@ class BroadcastCommand {
 
     @Execute(name = "bossbar")
     @DescriptionDocs(description = "Broadcasts a BOSSBAR message to all players.", arguments = "[-raw] <color> <duration> <text>")
-    void executeSubtitle(
+    void executeBossBar(
         @Flag("-raw") boolean raw,
         @Arg BossBar.Color color,
         @Arg Duration duration,
