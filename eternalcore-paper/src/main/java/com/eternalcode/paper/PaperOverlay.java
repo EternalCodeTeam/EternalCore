@@ -8,7 +8,7 @@ public enum PaperOverlay {
 
     ELDER_GUARDIAN("Elder Guardian", player -> player.showElderGuardian(false)),
     ELDER_GUARDIAN_SILENT("Elder Guardian Silent", player -> player.showElderGuardian(true)),
-    END_SCREEN("End Screen", Player::showWinScreen);
+    END_SCREEN("End Screen", player -> player.showWinScreen());
 
     private final PaperFeature feature;
 

@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.fun.endscreen;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.compatibility.Compatibility;
+import com.eternalcode.core.compatibility.Version;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.paper.PaperOverlay;
@@ -12,7 +14,8 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Command(name = "endscreen", aliases = {"end-screen", "win-screen"})
-@Permission("eternalcore.fun.endscreen")
+@Permission("eternalcore.endscreen")
+@Compatibility(from = @Version(minor = 19, patch = 4)) // Requires Minecraft 1.19.4 or higher
 public class EndScreenCommand {
 
     private final NoticeService noticeService;
