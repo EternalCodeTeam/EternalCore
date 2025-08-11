@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
+import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
@@ -191,6 +192,7 @@ public interface Translation {
 
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();
+    EndScreenMessages endScreen();
 
     Language getLanguage();
     // argument section

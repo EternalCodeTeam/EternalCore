@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
+import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
@@ -593,6 +594,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
     public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące końca gry"})
+    public PLEndScreenMessages endScreen = new PLEndScreenMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące komendy /burn"})
     public PLBurnMessages burn = new PLBurnMessages();

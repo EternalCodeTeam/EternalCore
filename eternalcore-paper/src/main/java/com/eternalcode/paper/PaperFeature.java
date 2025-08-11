@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-public abstract class PaperFeature<T> {
+public abstract class PaperFeature {
 
     private static final Environment ENVIRONMENT = PaperLib.getEnvironment();
     private static final Logger LOGGER = Logger.getLogger("EternalCore-Paper");
