@@ -54,7 +54,7 @@ class BroadcastCommand {
 
     @Execute(name = "bossbar")
     @DescriptionDocs(description = "Broadcasts a BOSSBAR message to all players.", arguments = "[-raw] <color> <duration> <text>")
-    void executeSubtitle(
+    void executeBossBar(
         @Flag("-raw") boolean raw,
         @Arg BossBar.Color color,
         @Arg Duration duration,
@@ -68,7 +68,7 @@ class BroadcastCommand {
         ), text, raw);
     }
 
-     private void sendBroadcast(Function<String, Notice> converter, String text, boolean raw) {
+    private void sendBroadcast(Function<String, Notice> converter, String text, boolean raw) {
         this.noticeService.create()
             .notice(translation -> converter.apply(raw ? text : translation.broadcast().messageFormat()))
             .placeholder("{BROADCAST}", text)
