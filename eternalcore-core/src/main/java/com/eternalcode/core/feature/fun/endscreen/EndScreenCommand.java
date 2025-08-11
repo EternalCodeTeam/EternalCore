@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Command(name = "endscreen", aliases = {"end-screen", "win-screen"})
-@Permission("eternalcore.troll.endscreen")
+@Permission("eternalcore.fun.endscreen")
 public class EndScreenCommand {
 
     private final NoticeService noticeService;
