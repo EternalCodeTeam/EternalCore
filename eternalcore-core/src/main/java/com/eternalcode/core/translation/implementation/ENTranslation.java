@@ -23,6 +23,7 @@ import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.ENSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
+import com.eternalcode.core.feature.teleportrandomplayer.messages.ENTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
@@ -212,12 +213,13 @@ public class ENTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
-
-        @Comment(" ")
-        public Notice randomPlayerNotFound = Notice.chat("<red>✘ <dark_red>No player found to teleport!");
-        @Comment({" ", "# {PLAYER} - The player you were teleported"})
-        public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Teleported to random player <green>{PLAYER}<white>!");
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /tprp command",
+    })
+    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
 
     @Comment({
         " ",
