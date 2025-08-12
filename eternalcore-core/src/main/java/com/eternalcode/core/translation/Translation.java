@@ -14,6 +14,7 @@ import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
+import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
@@ -258,4 +259,6 @@ public interface Translation {
     BurnMessages burn();
     // vanish section
     VanishMessages vanish();
+    // near section
+    NearMessages near();
 }

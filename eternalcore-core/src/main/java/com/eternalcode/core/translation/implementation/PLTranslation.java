@@ -14,6 +14,7 @@ import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
+import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
@@ -131,6 +132,12 @@ public class PLTranslation extends AbstractTranslation {
     @Override
     public File getConfigFile(File dataFolder) {
         return new File(dataFolder, "lang" + File.separator + "pl_messages.yml");
+    }
+
+    //@TODO add the polish translation
+    @Override
+    public NearMessages near() {
+        return null;
     }
 
     @Getter
