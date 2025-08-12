@@ -33,7 +33,6 @@ eternalShadow {
     libraryRelocate(
         "io.papermc.lib",
         "net.kyori",
-        "com.google.gson",
     )
 
     // configuration

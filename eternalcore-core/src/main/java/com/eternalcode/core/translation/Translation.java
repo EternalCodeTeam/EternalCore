@@ -1,18 +1,20 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.bridge.litecommand.argument.messages.ArgumentMessages;
+import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
+import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
-import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
@@ -21,6 +23,7 @@ import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
+import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.VanishMessages;
@@ -60,10 +63,6 @@ public interface Translation {
         Notice teleportedToLastLocation();
         Notice teleportedSpecifiedPlayerLastLocation();
         Notice lastLocationNoExist();
-
-        // teleport to random player command
-        Notice randomPlayerNotFound();
-        Notice teleportedToRandomPlayer();
     }
 
     interface ChatSection {
@@ -77,19 +76,12 @@ public interface Translation {
         Notice slowMode();
         Notice disabledChatInfo();
         Notice commandNotFound();
-        String alertMessageFormat();
         Notice tellrawInfo();
         Notice tellrawAllInfo();
         Notice tellrawSaved();
         Notice tellrawNoSaved();
         Notice tellrawMultipleSent();
         Notice tellrawCleared();
-        Notice alertQueueAdded();
-        Notice alertQueueRemovedSingle();
-        Notice alertQueueRemovedAll();
-        Notice alertQueueCleared();
-        Notice alertQueueEmpty();
-        Notice alertQueueSent();
     }
 
     interface EventSection {
@@ -100,8 +92,6 @@ public interface Translation {
         List<Notice> firstJoinMessage();
 
         Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
-
-        Notice welcome();
     }
 
     interface InventorySection {
@@ -199,6 +189,7 @@ public interface Translation {
 
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();
+    EndScreenMessages endScreen();
 
     Language getLanguage();
     // argument section
@@ -213,10 +204,14 @@ public interface Translation {
     SudoMessages sudo();
     // Teleport Section
     TeleportSection teleport();
+    // teleport to random player section.
+    TeleportToRandomPlayerMessages teleportToRandomPlayer();
     // Random Teleport Section
     RandomTeleportMessages randomTeleport();
     // Chat Section
     ChatSection chat();
+    // Broadcast Section
+    BroadcastMessages broadcast();
     // Warp Section
     WarpMessages warp();
     // Home section
@@ -260,5 +255,7 @@ public interface Translation {
     // vanish section
     VanishMessages vanish();
     // near section
-    NearMessages near();
+    NearMessages near()
+    // motd section
+    MotdMessages motd();
 }

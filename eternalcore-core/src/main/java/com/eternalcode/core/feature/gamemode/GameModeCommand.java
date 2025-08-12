@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.gamemode;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.bridge.litecommand.configurator.config.CommandConfiguration;
+import com.eternalcode.core.litecommand.configurator.config.CommandConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;

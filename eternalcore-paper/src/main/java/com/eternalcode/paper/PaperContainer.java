@@ -13,10 +13,10 @@ public enum PaperContainer {
     LOOM("Loom", player -> player.openLoom(null, true)),
     SMITHING_TABLE("Smithing Table", player -> player.openSmithingTable(null, true));
 
-    private final PaperFeature<PaperContainer> feature;
+    private final PaperFeature feature;
 
     PaperContainer(String name, Consumer<Player> action) {
-        this.feature = new PaperFeature<>(action, name) {
+        this.feature = new PaperFeature(action, name) {
         };
     }
 

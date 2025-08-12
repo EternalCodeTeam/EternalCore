@@ -1,18 +1,21 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.bridge.litecommand.argument.messages.ENArgumentMessages;
+import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.ENBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
+import com.eternalcode.core.feature.fun.endscreen.messages.ENEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
-import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.translation.Language;
+import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
@@ -20,6 +23,7 @@ import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.ENSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
+import com.eternalcode.core.feature.teleportrandomplayer.messages.ENTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
@@ -210,12 +214,13 @@ public class ENTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
-
-        @Comment(" ")
-        public Notice randomPlayerNotFound = Notice.chat("<red>✘ <dark_red>No player found to teleport!");
-        @Comment({" ", "# {PLAYER} - The player you were teleported"})
-        public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Teleported to random player <green>{PLAYER}<white>!");
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /tprp command",
+    })
+    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
 
     @Comment({
         " ",
@@ -260,16 +265,13 @@ public class ENTranslation extends AbstractTranslation {
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
 
-        @Comment({" ", "# {BROADCAST} - Broadcast"})
-        public String alertMessageFormat = "<red><bold>BROADCAST:</bold> <gray>{BROADCAST}";
-        public Notice alertQueueAdded = Notice.chat("<green>► <white>Message added to the queue!");
-        public Notice alertQueueRemovedSingle = Notice.chat("<green>► <white>Removed latest message!");
-        public Notice alertQueueRemovedAll = Notice.chat("<green>► <white>Removed all messages!");
-        public Notice alertQueueCleared = Notice.chat("<green>► <white>Message queue cleared!");
-        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>The message queue is empty!");
-        public Notice alertQueueSent = Notice.chat("<green>► <white>All messages sent from the queue!");
-
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /broadcast command",
+    })
+    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
 
     @Comment({
         " ",
@@ -357,9 +359,6 @@ public class ENTranslation extends AbstractTranslation {
             Notice.actionbar("<red>► {PLAYER} <white>logged off the server!"),
             Notice.actionbar("<red>► {PLAYER} <white>left the server!")
         );
-
-        @Comment({" ", "# {PLAYER} - Player who joined"})
-        public Notice welcome = Notice.title("<yellow>EternalCode.pl", "<yellow>Welcome back to the server!");
     }
 
 
@@ -574,6 +573,9 @@ public class ENTranslation extends AbstractTranslation {
     @Comment({" ", "# This section is responsible for demo screen messages."})
     public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
 
+    @Comment({" ", "# This section is responsible for end screen messages."})
+    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
+
     @Comment({" ", "# This section is responsible for '/burn' command messages."})
     public ENBurnMessages burn = new ENBurnMessages();
   
@@ -582,4 +584,7 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for '/near' command messages."})
     public ENNearMessages near = new ENNearMessages();
+  
+    @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
+    public ENMotdMessages motd = new ENMotdMessages();
 }

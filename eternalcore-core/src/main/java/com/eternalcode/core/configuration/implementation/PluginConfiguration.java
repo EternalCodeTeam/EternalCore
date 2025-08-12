@@ -7,6 +7,8 @@ import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
+import com.eternalcode.core.feature.broadcast.BroadcastConfig;
+import com.eternalcode.core.feature.broadcast.BroadcastSettings;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
@@ -37,6 +39,8 @@ import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.translation.TranslationConfig;
+import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Header;
@@ -62,6 +66,13 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
+    @Bean(proxied = TranslationSettings.class)
+    @Comment("")
+    @Comment("# Language Configuration")
+    @Comment("# Settings that determine the language used within the server.")
+    @Comment("# Choose the preferred language for all messages and interactions in the plugin.")
+    TranslationConfig language = new TranslationConfig();
+    
     @Bean(proxied = DatabaseSettings.class)
     @Comment("")
     @Comment("# Database Configuration")
@@ -129,6 +140,11 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Chat Configuration")
     @Comment("# Settings for chat management and formatting")
     ChatConfig chat = new ChatConfig();
+
+    @Bean(proxied = BroadcastSettings.class)
+    @Comment("")
+    @Comment("# Broadcast Configuration")
+    BroadcastConfig broadcast = new BroadcastConfig();
 
     @Bean(proxied = HelpOpSettings.class)
     @Comment("")

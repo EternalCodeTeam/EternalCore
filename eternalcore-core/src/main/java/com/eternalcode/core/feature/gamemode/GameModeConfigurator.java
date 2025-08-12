@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.gamemode;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
-import com.eternalcode.core.bridge.litecommand.configurator.config.CommandConfiguration;
+import com.eternalcode.core.litecommand.configurator.config.CommandConfiguration;
 import dev.rollczi.litecommands.command.builder.CommandBuilder;
 import dev.rollczi.litecommands.editor.Editor;
 
