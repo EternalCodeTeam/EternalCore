@@ -14,7 +14,7 @@ import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
-import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.translation.Language;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;

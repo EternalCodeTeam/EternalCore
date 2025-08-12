@@ -32,7 +32,7 @@ class UserContextual implements ContextProvider<CommandSender, User> {
                 .orElseThrow(() -> new IllegalStateException("Player " + player.getName() + " is not registered!")));
         }
 
-        Translation translation = this.translationManager.getDefaultMessages();
+        Translation translation = this.translationManager.getMessages();
         Notice onlyPlayer = translation.argument().onlyPlayer();
 
         return ContextResult.error(onlyPlayer);

@@ -15,7 +15,7 @@ class AdventureSetup {
 
     @Bean
     AudienceProvider audienceProvider(Plugin plugin) {
-        return BukkitAudiences.create(plugin);
+        return BukkitAudiences.builder(plugin).build();
     }
 
     @Bean

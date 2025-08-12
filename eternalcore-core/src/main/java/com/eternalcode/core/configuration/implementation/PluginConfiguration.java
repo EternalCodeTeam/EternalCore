@@ -39,6 +39,8 @@ import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.translation.TranslationConfig;
+import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Header;
@@ -64,6 +66,13 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Whether the player should receive information about new plugin updates upon joining the server")
     public boolean shouldReceivePluginUpdates = true;
 
+    @Bean(proxied = TranslationSettings.class)
+    @Comment("")
+    @Comment("# Language Configuration")
+    @Comment("# Settings that determine the language used within the server.")
+    @Comment("# Choose the preferred language for all messages and interactions in the plugin.")
+    TranslationConfig language = new TranslationConfig();
+    
     @Bean(proxied = DatabaseSettings.class)
     @Comment("")
     @Comment("# Database Configuration")

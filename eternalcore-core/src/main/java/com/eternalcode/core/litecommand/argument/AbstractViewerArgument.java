@@ -1,6 +1,5 @@
 package com.eternalcode.core.litecommand.argument;
 
-import com.eternalcode.core.feature.language.Language;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import dev.rollczi.litecommands.argument.Argument;
@@ -25,7 +24,7 @@ public abstract class AbstractViewerArgument<T> extends ArgumentResolver<Command
             return this.parse(invocation, argument, translation);
         }
 
-        Translation translation = this.translationManager.getMessages(Language.DEFAULT);
+        Translation translation = this.translationManager.getMessages();
         return this.parse(invocation, argument, translation);
     }
 

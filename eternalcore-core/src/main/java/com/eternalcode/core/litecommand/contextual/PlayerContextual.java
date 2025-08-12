@@ -27,7 +27,7 @@ class PlayerContextual implements ContextProvider<CommandSender, Player> {
             return ContextResult.ok(() -> player);
         }
 
-        Translation translation = this.translationManager.getDefaultMessages();
+        Translation translation = this.translationManager.getMessages();
         Notice onlyPlayer = translation.argument().onlyPlayer();
 
         return ContextResult.error(onlyPlayer);
