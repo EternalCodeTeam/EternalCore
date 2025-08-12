@@ -4,6 +4,8 @@ import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.Notice;
 import java.time.Duration;
@@ -21,23 +23,24 @@ class TeleportTask implements Runnable {
 
     private static final int SECONDS_OFFSET = 1;
 
-    private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
     private final TeleportService teleportService;
+    private final NoticeService noticeService;
     private final Server server;
 
     @Inject
     TeleportTask(
-        NoticeService noticeService,
         TeleportTaskService teleportTaskService,
         TeleportService teleportService,
+        NoticeService noticeService,
         Server server
     ) {
-        this.noticeService = noticeService;
         this.teleportTaskService = teleportTaskService;
         this.teleportService = teleportService;
+        this.noticeService = noticeService;
         this.server = server;
     }
+
 
     @Override
     public void run() {
@@ -57,8 +60,8 @@ class TeleportTask implements Runnable {
                 this.teleportTaskService.removeTeleport(uuid);
                 teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
 
+                this.sendClearActionBar(player);
                 this.noticeService.create()
-                    .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
                     .notice(translation -> translation.teleport().teleportTaskCanceled())
                     .player(player.getUniqueId())
                     .send();
@@ -77,6 +80,7 @@ class TeleportTask implements Runnable {
                     .placeholder("{TIME}", DurationUtil.format(duration.plusSeconds(SECONDS_OFFSET), true))
                     .player(player.getUniqueId())
                     .send();
+
                 continue;
             }
 
@@ -93,6 +97,8 @@ class TeleportTask implements Runnable {
 
         teleport.completeResult(TeleportResult.SUCCESS);
 
+        this.sendClearActionBar(player);
+
         this.noticeService.create()
             .notice(translation -> translation.teleport().teleported())
             .player(player.getUniqueId())
@@ -102,11 +108,19 @@ class TeleportTask implements Runnable {
     private boolean hasPlayerMovedDuringTeleport(Player player, Teleport teleport) {
         Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
         Location currentLocation = player.getLocation();
+
         if (!currentLocation.getWorld().equals(startLocation.getWorld())) {
-            return true; 
+            return true;
         }
+
         return currentLocation.distance(startLocation) > 0.5;
     }
 
+    private void sendClearActionBar(Player player) {
+        this.noticeService.create()
+            .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
+            .player(player.getUniqueId())
+            .send();
+    }
 }
 

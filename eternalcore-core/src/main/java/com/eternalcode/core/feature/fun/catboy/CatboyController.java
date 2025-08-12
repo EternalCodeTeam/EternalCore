@@ -4,7 +4,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.butcher.ButcherEntityRemoveEvent;
 import com.eternalcode.core.feature.catboy.Catboy;
 import com.eternalcode.core.feature.catboy.CatboyService;
-import com.eternalcode.core.feature.teleport.event.EternalTeleportEvent;
+import com.eternalcode.core.feature.teleport.apiteleport.event.EternalTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.publish.Subscribe;

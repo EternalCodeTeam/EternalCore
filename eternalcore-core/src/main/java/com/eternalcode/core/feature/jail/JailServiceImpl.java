@@ -8,7 +8,7 @@ import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.jail.event.JailDetainEvent;
 import com.eternalcode.core.feature.jail.event.JailReleaseEvent;
 import com.eternalcode.core.feature.spawn.SpawnService;
-import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.time.Duration;

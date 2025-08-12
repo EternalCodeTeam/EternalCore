@@ -1,14 +1,16 @@
-package com.eternalcode.core.feature.teleport.event;
+package com.eternalcode.core.feature.teleport.apiteleport.event;
 
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Called before an async player teleportation. (This event is not async)
- * Only called when the {@link com.eternalcode.core.feature.teleport.TeleportService} teleports the player, but
+ * Only called when the {@link TeleportService} teleports the player, but
  * this event is not called when the player teleports using the vanilla method.
  */
 public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
@@ -42,7 +44,7 @@ public class EternalTeleportEvent extends PlayerEvent implements Cancellable {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

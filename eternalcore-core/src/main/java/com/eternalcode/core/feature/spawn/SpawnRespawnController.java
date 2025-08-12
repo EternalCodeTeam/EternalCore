@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.spawn;
 
-import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.Location;

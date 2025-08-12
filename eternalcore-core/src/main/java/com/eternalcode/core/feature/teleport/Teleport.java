@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
+
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;
 import java.util.UUID;

@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
-import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
