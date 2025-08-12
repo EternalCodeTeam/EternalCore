@@ -41,12 +41,4 @@ public interface TeleportCommandService {
      * @return The settings for the specified command.
      */
     TeleportCommandSettings getCommandSettings(String command);
-
-    /**
-     * Creates default settings for a teleport command if no specific settings are found.
-     *
-     * @param command The name of the teleport command.
-     * @return Default settings for the specified command.
-     */
-    TeleportCommandSettings createDefaultCommandSettings(String command);
 }

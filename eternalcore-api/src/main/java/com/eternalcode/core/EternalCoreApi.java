@@ -9,7 +9,6 @@ import com.eternalcode.core.feature.msg.MsgService;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import com.eternalcode.core.feature.spawn.SpawnService;
-import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.warp.WarpService;
 
 public interface EternalCoreApi {
@@ -32,7 +31,7 @@ public interface EternalCoreApi {
 
     SpawnService getSpawnService();
 
-    TeleportService getTeleportService();
+    //TeleportService getTeleportService();
 
     WarpService getWarpService();
 }

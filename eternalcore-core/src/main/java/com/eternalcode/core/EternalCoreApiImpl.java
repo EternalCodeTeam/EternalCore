@@ -66,10 +66,10 @@ class EternalCoreApiImpl implements EternalCoreApi {
         return this.dependencyProvider.getDependency(SpawnService.class);
     }
 
-    @Override
-    public TeleportService getTeleportService() {
-        return this.dependencyProvider.getDependency(TeleportService.class);
-    }
+//    @Override
+//    public TeleportService getTeleportService() {
+//        return this.dependencyProvider.getDependency(TeleportService.class);
+//    }
 
     @Override
     public WarpService getWarpService() {

@@ -4,13 +4,15 @@ import com.eternalcode.core.feature.teleport.apiteleport.TeleportCommandSettings
 import com.eternalcode.core.feature.teleport.config.BukkitTeleportCommandSettings;
 import com.eternalcode.core.feature.teleport.config.TeleportConfig;
 import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeleportCommandService {
+@Service
+public class TeleportCommandService implements com.eternalcode.core.feature.teleport.apiteleport.TeleportCommandService {
 
     private final TeleportConfig config;
 
@@ -19,6 +21,7 @@ public class TeleportCommandService {
         this.config = config;
     }
 
+    @Override
     public Duration getTeleportDelay(Player player, String command) {
         TeleportCommandSettings settings = this.getCommandSettings(command.toLowerCase());
 
@@ -40,19 +43,21 @@ public class TeleportCommandService {
         return settings.defaultDelay();
     }
 
+    @Override
     public Duration getTeleportDelay(Player player) {
         return this.getTeleportDelay(player, "default");
     }
 
+    @Override
     public boolean hasInstantTeleport(Player player, String command) {
         return this.getTeleportDelay(player, command).isZero();
     }
 
+    @Override
     public TeleportCommandSettings getCommandSettings(String command) {
-        return this.config.commands.getOrDefault(command.toLowerCase(), this.createDefaultCommandSettings(command));
-    }
-
-    private TeleportCommandSettings createDefaultCommandSettings(String command) {
-        return new BukkitTeleportCommandSettings(true, new HashMap<>(), Duration.ofSeconds(5), "eternalcore."+ command +".bypass");
+        return this.config.commands.computeIfAbsent(
+            command.toLowerCase(),
+            cmd -> new BukkitTeleportCommandSettings(true, new HashMap<>(), Duration.ofSeconds(5), "eternalcore." + cmd + ".bypass")
+        );
     }
 }

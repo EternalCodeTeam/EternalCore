@@ -59,7 +59,6 @@ class TeleportServiceImpl implements TeleportService {
         return this.teleportWithDelay(player, location, "default");
     }
 
-    @Override
     public CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, String command) {
         Duration delay = this.teleportCommandService.getTeleportDelay(player, command);
         return this.teleportWithDelay(player, location, delay);

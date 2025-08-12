@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.teleport.config;
 
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportCommandSettings;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import eu.okaeri.configs.annotation.Comment;
 
@@ -17,10 +16,10 @@ public class TeleportConfig extends AbstractConfigurationFile {
         "Konfiguracja czasów teleportacji dla różnych komend",
         "Każda komenda może mieć własne czasy dla różnych poziomów uprawnień"
     })
-    public Map<String, TeleportCommandSettings> commands = this.createDefaultCommands();
+    public Map<String, BukkitTeleportCommandSettings> commands = this.createDefaultCommands();
 
-    private Map<String, TeleportCommandSettings> createDefaultCommands() {
-        Map<String, TeleportCommandSettings> defaultCommands = new HashMap<>();
+    private Map<String, BukkitTeleportCommandSettings> createDefaultCommands() {
+        Map<String, BukkitTeleportCommandSettings> defaultCommands = new HashMap<>();
 
         defaultCommands.put("tpa", new BukkitTeleportCommandSettings(
             true,
