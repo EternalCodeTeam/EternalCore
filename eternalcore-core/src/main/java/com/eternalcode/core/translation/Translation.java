@@ -75,12 +75,6 @@ public interface Translation {
         Notice slowMode();
         Notice disabledChatInfo();
         Notice commandNotFound();
-        Notice tellrawInfo();
-        Notice tellrawAllInfo();
-        Notice tellrawSaved();
-        Notice tellrawNoSaved();
-        Notice tellrawMultipleSent();
-        Notice tellrawCleared();
     }
 
     interface EventSection {
