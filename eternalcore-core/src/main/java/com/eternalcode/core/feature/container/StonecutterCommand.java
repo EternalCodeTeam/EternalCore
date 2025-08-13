@@ -27,30 +27,28 @@ class StonecutterCommand {
     @Permission("eternalcore.stonecutter")
     @DescriptionDocs(description = "Opens a stonecutter for you")
     void executeSelf(@Context Player player) {
-        PaperContainer.STONE_CUTTER.open(player);
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(player.getUniqueId())
-            .send();
+        this.openStonecutter(player);
     }
 
     @Execute
     @Permission("eternalcore.stonecutter.other")
     @DescriptionDocs(description = "Opens a stonecutter for another player", arguments = "<player>")
-    void execute(@Context CommandSender sender, @Arg Player target) {
-        PaperContainer.STONE_CUTTER.open(target);
+    void execute(@Context CommandSender commandSender, @Arg Player target) {
+        this.openStonecutter(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedBy())
-            .player(target.getUniqueId())
-            .placeholder("{PLAYER}", sender.getName())
-            .send();
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedFor())
-            .sender(sender)
+            .notice(translation -> translation.container().targetStonecutterOpened())
+            .sender(commandSender)
             .placeholder("{PLAYER}", target.getName())
+            .send();
+    }
+
+    void openStonecutter(Player player) {
+        PaperContainer.STONE_CUTTER.open(player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().stonecutterOpened())
+            .player(player.getUniqueId())
             .send();
     }
 

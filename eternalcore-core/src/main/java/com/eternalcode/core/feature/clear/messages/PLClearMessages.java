@@ -1,0 +1,16 @@
+package com.eternalcode.core.feature.clear.messages;
+
+import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
+@Getter
+@Accessors(fluent = true)
+public class PLClearMessages extends OkaeriConfig implements ClearMessages {
+
+    public Notice inventoryCleared = Notice.chat("<green>► <white>Twój ekwipunek został wyczyszczony!");
+    public Notice targetInvenoryCleared = Notice.chat("<green>► <white>Ekwipunek gracza <green>{PLAYER} <white>został wyczyszczony");
+
+}

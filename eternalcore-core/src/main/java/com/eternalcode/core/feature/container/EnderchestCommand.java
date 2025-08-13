@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command(name = "enderchest", aliases = { "ec" })
@@ -25,30 +26,28 @@ class EnderchestCommand {
     @Permission("eternalcore.enderchest")
     @DescriptionDocs(description = "Opens your enderchest")
     void execute(@Context Player player) {
-        player.openInventory(player.getEnderChest());
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(player.getUniqueId())
-            .send();
+        this.openEnderChest(player);
     }
 
     @Execute
     @Permission("eternalcore.enderchest.other")
-    @DescriptionDocs(description = "Opens another player his enderchest", arguments = "<player>")
-    void execute(@Context Player player, @Arg Player target) {
-        player.openInventory(target.getEnderChest());
+    @DescriptionDocs(description = "Opens his enderchest to the selected player", arguments = "<player>")
+    void execute(@Context CommandSender commandSender, @Arg Player target) {
+        this.openEnderChest(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedFor())
+            .notice(translation -> translation.container().targetEnderchestOpened())
+            .sender(commandSender)
             .placeholder("{PLAYER}", target.getName())
-            .player(player.getUniqueId())
             .send();
+    }
+
+    void openEnderChest(Player player) {
+        player.openInventory(player.getEnderChest());
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedBy())
-            .player(target.getUniqueId())
-            .placeholder("{PLAYER}", player.getName())
+            .notice(translation -> translation.container().enderchestOpened())
+            .player(player.getUniqueId())
             .send();
     }
 

@@ -1,5 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.clear.messages.PLClearMessages;
+import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
@@ -389,13 +391,11 @@ public class PLTranslation extends AbstractTranslation {
 
     @Getter
     public static class PLInventorySection extends OkaeriConfig implements InventorySection {
-        public Notice inventoryClearMessage = Notice.chat("<green>► <white>Wyczyszczono ekwipunek!");
-
-        @Comment({" ", "# {PLAYER} - Gracz którego ekwipunek został wyczyszczony"})
-        public Notice inventoryClearMessageBy = Notice.chat("<green>► <white>Ekwipunek gracza {PLAYER} został wyczyszczony");
-        @Comment(" ")
         public String disposalTitle = "<white><bold>Kosz";
     }
+
+    @Comment("# Ta sekcja odpowiada za komende /clear")
+    public PLClearMessages clear = new PLClearMessages();
 
     @Comment({
         " ",
@@ -547,22 +547,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Komunikaty odpowiedzialne za kontenery",
     })
-    public PLContainerSection container = new PLContainerSection();
-
-    @Getter
-    public static class PLContainerSection extends OkaeriConfig implements ContainerSection {
-
-        @Comment({
-            "# Wiadomości z tej sekcji służą do konfiguracji wiadomości z kontenerów",
-            "# Kontenery to inaczej skrzynie, workbench itp.",
-            "# W tym przypadku wykorzystujemy to do informowania graczy o otwarciu kontenera np. przy komendzie /anvil",
-            "# {PLAYER} - Gracz który otworzył kontener"
-        })
-
-        public Notice genericContainerOpened = Notice.empty();
-        public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>Otwarto kontener przez gracza <green>{PLAYER}<white>!");
-        public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>Otwarto kontener dla gracza <green>{PLAYER}<white>!");
-    }
+    PLContainerMessages container = new PLContainerMessages();
 
     @Comment({" ", "# Informacja zwrotna, gdy gracz zmienia język pluginu na polski"})
     public PLLanguageSection language = new PLLanguageSection();

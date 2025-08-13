@@ -26,30 +26,28 @@ class AnvilCommand {
     @Permission("eternalcore.anvil")
     @DescriptionDocs(description = "Opens an anvil for you")
     void executeSelf(@Context Player player) {
-        PaperContainer.ANVIL.open(player);
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(player.getUniqueId())
-            .send();
+        this.openAnvil(player);
     }
 
     @Execute
     @Permission("eternalcore.anvil.other")
     @DescriptionDocs(description = "Opens an anvil for another player", arguments = "<player>")
     void execute(@Context CommandSender sender, @Arg Player target) {
-        PaperContainer.ANVIL.open(target);
+        this.openAnvil(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedBy())
-            .placeholder("{PLAYER}", sender.getName())
-            .player(target.getUniqueId())
-            .send();
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedFor())
+            .notice(translation -> translation.container().targetAnvilOpened())
             .sender(sender)
             .placeholder("{PLAYER}", target.getName())
+            .send();
+    }
+
+    void openAnvil(Player player) {
+        PaperContainer.ANVIL.open(player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().anvilOpened())
+            .player(player.getUniqueId())
             .send();
     }
 

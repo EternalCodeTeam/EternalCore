@@ -26,30 +26,28 @@ class SmithingTableCommand {
     @Permission("eternalcore.smithingtable")
     @DescriptionDocs(description = "Opens a smithing table for you")
     void executeSelf(@Context Player player) {
-        PaperContainer.SMITHING_TABLE.open(player);
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(player.getUniqueId())
-            .send();
+        this.openSmithingTable(player);
     }
 
     @Execute
     @Permission("eternalcore.smithingtable.other")
     @DescriptionDocs(description = "Opens a smithing table for another player", arguments = "<player>")
-    void execute(@Context CommandSender sender, @Arg Player target) {
+    void execute(@Context CommandSender commandSender, @Arg Player target) {
         PaperContainer.SMITHING_TABLE.open(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedBy())
-            .placeholder("{PLAYER}", sender.getName())
-            .player(target.getUniqueId())
+            .notice(translation -> translation.container().targetSmithingOpened())
+            .sender(commandSender)
+            .placeholder("{PLAYER}", target.getName())
             .send();
+    }
+
+    void openSmithingTable(Player player) {
+        PaperContainer.SMITHING_TABLE.open(player);
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedFor())
-            .sender(sender)
-            .placeholder("{PLAYER}", target.getName())
+            .notice(translation -> translation.container().smithingOpened())
+            .player(player.getUniqueId())
             .send();
     }
 

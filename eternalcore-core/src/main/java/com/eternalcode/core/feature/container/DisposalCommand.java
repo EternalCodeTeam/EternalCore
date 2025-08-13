@@ -6,6 +6,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.commons.adventure.AdventureUtil;
+import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -13,6 +14,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command(name = "disposal")
@@ -35,7 +37,23 @@ class DisposalCommand {
     @Execute
     @DescriptionDocs(description = "Opens a disposal")
     void execute(@Context Player player) {
-        Translation translation = this.translationManager.getMessages(player.getUniqueId());
+        this.openDisposal(player);
+    }
+
+    @Execute
+    @DescriptionDocs(description = "Opens a disposal for target")
+    @Permission("eternalcore.disposal.other")
+    void executeOther(@Context CommandSender commandSender, @Arg Player target) {
+        this.openDisposal(target);
+
+        this.noticeService.create()
+            .sender(commandSender)
+            .notice(message -> message.container().targetDispostalOpened())
+            .send();
+    }
+
+    void openDisposal(Player player) {
+        Translation translation = this.translationManager.getMessages();
         Component component = this.miniMessage.deserialize(translation.inventory().disposalTitle());
         String serialize = AdventureUtil.SECTION_SERIALIZER.serialize(component);
 
@@ -43,8 +61,7 @@ class DisposalCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(message -> message.container().genericContainerOpened())
+            .notice(message -> message.container().dispostalOpened())
             .send();
     }
-
 }

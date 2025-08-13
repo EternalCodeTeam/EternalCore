@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.container;
+package com.eternalcode.core.feature.clear;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -29,10 +29,9 @@ class InventoryClearCommand {
         this.clear(player);
 
         this.noticeService.create()
-            .notice(translation -> translation.inventory().inventoryClearMessage())
+            .notice(translation -> translation.clear().inventoryCleared())
             .player(player.getUniqueId())
             .send();
-
     }
 
     @Execute
@@ -42,13 +41,13 @@ class InventoryClearCommand {
         this.clear(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.inventory().inventoryClearMessageBy())
+            .notice(translation -> translation.clear().targetInvenoryCleared())
             .placeholder("{PLAYER}", target.getName())
             .viewer(audience)
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.inventory().inventoryClearMessage())
+            .notice(translation -> translation.clear().inventoryCleared())
             .player(target.getUniqueId())
             .send();
     }
