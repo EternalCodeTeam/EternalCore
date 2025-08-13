@@ -33,7 +33,7 @@ class SmithingTableCommand {
     @Permission("eternalcore.smithingtable.other")
     @DescriptionDocs(description = "Opens a smithing table for another player", arguments = "<player>")
     void execute(@Context CommandSender commandSender, @Arg Player target) {
-        PaperContainer.SMITHING_TABLE.open(target);
+        this.openSmithingTable(target);
 
         this.noticeService.create()
             .notice(translation -> translation.container().targetSmithingOpened())

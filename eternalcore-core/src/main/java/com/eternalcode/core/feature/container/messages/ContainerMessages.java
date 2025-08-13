@@ -10,8 +10,8 @@ public interface ContainerMessages {
     Notice cartographyOpened();
     Notice targetCartographyOpened();
 
-    Notice dispostalOpened();
-    Notice targetDispostalOpened();
+    Notice disposalOpened();
+    Notice targetDisposalOpened();
 
     Notice enderchestOpened();
     Notice targetEnderchestOpened();

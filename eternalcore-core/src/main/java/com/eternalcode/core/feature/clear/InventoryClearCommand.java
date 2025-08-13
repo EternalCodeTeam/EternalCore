@@ -36,7 +36,7 @@ class InventoryClearCommand {
         this.clear(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.clear().targetInvenoryCleared())
+            .notice(translation -> translation.clear().targetInventoryCleared())
             .placeholder("{PLAYER}", target.getName())
             .viewer(audience)
             .send();

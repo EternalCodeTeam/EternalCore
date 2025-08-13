@@ -38,6 +38,7 @@ class CartographyTableCommand {
 
         this.noticeService.create()
             .notice(translation -> translation.container().targetCartographyOpened())
+            .placeholder("{PLAYER}", target.getName())
             .sender(sender)
             .send();
     }
