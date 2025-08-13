@@ -539,24 +539,6 @@ public class ENTranslation extends AbstractTranslation {
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>The specified container has been opened for <green>{PLAYER}<white>!");
     }
 
-    @Comment({" ", "# Information sent, when the language is changed to English"})
-    public ENLanguageSection language = new ENLanguageSection();
-
-    @Getter
-    public static class ENLanguageSection extends OkaeriConfig implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Our discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
-    }
-
     @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
     public ENSetSlotMessages setSlot = new ENSetSlotMessages();
 

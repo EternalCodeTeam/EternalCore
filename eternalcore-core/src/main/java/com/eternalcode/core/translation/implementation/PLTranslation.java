@@ -564,24 +564,6 @@ public class PLTranslation extends AbstractTranslation {
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>Otwarto kontener dla gracza <green>{PLAYER}<white>!");
     }
 
-    @Comment({" ", "# Informacja zwrotna, gdy gracz zmienia język pluginu na polski"})
-    public PLLanguageSection language = new PLLanguageSection();
-
-    @Getter
-    public static class PLLanguageSection extends OkaeriConfig implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Nasz discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
-    }
-
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
     public PLSetSlotMessages setSlot  = new PLSetSlotMessages();
 
