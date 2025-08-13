@@ -22,6 +22,10 @@ import org.bukkit.entity.Player;
 @Service
 class TeleportServiceImpl implements TeleportService {
 
+    // TODO: przerobic na cache
+//    private final Cache<UUID, Position> lastPosition = CacheBuilder.newBuilder()
+//        .expireAfterWrite(1, TimeUnit.HOURS)
+//        .build();
     private final Map<UUID, Position> lastPosition = new HashMap<>();
 
     private final TeleportCommandService teleportCommandService;
