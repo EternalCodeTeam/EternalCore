@@ -27,11 +27,6 @@ class InventoryClearCommand {
     @DescriptionDocs(description = "Clears your inventory")
     void execute(@Context Player player) {
         this.clear(player);
-
-        this.noticeService.create()
-            .notice(translation -> translation.clear().inventoryCleared())
-            .player(player.getUniqueId())
-            .send();
     }
 
     @Execute
@@ -45,16 +40,16 @@ class InventoryClearCommand {
             .placeholder("{PLAYER}", target.getName())
             .viewer(audience)
             .send();
-
-        this.noticeService.create()
-            .notice(translation -> translation.clear().inventoryCleared())
-            .player(target.getUniqueId())
-            .send();
     }
 
     private void clear(Player player) {
         player.getInventory().setArmorContents(new ItemStack[0]);
         player.getInventory().clear();
+
+        this.noticeService.create()
+            .notice(translation -> translation.clear().inventoryCleared())
+            .player(player.getUniqueId())
+            .send();
     }
 
 }
