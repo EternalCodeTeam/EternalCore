@@ -56,7 +56,7 @@ class DisposalCommand {
     void openDisposal(Player player) {
         Translation translation = this.translationManager.getMessages();
         Component containerTitle= this.miniMessage.deserialize(translation.inventory().disposalTitle());
-        String serialize = AdventureUtil.SECTION_SERIALIZER.serialize(component);
+        String serializedContainerTitle = AdventureUtil.SECTION_SERIALIZER.serialize(containerTitle);
 
         player.openInventory(this.server.createInventory(null, 54, serialize));
 
