@@ -16,7 +16,9 @@ import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.command.CommandSender;
@@ -52,13 +54,21 @@ class HomeArgument extends AbstractViewerArgument<Home> {
             return ParseResult.success(homeOption.get());
         }
 
-        String homes = this.homeService.getHomes(uniqueId).stream()
-            .map(home -> home.getName())
-            .collect(Collectors.joining(", "));
+        Optional<Set<Home>> homes = this.homeService.getHomes(uniqueId);
+        if (homes.isEmpty()) {
+            NoticeBroadcast noHomesNotice = this.noticeService.create()
+                .notice(translate -> translate.home().noHomesOwned())
+                .viewer(viewer);
+
+            return ParseResult.failure(noHomesNotice);
+        }
+
+        String homeList = homes.get()
+            .stream().map(home -> home.getName()).collect(Collectors.joining(", "));
 
         NoticeBroadcast homeListNotice = this.noticeService.create()
             .notice(translate -> translate.home().homeList())
-            .placeholder("{HOMES}", homes)
+            .placeholder("{HOMES}", homeList)
             .viewer(viewer);
 
         return ParseResult.failure(homeListNotice);
@@ -71,8 +81,11 @@ class HomeArgument extends AbstractViewerArgument<Home> {
         SuggestionContext context
     ) {
         Viewer viewer = this.viewerService.any(invocation.sender());
-        return this.homeService.getHomes(viewer.getUniqueId()).stream()
+        Optional<Set<Home>> homes = this.homeService.getHomes(viewer.getUniqueId());
+
+        return homes.map(homeSet -> SuggestionResult.of(homeSet.stream()
             .map(Home::getName)
-            .collect(SuggestionResult.collector());
+            .toList())).orElseGet(SuggestionResult::empty);
+
     }
 }

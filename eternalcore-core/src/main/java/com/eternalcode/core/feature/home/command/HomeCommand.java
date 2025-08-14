@@ -15,6 +15,8 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Collection;
 import java.util.Optional;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
 
 @Command(name = "home")
@@ -40,45 +42,29 @@ class HomeCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, if player has eternalcore.home.bypass permission, eternalcore will ignore teleport time")
+    @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, " +
+        "if player has eternalcore.home.bypass permission, eternalcore will ignore teleport time")
     void execute(@Context Player player) {
-        Collection<Home> playerHomes = this.homeService.getHomes(player.getUniqueId());
+        Optional<Set<Home>> homesOptional = this.homeService.getHomes(player.getUniqueId());
+        if (homesOptional.isEmpty()) {
 
-        if (playerHomes.isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.home().noHomesOwned())
                 .send();
             return;
         }
+        Set<Home> homeSet = homesOptional.get();
 
-        if (playerHomes.size() > 1) {
-            String homes = String.join(
-                ", ",
-                playerHomes.stream()
-                    .map(Home::getName)
-                    .toList());
+        Home home = homeSet.stream().findFirst().get();
 
-            Optional<Home> mainHome = playerHomes.stream()
-                .filter(home -> home.getName().equals(this.homesConfig.defaultHomeName))
-                .findFirst();
+        this.homeTeleportService.teleport(player, home);
+        this.noticeService.create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.home().teleportToHome())
+            .placeholder("{HOME}", home.getName())
+            .send();
 
-            if (mainHome.isPresent()) {
-                this.homeTeleportService.teleport(player, mainHome.get());
-                return;
-            }
-
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.home().homeList())
-                .placeholder("{HOMES}", homes)
-                .send();
-            return;
-        }
-
-        Home firstHome = playerHomes.iterator().next();
-
-        this.homeTeleportService.teleport(player, firstHome);
     }
 
     @Execute

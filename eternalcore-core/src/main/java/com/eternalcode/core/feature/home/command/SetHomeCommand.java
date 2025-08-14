@@ -15,6 +15,8 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.bukkit.entity.Player;
 
@@ -55,8 +57,11 @@ class SetHomeCommand {
     private void setOrOverrideHome(User user, Player player, String homeName) {
         UUID uniqueId = user.getUniqueId();
 
-        if (this.homeService.hasHome(uniqueId, homeName)) {
-            this.homeService.createHome(uniqueId, homeName, player.getLocation());
+
+
+        Optional<Home> home = this.homeService.getHome(uniqueId, homeName);
+        home.ifPresent(ignored -> {
+            this.homeService.setHome(uniqueId, homeName, player.getLocation());
 
             this.noticeService.create()
                 .user(user)
@@ -65,28 +70,27 @@ class SetHomeCommand {
                 .send();
 
             return;
-        }
+        });
 
-        int amountOfUserHomes = this.homeService.getHomes(player.getUniqueId()).size();
-        int maxAmountOfUserHomes = this.homeService.getHomeLimit(player);
+        if (this.homeService.underLimit(uniqueId)) {
+            int homeLimit = this.homeService.getHomeLimit(uniqueId);
 
-        if (amountOfUserHomes >= maxAmountOfUserHomes) {
             this.noticeService.create()
                 .user(user)
-                .placeholder("{LIMIT}", String.valueOf(maxAmountOfUserHomes))
+                .placeholder("{LIMIT}", String.valueOf(homeLimit))
                 .notice(translation -> translation.home().limit())
                 .send();
 
             this.eventCaller.callEvent(new HomeLimitReachedEvent(
                 player.getUniqueId(),
-                maxAmountOfUserHomes,
-                amountOfUserHomes
+                homeLimit,
+                this.homeService.getHomes(player.getUniqueId()).get().size()
             ));
 
             return;
         }
 
-        this.homeService.createHome(uniqueId, homeName, player.getLocation());
+        this.homeService.setHome(uniqueId, homeName, player.getLocation());
         this.noticeService.create()
             .user(user)
             .notice(translation -> translation.home().create())

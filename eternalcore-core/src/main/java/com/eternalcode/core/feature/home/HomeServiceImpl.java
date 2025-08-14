@@ -11,15 +11,17 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Service
-public class HomeManager implements HomeService {
+public class HomeServiceImpl implements HomeService {
 
     private final Map<UUID, Map<String, Home>> userHomes = new HashMap<>();
     private final HomeRepository repository;
@@ -28,7 +30,7 @@ public class HomeManager implements HomeService {
     private final PluginConfiguration pluginConfiguration;
 
     @Inject
-    private HomeManager(
+    private HomeServiceImpl(
         HomeRepository repository,
         EventCaller eventCaller,
         PluginConfiguration pluginConfiguration
@@ -46,7 +48,7 @@ public class HomeManager implements HomeService {
         });
     }
 
-    @Override
+
     public Home createHome(UUID playerUniqueId, String name, Location location) {
         Map<String, Home> homes = this.userHomes.computeIfAbsent(playerUniqueId, k -> new HashMap<>());
 
@@ -106,6 +108,20 @@ public class HomeManager implements HomeService {
     }
 
     @Override
+    public boolean underLimit(UUID playerUniqueId) {
+        return false;
+    }
+
+    @Override
+    public Home setHome(UUID playerUniqueId, String name, Location location) {
+        return null;
+    }
+
+    @Override
+    public int getHomeLimit(UUID playerUniqueId) {
+        return 0;
+    }
+
     public boolean hasHome(UUID playerUniqueId, String name) {
         Map<String, Home> homes = this.userHomes.get(playerUniqueId);
 
@@ -116,7 +132,7 @@ public class HomeManager implements HomeService {
         return homes.containsKey(name);
     }
 
-    @Override
+
     public boolean hasHome(UUID playerUniqueId, Home home) {
         Map<String, Home> homes = this.userHomes.get(playerUniqueId);
 
@@ -125,6 +141,11 @@ public class HomeManager implements HomeService {
         }
 
         return homes.containsValue(home);
+    }
+
+    @Override
+    public Optional<Home> getHome(UUID playerUniqueId) {
+        return Optional.empty();
     }
 
     @Override
@@ -138,12 +159,17 @@ public class HomeManager implements HomeService {
         return Optional.ofNullable(homes.get(name));
     }
 
-    @Override
-    public Collection<Home> getHomes(UUID user) {
-        return Collections.unmodifiableCollection(this.userHomes.getOrDefault(user, new HashMap<>()).values());
+
+    public Optional<Set<Home>> getHomes(UUID user) {
+        return Optional.empty();
     }
 
     @Override
+    public boolean hasHomes(UUID playerUniqueId) {
+        return false;
+    }
+
+
     public int getAmountOfHomes(UUID user) {
         Map<String, Home> homes = this.userHomes.get(user);
 
@@ -154,7 +180,6 @@ public class HomeManager implements HomeService {
         return homes.size();
     }
 
-    @Override
     public int getHomeLimit(Player player) {
         Map<String, Integer> maxHomes = this.pluginConfiguration.homes.maxHomes;
 

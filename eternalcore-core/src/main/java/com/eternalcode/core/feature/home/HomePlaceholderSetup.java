@@ -9,6 +9,9 @@ import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.bukkit.entity.Player;
@@ -28,16 +31,17 @@ class HomePlaceholderSetup {
     @Subscribe(EternalInitializeEvent.class)
     void setUp(PlaceholderRegistry placeholderRegistry) {
         Stream.of(
-            PlaceholderReplacer.of("homes_owned", (text, targetPlayer) -> this.ownedHomes(targetPlayer)),
-            PlaceholderReplacer.of("homes_count", (text, targetPlayer) -> this.homesCount(targetPlayer)),
-            PlaceholderReplacer.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer)),
-            PlaceholderReplacer.of("homes_left", (text, targetPlayer) -> this.homesLeft(targetPlayer))
+            PlaceholderReplacer.of("homes_owned", (text, targetPlayer) -> this.ownedHomes(targetPlayer.getUniqueId())),
+            PlaceholderReplacer.of("homes_count", (text, targetPlayer) -> this.homesCount(targetPlayer.getUniqueId())),
+            PlaceholderReplacer.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer.getUniqueId())),
+            PlaceholderReplacer.of("homes_left", (text, targetPlayer) -> this.homesLeft(targetPlayer.getUniqueId()))
         ).forEach(placeholder -> placeholderRegistry.registerPlaceholder(placeholder));
     }
 
-    private String homesLeft(Player targetPlayer) {
+    private String homesLeft(UUID targetPlayer) {
         int homesLimit = this.homeService.getHomeLimit(targetPlayer);
-        int amountOfHomes = this.homeService.getAmountOfHomes(targetPlayer.getUniqueId());
+        Optional<Set<Home>> homes = this.homeService.getHomes(targetPlayer);
+        int amountOfHomes = homes.map(Set::size).orElse(0);
 
         return homesLeft(homesLimit, amountOfHomes);
     }
@@ -52,22 +56,26 @@ class HomePlaceholderSetup {
         return String.valueOf(result);
     }
 
-    private String ownedHomes(Player targetPlayer) {
-        Collection<Home> homes = this.homeService.getHomes(targetPlayer.getUniqueId());
-        Translation translation = this.translationManager.getMessages(targetPlayer.getUniqueId());
+    private String ownedHomes(UUID targetPlayer) {
+        Optional<Set<Home>> homes = this.homeService.getHomes(targetPlayer);
+        Translation translation = this.translationManager.getMessages(targetPlayer);
 
         if (homes.isEmpty()) {
             return translation.home().noHomesOwnedPlaceholder();
         }
 
-        return homes.stream().map(Home::getName).collect(Collectors.joining(", "));
+        return homes.stream().flatMap(Set::stream).map(Home::getName).collect(Collectors.joining(", "));
     }
 
-    private String homesCount(Player targetPlayer) {
-        return String.valueOf(this.homeService.getAmountOfHomes(targetPlayer.getUniqueId()));
+    private String homesCount(UUID targetPlayer) {
+
+        Optional<Set<Home>> homes = this.homeService.getHomes(targetPlayer);
+        int amountOfHomes = homes.map(Set::size).orElse(0);
+
+        return String.valueOf(amountOfHomes);
     }
 
-    private String homesLimit(Player targetPlayer) {
+    private String homesLimit(UUID targetPlayer) {
         return String.valueOf(this.homeService.getHomeLimit(targetPlayer));
     }
 }

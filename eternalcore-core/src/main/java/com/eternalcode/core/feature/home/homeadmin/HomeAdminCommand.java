@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.home.homeadmin;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.home.Home;
-import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.feature.home.HomeServiceImpl;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -15,6 +15,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import io.papermc.lib.PaperLib;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.Location;
@@ -24,13 +25,13 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.home.admin")
 class HomeAdminCommand {
 
-    private final HomeManager homeManager;
+    private final HomeServiceImpl homeManager;
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
 
     @Inject
     public HomeAdminCommand(
-        HomeManager homeManager,
+        HomeServiceImpl homeManager,
         NoticeService noticeService,
         PluginConfiguration pluginConfiguration
     ) {
@@ -140,7 +141,8 @@ class HomeAdminCommand {
 
     private String formattedListUserHomes(UUID uniqueId) {
         return this.homeManager.getHomes(uniqueId).stream()
-            .map(home -> home.getName())
+            .flatMap(Set::stream)
+            .map(Home::getName)
             .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
 }

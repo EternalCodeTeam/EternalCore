@@ -40,4 +40,8 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
         Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
     public Notice homeListAsAdmin =
         Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
+
+    public Notice specifyToDelete = Notice.chat("");
+
+    public Notice teleportToHome = Notice.chat("");
 }

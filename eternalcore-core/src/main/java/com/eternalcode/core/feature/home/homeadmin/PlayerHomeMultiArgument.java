@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.home.homeadmin;
 
 import com.eternalcode.core.feature.home.Home;
-import com.eternalcode.core.feature.home.HomeManager;
+import com.eternalcode.core.feature.home.HomeServiceImpl;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.NoticeService;
@@ -19,6 +19,7 @@ import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.Server;
@@ -32,14 +33,14 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
     private static final String PLAYER_NAME_PLACEHOLDER_PREFIX = "{PLAYER}";
     private static final String HOME_DELIMITER = ", ";
 
-    private final HomeManager homeManager;
+    private final HomeServiceImpl homeManager;
     private final NoticeService noticeService;
     private final ViewerService viewerService;
     private final Server server;
 
     @Inject
     PlayerHomeMultiArgument(
-        HomeManager homeManager,
+        HomeServiceImpl homeManager,
         NoticeService noticeService,
         ViewerService viewerService,
         Server server
@@ -77,8 +78,8 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         }
 
         UUID uniqueId = player.getUniqueId();
+        Optional<Set<Home>> homes = this.homeManager.getHomes(uniqueId);
         if (!rawInput.hasNext()) {
-            Collection<Home> homes = this.homeManager.getHomes(uniqueId);
             if (homes.isEmpty()) {
                 NoticeBroadcast home = this.noticeService.create()
                     .notice(translate -> translate.home().playerNoOwnedHomes())
@@ -86,7 +87,7 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
                     .player(uniqueId);
                 return ParseResult.failure(home);
             }
-            NoticeBroadcast homeListNotice = homeNotice(homes, player, uniqueId);
+            NoticeBroadcast homeListNotice = homeNotice(homes.get(), player, uniqueId);
             return ParseResult.failure(homeListNotice);
         }
 
@@ -94,9 +95,7 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         Optional<Home> home = this.homeManager.getHome(uniqueId, homeName);
 
         if (home.isEmpty()) {
-            Collection<Home> homes = this.homeManager.getHomes(uniqueId);
-
-            NoticeBroadcast homeListNotice = homeNotice(homes, player, uniqueId);
+            NoticeBroadcast homeListNotice = homeNotice(homes.get(), player, uniqueId);
 
             return ParseResult.failure(homeListNotice);
         }
@@ -133,7 +132,8 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
             }
 
             return SuggestionResult.of(this.homeManager.getHomes(player.getUniqueId()).stream()
-                    .map(Home::getName)
+                    .flatMap(Set::stream)
+                    .map(home -> home.getName())
                     .collect(Collectors.toList()))
                 .appendLeft(playerName);
         }
