@@ -22,4 +22,5 @@ public interface ArgumentMessages {
     Notice worldDoesntExist();
     Notice incorrectNumberOfChunks();
     Notice incorrectLocation();
+    Notice noValidEntityScope();
 }

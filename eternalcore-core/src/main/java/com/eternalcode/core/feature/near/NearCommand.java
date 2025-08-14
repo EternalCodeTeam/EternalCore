@@ -14,20 +14,18 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@Command(name = "near", aliases = {})
+@Command(name = "near")
 @Permission("eternalcore.feature.near")
 public class NearCommand {
 
     private final NoticeService noticeService;
     private final MinecraftScheduler minecraftScheduler;
-    private static final int RADIUS = 100;
+    private static final int DEFAULT_RADIUS = 100;
     private static final long GLOW_TIME = 5L;
+    private static final EntityScope DEFAULT_ENTITY_SCOPE = EntityScope.PLAYER;
 
     @Inject
     public NearCommand(NoticeService noticeService, MinecraftScheduler minecraftScheduler) {
@@ -36,15 +34,18 @@ public class NearCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Show all nearby entities within a default radius.", arguments = "[]")
-    void showEntities(@Context Player sender) {
-        this.handleShowEntities(sender, RADIUS);
+    @DescriptionDocs(description = "Shows all players to the command sender.")
+    void showEntites(@Context Player player) {
+        handleShowEntities(player, DEFAULT_RADIUS, DEFAULT_ENTITY_SCOPE);
     }
 
     @Execute
-    @DescriptionDocs(description = "Show all nearby entities within a specified radius.", arguments = "[radius]")
-    void showEntitiesInRadius(@Context Player sender, @Arg Optional<Integer> radius) {
-        int actualRadius = radius.orElse(RADIUS);
+    @DescriptionDocs(
+        description = "Shows all entities of the specified entity scope within the specified radius to the command sender",
+        arguments = {"<entityScope> [radius]"}
+    )
+    void showEntitiesWithScope(@Context Player sender, @Arg EntityScope entityScope, @Arg Optional<Integer> radius) {
+        int actualRadius = radius.orElse(DEFAULT_RADIUS);
 
         if (actualRadius <= 0) {
             this.noticeService.create()
@@ -54,14 +55,16 @@ public class NearCommand {
             return;
         }
 
-        handleShowEntities(sender, actualRadius);
+        handleShowEntities(sender, actualRadius, entityScope);
     }
 
-    private void handleShowEntities(Player sender, int radius) {
+    private void handleShowEntities(Player sender, int radius, EntityScope entityScope) {
 
-        Collection<Entity> nearbyEntities = sender.getNearbyEntities(radius, radius, radius).stream()
+        List<Entity> nearbyEntities = sender.getNearbyEntities(radius, radius, radius).stream()
             .filter(entity -> !(entity.getUniqueId().equals(sender.getUniqueId())))
             .toList();
+
+        nearbyEntities = entityScope.filterEntities(nearbyEntities);
 
         if (nearbyEntities.isEmpty()) {
             this.noticeService.create()
@@ -72,11 +75,15 @@ public class NearCommand {
             return;
         }
 
-        nearbyEntities.forEach(entity -> entity.setGlowing(true));
-        this.minecraftScheduler.runLater(
-            () -> {nearbyEntities.forEach(entity -> entity.setGlowing(false));},
-            Duration.ofSeconds(GLOW_TIME)
-        );
+        if (sender.hasPermission(NearPermissionConstant.NEAR_GLOW_PERMISSION)) {
+            nearbyEntities.forEach(entity -> entity.setGlowing(true));
+            final List<Entity> finalNearbyEntities = nearbyEntities;
+            this.minecraftScheduler.runLater(
+                () -> {
+                    finalNearbyEntities.forEach(entity -> entity.setGlowing(false));},
+                Duration.ofSeconds(GLOW_TIME)
+            );
+        }
 
         Map<EntityType, Long> entityTypeCount = nearbyEntities.stream()
             .collect(Collectors.groupingBy(
