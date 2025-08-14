@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
@@ -522,11 +523,6 @@ public class PLTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Podany przedmiot nie istnieje!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Naprawiono trzymany przedmiot!");
-        public Notice repairAllMessage = Notice.chat("<green>► <white>Naprawiono wszystkie przedmioty!");
-
-        @Comment({" ", "# {TIME} - Czas przed wysłaniem następnej wiadomości (cooldown)"})
-        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>Możesz użyć tej komendy za <dark_red>{TIME}!");
 
         @Comment({" ", "# {SKULL} - Nazwa gracza do którego należy głowa"})
         public Notice skullMessage = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: {SKULL}");
@@ -536,10 +532,15 @@ public class PLTranslation extends AbstractTranslation {
         public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
     }
+    @Comment({
+        " ",
+        "#Ta sekcja odpowiada za wiadomosci repair"
+    })
+    public PLRepairMessages repair = new PLRepairMessages();
 
     @Comment({
         " ",
-        "# Komunikaty odpowiedzialne za ustawianie czasu i pogody",
+        "# Komunikaty odpowiedzialne za ustawianie czasu i pogody"
     })
     public PLTimeAndWeatherMessages timeAndWeather = new PLTimeAndWeatherMessages();
 
