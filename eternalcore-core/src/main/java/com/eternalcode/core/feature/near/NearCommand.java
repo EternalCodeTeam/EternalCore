@@ -1,9 +1,9 @@
 package com.eternalcode.core.feature.near;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
@@ -18,19 +18,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Command(name = "near")
-@Permission("eternalcore.feature.near")
+@Permission(NearPermissionConstant.NEAR_PERMISSION)
 public class NearCommand {
 
     private final NoticeService noticeService;
-    private final MinecraftScheduler minecraftScheduler;
+    private final Scheduler minecraftScheduler;
+
     private static final int DEFAULT_RADIUS = 100;
-    private static final long GLOW_TIME = 5L;
+    private static final int GLOW_TIME = 5; //in seconds
     private static final EntityScope DEFAULT_ENTITY_SCOPE = EntityScope.PLAYER;
 
     @Inject
-    public NearCommand(NoticeService noticeService, MinecraftScheduler minecraftScheduler) {
-        this.minecraftScheduler = minecraftScheduler;
+    public NearCommand(NoticeService noticeService, Scheduler minecraftScheduler) {
         this.noticeService = noticeService;
+        this.minecraftScheduler = minecraftScheduler;
     }
 
     @Execute
@@ -61,7 +62,7 @@ public class NearCommand {
     private void handleShowEntities(Player sender, int radius, EntityScope entityScope) {
 
         List<Entity> nearbyEntities = sender.getNearbyEntities(radius, radius, radius).stream()
-            .filter(entity -> !(entity.getUniqueId().equals(sender.getUniqueId())))
+            .filter(entity -> !entity.getUniqueId().equals(sender.getUniqueId()))
             .toList();
 
         nearbyEntities = entityScope.filterEntities(nearbyEntities);
@@ -79,49 +80,57 @@ public class NearCommand {
             nearbyEntities.forEach(entity -> entity.setGlowing(true));
             final List<Entity> finalNearbyEntities = nearbyEntities;
             this.minecraftScheduler.runLater(
-                () -> {
-                    finalNearbyEntities.forEach(entity -> entity.setGlowing(false));},
+                () -> finalNearbyEntities.forEach(entity -> entity.setGlowing(false)),
                 Duration.ofSeconds(GLOW_TIME)
             );
         }
-
-        Map<EntityType, Long> entityTypeCount = nearbyEntities.stream()
-            .collect(Collectors.groupingBy(
-                Entity::getType,
-                Collectors.counting()
-            ));
 
         this.noticeService.create()
             .player(sender.getUniqueId())
             .placeholder("{ENTITYAMOUNT}", String.valueOf(nearbyEntities.size()))
             .placeholder("{RADIUS}", String.valueOf(radius))
-            .placeholder("{ENTITYLIST}", buildEntityList(entityTypeCount))
+            .placeholder("{ENTITYLIST}", new EntityListFormater(nearbyEntities).format())
             .notice(translation -> translation.near().entitiesShown())
             .send();
 
     }
 
-    private String buildEntityList(Map<EntityType, Long> entityTypeCount) {
-        StringBuilder entityList = new StringBuilder().append("<br>");
-        entityTypeCount.entrySet().stream()
-            .sorted(Map.Entry.<EntityType, Long>comparingByValue().reversed())
-            .forEach(entry -> {
-                EntityType type = entry.getKey();
-                Long count = entry.getValue();
-                entityList.append("<gray>  - <white>");
-                if (count < 10) {
-                    entityList.append(" ").append(count);
-                } else {
-                    entityList.append(count);
-                }
-                entityList.append(" ").append(
-                    Arrays.stream(type.name().toLowerCase().split("_"))
-                        .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
-                        .collect(Collectors.joining(" "))
-                );
-                entityList.append("<br>");
-            });
-        return entityList.toString();
+    private class EntityListFormater {
+
+        private final String BULLETPOINT_STYLE = "<gray>";
+        private final String BULLETPOINT_SYMBOL = "-";
+        private final String LIST_ITEM_STYLE = "<white>";
+
+        private final Map<EntityType, Long> entityTypeCount;
+
+        public EntityListFormater(List<Entity> entities) {
+            this.entityTypeCount = entities.stream()
+                .collect(Collectors.groupingBy(
+                    Entity::getType,
+                    Collectors.counting()
+                ));
+        }
+
+        public String format() {
+            StringBuilder entityList = new StringBuilder().append("<br>");
+            this.entityTypeCount.entrySet().stream()
+                .sorted(Map.Entry.<EntityType, Long>comparingByValue().reversed())
+                .forEach(entry -> entityList.append(formatEntityLine(entry.getKey(), entry.getValue())));
+            return entityList.toString();
+        }
+
+        private String formatEntityLine(EntityType type, Long count) {
+            String countString = count < 10 ? " " + count.toString() : count.toString();
+            String typeName = formatEntityTypeName(type);
+            return BULLETPOINT_STYLE + "  " + BULLETPOINT_SYMBOL + " " + LIST_ITEM_STYLE + countString + " " + typeName + "<br>";
+        }
+
+        private String formatEntityTypeName(EntityType type) {
+            return Arrays.stream(type.name().toLowerCase().split("_"))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                .collect(Collectors.joining(" "));
+        }
+
     }
 
 }
