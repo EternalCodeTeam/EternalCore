@@ -31,7 +31,7 @@ class EnderchestCommand {
 
     @Execute
     @Permission("eternalcore.enderchest.other")
-    @DescriptionDocs(description = "Opens his enderchest to the selected player", arguments = "<player>")
+    @DescriptionDocs(description = "Opens selected player's enderchest to him", arguments = "<player>")
     void execute(@Context CommandSender commandSender, @Arg Player target) {
         this.openEnderChest(target);
 
