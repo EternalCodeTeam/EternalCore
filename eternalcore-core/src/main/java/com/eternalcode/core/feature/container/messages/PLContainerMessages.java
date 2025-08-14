@@ -15,8 +15,8 @@ public class PLContainerMessages extends OkaeriConfig implements ContainerMessag
     public Notice cartographyOpened = Notice.chat("<green>► <white>Otworzono stół kartograficzny!");
     public Notice targetCartographyOpened = Notice.chat("<green>► <white>Otworzono stół kartograficzny dla {PLAYER}!");
 
-    public Notice dispostalOpened = Notice.chat("<green>► <white>Otworzono śmietnik!");
-    public Notice targetDispostalOpened = Notice.chat("<green>► <white>Otworzono śmietnik dla {PLAYER}!");
+    public Notice disposalOpened = Notice.chat("<green>► <white>Otworzono śmietnik!");
+    public Notice targetDisposalOpened = Notice.chat("<green>► <white>Otworzono śmietnik dla {PLAYER}!");
 
     public Notice enderchestOpened = Notice.chat("<green>► <white>Otworzono enderchest!");
     public Notice targetEnderchestOpened = Notice.chat("<green>► <white>Otworzono enderchest dla {PLAYER}!");

@@ -11,6 +11,6 @@ import lombok.experimental.Accessors;
 public class ENClearMessages extends OkaeriConfig implements ClearMessages {
 
     public Notice inventoryCleared = Notice.chat("<green>► <white>Your inventory has been cleared");
-    public Notice targetInvenoryCleared = Notice.chat("<green>► <white>Player inventory: <green>{PLAYER} <white>has been cleared");
+    public Notice targetInventoryCleared = Notice.chat("<green>► <white>Player inventory: <green>{PLAYER} <white>has been cleared");
 
 }

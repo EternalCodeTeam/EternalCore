@@ -11,6 +11,6 @@ import lombok.experimental.Accessors;
 public class PLClearMessages extends OkaeriConfig implements ClearMessages {
 
     public Notice inventoryCleared = Notice.chat("<green>► <white>Twój ekwipunek został wyczyszczony!");
-    public Notice targetInvenoryCleared = Notice.chat("<green>► <white>Ekwipunek gracza <green>{PLAYER} <white>został wyczyszczony");
+    public Notice targetInventoryCleared = Notice.chat("<green>► <white>Ekwipunek gracza <green>{PLAYER} <white>został wyczyszczony");
 
 }
