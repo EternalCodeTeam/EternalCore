@@ -40,6 +40,7 @@ class VanishCommand {
             this.vanishSelf(player);
             return;
         }
+
         boolean vanished = this.vanishService.toggleVanish(target);
         this.sendMessage(player, target, vanished ? VanishMessages::vanishEnabledForOther : VanishMessages::vanishDisabledForOther);
         this.sendMessage(target, player, vanished ? VanishMessages::vanishEnabledByStaff : VanishMessages::vanishDisabledByStaff);
