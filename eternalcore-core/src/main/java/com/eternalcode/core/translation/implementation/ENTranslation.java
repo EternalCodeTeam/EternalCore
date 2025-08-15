@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
@@ -495,11 +496,6 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Repaired held item!");
-        public Notice repairAllMessage = Notice.chat("<green>► <white>Repaired all items!");
-
-        @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>You can use this command after <red>{TIME}!");
 
         @Comment({" ", "# {SKULL} - Name of the skull owner"})
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
@@ -509,6 +505,12 @@ public class ENTranslation extends AbstractTranslation {
         public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
+
+    @Comment({
+        " ",
+        "# This section is responsable for repair messages"
+    })
+    public ENRepairMessages repair = new ENRepairMessages();
 
     @Comment({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();

@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
@@ -159,14 +160,13 @@ public interface Translation {
         Notice giveNotItem();
 
         // others
-        Notice repairMessage();
-        Notice repairAllMessage();
-        Notice repairDelayMessage();
         Notice skullMessage();
         Notice enchantedMessage();
         Notice enchantedMessageFor();
         Notice enchantedMessageBy();
     }
+
+    RepairMessages repair();
 
     interface ContainerSection {
         Notice genericContainerOpened();
