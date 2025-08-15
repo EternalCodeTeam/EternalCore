@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
@@ -241,4 +242,6 @@ public interface Translation {
     VanishMessages vanish();
     // motd section
     MotdMessages motd();
+    // playtime section
+    PlaytimeMessages playtime();
 }

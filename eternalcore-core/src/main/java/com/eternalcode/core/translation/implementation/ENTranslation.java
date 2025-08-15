@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
@@ -556,4 +557,7 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
     public ENMotdMessages motd = new ENMotdMessages();
+
+    @Comment({" ", "# This section is responsible for information about players' game time."})
+    public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
 }

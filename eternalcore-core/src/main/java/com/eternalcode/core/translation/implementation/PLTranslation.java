@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
@@ -580,4 +581,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
     public PLMotdMessages motd = new PLMotdMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
+    public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
 }
