@@ -36,6 +36,7 @@ public class PlaytimeCommand {
     }
 
     @Execute
+    @Permission("eternalcore.playtime.other")
     @DescriptionDocs(description = "Show playtime of a player", arguments = "<player>")
     void other(@Context Player player, @Arg Player target) {
         this.noticeService.create()
@@ -49,8 +50,6 @@ public class PlaytimeCommand {
     private String formatPlaytime(Player player) {
         int ticks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         Duration playtime = Duration.ofSeconds(ticks / 20L);
-
-        return DurationUtil.format(playtime, true)
-            .replaceAll("(?<=[a-zA-Z])(?=\\d)", " ");
+        return DurationUtil.formatWithUnitSpacing(playtime, true);
     }
 }

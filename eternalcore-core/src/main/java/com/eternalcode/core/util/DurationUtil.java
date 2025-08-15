@@ -40,6 +40,11 @@ public class DurationUtil {
         return STANDARD_FORMAT.format(duration);
     }
 
+    public static String formatWithUnitSpacing(Duration duration, boolean removeMillis) {
+        String formatted = format(duration, removeMillis);
+        return formatted.replaceAll("(?<=[A-Za-z])(?=\\d)", " ");
+    }
+
     public static String format(Duration duration) {
         return format(duration, false);
     }
