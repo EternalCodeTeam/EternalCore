@@ -7,20 +7,17 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.regex.Pattern;
 
-public final class DurationUtil {
+public class DurationUtil {
 
-    private static final Duration ONE_SECOND = Duration.ofSeconds(1);
-    private static final long ONE_SECOND_MILLIS = ONE_SECOND.toMillis();
-    private static final String ZERO_SECONDS = "0s";
-    private static final Pattern UNIT_SPACING_PATTERN = Pattern.compile("(?<=[A-Za-z])(?=\\d)");
+    public static final Duration ONE_SECOND = Duration.ofSeconds(1);
+    private static final Pattern TOKEN = Pattern.compile("\\s*(\\d+)\\s*([a-zA-Z]+)\\s*");
 
     private static final TemporalAmountParser<Duration> WITHOUT_MILLIS_FORMAT = new DurationParser()
-        .withUnit("d", ChronoUnit.DAYS)
-        .withUnit("h", ChronoUnit.HOURS)
-        .withUnit("m", ChronoUnit.MINUTES)
         .withUnit("s", ChronoUnit.SECONDS)
+        .withUnit("m", ChronoUnit.MINUTES)
+        .withUnit("h", ChronoUnit.HOURS)
+        .withUnit("d", ChronoUnit.DAYS)
         .withRounded(ChronoUnit.MILLIS, RoundingMode.UP);
-
     private static final TemporalAmountParser<Duration> STANDARD_FORMAT = new DurationParser()
         .withUnit("d", ChronoUnit.DAYS)
         .withUnit("h", ChronoUnit.HOURS)
@@ -28,34 +25,25 @@ public final class DurationUtil {
         .withUnit("s", ChronoUnit.SECONDS)
         .withUnit("ms", ChronoUnit.MILLIS);
 
-    private DurationUtil() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
-
-    public static String format(Duration duration) {
-        return format(duration, false);
+    public DurationUtil() {
+        throw new UnsupportedOperationException("This class cannot be instantiated");
     }
 
     public static String format(Duration duration, boolean removeMillis) {
-        if (duration == null) {
-            throw new IllegalArgumentException("Duration cannot be null");
-        }
-
         String formatted;
         if (removeMillis) {
-            if (duration.toMillis() < ONE_SECOND_MILLIS) {
-                return addUnitSpacing(ZERO_SECONDS);
+            if (duration.toMillis() < ONE_SECOND.toMillis()) {
+                return "0s";
             }
             formatted = WITHOUT_MILLIS_FORMAT.format(duration);
         }
         else {
             formatted = STANDARD_FORMAT.format(duration);
         }
-
-        return addUnitSpacing(formatted);
+        return TOKEN.matcher(formatted).replaceAll("$1$2 ").trim();
     }
 
-    private static String addUnitSpacing(String formatted) {
-        return UNIT_SPACING_PATTERN.matcher(formatted).replaceAll(" ");
+    public static String format(Duration duration) {
+        return format(duration, false);
     }
 }
