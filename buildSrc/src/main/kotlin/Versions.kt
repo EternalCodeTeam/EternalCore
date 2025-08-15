@@ -9,7 +9,6 @@ object Versions {
     const val JETBRAINS_ANNOTATIONS = "26.0.2"
     const val PLACEHOLDER_API = "2.11.6"
     const val LOMBOK = "1.18.38"
-    const val GIT_CHECK = "1.0.0"
 
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.24.0"

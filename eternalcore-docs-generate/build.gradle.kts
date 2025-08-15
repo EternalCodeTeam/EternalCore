@@ -29,5 +29,4 @@ dependencies {
     runtimeOnly("com.eternalcode:multification-core:${Versions.MULTIFICATION}")
     runtimeOnly("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
     runtimeOnly("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
-    runtimeOnly("com.eternalcode:gitcheck:${Versions.GIT_CHECK}")
 }
