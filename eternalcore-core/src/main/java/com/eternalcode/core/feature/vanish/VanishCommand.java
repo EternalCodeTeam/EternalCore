@@ -36,8 +36,14 @@ class VanishCommand {
     @Permission(VanishPermissionConstant.VANISH_COMMAND_PERMISSION_OTHER)
     @DescriptionDocs(description = "Toggle vanish state for another player")
     void vanishOther(@Context Player player, @Arg Player target) {
+        if (player.equals(target)) {
+            this.vanishSelf(player);
+            return;
+        }
+
         boolean vanished = this.vanishService.toggleVanish(target);
-        this.sendMessage(player, target, vanished ? VanishMessages::vanishEnabledOther : VanishMessages::vanishDisabledOther);
+        this.sendMessage(player, target, vanished ? VanishMessages::vanishEnabledForOther : VanishMessages::vanishDisabledForOther);
+        this.sendMessage(target, player, vanished ? VanishMessages::vanishEnabledByStaff : VanishMessages::vanishDisabledByStaff);
     }
 
     private void sendMessage(Player sender, Player target, NoticeProvider<VanishMessages> message) {

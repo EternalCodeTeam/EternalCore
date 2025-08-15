@@ -77,12 +77,6 @@ public interface Translation {
         Notice slowMode();
         Notice disabledChatInfo();
         Notice commandNotFound();
-        Notice tellrawInfo();
-        Notice tellrawAllInfo();
-        Notice tellrawSaved();
-        Notice tellrawNoSaved();
-        Notice tellrawMultipleSent();
-        Notice tellrawCleared();
     }
 
     interface EventSection {
@@ -168,20 +162,13 @@ public interface Translation {
         Notice giveNotItem();
 
         // others
-        Notice repairMessage();
-        Notice repairAllMessage();
-        Notice repairDelayMessage();
         Notice skullMessage();
         Notice enchantedMessage();
         Notice enchantedMessageFor();
         Notice enchantedMessageBy();
     }
 
-    interface LanguageSection {
-        Notice languageChanged();
-
-        List<ConfigItem> decorationItems();
-    }
+    RepairMessages repair();
 
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();
@@ -238,8 +225,6 @@ public interface Translation {
     ItemEditMessages itemEdit();
     // time and weather
     TimeAndWeatherMessages timeAndWeather();
-    // language section
-    LanguageSection language();
     // container section
     ContainerMessages container();
     // auto message section

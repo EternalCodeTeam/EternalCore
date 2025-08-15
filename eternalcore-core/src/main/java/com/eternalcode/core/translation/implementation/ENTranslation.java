@@ -257,15 +257,6 @@ public class ENTranslation extends AbstractTranslation {
         @Comment(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
 
-        @Comment({" ", "# {PLAYER} - Player who received the message", "# {MESSAGE} - message content", "# {TYPE} - message type"})
-        public Notice tellrawInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>{PLAYER} <white>with the content: {MESSAGE}");
-        public Notice tellrawAllInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>all <white>with the content: {MESSAGE}");
-
-        public Notice tellrawSaved = Notice.chat("<green>► <white>Message saved in queue!");
-        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>No messages saved in queue!");
-        public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
-        public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
-
     }
 
     @Comment({
@@ -503,11 +494,6 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Repaired held item!");
-        public Notice repairAllMessage = Notice.chat("<green>► <white>Repaired all items!");
-
-        @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>You can use this command after <red>{TIME}!");
 
         @Comment({" ", "# {SKULL} - Name of the skull owner"})
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
@@ -518,29 +504,17 @@ public class ENTranslation extends AbstractTranslation {
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
 
+    @Comment({
+        " ",
+        "# This section is responsable for repair messages"
+    })
+    public ENRepairMessages repair = new ENRepairMessages();
+
     @Comment({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
 
     @Comment({" ", "# Messages responsible for containers"})
     public ENContainerMessages container = new ENContainerMessages();
-
-    @Comment({" ", "# Information sent, when the language is changed to English"})
-    public ENLanguageSection language = new ENLanguageSection();
-
-    @Getter
-    public static class ENLanguageSection extends OkaeriConfig implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Our discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
-    }
 
     @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
     public ENSetSlotMessages setSlot = new ENSetSlotMessages();
