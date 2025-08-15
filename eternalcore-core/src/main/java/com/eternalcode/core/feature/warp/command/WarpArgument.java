@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.warp.command;
 
-import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
+import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.feature.warp.Warp;
 import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.injector.annotations.Inject;

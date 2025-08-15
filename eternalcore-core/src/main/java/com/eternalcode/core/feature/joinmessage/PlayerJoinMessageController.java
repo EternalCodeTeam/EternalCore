@@ -41,12 +41,6 @@ class PlayerJoinMessageController implements Listener {
                 .send();
         }
 
-        this.noticeService.create()
-            .notice(translation -> translation.event().welcome())
-            .placeholder("{PLAYER}", player.getName())
-            .player(player.getUniqueId())
-            .sendAsync();
-
         event.setJoinMessage(StringUtils.EMPTY);
 
         this.noticeService.create()

@@ -1,18 +1,21 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.bridge.litecommand.argument.messages.PLArgumentMessages;
+import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
+import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
+import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
-import com.eternalcode.core.feature.language.Language;
+import com.eternalcode.core.translation.Language;
+import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
@@ -21,6 +24,7 @@ import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
+import com.eternalcode.core.feature.teleportrandomplayer.messages.PLTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.PLVanishMessages;
@@ -217,12 +221,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
-
-        @Comment(" ")
-        public Notice randomPlayerNotFound = Notice.chat("<red>✘ <dark_red>Nie można odnaleźć gracza do teleportacji!");
-        @Comment({" ", "# {PLAYER} - Gracz do którego cię teleportowano"})
-        public Notice teleportedToRandomPlayer = Notice.chat("<green>► <white>Zostałeś losowo teleportowany do <green>{PLAYER}<white>!");
     }
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /tprp"
+    })
+    public PLTeleportToRandomPlayerMessages teleportToRandomPlayer = new PLTeleportToRandomPlayerMessages();
 
     @Comment({
         " ",
@@ -272,15 +277,13 @@ public class PLTranslation extends AbstractTranslation {
         public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Wysłano wszystkie zapisane wiadomości!");
         public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
 
-        @Comment({" ", "# {BROADCAST} - Ogłoszenie"})
-        public String alertMessageFormat = "<red><bold>OGŁOSZENIE:</bold> <gray>{BROADCAST}";
-        public Notice alertQueueAdded = Notice.chat("<green>► <white>Dodano wiadomość do kolejki!");
-        public Notice alertQueueRemovedSingle = Notice.chat("<green>► <white>Usunięto ostatnią wiadomość z kolejki!");
-        public Notice alertQueueRemovedAll = Notice.chat("<green>► <white>Usunięto wszystkie wiadomości z kolejki!");
-        public Notice alertQueueCleared = Notice.chat("<green>► <white>Wyczyszczono kolejkę wiadomości!");
-        public Notice alertQueueEmpty = Notice.chat("<red>✘ <dark_red>Kolejka wiadomości jest pusta!");
-        public Notice alertQueueSent = Notice.chat("<green>► <white>Wysłano wszystkie wiadomości z kolejki!");
     }
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /broadcast",
+    })
+    public PLBroadcastMessages broadcast = new PLBroadcastMessages();
 
     @Comment({
         " ",
@@ -383,9 +386,6 @@ public class PLTranslation extends AbstractTranslation {
             Notice.actionbar("<red>► {PLAYER} <white>wylogował się z serwera!"),
             Notice.actionbar("<red>► {PLAYER} <white>opuścił serwer!")
         );
-
-        @Comment({" ", "# {PLAYER} - Gracz który dołączył do serwera"})
-        public Notice welcome = Notice.title("<yellow>{PLAYER}", "<yellow>Witaj ponownie na serwerze!");
     }
 
     @Comment({
@@ -604,9 +604,15 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
     public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
 
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące końca gry"})
+    public PLEndScreenMessages endScreen = new PLEndScreenMessages();
+
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące komendy /burn"})
     public PLBurnMessages burn = new PLBurnMessages();
   
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
     public PLVanishMessages vanish = new PLVanishMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
+    public PLMotdMessages motd = new PLMotdMessages();
 }

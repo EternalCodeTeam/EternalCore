@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.teleportrequest.self;
 
-import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
+import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;

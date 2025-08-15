@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.home.command;
 
-import com.eternalcode.core.bridge.litecommand.argument.AbstractViewerArgument;
+import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.injector.annotations.Inject;

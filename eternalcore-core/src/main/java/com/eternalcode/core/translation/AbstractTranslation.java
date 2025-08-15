@@ -1,9 +1,8 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
-import com.eternalcode.core.feature.language.Language;
 
-public abstract class AbstractTranslation extends AbstractConfigurationFile implements ReloadableTranslation {
+public abstract class AbstractTranslation extends AbstractConfigurationFile implements Translation {
 
     private final Language language;
 
@@ -19,5 +18,4 @@ public abstract class AbstractTranslation extends AbstractConfigurationFile impl
     public Language getLanguage() {
         return this.language;
     }
-
 }
