@@ -20,7 +20,7 @@ public class ENMotdMessages extends OkaeriConfig implements MotdMessages {
     public Notice motdContent = BukkitNotice.builder()
         .chat(List.of(
                 " ",
-                " <color:#9d6eef>🠚 <white>Welcome Back <gradient:#9d6eef:#A1AAFF:#9d6eef>{PLAYER}'s</gradient></white>",
+                " <color:#9d6eef>🠚 <white>Welcome Back, <gradient:#9d6eef:#A1AAFF:#9d6eef>{PLAYER}</gradient>!</white>",
                 " ",
                 " <white>Useful commands:",
                 "  <color:#9d6eef>⏺ <white>/discord - link to the Discord",
