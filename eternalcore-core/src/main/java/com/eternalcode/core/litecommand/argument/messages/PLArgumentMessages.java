@@ -36,6 +36,6 @@ public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages
     public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Niepoprawna liczba chunków!");
     public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
     //@TODO: Check if google translate is correct
-    public Notice noValidEntityScope = Notice.chat("<red>✘ <dark_red>Nie podano prawidłowego zakresu encji! Użyj sugerowanej opcji.");
+    public Notice noValidEntityScope = Notice.chat("<red>✘ <dark_red>Nie podano prawidłowego zakresu entity! Użyj sugerowanej opcji.");
 
 }
