@@ -23,21 +23,23 @@ public class NearCommand {
 
     private final NoticeService noticeService;
     private final Scheduler minecraftScheduler;
+    private final NearSettings nearSettings;
 
     private static final int DEFAULT_RADIUS = 100;
-    private static final int GLOW_TIME = 5; //in seconds
+    private static final Duration GLOW_TIME = Duration.ofSeconds(5);
     private static final EntityScope DEFAULT_ENTITY_SCOPE = EntityScope.PLAYER;
 
     @Inject
-    public NearCommand(NoticeService noticeService, Scheduler minecraftScheduler) {
+    public NearCommand(NoticeService noticeService, Scheduler minecraftScheduler, NearSettings nearSettings) {
         this.noticeService = noticeService;
         this.minecraftScheduler = minecraftScheduler;
+        this.nearSettings = nearSettings;
     }
 
     @Execute
     @DescriptionDocs(description = "Shows all players to the command sender.")
-    void showEntites(@Context Player player) {
-        handleShowEntities(player, DEFAULT_RADIUS, DEFAULT_ENTITY_SCOPE);
+    void showEntities(@Context Player player) {
+        this.handleShowEntities(player, DEFAULT_RADIUS, DEFAULT_ENTITY_SCOPE);
     }
 
     @Execute
@@ -56,7 +58,7 @@ public class NearCommand {
             return;
         }
 
-        handleShowEntities(sender, actualRadius, entityScope);
+        this.handleShowEntities(sender, actualRadius, entityScope);
     }
 
     private void handleShowEntities(Player sender, int radius, EntityScope entityScope) {
@@ -81,7 +83,7 @@ public class NearCommand {
             final List<Entity> finalNearbyEntities = nearbyEntities;
             this.minecraftScheduler.runLater(
                 () -> finalNearbyEntities.forEach(entity -> entity.setGlowing(false)),
-                Duration.ofSeconds(GLOW_TIME)
+                GLOW_TIME
             );
         }
 
@@ -89,21 +91,25 @@ public class NearCommand {
             .player(sender.getUniqueId())
             .placeholder("{ENTITYAMOUNT}", String.valueOf(nearbyEntities.size()))
             .placeholder("{RADIUS}", String.valueOf(radius))
-            .placeholder("{ENTITYLIST}", new EntityListFormater(nearbyEntities).format())
+            .placeholder("{ENTITYLIST}", new EntityListFormatter(nearbyEntities, this.nearSettings).format())
             .notice(translation -> translation.near().entitiesShown())
             .send();
 
     }
 
-    private class EntityListFormater {
+    private static class EntityListFormatter {
 
-        private final String BULLETPOINT_STYLE = "<gray>";
-        private final String BULLETPOINT_SYMBOL = "-";
-        private final String LIST_ITEM_STYLE = "<white>";
+        private final String BULLETPOINT_STYLE;
+        private final String BULLETPOINT_SYMBOL;
+        private final String LIST_ITEM_STYLE;
 
         private final Map<EntityType, Long> entityTypeCount;
 
-        public EntityListFormater(List<Entity> entities) {
+        public EntityListFormatter(List<Entity> entities, NearSettings nearSettings) {
+            this.BULLETPOINT_STYLE = nearSettings.bulletPointStyle();
+            this.BULLETPOINT_SYMBOL = nearSettings.bulletPointSymbol();
+            this.LIST_ITEM_STYLE = nearSettings.listItemStyle();
+
             this.entityTypeCount = entities.stream()
                 .collect(Collectors.groupingBy(
                     Entity::getType,
@@ -120,7 +126,7 @@ public class NearCommand {
         }
 
         private String formatEntityLine(EntityType type, Long count) {
-            String countString = count < 10 ? " " + count.toString() : count.toString();
+            String countString = count < 10 ? " " + count : count.toString();
             String typeName = formatEntityTypeName(type);
             return BULLETPOINT_STYLE + "  " + BULLETPOINT_SYMBOL + " " + LIST_ITEM_STYLE + countString + " " + typeName + "<br>";
         }

@@ -5,6 +5,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
+import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import org.bukkit.command.CommandSender;
@@ -14,7 +15,7 @@ import java.util.List;
 @LiteArgument(type = String.class, name = EntityScopeArgument.KEY)
 public class EntityScopeArgument extends AbstractViewerArgument<EntityScope> {
 
-    private static final List<String> suggestions = EntityScope.getNames();
+    private static final List<String> SUGGESTIONS = EntityScope.getNames();
     static final String KEY = "entity-scope";
 
     @Inject

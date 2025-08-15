@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
@@ -138,11 +139,8 @@ public class PLTranslation extends AbstractTranslation {
         return new File(dataFolder, "lang" + File.separator + "pl_messages.yml");
     }
 
-    //@TODO add the polish translation
-    @Override
-    public NearMessages near() {
-        return null;
-    }
+    @Comment({" ", " "})
+    public NearMessages near =  new PLNearMessages();
 
     @Getter
     public static class PLFormatSection extends OkaeriConfig implements Format {

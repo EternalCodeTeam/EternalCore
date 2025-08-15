@@ -21,6 +21,8 @@ import com.eternalcode.core.feature.jail.JailConfig;
 import com.eternalcode.core.feature.jail.JailSettings;
 import com.eternalcode.core.feature.lightning.LightningConfig;
 import com.eternalcode.core.feature.lightning.LightningSettings;
+import com.eternalcode.core.feature.near.NearConfig;
+import com.eternalcode.core.feature.near.NearSettings;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportConfig;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportSettings;
 import com.eternalcode.core.feature.repair.RepairConfig;
@@ -235,6 +237,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Vanish Configuration")
     @Comment("# Settings responsible for player vanish functionality")
     VanishConfig vanish = new VanishConfig();
+
+    @Bean(proxied = NearSettings.class)
+    @Comment("")
+    @Comment("# Near Configuration")
+    @Comment("# Settings for the /near command, allowing to customize the formating of the command's output in the chat")
+    NearConfig near = new NearConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
