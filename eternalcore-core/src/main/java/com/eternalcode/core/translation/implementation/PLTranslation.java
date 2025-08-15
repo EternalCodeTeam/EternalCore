@@ -261,16 +261,6 @@ public class PLTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
-
-        @Comment({" ", "# {PLAYER} - Gracz, który otrzymał wiadomość", "# {MESSAGE} - wiadomość", "# {TYPE} - typ wiadomości"})
-        public Notice tellrawInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>{PLAYER} <white>o treści: {MESSAGE}");
-        public Notice tellrawAllInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>wszystkich <white>o treści: {MESSAGE}");
-
-        public Notice tellrawSaved = Notice.chat("<green>► <white>Zapisano wiadomość w kolejce!");
-        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>Nie ma zapisanych wiadomości!");
-        public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Wysłano wszystkie zapisane wiadomości!");
-        public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
-
     }
 
     @Comment({
@@ -563,24 +553,6 @@ public class PLTranslation extends AbstractTranslation {
         public Notice genericContainerOpened = Notice.empty();
         public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>Otwarto kontener przez gracza <green>{PLAYER}<white>!");
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>Otwarto kontener dla gracza <green>{PLAYER}<white>!");
-    }
-
-    @Comment({" ", "# Informacja zwrotna, gdy gracz zmienia język pluginu na polski"})
-    public PLLanguageSection language = new PLLanguageSection();
-
-    @Getter
-    public static class PLLanguageSection extends OkaeriConfig implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Nasz discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
     }
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})

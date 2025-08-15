@@ -256,15 +256,6 @@ public class ENTranslation extends AbstractTranslation {
         @Comment(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
 
-        @Comment({" ", "# {PLAYER} - Player who received the message", "# {MESSAGE} - message content", "# {TYPE} - message type"})
-        public Notice tellrawInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>{PLAYER} <white>with the content: {MESSAGE}");
-        public Notice tellrawAllInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>all <white>with the content: {MESSAGE}");
-
-        public Notice tellrawSaved = Notice.chat("<green>► <white>Message saved in queue!");
-        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>No messages saved in queue!");
-        public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
-        public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
-
     }
 
     @Comment({
@@ -539,24 +530,6 @@ public class ENTranslation extends AbstractTranslation {
 
         public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>The specified container has been opened by <green>{PLAYER}<white>!");
         public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>The specified container has been opened for <green>{PLAYER}<white>!");
-    }
-
-    @Comment({" ", "# Information sent, when the language is changed to English"})
-    public ENLanguageSection language = new ENLanguageSection();
-
-    @Getter
-    public static class ENLanguageSection extends OkaeriConfig implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Our discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
     }
 
     @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
