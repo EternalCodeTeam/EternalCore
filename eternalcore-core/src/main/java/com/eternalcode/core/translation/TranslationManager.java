@@ -20,10 +20,12 @@ public class TranslationManager implements TranslationProvider<Translation> {
         return translations.getOrDefault(serverLanguage, translations.get(Language.EN));
     }
 
+    @Deprecated
     public Translation getMessages(UUID playerId) {
         return getMessages();
     }
 
+    @Deprecated
     public Translation getMessages(Language language) {
         return getMessages();
     }

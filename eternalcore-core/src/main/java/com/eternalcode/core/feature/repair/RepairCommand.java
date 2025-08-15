@@ -69,7 +69,7 @@ class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(translation -> translation.item().repairMessage())
+            .notice(translation -> translation.repair().itemRepaired())
             .player(player.getUniqueId())
             .send();
 
@@ -113,7 +113,7 @@ class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(translation -> translation.item().repairAllMessage())
+            .notice(translation -> translation.repair().allItemsRepaired())
             .player(player.getUniqueId())
             .send();
 
@@ -157,7 +157,7 @@ class RepairCommand {
 
         this.noticeService
             .create()
-            .notice(translation -> translation.item().repairMessage())
+            .notice(translation -> translation.repair().armorRepaired())
             .player(player.getUniqueId())
             .send();
 
@@ -170,7 +170,7 @@ class RepairCommand {
 
             this.noticeService
                 .create()
-                .notice(translation -> translation.item().repairDelayMessage())
+                .notice(translation -> translation.repair().delay())
                 .placeholder("{TIME}", DurationUtil.format(time, true))
                 .player(uuid)
                 .send();

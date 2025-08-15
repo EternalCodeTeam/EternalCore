@@ -27,30 +27,28 @@ class GrindstoneCommand {
     @Permission("eternalcore.grindstone")
     @DescriptionDocs(description = "Opens a grindstone for you")
     void executeSelf(@Context Player player) {
-        PaperContainer.GRINDSTONE.open(player);
-
-        this.announcer.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(player.getUniqueId())
-            .send();
+        this.openGrindstone(player);
     }
 
     @Execute
     @Permission("eternalcore.grindstone.other")
     @DescriptionDocs(description = "Opens a grindstone for another player", arguments = "<player>")
-    void execute(@Context CommandSender sender, @Arg Player target) {
+    void execute(@Context CommandSender commandSender, @Arg Player target) {
+        this.openGrindstone(target);
+
+        this.announcer.create()
+            .notice(translation -> translation.container().targetGrindstoneOpened())
+            .sender(commandSender)
+            .placeholder("{PLAYER}", target.getName())
+            .send();
+    }
+
+    void openGrindstone(Player target) {
         PaperContainer.GRINDSTONE.open(target);
 
         this.announcer.create()
-            .notice(translation -> translation.container().genericContainerOpenedFor())
-            .placeholder("{PLAYER}", target.getName())
-            .sender(sender)
-            .send();
-
-        this.announcer.create()
-            .notice(translation -> translation.container().genericContainerOpenedBy())
+            .notice(translation -> translation.container().grindstoneOpened())
             .player(target.getUniqueId())
-            .placeholder("{PLAYER}", sender.getName())
             .send();
     }
 

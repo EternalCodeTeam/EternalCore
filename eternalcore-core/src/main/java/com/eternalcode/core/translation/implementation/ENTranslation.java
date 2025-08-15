@@ -1,6 +1,8 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.ENClearMessages;
+import com.eternalcode.core.feature.container.messages.ENContainerMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
@@ -358,14 +360,11 @@ public class ENTranslation extends AbstractTranslation {
 
     @Getter
     public static class ENInventorySection extends OkaeriConfig implements InventorySection {
-        public Notice inventoryClearMessage = Notice.chat("<green>► <white>Your inventory has been cleared!");
-
-        @Comment({" ", "# {PLAYER} - Target player"})
-        public Notice inventoryClearMessageBy = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>inventory cleared");
-
-        @Comment(" ")
         public String disposalTitle = "<white><bold>Trash";
     }
+
+    @Comment("# This section is responsible for /clear command")
+    public ENClearMessages clear = new ENClearMessages();
 
     @Comment({
         " ",
@@ -496,11 +495,6 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Repaired held item!");
-        public Notice repairAllMessage = Notice.chat("<green>► <white>Repaired all items!");
-
-        @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>You can use this command after <red>{TIME}!");
 
         @Comment({" ", "# {SKULL} - Name of the skull owner"})
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
@@ -511,25 +505,17 @@ public class ENTranslation extends AbstractTranslation {
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
 
+    @Comment({
+        " ",
+        "# This section is responsable for repair messages"
+    })
+    public ENRepairMessages repair = new ENRepairMessages();
+
     @Comment({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
 
     @Comment({" ", "# Messages responsible for containers"})
-    public ENContainerSection container = new ENContainerSection();
-
-    @Getter
-    public static class ENContainerSection extends OkaeriConfig implements ContainerSection {
-
-        @Comment({
-            "# These messages are sent when the player opens a container",
-            "# {PLAYER} - Player who opened the container"
-        })
-
-        public Notice genericContainerOpened = Notice.empty();
-
-        public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>The specified container has been opened by <green>{PLAYER}<white>!");
-        public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>The specified container has been opened for <green>{PLAYER}<white>!");
-    }
+    public ENContainerMessages container = new ENContainerMessages();
 
     @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
     public ENSetSlotMessages setSlot = new ENSetSlotMessages();

@@ -1,38 +1,36 @@
 package com.eternalcode.core.updater;
 
+import com.eternalcode.commons.updater.UpdateResult;
+import com.eternalcode.commons.updater.Version;
+import com.eternalcode.commons.updater.impl.ModrinthUpdateChecker;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.gitcheck.GitCheck;
-import com.eternalcode.gitcheck.GitCheckResult;
-import com.eternalcode.gitcheck.git.GitRepository;
-import com.eternalcode.gitcheck.git.GitTag;
+import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import java.time.Duration;
 import org.bukkit.plugin.PluginDescriptionFile;
-import panda.std.Lazy;
 
 import java.util.concurrent.CompletableFuture;
 
 @Service
 class UpdaterService {
 
-    private static final GitRepository GIT_REPOSITORY = GitRepository.of("EternalCodeTeam", "EternalCore");
+    private static final String MODRINTH_PROJECT_ID = "EternalCore";
+    private static final String CACHE_KEY = "modrinth-update";
 
-    private final GitCheck gitCheck = new GitCheck();
-    private final Lazy<GitCheckResult> gitCheckResult;
+    private final AsyncLoadingCache<String, UpdateResult> updateCache;
 
     @Inject
     UpdaterService(PluginDescriptionFile pluginDescriptionFile) {
-        this.gitCheckResult = new Lazy<>(() -> {
-            String version = pluginDescriptionFile.getVersion();
+        Version currentVersion = new Version(pluginDescriptionFile.getVersion());
+        ModrinthUpdateChecker updateChecker = new ModrinthUpdateChecker();
 
-            return this.gitCheck.checkRelease(GIT_REPOSITORY, GitTag.of("v" + version));
-        });
+        this.updateCache = Caffeine.newBuilder()
+            .expireAfterWrite(Duration.ofHours(1))
+            .buildAsync(key -> updateChecker.check(MODRINTH_PROJECT_ID, currentVersion));
     }
 
-    CompletableFuture<Boolean> isUpToDate() {
-        return CompletableFuture.supplyAsync(() -> {
-            GitCheckResult checkResult = this.gitCheckResult.get();
-
-            return checkResult.isUpToDate();
-        });
+    CompletableFuture<UpdateResult> checkForUpdate() {
+        return this.updateCache.get(CACHE_KEY);
     }
 }

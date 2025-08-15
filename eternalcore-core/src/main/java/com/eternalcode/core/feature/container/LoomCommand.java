@@ -26,30 +26,28 @@ class LoomCommand {
     @Permission("eternalcore.loom")
     @DescriptionDocs(description = "Opens a loom for you")
     void executeSelf(@Context Player player) {
-        PaperContainer.LOOM.open(player);
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(player.getUniqueId())
-            .send();
+        this.openLoom(player);
     }
 
     @Execute
     @Permission("eternalcore.loom.other")
     @DescriptionDocs(description = "Opens a loom for another player", arguments = "<player>")
-    void execute(@Context CommandSender sender, @Arg Player target) {
-        PaperContainer.LOOM.open(target);
+    void execute(@Context CommandSender commandSender, @Arg Player target) {
+        this.openLoom(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedBy())
-            .placeholder("{PLAYER}", sender.getName())
-            .player(target.getUniqueId())
-            .send();
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedFor())
-            .sender(sender)
+            .notice(translation -> translation.container().targetLoomOpened())
+            .sender(commandSender)
             .placeholder("{PLAYER}", target.getName())
+            .send();
+    }
+
+    void openLoom(Player player) {
+        PaperContainer.LOOM.open(player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().loomOpened())
+            .player(player.getUniqueId())
             .send();
     }
 

@@ -7,8 +7,11 @@ public interface VanishMessages {
     Notice vanishEnabled();
     Notice vanishDisabled();
 
-    Notice vanishEnabledOther();
-    Notice vanishDisabledOther();
+    Notice vanishEnabledForOther();
+    Notice vanishDisabledForOther();
+
+    Notice vanishEnabledByStaff();
+    Notice vanishDisabledByStaff();
 
     Notice currentlyInVanish();
 
