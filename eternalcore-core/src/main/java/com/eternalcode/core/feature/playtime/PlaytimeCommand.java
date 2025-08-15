@@ -50,6 +50,6 @@ public class PlaytimeCommand {
     private String formatPlaytime(Player player) {
         int ticks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         Duration playtime = Duration.ofSeconds(ticks / 20L);
-        return DurationUtil.formatWithUnitSpacing(playtime, true);
+        return DurationUtil.format(playtime, true);
     }
 }

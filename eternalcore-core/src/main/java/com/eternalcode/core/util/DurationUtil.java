@@ -5,14 +5,20 @@ import com.eternalcode.commons.time.TemporalAmountParser;
 import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.regex.Pattern;
 
-public class DurationUtil {
+public final class DurationUtil {
+
+    private static final Duration ONE_SECOND = Duration.ofSeconds(1);
+    private static final long ONE_SECOND_MILLIS = ONE_SECOND.toMillis();
+    private static final String ZERO_SECONDS = "0s";
+    private static final Pattern UNIT_SPACING_PATTERN = Pattern.compile("(?<=[A-Za-z])(?=\\d)");
 
     private static final TemporalAmountParser<Duration> WITHOUT_MILLIS_FORMAT = new DurationParser()
-        .withUnit("s", ChronoUnit.SECONDS)
-        .withUnit("m", ChronoUnit.MINUTES)
-        .withUnit("h", ChronoUnit.HOURS)
         .withUnit("d", ChronoUnit.DAYS)
+        .withUnit("h", ChronoUnit.HOURS)
+        .withUnit("m", ChronoUnit.MINUTES)
+        .withUnit("s", ChronoUnit.SECONDS)
         .withRounded(ChronoUnit.MILLIS, RoundingMode.UP);
 
     private static final TemporalAmountParser<Duration> STANDARD_FORMAT = new DurationParser()
@@ -22,30 +28,34 @@ public class DurationUtil {
         .withUnit("s", ChronoUnit.SECONDS)
         .withUnit("ms", ChronoUnit.MILLIS);
 
-    public static final Duration ONE_SECOND = Duration.ofSeconds(1);
-
-    public DurationUtil() {
-        throw new UnsupportedOperationException("This class cannot be instantiated");
-    }
-
-    public static String format(Duration duration, boolean removeMillis) {
-        if (removeMillis) {
-            if (duration.toMillis() < ONE_SECOND.toMillis()) {
-                return "0s";
-            }
-
-            return WITHOUT_MILLIS_FORMAT.format(duration);
-        }
-
-        return STANDARD_FORMAT.format(duration);
-    }
-
-    public static String formatWithUnitSpacing(Duration duration, boolean removeMillis) {
-        String formatted = format(duration, removeMillis);
-        return formatted.replaceAll("(?<=[A-Za-z])(?=\\d)", " ");
+    private DurationUtil() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
     public static String format(Duration duration) {
         return format(duration, false);
+    }
+
+    public static String format(Duration duration, boolean removeMillis) {
+        if (duration == null) {
+            throw new IllegalArgumentException("Duration cannot be null");
+        }
+
+        String formatted;
+        if (removeMillis) {
+            if (duration.toMillis() < ONE_SECOND_MILLIS) {
+                return addUnitSpacing(ZERO_SECONDS);
+            }
+            formatted = WITHOUT_MILLIS_FORMAT.format(duration);
+        }
+        else {
+            formatted = STANDARD_FORMAT.format(duration);
+        }
+
+        return addUnitSpacing(formatted);
+    }
+
+    private static String addUnitSpacing(String formatted) {
+        return UNIT_SPACING_PATTERN.matcher(formatted).replaceAll(" ");
     }
 }
