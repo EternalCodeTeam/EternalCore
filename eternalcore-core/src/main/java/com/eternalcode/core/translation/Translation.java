@@ -1,6 +1,7 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.feature.repair.messages.RepairMessages;
+import com.eternalcode.core.feature.clear.messages.ClearMessages;
+import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
@@ -89,10 +90,11 @@ public interface Translation {
     }
 
     interface InventorySection {
-        Notice inventoryClearMessage();
-        Notice inventoryClearMessageBy();
         String disposalTitle();
     }
+
+    // clear section
+    ClearMessages clear();
 
     interface PlayerSection {
         // feed
@@ -168,12 +170,6 @@ public interface Translation {
 
     RepairMessages repair();
 
-    interface ContainerSection {
-        Notice genericContainerOpened();
-        Notice genericContainerOpenedBy();
-        Notice genericContainerOpenedFor();
-    }
-
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();
     EndScreenMessages endScreen();
@@ -230,7 +226,7 @@ public interface Translation {
     // time and weather
     TimeAndWeatherMessages timeAndWeather();
     // container section
-    ContainerSection container();
+    ContainerMessages container();
     // auto message section
     AutoMessageMessages autoMessage();
     // jail section
