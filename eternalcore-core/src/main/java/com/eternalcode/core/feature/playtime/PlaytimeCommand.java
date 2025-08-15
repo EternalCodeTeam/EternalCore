@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
-@Command(name = "playtime", aliases = {"play-time", "pt"})
+@Command(name = "playtime", aliases = "pt")
 @Permission("eternalcore.playtime")
 public class PlaytimeCommand {
 
@@ -26,7 +26,7 @@ public class PlaytimeCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Show your playtime")
+    @DescriptionDocs(description = "Shows your playtime")
     void self(@Context Player player) {
         this.noticeService.create()
             .notice(translation -> translation.playtime().self())
@@ -37,7 +37,7 @@ public class PlaytimeCommand {
 
     @Execute
     @Permission("eternalcore.playtime.other")
-    @DescriptionDocs(description = "Show playtime of a player", arguments = "<player>")
+    @DescriptionDocs(description = "Shows playtime of a player", arguments = "<player>")
     void other(@Context Player player, @Arg Player target) {
         this.noticeService.create()
             .notice(translation -> translation.playtime().other())
@@ -48,6 +48,7 @@ public class PlaytimeCommand {
     }
 
     private String formatPlaytime(Player player) {
+        // WARNING: The enum name is misleading, it actually records ticks played
         int ticks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         Duration playtime = Duration.ofSeconds(ticks / 20L);
         return DurationUtil.format(playtime, true);
