@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.near;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -9,44 +9,20 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Raider;
 
-public enum EntityScope {
+record EntityScope(String name, Predicate<Entity> filter) {
 
-    PLAYER(
-        "player", entities -> entities.stream()
-        .filter(entity -> entity.getType().equals(EntityType.PLAYER))
-        .toList()),
-    HOSTILE(
-        "hostile", entities -> entities.stream()
-        .filter(entity -> entity instanceof Monster)
-        .toList()),
-    PASSIVE(
-        "passive", entities -> entities.stream()
-        .filter(entity -> entity instanceof Animals)
-        .toList()),
-    RAIDER(
-        "raider", entities -> entities.stream()
-        .filter(entity -> entity instanceof Raider)
-        .toList()),
-    LIVING(
-        "mob", entities -> entities.stream()
-        .filter(entity -> entity instanceof LivingEntity)
-        .toList()),
-    LEASHED(
-        "leashed", entities -> entities.stream()
-        .filter(entity -> (entity instanceof LivingEntity && ((LivingEntity) entity).isLeashed()))
-        .toList()),
-    ALL("all", entities -> entities);
+    public static final EntityScope PLAYER = new EntityScope("player", entity -> entity.getType().equals(EntityType.PLAYER));
+    public static final EntityScope HOSTILE = new EntityScope("hostile", entity -> entity instanceof Monster);
+    public static final EntityScope PASSIVE = new EntityScope("passive", entity -> entity instanceof Animals);
+    public static final EntityScope RAIDER = new EntityScope("raider", entity -> entity instanceof Raider);
+    public static final EntityScope LIVING = new EntityScope("mob", entity -> entity instanceof LivingEntity);
+    public static final EntityScope LEASHED = new EntityScope("leashed", entity -> entity instanceof LivingEntity living && living.isLeashed());
+    public static final EntityScope ALL = new EntityScope("all", entities -> true);
 
-    private final String name;
-    private final EntityFilter filter;
+    private static final List<EntityScope> VALUES = List.of(PLAYER, HOSTILE, PASSIVE, RAIDER, LIVING, LEASHED, ALL);
 
-    EntityScope(String name, EntityFilter filter) {
-        this.name = name;
-        this.filter = filter;
-    }
-
-    public static EntityScope fromName(String name) {
-        for (EntityScope scope : values()) {
+    static EntityScope from(String name) {
+        for (EntityScope scope : VALUES) {
             if (scope.name.equalsIgnoreCase(name)) {
                 return scope;
             }
@@ -54,21 +30,8 @@ public enum EntityScope {
         throw new IllegalArgumentException("No EntityScope found for name: " + name);
     }
 
-    public static List<String> getNames() {
-        return Arrays.stream(EntityScope.values())
-            .map(entityScope -> entityScope.getName().toLowerCase())
-            .toList();
+    static List<EntityScope> values() {
+        return VALUES;
     }
 
-    public List<Entity> filterEntities(List<Entity> entities) {
-        return this.filter.filter(entities);
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    private interface EntityFilter {
-        List<Entity> filter(List<Entity> entities);
-    }
 }

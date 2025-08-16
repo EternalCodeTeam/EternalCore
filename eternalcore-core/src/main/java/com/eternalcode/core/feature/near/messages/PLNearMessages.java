@@ -11,18 +11,15 @@ import lombok.experimental.Accessors;
 public class PLNearMessages extends OkaeriConfig implements NearMessages {
 
     @Comment("# Available placeholders: {RADIUS} - the radius within which entities were searched")
-    public Notice noEntitiesFound = Notice.chat("<red>► <white>Nie znaleziono żadnych entity w zasięgu {RADIUS} bloków. Spróbuj ponownie z większym zasięgiem");
+    public Notice entitiesNotFound = Notice.chat("<red>► <white>Nie znaleziono żadnych entity w zasięgu {RADIUS} bloków. Spróbuj ponownie z większym zasięgiem");
 
     @Comment({
         "# Available placeholders: ",
         "{ENTITY_AMOUNT} - the amount of entities found and shown",
         "{RADIUS} - the radius within which entities were searched"
     })
-    public Notice entitiesShown = Notice.chat("<green>► <white>Liczba <bold>{ENTITY_AMOUNT}</bold> stworzeń w zasięgu: <bold>{RADIUS} bloków</bold>:");
-
-    @Comment("# Header for entity list - displayed before the list of entities")
-    public Notice entityListHeader = Notice.chat("<gray>Znalezione stworzenia:");
+    public Notice entitiesFound = Notice.chat("<green>► <white>Liczba <bold>{ENTITY_AMOUNT}</bold> stworzeń w zasięgu: <bold>{RADIUS} bloków</bold>:");
 
     @Comment("# Entry format for each entity type in the list. Placeholders: {ENTITY_TYPE} - type of entity, {COUNT} - amount of entities of this type")
-    public Notice entityListEntry = Notice.chat("<gray>- <white>{ENTITY_TYPE}: <yellow>{COUNT}");
+    public Notice entityEntry = Notice.chat("<gray>- <white>{ENTITY_TYPE}: <yellow>{COUNT}");
 }

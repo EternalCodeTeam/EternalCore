@@ -145,7 +145,7 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({
         " ",
         "# Ta sekcja odpowiada za wiadomości w komendzie /near "})
-    public NearMessages near =  new PLNearMessages();
+    public PLNearMessages near =  new PLNearMessages();
 
     @Getter
     public static class PLFormatSection extends OkaeriConfig implements Format {

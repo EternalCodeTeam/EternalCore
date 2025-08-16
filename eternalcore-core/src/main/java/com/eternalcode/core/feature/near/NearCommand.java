@@ -11,18 +11,17 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 @Command(name = "near")
 @Permission(NearPermissionConstant.NEAR_PERMISSION)
-public class NearCommand {
+class NearCommand {
 
     private static final int DEFAULT_RADIUS = 100;
     private static final Duration GLOW_TIME = Duration.ofSeconds(5);
@@ -67,43 +66,39 @@ public class NearCommand {
     }
 
     private void handleShowEntities(Player sender, int radius, EntityScope entityScope) {
-
-        List<Entity> nearbyEntities = sender.getNearbyEntities(radius, radius, radius).stream()
-            .filter(entity -> !entity.getUniqueId().equals(sender.getUniqueId()))
-            .toList();
-
-        nearbyEntities = entityScope.filterEntities(nearbyEntities);
+        Collection<Entity> nearbyEntities = sender.getWorld().getNearbyEntities(sender.getLocation(), radius, radius, radius, entityScope.filter());
 
         if (nearbyEntities.isEmpty()) {
             this.noticeService.create()
                 .player(sender.getUniqueId())
                 .placeholder("{RADIUS}", String.valueOf(radius))
-                .notice(translation -> translation.near().noEntitiesFound())
+                .notice(translation -> translation.near().entitiesFound())
                 .send();
             return;
         }
 
         if (sender.hasPermission(NearPermissionConstant.NEAR_GLOW_PERMISSION)) {
             nearbyEntities.forEach(entity -> entity.setGlowing(true));
-            List<Entity> finalNearbyEntities = nearbyEntities;
             this.minecraftScheduler.runLater(
-                () -> finalNearbyEntities.forEach(entity -> entity.setGlowing(false)),
+                () -> nearbyEntities.forEach(entity -> entity.setGlowing(false)),
                 GLOW_TIME
             );
         }
 
-        Map<EntityType, Integer> entityCounts = new HashMap<>();
+        Map<EntityType, Integer> countByEntity = new HashMap<>();
         for (Entity entity : nearbyEntities) {
             EntityType type = entity.getType();
-            entityCounts.put(type, entityCounts.getOrDefault(type, 0) + 1);
+            countByEntity.put(type, countByEntity.getOrDefault(type, 0) + 1);
         }
 
         this.noticeService.create()
             .player(sender.getUniqueId())
-            .notice(translation -> translation.near().entityListHeader())
+            .placeholder("{ENTITY_AMOUNT}", String.valueOf(nearbyEntities.size()))
+            .placeholder("{RADIUS}", String.valueOf(radius))
+            .notice(translation -> translation.near().entitiesFound())
             .send();
 
-        entityCounts.entrySet()
+        countByEntity.entrySet()
             .stream()
             .sorted(Map.Entry.<EntityType, Integer>comparingByValue().reversed())
             .forEach(entry -> {
@@ -114,17 +109,9 @@ public class NearCommand {
                     .player(sender.getUniqueId())
                     .placeholder("{ENTITY_TYPE}", entityTypeName)
                     .placeholder("{COUNT}", count)
-                    .notice(translation -> translation.near().entityListEntry())
+                    .notice(translation -> translation.near().entityEntry())
                     .send();
             });
-
-        this.noticeService.create()
-            .player(sender.getUniqueId())
-            .placeholder("{ENTITY_AMOUNT}", String.valueOf(nearbyEntities.size()))
-            .placeholder("{RADIUS}", String.valueOf(radius))
-            .notice(translation -> translation.near().entitiesShown())
-            .send();
-
     }
 
     private String formatEntityTypeName(EntityType type) {

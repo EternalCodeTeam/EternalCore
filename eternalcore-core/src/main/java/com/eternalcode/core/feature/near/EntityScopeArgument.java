@@ -11,17 +11,20 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import java.util.List;
+import java.util.Locale;
 import org.bukkit.command.CommandSender;
 
 @LiteArgument(type = EntityScope.class, name = EntityScopeArgument.KEY)
-public class EntityScopeArgument extends AbstractViewerArgument<EntityScope> {
+class EntityScopeArgument extends AbstractViewerArgument<EntityScope> {
 
     static final String KEY = "entity-scope";
 
-    private static final List<String> SUGGESTIONS = EntityScope.getNames();
+    private static final List<String> SUGGESTIONS = EntityScope.values().stream()
+        .map(entityScope -> entityScope.name().toLowerCase(Locale.ROOT))
+        .toList();
 
     @Inject
-    public EntityScopeArgument(TranslationManager translationManager) {
+    EntityScopeArgument(TranslationManager translationManager) {
         super(translationManager);
     }
 
@@ -32,7 +35,7 @@ public class EntityScopeArgument extends AbstractViewerArgument<EntityScope> {
         Translation translation
     ) {
         try {
-            EntityScope entityScope = EntityScope.fromName(argument);
+            EntityScope entityScope = EntityScope.from(argument);
             return ParseResult.success(entityScope);
         }
         catch (IllegalArgumentException exception) {
