@@ -72,7 +72,7 @@ class NearCommand {
             this.noticeService.create()
                 .player(sender.getUniqueId())
                 .placeholder("{RADIUS}", String.valueOf(radius))
-                .notice(translation -> translation.near().entitiesFound())
+                .notice(translation -> translation.near().entitiesNotFound())
                 .send();
             return;
         }

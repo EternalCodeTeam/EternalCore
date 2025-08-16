@@ -18,4 +18,6 @@ public class ENNearMessages extends OkaeriConfig implements NearMessages {
 
     @Comment("# Entry format for each entity type in the list. Placeholders: {ENTITY_TYPE} - type of entity, {COUNT} - amount of entities of this type")
     public Notice entityEntry = Notice.chat("<gray>- <white>{ENTITY_TYPE}: <yellow>{COUNT}");
+    public Notice invalidEntityType = Notice.chat("<red>✘ <dark_red>No valid entity scope provided! Use a suggested option.");
+
 }

@@ -39,7 +39,7 @@ class EntityScopeArgument extends AbstractViewerArgument<EntityScope> {
             return ParseResult.success(entityScope);
         }
         catch (IllegalArgumentException exception) {
-            return ParseResult.failure(translation.argument().noValidEntityScope());
+            return ParseResult.failure(translation.near().invalidEntityType());
         }
     }
 

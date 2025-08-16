@@ -7,5 +7,6 @@ public interface NearMessages {
     Notice entitiesNotFound();
     Notice entitiesFound();
     Notice entityEntry();
+    Notice invalidEntityType();
 
 }
