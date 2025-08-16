@@ -9,31 +9,32 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-
-import java.time.Duration;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Command(name = "near")
 @Permission(NearPermissionConstant.NEAR_PERMISSION)
 public class NearCommand {
 
-    private final NoticeService noticeService;
-    private final Scheduler minecraftScheduler;
-    private final NearSettings nearSettings;
-
     private static final int DEFAULT_RADIUS = 100;
     private static final Duration GLOW_TIME = Duration.ofSeconds(5);
     private static final EntityScope DEFAULT_ENTITY_SCOPE = EntityScope.PLAYER;
 
+    private final NoticeService noticeService;
+    private final Scheduler minecraftScheduler;
+
     @Inject
-    public NearCommand(NoticeService noticeService, Scheduler minecraftScheduler, NearSettings nearSettings) {
+    public NearCommand(NoticeService noticeService, Scheduler minecraftScheduler) {
         this.noticeService = noticeService;
         this.minecraftScheduler = minecraftScheduler;
-        this.nearSettings = nearSettings;
     }
 
     @Execute
@@ -47,7 +48,11 @@ public class NearCommand {
         description = "Shows all entities of the specified entity scope within the specified radius to the command sender",
         arguments = {"<entityScope> [radius]"}
     )
-    void showEntitiesWithScope(@Context Player sender, @Arg EntityScope entityScope, @Arg Optional<Integer> radius) {
+    void showEntitiesWithScope(
+        @Context Player sender,
+        @Arg(EntityScopeArgument.KEY) EntityScope entityScope,
+        @Arg Optional<Integer> radius
+    ) {
         int actualRadius = radius.orElse(DEFAULT_RADIUS);
 
         if (actualRadius <= 0) {
@@ -80,63 +85,51 @@ public class NearCommand {
 
         if (sender.hasPermission(NearPermissionConstant.NEAR_GLOW_PERMISSION)) {
             nearbyEntities.forEach(entity -> entity.setGlowing(true));
-            final List<Entity> finalNearbyEntities = nearbyEntities;
+            List<Entity> finalNearbyEntities = nearbyEntities;
             this.minecraftScheduler.runLater(
                 () -> finalNearbyEntities.forEach(entity -> entity.setGlowing(false)),
                 GLOW_TIME
             );
         }
 
+        Map<EntityType, Integer> entityCounts = new HashMap<>();
+        for (Entity entity : nearbyEntities) {
+            EntityType type = entity.getType();
+            entityCounts.put(type, entityCounts.getOrDefault(type, 0) + 1);
+        }
+
         this.noticeService.create()
             .player(sender.getUniqueId())
-            .placeholder("{ENTITYAMOUNT}", String.valueOf(nearbyEntities.size()))
+            .notice(translation -> translation.near().entityListHeader())
+            .send();
+
+        entityCounts.entrySet()
+            .stream()
+            .sorted(Map.Entry.<EntityType, Integer>comparingByValue().reversed())
+            .forEach(entry -> {
+                String entityTypeName = formatEntityTypeName(entry.getKey());
+                String count = entry.getValue().toString();
+
+                this.noticeService.create()
+                    .player(sender.getUniqueId())
+                    .placeholder("{ENTITY_TYPE}", entityTypeName)
+                    .placeholder("{COUNT}", count)
+                    .notice(translation -> translation.near().entityListEntry())
+                    .send();
+            });
+
+        this.noticeService.create()
+            .player(sender.getUniqueId())
+            .placeholder("{ENTITY_AMOUNT}", String.valueOf(nearbyEntities.size()))
             .placeholder("{RADIUS}", String.valueOf(radius))
-            .placeholder("{ENTITYLIST}", new EntityListFormatter(nearbyEntities, this.nearSettings).format())
             .notice(translation -> translation.near().entitiesShown())
             .send();
 
     }
 
-    private static class EntityListFormatter {
-
-        private final String BULLETPOINT_STYLE;
-        private final String BULLETPOINT_SYMBOL;
-        private final String LIST_ITEM_STYLE;
-
-        private final Map<EntityType, Long> entityTypeCount;
-
-        public EntityListFormatter(List<Entity> entities, NearSettings nearSettings) {
-            this.BULLETPOINT_STYLE = nearSettings.bulletPointStyle();
-            this.BULLETPOINT_SYMBOL = nearSettings.bulletPointSymbol();
-            this.LIST_ITEM_STYLE = nearSettings.listItemStyle();
-
-            this.entityTypeCount = entities.stream()
-                .collect(Collectors.groupingBy(
-                    Entity::getType,
-                    Collectors.counting()
-                ));
-        }
-
-        public String format() {
-            StringBuilder entityList = new StringBuilder().append("<br>");
-            this.entityTypeCount.entrySet().stream()
-                .sorted(Map.Entry.<EntityType, Long>comparingByValue().reversed())
-                .forEach(entry -> entityList.append(formatEntityLine(entry.getKey(), entry.getValue())));
-            return entityList.toString();
-        }
-
-        private String formatEntityLine(EntityType type, Long count) {
-            String countString = count < 10 ? " " + count : count.toString();
-            String typeName = formatEntityTypeName(type);
-            return BULLETPOINT_STYLE + "  " + BULLETPOINT_SYMBOL + " " + LIST_ITEM_STYLE + countString + " " + typeName + "<br>";
-        }
-
-        private String formatEntityTypeName(EntityType type) {
-            return Arrays.stream(type.name().toLowerCase().split("_"))
-                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
-                .collect(Collectors.joining(" "));
-        }
-
+    private String formatEntityTypeName(EntityType type) {
+        return Arrays.stream(type.name().toLowerCase().split("_"))
+            .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+            .collect(java.util.stream.Collectors.joining(" "));
     }
-
 }

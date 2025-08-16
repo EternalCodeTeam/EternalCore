@@ -17,5 +17,4 @@ public class NearPermissionConstant {
         description = "Allows the player to highlight the surrounding entities with a glow effect. "
     )
     public static final String NEAR_GLOW_PERMISSION = "eternalcore.near.glow";
-
 }

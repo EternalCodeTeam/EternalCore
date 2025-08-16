@@ -13,6 +13,12 @@ public class ENNearMessages extends OkaeriConfig implements NearMessages {
     @Comment("# Available placeholders: {RADIUS} - the radius within which entities were searched")
     public Notice noEntitiesFound = Notice.chat("<red>► <white>No entities found within a radius of {RADIUS} blocks. Please try again with a different radius.");
 
-    @Comment("# Available placeholders: {ENTITYAMOUNT} - the amount of entities found and shown, {RADIUS} - the radius within which entities were searched, {ENTITYLIST} - the list of all entities found grouped by the entity type")
-    public Notice entitiesShown = Notice.chat("<green>► <white><bold>{ENTITYAMOUNT} entities</bold> found and shown within a radius of <bold>{RADIUS} blocks</bold>: {ENTITYLIST}");
+    @Comment("# Available placeholders: {ENTITY_AMOUNT} - the amount of entities found and shown, {RADIUS} - the radius within which entities were searched")
+    public Notice entitiesShown = Notice.chat("<green>► <white><bold>{ENTITY_AMOUNT} entities</bold> found and shown within a radius of <bold>{RADIUS} blocks</bold>:");
+
+    @Comment("# Header for entity list - displayed before the list of entities")
+    public Notice entityListHeader = Notice.chat("<gray>Found entities:");
+
+    @Comment("# Entry format for each entity type in the list. Placeholders: {ENTITY_TYPE} - type of entity, {COUNT} - amount of entities of this type")
+    public Notice entityListEntry = Notice.chat("<gray>- <white>{ENTITY_TYPE}: <yellow>{COUNT}");
 }

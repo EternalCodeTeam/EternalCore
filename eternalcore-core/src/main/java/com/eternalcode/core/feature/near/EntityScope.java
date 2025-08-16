@@ -1,69 +1,42 @@
 package com.eternalcode.core.feature.near;
 
-import lombok.Getter;
-import org.bukkit.entity.*;
-
 import java.util.Arrays;
 import java.util.List;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
+import org.bukkit.entity.Raider;
 
 public enum EntityScope {
 
-    PLAYER("player", new EntityFilter() {
-        @Override
-        public List<Entity> filter(List<Entity> entities) {
-            return entities.stream()
-                .filter(entity -> entity.getType().equals(EntityType.PLAYER))
-                .toList();
-        }
-    }),
-    HOSTILE("hostile", new EntityFilter() {
-        @Override
-        public List<Entity> filter(List<Entity> entities) {
-            return entities.stream()
-                .filter(entity -> entity instanceof Monster)
-                .toList();
-        }
-    }),
-    PASSIVE("passive", new EntityFilter() {
-        @Override
-        public List<Entity> filter(List<Entity> entities) {
-            return entities.stream()
-                .filter(entity -> entity instanceof Animals)
-                .toList();
-        }
-    }),
-    RAIDER("raider", new EntityFilter() {
-        @Override
-        public List<Entity> filter(List<Entity> entities) {
-            return entities.stream()
-                .filter(entity -> entity instanceof Raider)
-                .toList();
-        }
-    }),
-    LIVING("mob", new EntityFilter() {
-        @Override
-        public List<Entity> filter(List<Entity> entities) {
-            return entities.stream()
-                .filter(entity -> entity.getType().isAlive())
-                .toList();
-        }
-    }),
-    LEASHED("leashed", new EntityFilter() {
-        @Override
-        public List<Entity> filter(List<Entity> entities) {
-            return entities.stream()
-                .filter(entity -> (entity instanceof LivingEntity && ((LivingEntity) entity).isLeashed()))
-                .toList();
-        }
-    }),
-    ALL("all", new EntityFilter() {
-        @Override
-        public List<Entity> filter(List<Entity> entities) {
-            return entities;
-        }
-    });
+    PLAYER(
+        "player", entities -> entities.stream()
+        .filter(entity -> entity.getType().equals(EntityType.PLAYER))
+        .toList()),
+    HOSTILE(
+        "hostile", entities -> entities.stream()
+        .filter(entity -> entity instanceof Monster)
+        .toList()),
+    PASSIVE(
+        "passive", entities -> entities.stream()
+        .filter(entity -> entity instanceof Animals)
+        .toList()),
+    RAIDER(
+        "raider", entities -> entities.stream()
+        .filter(entity -> entity instanceof Raider)
+        .toList()),
+    LIVING(
+        "mob", entities -> entities.stream()
+        .filter(entity -> entity instanceof LivingEntity)
+        .toList()),
+    LEASHED(
+        "leashed", entities -> entities.stream()
+        .filter(entity -> (entity instanceof LivingEntity && ((LivingEntity) entity).isLeashed()))
+        .toList()),
+    ALL("all", entities -> entities);
 
-    @Getter
     private final String name;
     private final EntityFilter filter;
 
@@ -72,17 +45,6 @@ public enum EntityScope {
         this.filter = filter;
     }
 
-    public List<Entity> filterEntities(List<Entity> entities) {
-        return filter.filter(entities);
-    }
-
-    /**
-     * Returns the EntityScope corresponding to the given name.
-     *
-     * @param name the name of the EntityScope
-     * @return the EntityScope corresponding to the name
-     * @throws IllegalArgumentException if no EntityScope with the given name exists
-     */
     public static EntityScope fromName(String name) {
         for (EntityScope scope : values()) {
             if (scope.name.equalsIgnoreCase(name)) {
@@ -98,8 +60,15 @@ public enum EntityScope {
             .toList();
     }
 
+    public List<Entity> filterEntities(List<Entity> entities) {
+        return this.filter.filter(entities);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
     private interface EntityFilter {
         List<Entity> filter(List<Entity> entities);
     }
-
 }

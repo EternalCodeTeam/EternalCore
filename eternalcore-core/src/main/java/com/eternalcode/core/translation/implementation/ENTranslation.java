@@ -38,7 +38,6 @@ import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.io.File;
