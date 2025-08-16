@@ -1,6 +1,9 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
+import com.eternalcode.core.feature.clear.messages.PLClearMessages;
+import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
@@ -267,16 +270,6 @@ public class PLTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
-
-        @Comment({" ", "# {PLAYER} - Gracz, który otrzymał wiadomość", "# {MESSAGE} - wiadomość", "# {TYPE} - typ wiadomości"})
-        public Notice tellrawInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>{PLAYER} <white>o treści: {MESSAGE}");
-        public Notice tellrawAllInfo = Notice.chat("<green>► <white>Wysłano wiadomość typu <green>{TYPE} <white>do <green>wszystkich <white>o treści: {MESSAGE}");
-
-        public Notice tellrawSaved = Notice.chat("<green>► <white>Zapisano wiadomość w kolejce!");
-        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>Nie ma zapisanych wiadomości!");
-        public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Wysłano wszystkie zapisane wiadomości!");
-        public Notice tellrawCleared = Notice.chat("<green>► <white>Wyczyszczono zapisane wiadomości!");
-
     }
 
     @Comment({
@@ -396,13 +389,11 @@ public class PLTranslation extends AbstractTranslation {
 
     @Getter
     public static class PLInventorySection extends OkaeriConfig implements InventorySection {
-        public Notice inventoryClearMessage = Notice.chat("<green>► <white>Wyczyszczono ekwipunek!");
-
-        @Comment({" ", "# {PLAYER} - Gracz którego ekwipunek został wyczyszczony"})
-        public Notice inventoryClearMessageBy = Notice.chat("<green>► <white>Ekwipunek gracza {PLAYER} został wyczyszczony");
-        @Comment(" ")
         public String disposalTitle = "<white><bold>Kosz";
     }
+
+    @Comment("# Ta sekcja odpowiada za komende /clear")
+    public PLClearMessages clear = new PLClearMessages();
 
     @Comment({
         " ",
@@ -529,11 +520,6 @@ public class PLTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Podany przedmiot nie istnieje!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Naprawiono trzymany przedmiot!");
-        public Notice repairAllMessage = Notice.chat("<green>► <white>Naprawiono wszystkie przedmioty!");
-
-        @Comment({" ", "# {TIME} - Czas przed wysłaniem następnej wiadomości (cooldown)"})
-        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>Możesz użyć tej komendy za <dark_red>{TIME}!");
 
         @Comment({" ", "# {SKULL} - Nazwa gracza do którego należy głowa"})
         public Notice skullMessage = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: {SKULL}");
@@ -543,10 +529,15 @@ public class PLTranslation extends AbstractTranslation {
         public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
     }
+    @Comment({
+        " ",
+        "#Ta sekcja odpowiada za wiadomosci repair"
+    })
+    public PLRepairMessages repair = new PLRepairMessages();
 
     @Comment({
         " ",
-        "# Komunikaty odpowiedzialne za ustawianie czasu i pogody",
+        "# Komunikaty odpowiedzialne za ustawianie czasu i pogody"
     })
     public PLTimeAndWeatherMessages timeAndWeather = new PLTimeAndWeatherMessages();
 
@@ -554,40 +545,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Komunikaty odpowiedzialne za kontenery",
     })
-    public PLContainerSection container = new PLContainerSection();
-
-    @Getter
-    public static class PLContainerSection extends OkaeriConfig implements ContainerSection {
-
-        @Comment({
-            "# Wiadomości z tej sekcji służą do konfiguracji wiadomości z kontenerów",
-            "# Kontenery to inaczej skrzynie, workbench itp.",
-            "# W tym przypadku wykorzystujemy to do informowania graczy o otwarciu kontenera np. przy komendzie /anvil",
-            "# {PLAYER} - Gracz który otworzył kontener"
-        })
-
-        public Notice genericContainerOpened = Notice.empty();
-        public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>Otwarto kontener przez gracza <green>{PLAYER}<white>!");
-        public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>Otwarto kontener dla gracza <green>{PLAYER}<white>!");
-    }
-
-    @Comment({" ", "# Informacja zwrotna, gdy gracz zmienia język pluginu na polski"})
-    public PLLanguageSection language = new PLLanguageSection();
-
-    @Getter
-    public static class PLLanguageSection extends OkaeriConfig implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Zmieniono język na <green>Polski<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Nasz discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
-    }
+    PLContainerMessages container = new PLContainerMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
     public PLSetSlotMessages setSlot  = new PLSetSlotMessages();

@@ -11,5 +11,5 @@ import lombok.experimental.Accessors;
 public class RepairConfig extends OkaeriConfig implements RepairSettings {
 
     @Comment("# Repair command cooldown")
-    public Duration repairDelay = Duration.ofSeconds(5);
+    public Duration repairDelay = Duration.ofSeconds(90);
 }

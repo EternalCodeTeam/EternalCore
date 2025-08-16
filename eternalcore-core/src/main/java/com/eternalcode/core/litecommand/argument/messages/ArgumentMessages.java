@@ -18,7 +18,6 @@ public interface ArgumentMessages {
     Notice noDamagedItems();
     Notice noEnchantment();
     Notice noValidEnchantmentLevel();
-    Notice invalidTimeFormat();
     Notice worldDoesntExist();
     Notice incorrectNumberOfChunks();
     Notice incorrectLocation();

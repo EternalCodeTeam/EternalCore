@@ -27,30 +27,28 @@ class CartographyTableCommand {
     @Permission("eternalcore.cartography")
     @DescriptionDocs(description = "Opens a cartography table for you")
     void executeSelf(@Context Player player) {
-        PaperContainer.CARTOGRAPHY_TABLE.open(player);
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpened())
-            .player(player.getUniqueId())
-            .send();
+        this.openCartographyTable(player);
     }
 
     @Execute
     @Permission("eternalcore.cartography.other")
     @DescriptionDocs(description = "Opens a cartography table for another player", arguments = "<player>")
     void execute(@Context CommandSender sender, @Arg Player target) {
-        PaperContainer.CARTOGRAPHY_TABLE.open(target);
+        this.openCartographyTable(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedBy())
-            .placeholder("{PLAYER}", sender.getName())
-            .player(target.getUniqueId())
-            .send();
-
-        this.noticeService.create()
-            .notice(translation -> translation.container().genericContainerOpenedFor())
-            .sender(sender)
+            .notice(translation -> translation.container().targetCartographyOpened())
             .placeholder("{PLAYER}", target.getName())
+            .sender(sender)
+            .send();
+    }
+
+    void openCartographyTable(Player player) {
+        PaperContainer.CARTOGRAPHY_TABLE.open(player);
+
+        this.noticeService.create()
+            .notice(translation -> translation.container().cartographyOpened())
+            .player(player.getUniqueId())
             .send();
     }
 

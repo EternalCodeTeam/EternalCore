@@ -12,8 +12,11 @@ public class PLVanishMessages extends OkaeriConfig implements VanishMessages {
     public Notice vanishEnabled = Notice.chat("<green>► <white>Włączono tryb niewidoczności!");
     public Notice vanishDisabled = Notice.chat("<red>► <white>Wyłączono tryb niewidoczności!");
 
-    public Notice vanishEnabledOther = Notice.chat("<green>► <white>{PLAYER} włączył tryb niewidoczności!");
-    public Notice vanishDisabledOther = Notice.chat("<red>► <white>{PLAYER} wyłączył tryb niewidoczności!");
+    public Notice vanishEnabledForOther = Notice.chat("<green>► <white>Włączono tryb niewidzialności dla <green>{PLAYER}!");
+    public Notice vanishDisabledForOther = Notice.chat("<red>► <white>Wyłączono tryb niewidzialności dla <green>{PLAYER}!");
+
+    public Notice vanishEnabledByStaff = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>włączył Ci tryb niewidzialności!");
+    public Notice vanishDisabledByStaff = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>wyłączył Ci tryb niewidzialności!");
 
     public Notice currentlyInVanish = Notice.actionbar("<gradient:#9d6eef:#A1AAFF:#9d6eef>Jesteś obecnie niewidzialny!</gradient> <dark_gray>(<gray>/vanish</gray>)</dark_gray>");
 

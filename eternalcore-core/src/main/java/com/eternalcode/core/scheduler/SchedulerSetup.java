@@ -13,13 +13,11 @@ class SchedulerSetup {
     @Bean
     MinecraftScheduler scheduler(Plugin plugin) {
         try {
-            Class.forName("io.papermc.paper.threadedregions.scheduler.GlobalRegionScheduler");
-            Class.forName("io.papermc.paper.threadedregions.scheduler.RegionScheduler");
-            Class.forName("io.papermc.paper.threadedregions.scheduler.AsyncScheduler");
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
             return new FoliaSchedulerImpl(plugin);
-        } catch (ClassNotFoundException notFoundException) {
+        }
+        catch (ClassNotFoundException notFoundException) {
             return new BukkitSchedulerImpl(plugin);
         }
     }
-
 }

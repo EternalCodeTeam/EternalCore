@@ -1,5 +1,8 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.clear.messages.ClearMessages;
+import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
@@ -76,12 +79,6 @@ public interface Translation {
         Notice slowMode();
         Notice disabledChatInfo();
         Notice commandNotFound();
-        Notice tellrawInfo();
-        Notice tellrawAllInfo();
-        Notice tellrawSaved();
-        Notice tellrawNoSaved();
-        Notice tellrawMultipleSent();
-        Notice tellrawCleared();
     }
 
     interface EventSection {
@@ -95,10 +92,11 @@ public interface Translation {
     }
 
     interface InventorySection {
-        Notice inventoryClearMessage();
-        Notice inventoryClearMessageBy();
         String disposalTitle();
     }
+
+    // clear section
+    ClearMessages clear();
 
     interface PlayerSection {
         // feed
@@ -166,26 +164,13 @@ public interface Translation {
         Notice giveNotItem();
 
         // others
-        Notice repairMessage();
-        Notice repairAllMessage();
-        Notice repairDelayMessage();
         Notice skullMessage();
         Notice enchantedMessage();
         Notice enchantedMessageFor();
         Notice enchantedMessageBy();
     }
 
-    interface LanguageSection {
-        Notice languageChanged();
-
-        List<ConfigItem> decorationItems();
-    }
-
-    interface ContainerSection {
-        Notice genericContainerOpened();
-        Notice genericContainerOpenedBy();
-        Notice genericContainerOpenedFor();
-    }
+    RepairMessages repair();
 
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();
@@ -242,10 +227,8 @@ public interface Translation {
     ItemEditMessages itemEdit();
     // time and weather
     TimeAndWeatherMessages timeAndWeather();
-    // language section
-    LanguageSection language();
     // container section
-    ContainerSection container();
+    ContainerMessages container();
     // auto message section
     AutoMessageMessages autoMessage();
     // jail section

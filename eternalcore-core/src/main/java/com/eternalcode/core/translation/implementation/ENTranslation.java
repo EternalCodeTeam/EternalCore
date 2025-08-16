@@ -1,5 +1,8 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.clear.messages.ENClearMessages;
+import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
@@ -256,15 +259,6 @@ public class ENTranslation extends AbstractTranslation {
         @Comment(" ")
         public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
 
-        @Comment({" ", "# {PLAYER} - Player who received the message", "# {MESSAGE} - message content", "# {TYPE} - message type"})
-        public Notice tellrawInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>{PLAYER} <white>with the content: {MESSAGE}");
-        public Notice tellrawAllInfo = Notice.chat("<green>► <white>A message of type <green>{TYPE} <white>was sent to <green>all <white>with the content: {MESSAGE}");
-
-        public Notice tellrawSaved = Notice.chat("<green>► <white>Message saved in queue!");
-        public Notice tellrawNoSaved = Notice.chat("<red>✘ <dark_red>No messages saved in queue!");
-        public Notice tellrawMultipleSent = Notice.chat("<green>► <white>Messages sent! Message que has been cleared!");
-        public Notice tellrawCleared = Notice.chat("<green>► <white>Message queue cleared!");
-
     }
 
     @Comment({
@@ -367,14 +361,11 @@ public class ENTranslation extends AbstractTranslation {
 
     @Getter
     public static class ENInventorySection extends OkaeriConfig implements InventorySection {
-        public Notice inventoryClearMessage = Notice.chat("<green>► <white>Your inventory has been cleared!");
-
-        @Comment({" ", "# {PLAYER} - Target player"})
-        public Notice inventoryClearMessageBy = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>inventory cleared");
-
-        @Comment(" ")
         public String disposalTitle = "<white><bold>Trash";
     }
+
+    @Comment("# This section is responsible for /clear command")
+    public ENClearMessages clear = new ENClearMessages();
 
     @Comment({
         " ",
@@ -505,11 +496,6 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
-        public Notice repairMessage = Notice.chat("<green>► <white>Repaired held item!");
-        public Notice repairAllMessage = Notice.chat("<green>► <white>Repaired all items!");
-
-        @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        public Notice repairDelayMessage = Notice.chat("<red>✘ <dark_red>You can use this command after <red>{TIME}!");
 
         @Comment({" ", "# {SKULL} - Name of the skull owner"})
         public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
@@ -520,43 +506,17 @@ public class ENTranslation extends AbstractTranslation {
         public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
 
+    @Comment({
+        " ",
+        "# This section is responsable for repair messages"
+    })
+    public ENRepairMessages repair = new ENRepairMessages();
+
     @Comment({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
 
     @Comment({" ", "# Messages responsible for containers"})
-    public ENContainerSection container = new ENContainerSection();
-
-    @Getter
-    public static class ENContainerSection extends OkaeriConfig implements ContainerSection {
-
-        @Comment({
-            "# These messages are sent when the player opens a container",
-            "# {PLAYER} - Player who opened the container"
-        })
-
-        public Notice genericContainerOpened = Notice.empty();
-
-        public Notice genericContainerOpenedBy = Notice.chat("<green>► <white>The specified container has been opened by <green>{PLAYER}<white>!");
-        public Notice genericContainerOpenedFor = Notice.chat("<green>► <white>The specified container has been opened for <green>{PLAYER}<white>!");
-    }
-
-    @Comment({" ", "# Information sent, when the language is changed to English"})
-    public ENLanguageSection language = new ENLanguageSection();
-
-    @Getter
-    public static class ENLanguageSection extends OkaeriConfig implements LanguageSection {
-        public Notice languageChanged = Notice.chat("<green>► <white>Language changed to <green>English<white>!");
-
-        public List<ConfigItem> decorationItems = List.of(
-            ConfigItem.builder()
-                .withMaterial(Material.SUNFLOWER)
-                .withGlow(true)
-                .withSlot(40)
-                .withName("&7Our discord")
-                .withLore(Collections.singletonList("&8» &6https://discord.gg/TRbDApaJaJ"))
-                .build()
-        );
-    }
+    public ENContainerMessages container = new ENContainerMessages();
 
     @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
     public ENSetSlotMessages setSlot = new ENSetSlotMessages();
