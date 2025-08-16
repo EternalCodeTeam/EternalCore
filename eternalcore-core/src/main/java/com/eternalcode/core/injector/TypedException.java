@@ -1,4 +1,4 @@
-package com.eternalcode.core.shared;
+package com.eternalcode.core.injector;
 
 public class TypedException extends RuntimeException {
 

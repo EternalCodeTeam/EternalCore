@@ -1,7 +1,5 @@
 package com.eternalcode.core.injector;
 
-import com.eternalcode.core.shared.TypedException;
-
 public class DependencyInjectorException extends TypedException {
 
     public DependencyInjectorException(Class<?> type) {
