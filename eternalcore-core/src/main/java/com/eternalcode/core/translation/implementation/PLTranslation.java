@@ -139,7 +139,9 @@ public class PLTranslation extends AbstractTranslation {
         return new File(dataFolder, "lang" + File.separator + "pl_messages.yml");
     }
 
-    @Comment({" ", " "})
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości w komendzie /near "})
     public NearMessages near =  new PLNearMessages();
 
     @Getter
