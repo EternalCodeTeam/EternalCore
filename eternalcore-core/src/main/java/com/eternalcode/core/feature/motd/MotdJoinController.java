@@ -15,7 +15,6 @@ class MotdJoinController implements Listener {
 
     private static final Placeholders<Player> PLACEHOLDERS = Placeholders.<Player>builder()
         .with("{PLAYER}", player -> player.getName())
-        .with("{TIME}", player -> String.valueOf(player.getWorld().getTime()))
         .with("{WORLD}", player -> player.getWorld().getName())
         .build();
 
