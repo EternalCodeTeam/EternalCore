@@ -38,7 +38,7 @@ class SudoCommand {
     @Execute(name = "-console")
     @Permission("eternalcore.sudo.console")
     @DescriptionDocs(description = "Execute command as console", arguments = "<command>")
-    void console(@Sender CommandSender sender, @Context Viewer viewer, @Join String command) {
+    void console(@Context Viewer viewer, @Join String command) {
         this.server.dispatchCommand(this.server.getConsoleSender(), command);
         this.sendSudoSpy(viewer, this.server.getConsoleSender(), command);
     }
