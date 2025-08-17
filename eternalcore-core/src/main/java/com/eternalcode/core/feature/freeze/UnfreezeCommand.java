@@ -35,7 +35,7 @@ public class UnfreezeCommand {
             return;
         }
 
-        this.freezeServiceImpl.freezePlayer(player, Duration.ZERO);
+        this.freezeServiceImpl.unfreezePlayer(player);
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().unfrozenSelf())
@@ -55,7 +55,7 @@ public class UnfreezeCommand {
             return;
         }
 
-        this.freezeServiceImpl.freezePlayer(target, Duration.ZERO);
+        this.freezeServiceImpl.unfreezePlayer(target);
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().unfrozenOther())
