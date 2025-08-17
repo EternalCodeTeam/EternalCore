@@ -15,7 +15,6 @@ public class HomesConfig extends OkaeriConfig implements HomesSettings {
     @Comment({
         "# Default home name when no specific name is provided",
         "# This name will be used when player uses /sethome without specifying a name",
-        "# Example: /sethome will create a home with this name"
     })
     public String defaultName = "home";
 
