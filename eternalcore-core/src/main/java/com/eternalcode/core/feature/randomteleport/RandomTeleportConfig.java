@@ -13,38 +13,54 @@ import org.bukkit.Material;
 @Accessors(fluent = true)
 public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleportSettings {
 
-    @Comment("# Delay to wait for the random teleportation")
+    @Comment({
+        "# Delay before teleportation",
+        "# Time to wait before teleporting (player must stand still)",
+        "# Movement or damage during this time cancels the teleportation"
+    })
     public Duration delay = Duration.ofSeconds(5);
 
-    @Comment("# Cooldown for random teleportation")
+    @Comment({
+        "# Cooldown between random teleport uses",
+        "# Time players must wait before using /rtp command again",
+        "# Prevents spam and reduces server load"
+    })
     public Duration cooldown = Duration.ofSeconds(60);
 
     @Comment({
         "# Type of radius for random teleportation",
-        "# WORLD_BORDER_RADIUS - radius based on the world-border size.",
-        "# STATIC_RADIUS - static radius based on the configuration.",
+        "# WORLD_BORDER_RADIUS - radius based on the world-border size",
+        "# STATIC_RADIUS - static radius based on the configuration below"
     })
     public RandomTeleportType radiusType = RandomTeleportType.WORLD_BORDER_RADIUS;
 
     @Comment({
-        "# Radius of random teleportation, this uses for starting point spawn via /setworldspawn.",
-        "# If you want to use a static radius, set the type to STATIC_RADIUS and set the radius here.",
-        "# If you using WORLD_BORDER_RADIUS, this value will be ignored."
+        "# Static radius configuration for random teleportation",
+        "# Uses spawn point as center (set via /setworldspawn)",
+        "# Only used when radiusType is set to STATIC_RADIUS",
+        "# Ignored when using WORLD_BORDER_RADIUS"
     })
     public RandomTeleportRadiusConfig radius = new RandomTeleportRadiusConfig(-5000, 5000, -5000, 5000);
 
-    @Comment("# Teleport to a specific world, if left empty it will teleport to the player's current world")
+    @Comment({
+        "# Target world for random teleportation",
+        "# Leave empty (\"\") to use player's current world",
+        "# Specify world name to always teleport to that world"
+    })
     public String world = "world";
 
-    @Comment("# Number of attempts to find a safe location for random teleportation")
+    @Comment({
+        "# Maximum attempts to find a safe teleport location",
+        "# Higher values increase chance of finding safe spot but may cause lag",
+        "# Recommended: 10-20 attempts"
+    })
     public int teleportAttempts = 10;
 
     @Comment({
-        "# Unsafe blocks for random teleportation",
-        "# These blocks are considered unsafe for players to be teleported onto.",
-        "# The list includes blocks that can cause damage, suffocation, or other",
-        "# undesirable effects. Ensure that the list is comprehensive to avoid",
-        "# teleporting players to hazardous locations."
+        "# Hazardous blocks that players cannot be teleported onto",
+        "# These blocks cause damage, suffocation, or other harmful effects",
+        "# Players will never be teleported directly onto these blocks",
+        "# Add or remove materials as needed for your server"
     })
     public Set<Material> unsafeBlocks = EnumSet.of(
         Material.LAVA,
@@ -64,11 +80,10 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
     );
 
     @Comment({
-        "# Air blocks for random teleportation",
-        "# These blocks are considered safe for players to be teleported into.",
-        "# The list includes blocks that do not cause damage or impede movement.",
-        "# Ensure that the list is comprehensive to avoid teleporting players",
-        "# into solid or hazardous blocks."
+        "# Safe blocks that players can be teleported into",
+        "# These blocks don't cause damage and allow free movement",
+        "# Players can safely spawn in these blocks or pass through them",
+        "# Includes air, grass, flowers, and other non-solid blocks"
     })
     public Set<Material> airBlocks = EnumSet.of(
         Material.AIR,
@@ -95,9 +110,6 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
         Material.ROSE_BUSH,
         Material.PEONY,
         Material.LARGE_FERN,
-        Material.LEGACY_GRASS,
-        Material.LEGACY_LONG_GRASS,
-        Material.LEGACY_DEAD_BUSH,
         Material.RAIL,
         Material.POWERED_RAIL,
         Material.DETECTOR_RAIL,
@@ -112,13 +124,12 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
     );
 
     @Comment({
-        "# Height range for random teleportation",
-        "# - Minimum: -64 (1.18+) or 0 (older versions)",
-        "# - Maximum: 320 (1.18+) or 256 (older versions)",
-        "# - Default range: 60-160 blocks",
-        "# Note: Values are automatically capped to world height limits"
+        "# Y-coordinate range for random teleportation",
+        "# Minimum: -64 (1.18+) or 0 (older versions)",
+        "# Maximum: 320 (1.18+) or 256 (older versions)",
+        "# Default: 60-160 (surface level, avoiding deep caves and sky)",
+        "# Values are automatically adjusted to world height limits"
     })
     public RandomTeleportHeightRange heightRange = RandomTeleportHeightRange.of(60, 160);
 
 }
-
