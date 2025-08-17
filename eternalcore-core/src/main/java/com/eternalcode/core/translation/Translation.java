@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
@@ -240,4 +241,6 @@ public interface Translation {
     NearMessages near();
     // motd section
     MotdMessages motd();
+    // playtime section
+    PlaytimeMessages playtime();
 }

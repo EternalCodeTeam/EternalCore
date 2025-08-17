@@ -1,6 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
+import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
@@ -573,4 +574,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
     public PLMotdMessages motd = new PLMotdMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
+    public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
 }
