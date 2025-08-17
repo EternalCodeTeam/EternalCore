@@ -1,10 +1,5 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
-import com.eternalcode.core.feature.clear.messages.ClearMessages;
-import com.eternalcode.core.feature.container.messages.ContainerMessages;
-import com.eternalcode.core.feature.repair.messages.RepairMessages;
-import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
@@ -22,6 +17,7 @@ import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
+import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -37,10 +33,9 @@ import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.multification.notice.Notice;
-import org.bukkit.event.entity.EntityDamageEvent;
-
 import java.util.List;
 import java.util.Map;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public interface Translation {
 
@@ -247,7 +242,7 @@ public interface Translation {
     // motd section
     MotdMessages motd();
     // offlineplayer section
-    TeleportOfflineMessages offlinePlayer();
+    TeleportOfflineMessages teleportToOfflinePlayer();
     // playtime section
     PlaytimeMessages playtime();
 }
