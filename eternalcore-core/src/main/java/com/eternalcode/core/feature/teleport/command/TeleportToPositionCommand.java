@@ -30,7 +30,7 @@ class TeleportToPositionCommand {
     @Execute
     @DescriptionDocs(description = "Teleport to specified coordinates", arguments = "<x> <y> <z>")
     void execute(@Sender Player player, @Arg Location location) {
-        this.teleportService.teleport(player, location);
+        this.teleport(player, location);
     }
 
     @Execute
