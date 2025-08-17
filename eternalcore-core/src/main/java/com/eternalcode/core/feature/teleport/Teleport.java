@@ -3,10 +3,12 @@ package com.eternalcode.core.feature.teleport;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
 
+import com.eternalcode.core.feature.teleport.config.TeleportMessages;
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class Teleport {
 
@@ -14,13 +16,22 @@ public class Teleport {
     private final Position startLocation;
     private final Position destinationLocation;
     private final Instant teleportMoment;
+    private final TeleportMessages messages;
+
     private final CompletableFuture<TeleportResult> result;
 
-    Teleport(UUID playerUniqueId, Position startLocation, Position destinationLocation, TemporalAmount time) {
+    Teleport(
+        UUID playerUniqueId,
+        Position startLocation,
+        Position destinationLocation,
+        TemporalAmount time,
+        TeleportMessages messages
+    ) {
         this.playerUniqueId = playerUniqueId;
         this.startLocation = startLocation;
         this.destinationLocation = destinationLocation;
         this.teleportMoment = Instant.now().plus(time);
+        this.messages = messages;
 
         this.result = new CompletableFuture<>();
     }
@@ -37,6 +48,10 @@ public class Teleport {
         this.result.complete(result);
     }
 
+    public boolean isCancelled() {
+        return this.result.isDone() && this.result.getNow(null) != TeleportResult.SUCCESS;
+    }
+
     public UUID getPlayerUniqueId() {
         return this.playerUniqueId;
     }
@@ -51,5 +66,9 @@ public class Teleport {
 
     public Instant getTeleportMoment() {
         return this.teleportMoment;
+    }
+
+    public TeleportMessages messages() {
+        return this.messages;
     }
 }

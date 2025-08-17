@@ -20,4 +20,15 @@ public class PLSpawnMessages extends OkaeriConfig implements SpawnMessages {
     @Comment("# {PLAYER} - Gracz który został przeteleportowany na spawn")
     public Notice spawnTeleportedOther =
         Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został przeteleportowany na spawn!");
+
+    public Notice countDown = Notice.title("<green>Teleportacja na spawn za: <white>{TIME}");
+
+    public Notice start = Notice.chat("<green>► <white>Teleportacja na spawn...");
+
+    public Notice succes = Notice.chat("<green>► <white>Pomyślnie przeteleportowano na spawn!");
+
+    public Notice failureAfterChangeWorld = Notice.chat("<red>✘ <dark_red>Teleportacja przerwana z powodu zmiany świata!");
+    public Notice failureAfterTakingDamage = Notice.chat("<red>✘ <dark_red>Teleportacja przerwana z powodu otrzymania obrażen!");
+    public Notice failtureAfterMoved = Notice.chat("<red>✘ <dark_red>Teleportacja przerwana z powodu poruszenia się!");
+    public Notice failtureAlreadyInTeleport = Notice.chat("<red>✘ <dark_red>Posiadasz już aktywną teleportację!");
 }

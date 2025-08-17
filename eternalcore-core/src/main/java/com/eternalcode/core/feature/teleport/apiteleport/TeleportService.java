@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.teleport.apiteleport;
 
+import com.eternalcode.core.feature.teleport.config.TeleportMessages;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -26,7 +27,7 @@ public interface TeleportService {
      * @param location docelowa lokalizacja
      * @return CompletableFuture z wynikiem teleportacji
      */
-    CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location);
+    CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, TeleportMessages messages);
 
     /**
      * Rozpoczyna proces teleportacji z określonym opóźnieniem.
@@ -36,7 +37,7 @@ public interface TeleportService {
      * @param delay    czas opóźnienia
      * @return CompletableFuture z wynikiem teleportacji
      */
-    CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, Duration delay);
+    CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, Duration delay, TeleportMessages messages);
 
     /**
      * Pobiera ostatnią lokalizację gracza.

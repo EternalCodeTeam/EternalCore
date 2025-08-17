@@ -10,7 +10,6 @@ import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.Notice;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
@@ -41,31 +40,20 @@ class TeleportTask implements Runnable {
         this.server = server;
     }
 
-
     @Override
     public void run() {
-        List<Teleport> teleports = List.copyOf(this.teleportTaskService.getTeleports());
-
-        for (Teleport teleport : teleports) {
+        for (Teleport teleport : this.teleportTaskService.getTeleports()) {
             UUID uuid = teleport.getPlayerUniqueId();
 
             Player player = this.server.getPlayer(uuid);
 
-            if (player == null) {
-                this.teleportTaskService.removeTeleport(uuid);
-                continue;
+            if (teleport.isCancelled()) {
+                this.handleCancel(player, teleport);
+                return;
             }
 
             if (this.hasPlayerMovedDuringTeleport(player, teleport)) {
-                this.teleportTaskService.removeTeleport(uuid);
-                teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
-
-                this.sendClearActionBar(player);
-                this.noticeService.create()
-                    .notice(translation -> translation.teleport().teleportTaskCanceled())
-                    .player(player.getUniqueId())
-                    .send();
-
+                teleport.completeResult(TeleportResult.CANCELLED_MOVE);
                 continue;
             }
 
@@ -76,7 +64,7 @@ class TeleportTask implements Runnable {
                 Duration duration = Duration.between(now, teleportMoment);
 
                 this.noticeService.create()
-                    .notice(translation -> translation.teleport().teleportTimerFormat())
+                    .notice(teleport.messages().countDown())
                     .placeholder("{TIME}", DurationUtil.format(duration.plusSeconds(SECONDS_OFFSET), true))
                     .player(player.getUniqueId())
                     .send();
@@ -88,6 +76,30 @@ class TeleportTask implements Runnable {
         }
     }
 
+    private void handleCancel(Player player, Teleport teleport) {
+        if (player == null) {
+            this.teleportTaskService.removeTeleport(teleport.getPlayerUniqueId());
+            return;
+        }
+
+        TeleportResult result = teleport.getResult().getNow(null);
+
+        Notice cancelNotice = switch (result) {
+            case CANCELLED_DAMAGE -> teleport.messages().failureAfterTakingDamage();
+            case CANCELLED_WORLD_CHANGE -> teleport.messages().failureAfterChangeWorld();
+            default -> teleport.messages().failtureAfterMoved();
+        };
+
+        this.noticeService.create()
+            .notice(cancelNotice)
+            .player(player.getUniqueId())
+            .send();
+
+        this.clearNotices(player);
+
+        this.teleportTaskService.removeTeleport(teleport.getPlayerUniqueId());
+    }
+
     private void completeTeleport(Player player, Teleport teleport) {
         Location destinationLocation = PositionAdapter.convert(teleport.getDestinationLocation());
         UUID uuid = teleport.getPlayerUniqueId();
@@ -97,10 +109,10 @@ class TeleportTask implements Runnable {
 
         teleport.completeResult(TeleportResult.SUCCESS);
 
-        this.sendClearActionBar(player);
+        this.clearNotices(player);
 
         this.noticeService.create()
-            .notice(translation -> translation.teleport().teleported())
+            .notice(teleport.messages().succes())
             .player(player.getUniqueId())
             .send();
     }
@@ -116,9 +128,10 @@ class TeleportTask implements Runnable {
         return currentLocation.distance(startLocation) > 0.5;
     }
 
-    private void sendClearActionBar(Player player) {
+    private void clearNotices(Player player) {
         this.noticeService.create()
-            .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
+            .notice(Notice.actionbar(StringUtils.EMPTY))
+            .notice(Notice.title(StringUtils.EMPTY, StringUtils.EMPTY))
             .player(player.getUniqueId())
             .send();
     }

@@ -7,6 +7,7 @@ import com.eternalcode.core.feature.teleport.apiteleport.TeleportCommandService;
 import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
 import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import com.eternalcode.core.feature.teleport.apiteleport.event.EternalTeleportEvent;
+import com.eternalcode.core.feature.teleport.config.TeleportMessages;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
@@ -59,24 +60,32 @@ class TeleportServiceImpl implements TeleportService {
     }
 
     @Override
-    public CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location) {
-        return this.teleportWithDelay(player, location, "default");
+    public CompletableFuture<TeleportResult> teleportWithDelay(
+        Player player,
+        Location location,
+        TeleportMessages messages
+    ) {
+        return this.teleportWithDelay(player, location, "default", messages);
     }
 
-    public CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, String command) {
+    public CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, String command, TeleportMessages messages) {
         Duration delay = this.teleportCommandService.getTeleportDelay(player, command);
-        return this.teleportWithDelay(player, location, delay);
+
+        return this.teleportWithDelay(player, location, delay, messages);
     }
 
     @Override
-    public CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, Duration delay) {
-        // Jeśli opóźnienie wynosi 0, teleportuj natychmiastowo
+    public CompletableFuture<TeleportResult> teleportWithDelay(Player player, Location location, Duration delay,
+        TeleportMessages messages) {
         if (delay.isZero()) {
             this.teleport(player, location);
             return CompletableFuture.completedFuture(TeleportResult.SUCCESS);
         }
 
-        // Utwórz zadanie teleportacji z opóźnieniem
+        if (this.teleportTaskService.isInTeleport(player.getUniqueId())) {
+            return CompletableFuture.completedFuture(TeleportResult.ALREADY_IN_TELEPORT);
+        }
+
         Position startPosition = PositionAdapter.convert(player.getLocation());
         Position destinationPosition = PositionAdapter.convert(location);
 
@@ -84,7 +93,8 @@ class TeleportServiceImpl implements TeleportService {
             player.getUniqueId(),
             startPosition,
             destinationPosition,
-            delay
+            delay,
+            messages
         );
 
         return teleport.getResult();

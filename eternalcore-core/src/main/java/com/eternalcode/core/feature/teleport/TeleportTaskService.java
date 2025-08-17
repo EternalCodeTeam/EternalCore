@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
+import com.eternalcode.core.feature.teleport.config.TeleportMessages;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;
@@ -10,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Service
 public class TeleportTaskService {
@@ -20,17 +23,32 @@ public class TeleportTaskService {
         UUID uuid,
         Position startLocation,
         Position destinationLocation,
+        TemporalAmount time,
+        TeleportMessages messages
+    ) {
+        Teleport teleport = new Teleport(uuid, startLocation, destinationLocation, time, messages);
+        this.teleports.put(uuid, teleport);
+        return teleport;
+    }
+
+    public Teleport createTeleport(
+        UUID uuid,
+        Position startLocation,
+        Position destinationLocation,
         TemporalAmount time
     ) {
-        Teleport teleport = new Teleport(uuid, startLocation, destinationLocation, time);
-
-        this.teleports.put(uuid, teleport);
-
-        return teleport;
+        return this.createTeleport(uuid, startLocation, destinationLocation, time, null);
     }
 
     public void removeTeleport(UUID uuid) {
         this.teleports.remove(uuid);
+    }
+
+    public void cancelTeleport(UUID uuid, TeleportResult result) {
+        Teleport teleport = this.teleports.get(uuid);
+        if (teleport != null && !teleport.isCancelled()) {
+            teleport.completeResult(result);
+        }
     }
 
     Optional<Teleport> findTeleport(UUID uuid) {
@@ -46,12 +64,16 @@ public class TeleportTaskService {
 
         Teleport teleport = teleportOption.get();
 
+        if (teleport.isCancelled()) {
+            this.removeTeleport(uuid);
+            return false;
+        }
+
         if (Instant.now().isBefore(teleport.getTeleportMoment())) {
             return true;
         }
 
         this.removeTeleport(uuid);
-
         return false;
     }
 

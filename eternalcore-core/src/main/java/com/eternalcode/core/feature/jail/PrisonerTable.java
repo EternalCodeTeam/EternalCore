@@ -14,7 +14,6 @@ class PrisonerTable {
     @DatabaseField(columnName = "id", id = true)
     private UUID uuid;
 
-
     @DatabaseField(columnName = "detained_at", dataType = DataType.SERIALIZABLE)
     private Instant detainedAt;
 

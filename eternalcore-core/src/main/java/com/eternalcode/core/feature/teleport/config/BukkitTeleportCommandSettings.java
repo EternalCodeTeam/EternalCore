@@ -19,7 +19,6 @@ public class BukkitTeleportCommandSettings extends OkaeriConfig implements Telep
 
     public Map<String, Duration> delayTiers;
 
-
     public BukkitTeleportCommandSettings(boolean useDelay, Map<String, Duration> delayTiers, Duration defaultDelay, String bypassPermission) {
         this.useDelay = useDelay;
         this.defaultDelay = defaultDelay;

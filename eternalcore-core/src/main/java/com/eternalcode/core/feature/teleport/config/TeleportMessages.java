@@ -6,12 +6,13 @@ public interface TeleportMessages {
 
     Notice countDown();
 
+    Notice start();
+
     Notice succes();
 
     Notice failureAfterChangeWorld();
-
     Notice failureAfterTakingDamage();
-
     Notice failtureAfterMoved();
+    Notice failtureAlreadyInTeleport();
 
 }
