@@ -40,7 +40,7 @@ public class TeleportOfflineCommand {
         if (location == null) {
             this.noticeService.create()
                 .player(sender.getUniqueId())
-                .notice(translation -> translation.teleport().lastLocationNoExist())
+                .notice(translation -> translation.offlinePlayer().lastLocationNotFound())
                 .send();
             return;
         }
@@ -49,7 +49,7 @@ public class TeleportOfflineCommand {
         this.noticeService.create()
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
-            .notice(translation -> translation.teleport().teleportedToPlayer())
+            .notice(translation -> translation.offlinePlayer().teleportedToPlayerLastLocation())
             .send();
     }
 

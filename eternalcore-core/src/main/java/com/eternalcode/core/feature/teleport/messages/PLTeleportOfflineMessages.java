@@ -12,4 +12,6 @@ public class PLTeleportOfflineMessages extends OkaeriConfig implements TeleportO
 
     @Comment({" ", "# {PLAYER} - Gracz, który nie grał wcześniej na serwerze"})
     public Notice offlinePlayerNotPlayedBefore = Notice.chat("<red>✘ <dark_red>Gracz <red>{PLAYER} <dark_red>nie grał wcześniej na tym serwerze!");
+    public Notice lastLocationNotFound = Notice.chat("<red>✘ <dark_red>Ostatnia lokalizacja gracza <red>{PLAYER} <dark_red>nie została znaleziona!");
+    public Notice teleportedToPlayerLastLocation = Notice.chat("<green>✔ <dark_green>Teleportowano do ostatniej lokalizacji gracza <green>{PLAYER}!");
 }
