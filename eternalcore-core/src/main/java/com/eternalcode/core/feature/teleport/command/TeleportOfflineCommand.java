@@ -8,6 +8,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -30,12 +31,21 @@ public class TeleportOfflineCommand {
             this.noticeService.create()
                 .player(sender.getUniqueId())
                 .placeholder("{PLAYER}", target.getName())
-                .notice(translation -> translation.teleport().offlinePlayerNotPlayedBefore())
+                .notice(translation -> translation.offlinePlayer().offlinePlayerNotPlayedBefore())
                 .send();
             return;
         }
 
-        this.teleportService.teleport(sender, target.getLocation());
+        Location location = target.getLocation();
+        if (location == null) {
+            this.noticeService.create()
+                .player(sender.getUniqueId())
+                .notice(translation -> translation.teleport().lastLocationNoExist())
+                .send();
+            return;
+        }
+
+        this.teleportService.teleport(sender, location);
         this.noticeService.create()
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())

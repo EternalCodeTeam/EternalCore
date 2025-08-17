@@ -23,6 +23,7 @@ import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
+import com.eternalcode.core.feature.teleport.messages.TeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
@@ -237,4 +238,6 @@ public interface Translation {
     VanishMessages vanish();
     // motd section
     MotdMessages motd();
+    // offlineplayer section
+    TeleportOfflineMessages offlinePlayer();
 }
