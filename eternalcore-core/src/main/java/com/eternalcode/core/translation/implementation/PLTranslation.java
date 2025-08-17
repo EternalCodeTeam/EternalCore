@@ -1,15 +1,12 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.clear.messages.PLClearMessages;
-import com.eternalcode.core.feature.container.messages.PLContainerMessages;
-import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
-import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
+import com.eternalcode.core.feature.clear.messages.PLClearMessages;
+import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
@@ -17,10 +14,10 @@ import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
-import com.eternalcode.core.translation.Language;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
+import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
@@ -31,13 +28,14 @@ import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMe
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.PLVanishMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
+import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
+import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.Material;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.io.File;
@@ -217,6 +215,8 @@ public class PLTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
+        @Comment({" ", "# {PLAYER} - Gracz, który nie grał wcześniej na serwerze"})
+        public Notice offlinePlayerNotPlayedBefore = Notice.chat("<red>✘ <dark_red>Gracz <red>{PLAYER} <dark_red>nie grał wcześniej na tym serwerze!");
     }
 
     @Comment({
