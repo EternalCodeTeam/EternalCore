@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface HomesSettings {
     Map<String, Integer> maxHomes();
-    Duration teleportTimeToHomes();
-    String defaultHomeName();
+    Duration delay();
+    String defaultName();
 }

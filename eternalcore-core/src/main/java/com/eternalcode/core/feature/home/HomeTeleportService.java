@@ -50,7 +50,7 @@ public class HomeTeleportService {
 
         Duration teleportTime = player.hasPermission(HOME_BYPASS)
             ? Duration.ZERO
-            : this.homesSettings.teleportTimeToHomes();
+            : this.homesSettings.delay();
 
         Position playerLocation = PositionAdapter.convert(player.getLocation());
         Position homeLocation = PositionAdapter.convert(pre.getLocation());
