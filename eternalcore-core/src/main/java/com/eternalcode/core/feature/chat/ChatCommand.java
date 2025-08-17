@@ -16,6 +16,7 @@ import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
@@ -57,7 +58,7 @@ class ChatCommand {
 
     @Execute(name = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
-    void clear(@Context CommandSender sender) {
+    void clear(@Sender CommandSender sender) {
         ClearChatEvent event = this.eventCaller.callEvent(new ClearChatEvent(sender));
 
         if (event.isCancelled()) {
@@ -79,7 +80,7 @@ class ChatCommand {
 
     @Execute(name = "on")
     @DescriptionDocs(description = "Enables chat")
-    void enable(@Context Viewer viewer, @Context CommandSender sender) {
+    void enable(@Context Viewer viewer, @Sender CommandSender sender) {
         if (this.chatSettings.chatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
             return;
@@ -102,7 +103,7 @@ class ChatCommand {
 
     @Execute(name = "off")
     @DescriptionDocs(description = "Disables chat")
-    void disable(@Context Viewer viewer, @Context CommandSender sender) {
+    void disable(@Context Viewer viewer, @Sender CommandSender sender) {
         if (!this.chatSettings.chatEnabled()) {
             this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
             return;

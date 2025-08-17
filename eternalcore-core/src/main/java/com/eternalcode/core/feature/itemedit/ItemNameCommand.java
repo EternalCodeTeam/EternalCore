@@ -4,13 +4,12 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.annotations.context.Context;
-import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
+import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.permission.Permission;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +30,7 @@ class ItemNameCommand {
 
     @Execute
     @DescriptionDocs(description = "Sets name of item in hand", arguments = "<name>")
-    void execute(@Context Player player, @Join String name) {
+    void execute(@Sender Player player, @Join String name) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
@@ -54,7 +53,7 @@ class ItemNameCommand {
 
     @Execute(name = "clear")
     @DescriptionDocs(description = "Clears name of item in hand")
-    void clear(@Context Player player) {
+    void clear(@Sender Player player) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {

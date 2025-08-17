@@ -8,6 +8,7 @@ import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.World;
@@ -28,7 +29,7 @@ class TimeCommand {
 
     @Execute(name = "add")
     @DescriptionDocs(description = "Adds specified amount of time to specified world", arguments = "<time>")
-    void add(@Context Player player, @Context Viewer viewer, @Arg(TimeArgument.KEY) int time) {
+    void add(@Sender Player player, @Context Viewer viewer, @Arg(TimeArgument.KEY) int time) {
         this.add(viewer, time, player.getWorld());
     }
 
@@ -46,7 +47,7 @@ class TimeCommand {
 
     @Execute(name = "set")
     @DescriptionDocs(description = "Sets specified time", arguments = "<time>")
-    void set(@Context Player player, @Context Viewer viewer, @Arg(TimeArgument.KEY) int time) {
+    void set(@Sender Player player, @Context Viewer viewer, @Arg(TimeArgument.KEY) int time) {
         this.set(viewer, time, player.getWorld());
     }
 
@@ -64,25 +65,25 @@ class TimeCommand {
 
     @Execute(name = "set day")
     @DescriptionDocs(description = "Sets time to day")
-    void setDay(@Context Player player, @Context Viewer viewer) {
+    void setDay(@Sender Player player, @Context Viewer viewer) {
         this.set(viewer, 1000, player.getWorld());
     }
 
     @Execute(name = "set night")
     @DescriptionDocs(description = "Sets time to night")
-    void setNight(@Context Player player, @Context Viewer viewer) {
+    void setNight(@Sender Player player, @Context Viewer viewer) {
         this.set(viewer, 13000, player.getWorld());
     }
 
     @Execute(name = "set noon")
     @DescriptionDocs(description = "Sets time to noon")
-    void setNoon(@Context Player player, @Context Viewer viewer) {
+    void setNoon(@Sender Player player, @Context Viewer viewer) {
         this.set(viewer, 6000, player.getWorld());
     }
 
     @Execute(name = "set midnight")
     @DescriptionDocs(description = "Sets time to midnight")
-    void setMidnight(@Context Player player, @Context Viewer viewer) {
+    void setMidnight(@Sender Player player, @Context Viewer viewer) {
         this.set(viewer, 18000, player.getWorld());
     }
 

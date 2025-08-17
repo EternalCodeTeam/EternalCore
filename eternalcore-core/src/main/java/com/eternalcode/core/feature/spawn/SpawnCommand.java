@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
@@ -12,6 +11,7 @@ import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
@@ -52,7 +52,7 @@ class SpawnCommand {
         permission = SPAWN_TELEPORT_BYPASS,
         description = "Allows you to bypass spawn teleportation time"
     )
-    void executeSelf(@Context Player sender) {
+    void executeSelf(@Sender Player sender) {
         Location spawnLocation = this.spawnService.getSpawnLocation();
 
         if (spawnLocation == null) {

@@ -1,20 +1,21 @@
 package com.eternalcode.core.feature.teleport.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
-import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.viewer.Viewer;
+import com.eternalcode.multification.shared.Formatter;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import com.eternalcode.multification.shared.Formatter;
 
 @Command(name = "teleport", aliases = { "tp" })
 @Permission("eternalcore.teleport")
@@ -45,7 +46,7 @@ class TeleportCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport to specified player", arguments = "<player>")
-    void execute(@Context Player sender, @Context Viewer senderViewer, @Arg Player player) {
+    void execute(@Sender Player sender, @Context Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
 
         Formatter formatter = this.formatter(player, player.getLocation());
@@ -66,7 +67,7 @@ class TeleportCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport to specified location", arguments = "<x> <y> <z>")
-    void to(@Context Player sender, @Arg Location location) {
+    void to(@Sender Player sender, @Arg Location location) {
         location.setWorld(sender.getWorld());
 
         this.teleportService.teleport(sender, location);
@@ -78,7 +79,7 @@ class TeleportCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport to specified location and world", arguments = "<x> <y> <z> <world>")
-    void to(@Context Player sender, @Arg Location location, @Arg World world) {
+    void to(@Sender Player sender, @Arg Location location, @Arg World world) {
         location.setWorld(world);
 
         this.teleportService.teleport(sender, location);

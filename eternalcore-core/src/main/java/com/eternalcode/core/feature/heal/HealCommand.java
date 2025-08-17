@@ -8,6 +8,7 @@ import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -26,7 +27,7 @@ class HealCommand {
     @Execute
     @Permission("eternalcore.heal")
     @DescriptionDocs(description = "Heal yourself")
-    void healSelf(@Context Player player) {
+    void healSelf(@Sender Player player) {
         this.heal(player);
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.player().healMessage());

@@ -11,6 +11,7 @@ import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Optional;
@@ -36,7 +37,7 @@ class TeleportBackCommand {
     @Execute
     @Permission("eternalcore.back")
     @DescriptionDocs(description = "Teleport to last location")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         Optional<Location> location = this.teleportService.getLastLocation(player.getUniqueId());
 
         if (location.isEmpty()) {

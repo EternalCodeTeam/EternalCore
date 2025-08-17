@@ -6,10 +6,10 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -31,19 +31,19 @@ class GiveCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives you an item", arguments = "<item>")
-    void execute(@Context Player player, @Arg Material material) {
+    void execute(@Sender Player player, @Arg Material material) {
         this.execute(player, material, this.config.items.defaultGiveAmount);
     }
 
     @Execute
     @DescriptionDocs(description = "Gives an item to another player", arguments = "<item> <player>")
-    void execute(@Context CommandSender sender, @Arg Material material, @Arg Player target) {
+    void execute(@Sender CommandSender sender, @Arg Material material, @Arg Player target) {
         this.execute(sender, material, this.config.items.defaultGiveAmount, target);
     }
 
     @Execute
     @DescriptionDocs(description = "Gives you an item with a custom amount", arguments = "<item> <amount>")
-    void execute(@Context Player player, @Arg Material material, @Arg(GiveArgument.KEY) int amount) {
+    void execute(@Sender Player player, @Arg Material material, @Arg(GiveArgument.KEY) int amount) {
         boolean isSuccess = this.giveService.giveItem(player, player, material, amount);
 
         if (isSuccess) {
@@ -57,7 +57,7 @@ class GiveCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<item> <amount> <player>")
-    void execute(@Context CommandSender sender, @Arg Material material, @Arg(GiveArgument.KEY) int amount, @Arg Player target) {
+    void execute(@Sender CommandSender sender, @Arg Material material, @Arg(GiveArgument.KEY) int amount, @Arg Player target) {
         boolean isSuccess = this.giveService.giveItem(sender, target, material, amount);
 
         if (!isSuccess) {
