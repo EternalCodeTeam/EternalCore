@@ -1,5 +1,12 @@
 package com.eternalcode.core.translation.implementation;
 
+
+import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.PLClearMessages;
+import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
+import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
@@ -568,4 +575,8 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące teleportu do graczy offline"})
     public PLTeleportOfflineMessages teleportToOfflinePlayer = new PLTeleportOfflineMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
+    public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
+
 }

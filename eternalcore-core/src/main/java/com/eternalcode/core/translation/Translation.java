@@ -1,5 +1,11 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.ClearMessages;
+import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.repair.messages.RepairMessages;
+import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
@@ -240,4 +246,6 @@ public interface Translation {
     MotdMessages motd();
     // offlineplayer section
     TeleportOfflineMessages offlinePlayer();
+    // playtime section
+    PlaytimeMessages playtime();
 }

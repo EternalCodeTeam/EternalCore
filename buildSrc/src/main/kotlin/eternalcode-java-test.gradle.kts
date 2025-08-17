@@ -8,6 +8,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("org.mockito:mockito-core:${Versions.MOCKITO_CORE}")
     testImplementation("net.kyori:adventure-platform-facet:${Versions.ADVENTURE_PLATFORM}")
