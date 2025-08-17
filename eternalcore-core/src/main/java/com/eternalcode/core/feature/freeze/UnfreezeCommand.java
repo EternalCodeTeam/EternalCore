@@ -9,15 +9,19 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
+
 @Command(name = "unfreeze")
 @Permission("eternalcore.unfreeze")
-public class UnFreezeCommand {
+public class UnfreezeCommand {
 
     private final NoticeService noticeService;
+    private final FreezeServiceImpl freezeServiceImpl;
 
     @Inject
-    public UnFreezeCommand(NoticeService noticeService) {
+    public UnfreezeCommand(NoticeService noticeService, FreezeServiceImpl freezeServiceImpl) {
         this.noticeService = noticeService;
+        this.freezeServiceImpl = freezeServiceImpl;
     }
 
     @Execute
@@ -31,7 +35,7 @@ public class UnFreezeCommand {
             return;
         }
 
-        player.setFreezeTicks(0);
+        this.freezeServiceImpl.freezePlayer(player, Duration.ZERO);
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().unfrozenSelf())
@@ -51,7 +55,7 @@ public class UnFreezeCommand {
             return;
         }
 
-        target.setFreezeTicks(0);
+        this.freezeServiceImpl.freezePlayer(target, Duration.ZERO);
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().unfrozenOther())

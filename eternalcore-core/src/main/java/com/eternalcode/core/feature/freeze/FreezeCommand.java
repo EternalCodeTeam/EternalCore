@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.freeze;
 
-import com.eternalcode.commons.time.DurationTickUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -18,15 +17,16 @@ import java.time.Duration;
 public class FreezeCommand {
 
     private final NoticeService noticeService;
+    private final FreezeServiceImpl freezeServiceImpl;
 
     @Inject
-    public FreezeCommand(NoticeService noticeService) {
+    public FreezeCommand(NoticeService noticeService, FreezeServiceImpl freezeServiceImpl) {
         this.noticeService = noticeService;
+        this.freezeServiceImpl = freezeServiceImpl;
     }
     @Execute
     public void freezeSelf(@Context Player player, @Arg Duration duration) {
-        int ticks = DurationTickUtil.durationToTicks(duration);
-        player.setFreezeTicks(ticks);
+        this.freezeServiceImpl.freezePlayer(player, duration);
         this.noticeService.create()
             .notice(translation -> translation.freeze().frozenSelf())
             .placeholder("{DURATION}", DurationUtil.format(duration, true))
@@ -37,8 +37,7 @@ public class FreezeCommand {
     @Execute
     @Permission("eternalcore.freeze.other")
     public void freezeOther(@Context Player player, @Arg Player target, @Arg Duration duration) {
-        int ticks = DurationTickUtil.durationToTicks(duration);
-        target.setFreezeTicks(ticks);
+        this.freezeServiceImpl.freezePlayer(target, duration);
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().frozenOther())
