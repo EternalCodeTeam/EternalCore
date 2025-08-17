@@ -1,7 +1,9 @@
 package com.eternalcode.core.feature.near;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.glowing.GlowingService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -15,6 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -26,14 +29,17 @@ class NearCommand {
     private static final int DEFAULT_RADIUS = 100;
     private static final Duration GLOW_TIME = Duration.ofSeconds(5);
     private static final EntityScope DEFAULT_ENTITY_SCOPE = EntityScope.PLAYER;
+    private static final ChatColor GLOWING_COLOR = ChatColor.RED;
 
+    private final GlowingService glowingService;
     private final NoticeService noticeService;
-    private final Scheduler minecraftScheduler;
+    private final MinecraftScheduler scheduler;
 
     @Inject
-    public NearCommand(NoticeService noticeService, Scheduler minecraftScheduler) {
+    public NearCommand(GlowingService glowingService, NoticeService noticeService, MinecraftScheduler scheduler) {
+        this.glowingService = glowingService;
         this.noticeService = noticeService;
-        this.minecraftScheduler = minecraftScheduler;
+        this.scheduler = scheduler;
     }
 
     @Execute
@@ -78,9 +84,10 @@ class NearCommand {
         }
 
         if (sender.hasPermission(NearPermissionConstant.NEAR_GLOW_PERMISSION)) {
-            nearbyEntities.forEach(entity -> entity.setGlowing(true));
-            this.minecraftScheduler.runLater(
-                () -> nearbyEntities.forEach(entity -> entity.setGlowing(false)),
+            nearbyEntities.forEach(entity -> this.glowingService.enableGlowing(entity, sender, GLOWING_COLOR));
+
+            this.scheduler.runLater(
+                () -> nearbyEntities.forEach(entity -> this.glowingService.disableGlowing(entity, sender)),
                 GLOW_TIME
             );
         }
