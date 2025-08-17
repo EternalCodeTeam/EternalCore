@@ -64,9 +64,6 @@ public interface Translation {
         Notice teleportedToLastLocation();
         Notice teleportedSpecifiedPlayerLastLocation();
         Notice lastLocationNoExist();
-
-        // Error
-        Notice offlinePlayerNotPlayedBefore();
     }
 
     interface ChatSection {

@@ -23,6 +23,7 @@ import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.ENSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
+import com.eternalcode.core.feature.teleport.messages.ENTeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.ENTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
@@ -214,8 +215,6 @@ public class ENTranslation extends AbstractTranslation {
         public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
-        @Comment({" ", "# {PLAYER} - Player who has never played before"})
-        public Notice offlinePlayerNotPlayedBefore = Notice.chat("<red>✘ <dark_red>Player <red>{PLAYER} <dark_red>has never played on this server before!");
     }
 
     @Comment({
@@ -543,4 +542,7 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
     public ENMotdMessages motd = new ENMotdMessages();
+
+    @Comment({" ", "# This section is responsible for teleporting to offline players."})
+    public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();
 }
