@@ -35,6 +35,7 @@ import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMe
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
+import com.eternalcode.core.feature.near.messages.ENNearMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
@@ -545,6 +546,9 @@ public class ENTranslation extends AbstractTranslation {
   
     @Comment({" ", "# This section is responsible for vanish-related stuff."})
     public ENVanishMessages vanish = new ENVanishMessages();
+
+    @Comment({" ", "# This section is responsible for '/near' command messages."})
+    public ENNearMessages near = new ENNearMessages();
 
     @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
     public ENMotdMessages motd = new ENMotdMessages();

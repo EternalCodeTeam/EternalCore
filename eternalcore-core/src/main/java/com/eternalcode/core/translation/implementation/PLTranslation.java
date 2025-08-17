@@ -1,6 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
 
+import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
@@ -23,6 +24,7 @@ import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
+import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
@@ -145,6 +147,11 @@ public class PLTranslation extends AbstractTranslation {
     public File getConfigFile(File dataFolder) {
         return new File(dataFolder, "lang" + File.separator + "pl_messages.yml");
     }
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości w komendzie /near "})
+    public PLNearMessages near =  new PLNearMessages();
 
     @Getter
     public static class PLFormatSection extends OkaeriConfig implements Format {
