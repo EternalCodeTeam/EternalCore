@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
@@ -547,4 +548,7 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for information about players' game time."})
     public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
+
+    @Comment({" ", "# This section is responsible for the messages of the freeze feature."})
+    public ENFreezeMessages freeze = new ENFreezeMessages();
 }
