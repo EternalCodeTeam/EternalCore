@@ -5,7 +5,6 @@ import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
@@ -20,6 +19,7 @@ import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
+import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
@@ -237,6 +237,8 @@ public interface Translation {
     BurnMessages burn();
     // vanish section
     VanishMessages vanish();
+    // near section
+    NearMessages near();
     // motd section
     MotdMessages motd();
     // playtime section

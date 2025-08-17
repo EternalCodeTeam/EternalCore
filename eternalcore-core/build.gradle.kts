@@ -110,4 +110,8 @@ eternalShadow {
     // caffeine
     library("com.github.ben-manes.caffeine:caffeine:${Versions.CAFFEINE}")
     libraryRelocate("com.github.benmanes.caffeine");
+
+    // glowingentites (nms)
+    library("fr.skytasul:glowingentities:${Versions.GLOWING_ENTITIES}")
+    libraryRelocate("fr.skytasul")
 }
