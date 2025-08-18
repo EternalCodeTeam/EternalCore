@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.teleport.config;
 
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportCommandSettings;
+import com.eternalcode.core.feature.teleport.TeleportCommandSettings;
 import eu.okaeri.configs.OkaeriConfig;
 import lombok.Getter;
 import lombok.experimental.Accessors;

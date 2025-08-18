@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.teleport;
 
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportCommandSettings;
 import com.eternalcode.core.feature.teleport.config.BukkitTeleportCommandSettings;
 import com.eternalcode.core.feature.teleport.config.TeleportConfig;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -12,12 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TeleportCommandService implements com.eternalcode.core.feature.teleport.apiteleport.TeleportCommandService {
+public class BukkitTeleportCommandService implements TeleportCommandService {
 
     private final TeleportConfig config;
 
     @Inject
-    public TeleportCommandService(TeleportConfig config) {
+    public BukkitTeleportCommandService(TeleportConfig config) {
         this.config = config;
     }
 

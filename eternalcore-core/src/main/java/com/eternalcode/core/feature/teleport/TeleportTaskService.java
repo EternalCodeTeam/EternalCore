@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
 import com.eternalcode.core.feature.teleport.config.TeleportMessages;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.time.Instant;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
 
 @Service
 public class TeleportTaskService {

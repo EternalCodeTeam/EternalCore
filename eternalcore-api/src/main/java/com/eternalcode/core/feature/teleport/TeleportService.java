@@ -1,6 +1,5 @@
-package com.eternalcode.core.feature.teleport.apiteleport;
+package com.eternalcode.core.feature.teleport;
 
-import com.eternalcode.core.feature.teleport.config.TeleportMessages;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

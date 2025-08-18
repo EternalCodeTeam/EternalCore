@@ -1,14 +1,12 @@
 package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
 
 import com.eternalcode.core.feature.teleport.config.TeleportMessages;
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
 
 public class Teleport {
 

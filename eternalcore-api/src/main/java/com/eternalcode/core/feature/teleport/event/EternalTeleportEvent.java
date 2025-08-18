@@ -1,6 +1,6 @@
-package com.eternalcode.core.feature.teleport.apiteleport.event;
+package com.eternalcode.core.feature.teleport.event;
 
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
+import com.eternalcode.core.feature.teleport.TeleportService;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;

@@ -2,20 +2,6 @@ package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.core.notice.NoticeService;
-import java.util.UUID;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
-import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.injector.annotations.component.Controller;
 import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -4,8 +4,6 @@ import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportResult;
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.Notice;
 import java.time.Duration;

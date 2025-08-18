@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport.apiteleport;
+package com.eternalcode.core.feature.teleport;
 
 public enum TeleportResult {
     SUCCESS,

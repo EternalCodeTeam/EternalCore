@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.core.feature.teleport.apiteleport.TeleportService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
