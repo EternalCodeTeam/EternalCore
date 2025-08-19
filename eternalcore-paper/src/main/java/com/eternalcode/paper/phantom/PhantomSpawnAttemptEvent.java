@@ -9,6 +9,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.jetbrains.annotations.NotNull;
 
 public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
+
     private static final HandlerList handlers = new HandlerList();
 
     private final Entity player;
