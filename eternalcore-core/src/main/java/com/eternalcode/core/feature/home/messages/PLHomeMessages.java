@@ -55,7 +55,7 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
         " ",
         "# Wiadomość wysyłana do gracza który nie wpisał poprawnie agumentów do komend /homeadmin"
     })
-    public Notice missingArgument = Notice.chat("<dark_red>✘ <red> Missing argument! Please input: <Player name> and <Home name>");
+    public Notice missingArgument = Notice.chat("<dark_red>✘ <red>Brakujący argument! Proszę podać: <nazwa gracza> i <nazwa domu>");
 
     @Comment({
         " ",
