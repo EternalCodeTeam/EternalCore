@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 @Controller
 @PermissionDocs(
     name = "Sleep Ignore",
-    permission = "eternalcore.sleepignore",
+    permission = "eternalcore.sleep.ignore",
     description = "Allows the player holding the permission to be ignored while sleeping in the night"
 )
 public class PlayerJoinSleepController implements Listener {
