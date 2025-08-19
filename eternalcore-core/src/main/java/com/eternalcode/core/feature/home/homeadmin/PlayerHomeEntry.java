@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.home.homeadmin;
 
 import com.eternalcode.core.feature.home.Home;
-import org.bukkit.entity.Player;
+import com.eternalcode.core.user.User;
 
-record PlayerHomeEntry(Player player, Home home) {
+record PlayerHomeEntry(User user, Home home) {
 }

@@ -5,6 +5,8 @@ import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserManager;
 import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.core.viewer.ViewerService;
 import com.eternalcode.multification.notice.NoticeBroadcast;
@@ -35,18 +37,20 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
     private final HomeManager homeManager;
     private final NoticeService noticeService;
     private final ViewerService viewerService;
+    private final UserManager userManager;
     private final Server server;
 
     @Inject
     PlayerHomeMultiArgument(
         HomeManager homeManager,
         NoticeService noticeService,
-        ViewerService viewerService,
+        ViewerService viewerService, UserManager userManager,
         Server server
     ) {
         this.homeManager = homeManager;
         this.noticeService = noticeService;
         this.viewerService = viewerService;
+        this.userManager = userManager;
         this.server = server;
     }
 
@@ -58,50 +62,58 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
     ) {
         Viewer viewer = this.viewerService.any(invocation.sender());
 
-        NoticeBroadcast offlinePlayer = this.noticeService.create()
-            .notice(translation -> translation.argument().offlinePlayer())
-            .viewer(viewer);
-
-        if (!rawInput.hasNext()) {
+        if (rawInput.size() < 2) {
             NoticeBroadcast missingPlayerName = this.noticeService.create()
-                .notice(translation -> translation.argument().missingPlayerName())
+                .notice(translation -> translation.home().missingArgument())
                 .viewer(viewer);
+
             return ParseResult.failure(missingPlayerName);
         }
 
-        String playerName = rawInput.next();
-        Player player = this.server.getPlayer(playerName);
+        Optional<User> optionalUser = this.userManager.getUser(rawInput.next());
 
-        if (player == null) {
+        if (optionalUser.isEmpty()) {
+            NoticeBroadcast offlinePlayer = this.noticeService.create()
+                .notice(translation -> translation.argument().missingPlayer())
+                .viewer(viewer);
+
             return ParseResult.failure(offlinePlayer);
         }
 
-        UUID uniqueId = player.getUniqueId();
-        if (!rawInput.hasNext()) {
-            Collection<Home> homes = this.homeManager.getHomes(uniqueId);
-            if (homes.isEmpty()) {
-                NoticeBroadcast home = this.noticeService.create()
-                    .notice(translate -> translate.home().playerNoOwnedHomes())
-                    .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
-                    .player(uniqueId);
-                return ParseResult.failure(home);
-            }
-            NoticeBroadcast homeListNotice = homeNotice(homes, player, uniqueId);
-            return ParseResult.failure(homeListNotice);
+        User user = optionalUser.get();
+        UUID uniqueId = user.getUniqueId();
+        String name = user.getName();
+
+        Collection<Home> homes = this.homeManager.getHomes(uniqueId);
+
+        if (homes.isEmpty()) {
+            NoticeBroadcast noHomesFound = this.noticeService.create()
+                .notice(translation -> translation.home().playerNoOwnedHomes())
+                .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, name)
+                .viewer(viewer);
+
+            return ParseResult.failure(noHomesFound);
         }
 
         String homeName = rawInput.next();
         Optional<Home> home = this.homeManager.getHome(uniqueId, homeName);
 
         if (home.isEmpty()) {
-            Collection<Home> homes = this.homeManager.getHomes(uniqueId);
 
-            NoticeBroadcast homeListNotice = homeNotice(homes, player, uniqueId);
+            String homesList = homes.stream()
+                .map(homeEntry -> homeEntry.getName())
+                .collect(Collectors.joining(HOME_DELIMITER));
 
-            return ParseResult.failure(homeListNotice);
+            NoticeBroadcast homeNotFound = this.noticeService.create()
+                .notice(translation -> translation.home().homeNotFound())
+                .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, name)
+                .placeholder(HOME_LIST_PLACEHOLDER_PREFIX, homesList)
+                .viewer(viewer);
+
+            return ParseResult.failure(homeNotFound);
         }
 
-        return ParseResult.success(new PlayerHomeEntry(player, home.get()));
+        return ParseResult.success(new PlayerHomeEntry(user, home.get()));
     }
 
     @Override
@@ -121,43 +133,25 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         if (index == 1) {
             return SuggestionResult.of(this.server.getOnlinePlayers().stream()
                 .map(Player::getName)
-                .collect(Collectors.toList()));
+                .toList());
         }
 
         if (index == 2) {
             String playerName = current.multilevelList().get(0);
-            Player player = this.server.getPlayer(playerName);
 
-            if (player == null) {
+            Optional<User> optionalUser = this.userManager.getUser(playerName);
+
+            if (optionalUser.isEmpty()) {
                 return SuggestionResult.empty();
             }
+            User user = optionalUser.get();
 
-            return SuggestionResult.of(this.homeManager.getHomes(player.getUniqueId()).stream()
+            return SuggestionResult.of(this.homeManager.getHomes(user.getUniqueId()).stream()
                     .map(Home::getName)
                     .collect(Collectors.toList()))
                 .appendLeft(playerName);
         }
 
         return SuggestionResult.empty();
-    }
-
-    private NoticeBroadcast homeNotice(Collection<Home> homes, Player player, UUID uniqueId) {
-        if (homes.isEmpty()) {
-            this.noticeService.create()
-                .notice(translate -> translate.home().playerNoOwnedHomes())
-                .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
-                .player(uniqueId)
-                .send();
-        }
-
-        String homeList = homes.stream()
-            .map(h -> h.getName())
-            .collect(Collectors.joining(HOME_DELIMITER));
-
-        return this.noticeService.create()
-            .notice(translate -> homes.isEmpty() ? translate.home().playerNoOwnedHomes() : translate.home().homeList())
-            .placeholder(HOME_LIST_PLACEHOLDER_PREFIX, homeList)
-            .placeholder(PLAYER_NAME_PLACEHOLDER_PREFIX, player.getName())
-            .player(uniqueId);
     }
 }

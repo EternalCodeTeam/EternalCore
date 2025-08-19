@@ -14,10 +14,13 @@ import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import io.papermc.lib.PaperLib;
+
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 @Command(name = "homeadmin")
@@ -41,34 +44,31 @@ class HomeAdminCommand {
 
     @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
-    void setHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
+    void setHome(@Context Player sender, @Arg("player") OfflinePlayer offlinePlayer, @Arg("home name") String homeName,  @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
 
-        Home home = playerHomeEntry.home();
-        Player player = playerHomeEntry.player();
-        UUID uniqueId = player.getUniqueId();
+        UUID uniqueId = offlinePlayer.getUniqueId();
 
-        boolean hasHome = this.homeManager.hasHome(uniqueId, home);
-        String name = home.getName();
+        boolean hasHome = this.homeManager.hasHome(uniqueId, homeName);
 
         if (hasHome) {
-            this.homeManager.createHome(uniqueId, name, optionalLocation);
+            this.homeManager.createHome(uniqueId, homeName, optionalLocation);
             this.noticeService.create()
                 .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
-                .placeholder("{HOME}", name)
-                .placeholder("{PLAYER}", player.getName())
-                .player(player.getUniqueId())
+                .placeholder("{HOME}", homeName)
+                .placeholder("{PLAYER}", offlinePlayer.getName())
+                .player(sender.getUniqueId())
                 .send();
 
             return;
         }
 
-        this.homeManager.createHome(uniqueId, name, optionalLocation);
+        this.homeManager.createHome(uniqueId, homeName, optionalLocation);
         this.noticeService.create()
             .notice(translate -> translate.home().createAsAdmin())
-            .placeholder("{HOME}", name)
-            .placeholder("{PLAYER}", player.getName())
-            .player(player.getUniqueId())
+            .placeholder("{HOME}", homeName)
+            .placeholder("{PLAYER}", offlinePlayer.getName())
+            .player(sender.getUniqueId())
             .send();
     }
 
@@ -76,9 +76,9 @@ class HomeAdminCommand {
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
     void deleteHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
-        Player player = playerHomeEntry.player();
+        User user = playerHomeEntry.user();
 
-        UUID uniqueId = player.getUniqueId();
+        UUID uniqueId = user.getUniqueId();
         boolean hasHome = this.homeManager.hasHome(uniqueId, home);
 
         if (!hasHome) {
@@ -87,7 +87,7 @@ class HomeAdminCommand {
             this.noticeService.create()
                 .notice(translate -> translate.home().homeList())
                 .placeholder("{HOMES}", homes)
-                .placeholder("{PLAYER}", player.getName())
+                .placeholder("{PLAYER}", user.getName())
                 .player(sender.getUniqueId())
                 .send();
 
@@ -98,7 +98,7 @@ class HomeAdminCommand {
         this.noticeService.create()
             .notice(translate -> translate.home().deleteAsAdmin())
             .placeholder("{HOME}", home.getName())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER}", user.getName())
             .player(sender.getUniqueId())
             .send();
     }
@@ -107,7 +107,7 @@ class HomeAdminCommand {
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
     void home(@Context Player player, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
-        Player user = playerHomeEntry.player();
+        User user = playerHomeEntry.user();
 
         Optional<Home> homeOption = this.homeManager.getHome(user.getUniqueId(), home.getName());
 
@@ -123,16 +123,37 @@ class HomeAdminCommand {
         }
 
         PaperLib.teleportAsync(player, homeOption.get().getLocation());
+
+        this.noticeService.create()
+            .notice(translation -> translation.home().teleportedAsAdmin())
+            .placeholder("{HOME}", home.getName())
+            .placeholder("{PLAYER}", user.getName())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(name = "list")
     @DescriptionDocs(description = "List user homes", arguments = "<user>")
     void list(@Context Viewer viewer, @Arg User user) {
-        String homes = this.formattedListUserHomes(user.getUniqueId());
+
+        Collection<Home> homes = this.homeManager.getHomes(user.getUniqueId());
+
+        if (homes.isEmpty()) {
+            this.noticeService.create()
+                .notice(translation -> translation.home().noHomesOnListAsAdmin())
+                .placeholder("{PLAYER}" ,user.getName())
+                .viewer(viewer)
+                .send();
+
+            return;
+        }
+
+
+        String homesList = this.formattedListUserHomes(user.getUniqueId());
 
         this.noticeService.create()
             .notice(translate -> translate.home().homeListAsAdmin())
-            .placeholder("{HOMES}", homes)
+            .placeholder("{HOMES}", homesList)
             .placeholder("{PLAYER}", user.getName())
             .viewer(viewer)
             .send();

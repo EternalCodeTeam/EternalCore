@@ -39,4 +39,28 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
         Notice.chat("<red>► <white>Home <red>{HOME} <white>has been deleted for <red>{PLAYER}<white>.");
     public Notice homeListAsAdmin =
         Notice.chat("<green>► <white>Available homes for <green>{PLAYER}<white>: <green>{HOMES}");
+    public Notice noHomesOnListAsAdmin =
+        Notice.chat("<red>► <dark_red>Player <red>{PLAYER} <dark_red>does not have any homes!");
+
+    @Comment({
+        " ",
+        "# {PLAYER} - username of home owner whom user teleported by using /homeadmin home",
+        "# {HOME} - name of the home"
+    })
+    public Notice teleportedAsAdmin =
+        Notice.chat("<green>► <white>Teleported to: <green>{PLAYER}<white> - <green>{HOME}!");
+
+    @Comment({
+        " ",
+        "# Notice sent to wrongly inputed /homeadmin command"
+    })
+    public Notice missingArgument = Notice.chat("<dark_red>✘ <red> Missing argument! Please input: <Player name> and <Home name>");
+
+    @Comment({
+        " ",
+        "# List suggesting available homes for player that can be used in /homeadmin command",
+        "# Placeholder: {PLAYER} - name of the player, {HOMES} - list of available homes"
+    })
+    public Notice homeNotFound = Notice.chat("<dark_red>✘ <red>Home not found! <dark_red> Available homes for <red>{PLAYER}<dark_red>: <red>{HOMES}");
+
 }
