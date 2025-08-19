@@ -167,7 +167,7 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
         "CACTUS", Arrays.asList(
             BukkitNotice.builder()
                 .sound(Sound.BLOCK_GRASS_BREAK)
-                .chat("<white>☠ <dark_red>{PLAYER} <red>pricked themselves on a cactus!")
+                .chat("<white>☠ <dark_red>{PLAYER} <red>was pricked by a <dark_green>cactus!")
                 .build(),
             BukkitNotice.builder()
                 .sound(Sound.BLOCK_GRASS_BREAK)
