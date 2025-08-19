@@ -9,7 +9,6 @@ import com.eternalcode.core.viewer.Viewer;
 import com.eternalcode.multification.shared.Formatter;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -46,7 +45,7 @@ class TeleportCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport to specified player", arguments = "<player>")
-    void execute(@Sender Player sender, @Context Viewer senderViewer, @Arg Player player) {
+    void execute(@Sender Player sender, @Sender Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
 
         Formatter formatter = this.formatter(player, player.getLocation());
@@ -56,7 +55,7 @@ class TeleportCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport player to player", arguments = "<player> <target-player>")
-    void other(@Context Viewer sender, @Arg Player player, @Arg Player target) {
+    void other(@Sender Viewer sender, @Arg Player player, @Arg Player target) {
         this.teleportService.teleport(player, target.getLocation());
 
         Formatter formatter = this.formatter(player, target.getLocation());
@@ -91,7 +90,7 @@ class TeleportCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport player to specified location and world", arguments = "<player> <x> <y> <z>")
-    void to(@Context Viewer sender, @Arg Player target, @Arg Location location) {
+    void to(@Sender Viewer sender, @Arg Player target, @Arg Location location) {
         location.setWorld(target.getWorld());
 
         Formatter formatter = this.formatter(target, location);
@@ -102,7 +101,7 @@ class TeleportCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<player> <x> <y> <z> <world>")
-    void to(@Context Viewer sender, @Arg Player target, @Arg Location location, @Arg World world) {
+    void to(@Sender Viewer sender, @Arg Player target, @Arg Location location, @Arg World world) {
         location.setWorld(world);
 
         Formatter formatter = this.formatter(target, location);

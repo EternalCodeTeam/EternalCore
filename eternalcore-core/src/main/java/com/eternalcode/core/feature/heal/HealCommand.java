@@ -7,7 +7,6 @@ import com.eternalcode.core.util.PotionEffectUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -36,7 +35,7 @@ class HealCommand {
     @Execute
     @Permission("eternalcore.heal.other")
     @DescriptionDocs(description = "Heal other player", arguments = "<player>")
-    void healOther(@Context Viewer viewer, @Arg Player target) {
+    void healOther(@Sender Viewer viewer, @Arg Player target) {
         this.heal(target);
 
         this.noticeService.create()

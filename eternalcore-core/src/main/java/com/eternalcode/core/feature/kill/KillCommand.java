@@ -7,7 +7,6 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -40,7 +39,7 @@ class KillCommand {
 
     @Execute
     @DescriptionDocs(description = "Kill specified player", arguments = "<player>")
-    void execute(@Context Viewer audience, @Arg Player player) {
+    void execute(@Sender Viewer audience, @Arg Player player) {
         this.scheduler.run(player, () -> player.setHealth(0));
 
         this.noticeService.create()

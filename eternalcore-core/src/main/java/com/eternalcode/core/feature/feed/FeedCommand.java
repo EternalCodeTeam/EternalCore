@@ -6,7 +6,6 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -37,7 +36,7 @@ class FeedCommand {
     @Execute
     @Permission("eternalcore.feed.other")
     @DescriptionDocs(description = "Feed other player", arguments = "<player>")
-    void execute(@Context Viewer viewer, @Arg Player target) {
+    void execute(@Sender Viewer viewer, @Arg Player target) {
         this.feed(target);
 
         this.noticeService.create()
