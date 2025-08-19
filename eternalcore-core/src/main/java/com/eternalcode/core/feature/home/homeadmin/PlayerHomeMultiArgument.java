@@ -131,8 +131,8 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         int index = current.lengthMultilevel();
 
         if (index == 1) {
-            return SuggestionResult.of(this.server.getOnlinePlayers().stream()
-                .map(Player::getName)
+            return SuggestionResult.of(this.userManager.getUsers().stream()
+                .map(user -> user.getName())
                 .toList());
         }
 
