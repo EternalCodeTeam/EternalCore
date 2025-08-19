@@ -31,7 +31,7 @@ public class TeleportOfflineCommand {
             this.noticeService.create()
                 .player(sender.getUniqueId())
                 .placeholder("{PLAYER}", target.getName())
-                .notice(translation -> translation.offlinePlayer().offlinePlayerNotPlayedBefore())
+                .notice(translation -> translation.teleportToOfflinePlayer().offlinePlayerNotPlayedBefore())
                 .send();
             return;
         }
@@ -40,7 +40,7 @@ public class TeleportOfflineCommand {
         if (location == null) {
             this.noticeService.create()
                 .player(sender.getUniqueId())
-                .notice(translation -> translation.offlinePlayer().lastLocationNotFound())
+                .notice(translation -> translation.teleportToOfflinePlayer().lastLocationNotFound())
                 .send();
             return;
         }
@@ -49,7 +49,7 @@ public class TeleportOfflineCommand {
         this.noticeService.create()
             .player(sender.getUniqueId())
             .placeholder("{PLAYER}", target.getName())
-            .notice(translation -> translation.offlinePlayer().teleportedToPlayerLastLocation())
+            .notice(translation -> translation.teleportToOfflinePlayer().teleportedToPlayerLastLocation())
             .send();
     }
 
