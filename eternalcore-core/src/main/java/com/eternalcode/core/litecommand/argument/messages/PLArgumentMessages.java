@@ -35,5 +35,5 @@ public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages
     public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Niepoprawna liczba chunków!");
     public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
 
-    public Notice missingPlayer = Notice.chat("<red>✘ <dark_red>Couldn't find player");
+    public Notice missingPlayer = Notice.chat("<red>✘ <dark_red>Nie znaleziono gracza");
 }
