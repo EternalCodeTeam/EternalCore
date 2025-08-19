@@ -62,5 +62,5 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
         "# Lista domów graczy sugerowana podczas korzystania z komend /homeadmin gdy użytkownik błędnie wprowadzi nazwę domu",
         "# Placeholder: {PLAYER} - gracz podany w komendzie /homeadmin, {HOMES} - lista dostępnych domów tego gracza"
     })
-    public Notice homeNotFound = Notice.chat("<dark_red>✘ <red>Home not found! <dark_red> Available homes for <red>{PLAYER}<dark_red>: <red>{HOMES}");
+    public Notice homeNotFound = Notice.chat("<dark_red>✘ <red>Nie znaleziono domu! <dark_red>Dostępne domy dla <red>{PLAYER}<dark_red>: <red>{HOMES}");
 }
