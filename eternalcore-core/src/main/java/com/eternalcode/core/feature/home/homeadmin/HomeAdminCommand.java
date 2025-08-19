@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ class HomeAdminCommand {
 
     @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
-    void setHome(@Context Player sender, @Arg("player") OfflinePlayer offlinePlayer, @Arg("home name") String homeName,  @Arg Optional<Location> location) {
+    void setHome(@Context Player sender, @Arg("player") OfflinePlayer offlinePlayer, @Arg("home name") String homeName, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
 
         UUID uniqueId = offlinePlayer.getUniqueId();
@@ -54,7 +55,7 @@ class HomeAdminCommand {
         if (hasHome) {
             this.homeManager.createHome(uniqueId, homeName, optionalLocation);
             this.noticeService.create()
-                .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
+                .notice(translation -> translation.home().overrideHomeLocationAsAdmin())
                 .placeholder("{HOME}", homeName)
                 .placeholder("{PLAYER}", offlinePlayer.getName())
                 .player(sender.getUniqueId())
@@ -65,7 +66,7 @@ class HomeAdminCommand {
 
         this.homeManager.createHome(uniqueId, homeName, optionalLocation);
         this.noticeService.create()
-            .notice(translate -> translate.home().createAsAdmin())
+            .notice(translation -> translation.home().createAsAdmin())
             .placeholder("{HOME}", homeName)
             .placeholder("{PLAYER}", offlinePlayer.getName())
             .player(sender.getUniqueId())
@@ -85,7 +86,7 @@ class HomeAdminCommand {
             String homes = this.formattedListUserHomes(uniqueId);
 
             this.noticeService.create()
-                .notice(translate -> translate.home().homeList())
+                .notice(translation -> translation.home().homeList())
                 .placeholder("{HOMES}", homes)
                 .placeholder("{PLAYER}", user.getName())
                 .player(sender.getUniqueId())
@@ -96,7 +97,7 @@ class HomeAdminCommand {
 
         this.homeManager.deleteHome(uniqueId, home.getName());
         this.noticeService.create()
-            .notice(translate -> translate.home().deleteAsAdmin())
+            .notice(translation -> translation.home().deleteAsAdmin())
             .placeholder("{HOME}", home.getName())
             .placeholder("{PLAYER}", user.getName())
             .player(sender.getUniqueId())
@@ -113,7 +114,7 @@ class HomeAdminCommand {
 
         if (homeOption.isEmpty()) {
             this.noticeService.create()
-                .notice(translate -> translate.home().playerNoOwnedHomes())
+                .notice(translation -> translation.home().playerNoOwnedHomes())
                 .placeholder("{HOME}", home.getName())
                 .placeholder("{PLAYER}", user.getName())
                 .player(player.getUniqueId())
@@ -141,7 +142,7 @@ class HomeAdminCommand {
         if (homes.isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.home().noHomesOnListAsAdmin())
-                .placeholder("{PLAYER}" ,user.getName())
+                .placeholder("{PLAYER}", user.getName())
                 .viewer(viewer)
                 .send();
 
@@ -152,7 +153,7 @@ class HomeAdminCommand {
         String homesList = this.formattedListUserHomes(user.getUniqueId());
 
         this.noticeService.create()
-            .notice(translate -> translate.home().homeListAsAdmin())
+            .notice(translation -> translation.home().homeListAsAdmin())
             .placeholder("{HOMES}", homesList)
             .placeholder("{PLAYER}", user.getName())
             .viewer(viewer)
