@@ -70,7 +70,7 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
         EntityDamageEvent.DamageCause.FIRE_TICK, Collections.singletonList(
             BukkitNotice.builder()
                 .sound(Sound.ITEM_FIRECHARGE_USE)
-                .chat("<white>☠ <dark_red>{PLAYER} <red>burned out in flames...")
+                .chat("<white>☠ <dark_red>{PLAYER} <red>burned to ashes...")
                 .build()
         ),
 
