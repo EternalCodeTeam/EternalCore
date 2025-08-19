@@ -51,9 +51,9 @@ class HomeAdminCommand {
         UUID uniqueId = offlinePlayer.getUniqueId();
 
         boolean hasHome = this.homeManager.hasHome(uniqueId, homeName);
+        this.homeManager.createHome(uniqueId, homeName, optionalLocation);
 
         if (hasHome) {
-            this.homeManager.createHome(uniqueId, homeName, optionalLocation);
             this.noticeService.create()
                 .notice(translation -> translation.home().overrideHomeLocationAsAdmin())
                 .placeholder("{HOME}", homeName)
@@ -64,7 +64,6 @@ class HomeAdminCommand {
             return;
         }
 
-        this.homeManager.createHome(uniqueId, homeName, optionalLocation);
         this.noticeService.create()
             .notice(translation -> translation.home().createAsAdmin())
             .placeholder("{HOME}", homeName)
@@ -83,11 +82,12 @@ class HomeAdminCommand {
         boolean hasHome = this.homeManager.hasHome(uniqueId, home);
 
         if (!hasHome) {
-            String homes = this.formattedListUserHomes(uniqueId);
+            Collection<Home> homes = this.homeManager.getHomes(uniqueId);
+            String homesList = this.formattedListUserHomes(homes);
 
             this.noticeService.create()
-                .notice(translation -> translation.home().homeList())
-                .placeholder("{HOMES}", homes)
+                .notice(translation -> translation.home().noHomesOnListAsAdmin())
+                .placeholder("{HOMES}", homesList)
                 .placeholder("{PLAYER}", user.getName())
                 .player(sender.getUniqueId())
                 .send();
@@ -149,8 +149,7 @@ class HomeAdminCommand {
             return;
         }
 
-
-        String homesList = this.formattedListUserHomes(user.getUniqueId());
+        String homesList = this.formattedListUserHomes(homes);
 
         this.noticeService.create()
             .notice(translation -> translation.home().homeListAsAdmin())
@@ -160,8 +159,8 @@ class HomeAdminCommand {
             .send();
     }
 
-    private String formattedListUserHomes(UUID uniqueId) {
-        return this.homeManager.getHomes(uniqueId).stream()
+    private String formattedListUserHomes(Collection<Home> homes) {
+        return homes.stream()
             .map(home -> home.getName())
             .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
