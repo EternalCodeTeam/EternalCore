@@ -9,12 +9,11 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-
-@Command(name = "playtime", aliases = "pt")
+@Command(name = "playtime")
 @Permission("eternalcore.playtime")
 public class PlaytimeCommand {
 
