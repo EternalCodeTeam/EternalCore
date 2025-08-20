@@ -33,14 +33,15 @@ public class PowertoolCommand {
     @Execute
     void clear(@Sender Player player) {
         ItemStack item = player.getInventory().getItemInMainHand();
-        if (item.getItemMeta() == null) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().noItemInMainHand())
                 .send();
             return;
         }
-        PersistentDataContainer persistentDataContainer = item.getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
 
         if (persistentDataContainer.has(new NamespacedKey(this.plugin, KEY), PersistentDataType.STRING)) {
             this.noticeService.create()
@@ -51,6 +52,7 @@ public class PowertoolCommand {
                 .send();
 
             persistentDataContainer.remove(new NamespacedKey(this.plugin, KEY));
+            item.setItemMeta(meta);
         } else {
             this.noticeService.create()
                 .player(player.getUniqueId())
@@ -79,8 +81,6 @@ public class PowertoolCommand {
                 .send();
             return;
         }
-        // TODO: properly set PDC data (we can't access {@link ItemMeta#editPersistentDataContainer} directly since
-        //  it's paper only method)
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
         persistentDataContainer.set(new NamespacedKey(this.plugin, KEY), PersistentDataType.STRING, command);
         item.setItemMeta(meta);

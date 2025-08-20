@@ -37,6 +37,7 @@ public class PowertoolController implements Listener {
         .with("{ITEM}", player -> player.getInventory().getItemInMainHand().getItemMeta().getItemName())
         .with("{ITEM_TYPE}", player -> player.getInventory().getItemInMainHand().getType().name())
         .build();
+
     private final Plugin plugin;
 
     @Inject
@@ -52,7 +53,6 @@ public class PowertoolController implements Listener {
         }
 
         PersistentDataContainer dataContainer = item.getItemMeta().getPersistentDataContainer();
-        System.out.println(dataContainer);
 
         NamespacedKey key = NamespacedKey.fromString(KEY, this.plugin);
 
