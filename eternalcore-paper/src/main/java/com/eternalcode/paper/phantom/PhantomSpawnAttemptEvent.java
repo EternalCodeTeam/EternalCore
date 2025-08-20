@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final Entity spawningEntity;
     private final Location spawnLocation;
