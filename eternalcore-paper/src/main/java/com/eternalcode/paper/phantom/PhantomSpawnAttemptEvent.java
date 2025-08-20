@@ -52,7 +52,7 @@ public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return handlers;
+        return HANDLER_LIST;
     }
 
     public static HandlerList getHandlerList() {
