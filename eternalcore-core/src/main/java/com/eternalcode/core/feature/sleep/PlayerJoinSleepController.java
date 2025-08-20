@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.sleep;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -21,11 +22,6 @@ public class PlayerJoinSleepController implements Listener {
         Player player = event.getPlayer();
         if (player.hasPermission(SLEEP_IGNORE_PERMISSION)) {
             player.setSleepingIgnored(true);
-        }
-    }
-    void onPlayerJoin(PlayerJoinEvent event) {
-        if (event.getPlayer().hasPermission(SLEEP_IGNORE_PERMISSION)) {
-            event.getPlayer().setSleepingIgnored(true);
         }
     }
 }

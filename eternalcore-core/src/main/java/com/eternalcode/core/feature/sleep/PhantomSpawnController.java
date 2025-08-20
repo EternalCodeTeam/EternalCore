@@ -18,6 +18,8 @@ import org.bukkit.plugin.Plugin;
 )
 public class PhantomSpawnController implements Listener {
 
+    private static final String NO_INSOMNIA_PERMISSION = "eternalcore.sleep.noinsomnia";
+
     @Inject
     public PhantomSpawnController(Plugin plugin) {
         new PhantomEventInitializer(plugin).initialize();
@@ -25,8 +27,8 @@ public class PhantomSpawnController implements Listener {
 
     @EventHandler
     void onPhantomSpawnAttempt(PhantomSpawnAttemptEvent event) {
-        if (event.getSpawningEntity() instanceof Player player) {
-            if (player.hasPermission("eternalcore.sleep.noinsomnia")) {
+        if (event.getEntity() instanceof Player player) {
+            if (player.hasPermission(NO_INSOMNIA_PERMISSION)) {
                 event.setCancelled(true);
             }
         }
