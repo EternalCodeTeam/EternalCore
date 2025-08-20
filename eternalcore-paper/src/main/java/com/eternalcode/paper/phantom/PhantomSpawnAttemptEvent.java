@@ -15,7 +15,7 @@ public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
-    private final Entity spawningEntity;
+    private final Entity entity;
     private final Location location;
     private final SpawnReason spawnReason;
     private boolean cancelled = false;
