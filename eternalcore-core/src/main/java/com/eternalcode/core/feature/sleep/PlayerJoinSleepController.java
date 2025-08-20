@@ -18,6 +18,12 @@ public class PlayerJoinSleepController implements Listener {
 
     @EventHandler
     void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        if (player.hasPermission(SLEEP_IGNORE_PERMISSION)) {
+            player.setSleepingIgnored(true);
+        }
+    }
+    void onPlayerJoin(PlayerJoinEvent event) {
         if (event.getPlayer().hasPermission(SLEEP_IGNORE_PERMISSION)) {
             event.getPlayer().setSleepingIgnored(true);
         }
