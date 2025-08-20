@@ -26,7 +26,13 @@ public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
         this.spawnReason = spawnReason;
     }
 
-    public Entity getSpawningEntity() {
+    public Entity getEntity() {
+        return this.entity;
+    }
+
+    public Location getLocation() {
+        return this.location;
+    }
         return spawningEntity;
     }
 
