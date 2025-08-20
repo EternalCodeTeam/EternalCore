@@ -50,6 +50,6 @@ public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
     }
 
     public static HandlerList getHandlerList() {
-        return handlers;
+        return HANDLER_LIST;
     }
 }
