@@ -20,9 +20,9 @@ public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
     private final SpawnReason spawnReason;
     private boolean cancelled = false;
 
-    public PhantomSpawnAttemptEvent(Entity spawningEntity, Location spawnLocation, SpawnReason spawnReason) {
-        this.spawningEntity = spawningEntity;
-        this.spawnLocation = spawnLocation;
+    public PhantomSpawnAttemptEvent(Entity entity, Location location, SpawnReason spawnReason) {
+        this.entity = entity;
+        this.location = location;
         this.spawnReason = spawnReason;
     }
 
@@ -33,11 +33,9 @@ public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
     public Location getLocation() {
         return this.location;
     }
-        return spawningEntity;
-    }
 
-    public Location getSpawnLocation() {
-        return spawnLocation;
+    public SpawnReason getSpawnReason() {
+        return this.spawnReason;
     }
 
     @Override
