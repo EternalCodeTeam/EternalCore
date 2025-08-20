@@ -8,23 +8,26 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Internal event of {@link com.destroystokyo.paper.event.entity.PhantomPreSpawnEvent}
+ */
 public class PhantomSpawnAttemptEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
 
-    private final Entity player;
+    private final Entity spawningEntity;
     private final Location spawnLocation;
     private final SpawnReason spawnReason;
     private boolean cancelled = false;
 
-    public PhantomSpawnAttemptEvent(Entity entity, Location spawnLocation, SpawnReason spawnReason) {
-        this.player = entity;
+    public PhantomSpawnAttemptEvent(Entity spawningEntity, Location spawnLocation, SpawnReason spawnReason) {
+        this.spawningEntity = spawningEntity;
         this.spawnLocation = spawnLocation;
         this.spawnReason = spawnReason;
     }
 
     public Entity getSpawningEntity() {
-        return player;
+        return spawningEntity;
     }
 
     public Location getSpawnLocation() {
