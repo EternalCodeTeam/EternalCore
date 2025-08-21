@@ -1,8 +1,8 @@
 package com.eternalcode.core.configuration.migrations;
 
-import eu.okaeri.configs.migrate.builtin.NamedMigration;
-
 import static eu.okaeri.configs.migrate.ConfigMigrationDsl.move;
+
+import eu.okaeri.configs.migrate.builtin.NamedMigration;
 
 public class Migration_0010_Move_jail_to_dedicated_section extends NamedMigration {
 
@@ -16,13 +16,13 @@ public class Migration_0010_Move_jail_to_dedicated_section extends NamedMigratio
             move("jailSection.jailLocationOverride", "jail.locationOverride"),
 
             move("jailSection.jailDetainBroadcast", "jail.detainBroadcast"),
-            move("jailSection.jailDetainPrivate", "jail.detainPrivate"),
+            move("jailSection.jailDetainPrivate", "jail.detained"),
             move("jailSection.jailDetainCountdown", "jail.detainCountdown"),
             move("jailSection.jailDetainOverride", "jail.detainOverride"),
             move("jailSection.jailDetainAdmin", "jail.detainAdmin"),
 
             move("jailSection.jailReleaseBroadcast", "jail.releaseBroadcast"),
-            move("jailSection.jailReleasePrivate", "jail.releasePrivate"),
+            move("jailSection.jailReleasePrivate", "jail.released"),
             move("jailSection.jailReleaseAll", "jail.releaseAll"),
             move("jailSection.jailReleaseNoPlayers", "jail.releaseNoPlayers"),
             move("jailSection.jailIsNotPrisoner", "jail.isNotPrisoner"),

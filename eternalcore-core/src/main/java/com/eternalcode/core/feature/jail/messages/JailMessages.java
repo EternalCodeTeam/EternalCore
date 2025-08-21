@@ -9,13 +9,13 @@ public interface JailMessages {
     Notice locationOverride();
 
     Notice detainBroadcast();
-    Notice detainPrivate();
+    Notice detained();
     Notice detainCountdown();
     Notice detainOverride();
     Notice detainAdmin();
 
     Notice releaseBroadcast();
-    Notice releasePrivate();
+    Notice released();
     Notice releaseAll();
     Notice releaseNoPlayers();
     Notice isNotPrisoner();

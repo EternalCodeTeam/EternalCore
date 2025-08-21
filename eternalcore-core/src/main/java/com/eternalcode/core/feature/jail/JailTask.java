@@ -39,7 +39,7 @@ class JailTask implements Runnable {
 
             if (jailedPlayer.isPrisonExpired()) {
                 this.noticeService.create()
-                    .notice(translation -> translation.jail().releasePrivate())
+                    .notice(translation -> translation.jail().released())
                     .player(jailedPlayer.getPlayerUniqueId())
                     .send();
 

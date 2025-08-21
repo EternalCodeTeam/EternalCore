@@ -16,11 +16,10 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-
-import java.time.Duration;
 
 @Command(name = "jail")
 @Permission(JAIL_BYPASS_PERMISSION)
@@ -142,7 +141,7 @@ class JailCommand {
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.jail().detainPrivate())
+            .notice(translation -> translation.jail().detained())
             .player(target.getUniqueId())
             .send();
     }
@@ -170,7 +169,7 @@ class JailCommand {
         this.jailService.releasePlayer(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.jail().releasePrivate())
+            .notice(translation -> translation.jail().released())
             .player(target.getUniqueId())
             .send();
 

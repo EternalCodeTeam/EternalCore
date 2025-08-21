@@ -16,7 +16,7 @@ public class PLJailMessages extends OkaeriConfig implements JailMessages {
     public Notice locationOverride = Notice.chat("<green>► <white>Nadpisałeś lokalizację jail'a!");
 
     @Comment({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące uwięzienia gracza"})
-    public Notice detainPrivate = Notice.chat("<green>► <white>Zostałeś uwięziony!");
+    public Notice detained = Notice.chat("<green>► <white>Zostałeś uwięziony!");
     public Notice cannotUseCommand = Notice.chat("<red>✘ <dark_red>Nie możesz użyć tej komendy!");
     @Comment({" ", "# {PLAYER} - Gracz który został uwięziony"})
     public Notice detainBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwięziony!");
@@ -31,7 +31,7 @@ public class PLJailMessages extends OkaeriConfig implements JailMessages {
     @Comment({" ", "# Sekcja odpowiedzialna za wiadomości dotyczące uwolnienia gracza"})
     @Comment({" ", "# {PLAYER} - Gracz który został uwolniony"})
     public Notice releaseBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został uwolniony!");
-    public Notice releasePrivate = Notice.actionbar("<green>► <white>Zostałeś uwolniony!");
+    public Notice released = Notice.actionbar("<green>► <white>Zostałeś uwolniony!");
     public Notice releaseAll = Notice.chat("<green>► <white>Wszyscy gracze zostali uwolnieni!");
     public Notice releaseNoPlayers = Notice.chat("<red>✘ <dark_red>Nikt nie jest uwięziony!");
     @Comment({" ", "# {PLAYER} - Nazwa gracza"})
