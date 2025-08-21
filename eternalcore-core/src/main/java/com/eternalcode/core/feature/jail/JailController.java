@@ -58,7 +58,7 @@ class JailController implements Listener {
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailCannotUseCommand())
+            .notice(translation -> translation.jail().cannotUseCommand())
             .player(player.getUniqueId())
             .send();
 

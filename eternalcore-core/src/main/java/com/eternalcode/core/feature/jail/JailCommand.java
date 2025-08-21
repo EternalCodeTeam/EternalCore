@@ -1,7 +1,12 @@
 package com.eternalcode.core.feature.jail;
 
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_BYPASS_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_DETAIN_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_LIST_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_RELEASE_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_SETUP_PERMISSION;
+
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -11,20 +16,15 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import java.time.Duration;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Command(name = "jail")
-@PermissionDocs(
-    name = "Jail Bypass",
-    permission = JailCommand.JAIL_BYPASS,
-    description = "Permission allows to bypass jail punishment"
-)
-class JailCommand {
+import java.time.Duration;
 
-    static final String JAIL_BYPASS = "eternalcore.jail.bypass";
+@Command(name = "jail")
+@Permission(JAIL_BYPASS_PERMISSION)
+class JailCommand {
 
     private final JailService jailService;
     private final NoticeService noticeService;
@@ -41,7 +41,7 @@ class JailCommand {
 
     @Async
     @Execute(name = "setup")
-    @Permission("eternalcore.jail.setup")
+    @Permission(JAIL_SETUP_PERMISSION)
     @DescriptionDocs(description = "Define jail spawn area")
     void executeJailSetup(@Context Player player) {
         Location location = player.getLocation();
@@ -51,15 +51,15 @@ class JailCommand {
 
         this.noticeService.create()
             .notice(translation -> (isLastJailSet
-                ? translation.jailSection().jailLocationOverride()
-                : translation.jailSection().jailLocationSet()))
+                ? translation.jail().locationOverride()
+                : translation.jail().locationSet()))
             .player(player.getUniqueId())
             .send();
     }
 
     @Async
     @Execute(name = "setup")
-    @Permission("eternalcore.jail.setup")
+    @Permission(JAIL_SETUP_PERMISSION)
     @DescriptionDocs(description = "Define jail spawn area", arguments = "<location>")
     void executeJailSetup(@Context Player player, @Arg Location location) {
         boolean isLastJailSet = this.jailService.getJailAreaLocation().isPresent();
@@ -69,15 +69,15 @@ class JailCommand {
 
         this.noticeService.create()
             .notice(translation -> (isLastJailSet
-                ? translation.jailSection().jailLocationOverride()
-                : translation.jailSection().jailLocationSet()))
+                ? translation.jail().locationOverride()
+                : translation.jail().locationSet()))
             .player(player.getUniqueId())
             .send();
     }
 
     @Async
     @Execute(name = "remove")
-    @Permission("eternalcore.jail.setup")
+    @Permission(JAIL_SETUP_PERMISSION)
     @DescriptionDocs(description = "Remove jail spawn area")
     void executeJailRemove(@Context Player player) {
         if (this.isPrisonAvailable(player)) {
@@ -87,36 +87,36 @@ class JailCommand {
         this.jailService.removeJailArea();
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailLocationRemove())
+            .notice(translation -> translation.jail().locationRemoved())
             .player(player.getUniqueId())
             .send();
     }
 
     @Execute(name = "detain")
-    @Permission("eternalcore.jail.detain")
+    @Permission(JAIL_DETAIN_PERMISSION)
     @DescriptionDocs(description = "Detain self")
     void executeJailDetainSelf(@Context Player player) {
         this.executeJailDetainForTime(player, player, this.jailSettings.defaultJailDuration());
     }
 
     @Execute(name = "detain")
-    @Permission("eternalcore.jail.detain")
+    @Permission(JAIL_DETAIN_PERMISSION)
     @DescriptionDocs(description = "Detain a player", arguments = "<player>")
     void executeJailDetain(@Context Player player, @Arg Player target) {
         this.executeJailDetainForTime(player, target, this.jailSettings.defaultJailDuration());
     }
 
     @Execute(name = "detain")
-    @Permission("eternalcore.jail.detain")
+    @Permission(JAIL_DETAIN_PERMISSION)
     @DescriptionDocs(description = "Detain a player for some time", arguments = "<player> <time>")
     void executeJailDetainForTime(@Context Player player, @Arg Player target, @Arg Duration duration) {
         if (this.isPrisonAvailable(player)) {
             return;
         }
 
-        if (target.hasPermission(JAIL_BYPASS)) {
+        if (target.hasPermission(JAIL_BYPASS_PERMISSION)) {
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailDetainAdmin())
+                .notice(translation -> translation.jail().detainAdmin())
                 .placeholder("{PLAYER}", target.getName())
                 .player(player.getUniqueId())
                 .send();
@@ -127,7 +127,7 @@ class JailCommand {
 
         if (isPlayerJailed) {
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailDetainOverride())
+                .notice(translation -> translation.jail().detainOverride())
                 .placeholder("{PLAYER}", target.getName())
                 .player(player.getUniqueId())
                 .send();
@@ -136,31 +136,31 @@ class JailCommand {
         this.jailService.detainPlayer(target, player, duration);
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailDetainBroadcast())
+            .notice(translation -> translation.jail().detainBroadcast())
             .placeholder("{PLAYER}", target.getName())
             .all()
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailDetainPrivate())
+            .notice(translation -> translation.jail().detainPrivate())
             .player(target.getUniqueId())
             .send();
     }
 
     @Execute(name = "release")
-    @Permission("eternalcore.jail.release")
+    @Permission(JAIL_RELEASE_PERMISSION)
     @DescriptionDocs(description = "Release self from jail")
     void executeJailReleaseSelf(@Context Player player) {
         this.executeJailRelease(player, player);
     }
 
     @Execute(name = "release")
-    @Permission("eternalcore.jail.release")
+    @Permission(JAIL_RELEASE_PERMISSION)
     @DescriptionDocs(description = "Release a player from jail", arguments = "<player>")
     void executeJailRelease(@Context Player player, @Arg Player target) {
         if (!this.jailService.isPlayerJailed(target.getUniqueId())) {
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailIsNotPrisoner())
+                .notice(translation -> translation.jail().isNotPrisoner())
                 .placeholder("{PLAYER}", target.getName())
                 .player(player.getUniqueId())
                 .send();
@@ -170,24 +170,24 @@ class JailCommand {
         this.jailService.releasePlayer(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailReleasePrivate())
+            .notice(translation -> translation.jail().releasePrivate())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailReleaseBroadcast())
+            .notice(translation -> translation.jail().releaseBroadcast())
             .placeholder("{PLAYER}", target.getName())
             .all()
             .send();
     }
 
     @Execute(name = "release -all", aliases = { "release *" })
-    @Permission("eternalcore.jail.release")
+    @Permission(JAIL_RELEASE_PERMISSION)
     @DescriptionDocs(description = "Release all players from jail")
     void executeJailReleaseAll(@Context Player player) {
         if (this.jailService.getJailedPlayers().isEmpty()) {
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailReleaseNoPlayers())
+                .notice(translation -> translation.jail().releaseNoPlayers())
                 .player(player.getUniqueId())
                 .send();
             return;
@@ -196,31 +196,31 @@ class JailCommand {
         this.jailService.releaseAllPlayers();
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailReleaseAll())
+            .notice(translation -> translation.jail().releaseAll())
             .all()
             .send();
     }
 
     @Execute(name = "list")
-    @Permission("eternalcore.jail.list")
+    @Permission(JAIL_LIST_PERMISSION)
     @DescriptionDocs(description = "List all jailed players")
     void executeJailList(@Context Player player) {
         if (this.jailService.getJailedPlayers().isEmpty()) {
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailListEmpty())
+                .notice(translation -> translation.jail().listEmpty())
                 .player(player.getUniqueId())
                 .send();
             return;
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailListHeader())
+            .notice(translation -> translation.jail().listHeader())
             .player(player.getUniqueId())
             .send();
 
         for (JailedPlayer jailedPlayer : this.jailService.getJailedPlayers()) {
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailListPlayerEntry())
+                .notice(translation -> translation.jail().listPlayerEntry())
                 .placeholder("{PLAYER}", this.server.getOfflinePlayer(jailedPlayer.getPlayerUniqueId()).getName())
                 .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.getRemainingTime(), true))
                 .placeholder("{DETAINED_BY}", jailedPlayer.getDetainedBy())
@@ -232,7 +232,7 @@ class JailCommand {
     private boolean isPrisonAvailable(Player player) {
         if (this.jailService.getJailAreaLocation().isEmpty()) {
             this.noticeService.create()
-                .notice(translation -> translation.jailSection().jailLocationNotSet())
+                .notice(translation -> translation.jail().locationNotSet())
                 .player(player.getUniqueId())
                 .send();
             return true;

@@ -84,7 +84,15 @@ class JailServiceImpl implements JailService {
             return false;
         }
 
-        JailedPlayer jailedPlayer = new JailedPlayer(player.getUniqueId(), Instant.now(), time, detainedBy.getName());
+        Location lastLocation = player.getLocation();
+
+        JailedPlayer jailedPlayer = new JailedPlayer(
+            player.getUniqueId(),
+            Instant.now(),
+            time,
+            detainedBy.getName(),
+            lastLocation
+        );
 
         this.prisonerRepository.savePrisoner(jailedPlayer);
         this.jailedPlayers.put(player.getUniqueId(), jailedPlayer);
@@ -102,28 +110,36 @@ class JailServiceImpl implements JailService {
             return false;
         }
 
+        JailedPlayer jailedPlayer = this.jailedPlayers.get(player.getUniqueId());
+
         this.prisonerRepository.deletePrisoner(player.getUniqueId());
         this.jailedPlayers.remove(player.getUniqueId());
 
-        this.spawnService.teleportToSpawn(player);
+        if (jailedPlayer != null && jailedPlayer.getLastLocation() != null) {
+            this.teleportService.teleport(player, jailedPlayer.getLastLocation());
+        } else {
+            this.spawnService.teleportToSpawn(player);
+        }
 
         return true;
     }
 
     @Override
     public void releaseAllPlayers() {
-        this.jailedPlayers.forEach((uuid, prisoner) -> {
-            Player jailedPlayer = this.server.getPlayer(uuid);
+        this.jailedPlayers.forEach((uuid, jailedPlayer) -> {
+            Player player = this.server.getPlayer(uuid);
+
             JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(uuid);
             this.eventCaller.callEvent(jailReleaseEvent);
 
-            if (jailReleaseEvent.isCancelled()) {
+            if (jailReleaseEvent.isCancelled() || player == null) {
                 return;
             }
 
-            if (jailedPlayer != null) {
-                this.teleportService.teleport(jailedPlayer, this.spawnService.getSpawnLocation());
-            }
+            Location targetLocation = Optional.ofNullable(jailedPlayer.getLastLocation())
+                .orElseGet(this.spawnService::getSpawnLocation);
+
+            this.teleportService.teleport(player, targetLocation);
         });
 
         this.jailedPlayers.clear();
@@ -134,11 +150,7 @@ class JailServiceImpl implements JailService {
     public boolean isPlayerJailed(UUID player) {
         JailedPlayer jailedPlayer = this.jailedPlayers.get(player);
 
-        if (jailedPlayer == null || jailedPlayer.isPrisonExpired()) {
-            return false;
-        }
-
-        return true;
+        return jailedPlayer != null && !jailedPlayer.isPrisonExpired();
     }
 
     @Override

@@ -232,7 +232,7 @@ public interface Translation {
     // auto message section
     AutoMessageMessages autoMessage();
     // jail section
-    JailMessages jailSection();
+    JailMessages jail();
     // burn section
     BurnMessages burn();
     // vanish section

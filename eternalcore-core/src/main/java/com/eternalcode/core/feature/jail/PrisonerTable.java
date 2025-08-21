@@ -1,8 +1,11 @@
 package com.eternalcode.core.feature.jail;
 
+import com.eternalcode.core.database.persister.LocationPersister;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import org.bukkit.Location;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -24,18 +27,27 @@ class PrisonerTable {
     @DatabaseField(columnName = "detained_by")
     private String detainedBy;
 
+    @DatabaseField(columnName = "last_location", persisterClass = LocationPersister.class)
+    @Nullable
+    private Location lastLocation;
+
     PrisonerTable() {
     }
 
     PrisonerTable(UUID uuid, Instant detainedAt, Duration duration, String detainedBy) {
+        this(uuid, detainedAt, duration, detainedBy, null);
+    }
+
+    PrisonerTable(UUID uuid, Instant detainedAt, Duration duration, String detainedBy, @Nullable Location lastLocation) {
         this.uuid = uuid;
         this.detainedAt = detainedAt;
         this.duration = duration;
         this.detainedBy = detainedBy;
+        this.lastLocation = lastLocation;
     }
 
     JailedPlayer toPrisoner() {
-        return new JailedPlayer(this.uuid, this.detainedAt, this.duration, this.detainedBy);
+        return new JailedPlayer(this.uuid, this.detainedAt, this.duration, this.detainedBy, this.lastLocation);
     }
 
     static PrisonerTable from(JailedPlayer jailedPlayer) {
@@ -43,7 +55,8 @@ class PrisonerTable {
             jailedPlayer.getPlayerUniqueId(),
             jailedPlayer.getDetainedAt(),
             jailedPlayer.getPrisonTime(),
-            jailedPlayer.getDetainedBy()
+            jailedPlayer.getDetainedBy(),
+            jailedPlayer.getLastLocation()
         );
     }
 }
