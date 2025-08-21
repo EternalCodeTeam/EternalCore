@@ -86,7 +86,7 @@ class JailServiceImpl implements JailService {
             return false;
         }
 
-        Position lastLocation = PositionAdapter.convert(player.getLocation());
+        Location lastLocation = player.getLocation();
 
         JailedPlayer jailedPlayer = new JailedPlayer(
             player.getUniqueId(),
@@ -117,8 +117,8 @@ class JailServiceImpl implements JailService {
         this.prisonerRepository.deletePrisoner(player.getUniqueId());
         this.jailedPlayers.remove(player.getUniqueId());
 
-        if (jailedPlayer != null && jailedPlayer.getLastPosition() != null) {
-            this.teleportService.teleport(player, PositionAdapter.convert(jailedPlayer.getLastPosition()));
+        if (jailedPlayer != null && jailedPlayer.getLastLocation() != null) {
+            this.teleportService.teleport(player, jailedPlayer.getLastLocation());
         } else {
             this.spawnService.teleportToSpawn(player);
         }
@@ -143,10 +143,9 @@ class JailServiceImpl implements JailService {
             playersToRelease.add(uuid);
 
             if (player != null) {
-                Position targetPosition = Optional.ofNullable(jailedPlayer.getLastPosition())
-                    .orElse(PositionAdapter.convert(this.spawnService.getSpawnLocation()));
-
-                this.teleportService.teleport(player, PositionAdapter.convert(targetPosition));
+                this.teleportService.teleport(player, jailedPlayer.getLastLocation() != null
+                    ? jailedPlayer.getLastLocation()
+                    : this.spawnService.getSpawnLocation());
             }
         });
 
