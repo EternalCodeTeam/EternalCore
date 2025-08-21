@@ -19,7 +19,7 @@ object Versions {
     const val POSTGRESQL = "42.7.7"
     const val H2 = "2.3.232"
     const val ORMLITE = "6.1"
-    const val HIKARI_CP = "7.0.1"
+    const val HIKARI_CP = "7.0.2"
 
     const val LITE_COMMANDS = "3.10.4"
     const val LITE_SKULL_API = "2.0.0"
@@ -40,6 +40,8 @@ object Versions {
     const val BSTATS = "3.1.0"
 
     const val CAFFEINE = "3.2.2"
+
+    const val GLOWING_ENTITIES = "1.4.7"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
