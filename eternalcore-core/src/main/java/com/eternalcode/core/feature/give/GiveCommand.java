@@ -38,7 +38,7 @@ class GiveCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives an item to another player", arguments = "<player> <item>")
-    void execute(@Context CommandSender sender, @Arg Player target, @Arg Material material) {
+    void execute(@Context CommandSender sender, @OptionalArg Player target, @Arg Material material) {
         this.execute(sender, target, material, this.config.items.defaultGiveAmount);
     }
 
@@ -58,7 +58,7 @@ class GiveCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives an item with a custom amount to another player", arguments = "<player> <item> <amount>")
-    void execute(@Context CommandSender sender, @Arg Player target, @Arg Material material, @OptionalArg(GiveArgument.KEY) int amount) {
+    void execute(@Context CommandSender sender, @OptionalArg Player target, @Arg Material material, @OptionalArg(GiveArgument.KEY) int amount) {
         boolean isSuccess = this.giveService.giveItem(sender, target, material, amount);
 
         if (!isSuccess) {
