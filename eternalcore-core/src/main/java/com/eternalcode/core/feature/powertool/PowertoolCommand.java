@@ -7,6 +7,7 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,6 +21,7 @@ import org.bukkit.plugin.Plugin;
 public class PowertoolCommand {
 
     public static final String KEY = "powertool";
+    private final NamespacedKey key;
 
     private final Plugin plugin;
     private final NoticeService noticeService;
@@ -28,13 +30,14 @@ public class PowertoolCommand {
     PowertoolCommand(Plugin plugin, NoticeService noticeService) {
         this.plugin = plugin;
         this.noticeService = noticeService;
+        this.key = new NamespacedKey(this.plugin, KEY);
     }
 
     @Execute
     void clear(@Sender Player player) {
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
+        if (item.getType() == Material.AIR || meta == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().noItemInMainHand())
@@ -43,15 +46,15 @@ public class PowertoolCommand {
         }
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
 
-        if (persistentDataContainer.has(new NamespacedKey(this.plugin, KEY), PersistentDataType.STRING)) {
+        if (persistentDataContainer.has(key, PersistentDataType.STRING)) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().commandRemoved())
                 .placeholder("{ITEM}", item.getType().name())
-                .placeholder("{COMMAND}", persistentDataContainer.get(new NamespacedKey(this.plugin, KEY), PersistentDataType.STRING))
+                .placeholder("{COMMAND}", persistentDataContainer.get(key, PersistentDataType.STRING))
                 .send();
 
-            persistentDataContainer.remove(new NamespacedKey(this.plugin, KEY));
+            persistentDataContainer.remove(key);
             item.setItemMeta(meta);
         } else {
             this.noticeService.create()
@@ -64,7 +67,7 @@ public class PowertoolCommand {
 
     @Execute
     void assign(@Sender Player player, @Join String command) {
-        if (command.isEmpty()) {
+        if (command.trim().isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().commandCannotBeEmpty())
@@ -74,7 +77,7 @@ public class PowertoolCommand {
 
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
+        if (item.getType() == Material.AIR || meta == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().noItemInMainHand())
@@ -82,7 +85,7 @@ public class PowertoolCommand {
             return;
         }
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-        persistentDataContainer.set(new NamespacedKey(this.plugin, KEY), PersistentDataType.STRING, command);
+        persistentDataContainer.set(key, PersistentDataType.STRING, command);
         item.setItemMeta(meta);
 
         this.noticeService.create()
