@@ -16,7 +16,9 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import org.bukkit.Location;
@@ -126,24 +128,32 @@ class JailServiceImpl implements JailService {
 
     @Override
     public void releaseAllPlayers() {
+        Set<UUID> playersToRelease = new HashSet<>();
+
         this.jailedPlayers.forEach((uuid, jailedPlayer) -> {
             Player player = this.server.getPlayer(uuid);
 
             JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(uuid);
             this.eventCaller.callEvent(jailReleaseEvent);
 
-            if (jailReleaseEvent.isCancelled() || player == null) {
+            if (jailReleaseEvent.isCancelled()) {
                 return;
             }
 
-            Location targetLocation = Optional.ofNullable(jailedPlayer.getLastLocation())
-                .orElseGet(this.spawnService::getSpawnLocation);
+            playersToRelease.add(uuid);
 
-            this.teleportService.teleport(player, targetLocation);
+            if (player != null) {
+                Location targetLocation = Optional.ofNullable(jailedPlayer.getLastLocation())
+                    .orElseGet(this.spawnService::getSpawnLocation);
+
+                this.teleportService.teleport(player, targetLocation);
+            }
         });
 
-        this.jailedPlayers.clear();
-        this.prisonerRepository.deleteAllPrisoners();
+        playersToRelease.forEach(uuid -> {
+            this.jailedPlayers.remove(uuid);
+            this.prisonerRepository.deletePrisoner(uuid);
+        });
     }
 
     @Override

@@ -17,6 +17,6 @@ public class JailConfig extends OkaeriConfig implements JailSettings {
     @Comment("# Command restriction type, either WHITELIST or BLACKLIST")
     public JailCommandRestrictionType restrictionType = JailCommandRestrictionType.WHITELIST;
 
-    @Comment("# Restricted commands for jailed players")
+    @Comment("# List of commands for restriction logic. Acts as a whitelist or blacklist depending on restrictionType.")
     public Set<String> restrictedCommands = Set.of("help", "msg", "r", "tell", "me", "helpop");
 }
