@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
@@ -52,22 +53,23 @@ public class PowertoolController implements Listener {
             return;
         }
 
-        PersistentDataContainer dataContainer = item.getItemMeta().getPersistentDataContainer();
+        ItemMeta meta = item.getItemMeta();
+
+        PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
 
         NamespacedKey key = NamespacedKey.fromString(KEY, this.plugin);
 
-        if (dataContainer.has(key)) {
             String command = dataContainer.get(key, PersistentDataType.STRING);
-            if (command != null && !command.isEmpty()) {
+            if (command != null && !command.trim().isEmpty()) {
                 Player player = event.getPlayer();
                 if (!player.hasPermission(POWERTOOL_USE_PERMISSION)) {
                     dataContainer.remove(key);
+                    item.setItemMeta(meta);
                     return;
                 }
                 Formatter formatter = EXECUTION_CONTEXT_PLACEHOLDERS.toFormatter(player);
 
                 player.performCommand(formatter.format(command));
-            }
         }
     }
 }

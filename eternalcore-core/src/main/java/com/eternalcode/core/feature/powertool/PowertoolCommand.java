@@ -49,7 +49,7 @@ public class PowertoolCommand {
         if (persistentDataContainer.has(key, PersistentDataType.STRING)) {
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .notice(translation -> translation.powertool().commandRemoved())
+                .notice(translation -> translation.powertool().removed())
                 .placeholder("{ITEM}", item.getType().name())
                 .placeholder("{COMMAND}", persistentDataContainer.get(key, PersistentDataType.STRING))
                 .send();
@@ -59,7 +59,7 @@ public class PowertoolCommand {
         } else {
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .notice(translation -> translation.powertool().commandNotAssigned())
+                .notice(translation -> translation.powertool().notAssigned())
                 .placeholder("{ITEM}", item.getType().name())
                 .send();
         }
@@ -70,7 +70,7 @@ public class PowertoolCommand {
         if (command.trim().isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())
-                .notice(translation -> translation.powertool().commandCannotBeEmpty())
+                .notice(translation -> translation.powertool().emptyCommand())
                 .send();
             return;
         }
@@ -90,7 +90,7 @@ public class PowertoolCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(translation -> translation.powertool().commandAssigned())
+            .notice(translation -> translation.powertool().assigned())
             .placeholder("{ITEM}", item.getType().name())
             .placeholder("{COMMAND}", command)
             .send();
