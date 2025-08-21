@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.jail;
 
-import org.bukkit.Location;
+import com.eternalcode.commons.bukkit.position.Position;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
@@ -14,18 +14,18 @@ public class JailedPlayer {
     private final Duration prisonTime;
     private final String detainedBy;
     @Nullable
-    private final Location lastLocation;
+    private final Position lastPosition;
 
     public JailedPlayer(UUID player, Instant detainedAt, Duration prisonTime, String detainedBy) {
         this(player, detainedAt, prisonTime, detainedBy, null);
     }
 
-    public JailedPlayer(UUID player, Instant detainedAt, Duration prisonTime, String detainedBy, @Nullable Location lastLocation) {
+    public JailedPlayer(UUID player, Instant detainedAt, Duration prisonTime, String detainedBy, @Nullable Position lastPosition) {
         this.player = player;
         this.detainedAt = detainedAt;
         this.prisonTime = prisonTime;
         this.detainedBy = detainedBy;
-        this.lastLocation = lastLocation;
+        this.lastPosition = lastPosition;
     }
     
     public UUID getPlayerUniqueId() {
@@ -45,8 +45,8 @@ public class JailedPlayer {
     }
 
     @Nullable
-    public Location getLastLocation() {
-        return this.lastLocation;
+    public Position getLastPosition() {
+        return this.lastPosition;
     }
 
     public boolean isPrisonExpired() {
