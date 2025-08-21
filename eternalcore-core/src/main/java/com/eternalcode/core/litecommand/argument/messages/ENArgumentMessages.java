@@ -34,5 +34,5 @@ public class ENArgumentMessages extends OkaeriConfig implements ArgumentMessages
     public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
     public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location format! <red>({LOCATION})");
 
-    public Notice missingPlayer = Notice.chat("<red>✘ <dark_red>Couldn't find player");
+    public Notice missingPlayer = Notice.chat("<red>✘ <dark_red>Couldn't find player!");
 }
