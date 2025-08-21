@@ -14,6 +14,7 @@ import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
 import dev.rollczi.litecommands.folia.FoliaExtension;
+import dev.rollczi.litecommands.schematic.SchematicFormat;
 import net.kyori.adventure.platform.AudienceProvider;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
@@ -44,6 +45,11 @@ class LiteCommandsSetup {
                 .sender(invocation.sender())
                 .notice(translation -> translation.argument().incorrectLocation())
                 .placeholder("{LOCATION}", input)
+            )
+            .schematicGenerator(SchematicFormat.builder()
+                .argument("<%s>")
+                .optionalArgument("[%s]")
+                .build()
             )
             .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
                 .serializer(miniMessage)

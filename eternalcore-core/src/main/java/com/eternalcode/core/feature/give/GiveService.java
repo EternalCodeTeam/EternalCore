@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 @Service
-class GiveService {
+public class GiveService {
 
     private final PluginConfiguration pluginConfiguration;
     private final NoticeService noticeService;

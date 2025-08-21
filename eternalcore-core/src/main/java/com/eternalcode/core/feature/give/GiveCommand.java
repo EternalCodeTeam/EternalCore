@@ -8,13 +8,14 @@ import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Command(name = "give", aliases = { "i", "item" })
+@Command(name = "give")
 @Permission("eternalcore.give")
 class GiveCommand {
 
@@ -36,14 +37,14 @@ class GiveCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Gives an item to another player", arguments = "<item> <player>")
-    void execute(@Context CommandSender sender, @Arg Material material, @Arg Player target) {
+    @DescriptionDocs(description = "Gives an item to another player", arguments = "<item> [player]")
+    void execute(@Context CommandSender sender, @Arg Material material, @OptionalArg Player target) {
         this.execute(sender, material, this.config.items.defaultGiveAmount, target);
     }
 
     @Execute
-    @DescriptionDocs(description = "Gives you an item with a custom amount", arguments = "<item> <amount>")
-    void execute(@Context Player player, @Arg Material material, @Arg(GiveArgument.KEY) int amount) {
+    @DescriptionDocs(description = "Gives you an item with a custom amount", arguments = "<item> [amount]")
+    void execute(@Context Player player, @Arg Material material, @OptionalArg(GiveArgument.KEY) int amount) {
         boolean isSuccess = this.giveService.giveItem(player, player, material, amount);
 
         if (isSuccess) {
