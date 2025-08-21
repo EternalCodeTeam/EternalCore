@@ -46,11 +46,6 @@ class LiteCommandsSetup {
                 .notice(translation -> translation.argument().incorrectLocation())
                 .placeholder("{LOCATION}", input)
             )
-            .schematicGenerator(SchematicFormat.builder()
-                .argument("<%s>")
-                .optionalArgument("[%s]")
-                .build()
-            )
             .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
                 .serializer(miniMessage)
             );
