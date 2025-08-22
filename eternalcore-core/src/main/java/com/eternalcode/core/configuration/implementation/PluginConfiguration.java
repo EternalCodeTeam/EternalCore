@@ -99,7 +99,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
 
     @Bean(proxied = RandomTeleportSettings.class)
     @Comment("")
-    @Comment("# Random Teleport Configuration")
     @Comment("# Settings for random teleportation feature")
     RandomTeleportConfig randomTeleport = new RandomTeleportConfig();
 
