@@ -85,6 +85,9 @@ public class PowertoolCommand {
             return;
         }
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
+        if (command.startsWith("/")) {
+            command = command.substring(1);
+        }
         persistentDataContainer.set(key, PersistentDataType.STRING, command);
         item.setItemMeta(meta);
 
