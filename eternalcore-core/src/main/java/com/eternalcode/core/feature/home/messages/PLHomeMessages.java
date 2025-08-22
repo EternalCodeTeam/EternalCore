@@ -40,4 +40,27 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
         Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
     public Notice homeListAsAdmin =
         Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
+    public Notice noHomesOnListAsAdmin =
+        Notice.chat("<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie posiada domów.");
+
+    @Comment({
+        " ",
+        "# {PLAYER} - nick właściciela domu na który przeteleportowano się za pomocą /homeadmin home",
+        "# {HOME} - nazwa domu"
+    })
+    public Notice teleportedAsAdmin =
+        Notice.chat("<green>► <white>Przeteleportowano do domu gracza: <green>{PLAYER}<white> - <green>{HOME}!");
+
+    @Comment({
+        " ",
+        "# Wiadomość wysyłana do gracza który nie wpisał poprawnie agumentów do komend /homeadmin"
+    })
+    public Notice missingArgument = Notice.chat("<dark_red>✘ <red>Brakujący argument! Proszę podać: <nazwa gracza> i <nazwa domu>");
+
+    @Comment({
+        " ",
+        "# Lista domów graczy sugerowana podczas korzystania z komend /homeadmin gdy użytkownik błędnie wprowadzi nazwę domu",
+        "# Placeholder: {PLAYER} - gracz podany w komendzie /homeadmin, {HOMES} - lista dostępnych domów tego gracza"
+    })
+    public Notice homeNotFound = Notice.chat("<dark_red>✘ <red>Nie znaleziono domu! <dark_red>Dostępne domy dla <red>{PLAYER}<dark_red>: <red>{HOMES}");
 }
