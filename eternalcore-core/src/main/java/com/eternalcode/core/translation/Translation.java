@@ -11,6 +11,8 @@ import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
+import com.eternalcode.core.feature.clear.messages.ClearMessages;
+import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
@@ -21,22 +23,25 @@ import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
+import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
+import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
+import com.eternalcode.core.feature.teleport.messages.TeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
+import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.multification.notice.Notice;
-import org.bukkit.event.entity.EntityDamageEvent;
-
 import java.util.List;
 import java.util.Map;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public interface Translation {
 
@@ -242,6 +247,8 @@ public interface Translation {
     NearMessages near();
     // motd section
     MotdMessages motd();
+    // offlineplayer section
+    TeleportOfflineMessages teleportToOfflinePlayer();
     // playtime section
     PlaytimeMessages playtime();
     // freeze section
