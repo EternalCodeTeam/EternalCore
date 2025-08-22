@@ -5,7 +5,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import io.papermc.lib.PaperLib;
@@ -29,7 +29,7 @@ public class TeleportToRandomPlayerCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport to a player who hasn't been teleported to recently, ensuring fair distribution")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         Player targetPlayer = this.randomPlayerService.findLeastRecentlyTeleportedPlayer(player);
 
         if (targetPlayer == null || !targetPlayer.isOnline()) {
@@ -57,7 +57,7 @@ public class TeleportToRandomPlayerCommand {
      */
     @Execute
     @DescriptionDocs(description = "Teleport to a player who is within specified Y range and hasn't been teleported to recently")
-    void executeWithYRange(@Context Player player, @Arg int minY, @Arg int maxY) {
+    void executeWithYRange(@Sender Player player, @Arg int minY, @Arg int maxY) {
         if (minY > maxY) {
             this.noticeService.create()
                 .player(player.getUniqueId())

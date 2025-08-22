@@ -8,7 +8,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.paper.PaperOverlay;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ public class EndScreenCommand {
 
     @Execute
     @DescriptionDocs(description = "Show a end screen to yourself")
-    void self(@Context Player sender) {
+    void self(@Sender Player sender) {
         PaperOverlay.END_SCREEN.show(sender);
 
         this.noticeService.create()
@@ -38,7 +38,7 @@ public class EndScreenCommand {
 
     @Execute
     @DescriptionDocs(description = "Show a end screen to a player", arguments = "<player>")
-    void other(@Context Player sender, @Arg Player target) {
+    void other(@Sender Player sender, @Arg Player target) {
         PaperOverlay.END_SCREEN.show(target);
 
         this.noticeService.create()

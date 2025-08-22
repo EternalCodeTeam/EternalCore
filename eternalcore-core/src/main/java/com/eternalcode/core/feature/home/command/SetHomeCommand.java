@@ -11,6 +11,7 @@ import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.UUID;
@@ -40,13 +41,13 @@ class SetHomeCommand {
 
     @Execute
     @DescriptionDocs(description = "Set home location with specified name", arguments = "<home>")
-    void execute(@Context User user, @Context Player player, @Arg String home) {
+    void execute(@Sender User user, @Sender Player player, @Arg String home) {
         this.setOrOverrideHome(user, player, home);
     }
 
     @Execute
     @DescriptionDocs(description = "Set home location")
-    void execute(@Context User user, @Context Player player) {
+    void execute(@Sender User user, @Sender Player player) {
         this.setOrOverrideHome(user, player, this.homesSettings.defaultName());
     }
 

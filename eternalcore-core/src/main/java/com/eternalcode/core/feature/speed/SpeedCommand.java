@@ -5,10 +5,10 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
 @Command(name = "speed")
@@ -24,7 +24,7 @@ class SpeedCommand {
 
     @Execute
     @DescriptionDocs(description = "Set speed depending on whether you flying or walking by specified amount", arguments = "<speed>")
-    void execute(@Context Player player, @Arg(SpeedArgument.KEY) Integer speed) {
+    void execute(@Sender Player player, @Arg(SpeedArgument.KEY) Integer speed) {
         this.setSpeed(player, speed);
 
         this.noticeService.create()
@@ -36,7 +36,7 @@ class SpeedCommand {
 
     @Execute
     @DescriptionDocs(description = "Set speed depending on whether the player is flying or walking by specified amount", arguments = "<speed> <player>")
-    void execute(@Context Viewer viewer, @Arg(SpeedArgument.KEY) Integer speed, @Arg Player target) {
+    void execute(@Sender Viewer viewer, @Arg(SpeedArgument.KEY) Integer speed, @Arg Player target) {
         this.setSpeed(target, speed);
 
         this.noticeService.create()
@@ -55,7 +55,7 @@ class SpeedCommand {
 
     @Execute
     @DescriptionDocs(description = "Set speed of walking or flying to specified amount", arguments = "<type> <speed>")
-    void execute(@Context Player player, @Arg SpeedType speedType, @Arg(SpeedArgument.KEY) Integer speed) {
+    void execute(@Sender Player player, @Arg SpeedType speedType, @Arg(SpeedArgument.KEY) Integer speed) {
         this.setSpeed(player, speedType, speed);
 
         this.noticeService.create()
@@ -67,7 +67,7 @@ class SpeedCommand {
 
     @Execute
     @DescriptionDocs(description = "Set speed of walking or flying to specified amount and player", arguments = "<type> <speed> <player>")
-    void execute(@Context Viewer viewer, @Arg SpeedType speedType, @Arg(SpeedArgument.KEY) Integer speed, @Arg Player target) {
+    void execute(@Sender Viewer viewer, @Arg SpeedType speedType, @Arg(SpeedArgument.KEY) Integer speed, @Arg Player target) {
         this.setSpeed(target, speedType, speed);
 
         this.noticeService.create()

@@ -8,7 +8,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.List;
@@ -36,7 +36,7 @@ class TpaHereActionCommand {
 
     @Execute(name = "tpahereaccept")
     @Permission("eternalcore.tpaccept")
-    void accept(@Context Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
+    void accept(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         this.teleportTaskService.createTeleport(
             player.getUniqueId(),
             PositionAdapter.convert(player.getLocation()),
@@ -64,7 +64,7 @@ class TpaHereActionCommand {
     @Execute(name = "tpaheredeny")
     @Permission("eternalcore.tpahere.deny")
     @DescriptionDocs(description = "Deny a teleport here request")
-    void executeTarget(@Context Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
+    void executeTarget(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         this.requestService.removeRequest(target.getUniqueId());
 
         this.noticeService
@@ -85,7 +85,7 @@ class TpaHereActionCommand {
     @Execute(name = "tpaheredeny -all")
     @Permission("eternalcore.tpahere.deny")
     @DescriptionDocs(description = "Deny all teleport here requests")
-    void executeAll(@Context Player player) {
+    void executeAll(@Sender Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {

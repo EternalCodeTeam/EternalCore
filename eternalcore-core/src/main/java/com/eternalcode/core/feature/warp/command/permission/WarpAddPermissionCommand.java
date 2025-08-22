@@ -7,7 +7,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ public class WarpAddPermissionCommand {
     }
 
     @Execute
-    void addPermission(@Context Player player, @Arg Warp warp, @Arg String... permissions) {
+    void addPermission(@Sender Player player, @Arg Warp warp, @Arg String... permissions) {
         UUID uniqueId = player.getUniqueId();
 
         if (permissions.length == 0) {

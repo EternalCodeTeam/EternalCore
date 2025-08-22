@@ -4,10 +4,10 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.liteskullapi.SkullAPI;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import net.kyori.adventure.text.Component;
@@ -30,7 +30,7 @@ class SkullCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives you a skull of player", arguments = "<player>")
-    void execute(@Context Player sender, @Arg(SkullNicknameArgument.KEY) String name) {
+    void execute(@Sender Player sender, @Arg(SkullNicknameArgument.KEY) String name) {
         this.skullAPI.acceptSkullData(name, skull -> {
             ItemStack namedSkull = ItemBuilder.skull()
                 .name(Component.text(name))

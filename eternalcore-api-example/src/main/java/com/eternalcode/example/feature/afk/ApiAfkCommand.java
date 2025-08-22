@@ -5,14 +5,13 @@ import com.eternalcode.core.feature.afk.AfkReason;
 import com.eternalcode.core.feature.afk.AfkService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
-import org.bukkit.entity.Player;
-
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 @Command(name = "api afk")
 public class ApiAfkCommand {
@@ -28,14 +27,14 @@ public class ApiAfkCommand {
     }
 
     @Execute(name = "isafk")
-    void execute(@Context Player player, @Arg Player target) {
+    void execute(@Sender Player player, @Arg Player target) {
         boolean afk = this.afkService.isAfk(target.getUniqueId());
         String message = "Player %s is %s afk, used via eternalcore api bridge!";
         player.sendMessage(String.format(message, target.getName(), afk ? "now" : "not"));
     }
 
     @Execute(name = "setafk")
-    void executeSetAfk(@Context Player player, @Arg Player target) {
+    void executeSetAfk(@Sender Player player, @Arg Player target) {
         Afk afk = this.afkService.markAfk(target.getUniqueId(), AfkReason.COMMAND);
 
         AfkReason afkReason = afk.getAfkReason();
@@ -53,14 +52,14 @@ public class ApiAfkCommand {
     }
 
     @Execute(name = "removeafk")
-    void executeRemoveAfk(@Context Player player, @Arg Player target) {
+    void executeRemoveAfk(@Sender Player player, @Arg Player target) {
         this.afkService.clearAfk(target.getUniqueId());
         String message = "You have removed %s from afk via eternalcore api bridge!";
         player.sendMessage(String.format(message, target.getName()));
     }
 
     @Execute(name = "addinteraction")
-    void executeMarkInteraction(@Context Player player, @Arg Player target, @Arg int interactions) {
+    void executeMarkInteraction(@Sender Player player, @Arg Player target, @Arg int interactions) {
         for (int i = 0; i < interactions; i++) {
             this.afkService.markInteraction(target.getUniqueId());
         }
@@ -71,7 +70,7 @@ public class ApiAfkCommand {
     }
 
     @Execute(name = "demo")
-    void executeDemo(@Context Player player) {
+    void executeDemo(@Sender Player player) {
         player.showDemoScreen();
     }
 

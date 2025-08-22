@@ -10,7 +10,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -47,7 +47,7 @@ class HelpOpCommand {
 
     @Execute
     @DescriptionDocs(description = "Send helpop message to all administrator with eternalcore.helpop.spy permission", arguments = "<message>")
-    void execute(@Context Player player, @Join String message) {
+    void execute(@Sender Player player, @Join String message) {
         UUID uuid = player.getUniqueId();
         HelpOpEvent event = new HelpOpEvent(player, message);
 

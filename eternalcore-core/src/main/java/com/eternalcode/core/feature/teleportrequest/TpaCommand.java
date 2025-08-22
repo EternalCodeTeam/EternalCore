@@ -5,10 +5,10 @@ import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.entity.Player;
 
@@ -29,7 +29,7 @@ class TpaCommand {
 
     @Execute
     @DescriptionDocs(description = "Send teleport request to player", arguments = "<player>")
-    void execute(@Context Player player, @Arg Player target) {
+    void execute(@Sender Player player, @Arg Player target) {
         if (player.equals(target)) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaSelfMessage());
 
@@ -74,4 +74,3 @@ class TpaCommand {
         return this.ignoreService.isIgnored(target.getUniqueId(), sender.getUniqueId());
     }
 }
-

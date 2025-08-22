@@ -1,16 +1,16 @@
 package com.eternalcode.core.feature.container;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import com.eternalcode.commons.adventure.AdventureUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
@@ -36,14 +36,14 @@ class DisposalCommand {
 
     @Execute
     @DescriptionDocs(description = "Opens a disposal")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         this.openDisposal(player);
     }
 
     @Execute
     @DescriptionDocs(description = "Opens a disposal for target")
     @Permission("eternalcore.disposal.other")
-    void executeOther(@Context CommandSender commandSender, @Arg Player target) {
+    void executeOther(@Sender CommandSender commandSender, @Arg Player target) {
         this.openDisposal(target);
 
         this.noticeService.create()

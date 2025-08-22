@@ -4,15 +4,14 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-
 import java.util.List;
 import java.util.UUID;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 @Command(name = "tpadeny", aliases = "tpdeny")
 @Permission("eternalcore.tpadeny")
@@ -31,7 +30,7 @@ class TpaDenyCommand {
 
     @Execute
     @DescriptionDocs(description = "Deny teleport request", arguments = "<player>")
-    void executeTarget(@Context Player player, @Arg(RequesterArgument.KEY) Player target) {
+    void executeTarget(@Sender Player player, @Arg(RequesterArgument.KEY) Player target) {
         this.requestService.removeRequest(target.getUniqueId());
 
         this.noticeService
@@ -51,7 +50,7 @@ class TpaDenyCommand {
 
     @Execute(name = "-all", aliases = "*")
     @DescriptionDocs(description = "Deny all teleport requests")
-    void executeAll(@Context Player player) {
+    void executeAll(@Sender Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {

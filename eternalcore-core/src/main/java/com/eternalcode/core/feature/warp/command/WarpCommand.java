@@ -11,7 +11,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.List;
@@ -46,7 +46,7 @@ class WarpCommand {
 
     @Execute(name = "warp")
     @DescriptionDocs(description = "Open warp inventory, optionally you can disable this feature in config, if feature is disabled eternalcore will show all available warps")
-    void warp(@Context Player player) {
+    void warp(@Sender Player player) {
         if (!this.warpSettings.inventoryEnabled()) {
             List<String> list = this.warpService.getWarps().stream().map(Warp::getName).toList();
 
@@ -73,7 +73,7 @@ class WarpCommand {
 
     @Execute(name = "warp")
     @DescriptionDocs(description = "Teleport to warp", arguments = "<warp>")
-    void warp(@Context Player player, @Arg Warp warp) {
+    void warp(@Sender Player player, @Arg Warp warp) {
         if (!warp.hasPermissions(player)) {
             this.noticeService.create()
                 .player(player.getUniqueId())

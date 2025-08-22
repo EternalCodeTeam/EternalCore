@@ -5,10 +5,10 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.entity.Player;
 
 @Command(name = "whois")
@@ -24,7 +24,7 @@ class WhoIsCommand {
 
     @Execute
     @DescriptionDocs(description = "Shows information about player", arguments = "<player>")
-    void execute(@Context Viewer viewer, @Arg Player player) {
+    void execute(@Sender Viewer viewer, @Arg Player player) {
         this.noticeService.create()
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{UUID}", String.valueOf(player.getUniqueId()))

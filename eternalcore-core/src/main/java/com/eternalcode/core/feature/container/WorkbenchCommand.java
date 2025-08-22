@@ -1,14 +1,13 @@
 package com.eternalcode.core.feature.container;
 
-
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,14 +24,14 @@ class WorkbenchCommand {
     @Execute
     @Permission("eternalcore.workbench")
     @DescriptionDocs(description = "Opens a workbench for you")
-    void executeSelf(@Context Player player) {
+    void executeSelf(@Sender Player player) {
         this.openWorkbench(player);
     }
 
     @Execute
     @Permission("eternalcore.workbench.other")
     @DescriptionDocs(description = "Opens a workbench for another player", arguments = "<player>")
-    void execute(@Context CommandSender commandSender, @Arg Player target) {
+    void execute(@Sender CommandSender commandSender, @Arg Player target) {
         this.openWorkbench(target);
 
         this.noticeService.create()

@@ -8,6 +8,7 @@ import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.World;
@@ -27,13 +28,13 @@ class ThunderCommand {
 
     @Execute
     @DescriptionDocs(description = "Sets weather to thunder in current world")
-    void thunder(@Context Viewer viewer, @Context World world) {
+    void thunder(@Sender Viewer viewer, @Context World world) {
         this.setThunder(viewer, world);
     }
 
     @Execute
     @DescriptionDocs(description = "Sets weather to thunder in specified world", arguments = "<world>")
-    void thunderWorld(@Context Viewer viewer, @Arg World world) {
+    void thunderWorld(@Sender Viewer viewer, @Arg World world) {
         this.setThunder(viewer, world);
     }
 

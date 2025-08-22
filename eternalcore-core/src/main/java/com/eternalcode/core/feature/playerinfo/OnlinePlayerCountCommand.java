@@ -5,10 +5,10 @@ import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.Server;
 
 @Command(name = "online")
@@ -28,7 +28,7 @@ class OnlinePlayerCountCommand {
 
     @Execute
     @DescriptionDocs(description = "Shows online players count")
-    void execute(@Context Viewer viewer) {
+    void execute(@Sender Viewer viewer) {
         long visiblePlayerCount = this.server.getOnlinePlayers().stream()
             .filter(player -> !this.vanishService.isVanished(player))
             .count();

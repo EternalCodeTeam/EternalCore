@@ -1,14 +1,13 @@
 package com.eternalcode.core.feature.container;
 
-
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,14 +24,14 @@ class EnderchestCommand {
     @Execute
     @Permission("eternalcore.enderchest")
     @DescriptionDocs(description = "Opens your enderchest")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         this.openEnderChest(player);
     }
 
     @Execute
     @Permission("eternalcore.enderchest.other")
     @DescriptionDocs(description = "Opens selected player's enderchest to him", arguments = "<player>")
-    void execute(@Context CommandSender commandSender, @Arg Player target) {
+    void execute(@Sender CommandSender commandSender, @Arg Player target) {
         this.openEnderChest(target);
 
         this.noticeService.create()

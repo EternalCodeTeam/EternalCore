@@ -7,7 +7,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.multification.notice.provider.NoticeProvider;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ class VanishCommand {
 
     @Execute
     @DescriptionDocs(description = "Toggle your vanish state")
-    void vanishSelf(@Context Player player) {
+    void vanishSelf(@Sender Player player) {
         boolean vanished = this.vanishService.toggleVanish(player);
         this.sendMessage(player, player, vanished ? VanishMessages::vanishEnabled : VanishMessages::vanishDisabled);
     }
@@ -35,7 +35,7 @@ class VanishCommand {
     @Execute
     @Permission(VanishPermissionConstant.VANISH_COMMAND_PERMISSION_OTHER)
     @DescriptionDocs(description = "Toggle vanish state for another player")
-    void vanishOther(@Context Player player, @Arg Player target) {
+    void vanishOther(@Sender Player player, @Arg Player target) {
         if (player.equals(target)) {
             this.vanishSelf(player);
             return;
@@ -55,4 +55,3 @@ class VanishCommand {
     }
 
 }
-
