@@ -59,7 +59,7 @@ class HomeCommand {
                     .toList());
 
             Optional<Home> mainHome = playerHomes.stream()
-                .filter(home -> home.getName().equals(this.homesSettings.defaultHomeName()))
+                .filter(home -> home.getName().equals(this.homesSettings.defaultName()))
                 .findFirst();
 
             if (mainHome.isPresent()) {

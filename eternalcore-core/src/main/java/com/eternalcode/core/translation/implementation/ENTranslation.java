@@ -1,5 +1,12 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
+import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.ENClearMessages;
+import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
+import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
@@ -26,11 +33,13 @@ import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.ENSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
+import com.eternalcode.core.feature.teleport.messages.ENTeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.ENTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
+import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
@@ -543,12 +552,18 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for '/near' command messages."})
     public ENNearMessages near = new ENNearMessages();
-  
+
     @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
     public ENMotdMessages motd = new ENMotdMessages();
 
+    @Comment({" ", "# This section is responsible for teleporting to offline players."})
+    public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();
+
     @Comment({" ", "# This section is responsible for information about players' game time."})
     public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
+
+    @Comment({" ", "# This section is responsible for the messages of the freeze feature."})
+    public ENFreezeMessages freeze = new ENFreezeMessages();
 
     @Comment({" ", "# This section is responsible for powertool messages."})
     public ENPowertoolMessages powertool = new ENPowertoolMessages();

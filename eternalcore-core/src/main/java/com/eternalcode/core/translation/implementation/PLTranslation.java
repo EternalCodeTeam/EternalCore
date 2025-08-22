@@ -1,5 +1,13 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
+import com.eternalcode.core.feature.near.messages.PLNearMessages;
+import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.PLClearMessages;
+import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
+import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
@@ -26,6 +34,7 @@ import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
+import com.eternalcode.core.feature.teleport.messages.PLTeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.PLTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
@@ -572,9 +581,15 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
     public PLMotdMessages motd = new PLMotdMessages();
 
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące teleportu do graczy offline"})
+    public PLTeleportOfflineMessages teleportToOfflinePlayer = new PLTeleportOfflineMessages();
+
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
     public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące powertoolów."})
     public PLPowertoolMessages powertool = new PLPowertoolMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące zamrażania graczy"})
+    public PLFreezeMessages freeze = new PLFreezeMessages();
 }

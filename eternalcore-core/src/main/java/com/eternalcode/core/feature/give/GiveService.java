@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 @Service
-class GiveService {
+public class GiveService {
 
     private final PluginConfiguration pluginConfiguration;
     private final NoticeService noticeService;
@@ -33,6 +33,15 @@ class GiveService {
             return false;
         }
 
+        if (amount <= 0) {
+            this.noticeService.create()
+                .placeholder("{AMOUNT}", String.valueOf(amount))
+                .notice(translation -> translation.argument().numberBiggerThanZero())
+                .sender(sender)
+                .send();
+            return false;
+        }
+
         PlayerInventory inventory = player.getInventory();
         GiveResult giveResult = this.processGive(new PlayerContents(inventory.getStorageContents(), inventory.getItemInOffHand()), new ItemStack(material, amount));
         Optional<ItemStack> rest = giveResult.rest();
@@ -48,10 +57,7 @@ class GiveService {
         inventory.setStorageContents(giveResult.contents().storage);
         inventory.setItemInOffHand(giveResult.contents().extraSlot);
 
-        if (rest.isPresent()) {
-            player.getWorld().dropItemNaturally(player.getLocation(), rest.get());
-        }
-
+        rest.ifPresent(itemStack -> player.getWorld().dropItemNaturally(player.getLocation(), itemStack));
         return true;
     }
 

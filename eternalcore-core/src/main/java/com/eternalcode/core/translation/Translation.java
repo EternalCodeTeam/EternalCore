@@ -1,5 +1,11 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
+import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.ClearMessages;
+import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.repair.messages.RepairMessages;
+import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
@@ -26,6 +32,7 @@ import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
+import com.eternalcode.core.feature.teleport.messages.TeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
@@ -241,8 +248,12 @@ public interface Translation {
     NearMessages near();
     // motd section
     MotdMessages motd();
+    // offlineplayer section
+    TeleportOfflineMessages teleportToOfflinePlayer();
     // playtime section
     PlaytimeMessages playtime();
+    // freeze section
+    FreezeMessages freeze();
     // powertool section
     PowertoolMessages powertool();
 }
