@@ -5,11 +5,11 @@ import static com.eternalcode.core.feature.powertool.PowertoolCommand.KEY;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.multification.shared.Formatter;
 import java.util.logging.Logger;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,14 +43,14 @@ public class PowertoolController implements Listener {
         .build();
 
     private final Plugin plugin;
-    private final Server server;
     private final Logger logger;
+    private final NoticeService noticeService;
 
     @Inject
-    PowertoolController(Plugin plugin) {
+    PowertoolController(Plugin plugin, NoticeService noticeService) {
         this.plugin = plugin;
-        this.server = this.plugin.getServer();
         this.logger = this.plugin.getLogger();
+        this.noticeService = noticeService;
     }
 
     @EventHandler
@@ -81,8 +81,16 @@ public class PowertoolController implements Listener {
                 Formatter formatter = EXECUTION_CONTEXT_PLACEHOLDERS.toFormatter(player);
 
                 String formattedCommand = formatter.format(command);
-                player.performCommand(formattedCommand);
-                this.logger.info("Player " + player.getName() + " used powertool command: " + formattedCommand);
-        }
+                if (player.performCommand(formattedCommand)) {
+                    this.logger.info("Player " + player.getName() + " used powertool command: /" + formattedCommand);
+                    return;
+                }
+                this.noticeService.create()
+                    .player(player.getUniqueId())
+                    .notice(translation -> translation.powertool().executionFailed())
+                    .placeholder("{COMMAND}", formattedCommand)
+                    .send();
+            }
     }
 }
+

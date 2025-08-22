@@ -26,4 +26,5 @@ public class PLPowertoolMessages extends OkaeriConfig implements PowertoolMessag
         + "aby przypisać ją do power toola.");
     public Notice invalidCommand = Notice.chat("<red>✘ <dark_red>Podana komenda jest nieprawidłowa! Upewnij się, że "
         + "komenda istnieje.");
+    public Notice executionFailed = Notice.chat("<red>✘ <dark_red>Wystąpił błąd podczas wykonywania komendy {COMMAND} przypisanej do power toola.");
 }

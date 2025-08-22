@@ -10,5 +10,6 @@ public interface PowertoolMessages {
     Notice emptyCommand();
     Notice noItemInMainHand();
     Notice invalidCommand();
+    Notice executionFailed();
 
 }
