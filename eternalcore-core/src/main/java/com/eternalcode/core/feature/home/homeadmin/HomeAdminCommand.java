@@ -45,6 +45,9 @@ class HomeAdminCommand {
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [position]")
     void setHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
+        optionalLocation.setWorld(sender.getWorld());
+        optionalLocation.setYaw(sender.getLocation().getYaw());
+        optionalLocation.setPitch(sender.getLocation().getPitch());
 
         Home home = playerHomeEntry.home();
         Player player = playerHomeEntry.player();
