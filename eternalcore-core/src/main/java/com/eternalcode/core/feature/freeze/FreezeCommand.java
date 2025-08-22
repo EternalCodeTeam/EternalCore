@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -35,19 +36,19 @@ public class FreezeCommand {
 
     @Execute
     @Permission("eternalcore.freeze.other")
-    public void freezeOther(@Context Player player, @Arg Player target, @Arg Duration duration) {
+    public void freezeOther(@Context CommandSender sender, @Arg Player target, @Arg Duration duration) {
         this.freezePlayer(target, duration);
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().frozenOther())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{DURATION}", DurationUtil.format(duration, true))
-            .player(player.getUniqueId())
+            .sender(sender)
             .send();
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().frozenByOther())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .placeholder("{DURATION}", DurationUtil.format(duration, true))
             .player(target.getUniqueId())
             .send();

@@ -7,6 +7,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command(name = "unfreeze")
@@ -41,12 +42,12 @@ public class UnfreezeCommand {
 
     @Execute
     @Permission("eternalcore.unfreeze.other")
-    public void unfreezeOther(@Context Player player, @Arg Player target) {
+    public void unfreezeOther(@Context CommandSender sender, @Arg Player target) {
         if (!target.isFrozen()) {
             this.noticeService.create()
                 .notice(translation -> translation.freeze().otherNotFrozen())
                 .placeholder("{PLAYER}", target.getName())
-                .player(player.getUniqueId())
+                .sender(sender)
                 .send();
             return;
         }
@@ -56,12 +57,12 @@ public class UnfreezeCommand {
         this.noticeService.create()
             .notice(translation -> translation.freeze().unfrozenOther())
             .placeholder("{PLAYER}", target.getName())
-            .player(player.getUniqueId())
+            .sender(sender)
             .send();
 
         this.noticeService.create()
             .notice(translation -> translation.freeze().unfrozenByOther())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER}", sender.getName())
             .player(target.getUniqueId())
             .send();
     }
