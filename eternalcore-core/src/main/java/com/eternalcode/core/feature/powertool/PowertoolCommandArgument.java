@@ -17,19 +17,13 @@ import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.command.SimpleCommandMap;
-import org.bukkit.command.TabCompleter;
 
 @LiteArgument(type = String.class, name = KEY)
 class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
@@ -47,7 +41,6 @@ class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
         this.server = server;
         this.commandCache = Caffeine.newBuilder()
             .maximumSize(1)
-            .expireAfterWrite(5, TimeUnit.MINUTES)
             .build();
     }
 
@@ -85,60 +78,11 @@ class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
 
         Map<String, Command> knownCommands = this.getAllKnownCommands();
 
-        if (parts.length <= 1) {
-            // Sugeruj główne komendy
-            String partial = parts.length == 1 ? parts[0] : "";
-            return knownCommands.keySet().stream()
-                .filter(cmd -> cmd.toLowerCase().startsWith(partial.toLowerCase()))
-                .collect(SuggestionResult.collector());
-        } else {
-            // Sugeruj subkomendy
-            String mainCommand = parts[0];
-            Command command = knownCommands.get(mainCommand);
-
-            if (command != null) {
-                List<String> subcommandSuggestions = getSubcommandSuggestions(
-                    command,
-                    invocation.sender(),
-                    Arrays.copyOfRange(parts, 1, parts.length)
-                );
-
-                String currentSubcommand = parts[parts.length - 1];
-                return subcommandSuggestions.stream()
-                    .filter(suggestion -> suggestion.toLowerCase().startsWith(currentSubcommand.toLowerCase()))
-                    .map(suggestion -> mainCommand + " " + String.join(" ", Arrays.copyOfRange(parts, 1, parts.length - 1)) +
-                        (parts.length > 2 ? " " : "") + suggestion)
-                    .collect(SuggestionResult.collector());
-            }
-        }
-
-        return SuggestionResult.empty();
-    }
-
-    private List<String> getSubcommandSuggestions(Command command, CommandSender sender, String[] args) {
-        try {
-            // Dla PluginCommand, spróbuj użyć TabCompleter
-            if (command instanceof PluginCommand pluginCommand) {
-                TabCompleter tabCompleter = pluginCommand.getTabCompleter();
-                if (tabCompleter != null) {
-                    List<String> completions = tabCompleter.onTabComplete(sender, command, command.getName(), args);
-                    if (completions != null && !completions.isEmpty()) {
-                        return completions;
-                    }
-                }
-            }
-
-            // Fallback do domyślnej implementacji tab completion
-            List<String> completions = command.tabComplete(sender, command.getName(), args);
-            if (completions != null) {
-                return completions;
-            }
-        } catch (Exception e) {
-            // Ignoruj błędy tab completion
-        }
-
-        // Zwróć puste sugestie jeśli nic nie działa
-        return List.of();
+        // Sugeruj główne komendy
+        String partial = parts.length == 1 ? parts[0] : "";
+        return knownCommands.keySet().stream()
+            .filter(cmd -> cmd.toLowerCase().startsWith(partial.toLowerCase()))
+            .collect(SuggestionResult.collector());
     }
 
     private Map<String, Command> getAllKnownCommands() {
@@ -158,30 +102,12 @@ class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
                 @SuppressWarnings("unchecked")
                 Map<String, Command> knownCommands = (Map<String, Command>) knownCommandsField.get(simpleMap);
 
-                return knownCommands.entrySet().stream()
-                    .filter(entry -> !isInternalCommand(entry.getKey()))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                return knownCommands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             }
         }
         catch (IllegalAccessException | NoSuchFieldException exception) {
             exception.printStackTrace();
         }
-        throw new IllegalStateException("CommandMap is not instance of SimpleCommandMap");
-    }
-
-    private boolean isInternalCommand(String commandName) {
-        // Odfiltruj komendy systemowe/wewnętrzne
-        Set<String> internalCommands = Set.of(
-            "bukkit", "minecraft", "help", "?", "ver", "version",
-            "plugins", "pl", "reload", "rl"
-        );
-        return internalCommands.contains(commandName.toLowerCase());
-    }
-
-    /**
-     * Czyści cache komend - użyteczne po przeładowaniu pluginów
-     */
-    public void clearCache() {
-        commandCache.invalidateAll();
+        throw new IllegalStateException("CommandMap is not instance of SimpleCommandMap"); // should never happen
     }
 }
