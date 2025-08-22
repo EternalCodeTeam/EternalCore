@@ -47,7 +47,7 @@ class SetHomeCommand {
     @Execute
     @DescriptionDocs(description = "Set home location")
     void execute(@Context User user, @Context Player player) {
-        this.setOrOverrideHome(user, player, this.homesSettings.defaultHomeName());
+        this.setOrOverrideHome(user, player, this.homesSettings.defaultName());
     }
 
     private void setOrOverrideHome(User user, Player player, String homeName) {
