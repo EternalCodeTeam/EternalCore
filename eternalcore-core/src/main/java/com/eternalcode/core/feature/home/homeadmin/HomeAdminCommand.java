@@ -43,8 +43,8 @@ class HomeAdminCommand {
 
     @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [position]")
-    void setHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Position> position) {
-        Position optionalPosition = position.orElseGet(() -> PositionAdapter.convert(sender.getLocation()));
+    void setHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
+        Location optionalLocation = location.orElse(sender.getLocation());
 
         Home home = playerHomeEntry.home();
         Player player = playerHomeEntry.player();
@@ -53,8 +53,10 @@ class HomeAdminCommand {
         boolean hasHome = this.homeManager.hasHome(uniqueId, home);
         String name = home.getName();
 
+        Position position = PositionAdapter.convert(optionalLocation);
+
         if (hasHome) {
-            this.homeManager.createHome(uniqueId, name, optionalPosition);
+            this.homeManager.createHome(uniqueId, name, position);
             this.noticeService.create()
                 .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
                 .placeholder("{HOME}", name)
@@ -65,7 +67,7 @@ class HomeAdminCommand {
             return;
         }
 
-        this.homeManager.createHome(uniqueId, name, optionalPosition);
+        this.homeManager.createHome(uniqueId, name, position);
         this.noticeService.create()
             .notice(translate -> translate.home().createAsAdmin())
             .placeholder("{HOME}", name)
