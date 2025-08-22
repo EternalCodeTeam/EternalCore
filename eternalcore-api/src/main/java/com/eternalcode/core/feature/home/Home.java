@@ -1,11 +1,12 @@
 package com.eternalcode.core.feature.home;
 
+import com.eternalcode.commons.bukkit.position.Position;
+
 import java.util.UUID;
-import org.bukkit.Location;
 
 public interface Home {
 
-    Location getLocation();
+    Position getPosition();
 
     String getName();
 

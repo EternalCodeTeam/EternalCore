@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.home.HomesSettings;
@@ -54,7 +55,7 @@ class SetHomeCommand {
         UUID uniqueId = user.getUniqueId();
 
         if (this.homeService.hasHome(uniqueId, homeName)) {
-            this.homeService.createHome(uniqueId, homeName, player.getLocation());
+            this.homeService.createHome(uniqueId, homeName, PositionAdapter.convert(player.getLocation()));
 
             this.noticeService.create()
                 .user(user)
@@ -84,7 +85,7 @@ class SetHomeCommand {
             return;
         }
 
-        this.homeService.createHome(uniqueId, homeName, player.getLocation());
+        this.homeService.createHome(uniqueId, homeName, PositionAdapter.convert(player.getLocation()));
         this.noticeService.create()
             .user(user)
             .notice(translation -> translation.home().create())

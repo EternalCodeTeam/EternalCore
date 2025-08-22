@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import com.eternalcode.commons.bukkit.position.Position;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +25,7 @@ public interface HomeService {
     void deleteHome(UUID playerUniqueId, String name);
 
     @Nullable
-    Home createHome(UUID playerUniqueId, String name, Location location);
+    Home createHome(UUID playerUniqueId, String name, Position position);
 
     int getHomeLimit(Player player);
 }

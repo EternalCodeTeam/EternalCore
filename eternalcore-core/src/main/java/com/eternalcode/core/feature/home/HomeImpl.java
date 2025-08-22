@@ -2,27 +2,28 @@ package com.eternalcode.core.feature.home;
 
 import java.util.Objects;
 import java.util.UUID;
-import org.bukkit.Location;
+
+import com.eternalcode.commons.bukkit.position.Position;
 
 public class HomeImpl implements Home {
 
     private final UUID uuid;
     private final UUID owner;
     private final String name;
-    private final Location location;
+    private final Position position;
 
-    public HomeImpl(UUID uuid, UUID owner, String name, Location location) {
+    public HomeImpl(UUID uuid, UUID owner, String name, Position position) {
         this.uuid = uuid;
         this.owner = owner;
         this.name = name;
-        this.location = location;
+        this.position = position;
     }
 
-    public HomeImpl(UUID owner, String name, Location location) {
+    public HomeImpl(UUID owner, String name, Position position) {
         this.owner = owner;
         this.uuid = UUID.randomUUID();
         this.name = name;
-        this.location = location;
+        this.position = position;
     }
 
     @Override
@@ -41,8 +42,8 @@ public class HomeImpl implements Home {
     }
 
     @Override
-    public Location getLocation() {
-        return this.location;
+    public Position getPosition() {
+        return this.position;
     }
 
     @Override
