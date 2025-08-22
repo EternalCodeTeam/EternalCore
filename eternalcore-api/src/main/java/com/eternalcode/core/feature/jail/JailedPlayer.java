@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.commons.bukkit.position.Position;
-import org.bukkit.Location;
 
 import java.time.Duration;
 import java.time.Instant;

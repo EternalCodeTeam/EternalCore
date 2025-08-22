@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.database.persister.PositionPersister;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
@@ -15,7 +16,6 @@ class PrisonerTable {
 
     @DatabaseField(columnName = "id", id = true)
     private UUID uuid;
-
 
     @DatabaseField(columnName = "detained_at", dataType = DataType.SERIALIZABLE)
     private Instant detainedAt;
@@ -45,7 +45,7 @@ class PrisonerTable {
     }
 
     JailedPlayer toPrisoner() {
-        return new JailedPlayer(this.uuid, this.detainedAt, this.duration, this.detainedBy, this.lastPosition);
+        return new JailedPlayer(this.uuid, this.detainedAt, this.duration, this.detainedBy, lastPosition);
     }
 
     static PrisonerTable from(JailedPlayer jailedPlayer) {

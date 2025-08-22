@@ -1,6 +1,7 @@
 package com.eternalcode.core.database.persister;
 
 import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.j256.ormlite.field.FieldType;
 import com.j256.ormlite.field.SqlType;
 import com.j256.ormlite.field.types.BaseDataType;
@@ -22,8 +23,11 @@ public class PositionPersister extends BaseDataType {
             return null;
         }
 
-        Position position = (Position) javaObject;
-        return position.world() + "/" + position.x() + "/" + position.y() + "/" + position.z() + "/" + position.yaw() + "/" + position.pitch();
+        if (!(javaObject instanceof Position position)) {
+            throw new IllegalArgumentException("Invalid object type: " + javaObject.getClass().getName());
+        }
+
+        return position.toString();
     }
 
     @Override

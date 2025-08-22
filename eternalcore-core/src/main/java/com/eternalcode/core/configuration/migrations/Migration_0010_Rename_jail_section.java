@@ -4,11 +4,11 @@ import static eu.okaeri.configs.migrate.ConfigMigrationDsl.move;
 
 import eu.okaeri.configs.migrate.builtin.NamedMigration;
 
-public class Migration_0010_Move_jail_to_dedicated_section extends NamedMigration {
+public class Migration_0010_Rename_jail_section extends NamedMigration {
 
-    Migration_0010_Move_jail_to_dedicated_section() {
+    Migration_0010_Rename_jail_section() {
         super(
-            "Move jail to dedicated section",
+            "Rename jail section",
 
             move("jailSection.jailLocationSet", "jail.locationSet"),
             move("jailSection.jailLocationRemove", "jail.locationRemove"),
