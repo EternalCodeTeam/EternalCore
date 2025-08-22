@@ -52,13 +52,13 @@ public class HomeTeleportService {
             ? Duration.ZERO
             : this.homesSettings.teleportTimeToHomes();
 
-        Position playerLocation = PositionAdapter.convert(player.getLocation());
-        Position homeLocation = PositionAdapter.convert(pre.getLocation());
+        Position playerPosition = PositionAdapter.convert(player.getLocation());
+        Position homeLocation = pre.getPosition();
 
         HomeTeleportEvent post = new HomeTeleportEvent(uniqueId, home);
         Teleport teleport = this.teleportTaskService.createTeleport(
             uniqueId,
-            playerLocation,
+            playerPosition,
             homeLocation,
             teleportTime
         );

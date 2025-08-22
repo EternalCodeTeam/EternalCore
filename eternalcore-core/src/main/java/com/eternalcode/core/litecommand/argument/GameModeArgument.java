@@ -48,5 +48,4 @@ class GameModeArgument extends AbstractViewerArgument<GameMode> {
             .stream()
             .collect(SuggestionResult.collector());
     }
-
 }

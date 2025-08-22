@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home.event;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.feature.home.Home;
 import java.util.UUID;
 import org.bukkit.Location;
@@ -16,7 +17,7 @@ public class PreHomeTeleportEvent extends Event implements Cancellable {
 
     private final UUID playerUniqueId;
     private final Home home;
-    private Location location;
+    private Position position;
     private boolean cancelled;
 
     public PreHomeTeleportEvent(UUID playerUniqueId, Home home) {
@@ -24,19 +25,19 @@ public class PreHomeTeleportEvent extends Event implements Cancellable {
 
         this.playerUniqueId = playerUniqueId;
         this.home = home;
-        this.location = home.getLocation();
+        this.position = home.getPosition();
     }
 
     public Home getHome() {
         return this.home;
     }
 
-    public Location getLocation() {
-        return this.location;
+    public Position getPosition() {
+        return this.position;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
 

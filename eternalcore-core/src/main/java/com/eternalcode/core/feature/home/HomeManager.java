@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.home;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.database.HomeRepository;
 import com.eternalcode.core.feature.home.event.HomeCreateEvent;
@@ -46,33 +47,33 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public Home createHome(UUID playerUniqueId, String name, Location location) {
+    public Home createHome(UUID playerUniqueId, String name, Position position) {
         Map<String, Home> homes = this.userHomes.computeIfAbsent(playerUniqueId, k -> new HashMap<>());
 
         Home home = homes.get(name);
 
         if (home != null) {
-            HomeOverrideEvent event = this.eventCaller.callEvent(new HomeOverrideEvent(playerUniqueId, name, playerUniqueId, location));
+            HomeOverrideEvent event = this.eventCaller.callEvent(new HomeOverrideEvent(playerUniqueId, name, playerUniqueId, position));
 
             if (event.isCancelled()) {
                 return home;
             }
 
-            Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getLocation());
+            Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getPosition());
             homes.put(event.getHomeName(), homeInEvent);
             this.repository.deleteHome(playerUniqueId, name).thenAccept(completable -> this.repository.saveHome(homeInEvent));
 
             return homeInEvent;
         }
 
-        HomeCreateEvent event = new HomeCreateEvent(playerUniqueId, name, playerUniqueId, location);
+        HomeCreateEvent event = new HomeCreateEvent(playerUniqueId, name, playerUniqueId, position);
         this.eventCaller.callEvent(event);
 
         if (event.isCancelled()) {
             return null;
         }
 
-        Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getLocation());
+        Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getPosition());
         homes.put(event.getHomeName(), homeInEvent);
         this.repository.saveHome(homeInEvent);
 

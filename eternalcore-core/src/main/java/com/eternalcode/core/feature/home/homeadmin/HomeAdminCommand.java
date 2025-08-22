@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.home.homeadmin;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
@@ -40,9 +42,12 @@ class HomeAdminCommand {
     }
 
     @Execute(name = "sethome")
-    @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
+    @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [position]")
     void setHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
+        optionalLocation.setWorld(sender.getWorld());
+        optionalLocation.setYaw(sender.getLocation().getYaw());
+        optionalLocation.setPitch(sender.getLocation().getPitch());
 
         Home home = playerHomeEntry.home();
         Player player = playerHomeEntry.player();
@@ -51,8 +56,10 @@ class HomeAdminCommand {
         boolean hasHome = this.homeManager.hasHome(uniqueId, home);
         String name = home.getName();
 
+        Position position = PositionAdapter.convert(optionalLocation);
+
         if (hasHome) {
-            this.homeManager.createHome(uniqueId, name, optionalLocation);
+            this.homeManager.createHome(uniqueId, name, position);
             this.noticeService.create()
                 .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
                 .placeholder("{HOME}", name)
@@ -63,7 +70,7 @@ class HomeAdminCommand {
             return;
         }
 
-        this.homeManager.createHome(uniqueId, name, optionalLocation);
+        this.homeManager.createHome(uniqueId, name, position);
         this.noticeService.create()
             .notice(translate -> translate.home().createAsAdmin())
             .placeholder("{HOME}", name)
@@ -122,7 +129,8 @@ class HomeAdminCommand {
             return;
         }
 
-        PaperLib.teleportAsync(player, homeOption.get().getLocation());
+        Location homeLocation = PositionAdapter.convert(homeOption.get().getPosition());
+        PaperLib.teleportAsync(player, homeLocation);
     }
 
     @Execute(name = "list")
@@ -140,7 +148,7 @@ class HomeAdminCommand {
 
     private String formattedListUserHomes(UUID uniqueId) {
         return this.homeManager.getHomes(uniqueId).stream()
-            .map(home -> home.getName())
+            .map(Home::getName)
             .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
 }

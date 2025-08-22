@@ -26,7 +26,7 @@ public class ApiHomeCommand {
     @Execute(name = "teleport")
     void executeTeleport(@Context Player player, @Arg("homeName") String homeName) {
         Location location = this.homeService.getHome(player.getUniqueId(), homeName)
-            .map(home -> home.getLocation())
+            .map(home -> home.getPosition())
             .orElse(null);
 
         if (location == null) {

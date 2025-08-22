@@ -45,13 +45,20 @@ class JailController implements Listener {
         }
 
         String command = event.getMessage().split(" ")[0].substring(1);
+        Set<String> restrictedCommands = this.jailSettings.restrictedCommands();
+        JailCommandRestrictionType restrictionType = this.jailSettings.restrictionType();
 
-        if (this.jailSettings.allowedCommands().contains(command)) {
+        boolean shouldBlockCommand = switch (restrictionType) {
+            case WHITELIST -> !restrictedCommands.contains(command);
+            case BLACKLIST -> restrictedCommands.contains(command);
+        };
+
+        if (!shouldBlockCommand) {
             return;
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailCannotUseCommand())
+            .notice(translation -> translation.jail().cannotUseCommand())
             .player(player.getUniqueId())
             .send();
 
