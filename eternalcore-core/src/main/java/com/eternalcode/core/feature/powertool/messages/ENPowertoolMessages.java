@@ -23,4 +23,5 @@ public class ENPowertoolMessages extends OkaeriConfig implements PowertoolMessag
         + "a command/remove a command.");
     public Notice emptyCommand = Notice.chat("<red>✘ <dark_red>The command cannot be empty! Please provide a valid "
         + "command to assign to the power tool.");
+    public Notice invalidCommand = Notice.chat("<red>✘ <dark_red>The provided command is invalid! Make sure the command exists.");
 }

@@ -9,5 +9,6 @@ public interface PowertoolMessages {
     Notice notAssigned();
     Notice emptyCommand();
     Notice noItemInMainHand();
+    Notice invalidCommand();
 
 }

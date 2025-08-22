@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.powertool;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import dev.rollczi.litecommands.annotations.argument.Key;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -66,7 +67,7 @@ public class PowertoolCommand {
     }
 
     @Execute
-    void assign(@Sender Player player, @Join String command) {
+    void assign(@Sender Player player, @Join @Key(PowertoolCommandArgument.KEY) String command) {
         if (command.trim().isEmpty()) {
             this.noticeService.create()
                 .player(player.getUniqueId())

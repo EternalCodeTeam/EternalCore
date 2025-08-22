@@ -7,7 +7,9 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.multification.shared.Formatter;
+import java.util.logging.Logger;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,10 +43,14 @@ public class PowertoolController implements Listener {
         .build();
 
     private final Plugin plugin;
+    private final Server server;
+    private final Logger logger;
 
     @Inject
     PowertoolController(Plugin plugin) {
         this.plugin = plugin;
+        this.server = this.plugin.getServer();
+        this.logger = this.plugin.getLogger();
     }
 
     @EventHandler
@@ -74,7 +80,9 @@ public class PowertoolController implements Listener {
                 }
                 Formatter formatter = EXECUTION_CONTEXT_PLACEHOLDERS.toFormatter(player);
 
-                player.performCommand(formatter.format(command));
+                String formattedCommand = formatter.format(command);
+                player.performCommand(formattedCommand);
+                this.logger.info("Player " + player.getName() + " used powertool command: " + formattedCommand);
         }
     }
 }
