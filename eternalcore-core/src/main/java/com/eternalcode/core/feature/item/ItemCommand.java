@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
-import com.eternalcode.core.feature.give.GiveArgument;
+import com.eternalcode.core.litecommand.argument.StackAmountArgument;
 import com.eternalcode.core.feature.give.GiveService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -39,7 +39,7 @@ public class ItemCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives an item with a custom amount", arguments = "<item> [amount]")
-    void execute(@Context Player player, @Arg Material material, @OptionalArg(GiveArgument.KEY) int amount) {
+    void execute(@Context Player player, @Arg Material material, @OptionalArg(StackAmountArgument.KEY) int amount) {
         boolean isSuccess = this.giveService.giveItem(player, player, material, amount);
 
         if (isSuccess) {
