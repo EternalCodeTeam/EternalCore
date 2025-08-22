@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
@@ -577,4 +578,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
     public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące zamrażania graczy"})
+    public PLFreezeMessages freeze = new PLFreezeMessages();
 }
