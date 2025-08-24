@@ -17,7 +17,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
-@Command(name = "powertool", aliases = {"pt"})
+@Command(name = "powertool")
 @Permission("eternalcore.powertool.assign")
 public class PowertoolCommand {
 
