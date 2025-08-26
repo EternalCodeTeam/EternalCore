@@ -6,7 +6,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.paper.PaperContainer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.command.CommandSender;
@@ -25,14 +25,14 @@ class SmithingTableCommand {
     @Execute
     @Permission("eternalcore.smithingtable")
     @DescriptionDocs(description = "Opens a smithing table for you")
-    void executeSelf(@Context Player player) {
+    void executeSelf(@Sender Player player) {
         this.openSmithingTable(player);
     }
 
     @Execute
     @Permission("eternalcore.smithingtable.other")
     @DescriptionDocs(description = "Opens a smithing table for another player", arguments = "<player>")
-    void execute(@Context CommandSender commandSender, @Arg Player target) {
+    void execute(@Sender CommandSender commandSender, @Arg Player target) {
         this.openSmithingTable(target);
 
         this.noticeService.create()

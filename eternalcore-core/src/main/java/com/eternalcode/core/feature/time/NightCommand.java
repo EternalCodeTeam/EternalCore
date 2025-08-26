@@ -6,10 +6,11 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import dev.rollczi.litecommands.annotations.command.Command;
 import org.bukkit.World;
 
 @Command(name = "night")
@@ -27,13 +28,13 @@ class NightCommand {
 
     @Execute
     @DescriptionDocs(description = "Sets time to night in current world")
-    void night(@Context Viewer viewer, @Context World world) {
+    void night(@Sender Viewer viewer, @Context World world) {
         this.setNight(viewer, world);
     }
 
     @Execute
     @DescriptionDocs(description = "Sets time to night in specified world", arguments = "<world>")
-    void nightWorld(@Context Viewer viewer, @Arg World world) {
+    void nightWorld(@Sender Viewer viewer, @Arg World world) {
         this.setNight(viewer, world);
     }
 

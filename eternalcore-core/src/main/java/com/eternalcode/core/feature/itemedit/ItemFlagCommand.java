@@ -7,7 +7,7 @@ import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.multification.shared.Formatter;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ class ItemFlagCommand {
 
     @Execute
     @DescriptionDocs(description = "Adds or removes item flag from item in hand", arguments = "<item-flag>")
-    void execute(@Context Player player, @Arg ItemFlag flag) {
+    void execute(@Sender Player player, @Arg ItemFlag flag) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
 
@@ -55,7 +55,7 @@ class ItemFlagCommand {
 
     @Execute(name = "clear")
     @DescriptionDocs(description = "Clears all item flags from item in hand")
-    void clear(@Context Player player) {
+    void clear(@Sender Player player) {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
 

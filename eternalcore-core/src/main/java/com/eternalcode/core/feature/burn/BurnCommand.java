@@ -5,12 +5,11 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.entity.Player;
-
 import java.util.Optional;
+import org.bukkit.entity.Player;
 
 @Command(name = "burn", aliases = {"ignite"})
 @Permission("eternalcore.burn")
@@ -26,14 +25,14 @@ public class BurnCommand {
 
     @Execute
     @DescriptionDocs(description = "Burns yourself for a specified amount of ticks.", arguments = "[ticks]")
-    void self(@Context Player sender, @Arg Optional<Integer> ticks) {
+    void self(@Sender Player sender, @Arg Optional<Integer> ticks) {
         this.burn(sender, sender, ticks);
     }
 
     @Execute
     @Permission("eternalcore.burn.other")
     @DescriptionDocs(description = "Burns target for a specified amount of ticks.", arguments = "<target> [ticks]")
-    void other(@Context Player sender, @Arg Player target, @Arg Optional<Integer> ticks) {
+    void other(@Sender Player sender, @Arg Player target, @Arg Optional<Integer> ticks) {
         this.burn(sender, target, ticks);
     }
 
