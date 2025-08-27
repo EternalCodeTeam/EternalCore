@@ -21,7 +21,7 @@ class PhantomSpawnController implements Listener {
     private static final String NO_INSOMNIA_PERMISSION = "eternalcore.sleep.noinsomnia";
 
     @Inject
-    public PhantomSpawnController(Plugin plugin) {
+    PhantomSpawnController(Plugin plugin) {
         new PhantomEventInitializer(plugin).initialize();
     }
 
