@@ -8,12 +8,11 @@ import com.eternalcode.core.notice.EternalCoreBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.viewer.Viewer;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.argument.resolver.ArgumentResolver;
 import dev.rollczi.litecommands.invocation.Invocation;
+import dev.rollczi.litecommands.shared.Lazy;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import java.lang.reflect.Field;
@@ -29,19 +28,16 @@ import org.bukkit.command.SimpleCommandMap;
 class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
 
     public static final String KEY = "powertool_command";
-    private static final String CACHE_KEY = "commands";
 
     private final NoticeService noticeService;
     private final Server server;
-    private final Cache<String, Map<String, Command>> commandCache;
+    private final Lazy<Map<String, Command>> knownCommands;
 
     @Inject
     PowertoolCommandArgument(NoticeService noticeService, Server server) {
         this.noticeService = noticeService;
         this.server = server;
-        this.commandCache = Caffeine.newBuilder()
-            .maximumSize(1)
-            .build();
+        this.knownCommands = new Lazy<>(this::fetchKnownCommands);
     }
 
     @Override
@@ -53,9 +49,8 @@ class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
         String[] parts = argument.trim().split("\\s+");
         String mainCommand = parts[0];
 
-        Map<String, Command> knownCommands = this.getAllKnownCommands();
+        Map<String, Command> knownCommands = this.knownCommands.get();
 
-        // Sprawdź czy główna komenda istnieje
         if (!knownCommands.containsKey(mainCommand)) {
             EternalCoreBroadcast<Viewer, Translation, ?> invalidCommandNotice = this.noticeService.create()
                 .sender(invocation.sender())
@@ -73,20 +68,8 @@ class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
         Argument<String> argument,
         SuggestionContext context
     ) {
-        String currentInput = context.getCurrent().multilevel();
-        String[] parts = currentInput.split("\\s+");
-
-        Map<String, Command> knownCommands = this.getAllKnownCommands();
-
-        // Sugeruj główne komendy
-        String partial = parts.length == 1 ? parts[0] : "";
-        return knownCommands.keySet().stream()
-            .filter(cmd -> cmd.toLowerCase().startsWith(partial.toLowerCase()))
-            .collect(SuggestionResult.collector());
-    }
-
-    private Map<String, Command> getAllKnownCommands() {
-        return commandCache.get(CACHE_KEY, key -> this.fetchKnownCommands());
+        Map<String, Command> knownCommands = this.knownCommands.get();
+        return SuggestionResult.of(knownCommands.keySet());
     }
 
     private Map<String, Command> fetchKnownCommands() {
