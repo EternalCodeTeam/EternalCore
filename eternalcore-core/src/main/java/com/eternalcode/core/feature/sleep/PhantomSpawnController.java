@@ -16,7 +16,7 @@ import org.bukkit.plugin.Plugin;
     permission = "eternalcore.sleep.noinsomnia",
     description = "Allows the player holding the permission to not spawn phantoms when not sleeping for 3+ nights"
 )
-public class PhantomSpawnController implements Listener {
+class PhantomSpawnController implements Listener {
 
     private static final String NO_INSOMNIA_PERMISSION = "eternalcore.sleep.noinsomnia";
 
