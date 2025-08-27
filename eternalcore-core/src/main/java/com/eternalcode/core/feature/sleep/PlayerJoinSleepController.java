@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
     permission = "eternalcore.sleep.ignore",
     description = "Allows the player holding the permission to be ignored while sleeping in the night"
 )
-public class PlayerJoinSleepController implements Listener {
+class PlayerJoinSleepController implements Listener {
 
     private static final String SLEEP_IGNORE_PERMISSION = "eternalcore.sleep.ignore";
 
