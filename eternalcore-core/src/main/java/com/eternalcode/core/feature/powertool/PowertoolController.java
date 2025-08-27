@@ -70,7 +70,7 @@ public class PowertoolController implements Listener {
 
         NamespacedKey key = NamespacedKey.fromString(KEY, this.plugin);
 
-            String command = dataContainer.get(key, PersistentDataType.STRING);
+        String command = dataContainer.get(key, PersistentDataType.STRING);
             if (command != null && !command.trim().isEmpty()) {
                 Player player = event.getPlayer();
                 if (!player.hasPermission(POWERTOOL_USE_PERMISSION)) {
