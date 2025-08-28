@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ class AutoMessageCommand {
 
     @Execute
     @DescriptionDocs(description = "Toggles the display of automatic messages.")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         this.autoMessageService.switchReceiving(player.getUniqueId()).thenAccept(receiving -> {
             if (receiving) {
                 this.noticeService.player(player.getUniqueId(), messages -> messages.autoMessage().enabled());

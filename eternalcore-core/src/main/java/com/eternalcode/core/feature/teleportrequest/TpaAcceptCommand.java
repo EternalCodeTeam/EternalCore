@@ -7,7 +7,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.List;
@@ -36,7 +36,7 @@ class TpaAcceptCommand {
 
     @Execute
     @DescriptionDocs(description = "Accept teleport request", arguments = "<player>")
-    void executeTarget(@Context Player player, @Arg(RequesterArgument.KEY) Player target) {
+    void executeTarget(@Sender Player player, @Arg(RequesterArgument.KEY) Player target) {
         this.teleportTaskService.createTeleport(
             target.getUniqueId(),
             PositionAdapter.convert(target.getLocation()),
@@ -63,7 +63,7 @@ class TpaAcceptCommand {
 
     @Execute(name = "-all", aliases = "*")
     @DescriptionDocs(description = "Accept all teleport requests")
-    void executeAll(@Context Player player) {
+    void executeAll(@Sender Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {
