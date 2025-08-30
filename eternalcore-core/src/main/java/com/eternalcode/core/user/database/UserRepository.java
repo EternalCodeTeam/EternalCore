@@ -4,10 +4,11 @@ import com.eternalcode.core.user.User;
 import java.util.Collection;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import org.jetbrains.annotations.Nullable;
 
 public interface UserRepository {
 
-    CompletableFuture<User> getUser(UUID uniqueId);
+    @Nullable CompletableFuture<User> getUser(UUID uniqueId);
 
     CompletableFuture<Void> saveUser(User player);
 
