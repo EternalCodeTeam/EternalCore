@@ -1,6 +1,8 @@
 package com.eternalcode.core.user;
 
 import com.eternalcode.core.test.MockServer;
+import com.eternalcode.core.test.MockUserRepository;
+import com.eternalcode.core.test.MockUserRepositorySettings;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,8 +26,11 @@ class PrepareUserControllerTest {
 
     @BeforeEach
     void setUp() {
+        MockUserRepositorySettings mockUserRepositorySettings = new MockUserRepositorySettings();
+        MockUserRepository mockUserRepository = new MockUserRepository();
+
         this.mockServer = new MockServer();
-        this.userManager = new UserManager();
+        this.userManager = new UserManager(mockUserRepository, mockUserRepositorySettings);
 
         PrepareUserController controller = new PrepareUserController(this.userManager, this.mockServer.getServer());
 

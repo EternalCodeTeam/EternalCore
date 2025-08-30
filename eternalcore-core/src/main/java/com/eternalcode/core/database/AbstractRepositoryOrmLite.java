@@ -50,6 +50,10 @@ public abstract class AbstractRepositoryOrmLite {
         return this.action(type, Dao::queryForAll);
     }
 
+    protected <T> CompletableFuture<List<T>> selectBatch(Class<T> type, int offset, int limit) {
+        return this.action(type, dao -> dao.queryBuilder().offset((long) offset).limit((long) limit).query());
+    }
+
     protected <T, ID, R> CompletableFuture<R> action(
         Class<T> type,
         ThrowingFunction<Dao<T, ID>, R, SQLException> action

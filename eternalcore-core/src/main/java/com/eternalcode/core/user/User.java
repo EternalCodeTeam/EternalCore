@@ -12,7 +12,7 @@ public class User implements Viewer {
     private final String name;
     private final UUID uuid;
 
-    User(UUID uuid, String name) {
+    public User(UUID uuid, String name) {
         this.name = name;
         this.uuid = uuid;
     }
