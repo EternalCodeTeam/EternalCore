@@ -21,7 +21,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
-class BatchTest extends IntegrationTestSpec {
+class UserBatchFetchTest extends IntegrationTestSpec {
 
     @Container
     private static final MySQLContainer<?> container = new MySQLContainer<>(DockerImageName.parse("mysql:8.0"))
@@ -58,7 +58,7 @@ class BatchTest extends IntegrationTestSpec {
 
         userRepository.getUser(randomUUID).thenAccept(user -> {
             Assertions.assertNotNull(user);
-            Assertions.assertEquals("test1", user.getName());
+            Assertions.assertEquals("test1", user.get().getName());
         });
 
         databaseManager.close();

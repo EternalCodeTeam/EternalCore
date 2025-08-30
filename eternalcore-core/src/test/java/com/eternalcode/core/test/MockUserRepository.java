@@ -3,12 +3,13 @@ package com.eternalcode.core.test;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.database.UserRepository;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class MockUserRepository implements UserRepository {
     @Override
-    public CompletableFuture<User> getUser(UUID uniqueId) {
+    public CompletableFuture<Optional<User>> getUser(UUID uniqueId) {
         return CompletableFuture.completedFuture(null);
     }
 
@@ -18,7 +19,7 @@ public class MockUserRepository implements UserRepository {
     }
 
     @Override
-    public CompletableFuture<User> updateUser(UUID uniqueId, User player) {
+    public CompletableFuture<User> updateUser(User player) {
         return CompletableFuture.completedFuture(player);
     }
 

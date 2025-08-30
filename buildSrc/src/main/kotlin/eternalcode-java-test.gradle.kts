@@ -10,9 +10,9 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    testImplementation("org.testcontainers:junit-jupiter:1.21.3")
-    testImplementation("org.testcontainers:mysql:1.21.3")
-    testImplementation("mysql:mysql-connector-java:8.0.33")
+    testImplementation("org.testcontainers:junit-jupiter:${Versions.TEST_CONTAINERS}")
+    testImplementation("org.testcontainers:mysql:${Versions.TEST_CONTAINERS}")
+    testImplementation("mysql:mysql-connector-java:${Versions.MYSQL_CONNECTOR}")
     testImplementation("org.mockito:mockito-core:${Versions.MOCKITO_CORE}")
     testImplementation("net.kyori:adventure-platform-facet:${Versions.ADVENTURE_PLATFORM}")
     testImplementation("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")

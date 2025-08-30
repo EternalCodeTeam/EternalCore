@@ -1,6 +1,5 @@
 package com.eternalcode.core.user;
 
-import com.eternalcode.commons.algorithm.BatchProcessor;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.database.UserRepository;
@@ -11,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 @Service
@@ -18,6 +18,7 @@ public class UserManager {
 
     private final Cache<UUID, User> usersByUUID;
     private final Cache<String, User> usersByName;
+    private boolean fetched = false;
 
     private final UserRepository userRepository;
     private final UserRepositorySettings userRepositorySettings;
@@ -30,7 +31,7 @@ public class UserManager {
 
         this.userRepository = userRepository;
 
-        fetchUsers();
+        fetchUsers().thenRun(() -> this.fetched = true);
     }
 
     public Optional<User> getUser(UUID uuid) {
@@ -38,34 +39,37 @@ public class UserManager {
     }
 
     public Optional<User> getUser(String name) {
-        return Optional.ofNullable(this.usersByName.getIfPresent(name));
+        return Optional.ofNullable(this.usersByName.getIfPresent(name.toLowerCase()));
     }
 
     public User getOrCreate(UUID uuid, String name) {
+        if (!this.fetched) {
+            throw new IllegalStateException("Users have not been fetched from the database yet!");
+        }
+
         User userByUUID = this.usersByUUID.getIfPresent(uuid);
 
         if (userByUUID != null) {
             return userByUUID;
         }
 
-        User userByName = this.usersByName.getIfPresent(name);
+        User userByName = this.usersByName.getIfPresent(name.toLowerCase());
 
         if (userByName != null) {
             return userByName;
         }
 
-        this.userRepository.saveUser(new User(uuid, name));
         return this.create(uuid, name);
     }
 
     public User create(UUID uuid, String name) {
-        if (this.usersByName.getIfPresent(name) != null || this.usersByUUID.getIfPresent(uuid) != null) {
+        if (this.usersByName.getIfPresent(name.toLowerCase()) != null || this.usersByUUID.getIfPresent(uuid) != null) {
             throw new IllegalStateException("User already exists");
         }
 
         User user = new User(uuid, name);
         this.usersByUUID.put(uuid, user);
-        this.usersByName.put(name, user);
+        this.usersByName.put(name.toLowerCase(), user);
 
         this.userRepository.saveUser(user);
         return user;
@@ -75,33 +79,23 @@ public class UserManager {
         return Collections.unmodifiableCollection(this.usersByUUID.asMap().values());
     }
 
-    private void fetchUsers() {
+    private CompletableFuture<Void> fetchUsers() {
         if (this.userRepositorySettings.batchDatabaseFetchSize() <= 0) {
             throw new IllegalArgumentException("Value for batchDatabaseFetchSize must be greater than 0!");
         }
 
-        Consumer<Collection<User>> batchSave = users ->
-        {
-            BatchProcessor<User> batchProcessor = new BatchProcessor<>(users, this.userRepositorySettings.batchDatabaseFetchSize());
-
-            do {
-                batchProcessor.processNext(user -> {
-                    usersByName.put(user.getName(), user);
-                    usersByUUID.put(user.getUniqueId(), user);
-                });
-
-            } while (!batchProcessor.isComplete());
-        };
+        Consumer<Collection<User>> batchSave = users -> users.forEach(user -> {
+            this.usersByName.put(user.getName(), user);
+            this.usersByUUID.put(user.getUniqueId(), user);
+        });
 
         if (this.userRepositorySettings.useBatchDatabaseFetching()) {
-            this.userRepository.fetchUsersBatch(this.userRepositorySettings.batchDatabaseFetchSize())
-                .thenAccept(batchSave);
+            this.userRepository.fetchUsersBatch(this.userRepositorySettings.batchDatabaseFetchSize()).thenAccept(batchSave);
         }
         else {
-
-            this.userRepository.fetchAllUsers()
-                .thenAccept(batchSave);
-
+            this.userRepository.fetchAllUsers().thenAccept(batchSave);
         }
+
+        return CompletableFuture.completedFuture(null);
     }
 }

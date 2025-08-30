@@ -8,7 +8,10 @@ import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.user.User;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -22,31 +25,28 @@ public class UserRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     }
 
     @Override
-    public CompletableFuture<User> getUser(UUID uniqueId) {
+    public CompletableFuture<Optional<User>> getUser(UUID uniqueId) {
         return this.selectSafe(UserTable.class, uniqueId)
-            .thenApply(optional -> optional.map(userTable -> userTable.toUser()).orElseGet(null));
+            .thenApply(optional -> optional.map(UserTable::toUser));
     }
 
     @Override
     public CompletableFuture<Collection<User>> fetchAllUsers() {
         return this.selectAll(UserTable.class)
-            .thenApply(userTables -> userTables.stream().map(UserTable::toUser).toList());
+            .thenApply(userTables -> userTables.stream()
+                .map(UserTable::toUser)
+                .toList());
     }
 
     @Override
     public CompletableFuture<Collection<User>> fetchUsersBatch(int batchSize) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                var dao = this.databaseManager.getDao(UserTable.class);
-                var users = new java.util.ArrayList<User>();
+                var users = new ArrayList<User>();
 
                 int offset = 0;
                 while (true) {
-                    var queryBuilder = dao.queryBuilder();
-                    queryBuilder.limit((long) batchSize);
-                    queryBuilder.offset((long) offset);
-
-                    var batch = dao.query(queryBuilder.prepare());
+                    List<UserTable> batch = this.selectBatch(UserTable.class, offset, batchSize).join();
 
                     if (batch.isEmpty()) {
                         break;
@@ -72,7 +72,7 @@ public class UserRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     }
 
     @Override
-    public CompletableFuture<User> updateUser(UUID uniqueId, User user) {
+    public CompletableFuture<User> updateUser(User user) {
         return this.save(UserTable.class, UserTable.from(user)).thenApply(v -> user);
     }
 
