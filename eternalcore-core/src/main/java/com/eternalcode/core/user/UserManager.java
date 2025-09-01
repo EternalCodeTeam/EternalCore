@@ -34,11 +34,11 @@ public class UserManager {
         fetchUsers().thenRun(() -> this.fetched = true);
     }
 
-    public Optional<User> getUser(UUID uuid) {
+    public CompletableFuture<Optional<User>> getUser(UUID uuid) {
         return Optional.ofNullable(this.usersByUUID.getIfPresent(uuid));
     }
 
-    public Optional<User> getUser(String name) {
+    public CompletableFuture<Optional<User>> getUser(String name) {
         return Optional.ofNullable(this.usersByName.getIfPresent(name.toLowerCase()));
     }
 
@@ -62,7 +62,7 @@ public class UserManager {
         return this.create(uuid, name);
     }
 
-    public User create(UUID uuid, String name) {
+    private User create(UUID uuid, String name) {
         if (this.usersByName.getIfPresent(name.toLowerCase()) != null || this.usersByUUID.getIfPresent(uuid) != null) {
             throw new IllegalStateException("User already exists");
         }

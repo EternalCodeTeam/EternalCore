@@ -32,7 +32,7 @@ class PrepareUserControllerTest {
         this.mockServer = new MockServer();
         this.userManager = new UserManager(mockUserRepository, mockUserRepositorySettings);
 
-        PrepareUserController controller = new PrepareUserController(this.userManager, this.mockServer.getServer());
+        PrepareUserController controller = new PrepareUserController(this.userManager);
 
         this.mockServer.listenJoin(controller::onJoin);
         this.mockServer.listenQuit(controller::onQuit);

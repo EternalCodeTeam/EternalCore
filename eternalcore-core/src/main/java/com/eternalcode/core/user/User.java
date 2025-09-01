@@ -7,7 +7,6 @@ import java.util.UUID;
 
 public class User implements Viewer {
 
-    private UserClientSettings userClientSettings = UserClientSettings.NONE;
 
     private final String name;
     private final UUID uuid;
@@ -30,14 +29,6 @@ public class User implements Viewer {
     @Override
     public boolean isConsole() {
         return false;
-    }
-
-    public UserClientSettings getClientSettings() {
-        return this.userClientSettings;
-    }
-
-    public void setClientSettings(UserClientSettings userClientSettings) {
-        this.userClientSettings = userClientSettings;
     }
 
     @Override
