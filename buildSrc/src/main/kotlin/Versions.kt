@@ -6,7 +6,7 @@ object Versions {
     const val ETERNALCODE_COMMONS = "1.3.0"
     const val MULTIFICATION = "1.2.2"
 
-    const val JETBRAINS_ANNOTATIONS = "26.0.2"
+    const val JETBRAINS_ANNOTATIONS = "26.0.2-1"
     const val PLACEHOLDER_API = "2.11.6"
     const val LOMBOK = "1.18.38"
 
