@@ -32,6 +32,7 @@ class UserBatchFetchTest extends IntegrationTestSpec {
     private final TestScheduler testScheduler = new TestScheduler();
 
     private DatabaseManager databaseManager;
+    private final Logger logger  = Logger.getLogger("test");
 
     @Test
     void testWithMySQL(@TempDir Path tempDir) throws SQLException {
@@ -43,7 +44,7 @@ class UserBatchFetchTest extends IntegrationTestSpec {
         config.hostname = container.getHost();
         config.port = container.getFirstMappedPort();
 
-        databaseManager = new DatabaseManager(Logger.getLogger("test"), tempDir.toFile(), config);
+        databaseManager = new DatabaseManager(this.logger, tempDir.toFile(), config);
         databaseManager.connect();
 
         UserRepository userRepository = new UserRepositoryOrmLite(databaseManager, this.testScheduler);
@@ -71,31 +72,32 @@ class UserBatchFetchTest extends IntegrationTestSpec {
         config.username = "sa";
         config.password = "";
 
-        // ✅ Use H2 in-memory database
-        config.hostname = null; // not used
-        config.port = 0;        // not used
-        config.database = "eternalcode"; // any name works
+        config.hostname = null;
+        config.port = 0;
+        config.database = "eternalcode";
 
         DatabaseManager db = new DatabaseManager(Logger.getLogger("test"), tempDir.toFile(), config);
         db.connect();
 
         UserRepository userRepo = new UserRepositoryOrmLite(db, new TestScheduler());
 
-        // Insert 5000 users
         for (int i = 0; i < 50000; i++) {
             userRepo.saveUser(new User(UUID.randomUUID(), "user" + i)).join();
         }
 
+        IntegrationTestSpec spec = new IntegrationTestSpec();
+
         long start = System.nanoTime();
-        var allUsers = userRepo.fetchAllUsers().join();
+        var allUsers = spec.await(userRepo.fetchAllUsers());
         long allFetchTime = System.nanoTime() - start;
 
         start = System.nanoTime();
-        var batchedUsers = userRepo.fetchUsersBatch(500).join();
+        var batchedUsers = spec.await(userRepo.fetchUsersBatch(500));
         long batchFetchTime = System.nanoTime() - start;
 
-        System.out.printf("All fetch: %d ms, Batched fetch: %d ms%n",
-            allFetchTime / 1_000_000, batchFetchTime / 1_000_000);
+
+        this.logger.info(String.format("All users fetch time: %d ms", allFetchTime / 1_000_000));
+        this.logger.info(String.format("Batched users fetch time: %d ms", batchFetchTime / 1_000_000));
 
         Assertions.assertEquals(allUsers.size(), batchedUsers.size());
     }

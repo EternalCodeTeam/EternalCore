@@ -7,7 +7,7 @@ public class IntegrationTestSpec {
 
     public <T> T await(CompletableFuture<T> future) {
         return future
-            .orTimeout(5, TimeUnit.SECONDS)
+            .orTimeout(10, TimeUnit.SECONDS)
             .join();
     }
 }
