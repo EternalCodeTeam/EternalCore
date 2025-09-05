@@ -24,7 +24,9 @@ import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
-import com.eternalcode.core.feature.near.messages.NearMessages;
+import com.eternalcode.core.feature.near.messages.PLNearMessages;
+import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
+import com.eternalcode.core.feature.powertool.messages.PLPowertoolMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
@@ -44,15 +46,14 @@ import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import lombok.Getter;
-import lombok.experimental.Accessors;
-import org.bukkit.event.entity.EntityDamageEvent;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 @Getter
 @Accessors(fluent = true)
@@ -585,6 +586,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
     public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące powertoolsów."})
+    public PLPowertoolMessages powertool = new PLPowertoolMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące zamrażania graczy"})
     public PLFreezeMessages freeze = new PLFreezeMessages();
