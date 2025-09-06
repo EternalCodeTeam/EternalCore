@@ -9,7 +9,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
@@ -42,7 +42,7 @@ class AfkCommand {
 
     @Execute
     @DescriptionDocs(description = "Toggles AFK status for the player.")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         UUID uuid = player.getUniqueId();
 
         if (player.hasPermission(AFK_BYPASS_PERMISSION)) {

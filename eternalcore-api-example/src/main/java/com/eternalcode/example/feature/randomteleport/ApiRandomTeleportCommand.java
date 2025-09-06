@@ -3,7 +3,7 @@ package com.eternalcode.example.feature.randomteleport;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.Location;
@@ -20,7 +20,7 @@ public class ApiRandomTeleportCommand {
     }
 
     @Execute(name = "safe-random-location")
-    void execute(@Context Player player, @Arg int attempts) {
+    void execute(@Sender Player player, @Arg int attempts) {
         World world = player.getWorld();
 
         CompletableFuture<Location> safeRandomLocation =
@@ -30,7 +30,7 @@ public class ApiRandomTeleportCommand {
     }
 
     @Execute(name = "safe-random-location-with-radius")
-    void execute(@Context Player player, @Arg int radius, @Arg int attempts) {
+    void execute(@Sender Player player, @Arg int radius, @Arg int attempts) {
         World world = player.getWorld();
 
         CompletableFuture<Location> safeRandomLocation =
@@ -40,12 +40,12 @@ public class ApiRandomTeleportCommand {
     }
 
     @Execute(name = "teleport")
-    void execute(@Context Player player, @Arg Player target) {
+    void execute(@Sender Player player, @Arg Player target) {
         this.randomTeleportService.teleport(target);
     }
 
     @Execute(name = "teleport")
-    void execute(@Context Player player, @Arg Player target, @Arg World world) {
+    void execute(@Sender Player player, @Arg Player target, @Arg World world) {
         this.randomTeleportService.teleport(target, world);
     }
 }

@@ -9,7 +9,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.UUID;
@@ -41,7 +41,7 @@ class SetWarpCommand {
 
     @Execute
     @DescriptionDocs(description = "Create warp")
-    void add(@Context Player player, @Arg String warpName) {
+    void add(@Sender Player player, @Arg String warpName) {
         UUID uniqueId = player.getUniqueId();
 
         this.createWarp(player, warpName, uniqueId);

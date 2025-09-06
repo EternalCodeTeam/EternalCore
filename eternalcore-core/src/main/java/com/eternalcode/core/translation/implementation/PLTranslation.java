@@ -587,7 +587,7 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
     public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące powertoolów."})
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące powertoolsów."})
     public PLPowertoolMessages powertool = new PLPowertoolMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące zamrażania graczy"})

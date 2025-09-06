@@ -6,7 +6,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ class GodCommand {
     @Execute
     @Permission("eternalcore.god")
     @DescriptionDocs(description = "Toggle god mode")
-    void execute(@Context Player sender) {
+    void execute(@Sender Player sender) {
         sender.setInvulnerable(!sender.isInvulnerable());
 
         this.noticeService.create()
@@ -41,7 +41,7 @@ class GodCommand {
     @Execute
     @Permission("eternalcore.god.other")
     @DescriptionDocs(description = "Toggle god mode for specified player", arguments = "<player>")
-    void execute(@Context Viewer viewer, @Arg Player target) {
+    void execute(@Sender Viewer viewer, @Arg Player target) {
         target.setInvulnerable(!target.isInvulnerable());
 
         this.noticeService.create()

@@ -6,7 +6,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -33,7 +33,7 @@ class ItemLoreCommand {
 
     @Execute
     @DescriptionDocs(description = "Sets lore of item in hand", arguments = "<line> <text>")
-    void execute(@Context Player player, @Arg(ItemLoreArgument.KEY) int line, @Join String text) {
+    void execute(@Sender Player player, @Arg(ItemLoreArgument.KEY) int line, @Join String text) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
@@ -63,7 +63,7 @@ class ItemLoreCommand {
 
     @Execute(name = "remove")
     @DescriptionDocs(description = "Removes a specific line of lore from the item in hand", arguments = "<line>")
-    void remove(@Context Player player, @Arg(ItemLoreArgument.KEY) int line) {
+    void remove(@Sender Player player, @Arg(ItemLoreArgument.KEY) int line) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {
@@ -97,7 +97,7 @@ class ItemLoreCommand {
 
     @Execute(name = "clear")
     @DescriptionDocs(description = "Clears all lore from the item in hand")
-    void clear(@Context Player player) {
+    void clear(@Sender Player player) {
         ItemStack itemStack = this.validateItemFromMainHand(player);
 
         if (itemStack == null) {

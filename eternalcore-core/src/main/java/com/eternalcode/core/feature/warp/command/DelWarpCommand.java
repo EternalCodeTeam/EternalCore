@@ -8,7 +8,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ class DelWarpCommand {
 
     @Execute
     @DescriptionDocs(description = "Remove warp", arguments = "<warp>")
-    void remove(@Context Player player, @Arg Warp warp) {
+    void remove(@Sender Player player, @Arg Warp warp) {
         String name = warp.getName();
 
         this.removeWarp(player, name);

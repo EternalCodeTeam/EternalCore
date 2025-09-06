@@ -2,7 +2,7 @@ package com.eternalcode.example.feature.jail;
 
 import com.eternalcode.core.feature.jail.JailService;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import org.bukkit.entity.Player;
 
@@ -19,7 +19,7 @@ public class ApiJailCommand {
      * This method allows jailed player to buy freedom for 1 exp.
      */
     @Execute(name = "buy freedom")
-    void executeBuyFreedom(@Context Player player) {
+    void executeBuyFreedom(@Sender Player player) {
         if (!this.jailService.isPlayerJailed(player.getUniqueId())) {
             player.sendMessage("You are not jailed!");
             return;

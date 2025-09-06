@@ -7,7 +7,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -26,7 +26,7 @@ public class DemoScreenCommand {
 
     @Execute
     @DescriptionDocs(description = {"Show a demo screen to yourself"})
-    void self(@Context Player sender) {
+    void self(@Sender Player sender) {
         sender.showDemoScreen();
 
         this.noticeService.create()
@@ -37,7 +37,7 @@ public class DemoScreenCommand {
 
     @Execute
     @DescriptionDocs(description = {"Show a demo screen to a player"}, arguments = {"<player>"})
-    void other(@Context Player sender, @Arg Player target) {
+    void other(@Sender Player sender, @Arg Player target) {
         target.showDemoScreen();
 
         this.noticeService.create()

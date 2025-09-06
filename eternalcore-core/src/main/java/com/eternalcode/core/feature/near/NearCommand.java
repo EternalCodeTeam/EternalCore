@@ -2,13 +2,12 @@ package com.eternalcode.core.feature.near;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
-import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.glowing.GlowingService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
@@ -44,7 +43,7 @@ class NearCommand {
 
     @Execute
     @DescriptionDocs(description = "Shows all players to the command sender.")
-    void showEntities(@Context Player player) {
+    void showEntities(@Sender Player player) {
         this.handleShowEntities(player, DEFAULT_RADIUS, DEFAULT_ENTITY_SCOPE);
     }
 
@@ -54,7 +53,7 @@ class NearCommand {
         arguments = {"<entityScope> [radius]"}
     )
     void showEntitiesWithScope(
-        @Context Player sender,
+        @Sender Player sender,
         @Arg(EntityScopeArgument.KEY) EntityScope entityScope,
         @Arg Optional<Integer> radius
     ) {
