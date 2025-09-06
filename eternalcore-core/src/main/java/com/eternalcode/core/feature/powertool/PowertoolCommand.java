@@ -21,7 +21,7 @@ import org.bukkit.plugin.Plugin;
 @Permission("eternalcore.powertool.assign")
 public class PowertoolCommand {
 
-    public static final String KEY = "powertool";
+    public static final String KEY = "eternalcore_powertool";
     private final NamespacedKey key;
 
     private final Plugin plugin;
