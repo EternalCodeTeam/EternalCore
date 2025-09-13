@@ -2,6 +2,7 @@ package com.eternalcode.core.user;
 
 import com.eternalcode.core.test.MockUserRepository;
 import com.eternalcode.core.test.MockUserRepositorySettings;
+import com.eternalcode.core.user.database.UserRepositoryConfig;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserManagerTest {
 
-    private final MockUserRepositorySettings mockUserRepositorySettings = new MockUserRepositorySettings();
+    private final UserRepositoryConfig mockUserRepositorySettings = new UserRepositoryConfig();
     private final MockUserRepository mockUserRepository = new MockUserRepository();
 
     @Test

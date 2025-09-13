@@ -14,9 +14,9 @@ public interface UserRepository {
 
     CompletableFuture<Void> saveUser(User player);
 
-    CompletableFuture<User> updateUser(User player);
-
-    CompletableFuture<Void> deleteUser(UUID uniqueId);
+//    CompletableFuture<User> updateUser(User player);
+//
+//    CompletableFuture<Void> deleteUser(UUID uniqueId);
 
     CompletableFuture<Collection<User>> fetchAllUsers(Duration fetchInPast);
 
