@@ -1,5 +1,6 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.back.messages.BackMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
@@ -67,11 +68,6 @@ public interface Translation {
         // Coordinates XYZ
         Notice teleportedToCoordinates();
         Notice teleportedSpecifiedPlayerToCoordinates();
-
-        // Back
-        Notice teleportedToLastLocation();
-        Notice teleportedSpecifiedPlayerLastLocation();
-        Notice lastLocationNoExist();
     }
 
     interface ChatSection {
@@ -195,6 +191,7 @@ public interface Translation {
     SudoMessages sudo();
     // Teleport Section
     TeleportSection teleport();
+    BackMessages back();
     // teleport to random player section.
     TeleportToRandomPlayerMessages teleportToRandomPlayer();
     // Random Teleport Section
