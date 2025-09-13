@@ -18,14 +18,14 @@ import org.bukkit.entity.Player;
 
 @Command(name = "item", aliases = {"i"})
 @Permission("eternalcore.item")
-public class ItemCommand {
+class ItemCommand {
 
     private final NoticeService noticeService;
     private final GiveService giveService;
     private final PluginConfiguration config;
 
     @Inject
-    public ItemCommand(NoticeService noticeService, GiveService giveService, PluginConfiguration config) {
+    ItemCommand(NoticeService noticeService, GiveService giveService, PluginConfiguration config) {
         this.noticeService = noticeService;
         this.giveService = giveService;
         this.config = config;
