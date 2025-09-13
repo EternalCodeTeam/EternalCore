@@ -59,8 +59,8 @@ class AfkPlaceholderSetup {
             player -> {
                 long afkPlayerCount = this.server.getOnlinePlayers()
                     .stream()
-                    .mapToLong(onlinePlayer -> afkService.isAfk(onlinePlayer.getUniqueId()) ? 1L : 0L)
-                    .sum();
+                    .filter(onlinePlayer -> afkService.isAfk(onlinePlayer.getUniqueId()))
+                    .count();
                 return String.valueOf(afkPlayerCount);
             }));
     }
