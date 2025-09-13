@@ -2,6 +2,7 @@ package com.eternalcode.core.test;
 
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.database.UserRepository;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,7 +30,7 @@ public class MockUserRepository implements UserRepository {
     }
 
     @Override
-    public CompletableFuture<Collection<User>> fetchAllUsers() {
+    public CompletableFuture<Collection<User>> fetchAllUsers(Duration timeout) {
         return CompletableFuture.completedFuture(java.util.List.of());
     }
 

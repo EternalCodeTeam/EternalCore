@@ -8,6 +8,8 @@ import com.eternalcode.core.injector.annotations.component.Repository;
 import com.eternalcode.core.user.User;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,44 +33,20 @@ public class UserRepositoryOrmLite extends AbstractRepositoryOrmLite implements 
     }
 
     @Override
-    public CompletableFuture<Collection<User>> fetchAllUsers() {
-        return this.selectAll(UserTable.class)
-            .thenApply(userTables -> userTables.stream()
+    public CompletableFuture<Collection<User>> fetchAllUsers(Duration queryParameter) {
+        return this.selectAll(UserTable.class).thenApply(userTable ->
+            userTable.stream()
                 .map(UserTable::toUser)
-                .toList());
-    }
-
-    @Override
-    public CompletableFuture<Collection<User>> fetchUsersBatch(int batchSize) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                var users = new ArrayList<User>();
-
-                int offset = 0;
-                while (true) {
-                    List<UserTable> batch = this.selectBatch(UserTable.class, offset, batchSize).join();
-
-                    if (batch.isEmpty()) {
-                        break;
-                    }
-
-                    batch.stream()
-                        .map(UserTable::toUser)
-                        .forEach(users::add);
-
-                    offset += batchSize;
-                }
-
-                return users;
-            } catch (Exception exception) {
-                throw new RuntimeException("Failed to fetch users in batches", exception);
-            }
-        });
+                .filter(user -> user.getLastLogin().isAfter(Instant.now().minus(queryParameter)))
+                .toList()
+        );
     }
 
     @Override
     public CompletableFuture<Void> saveUser(User user) {
         return this.save(UserTable.class, UserTable.from(user)).thenApply(v -> null);
+
+        return this.upda
     }
 
     @Override

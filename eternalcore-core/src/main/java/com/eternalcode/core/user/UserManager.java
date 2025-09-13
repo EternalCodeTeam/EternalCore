@@ -6,6 +6,7 @@ import com.eternalcode.core.user.database.UserRepository;
 import com.eternalcode.core.user.database.UserRepositorySettings;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -67,7 +68,7 @@ public class UserManager {
             throw new IllegalStateException("User already exists");
         }
 
-        User user = new User(uuid, name);
+        User user = new User(uuid, name, Instant.now(), Instant.now());
         this.usersByUUID.put(uuid, user);
         this.usersByName.put(name.toLowerCase(), user);
 
@@ -93,7 +94,7 @@ public class UserManager {
             this.userRepository.fetchUsersBatch(this.userRepositorySettings.batchDatabaseFetchSize()).thenAccept(batchSave);
         }
         else {
-            this.userRepository.fetchAllUsers().thenAccept(batchSave);
+            this.userRepository.fetchAllUsers(this.userRepositorySettings.cacheLoadTreshold()).thenAccept(batchSave);
         }
 
         return CompletableFuture.completedFuture(null);

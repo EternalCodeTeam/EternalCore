@@ -10,6 +10,7 @@ import com.eternalcode.core.util.IntegrationTestSpec;
 import com.eternalcode.core.util.TestScheduler;
 import java.nio.file.Path;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.UUID;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.Assertions;
@@ -88,7 +89,7 @@ class UserBatchFetchTest extends IntegrationTestSpec {
         IntegrationTestSpec spec = new IntegrationTestSpec();
 
         long start = System.nanoTime();
-        var allUsers = spec.await(userRepo.fetchAllUsers());
+        var allUsers = spec.await(userRepo.fetchAllUsers(Duration.ofDays(7)));
         long allFetchTime = System.nanoTime() - start;
 
         start = System.nanoTime();

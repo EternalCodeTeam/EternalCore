@@ -2,6 +2,7 @@ package com.eternalcode.core.user.database;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.time.Duration;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -21,4 +22,6 @@ public class UserRepositoryConfig extends OkaeriConfig implements UserRepository
         "# Value must be greater than 0!"
     })
     public int batchDatabaseFetchSize = 1000;
+
+    public Duration cacheLoadTreshold = Duration.ofDays(7);
 }

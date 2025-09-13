@@ -1,6 +1,7 @@
 package com.eternalcode.core.user.database;
 
 import com.eternalcode.core.user.User;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +18,7 @@ public interface UserRepository {
 
     CompletableFuture<Void> deleteUser(UUID uniqueId);
 
-    CompletableFuture<Collection<User>> fetchAllUsers();
+    CompletableFuture<Collection<User>> fetchAllUsers(Duration fetchInPast);
 
     CompletableFuture<Collection<User>> fetchUsersBatch(int batchSize);
 }
