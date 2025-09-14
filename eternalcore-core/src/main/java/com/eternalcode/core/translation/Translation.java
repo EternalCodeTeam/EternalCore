@@ -24,6 +24,7 @@ import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
+import com.eternalcode.core.feature.powertool.messages.PowertoolMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -253,4 +254,6 @@ public interface Translation {
     PlaytimeMessages playtime();
     // freeze section
     FreezeMessages freeze();
+    // powertool section
+    PowertoolMessages powertool();
 }
