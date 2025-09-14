@@ -27,7 +27,7 @@ public class RelocationCacheResolver {
     public void markAsRelocated(List<Relocation> relocations) {
         try {
             Files.writeString(relocationsFile.toPath(), toRawRelocations(relocations), StandardCharsets.UTF_8);
-        } catch (Exception exception) {
+        } catch (IOException exception) {
             throw new RuntimeException("Failed to save relocations", exception);
         }
     }
