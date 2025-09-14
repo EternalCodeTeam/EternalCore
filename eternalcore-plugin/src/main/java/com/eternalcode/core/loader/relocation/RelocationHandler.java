@@ -30,7 +30,6 @@ import com.eternalcode.core.loader.dependency.Dependency;
 import com.eternalcode.core.loader.dependency.DependencyException;
 import com.eternalcode.core.loader.dependency.DependencyLoadResult;
 import com.eternalcode.core.loader.dependency.DependencyLoader;
-
 import com.eternalcode.core.loader.repository.Repository;
 import java.io.File;
 import java.io.IOException;
@@ -76,14 +75,14 @@ public class RelocationHandler implements AutoCloseable {
 
         Path relocatedJar = dependency.toMavenJar(localRepository, "relocated").toPath();
 
-        if (Files.exists(relocatedJar) && !this.cacheResolver.shouldForceRelocate(dependency, relocations)) {
+        if (Files.exists(relocatedJar) && !this.cacheResolver.shouldForceRelocate(relocations)) {
             return relocatedJar;
         }
 
-        return this.relocate(dependency, dependencyPath, relocatedJar, relocations);
+        return this.relocate(dependencyPath, relocatedJar, relocations);
     }
 
-    private Path relocate(Dependency dependency, Path input, Path output, List<Relocation> relocations) {
+    private Path relocate(Path input, Path output, List<Relocation> relocations) {
         Map<String, String> mappings = new HashMap<>();
 
         for (Relocation relocation : relocations) {
@@ -96,7 +95,7 @@ public class RelocationHandler implements AutoCloseable {
             Files.createFile(output);
             Object relocator = this.jarRelocatorConstructor.newInstance(input.toFile(), output.toFile(), mappings);
             this.jarRelocatorRunMethod.invoke(relocator);
-            this.cacheResolver.markAsRelocated(dependency, relocations);
+            this.cacheResolver.markAsRelocated(relocations);
 
             return output;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | IOException exception) {
