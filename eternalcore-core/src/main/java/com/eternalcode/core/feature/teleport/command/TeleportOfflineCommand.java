@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 @Command(name = "tpoffline", aliases = "tpo")
 @Permission("eternalcore.teleportoffline")
-public class TeleportOfflineCommand {
+class TeleportOfflineCommand {
 
     private final NoticeService noticeService;
     private final TeleportService teleportService;

@@ -15,12 +15,12 @@ import org.bukkit.entity.Player;
 
 @Command(name = "playtime")
 @Permission("eternalcore.playtime")
-public class PlaytimeCommand {
+class PlaytimeCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public PlaytimeCommand(NoticeService noticeService) {
+    PlaytimeCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
