@@ -85,7 +85,9 @@ class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
                 @SuppressWarnings("unchecked")
                 Map<String, Command> knownCommands = (Map<String, Command>) knownCommandsField.get(simpleMap);
 
-                return knownCommands.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                return knownCommands.entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             }
         }
         catch (IllegalAccessException | NoSuchFieldException exception) {

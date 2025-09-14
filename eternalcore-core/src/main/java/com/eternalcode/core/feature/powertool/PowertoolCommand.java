@@ -59,11 +59,11 @@ public class PowertoolCommand {
             item.setItemMeta(meta);
             return;
         }
-            this.noticeService.create()
-                .player(player.getUniqueId())
-                .notice(translation -> translation.powertool().notAssigned())
-                .placeholder("{ITEM}", item.getType().name())
-                .send();
+        this.noticeService.create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.powertool().notAssigned())
+            .placeholder("{ITEM}", item.getType().name())
+            .send();
     }
 
     @Execute

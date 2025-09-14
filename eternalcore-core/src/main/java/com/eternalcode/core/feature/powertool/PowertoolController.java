@@ -71,26 +71,26 @@ public class PowertoolController implements Listener {
         NamespacedKey key = NamespacedKey.fromString(KEY, this.plugin);
 
         String command = dataContainer.get(key, PersistentDataType.STRING);
-            if (command != null && !command.trim().isEmpty()) {
-                Player player = event.getPlayer();
-                if (!player.hasPermission(POWERTOOL_USE_PERMISSION)) {
-                    dataContainer.remove(key);
-                    item.setItemMeta(meta);
-                    return;
-                }
-                Formatter formatter = EXECUTION_CONTEXT_PLACEHOLDERS.toFormatter(player);
-
-                String formattedCommand = formatter.format(command);
-                if (player.performCommand(formattedCommand)) {
-                    this.logger.info("Player " + player.getName() + " used powertool command: /" + formattedCommand);
-                    return;
-                }
-                this.noticeService.create()
-                    .player(player.getUniqueId())
-                    .notice(translation -> translation.powertool().executionFailed())
-                    .placeholder("{COMMAND}", formattedCommand)
-                    .send();
+        if (command != null && !command.trim().isEmpty()) {
+            Player player = event.getPlayer();
+            if (!player.hasPermission(POWERTOOL_USE_PERMISSION)) {
+                dataContainer.remove(key);
+                item.setItemMeta(meta);
+                return;
             }
+            Formatter formatter = EXECUTION_CONTEXT_PLACEHOLDERS.toFormatter(player);
+
+            String formattedCommand = formatter.format(command);
+            if (player.performCommand(formattedCommand)) {
+                this.logger.info("Player " + player.getName() + " used powertool command: /" + formattedCommand);
+                return;
+            }
+            this.noticeService.create()
+                .player(player.getUniqueId())
+                .notice(translation -> translation.powertool().executionFailed())
+                .placeholder("{COMMAND}", formattedCommand)
+                .send();
+        }
     }
 }
 
