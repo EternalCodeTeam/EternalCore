@@ -2,6 +2,7 @@ package com.eternalcode.core.loader.relocation;
 
 import com.eternalcode.core.loader.repository.LocalRepository;
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
