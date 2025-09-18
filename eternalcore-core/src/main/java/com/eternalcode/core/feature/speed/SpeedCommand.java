@@ -59,7 +59,6 @@ class SpeedCommand {
             .send();
     }
 
-    // ... existing code ...
     @Execute
     @DescriptionDocs(description = "Set speed of walking or flying to specified amount", arguments = "<type> <speed>")
     void execute(@Sender Player player, @Arg SpeedType speedType, @Arg(SpeedArgument.KEY) Double speed) {
@@ -74,7 +73,6 @@ class SpeedCommand {
             .send();
     }
 
-    // ... existing code ...
     @Execute
     @DescriptionDocs(description = "Set speed of walking or flying to specified amount and player", arguments = "<type> <speed> <player>")
     void execute(

@@ -47,8 +47,7 @@ class SpeedArgument extends AbstractViewerArgument<Double> {
         SuggestionContext context
     ) {
         return IntStream.rangeClosed(0, 20)
-            .mapToDouble(i -> i / 2.0)
-            .mapToObj(d -> (d % 1.0 == 0.0) ? String.valueOf((int) d) : String.valueOf(d))
+            .mapToObj(i -> (i % 2 == 0) ? String.valueOf(i / 2) : String.valueOf(i / 2.0))
             .collect(SuggestionResult.collector());
     }
 }
