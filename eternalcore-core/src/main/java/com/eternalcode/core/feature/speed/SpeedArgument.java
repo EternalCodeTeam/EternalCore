@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.speed;
 
-import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import dev.rollczi.litecommands.argument.Argument;
@@ -10,12 +10,11 @@ import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import java.util.stream.IntStream;
 import org.bukkit.command.CommandSender;
 
-import java.util.stream.IntStream;
-
-@LiteArgument(type = Integer.class, name = SpeedArgument.KEY)
-class SpeedArgument extends AbstractViewerArgument<Integer> {
+@LiteArgument(type = Double.class, name = SpeedArgument.KEY)
+class SpeedArgument extends AbstractViewerArgument<Double> {
 
     static final String KEY = "speed";
 
@@ -25,11 +24,12 @@ class SpeedArgument extends AbstractViewerArgument<Integer> {
     }
 
     @Override
-    public ParseResult<Integer> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
+    public ParseResult<Double> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         try {
-            int value = Integer.parseInt(argument);
+            String normalized = argument.replace(',', '.');
+            double value = Double.parseDouble(normalized);
 
-            if (value < 0 || value > 10) {
+            if (value < 0.0 || value > 10.0) {
                 return ParseResult.failure(translation.player().speedBetweenZeroAndTen());
             }
 
@@ -41,10 +41,14 @@ class SpeedArgument extends AbstractViewerArgument<Integer> {
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Integer> argument, SuggestionContext context) {
-        return IntStream.range(0, 11)
-            .mapToObj(String::valueOf)
+    public SuggestionResult suggest(
+        Invocation<CommandSender> invocation,
+        Argument<Double> argument,
+        SuggestionContext context
+    ) {
+        return IntStream.rangeClosed(0, 20)
+            .mapToDouble(i -> i / 2.0)
+            .mapToObj(d -> (d % 1.0 == 0.0) ? String.valueOf((int) d) : String.valueOf(d))
             .collect(SuggestionResult.collector());
     }
-
 }
