@@ -18,6 +18,12 @@ class SpeedArgument extends AbstractViewerArgument<Double> {
 
     static final String KEY = "speed";
 
+    private static final double MIN_SPEED = 0.0;
+    private static final double MAX_SPEED = 10.0;
+    private static final char DECIMAL_COMMA = ',';
+    private static final char DECIMAL_DOT = '.';
+    private static final double SUGGESTION_STEP = 0.5;
+
     @Inject
     SpeedArgument(TranslationManager translationManager) {
         super(translationManager);
@@ -26,10 +32,10 @@ class SpeedArgument extends AbstractViewerArgument<Double> {
     @Override
     public ParseResult<Double> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         try {
-            String normalized = argument.replace(',', '.');
+            String normalized = argument.replace(DECIMAL_COMMA, DECIMAL_DOT);
             double value = Double.parseDouble(normalized);
 
-            if (value < 0.0 || value > 10.0) {
+            if (value < MIN_SPEED || value > MAX_SPEED) {
                 return ParseResult.failure(translation.player().speedBetweenZeroAndTen());
             }
 
@@ -46,8 +52,14 @@ class SpeedArgument extends AbstractViewerArgument<Double> {
         Argument<Double> argument,
         SuggestionContext context
     ) {
-        return IntStream.rangeClosed(0, 20)
-            .mapToObj(i -> (i % 2 == 0) ? String.valueOf(i / 2) : String.valueOf(i / 2.0))
+        int maxIndex = (int) Math.round((MAX_SPEED - MIN_SPEED) / SUGGESTION_STEP);
+        return IntStream.rangeClosed(0, maxIndex)
+            .mapToObj(i -> {
+                double value = MIN_SPEED + (i * SUGGESTION_STEP);
+                return (value % 1.0 == 0.0)
+                    ? String.valueOf((int) value)
+                    : String.valueOf(value);
+            })
             .collect(SuggestionResult.collector());
     }
 }
