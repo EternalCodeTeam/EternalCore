@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.warp.command;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.warp.Warp;
-import com.eternalcode.core.feature.warp.WarpInventory;
+import com.eternalcode.core.feature.warp.inventory.WarpInventory;
 import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.feature.warp.WarpTeleportService;

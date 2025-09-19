@@ -1,16 +1,16 @@
-package com.eternalcode.core.feature.warp;
+package com.eternalcode.core.feature.warp.inventory;
 
 import com.eternalcode.commons.adventure.AdventureUtil;
+import com.eternalcode.commons.concurrent.FutureHandler;
 import com.eternalcode.commons.scheduler.Scheduler;
-import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.messages.WarpMessages;
-import com.eternalcode.core.feature.warp.messages.WarpMessages.WarpInventorySection;
+import com.eternalcode.core.feature.warp.Warp;
+import com.eternalcode.core.feature.warp.WarpInventoryItem;
+import com.eternalcode.core.feature.warp.WarpService;
+import com.eternalcode.core.feature.warp.WarpSettings;
+import com.eternalcode.core.feature.warp.WarpTeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import com.eternalcode.core.translation.AbstractTranslation;
-import com.eternalcode.core.translation.Translation;
-import com.eternalcode.core.translation.TranslationManager;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -39,75 +39,75 @@ public class WarpInventory {
     private static final int BORDER_ROW_COUNT = 2;
     private static final int UGLY_BORDER_ROW_COUNT = 1;
 
-    private final TranslationManager translationManager;
     private final WarpService warpService;
     private final Server server;
     private final MiniMessage miniMessage;
     private final WarpTeleportService warpTeleportService;
-    private final ConfigurationManager configurationManager;
     private final WarpSettings warpSettings;
     private final Scheduler scheduler;
+    private final WarpInventoryConfigService warpInventoryConfigService;
 
     @Inject
     WarpInventory(
-        TranslationManager translationManager,
         WarpService warpService,
         Server server,
         MiniMessage miniMessage,
         WarpTeleportService warpTeleportService,
-        ConfigurationManager configurationManager,
         WarpSettings warpSettings,
-        Scheduler scheduler
+        Scheduler scheduler,
+        WarpInventoryConfigService warpInventoryConfigService
     ) {
-        this.translationManager = translationManager;
         this.warpService = warpService;
         this.server = server;
         this.miniMessage = miniMessage;
         this.warpTeleportService = warpTeleportService;
-        this.configurationManager = configurationManager;
         this.warpSettings = warpSettings;
         this.scheduler = scheduler;
+        this.warpInventoryConfigService = warpInventoryConfigService;
     }
 
     public void openInventory(Player player) {
-        Gui gui = this.createInventory(player);
-        this.scheduler.run(() -> gui.open(player));
+        this.warpInventoryConfigService.getWarpInventoryData()
+            .thenAccept(warpData -> {
+                this.scheduler.run(() -> {
+                    Gui gui = this.createInventory(player, warpData);
+                    gui.open(player);
+                });
+            })
+            .exceptionally(FutureHandler::handleException);
     }
 
-    private Gui createInventory(Player player) {
-        Translation translation = this.translationManager.getMessages();
-        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
-
+    private Gui createInventory(Player player, WarpInventoryConfigService.WarpInventoryConfigData warpData) {
         int rowsCount;
-        int size = warpSection.items().size();
+        int size = warpData.items().size();
 
-        if (!warpSection.border().enabled()) {
+        if (!warpData.border().enabled()) {
             rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1;
         }
         else {
-            switch (warpSection.border().fillType()) {
+            switch (warpData.border().fillType()) {
                 case BORDER, ALL -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITH_BORDER + 1 + BORDER_ROW_COUNT;
                 case TOP, BOTTOM -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1 + UGLY_BORDER_ROW_COUNT;
-                default -> throw new IllegalStateException("Unexpected value: " + warpSection.border().fillType());
+                default -> throw new IllegalStateException("Unexpected value: " + warpData.border().fillType());
             }
         }
 
         Gui gui = Gui.gui()
-            .title(this.miniMessage.deserialize(warpSection.title()))
+            .title(this.miniMessage.deserialize(warpData.title()))
             .rows(rowsCount)
             .disableAllInteractions()
             .create();
 
-        this.createWarpItems(player, warpSection, gui);
-        this.createBorder(warpSection, gui);
-        this.createDecorations(warpSection, gui);
+        this.createWarpItems(player, warpData, gui);
+        this.createBorder(warpData, gui);
+        this.createDecorations(warpData, gui);
 
         return gui;
     }
 
-    private void createBorder(WarpInventorySection warpSection, Gui gui) {
-        if (warpSection.border().enabled()) {
-            WarpInventorySection.BorderSection borderSection = warpSection.border();
+    private void createBorder(WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
+        if (warpData.border().enabled()) {
+            WarpInventoryConfig.BorderSection borderSection = warpData.border();
 
             ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
 
@@ -134,8 +134,8 @@ public class WarpInventory {
         }
     }
 
-    private void createDecorations(WarpInventorySection warpSection, Gui gui) {
-        for (ConfigItem item : warpSection.decorationItems().items()) {
+    private void createDecorations(WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
+        for (ConfigItem item : warpData.decorationItems().items()) {
             BaseItemBuilder baseItemBuilder = this.createItem(item);
             GuiItem guiItem = baseItemBuilder.asGuiItem();
 
@@ -157,8 +157,8 @@ public class WarpInventory {
         }
     }
 
-    private void createWarpItems(Player player, WarpInventorySection warpSection, Gui gui) {
-        warpSection.items().values().forEach(item -> {
+    private void createWarpItems(Player player, WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
+        warpData.items().values().forEach(item -> {
             Optional<Warp> warpOptional = this.warpService.findWarp(item.warpName());
 
             if (warpOptional.isEmpty()) {
@@ -215,34 +215,35 @@ public class WarpInventory {
             return;
         }
 
-        AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages();
-        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
-        int slot = getSlot(warpSection);
+        this.warpInventoryConfigService.getWarpInventoryData()
+            .thenAccept(warpData -> {
+                int slot = getSlot(warpData);
 
-        warpSection.addItem(
-            warp.getName(),
-            WarpInventoryItem.builder()
-                .withWarpName(warp.getName())
-                .withWarpItem(ConfigItem.builder()
-                    .withName(this.warpSettings.itemNamePrefix() + warp.getName())
-                    .withLore(Collections.singletonList(this.warpSettings.itemLore()))
-                    .withMaterial(this.warpSettings.itemMaterial())
-                    .withTexture(this.warpSettings.itemTexture())
-                    .withSlot(slot)
-                    .withGlow(true)
-                    .build())
-                .build());
+                WarpInventoryItem warpInventoryItem = WarpInventoryItem.builder()
+                    .withWarpName(warp.getName())
+                    .withWarpItem(ConfigItem.builder()
+                        .withName(this.warpSettings.itemNamePrefix() + warp.getName())
+                        .withLore(Collections.singletonList(this.warpSettings.itemLore()))
+                        .withMaterial(this.warpSettings.itemMaterial())
+                        .withTexture(this.warpSettings.itemTexture())
+                        .withSlot(slot)
+                        .withGlow(true)
+                        .build())
+                    .build();
 
-        this.configurationManager.save(translation);
+                this.warpInventoryConfigService.addWarpItem(warp.getName(), warpInventoryItem)
+                    .exceptionally(FutureHandler::handleException);
+            })
+            .exceptionally(FutureHandler::handleException);
     }
 
-    private int getSlot(WarpMessages.WarpInventorySection warpSection) {
-        int size = warpSection.items().size();
-        if (!warpSection.border().enabled()) {
+    private int getSlot(WarpInventoryConfigService.WarpInventoryConfigData warpData) {
+        int size = warpData.items().size();
+        if (!warpData.border().enabled()) {
             return GUI_ITEM_SLOT_WITHOUT_BORDER + size;
         }
 
-        return switch (warpSection.border().fillType()) {
+        return switch (warpData.border().fillType()) {
             case BORDER -> GUI_ITEM_SLOT_WITH_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
             case ALL -> GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
             case TOP -> GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
@@ -255,29 +256,32 @@ public class WarpInventory {
             return;
         }
 
-        AbstractTranslation translation = (AbstractTranslation) this.translationManager.getMessages();
-        WarpMessages.WarpInventorySection warpSection = translation.warp().warpInventory();
-        WarpInventoryItem removed = warpSection.removeItem(warpName);
-
-        if (removed != null) {
-            this.shiftWarpItems(removed, warpSection);
-        }
-
-        this.configurationManager.save(translation);
+        this.warpInventoryConfigService.removeWarpItem(warpName)
+            .thenAccept(removed -> {
+                if (removed != null) {
+                    this.shiftWarpItems(removed);
+                }
+            })
+            .exceptionally(FutureHandler::handleException);
     }
 
-    private void shiftWarpItems(WarpInventoryItem removed, WarpMessages.WarpInventorySection warpSection) {
+    private void shiftWarpItems(WarpInventoryItem removed) {
         int removedSlot = removed.warpItem.slot;
-        List<WarpInventoryItem> itemsToShift = warpSection.items().values().stream()
-            .filter(item -> item.warpItem.slot > removedSlot)
-            .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
-            .toList();
 
-        int currentShift = removedSlot;
-        for (WarpInventoryItem item : itemsToShift) {
-            int nextShift = item.warpItem.slot;
-            item.warpItem.slot = currentShift;
-            currentShift = nextShift;
-        }
+        this.warpInventoryConfigService.getWarpItems()
+            .thenAccept(items -> {
+                List<WarpInventoryItem> itemsToShift = items.values().stream()
+                    .filter(item -> item.warpItem.slot > removedSlot)
+                    .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
+                    .toList();
+
+                int currentShift = removedSlot;
+                for (WarpInventoryItem item : itemsToShift) {
+                    int nextShift = item.warpItem.slot;
+                    item.warpItem.slot = currentShift;
+                    currentShift = nextShift;
+                }
+            })
+            .exceptionally(FutureHandler::handleException);
     }
 }
