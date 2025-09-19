@@ -2,19 +2,23 @@ package com.eternalcode.core.user;
 
 import com.eternalcode.core.viewer.Viewer;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
 public class User implements Viewer {
 
-    private UserClientSettings userClientSettings = UserClientSettings.NONE;
 
     private final String name;
     private final UUID uuid;
+    private final Instant created;
+    private final Instant lastLogin;
 
-    User(UUID uuid, String name) {
+    public User(UUID uuid, String name, Instant created, Instant lastLogin) {
         this.name = name;
         this.uuid = uuid;
+        this.created = created;
+        this.lastLogin = lastLogin;
     }
 
     @Override
@@ -27,17 +31,17 @@ public class User implements Viewer {
         return this.uuid;
     }
 
+    public Instant getCreated() {
+        return created;
+    }
+
+    public Instant getLastLogin() {
+        return lastLogin;
+    }
+
     @Override
     public boolean isConsole() {
         return false;
-    }
-
-    public UserClientSettings getClientSettings() {
-        return this.userClientSettings;
-    }
-
-    public void setClientSettings(UserClientSettings userClientSettings) {
-        this.userClientSettings = userClientSettings;
     }
 
     @Override

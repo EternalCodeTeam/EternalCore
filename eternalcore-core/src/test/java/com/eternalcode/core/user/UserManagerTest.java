@@ -1,5 +1,8 @@
 package com.eternalcode.core.user;
 
+import com.eternalcode.core.test.MockUserRepository;
+import com.eternalcode.core.test.MockUserRepositorySettings;
+import com.eternalcode.core.user.database.UserRepositoryConfig;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -10,9 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserManagerTest {
 
+    private final UserRepositoryConfig mockUserRepositorySettings = new UserRepositoryConfig();
+    private final MockUserRepository mockUserRepository = new MockUserRepository();
+
     @Test
     void testUsersCreate() {
-        UserManager manager = new UserManager();
+        UserManager manager = new UserManager(this.mockUserRepository, this.mockUserRepositorySettings);
 
         assertEquals(0, manager.getUsers().size());
 
@@ -27,7 +33,7 @@ class UserManagerTest {
 
     @Test
     void testCreateSameUser() {
-        UserManager manager = new UserManager();
+        UserManager manager = new UserManager(this.mockUserRepository, this.mockUserRepositorySettings);
 
         manager.create(UUID.randomUUID(), "Piotr");
         assertThrows(IllegalStateException.class, () -> manager.create(UUID.randomUUID(), "Piotr"));
@@ -39,7 +45,7 @@ class UserManagerTest {
 
     @Test
     void testGetUsers() {
-        UserManager manager = new UserManager();
+        UserManager manager = new UserManager(this.mockUserRepository, this.mockUserRepositorySettings);
 
         assertEquals(0, manager.getUsers().size());
 
@@ -52,7 +58,7 @@ class UserManagerTest {
 
     @Test
     void testGetUser() {
-        UserManager manager = new UserManager();
+        UserManager manager = new UserManager(this.mockUserRepository, this.mockUserRepositorySettings);
 
         assertEquals(0, manager.getUsers().size());
 
@@ -65,7 +71,7 @@ class UserManagerTest {
 
     @Test
     void testGetOrCreate() {
-        UserManager manager = new UserManager();
+        UserManager manager = new UserManager(this.mockUserRepository, this.mockUserRepositorySettings);
 
         UUID uuid = UUID.randomUUID();
         User user = manager.getOrCreate(uuid, "Michał");
