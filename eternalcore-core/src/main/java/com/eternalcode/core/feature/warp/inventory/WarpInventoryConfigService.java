@@ -25,21 +25,35 @@ public class WarpInventoryConfigService {
 
     public CompletableFuture<WarpInventoryConfigData> getWarpInventoryData() {
         return this.warpInventoryRepository.getAllWarpInventoryItems()
-            .thenApply(items -> {
-                return new WarpInventoryConfigData(
-                    this.warpInventoryConfig.display().title(),
-                    this.warpInventoryConfig.border(),
-                    this.warpInventoryConfig.decorationItems(),
-                    items
-                );
-            });
+            .thenApply(items -> new WarpInventoryConfigData(
+                this.warpInventoryConfig.display().title(),
+                this.warpInventoryConfig.border(),
+                this.warpInventoryConfig.decorationItems(),
+                items
+            ));
     }
 
     public CompletableFuture<Void> addWarpItem(String warpName, WarpInventoryItem item) {
+        if (warpName == null || warpName.trim().isEmpty()) {
+            return CompletableFuture.failedFuture(
+                new IllegalArgumentException("Warp name cannot be null or empty")
+            );
+        }
+
+        if (item == null) {
+            return CompletableFuture.failedFuture(
+                new IllegalArgumentException("WarpInventoryItem cannot be null")
+            );
+        }
+
         return this.warpInventoryRepository.saveWarpInventoryItem(warpName, item);
     }
 
     public CompletableFuture<WarpInventoryItem> removeWarpItem(String warpName) {
+        if (warpName == null || warpName.trim().isEmpty()) {
+            return CompletableFuture.completedFuture(null);
+        }
+
         return this.warpInventoryRepository.getWarpInventoryItem(warpName)
             .thenCompose(item -> {
                 if (item != null) {
@@ -54,13 +68,11 @@ public class WarpInventoryConfigService {
         return this.warpInventoryRepository.getAllWarpInventoryItems();
     }
 
-
     public record WarpInventoryConfigData(
         String title,
         BorderSection border,
         DecorationItemsSection decorationItems,
         Map<String, WarpInventoryItem> items
     ) {
-
     }
 }

@@ -13,6 +13,4 @@ public interface WarpInventoryRepository {
     CompletableFuture<WarpInventoryItem> getWarpInventoryItem(String warpName);
 
     CompletableFuture<Map<String, WarpInventoryItem>> getAllWarpInventoryItems();
-
-    WarpInventoryConfig getConfig();
 }

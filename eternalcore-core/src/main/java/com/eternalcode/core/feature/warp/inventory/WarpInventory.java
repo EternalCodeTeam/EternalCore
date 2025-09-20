@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
@@ -48,7 +49,7 @@ public class WarpInventory {
     private final WarpInventoryConfigService warpInventoryConfigService;
 
     @Inject
-    WarpInventory(
+    public WarpInventory(
         WarpService warpService,
         Server server,
         MiniMessage miniMessage,
@@ -78,19 +79,7 @@ public class WarpInventory {
     }
 
     private Gui createInventory(Player player, WarpInventoryConfigService.WarpInventoryConfigData warpData) {
-        int rowsCount;
-        int size = warpData.items().size();
-
-        if (!warpData.border().enabled()) {
-            rowsCount = (size + 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1;
-        }
-        else {
-            switch (warpData.border().fillType()) {
-                case BORDER, ALL -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITH_BORDER + 1 + BORDER_ROW_COUNT;
-                case TOP, BOTTOM -> rowsCount = (size - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + 1 + UGLY_BORDER_ROW_COUNT;
-                default -> throw new IllegalStateException("Unexpected value: " + warpData.border().fillType());
-            }
-        }
+        int rowsCount = calculateRowsCount(warpData);
 
         Gui gui = Gui.gui()
             .title(this.miniMessage.deserialize(warpData.title()))
@@ -105,33 +94,51 @@ public class WarpInventory {
         return gui;
     }
 
-    private void createBorder(WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
-        if (warpData.border().enabled()) {
-            WarpInventoryConfig.BorderSection borderSection = warpData.border();
+    private int calculateRowsCount(WarpInventoryConfigService.WarpInventoryConfigData warpData) {
+        int size = warpData.items().size();
 
-            ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
-
-            if (!borderSection.name().isBlank()) {
-                borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(borderSection.name())));
-            }
-
-            if (!borderSection.lore().isEmpty()) {
-                borderItem.lore(borderSection.lore()
-                    .stream()
-                    .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
-                    .toList());
-            }
-
-            GuiItem guiItem = new GuiItem(borderItem.build());
-
-            switch (borderSection.fillType()) {
-                case BORDER -> gui.getFiller().fillBorder(guiItem);
-                case ALL -> gui.getFiller().fill(guiItem);
-                case TOP -> gui.getFiller().fillTop(guiItem);
-                case BOTTOM -> gui.getFiller().fillBottom(guiItem);
-                default -> throw new IllegalStateException("Unexpected value: " + borderSection.fillType());
-            }
+        if (!warpData.border().enabled()) {
+            return (size + GUI_ROW_SIZE_WITHOUT_BORDER - 1) / GUI_ROW_SIZE_WITHOUT_BORDER;
         }
+
+        return switch (warpData.border().fillType()) {
+            case BORDER, ALL -> (size + GUI_ROW_SIZE_WITH_BORDER - 1) / GUI_ROW_SIZE_WITH_BORDER + BORDER_ROW_COUNT;
+            case TOP, BOTTOM -> (size + GUI_ROW_SIZE_WITHOUT_BORDER - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + UGLY_BORDER_ROW_COUNT;
+        };
+    }
+
+    private void createBorder(WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
+        if (!warpData.border().enabled()) {
+            return;
+        }
+
+        WarpInventoryConfig.BorderSection borderSection = warpData.border();
+        GuiItem guiItem = createBorderItem(borderSection);
+
+        switch (borderSection.fillType()) {
+            case BORDER -> gui.getFiller().fillBorder(guiItem);
+            case ALL -> gui.getFiller().fill(guiItem);
+            case TOP -> gui.getFiller().fillTop(guiItem);
+            case BOTTOM -> gui.getFiller().fillBottom(guiItem);
+        }
+    }
+
+    private GuiItem createBorderItem(WarpInventoryConfig.BorderSection borderSection) {
+        ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
+
+        if (!borderSection.name().isBlank()) {
+            borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(borderSection.name())));
+        }
+
+        if (!borderSection.lore().isEmpty()) {
+            List<Component> loreComponents = borderSection.lore()
+                .stream()
+                .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
+                .toList();
+            borderItem.lore(loreComponents);
+        }
+
+        return new GuiItem(borderItem.build());
     }
 
     private void createDecorations(WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
@@ -141,20 +148,22 @@ public class WarpInventory {
 
             guiItem.setAction(event -> {
                 Player player = (Player) event.getWhoClicked();
-
-                if (item.commands.isEmpty()) {
-                    return;
-                }
-
-                for (String command : item.commands) {
-                    this.server.dispatchCommand(player, command);
-                }
-
-                player.closeInventory();
+                this.executeDecorationCommands(player, item);
             });
 
             gui.setItem(item.slot(), guiItem);
         }
+    }
+
+    private void executeDecorationCommands(Player player, ConfigItem item) {
+        if (item.commands.isEmpty()) {
+            return;
+        }
+
+        for (String command : item.commands) {
+            this.server.dispatchCommand(player, command);
+        }
+        player.closeInventory();
     }
 
     private void createWarpItems(Player player, WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
@@ -166,26 +175,29 @@ public class WarpInventory {
             }
 
             Warp warp = warpOptional.get();
-            ConfigItem warpItem = item.warpItem();
 
             if (!warp.hasPermissions(player)) {
                 return;
             }
 
-            BaseItemBuilder baseItemBuilder = this.createItem(warpItem);
-            GuiItem guiItem = baseItemBuilder.asGuiItem();
-
-            guiItem.setAction(event -> {
-                if (!warp.hasPermissions(player)) {
-                    return;
-                }
-
-                player.closeInventory();
-                this.warpTeleportService.teleport(player, warp);
-            });
-
-            gui.setItem(warpItem.slot(), guiItem);
+            this.createWarpGuiItem(player, warp, item.warpItem(), gui);
         });
+    }
+
+    private void createWarpGuiItem(Player player, Warp warp, ConfigItem warpItem, Gui gui) {
+        BaseItemBuilder baseItemBuilder = this.createItem(warpItem);
+        GuiItem guiItem = baseItemBuilder.asGuiItem();
+
+        guiItem.setAction(event -> {
+            if (!warp.hasPermissions(player)) {
+                return;
+            }
+
+            player.closeInventory();
+            this.warpTeleportService.teleport(player, warp);
+        });
+
+        gui.setItem(warpItem.slot(), guiItem);
     }
 
     private BaseItemBuilder createItem(ConfigItem item) {
@@ -210,31 +222,34 @@ public class WarpInventory {
             .glow(item.glow());
     }
 
-    public void addWarp(Warp warp) {
+    public CompletableFuture<Void> addWarp(Warp warp) {
         if (!this.warpService.exists(warp.getName())) {
-            return;
+            return CompletableFuture.completedFuture(null);
         }
 
-        this.warpInventoryConfigService.getWarpInventoryData()
-            .thenAccept(warpData -> {
+        return this.warpInventoryConfigService.getWarpInventoryData()
+            .thenCompose(warpData -> {
                 int slot = getSlot(warpData);
 
-                WarpInventoryItem warpInventoryItem = WarpInventoryItem.builder()
-                    .withWarpName(warp.getName())
-                    .withWarpItem(ConfigItem.builder()
-                        .withName(this.warpSettings.itemNamePrefix() + warp.getName())
-                        .withLore(Collections.singletonList(this.warpSettings.itemLore()))
-                        .withMaterial(this.warpSettings.itemMaterial())
-                        .withTexture(this.warpSettings.itemTexture())
-                        .withSlot(slot)
-                        .withGlow(true)
-                        .build())
-                    .build();
+                WarpInventoryItem warpInventoryItem = createWarpInventoryItem(warp, slot);
 
-                this.warpInventoryConfigService.addWarpItem(warp.getName(), warpInventoryItem)
-                    .exceptionally(FutureHandler::handleException);
+                return this.warpInventoryConfigService.addWarpItem(warp.getName(), warpInventoryItem);
             })
             .exceptionally(FutureHandler::handleException);
+    }
+
+    private WarpInventoryItem createWarpInventoryItem(Warp warp, int slot) {
+        return WarpInventoryItem.builder()
+            .withWarpName(warp.getName())
+            .withWarpItem(ConfigItem.builder()
+                .withName(this.warpSettings.itemNamePrefix() + warp.getName())
+                .withLore(Collections.singletonList(this.warpSettings.itemLore()))
+                .withMaterial(this.warpSettings.itemMaterial())
+                .withTexture(this.warpSettings.itemTexture())
+                .withSlot(slot)
+                .withGlow(true)
+                .build())
+            .build();
     }
 
     private int getSlot(WarpInventoryConfigService.WarpInventoryConfigData warpData) {
@@ -244,44 +259,49 @@ public class WarpInventory {
         }
 
         return switch (warpData.border().fillType()) {
-            case BORDER -> GUI_ITEM_SLOT_WITH_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
-            case ALL -> GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / WarpInventory.GUI_ROW_SIZE_WITH_BORDER) * 2);
+            case BORDER -> GUI_ITEM_SLOT_WITH_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
+            case ALL -> GUI_ITEM_SLOT_WITH_ALL_BORDER + size + ((size / GUI_ROW_SIZE_WITH_BORDER) * 2);
             case TOP -> GUI_ITEM_SLOT_WITH_TOP_BORDER + size;
             case BOTTOM -> size;
         };
     }
 
-    public void removeWarp(String warpName) {
+    public CompletableFuture<Void> removeWarp(String warpName) {
         if (!this.warpSettings.autoAddNewWarps()) {
-            return;
+            return CompletableFuture.completedFuture(null);
         }
 
-        this.warpInventoryConfigService.removeWarpItem(warpName)
-            .thenAccept(removed -> {
+        return this.warpInventoryConfigService.removeWarpItem(warpName)
+            .thenCompose(removed -> {
                 if (removed != null) {
-                    this.shiftWarpItems(removed);
+                    return this.shiftWarpItems(removed);
                 }
+                return CompletableFuture.completedFuture(null);
             })
             .exceptionally(FutureHandler::handleException);
     }
 
-    private void shiftWarpItems(WarpInventoryItem removed) {
+    private CompletableFuture<Void> shiftWarpItems(WarpInventoryItem removed) {
         int removedSlot = removed.warpItem.slot;
 
-        this.warpInventoryConfigService.getWarpItems()
-            .thenAccept(items -> {
+        return this.warpInventoryConfigService.getWarpItems()
+            .thenApply(items -> {
                 List<WarpInventoryItem> itemsToShift = items.values().stream()
                     .filter(item -> item.warpItem.slot > removedSlot)
                     .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
                     .toList();
 
-                int currentShift = removedSlot;
-                for (WarpInventoryItem item : itemsToShift) {
-                    int nextShift = item.warpItem.slot;
-                    item.warpItem.slot = currentShift;
-                    currentShift = nextShift;
-                }
-            })
-            .exceptionally(FutureHandler::handleException);
+                this.performSlotShift(itemsToShift, removedSlot);
+                return null;
+            });
+    }
+
+    private void performSlotShift(List<WarpInventoryItem> itemsToShift, int removedSlot) {
+        int currentShift = removedSlot;
+        for (WarpInventoryItem item : itemsToShift) {
+            int nextShift = item.warpItem.slot;
+            item.warpItem.slot = currentShift;
+            currentShift = nextShift;
+        }
     }
 }

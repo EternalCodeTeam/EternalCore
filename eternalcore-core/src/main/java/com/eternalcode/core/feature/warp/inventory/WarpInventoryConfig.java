@@ -43,6 +43,25 @@ public class WarpInventoryConfig extends AbstractConfigurationFile {
         return new File(dataFolder, "warp-inventory.yml");
     }
 
+    public Map<String, WarpInventoryItem> getItems() {
+        return new HashMap<>(this.items);
+    }
+
+    public void setItems(Map<String, WarpInventoryItem> items) {
+        if (items == null) {
+            this.items = new HashMap<>();
+            return;
+        }
+        this.items = new HashMap<>(items);
+    }
+
+    public enum FillType {
+        BORDER,
+        ALL,
+        TOP,
+        BOTTOM
+    }
+
     @Getter
     @Accessors(fluent = true)
     public static class DisplaySection extends OkaeriConfig {
@@ -57,41 +76,23 @@ public class WarpInventoryConfig extends AbstractConfigurationFile {
                   "# Changes of border section may affect the appearance of the GUI inventory, after changes adjust slots of existing items."})
         public boolean enabled = true;
 
+        @Comment("# Material for border items")
         public Material material = Material.GRAY_STAINED_GLASS_PANE;
 
+        @Comment("# How to fill the border")
         public FillType fillType = FillType.BORDER;
 
+        @Comment("# Display name for border items (empty for no name)")
         public String name = "";
 
+        @Comment("# Lore lines for border items")
         public List<String> lore = Collections.emptyList();
     }
 
     @Getter
     @Accessors(fluent = true)
     public static class DecorationItemsSection extends OkaeriConfig {
+        @Comment("# List of decoration items to display in the inventory")
         public List<ConfigItem> items = List.of();
-    }
-
-    public enum FillType {
-        BORDER,
-        ALL,
-        TOP,
-        BOTTOM
-    }
-
-    public void setItems(Map<String, WarpInventoryItem> items) {
-        this.items = items;
-    }
-
-    public void addItem(String warpName, WarpInventoryItem item) {
-        this.items.put(warpName, item);
-    }
-
-    public WarpInventoryItem removeItem(String warpName) {
-        return this.items.remove(warpName);
-    }
-
-    public Map<String, WarpInventoryItem> getItems() {
-        return this.items;
     }
 }
