@@ -16,8 +16,8 @@ import dev.rollczi.litecommands.shared.Lazy;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -85,9 +85,7 @@ class PowertoolCommandArgument extends ArgumentResolver<CommandSender, String> {
                 @SuppressWarnings("unchecked")
                 Map<String, Command> knownCommands = (Map<String, Command>) knownCommandsField.get(simpleMap);
 
-                return knownCommands.entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                return Collections.unmodifiableMap(knownCommands);
             }
         }
         catch (IllegalAccessException | NoSuchFieldException exception) {
