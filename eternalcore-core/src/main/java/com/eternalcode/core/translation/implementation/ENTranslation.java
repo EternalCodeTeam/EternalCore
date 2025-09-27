@@ -516,7 +516,7 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# This section is responsable for repair messages"
+        "# This section is responsible for repair messages"
     })
     public ENRepairMessages repair = new ENRepairMessages();
 
