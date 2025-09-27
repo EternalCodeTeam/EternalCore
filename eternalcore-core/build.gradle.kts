@@ -17,6 +17,8 @@ dependencies {
     // Minecraft & Bridges API
     compileOnlyApi("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
     compileOnly("me.clip:placeholderapi:${Versions.PLACEHOLDER_API}")
+    compileOnly("us.dynmap:dynmap-api:${Versions.DYNMAP_API}")
+    compileOnly("us.dynmap:DynmapCoreAPI:${Versions.DYNMAP_API}")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:${Versions.LOMBOK}")
