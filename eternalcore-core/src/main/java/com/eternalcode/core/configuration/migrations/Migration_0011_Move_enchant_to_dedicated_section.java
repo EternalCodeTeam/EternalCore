@@ -7,7 +7,7 @@ import eu.okaeri.configs.migrate.builtin.NamedMigration;
 public class Migration_0011_Move_enchant_to_dedicated_section extends NamedMigration {
     Migration_0011_Move_enchant_to_dedicated_section() {
         super(
-            "Move give to dedicated section",
+            "Move enchant to dedicated section",
             move("items.unsafeEnchantments", "enchant.unsafeEnchantments")
         );
     }
