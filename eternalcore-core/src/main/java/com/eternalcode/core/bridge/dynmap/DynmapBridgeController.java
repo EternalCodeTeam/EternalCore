@@ -64,7 +64,7 @@ public class DynmapBridgeController implements Listener {
 
         Player player = event.getPlayer();
         if (this.vanishService.isVanished(player)) {
-            this.dynmapAPI.setPlayerVisiblity(player, true);
+            this.dynmapAPI.setPlayerVisiblity(player, false);
         }
     }
 }
