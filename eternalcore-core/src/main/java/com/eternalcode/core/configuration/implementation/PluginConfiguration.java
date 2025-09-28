@@ -13,6 +13,10 @@ import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.enchant.EnchantConfig;
+import com.eternalcode.core.feature.enchant.EnchantSettings;
+import com.eternalcode.core.feature.give.GiveConfig;
+import com.eternalcode.core.feature.give.GiveSettings;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.home.HomesConfig;
@@ -173,25 +177,17 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings for Away From Keyboard detection and management")
     AfkConfig afk = new AfkConfig();
 
+    @Bean(proxied = EnchantSettings.class)
     @Comment("")
-    @Comment("# Items Configuration")
-    @Comment("# Settings for item management and behavior")
-    public Items items = new Items();
+    @Comment("# Enchant Configuration")
+    @Comment("# Settings for enchant functionality")
+    EnchantConfig enchant = new EnchantConfig();
 
-    // TODO: Add migration, move option's to domain-specific configuration classes
-    // unsafeEnchantments -> com.eternalcode.core.enchant.EnchantConfig
-    // defaultGiveAmount -> com.eternalcode.core.feature.give.GiveConfig
-    // dropOnFullInventory -> com.eternalcode.core.feature.give.GiveConfig
-    public static class Items extends OkaeriConfig {
-        @Comment("# Allow unsafe enchantments (enables custom enchants on various items)")
-        public boolean unsafeEnchantments = true;
-
-        @Comment("# Default amount of items to give when no amount is specified")
-        public int defaultGiveAmount = 1;
-
-        @Comment("# Drop items on ground when player's inventory is full")
-        public boolean dropOnFullInventory = true;
-    }
+    @Bean(proxied = GiveSettings.class)
+    @Comment("")
+    @Comment("# Give Configuration")
+    @Comment("# Settings for item giving functionality")
+    GiveConfig give = new GiveConfig();
 
     @Bean(proxied = WarpSettings.class)
     @Comment("")

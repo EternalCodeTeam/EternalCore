@@ -14,12 +14,12 @@ import org.bukkit.inventory.PlayerInventory;
 @Service
 public class GiveService {
 
-    private final PluginConfiguration pluginConfiguration;
+    private final GiveSettings giveSettings;
     private final NoticeService noticeService;
 
     @Inject
-    public GiveService(PluginConfiguration pluginConfiguration, NoticeService noticeService) {
-        this.pluginConfiguration = pluginConfiguration;
+    public GiveService(GiveSettings giveSettings, NoticeService noticeService) {
+        this.giveSettings = giveSettings;
         this.noticeService = noticeService;
     }
 
@@ -46,7 +46,7 @@ public class GiveService {
         GiveResult giveResult = this.processGive(new PlayerContents(inventory.getStorageContents(), inventory.getItemInOffHand()), new ItemStack(material, amount));
         Optional<ItemStack> rest = giveResult.rest();
 
-        if (rest.isPresent() && !this.pluginConfiguration.items.dropOnFullInventory) {
+        if (rest.isPresent() && !this.giveSettings.dropOnFullInventory()) {
             this.noticeService.create()
                 .notice(translation -> translation.item().giveNoSpace())
                 .sender(sender)
