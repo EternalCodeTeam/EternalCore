@@ -1,16 +1,14 @@
 package com.eternalcode.core.bridge.dynmap;
 
 import com.eternalcode.core.feature.vanish.VanishService;
-import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
+import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
 
 public class DynmapBridgeController implements Listener {
@@ -18,10 +16,9 @@ public class DynmapBridgeController implements Listener {
     private final VanishService vanishService;
     private final DynmapAPI dynmapAPI;
 
-    public DynmapBridgeController(VanishService vanishService, JavaPlugin plugin) {
+    public DynmapBridgeController(VanishService vanishService, DynmapAPI dynmapAPI) {
         this.vanishService = vanishService;
-        Plugin dynmapPlugin = plugin.getServer().getPluginManager().getPlugin("dynmap");
-        this.dynmapAPI = (DynmapAPI) dynmapPlugin;
+        this.dynmapAPI = dynmapAPI;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
