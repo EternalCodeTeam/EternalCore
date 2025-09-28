@@ -8,7 +8,7 @@ public class Migration_0011_Move_enchant_to_dedicated_section extends NamedMigra
     Migration_0011_Move_enchant_to_dedicated_section() {
         super(
             "Move give to dedicated section",
-            move("items.unsafeEnchantments", "give.unsafeEnchantments")
+            move("items.unsafeEnchantments", "enchant.unsafeEnchantments")
         );
     }
 }
