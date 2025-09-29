@@ -32,7 +32,7 @@ object Versions {
     const val PANDA_UTILITIES = "0.5.3-alpha"
     const val APACHE_COMMONS = "2.20.0"
 
-    const val TRIUMPH_GUI = "3.1.12"
+    const val TRIUMPH_GUI = "3.1.13"
 
     const val XSERIES = "13.4.0"
 
