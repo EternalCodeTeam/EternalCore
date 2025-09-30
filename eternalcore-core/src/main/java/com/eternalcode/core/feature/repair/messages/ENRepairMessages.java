@@ -18,6 +18,6 @@ public class ENRepairMessages extends OkaeriConfig implements RepairMessages {
 
     public Notice cannotRepair = Notice.chat ("<red>✘ <dark_red>You can't repair this item!");
 
-    public Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>This item is not damaged!");
+    public Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>You don't have any damaged items to repair!");
 
 }
