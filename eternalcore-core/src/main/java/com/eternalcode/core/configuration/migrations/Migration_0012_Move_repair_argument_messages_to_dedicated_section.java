@@ -4,8 +4,8 @@ import static eu.okaeri.configs.migrate.ConfigMigrationDsl.move;
 
 import eu.okaeri.configs.migrate.builtin.NamedMigration;
 
-public class Migration_0012_Move_Item_Repair_Notices extends NamedMigration {
-    Migration_0012_Move_Item_Repair_Notices() {
+public class Migration_0012_Move_repair_argument_messages_to_dedicated_section extends NamedMigration {
+    Migration_0012_Move_repair_argument_messages_to_dedicated_section() {
         super(
             "Move repair notices to dedicated section",
             move("argument.noDamaged", "repair.cannotRepair"),
