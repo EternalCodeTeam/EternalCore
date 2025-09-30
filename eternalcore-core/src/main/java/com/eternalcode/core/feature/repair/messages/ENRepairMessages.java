@@ -16,4 +16,8 @@ public class ENRepairMessages extends OkaeriConfig implements RepairMessages {
 
     public Notice delay = Notice.chat("<red>✘ <dark_red>You can use this command in <dark_red>{TIME}!");
 
+    public Notice cannotRepair = Notice.chat ("<red>✘ <dark_red>You can't repair this item!");
+
+    public Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>This item is not damaged!");
+
 }

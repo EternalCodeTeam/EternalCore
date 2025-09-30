@@ -15,4 +15,8 @@ public class PLRepairMessages extends OkaeriConfig implements RepairMessages {
     public Notice armorRepaired = Notice.chat("<green>► <white>Twoja zbroja została naprawiona!");
 
     public Notice delay = Notice.chat ("<red>✘ <dark_red>Możesz użyć tej komendy za <dark_red>{TIME}!");
+
+    public Notice cannotRepair = Notice.chat ("<red>✘ <dark_red>Nie możesz naprawić tego itemu!");
+
+    public Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>Ten item nie jest uszkodzony!");
 }

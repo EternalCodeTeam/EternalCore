@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.enchant;
 
-import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import dev.rollczi.litecommands.argument.Argument;
@@ -10,15 +10,15 @@ import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import java.util.Locale;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 
-import java.util.List;
+import java.util.Arrays;
 
-@LiteArgument(type = int.class, name = EnchantArgument.KEY)
-class EnchantArgument extends AbstractViewerArgument<Integer> {
-
-    private static final List<Integer> suggestions = List.of(1, 2, 3, 4, 5);
-    static final String KEY = "enchant-level";
+@LiteArgument(type = Enchantment.class)
+class EnchantArgument extends AbstractViewerArgument<Enchantment> {
 
     @Inject
     EnchantArgument(TranslationManager translationManager) {
@@ -26,21 +26,22 @@ class EnchantArgument extends AbstractViewerArgument<Integer> {
     }
 
     @Override
-    public ParseResult<Integer> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        try {
-            int value = Integer.parseInt(argument);
+    public ParseResult<Enchantment> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
+        Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument.toLowerCase(Locale.ROOT)));
 
-            return ParseResult.success(value);
+        if (enchantment == null) {
+            return ParseResult.failure(translation.enchant().invalidEnchantment());
         }
-        catch (NumberFormatException exception) {
-            return ParseResult.failure(translation.argument().noValidEnchantmentLevel());
-        }
+
+        return ParseResult.success(enchantment);
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Integer> argument, SuggestionContext context) {
-        return suggestions.stream()
-            .map(String::valueOf)
+    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Enchantment> argument, SuggestionContext context) {
+        return Arrays.stream(Enchantment.values())
+            .map(Enchantment::getKey)
+            .map(NamespacedKey::getKey)
             .collect(SuggestionResult.collector());
     }
+
 }
