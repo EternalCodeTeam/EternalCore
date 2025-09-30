@@ -19,12 +19,12 @@ import org.bukkit.inventory.PlayerInventory;
 @Permission("eternalcore.enchant")
 class EnchantCommand {
 
-    private final PluginConfiguration configuration;
+    private final EnchantSettings enchantSettings;
     private final NoticeService noticeService;
 
     @Inject
-    EnchantCommand(PluginConfiguration configuration, NoticeService noticeService) {
-        this.configuration = configuration;
+    EnchantCommand(EnchantSettings enchantSettings, NoticeService noticeService) {
+        this.enchantSettings = enchantSettings;
         this.noticeService = noticeService;
     }
 
@@ -82,7 +82,7 @@ class EnchantCommand {
     }
 
     private void enchantItem(UUID playerId, ItemStack item, Enchantment enchantment, int level) {
-        if (this.configuration.items.unsafeEnchantments) {
+        if (this.enchantSettings.unsafeEnchantments()) {
             item.addUnsafeEnchantment(enchantment, level);
             return;
         }

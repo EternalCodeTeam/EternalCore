@@ -20,21 +20,21 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.item")
 class ItemCommand {
 
+    private static final int DEFAULT_AMOUNT = 1;
+
     private final NoticeService noticeService;
     private final GiveService giveService;
-    private final PluginConfiguration config;
 
     @Inject
-    ItemCommand(NoticeService noticeService, GiveService giveService, PluginConfiguration config) {
+    ItemCommand(NoticeService noticeService, GiveService giveService) {
         this.noticeService = noticeService;
         this.giveService = giveService;
-        this.config = config;
     }
 
     @Execute
     @DescriptionDocs(description = "Gives you an item", arguments = "<item>")
     void execute(@Context Player player, @Arg Material material) {
-        this.execute(player, material, this.config.items.defaultGiveAmount);
+        this.execute(player, material, DEFAULT_AMOUNT);
     }
 
     @Execute
