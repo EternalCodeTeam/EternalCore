@@ -90,7 +90,7 @@ abstract class GuavaDelay<T> {
             return false;
         }
 
-        if (Instant.now().isAfter(until)) {
+        if (!Instant.now().isBefore(until)) {
             this.cache.invalidate(key);
             return false;
         }
