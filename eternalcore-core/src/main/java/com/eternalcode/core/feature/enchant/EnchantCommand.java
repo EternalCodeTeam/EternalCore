@@ -89,7 +89,7 @@ class EnchantCommand {
         if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(item)) {
             this.noticeService.create()
                 .player(playerId)
-                .notice(translation -> translation.enchant().invalidEnchantment())
+                .notice(translation -> translation.enchant().invalidEnchantmentLevel())
                 .send();
             return;
         }
