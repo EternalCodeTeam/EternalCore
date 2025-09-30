@@ -32,25 +32,13 @@ abstract class GuavaDelay<T> {
     protected final Cache<T, Instant> cache;
 
     /**
-     * Creates a new BaseDelay with a custom maximum cache size.
+     * Creates a new GuavaDelay with a custom maximum cache size.
      *
-     * @param maximumSize the maximum number of entries in the cache must be greater than 0
+     * @param maximumSize the maximum number of entries in the cache
      */
     protected GuavaDelay(long maximumSize) {
         this.cache = CacheBuilder.newBuilder()
             .maximumSize(maximumSize)
-            .build();
-    }
-
-    /**
-     * Creates a new BaseDelay with a custom expireAfterWrite and maximum cache size.
-     *
-     * @param maximumSize the maximum number of entries in the cache must be greater than 0
-     */
-    protected GuavaDelay(Duration expireAfter, long maximumSize) {
-        this.cache = CacheBuilder.newBuilder()
-            .maximumSize(maximumSize)
-            .expireAfterWrite(expireAfter)
             .build();
     }
 
