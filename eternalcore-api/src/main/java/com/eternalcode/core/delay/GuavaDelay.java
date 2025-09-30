@@ -156,7 +156,7 @@ abstract class GuavaDelay<T> {
 
         Instant base = this.cache.getIfPresent(key);
         Instant now = Instant.now();
-        Instant start = (base == null || now.isAfter(base)) ? now : base;
+        Instant start = (base == null || !now.isBefore(base)) ? now : base;
         this.cache.put(key, start.plus(extra));
     }
 }
