@@ -1,11 +1,7 @@
 package com.eternalcode.core.feature.randomteleport;
 
-import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_BYPASS_PERMISSION;
-import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_COMMAND_OTHER;
-import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_COMMAND_SELF;
-import static com.eternalcode.core.feature.randomteleport.RandomTeleportPlaceholders.PLACEHOLDERS;
-
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.delay.DefaultDelay;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -16,9 +12,15 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import org.bukkit.entity.Player;
+
 import java.time.Duration;
 import java.util.UUID;
-import org.bukkit.entity.Player;
+
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_BYPASS_PERMISSION;
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_COMMAND_OTHER;
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPermissionConstant.RTP_COMMAND_SELF;
+import static com.eternalcode.core.feature.randomteleport.RandomTeleportPlaceholders.PLACEHOLDERS;
 
 @Command(name = "rtp", aliases = "randomteleport")
 class RandomTeleportCommand {
@@ -27,7 +29,7 @@ class RandomTeleportCommand {
     private final RandomTeleportService randomTeleportService;
     private final RandomTeleportTaskService randomTeleportTaskService;
     private final RandomTeleportSettings randomTeleportSettings;
-    private final Delay<UUID> cooldown;
+    private final DefaultDelay<UUID> cooldown;
 
     @Inject
     RandomTeleportCommand(
@@ -40,7 +42,7 @@ class RandomTeleportCommand {
         this.randomTeleportService = randomTeleportService;
         this.randomTeleportTaskService = randomTeleportTaskService;
         this.randomTeleportSettings = randomTeleportSettings;
-        this.cooldown = new Delay<>(() -> this.randomTeleportSettings.cooldown());
+        this.cooldown = Delay.withDefault(this.randomTeleportSettings.cooldown());
     }
 
     @Execute
@@ -68,7 +70,7 @@ class RandomTeleportCommand {
                 this.handleTeleportSuccess(player);
             });
 
-        this.cooldown.markDelay(uuid, this.randomTeleportSettings.cooldown());
+        this.cooldown.markDelay(uuid);
     }
 
     @Execute
@@ -96,7 +98,7 @@ class RandomTeleportCommand {
                 this.handleAdminTeleport(sender, player);
             });
 
-        this.cooldown.markDelay(uuid, this.randomTeleportSettings.cooldown());
+        this.cooldown.markDelay(uuid);
     }
 
     private void handleTeleportSuccess(Player player) {
@@ -129,7 +131,7 @@ class RandomTeleportCommand {
         }
 
         if (this.cooldown.hasDelay(uniqueId)) {
-            Duration time = this.cooldown.getDurationToExpire(uniqueId);
+            Duration time = this.cooldown.getRemaining(uniqueId);
 
             this.noticeService.create()
                 .notice(translation -> translation.randomTeleport().randomTeleportDelay())

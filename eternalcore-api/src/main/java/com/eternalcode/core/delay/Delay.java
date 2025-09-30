@@ -1,50 +1,61 @@
 package com.eternalcode.core.delay;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-
 import java.time.Duration;
-import java.time.Instant;
-import java.util.function.Supplier;
 
-public class Delay<T> {
+/**
+ * Factory class for creating delay instances.
+ * <p>
+ * Naming convention:
+ * - withDefault(...) -> DefaultDelay (uses predefined Duration)
+ * - explicit(...) -> ExplicitDelay (requires explicit Duration each time)
+ */
+public final class Delay {
 
-    private final Cache<T, Instant> delays;
-
-    private final Supplier<Duration> delaySettings;
-
-    public Delay(Supplier<Duration> delayProvider) {
-        this.delaySettings = delayProvider;
-
-        this.delays = CacheBuilder.newBuilder()
-            .expireAfterWrite(delayProvider.get())
-            .build();
+    private Delay() {
+        throw new UnsupportedOperationException("Utility class - do not instantiate");
     }
 
-    public void markDelay(T key, Duration delay) {
-        this.delays.put(key, Instant.now().plus(delay));
+    /**
+     * Creates a DefaultDelay with the default cache size.
+     *
+     * @param defaultDelay the default duration used for delays
+     * @param <T> the key type
+     * @return DefaultDelay instance
+     */
+    public static <T> DefaultDelay<T> withDefault(Duration defaultDelay) {
+        return new GuavaDefaultDelay<>(defaultDelay);
     }
 
-    public void markDelay(T key) {
-        this.markDelay(key, this.delaySettings.get());
+    /**
+     * Creates a DefaultDelay with a custom maximum cache size.
+     *
+     * @param defaultDelay the default duration used for delays
+     * @param maximumSize maximum number of entries in the cache
+     * @param <T> the key type
+     * @return DefaultDelay instance
+     */
+    public static <T> DefaultDelay<T> withDefault(Duration defaultDelay, long maximumSize) {
+        return new GuavaDefaultDelay<>(defaultDelay, maximumSize);
     }
 
-    public void unmarkDelay(T key) {
-        this.delays.invalidate(key);
+    /**
+     * Creates an ExplicitDelay with the default cache size.
+     *
+     * @param <T> the key type
+     * @return ExplicitDelay instance
+     */
+    public static <T> ExplicitDelay<T> explicit() {
+        return new GuavaExplicitDelay<>();
     }
 
-    public boolean hasDelay(T key) {
-        Instant delayExpireMoment = this.getDelayExpireMoment(key);
-
-        return Instant.now().isBefore(delayExpireMoment);
+    /**
+     * Creates an ExplicitDelay with a custom maximum cache size.
+     *
+     * @param maximumSize maximum number of entries in the cache
+     * @param <T> the key type
+     * @return ExplicitDelay instance
+     */
+    public static <T> ExplicitDelay<T> explicit(long maximumSize) {
+        return new GuavaExplicitDelay<>(maximumSize);
     }
-
-    public Duration getDurationToExpire(T key) {
-        return Duration.between(Instant.now(), this.getDelayExpireMoment(key));
-    }
-
-    private Instant getDelayExpireMoment(T key) {
-        return this.delays.asMap().getOrDefault(key, Instant.MIN);
-    }
-
 }

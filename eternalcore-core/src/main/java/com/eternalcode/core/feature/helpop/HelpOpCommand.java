@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.helpop;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.delay.DefaultDelay;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.helpop.event.HelpOpEvent;
@@ -14,10 +15,11 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import java.time.Duration;
-import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
+import java.util.UUID;
 
 @Command(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
@@ -34,7 +36,7 @@ class HelpOpCommand {
     private final HelpOpSettings helpOpSettings;
     private final EventCaller eventCaller;
     private final Server server;
-    private final Delay<UUID> delay;
+    private final DefaultDelay<UUID> delay;
 
     @Inject
     HelpOpCommand(NoticeService noticeService, HelpOpSettings helpOpSettings, EventCaller eventCaller, Server server) {
@@ -42,7 +44,7 @@ class HelpOpCommand {
         this.helpOpSettings = helpOpSettings;
         this.eventCaller = eventCaller;
         this.server = server;
-        this.delay = new Delay<>(() -> this.helpOpSettings.helpOpDelay());
+        this.delay = Delay.withDefault(this.helpOpSettings.helpOpDelay());
     }
 
     @Execute
@@ -58,7 +60,7 @@ class HelpOpCommand {
         }
 
         if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
+            Duration time = this.delay.getRemaining(uuid);
 
             this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
@@ -91,7 +93,7 @@ class HelpOpCommand {
             .notice(translation -> translation.helpOp().send())
             .send();
 
-        this.delay.markDelay(uuid, this.helpOpSettings.helpOpDelay());
+        this.delay.markDelay(uuid);
     }
 
 }
