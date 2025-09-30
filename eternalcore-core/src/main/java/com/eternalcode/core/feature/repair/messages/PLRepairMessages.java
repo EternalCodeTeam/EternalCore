@@ -18,5 +18,5 @@ public class PLRepairMessages extends OkaeriConfig implements RepairMessages {
 
     public Notice cannotRepair = Notice.chat ("<red>✘ <dark_red>Nie możesz naprawić tego itemu!");
 
-    public Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>Ten item nie jest uszkodzony!");
+    public Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>Nie masz żadnych uszkodzonych przedmiotów do naprawy!");
 }
