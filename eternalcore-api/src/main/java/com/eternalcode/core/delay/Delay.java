@@ -12,7 +12,7 @@ import java.time.Duration;
 public final class Delay {
 
     private Delay() {
-        throw new UnsupportedOperationException("Utility class - do not instantiate");
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
     /**
