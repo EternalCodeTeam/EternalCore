@@ -6,10 +6,6 @@ public interface BackMessages {
 
     Notice lastLocationNoExist();
 
-    Notice noPermissionBackOnDeath();
-
-    Notice targetNoPermissionBackOnDeath();
-
     Notice teleportedToLastLocation();
 
     Notice teleportedSpecifiedPlayerLastLocation();

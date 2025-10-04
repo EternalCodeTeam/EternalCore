@@ -6,14 +6,14 @@ import com.eternalcode.core.feature.teleport.TeleportTaskService;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import panda.std.Pair;
 
 @Service
 public class BackService {
@@ -22,7 +22,7 @@ public class BackService {
     private final TeleportTaskService teleportTaskService;
     private final TeleportRequestSettings settings;
 
-    private final Map<UUID, BackLocation> backLocations = new HashMap<>();
+    private final Cache<UUID, Pair<BackLocation, BackLocation>> backLocationsCache;
 
     @Inject
     public BackService(
@@ -33,14 +33,31 @@ public class BackService {
         this.teleportService = teleportService;
         this.teleportTaskService = teleportTaskService;
         this.settings = settings;
+
+        this.backLocationsCache = Caffeine.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(2, TimeUnit.HOURS)
+            .build();
     }
 
-    public Optional<BackLocation> getBackLocation(UUID playerId) {
-        return Optional.ofNullable(backLocations.get(playerId));
+    public Optional<Pair<BackLocation, BackLocation>> getBackLocationPair(UUID playerId) {
+        return Optional.ofNullable(backLocationsCache.getIfPresent(playerId));
     }
 
     public void setBackLocation(UUID playerId, Location location, boolean isFromDeath) {
-        backLocations.put(playerId, new BackLocation(location, isFromDeath));
+        Pair<BackLocation, BackLocation> existing = backLocationsCache.getIfPresent(playerId);
+        BackLocation newLocation = new BackLocation(location);
+        BackLocation deathLocation;
+        BackLocation normalLocation;
+        if (existing == null) {
+            deathLocation = isFromDeath ? newLocation : null;
+            normalLocation = isFromDeath ? null : newLocation;
+        }
+        else {
+            deathLocation = isFromDeath ? newLocation : existing.getFirst();
+            normalLocation = isFromDeath ? existing.getSecond() : newLocation;
+        }
+        backLocationsCache.put(playerId, Pair.of(deathLocation, normalLocation));
     }
 
     public void teleportBack(Player player, Location location) {
@@ -57,6 +74,6 @@ public class BackService {
         }
     }
 
-    public record BackLocation(Location location, boolean isFromDeath) {
+    public record BackLocation(Location location) {
     }
 }

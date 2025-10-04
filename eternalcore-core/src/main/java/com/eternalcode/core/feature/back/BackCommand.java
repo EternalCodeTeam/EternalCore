@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.back;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.back.BackService.BackLocation;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -9,14 +10,12 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.entity.Player;
-
 import java.util.Optional;
+import org.bukkit.entity.Player;
+import panda.std.Pair;
 
 @Command(name = "back")
 public class BackCommand {
-
-    private static final String PERMISSION_BACK_ON_DEATH = "eternalcore.back.ondeath";
 
     private final BackService backService;
     private final NoticeService noticeService;
@@ -27,47 +26,73 @@ public class BackCommand {
         this.noticeService = noticeService;
     }
 
-    @Execute
-    @Permission("eternalcore.back")
-    @DescriptionDocs(description = "Teleport to last location")
-    public void execute(@Sender Player player) {
-        Optional<BackService.BackLocation> backLocation = this.backService.getBackLocation(player.getUniqueId());
+    @Execute(name = "death")
+    @Permission("eternalcore.back.death")
+    @DescriptionDocs(description = "Teleport to your last death location")
+    public void executeBackDeath(@Sender Player player) {
+        Optional<Pair<BackLocation, BackLocation>> backPair = this.backService.getBackLocationPair(player.getUniqueId());
 
-        if (backLocation.isEmpty()) {
+        if (backPair.isEmpty() || backPair.get().getFirst() == null) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.back().lastLocationNoExist());
             return;
         }
 
-        BackService.BackLocation location = backLocation.get();
-
-        if (location.isFromDeath() && !player.hasPermission(PERMISSION_BACK_ON_DEATH)) {
-            this.noticeService.player(player.getUniqueId(), translation -> translation.back().noPermissionBackOnDeath());
-            return;
-        }
-
-        this.backService.teleportBack(player, location.location());
+        BackLocation deathLocation = backPair.get().getFirst();
+        this.backService.teleportBack(player, deathLocation.location());
         this.noticeService.player(player.getUniqueId(), translation -> translation.back().teleportedToLastLocation());
     }
 
-    @Execute
-    @Permission("eternalcore.back.other")
-    @DescriptionDocs(description = "Teleport specified player to last location", arguments = "<player>")
-    public void execute(@Sender Viewer viewer, @Arg Player target) {
-        Optional<BackService.BackLocation> backLocation = this.backService.getBackLocation(target.getUniqueId());
+    @Execute(name = "teleport")
+    @Permission("eternalcore.back.teleport")
+    @DescriptionDocs(description = "Teleport to your last teleport location")
+    public void executeBackTeleport(@Sender Player player) {
+        Optional<Pair<BackLocation, BackLocation>> backPair = this.backService.getBackLocationPair(player.getUniqueId());
 
-        if (backLocation.isEmpty()) {
+        if (backPair.isEmpty() || backPair.get().getSecond() == null) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.back().lastLocationNoExist());
+            return;
+        }
+
+        BackLocation teleportLocation = backPair.get().getSecond();
+        this.backService.teleportBack(player, teleportLocation.location());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.back().teleportedToLastLocation());
+    }
+
+    @Execute(name = "death")
+    @Permission("eternalcore.back.death.other")
+    @DescriptionDocs(description = "Teleport specified player to their last death location", arguments = "<player>")
+    public void executeBackDeathOther(@Sender Viewer viewer, @Arg Player target) {
+        Optional<Pair<BackLocation, BackLocation>> backPair = this.backService.getBackLocationPair(target.getUniqueId());
+
+        if (backPair.isEmpty() || backPair.get().getFirst() == null) {
             this.noticeService.viewer(viewer, translation -> translation.back().lastLocationNoExist());
             return;
         }
 
-        BackService.BackLocation location = backLocation.get();
+        BackLocation deathLocation = backPair.get().getFirst();
+        this.backService.teleportBack(target, deathLocation.location());
+        this.noticeService.player(target.getUniqueId(), translation -> translation.back().teleportedToLastLocation());
 
-        if (location.isFromDeath() && !target.hasPermission(PERMISSION_BACK_ON_DEATH)) {
-            this.noticeService.viewer(viewer, translation -> translation.back().targetNoPermissionBackOnDeath());
+        this.noticeService.create()
+            .viewer(viewer)
+            .notice(translation -> translation.back().teleportedSpecifiedPlayerLastLocation())
+            .placeholder("{PLAYER}", target.getName())
+            .send();
+    }
+
+    @Execute(name = "teleport")
+    @Permission("eternalcore.back.teleport.other")
+    @DescriptionDocs(description = "Teleport specified player to their last teleport location", arguments = "<player>")
+    public void executeBackTeleportOther(@Sender Viewer viewer, @Arg Player target) {
+        Optional<Pair<BackLocation, BackLocation>> backPair = this.backService.getBackLocationPair(target.getUniqueId());
+
+        if (backPair.isEmpty() || backPair.get().getSecond() == null) {
+            this.noticeService.viewer(viewer, translation -> translation.back().lastLocationNoExist());
             return;
         }
 
-        this.backService.teleportBack(target, location.location());
+        BackLocation teleportLocation = backPair.get().getSecond();
+        this.backService.teleportBack(target, teleportLocation.location());
         this.noticeService.player(target.getUniqueId(), translation -> translation.back().teleportedToLastLocation());
 
         this.noticeService.create()

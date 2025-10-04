@@ -10,8 +10,6 @@ import lombok.experimental.Accessors;
 public class PLBackMessages extends OkaeriConfig implements BackMessages {
 
     public Notice lastLocationNoExist = Notice.chat("<red>► <white>Nie masz żadnej ostatniej lokalizacji, do której można się teleportować!");
-    public Notice noPermissionBackOnDeath = Notice.chat("<red>► <white>Nie masz uprawnień do używania <red>/back <white>po śmierci!");
-    public Notice targetNoPermissionBackOnDeath = Notice.chat("<red>► <white>Gracz nie ma uprawnień do używania <red>/back <white>po śmierci!");
     public Notice teleportedToLastLocation = Notice.chat("<green>► <white>Zostałeś przeteleportowany do ostatniej lokalizacji!");
     public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został przeteleportowany do swojej ostatniej lokalizacji!");
 
