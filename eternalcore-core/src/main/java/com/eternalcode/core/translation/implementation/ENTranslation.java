@@ -1,5 +1,9 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
+import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
+import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
+import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
 import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
@@ -519,6 +523,19 @@ public class ENTranslation extends AbstractTranslation {
         "# This section is responsible for repair messages"
     })
     public ENRepairMessages repair = new ENRepairMessages();
+
+    @Comment({
+        " ",
+        "# This section is responsible for enchant messages"
+    })
+    ENEnchantMessages enchant = new ENEnchantMessages();
+
+    @Comment({
+        " ",
+        "# This section is responsible for butcher messages"
+    })
+    ENButcherMessages butcher = new ENButcherMessages();
+
 
     @Comment({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();

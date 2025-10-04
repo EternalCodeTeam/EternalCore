@@ -1,18 +1,15 @@
 package com.eternalcode.core.translation;
 
-import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
-import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
-import com.eternalcode.core.feature.clear.messages.ClearMessages;
-import com.eternalcode.core.feature.container.messages.ContainerMessages;
-import com.eternalcode.core.feature.repair.messages.RepairMessages;
-import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
+import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
+import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
@@ -178,6 +175,10 @@ public interface Translation {
     }
 
     RepairMessages repair();
+
+    EnchantMessages enchant();
+
+    ButcherMessages butcher();
 
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();

@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.enchant;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -30,7 +29,7 @@ class EnchantCommand {
 
     @Execute
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level>")
-    void execute(@Sender Player player, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level) {
+    void execute(@Sender Player player, @Arg Enchantment enchantment, @Arg(EnchantLevelArgument.KEY) int level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
@@ -53,7 +52,7 @@ class EnchantCommand {
 
     @Execute
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level> <player>")
-    void execute(@Sender Player sender, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level, @Arg Player target) {
+    void execute(@Sender Player sender, @Arg Enchantment enchantment, @Arg(EnchantLevelArgument.KEY) int level, @Arg Player target) {
         PlayerInventory targetInventory = target.getInventory();
         ItemStack handItem = targetInventory.getItem(targetInventory.getHeldItemSlot());
 
@@ -90,7 +89,7 @@ class EnchantCommand {
         if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(item)) {
             this.noticeService.create()
                 .player(playerId)
-                .notice(translation -> translation.argument().noValidEnchantmentLevel())
+                .notice(translation -> translation.enchant().invalidEnchantmentLevel())
                 .send();
             return;
         }
