@@ -12,8 +12,11 @@ import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
+import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
+import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
@@ -25,6 +28,7 @@ import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
+import com.eternalcode.core.feature.powertool.messages.PowertoolMessages;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -174,6 +178,10 @@ public interface Translation {
 
     RepairMessages repair();
 
+    EnchantMessages enchant();
+
+    ButcherMessages butcher();
+
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();
     EndScreenMessages endScreen();
@@ -250,4 +258,6 @@ public interface Translation {
     PlaytimeMessages playtime();
     // freeze section
     FreezeMessages freeze();
+    // powertool section
+    PowertoolMessages powertool();
 }

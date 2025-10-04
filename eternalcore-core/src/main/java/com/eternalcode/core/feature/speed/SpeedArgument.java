@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.speed;
 
-import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import dev.rollczi.litecommands.argument.Argument;
@@ -10,14 +10,19 @@ import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
+import java.util.stream.IntStream;
 import org.bukkit.command.CommandSender;
 
-import java.util.stream.IntStream;
-
-@LiteArgument(type = Integer.class, name = SpeedArgument.KEY)
-class SpeedArgument extends AbstractViewerArgument<Integer> {
+@LiteArgument(type = Double.class, name = SpeedArgument.KEY)
+class SpeedArgument extends AbstractViewerArgument<Double> {
 
     static final String KEY = "speed";
+
+    private static final double MIN_SPEED = 0.0;
+    private static final double MAX_SPEED = 10.0;
+    private static final char DECIMAL_COMMA = ',';
+    private static final char DECIMAL_DOT = '.';
+    private static final double SUGGESTION_STEP = 0.5;
 
     @Inject
     SpeedArgument(TranslationManager translationManager) {
@@ -25,11 +30,12 @@ class SpeedArgument extends AbstractViewerArgument<Integer> {
     }
 
     @Override
-    public ParseResult<Integer> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
+    public ParseResult<Double> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         try {
-            int value = Integer.parseInt(argument);
+            String normalized = argument.replace(DECIMAL_COMMA, DECIMAL_DOT);
+            double value = Double.parseDouble(normalized);
 
-            if (value < 0 || value > 10) {
+            if (value < MIN_SPEED || value > MAX_SPEED) {
                 return ParseResult.failure(translation.player().speedBetweenZeroAndTen());
             }
 
@@ -41,10 +47,19 @@ class SpeedArgument extends AbstractViewerArgument<Integer> {
     }
 
     @Override
-    public SuggestionResult suggest(Invocation<CommandSender> invocation, Argument<Integer> argument, SuggestionContext context) {
-        return IntStream.range(0, 11)
-            .mapToObj(String::valueOf)
+    public SuggestionResult suggest(
+        Invocation<CommandSender> invocation,
+        Argument<Double> argument,
+        SuggestionContext context
+    ) {
+        int maxIndex = (int) Math.round((MAX_SPEED - MIN_SPEED) / SUGGESTION_STEP);
+        return IntStream.rangeClosed(0, maxIndex)
+            .mapToObj(i -> {
+                double value = MIN_SPEED + (i * SUGGESTION_STEP);
+                return (value % 1.0 == 0.0)
+                    ? String.valueOf((int) value)
+                    : String.valueOf(value);
+            })
             .collect(SuggestionResult.collector());
     }
-
 }

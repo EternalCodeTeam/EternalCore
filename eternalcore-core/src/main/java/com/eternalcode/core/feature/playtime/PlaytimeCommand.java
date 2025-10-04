@@ -13,7 +13,7 @@ import java.time.Duration;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
-@Command(name = "playtime", aliases = "pt")
+@Command(name = "playtime")
 @Permission("eternalcore.playtime")
 class PlaytimeCommand {
 

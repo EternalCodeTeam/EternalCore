@@ -5,8 +5,11 @@ import java.nio.file.Path;
 
 public class LocalRepository extends Repository {
 
+    private final Path repositoryFolder;
+
     public LocalRepository(Path repositoryFolder) {
         super(assertFolder(repositoryFolder));
+        this.repositoryFolder = repositoryFolder;
     }
 
     private static String assertFolder(Path repositoryFolder) {
@@ -18,4 +21,7 @@ public class LocalRepository extends Repository {
         }
     }
 
+    public Path getRepositoryFolder() {
+        return repositoryFolder;
+    }
 }

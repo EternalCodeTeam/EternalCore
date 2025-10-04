@@ -2,7 +2,7 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
-    id("xyz.jpenilla.run-paper") version "3.0.0"
+    id("xyz.jpenilla.run-paper") version "3.0.1"
 }
 
 eternalShadowCompiler {
@@ -17,7 +17,7 @@ eternalShadowCompiler {
         description = "All the most important server functions in one!"
         website = "www.eternalcode.pl"
         version = "${project.version}"
-        softDepend = listOf("PlaceholderAPI")
+        softDepend = listOf("PlaceholderAPI", "dynmap")
         foliaSupported = true
     }
 

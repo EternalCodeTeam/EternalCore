@@ -24,6 +24,9 @@ import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
+import com.eternalcode.core.feature.near.messages.ENNearMessages;
+import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
+import com.eternalcode.core.feature.powertool.messages.ENPowertoolMessages;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
@@ -37,22 +40,21 @@ import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMe
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
-import com.eternalcode.core.feature.near.messages.ENNearMessages;
+import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import lombok.Getter;
-import lombok.experimental.Accessors;
-import org.bukkit.event.entity.EntityDamageEvent;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 @Getter
 @Accessors(fluent = true)
@@ -513,9 +515,22 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# This section is responsable for repair messages"
+        "# This section is responsible for repair messages"
     })
     public ENRepairMessages repair = new ENRepairMessages();
+
+    @Comment({
+        " ",
+        "# This section is responsible for enchant messages"
+    })
+    ENEnchantMessages enchant = new ENEnchantMessages();
+
+    @Comment({
+        " ",
+        "# This section is responsible for butcher messages"
+    })
+    ENButcherMessages butcher = new ENButcherMessages();
+
 
     @Comment({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
@@ -561,4 +576,7 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for the messages of the freeze feature."})
     public ENFreezeMessages freeze = new ENFreezeMessages();
+
+    @Comment({" ", "# This section is responsible for powertool messages."})
+    public ENPowertoolMessages powertool = new ENPowertoolMessages();
 }
