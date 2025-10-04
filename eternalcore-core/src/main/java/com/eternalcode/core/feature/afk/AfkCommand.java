@@ -1,9 +1,8 @@
 package com.eternalcode.core.feature.afk;
 
-import static com.eternalcode.core.feature.afk.AfkCommand.AFK_BYPASS_PERMISSION;
-
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.delay.DefaultDelay;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -12,9 +11,12 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import org.bukkit.entity.Player;
+
 import java.time.Duration;
 import java.util.UUID;
-import org.bukkit.entity.Player;
+
+import static com.eternalcode.core.feature.afk.AfkCommand.AFK_BYPASS_PERMISSION;
 
 @Command(name = "afk")
 @Permission("eternalcore.afk")
@@ -30,14 +32,14 @@ class AfkCommand {
     private final NoticeService noticeService;
     private final AfkSettings afkSettings;
     private final AfkService afkService;
-    private final Delay<UUID> delay;
+    private final DefaultDelay<UUID> delay;
 
     @Inject
     AfkCommand(NoticeService noticeService, AfkSettings afkSettings, AfkService afkService) {
         this.noticeService = noticeService;
         this.afkSettings = afkSettings;
         this.afkService = afkService;
-        this.delay = new Delay<>(() -> this.afkSettings.afkCommandDelay());
+        this.delay = Delay.withDefault(this.afkSettings.afkCommandDelay());
     }
 
     @Execute
@@ -51,7 +53,7 @@ class AfkCommand {
         }
 
         if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
+            Duration time = this.delay.getRemaining(uuid);
 
             this.noticeService
                 .create()
@@ -64,6 +66,6 @@ class AfkCommand {
         }
 
         this.afkService.switchAfk(uuid, AfkReason.COMMAND);
-        this.delay.markDelay(uuid, this.afkSettings.afkCommandDelay());
+        this.delay.markDelay(uuid);
     }
 }
