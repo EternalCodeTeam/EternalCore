@@ -8,7 +8,7 @@ public class Migration_0010_Move_back_to_dedicated_section extends NamedMigratio
     Migration_0010_Move_back_to_dedicated_section() {
         super(
             "Improve homes config",
-            move("teleport.teleportedToLastLocation", "back.lastLocationNoExist"),
+            move("teleport.teleportedToLastLocation", "back.teleportedToLastLocation"),
             move("teleport.teleportedSpecifiedPlayerLastLocation", "back.teleportedSpecifiedPlayerLastLocation"),
             move("teleport.lastLocationNoExist", "back.lastLocationNoExist")
         );
