@@ -1,10 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
-import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
-import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
+import com.eternalcode.core.feature.back.messages.PLBackMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
@@ -248,6 +244,12 @@ public class PLTranslation extends AbstractTranslation {
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
     }
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości komendy /back"
+    })
+    public PLBackMessages back = new PLBackMessages();
 
     @Comment({
         " ",
