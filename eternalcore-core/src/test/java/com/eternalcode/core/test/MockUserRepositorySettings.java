@@ -1,6 +1,5 @@
 package com.eternalcode.core.test;
 
-import com.eternalcode.core.user.database.UserRepositorySettings;
 import java.time.Duration;
 
 public class MockUserRepositorySettings implements UserRepositorySettings {

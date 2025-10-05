@@ -20,7 +20,6 @@ class PrepareUserController implements Listener {
     @EventHandler
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        this.userManager.getOrCreate(player.getUniqueId(), player.getName());
     }
 
 }

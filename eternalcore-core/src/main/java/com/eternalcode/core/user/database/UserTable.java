@@ -1,10 +1,10 @@
 package com.eternalcode.core.user.database;
 
 import com.eternalcode.core.user.User;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import java.time.Duration;
-import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "eternal_core_users")
@@ -16,15 +16,15 @@ public class UserTable {
     @DatabaseField(columnName = "name")
     private String name;
 
-    @DatabaseField(columnName = "created")
-    private Instant created;
+    @DatabaseField(columnName = "created", dataType = DataType.DATE)
+    private Date created;
 
-    @DatabaseField(columnName = "last_login")
-    private Instant lastLogin;
+    @DatabaseField(columnName = "last_login", dataType = DataType.DATE)
+    private Date lastLogin;
 
     UserTable() {}
 
-    UserTable(UUID uniqueId, String name, Instant created, Instant lastLogin) {
+    UserTable(UUID uniqueId, String name, Date created, Date lastLogin) {
         this.uniqueId = uniqueId;
         this.name = name;
         this.created = created;
@@ -32,10 +32,10 @@ public class UserTable {
     }
 
     public User toUser() {
-        return new User(this.uniqueId, this.name, this.created, this.lastLogin);
+        return new User(this.uniqueId, this.name, this.created.toInstant(), this.lastLogin.toInstant());
     }
 
     public static UserTable from(User user) {
-        return new UserTable(user.getUniqueId(), user.getName(), user.getCreated(), user.getLastLogin());
+        return new UserTable(user.getUniqueId(), user.getName(), Date.from(user.getCreated()), Date.from(user.getLastLogin()));
     }
 }

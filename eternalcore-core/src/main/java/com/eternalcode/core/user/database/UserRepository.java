@@ -3,6 +3,7 @@ package com.eternalcode.core.user.database;
 import com.eternalcode.core.user.User;
 import java.time.Duration;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -10,15 +11,13 @@ import org.jetbrains.annotations.Nullable;
 
 public interface UserRepository {
 
+    CompletableFuture<List<User>> getActiveUsers();
+
     CompletableFuture<Optional<User>> getUser(UUID uniqueId);
 
-    CompletableFuture<Void> saveUser(User player);
+    CompletableFuture<Optional<User>> getUser(String name);
 
-//    CompletableFuture<User> updateUser(User player);
-//
-//    CompletableFuture<Void> deleteUser(UUID uniqueId);
+    CompletableFuture<User> saveUser(User user);
 
-    CompletableFuture<Collection<User>> fetchAllUsers(Duration fetchInPast);
-
-    CompletableFuture<Collection<User>> fetchUsersBatch(int batchSize);
+    CompletableFuture<User> updateUser(UUID uniqueId, String name);
 }
