@@ -36,10 +36,10 @@ class BroadcastCommand {
 
     @Execute(name = "title")
     @DescriptionDocs(description = "Broadcasts a combined title message to all players.", arguments = "[-raw] <text>")
-    void executeTitle(@Flag("-raw") boolean raw, @Join String subtitle) {
+    void executeTitle(@Flag("-raw") boolean raw, @Join String text) {
 
         this.noticeService.create()
-            .notice(translation -> Notice.title(raw ? " " : translation.broadcast().messageFormat(), subtitle,
+            .notice(translation -> Notice.title(raw ? " " : translation.broadcast().messageFormat(), text,
                 this.settings.titleFadeIn(), this.settings.titleStay(), this.settings.titleFadeOut()))
             .onlinePlayers()
             .send();
