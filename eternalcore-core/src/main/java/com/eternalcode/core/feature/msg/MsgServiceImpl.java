@@ -13,7 +13,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import java.time.Duration;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import org.bukkit.Server;
@@ -123,7 +122,7 @@ class MsgServiceImpl implements MsgService {
     }
 
     private User toUser(Player target) {
-        return this.userManager.getOrCreate(target.getUniqueId(), target.getName());
+        return this.userManager.getUser(target.getUniqueId()).get();
     }
 
 

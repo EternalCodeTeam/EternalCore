@@ -41,7 +41,6 @@ import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
 import com.eternalcode.core.translation.TranslationConfig;
 import com.eternalcode.core.translation.TranslationSettings;
-import com.eternalcode.core.user.database.UserRepositoryConfig;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Header;
@@ -79,12 +78,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Database Configuration")
     @Comment("# Settings responsible for the database connection")
     DatabaseConfig database = new DatabaseConfig();
-
-    @Bean(proxied = UserRepositorySettings.class)
-    @Comment("")
-    @Comment("# User Repository Configuration")
-    @Comment("# Settings for managing user data storage and retrieval")
-    UserRepositoryConfig userRepository = new UserRepositoryConfig();
 
     @Bean(proxied = SpawnJoinSettings.class)
     @Comment("")

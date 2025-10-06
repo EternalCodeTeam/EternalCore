@@ -5,13 +5,9 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.database.UserRepository;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import java.time.Instant;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 @Service
 public class UserManager {
@@ -39,11 +35,37 @@ public class UserManager {
     }
 
     public CompletableFuture<Optional<User>> getUserFromRepository(UUID uniqueId) {
-        return this.userRepository.getUser(uniqueId);
+
+        User userFromCache = this.usersByUUID.getIfPresent(uniqueId);
+
+        if (userFromCache != null) {
+            return CompletableFuture.completedFuture(Optional.of(userFromCache));
+        }
+
+        CompletableFuture<Optional<User>> userFuture = this.userRepository.getUser(uniqueId);
+        userFuture.thenAccept(optionalUser -> optionalUser.ifPresent(user -> {
+            this.usersByUUID.put(uniqueId, user);
+            this.usersByName.put(user.getName(), user);
+        }));
+
+        return userFuture;
     }
 
     public CompletableFuture<Optional<User>> getUserFromRepository(String name) {
-        return this.userRepository.getUser(name);
+
+        User userFromCache = this.usersByName.getIfPresent(name);
+
+        if (userFromCache != null) {
+            return CompletableFuture.completedFuture(Optional.of(userFromCache));
+        }
+
+        CompletableFuture<Optional<User>> userFuture = this.userRepository.getUser(name);
+        userFuture.thenAccept(optionalUser -> optionalUser.ifPresent(user -> {
+            this.usersByUUID.put(user.getUniqueId(), user);
+            this.usersByName.put(name, user);
+        }));
+
+        return userFuture;
     }
 
     public void saveUser(User user) {
@@ -57,6 +79,12 @@ public class UserManager {
 
     private void fetchActiveUsers() {
         this.userRepository.getActiveUsers().thenAccept(list -> list.forEach(this::saveInCache));
+    }
+
+    void fetchUser(UUID uniqueId) {
+        this.userRepository.getUser(uniqueId).thenAccept(optionalUser -> {
+            optionalUser.ifPresent(user -> this.saveInCache(user));
+        });
     }
 
     private void saveInCache(User user) {

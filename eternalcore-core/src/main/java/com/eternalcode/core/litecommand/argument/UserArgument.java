@@ -35,7 +35,7 @@ class UserArgument extends AbstractViewerArgument<User> {
 
     @Override
     public ParseResult<User> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        return ParseResult.completableFuture(this.userManager.getUser(argument), maybeUser -> maybeUser.map(user -> success(user))
+        return ParseResult.completableFuture(this.userManager.getUserFromRepository(argument), maybeUser -> maybeUser.map(user -> success(user))
             .orElse(failure(translation.argument().offlinePlayer())));
     }
 
