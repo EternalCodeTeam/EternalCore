@@ -11,12 +11,12 @@ import lombok.experimental.Accessors;
 public class ENSeenMessages extends OkaeriConfig implements SeenMessages {
 
     @Comment("# {PLAYER} - The player who is never played before on the server")
-    public Notice neverPlayedBefore = Notice.chat("<green>{PLAYER} has not played before on this server.");
+    Notice neverPlayedBefore = Notice.chat("<green>{PLAYER} has not played before on this server.");
 
     @Comment("# {PLAYER} - The player who was last seen on the server, {SEEN} - Time since last login")
-    public Notice lastSeen =  Notice.chat("<green>{PLAYER} was last seen {SEEN} ago.");
+    Notice lastSeen =  Notice.chat("<green>{PLAYER} was last seen {SEEN} ago.");
 
     @Comment("# {PLAYER} - The player who is now online")
-    public Notice nowOnline = Notice.chat("<green>{PLAYER} is now online!");
+    Notice nowOnline = Notice.chat("<green>{PLAYER} is now online!");
 
 }

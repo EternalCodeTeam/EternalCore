@@ -39,7 +39,7 @@ public class NoticeService extends Multification<Viewer, Translation> {
     private final NoticeResolverRegistry noticeRegistry;
 
     @Inject
-    public NoticeService(
+    NoticeService(
         UserManager userManager,
         Scheduler scheduler,
         Server server,

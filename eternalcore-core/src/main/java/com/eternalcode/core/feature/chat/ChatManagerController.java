@@ -4,6 +4,7 @@ import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_BYPAS
 import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_SLOWMODE_BYPASS_PERMISSION;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.chat.event.restrict.ChatRestrictCause;
 import com.eternalcode.core.feature.chat.event.restrict.ChatRestrictEvent;
@@ -13,6 +14,8 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import java.time.Duration;
 import java.util.UUID;
+
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -34,18 +37,24 @@ class ChatManagerController implements Listener {
     private final ChatSettings chatSettings;
     private final NoticeService noticeService;
     private final EventCaller eventCaller;
+    private final PluginConfiguration config;
+    private final Server server;
 
     @Inject
     ChatManagerController(
         ChatService chatService,
         ChatSettings chatSettings,
         NoticeService noticeService,
-        EventCaller eventCaller
+        EventCaller eventCaller,
+        PluginConfiguration config,
+        Server server
     ) {
         this.chatService = chatService;
         this.chatSettings = chatSettings;
         this.noticeService = noticeService;
         this.eventCaller = eventCaller;
+        this.config = config;
+        this.server = server;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -89,5 +98,22 @@ class ChatManagerController implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     void markUseChat(AsyncPlayerChatEvent event) {
         this.chatService.markUseChat(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    void sendSound(AsyncPlayerChatEvent event) {
+        PluginConfiguration.Sounds sound = this.config.sound;
+
+        if (!sound.enableAfterChatMessage) {
+            return;
+        }
+
+        if (!this.chatSettings.chatEnabled()) {
+            return;
+        }
+
+        for (Player online : this.server.getOnlinePlayers()) {
+            online.playSound(online.getLocation(), sound.afterChatMessage, sound.afterChatMessageVolume, sound.afterChatMessagePitch);
+        }
     }
 }

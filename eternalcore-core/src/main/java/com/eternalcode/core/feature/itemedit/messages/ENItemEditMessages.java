@@ -11,30 +11,30 @@ import lombok.experimental.Accessors;
 public class ENItemEditMessages extends OkaeriConfig implements ItemEditMessages {
 
     @Comment("# {ITEM_NAME} - New item name")
-    public Notice itemChangeNameMessage = Notice.chat("<green>► <white>Name changed to: <green>{ITEM_NAME}");
+    Notice itemChangeNameMessage = Notice.chat("<green>► <white>Name changed to: <green>{ITEM_NAME}");
 
     @Comment(" ")
-    public Notice itemClearNameMessage = Notice.chat("<green>► <white>Item name cleared!");
+    Notice itemClearNameMessage = Notice.chat("<green>► <white>Item name cleared!");
 
     @Comment({" ", "# {ITEM_LORE} - New item lore"})
-    public Notice itemChangeLoreMessage = Notice.chat("<green>► <white>Lore changed to: <green>{ITEM_LORE}");
+    Notice itemChangeLoreMessage = Notice.chat("<green>► <white>Lore changed to: <green>{ITEM_LORE}");
 
     @Comment(" ")
-    public Notice itemClearLoreMessage = Notice.chat("<green>► <white>Item lore cleared!");
+    Notice itemClearLoreMessage = Notice.chat("<green>► <white>Item lore cleared!");
 
     @Comment({" ", "# {LINE} - Line number removed"})
-    public Notice itemLoreLineRemoved = Notice.chat("<green>► <white>Removed lore line: <green>{LINE}");
+    Notice itemLoreLineRemoved = Notice.chat("<green>► <white>Removed lore line: <green>{LINE}");
 
     @Comment({" ", "# {ITEM_FLAG} - Flag name"})
-    public Notice itemFlagRemovedMessage = Notice.chat("<green>► <white>Removed item flag: <green>{ITEM_FLAG}");
-    public Notice itemFlagAddedMessage = Notice.chat("<green>► <white>Added item flag: <green>{ITEM_FLAG}");
+    Notice itemFlagRemovedMessage = Notice.chat("<green>► <white>Removed item flag: <green>{ITEM_FLAG}");
+    Notice itemFlagAddedMessage = Notice.chat("<green>► <white>Added item flag: <green>{ITEM_FLAG}");
 
     @Comment(" ")
-    public Notice itemFlagClearedMessage = Notice.chat("<green>► <white>All item flags cleared!");
+    Notice itemFlagClearedMessage = Notice.chat("<green>► <white>All item flags cleared!");
 
     @Comment(" ")
-    public Notice noLore = Notice.chat("<red>✖ <white>This item has no lore!");
+    Notice noLore = Notice.chat("<red>✖ <white>This item has no lore!");
 
     @Comment(" ")
-    public Notice invalidLoreLine = Notice.chat("<red>✖ <white>Invalid lore line number!");
+    Notice invalidLoreLine = Notice.chat("<red>✖ <white>Invalid lore line number!");
 }
