@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.helpop;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.delay.DefaultDelay;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.helpop.event.HelpOpEvent;
@@ -15,11 +14,10 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-
 import java.time.Duration;
 import java.util.UUID;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 @Command(name = "helpop", aliases = { "report" })
 @Permission("eternalcore.helpop")
@@ -36,7 +34,7 @@ class HelpOpCommand {
     private final HelpOpSettings helpOpSettings;
     private final EventCaller eventCaller;
     private final Server server;
-    private final DefaultDelay<UUID> delay;
+    private final Delay<UUID> delay;
 
     @Inject
     HelpOpCommand(NoticeService noticeService, HelpOpSettings helpOpSettings, EventCaller eventCaller, Server server) {
@@ -44,7 +42,7 @@ class HelpOpCommand {
         this.helpOpSettings = helpOpSettings;
         this.eventCaller = eventCaller;
         this.server = server;
-        this.delay = Delay.withDefault(this.helpOpSettings.helpOpDelay());
+        this.delay = Delay.withDefault(() -> this.helpOpSettings.helpOpDelay());
     }
 
     @Execute

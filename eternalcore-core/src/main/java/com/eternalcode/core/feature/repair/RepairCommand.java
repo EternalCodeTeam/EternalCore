@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.repair;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.delay.DefaultDelay;
 import com.eternalcode.core.delay.Delay;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -10,6 +9,8 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -17,21 +18,18 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.Repairable;
 
-import java.time.Duration;
-import java.util.UUID;
-
 @Command(name = "repair")
 class RepairCommand {
 
     private final NoticeService noticeService;
-    private final DefaultDelay<UUID> delay;
+    private final Delay<UUID> delay;
     private final RepairSettings repairSettings;
 
     @Inject
     RepairCommand(NoticeService noticeService, RepairSettings repairSettings) {
         this.noticeService = noticeService;
         this.repairSettings = repairSettings;
-        this.delay = Delay.withDefault(this.repairSettings.repairDelay());
+        this.delay = Delay.withDefault(() -> this.repairSettings.repairDelay());
     }
 
     @Execute
