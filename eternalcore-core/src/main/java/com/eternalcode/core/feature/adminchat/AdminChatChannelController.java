@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.adminchat;
 
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.entity.Player;
@@ -14,10 +15,12 @@ import org.jetbrains.annotations.NotNull;
 final class AdminChatChannelController implements Listener {
 
     private final AdminChatService adminChatService;
+    private final Scheduler scheduler;
 
     @Inject
-    AdminChatChannelController(@NotNull AdminChatService adminChatService) {
+    AdminChatChannelController(@NotNull AdminChatService adminChatService, Scheduler scheduler) {
         this.adminChatService = adminChatService;
+        this.scheduler = scheduler;
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -30,7 +33,7 @@ final class AdminChatChannelController implements Listener {
 
         event.setCancelled(true);
 
-        this.adminChatService.sendAdminChatMessage(event.getMessage(), player);
+        this.scheduler.run(() -> this.adminChatService.sendAdminChatMessage(event.getMessage(), player));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

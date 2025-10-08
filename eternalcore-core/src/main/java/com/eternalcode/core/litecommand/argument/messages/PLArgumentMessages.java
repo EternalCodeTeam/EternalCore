@@ -27,11 +27,6 @@ public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages
     public Notice noItem = Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w dłoni!");
     public Notice noMaterial = Notice.chat("<red>✘ <dark_red>Taki materiał nie istnieje!");
     public Notice noArgument = Notice.chat("<red>✘ <dark_red>Taki argument nie istnieje!");
-    public Notice noDamaged = Notice.chat("<red>✘ <dark_red>Ten przedmiot nie może być naprawiony!");
-    public Notice noDamagedItems = Notice.chat("<red>✘ <dark_red>Musisz posiadać uszkodzone przedmioty!");
-    public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>Takie zaklęcie nie istnieje!");
-    public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>Ten poziom zaklęcia nie jest wspierany!");
     public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Świat <dark_red>{WORLD} <red>nie istnieje!");
-    public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Niepoprawna liczba chunków!");
     public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
 }

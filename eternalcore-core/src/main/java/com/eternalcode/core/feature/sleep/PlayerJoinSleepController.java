@@ -1,0 +1,27 @@
+package com.eternalcode.core.feature.sleep;
+
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.injector.annotations.component.Controller;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+@Controller
+@PermissionDocs(
+    name = "Sleep Ignore",
+    permission = "eternalcore.sleep.ignore",
+    description = "Player with this permission will ignore sleep count needed to skip the night"
+)
+class PlayerJoinSleepController implements Listener {
+
+    private static final String SLEEP_IGNORE_PERMISSION = "eternalcore.sleep.ignore";
+
+    @EventHandler
+    void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        if (player.hasPermission(SLEEP_IGNORE_PERMISSION)) {
+            player.setSleepingIgnored(true);
+        }
+    }
+}

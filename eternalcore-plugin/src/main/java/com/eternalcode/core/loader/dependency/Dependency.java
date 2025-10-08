@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class Dependency {
 
-    private static final Pattern VERSION_PATTERN = Pattern.compile("(?<major>[0-9]+)\\.(?<minor>[0-9]+)\\.?(?<patch>[0-9]?)(-(?<label>[-+.a-zA-Z0-9]+))?");
+    private static final Pattern VERSION_PATTERN = Pattern.compile("(?<major>[0-9]+)\\.(?<minor>[0-9]+)(?:\\.(?<patch>[0-9]+))?(?:-(?<label>[-+.a-zA-Z0-9]+))?");
 
     private static final String PATH_FORMAT = "%s/%s/%s/%s/%s";
     private static final String JAR_MAVEN_FORMAT = "%s-%s.jar";
@@ -131,8 +131,7 @@ public class Dependency {
         }
 
         String versionNumber = matcher.group(name);
-
-        if (versionNumber.isEmpty()) {
+        if (versionNumber == null || versionNumber.isEmpty()) {
             return 0;
         }
 

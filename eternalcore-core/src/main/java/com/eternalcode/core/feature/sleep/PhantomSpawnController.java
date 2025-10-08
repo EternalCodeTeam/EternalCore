@@ -1,0 +1,34 @@
+package com.eternalcode.core.feature.sleep;
+
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.paper.phantom.PhantomEventInitializer;
+import com.eternalcode.paper.phantom.PhantomSpawnAttemptEvent;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
+
+@Controller
+@PermissionDocs(
+    name = "Phantom Spawn Ignore",
+    permission = "eternalcore.sleep.noinsomnia",
+    description = "Player with this permission will not spawn phantoms"
+)
+class PhantomSpawnController implements Listener {
+
+    @Inject
+    PhantomSpawnController(Plugin plugin) {
+        new PhantomEventInitializer(plugin).initialize();
+    }
+
+    @EventHandler
+    void onPhantomSpawnAttempt(PhantomSpawnAttemptEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (player.hasPermission("eternalcore.sleep.noinsomnia")) {
+                event.setCancelled(true);
+            }
+        }
+    }
+}

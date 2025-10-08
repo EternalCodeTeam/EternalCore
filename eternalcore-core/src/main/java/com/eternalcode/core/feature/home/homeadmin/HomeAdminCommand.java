@@ -12,7 +12,7 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import io.papermc.lib.PaperLib;
@@ -79,7 +79,7 @@ class HomeAdminCommand {
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
-    void deleteHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
+    void deleteHome(@Sender Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
         Player player = playerHomeEntry.player();
 
@@ -110,7 +110,7 @@ class HomeAdminCommand {
 
     @Execute(name = "home")
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
-    void home(@Context Player player, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
+    void home(@Sender Player player, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
         Player user = playerHomeEntry.player();
 
@@ -133,7 +133,7 @@ class HomeAdminCommand {
 
     @Execute(name = "list")
     @DescriptionDocs(description = "List user homes", arguments = "<user>")
-    void list(@Context Viewer viewer, @Arg User user) {
+    void list(@Sender Viewer viewer, @Arg User user) {
         String homes = this.formattedListUserHomes(user.getUniqueId());
 
         this.noticeService.create()

@@ -6,28 +6,27 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-
-@Command(name = "playtime", aliases = "pt")
+@Command(name = "playtime")
 @Permission("eternalcore.playtime")
-public class PlaytimeCommand {
+class PlaytimeCommand {
 
     private final NoticeService noticeService;
 
     @Inject
-    public PlaytimeCommand(NoticeService noticeService) {
+    PlaytimeCommand(NoticeService noticeService) {
         this.noticeService = noticeService;
     }
 
     @Execute
     @DescriptionDocs(description = "Shows your playtime")
-    void self(@Context Player player) {
+    void self(@Sender Player player) {
         this.noticeService.create()
             .notice(translation -> translation.playtime().self())
             .placeholder("{PLAYTIME}", this.formatPlaytime(player))
@@ -38,7 +37,7 @@ public class PlaytimeCommand {
     @Execute
     @Permission("eternalcore.playtime.other")
     @DescriptionDocs(description = "Shows playtime of a player", arguments = "<player>")
-    void other(@Context Player player, @Arg Player target) {
+    void other(@Sender Player player, @Arg Player target) {
         this.noticeService.create()
             .notice(translation -> translation.playtime().other())
             .placeholder("{PLAYER}", target.getName())

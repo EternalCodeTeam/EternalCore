@@ -7,7 +7,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -37,7 +37,7 @@ class SudoCommand {
     @Execute(name = "-console")
     @Permission("eternalcore.sudo.console")
     @DescriptionDocs(description = "Execute command as console", arguments = "<command>")
-    void console(@Context Viewer viewer, @Join String command) {
+    void console(@Sender Viewer viewer, @Join String command) {
         this.server.dispatchCommand(this.server.getConsoleSender(), command);
         this.sendSudoSpy(viewer, this.server.getConsoleSender(), command);
     }
@@ -45,7 +45,7 @@ class SudoCommand {
     @Execute
     @Permission("eternalcore.sudo.player")
     @DescriptionDocs(description = "Execute command as player", arguments = "<player> <command>")
-    void player(@Context Viewer viewer, @Arg Player target, @Join String command) {
+    void player(@Sender Viewer viewer, @Arg Player target, @Join String command) {
         this.server.dispatchCommand(target, command);
         this.sendSudoSpy(viewer, target, command);
     }
