@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -47,33 +48,33 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public Home createHome(UUID playerUniqueId, String name, Position position) {
+    public Home createHome(UUID playerUniqueId, String name, Location location) {
         Map<String, Home> homes = this.userHomes.computeIfAbsent(playerUniqueId, k -> new HashMap<>());
 
         Home home = homes.get(name);
 
         if (home != null) {
-            HomeOverrideEvent event = this.eventCaller.callEvent(new HomeOverrideEvent(playerUniqueId, name, playerUniqueId, position));
+            HomeOverrideEvent event = this.eventCaller.callEvent(new HomeOverrideEvent(playerUniqueId, name, playerUniqueId, location));
 
             if (event.isCancelled()) {
                 return home;
             }
 
-            Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getPosition());
+            Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getLocation());
             homes.put(event.getHomeName(), homeInEvent);
             this.repository.deleteHome(playerUniqueId, name).thenAccept(completable -> this.repository.saveHome(homeInEvent));
 
             return homeInEvent;
         }
 
-        HomeCreateEvent event = new HomeCreateEvent(playerUniqueId, name, playerUniqueId, position);
+        HomeCreateEvent event = new HomeCreateEvent(playerUniqueId, name, playerUniqueId, location);
         this.eventCaller.callEvent(event);
 
         if (event.isCancelled()) {
             return null;
         }
 
-        Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getPosition());
+        Home homeInEvent = new HomeImpl(playerUniqueId, event.getHomeName(), event.getLocation());
         homes.put(event.getHomeName(), homeInEvent);
         this.repository.saveHome(homeInEvent);
 

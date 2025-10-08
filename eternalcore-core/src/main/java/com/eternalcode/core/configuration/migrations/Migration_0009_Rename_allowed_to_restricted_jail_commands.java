@@ -7,7 +7,7 @@ class Migration_0009_Rename_allowed_to_restricted_jail_commands extends NamedMig
 
     Migration_0009_Rename_allowed_to_restricted_jail_commands() {
         super("Rename allowed to restricted jail commands",
-            move("jail.allowedCommands", "jail.restrictedCommands")
+            move("jailSection.allowedCommands", "jail.restrictedCommands")
         );
     }
 }

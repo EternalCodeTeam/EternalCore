@@ -1,56 +1,58 @@
 package com.eternalcode.core.feature.jail;
 
-import com.eternalcode.commons.bukkit.position.Position;
+import org.bukkit.Location;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
-public class JailedPlayer {
+public interface JailedPlayer {
 
-    private final UUID player;
-    private final Instant detainedAt;
-    private final Duration prisonTime;
-    private final String detainedBy;
-    private final Position lastPosition;
+    /**
+     * Gets the player's UUID.
+     * @return player's UUID.
+     */
+    UUID playerUniqueId();
 
-    public JailedPlayer(UUID player, Instant detainedAt, Duration prisonTime, String detainedBy, Position lastPosition) {
-        this.player = player;
-        this.detainedAt = detainedAt;
-        this.prisonTime = prisonTime;
-        this.detainedBy = detainedBy;
-        this.lastPosition = lastPosition;
-    }
-    
-    public UUID getPlayerUniqueId() {
-        return this.player;
-    }
+    /**
+     * Gets the time when the player was detained.
+     * @return time when the player was detained.
+     */
+    Instant detainedAt();
 
-    public Instant getDetainedAt() {
-        return this.detainedAt;
-    }
+    /**
+     * Gets the name of the player who detained the player.
+     * @return name of player.
+     */
+    String detainedBy();
 
-    public String getDetainedBy() {
-        return this.detainedBy;
-    }
+    /**
+     * Gets the time the player is jailed.
+     * @return time the player is jailed.
+     */
+    Duration prisonTime();
 
-    public Duration getPrisonTime() {
-        return this.prisonTime;
-    }
+    /**
+     * Gets the jail position where the player is teleported when detained.
+     * @return last location of player.
+     */
+    Location lastLocation();
 
-    public Position getLastPosition() {
-        return this.lastPosition;
-    }
+    /**
+     * Checks if the jail has expired.
+     * @return true if the jail has expired, false otherwise.
+     */
+    boolean isPrisonExpired();
 
-    public boolean isPrisonExpired() {
-        return this.detainedAt.plus(this.prisonTime).isBefore(Instant.now());
-    }
+    /**
+     * Gets the time when the player was released.
+     * @return time when the player was released.
+     */
+    Instant releaseTime();
 
-    public Instant getReleaseTime() {
-        return Instant.now().plus(this.prisonTime);
-    }
-
-    public Duration getRemainingTime() {
-        return Duration.between(Instant.now(), this.detainedAt.plus(this.prisonTime));
-    }
+    /**
+     * Gets the remaining time of the jail.
+     * @return remaining time of the jail.
+     */
+    Duration remainingTime();
 }

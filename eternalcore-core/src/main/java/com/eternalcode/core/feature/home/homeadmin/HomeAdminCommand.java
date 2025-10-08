@@ -56,10 +56,8 @@ class HomeAdminCommand {
         boolean hasHome = this.homeManager.hasHome(uniqueId, home);
         String name = home.getName();
 
-        Position position = PositionAdapter.convert(optionalLocation);
-
         if (hasHome) {
-            this.homeManager.createHome(uniqueId, name, position);
+            this.homeManager.createHome(uniqueId, name, optionalLocation);
             this.noticeService.create()
                 .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
                 .placeholder("{HOME}", name)
@@ -70,7 +68,7 @@ class HomeAdminCommand {
             return;
         }
 
-        this.homeManager.createHome(uniqueId, name, position);
+        this.homeManager.createHome(uniqueId, name, optionalLocation);
         this.noticeService.create()
             .notice(translate -> translate.home().createAsAdmin())
             .placeholder("{HOME}", name)
@@ -129,7 +127,7 @@ class HomeAdminCommand {
             return;
         }
 
-        Location homeLocation = PositionAdapter.convert(homeOption.get().getPosition());
+        Location homeLocation = homeOption.get().getLocation();
         PaperLib.teleportAsync(player, homeLocation);
     }
 

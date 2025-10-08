@@ -1,11 +1,13 @@
 package com.eternalcode.core.feature.home.database;
 
 import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.core.database.persister.PositionPersister;
+import com.eternalcode.core.database.persister.LocationPersister;
 import com.eternalcode.core.feature.home.HomeImpl;
 import com.eternalcode.core.feature.home.Home;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import org.bukkit.Location;
+
 import java.util.UUID;
 
 @DatabaseTable(tableName = "eternal_core_homes")
@@ -20,24 +22,24 @@ class HomeTable {
     @DatabaseField(columnName = "name")
     private String name;
 
-    @DatabaseField(columnName = "location", persisterClass = PositionPersister.class)
-    private Position position;
+    @DatabaseField(columnName = "location", persisterClass = LocationPersister.class)
+    private Location location;
 
     HomeTable() {}
 
-    HomeTable(UUID uuid, UUID owner, String name, Position position) {
+    HomeTable(UUID uuid, UUID owner, String name, Location location) {
         this.uuid = uuid;
         this.owner = owner;
         this.name = name;
-        this.position = position;
+        this.location = location;
     }
 
     Home toHome() {
-        return new HomeImpl(this.uuid, this.owner, this.name, this.position);
+        return new HomeImpl(this.uuid, this.owner, this.name, this.location);
     }
 
     static HomeTable from(Home home) {
-        return new HomeTable(home.getUuid(), home.getOwner(), home.getName(), home.getPosition());
+        return new HomeTable(home.getUuid(), home.getOwner(), home.getName(), home.getLocation());
     }
 }
 

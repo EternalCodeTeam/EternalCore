@@ -12,6 +12,8 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.time.Duration;
 import java.util.UUID;
+
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Service
@@ -53,13 +55,13 @@ public class HomeTeleportService {
             : this.homesSettings.teleportTimeToHomes();
 
         Position playerPosition = PositionAdapter.convert(player.getLocation());
-        Position homeLocation = pre.getPosition();
+        Location homeLocation = pre.getLocation();
 
         HomeTeleportEvent post = new HomeTeleportEvent(uniqueId, home);
         Teleport teleport = this.teleportTaskService.createTeleport(
             uniqueId,
             playerPosition,
-            homeLocation,
+            PositionAdapter.convert(homeLocation),
             teleportTime
         );
 

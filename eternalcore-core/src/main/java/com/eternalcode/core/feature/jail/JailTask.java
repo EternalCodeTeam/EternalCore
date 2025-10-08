@@ -25,7 +25,7 @@ class JailTask implements Runnable {
     @Override
     public void run() {
         for (JailedPlayer jailedPlayer : this.jailService.getJailedPlayers()) {
-            Player player = this.server.getPlayer(jailedPlayer.getPlayerUniqueId());
+            Player player = this.server.getPlayer(jailedPlayer.playerUniqueId());
 
             if (player == null) {
                 continue;
@@ -33,14 +33,14 @@ class JailTask implements Runnable {
 
             this.noticeService.create()
                 .notice(translation -> translation.jail().detainCountdown())
-                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.getRemainingTime(), true))
-                .player(jailedPlayer.getPlayerUniqueId())
+                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.remainingTime(), true))
+                .player(jailedPlayer.playerUniqueId())
                 .send();
 
             if (jailedPlayer.isPrisonExpired()) {
                 this.noticeService.create()
                     .notice(translation -> translation.jail().released())
-                    .player(jailedPlayer.getPlayerUniqueId())
+                    .player(jailedPlayer.playerUniqueId())
                     .send();
 
                 this.jailService.releasePlayer(player);

@@ -45,16 +45,22 @@ class PrisonerTable {
     }
 
     JailedPlayer toPrisoner() {
-        return new JailedPlayer(this.uuid, this.detainedAt, this.duration, this.detainedBy, lastPosition);
+        return new JailedPlayerImpl(
+            this.uuid,
+            this.detainedAt,
+            this.duration,
+            this.detainedBy,
+            PositionAdapter.convert(this.lastPosition)
+        );
     }
 
     static PrisonerTable from(JailedPlayer jailedPlayer) {
         return new PrisonerTable(
-            jailedPlayer.getPlayerUniqueId(),
-            jailedPlayer.getDetainedAt(),
-            jailedPlayer.getPrisonTime(),
-            jailedPlayer.getDetainedBy(),
-            jailedPlayer.getLastPosition()
+            jailedPlayer.playerUniqueId(),
+            jailedPlayer.detainedAt(),
+            jailedPlayer.prisonTime(),
+            jailedPlayer.detainedBy(),
+            jailedPlayer.lastLocation() != null ? PositionAdapter.convert(jailedPlayer.lastLocation()) : null
         );
     }
 }

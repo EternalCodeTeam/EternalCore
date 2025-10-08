@@ -86,14 +86,12 @@ class JailServiceImpl implements JailService {
             return false;
         }
 
-        Position lastPosition = PositionAdapter.convert(player.getLocation());
-
-        JailedPlayer jailedPlayer = new JailedPlayer(
+        JailedPlayer jailedPlayer = new JailedPlayerImpl(
             player.getUniqueId(),
             Instant.now(),
             time,
             detainedBy.getName(),
-            lastPosition
+            player.getLocation()
         );
 
         this.prisonerRepository.savePrisoner(jailedPlayer);
@@ -117,8 +115,8 @@ class JailServiceImpl implements JailService {
         this.prisonerRepository.deletePrisoner(player.getUniqueId());
         this.jailedPlayers.remove(player.getUniqueId());
 
-        if (jailedPlayer != null && jailedPlayer.getLastPosition() != null) {
-            this.teleportService.teleport(player, PositionAdapter.convert(jailedPlayer.getLastPosition()));
+        if (jailedPlayer != null && jailedPlayer.lastLocation() != null) {
+            this.teleportService.teleport(player, jailedPlayer.lastLocation());
         } else {
             this.spawnService.teleportToSpawn(player);
         }
@@ -143,8 +141,8 @@ class JailServiceImpl implements JailService {
             playersToRelease.add(uuid);
 
             if (player != null) {
-                this.teleportService.teleport(player, jailedPlayer.getLastPosition() != null
-                    ? PositionAdapter.convert(jailedPlayer.getLastPosition())
+                this.teleportService.teleport(player, jailedPlayer.lastLocation() != null
+                    ? jailedPlayer.lastLocation()
                     : this.spawnService.getSpawnLocation());
             }
         });
@@ -170,7 +168,7 @@ class JailServiceImpl implements JailService {
     private void loadFromDatabase() {
         this.prisonerRepository.getPrisoners().thenAccept(prisoners -> {
             for (JailedPlayer jailedPlayer : prisoners) {
-                this.jailedPlayers.put(jailedPlayer.getPlayerUniqueId(), jailedPlayer);
+                this.jailedPlayers.put(jailedPlayer.playerUniqueId(), jailedPlayer);
             }
         });
     }

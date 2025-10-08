@@ -55,7 +55,7 @@ class SetHomeCommand {
         UUID uniqueId = user.getUniqueId();
 
         if (this.homeService.hasHome(uniqueId, homeName)) {
-            this.homeService.createHome(uniqueId, homeName, PositionAdapter.convert(player.getLocation()));
+            this.homeService.createHome(uniqueId, homeName, player.getLocation());
 
             this.noticeService.create()
                 .user(user)
@@ -85,7 +85,7 @@ class SetHomeCommand {
             return;
         }
 
-        this.homeService.createHome(uniqueId, homeName, PositionAdapter.convert(player.getLocation()));
+        this.homeService.createHome(uniqueId, homeName, player.getLocation());
         this.noticeService.create()
             .user(user)
             .notice(translation -> translation.home().create())

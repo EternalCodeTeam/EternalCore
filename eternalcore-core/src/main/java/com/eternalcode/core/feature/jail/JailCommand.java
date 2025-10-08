@@ -222,9 +222,9 @@ class JailCommand {
         for (JailedPlayer jailedPlayer : this.jailService.getJailedPlayers()) {
             this.noticeService.create()
                 .notice(translation -> translation.jail().listPlayerEntry())
-                .placeholder("{PLAYER}", this.server.getOfflinePlayer(jailedPlayer.getPlayerUniqueId()).getName())
-                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.getRemainingTime(), true))
-                .placeholder("{DETAINED_BY}", jailedPlayer.getDetainedBy())
+                .placeholder("{PLAYER}", this.server.getOfflinePlayer(jailedPlayer.playerUniqueId()).getName())
+                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.remainingTime(), true))
+                .placeholder("{DETAINED_BY}", jailedPlayer.detainedBy())
                 .player(player.getUniqueId())
                 .send();
         }

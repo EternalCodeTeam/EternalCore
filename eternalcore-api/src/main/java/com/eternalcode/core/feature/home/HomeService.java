@@ -1,14 +1,12 @@
 package com.eternalcode.core.feature.home;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-
-import com.eternalcode.commons.bukkit.position.Position;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface HomeService {
 
@@ -25,7 +23,7 @@ public interface HomeService {
     void deleteHome(UUID playerUniqueId, String name);
 
     @Nullable
-    Home createHome(UUID playerUniqueId, String name, Position position);
+    Home createHome(UUID playerUniqueId, String name, Location location);
 
     int getHomeLimit(Player player);
 }

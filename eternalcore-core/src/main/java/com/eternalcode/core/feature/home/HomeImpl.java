@@ -4,26 +4,27 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.eternalcode.commons.bukkit.position.Position;
+import org.bukkit.Location;
 
 public class HomeImpl implements Home {
 
     private final UUID uuid;
     private final UUID owner;
     private final String name;
-    private final Position position;
+    private final Location location;
 
-    public HomeImpl(UUID uuid, UUID owner, String name, Position position) {
+    public HomeImpl(UUID uuid, UUID owner, String name, Location location) {
         this.uuid = uuid;
         this.owner = owner;
         this.name = name;
-        this.position = position;
+        this.location = location;
     }
 
-    public HomeImpl(UUID owner, String name, Position position) {
+    public HomeImpl(UUID owner, String name, Location location) {
         this.owner = owner;
         this.uuid = UUID.randomUUID();
         this.name = name;
-        this.position = position;
+        this.location = location;
     }
 
     @Override
@@ -42,8 +43,8 @@ public class HomeImpl implements Home {
     }
 
     @Override
-    public Position getPosition() {
-        return this.position;
+    public Location getLocation() {
+        return this.location;
     }
 
     @Override
