@@ -48,7 +48,7 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
 
             if (value > safeChunkNumber) {
                 NoticeBroadcast placeholder = this.noticeService.create()
-                    .notice(translate -> translate.player().safeChunksMessage())
+                    .notice(translate -> translate.butcher().safeChunksMessage())
                     .viewer(viewer)
                     .placeholder("{SAFE_CHUNKS}", String.valueOf(safeChunkNumber));
 

@@ -73,7 +73,7 @@ class ButcherCommand {
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.player().butcherCommand())
+            .notice(translation -> translation.butcher().butcherCommand())
             .player(player.getUniqueId())
             .placeholder("{KILLED}", String.valueOf(killedMobs))
             .send();

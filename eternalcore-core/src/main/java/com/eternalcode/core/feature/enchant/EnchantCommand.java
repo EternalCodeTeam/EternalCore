@@ -46,7 +46,7 @@ class EnchantCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(translation -> translation.item().enchantedMessage())
+            .notice(translation -> translation.enchant().enchantedMessage())
             .send();
     }
 
@@ -69,13 +69,13 @@ class EnchantCommand {
 
         this.noticeService.create()
             .player(sender.getUniqueId())
-            .notice(translation -> translation.item().enchantedMessageFor())
+            .notice(translation -> translation.enchant().enchantedMessageFor())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService.create()
             .player(target.getUniqueId())
-            .notice(translation -> translation.item().enchantedMessageBy())
+            .notice(translation -> translation.enchant().enchantedMessageBy())
             .placeholder("{PLAYER}", sender.getName())
             .send();
     }

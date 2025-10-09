@@ -28,7 +28,7 @@ class SpeedTypeArgument extends AbstractViewerArgument<SpeedType> {
             return ParseResult.success(SpeedType.valueOf(argument.toUpperCase()));
         }
         catch (IllegalArgumentException exception) {
-            return ParseResult.failure(translation.player().speedTypeNotCorrect());
+            return ParseResult.failure(translation.speed().speedTypeNotCorrect());
         }
     }
 

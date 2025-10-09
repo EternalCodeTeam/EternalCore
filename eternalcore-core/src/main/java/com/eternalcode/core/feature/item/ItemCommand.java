@@ -45,7 +45,7 @@ class ItemCommand {
         if (isSuccess) {
             this.noticeService.create()
                 .placeholder("{ITEM}", MaterialUtil.format(material))
-                .notice(translation -> translation.item().giveReceived())
+                .notice(translation -> translation.give().giveReceived())
                 .player(player.getUniqueId())
                 .send();
         }

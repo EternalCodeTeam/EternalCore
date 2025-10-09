@@ -26,7 +26,7 @@ public class GiveService {
     public boolean giveItem(CommandSender sender, Player player, Material material, int amount) {
         if (this.isInvalidMaterial(material)) {
             this.noticeService.create()
-                .notice(translation -> translation.item().giveNotItem())
+                .notice(translation -> translation.give().giveNotItem())
                 .sender(sender)
                 .send();
 
@@ -48,7 +48,7 @@ public class GiveService {
 
         if (rest.isPresent() && !this.giveSettings.dropOnFullInventory()) {
             this.noticeService.create()
-                .notice(translation -> translation.item().giveNoSpace())
+                .notice(translation -> translation.give().giveNoSpace())
                 .sender(sender)
                 .send();
             return false;

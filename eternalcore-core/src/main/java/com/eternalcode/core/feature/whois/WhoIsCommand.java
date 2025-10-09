@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.playerinfo;
+package com.eternalcode.core.feature.whois;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -35,7 +35,7 @@ class WhoIsCommand {
             .placeholder("{LEVEL}", String.valueOf(player.getLevel()))
             .placeholder("{HEALTH}", String.valueOf(Math.round(player.getHealthScale())))
             .placeholder("{FOOD}", String.valueOf(player.getFoodLevel()))
-            .messages(translation -> translation.player().whoisCommand())
+            .messages(translation -> translation.whois().whoisCommand())
             .viewer(viewer)
             .send();
     }
