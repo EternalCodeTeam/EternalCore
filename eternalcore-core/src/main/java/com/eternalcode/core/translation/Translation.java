@@ -15,6 +15,7 @@ import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMess
 import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
+import com.eternalcode.core.feature.ignore.messages.IgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
@@ -193,6 +194,8 @@ public interface Translation {
     HelpOpSection helpOp();
     // AdminChat Section
     AdminChatMessages adminChat();
+    // Ignore Section
+    IgnoreMessages ignore();
     // sudo
     SudoMessages sudo();
     // Teleport Section

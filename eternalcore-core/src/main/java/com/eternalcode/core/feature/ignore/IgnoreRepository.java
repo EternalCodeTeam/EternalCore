@@ -16,5 +16,4 @@ interface IgnoreRepository {
     CompletableFuture<Void> unIgnoreAll(UUID by);
 
     CompletableFuture<Void> purgeAll();
-
 }

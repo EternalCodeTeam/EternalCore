@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.concurrent.FutureHandler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
@@ -9,9 +10,8 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-
 import java.util.UUID;
-
+import java.util.concurrent.CompletableFuture;
 
 @Command(name = "ignore")
 @Permission("eternalcore.ignore")
@@ -33,33 +33,33 @@ class IgnoreCommand {
         UUID targetUuid = target.getUniqueId();
 
         if (sender.equals(target)) {
-            this.noticeService.viewer(sender, translation -> translation.msg().cantIgnoreYourself());
+            this.noticeService.viewer(sender, translation -> translation.ignore().cantIgnoreYourself());
             return;
         }
 
-        this.ignoreService.isIgnored(senderUuid, targetUuid).thenAccept(isIgnored -> {
-            if (isIgnored) {
-                this.noticeService.create()
-                    .user(sender)
-                    .placeholder("{PLAYER}", target.getName())
-                    .notice(translation -> translation.msg().alreadyIgnorePlayer())
-                    .send();
-
-                return;
-            }
-
-            this.ignoreService.ignore(senderUuid, targetUuid).thenAccept(cancelled -> {
-                if (cancelled) {
-                    return;
+        this.ignoreService.isIgnored(senderUuid, targetUuid)
+            .thenCompose(isIgnored -> {
+                if (isIgnored) {
+                    this.noticeService.create()
+                        .user(sender)
+                        .placeholder("{PLAYER}", target.getName())
+                        .notice(translation -> translation.ignore().alreadyIgnorePlayer())
+                        .send();
+                    return CompletableFuture.completedFuture(IgnoreResult.CANCELLED);
                 }
 
-                this.noticeService.create()
-                    .player(senderUuid)
-                    .placeholder("{PLAYER}", target.getName())
-                    .notice(translation -> translation.msg().ignorePlayer())
-                    .send();
-            });
-        });
+                return this.ignoreService.ignore(senderUuid, targetUuid);
+            })
+            .thenAccept(result -> {
+                if (result == IgnoreResult.SUCCESS) {
+                    this.noticeService.create()
+                        .player(senderUuid)
+                        .placeholder("{PLAYER}", target.getName())
+                        .notice(translation -> translation.ignore().ignorePlayer())
+                        .send();
+                }
+            })
+            .exceptionally(FutureHandler::handleException);
     }
 
     @Execute(name = "-all", aliases = "*")
@@ -67,16 +67,15 @@ class IgnoreCommand {
     void ignoreAll(@Context User sender) {
         UUID senderUuid = sender.getUniqueId();
 
-        this.ignoreService.ignoreAll(senderUuid).thenAccept(cancelled -> {
-            if (cancelled) {
-                return;
-            }
-
-            this.noticeService.create()
-                .player(senderUuid)
-                .notice(translation -> translation.msg().ignoreAll())
-                .send();
-        });
+        this.ignoreService.ignoreAll(senderUuid)
+            .thenAccept(result -> {
+                if (result == IgnoreResult.SUCCESS) {
+                    this.noticeService.create()
+                        .player(senderUuid)
+                        .notice(translation -> translation.ignore().ignoreAll())
+                        .send();
+                }
+            })
+            .exceptionally(FutureHandler::handleException);
     }
-
 }

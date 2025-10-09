@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.ignore;
 
 import com.eternalcode.commons.scheduler.Scheduler;
-import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.AbstractRepositoryOrmLite;
+import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 import com.google.common.cache.CacheBuilder;
@@ -13,9 +13,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
-import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Set;
@@ -23,6 +20,8 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 @Repository
 class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
@@ -82,29 +81,31 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     @Override
     public CompletableFuture<Void> unIgnore(UUID by, UUID target) {
-        return this.action(IgnoreTable.class, dao -> {
-                DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
+        return this.action(
+                IgnoreTable.class, dao -> {
+                    DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
 
-                builder.where()
-                    .eq("player_id", by)
-                    .and()
-                    .eq("ignored_id", target);
+                    builder.where()
+                        .eq("player_id", by)
+                        .and()
+                        .eq("ignored_id", target);
 
-                return builder.delete();
-            })
+                    return builder.delete();
+                })
             .thenRun(() -> this.ignores.refresh(by));
     }
 
     @Override
     public CompletableFuture<Void> unIgnoreAll(UUID by) {
-        return this.action(IgnoreTable.class, dao -> {
-                DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
+        return this.action(
+                IgnoreTable.class, dao -> {
+                    DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
 
-                builder.where()
-                    .eq("player_id", by);
+                    builder.where()
+                        .eq("player_id", by);
 
-                return builder.delete();
-            })
+                    return builder.delete();
+                })
             .thenRun(() -> this.ignores.refresh(by));
     }
 
