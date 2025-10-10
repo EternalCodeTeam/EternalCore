@@ -8,14 +8,14 @@ public class Migration_0015_Move_ignore_messages_to_dedicated_section extends Na
     Migration_0015_Move_ignore_messages_to_dedicated_section() {
         super(
             "Move ignore messages to dedicated section",
-            move("msg.ignorePlayer", "ignore.ignorePlayer"),
-            move("msg.ignoreAll", "ignore.ignoreAll"),
-            move("msg.cantIgnoreYourself", "ignore.cantIgnoreYourself"),
-            move("msg.alreadyIgnorePlayer", "ignore.alreadyIgnorePlayer"),
-            move("msg.unIgnorePlayer", "ignore.unIgnorePlayer"),
-            move("msg.unIgnoreAll", "ignore.unIgnoreAll"),
-            move("msg.cantUnIgnoreYourself", "ignore.cantUnIgnoreYourself"),
-            move("msg.notIgnorePlayer", "ignore.notIgnorePlayer")
+            move("msg.ignorePlayer", "ignore.playerIgnored"),
+            move("msg.ignoreAll", "ignore.allPlayersIgnored"),
+            move("msg.cantIgnoreYourself", "ignore.cannotIgnoreSelf"),
+            move("msg.alreadyIgnorePlayer", "ignore.playerAlreadyIgnored"),
+            move("msg.unIgnorePlayer", "ignore.playerUnignored"),
+            move("msg.unIgnoreAll", "ignore.allPlayersUnignored"),
+            move("msg.cantUnIgnoreYourself", "ignore.cannotUnignoreSelf"),
+            move("msg.notIgnorePlayer", "ignore.playerNotIgnored")
         );
     }
 }

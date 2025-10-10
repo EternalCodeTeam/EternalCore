@@ -33,7 +33,7 @@ class UnIgnoreCommand {
         UUID targetUuid = target.getUniqueId();
 
         if (sender.equals(target)) {
-            this.noticeService.viewer(sender, translation -> translation.ignore().cantUnIgnoreYourself());
+            this.noticeService.viewer(sender, translation -> translation.ignore().cannotUnignoreSelf());
             return;
         }
 
@@ -43,7 +43,7 @@ class UnIgnoreCommand {
                     this.noticeService.create()
                         .user(sender)
                         .placeholder("{PLAYER}", target.getName())
-                        .notice(translation -> translation.ignore().notIgnorePlayer())
+                        .notice(translation -> translation.ignore().playerNotIgnored())
                         .send();
                     return CompletableFuture.completedFuture(IgnoreResult.CANCELLED);
                 }
@@ -55,7 +55,7 @@ class UnIgnoreCommand {
                     this.noticeService.create()
                         .player(senderUuid)
                         .placeholder("{PLAYER}", target.getName())
-                        .notice(translation -> translation.ignore().unIgnorePlayer())
+                        .notice(translation -> translation.ignore().playerUnignored())
                         .send();
                 }
             })
@@ -72,7 +72,7 @@ class UnIgnoreCommand {
                 if (result == IgnoreResult.SUCCESS) {
                     this.noticeService.create()
                         .player(senderUuid)
-                        .notice(translation -> translation.ignore().unIgnoreAll())
+                        .notice(translation -> translation.ignore().allPlayersUnignored())
                         .send();
                 }
             })
