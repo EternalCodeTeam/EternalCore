@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.ignore;
 
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -14,5 +15,7 @@ public interface IgnoreService {
     CompletableFuture<IgnoreResult> unIgnore(UUID requester, UUID target);
 
     CompletableFuture<IgnoreResult> unIgnoreAll(UUID requester);
+
+    CompletableFuture<Set<UUID>> getIgnoredPlayers(UUID requester);
 
 }

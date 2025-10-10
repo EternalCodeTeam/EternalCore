@@ -10,24 +10,22 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLIgnoreMessages extends OkaeriConfig implements IgnoreMessages {
     
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
+    @Comment("# {PLAYER} - Nazwa gracza")
     public Notice ignorePlayer = Notice.chat("<green>► <white>Zignorowano gracza <red>{PLAYER}<white>!");
 
-    @Comment(" ")
     public Notice ignoreAll = Notice.chat("<red>► <dark_red>Zignorowano wszystkich graczy!");
     public Notice cantIgnoreYourself = Notice.chat("<red>► <dark_red>Nie możesz zignorować samego siebie!");
 
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
+    @Comment("# {PLAYER} - Nazwa gracza")
     public Notice alreadyIgnorePlayer = Notice.chat("<red>► <dark_red>Gracz <red>{PLAYER} jest już zignorowany!");
 
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
+    @Comment("# {PLAYER} - Nazwa gracza")
     public Notice unIgnorePlayer = Notice.chat("<red>► <dark_red>Od ignorowano gracza <red>{PLAYER}<dark_red>!");
 
-    @Comment(" ")
     public Notice unIgnoreAll = Notice.chat("<red>► <dark_red>Od ignorowano wszystkich graczy!");
     public Notice cantUnIgnoreYourself = Notice.chat("<red>► <dark_red>Nie możesz od ignorować samego siebie!");
 
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
+    @Comment("# {PLAYER} - Nazwa gracza")
     public Notice notIgnorePlayer = Notice.chat(
         "<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!");
 }

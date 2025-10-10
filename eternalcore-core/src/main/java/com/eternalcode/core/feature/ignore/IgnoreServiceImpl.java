@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.ignore.event.UnIgnoreAllEvent;
 import com.eternalcode.core.feature.ignore.event.UnIgnoreEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.event.Event;
@@ -42,7 +43,10 @@ class IgnoreServiceImpl implements IgnoreService {
 
                 return this.ignoreRepository.ignore(requester, target)
                     .thenApply(unused -> IgnoreResult.SUCCESS)
-                    .exceptionally(FutureHandler::handleException);
+                    .exceptionally(throwable -> {
+                        FutureHandler.handleException(throwable);
+                        return IgnoreResult.ERROR;
+                    });
             });
     }
 
@@ -56,7 +60,10 @@ class IgnoreServiceImpl implements IgnoreService {
 
                 return this.ignoreRepository.ignoreAll(requester)
                     .thenApply(unused -> IgnoreResult.SUCCESS)
-                    .exceptionally(FutureHandler::handleException);
+                    .exceptionally(throwable -> {
+                        FutureHandler.handleException(throwable);
+                        return IgnoreResult.ERROR;
+                    });
             });
     }
 
@@ -70,7 +77,10 @@ class IgnoreServiceImpl implements IgnoreService {
 
                 return this.ignoreRepository.unIgnore(requester, target)
                     .thenApply(unused -> IgnoreResult.SUCCESS)
-                    .exceptionally(FutureHandler::handleException);
+                    .exceptionally(throwable -> {
+                        FutureHandler.handleException(throwable);
+                        return IgnoreResult.ERROR;
+                    });
             });
     }
 
@@ -84,8 +94,16 @@ class IgnoreServiceImpl implements IgnoreService {
 
                 return this.ignoreRepository.unIgnoreAll(requester)
                     .thenApply(unused -> IgnoreResult.SUCCESS)
-                    .exceptionally(FutureHandler::handleException);
+                    .exceptionally(throwable -> {
+                        FutureHandler.handleException(throwable);
+                        return IgnoreResult.ERROR;
+                    });
             });
+    }
+
+    @Override
+    public CompletableFuture<Set<UUID>> getIgnoredPlayers(UUID requester) {
+        return this.ignoreRepository.getIgnoredPlayers(requester);
     }
 
     private <T extends Event> CompletableFuture<T> callEventSync(T event) {

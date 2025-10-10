@@ -28,7 +28,7 @@ class UnIgnoreCommand {
 
     @Execute
     @DescriptionDocs(description = "Unignore specified player", arguments = "<player>")
-    void unignore(@Context User sender, @Arg User target) {
+    void unignore(@Context User sender, @Arg("ignored_player") User target) {
         UUID senderUuid = sender.getUniqueId();
         UUID targetUuid = target.getUniqueId();
 

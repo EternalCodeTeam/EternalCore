@@ -9,9 +9,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.DeleteBuilder;
-import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.time.Duration;
@@ -20,7 +18,6 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Repository
@@ -109,31 +106,16 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
             .thenRun(() -> this.ignores.refresh(by));
     }
 
-    @ApiStatus.Internal
     @Override
-    public CompletableFuture<Void> purgeAll() {
-        return this.deleteAll(IgnoreTable.class)
-            .thenRun(this.ignores::invalidateAll);
-    }
-
-    @DatabaseTable(tableName = "eternal_core_ignores")
-    private static class IgnoreTable {
-
-        @DatabaseField(id = true)
-        Long id;
-
-        @DatabaseField(columnName = "player_id", uniqueCombo = true)
-        UUID playerUuid;
-
-        @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
-        UUID ignoredUuid;
-
-        IgnoreTable() {}
-
-        IgnoreTable(UUID playerUuid, UUID ignoredUuid) {
-            this.playerUuid = playerUuid;
-            this.ignoredUuid = ignoredUuid;
-        }
+    public CompletableFuture<Set<UUID>> getIgnoredPlayers(UUID by) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return this.ignores.get(by);
+            }
+            catch (ExecutionException exception) {
+                throw new RuntimeException(exception);
+            }
+        });
     }
 
     private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
