@@ -8,8 +8,10 @@ public class Migration_0016_Move_feed_messages_to_dedicated_section extends Name
     Migration_0016_Move_feed_messages_to_dedicated_section() {
         super(
             "Move feed messages to dedicated section",
-            move("player.feedMessage", "feed.feedMessage"),
-            move("player.feedMessageBy", "feed.feedMessageBy")
+            move("player.feedMessage", "feed.received"),
+            move("player.feedMessageBy", "feed.given")
         );
     }
 }
+
+

@@ -49,7 +49,7 @@ class GameModeCommand {
         sender.setGameMode(gameMode);
 
         this.noticeService.create()
-            .notice(translation -> translation.gamemode().gameModeMessage())
+            .notice(translation -> translation.gamemode().self())
             .placeholder("{GAMEMODE}", gameMode.name())
             .player(sender.getUniqueId())
             .send();
@@ -62,13 +62,13 @@ class GameModeCommand {
         player.setGameMode(gameMode);
 
         this.noticeService.create()
-            .notice(translation -> translation.gamemode().gameModeMessage())
+            .notice(translation -> translation.gamemode().self())
             .placeholder("{GAMEMODE}", gameMode.name())
             .player(player.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.gamemode().gameModeSetMessage())
+            .notice(translation -> translation.gamemode().other())
             .placeholder("{GAMEMODE}", gameMode.name())
             .placeholder("{PLAYER}", player.getName())
             .viewer(sender)

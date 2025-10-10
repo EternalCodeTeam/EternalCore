@@ -28,7 +28,7 @@ class FeedCommand {
         this.feed(player);
 
         this.noticeService.create()
-            .notice(translation -> translation.feed().feedMessage())
+            .notice(translation -> translation.feed().received())
             .player(player.getUniqueId())
             .send();
     }
@@ -40,12 +40,12 @@ class FeedCommand {
         this.feed(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.feed().feedMessage())
+            .notice(translation -> translation.feed().received())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.feed().feedMessageBy())
+            .notice(translation -> translation.feed().given())
             .placeholder("{PLAYER}", target.getName())
             .viewer(viewer)
             .send();

@@ -22,7 +22,7 @@ public class ENWhoIsMessages extends OkaeriConfig implements WhoIsMessages {
         "# {HEALTH} - Player health",
         "# {FOOD} - Player food level"
     })
-    public List<String> whoisCommand = List.of(
+    public List<String> info = List.of(
         "<green>► <white>Target name: <green>{PLAYER}",
         "<green>► <white>Target UUID: <green>{UUID}",
         "<green>► <white>Target address: <green>{IP}",

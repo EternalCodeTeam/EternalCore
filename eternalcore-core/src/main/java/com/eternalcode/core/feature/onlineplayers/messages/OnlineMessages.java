@@ -4,7 +4,7 @@ import com.eternalcode.multification.notice.Notice;
 import java.util.List;
 
 public interface OnlineMessages {
-    Notice onlinePlayersCountMessage();
-    Notice onlinePlayersMessage();
-    List<String> fullServerSlots();
+    Notice count();
+    Notice list();
+    List<String> full();
 }

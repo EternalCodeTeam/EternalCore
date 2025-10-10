@@ -29,7 +29,7 @@ class HealCommand {
     void healSelf(@Sender Player player) {
         this.heal(player);
 
-        this.noticeService.player(player.getUniqueId(), translation -> translation.heal().healMessage());
+        this.noticeService.player(player.getUniqueId(), translation -> translation.heal().received());
     }
 
     @Execute
@@ -39,12 +39,12 @@ class HealCommand {
         this.heal(target);
 
         this.noticeService.create()
-            .notice(translation -> translation.heal().healMessage())
+            .notice(translation -> translation.heal().received())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(translation -> translation.heal().healMessageBy())
+            .notice(translation -> translation.heal().given())
             .placeholder("{PLAYER}", target.getName())
             .viewer(viewer)
             .send();

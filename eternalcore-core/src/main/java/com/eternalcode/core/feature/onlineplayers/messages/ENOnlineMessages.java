@@ -12,12 +12,12 @@ import java.util.List;
 public class ENOnlineMessages extends OkaeriConfig implements OnlineMessages {
     
     @Comment({" ", "# {ONLINE} - Number of online players"})
-    public Notice onlinePlayersCountMessage = Notice.chat("<green>► <white>On server now is: <green>{ONLINE} <white>players!");
+    public Notice count = Notice.chat("<green>► <white>On server now is: <green>{ONLINE} <white>players!");
 
     @Comment("# {ONLINE} - Current online players, {PLAYERS} - Player list")
-    public Notice onlinePlayersMessage = Notice.chat("<green>► <white>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <green>{PLAYERS}");
+    public Notice list = Notice.chat("<green>► <white>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <green>{PLAYERS}");
 
-    public List<String> fullServerSlots = List.of(
+    public List<String> full = List.of(
         " ",
         "<red>✘ <dark_red>Server is full!",
         "<red>✘ <dark_red>Buy rank on our site!"

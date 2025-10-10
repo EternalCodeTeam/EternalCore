@@ -29,8 +29,8 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> player.isFlying()
-                ? translation.speed().speedFlySet()
-                : translation.speed().speedWalkSet())
+                ? translation.speed().flySet()
+                : translation.speed().walkSet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(player.getUniqueId())
             .send();
@@ -43,16 +43,16 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> target.isFlying()
-                ? translation.speed().speedFlySet()
-                : translation.speed().speedWalkSet())
+                ? translation.speed().flySet()
+                : translation.speed().walkSet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
             .notice(translation -> target.isFlying()
-                ? translation.speed().speedFlySetBy()
-                : translation.speed().speedWalkSetBy())
+                ? translation.speed().flySetFor()
+                : translation.speed().walkSetFor())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{SPEED}", String.valueOf(speed))
             .viewer(viewer)
@@ -66,8 +66,8 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> speedType == SpeedType.WALK
-                ? translation.speed().speedWalkSet()
-                : translation.speed().speedFlySet())
+                ? translation.speed().walkSet()
+                : translation.speed().flySet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(player.getUniqueId())
             .send();
@@ -84,16 +84,16 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> speedType == SpeedType.WALK
-                ? translation.speed().speedWalkSet()
-                : translation.speed().speedFlySet())
+                ? translation.speed().walkSet()
+                : translation.speed().flySet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
             .notice(translation -> speedType == SpeedType.WALK
-                ? translation.speed().speedWalkSetBy()
-                : translation.speed().speedFlySetBy())
+                ? translation.speed().walkSetFor()
+                : translation.speed().flySetFor())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{SPEED}", String.valueOf(speed))
             .viewer(viewer)

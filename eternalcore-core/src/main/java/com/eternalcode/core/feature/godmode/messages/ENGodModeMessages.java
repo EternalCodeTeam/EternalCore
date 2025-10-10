@@ -10,11 +10,12 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENGodModeMessages extends OkaeriConfig implements GodModeMessages {
     
-    @Comment({" ", "# {STATE} - Godmode status"})
-    public Notice godEnable = Notice.chat("<green>► <white>God is now {STATE}");
-    public Notice godDisable = Notice.chat("<green>► <white>God is now {STATE}");
+    @Comment({" ", "# {STATE} - Invulnerability status"})
+    public Notice enabled = Notice.chat("<green>► <white>Invulnerability is now {STATE}");
+    public Notice disabled = Notice.chat("<green>► <white>Invulnerability is now {STATE}");
 
-    @Comment({" ", "# {PLAYER} - Target player, {STATE} - Target player godmode status"})
-    public Notice godSetEnable = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>god is now: {STATE}");
-    public Notice godSetDisable = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>god is now: {STATE}");
+    @Comment({" ", "# {PLAYER} - Target player, {STATE} - Target player invulnerability status"})
+    public Notice enabledFor = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>invulnerability is now: {STATE}");
+    public Notice disabledFor = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>invulnerability is now: {STATE}");
 }
+

@@ -9,9 +9,9 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class PLFeedMessages extends OkaeriConfig implements FeedMessages {
-    
-    public Notice feedMessage = Notice.chat("<green>► <white>Zostałeś nakarmiony!");
-    
-    @Comment(" # {PLAYER} - Gracz który został nakarmiony")
-    public Notice feedMessageBy = Notice.chat("<green>► <white>Nakarmiłeś gracza <green>{PLAYER}");
+    public Notice received = Notice.chat("<green>► <white>Zostałeś nakarmiony!");
+
+    @Comment("# {PLAYER} - Gracz który został nakarmiony")
+    public Notice given = Notice.chat("<green>► <white>Nakarmiłeś gracza <green>{PLAYER}");
 }
+

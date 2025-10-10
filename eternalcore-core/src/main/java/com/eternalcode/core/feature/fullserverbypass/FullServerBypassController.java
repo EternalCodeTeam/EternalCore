@@ -62,14 +62,14 @@ class FullServerBypassController implements Listener {
 
         if (userOption.isEmpty()) {
             return Joiner.on("\n")
-                .join(this.translationManager.getMessages().online().fullServerSlots())
+                .join(this.translationManager.getMessages().online().full())
                 .toString();
         }
 
         User user = userOption.get();
 
         return Joiner.on("\n")
-            .join(this.translationManager.getMessages(user.getUniqueId()).online().fullServerSlots())
+            .join(this.translationManager.getMessages(user.getUniqueId()).online().full())
             .toString();
     }
 }

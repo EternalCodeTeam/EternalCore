@@ -11,10 +11,11 @@ import lombok.experimental.Accessors;
 public class PLGodModeMessages extends OkaeriConfig implements GodModeMessages {
     
     @Comment({" ", "# {STATE} - Status nieśmiertelności"})
-    public Notice godEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
-    public Notice godDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
+    public Notice enabled = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
+    public Notice disabled = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
 
     @Comment("# {PLAYER} - Gracz któremu został ustawiony tryb nieśmiertelności, {STATE} - Status nieśmiertelności")
-    public Notice godSetEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
-    public Notice godSetDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
+    public Notice enabledFor = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
+    public Notice disabledFor = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
 }
+

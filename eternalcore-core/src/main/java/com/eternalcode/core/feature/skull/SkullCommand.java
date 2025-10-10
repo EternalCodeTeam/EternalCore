@@ -47,7 +47,7 @@ class SkullCommand {
             }
 
             this.noticeService.create()
-                .notice(translation -> translation.skull().skullMessage())
+                .notice(translation -> translation.skull().received())
                 .placeholder("{SKULL}", name)
                 .player(sender.getUniqueId())
                 .send();

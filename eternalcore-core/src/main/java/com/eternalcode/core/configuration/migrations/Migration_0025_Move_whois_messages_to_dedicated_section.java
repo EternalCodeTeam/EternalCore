@@ -8,7 +8,9 @@ public class Migration_0025_Move_whois_messages_to_dedicated_section extends Nam
     Migration_0025_Move_whois_messages_to_dedicated_section() {
         super(
             "Move whois messages to dedicated section",
-            move("player.whoisCommand", "whois.whoisCommand")
+            move("player.whoisCommand", "whois.info")
         );
     }
 }
+
+

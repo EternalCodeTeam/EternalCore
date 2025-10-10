@@ -51,7 +51,7 @@ class GiveCommand {
         if (isSuccess) {
             this.noticeService.create()
                 .placeholder("{ITEM}", MaterialUtil.format(material))
-                .notice(translation -> translation.give().giveReceived())
+                .notice(translation -> translation.give().received())
                 .player(player.getUniqueId())
                 .send();
         }
@@ -69,14 +69,14 @@ class GiveCommand {
         String formattedMaterial = MaterialUtil.format(material);
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
-            .notice(translation -> translation.give().giveReceived())
+            .notice(translation -> translation.give().received())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", target.getName())
-            .notice(translation -> translation.give().giveGiven())
+            .notice(translation -> translation.give().given())
             .sender(sender)
             .send();
     }

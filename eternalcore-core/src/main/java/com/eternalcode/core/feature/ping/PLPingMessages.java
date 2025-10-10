@@ -11,8 +11,8 @@ import lombok.experimental.Accessors;
 public class PLPingMessages extends OkaeriConfig implements PingMessages {
     
     @Comment({" ", "# {PING} - Aktualna ilość pingu."})
-    public Notice pingMessage = Notice.chat("<green>► <white>Twój ping: <green>{PING}<white>ms");
+    public Notice self = Notice.chat("<green>► <white>Twój ping: <green>{PING}<white>ms");
     
     @Comment("# {PLAYER} - Gracz któremu został ustawiony tryb nieśmiertelności, {PING} - Aktualna ilość pingu dla gracza.")
-    public Notice pingOtherMessage = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>ma ping: <green>{PING}<white>ms");
+    public Notice other = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>ma ping: <green>{PING}<white>ms");
 }

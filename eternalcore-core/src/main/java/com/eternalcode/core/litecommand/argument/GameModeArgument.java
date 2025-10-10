@@ -39,7 +39,7 @@ class GameModeArgument extends AbstractViewerArgument<GameMode> {
 
         return alias
             .map(parsed -> ParseResult.success(parsed))
-            .orElseGet(() -> ParseResult.failure(translation.gamemode().gameModeNotCorrect()));
+            .orElseGet(() -> ParseResult.failure(translation.gamemode().invalidType()));
     }
 
     @Override

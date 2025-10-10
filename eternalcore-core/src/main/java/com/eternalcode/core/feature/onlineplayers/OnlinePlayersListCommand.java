@@ -48,7 +48,7 @@ class OnlinePlayersListCommand {
             .toString();
 
         this.noticeService.create()
-            .notice(translation -> translation.online().onlinePlayersMessage())
+            .notice(translation -> translation.online().list())
             .placeholder("{ONLINE}", onlineCount)
             .placeholder("{PLAYERS}", players)
             .viewer(viewer)

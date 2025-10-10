@@ -8,9 +8,11 @@ public class Migration_0024_Move_online_messages_to_dedicated_section extends Na
     Migration_0024_Move_online_messages_to_dedicated_section() {
         super(
             "Move online messages to dedicated section",
-            move("player.onlinePlayersCountMessage", "online.onlinePlayersCountMessage"),
-            move("player.onlinePlayersMessage", "online.onlinePlayersMessage"),
-            move("player.fullServerSlots", "online.fullServerSlots")
+            move("player.onlinePlayersCountMessage", "online.count"),
+            move("player.onlinePlayersMessage", "online.list"),
+            move("player.fullServerSlots", "online.full")
         );
     }
 }
+
+

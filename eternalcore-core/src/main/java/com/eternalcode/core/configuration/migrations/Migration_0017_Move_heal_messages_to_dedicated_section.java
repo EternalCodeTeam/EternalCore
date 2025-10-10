@@ -8,8 +8,10 @@ public class Migration_0017_Move_heal_messages_to_dedicated_section extends Name
     Migration_0017_Move_heal_messages_to_dedicated_section() {
         super(
             "Move heal messages to dedicated section",
-            move("player.healMessage", "heal.healMessage"),
-            move("player.healMessageBy", "heal.healMessageBy")
+            move("player.healMessage", "heal.received"),
+            move("player.healMessageBy", "heal.given")
         );
     }
 }
+
+

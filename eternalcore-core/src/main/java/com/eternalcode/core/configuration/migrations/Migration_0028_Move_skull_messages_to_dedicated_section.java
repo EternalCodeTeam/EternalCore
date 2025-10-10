@@ -8,7 +8,7 @@ public class Migration_0028_Move_skull_messages_to_dedicated_section extends Nam
     Migration_0028_Move_skull_messages_to_dedicated_section() {
         super(
             "Move skull messages to dedicated section",
-            move("item.skullMessage", "skull.skullMessage")
+            move("item.skullMessage", "skull.received")
         );
     }
 }

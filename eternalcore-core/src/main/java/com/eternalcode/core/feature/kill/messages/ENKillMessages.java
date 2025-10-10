@@ -11,5 +11,6 @@ import lombok.experimental.Accessors;
 public class ENKillMessages extends OkaeriConfig implements KillMessages {
     
     @Comment("# {PLAYER} - Killed player")
-    public Notice killedMessage = Notice.chat("<red>► <dark_red>Killed <red>{PLAYER}");
+    public Notice killed = Notice.chat("<red>► <dark_red>Killed <red>{PLAYER}");
 }
+

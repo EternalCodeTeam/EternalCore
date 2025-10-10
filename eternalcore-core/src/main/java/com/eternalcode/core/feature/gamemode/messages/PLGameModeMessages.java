@@ -10,11 +10,12 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLGameModeMessages extends OkaeriConfig implements GameModeMessages {
     
-    public Notice gameModeNotCorrect = Notice.chat("<red>✘ <dark_red>Niepoprawny typ!");
+    public Notice invalidType = Notice.chat("<red>✘ <dark_red>Niepoprawny typ!");
     
     @Comment("# {GAMEMODE} - Ustawiony tryb gry")
-    public Notice gameModeMessage = Notice.chat("<green>► <white>Ustawiono tryb gry na: <green>{GAMEMODE}");
+    public Notice self = Notice.chat("<green>► <white>Ustawiono tryb gry na: <green>{GAMEMODE}");
     
     @Comment("# {PLAYER} - Gracz któremu został ustawiony tryb gry, {GAMEMODE} - Ustawiony tryb gry dla gracza")
-    public Notice gameModeSetMessage = Notice.chat("<green>► <white>Ustawiono tryb gry graczowi <green>{PLAYER} <white>na: <green>{GAMEMODE}");
+    public Notice other = Notice.chat("<green>► <white>Ustawiono tryb gry graczowi <green>{PLAYER} <white>na: <green>{GAMEMODE}");
 }
+

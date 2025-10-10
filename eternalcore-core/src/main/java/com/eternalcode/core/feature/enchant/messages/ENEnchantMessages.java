@@ -11,10 +11,10 @@ import lombok.experimental.Accessors;
 public class ENEnchantMessages extends OkaeriConfig implements EnchantMessages {
 
 @Comment(" ")
-public Notice enchantedMessage = Notice.chat("<green>► <white>Item in hand is enchanted!");
-public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
-public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
+public Notice self = Notice.chat("<green>► <white>Item in hand is enchanted!");
+public Notice other = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
+public Notice by = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
 
-    public Notice invalidEnchantment = Notice.chat("<red>✘ <dark_red>Invalid enchantment provided!");
-    public Notice invalidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>This enchantment level is not supported!");
+    public Notice invalid = Notice.chat("<red>✘ <dark_red>Invalid enchantment provided!");
+    public Notice invalidLevel = Notice.chat("<red>✘ <dark_red>This enchantment level is not supported!");
 }

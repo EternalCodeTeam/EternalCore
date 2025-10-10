@@ -11,13 +11,14 @@ import lombok.experimental.Accessors;
 public class PLGiveMessages extends OkaeriConfig implements GiveMessages {
 
     @Comment({" ", "# {ITEM} - Nazwa otrzymanego itemu"})
-    public Notice giveReceived = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM}");
+    public Notice received = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM}");
 
     @Comment({" ", "# {PLAYER} - Osoba której został przydzielony przedmiot, {ITEM} - Nazwa otrzymanego przedmiotu"})
-    public Notice giveGiven = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM}");
+    public Notice given = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM}");
 
-    public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Brak miejsca w ekwipunku!");
+    public Notice noSpace = Notice.chat("<red>✘ <dark_red>Brak miejsca w ekwipunku!");
 
     @Comment(" ")
-    public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Podany przedmiot nie istnieje!");
+    public Notice invalidItem = Notice.chat("<red>✘ <dark_red>Podany przedmiot nie istnieje!");
 }
+

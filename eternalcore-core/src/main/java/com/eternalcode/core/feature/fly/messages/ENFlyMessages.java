@@ -11,10 +11,11 @@ import lombok.experimental.Accessors;
 public class ENFlyMessages extends OkaeriConfig implements FlyMessages {
     
     @Comment({" ", "# {STATE} - Fly status"})
-    public Notice flyEnable = Notice.chat("<green>► <white>Fly is now {STATE}");
-    public Notice flyDisable = Notice.chat("<green>► <white>Fly is now {STATE}");
+    public Notice enabled = Notice.chat("<green>► <white>Fly is now {STATE}");
+    public Notice disabled = Notice.chat("<green>► <white>Fly is now {STATE}");
 
     @Comment("# {PLAYER} - Target player, {STATE} - Target player fly status")
-    public Notice flySetEnable = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
-    public Notice flySetDisable = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
+    public Notice enabledFor = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
+    public Notice disabledFor = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
 }
+

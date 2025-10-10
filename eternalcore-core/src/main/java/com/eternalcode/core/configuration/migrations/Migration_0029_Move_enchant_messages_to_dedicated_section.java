@@ -8,9 +8,9 @@ public class Migration_0029_Move_enchant_messages_to_dedicated_section extends N
     Migration_0029_Move_enchant_messages_to_dedicated_section() {
         super(
             "Move enchant messages to dedicated section",
-            move("item.enchantedMessage", "enchant.enchantedMessage"),
-            move("item.enchantedMessageFor", "enchant.enchantedMessageFor"),
-            move("item.enchantedMessageBy", "enchant.enchantedMessageBy")
+            move("item.enchantedMessage", "enchant.self"),
+            move("item.enchantedMessageFor", "enchant.other"),
+            move("item.enchantedMessageBy", "enchant.by")
         );
     }
 }
