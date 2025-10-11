@@ -10,6 +10,11 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLEnchantMessages extends OkaeriConfig implements EnchantMessages {
 
-    public Notice invalidEnchantment = Notice.chat("<red>✘ <dark_red>Takie zaklęcie nie istnieje!");
-    public Notice invalidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>Ten poziom zaklęcia nie jest wspierany!");
+@Comment(" ")
+public Notice self = Notice.chat("<green>► <white>Item w twojej ręce został zaklęty!");
+public Notice other = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
+public Notice by = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
+
+    public Notice invalid = Notice.chat("<red>✘ <dark_red>Takie zaklęcie nie istnieje!");
+    public Notice invalidLevel = Notice.chat("<red>✘ <dark_red>Ten poziom zaklęcia nie jest wspierany!");
 }
