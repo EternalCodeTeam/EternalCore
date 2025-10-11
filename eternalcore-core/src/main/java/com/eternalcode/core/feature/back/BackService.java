@@ -66,13 +66,13 @@ public class BackService {
     public void teleportBack(Player player, Location location) {
         if (player.hasPermission(BYPASS_PERMISSION)) {
             teleportService.teleport(player, location);
-        } else {
-            teleportTaskService.createTeleport(
-                player.getUniqueId(),
-                PositionAdapter.convert(player.getLocation()),
-                PositionAdapter.convert(location),
-                settings.tpaTimer()
-            );
+            return;
         }
+        teleportTaskService.createTeleport(
+            player.getUniqueId(),
+            PositionAdapter.convert(player.getLocation()),
+            PositionAdapter.convert(location),
+            settings.tpaTimer()
+        );
     }
 }
