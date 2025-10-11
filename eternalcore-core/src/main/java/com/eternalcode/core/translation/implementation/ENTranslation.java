@@ -23,6 +23,7 @@ import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMe
 import com.eternalcode.core.feature.fun.endscreen.messages.ENEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
+import com.eternalcode.core.feature.ignore.messages.ENIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
@@ -179,6 +180,12 @@ public class ENTranslation extends AbstractTranslation {
         "# This section is responsible for the communication between administration",
     })
     public ENAdminChatMessages adminChat = new ENAdminChatMessages();
+
+    @Comment({
+        " ",
+        "# This section is responsible for ignore-related messages"
+    })
+    public ENIgnoreMessages ignore = new ENIgnoreMessages();
 
     @Comment({
         " ",
