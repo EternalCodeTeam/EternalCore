@@ -21,6 +21,7 @@ import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMe
 import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
+import com.eternalcode.core.feature.ignore.messages.PLIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
@@ -172,6 +173,12 @@ public class PLTranslation extends AbstractTranslation {
         "# Ta sekcja odpowiada za czat komunikacji między administracją"
     })
     public PLAdminChatMessages adminChat = new PLAdminChatMessages();
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości dotyczące ignorowania graczy"
+    })
+    public PLIgnoreMessages ignore = new PLIgnoreMessages();
 
     @Comment({
         " ",
