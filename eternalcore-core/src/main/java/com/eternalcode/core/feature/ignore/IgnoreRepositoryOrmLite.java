@@ -37,6 +37,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
             .expireAfterAccess(Duration.ofMinutes(15))
             .refreshAfterWrite(Duration.ofMinutes(3))
             .build(new IgnoreLoader());
+
         TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreTable.class);
     }
 
@@ -83,9 +84,9 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                     DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
 
                     builder.where()
-                        .eq("player_id", by)
+                        .eq(IgnoreTable.PLAYER_ID_COLUMN, by)
                         .and()
-                        .eq("ignored_id", target);
+                        .eq(IgnoreTable.IGNORED_ID_COLUMN, target);
 
                     return builder.delete();
                 })
@@ -99,7 +100,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                     DeleteBuilder<IgnoreTable, Object> builder = dao.deleteBuilder();
 
                     builder.where()
-                        .eq("player_id", by);
+                        .eq(IgnoreTable.PLAYER_ID_COLUMN, by);
 
                     return builder.delete();
                 })
@@ -123,7 +124,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
         @Override
         public @NotNull Set<UUID> load(@NotNull UUID key) throws SQLException {
             return IgnoreRepositoryOrmLite.this.cachedDao.queryBuilder()
-                .where().eq("player_id", key)
+                .where().eq(IgnoreTable.PLAYER_ID_COLUMN, key)
                 .query()
                 .stream()
                 .map(ignoreTable -> ignoreTable.ignoredUuid)

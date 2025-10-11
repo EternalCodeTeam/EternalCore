@@ -7,13 +7,16 @@ import java.util.UUID;
 @DatabaseTable(tableName = "eternal_core_ignores")
 class IgnoreTable {
 
+    public static final String PLAYER_ID_COLUMN = "player_id";
+    public static final String IGNORED_ID_COLUMN = "ignored_id";
+
     @DatabaseField(id = true)
     Long id;
 
-    @DatabaseField(columnName = "player_id", uniqueCombo = true)
+    @DatabaseField(columnName = PLAYER_ID_COLUMN, uniqueCombo = true)
     UUID playerUuid;
 
-    @DatabaseField(columnName = "ignored_id", uniqueCombo = true)
+    @DatabaseField(columnName = IGNORED_ID_COLUMN, uniqueCombo = true)
     UUID ignoredUuid;
 
     IgnoreTable() {}
