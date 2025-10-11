@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.back;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
@@ -13,16 +14,18 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import panda.std.Pair;
 
 @Service
 public class BackService {
+
+    private static final String BYPASS_PERMISSION = "eternalcore.teleport.bypass";
 
     private final TeleportService teleportService;
     private final TeleportTaskService teleportTaskService;
     private final TeleportRequestSettings settings;
 
-    private final Cache<UUID, Pair<BackLocation, BackLocation>> backLocationsCache;
+    private final Cache<UUID, Position> deathLocations;
+    private final Cache<UUID, Position> teleportLocations;
 
     @Inject
     public BackService(
@@ -34,37 +37,36 @@ public class BackService {
         this.teleportTaskService = teleportTaskService;
         this.settings = settings;
 
-        this.backLocationsCache = Caffeine.newBuilder()
+        this.deathLocations = Caffeine.newBuilder()
+            .maximumSize(1000)
+            .expireAfterWrite(2, TimeUnit.HOURS)
+            .build();
+        this.teleportLocations = Caffeine.newBuilder()
             .maximumSize(1000)
             .expireAfterWrite(2, TimeUnit.HOURS)
             .build();
     }
 
-    public Optional<Pair<BackLocation, BackLocation>> getBackLocationPair(UUID playerId) {
-        return Optional.ofNullable(backLocationsCache.getIfPresent(playerId));
+    public Optional<Position> getDeathLocation(UUID playerId) {
+        return Optional.ofNullable(deathLocations.getIfPresent(playerId));
     }
 
-    public void setBackLocation(UUID playerId, Location location, boolean isFromDeath) {
-        Pair<BackLocation, BackLocation> existing = backLocationsCache.getIfPresent(playerId);
-        BackLocation newLocation = new BackLocation(location);
-        BackLocation deathLocation;
-        BackLocation normalLocation;
-        if (existing == null) {
-            deathLocation = isFromDeath ? newLocation : null;
-            normalLocation = isFromDeath ? null : newLocation;
-        }
-        else {
-            deathLocation = isFromDeath ? newLocation : existing.getFirst();
-            normalLocation = isFromDeath ? existing.getSecond() : newLocation;
-        }
-        backLocationsCache.put(playerId, Pair.of(deathLocation, normalLocation));
+    public Optional<Position> getTeleportLocation(UUID playerId) {
+        return Optional.ofNullable(teleportLocations.getIfPresent(playerId));
+    }
+
+    public void markDeathLocation(UUID player, Position position) {
+        this.deathLocations.put(player, position);
+    }
+
+    public void markTeleportLocation(UUID player, Position position) {
+        this.teleportLocations.put(player, position);
     }
 
     public void teleportBack(Player player, Location location) {
-        if (player.hasPermission("eternalcore.teleport.bypass")) {
+        if (player.hasPermission(BYPASS_PERMISSION)) {
             teleportService.teleport(player, location);
-        }
-        else {
+        } else {
             teleportTaskService.createTeleport(
                 player.getUniqueId(),
                 PositionAdapter.convert(player.getLocation()),
@@ -72,8 +74,5 @@ public class BackService {
                 settings.tpaTimer()
             );
         }
-    }
-
-    public record BackLocation(Location location) {
     }
 }

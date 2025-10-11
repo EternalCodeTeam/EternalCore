@@ -4,10 +4,14 @@ import com.eternalcode.multification.notice.Notice;
 
 public interface BackMessages {
 
-    Notice lastLocationNoExist();
+    Notice lastLocationNotFound();
 
-    Notice teleportedToLastLocation();
+    Notice teleportedToLastTeleportLocation();
 
-    Notice teleportedSpecifiedPlayerLastLocation();
+    Notice teleportedOtherToLastTeleportLocation();
+
+    Notice teleportedToLastDeathLocation();
+
+    Notice teleportedOtherToLastDeathLocation();
 
 }

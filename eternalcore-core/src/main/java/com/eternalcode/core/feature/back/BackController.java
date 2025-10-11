@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.back;
 
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.injector.annotations.Inject;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +22,7 @@ public class BackController implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player entity = event.getEntity();
 
-        this.backService.setBackLocation(entity.getUniqueId(), entity.getLocation(), true);
+        this.backService.markDeathLocation(entity.getUniqueId(), PositionAdapter.convert(entity.getLocation()));
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -30,6 +31,6 @@ public class BackController implements Listener {
             return;
         }
 
-        this.backService.setBackLocation(event.getPlayer().getUniqueId(), event.getFrom(), false);
+        this.backService.markTeleportLocation(event.getPlayer().getUniqueId(), PositionAdapter.convert(event.getFrom()));
     }
 }

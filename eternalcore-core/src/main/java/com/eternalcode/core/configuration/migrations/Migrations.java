@@ -17,5 +17,6 @@ public class Migrations {
         new Migration_0012_Move_repair_argument_messages_to_dedicated_section(),
         new Migration_0013_Move_enchant_messages_to_dedicated_section(),
         new Migration_0014_Move_butcher_messages_to_dedicated_section(),
+        new Migration_0030_Move_back_to_dedicated_section()
         };
 }

@@ -9,8 +9,16 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENBackMessages extends OkaeriConfig implements BackMessages {
 
-    public Notice lastLocationNoExist = Notice.chat("<red>► <white>You don't have any last location to teleport to!");
-    public Notice teleportedToLastLocation = Notice.chat("<green>► <white>You have been teleported to your last location!");
-    public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been teleported to their last location!");
+    public Notice lastLocationNotFound = Notice.chat(
+        "<red>► <white>You don't have any last location to teleport to!");
 
+    public Notice teleportedToLastTeleportLocation = Notice.chat(
+        "<green>► <white>You have been teleported to your last location!");
+    public Notice teleportedOtherToLastTeleportLocation = Notice.chat(
+        "<green>► <white>Player <green>{PLAYER} <white>has been teleported to their last location!");
+
+    public Notice teleportedToLastDeathLocation = Notice.chat(
+        "<green>► <white>You have been teleported to your last death location!");
+    public Notice teleportedOtherToLastDeathLocation = Notice.chat(
+        "<green>► <white>Player <green>{PLAYER} <white>has been teleported to their last death location!");
 }
