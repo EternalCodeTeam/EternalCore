@@ -29,5 +29,5 @@ public class PLIgnoreMessages extends OkaeriConfig implements IgnoreMessages {
 
     @Comment("# {PLAYER} - Nazwa gracza")
     public Notice playerNotIgnored = Notice.chat(
-        "<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!");
+        "<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie jest przez Ciebie zignorowany. Nie możesz go odignorować!");
 }
