@@ -25,7 +25,7 @@ public class PLIgnoreMessages extends OkaeriConfig implements IgnoreMessages {
 
     public Notice allPlayersUnignored = Notice.chat("<red>► <dark_red>Od ignorowano wszystkich graczy!");
 
-    public Notice cannotUnignoreSelf = Notice.chat("<red>► <dark_red>Nie możesz od ignorować samego siebie!");
+    public Notice cannotUnignoreSelf = Notice.chat("<red>► <dark_red>Nie możesz odignorować samego siebie!");
 
     @Comment("# {PLAYER} - Nazwa gracza")
     public Notice playerNotIgnored = Notice.chat(
