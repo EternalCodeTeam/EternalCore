@@ -1,12 +1,14 @@
 package com.eternalcode.core.feature.home.database;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.database.persister.LocationPersister;
 import com.eternalcode.core.feature.home.HomeImpl;
 import com.eternalcode.core.feature.home.Home;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-import java.util.UUID;
 import org.bukkit.Location;
+
+import java.util.UUID;
 
 @DatabaseTable(tableName = "eternal_core_homes")
 class HomeTable {

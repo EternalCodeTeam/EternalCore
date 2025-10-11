@@ -16,7 +16,9 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import org.bukkit.Location;
@@ -84,7 +86,13 @@ class JailServiceImpl implements JailService {
             return false;
         }
 
-        JailedPlayer jailedPlayer = new JailedPlayer(player.getUniqueId(), Instant.now(), time, detainedBy.getName());
+        JailedPlayer jailedPlayer = new JailedPlayerImpl(
+            player.getUniqueId(),
+            Instant.now(),
+            time,
+            detainedBy.getName(),
+            player.getLocation()
+        );
 
         this.prisonerRepository.savePrisoner(jailedPlayer);
         this.jailedPlayers.put(player.getUniqueId(), jailedPlayer);
@@ -102,18 +110,27 @@ class JailServiceImpl implements JailService {
             return false;
         }
 
+        JailedPlayer jailedPlayer = this.jailedPlayers.get(player.getUniqueId());
+
         this.prisonerRepository.deletePrisoner(player.getUniqueId());
         this.jailedPlayers.remove(player.getUniqueId());
 
-        this.spawnService.teleportToSpawn(player);
+        if (jailedPlayer != null && jailedPlayer.lastLocation() != null) {
+            this.teleportService.teleport(player, jailedPlayer.lastLocation());
+        } else {
+            this.spawnService.teleportToSpawn(player);
+        }
 
         return true;
     }
 
     @Override
     public void releaseAllPlayers() {
-        this.jailedPlayers.forEach((uuid, prisoner) -> {
-            Player jailedPlayer = this.server.getPlayer(uuid);
+        Set<UUID> playersToRelease = new HashSet<>();
+
+        this.jailedPlayers.forEach((uuid, jailedPlayer) -> {
+            Player player = this.server.getPlayer(uuid);
+
             JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(uuid);
             this.eventCaller.callEvent(jailReleaseEvent);
 
@@ -121,24 +138,26 @@ class JailServiceImpl implements JailService {
                 return;
             }
 
-            if (jailedPlayer != null) {
-                this.teleportService.teleport(jailedPlayer, this.spawnService.getSpawnLocation());
+            playersToRelease.add(uuid);
+
+            if (player != null) {
+                this.teleportService.teleport(player, jailedPlayer.lastLocation() != null
+                    ? jailedPlayer.lastLocation()
+                    : this.spawnService.getSpawnLocation());
             }
         });
 
-        this.jailedPlayers.clear();
-        this.prisonerRepository.deleteAllPrisoners();
+        playersToRelease.forEach(uuid -> {
+            this.jailedPlayers.remove(uuid);
+            this.prisonerRepository.deletePrisoner(uuid);
+        });
     }
 
     @Override
     public boolean isPlayerJailed(UUID player) {
         JailedPlayer jailedPlayer = this.jailedPlayers.get(player);
 
-        if (jailedPlayer == null || jailedPlayer.isPrisonExpired()) {
-            return false;
-        }
-
-        return true;
+        return jailedPlayer != null && !jailedPlayer.isPrisonExpired();
     }
 
     @Override
@@ -149,7 +168,7 @@ class JailServiceImpl implements JailService {
     private void loadFromDatabase() {
         this.prisonerRepository.getPrisoners().thenAccept(prisoners -> {
             for (JailedPlayer jailedPlayer : prisoners) {
-                this.jailedPlayers.put(jailedPlayer.getPlayerUniqueId(), jailedPlayer);
+                this.jailedPlayers.put(jailedPlayer.playerUniqueId(), jailedPlayer);
             }
         });
     }

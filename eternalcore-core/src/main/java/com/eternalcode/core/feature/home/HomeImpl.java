@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.home;
 
 import java.util.Objects;
 import java.util.UUID;
+
+import com.eternalcode.commons.bukkit.position.Position;
 import org.bukkit.Location;
 
 public class HomeImpl implements Home {

@@ -12,7 +12,6 @@ import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
@@ -29,9 +28,6 @@ import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
-import com.eternalcode.core.feature.near.messages.PLNearMessages;
-import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
-import com.eternalcode.core.feature.powertool.messages.PLPowertoolMessages;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
@@ -51,6 +47,10 @@ import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+import org.bukkit.event.entity.EntityDamageEvent;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -607,7 +607,7 @@ public class PLTranslation extends AbstractTranslation {
     public PLAutoMessageMessages autoMessage = new PLAutoMessageMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
-    public PLJailMessages jailSection = new PLJailMessages();
+    public PLJailMessages jail = new PLJailMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
     public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
