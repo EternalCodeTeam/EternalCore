@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 @LiteArgument(type = User.class, name = "ignored_player")
 class IgnoredPlayerArgument extends AbstractViewerArgument<User> {
@@ -47,14 +48,15 @@ class IgnoredPlayerArgument extends AbstractViewerArgument<User> {
     public SuggestionResult suggest(
         Invocation<CommandSender> invocation,
         Argument<User> argument,
-        SuggestionContext context) {
+        SuggestionContext context
+    ) {
         CommandSender sender = invocation.sender();
 
-        if (!(sender instanceof org.bukkit.entity.Player)) {
+        if (!(sender instanceof Player)) {
             return SuggestionResult.empty();
         }
 
-        UUID senderUuid = ((org.bukkit.entity.Player) sender).getUniqueId();
+        UUID senderUuid = ((Player) sender).getUniqueId();
 
         try {
             Set<UUID> ignoredPlayers = this.ignoreService.getIgnoredPlayers(senderUuid).get();
