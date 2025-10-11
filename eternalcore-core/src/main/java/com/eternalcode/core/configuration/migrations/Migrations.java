@@ -18,5 +18,6 @@ public class Migrations {
         new Migration_0013_Move_enchant_messages_to_dedicated_section(),
         new Migration_0014_Move_butcher_messages_to_dedicated_section(),
         new Migration_0015_Move_ignore_messages_to_dedicated_section(),
+        new Migration_0030_Move_back_to_dedicated_section()
         };
 }

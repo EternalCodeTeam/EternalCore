@@ -1,9 +1,6 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
-import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
-import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
+import com.eternalcode.core.feature.back.messages.ENBackMessages;
 import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
@@ -228,15 +225,13 @@ public class ENTranslation extends AbstractTranslation {
         public Notice teleportedToCoordinates = Notice.chat("<green>► <white>Teleported to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
         @Comment({" ", "# {PLAYER} -  Player who has been teleported, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
         public Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-
-        // Back
-        @Comment(" ")
-        public Notice teleportedToLastLocation = Notice.chat("<green>► <white>Teleported to the last location!");
-        @Comment({" ", "# {PLAYER} - Player who has been teleported"})
-        public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
-        @Comment(" ")
-        public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /back command",
+    })
+    public ENBackMessages back = new ENBackMessages();
 
     @Comment({
         " ",
