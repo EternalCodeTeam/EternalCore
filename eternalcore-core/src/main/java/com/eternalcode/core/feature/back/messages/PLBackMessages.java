@@ -22,5 +22,4 @@ public class PLBackMessages extends OkaeriConfig implements BackMessages {
 
     public Notice teleportedOtherToLastDeathLocation = Notice.chat(
         "<green>► <white>Gracz <green>{PLAYER} <white>został przeteleportowany do swojej ostatniej lokalizacji śmierci!");
-
 }
