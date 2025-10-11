@@ -1,7 +1,7 @@
 package com.eternalcode.core.delay;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -13,11 +13,10 @@ public class Delay<T> {
 
     private final Supplier<Duration> delaySettings;
 
-    public Delay(Supplier<Duration> delayProvider) {
+    private Delay(Supplier<Duration> delayProvider) {
         this.delaySettings = delayProvider;
-
-        this.delays = CacheBuilder.newBuilder()
-            .expireAfterWrite(delayProvider.get())
+        this.delays = Caffeine.newBuilder()
+            .expireAfter(new InstantExpiry<T>())
             .build();
     }
 
@@ -34,17 +33,21 @@ public class Delay<T> {
     }
 
     public boolean hasDelay(T key) {
-        Instant delayExpireMoment = this.getDelayExpireMoment(key);
+        Instant delayExpireMoment = this.getExpireAt(key);
 
         return Instant.now().isBefore(delayExpireMoment);
     }
 
-    public Duration getDurationToExpire(T key) {
-        return Duration.between(Instant.now(), this.getDelayExpireMoment(key));
+    public Duration getRemaining(T key) {
+        return Duration.between(Instant.now(), this.getExpireAt(key));
     }
 
-    private Instant getDelayExpireMoment(T key) {
+    private Instant getExpireAt(T key) {
         return this.delays.asMap().getOrDefault(key, Instant.MIN);
+    }
+
+    public static <T> Delay<T> withDefault(Supplier<Duration> defaultDelay) {
+        return new Delay<>(defaultDelay);
     }
 
 }
