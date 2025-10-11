@@ -43,6 +43,8 @@ import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.litecommand.handler.invalidusage.InvalidUsageConfig;
+import com.eternalcode.core.litecommand.handler.invalidusage.InvalidUsageSettings;
 import com.eternalcode.core.translation.TranslationConfig;
 import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
@@ -82,6 +84,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Database Configuration")
     @Comment("# Settings responsible for the database connection")
     DatabaseConfig database = new DatabaseConfig();
+
+    @Bean(proxied = InvalidUsageSettings.class)
+    @Comment("")
+    @Comment("# Invalid usage message generation configuration")
+    @Comment("# Settings for command usage hinting")
+    InvalidUsageConfig invalidUsage = new InvalidUsageConfig();
 
     @Bean(proxied = SpawnJoinSettings.class)
     @Comment("")
@@ -230,6 +238,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Vanish Configuration")
     @Comment("# Settings responsible for player vanish functionality")
     VanishConfig vanish = new VanishConfig();
+
 
     @Override
     public File getConfigFile(File dataFolder) {
