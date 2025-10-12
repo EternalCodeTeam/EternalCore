@@ -21,31 +21,20 @@ class MsgToggleServiceImpl implements MsgToggleService {
 
     @Override
     public CompletableFuture<MsgState> getState(UUID playerUniqueId) {
-        return this.cacheRegistry.<MsgState>get(MsgPlaceholderSetup.MSG_STATE_CACHE_KEY)
-            .map(cache -> {
-                MsgState cached = cache.getCached(playerUniqueId);
-                if (cached != null) {
-                    return CompletableFuture.completedFuture(cached);
-                }
-
-                return this.msgToggleRepository.getPrivateChatState(playerUniqueId)
-                    .thenApply(state -> {
-                        cache.update(playerUniqueId, state);
-                        return state;
-                    });
-            })
-            .orElseGet(() -> this.msgToggleRepository.getPrivateChatState(playerUniqueId));
+        return this.msgToggleRepository.getPrivateChatState(playerUniqueId)
+            .thenApply(state -> {
+                this.updateCache(playerUniqueId, state);
+                return state;
+            });
     }
 
     @Override
     public CompletableFuture<Void> setState(UUID playerUniqueId, MsgState state) {
-        this.cacheRegistry.<MsgState>get(MsgPlaceholderSetup.MSG_STATE_CACHE_KEY)
-            .ifPresent(cache -> cache.update(playerUniqueId, state));
+        this.updateCache(playerUniqueId, state);
 
         return this.msgToggleRepository.setPrivateChatState(playerUniqueId, state)
             .exceptionally(throwable -> {
-                this.cacheRegistry.<MsgState>get(MsgPlaceholderSetup.MSG_STATE_CACHE_KEY)
-                    .ifPresent(cache -> cache.invalidate(playerUniqueId));
+                this.invalidateCache(playerUniqueId);
                 return null;
             });
     }
@@ -57,5 +46,15 @@ class MsgToggleServiceImpl implements MsgToggleService {
             return this.setState(playerUniqueId, newState)
                 .thenApply(aVoid -> newState);
         });
+    }
+
+    private void updateCache(UUID uuid, MsgState state) {
+        this.cacheRegistry.<MsgState>get(MsgPlaceholderSetup.MSG_STATE_CACHE_KEY)
+            .ifPresent(cache -> cache.update(uuid, state));
+    }
+
+    private void invalidateCache(UUID uuid) {
+        this.cacheRegistry.<MsgState>get(MsgPlaceholderSetup.MSG_STATE_CACHE_KEY)
+            .ifPresent(cache -> cache.invalidate(uuid));
     }
 }

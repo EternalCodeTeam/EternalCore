@@ -4,7 +4,7 @@ package com.eternalcode.core.feature.msg.toggle;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-interface MsgToggleRepository {
+public interface MsgToggleRepository {
 
     CompletableFuture<MsgState> getPrivateChatState(UUID uuid);
 

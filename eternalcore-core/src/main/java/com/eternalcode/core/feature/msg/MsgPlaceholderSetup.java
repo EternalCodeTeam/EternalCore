@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.msg;
 
 import com.eternalcode.core.feature.msg.toggle.MsgState;
-import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
+import com.eternalcode.core.feature.msg.toggle.MsgToggleRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
@@ -21,19 +21,19 @@ public class MsgPlaceholderSetup {
     public static final String MSG_STATE_CACHE_KEY = "msg_state";
 
     private final MsgService msgService;
-    private final MsgToggleService msgToggleService;
+    private final MsgToggleRepository msgToggleRepository;
     private final TranslationManager translationManager;
     private final AsyncPlaceholderCacheRegistry cacheRegistry;
 
     @Inject
     MsgPlaceholderSetup(
         MsgService msgService,
-        MsgToggleService msgToggleService,
+        MsgToggleRepository msgToggleRepository,
         TranslationManager translationManager,
         AsyncPlaceholderCacheRegistry cacheRegistry
     ) {
         this.msgService = msgService;
-        this.msgToggleService = msgToggleService;
+        this.msgToggleRepository = msgToggleRepository;
         this.translationManager = translationManager;
         this.cacheRegistry = cacheRegistry;
     }
@@ -44,7 +44,7 @@ public class MsgPlaceholderSetup {
 
         AsyncPlaceholderCached<MsgState> stateCache = this.cacheRegistry.register(
             MSG_STATE_CACHE_KEY,
-            this.msgToggleService::getState,
+            this.msgToggleRepository::getPrivateChatState,
             Duration.ofMinutes(10)
         );
 
