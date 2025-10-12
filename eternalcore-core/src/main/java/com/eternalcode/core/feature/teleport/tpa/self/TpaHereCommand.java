@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrequest.self;
+package com.eternalcode.core.feature.teleport.tpa.self;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.ignore.IgnoreService;

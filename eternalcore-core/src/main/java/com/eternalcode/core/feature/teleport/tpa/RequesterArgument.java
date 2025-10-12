@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrequest.self;
+package com.eternalcode.core.feature.teleport.tpa;
 
 import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -17,16 +17,16 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-@LiteArgument(type = Player.class, name = SelfRequesterArgument.KEY)
-class SelfRequesterArgument extends AbstractViewerArgument<Player> {
+@LiteArgument(type = Player.class, name = RequesterArgument.KEY)
+class RequesterArgument extends AbstractViewerArgument<Player> {
 
-    static final String KEY = "selfrequester";
+    static final String KEY = "requester";
 
-    private final TeleportHereRequestService requestService;
+    private final TeleportRequestService requestService;
     private final Server server;
 
     @Inject
-    SelfRequesterArgument(TeleportHereRequestService requestService, TranslationManager translationManager, Server server) {
+    RequesterArgument(TeleportRequestService requestService, TranslationManager translationManager, Server server) {
         super(translationManager);
         this.requestService = requestService;
         this.server = server;

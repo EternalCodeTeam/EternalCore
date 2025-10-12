@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrandomplayer;
+package com.eternalcode.core.feature.teleport.rtp;
 
 public interface TeleportToRandomPlayerSettings {
 

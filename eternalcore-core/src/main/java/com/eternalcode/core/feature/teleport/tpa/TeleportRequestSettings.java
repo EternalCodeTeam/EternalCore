@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrequest;
+package com.eternalcode.core.feature.teleport.tpa;
 
 import java.time.Duration;
 

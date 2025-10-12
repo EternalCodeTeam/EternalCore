@@ -1,10 +1,13 @@
-package com.eternalcode.core.feature.teleportrequest;
+package com.eternalcode.core.feature.teleport.tpa.self;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.feature.teleport.tpa.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.command.RootCommand;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
@@ -13,24 +16,55 @@ import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Command(name = "tpadeny", aliases = "tpdeny")
-@Permission("eternalcore.tpadeny")
-class TpaDenyCommand {
+@RootCommand
+class TpaHereActionCommand {
 
-    private final TeleportRequestService requestService;
+    private final TeleportHereRequestService requestService;
+    private final TeleportTaskService teleportTaskService;
+    private final TeleportRequestSettings settings;
     private final NoticeService noticeService;
     private final Server server;
 
     @Inject
-    TpaDenyCommand(TeleportRequestService requestService, NoticeService noticeService, Server server) {
+    TpaHereActionCommand(TeleportHereRequestService requestService, TeleportTaskService teleportTaskService, TeleportRequestSettings settings, NoticeService noticeService, Server server) {
         this.requestService = requestService;
+        this.teleportTaskService = teleportTaskService;
+        this.settings = settings;
         this.noticeService = noticeService;
         this.server = server;
     }
 
-    @Execute
-    @DescriptionDocs(description = "Deny teleport request", arguments = "<player>")
-    void executeTarget(@Sender Player player, @Arg(RequesterArgument.KEY) Player target) {
+    @Execute(name = "tpahereaccept")
+    @Permission("eternalcore.tpaccept")
+    void accept(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
+        this.teleportTaskService.createTeleport(
+            player.getUniqueId(),
+            PositionAdapter.convert(player.getLocation()),
+            PositionAdapter.convert(target.getLocation()),
+            this.settings.tpaTimer()
+        );
+
+        this.requestService.removeRequest(target.getUniqueId());
+
+        this.noticeService
+            .create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.tpa().tpaAcceptMessage())
+            .placeholder("{PLAYER}", target.getName())
+            .send();
+
+        this.noticeService
+            .create()
+            .player(target.getUniqueId())
+            .notice(translation -> translation.tpa().tpaAcceptReceivedMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .send();
+    }
+
+    @Execute(name = "tpaheredeny")
+    @Permission("eternalcore.tpahere.deny")
+    @DescriptionDocs(description = "Deny a teleport here request")
+    void executeTarget(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         this.requestService.removeRequest(target.getUniqueId());
 
         this.noticeService
@@ -48,25 +82,22 @@ class TpaDenyCommand {
             .send();
     }
 
-    @Execute(name = "-all", aliases = "*")
-    @DescriptionDocs(description = "Deny all teleport requests")
+    @Execute(name = "tpaheredeny -all")
+    @Permission("eternalcore.tpahere.deny")
+    @DescriptionDocs(description = "Deny all teleport here requests")
     void executeAll(@Sender Player player) {
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {
-
             this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaDenyNoRequestMessage());
-
             return;
         }
 
         for (UUID uniqueId : requests) {
             Player requester = this.server.getPlayer(uniqueId);
-
             this.requestService.removeRequest(uniqueId);
 
             if (requester != null) {
-
                 this.noticeService
                     .create()
                     .player(uniqueId)
@@ -78,4 +109,5 @@ class TpaDenyCommand {
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaDenyAllDenied());
     }
+
 }

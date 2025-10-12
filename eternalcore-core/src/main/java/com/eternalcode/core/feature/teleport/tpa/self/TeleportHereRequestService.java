@@ -1,5 +1,6 @@
-package com.eternalcode.core.feature.teleportrequest;
+package com.eternalcode.core.feature.teleport.tpa.self;
 
+import com.eternalcode.core.feature.teleport.tpa.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.google.common.cache.Cache;
@@ -10,12 +11,12 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-class TeleportRequestService {
+class TeleportHereRequestService {
 
     private final Cache<UUID, UUID> requests;
 
     @Inject
-    TeleportRequestService(TeleportRequestSettings settings) {
+    TeleportHereRequestService(TeleportRequestSettings settings) {
         this.requests = CacheBuilder
             .newBuilder()
             .expireAfterWrite(settings.tpaRequestExpire())
@@ -31,8 +32,15 @@ class TeleportRequestService {
     }
 
     boolean hasRequest(UUID requester, UUID target) {
-        UUID foundTarget = this.requests.getIfPresent(requester);
-        return foundTarget != null && foundTarget.equals(target);
+        Map<UUID, UUID> map = this.requests.asMap();
+
+        for (Map.Entry<UUID, UUID> entry : map.entrySet()) {
+            if (entry.getKey().equals(requester) && entry.getValue().equals(target)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     List<UUID> findRequests(UUID target) {

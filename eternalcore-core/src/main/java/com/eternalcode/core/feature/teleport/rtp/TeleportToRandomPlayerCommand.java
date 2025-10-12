@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrandomplayer;
+package com.eternalcode.core.feature.teleport.rtp;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;

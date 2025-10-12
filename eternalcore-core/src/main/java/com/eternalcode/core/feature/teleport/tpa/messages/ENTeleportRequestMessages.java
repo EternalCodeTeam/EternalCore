@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrequest.messages;
+package com.eternalcode.core.feature.teleport.tpa.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;

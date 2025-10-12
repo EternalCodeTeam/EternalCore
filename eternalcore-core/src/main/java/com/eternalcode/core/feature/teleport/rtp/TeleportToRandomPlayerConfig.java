@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrandomplayer;
+package com.eternalcode.core.feature.teleport.rtp;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;

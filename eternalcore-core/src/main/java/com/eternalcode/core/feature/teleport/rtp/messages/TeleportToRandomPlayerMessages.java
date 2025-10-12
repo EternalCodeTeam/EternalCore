@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleportrandomplayer.messages;
+package com.eternalcode.core.feature.teleport.rtp.messages;
 
 import com.eternalcode.multification.notice.Notice;
 
