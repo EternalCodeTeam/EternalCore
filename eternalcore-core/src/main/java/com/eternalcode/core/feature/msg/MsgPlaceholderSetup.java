@@ -4,33 +4,27 @@ import com.eternalcode.core.feature.msg.toggle.MsgState;
 import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.placeholder.cache.AsyncPlaceholderCached;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Controller
 class MsgPlaceholderSetup {
 
-    private static final Duration CACHE_DURATION = Duration.ofSeconds(5);
-
     private final MsgService msgService;
-    private final MsgToggleService msgToggleService;
     private final TranslationManager translationManager;
-    private final ConcurrentHashMap<UUID, CachedState> stateCache = new ConcurrentHashMap<>();
+    private final AsyncPlaceholderCached<MsgState> stateCache;
 
     @Inject
     MsgPlaceholderSetup(MsgService msgService, MsgToggleService msgToggleService, TranslationManager translationManager) {
         this.msgService = msgService;
-        this.msgToggleService = msgToggleService;
         this.translationManager = translationManager;
+        this.stateCache = new AsyncPlaceholderCached<>(msgToggleService::getState);
     }
 
     @Subscribe(EternalInitializeEvent.class)
@@ -39,10 +33,7 @@ class MsgPlaceholderSetup {
 
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "socialspy_status",
-            player -> {
-                UUID uuid = player.getUniqueId();
-                return String.valueOf(this.msgService.isSpy(uuid));
-            }
+            player -> String.valueOf(this.msgService.isSpy(player.getUniqueId()))
         ));
 
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
@@ -59,7 +50,7 @@ class MsgPlaceholderSetup {
             "msg_status",
             player -> {
                 UUID uuid = player.getUniqueId();
-                MsgState state = this.getCachedOrLoadState(uuid);
+                MsgState state = this.stateCache.getCached(uuid);
 
                 if (state == null) {
                     return translation.msg().placeholders().loading();
@@ -73,7 +64,7 @@ class MsgPlaceholderSetup {
             "msg_status_formatted",
             player -> {
                 UUID uuid = player.getUniqueId();
-                MsgState state = this.getCachedOrLoadState(uuid);
+                MsgState state = this.stateCache.getCached(uuid);
 
                 if (state == null) {
                     return translation.msg().placeholders().loading();
@@ -86,31 +77,7 @@ class MsgPlaceholderSetup {
         ));
     }
 
-    private MsgState getCachedOrLoadState(UUID uuid) {
-        CachedState cached = this.stateCache.get(uuid);
-
-        if (cached != null && !cached.isExpired()) {
-            return cached.state();
-        }
-
-        CompletableFuture<MsgState> future = this.msgToggleService.getState(uuid);
-
-        if (future.isDone() && !future.isCompletedExceptionally()) {
-            MsgState state = future.join();
-            this.stateCache.put(uuid, new CachedState(state, Instant.now()));
-            return state;
-        }
-
-        future.thenAccept(state ->
-            this.stateCache.put(uuid, new CachedState(state, Instant.now()))
-        );
-
-        return null;
-    }
-
-    private record CachedState(MsgState state, Instant timestamp) {
-        boolean isExpired() {
-            return Duration.between(this.timestamp, Instant.now()).compareTo(CACHE_DURATION) > 0;
-        }
+    public AsyncPlaceholderCached<MsgState> getStateCache() {
+        return this.stateCache;
     }
 }
