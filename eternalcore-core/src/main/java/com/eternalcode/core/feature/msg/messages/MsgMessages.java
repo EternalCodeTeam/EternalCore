@@ -20,6 +20,8 @@ public interface MsgMessages {
     Placeholders placeholders();
 
     interface Placeholders {
+        String loading();
+
         String msgEnabled();
         String msgDisabled();
 
