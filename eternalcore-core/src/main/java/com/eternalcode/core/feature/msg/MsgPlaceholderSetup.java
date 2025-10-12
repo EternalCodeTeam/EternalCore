@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Controller
 class MsgPlaceholderSetup {
 
-    private static final Duration CACHE_DURATION = Duration.ofMillis(200);
+    private static final Duration CACHE_DURATION = Duration.ofSeconds(5);
 
     private final MsgService msgService;
     private final MsgToggleService msgToggleService;
@@ -56,7 +56,7 @@ class MsgPlaceholderSetup {
         ));
 
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
-            "msg_toggle",
+            "msg_status",
             player -> {
                 UUID uuid = player.getUniqueId();
                 MsgState state = this.getCachedOrLoadState(uuid);
@@ -70,7 +70,7 @@ class MsgPlaceholderSetup {
         ));
 
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
-            "msg_toggle_formatted",
+            "msg_status_formatted",
             player -> {
                 UUID uuid = player.getUniqueId();
                 MsgState state = this.getCachedOrLoadState(uuid);

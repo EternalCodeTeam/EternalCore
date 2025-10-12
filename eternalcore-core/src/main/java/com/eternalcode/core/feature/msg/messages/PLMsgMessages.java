@@ -42,7 +42,7 @@ public class PLMsgMessages extends OkaeriConfig implements MsgMessages {
 
     @Getter
     @Accessors(fluent = true)
-    public static class PLPlaceholders implements MsgMessages.Placeholders {
+    public static class PLPlaceholders extends OkaeriConfig implements MsgMessages.Placeholders {
         private String loading = "<yellow>Ładowanie...";
 
         private String msgEnabled = "<green>Włączone";

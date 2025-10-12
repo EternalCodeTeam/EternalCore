@@ -41,7 +41,7 @@ public class ENMsgMessages extends OkaeriConfig implements MsgMessages {
 
     @Getter
     @Accessors(fluent = true)
-    public static class ENPlaceholders implements MsgMessages.Placeholders {
+    public static class ENPlaceholders extends OkaeriConfig implements MsgMessages.Placeholders {
         private String loading = "<yellow>Loading...";
 
         private String msgEnabled = "<green>Enabled";
