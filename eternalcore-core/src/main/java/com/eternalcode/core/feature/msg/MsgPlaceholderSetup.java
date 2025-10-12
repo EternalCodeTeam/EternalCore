@@ -4,32 +4,49 @@ import com.eternalcode.core.feature.msg.toggle.MsgState;
 import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.core.placeholder.cache.AsyncPlaceholderCached;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.placeholder.PlaceholderReplacer;
+import com.eternalcode.core.placeholder.cache.AsyncPlaceholderCacheRegistry;
+import com.eternalcode.core.placeholder.cache.AsyncPlaceholderCached;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
+import java.time.Duration;
 import java.util.UUID;
 
 @Controller
-class MsgPlaceholderSetup {
+public class MsgPlaceholderSetup {
+
+    public static final String MSG_STATE_CACHE_KEY = "msg_state";
 
     private final MsgService msgService;
+    private final MsgToggleService msgToggleService;
     private final TranslationManager translationManager;
-    private final AsyncPlaceholderCached<MsgState> stateCache;
+    private final AsyncPlaceholderCacheRegistry cacheRegistry;
 
     @Inject
-    MsgPlaceholderSetup(MsgService msgService, MsgToggleService msgToggleService, TranslationManager translationManager) {
+    MsgPlaceholderSetup(
+        MsgService msgService,
+        MsgToggleService msgToggleService,
+        TranslationManager translationManager,
+        AsyncPlaceholderCacheRegistry cacheRegistry
+    ) {
         this.msgService = msgService;
+        this.msgToggleService = msgToggleService;
         this.translationManager = translationManager;
-        this.stateCache = new AsyncPlaceholderCached<>(msgToggleService::getState);
+        this.cacheRegistry = cacheRegistry;
     }
 
     @Subscribe(EternalInitializeEvent.class)
     void setUpPlaceholders(PlaceholderRegistry placeholderRegistry) {
         Translation translation = this.translationManager.getMessages();
+
+        AsyncPlaceholderCached<MsgState> stateCache = this.cacheRegistry.register(
+            MSG_STATE_CACHE_KEY,
+            this.msgToggleService::getState,
+            Duration.ofMinutes(10)
+        );
 
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "socialspy_status",
@@ -50,7 +67,7 @@ class MsgPlaceholderSetup {
             "msg_status",
             player -> {
                 UUID uuid = player.getUniqueId();
-                MsgState state = this.stateCache.getCached(uuid);
+                MsgState state = stateCache.getCached(uuid);
 
                 if (state == null) {
                     return translation.msg().placeholders().loading();
@@ -64,7 +81,7 @@ class MsgPlaceholderSetup {
             "msg_status_formatted",
             player -> {
                 UUID uuid = player.getUniqueId();
-                MsgState state = this.stateCache.getCached(uuid);
+                MsgState state = stateCache.getCached(uuid);
 
                 if (state == null) {
                     return translation.msg().placeholders().loading();
@@ -75,9 +92,5 @@ class MsgPlaceholderSetup {
                     : translation.msg().placeholders().msgDisabled();
             }
         ));
-    }
-
-    public AsyncPlaceholderCached<MsgState> getStateCache() {
-        return this.stateCache;
     }
 }
