@@ -26,12 +26,12 @@ class AsyncPlaceholderCacheController implements Listener {
     }
 
     @Subscribe
-    void onEternalDisable(EternalShutdownEvent event) {
+    void onDisable(EternalShutdownEvent event) {
         this.cacheRegistry.invalidateAll();
     }
 
     @Subscribe
-    void onEternalDisable(EternalReloadEvent event) {
+    void onReload(EternalReloadEvent event) {
         this.cacheRegistry.invalidateAll();
     }
 }
