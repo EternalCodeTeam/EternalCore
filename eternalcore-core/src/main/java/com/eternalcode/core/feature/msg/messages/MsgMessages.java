@@ -17,4 +17,14 @@ public interface MsgMessages {
     Notice otherMessagesDisabled();
     Notice otherMessagesEnabled();
 
+    Placeholders placeholders();
+
+    interface Placeholders {
+        String msgEnabled();
+        String msgDisabled();
+
+        String socialSpyEnabled();
+        String socialSpyDisabled();
+    }
+
 }

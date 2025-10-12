@@ -36,4 +36,21 @@ public class ENMsgMessages extends OkaeriConfig implements MsgMessages {
     public Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy has been {STATE}<white>!");
     public Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy has been {STATE}<white>!");
 
+    @Comment("# Formatowanie placeholderów")
+    public ENPlaceholders placeholders = new ENPlaceholders();
+
+    @Getter
+    @Accessors(fluent = true)
+    public static class ENPlaceholders implements MsgMessages.Placeholders {
+
+        private String msgEnabled = "<green>Enabled";
+        private String msgDisabled = "<red>Disabled";
+        private String socialSpyEnabled = "<green>Enabled";
+        private String socialSpyDisabled = "<red>Disabled";
+    }
+
+    public ENPlaceholders placeholders() {
+        return this.placeholders;
+    }
+
 }

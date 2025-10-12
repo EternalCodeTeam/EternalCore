@@ -37,4 +37,20 @@ public class PLMsgMessages extends OkaeriConfig implements MsgMessages {
     public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
     public Notice otherMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone <white>dla gracza <green>{PLAYER}<white>!");
 
+    @Comment("# Formatowanie placeholderów")
+    public PLPlaceholders placeholders = new PLPlaceholders();
+
+    @Getter
+    @Accessors(fluent = true)
+    public static class PLPlaceholders implements MsgMessages.Placeholders {
+
+        private String msgEnabled = "<green>Włączone";
+        private String msgDisabled = "<red>Wyłączone";
+        private String socialSpyEnabled = "<green>Włączony";
+        private String socialSpyDisabled = "<red>Wyłączony";
+    }
+
+    public PLPlaceholders placeholders() {
+        return this.placeholders;
+    }
 }
