@@ -2,6 +2,9 @@ package com.eternalcode.core.placeholder.cache;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.publish.Subscribe;
+import com.eternalcode.core.publish.event.EternalReloadEvent;
+import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -20,5 +23,15 @@ class AsyncPlaceholderCacheController implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     void onPlayerQuit(PlayerQuitEvent event) {
         this.cacheRegistry.invalidatePlayer(event.getPlayer().getUniqueId());
+    }
+
+    @Subscribe
+    void onEternalDisable(EternalShutdownEvent event) {
+        this.cacheRegistry.invalidateAll();
+    }
+
+    @Subscribe
+    void onEternalDisable(EternalReloadEvent event) {
+        this.cacheRegistry.invalidateAll();
     }
 }
