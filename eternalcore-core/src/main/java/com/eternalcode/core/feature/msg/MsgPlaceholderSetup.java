@@ -14,6 +14,7 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import java.time.Duration;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Controller
 public class MsgPlaceholderSetup {
@@ -65,32 +66,39 @@ public class MsgPlaceholderSetup {
 
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "msg_status",
-            player -> {
-                UUID uuid = player.getUniqueId();
-                MsgState state = stateCache.getCached(uuid);
-
-                if (state == null) {
-                    return translation.msg().placeholders().loading();
-                }
-
-                return state.name().toLowerCase();
-            }
+            player -> this.formatMsgState(
+                player.getUniqueId(),
+                stateCache,
+                translation,
+                state -> state.name().toLowerCase()
+            )
         ));
 
         placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "msg_status_formatted",
-            player -> {
-                UUID uuid = player.getUniqueId();
-                MsgState state = stateCache.getCached(uuid);
-
-                if (state == null) {
-                    return translation.msg().placeholders().loading();
-                }
-
-                return state == MsgState.ENABLED
+            player -> this.formatMsgState(
+                player.getUniqueId(),
+                stateCache,
+                translation,
+                state -> state == MsgState.ENABLED
                     ? translation.msg().placeholders().msgEnabled()
-                    : translation.msg().placeholders().msgDisabled();
-            }
+                    : translation.msg().placeholders().msgDisabled()
+            )
         ));
+    }
+
+    private String formatMsgState(
+        UUID uuid,
+        AsyncPlaceholderCached<MsgState> stateCache,
+        Translation translation,
+        Function<MsgState, String> formatter
+    ) {
+        MsgState state = stateCache.getCached(uuid);
+
+        if (state == null) {
+            return translation.msg().placeholders().loading();
+        }
+
+        return formatter.apply(state);
     }
 }

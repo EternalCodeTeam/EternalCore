@@ -4,8 +4,10 @@ import com.eternalcode.core.feature.msg.MsgPlaceholderSetup;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.placeholder.cache.AsyncPlaceholderCacheRegistry;
+import com.eternalcode.core.placeholder.cache.AsyncPlaceholderCached;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 @Service
 class MsgToggleServiceImpl implements MsgToggleService {
@@ -23,18 +25,18 @@ class MsgToggleServiceImpl implements MsgToggleService {
     public CompletableFuture<MsgState> getState(UUID playerUniqueId) {
         return this.msgToggleRepository.getPrivateChatState(playerUniqueId)
             .thenApply(state -> {
-                this.updateCache(playerUniqueId, state);
+                this.withCache(cache -> cache.update(playerUniqueId, state));
                 return state;
             });
     }
 
     @Override
     public CompletableFuture<Void> setState(UUID playerUniqueId, MsgState state) {
-        this.updateCache(playerUniqueId, state);
+        this.withCache(cache -> cache.update(playerUniqueId, state));
 
         return this.msgToggleRepository.setPrivateChatState(playerUniqueId, state)
             .exceptionally(throwable -> {
-                this.invalidateCache(playerUniqueId);
+                this.withCache(cache -> cache.invalidate(playerUniqueId));
                 return null;
             });
     }
@@ -48,13 +50,8 @@ class MsgToggleServiceImpl implements MsgToggleService {
         });
     }
 
-    private void updateCache(UUID uuid, MsgState state) {
+    private void withCache(Consumer<AsyncPlaceholderCached<MsgState>> action) {
         this.cacheRegistry.<MsgState>get(MsgPlaceholderSetup.MSG_STATE_CACHE_KEY)
-            .ifPresent(cache -> cache.update(uuid, state));
-    }
-
-    private void invalidateCache(UUID uuid) {
-        this.cacheRegistry.<MsgState>get(MsgPlaceholderSetup.MSG_STATE_CACHE_KEY)
-            .ifPresent(cache -> cache.invalidate(uuid));
+            .ifPresent(action);
     }
 }
