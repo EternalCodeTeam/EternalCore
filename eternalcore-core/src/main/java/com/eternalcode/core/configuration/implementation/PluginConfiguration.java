@@ -13,6 +13,8 @@ import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageConfig;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageSettings;
 import com.eternalcode.core.feature.enchant.EnchantConfig;
 import com.eternalcode.core.feature.enchant.EnchantSettings;
 import com.eternalcode.core.feature.give.GiveConfig;
@@ -76,7 +78,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings that determine the language used within the server.")
     @Comment("# Choose the preferred language for all messages and interactions in the plugin.")
     TranslationConfig language = new TranslationConfig();
-    
+
     @Bean(proxied = DatabaseSettings.class)
     @Comment("")
     @Comment("# Database Configuration")
@@ -94,6 +96,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Teleport Request Configuration")
     @Comment("# Settings for teleport requests between players")
     TeleportRequestConfig teleportAsk = new TeleportRequestConfig();
+
+    @Bean(proxied = DeathMessageSettings.class)
+    @Comment("")
+    @Comment("# Death Message Configuration")
+    @Comment("# Settings for player death messages")
+    DeathMessageConfig deathMessages = new DeathMessageConfig();
 
     @Bean(proxied = TeleportToRandomPlayerSettings.class)
     @Comment("")

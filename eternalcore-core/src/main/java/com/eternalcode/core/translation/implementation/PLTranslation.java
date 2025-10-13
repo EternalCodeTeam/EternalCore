@@ -1,25 +1,16 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
-import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
-import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
-import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
-import com.eternalcode.core.feature.near.messages.PLNearMessages;
-import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
-import com.eternalcode.core.feature.clear.messages.PLClearMessages;
-import com.eternalcode.core.feature.container.messages.PLContainerMessages;
-import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
-import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
+import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.deathmessage.messages.PLDeathMessages;
+import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
+import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
@@ -53,13 +44,9 @@ import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 @Getter
 @Accessors(fluent = true)
@@ -347,37 +334,14 @@ public class PLTranslation extends AbstractTranslation {
     })
     public PLEventSection event = new PLEventSection();
 
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości o śmierci graczy",
+    })
+    public PLDeathMessages deathMessage = new PLDeathMessages();
+
     @Getter
     public static class PLEventSection extends OkaeriConfig implements EventSection {
-        @Comment({
-            "# {PLAYER} - Gracz, który zginął",
-            "# {KILLER} - Gracz, który zabił (tylko w przypadku PvP)"
-        })
-        public List<Notice> deathMessage = List.of(
-            Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął przez {KILLER}!"),
-            Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął tragicznie podczas ciężkiej walki!")
-        );
-
-        @Comment({
-            "# Wiadomości wyświetlane gdy gracz ginie od konkretnego typu obrażeń",
-            "# {PLAYER} - Gracz, który zginął",
-            "# {CAUSE} - Przyczyna śmierci (np. UPADEK, VOID)",
-            "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
-        })
-        public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł w otchłań!")
-            ),
-            EntityDamageEvent.DamageCause.FALL, Arrays.asList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z wysokości!"),
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
-            )
-        );
-
-        @Comment("# {PLAYER} - Gracz, który zginął z nieznanej przyczyny")
-        public List<Notice> unknownDeathCause = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt!")
-        );
 
         @Comment({
             " ",
