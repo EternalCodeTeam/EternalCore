@@ -80,8 +80,4 @@ public class DeathCauseResolver {
 
         return null;
     }
-
-    public boolean isDamageEventValid(EntityDamageEvent event) {
-        return event != null;
-    }
 }

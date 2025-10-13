@@ -97,7 +97,8 @@ public class EnvironmentDeathMessageHandler {
 
     private void handleUnknownDeath(String victimName) {
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage().unknownDeathCause()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage()
+                .unknownDeathCause()))
             .placeholder("{PLAYER}", victimName)
             .onlinePlayers()
             .send();
@@ -111,9 +112,8 @@ public class EnvironmentDeathMessageHandler {
         return this.formatEntityName(entity.getType());
     }
 
-    private String formatEntityName(EntityType type) {
-        String name = type.name().toLowerCase().replace("_", " ");
-        String[] words = name.split(" ");
+    private String formatName(String name) {
+        String[] words = name.toLowerCase().replace("_", " ").split(" ");
         StringBuilder formatted = new StringBuilder();
 
         for (String word : words) {
@@ -127,19 +127,11 @@ public class EnvironmentDeathMessageHandler {
         return formatted.toString().trim();
     }
 
+    private String formatEntityName(EntityType type) {
+        return this.formatName(type.name());
+    }
+
     private String formatCauseName(EntityDamageEvent.DamageCause cause) {
-        String name = cause.name().toLowerCase().replace("_", " ");
-        String[] words = name.split(" ");
-        StringBuilder formatted = new StringBuilder();
-
-        for (String word : words) {
-            if (word.length() > 0) {
-                formatted.append(Character.toUpperCase(word.charAt(0)))
-                    .append(word.substring(1))
-                    .append(" ");
-            }
-        }
-
-        return formatted.toString().trim();
+        return this.formatName(cause.name());
     }
 }

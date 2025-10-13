@@ -31,10 +31,6 @@ public class DeathMessageService {
         }
 
         EntityDamageEvent lastDamage = victim.getLastDamageCause();
-        if (lastDamage != null && !this.causeResolver.isDamageEventValid(lastDamage)) {
-            lastDamage = null;
-        }
-
         DeathContext context = this.causeResolver.resolve(victim, lastDamage);
 
         if (context.isPlayerKill()) {
