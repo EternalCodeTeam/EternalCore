@@ -58,7 +58,7 @@ class RepairCommand {
         if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
             this.noticeService
                 .create()
-                .notice(translation -> translation.argument().noDamaged())
+                .notice(translation -> translation.repair().cannotRepair())
                 .player(player.getUniqueId())
                 .send();
 
@@ -104,7 +104,7 @@ class RepairCommand {
         if (!exists) {
             this.noticeService
                 .create()
-                .notice(translation -> translation.argument().noDamagedItems())
+                .notice(translation -> translation.repair().needDamagedItem())
                 .player(player.getUniqueId())
                 .send();
 
@@ -148,7 +148,7 @@ class RepairCommand {
         if (!exists) {
             this.noticeService
                 .create()
-                .notice(translation -> translation.argument().noDamagedItems())
+                .notice(translation -> translation.repair().needDamagedItem())
                 .player(player.getUniqueId())
                 .send();
 

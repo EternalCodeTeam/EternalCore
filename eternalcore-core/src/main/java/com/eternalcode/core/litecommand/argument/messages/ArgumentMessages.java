@@ -14,11 +14,6 @@ public interface ArgumentMessages {
     Notice numberBiggerThanOrEqualZero();
     Notice noItem();
     Notice noArgument();
-    Notice noDamaged();
-    Notice noDamagedItems();
-    Notice noEnchantment();
-    Notice noValidEnchantmentLevel();
     Notice worldDoesntExist();
-    Notice incorrectNumberOfChunks();
     Notice incorrectLocation();
 }

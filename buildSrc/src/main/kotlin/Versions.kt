@@ -12,7 +12,7 @@ object Versions {
     const val LOMBOK = "1.18.42"
 
     const val PAPERLIB = "1.0.8"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.24.0"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "4.25.0"
     const val ADVENTURE_PLATFORM = "4.4.1"
     const val OKAERI_CONFIGS = "5.0.13"
 
@@ -22,7 +22,7 @@ object Versions {
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "7.0.2"
 
-    const val LITE_COMMANDS = "3.10.5"
+    const val LITE_COMMANDS = "3.10.6"
     const val LITE_SKULL_API = "2.0.0"
 
     const val GUAVA = "33.5.0-jre"
@@ -34,7 +34,7 @@ object Versions {
 
     const val TRIUMPH_GUI = "3.1.13"
 
-    const val XSERIES = "13.4.0"
+    const val XSERIES = "13.5.1"
 
     const val LUCKPERMS = "5.5.0"
 
@@ -42,12 +42,12 @@ object Versions {
 
     const val CAFFEINE = "3.2.2"
 
-    const val GLOWING_ENTITIES = "1.4.7"
+    const val GLOWING_ENTITIES = "1.4.8"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
     // tests
-    const val JUNIT_BOM = "5.13.4"
+    const val JUNIT_BOM = "6.0.0"
     const val MOCKITO_CORE = "5.20.0"
 
 }
