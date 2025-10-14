@@ -9,11 +9,11 @@ import java.util.regex.Pattern;
 
 public final class DurationUtil {
 
-    private static final Duration SECOND = Duration.ofSeconds(1);
+    private static final Duration ONE_SECOND = Duration.ofSeconds(1);
     private static final Pattern REFORMAT_PATTERN = Pattern.compile("(\\d+)([dhms]+)");
     private static final String REFORMAT_REPLACEMENT = "$1$2 ";
 
-    private static final TemporalAmountParser<Duration> DURATION_NO_MILLIS = new DurationParser()
+    private static final TemporalAmountParser<Duration> DURATION_WITHOUT_MILLIS = new DurationParser()
         .withUnit("s", ChronoUnit.SECONDS)
         .withUnit("m", ChronoUnit.MINUTES)
         .withUnit("h", ChronoUnit.HOURS)
@@ -37,10 +37,10 @@ public final class DurationUtil {
 
     public static String format(Duration duration, boolean removeMillis) {
         if (removeMillis) {
-            if (duration.compareTo(SECOND) < 0) {
+            if (duration.compareTo(ONE_SECOND) < 0) {
                 return "0s";
             }
-            return reformat(DURATION_NO_MILLIS.format(duration));
+            return reformat(DURATION_WITHOUT_MILLIS.format(duration));
         }
         return reformat(DURATION_STANDARD.format(duration));
     }
