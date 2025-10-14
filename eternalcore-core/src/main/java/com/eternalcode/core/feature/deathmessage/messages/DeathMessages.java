@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public interface DeathMessages {
 
-    String fistsWeaponName();
+    String unarmedWeaponName();
 
     List<Notice> deathMessageByEntity();
     List<Notice> deathMessage();

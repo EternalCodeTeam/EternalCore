@@ -34,7 +34,9 @@ public class PlayerKillMessageHandler {
         String victimName = victim.getName();
         String killerName = killer.getName();
 
-        ItemStack weapon = killer.getInventory().getItemInMainHand();
+        ItemStack weapon = killer.getInventory().getItemInMainHand().getType() != Material.AIR
+            ? killer.getInventory().getItemInMainHand()
+            : killer.getInventory().getItemInOffHand();
         String weaponName = this.getWeaponName(weapon);
 
         this.noticeService.create()
@@ -48,7 +50,7 @@ public class PlayerKillMessageHandler {
 
     private String getWeaponName(ItemStack weapon) {
         if (weapon == null || weapon.getType() == Material.AIR) {
-            return this.translationManager.getMessages().deathMessage().fistsWeaponName();
+            return this.translationManager.getMessages().deathMessage().unarmedWeaponName();
         }
 
         if (weapon.hasItemMeta() && weapon.getItemMeta().hasDisplayName()) {

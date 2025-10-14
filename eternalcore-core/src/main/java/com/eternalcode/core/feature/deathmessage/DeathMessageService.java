@@ -33,7 +33,7 @@ public class DeathMessageService {
         EntityDamageEvent lastDamage = victim.getLastDamageCause();
         DeathContext context = this.causeResolver.resolve(victim, lastDamage);
 
-        if (context.isPlayerKill()) {
+        if (context.isKilledByPlayer()) {
             this.killMessageHandler.handle(context);
             return;
         }

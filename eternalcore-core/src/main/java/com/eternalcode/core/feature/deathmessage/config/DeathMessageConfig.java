@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class DeathMessageConfig extends OkaeriConfig implements DeathMessageSettings {
 
-        @Comment("# Enable/disable custom death messages")
+    @Comment("# Enable/disable custom death messages")
     @Comment("# false = use default Minecraft death messages")
     @Comment("# true = use custom messages from translations")
     public boolean customMessagesEnabled = true;

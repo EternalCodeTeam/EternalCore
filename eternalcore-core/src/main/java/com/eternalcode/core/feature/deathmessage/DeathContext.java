@@ -13,7 +13,7 @@ public record DeathContext(
     DeathType deathType
 ) {
 
-    public boolean isPlayerKill() {
+    public boolean isKilledByPlayer() {
         return this.deathType == DeathType.PLAYER_KILL;
     }
 
