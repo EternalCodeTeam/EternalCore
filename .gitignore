@@ -1,5 +1,5 @@
 # Intellij
-/.idea/*
+/.idea/**
 !/.idea/icon.svg
 *.iml
 *.ipr
