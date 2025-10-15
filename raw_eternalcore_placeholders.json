@@ -1,0 +1,34 @@
+[
+  {
+    "name": "afk",
+    "description": "Returns true if the player is AFK, false otherwise",
+    "example": "true",
+    "returnType": "boolean",
+    "category": "AFK",
+    "requiresPlayer": true
+  },
+  {
+    "name": "afk_formatted",
+    "description": "Returns a formatted AFK status message based on player's language settings",
+    "example": "[AFK]",
+    "returnType": "String",
+    "category": "AFK",
+    "requiresPlayer": true
+  },
+  {
+    "name": "afk_playercount",
+    "description": "Returns the total number of AFK players on the server",
+    "example": "3",
+    "returnType": "int",
+    "category": "AFK",
+    "requiresPlayer": false
+  },
+  {
+    "name": "afk_time",
+    "description": "Returns the duration the player has been AFK in a formatted string",
+    "example": "5m 30s",
+    "returnType": "String",
+    "category": "AFK",
+    "requiresPlayer": true
+  }
+]
