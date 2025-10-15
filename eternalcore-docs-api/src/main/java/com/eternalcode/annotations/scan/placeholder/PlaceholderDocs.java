@@ -23,12 +23,12 @@ public @interface PlaceholderDocs {
     /**
      * Example output of the placeholder
      */
-    String example() default "";
+    String example();
 
     /**
      * Return type of the placeholder
      */
-    String returnType() default "String";
+    String returnType();
 
     /**
      * Category for grouping placeholders
@@ -38,5 +38,5 @@ public @interface PlaceholderDocs {
     /**
      * Whether the placeholder requires a player context
      */
-    boolean requiresPlayer() default true;
+    boolean requiresPlayer();
 }

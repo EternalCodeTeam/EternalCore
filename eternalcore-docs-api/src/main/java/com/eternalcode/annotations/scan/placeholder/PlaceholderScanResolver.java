@@ -11,8 +11,9 @@ public class PlaceholderScanResolver extends SingleAnnotationScanResolver<Placeh
 
     @Override
     public PlaceholderResult resolve(EternalScanRecord record, PlaceholderDocs annotation) {
+        String prefixedName = "%eternalcore_" + annotation.name() + "%";
         return new PlaceholderResult(
-            annotation.name(),
+            prefixedName,
             annotation.description(),
             annotation.example(),
             annotation.returnType(),
