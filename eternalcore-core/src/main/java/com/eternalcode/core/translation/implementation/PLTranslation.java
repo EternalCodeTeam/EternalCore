@@ -1,25 +1,15 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
-import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
-import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
-import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
-import com.eternalcode.core.feature.near.messages.PLNearMessages;
-import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
-import com.eternalcode.core.feature.clear.messages.PLClearMessages;
-import com.eternalcode.core.feature.container.messages.PLContainerMessages;
-import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
-import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
+import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
+import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
@@ -28,11 +18,13 @@ import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.ignore.messages.PLIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
+import com.eternalcode.core.feature.joinmessage.messages.PLJoinMessage;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.PLPowertoolMessages;
+import com.eternalcode.core.feature.quitmessage.messages.PLQuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
@@ -378,39 +370,6 @@ public class PLTranslation extends AbstractTranslation {
         public List<Notice> unknownDeathCause = List.of(
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt!")
         );
-
-        @Comment({
-            " ",
-            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
-            "# za każdym razem gdy gracz dołączy do serwera",
-            "# {PLAYER} - Gracz który dołączył do serwera",
-        })
-        public List<Notice> joinMessage = List.of(
-            Notice.actionbar("<green>► <green>{PLAYER} <white>dołączył do serwera!"),
-            Notice.actionbar("<green>► <white>Witaj na serwerze <green>{PLAYER}<white>!")
-        );
-
-        @Comment({
-            " ",
-            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
-            "# za każdym razem gdy gracz dołączy do serwera po raz pierwszy",
-            "# {PLAYER} - Gracz który dołączył do serwera po raz pierwszy"
-        })
-        public List<Notice> firstJoinMessage = List.of(
-            Notice.actionbar("<green>► {PLAYER} <white>dołączył do serwera po raz pierwszy!"),
-            Notice.actionbar("<green>► {PLAYER} <white>zawitał u nas po raz pierwszy!")
-        );
-
-        @Comment({
-            " ",
-            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
-            "# za każdym razem gdy gracz opuści serwer",
-            "# {PLAYER} - Gracz który opuścił serwer"
-        })
-        public List<Notice> quitMessage = List.of(
-            Notice.actionbar("<red>► {PLAYER} <white>wylogował się z serwera!"),
-            Notice.actionbar("<red>► {PLAYER} <white>opuścił serwer!")
-        );
     }
 
     @Comment({
@@ -621,6 +580,12 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
     public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące wiadomości dołączenia gracza do serwera"})
+    public PLJoinMessage join = new PLJoinMessage();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące wiadomości wyjścia gracza z serwera"})
+    public PLQuitMessage quit = new PLQuitMessage();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące końca gry"})
     public PLEndScreenMessages endScreen = new PLEndScreenMessages();
