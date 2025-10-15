@@ -30,5 +30,37 @@
     "returnType": "String",
     "category": "AFK",
     "requiresPlayer": true
+  },
+  {
+    "name": "homes_count",
+    "description": "Returns the number of homes the player currently owns.",
+    "example": "3",
+    "returnType": "int",
+    "category": "Home",
+    "requiresPlayer": true
+  },
+  {
+    "name": "homes_left",
+    "description": "Returns how many more homes the player can create before reaching the limit.",
+    "example": "2",
+    "returnType": "int",
+    "category": "Home",
+    "requiresPlayer": true
+  },
+  {
+    "name": "homes_limit",
+    "description": "Returns the maximum number of homes the player can have.",
+    "example": "5",
+    "returnType": "int",
+    "category": "Home",
+    "requiresPlayer": true
+  },
+  {
+    "name": "homes_owned",
+    "description": "Returns a comma-separated list of all homes owned by the player. If the player has no homes, returns a localized message.",
+    "example": "home1, home2, domek",
+    "returnType": "String",
+    "category": "Home",
+    "requiresPlayer": true
   }
 ]
