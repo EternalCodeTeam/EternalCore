@@ -8,6 +8,7 @@ import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
 import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
 import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
@@ -45,13 +46,9 @@ import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 @Getter
 @Accessors(fluent = true)
@@ -321,42 +318,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# Section responsible for various server events."
+        "# This section is responsible for death messages"
     })
-    public ENEventSection event = new ENEventSection();
-
-    @Getter
-    public static class ENEventSection extends OkaeriConfig implements EventSection {
-        @Comment({
-            "# {PLAYER} - Killed player",
-            "# {KILLER} - Killer (only for PvP deaths)"
-        })
-        public List<Notice> deathMessage = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!"),
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <dark_red>{KILLER}!")
-        );
-
-        @Comment({
-            "# Messages shown when a player dies from specific damage causes",
-            "# {PLAYER} - Killed player",
-            "# {CAUSE} - Death cause (e.g., FALL, VOID)",
-            "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
-        })
-        public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell into the void!")
-            ),
-            EntityDamageEvent.DamageCause.FALL, Arrays.asList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell from a high place!"),
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell off a deadly cliff!")
-            )
-        );
-
-        @Comment("# {PLAYER} - Player who died from an unknown cause")
-        public List<Notice> unknownDeathCause = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died under mysterious circumstances!")
-        );
-    }
+    public ENDeathMessages deathMessage = new ENDeathMessages();
 
     @Comment({" ", "# Section responsible for inventories-related stuff."})
     public ENInventorySection inventory = new ENInventorySection();

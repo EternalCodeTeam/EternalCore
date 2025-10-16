@@ -8,6 +8,7 @@ import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
 import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
@@ -41,8 +42,6 @@ import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.multification.notice.Notice;
 import java.util.List;
-import java.util.Map;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public interface Translation {
 
@@ -87,14 +86,6 @@ public interface Translation {
         Notice disabledChatInfo();
         Notice commandNotFound();
     }
-
-    interface EventSection {
-        List<Notice> deathMessage();
-        List<Notice> unknownDeathCause();
-
-        Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
-    }
-
     interface InventorySection {
         String disposalTitle();
     }
@@ -219,8 +210,8 @@ public interface Translation {
     MsgMessages msg();
     // afk section
     AfkMessages afk();
-    // event section
-    EventSection event();
+    // death message section
+    DeathMessages deathMessage();
     // inventory section
     InventorySection inventory();
     // player section
