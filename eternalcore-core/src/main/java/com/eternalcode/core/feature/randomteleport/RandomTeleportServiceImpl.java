@@ -8,6 +8,9 @@ import com.eternalcode.core.feature.randomteleport.event.RandomTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -54,6 +57,64 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
                 return teleportResult;
             }));
+    }
+
+    @Override
+    public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players) {
+        if (players.isEmpty()) {
+            return CompletableFuture.completedFuture(Map.of());
+        }
+
+        Player firstPlayer = players.iterator().next();
+        World world = resolveWorld(firstPlayer, randomTeleportSettings);
+
+        return this.teleport(players, world);
+    }
+
+    @Override
+    public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players, World world) {
+        if (players.isEmpty()) {
+            return CompletableFuture.completedFuture(Map.of());
+        }
+
+        return this.getSafeRandomLocation(world, this.randomTeleportSettings.teleportAttempts())
+            .thenCompose(location -> this.teleport(players, location));
+    }
+
+    @Override
+    public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(
+        Collection<Player> players,
+        Location location
+    ) {
+        if (players.isEmpty()) {
+            return CompletableFuture.completedFuture(Map.of());
+        }
+
+        Map<Player, RandomTeleportResult> results = new HashMap<>();
+
+        CompletableFuture<?>[] futures = players.stream()
+            .map(player -> {
+                PreRandomTeleportEvent preRandomTeleportEvent =
+                    this.eventCaller.callEvent(new PreRandomTeleportEvent(player));
+
+                if (preRandomTeleportEvent.isCancelled()) {
+                    results.put(player, new RandomTeleportResult(false, player.getLocation()));
+                    return CompletableFuture.completedFuture(null);
+                }
+
+                return PaperLib.teleportAsync(player, location).thenApply(success -> {
+                    RandomTeleportResult teleportResult = new RandomTeleportResult(success, location);
+                    results.put(player, teleportResult);
+
+                    RandomTeleportEvent event = new RandomTeleportEvent(player, location);
+                    this.eventCaller.callEvent(event);
+
+                    return null;
+                });
+            })
+            .toArray(CompletableFuture[]::new);
+
+        return CompletableFuture.allOf(futures).thenApply(v -> results);
     }
 
     @Override

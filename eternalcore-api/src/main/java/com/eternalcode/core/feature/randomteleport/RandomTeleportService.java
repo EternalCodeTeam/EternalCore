@@ -4,6 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public interface RandomTeleportService {
@@ -24,6 +26,34 @@ public interface RandomTeleportService {
      * @return A CompletableFuture containing the TeleportResult indicating the success or failure of the teleportation.
      */
     CompletableFuture<RandomTeleportResult> teleport(Player player, World world);
+
+    /**
+     * Asynchronously teleports a collection of players to the same random location.
+     * All players will be teleported to the same safe location in the first player's world.
+     *
+     * @param players The collection of players to teleport together.
+     * @return A CompletableFuture containing a map of each player to their TeleportResult.
+     */
+    CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players);
+
+    /**
+     * Asynchronously teleports a collection of players to the same random location within the specified world.
+     * All players will be teleported to the same safe location.
+     *
+     * @param players The collection of players to teleport together.
+     * @param world   The world to which the players should be teleported.
+     * @return A CompletableFuture containing a map of each player to their TeleportResult.
+     */
+    CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players, World world);
+
+    /**
+     * Asynchronously teleports a collection of players to the same specific location.
+     *
+     * @param players  The collection of players to teleport.
+     * @param location The exact location to teleport all players to.
+     * @return A CompletableFuture containing a map of each player to their TeleportResult.
+     */
+    CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players, Location location);
 
     /**
      * Asynchronously retrieves a safe random location within the specified world.
@@ -63,6 +93,5 @@ public interface RandomTeleportService {
      * @return A CompletableFuture containing the random Location that is deemed safe.
      */
     CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount);
-
 
 }
