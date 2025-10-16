@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 @Accessors(fluent = true)
 public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
 
-    public String fistsWeaponName = "Fists";
+    public String unarmedWeaponName = "Fists";
 
     public List<Notice> deathMessageByEntity = Arrays.asList(
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <yellow>{MOB}<red>!"),
