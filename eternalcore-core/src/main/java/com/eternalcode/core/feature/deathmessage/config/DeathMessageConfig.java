@@ -13,8 +13,4 @@ public class DeathMessageConfig extends OkaeriConfig implements DeathMessageSett
     @Comment("# false = use default Minecraft death messages")
     @Comment("# true = use custom messages from translations")
     public boolean customMessagesEnabled = true;
-
-    @Comment("# Maximum time (in ticks) since last damage to consider it as the cause of death")
-    @Comment("# 100 ticks = 5 seconds")
-    public int maxDamageCauseAge = 100;
 }
