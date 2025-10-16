@@ -8,8 +8,6 @@ import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
-import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
-import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.deathmessage.messages.PLDeathMessages;
 import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
