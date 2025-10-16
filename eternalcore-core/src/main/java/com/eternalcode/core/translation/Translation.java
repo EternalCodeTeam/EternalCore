@@ -19,11 +19,13 @@ import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.ignore.messages.IgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
+import com.eternalcode.core.feature.joinmessage.messages.JoinMessage;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.PowertoolMessages;
+import com.eternalcode.core.feature.quitmessage.messages.QuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -84,13 +86,6 @@ public interface Translation {
         Notice disabledChatInfo();
         Notice commandNotFound();
     }
-
-    public interface EventSection {
-        List<Notice> joinMessage();
-        List<Notice> quitMessage();
-        List<Notice> firstJoinMessage();
-    }
-
     interface InventorySection {
         String disposalTitle();
     }
@@ -180,6 +175,8 @@ public interface Translation {
     DemoScreenMessages demoScreen();
     EndScreenMessages endScreen();
 
+    JoinMessage join();
+    QuitMessage quit();
     Language getLanguage();
     // argument section
     ArgumentMessages argument();
@@ -213,8 +210,6 @@ public interface Translation {
     MsgMessages msg();
     // afk section
     AfkMessages afk();
-    // event section
-    EventSection event();
     // death message section
     DeathMessages deathMessage();
     // inventory section

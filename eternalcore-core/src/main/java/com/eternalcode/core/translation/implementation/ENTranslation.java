@@ -8,6 +8,8 @@ import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
+import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
 import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
 import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
 import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
@@ -19,11 +21,13 @@ import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.ignore.messages.ENIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
+import com.eternalcode.core.feature.joinmessage.messages.ENJoinMessage;
 import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.near.messages.ENNearMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.ENPowertoolMessages;
+import com.eternalcode.core.feature.quitmessage.messages.ENQuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
@@ -316,37 +320,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# Section responsible for various server events."
-    })
-    public ENEventSection event = new ENEventSection();
-
-    @Comment({
-        " ",
         "# This section is responsible for death messages"
     })
     public ENDeathMessages deathMessage = new ENDeathMessages();
-
-    @Getter
-    public static class ENEventSection extends OkaeriConfig implements EventSection {
-
-        @Comment({"", "# {PLAYER} - Player who joined"})
-        public List<Notice> joinMessage = List.of(
-            Notice.actionbar("<green>► <green>{PLAYER} <white>joined the server!"),
-            Notice.actionbar("<green>► <white>Welcome to the server <green>{PLAYER}<white>!")
-        );
-
-        @Comment("# {PLAYER} - Player who joined.")
-        public List<Notice> firstJoinMessage = List.of(
-            Notice.chat("<green>► {PLAYER} <white>joined the server for the first time!"),
-            Notice.chat("<green>► {PLAYER} <white>welcome to the server for the first time!")
-        );
-
-        @Comment("# {PLAYER} - Player who left")
-        public List<Notice> quitMessage = List.of(
-            Notice.actionbar("<red>► {PLAYER} <white>logged off the server!"),
-            Notice.actionbar("<red>► {PLAYER} <white>left the server!")
-        );
-    }
 
     @Comment({" ", "# Section responsible for inventories-related stuff."})
     public ENInventorySection inventory = new ENInventorySection();
@@ -547,6 +523,12 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({" ", "# This section is responsible for demo screen messages."})
     public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
+
+    @Comment({" ", "# This section is responsible for join message."})
+    public ENJoinMessage join = new ENJoinMessage();
+
+    @Comment({" ", "# This section is responsible for quit message."})
+    public ENQuitMessage quit = new ENQuitMessage();
 
     @Comment({" ", "# This section is responsible for end screen messages."})
     public ENEndScreenMessages endScreen = new ENEndScreenMessages();
