@@ -11,7 +11,14 @@ public class Migrations {
         new Migration_0006_Move_alert_to_broadcast_section(),
         new Migration_0007_Move_clear_to_dedicated_section(),
         new Migration_0008_Move_repair_to_dedicated_section(),
-        new Migration_0009_Improve_Homes_Config()
-    };
-
+        new Migration_0009_Improve_Homes_Config(),
+        new Migration_0010_Move_give_to_dedicated_section(),
+        new Migration_0011_Move_enchant_to_dedicated_section(),
+        new Migration_0012_Move_repair_argument_messages_to_dedicated_section(),
+        new Migration_0013_Move_enchant_messages_to_dedicated_section(),
+        new Migration_0014_Move_butcher_messages_to_dedicated_section(),
+        new Migration_0015_Move_ignore_messages_to_dedicated_section(),
+        new Migration_0031_Move_death_messages_to_dedicated_section(),
+        new Migration_0032_Move_join_quit_messages_to_dedicated_section(),
+        };
 }

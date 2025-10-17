@@ -5,10 +5,9 @@ import com.eternalcode.core.feature.vanish.event.DisableVanishEvent;
 import com.eternalcode.core.feature.vanish.event.EnableVanishEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import org.bukkit.entity.Player;
-
 import java.util.Set;
 import java.util.UUID;
+import org.bukkit.entity.Player;
 
 @Service
 class VanishServiceImpl implements VanishService {
@@ -18,7 +17,11 @@ class VanishServiceImpl implements VanishService {
     private final EventCaller eventCaller;
 
     @Inject
-    VanishServiceImpl(VanishInvisibleService vanishInvisibleService, VanishMetaDataService vanishMetaDataService, EventCaller eventCaller) {
+    VanishServiceImpl(
+        VanishInvisibleService vanishInvisibleService,
+        VanishMetaDataService vanishMetaDataService,
+        EventCaller eventCaller
+    ) {
         this.vanishInvisibleService = vanishInvisibleService;
         this.vanishMetaDataService = vanishMetaDataService;
         this.eventCaller = eventCaller;
@@ -50,12 +53,12 @@ class VanishServiceImpl implements VanishService {
 
     @Override
     public boolean isVanished(Player player) {
-        return this.vanishMetaDataService.hasMetadata(player);
+        return this.vanishInvisibleService.getVanishedPlayers().contains(player.getUniqueId());
     }
 
     @Override
     public boolean isVanished(UUID uniqueId) {
-        return this.vanishMetaDataService.hasMetadata(uniqueId);
+        return this.vanishInvisibleService.getVanishedPlayers().contains(uniqueId);
     }
 
     @Override

@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Find existing comment
-        uses: peter-evans/find-comment@v3
+        uses: peter-evans/find-comment@v4
         if: github.event_name == 'pull_request'
         id: find-comment
         with:
@@ -30,7 +30,7 @@ jobs:
           comment-author: 'github-actions[bot]'
 
       - name: Create progress comment if not exists
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         if: github.event_name == 'pull_request' && steps.find-comment.outputs.comment-id == ''
         id: create-comment
         with:
@@ -43,7 +43,7 @@ jobs:
           edit-mode: replace
 
       - name: Update progress comment if exists
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         if: github.event_name == 'pull_request' && steps.find-comment.outputs.comment-id != ''
         id: update-comment
         with:
@@ -71,7 +71,7 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Cache Gradle
-        uses: actions/cache@v4.2.4
+        uses: actions/cache@v4.3.0
         with:
           path: ~/.gradle/caches
           key: >-
@@ -94,7 +94,7 @@ jobs:
           overwrite: true
 
       - name: Update comment with download link
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         if: github.event_name == 'pull_request'
         with:
           comment-id: ${{ steps.comment.outputs.comment-id }}

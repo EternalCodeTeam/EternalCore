@@ -26,11 +26,6 @@ public class ENArgumentMessages extends OkaeriConfig implements ArgumentMessages
     public Notice noItem = Notice.chat("<red>✘ <dark_red>You need item to use this command!");
     public Notice noMaterial = Notice.chat("<red>✘ <dark_red>This item doesn't exist");
     public Notice noArgument = Notice.chat("<red>✘ <dark_red>This argument doesn't exist");
-    public Notice noDamaged = Notice.chat("<red>✘ <dark_red>This item can't be repaired");
-    public Notice noDamagedItems = Notice.chat("<red>✘ <dark_red>You need damaged items to use this command!");
-    public Notice noEnchantment = Notice.chat("<red>✘ <dark_red>This enchantment doesn't exist");
-    public Notice noValidEnchantmentLevel = Notice.chat("<red>✘ <dark_red>This enchantment level is not supported!");
     public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>World <red>{WORLD} <dark_red>doesn't exist!");
-    public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
     public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location format! <red>({LOCATION})");
 }
