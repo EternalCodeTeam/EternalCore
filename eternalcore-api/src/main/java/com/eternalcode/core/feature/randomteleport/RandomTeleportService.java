@@ -29,12 +29,17 @@ public interface RandomTeleportService {
 
     /**
      * Asynchronously teleports a collection of players to the same random location.
-     * All players will be teleported to the same safe location in the first player's world.
+     * <p>
+     * All players will be teleported to the same safe location.
+     * The world is determined from an arbitrary player in the collection
+     * if not specified otherwise. If players are from different worlds,
+     * the chosen world may vary depending on the iteration order of the collection.
      *
      * @param players The collection of players to teleport together.
      * @return A CompletableFuture containing a map of each player to their TeleportResult.
      */
     CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players);
+
 
     /**
      * Asynchronously teleports a collection of players to the same random location within the specified world.
