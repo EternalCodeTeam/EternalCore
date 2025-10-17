@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
 import dev.rollczi.litecommands.suggestion.SuggestionContext;
 import dev.rollczi.litecommands.suggestion.SuggestionResult;
-import java.util.Optional;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 
@@ -27,24 +26,15 @@ class GameModeArgument extends AbstractViewerArgument<GameMode> {
 
     @Override
     public ParseResult<GameMode> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        Optional<GameMode> gameMode;
-
         try {
-            gameMode = Optional.of(GameMode.valueOf(argument.toUpperCase()));
+            GameMode gameMode = GameMode.valueOf(argument.toUpperCase());
+            return ParseResult.success(gameMode);
         }
         catch (IllegalArgumentException exception) {
-            gameMode = Optional.empty();
+            return this.gameModeArgumentSettings.getByAlias(argument)
+                .map(ParseResult::success)
+                .orElseGet(() -> ParseResult.failure(translation.player().gameModeNotCorrect()));
         }
-
-        if (gameMode.isPresent()) {
-            return ParseResult.success(gameMode.get());
-        }
-
-        Optional<GameMode> alias = this.gameModeArgumentSettings.getByAlias(argument);
-
-        return alias
-            .map(ParseResult::success)
-            .orElseGet(() -> ParseResult.failure(translation.player().gameModeNotCorrect()));
     }
 
     @Override
