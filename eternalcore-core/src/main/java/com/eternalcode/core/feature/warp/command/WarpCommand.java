@@ -68,7 +68,7 @@ class WarpCommand {
             return;
         }
 
-        this.warpInventory.openInventory(player);
+        this.warpInventory.open(player);
     }
 
     @Execute(name = "warp")

@@ -18,6 +18,7 @@ import dev.triumphteam.gui.guis.GuiItem;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import net.kyori.adventure.text.Component;
@@ -67,23 +68,23 @@ public class WarpInventory {
         this.warpInventoryConfigService = warpInventoryConfigService;
     }
 
-    public void openInventory(Player player) {
+    public void open(Player player) {
         this.warpInventoryConfigService.getWarpInventoryData()
             .thenAccept(warpData -> {
                 this.scheduler.run(() -> {
-                    Gui gui = this.createInventory(player, warpData);
+                    Gui gui = this.create(player, warpData);
                     gui.open(player);
                 });
             })
             .exceptionally(FutureHandler::handleException);
     }
 
-    private Gui createInventory(Player player, WarpInventoryConfigService.WarpInventoryConfigData warpData) {
-        int rowsCount = calculateRowsCount(warpData);
+    private Gui create(Player player, WarpInventoryConfigService.WarpInventoryConfigData warpData) {
+        int rows = calculateRowsCount(warpData);
 
         Gui gui = Gui.gui()
             .title(this.miniMessage.deserialize(warpData.title()))
-            .rows(rowsCount)
+            .rows(rows)
             .disableAllInteractions()
             .create();
 
@@ -267,41 +268,38 @@ public class WarpInventory {
     }
 
     public CompletableFuture<Void> removeWarp(String warpName) {
-        if (!this.warpSettings.autoAddNewWarps()) {
-            return CompletableFuture.completedFuture(null);
-        }
-
-        return this.warpInventoryConfigService.removeWarpItem(warpName)
-            .thenCompose(removed -> {
-                if (removed != null) {
-                    return this.shiftWarpItems(removed);
+        return this.warpInventoryConfigService.getWarpItems()
+            .thenCompose(items -> {
+                if (!items.containsKey(warpName)) {
+                    return CompletableFuture.completedFuture(null);
                 }
-                return CompletableFuture.completedFuture(null);
+
+                return this.warpInventoryConfigService.removeWarpItem(warpName)
+                    .thenCompose(removed -> {
+                        if (removed != null) {
+                            return this.shiftWarpItems(removed, items);
+                        }
+                        return CompletableFuture.completedFuture(null);
+                    });
             })
             .exceptionally(FutureHandler::handleException);
     }
 
-    private CompletableFuture<Void> shiftWarpItems(WarpInventoryItem removed) {
+    private CompletableFuture<Void> shiftWarpItems(WarpInventoryItem removed, Map<String, WarpInventoryItem> items) {
         int removedSlot = removed.warpItem.slot;
 
-        return this.warpInventoryConfigService.getWarpItems()
-            .thenApply(items -> {
-                List<WarpInventoryItem> itemsToShift = items.values().stream()
-                    .filter(item -> item.warpItem.slot > removedSlot)
-                    .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
-                    .toList();
+        List<WarpInventoryItem> itemsToShift = items.values().stream()
+            .filter(item -> item.warpItem.slot > removedSlot)
+            .sorted(Comparator.comparingInt(item -> item.warpItem.slot))
+            .toList();
 
-                this.performSlotShift(itemsToShift, removedSlot);
-                return null;
-            });
-    }
-
-    private void performSlotShift(List<WarpInventoryItem> itemsToShift, int removedSlot) {
         int currentShift = removedSlot;
         for (WarpInventoryItem item : itemsToShift) {
             int nextShift = item.warpItem.slot;
             item.warpItem.slot = currentShift;
             currentShift = nextShift;
         }
+
+        return CompletableFuture.completedFuture(null);
     }
 }
