@@ -1,5 +1,7 @@
 package com.eternalcode.core.util;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import org.bukkit.Material;
 
 public final class MaterialUtil {
@@ -21,24 +23,9 @@ public final class MaterialUtil {
             return text;
         }
 
-        String[] words = text.split(SPACE);
-        StringBuilder result = new StringBuilder();
-
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-
-            if (!word.isEmpty()) {
-                result.append(Character.toUpperCase(word.charAt(0)));
-                if (word.length() > 1) {
-                    result.append(word.substring(1));
-                }
-            }
-
-            if (i < words.length - 1) {
-                result.append(SPACE);
-            }
-        }
-
-        return result.toString();
+        return Arrays.stream(text.split(SPACE))
+            .filter(word -> !word.isEmpty())
+            .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+            .collect(Collectors.joining(SPACE));
     }
 }
