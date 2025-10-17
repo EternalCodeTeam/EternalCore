@@ -11,10 +11,10 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Collection;
+import java.util.stream.Collectors;
 import org.bukkit.Server;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import panda.utilities.text.Joiner;
 
 @Command(name = "list")
 @Permission("eternalcore.list")
@@ -43,9 +43,9 @@ class OnlinePlayersListCommand {
             .toList();
 
         String onlineCount = String.valueOf(online.size());
-        String players = Joiner.on(this.config.format.separator)
-            .join(online, HumanEntity::getName)
-            .toString();
+        String players = online.stream()
+            .map(HumanEntity::getName)
+            .collect(Collectors.joining(this.config.format.separator));
 
         this.noticeService.create()
             .notice(translation -> translation.player().onlinePlayersMessage())
