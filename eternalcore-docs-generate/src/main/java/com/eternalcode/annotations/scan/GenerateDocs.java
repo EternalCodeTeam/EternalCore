@@ -10,58 +10,31 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
+import static java.util.Comparator.comparing;
 
 public class GenerateDocs {
+
+    private static final Gson GSON = new GsonBuilder()
+        .setPrettyPrinting()
+        .disableHtmlEscaping()
+        .create();
 
     public static void main(String[] args) throws ClassNotFoundException {
         Class<?> aClass = Class.forName("com.eternalcode.core.EternalCore");
         EternalScanner scanner = new EternalScanner(aClass.getClassLoader(), aClass.getPackage());
 
-        // Scan commands
-        List<CommandResult> commandResults = scanner.scan(new CommandScanResolver())
-            .stream()
-            .sorted(Comparator.comparing(CommandResult::name))
-            .distinct()
-            .toList();
+        List<CommandResult> commandResults = scanner.scan(new CommandScanResolver(), comparing(CommandResult::name));
+        List<PermissionResult> permissionResults = scanner.scan(new PermissionScanResolver(), comparing(PermissionResult::name));
+        List<PlaceholderResult> placeholderResults = scanner.scan(new PlaceholderScanResolver(), comparing(PlaceholderResult::name));
 
-        // Scan permissions
-        List<PermissionResult> permissionResults = scanner.scan(new PermissionScanResolver())
-            .stream()
-            .sorted(Comparator.comparing(PermissionResult::name))
-            .distinct()
-            .toList();
+        generateResult("raw_eternalcore_documentation.json", new DocumentationResult(commandResults, permissionResults));
+        generateResult("raw_eternalcore_placeholders.json", placeholderResults);
+    }
 
-        // Scan placeholders
-        List<PlaceholderResult> placeholderResults = scanner.scan(new PlaceholderScanResolver())
-            .stream()
-            .sorted(Comparator.comparing(PlaceholderResult::name))
-            .distinct()
-            .toList();
-
-        Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .disableHtmlEscaping()
-            .create();
-
-        // Generate combined documentation
-        DocumentationResult combinedDocs = new DocumentationResult(
-            commandResults,
-            permissionResults,
-            placeholderResults
-        );
-
-        try (FileWriter fileWriter = new FileWriter("raw_eternalcore_documentation.json")) {
-            gson.toJson(combinedDocs, fileWriter);
-        }
-        catch (IOException exception) {
-            exception.printStackTrace();
-        }
-
-        // Generate separate placeholder documentation
-        try (FileWriter fileWriter = new FileWriter("raw_eternalcore_placeholders.json")) {
-            gson.toJson(placeholderResults, fileWriter);
+    private static void generateResult(String fileName, Object objectToRender) {
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            GSON.toJson(objectToRender, fileWriter);
         }
         catch (IOException exception) {
             exception.printStackTrace();
@@ -70,7 +43,6 @@ public class GenerateDocs {
 
     public record DocumentationResult(
         List<CommandResult> commands,
-        List<PermissionResult> permissions,
-        List<PlaceholderResult> placeholders
+        List<PermissionResult> permissions
     ) {}
 }
