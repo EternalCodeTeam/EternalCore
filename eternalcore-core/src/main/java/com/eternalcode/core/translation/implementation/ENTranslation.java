@@ -1,5 +1,13 @@
 package com.eternalcode.core.translation.implementation;
 
+import com.eternalcode.core.feature.back.messages.ENBackMessages;
+import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
+import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.ENClearMessages;
+import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
+import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
+import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
@@ -234,6 +242,12 @@ public class ENTranslation extends AbstractTranslation {
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
     }
+
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /back command",
+    })
+    public ENBackMessages back = new ENBackMessages();
 
     @Comment({
         " ",
