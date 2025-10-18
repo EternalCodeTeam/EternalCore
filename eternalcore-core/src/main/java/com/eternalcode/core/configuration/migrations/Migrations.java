@@ -19,5 +19,7 @@ public class Migrations {
         new Migration_0014_Move_butcher_messages_to_dedicated_section(),
         new Migration_0015_Move_ignore_messages_to_dedicated_section(),
         new Migration_0030_Move_back_to_dedicated_section()
+        new Migration_0031_Move_death_messages_to_dedicated_section(),
+        new Migration_0032_Move_join_quit_messages_to_dedicated_section(),
         };
 }
