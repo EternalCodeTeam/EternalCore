@@ -92,12 +92,9 @@ eternalShadow {
     )
 
     // common libraries
-    library("org.panda-lang:expressible:${Versions.EXPRESSIBLE}")
-    library("org.panda-lang:panda-utilities:${Versions.PANDA_UTILITIES}")
+
     library("commons-io:commons-io:${Versions.APACHE_COMMONS}")
     libraryRelocate(
-        "panda.std",
-        "panda.utilities",
         "org.apache.commons.io",
     )
 

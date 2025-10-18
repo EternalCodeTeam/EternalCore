@@ -20,8 +20,6 @@ dependencies {
     runtimeOnly("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
     runtimeOnly("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
     runtimeOnly("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
-    runtimeOnly("org.panda-lang:expressible:${Versions.EXPRESSIBLE}")
-    runtimeOnly("org.panda-lang:panda-utilities:${Versions.PANDA_UTILITIES}")
     runtimeOnly("commons-io:commons-io:${Versions.APACHE_COMMONS}")
     runtimeOnly("dev.triumphteam:triumph-gui:${Versions.TRIUMPH_GUI}")
     runtimeOnly("org.bstats:bstats-bukkit:${Versions.BSTATS}")
