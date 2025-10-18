@@ -1,11 +1,10 @@
 package com.eternalcode.core.feature.home.event;
 
+import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-
-import java.util.UUID;
 
 /**
  * Event called when a home is created.
@@ -22,7 +21,6 @@ public class HomeCreateEvent extends Event implements Cancellable {
 
     public HomeCreateEvent(UUID playerUniqueId, String homeName, UUID homeUniqueId, Location location) {
         super(false);
-
         this.playerUniqueId = playerUniqueId;
         this.homeName = homeName;
         this.homeUniqueId = homeUniqueId;

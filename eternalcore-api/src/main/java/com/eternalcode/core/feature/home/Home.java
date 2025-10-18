@@ -1,8 +1,7 @@
 package com.eternalcode.core.feature.home;
 
-import org.bukkit.Location;
-
 import java.util.UUID;
+import org.bukkit.Location;
 
 public interface Home {
 

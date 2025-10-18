@@ -1,8 +1,6 @@
 package com.eternalcode.core.feature.home.homeadmin;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
@@ -42,12 +40,9 @@ class HomeAdminCommand {
     }
 
     @Execute(name = "sethome")
-    @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [position]")
-    void setHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
+    @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
+    void setHome(@Sender Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
-        optionalLocation.setWorld(sender.getWorld());
-        optionalLocation.setYaw(sender.getLocation().getYaw());
-        optionalLocation.setPitch(sender.getLocation().getPitch());
 
         Home home = playerHomeEntry.home();
         Player player = playerHomeEntry.player();
@@ -127,8 +122,7 @@ class HomeAdminCommand {
             return;
         }
 
-        Location homeLocation = homeOption.get().getLocation();
-        PaperLib.teleportAsync(player, homeLocation);
+        PaperLib.teleportAsync(player, homeOption.get().getLocation());
     }
 
     @Execute(name = "list")
@@ -146,8 +140,7 @@ class HomeAdminCommand {
 
     private String formattedListUserHomes(UUID uniqueId) {
         return this.homeManager.getHomes(uniqueId).stream()
-            .map(Home::getName)
+            .map(home -> home.getName())
             .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
 }
-

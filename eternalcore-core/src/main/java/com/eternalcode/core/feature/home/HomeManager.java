@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.home;
 
-import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.home.database.HomeRepository;
 import com.eternalcode.core.feature.home.event.HomeCreateEvent;
@@ -15,7 +14,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

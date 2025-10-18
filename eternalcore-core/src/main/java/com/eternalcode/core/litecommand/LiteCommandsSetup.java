@@ -45,7 +45,7 @@ class LiteCommandsSetup {
                 .notice(translation -> translation.argument().incorrectLocation())
                 .placeholder("{LOCATION}", input)
             )
-            .extension(new LiteAdventurePlatformExtension<>(audiencesProvider), extension -> extension
+            .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
                 .serializer(miniMessage)
             );
     }
