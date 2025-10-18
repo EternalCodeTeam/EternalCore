@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.playerinfo;
+package com.eternalcode.core.feature.onlineplayers;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.vanish.VanishService;
@@ -35,7 +35,7 @@ class OnlinePlayerCountCommand {
 
         this.noticeService
             .create()
-            .notice(translation -> translation.player().onlinePlayersCountMessage())
+            .notice(translation -> translation.online().onlinePlayersCount())
             .viewer(viewer)
             .placeholder("{ONLINE}", String.valueOf(visiblePlayerCount))
             .send();

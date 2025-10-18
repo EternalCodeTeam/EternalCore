@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface QuitMessage {
 
-    List<Notice> quitMessage();
+    List<Notice> playerLeftServer();
 }

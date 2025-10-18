@@ -17,26 +17,26 @@ public class PLDeathMessages extends OkaeriConfig implements DeathMessages {
 
     public String unarmedWeaponName = "Pięści";
 
-    public List<Notice> deathMessageByEntity = Arrays.asList(
+    public List<Notice> playerKilledByEntity = Arrays.asList(
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez <yellow>{MOB}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>zginął z rąk <yellow>{MOB}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>nie przeżył spotkania z <yellow>{MOB}<red>!")
     );
 
-    public List<Notice> deathMessage = Arrays.asList(
+    public List<Notice> playerKilledByOtherPlayer = Arrays.asList(
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez <dark_red>{KILLER}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został pokonany przez <dark_red>{KILLER} <red>przy użyciu <yellow>{WEAPON}<red>!"),
         Notice.chat("<white>☠ <dark_red>{KILLER} <red>wyeliminował <dark_red>{PLAYER}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>zginął w walce z <dark_red>{KILLER}<red>!")
     );
 
-    public List<Notice> unknownDeathCause = Arrays.asList(
+    public List<Notice> playerDiedByUnknownCause = Arrays.asList(
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>zginął z nieznanych powodów!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>tajemniczo zmarł!")
     );
 
-    public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = new HashMap<>() {{
+    public Map<EntityDamageEvent.DamageCause, List<Notice>> playerDiedByDamageCause = new HashMap<>() {{
         put(EntityDamageEvent.DamageCause.VOID, Arrays.asList(
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł w otchłań!"),
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>zniknął w pustce!")
@@ -149,7 +149,7 @@ public class PLDeathMessages extends OkaeriConfig implements DeathMessages {
         ));
     }};
 
-    public Map<EntityType, List<Notice>> deathMessageByMobType = new HashMap<>() {{
+    public Map<EntityType, List<Notice>> playerKilledByMobType = new HashMap<>() {{
         put(EntityType.ZOMBIE, Arrays.asList(
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zjedzony przez zombie!"),
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>stał się pożywieniem zombie!")

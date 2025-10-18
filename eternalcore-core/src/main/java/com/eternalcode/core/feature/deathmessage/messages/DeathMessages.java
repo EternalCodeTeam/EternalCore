@@ -10,11 +10,11 @@ public interface DeathMessages {
 
     String unarmedWeaponName();
 
-    List<Notice> deathMessageByEntity();
-    List<Notice> deathMessage();
-    List<Notice> unknownDeathCause();
+    List<Notice> playerKilledByEntity();
+    List<Notice> playerKilledByOtherPlayer();
+    List<Notice> playerDiedByUnknownCause();
 
-    Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
-    Map<EntityType, List<Notice>> deathMessageByMobType();
+    Map<EntityDamageEvent.DamageCause, List<Notice>> playerDiedByDamageCause();
+    Map<EntityType, List<Notice>> playerKilledByMobType();
 
 }

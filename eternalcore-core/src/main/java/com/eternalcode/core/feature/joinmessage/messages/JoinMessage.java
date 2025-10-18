@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface JoinMessage {
 
-    List<Notice> joinMessages();
+    List<Notice> playerJoinedServer();
 
-    List<Notice> firstJoinMessages();
+    List<Notice> playerJoinedServerFirstTime();
 }
