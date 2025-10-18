@@ -1,15 +1,5 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
-import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
-import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
-import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
-import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
-import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
-import com.eternalcode.core.feature.clear.messages.ENClearMessages;
-import com.eternalcode.core.feature.container.messages.ENContainerMessages;
-import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
-import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
@@ -63,14 +53,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENTranslation extends AbstractTranslation {
-
-    public ENTranslation(Language language) {
-        super(language);
-    }
-
-    public ENTranslation() {
-        this(Language.EN);
-    }
 
     @Comment({
         "#",
@@ -135,22 +117,171 @@ public class ENTranslation extends AbstractTranslation {
     })
     @Comment("# This section is responsible for all messages used during bad of a command argument")
     public ENArgumentMessages argument = new ENArgumentMessages();
-
     @Comment({
         " ",
         "# This answer is responsible for the general formatting of some values",
         "# The purpose of the section is to reduce the repetition of some messages."
     })
     public ENFormatSection format = new ENFormatSection();
-
     @Comment("# This section is responsible for all messages related to item editing.")
     public ENItemEditMessages itemEdit = new ENItemEditMessages();
-
     @Comment({
         " ",
         "# This section is responsible for the messages of the /signeditor command",
     })
     public ENSignEditorMessages signEditor = new ENSignEditorMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for the player support chat /helpop",
+    })
+    public ENHelpOpMessages helpOp = new ENHelpOpMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /seen command"
+    })
+    public ENSeenMessages seen = new ENSeenMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for the communication between administration",
+    })
+    public ENAdminChatMessages adminChat = new ENAdminChatMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for ignore-related messages"
+    })
+    public ENIgnoreMessages ignore = new ENIgnoreMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /sudo command",
+    })
+    public ENSudoMessages sudo = new ENSudoMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for messages related to teleportation",
+    })
+    public ENTeleportSection teleport = new ENTeleportSection();
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /tprp command",
+    })
+    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for messages related to random teleport",
+    })
+    public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
+    public ENChatSection chat = new ENChatSection();
+    @Comment({
+        " ",
+        "# This section is responsible for the messages of the /broadcast command",
+    })
+    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for handling tpa requests,",
+        "# It gives you the ability to edit queries of this type",
+    })
+    public ENTeleportRequestMessages tpa = new ENTeleportRequestMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for setting and editing fast travel points - warp",
+    })
+    public ENWarpMessages warp = new ENWarpMessages();
+    @Comment({
+        " ",
+        "# The following section is responsible for setting and editing personal fast travel points - home",
+    })
+    public ENHomeMessages home = new ENHomeMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for setting and editing private messages."
+    })
+    public ENMsgMessages msg = new ENMsgMessages();
+    @Comment({
+        " ",
+        "# Section responsible for AFK."
+    })
+    public ENAfkMessages afk = new ENAfkMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for death messages"
+    })
+    public ENDeathMessages deathMessage = new ENDeathMessages();
+    @Comment({" ", "# Section responsible for inventories-related stuff."})
+    public ENInventorySection inventory = new ENInventorySection();
+    @Comment("# This section is responsible for /clear command")
+    public ENClearMessages clear = new ENClearMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for player-related stuff and interactions with them."
+    })
+    public ENPlayerSection player = new ENPlayerSection();
+    @Comment({" ", "# This section is responsible for spawn-related stuff."})
+    public ENSpawnMessages spawn = new ENSpawnMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for messages regarding item attributes."
+    })
+    public ENItemSection item = new ENItemSection();
+    @Comment({
+        " ",
+        "# This section is responsible for repair messages"
+    })
+    public ENRepairMessages repair = new ENRepairMessages();
+    @Comment({" ", "# Messages sent on time and weather change."})
+    public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
+    @Comment({" ", "# Messages responsible for containers"})
+    public ENContainerMessages container = new ENContainerMessages();
+    @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
+    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
+    @Comment({" ", "# Auto message"})
+    public ENAutoMessageMessages autoMessage = new ENAutoMessageMessages();
+    @Comment({" ", "# This section is responsible for handling jail-related stuff."})
+    public ENJailMessages jail = new ENJailMessages();
+    @Comment({" ", "# This section is responsible for elder guardian messages."})
+    public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
+    @Comment({" ", "# This section is responsible for demo screen messages."})
+    public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
+    @Comment({" ", "# This section is responsible for join message."})
+    public ENJoinMessage join = new ENJoinMessage();
+    @Comment({" ", "# This section is responsible for quit message."})
+    public ENQuitMessage quit = new ENQuitMessage();
+    @Comment({" ", "# This section is responsible for end screen messages."})
+    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
+    @Comment({" ", "# This section is responsible for '/burn' command messages."})
+    public ENBurnMessages burn = new ENBurnMessages();
+    @Comment({" ", "# This section is responsible for vanish-related stuff."})
+    public ENVanishMessages vanish = new ENVanishMessages();
+    @Comment({" ", "# This section is responsible for '/near' command messages."})
+    public ENNearMessages near = new ENNearMessages();
+    @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
+    public ENMotdMessages motd = new ENMotdMessages();
+    @Comment({" ", "# This section is responsible for teleporting to offline players."})
+    public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();
+    @Comment({" ", "# This section is responsible for information about players' game time."})
+    public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
+    @Comment({" ", "# This section is responsible for the messages of the freeze feature."})
+    public ENFreezeMessages freeze = new ENFreezeMessages();
+    @Comment({" ", "# This section is responsible for powertool messages."})
+    public ENPowertoolMessages powertool = new ENPowertoolMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for enchant messages"
+    })
+    ENEnchantMessages enchant = new ENEnchantMessages();
+    @Comment({
+        " ",
+        "# This section is responsible for butcher messages"
+    })
+    ENButcherMessages butcher = new ENButcherMessages();
+
+    public ENTranslation(Language language) {
+        super(language);
+    }
+
+    public ENTranslation() {
+        this(Language.EN);
+    }
 
     @Override
     public File getConfigFile(File dataFolder) {
@@ -162,42 +293,6 @@ public class ENTranslation extends AbstractTranslation {
         public String enable = "<green>enabled";
         public String disable = "<red>disabled";
     }
-
-    @Comment({
-        " ",
-        "# This section is responsible for the player support chat /helpop",
-    })
-    public ENHelpOpMessages helpOp = new ENHelpOpMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /seen command"
-    })
-    public ENSeenMessages seen = new ENSeenMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the communication between administration",
-    })
-    public ENAdminChatMessages adminChat = new ENAdminChatMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for ignore-related messages"
-    })
-    public ENIgnoreMessages ignore = new ENIgnoreMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /sudo command",
-    })
-    public ENSudoMessages sudo = new ENSudoMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages related to teleportation",
-    })
-    public ENTeleportSection teleport = new ENTeleportSection();
 
     @Getter
     public static class ENTeleportSection extends OkaeriConfig implements TeleportSection {
@@ -245,20 +340,6 @@ public class ENTranslation extends AbstractTranslation {
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
     }
 
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /tprp command",
-    })
-    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages related to random teleport",
-    })
-    public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
-
-    public ENChatSection chat = new ENChatSection();
-
     @Getter
     public static class ENChatSection extends OkaeriConfig implements ChatSection {
         @Comment({"# {PLAYER} - Player who performed the actions for the chat"})
@@ -289,65 +370,10 @@ public class ENTranslation extends AbstractTranslation {
             Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
     }
 
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /broadcast command",
-    })
-    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for handling tpa requests,",
-        "# It gives you the ability to edit queries of this type",
-    })
-    public ENTeleportRequestMessages tpa = new ENTeleportRequestMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for setting and editing fast travel points - warp",
-    })
-    public ENWarpMessages warp = new ENWarpMessages();
-
-    @Comment({
-        " ",
-        "# The following section is responsible for setting and editing personal fast travel points - home",
-    })
-    public ENHomeMessages home = new ENHomeMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for setting and editing private messages."
-    })
-    public ENMsgMessages msg = new ENMsgMessages();
-
-    @Comment({
-        " ",
-        "# Section responsible for AFK."
-    })
-    public ENAfkMessages afk = new ENAfkMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for death messages"
-    })
-    public ENDeathMessages deathMessage = new ENDeathMessages();
-
-    @Comment({" ", "# Section responsible for inventories-related stuff."})
-    public ENInventorySection inventory = new ENInventorySection();
-
     @Getter
     public static class ENInventorySection extends OkaeriConfig implements InventorySection {
         public String disposalTitle = "<white><bold>Trash";
     }
-
-    @Comment("# This section is responsible for /clear command")
-    public ENClearMessages clear = new ENClearMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for player-related stuff and interactions with them."
-    })
-    public ENPlayerSection player = new ENPlayerSection();
 
     @Getter
     public static class ENPlayerSection extends OkaeriConfig implements PlayerSection {
@@ -460,15 +486,6 @@ public class ENTranslation extends AbstractTranslation {
             Notice.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
     }
 
-    @Comment({" ", "# This section is responsible for spawn-related stuff."})
-    public ENSpawnMessages spawn = new ENSpawnMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages regarding item attributes."
-    })
-    public ENItemSection item = new ENItemSection();
-
     @Getter
     public static class ENItemSection extends OkaeriConfig implements ItemSection {
         @Comment({" ", "# {ITEM} - Name of received item"})
@@ -492,76 +509,4 @@ public class ENTranslation extends AbstractTranslation {
         public Notice enchantedMessageBy =
             Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
-
-    @Comment({
-        " ",
-        "# This section is responsible for repair messages"
-    })
-    public ENRepairMessages repair = new ENRepairMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for enchant messages"
-    })
-    ENEnchantMessages enchant = new ENEnchantMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for butcher messages"
-    })
-    ENButcherMessages butcher = new ENButcherMessages();
-
-    @Comment({" ", "# Messages sent on time and weather change."})
-    public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
-
-    @Comment({" ", "# Messages responsible for containers"})
-    public ENContainerMessages container = new ENContainerMessages();
-
-    @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
-    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
-
-    @Comment({" ", "# Auto message"})
-    public ENAutoMessageMessages autoMessage = new ENAutoMessageMessages();
-
-    @Comment({" ", "# This section is responsible for handling jail-related stuff."})
-    public ENJailMessages jail = new ENJailMessages();
-
-    @Comment({" ", "# This section is responsible for elder guardian messages."})
-    public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
-
-    @Comment({" ", "# This section is responsible for demo screen messages."})
-    public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
-
-    @Comment({" ", "# This section is responsible for join message."})
-    public ENJoinMessage join = new ENJoinMessage();
-
-    @Comment({" ", "# This section is responsible for quit message."})
-    public ENQuitMessage quit = new ENQuitMessage();
-
-    @Comment({" ", "# This section is responsible for end screen messages."})
-    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
-
-    @Comment({" ", "# This section is responsible for '/burn' command messages."})
-    public ENBurnMessages burn = new ENBurnMessages();
-
-    @Comment({" ", "# This section is responsible for vanish-related stuff."})
-    public ENVanishMessages vanish = new ENVanishMessages();
-
-    @Comment({" ", "# This section is responsible for '/near' command messages."})
-    public ENNearMessages near = new ENNearMessages();
-
-    @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
-    public ENMotdMessages motd = new ENMotdMessages();
-
-    @Comment({" ", "# This section is responsible for teleporting to offline players."})
-    public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();
-
-    @Comment({" ", "# This section is responsible for information about players' game time."})
-    public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
-
-    @Comment({" ", "# This section is responsible for the messages of the freeze feature."})
-    public ENFreezeMessages freeze = new ENFreezeMessages();
-
-    @Comment({" ", "# This section is responsible for powertool messages."})
-    public ENPowertoolMessages powertool = new ENPowertoolMessages();
 }

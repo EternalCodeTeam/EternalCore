@@ -4,9 +4,9 @@ import static eu.okaeri.configs.migrate.ConfigMigrationDsl.move;
 
 import eu.okaeri.configs.migrate.builtin.NamedMigration;
 
-public class Migration_0010_Rename_jail_section extends NamedMigration {
+public class Migration_0033_Rename_jail_section extends NamedMigration {
 
-    Migration_0010_Rename_jail_section() {
+    Migration_0033_Rename_jail_section() {
         super(
             "Rename jail section",
 
@@ -31,7 +31,8 @@ public class Migration_0010_Rename_jail_section extends NamedMigration {
             move("jailSection.jailListEmpty", "jail.listEmpty"),
             move("jailSection.jailListPlayerEntry", "jail.listPlayerEntry"),
 
-            move("jailSection.jailCannotUseCommand", "jail.cannotUseCommand")
+            move("jailSection.jailCannotUseCommand", "jail.cannotUseCommand"),
+            move("jailSection.allowedCommands", "jail.restrictedCommands")
         );
     }
 }
