@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.give;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.litecommand.argument.StackAmountArgument;
 import com.eternalcode.core.notice.NoticeService;
@@ -51,7 +50,7 @@ class GiveCommand {
         if (isSuccess) {
             this.noticeService.create()
                 .placeholder("{ITEM}", MaterialUtil.format(material))
-                .notice(translation -> translation.give().received())
+                .notice(translation -> translation.give().itemGivenByAdmin())
                 .player(player.getUniqueId())
                 .send();
         }
@@ -69,14 +68,14 @@ class GiveCommand {
         String formattedMaterial = MaterialUtil.format(material);
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
-            .notice(translation -> translation.give().received())
+            .notice(translation -> translation.give().itemGivenByAdmin())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", target.getName())
-            .notice(translation -> translation.give().given())
+            .notice(translation -> translation.give().itemGivenToTargetPlayer())
             .sender(sender)
             .send();
     }

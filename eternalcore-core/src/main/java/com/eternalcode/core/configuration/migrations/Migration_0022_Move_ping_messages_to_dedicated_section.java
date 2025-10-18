@@ -8,8 +8,8 @@ public class Migration_0022_Move_ping_messages_to_dedicated_section extends Name
     Migration_0022_Move_ping_messages_to_dedicated_section() {
         super(
             "Move ping messages to dedicated section",
-            move("player.pingMessage", "ping.self"),
-            move("player.pingOtherMessage", "ping.other")
+            move("player.pingMessage", "ping.playerPing"),
+            move("player.pingOtherMessage", "ping.targetPlayerPing")
         );
     }
 }

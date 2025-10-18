@@ -46,7 +46,7 @@ class EnchantCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(translation -> translation.enchant().self())
+            .notice(translation -> translation.enchant().enchantedItem())
             .send();
     }
 
@@ -69,13 +69,13 @@ class EnchantCommand {
 
         this.noticeService.create()
             .player(sender.getUniqueId())
-            .notice(translation -> translation.enchant().other())
+            .notice(translation -> translation.enchant().enchantedTargetPlayerItem())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService.create()
             .player(target.getUniqueId())
-            .notice(translation -> translation.enchant().by())
+            .notice(translation -> translation.enchant().enchantedItemByAdmin())
             .placeholder("{PLAYER}", sender.getName())
             .send();
     }
@@ -89,7 +89,7 @@ class EnchantCommand {
         if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(item)) {
             this.noticeService.create()
                 .player(playerId)
-                .notice(translation -> translation.enchant().invalidLevel())
+                .notice(translation -> translation.enchant().enchantmentLevelUnsupported())
                 .send();
             return;
         }

@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.give;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -26,7 +25,7 @@ public class GiveService {
     public boolean giveItem(CommandSender sender, Player player, Material material, int amount) {
         if (this.isInvalidMaterial(material)) {
             this.noticeService.create()
-                .notice(translation -> translation.give().invalidItem())
+                .notice(translation -> translation.give().itemNotFound())
                 .sender(sender)
                 .send();
 

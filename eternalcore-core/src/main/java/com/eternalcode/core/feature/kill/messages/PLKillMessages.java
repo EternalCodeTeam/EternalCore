@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLKillMessages extends OkaeriConfig implements KillMessages {
 
-    @Comment("# {PLAYER} - Gracz który został zabity")
-    public Notice killed = Notice.chat("<red>► <dark_red>Zabito gracza <red>{PLAYER}");
+    public Notice killedYourself = Notice.chat("<red>► <dark_red>Zabiłeś się!");
+    public Notice killedTargetPlayer = Notice.chat("<red>► <dark_red>Zabito gracza <red>{PLAYER}");
+    public Notice killedByAdmin = Notice.chat("<red>► <dark_red>Administrator cię zabił!");
 }

@@ -14,6 +14,6 @@ public class ENButcherMessages extends OkaeriConfig implements ButcherMessages {
     public Notice killed = Notice.chat("<green>► <white>You killed <green>{KILLED} <white>mobs!");
 
     @Comment({" ", "# {SAFE_CHUNKS} - The number of safe chunks"})
-    public Notice limitExceeded = Notice.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
-    public Notice invalidChunks = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
+    public Notice safeChunksLimitExceeded = Notice.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
+    public Notice invalidChunkNumber = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
 }

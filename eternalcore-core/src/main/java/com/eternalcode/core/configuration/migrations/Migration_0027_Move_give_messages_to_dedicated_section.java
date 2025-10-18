@@ -8,10 +8,10 @@ public class Migration_0027_Move_give_messages_to_dedicated_section extends Name
     Migration_0027_Move_give_messages_to_dedicated_section() {
         super(
             "Move give messages to dedicated section",
-            move("item.giveReceived", "give.received"),
-            move("item.giveGiven", "give.given"),
+            move("item.giveReceived", "give.itemGivenByAdmin"),
+            move("item.giveGiven", "give.itemGivenToTargetPlayer"),
             move("item.giveNoSpace", "give.noSpace"),
-            move("item.giveNotItem", "give.invalidItem")
+            move("item.giveNotItem", "give.itemNotFound")
         );
     }
 }

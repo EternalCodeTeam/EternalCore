@@ -26,7 +26,7 @@ class PingCommand {
     @DescriptionDocs(description = "Shows your ping")
     void execute(@Sender Player sender) {
         this.noticeService.create()
-            .notice(translation -> translation.ping().self())
+            .notice(translation -> translation.ping().playerPing())
             .placeholder("{PING}", String.valueOf(sender.getPing()))
             .player(sender.getUniqueId())
             .send();
@@ -38,7 +38,7 @@ class PingCommand {
     @DescriptionDocs(description = "Shows ping of other player", arguments = "<player>")
     void execute(@Sender Viewer viewer, @Arg Player target) {
         this.noticeService.create()
-            .notice(translation -> translation.ping().other())
+            .notice(translation -> translation.ping().targetPlayerPing())
             .placeholder("{PING}", String.valueOf(target.getPing()))
             .placeholder("{PLAYER}", target.getName())
             .viewer(viewer)

@@ -11,8 +11,8 @@ import lombok.experimental.Accessors;
 public class ENPingMessages extends OkaeriConfig implements PingMessages {
     
     @Comment({" ", "# {PING} - Current ping"})
-    public Notice self = Notice.chat("<green>► <white>Your ping is: <green>{PING}<white>ms");
+    public Notice playerPing = Notice.chat("<green>► <white>Your ping is: <green>{PING}<white>ms");
 
     @Comment("# {PLAYER} - Target player, {PING} - Ping of target player")
-    public Notice other = Notice.chat("<green>► <white>Ping of the <green>{PLAYER} <white>is: <green>{PING}<white>ms");
+    public Notice targetPlayerPing = Notice.chat("<green>► <white>Ping of the <green>{PLAYER} <white>is: <green>{PING}<white>ms");
 }

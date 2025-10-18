@@ -8,7 +8,7 @@ public class Migration_0018_Move_kill_messages_to_dedicated_section extends Name
     Migration_0018_Move_kill_messages_to_dedicated_section() {
         super(
             "Move kill messages to dedicated section",
-            move("player.killedMessage", "kill.killed")
+            move("player.killedMessage", "kill.killedTargetPlayer")
         );
     }
 }

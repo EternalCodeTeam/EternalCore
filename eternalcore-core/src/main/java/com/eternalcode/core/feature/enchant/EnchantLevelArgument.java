@@ -33,7 +33,7 @@ class EnchantLevelArgument extends AbstractViewerArgument<Integer> {
             return ParseResult.success(value);
         }
         catch (NumberFormatException exception) {
-            return ParseResult.failure(translation.enchant().invalidLevel());
+            return ParseResult.failure(translation.enchant().enchantmentLevelUnsupported());
         }
     }
 

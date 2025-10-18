@@ -28,7 +28,7 @@ class FlyCommand {
         player.setAllowFlight(!player.getAllowFlight());
 
         this.noticeService.create()
-            .notice(translation -> player.getAllowFlight() ? translation.fly().enabled() : translation.fly().disabled())
+            .notice(translation -> player.getAllowFlight() ? translation.fly().flyEnabled() : translation.fly().flyDisabled())
             .placeholder("{STATE}", translation -> player.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .player(player.getUniqueId())
             .send();
@@ -41,13 +41,13 @@ class FlyCommand {
         target.setAllowFlight(!target.getAllowFlight());
 
         this.noticeService.create()
-            .notice(translation -> target.getAllowFlight() ? translation.fly().enabled() : translation.fly().disabled())
+            .notice(translation -> target.getAllowFlight() ? translation.fly().flyEnabled() : translation.fly().flyDisabled())
             .placeholder("{STATE}", translation -> target.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
-            .notice(translation -> target.getAllowFlight() ? translation.fly().enabledFor() : translation.fly().disabledFor())
+            .notice(translation -> target.getAllowFlight() ? translation.fly().flyEnabledForTarget() : translation.fly().flyDisabledForTarget())
             .placeholder("{PLAYER}", target.getName())
             .placeholder("{STATE}", translation -> target.getAllowFlight() ? translation.format().enable() : translation.format().disable())
             .viewer(viewer)

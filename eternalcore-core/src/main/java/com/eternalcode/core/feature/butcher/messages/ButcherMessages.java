@@ -4,6 +4,6 @@ import com.eternalcode.multification.notice.Notice;
 
 public interface ButcherMessages {
     Notice killed();
-    Notice limitExceeded();
-    Notice invalidChunks();
+    Notice safeChunksLimitExceeded();
+    Notice invalidChunkNumber();
 }

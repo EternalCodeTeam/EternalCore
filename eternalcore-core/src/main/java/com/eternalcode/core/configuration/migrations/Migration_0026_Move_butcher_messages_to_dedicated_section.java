@@ -9,7 +9,8 @@ public class Migration_0026_Move_butcher_messages_to_dedicated_section extends N
         super(
             "Move butcher messages to dedicated section",
             move("player.butcherCommand", "butcher.killed"),
-            move("player.safeChunksMessage", "butcher.limitExceeded")
+            move("player.safeChunksMessage", "butcher.safeChunksLimitExceeded"),
+            move("butcher.incorrectNumberOfChunks", "butcher.invalidChunkNumber")
         );
     }
 }

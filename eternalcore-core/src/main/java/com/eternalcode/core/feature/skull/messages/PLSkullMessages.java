@@ -10,6 +10,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLSkullMessages extends OkaeriConfig implements SkullMessages {
 
-    @Comment({" ", "# {SKULL} - Nazwa właściciela czaszki"})
-    public Notice received = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: <green>{SKULL}");
+    public Notice playerSkullReceived = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: <green>{SKULL}");
+
 }

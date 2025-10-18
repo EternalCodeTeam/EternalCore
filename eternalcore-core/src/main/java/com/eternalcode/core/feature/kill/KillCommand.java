@@ -31,7 +31,7 @@ class KillCommand {
         player.setHealth(0);
 
         this.noticeService.create()
-            .notice(translation -> translation.kill().killed())
+            .notice(translation -> translation.kill().killedYourself())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .send();
@@ -41,9 +41,10 @@ class KillCommand {
     @DescriptionDocs(description = "Kill specified player", arguments = "<player>")
     void execute(@Sender Viewer audience, @Arg Player player) {
         this.scheduler.run(player, () -> player.setHealth(0));
+        this.noticeService.player(player.getUniqueId(), translation -> translation.kill().killedByAdmin());
 
         this.noticeService.create()
-            .notice(translation -> translation.kill().killed())
+            .notice(translation -> translation.kill().killedTargetPlayer())
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)
             .send();

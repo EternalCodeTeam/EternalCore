@@ -10,16 +10,16 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENSpeedMessages extends OkaeriConfig implements SpeedMessages {
 
-    public Notice invalidRange = Notice.chat("<red>✘ <dark_red>Enter speed from 0 to 10!");
-    public Notice invalidType = Notice.chat("<red>✘ <dark_red>Invalid speed type!");
+    public Notice invalidSpeedRange = Notice.chat("<red>✘ <dark_red>Enter speed from 0 to 10!");
+    public Notice invalidSpeedType = Notice.chat("<red>✘ <dark_red>Invalid speed type!");
 
     @Comment("# {SPEED} - Walk or fly speed value")
-    public Notice walkSet = Notice.chat("<green>► <white>Walking speed is set to <green>{SPEED}");
-    public Notice flySet = Notice.chat("<green>► <white>Flying speed is set to <green>{SPEED}");
+    public Notice walkSpeedSetForYourself = Notice.chat("<green>► <white>Walking speed is set to <green>{SPEED}");
+    public Notice flySpeedSetForYourself = Notice.chat("<green>► <white>Flying speed is set to <green>{SPEED}");
 
-    @Comment("# {PLAYER} - Target player, {SPEED} - Target player walk or fly speed value")
-    public Notice walkSetFor = Notice.chat("<green>► <white>Walking speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
-    public Notice flySetFor = Notice.chat("<green>► <white>Flying speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
+    @Comment("# {SPEED} - Target player walk or fly speed value")
+    public Notice walkSpeedSetForTargetPlayer = Notice.chat("<green>► <white>Walking speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
+    public Notice flySpeedSetForTargetPlayer = Notice.chat("<green>► <white>Flying speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
 }
 
 

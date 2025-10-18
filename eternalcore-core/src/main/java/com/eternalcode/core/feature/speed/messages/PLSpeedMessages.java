@@ -10,14 +10,14 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLSpeedMessages extends OkaeriConfig implements SpeedMessages {
 
-    public Notice invalidRange = Notice.chat("<red>✘ <dark_red>Ustaw prędkość w zakresie 0-10!");
-    public Notice invalidType = Notice.chat("<red>✘ <dark_red>Nieprawidłowy typ prędkości");
+    public Notice invalidSpeedRange = Notice.chat("<red>✘ <dark_red>Ustaw prędkość w zakresie 0-10!");
+    public Notice invalidSpeedType = Notice.chat("<red>✘ <dark_red>Nieprawidłowy typ prędkości");
 
     @Comment("# {SPEED} - Ustawiona prędkość chodzenia lub latania")
-    public Notice walkSet = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
-    public Notice flySet = Notice.chat("<green>► <white>Ustawiono prędkość latania na <green>{SPEED}");
+    public Notice walkSpeedSetForYourself = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
+    public Notice flySpeedSetForYourself = Notice.chat("<green>► <white>Ustawiono prędkość latania na <green>{SPEED}");
 
-    @Comment("# {PLAYER} - Gracz któremu została ustawiona prędkość chodzenia lub latania, {SPEED} - Ustawiona prędkość")
-    public Notice walkSetFor = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia gracza <green>{PLAYER} <white>na <green>{SPEED}");
-    public Notice flySetFor = Notice.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
+    @Comment("# {SPEED} - Ustawiona prędkość")
+    public Notice walkSpeedSetForTargetPlayer = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia gracza <green>{PLAYER} <white>na <green>{SPEED}");
+    public Notice flySpeedSetForTargetPlayer = Notice.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
 }

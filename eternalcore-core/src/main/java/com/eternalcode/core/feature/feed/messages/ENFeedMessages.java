@@ -9,9 +9,12 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENFeedMessages extends OkaeriConfig implements FeedMessages {
-    public Notice received = Notice.chat("<green>► <white>You've been fed!");
+    public Notice fedYourself = Notice.chat("<green>► <white>You've been fed!");
 
     @Comment("# {PLAYER} - Player who has been fed")
-    public Notice given = Notice.chat("<green>► <white>You've fed the <green>{PLAYER}");
+    public Notice fedTargetPlayer = Notice.chat("<green>► <white>You've fed the <green>{PLAYER}");
+
+    @Comment("# {ADMIN} - the administrator executing the command")
+    public Notice fedByAdmin = Notice.chat("<green>► <white>Administrator <green>{ADMIN} <white>fed you!");
 }
 

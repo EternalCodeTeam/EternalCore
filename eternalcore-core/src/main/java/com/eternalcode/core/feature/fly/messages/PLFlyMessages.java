@@ -10,12 +10,12 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLFlyMessages extends OkaeriConfig implements FlyMessages {
     
-    @Comment({" ", "# {STATE} - Status latania"})
-    public Notice enabled = Notice.chat("<green>► <white>Latanie zostało {STATE}");
-    public Notice disabled = Notice.chat("<green>► <white>Latanie zostało {STATE}");
+    @Comment("# {STATE} - Status latania")
+    public Notice flyEnabled = Notice.chat("<green>► <white>Latanie zostało {STATE}");
+    public Notice flyDisabled = Notice.chat("<green>► <white>Latanie zostało {STATE}");
     
     @Comment("# {PLAYER} - Gracz któremu zostało ustawione latanie, {STATE} - Status latania")
-    public Notice enabledFor = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
-    public Notice disabledFor = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
+    public Notice flyEnabledForTarget = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
+    public Notice flyDisabledForTarget = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
 }
 

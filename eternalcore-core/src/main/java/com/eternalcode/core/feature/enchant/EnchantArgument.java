@@ -30,7 +30,7 @@ class EnchantArgument extends AbstractViewerArgument<Enchantment> {
         Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(argument.toLowerCase(Locale.ROOT)));
 
         if (enchantment == null) {
-            return ParseResult.failure(translation.enchant().invalid());
+            return ParseResult.failure(translation.enchant().enchantmentNotFound());
         }
 
         return ParseResult.success(enchantment);

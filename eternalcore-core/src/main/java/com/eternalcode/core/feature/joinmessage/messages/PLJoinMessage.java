@@ -18,7 +18,7 @@ public class PLJoinMessage extends OkaeriConfig implements JoinMessage {
         "# za każdym razem gdy gracz dołączy do serwera.",
         "# {PLAYER} - Gracz, który dołączył do serwera."
     })
-    public List<Notice> joinMessages = List.of(
+    public List<Notice> playerJoinedServer = List.of(
         BukkitNotice.builder()
             .actionBar("<green>► {PLAYER} <white>dołączył do serwera!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
@@ -35,7 +35,7 @@ public class PLJoinMessage extends OkaeriConfig implements JoinMessage {
         "# za każdym razem gdy gracz dołączy do serwera po raz pierwszy.",
         "# {PLAYER} - Gracz, który dołączył po raz pierwszy."
     })
-    public List<Notice> firstJoinMessages = List.of(
+    public List<Notice> playerJoinedServerFirstTime = List.of(
         BukkitNotice.builder()
             .actionBar("<green>► {PLAYER} <white>dołączył do serwera po raz pierwszy!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
