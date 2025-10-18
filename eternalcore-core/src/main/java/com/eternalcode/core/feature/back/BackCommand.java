@@ -28,9 +28,15 @@ public class BackCommand {
     }
 
     @ExecuteDefault
+    @Execute(name = "teleport")
     @Permission("eternalcore.back.teleport")
-    void executeDefault(@Sender Player player) {
-        this.teleportBack(player);
+    @DescriptionDocs(description = "Teleport to your last teleport location")
+    public void executeBackTeleport(@Sender Player player) {
+        if (this.teleportBack(player)) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.back().teleportedToLastTeleportLocation());
+            return;
+        }
+        this.noticeService.player(player.getUniqueId(), translation -> translation.back().lastLocationNotFound());
     }
 
     @Execute(name = "death")
@@ -45,26 +51,15 @@ public class BackCommand {
     }
 
     @Execute(name = "teleport")
-    @Permission("eternalcore.back.teleport")
-    @DescriptionDocs(description = "Teleport to your last teleport location")
-    public void executeBackTeleport(@Sender Player player) {
-        if (this.teleportBack(player)) {
-            this.noticeService.player(player.getUniqueId(), translation -> translation.back().teleportedToLastTeleportLocation());
-            return;
-        }
-        this.noticeService.player(player.getUniqueId(), translation -> translation.back().lastLocationNotFound());
-    }
-
-    @Execute(name = "death")
-    @Permission("eternalcore.back.death.other")
-    @DescriptionDocs(description = "Teleport specified player to their last death location", arguments = "<player>")
-    public void executeBackDeathOther(@Sender Viewer viewer, @Arg Player target) {
-        if (this.teleportBackDeath(target)) {
-            this.noticeService.player(target.getUniqueId(), translation -> translation.back().teleportedToLastDeathLocation());
+    @Permission("eternalcore.back.teleport.other")
+    @DescriptionDocs(description = "Teleport specified player to their last teleport location", arguments = "<player>")
+    public void executeBackTeleportOther(@Sender Viewer viewer, @Arg Player target) {
+        if (this.teleportBack(target)) {
+            this.noticeService.player(target.getUniqueId(), translation -> translation.back().teleportedToLastTeleportLocationByAdmin());
 
             this.noticeService.create()
                 .viewer(viewer)
-                .notice(translation -> translation.back().teleportedTargetToLastDeathLocation())
+                .notice(translation -> translation.back().teleportedTargetPlayerToLastTeleportLocation())
                 .placeholder("{PLAYER}", target.getName())
                 .send();
             return;
@@ -72,17 +67,21 @@ public class BackCommand {
         this.noticeService.player(viewer.getUniqueId(), translation -> translation.back().lastLocationNotFound());
     }
 
-    @Execute(name = "teleport")
-    @Permission("eternalcore.back.teleport.other")
-    @DescriptionDocs(description = "Teleport specified player to their last teleport location", arguments = "<player>")
-    public void executeBackTeleportOther(@Sender Viewer viewer, @Arg Player target) {
-        this.teleportBack(target);
+    @Execute(name = "death")
+    @Permission("eternalcore.back.death.other")
+    @DescriptionDocs(description = "Teleport specified player to their last death location", arguments = "<player>")
+    public void executeBackDeathOther(@Sender Viewer viewer, @Arg Player target) {
+        if (this.teleportBackDeath(target)) {
+            this.noticeService.player(target.getUniqueId(), translation -> translation.back().teleportedToLastDeathLocationByAdmin());
 
-        this.noticeService.create()
-            .viewer(viewer)
-            .notice(translation -> translation.back().teleportedTargetToLastTeleportLocation())
-            .placeholder("{PLAYER}", target.getName())
-            .send();
+            this.noticeService.create()
+                .viewer(viewer)
+                .notice(translation -> translation.back().teleportedTargetPlayerToLastDeathLocation())
+                .placeholder("{PLAYER}", target.getName())
+                .send();
+            return;
+        }
+        this.noticeService.player(viewer.getUniqueId(), translation -> translation.back().lastLocationNotFound());
     }
 
     private boolean teleportBack(Player target) {

@@ -6,12 +6,14 @@ public interface BackMessages {
 
     Notice lastLocationNotFound();
 
+    // Teleport do ostatniej lokalizacji teleportacji
     Notice teleportedToLastTeleportLocation();
+    Notice teleportedTargetPlayerToLastTeleportLocation();
+    Notice teleportedToLastTeleportLocationByAdmin();
 
-    Notice teleportedTargetToLastTeleportLocation();
-
+    // Teleport do ostatniej lokalizacji śmierci
     Notice teleportedToLastDeathLocation();
-
-    Notice teleportedTargetToLastDeathLocation();
+    Notice teleportedTargetPlayerToLastDeathLocation();
+    Notice teleportedToLastDeathLocationByAdmin();
 
 }

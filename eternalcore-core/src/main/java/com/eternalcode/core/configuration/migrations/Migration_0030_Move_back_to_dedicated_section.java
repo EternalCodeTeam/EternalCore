@@ -9,7 +9,7 @@ public class Migration_0030_Move_back_to_dedicated_section extends NamedMigratio
         super(
             "Improve homes config",
             move("teleport.teleportedToLastLocation", "back.teleportedToLastTeleportLocation"),
-            move("teleport.teleportedSpecifiedPlayerLastLocation", "back.teleportedOtherToLastTeleportLocation"),
+            move("teleport.teleportedSpecifiedPlayerLastLocation", "back.teleportedTargetPlayerToLastTeleportLocation"),
             move("teleport.lastLocationNoExist", "back.lastLocationNotFound")
         );
     }
