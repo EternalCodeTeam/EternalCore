@@ -9,42 +9,43 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENJailMessages extends OkaeriConfig implements JailMessages {
-    @Comment({" ", "# Section responsible for location of jail setup"})
-    public Notice jailLocationSet = Notice.chat("<green>► <white>Jail location has been set!");
-    public Notice jailLocationRemove = Notice.chat("<red>✘ <dark_red>Jail location has been removed!");
-    public Notice jailLocationNotSet = Notice.chat("<red>✘ <dark_red>Jail location is not set!");
-    public Notice jailLocationOverride = Notice.chat("<green>► <white>Jail location has been overridden!");
 
-    @Comment({" ", "# Section responsible for detaining players"})
-    public Notice jailDetainPrivate = Notice.chat("<green>► <white>You have been jailed!");
-    public Notice jailCannotUseCommand = Notice.chat("<red>✘ <dark_red>You can't use this command! You are in jail!");
-    @Comment({" ", "# {PLAYER} - Player who has been detained"})
-    public Notice jailDetainOverride =
-        Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER} <white>!");
-    @Comment({" ", "# {PLAYER} - Player who has been detained"})
-    public Notice jailDetainBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
-    @Comment({" ", "# {REMAINING_TIME} - Time left to release"})
-    public Notice jailDetainCountdown =
-        Notice.actionbar("<red> You are in jail! <gray>Time left: <red>{REMAINING_TIME}!");
-    @Comment({" ", "# {PLAYER} - Admin who you can't detain"})
-    public Notice jailDetainAdmin =
-        Notice.chat("<red>✘ <dark_red>You can't jail <red>{PLAYER} <dark_red>because he is an admin!");
+    @Comment("# Messages related to jail location setup")
+    public Notice locationSet = Notice.chat("<green>► <white>Jail location has been set!");
+    public Notice locationRemoved = Notice.chat("<red>✘ <dark_red>Jail location has been removed!");
+    public Notice locationNotSet = Notice.chat("<red>✘ <dark_red>Jail location is not set!");
+    public Notice locationOverride = Notice.chat("<green>► <white>Jail location has been overridden!");
 
-    @Comment({" ", "# Section responsible for releasing players from jail"})
-    @Comment({" ", "# {PLAYER} - Player who has been released from jail"})
-    public Notice jailReleaseBroadcast =
-        Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been granted freedom!");
-    public Notice jailReleasePrivate = Notice.actionbar("<green> You have been released from jail!");
-    public Notice jailReleaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
-    public Notice jailReleaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players found in jail!");
-    @Comment({" ", "# {PLAYER} - Player nickname"})
-    public Notice jailIsNotPrisoner = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not a prisoner!");
+    @Comment("# Messages related to jailing players")
+    public Notice detained = Notice.chat("<green>► <white>You have been jailed!");
+    public Notice cannotUseCommand = Notice.chat("<red>✘ <dark_red>You can’t use this command while jailed!");
 
-    @Comment({" ", "# Section responsible for listing players in jail"})
-    public Notice jailListHeader = Notice.chat("<green>► <white>Players in jail: ");
-    public Notice jailListEmpty = Notice.chat("<red>✘ <dark_red>No players found in jail!");
-    @Comment({" ", "# {PLAYER} - Player who has been detained", "# {REMAINING_TIME} - Time of detention",
-                  "# {DETAINED_BY} - Player who detained the player"})
-    public Notice jailListPlayerEntry = Notice.chat(
-        "<green>► <white>{PLAYER} <gray>(<white>{REMAINING_TIME}<gray>) <white>detained by <green>{DETAINED_BY} <white>!");
+    @Comment("# {PLAYER} - name of the player who was jailed again")
+    public Notice detainOverride = Notice.chat("<green>► <white>You have overridden the jail for <green>{PLAYER}<white>!");
+
+    @Comment("# {PLAYER} - name of the player who was jailed")
+    public Notice detainBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been jailed!");
+
+    @Comment("# {REMAINING_TIME} - time left until release")
+    public Notice detainCountdown = Notice.actionbar("<red>You are in jail! <gray>Time left: <red>{REMAINING_TIME}!");
+
+    @Comment("# {PLAYER} - admin who cannot be jailed")
+    public Notice detainAdmin = Notice.chat("<red>✘ <dark_red>You can’t jail <red>{PLAYER}<dark_red> because they are an admin!");
+
+    @Comment("# Messages related to releasing players from jail")
+    @Comment("# {PLAYER} - name of the player who was released")
+    public Notice releaseBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been released!");
+    public Notice released = Notice.actionbar("<green>You have been released from jail!");
+    public Notice releaseAll = Notice.chat("<green>► <white>All players have been released from jail!");
+    public Notice releaseNoPlayers = Notice.chat("<red>✘ <dark_red>No players are currently jailed!");
+
+    @Comment("# {PLAYER} - name of the player who is not jailed")
+    public Notice isNotPrisoner = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not jailed!");
+
+    @Comment("# Messages related to listing jailed players")
+    public Notice listHeader = Notice.chat("<green>► <white>Players currently in jail:");
+    public Notice listEmpty = Notice.chat("<red>✘ <dark_red>No players are currently jailed!");
+
+    @Comment("# {PLAYER} - jailed player, {DETAINED_BY} - player who jailed them, {REMAINING_TIME} - time left until release")
+    public Notice listPlayerEntry = Notice.chat("<green>► <white>{PLAYER} <gray>(<white>{REMAINING_TIME}<gray>) <white>jailed by <green>{DETAINED_BY}<white>!");
 }

@@ -40,4 +40,3 @@ class HomeTable {
         return new HomeTable(home.getUuid(), home.getOwner(), home.getName(), home.getLocation());
     }
 }
-

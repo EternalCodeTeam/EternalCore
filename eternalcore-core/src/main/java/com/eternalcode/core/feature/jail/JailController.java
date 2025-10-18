@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.jail;
 
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_BYPASS_PERMISSION;
+
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -40,18 +42,25 @@ class JailController implements Listener {
             return;
         }
 
-        if (player.hasPermission("eternalcore.jail.bypass")) {
+        if (player.hasPermission(JAIL_BYPASS_PERMISSION)) {
             return;
         }
 
         String command = event.getMessage().split(" ")[0].substring(1);
+        Set<String> restrictedCommands = this.jailSettings.restrictedCommands();
+        JailCommandRestrictionType restrictionType = this.jailSettings.restrictionType();
 
-        if (this.jailSettings.allowedCommands().contains(command)) {
+        boolean shouldBlockCommand = switch (restrictionType) {
+            case WHITELIST -> !restrictedCommands.contains(command);
+            case BLACKLIST -> restrictedCommands.contains(command);
+        };
+
+        if (!shouldBlockCommand) {
             return;
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.jailSection().jailCannotUseCommand())
+            .notice(translation -> translation.jail().cannotUseCommand())
             .player(player.getUniqueId())
             .send();
 
@@ -70,5 +79,4 @@ class JailController implements Listener {
             teleportEvent.setCancelled(true);
         }
     }
-
 }

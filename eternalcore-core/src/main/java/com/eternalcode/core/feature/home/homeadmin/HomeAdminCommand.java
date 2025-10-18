@@ -144,4 +144,3 @@ class HomeAdminCommand {
             .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
 }
-

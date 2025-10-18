@@ -537,7 +537,7 @@ public class PLTranslation extends AbstractTranslation {
     public PLAutoMessageMessages autoMessage = new PLAutoMessageMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
-    public PLJailMessages jailSection = new PLJailMessages();
+    public PLJailMessages jail = new PLJailMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
     public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
