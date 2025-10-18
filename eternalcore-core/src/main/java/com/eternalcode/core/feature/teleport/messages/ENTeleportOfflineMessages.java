@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 public class ENTeleportOfflineMessages extends OkaeriConfig implements TeleportOfflineMessages {
 
     @Comment({" ", "# {PLAYER} - Player who has never played before"})
-    public Notice offlinePlayerNotPlayedBefore = Notice.chat("<red>✘ <dark_red>Player <red>{PLAYER} <dark_red>has never played on this server before!");
-    public Notice lastLocationNotFound = Notice.chat("<red>✘ <dark_red>Last location of player <red>{PLAYER} <dark_red>was not found!");
-    public Notice teleportedToPlayerLastLocation = Notice.chat("<green>✔ <dark_green>Teleported to the last location of player <green>{PLAYER}!");
+    Notice offlinePlayerNotPlayedBefore = Notice.chat("<red>✘ <dark_red>Player <red>{PLAYER} <dark_red>has never played on this server before!");
+    Notice lastLocationNotFound = Notice.chat("<red>✘ <dark_red>Last location of player <red>{PLAYER} <dark_red>was not found!");
+    Notice teleportedToPlayerLastLocation = Notice.chat("<green>✔ <dark_green>Teleported to the last location of player <green>{PLAYER}!");
 }

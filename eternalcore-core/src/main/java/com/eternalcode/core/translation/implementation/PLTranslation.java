@@ -194,43 +194,43 @@ public class PLTranslation extends AbstractTranslation {
     public static class PLTeleportSection extends OkaeriConfig implements TeleportSection {
         // teleport
         @Comment({"# {PLAYER} - Gracz który został teleportowany"})
-        public Notice teleportedToPlayer = Notice.chat("<green>► <white>Przeteleportowano do gracza <green>{PLAYER}<white>!");
+        Notice teleportedToPlayer = Notice.chat("<green>► <white>Przeteleportowano do gracza <green>{PLAYER}<white>!");
 
         @Comment({"# {PLAYER} - Gracz który został teleportowany, {ARG-PLAYER} - Gracz do którego został teleportowany inny gracz"})
-        public Notice teleportedPlayerToPlayer = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do gracza <green>{ARG-PLAYER}<white>!");
+        Notice teleportedPlayerToPlayer = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do gracza <green>{ARG-PLAYER}<white>!");
 
         @Comment({"# {Y} - Koordynat Y najwyżej położonego bloku"})
-        public Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
+        Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
 
         @Comment(" ")
-        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>Przeteleportowano wszystkich graczy do ciebie!");
+        Notice teleportedAllToPlayer = Notice.chat("<green>► <white>Przeteleportowano wszystkich graczy do ciebie!");
 
         // Task
         @Comment({"# {TIME} - Czas teleportacji"})
-        public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleportacja za <green>{TIME}");
+        Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleportacja za <green>{TIME}");
         @Comment(" ")
-        public Notice teleported = Notice.builder()
+        Notice teleported = Notice.builder()
             .chat("<green>► <white>Przeteleportowano!")
             .actionBar("<green>► <white>Przeteleportowano!")
             .build();
 
-        public Notice teleporting = Notice.chat("<green>► <white>Teleportowanie...");
-        public Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>Ruszyłeś się, teleportacja została przerwana!");
-        public Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>Teleportujesz się już!");
+        Notice teleporting = Notice.chat("<green>► <white>Teleportowanie...");
+        Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>Ruszyłeś się, teleportacja została przerwana!");
+        Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>Teleportujesz się już!");
 
         // Coordinates XYZ
         @Comment({" ", "# {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
-        public Notice teleportedToCoordinates = Notice.chat("<green>► <white>Przeteleportowano na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
+        Notice teleportedToCoordinates = Notice.chat("<green>► <white>Przeteleportowano na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
         @Comment({" ", "# {PLAYER} - Gracz który został teleportowany, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
-        public Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
+        Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
 
         // Back
         @Comment(" ")
-        public Notice teleportedToLastLocation = Notice.chat("<green>► <white>Przeteleportowano do ostatniej lokalizacji!");
+        Notice teleportedToLastLocation = Notice.chat("<green>► <white>Przeteleportowano do ostatniej lokalizacji!");
         @Comment({" ", "# {PLAYER} - Gracz który został teleportowany"})
-        public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
+        Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
         @Comment(" ")
-        public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
+        Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
     }
 
     @Comment({
@@ -254,29 +254,29 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     public static class PLChatSection extends OkaeriConfig implements ChatSection {
         @Comment({"# {PLAYER} - Gracz który wykonał akcje dla czatu"})
-        public Notice disabled = Notice.chat("<green>► <white>Czat został wyłączony przez <green>{PLAYER}<white>!");
-        public Notice enabled = Notice.chat("<green>► <white>Czat został włączony przez <green>{PLAYER}<white>!");
-        public Notice cleared = Notice.chat("<green>► <white>Czat został wyczyszczony przez <green>{PLAYER}<white>!");
+        Notice disabled = Notice.chat("<green>► <white>Czat został wyłączony przez <green>{PLAYER}<white>!");
+        Notice enabled = Notice.chat("<green>► <white>Czat został włączony przez <green>{PLAYER}<white>!");
+        Notice cleared = Notice.chat("<green>► <white>Czat został wyczyszczony przez <green>{PLAYER}<white>!");
 
         @Comment(" ")
-        public Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Czat jest już wyłączony!");
-        public Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Czat jest już włączony!");
+        Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Czat jest już wyłączony!");
+        Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Czat jest już włączony!");
 
         @Comment({" ", "# {SLOWMODE} - Czas powolnego wysyłania wiadomości"})
-        public Notice slowModeSet = Notice.chat("<green>► <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
+        Notice slowModeSet = Notice.chat("<green>► <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
 
         @Comment({" ", "# {PLAYER} - Gracz który wyłączył tryb powolnego wysyłania wiadomości"})
-        public Notice slowModeOff = Notice.chat("<green>► <white>Tryb powolnego wysyłania został wyłączony przez <green>{PLAYER}<white>!");
+        Notice slowModeOff = Notice.chat("<green>► <white>Tryb powolnego wysyłania został wyłączony przez <green>{PLAYER}<white>!");
 
         @Comment({" ", "# {TIME} - Czas powolnego wysyłania wiadomości"})
-        public Notice slowMode = Notice.chat("<red>✘ <dark_red>Następną wiadomość możesz wysłać za: <red>{TIME}<dark_red>!");
+        Notice slowMode = Notice.chat("<red>✘ <dark_red>Następną wiadomość możesz wysłać za: <red>{TIME}<dark_red>!");
 
         @Comment(" ")
-        public Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Czat jest obecnie wyłączony!");
+        Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Czat jest obecnie wyłączony!");
 
 
         @Comment(" ")
-        public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
+        Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
     }
 
     @Comment({
@@ -411,63 +411,63 @@ public class PLTranslation extends AbstractTranslation {
 
     @Getter
     public static class PLPlayerSection extends OkaeriConfig implements PlayerSection {
-        public Notice feedMessage = Notice.chat("<green>► <white>Zostałeś nakarmiony!");
+        Notice feedMessage = Notice.chat("<green>► <white>Zostałeś nakarmiony!");
         @Comment(" # {PLAYER} - Gracz który został nakarmiony")
-        public Notice feedMessageBy = Notice.chat("<green>► <white>Nakarmiłeś gracza <green>{PLAYER}");
+        Notice feedMessageBy = Notice.chat("<green>► <white>Nakarmiłeś gracza <green>{PLAYER}");
 
         @Comment(" ")
-        public Notice healMessage = Notice.chat("<green>► <white>Zostałeś uleczony!");
+        Notice healMessage = Notice.chat("<green>► <white>Zostałeś uleczony!");
         @Comment("# {PLAYER} - Gracz który został uleczony")
-        public Notice healMessageBy = Notice.chat("<green>► <white>Uleczyłeś gracza <green>{PLAYER}");
+        Notice healMessageBy = Notice.chat("<green>► <white>Uleczyłeś gracza <green>{PLAYER}");
 
         @Comment(" ")
-        public Notice killSelf = Notice.chat("<red>► <dark_red>Popełniłeś samobójstwo!");
+        Notice killSelf = Notice.chat("<red>► <dark_red>Popełniłeś samobójstwo!");
         @Comment("# {PLAYER} - Gracz który został zabity")
-        public Notice killedMessage = Notice.chat("<red>► <dark_red>Zabito gracza <red>{PLAYER}");
+        Notice killedMessage = Notice.chat("<red>► <dark_red>Zabito gracza <red>{PLAYER}");
 
         @Comment(" ")
-        public Notice speedBetweenZeroAndTen = Notice.chat("<red>✘ <dark_red>Ustaw prędkość w zakresie 0-10!");
-        public Notice speedTypeNotCorrect = Notice.chat("<red>✘ <dark_red>Nieprawidłowy typ prędkości");
+        Notice speedBetweenZeroAndTen = Notice.chat("<red>✘ <dark_red>Ustaw prędkość w zakresie 0-10!");
+        Notice speedTypeNotCorrect = Notice.chat("<red>✘ <dark_red>Nieprawidłowy typ prędkości");
 
         @Comment("# {SPEED} - Ustawiona prędkość chodzenia lub latania")
-        public Notice speedWalkSet = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
-        public Notice speedFlySet = Notice.chat("<green>► <white>Ustawiono prędkość latania na <green>{SPEED}");
+        Notice speedWalkSet = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
+        Notice speedFlySet = Notice.chat("<green>► <white>Ustawiono prędkość latania na <green>{SPEED}");
 
         @Comment("# {PLAYER} - Gracz któremu została ustawiona prędkość chodzenia lub latania, {SPEED} - Ustawiona prędkość")
-        public Notice speedWalkSetBy = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia gracza <green>{PLAYER} <white>na <green>{SPEED}");
-        public Notice speedFlySetBy = Notice.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
+        Notice speedWalkSetBy = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia gracza <green>{PLAYER} <white>na <green>{SPEED}");
+        Notice speedFlySetBy = Notice.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
 
         @Comment({" ", "# {STATE} - Status nieśmiertelności"})
-        public Notice godEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
-        public Notice godDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
+        Notice godEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
+        Notice godDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności został {STATE}");
 
         @Comment("# {PLAYER} - Gracz któremu został ustawiony tryb nieśmiertelności, {STATE} - Status nieśmiertelności")
-        public Notice godSetEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
-        public Notice godSetDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
+        Notice godSetEnable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
+        Notice godSetDisable = Notice.chat("<green>► <white>Tryb nieśmiertelności dla gracza <green>{PLAYER} <white>został {STATE}");
 
         @Comment({" ", "# {STATE} - Status latania"})
-        public Notice flyEnable = Notice.chat("<green>► <white>Latanie zostało {STATE}");
-        public Notice flyDisable = Notice.chat("<green>► <white>Latanie zostało {STATE}");
+        Notice flyEnable = Notice.chat("<green>► <white>Latanie zostało {STATE}");
+        Notice flyDisable = Notice.chat("<green>► <white>Latanie zostało {STATE}");
         @Comment("# {PLAYER} - Gracz któremu zostało ustawione latanie, {STATE} - Status latania")
-        public Notice flySetEnable = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
-        public Notice flySetDisable = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
+        Notice flySetEnable = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
+        Notice flySetDisable = Notice.chat("<green>► <white>Latanie dla gracza <green>{PLAYER} <white>zostało {STATE}");
 
         @Comment({" ", "# {PING} - Aktualna ilość pingu."})
-        public Notice pingMessage = Notice.chat("<green>► <white>Twój ping: <green>{PING}<white>ms");
+        Notice pingMessage = Notice.chat("<green>► <white>Twój ping: <green>{PING}<white>ms");
         @Comment("# {PLAYER} - Gracz któremu został ustawiony tryb nieśmiertelności, {PING} - Aktualna ilość pingu dla gracza.")
-        public Notice pingOtherMessage = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>ma ping: <green>{PING}<white>ms");
+        Notice pingOtherMessage = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>ma ping: <green>{PING}<white>ms");
 
         @Comment(" ")
-        public Notice gameModeNotCorrect = Notice.chat("<red>✘ <dark_red>Niepoprawny typ!");
+        Notice gameModeNotCorrect = Notice.chat("<red>✘ <dark_red>Niepoprawny typ!");
         @Comment("# {GAMEMODE} - Ustawiony tryb gry")
-        public Notice gameModeMessage = Notice.chat("<green>► <white>Ustawiono tryb gry na: <green>{GAMEMODE}");
+        Notice gameModeMessage = Notice.chat("<green>► <white>Ustawiono tryb gry na: <green>{GAMEMODE}");
         @Comment("# {PLAYER} - Gracz któremu został ustawiony tryb gry, {GAMEMODE} - Ustawiony tryb gry dla gracza")
-        public Notice gameModeSetMessage = Notice.chat("<green>► <white>Ustawiono tryb gry graczowi <green>{PLAYER} <white>na: <green>{GAMEMODE}");
+        Notice gameModeSetMessage = Notice.chat("<green>► <white>Ustawiono tryb gry graczowi <green>{PLAYER} <white>na: <green>{GAMEMODE}");
 
         @Comment({" ", "# {ONLINE} - Aktualna ilość graczy online"})
-        public Notice onlinePlayersCountMessage = Notice.chat("<green>► <white>Na serwerze jest: <green>{ONLINE} <white>graczy online!");
+        Notice onlinePlayersCountMessage = Notice.chat("<green>► <white>Na serwerze jest: <green>{ONLINE} <white>graczy online!");
         @Comment("# {ONLINE} - Aktualna ilość graczy online, {PLAYERS} - Lista graczy online")
-        public Notice onlinePlayersMessage = Notice.chat("<green>► <white>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <green>{PLAYERS} ");
+        Notice onlinePlayersMessage = Notice.chat("<green>► <white>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <green>{PLAYERS} ");
 
         public List<String> fullServerSlots = List.of(
             " ",
@@ -499,10 +499,10 @@ public class PLTranslation extends AbstractTranslation {
         );
 
         @Comment({" ", "# {KILLED} - Liczba zabitych mobów"})
-        public Notice butcherCommand = Notice.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>mobów!");
+        Notice butcherCommand = Notice.chat("<green>► <white>Zabiłeś <green>{KILLED} <white>mobów!");
 
         @Comment({" ", "# {SAFE_CHUNKS} - Liczba bezpiecznych chunków"})
-        public Notice safeChunksMessage = Notice.chat("<red>✘ <dark_red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
+        Notice safeChunksMessage = Notice.chat("<red>✘ <dark_red>Przekroczyłeś liczbę bezpiecznych chunków <dark_red>{SAFE_CHUNKS}");
     }
 
     @Comment({" ", "# Ta sekcja odpowiada za zmianę punktu spawn oraz teleportację graczy na spawn"})
@@ -518,23 +518,23 @@ public class PLTranslation extends AbstractTranslation {
     @Getter
     public static class PLItemSection extends OkaeriConfig implements ItemSection {
         @Comment({" ", "# {ITEM} - Nazwa otrzymanego itemu"})
-        public Notice giveReceived = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM}");
+        Notice giveReceived = Notice.chat("<green>► <white>Otrzymałeś: <green>{ITEM}");
 
         @Comment({" ", "# {PLAYER} - Osoba której został przydzielony przedmiot, {ITEM} - Nazwa otrzymanego przedmiotu"})
-        public Notice giveGiven = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM}");
+        Notice giveGiven = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>otrzymał: <green>{ITEM}");
 
-        public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Brak miejsca w ekwipunku!");
+        Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Brak miejsca w ekwipunku!");
 
         @Comment(" ")
-        public Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Podany przedmiot nie istnieje!");
+        Notice giveNotItem = Notice.chat("<red>✘ <dark_red>Podany przedmiot nie istnieje!");
 
         @Comment({" ", "# {SKULL} - Nazwa gracza do którego należy głowa"})
-        public Notice skullMessage = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: {SKULL}");
+        Notice skullMessage = Notice.chat("<green>► <white>Otrzymałeś głowę gracza: {SKULL}");
 
         @Comment(" ")
-        public Notice enchantedMessage = Notice.chat("<green>► <white>Item w twojej ręce został zaklęty!");
-        public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
-        public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
+        Notice enchantedMessage = Notice.chat("<green>► <white>Item w twojej ręce został zaklęty!");
+        Notice enchantedMessageFor = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
+        Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
     }
     @Comment({
         " ",

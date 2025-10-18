@@ -8,5 +8,5 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class PLSetSlotMessages extends OkaeriConfig implements SetSlotMessages {
-    public Notice slotSaved = Notice.chat("<green>► <white>Sloty serwera zostały ustawione na <green>{SLOTS} <white>i zapisane!");
+    Notice slotSaved = Notice.chat("<green>► <white>Sloty serwera zostały ustawione na <green>{SLOTS} <white>i zapisane!");
 }

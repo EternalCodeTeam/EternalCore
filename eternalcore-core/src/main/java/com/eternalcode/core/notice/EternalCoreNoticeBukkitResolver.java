@@ -10,7 +10,7 @@ import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
 public class EternalCoreNoticeBukkitResolver {
 
     @Bean
-    public NoticeResolverRegistry resolverRegistry() {
+    NoticeResolverRegistry resolverRegistry() {
         return NoticeResolverDefaults.createRegistry()
             .registerResolver(new SoundBukkitResolver());
     }

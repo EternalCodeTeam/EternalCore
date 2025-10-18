@@ -18,7 +18,7 @@ class NoticeHandler implements ResultHandler<CommandSender, Notice> {
     private final NoticeService noticeService;
 
     @Inject
-    public NoticeHandler(ViewerService viewerService, NoticeService noticeService) {
+    NoticeHandler(ViewerService viewerService, NoticeService noticeService) {
         this.viewerService = viewerService;
         this.noticeService = noticeService;
     }

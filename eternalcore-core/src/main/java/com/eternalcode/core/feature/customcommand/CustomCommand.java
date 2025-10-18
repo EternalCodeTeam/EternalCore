@@ -30,7 +30,7 @@ public class CustomCommand implements Serializable {
         return aliases;
     }
 
-    public Notice getMessage() {
+    Notice getMessage() {
         return message;
     }
 }

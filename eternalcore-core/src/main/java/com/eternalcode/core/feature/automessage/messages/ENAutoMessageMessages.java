@@ -34,8 +34,8 @@ public class ENAutoMessageMessages extends OkaeriConfig implements AutoMessageMe
             .build()
     );
 
-    public Notice enabled = Notice.chat("<green>► <white>Enabled auto messages!");
-    public Notice disabled = Notice.chat("<green>► <white>Disabled auto messages!");
+    Notice enabled = Notice.chat("<green>► <white>Enabled auto messages!");
+    Notice disabled = Notice.chat("<green>► <white>Disabled auto messages!");
 
     @Override
     public Collection<Notice> messages() {

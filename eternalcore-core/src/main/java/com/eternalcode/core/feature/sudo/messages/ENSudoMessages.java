@@ -10,8 +10,8 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENSudoMessages extends OkaeriConfig implements SudoMessages {
     @Comment({"# {PLAYER} - Player who executed the command, {TARGET} - Player or console on which the command was executed, {COMMAND} - Command"})
-    public Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> executed command: <white>{COMMAND} <dark_gray>on: <white>{TARGET}");
+    Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> executed command: <white>{COMMAND} <dark_gray>on: <white>{TARGET}");
 
     @Comment({"# {TARGET} - Player or console on which the command was executed, {COMMAND} - Command"})
-    public Notice sudoMessage = Notice.chat("<green>► <white>You executed command: <green>{COMMAND} <white>on: <green>{TARGET}");
+    Notice sudoMessage = Notice.chat("<green>► <white>You executed command: <green>{COMMAND} <white>on: <green>{TARGET}");
 }
