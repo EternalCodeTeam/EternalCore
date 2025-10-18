@@ -14,12 +14,12 @@ public class PLBackMessages extends OkaeriConfig implements BackMessages {
 
     public Notice teleportedToLastTeleportLocation = Notice.chat(
         "<green>► <white>Zostałeś przeteleportowany do ostatniej lokalizacji!");
-    public Notice teleportedOtherToLastTeleportLocation = Notice.chat(
+    public Notice teleportedTargetToLastTeleportLocation = Notice.chat(
         "<green>► <white>Gracz <green>{PLAYER} <white>został przeteleportowany do swojej ostatniej lokalizacji!");
 
     public Notice teleportedToLastDeathLocation = Notice.chat(
         "<green>► <white>Zostałeś przeteleportowany do ostatniej lokalizacji śmierci!");
 
-    public Notice teleportedOtherToLastDeathLocation = Notice.chat(
+    public Notice teleportedTargetToLastDeathLocation = Notice.chat(
         "<green>► <white>Gracz <green>{PLAYER} <white>został przeteleportowany do swojej ostatniej lokalizacji śmierci!");
 }

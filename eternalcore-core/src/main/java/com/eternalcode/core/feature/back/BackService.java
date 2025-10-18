@@ -38,11 +38,9 @@ public class BackService {
         this.settings = settings;
 
         this.deathLocations = Caffeine.newBuilder()
-            .maximumSize(1000)
             .expireAfterWrite(2, TimeUnit.HOURS)
             .build();
         this.teleportLocations = Caffeine.newBuilder()
-            .maximumSize(1000)
             .expireAfterWrite(2, TimeUnit.HOURS)
             .build();
     }

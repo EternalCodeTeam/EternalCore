@@ -8,10 +8,10 @@ public interface BackMessages {
 
     Notice teleportedToLastTeleportLocation();
 
-    Notice teleportedOtherToLastTeleportLocation();
+    Notice teleportedTargetToLastTeleportLocation();
 
     Notice teleportedToLastDeathLocation();
 
-    Notice teleportedOtherToLastDeathLocation();
+    Notice teleportedTargetToLastDeathLocation();
 
 }
