@@ -13,6 +13,8 @@ import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageConfig;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageSettings;
 import com.eternalcode.core.feature.enchant.EnchantConfig;
 import com.eternalcode.core.feature.enchant.EnchantSettings;
 import com.eternalcode.core.feature.give.GiveConfig;
@@ -76,7 +78,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings that determine the language used within the server.")
     @Comment("# Choose the preferred language for all messages and interactions in the plugin.")
     TranslationConfig language = new TranslationConfig();
-    
+
     @Bean(proxied = DatabaseSettings.class)
     @Comment("")
     @Comment("# Database Configuration")
@@ -95,6 +97,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings for teleport requests between players")
     TeleportRequestConfig teleportAsk = new TeleportRequestConfig();
 
+    @Bean(proxied = DeathMessageSettings.class)
+    @Comment("")
+    @Comment("# Death Message Configuration")
+    @Comment("# Settings for player death messages")
+    DeathMessageConfig deathMessages = new DeathMessageConfig();
+
     @Bean(proxied = TeleportToRandomPlayerSettings.class)
     @Comment("")
     @Comment("# Configuration for teleporting to a random player")
@@ -111,32 +119,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Homes Configuration")
     @Comment("# Settings for player home management")
     HomesConfig homes = new HomesConfig();
-
-    @Comment("")
-    @Comment("# Sound Configuration")
-    @Comment("# Settings for various sound effects")
-    @Bean
-    public Sounds sound = new Sounds();
-
-    public static class Sounds extends OkaeriConfig {
-        @Comment("# Enable sound when player joins the server")
-        public boolean enabledAfterJoin = true;
-        public Sound afterJoin = Sound.BLOCK_NOTE_BLOCK_PLING;
-        public float afterJoinVolume = 1.8F;
-        public float afterJoinPitch = 1F;
-
-        @Comment("# Enable sound when player leaves the server")
-        public boolean enableAfterQuit = true;
-        public Sound afterQuit = Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
-        public float afterQuitVolume = 1.8F;
-        public float afterQuitPitch = 1F;
-
-        @Comment("# Enable sound when player sends a chat message")
-        public boolean enableAfterChatMessage = true;
-        public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
-        public float afterChatMessageVolume = 1.8F;
-        public float afterChatMessagePitch = 1F;
-    }
 
     @Bean(proxied = ChatSettings.class)
     @Comment("")

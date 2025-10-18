@@ -37,24 +37,4 @@ public class PLMsgMessages extends OkaeriConfig implements MsgMessages {
     public Notice otherMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
     public Notice otherMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone <white>dla gracza <green>{PLAYER}<white>!");
 
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-    public Notice ignorePlayer = Notice.chat("<green>► <white>Zignorowano gracza <red>{PLAYER}<white>!");
-
-    @Comment(" ")
-    public Notice ignoreAll = Notice.chat("<red>► <dark_red>Zignorowano wszystkich graczy!");
-    public Notice cantIgnoreYourself = Notice.chat("<red>► <dark_red>Nie możesz zignorować samego siebie!");
-
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-    public Notice alreadyIgnorePlayer = Notice.chat("<red>► <dark_red>Gracz <red>{PLAYER} jest już zignorowany!");
-
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-    public Notice unIgnorePlayer = Notice.chat("<red>► <dark_red>Od ignorowano gracza <red>{PLAYER}<dark_red>!");
-
-    @Comment(" ")
-    public Notice unIgnoreAll = Notice.chat("<red>► <dark_red>Od ignorowano wszystkich graczy!");
-    public Notice cantUnIgnoreYourself = Notice.chat("<red>► <dark_red>Nie możesz od ignorować samego siebie!");
-
-    @Comment({" ", "# {PLAYER} - Gracz który jest zignorowany"})
-    public Notice notIgnorePlayer = Notice.chat(
-        "<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie jest przez Ciebie zignorowany. Nie możesz go od ignorować!");
 }

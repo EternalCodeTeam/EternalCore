@@ -8,6 +8,7 @@ import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
 import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
 import com.eternalcode.core.feature.feed.messages.FeedMessages;
 import com.eternalcode.core.feature.fly.messages.FlyMessages;
@@ -21,8 +22,10 @@ import com.eternalcode.core.feature.godmode.messages.GodModeMessages;
 import com.eternalcode.core.feature.heal.messages.HealMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
+import com.eternalcode.core.feature.ignore.messages.IgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
+import com.eternalcode.core.feature.joinmessage.messages.JoinMessage;
 import com.eternalcode.core.feature.kill.messages.KillMessages;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
@@ -31,6 +34,7 @@ import com.eternalcode.core.feature.onlineplayers.messages.OnlineMessages;
 import com.eternalcode.core.feature.ping.PingMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.PowertoolMessages;
+import com.eternalcode.core.feature.quitmessage.messages.QuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
@@ -50,8 +54,6 @@ import com.eternalcode.core.feature.whois.WhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.multification.notice.Notice;
 import java.util.List;
-import java.util.Map;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public interface Translation {
 
@@ -96,17 +98,6 @@ public interface Translation {
         Notice disabledChatInfo();
         Notice commandNotFound();
     }
-
-    interface EventSection {
-        List<Notice> deathMessage();
-        List<Notice> unknownDeathCause();
-        List<Notice> joinMessage();
-        List<Notice> quitMessage();
-        List<Notice> firstJoinMessage();
-
-        Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause();
-    }
-
     interface InventorySection {
         String disposalTitle();
     }
@@ -160,6 +151,8 @@ public interface Translation {
     DemoScreenMessages demoScreen();
     EndScreenMessages endScreen();
 
+    JoinMessage join();
+    QuitMessage quit();
     Language getLanguage();
     // argument section
     ArgumentMessages argument();
@@ -169,6 +162,8 @@ public interface Translation {
     HelpOpSection helpOp();
     // AdminChat Section
     AdminChatMessages adminChat();
+    // Ignore Section
+    IgnoreMessages ignore();
     // sudo
     SudoMessages sudo();
     // Teleport Section
@@ -191,8 +186,8 @@ public interface Translation {
     MsgMessages msg();
     // afk section
     AfkMessages afk();
-    // event section
-    EventSection event();
+    // death message section
+    DeathMessages deathMessage();
     // inventory section
     InventorySection inventory();
     //Seen section
