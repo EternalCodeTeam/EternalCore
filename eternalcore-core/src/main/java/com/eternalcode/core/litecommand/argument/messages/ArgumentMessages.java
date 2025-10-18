@@ -13,6 +13,7 @@ public interface ArgumentMessages {
     Notice numberBiggerThanZero();
     Notice numberBiggerThanOrEqualZero();
     Notice noItem();
+    Notice noMaterial();
     Notice noArgument();
     Notice worldDoesntExist();
     Notice incorrectLocation();
