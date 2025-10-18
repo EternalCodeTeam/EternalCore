@@ -24,7 +24,7 @@ public class MaterialArgument extends AbstractViewerArgument<Material> {
     @Override
     public ParseResult<Material> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
         try {
-            Material material = Material.valueOf(argument.toUpperCase());
+            Material material = Material.matchMaterial(argument);
             return ParseResult.success(material);
         } catch (IllegalArgumentException exception) {
             return ParseResult.failure(translation.argument().noMaterial());
