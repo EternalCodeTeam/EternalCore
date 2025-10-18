@@ -2,11 +2,10 @@ package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import org.bukkit.Location;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
+import org.bukkit.Location;
 
 public class JailedPlayerImpl implements JailedPlayer {
 
@@ -16,12 +15,30 @@ public class JailedPlayerImpl implements JailedPlayer {
     private final String detainedBy;
     private final Position lastPosition;
 
-    public JailedPlayerImpl(UUID playerUUID, Instant detainedAt, Duration prisonTime, String detainedBy, Location lastLocation) {
+    public JailedPlayerImpl(
+        UUID playerUUID,
+        Instant detainedAt,
+        Duration prisonTime,
+        String detainedBy,
+        Location lastLocation) {
+        if (playerUUID == null) {
+            throw new IllegalArgumentException("Player UUID cannot be null");
+        }
+        if (detainedAt == null) {
+            throw new IllegalArgumentException("Detained at cannot be null");
+        }
+        if (prisonTime == null || prisonTime.isNegative() || prisonTime.isZero()) {
+            throw new IllegalArgumentException("Prison time must be positive");
+        }
+        if (detainedBy == null || detainedBy.isBlank()) {
+            throw new IllegalArgumentException("Detained by cannot be null or blank");
+        }
+
         this.playerUUID = playerUUID;
         this.detainedAt = detainedAt;
         this.prisonTime = prisonTime;
         this.detainedBy = detainedBy;
-        this.lastPosition = PositionAdapter.convert(lastLocation);
+        this.lastPosition = lastLocation != null ? PositionAdapter.convert(lastLocation) : null;
     }
 
     @Override
@@ -46,7 +63,7 @@ public class JailedPlayerImpl implements JailedPlayer {
 
     @Override
     public Location lastLocation() {
-        return PositionAdapter.convert(this.lastPosition);
+        return this.lastPosition != null ? PositionAdapter.convert(this.lastPosition) : null;
     }
 
     @Override
@@ -56,7 +73,7 @@ public class JailedPlayerImpl implements JailedPlayer {
 
     @Override
     public Instant releaseTime() {
-        return Instant.now().plus(this.prisonTime);
+        return this.detainedAt.plus(this.prisonTime);
     }
 
     @Override

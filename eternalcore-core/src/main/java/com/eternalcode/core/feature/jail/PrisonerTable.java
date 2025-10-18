@@ -1,15 +1,13 @@
 package com.eternalcode.core.feature.jail;
 
-import com.eternalcode.commons.bukkit.position.Position;
-import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.database.persister.PositionPersister;
+import com.eternalcode.core.database.persister.LocationPersister;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
+import org.bukkit.Location;
 
 @DatabaseTable(tableName = "eternal_core_prisoners")
 class PrisonerTable {
@@ -27,31 +25,21 @@ class PrisonerTable {
     private String detainedBy;
 
     @DatabaseField(
-        columnName = "last_position",
-        persisterClass = PositionPersister.class,
+        columnName = "last_location",
+        persisterClass = LocationPersister.class,
         dataType = DataType.LONG_STRING
     )
-    private Position lastPosition;
+    private Location lastLocation;
 
     PrisonerTable() {
     }
 
-    PrisonerTable(UUID uuid, Instant detainedAt, Duration duration, String detainedBy, Position lastPosition) {
+    PrisonerTable(UUID uuid, Instant detainedAt, Duration duration, String detainedBy, Location lastLocation) {
         this.uuid = uuid;
         this.detainedAt = detainedAt;
         this.duration = duration;
         this.detainedBy = detainedBy;
-        this.lastPosition = lastPosition;
-    }
-
-    JailedPlayer toPrisoner() {
-        return new JailedPlayerImpl(
-            this.uuid,
-            this.detainedAt,
-            this.duration,
-            this.detainedBy,
-            PositionAdapter.convert(this.lastPosition)
-        );
+        this.lastLocation = lastLocation;
     }
 
     static PrisonerTable from(JailedPlayer jailedPlayer) {
@@ -60,7 +48,17 @@ class PrisonerTable {
             jailedPlayer.detainedAt(),
             jailedPlayer.prisonTime(),
             jailedPlayer.detainedBy(),
-            jailedPlayer.lastLocation() != null ? PositionAdapter.convert(jailedPlayer.lastLocation()) : null
+            jailedPlayer.lastLocation()
+        );
+    }
+
+    JailedPlayer toPrisoner() {
+        return new JailedPlayerImpl(
+            this.uuid,
+            this.detainedAt,
+            this.duration,
+            this.detainedBy,
+            this.lastLocation
         );
     }
 }

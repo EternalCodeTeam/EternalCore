@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.jail;
 
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_BYPASS_PERMISSION;
+
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -40,7 +42,7 @@ class JailController implements Listener {
             return;
         }
 
-        if (player.hasPermission("eternalcore.jail.bypass")) {
+        if (player.hasPermission(JAIL_BYPASS_PERMISSION)) {
             return;
         }
 
@@ -77,5 +79,4 @@ class JailController implements Listener {
             teleportEvent.setCancelled(true);
         }
     }
-
 }

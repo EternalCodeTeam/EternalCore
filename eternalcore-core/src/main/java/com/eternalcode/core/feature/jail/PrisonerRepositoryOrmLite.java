@@ -1,15 +1,12 @@
 package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.commons.scheduler.Scheduler;
-import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.database.AbstractRepositoryOrmLite;
+import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
-
 import com.j256.ormlite.table.TableUtils;
-
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -28,7 +25,7 @@ class PrisonerRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pri
     @Override
     public CompletableFuture<Optional<JailedPlayer>> getPrisoner(UUID uuid) {
         return this.selectSafe(PrisonerTable.class, uuid)
-            .thenApply(optional -> optional.map(prisonerTable -> prisonerTable.toPrisoner()));
+            .thenApply(optional -> optional.map(PrisonerTable::toPrisoner));
     }
 
     @Override
@@ -45,7 +42,7 @@ class PrisonerRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pri
     }
 
     @Override
-    public void editPrisoner(JailedPlayer jailedPlayer) {
+    public void savePrisoner(JailedPlayer jailedPlayer) {
         this.save(PrisonerTable.class, PrisonerTable.from(jailedPlayer));
     }
 
@@ -53,18 +50,4 @@ class PrisonerRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pri
     public void deleteAllPrisoners() {
         this.delete(PrisonerTable.class, new PrisonerTable());
     }
-
-    @Override
-    public CompletableFuture<List<JailedPlayer>> getAllPrisoners() {
-        return this.selectAll(PrisonerTable.class)
-            .thenApply(prisonerTables -> prisonerTables.stream()
-                .map(PrisonerTable::toPrisoner)
-                .toList());
-    }
-
-    @Override
-    public void savePrisoner(JailedPlayer jailedPlayer) {
-        this.save(PrisonerTable.class, PrisonerTable.from(jailedPlayer));
-    }
-
 }

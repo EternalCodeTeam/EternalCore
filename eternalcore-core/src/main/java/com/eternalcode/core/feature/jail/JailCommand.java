@@ -1,5 +1,12 @@
 package com.eternalcode.core.feature.jail;
 
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_BYPASS_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_COMMAND_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_DETAIN_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_LIST_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_RELEASE_PERMISSION;
+import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_SETUP_PERMISSION;
+
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -10,18 +17,10 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.time.Duration;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-
-import java.time.Duration;
-
-import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_BYPASS_PERMISSION;
-import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_COMMAND_PERMISSION;
-import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_DETAIN_PERMISSION;
-import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_LIST_PERMISSION;
-import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_RELEASE_PERMISSION;
-import static com.eternalcode.core.feature.jail.JailPermissionConstant.JAIL_SETUP_PERMISSION;
 
 @Command(name = "jail")
 @Permission(JAIL_COMMAND_PERMISSION)
@@ -81,7 +80,7 @@ class JailCommand {
     @Permission(JAIL_SETUP_PERMISSION)
     @DescriptionDocs(description = "Remove jail spawn area")
     void executeJailRemove(@Sender Player player) {
-        if (this.isPrisonAvailable(player)) {
+        if (this.handleMissingJailLocation(player)) {
             return;
         }
 
@@ -111,7 +110,7 @@ class JailCommand {
     @Permission(JAIL_DETAIN_PERMISSION)
     @DescriptionDocs(description = "Detain a player for some time", arguments = "<player> <time>")
     void executeJailDetainForTime(@Sender Player player, @Arg Player target, @Arg Duration duration) {
-        if (this.isPrisonAvailable(player)) {
+        if (this.handleMissingJailLocation(player)) {
             return;
         }
 
@@ -182,7 +181,7 @@ class JailCommand {
             .send();
     }
 
-    @Execute(name = "release -all", aliases = { "release *" })
+    @Execute(name = "release -all", aliases = {"release *"})
     @Permission(JAIL_RELEASE_PERMISSION)
     @DescriptionDocs(description = "Release all players from jail")
     void executeJailReleaseAll(@Sender Player player) {
@@ -230,7 +229,7 @@ class JailCommand {
         }
     }
 
-    private boolean isPrisonAvailable(Player player) {
+    private boolean handleMissingJailLocation(Player player) {
         if (this.jailService.getJailAreaLocation().isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.jail().locationNotSet())

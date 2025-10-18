@@ -10,5 +10,4 @@ public interface JailSettings {
     JailCommandRestrictionType restrictionType();
 
     Set<String> restrictedCommands();
-
 }

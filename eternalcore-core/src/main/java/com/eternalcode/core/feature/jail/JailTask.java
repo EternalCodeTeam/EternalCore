@@ -4,11 +4,13 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
+
 import java.util.concurrent.TimeUnit;
+
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Task(period = 1, delay = 1, unit = TimeUnit.SECONDS)
+@Task(period = 30, delay = 30, unit = TimeUnit.SECONDS)
 class JailTask implements Runnable {
 
     private final JailService jailService;
@@ -31,12 +33,6 @@ class JailTask implements Runnable {
                 continue;
             }
 
-            this.noticeService.create()
-                .notice(translation -> translation.jail().detainCountdown())
-                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.remainingTime(), true))
-                .player(jailedPlayer.playerUniqueId())
-                .send();
-
             if (jailedPlayer.isPrisonExpired()) {
                 this.noticeService.create()
                     .notice(translation -> translation.jail().released())
@@ -44,7 +40,14 @@ class JailTask implements Runnable {
                     .send();
 
                 this.jailService.releasePlayer(player);
+                continue;
             }
+
+            this.noticeService.create()
+                .notice(translation -> translation.jail().detainCountdown())
+                .placeholder("{REMAINING_TIME}", DurationUtil.format(jailedPlayer.remainingTime(), true))
+                .player(jailedPlayer.playerUniqueId())
+                .send();
         }
     }
 }
