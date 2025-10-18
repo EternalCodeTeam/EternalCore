@@ -25,6 +25,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${Versions.LOMBOK}")
 
     testImplementation("com.eternalcode:eternalcode-commons-bukkit:${Versions.ETERNALCODE_COMMONS}")
+    testImplementation("org.assertj:assertj-core:${Versions.ASSERTJ_CORE}")
+    testImplementation("org.awaitility:awaitility:${Versions.AWAITILITY}")
 }
 
 eternalShadow {
