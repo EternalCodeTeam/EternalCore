@@ -12,4 +12,7 @@ public class ENBroadcastMessages extends OkaeriConfig implements BroadcastMessag
     @Comment("# {BROADCAST} - Broadcast")
     public String messageFormat = "<red><bold>BROADCAST:</bold> <gray>{BROADCAST}";
 
+    @Comment("# Used only in title broadcasts")
+    public String titleHeader = "<red><bold>BROADCAST:</bold>";
+
 }
