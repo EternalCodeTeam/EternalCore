@@ -12,4 +12,7 @@ public class PLBroadcastMessages extends OkaeriConfig implements BroadcastMessag
     @Comment("# {BROADCAST} - Ogłoszenie")
     public String messageFormat = "<red><bold>OGŁOSZENIE:</bold> <gray>{BROADCAST}";
 
+    @Comment("# Używane tylko w ogłoszeniach tytułowych")
+    public String titleHeader = "<red><bold>OGŁOSZENIE:</bold>";
+
 }
