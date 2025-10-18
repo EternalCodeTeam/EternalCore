@@ -34,7 +34,7 @@ object Versions {
 
     const val TRIUMPH_GUI = "3.1.13"
 
-    const val XSERIES = "13.5.0"
+    const val XSERIES = "13.5.1"
 
     const val LUCKPERMS = "5.5.0"
 
@@ -47,7 +47,7 @@ object Versions {
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
     // tests
-    const val JUNIT_BOM = "5.14.0"
+    const val JUNIT_BOM = "6.0.0"
     const val MOCKITO_CORE = "5.20.0"
 
 }

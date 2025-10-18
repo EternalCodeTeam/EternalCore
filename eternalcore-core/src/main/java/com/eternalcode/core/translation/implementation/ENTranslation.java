@@ -15,20 +15,27 @@ import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.ENBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
+import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
+import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
+import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.ENEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
+import com.eternalcode.core.feature.ignore.messages.ENIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
+import com.eternalcode.core.feature.joinmessage.messages.ENJoinMessage;
 import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.near.messages.ENNearMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.ENPowertoolMessages;
+import com.eternalcode.core.feature.quitmessage.messages.ENQuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
@@ -43,20 +50,15 @@ import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
-import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 @Getter
 @Accessors(fluent = true)
@@ -181,6 +183,12 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
+        "# This section is responsible for ignore-related messages"
+    })
+    public ENIgnoreMessages ignore = new ENIgnoreMessages();
+
+    @Comment({
+        " ",
         "# This section is responsible for the messages of the /sudo command",
     })
     public ENSudoMessages sudo = new ENSudoMessages();
@@ -195,13 +203,16 @@ public class ENTranslation extends AbstractTranslation {
     public static class ENTeleportSection extends OkaeriConfig implements TeleportSection {
         // teleport
         @Comment({"# {PLAYER} - Teleported players"})
-        public Notice teleportedToPlayer = Notice.chat("<green>► <white>Successfully teleported to <green>{PLAYER}<white>!");
+        public Notice teleportedToPlayer =
+            Notice.chat("<green>► <white>Successfully teleported to <green>{PLAYER}<white>!");
 
         @Comment({"# {PLAYER} - Teleported player, {ARG-PLAYER} - Player to whom another player has been transferred"})
-        public Notice teleportedPlayerToPlayer = Notice.chat("<green>► <white>Successfully teleported <green>{PLAYER} <white>to <green>{ARG-PLAYER}<white>!");
+        public Notice teleportedPlayerToPlayer =
+            Notice.chat("<green>► <white>Successfully teleported <green>{PLAYER} <white>to <green>{ARG-PLAYER}<white>!");
 
         @Comment({"# {Y} - Y coordinate of the highest block"})
-        public Notice teleportedToHighestBlock = Notice.chat("<green>► <white>Teleported successfully to the highest block! (Y: {Y})");
+        public Notice teleportedToHighestBlock =
+            Notice.chat("<green>► <white>Teleported successfully to the highest block! (Y: {Y})");
 
         @Comment(" ")
         public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>All players have been teleported to you!");
@@ -217,15 +228,19 @@ public class ENTranslation extends AbstractTranslation {
 
         // Coordinates XYZ
         @Comment({" ", "# {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
-        public Notice teleportedToCoordinates = Notice.chat("<green>► <white>Teleported to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-        @Comment({" ", "# {PLAYER} -  Player who has been teleported, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
-        public Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
+        public Notice teleportedToCoordinates = Notice.chat(
+            "<green>► <white>Teleported to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
+        @Comment({" ",
+                  "# {PLAYER} -  Player who has been teleported, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
+        public Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
+            "<green>► <white>Teleported <green>{PLAYER} <white>to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
 
         // Back
         @Comment(" ")
         public Notice teleportedToLastLocation = Notice.chat("<green>► <white>Teleported to the last location!");
         @Comment({" ", "# {PLAYER} - Player who has been teleported"})
-        public Notice teleportedSpecifiedPlayerLastLocation = Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
+        public Notice teleportedSpecifiedPlayerLastLocation =
+            Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Comment(" ")
         public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
     }
@@ -259,17 +274,19 @@ public class ENTranslation extends AbstractTranslation {
         public Notice slowModeSet = Notice.chat("<green>► <white>SlowMode set to: {SLOWMODE}");
 
         @Comment({" ", "# {PLAYER} - Player who performed the actions for the chat"})
-        public Notice slowModeOff = Notice.chat("<green>► <white>SlowMode has been disabled by <green>{PLAYER}<white>!");
+        public Notice slowModeOff =
+            Notice.chat("<green>► <white>SlowMode has been disabled by <green>{PLAYER}<white>!");
 
         @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        public Notice slowMode = Notice.chat("<red>✘ <dark_red>You can write the next message for: <red>{TIME}<dark_red>!");
+        public Notice slowMode =
+            Notice.chat("<red>✘ <dark_red>You can write the next message for: <red>{TIME}<dark_red>!");
 
         @Comment(" ")
         public Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Chat is currently disabled!");
 
         @Comment(" ")
-        public Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
-
+        public Notice commandNotFound =
+            Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
     }
 
     @Comment({
@@ -311,61 +328,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# Section responsible for various server events."
+        "# This section is responsible for death messages"
     })
-    public ENEventSection event = new ENEventSection();
-
-    @Getter
-    public static class ENEventSection extends OkaeriConfig implements EventSection {
-        @Comment({
-            "# {PLAYER} - Killed player",
-            "# {KILLER} - Killer (only for PvP deaths)"
-        })
-        public List<Notice> deathMessage = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died!"),
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <dark_red>{KILLER}!")
-        );
-
-        @Comment({
-            "# Messages shown when a player dies from specific damage causes",
-            "# {PLAYER} - Killed player",
-            "# {CAUSE} - Death cause (e.g., FALL, VOID)",
-            "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
-        })
-        public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell into the void!")
-            ),
-            EntityDamageEvent.DamageCause.FALL, Arrays.asList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell from a high place!"),
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell off a deadly cliff!")
-            )
-        );
-
-        @Comment("# {PLAYER} - Player who died from an unknown cause")
-        public List<Notice> unknownDeathCause = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died under mysterious circumstances!")
-        );
-
-        @Comment({"", "# {PLAYER} - Player who joined"})
-        public List<Notice> joinMessage = List.of(
-            Notice.actionbar("<green>► <green>{PLAYER} <white>joined the server!"),
-            Notice.actionbar("<green>► <white>Welcome to the server <green>{PLAYER}<white>!")
-        );
-
-        @Comment("# {PLAYER} - Player who joined.")
-        public List<Notice> firstJoinMessage = List.of(
-            Notice.chat("<green>► {PLAYER} <white>joined the server for the first time!"),
-            Notice.chat("<green>► {PLAYER} <white>welcome to the server for the first time!")
-        );
-
-        @Comment("# {PLAYER} - Player who left")
-        public List<Notice> quitMessage = List.of(
-            Notice.actionbar("<red>► {PLAYER} <white>logged off the server!"),
-            Notice.actionbar("<red>► {PLAYER} <white>left the server!")
-        );
-    }
-
+    public ENDeathMessages deathMessage = new ENDeathMessages();
 
     @Comment({" ", "# Section responsible for inventories-related stuff."})
     public ENInventorySection inventory = new ENInventorySection();
@@ -411,8 +376,10 @@ public class ENTranslation extends AbstractTranslation {
         public Notice speedFlySet = Notice.chat("<green>► <white>Flying speed is set to <green>{SPEED}");
 
         @Comment("# {PLAYER} - Target player, {SPEED} - Target player walk or fly speed value")
-        public Notice speedWalkSetBy = Notice.chat("<green>► <white>Walking speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
-        public Notice speedFlySetBy = Notice.chat("<green>► <white>Flying speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
+        public Notice speedWalkSetBy =
+            Notice.chat("<green>► <white>Walking speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
+        public Notice speedFlySetBy =
+            Notice.chat("<green>► <white>Flying speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
 
         @Comment({" ", "# {STATE} - Godmode status"})
         public Notice godEnable = Notice.chat("<green>► <white>God is now {STATE}");
@@ -434,7 +401,8 @@ public class ENTranslation extends AbstractTranslation {
         public Notice pingMessage = Notice.chat("<green>► <white>Your ping is: <green>{PING}<white>ms");
 
         @Comment("# {PLAYER} - Target player, {PING} - Ping of target player")
-        public Notice pingOtherMessage = Notice.chat("<green>► <white>Ping of the <green>{PLAYER} <white>is: <green>{PING}<white>ms");
+        public Notice pingOtherMessage =
+            Notice.chat("<green>► <white>Ping of the <green>{PLAYER} <white>is: <green>{PING}<white>ms");
 
         @Comment(" ")
         public Notice gameModeNotCorrect = Notice.chat("<red>✘ <dark_red>Not a valid gamemode type");
@@ -443,13 +411,16 @@ public class ENTranslation extends AbstractTranslation {
         public Notice gameModeMessage = Notice.chat("<green>► <white>Gamemode now is set to: <green>{GAMEMODE}");
 
         @Comment("# {PLAYER} - Target player, {GAMEMODE} - Gamemode")
-        public Notice gameModeSetMessage = Notice.chat("<green>► <white>Gamemode for <green>{PLAYER} <white>now is set to: <green>{GAMEMODE}");
+        public Notice gameModeSetMessage =
+            Notice.chat("<green>► <white>Gamemode for <green>{PLAYER} <white>now is set to: <green>{GAMEMODE}");
 
         @Comment({" ", "# {ONLINE} - Number of online players"})
-        public Notice onlinePlayersCountMessage = Notice.chat("<green>► <white>On server now is: <green>{ONLINE} <white>players!");
+        public Notice onlinePlayersCountMessage =
+            Notice.chat("<green>► <white>On server now is: <green>{ONLINE} <white>players!");
 
         @Comment("# {ONLINE} - Current online players, {PLAYERS} - Player list")
-        public Notice onlinePlayersMessage = Notice.chat("<green>► <white>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <green>{PLAYERS}");
+        public Notice onlinePlayersMessage =
+            Notice.chat("<green>► <white>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <green>{PLAYERS}");
 
         public List<String> fullServerSlots = List.of(
             " ",
@@ -469,7 +440,8 @@ public class ENTranslation extends AbstractTranslation {
             "# {HEALTH} - Player health",
             "# {FOOD} - Player food level"
         })
-        public List<String> whoisCommand = List.of("<green>► <white>Target name: <green>{PLAYER}",
+        public List<String> whoisCommand = List.of(
+            "<green>► <white>Target name: <green>{PLAYER}",
             "<green>► <white>Target UUID: <green>{UUID}",
             "<green>► <white>Target address: <green>{IP}",
             "<green>► <white>Target walk speed: <green>{WALK-SPEED}",
@@ -484,7 +456,8 @@ public class ENTranslation extends AbstractTranslation {
         public Notice butcherCommand = Notice.chat("<green>► <white>You killed <green>{KILLED} <white>mobs!");
 
         @Comment({" ", "# {SAFE_CHUNKS} - The number of safe chunks"})
-        public Notice safeChunksMessage = Notice.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
+        public Notice safeChunksMessage =
+            Notice.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
     }
 
     @Comment({" ", "# This section is responsible for spawn-related stuff."})
@@ -502,7 +475,8 @@ public class ENTranslation extends AbstractTranslation {
         public Notice giveReceived = Notice.chat("<green>► <white>You have received: <green>{ITEM}");
 
         @Comment({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item"})
-        public Notice giveGiven = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
+        public Notice giveGiven =
+            Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
         public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Not enough space in inventory!");
 
         @Comment(" ")
@@ -513,8 +487,10 @@ public class ENTranslation extends AbstractTranslation {
 
         @Comment(" ")
         public Notice enchantedMessage = Notice.chat("<green>► <white>Item in hand is enchanted!");
-        public Notice enchantedMessageFor = Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
-        public Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
+        public Notice enchantedMessageFor =
+            Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
+        public Notice enchantedMessageBy =
+            Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
     }
 
     @Comment({
@@ -534,7 +510,6 @@ public class ENTranslation extends AbstractTranslation {
         "# This section is responsible for butcher messages"
     })
     ENButcherMessages butcher = new ENButcherMessages();
-
 
     @Comment({" ", "# Messages sent on time and weather change."})
     public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
@@ -557,12 +532,18 @@ public class ENTranslation extends AbstractTranslation {
     @Comment({" ", "# This section is responsible for demo screen messages."})
     public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
 
+    @Comment({" ", "# This section is responsible for join message."})
+    public ENJoinMessage join = new ENJoinMessage();
+
+    @Comment({" ", "# This section is responsible for quit message."})
+    public ENQuitMessage quit = new ENQuitMessage();
+
     @Comment({" ", "# This section is responsible for end screen messages."})
     public ENEndScreenMessages endScreen = new ENEndScreenMessages();
 
     @Comment({" ", "# This section is responsible for '/burn' command messages."})
     public ENBurnMessages burn = new ENBurnMessages();
-  
+
     @Comment({" ", "# This section is responsible for vanish-related stuff."})
     public ENVanishMessages vanish = new ENVanishMessages();
 
