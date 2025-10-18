@@ -108,7 +108,7 @@ class AfkPlaceholderSetup {
     private PlaceholderReplacer createAfkPlayerCountPlaceholder(AfkService afkService) {
         return PlaceholderReplacer.of(
             "afk_playercount",
-            player -> {
+            ignoredPlayer -> {
                 long afkPlayerCount = this.server.getOnlinePlayers()
                     .stream()
                     .filter(onlinePlayer -> afkService.isAfk(onlinePlayer.getUniqueId()))
