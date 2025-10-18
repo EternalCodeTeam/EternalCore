@@ -53,7 +53,6 @@ import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.core.feature.whois.WhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.multification.notice.Notice;
-import java.util.List;
 
 public interface Translation {
 
@@ -98,6 +97,7 @@ public interface Translation {
         Notice disabledChatInfo();
         Notice commandNotFound();
     }
+
     interface InventorySection {
         String disposalTitle();
     }

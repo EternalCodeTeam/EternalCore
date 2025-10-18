@@ -10,8 +10,6 @@ import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
 import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
-import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
-import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
 import com.eternalcode.core.feature.feed.messages.ENFeedMessages;
 import com.eternalcode.core.feature.fly.messages.ENFlyMessages;
 import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
@@ -60,7 +58,6 @@ import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
-import java.util.List;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
