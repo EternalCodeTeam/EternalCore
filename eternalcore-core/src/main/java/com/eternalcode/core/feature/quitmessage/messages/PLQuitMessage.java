@@ -15,8 +15,7 @@ public class PLQuitMessage extends OkaeriConfig implements QuitMessage {
 
     @Comment({
         "# EternalCore będzie losował losową wiadomość z poniższej listy",
-        "# za każdym razem gdy gracz opuści serwer.",
-        "# {PLAYER} - Gracz, który opuścił serwer."
+        "# za każdym razem gdy gracz opuści serwer."
     })
     public List<Notice> playerLeftServer = List.of(
         BukkitNotice.builder()

@@ -16,7 +16,6 @@ public class PLJoinMessage extends OkaeriConfig implements JoinMessage {
     @Comment({
         "# EternalCore będzie losował losową wiadomość z poniższej listy",
         "# za każdym razem gdy gracz dołączy do serwera.",
-        "# {PLAYER} - Gracz, który dołączył do serwera."
     })
     public List<Notice> playerJoinedServer = List.of(
         BukkitNotice.builder()
@@ -33,7 +32,6 @@ public class PLJoinMessage extends OkaeriConfig implements JoinMessage {
     @Comment({
         "# EternalCore będzie losował losową wiadomość z poniższej listy",
         "# za każdym razem gdy gracz dołączy do serwera po raz pierwszy.",
-        "# {PLAYER} - Gracz, który dołączył po raz pierwszy."
     })
     public List<Notice> playerJoinedServerFirstTime = List.of(
         BukkitNotice.builder()

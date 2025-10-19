@@ -29,8 +29,8 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> player.isFlying()
-                ? translation.speed().flySpeedSetForYourself()
-                : translation.speed().walkSpeedSetForYourself())
+                ? translation.speed().flySpeedSet()
+                : translation.speed().walkSpeedSet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(player.getUniqueId())
             .send();
@@ -43,8 +43,8 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> target.isFlying()
-                ? translation.speed().flySpeedSetForYourself()
-                : translation.speed().walkSpeedSetForYourself())
+                ? translation.speed().flySpeedSet()
+                : translation.speed().walkSpeedSet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(target.getUniqueId())
             .send();
@@ -66,8 +66,8 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> speedType == SpeedType.WALK
-                ? translation.speed().walkSpeedSetForYourself()
-                : translation.speed().flySpeedSetForYourself())
+                ? translation.speed().walkSpeedSet()
+                : translation.speed().flySpeedSet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(player.getUniqueId())
             .send();
@@ -84,8 +84,8 @@ class SpeedCommand {
 
         this.noticeService.create()
             .notice(translation -> speedType == SpeedType.WALK
-                ? translation.speed().walkSpeedSetForYourself()
-                : translation.speed().flySpeedSetForYourself())
+                ? translation.speed().walkSpeedSet()
+                : translation.speed().flySpeedSet())
             .placeholder("{SPEED}", String.valueOf(speed))
             .player(target.getUniqueId())
             .send();

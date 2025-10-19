@@ -28,7 +28,7 @@ class FeedCommand {
         this.feed(player);
 
         this.noticeService.create()
-            .notice(translation -> translation.feed().fedYourself())
+            .notice(translation -> translation.feed().fed())
             .player(player.getUniqueId())
             .send();
     }

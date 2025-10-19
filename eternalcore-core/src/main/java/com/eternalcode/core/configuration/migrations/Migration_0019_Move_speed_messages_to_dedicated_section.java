@@ -10,8 +10,8 @@ public class Migration_0019_Move_speed_messages_to_dedicated_section extends Nam
             "Move speed messages to dedicated section",
             move("player.speedBetweenZeroAndTen", "speed.invalidSpeedRange"),
             move("player.speedTypeNotCorrect", "speed.invalidSpeedType"),
-            move("player.speedWalkSet", "speed.walkSpeedSetForYourself"),
-            move("player.speedFlySet", "speed.flySpeedSetForYourself"),
+            move("player.speedWalkSet", "speed.walkSpeedSet"),
+            move("player.speedFlySet", "speed.flySpeedSet"),
             move("player.speedWalkSetBy", "speed.walkSpeedSetForTargetPlayer"),
             move("player.speedFlySetBy", "speed.flySpeedSetForTargetPlayer")
         );

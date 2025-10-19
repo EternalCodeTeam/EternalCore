@@ -15,8 +15,7 @@ public class ENQuitMessage extends OkaeriConfig implements QuitMessage {
 
     @Comment({
         "# EternalCore will randomly select one of the messages from the list below",
-        "# every time a player leaves the server.",
-        "# {PLAYER} - Player who left the server."
+        "# every time a player leaves the server."
     })
     public List<Notice> playerLeftServer = List.of(
         BukkitNotice.builder()

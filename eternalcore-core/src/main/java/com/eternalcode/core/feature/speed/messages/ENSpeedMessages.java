@@ -14,8 +14,8 @@ public class ENSpeedMessages extends OkaeriConfig implements SpeedMessages {
     public Notice invalidSpeedType = Notice.chat("<red>✘ <dark_red>Invalid speed type!");
 
     @Comment("# {SPEED} - Walk or fly speed value")
-    public Notice walkSpeedSetForYourself = Notice.chat("<green>► <white>Walking speed is set to <green>{SPEED}");
-    public Notice flySpeedSetForYourself = Notice.chat("<green>► <white>Flying speed is set to <green>{SPEED}");
+    public Notice walkSpeedSet = Notice.chat("<green>► <white>Walking speed is set to <green>{SPEED}");
+    public Notice flySpeedSet = Notice.chat("<green>► <white>Flying speed is set to <green>{SPEED}");
 
     @Comment("# {SPEED} - Target player walk or fly speed value")
     public Notice walkSpeedSetForTargetPlayer = Notice.chat("<green>► <white>Walking speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
