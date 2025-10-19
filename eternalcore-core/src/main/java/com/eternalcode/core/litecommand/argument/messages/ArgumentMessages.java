@@ -12,6 +12,7 @@ public interface ArgumentMessages {
     Notice onlyPlayer();
     Notice numberBiggerThanZero();
     Notice numberBiggerThanOrEqualZero();
+    Notice stackNumberIncorrect();
     Notice noItem();
     Notice noArgument();
     Notice worldDoesntExist();

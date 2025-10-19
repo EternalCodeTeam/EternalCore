@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.litecommand.argument.StackAmountArgument;
 import com.eternalcode.core.feature.give.GiveService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -11,7 +10,6 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,7 +37,7 @@ class ItemCommand {
 
     @Execute
     @DescriptionDocs(description = "Gives an item with a custom amount", arguments = "<item> [amount]")
-    void execute(@Context Player player, @Arg Material material, @OptionalArg(StackAmountArgument.KEY) int amount) {
+    void execute(@Context Player player, @Arg Material material, @Arg(StackAmountArgument.KEY) int amount) {
         boolean isSuccess = this.giveService.giveItem(player, player, material, amount);
 
         if (isSuccess) {
