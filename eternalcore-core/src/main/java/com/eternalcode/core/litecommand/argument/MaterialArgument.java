@@ -16,6 +16,11 @@ import org.bukkit.command.CommandSender;
 @LiteArgument(type = Material.class)
 public class MaterialArgument extends AbstractViewerArgument<Material> {
 
+    private static final SuggestionResult CACHED_SUGGESTIONS = Arrays.stream(Material.values())
+        .map(Material::name)
+        .map(String::toLowerCase)
+        .collect(SuggestionResult.collector());
+
     @Inject
     MaterialArgument(TranslationManager translationManager) {
         super(translationManager);
@@ -23,12 +28,11 @@ public class MaterialArgument extends AbstractViewerArgument<Material> {
 
     @Override
     public ParseResult<Material> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        try {
-            Material material = Material.matchMaterial(argument);
-            return ParseResult.success(material);
-        } catch (IllegalArgumentException exception) {
+        Material material = Material.matchMaterial(argument);
+        if (material == null) {
             return ParseResult.failure(translation.argument().noMaterial());
         }
+        return ParseResult.success(material);
     }
 
     @Override
@@ -37,9 +41,6 @@ public class MaterialArgument extends AbstractViewerArgument<Material> {
         Argument<Material> argument,
         SuggestionContext context
     ) {
-        return Arrays.stream(Material.values())
-            .map(Material::name)
-            .map(String::toLowerCase)
-            .collect(SuggestionResult.collector());
+        return CACHED_SUGGESTIONS;
     }
 }
