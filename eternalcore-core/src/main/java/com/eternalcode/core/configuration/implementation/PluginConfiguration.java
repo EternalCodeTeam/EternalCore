@@ -13,6 +13,12 @@ import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageConfig;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageSettings;
+import com.eternalcode.core.feature.enchant.EnchantConfig;
+import com.eternalcode.core.feature.enchant.EnchantSettings;
+import com.eternalcode.core.feature.give.GiveConfig;
+import com.eternalcode.core.feature.give.GiveSettings;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
 import com.eternalcode.core.feature.helpop.HelpOpSettings;
 import com.eternalcode.core.feature.home.HomesConfig;
@@ -72,7 +78,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings that determine the language used within the server.")
     @Comment("# Choose the preferred language for all messages and interactions in the plugin.")
     TranslationConfig language = new TranslationConfig();
-    
+
     @Bean(proxied = DatabaseSettings.class)
     @Comment("")
     @Comment("# Database Configuration")
@@ -91,6 +97,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings for teleport requests between players")
     TeleportRequestConfig teleportAsk = new TeleportRequestConfig();
 
+    @Bean(proxied = DeathMessageSettings.class)
+    @Comment("")
+    @Comment("# Death Message Configuration")
+    @Comment("# Settings for player death messages")
+    DeathMessageConfig deathMessages = new DeathMessageConfig();
+
     @Bean(proxied = TeleportToRandomPlayerSettings.class)
     @Comment("")
     @Comment("# Configuration for teleporting to a random player")
@@ -107,32 +119,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Homes Configuration")
     @Comment("# Settings for player home management")
     HomesConfig homes = new HomesConfig();
-
-    @Comment("")
-    @Comment("# Sound Configuration")
-    @Comment("# Settings for various sound effects")
-    @Bean
-    public Sounds sound = new Sounds();
-
-    public static class Sounds extends OkaeriConfig {
-        @Comment("# Enable sound when player joins the server")
-        public boolean enabledAfterJoin = true;
-        public Sound afterJoin = Sound.BLOCK_NOTE_BLOCK_PLING;
-        public float afterJoinVolume = 1.8F;
-        public float afterJoinPitch = 1F;
-
-        @Comment("# Enable sound when player leaves the server")
-        public boolean enableAfterQuit = true;
-        public Sound afterQuit = Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
-        public float afterQuitVolume = 1.8F;
-        public float afterQuitPitch = 1F;
-
-        @Comment("# Enable sound when player sends a chat message")
-        public boolean enableAfterChatMessage = true;
-        public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
-        public float afterChatMessageVolume = 1.8F;
-        public float afterChatMessagePitch = 1F;
-    }
 
     @Bean(proxied = ChatSettings.class)
     @Comment("")
@@ -173,25 +159,17 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings for Away From Keyboard detection and management")
     AfkConfig afk = new AfkConfig();
 
+    @Bean(proxied = EnchantSettings.class)
     @Comment("")
-    @Comment("# Items Configuration")
-    @Comment("# Settings for item management and behavior")
-    public Items items = new Items();
+    @Comment("# Enchant Configuration")
+    @Comment("# Settings for enchant functionality")
+    EnchantConfig enchant = new EnchantConfig();
 
-    // TODO: Add migration, move option's to domain-specific configuration classes
-    // unsafeEnchantments -> com.eternalcode.core.enchant.EnchantConfig
-    // defaultGiveAmount -> com.eternalcode.core.feature.give.GiveConfig
-    // dropOnFullInventory -> com.eternalcode.core.feature.give.GiveConfig
-    public static class Items extends OkaeriConfig {
-        @Comment("# Allow unsafe enchantments (enables custom enchants on various items)")
-        public boolean unsafeEnchantments = true;
-
-        @Comment("# Default amount of items to give when no amount is specified")
-        public int defaultGiveAmount = 1;
-
-        @Comment("# Drop items on ground when player's inventory is full")
-        public boolean dropOnFullInventory = true;
-    }
+    @Bean(proxied = GiveSettings.class)
+    @Comment("")
+    @Comment("# Give Configuration")
+    @Comment("# Settings for item giving functionality")
+    GiveConfig give = new GiveConfig();
 
     @Bean(proxied = WarpSettings.class)
     @Comment("")

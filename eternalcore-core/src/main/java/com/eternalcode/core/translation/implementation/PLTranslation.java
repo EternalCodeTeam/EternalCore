@@ -1,32 +1,31 @@
 package com.eternalcode.core.translation.implementation;
 
-import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
-import com.eternalcode.core.feature.near.messages.PLNearMessages;
-import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
-import com.eternalcode.core.feature.clear.messages.PLClearMessages;
-import com.eternalcode.core.feature.container.messages.PLContainerMessages;
-import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
-import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
+import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.deathmessage.messages.PLDeathMessages;
+import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
+import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
 import com.eternalcode.core.feature.helpop.messages.PLHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.PLHomeMessages;
+import com.eternalcode.core.feature.ignore.messages.PLIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
+import com.eternalcode.core.feature.joinmessage.messages.PLJoinMessage;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.PLPowertoolMessages;
+import com.eternalcode.core.feature.quitmessage.messages.PLQuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
@@ -47,13 +46,9 @@ import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 @Getter
 @Accessors(fluent = true)
@@ -152,7 +147,7 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({
         " ",
         "# Ta sekcja odpowiada za wiadomości w komendzie /near "})
-    public PLNearMessages near =  new PLNearMessages();
+    public PLNearMessages near = new PLNearMessages();
 
     @Getter
     public static class PLFormatSection extends OkaeriConfig implements Format {
@@ -171,6 +166,12 @@ public class PLTranslation extends AbstractTranslation {
         "# Ta sekcja odpowiada za czat komunikacji między administracją"
     })
     public PLAdminChatMessages adminChat = new PLAdminChatMessages();
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomości dotyczące ignorowania graczy"
+    })
+    public PLIgnoreMessages ignore = new PLIgnoreMessages();
 
     @Comment({
         " ",
@@ -274,7 +275,6 @@ public class PLTranslation extends AbstractTranslation {
         @Comment(" ")
         Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Czat jest obecnie wyłączony!");
 
-
         @Comment(" ")
         Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
     }
@@ -318,75 +318,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# Ta sekcja odpowiada za ustawianie i edycję wiadomości o zdarzeniach gracza",
+        "# Ta sekcja odpowiada za wiadomości o śmierci graczy",
     })
-    public PLEventSection event = new PLEventSection();
-
-    @Getter
-    public static class PLEventSection extends OkaeriConfig implements EventSection {
-        @Comment({
-            "# {PLAYER} - Gracz, który zginął",
-            "# {KILLER} - Gracz, który zabił (tylko w przypadku PvP)"
-        })
-        public List<Notice> deathMessage = List.of(
-            Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął przez {KILLER}!"),
-            Notice.actionbar("<white>☠ <dark_red>{PLAYER} <red>zginął tragicznie podczas ciężkiej walki!")
-        );
-
-        @Comment({
-            "# Wiadomości wyświetlane gdy gracz ginie od konkretnego typu obrażeń",
-            "# {PLAYER} - Gracz, który zginął",
-            "# {CAUSE} - Przyczyna śmierci (np. UPADEK, VOID)",
-            "# List of DamageCauses: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html"
-        })
-        public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = Map.of(
-            EntityDamageEvent.DamageCause.VOID, Collections.singletonList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>wypadł w otchłań!")
-            ),
-            EntityDamageEvent.DamageCause.FALL, Arrays.asList(
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z wysokości!"),
-                Notice.chat("<white>☠ <dark_red>{PLAYER} <red>spadł z zabójczego klifu!")
-            )
-        );
-
-        @Comment("# {PLAYER} - Gracz, który zginął z nieznanej przyczyny")
-        public List<Notice> unknownDeathCause = List.of(
-            Notice.chat("<white>☠ <dark_red>{PLAYER} <red>został zabity przez niezidentyfikowany obiekt!")
-        );
-
-        @Comment({
-            " ",
-            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
-            "# za każdym razem gdy gracz dołączy do serwera",
-            "# {PLAYER} - Gracz który dołączył do serwera",
-        })
-        public List<Notice> joinMessage = List.of(
-            Notice.actionbar("<green>► <green>{PLAYER} <white>dołączył do serwera!"),
-            Notice.actionbar("<green>► <white>Witaj na serwerze <green>{PLAYER}<white>!")
-        );
-
-        @Comment({
-            " ",
-            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
-            "# za każdym razem gdy gracz dołączy do serwera po raz pierwszy",
-            "# {PLAYER} - Gracz który dołączył do serwera po raz pierwszy"
-        })
-        public List<Notice> firstJoinMessage = List.of(
-            Notice.actionbar("<green>► {PLAYER} <white>dołączył do serwera po raz pierwszy!"),
-            Notice.actionbar("<green>► {PLAYER} <white>zawitał u nas po raz pierwszy!")
-        );
-
-        @Comment({
-            " ",
-            "# Podobnie jak w wiadomości o śmierci, EternalCore będzie losował losową wiadomość z poniższej listy",
-            "# za każdym razem gdy gracz opuści serwer",
-            "# {PLAYER} - Gracz który opuścił serwer"
-        })
-        public List<Notice> quitMessage = List.of(
-            Notice.actionbar("<red>► {PLAYER} <white>wylogował się z serwera!"),
-            Notice.actionbar("<red>► {PLAYER} <white>opuścił serwer!")
-        );
-    }
+    public PLDeathMessages deathMessage = new PLDeathMessages();
 
     @Comment({
         " ",
@@ -487,7 +421,8 @@ public class PLTranslation extends AbstractTranslation {
             "# {HEALTH} - zdrowie gracza",
             "# {FOOD} - poziom najedzenia gracza"
         })
-        public List<String> whoisCommand = List.of("<green>► <white>Gracz: <green>{PLAYER}",
+        public List<String> whoisCommand = List.of(
+            "<green>► <white>Gracz: <green>{PLAYER}",
             "<green>► <white>UUID: <green>{UUID}",
             "<green>► <white>IP: <green>{IP}",
             "<green>► <white>Szybkość chodzenia: <green>{WALK-SPEED}",
@@ -536,11 +471,24 @@ public class PLTranslation extends AbstractTranslation {
         Notice enchantedMessageFor = Notice.chat("<green>► <white>Item w ręce gracza <green>{PLAYER} <white>został zaklęty!");
         Notice enchantedMessageBy = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>zaklął twój item!");
     }
+
     @Comment({
         " ",
-        "#Ta sekcja odpowiada za wiadomosci repair"
+        "# Ta sekcja odpowiada za wiadomosci repair"
     })
     public PLRepairMessages repair = new PLRepairMessages();
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomosci enchant"
+    })
+    PLEnchantMessages enchant = new PLEnchantMessages();
+
+    @Comment({
+        " ",
+        "# Ta sekcja odpowiada za wiadomosci butcher"
+    })
+    ENButcherMessages butcher = new ENButcherMessages();
 
     @Comment({
         " ",
@@ -555,7 +503,7 @@ public class PLTranslation extends AbstractTranslation {
     PLContainerMessages container = new PLContainerMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
-    public PLSetSlotMessages setSlot  = new PLSetSlotMessages();
+    public PLSetSlotMessages setSlot = new PLSetSlotMessages();
 
     @Comment({" ", "# Automatyczne wiadomości "})
     public PLAutoMessageMessages autoMessage = new PLAutoMessageMessages();
@@ -569,12 +517,18 @@ public class PLTranslation extends AbstractTranslation {
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
     public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
 
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące wiadomości dołączenia gracza do serwera"})
+    public PLJoinMessage join = new PLJoinMessage();
+
+    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące wiadomości wyjścia gracza z serwera"})
+    public PLQuitMessage quit = new PLQuitMessage();
+
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące końca gry"})
     public PLEndScreenMessages endScreen = new PLEndScreenMessages();
 
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące komendy /burn"})
     public PLBurnMessages burn = new PLBurnMessages();
-  
+
     @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
     public PLVanishMessages vanish = new PLVanishMessages();
 

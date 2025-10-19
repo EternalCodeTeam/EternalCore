@@ -22,25 +22,25 @@ class GiveCommand {
 
     private final NoticeService noticeService;
     private final GiveService giveService;
-    private final PluginConfiguration config;
+    private final GiveSettings giveSettings;
 
     @Inject
-    GiveCommand(NoticeService noticeService, GiveService giveService, PluginConfiguration config) {
+    GiveCommand(NoticeService noticeService, GiveService giveService, GiveSettings giveSettings) {
         this.noticeService = noticeService;
         this.giveService = giveService;
-        this.config = config;
+        this.giveSettings = giveSettings;
     }
 
     @Execute
     @DescriptionDocs(description = "Gives you an item", arguments = "<item>")
     void execute(@Sender Player player, @Arg Material material) {
-        this.execute(player, material, this.config.items.defaultGiveAmount);
+        this.execute(player, material, this.giveSettings.defaultGiveAmount());
     }
 
     @Execute
     @DescriptionDocs(description = "Gives an item to another player", arguments = "<player> <item>")
     void execute(@Sender CommandSender sender, @OptionalArg Player target, @Arg Material material) {
-        this.execute(sender, target, material, this.config.items.defaultGiveAmount);
+        this.execute(sender, target, material, this.giveSettings.defaultGiveAmount());
     }
 
     @Execute
