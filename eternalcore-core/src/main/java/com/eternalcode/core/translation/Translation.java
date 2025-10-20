@@ -10,19 +10,28 @@ import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
 import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
+import com.eternalcode.core.feature.feed.messages.FeedMessages;
+import com.eternalcode.core.feature.fly.messages.FlyMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
+import com.eternalcode.core.feature.gamemode.messages.GameModeMessages;
+import com.eternalcode.core.feature.give.messages.GiveMessages;
+import com.eternalcode.core.feature.godmode.messages.GodModeMessages;
+import com.eternalcode.core.feature.heal.messages.HealMessages;
 import com.eternalcode.core.feature.helpop.messages.HelpOpSection;
 import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.ignore.messages.IgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
 import com.eternalcode.core.feature.joinmessage.messages.JoinMessage;
+import com.eternalcode.core.feature.kill.messages.KillMessages;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
+import com.eternalcode.core.feature.onlineplayers.messages.OnlineMessages;
+import com.eternalcode.core.feature.ping.PingMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.PowertoolMessages;
 import com.eternalcode.core.feature.quitmessage.messages.QuitMessage;
@@ -31,7 +40,9 @@ import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
+import com.eternalcode.core.feature.skull.messages.SkullMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
+import com.eternalcode.core.feature.speed.messages.SpeedMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
 import com.eternalcode.core.feature.teleport.messages.TeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
@@ -39,9 +50,9 @@ import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMess
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
+import com.eternalcode.core.feature.whois.WhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.multification.notice.Notice;
-import java.util.List;
 
 public interface Translation {
 
@@ -86,6 +97,7 @@ public interface Translation {
         Notice disabledChatInfo();
         Notice commandNotFound();
     }
+
     interface InventorySection {
         String disposalTitle();
     }
@@ -93,84 +105,48 @@ public interface Translation {
     // clear section
     ClearMessages clear();
 
-    interface PlayerSection {
-        // feed
-        Notice feedMessage();
-        Notice feedMessageBy();
+    // feed section
+    FeedMessages feed();
 
-        // heal
-        Notice healMessage();
-        Notice healMessageBy();
+    // heal section
+    HealMessages heal();
 
-        // kill
-        Notice killedMessage();
+    // kill section
+    KillMessages kill();
 
-        // speed
-        Notice speedBetweenZeroAndTen();
-        Notice speedTypeNotCorrect();
+    // speed section
+    SpeedMessages speed();
 
-        Notice speedWalkSet();
-        Notice speedFlySet();
+    // godmode section
+    GodModeMessages godmode();
 
-        Notice speedWalkSetBy();
-        Notice speedFlySetBy();
+    // fly section
+    FlyMessages fly();
 
-        // godmode
-        Notice godEnable();
-        Notice godDisable();
-        Notice godSetEnable();
-        Notice godSetDisable();
+    // ping section
+    PingMessages ping();
 
-        // fly
-        Notice flyEnable();
-        Notice flyDisable();
-        Notice flySetEnable();
-        Notice flySetDisable();
+    // gamemode section
+    GameModeMessages gamemode();
 
-        // ping
-        Notice pingMessage();
-        Notice pingOtherMessage();
+    // online section
+    OnlineMessages online();
 
-        // gamemode
-        Notice gameModeNotCorrect();
-        Notice gameModeMessage();
-        Notice gameModeSetMessage();
+    // whois section
+    WhoIsMessages whois();
 
-        // online
-        Notice onlinePlayersCountMessage();
-        Notice onlinePlayersMessage();
+    // butcher section
+    ButcherMessages butcher();
 
-        // slot-bypass
-        List<String> fullServerSlots();
+    // give section
+    GiveMessages give();
 
-        // whois
-        List<String> whoisCommand();
-
-        // butcher
-        Notice butcherCommand();
-        Notice safeChunksMessage();
-    }
-
-    interface ItemSection {
-        // give
-        Notice giveReceived();
-        Notice giveGiven();
-        Notice giveNoSpace();
-        Notice giveNotItem();
-
-        // others
-        Notice skullMessage();
-        Notice enchantedMessage();
-        Notice enchantedMessageFor();
-        Notice enchantedMessageBy();
-    }
+    // skull section
+    SkullMessages skull();
 
     RepairMessages repair();
 
     EnchantMessages enchant();
-
-    ButcherMessages butcher();
-
     ElderGuardianMessages elderGuardian();
     DemoScreenMessages demoScreen();
     EndScreenMessages endScreen();
@@ -214,8 +190,6 @@ public interface Translation {
     DeathMessages deathMessage();
     // inventory section
     InventorySection inventory();
-    // player section
-    PlayerSection player();
     //Seen section
     SeenMessages seen();
     // sign editor section
@@ -224,8 +198,6 @@ public interface Translation {
     SpawnMessages spawn();
     // set slot section
     SetSlotMessages setSlot();
-    // item section
-    ItemSection item();
     // itemedit
     ItemEditMessages itemEdit();
     // time and weather
