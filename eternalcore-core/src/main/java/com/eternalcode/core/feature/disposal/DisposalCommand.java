@@ -56,7 +56,7 @@ class DisposalCommand {
 
         this.noticeService.create()
             .sender(commandSender)
-            .notice(message -> message.container().targetDisposalOpened())
+            .notice(message -> message.disposal().disposalForTargetOpened())
             .placeholder("{PLAYER}", target.getName())
             .send();
     }
@@ -67,7 +67,7 @@ class DisposalCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(message -> message.container().disposalOpened())
+            .notice(message -> message.disposal().disposalOpened())
             .send();
     }
 
