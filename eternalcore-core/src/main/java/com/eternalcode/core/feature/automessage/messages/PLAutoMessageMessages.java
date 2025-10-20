@@ -33,8 +33,8 @@ public class PLAutoMessageMessages extends OkaeriConfig implements AutoMessageMe
             .build()
     );
 
-    public Notice enabled = Notice.chat("<green>► <white>Włączono automatyczne wiadomości!");
-    public Notice disabled = Notice.chat("<green>► <white>Wyłączono automatyczne wiadomości!");
+    Notice enabled = Notice.chat("<green>► <white>Włączono automatyczne wiadomości!");
+    Notice disabled = Notice.chat("<green>► <white>Wyłączono automatyczne wiadomości!");
 
     @Override
     public Collection<Notice> messages() {

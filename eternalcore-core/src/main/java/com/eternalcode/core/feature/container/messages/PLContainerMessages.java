@@ -9,30 +9,30 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLContainerMessages extends OkaeriConfig implements ContainerMessages {
 
-    public Notice anvilOpened = Notice.chat("<green>► <white>Otworzono kowadło!");
-    public Notice targetAnvilOpened = Notice.chat("<green>► <white>Otworzono kowadło dla {PLAYER}!");
+    Notice anvilOpened = Notice.chat("<green>► <white>Otworzono kowadło!");
+    Notice targetAnvilOpened = Notice.chat("<green>► <white>Otworzono kowadło dla {PLAYER}!");
 
-    public Notice cartographyOpened = Notice.chat("<green>► <white>Otworzono stół kartograficzny!");
-    public Notice targetCartographyOpened = Notice.chat("<green>► <white>Otworzono stół kartograficzny dla {PLAYER}!");
+    Notice cartographyOpened = Notice.chat("<green>► <white>Otworzono stół kartograficzny!");
+    Notice targetCartographyOpened = Notice.chat("<green>► <white>Otworzono stół kartograficzny dla {PLAYER}!");
 
-    public Notice disposalOpened = Notice.chat("<green>► <white>Otworzono śmietnik!");
-    public Notice targetDisposalOpened = Notice.chat("<green>► <white>Otworzono śmietnik dla {PLAYER}!");
+    Notice disposalOpened = Notice.chat("<green>► <white>Otworzono śmietnik!");
+    Notice targetDisposalOpened = Notice.chat("<green>► <white>Otworzono śmietnik dla {PLAYER}!");
 
-    public Notice enderchestOpened = Notice.chat("<green>► <white>Otworzono enderchest!");
-    public Notice targetEnderchestOpened = Notice.chat("<green>► <white>Otworzono enderchest dla {PLAYER}!");
+    Notice enderchestOpened = Notice.chat("<green>► <white>Otworzono enderchest!");
+    Notice targetEnderchestOpened = Notice.chat("<green>► <white>Otworzono enderchest dla {PLAYER}!");
 
-    public Notice grindstoneOpened = Notice.chat("<green>► <white>Otworzono szlifierkę!");
-    public Notice targetGrindstoneOpened = Notice.chat("<green>► <white>Otworzono szlifierkę dla {PLAYER}!");
+    Notice grindstoneOpened = Notice.chat("<green>► <white>Otworzono szlifierkę!");
+    Notice targetGrindstoneOpened = Notice.chat("<green>► <white>Otworzono szlifierkę dla {PLAYER}!");
 
-    public Notice loomOpened = Notice.chat("<green>► <white>Otworzono krosno!");
-    public Notice targetLoomOpened = Notice.chat("<green>► <white>Otworzono krosno dla {PLAYER}!");
+    Notice loomOpened = Notice.chat("<green>► <white>Otworzono krosno!");
+    Notice targetLoomOpened = Notice.chat("<green>► <white>Otworzono krosno dla {PLAYER}!");
 
-    public Notice smithingOpened = Notice.chat("<green>► <white>Otworzono stół kowalski!");
-    public Notice targetSmithingOpened = Notice.chat("<green>► <white>Otworzono stół kowalski dla {PLAYER}!");
+    Notice smithingOpened = Notice.chat("<green>► <white>Otworzono stół kowalski!");
+    Notice targetSmithingOpened = Notice.chat("<green>► <white>Otworzono stół kowalski dla {PLAYER}!");
 
-    public Notice stonecutterOpened = Notice.chat("<green>► <white>Otworzono piłę kamieniarską!");
-    public Notice targetStonecutterOpened = Notice.chat("<green>► <white>Otworzono piłę kamieniarską dla {PLAYER}!");
+    Notice stonecutterOpened = Notice.chat("<green>► <white>Otworzono piłę kamieniarską!");
+    Notice targetStonecutterOpened = Notice.chat("<green>► <white>Otworzono piłę kamieniarską dla {PLAYER}!");
 
-    public Notice workbenchOpened = Notice.chat("<green>► <white>Otworzono stół rzemieślniczy!");
-    public Notice targetWorkbenchOpened = Notice.chat("<green>► <white>Otworzono stół rzemieślniczy dla {PLAYER}!");
+    Notice workbenchOpened = Notice.chat("<green>► <white>Otworzono stół rzemieślniczy!");
+    Notice targetWorkbenchOpened = Notice.chat("<green>► <white>Otworzono stół rzemieślniczy dla {PLAYER}!");
 }

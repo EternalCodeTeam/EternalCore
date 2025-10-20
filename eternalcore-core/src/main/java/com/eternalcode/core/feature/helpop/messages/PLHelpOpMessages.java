@@ -10,10 +10,10 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLHelpOpMessages extends OkaeriConfig implements HelpOpSection {
     @Comment({"# {PLAYER} - Gracz który wysłał wiadomość na helpop, {TEXT} - Treść wysłanej wiadomości"})
-    public Notice format =
+    Notice format =
         Notice.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{PLAYER}<white>: <white>{TEXT}");
     @Comment(" ")
-    public Notice send = Notice.chat("<green>► <white>Wiadomość została wysłana do administracji");
+    Notice send = Notice.chat("<green>► <white>Wiadomość została wysłana do administracji");
     @Comment("# {TIME} - Czas do końca blokady (cooldown)")
-    public Notice helpOpDelay = Notice.chat("<white>► <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
+    Notice helpOpDelay = Notice.chat("<white>► <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
 }

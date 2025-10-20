@@ -9,6 +9,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLDemoScreenMessages extends OkaeriConfig implements DemoScreenMessages {
 
-    public Notice shownToSelf = Notice.chat("<green>► <white>Pokazałeś ekran demo sobie!</white>");
-    public Notice shownToOtherPlayer = Notice.chat("<green>► <white>Pokazałeś ekran demo graczowi <green>{PLAYER}!</green>");
+    Notice shownToSelf = Notice.chat("<green>► <white>Pokazałeś ekran demo sobie!</white>");
+    Notice shownToOtherPlayer = Notice.chat("<green>► <white>Pokazałeś ekran demo graczowi <green>{PLAYER}!</green>");
 }

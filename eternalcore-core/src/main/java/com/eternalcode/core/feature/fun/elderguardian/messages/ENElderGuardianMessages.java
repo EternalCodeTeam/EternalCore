@@ -9,8 +9,8 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENElderGuardianMessages extends OkaeriConfig implements ElderGuardianMessages {
 
-    public Notice elderGuardianShown =
+    Notice elderGuardianShown =
         Notice.chat("<green>► <white>Shown elder guardian to player <green>{PLAYER}<white>!");
-    public Notice elderGuardianShownSilently =
+    Notice elderGuardianShownSilently =
         Notice.chat("<green>► <white>Shown elder guardian to player <green>{PLAYER}<white> silently!");
 }
