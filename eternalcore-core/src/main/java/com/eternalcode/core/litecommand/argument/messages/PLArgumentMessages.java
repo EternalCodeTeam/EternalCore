@@ -24,7 +24,7 @@ public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages
     Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
     Notice numberBiggerThanZero = Notice.chat("<red>✘ <dark_red>Liczba musi być większa od 0!");
     Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
-    Notice stackNumberIncorrect = Notice.chat("<red>✘ <dark_red><Niepoprawna liczba!");
+    Notice stackNumberIncorrect = Notice.chat("<red>✘ <dark_red>Niepoprawna liczba!");
     Notice noItem = Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w dłoni!");
     Notice noMaterial = Notice.chat("<red>✘ <dark_red>Taki materiał nie istnieje!");
     Notice noArgument = Notice.chat("<red>✘ <dark_red>Taki argument nie istnieje!");
