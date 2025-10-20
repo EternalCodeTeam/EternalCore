@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.playerinfo;
+package com.eternalcode.core.feature.onlineplayers;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.configuration.implementation.PluginConfiguration;
@@ -48,7 +48,7 @@ class OnlinePlayersListCommand {
             .collect(Collectors.joining(this.config.format.separator));
 
         this.noticeService.create()
-            .notice(translation -> translation.player().onlinePlayersMessage())
+            .notice(translation -> translation.online().onlinePlayersList())
             .placeholder("{ONLINE}", onlineCount)
             .placeholder("{PLAYERS}", players)
             .viewer(viewer)

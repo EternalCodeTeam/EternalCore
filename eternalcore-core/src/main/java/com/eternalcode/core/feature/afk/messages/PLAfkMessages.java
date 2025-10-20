@@ -11,13 +11,13 @@ import lombok.experimental.Accessors;
 public class PLAfkMessages extends OkaeriConfig implements AfkMessages {
 
     @Comment("# {PLAYER} - Gracz ")
-    public Notice afkOn = Notice.chat("<green>► <white>{PLAYER} jest AFK!");
+    Notice afkOn = Notice.chat("<green>► <white>{PLAYER} jest AFK!");
 
     @Comment("# {PLAYER} - Gracz ")
-    public Notice afkOff = Notice.chat("<green>► <white>{PLAYER} już nie jest AFK!");
+    Notice afkOff = Notice.chat("<green>► <white>{PLAYER} już nie jest AFK!");
 
     @Comment({" ", "# {TIME} - Czas po którym gracz może użyć komendy"})
-    public Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
+    Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
 
     @Comment({" "})
     public String afkKickReason = "<red>Zostałeś wyrzucony z powodu braku aktywności!";

@@ -10,24 +10,24 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages {
     @Comment("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
-    public Notice permissionMessage =
+    Notice permissionMessage =
         Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
 
     @Comment({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
-    public Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
-    public Notice usageMessageHead = Notice.chat("<gold>✘ <white>Poprawne użycie:");
-    public Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
+    Notice usageMessage = Notice.chat("<gold>✘ <white>Poprawne użycie: <gold>{USAGE}");
+    Notice usageMessageHead = Notice.chat("<gold>✘ <white>Poprawne użycie:");
+    Notice usageMessageEntry = Notice.chat("<gold>✘ <white>{USAGE}");
 
     @Comment(" ")
-    public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę gracza!");
-    public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
-    public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
-    public Notice numberBiggerThanZero = Notice.chat("<red>✘ <dark_red>Liczba musi być większa od 0!");
-    public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
-    public Notice noItem = Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w dłoni!");
-    public Notice noMaterial = Notice.chat("<red>✘ <dark_red>Taki materiał nie istnieje!");
-    public Notice noArgument = Notice.chat("<red>✘ <dark_red>Taki argument nie istnieje!");
-    public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Świat <dark_red>{WORLD} <red>nie istnieje!");
-    public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
+    Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę gracza!");
+    Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>Ten gracz jest obecnie offline!");
+    Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Ta komenda jest dostępna tylko dla graczy!");
+    Notice numberBiggerThanZero = Notice.chat("<red>✘ <dark_red>Liczba musi być większa od 0!");
+    Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>Liczba musi być równa lub większa od 0!");
+    Notice noItem = Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w dłoni!");
+    Notice noMaterial = Notice.chat("<red>✘ <dark_red>Taki materiał nie istnieje!");
+    Notice noArgument = Notice.chat("<red>✘ <dark_red>Taki argument nie istnieje!");
+    Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Świat <dark_red>{WORLD} <red>nie istnieje!");
+    Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
 
 }

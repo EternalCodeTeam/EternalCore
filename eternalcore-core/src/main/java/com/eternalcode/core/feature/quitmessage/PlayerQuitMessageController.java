@@ -37,7 +37,7 @@ class PlayerQuitMessageController implements Listener {
         event.setQuitMessage(EMPTY_MESSAGE);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().quitMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().playerLeftServer()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();

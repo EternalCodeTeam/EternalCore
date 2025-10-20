@@ -9,15 +9,15 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class PLTeleportRequestMessages extends OkaeriConfig implements TeleportRequestMessages {
-    public Notice tpaSelfMessage = Notice.chat("<red>✘ <dark_red>Nie możesz teleportować się samodzielnie!");
-    public Notice tpaAlreadySentMessage = Notice.chat("<red>✘ <dark_red>Już wysłałeś prośbę o teleportację!");
+    Notice tpaSelfMessage = Notice.chat("<red>✘ <dark_red>Nie możesz teleportować się samodzielnie!");
+    Notice tpaAlreadySentMessage = Notice.chat("<red>✘ <dark_red>Już wysłałeś prośbę o teleportację!");
     @Comment({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportację"})
-    public Notice tpaSentMessage =
+    Notice tpaSentMessage =
         Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!");
 
-    public Notice tpaHereSent = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację gracza <green>{PLAYER}<white> do twojej lokalizacji!");
-    public Notice tpaHereSentToAll = Notice.chat("<green>► <white>Wysłano prośbę o teleportację do wszystkich graczy!");
-    public Notice tpaHereReceived = Notice.builder()
+    Notice tpaHereSent = Notice.chat("<green>► <white>Wysłałeś prośbę o teleportację gracza <green>{PLAYER}<white> do twojej lokalizacji!");
+    Notice tpaHereSentToAll = Notice.chat("<green>► <white>Wysłano prośbę o teleportację do wszystkich graczy!");
+    Notice tpaHereReceived = Notice.builder()
         .chat("<green>► <white>Otrzymałeś prośbę o teleportację do gracza: <green>{PLAYER}<white>!")
         .chat(
             "<hover:show_text:'<green>Teleportować się do gracza?</green>'><gold><click:suggest_command:'/tpahereaccept {PLAYER}'><dark_gray>» <gold>/tpahereaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>")
@@ -32,7 +32,7 @@ public class PLTeleportRequestMessages extends OkaeriConfig implements TeleportR
         "# Więcej informacji znajdziesz na stronie: https://docs.adventure.kyori.net/minimessage/format.html",
     })
     @Comment({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-    public Notice tpaReceivedMessage = Notice.builder()
+    Notice tpaReceivedMessage = Notice.builder()
         .chat("<green>► <white>Otrzymałeś prośbę o teleportację od gracza: <green>{PLAYER}<white>!")
         .chat(
             "<hover:show_text:'<green>Akceptować prośbę o teleportacje?</green>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>by ją zaakceptować! <gray>(Kliknij)</gray></click></gold></hover>")
@@ -41,35 +41,35 @@ public class PLTeleportRequestMessages extends OkaeriConfig implements TeleportR
         .build();
 
     @Comment(" ")
-    public Notice tpaDenyNoRequestMessage =
+    Notice tpaDenyNoRequestMessage =
         Notice.chat("<red>✘ <dark_red>Nie otrzymałeś prośby o teleportację od tego gracza!");
 
     @Comment({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-    public Notice tpaDenyDoneMessage =
+    Notice tpaDenyDoneMessage =
         Notice.chat("<red>✘ <dark_red>Odrzuciłeś prośbę o teleportację od gracza: <red>{PLAYER}<dark_red>!");
 
     @Comment({" ", "# {PLAYER} - Gracz który odrzucił prośbę o teleportacje"})
-    public Notice tpaDenyReceivedMessage =
+    Notice tpaDenyReceivedMessage =
         Notice.chat("<red>► <dark_red>Gracz: <red>{PLAYER} <dark_red>odrzucił twoją prośbę o teleportację!");
 
     @Comment(" ")
-    public Notice tpaDenyAllDenied = Notice.chat("<red>► <dark_red>Odrzucono wszystkie prośby o teleportację!");
+    Notice tpaDenyAllDenied = Notice.chat("<red>► <dark_red>Odrzucono wszystkie prośby o teleportację!");
 
     @Comment({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-    public Notice tpaAcceptMessage =
+    Notice tpaAcceptMessage =
         Notice.chat("<green>► <white>Zaakceptowałeś prośbę o teleportację od gracza: <green>{PLAYER}<white>!");
 
     @Comment(" ")
-    public Notice tpaAcceptNoRequestMessage =
+    Notice tpaAcceptNoRequestMessage =
         Notice.chat("<red>✘ <dark_red>Ten gracz nie wysłał do ciebie prośby o teleportację!");
 
     @Comment({" ", "# {PLAYER} - Gracz który wysłał prośbę o teleportacje do innego gracza"})
-    public Notice tpaAcceptReceivedMessage =
+    Notice tpaAcceptReceivedMessage =
         Notice.chat("<green>► <white>Gracz: <green>{PLAYER} <white>zaakceptował twoją prośbę o teleportację!");
 
     @Comment(" ")
-    public Notice tpaAcceptAllAccepted = Notice.chat("<green>► <white>Zaakceptowano wszystkie prośby o teleportację!");
+    Notice tpaAcceptAllAccepted = Notice.chat("<green>► <white>Zaakceptowano wszystkie prośby o teleportację!");
 
     @Comment(" ")
-    public Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>ignoruje Cię!");
+    Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>ignoruje Cię!");
 }

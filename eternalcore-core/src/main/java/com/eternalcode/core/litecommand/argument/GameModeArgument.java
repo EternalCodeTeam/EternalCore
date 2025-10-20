@@ -33,7 +33,7 @@ class GameModeArgument extends AbstractViewerArgument<GameMode> {
         catch (IllegalArgumentException exception) {
             return this.gameModeArgumentSettings.getByAlias(argument)
                 .map(ParseResult::success)
-                .orElseGet(() -> ParseResult.failure(translation.player().gameModeNotCorrect()));
+                .orElseGet(() -> ParseResult.failure(translation.gamemode().gamemodeTypeInvalid()));
         }
     }
 

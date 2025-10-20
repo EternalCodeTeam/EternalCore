@@ -17,7 +17,7 @@ public class ENJoinMessage extends OkaeriConfig implements JoinMessage {
         "# EternalCore will randomly select one of the messages from the list below",
         "# every time a player joins the server.",
     })
-    public List<Notice> joinMessages = List.of(
+    public List<Notice> playerJoinedServer = List.of(
         BukkitNotice.builder()
             .actionBar("<green>► {PLAYER} <white>joined the server!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
@@ -33,7 +33,7 @@ public class ENJoinMessage extends OkaeriConfig implements JoinMessage {
         "# EternalCore will randomly select one of the messages from the list below",
         "# every time a player joins the server for the first time.",
     })
-    public List<Notice> firstJoinMessages = List.of(
+    public List<Notice> playerJoinedServerFirstTime = List.of(
         BukkitNotice.builder()
             .actionBar("<green>► {PLAYER} <white>joined the server for the first time!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)

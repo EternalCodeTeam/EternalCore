@@ -17,26 +17,26 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
 
     public String unarmedWeaponName = "Fists";
 
-    public List<Notice> deathMessageByEntity = Arrays.asList(
+    public List<Notice> playerKilledByEntity = Arrays.asList(
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <yellow>{MOB}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was slain by <yellow>{MOB}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>didn't survive the encounter with <yellow>{MOB}<red>!")
     );
 
-    public List<Notice> deathMessage = Arrays.asList(
+    public List<Notice> playerKilledByOtherPlayer = Arrays.asList(
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was killed by <dark_red>{KILLER}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was slain by <dark_red>{KILLER} <red>using <yellow>{WEAPON}<red>!"),
         Notice.chat("<white>☠ <dark_red>{KILLER} <red>eliminated <dark_red>{PLAYER}<red>!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died in combat with <dark_red>{KILLER}<red>!")
     );
 
-    public List<Notice> unknownDeathCause = Arrays.asList(
+    public List<Notice> playerDiedByUnknownCause = Arrays.asList(
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died under mysterious circumstances!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>died for unknown reasons!"),
         Notice.chat("<white>☠ <dark_red>{PLAYER} <red>mysteriously perished!")
     );
 
-    public Map<EntityDamageEvent.DamageCause, List<Notice>> deathMessageByDamageCause = new HashMap<>() {{
+    public Map<EntityDamageEvent.DamageCause, List<Notice>> playerDiedByDamageCause = new HashMap<>() {{
         put(EntityDamageEvent.DamageCause.VOID, Arrays.asList(
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>fell into the void!"),
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>descended into nothingness!")
@@ -149,7 +149,7 @@ public class ENDeathMessages extends OkaeriConfig implements DeathMessages {
         ));
     }};
 
-    public Map<EntityType, List<Notice>> deathMessageByMobType = new HashMap<>() {{
+    public Map<EntityType, List<Notice>> playerKilledByMobType = new HashMap<>() {{
         put(EntityType.ZOMBIE, Arrays.asList(
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>was eaten by a zombie!"),
             Notice.chat("<white>☠ <dark_red>{PLAYER} <red>became zombie food!")

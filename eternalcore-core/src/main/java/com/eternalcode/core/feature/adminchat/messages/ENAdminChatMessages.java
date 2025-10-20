@@ -11,11 +11,11 @@ import lombok.experimental.Accessors;
 public class ENAdminChatMessages extends OkaeriConfig implements AdminChatMessages {
 
     @Comment({"# {PLAYER} - Player who sent message on adminchat, {TEXT} - message"})
-    public Notice format = Notice.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
+    Notice format = Notice.chat("<dark_gray>[<dark_red>AdminChat<dark_gray>] <red>{PLAYER}<dark_gray>: <white>{TEXT}");
 
-    public Notice enabled = Notice.chat("<green>► <white>Enabled persistent admin chat!");
+    Notice enabled = Notice.chat("<green>► <white>Enabled persistent admin chat!");
 
-    public Notice disabled = Notice.chat("<green>► <white>Disabled persistent admin chat!");
+    Notice disabled = Notice.chat("<green>► <white>Disabled persistent admin chat!");
 
-    public Notice enabledReminder = Notice.actionbar("<green>AdminChat channel is enabled!");
+    Notice enabledReminder = Notice.actionbar("<green>AdminChat channel is enabled!");
 }

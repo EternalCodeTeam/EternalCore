@@ -9,12 +9,12 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENIgnoreMessages extends OkaeriConfig implements IgnoreMessages {
-    public Notice playerIgnored = Notice.chat("<green>► {PLAYER} <white>player has been ignored!");
-    public Notice allPlayersIgnored = Notice.chat("<red>► <dark_red>All players have been ignored!");
-    public Notice cannotIgnoreSelf = Notice.chat("<red>► <dark_red>You can't ignore yourself!");
-    public Notice playerAlreadyIgnored = Notice.chat("<red>► <dark_red>You already ignore this player!");
-    public Notice playerUnignored = Notice.chat("<red>► <dark_red>{PLAYER} <red>player has been unignored!");
-    public Notice allPlayersUnignored = Notice.chat("<red>► <dark_red>All players have been unignored!");
-    public Notice cannotUnignoreSelf = Notice.chat("<red>► <dark_red>You can't unignore yourself!");
-    public Notice playerNotIgnored = Notice.chat("<red>► <dark_red>You don't ignore this player, so you can unignore him!");
+    Notice playerIgnored = Notice.chat("<green>► {PLAYER} <white>player has been ignored!");
+    Notice allPlayersIgnored = Notice.chat("<red>► <dark_red>All players have been ignored!");
+    Notice cannotIgnoreSelf = Notice.chat("<red>► <dark_red>You can't ignore yourself!");
+    Notice playerAlreadyIgnored = Notice.chat("<red>► <dark_red>You already ignore this player!");
+    Notice playerUnignored = Notice.chat("<red>► <dark_red>{PLAYER} <red>player has been unignored!");
+    Notice allPlayersUnignored = Notice.chat("<red>► <dark_red>All players have been unignored!");
+    Notice cannotUnignoreSelf = Notice.chat("<red>► <dark_red>You can't unignore yourself!");
+    Notice playerNotIgnored = Notice.chat("<red>► <dark_red>You don't ignore this player, so you can unignore him!");
 }

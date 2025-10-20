@@ -63,8 +63,8 @@ class FullServerBypassController implements Listener {
         Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
         List<String> messages = userOption
-            .map(user -> this.translationManager.getMessages(user.getUniqueId()).player().fullServerSlots())
-            .orElseGet(() -> this.translationManager.getMessages().player().fullServerSlots());
+            .map(user -> this.translationManager.getMessages(user.getUniqueId()).online().serverFull())
+            .orElseGet(() -> this.translationManager.getMessages(user.getUniqueId()).online().serverFull());
 
         return String.join(LINE_SEPARATOR, messages);
     }

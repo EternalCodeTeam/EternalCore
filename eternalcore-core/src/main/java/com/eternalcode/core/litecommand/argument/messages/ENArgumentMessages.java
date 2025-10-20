@@ -10,22 +10,22 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENArgumentMessages extends OkaeriConfig implements ArgumentMessages {
     @Comment("# {PERMISSIONS} - Required permission")
-    public Notice permissionMessage = Notice.chat("<red>✘ <dark_red>You don't have permission to perform this command! <red>({PERMISSIONS})");
+    Notice permissionMessage = Notice.chat("<red>✘ <dark_red>You don't have permission to perform this command! <red>({PERMISSIONS})");
 
     @Comment({" ", "# {USAGE} - Correct usage"})
-    public Notice usageMessage = Notice.chat("<gold>✘ <white>Correct usage: <gold>{USAGE}");
-    public Notice usageMessageHead = Notice.chat("<green>► <white>Correct usage:");
-    public Notice usageMessageEntry = Notice.chat("<green>► <white>{USAGE}");
+    Notice usageMessage = Notice.chat("<gold>✘ <white>Correct usage: <gold>{USAGE}");
+    Notice usageMessageHead = Notice.chat("<green>► <white>Correct usage:");
+    Notice usageMessageEntry = Notice.chat("<green>► <white>{USAGE}");
 
     @Comment(" ")
-    public Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>You must provide a player name!");
-    public Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>This player is currently offline!");
-    public Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Command is only for players!");
-    public Notice numberBiggerThanZero = Notice.chat("<red>✘ <dark_red>The number must be greater than 0!");
-    public Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>The number must be greater than or equal to 0!");
-    public Notice noItem = Notice.chat("<red>✘ <dark_red>You need item to use this command!");
-    public Notice noMaterial = Notice.chat("<red>✘ <dark_red>This item doesn't exist");
-    public Notice noArgument = Notice.chat("<red>✘ <dark_red>This argument doesn't exist");
-    public Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>World <red>{WORLD} <dark_red>doesn't exist!");
-    public Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location format! <red>({LOCATION})");
+    Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>You must provide a player name!");
+    Notice offlinePlayer = Notice.chat("<red>✘ <dark_red>This player is currently offline!");
+    Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Command is only for players!");
+    Notice numberBiggerThanZero = Notice.chat("<red>✘ <dark_red>The number must be greater than 0!");
+    Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>The number must be greater than or equal to 0!");
+    Notice noItem = Notice.chat("<red>✘ <dark_red>You need item to use this command!");
+    Notice noMaterial = Notice.chat("<red>✘ <dark_red>This item doesn't exist");
+    Notice noArgument = Notice.chat("<red>✘ <dark_red>This argument doesn't exist");
+    Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>World <red>{WORLD} <dark_red>doesn't exist!");
+    Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Incorrect location format! <red>({LOCATION})");
 }
