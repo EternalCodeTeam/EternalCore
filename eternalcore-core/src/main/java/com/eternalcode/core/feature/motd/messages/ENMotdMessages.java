@@ -17,7 +17,7 @@ public class ENMotdMessages extends OkaeriConfig implements MotdMessages {
     @Comment("# Out of the box supported placeholders: {PLAYER}, {WORLD}")
     @Comment("# You can add your own placeholders using the PlaceholderAPI.")
     @Comment("# You can check our Notification Generator: https://www.eternalcode.pl/notification-generator")
-    public Notice motdContent = BukkitNotice.builder()
+    Notice motdContent = BukkitNotice.builder()
         .chat(List.of(
                 " ",
                 " <color:#9d6eef>🠚 <white>Welcome Back, <gradient:#9d6eef:#A1AAFF:#9d6eef>{PLAYER}</gradient>!</white>",

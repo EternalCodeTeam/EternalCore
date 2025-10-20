@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class PLHealMessages extends OkaeriConfig implements HealMessages {
-    public Notice healed = Notice.chat("<green>► <white>Zostałeś uleczony!");
-    public Notice healedTargetPlayer = Notice.chat("<green>► <white>Uleczyłeś gracza <green>{PLAYER}");
+    Notice healed = Notice.chat("<green>► <white>Zostałeś uleczony!");
+    Notice healedTargetPlayer = Notice.chat("<green>► <white>Uleczyłeś gracza <green>{PLAYER}");
 }
 

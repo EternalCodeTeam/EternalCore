@@ -9,6 +9,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENSkullMessages extends OkaeriConfig implements SkullMessages {
 
-    public Notice playerSkullReceived = Notice.chat("<green>► <white>Player <green>{SKULL} <white>head received");
+    Notice playerSkullReceived = Notice.chat("<green>► <white>Player <green>{SKULL} <white>head received");
 }
 

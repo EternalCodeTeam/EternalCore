@@ -204,46 +204,46 @@ public class ENTranslation extends AbstractTranslation {
     public static class ENTeleportSection extends OkaeriConfig implements TeleportSection {
         // teleport
         @Comment({"# {PLAYER} - Teleported players"})
-        public Notice teleportedToPlayer =
+        Notice teleportedToPlayer =
             Notice.chat("<green>► <white>Successfully teleported to <green>{PLAYER}<white>!");
 
         @Comment({"# {PLAYER} - Teleported player, {ARG-PLAYER} - Player to whom another player has been transferred"})
-        public Notice teleportedPlayerToPlayer =
+        Notice teleportedPlayerToPlayer =
             Notice.chat("<green>► <white>Successfully teleported <green>{PLAYER} <white>to <green>{ARG-PLAYER}<white>!");
 
         @Comment({"# {Y} - Y coordinate of the highest block"})
-        public Notice teleportedToHighestBlock =
+        Notice teleportedToHighestBlock =
             Notice.chat("<green>► <white>Teleported successfully to the highest block! (Y: {Y})");
 
         @Comment(" ")
-        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>All players have been teleported to you!");
+        Notice teleportedAllToPlayer = Notice.chat("<green>► <white>All players have been teleported to you!");
 
         // Task
         @Comment({"# {TIME} - Teleportation time"})
-        public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleporting in <green>{TIME}");
+        Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleporting in <green>{TIME}");
         @Comment(" ")
-        public Notice teleported = Notice.chat("<green>► <white>Teleported!");
-        public Notice teleporting = Notice.chat("<green>► <white>Teleporting...");
-        public Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>You've moved, teleportation canceled!");
-        public Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>You are in teleport!");
+        Notice teleported = Notice.chat("<green>► <white>Teleported!");
+        Notice teleporting = Notice.chat("<green>► <white>Teleporting...");
+        Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>You've moved, teleportation canceled!");
+        Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>You are in teleport!");
 
         // Coordinates XYZ
         @Comment({" ", "# {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
-        public Notice teleportedToCoordinates = Notice.chat(
+        Notice teleportedToCoordinates = Notice.chat(
             "<green>► <white>Teleported to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
         @Comment({" ",
                   "# {PLAYER} -  Player who has been teleported, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
-        public Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
+        Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
             "<green>► <white>Teleported <green>{PLAYER} <white>to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
 
         // Back
         @Comment(" ")
-        public Notice teleportedToLastLocation = Notice.chat("<green>► <white>Teleported to the last location!");
+        Notice teleportedToLastLocation = Notice.chat("<green>► <white>Teleported to the last location!");
         @Comment({" ", "# {PLAYER} - Player who has been teleported"})
-        public Notice teleportedSpecifiedPlayerLastLocation =
+        Notice teleportedSpecifiedPlayerLastLocation =
             Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
         @Comment(" ")
-        public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
+        Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
     }
 
     @Comment({
@@ -263,30 +263,30 @@ public class ENTranslation extends AbstractTranslation {
     @Getter
     public static class ENChatSection extends OkaeriConfig implements ChatSection {
         @Comment({"# {PLAYER} - Player who performed the actions for the chat"})
-        public Notice disabled = Notice.chat("<green>► <white>Chat has been disabled by <green>{PLAYER}<white>!");
-        public Notice enabled = Notice.chat("<green>► <white>The chat has been enabled by <green>{PLAYER}<white>!");
-        public Notice cleared = Notice.chat("<green>► <white>Chat has been cleared by <green>{PLAYER}<white>!");
+        Notice disabled = Notice.chat("<green>► <white>Chat has been disabled by <green>{PLAYER}<white>!");
+        Notice enabled = Notice.chat("<green>► <white>The chat has been enabled by <green>{PLAYER}<white>!");
+        Notice cleared = Notice.chat("<green>► <white>Chat has been cleared by <green>{PLAYER}<white>!");
 
         @Comment(" ")
-        public Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Chat already off!");
-        public Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Chat already on!");
+        Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Chat already off!");
+        Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Chat already on!");
 
         @Comment({" ", "# {SLOWMODE} - Time for next message"})
-        public Notice slowModeSet = Notice.chat("<green>► <white>SlowMode set to: {SLOWMODE}");
+        Notice slowModeSet = Notice.chat("<green>► <white>SlowMode set to: {SLOWMODE}");
 
         @Comment({" ", "# {PLAYER} - Player who performed the actions for the chat"})
-        public Notice slowModeOff =
+        Notice slowModeOff =
             Notice.chat("<green>► <white>SlowMode has been disabled by <green>{PLAYER}<white>!");
 
         @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        public Notice slowMode =
+        Notice slowMode =
             Notice.chat("<red>✘ <dark_red>You can write the next message for: <red>{TIME}<dark_red>!");
 
         @Comment(" ")
-        public Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Chat is currently disabled!");
+        Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Chat is currently disabled!");
 
         @Comment(" ")
-        public Notice commandNotFound =
+        Notice commandNotFound =
             Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
     }
 
