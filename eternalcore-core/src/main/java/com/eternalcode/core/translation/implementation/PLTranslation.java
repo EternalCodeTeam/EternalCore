@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.butcher.messages.PLButcherMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.PLDeathMessages;
+import com.eternalcode.core.feature.disposal.messages.PLDisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
 import com.eternalcode.core.feature.feed.messages.PLFeedMessages;
 import com.eternalcode.core.feature.fly.messages.PLFlyMessages;
@@ -349,14 +350,10 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# Ta sekcja odpowiada za przeglądanie ekwipunku gracza"
+        "# Ta sekcja odpowiada za wiadomości o koszu",
     })
-    public PLInventorySection inventory = new PLInventorySection();
+    public PLDisposalMessages disposal = new PLDisposalMessages();
 
-    @Getter
-    public static class PLInventorySection extends OkaeriConfig implements InventorySection {
-        public String disposalTitle = "<white><bold>Kosz";
-    }
 
     @Comment("# Ta sekcja odpowiada za komende /clear")
     public PLClearMessages clear = new PLClearMessages();
