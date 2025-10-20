@@ -14,8 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
-import panda.utilities.text.Joiner;
 
+import java.util.List;
 import java.util.Optional;
 
 @PermissionDocs(
@@ -27,6 +27,7 @@ import java.util.Optional;
 class FullServerBypassController implements Listener {
 
     static final String SLOT_BYPASS = "eternalcore.slot.bypass";
+    private static final String LINE_SEPARATOR = "\n";
 
     private final TranslationManager translationManager;
     private final UserManager userManager;
@@ -41,35 +42,30 @@ class FullServerBypassController implements Listener {
 
     @EventHandler
     void onLogin(PlayerLoginEvent event) {
-        if (event.getResult() == PlayerLoginEvent.Result.KICK_FULL) {
-            Player player = event.getPlayer();
-
-            if (player.hasPermission(SLOT_BYPASS)) {
-                event.allow();
-
-                return;
-            }
-
-            String serverFullMessage = this.getServerFullMessage(player);
-            Component serverFullMessageComponent = this.miniMessage.deserialize(serverFullMessage);
-
-            event.disallow(PlayerLoginEvent.Result.KICK_FULL, AdventureUtil.SECTION_SERIALIZER.serialize(serverFullMessageComponent));
+        if (event.getResult() != PlayerLoginEvent.Result.KICK_FULL) {
+            return;
         }
+
+        Player player = event.getPlayer();
+
+        if (player.hasPermission(SLOT_BYPASS)) {
+            event.allow();
+            return;
+        }
+
+        String serverFullMessage = this.getServerFullMessage(player);
+        Component serverFullMessageComponent = this.miniMessage.deserialize(serverFullMessage);
+
+        event.disallow(PlayerLoginEvent.Result.KICK_FULL, AdventureUtil.SECTION_SERIALIZER.serialize(serverFullMessageComponent));
     }
 
     private String getServerFullMessage(Player player) {
         Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
 
-        if (userOption.isEmpty()) {
-            return Joiner.on("\n")
-                .join(this.translationManager.getMessages().online().serverFull())
-                .toString();
-        }
+        List<String> messages = userOption
+            .map(user -> this.translationManager.getMessages(user.getUniqueId()).online().serverFull())
+            .orElseGet(() -> this.translationManager.getMessages(player.getUniqueId()).online().serverFull());
 
-        User user = userOption.get();
-
-        return Joiner.on("\n")
-            .join(this.translationManager.getMessages(user.getUniqueId()).online().serverFull())
-            .toString();
+        return String.join(LINE_SEPARATOR, messages);
     }
 }
