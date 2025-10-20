@@ -23,6 +23,7 @@ public class ENArgumentMessages extends OkaeriConfig implements ArgumentMessages
     Notice onlyPlayer = Notice.chat("<red>✘ <dark_red>Command is only for players!");
     Notice numberBiggerThanZero = Notice.chat("<red>✘ <dark_red>The number must be greater than 0!");
     Notice numberBiggerThanOrEqualZero = Notice.chat("<red>✘ <dark_red>The number must be greater than or equal to 0!");
+    Notice stackNumberIncorrect = Notice.chat("<red>✘ <dark_red>Incorrect number!");
     Notice noItem = Notice.chat("<red>✘ <dark_red>You need item to use this command!");
     Notice noMaterial = Notice.chat("<red>✘ <dark_red>This item doesn't exist");
     Notice noArgument = Notice.chat("<red>✘ <dark_red>This argument doesn't exist");
