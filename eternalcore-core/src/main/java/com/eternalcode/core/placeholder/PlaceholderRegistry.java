@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface PlaceholderRegistry {
 
-    void registerPlaceholder(PlaceholderReplacer stack);
+    void register(Placeholder stack);
 
     String format(String text, Viewer target);
 
