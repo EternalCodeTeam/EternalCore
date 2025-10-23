@@ -12,13 +12,10 @@ public interface ArgumentMessages {
     Notice onlyPlayer();
     Notice numberBiggerThanZero();
     Notice numberBiggerThanOrEqualZero();
+    Notice stackNumberIncorrect();
     Notice noItem();
+    Notice noMaterial();
     Notice noArgument();
-    Notice noDamaged();
-    Notice noDamagedItems();
-    Notice noEnchantment();
-    Notice noValidEnchantmentLevel();
     Notice worldDoesntExist();
-    Notice incorrectNumberOfChunks();
     Notice incorrectLocation();
 }

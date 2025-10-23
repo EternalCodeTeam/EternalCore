@@ -10,10 +10,9 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import net.kyori.adventure.bossbar.BossBar;
-
 import java.time.Duration;
 import java.util.function.Function;
+import net.kyori.adventure.bossbar.BossBar;
 
 @Command(name = "broadcast", aliases = "bc")
 @Permission("eternalcore.broadcast")
@@ -35,15 +34,14 @@ class BroadcastCommand {
     }
 
     @Execute(name = "title")
-    @DescriptionDocs(description = "Broadcasts a TITLE message to all players.", arguments = "[-raw] <text>")
-    void executeTitle(@Flag("-raw") boolean raw, @Join String title) {
-        this.sendBroadcast(formatted -> Notice.title(formatted, "", this.settings.titleFadeIn(), this.settings.titleStay(), this.settings.titleFadeOut()), title, raw);
-    }
-
-    @Execute(name = "subtitle")
-    @DescriptionDocs(description = "Broadcasts a SUBTITLE message to all players.", arguments = "[-raw] <text>")
-    void executeSubtitle(@Flag("-raw") boolean raw, @Join String subtitle) {
-        this.sendBroadcast(formatted -> Notice.title("", formatted, this.settings.titleFadeIn(), this.settings.titleStay(), this.settings.titleFadeOut()), subtitle, raw);
+    @DescriptionDocs(description = "Broadcasts a combined title message to all players.", arguments = "[-raw] <text>")
+    void executeTitle(@Flag("-raw") boolean raw, @Join String text) {
+        this.noticeService.create()
+            .notice(translation -> Notice.title(
+                raw ? " " : translation.broadcast().titleHeader(), text,
+                this.settings.titleFadeIn(), this.settings.titleStay(), this.settings.titleFadeOut()))
+            .onlinePlayers()
+            .send();
     }
 
     @Execute(name = "actionbar")

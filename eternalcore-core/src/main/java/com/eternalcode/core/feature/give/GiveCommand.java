@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.give;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.litecommand.argument.StackAmountArgument;
 import com.eternalcode.core.notice.NoticeService;
@@ -22,25 +21,25 @@ class GiveCommand {
 
     private final NoticeService noticeService;
     private final GiveService giveService;
-    private final PluginConfiguration config;
+    private final GiveSettings giveSettings;
 
     @Inject
-    GiveCommand(NoticeService noticeService, GiveService giveService, PluginConfiguration config) {
+    GiveCommand(NoticeService noticeService, GiveService giveService, GiveSettings giveSettings) {
         this.noticeService = noticeService;
         this.giveService = giveService;
-        this.config = config;
+        this.giveSettings = giveSettings;
     }
 
     @Execute
     @DescriptionDocs(description = "Gives you an item", arguments = "<item>")
     void execute(@Sender Player player, @Arg Material material) {
-        this.execute(player, material, this.config.items.defaultGiveAmount);
+        this.execute(player, material, this.giveSettings.defaultGiveAmount());
     }
 
     @Execute
     @DescriptionDocs(description = "Gives an item to another player", arguments = "<player> <item>")
     void execute(@Sender CommandSender sender, @OptionalArg Player target, @Arg Material material) {
-        this.execute(sender, target, material, this.config.items.defaultGiveAmount);
+        this.execute(sender, target, material, this.giveSettings.defaultGiveAmount());
     }
 
     @Execute
@@ -51,7 +50,7 @@ class GiveCommand {
         if (isSuccess) {
             this.noticeService.create()
                 .placeholder("{ITEM}", MaterialUtil.format(material))
-                .notice(translation -> translation.item().giveReceived())
+                .notice(translation -> translation.give().itemGivenByAdmin())
                 .player(player.getUniqueId())
                 .send();
         }
@@ -69,14 +68,14 @@ class GiveCommand {
         String formattedMaterial = MaterialUtil.format(material);
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
-            .notice(translation -> translation.item().giveReceived())
+            .notice(translation -> translation.give().itemGivenByAdmin())
             .player(target.getUniqueId())
             .send();
 
         this.noticeService.create()
             .placeholder("{ITEM}", formattedMaterial)
             .placeholder("{PLAYER}", target.getName())
-            .notice(translation -> translation.item().giveGiven())
+            .notice(translation -> translation.give().itemGivenToTargetPlayer())
             .sender(sender)
             .send();
     }

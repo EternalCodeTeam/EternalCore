@@ -8,4 +8,6 @@ public interface RepairMessages {
     Notice allItemsRepaired();
     Notice armorRepaired();
     Notice delay();
+    Notice cannotRepair();
+    Notice needDamagedItem();
 }

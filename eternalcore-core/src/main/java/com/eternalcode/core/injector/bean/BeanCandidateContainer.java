@@ -1,14 +1,9 @@
 package com.eternalcode.core.injector.bean;
 
 import dev.rollczi.litecommands.priority.MutablePrioritizedList;
-import dev.rollczi.litecommands.priority.Prioritized;
-import dev.rollczi.litecommands.priority.PrioritizedList;
 import dev.rollczi.litecommands.priority.PriorityLevel;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.function.Function;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 class BeanCandidateContainer {
 
@@ -66,5 +61,4 @@ class BeanCandidateContainer {
             return candidate;
         }
     }
-
 }

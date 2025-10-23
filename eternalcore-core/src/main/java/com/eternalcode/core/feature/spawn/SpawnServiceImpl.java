@@ -29,15 +29,13 @@ public class SpawnServiceImpl implements SpawnService {
 
     @Override
     public void teleportToSpawn(Player player) {
-        Position spawn = this.locationsConfiguration.spawn;
-
-        if (spawn.isNoneWorld()) {
+        if (!isSpawnValid()) {
             this.logger.warning(WARNING);
-
             return;
         }
 
-        PaperLib.teleportAsync(player, PositionAdapter.convert(spawn));
+        Location spawnLocation = PositionAdapter.convert(this.locationsConfiguration.spawn);
+        PaperLib.teleportAsync(player, spawnLocation);
     }
 
     @Override
@@ -48,7 +46,15 @@ public class SpawnServiceImpl implements SpawnService {
 
     @Override
     public Location getSpawnLocation() {
-        Position spawn = this.locationsConfiguration.spawn;
-        return PositionAdapter.convert(spawn);
+        if (!isSpawnValid()) {
+            this.logger.warning(WARNING);
+            return null;
+        }
+
+        return PositionAdapter.convert(this.locationsConfiguration.spawn);
+    }
+
+    private boolean isSpawnValid() {
+        return !this.locationsConfiguration.spawn.isNoneWorld();
     }
 }

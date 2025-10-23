@@ -10,18 +10,18 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENTeleportToRandomPlayerMessages extends OkaeriConfig implements TeleportToRandomPlayerMessages {
 
-    public Notice randomPlayerNotFound =
+    Notice randomPlayerNotFound =
         Notice.chat("<red>✘ <dark_red>No player found to teleport!");
 
     @Comment("{PLAYER} - The name of the player you have been teleported to")
-    public Notice teleportedToRandomPlayer =
+    Notice teleportedToRandomPlayer =
         Notice.chat("<green>► <white>Teleported to random player <green>{PLAYER}<white>!");
 
-    public Notice randomPlayerInRangeNotFound =
+    Notice randomPlayerInRangeNotFound =
         Notice.chat("<red>✘ <dark_red>No player found in range to teleport!");
 
     @Comment("{PLAYER} - The name of the player you have been teleported to within range")
-    public Notice teleportedToRandomPlayerInRange =
+    Notice teleportedToRandomPlayerInRange =
         Notice.chat("<green>► <white>Teleported to a random player in range: <green>{PLAYER}<white>!");
 
 }

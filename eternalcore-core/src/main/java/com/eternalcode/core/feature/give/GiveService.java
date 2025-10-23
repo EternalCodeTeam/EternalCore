@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.give;
 
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -14,19 +13,19 @@ import org.bukkit.inventory.PlayerInventory;
 @Service
 public class GiveService {
 
-    private final PluginConfiguration pluginConfiguration;
+    private final GiveSettings giveSettings;
     private final NoticeService noticeService;
 
     @Inject
-    public GiveService(PluginConfiguration pluginConfiguration, NoticeService noticeService) {
-        this.pluginConfiguration = pluginConfiguration;
+    public GiveService(GiveSettings giveSettings, NoticeService noticeService) {
+        this.giveSettings = giveSettings;
         this.noticeService = noticeService;
     }
 
     public boolean giveItem(CommandSender sender, Player player, Material material, int amount) {
         if (this.isInvalidMaterial(material)) {
             this.noticeService.create()
-                .notice(translation -> translation.item().giveNotItem())
+                .notice(translation -> translation.give().itemNotFound())
                 .sender(sender)
                 .send();
 
@@ -46,9 +45,9 @@ public class GiveService {
         GiveResult giveResult = this.processGive(new PlayerContents(inventory.getStorageContents(), inventory.getItemInOffHand()), new ItemStack(material, amount));
         Optional<ItemStack> rest = giveResult.rest();
 
-        if (rest.isPresent() && !this.pluginConfiguration.items.dropOnFullInventory) {
+        if (rest.isPresent() && !this.giveSettings.dropOnFullInventory()) {
             this.noticeService.create()
-                .notice(translation -> translation.item().giveNoSpace())
+                .notice(translation -> translation.give().noSpace())
                 .sender(sender)
                 .send();
             return false;
