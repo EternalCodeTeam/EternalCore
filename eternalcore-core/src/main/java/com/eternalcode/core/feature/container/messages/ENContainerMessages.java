@@ -15,9 +15,6 @@ public class ENContainerMessages extends OkaeriConfig implements ContainerMessag
     Notice cartographyOpened = Notice.chat("<green>► <white>Cartography table opened!");
     Notice targetCartographyOpened = Notice.chat("<green>► <white>Opened a cartography table for {PLAYER}!");
 
-    Notice disposalOpened = Notice.chat("<green>► <white>Disposal opened!");
-    Notice targetDisposalOpened = Notice.chat("<green>► <white>Opened a disposal for {PLAYER}!");
-
     Notice enderchestOpened = Notice.chat("<green>► <white>Ender chest opened!");
     Notice targetEnderchestOpened = Notice.chat("<green>► <white>Opened an ender chest for {PLAYER}!");
 

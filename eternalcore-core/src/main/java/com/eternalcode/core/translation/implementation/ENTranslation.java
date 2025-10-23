@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
+import com.eternalcode.core.feature.disposal.messages.ENDisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
 import com.eternalcode.core.feature.feed.messages.ENFeedMessages;
 import com.eternalcode.core.feature.fly.messages.ENFlyMessages;
@@ -332,13 +333,12 @@ public class ENTranslation extends AbstractTranslation {
         "# This section is responsible for death messages"
     })
     public ENDeathMessages deathMessage = new ENDeathMessages();
-    @Comment({" ", "# Section responsible for inventories-related stuff."})
-    public ENInventorySection inventory = new ENInventorySection();
 
-    @Getter
-    public static class ENInventorySection extends OkaeriConfig implements InventorySection {
-        public String disposalTitle = "<white><bold>Trash";
-    }
+    @Comment({
+        " ",
+        "# This section is responsible for disposal messages"
+    })
+    public ENDisposalMessages disposal = new ENDisposalMessages();
 
     @Comment("# This section is responsible for /clear command")
     public ENClearMessages clear = new ENClearMessages();
