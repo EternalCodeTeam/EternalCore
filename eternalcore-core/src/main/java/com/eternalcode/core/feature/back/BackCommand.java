@@ -35,8 +35,13 @@ public class BackCommand {
             return;
         }
         Position latestPosition = latestPositionOptional.get();
+        Position deathPosition = this.backService.getDeathLocation(player.getUniqueId()).orElse(null);
 
-
+        if (latestPosition.equals(deathPosition)) {
+            this.executeBackDeath(player);
+            return;
+        }
+        this.executeBackTeleport(player);
     }
 
 
