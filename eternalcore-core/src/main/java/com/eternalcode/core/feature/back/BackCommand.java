@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.execute.ExecuteDefault;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Optional;
 import org.bukkit.entity.Player;
@@ -27,7 +26,20 @@ public class BackCommand {
         this.noticeService = noticeService;
     }
 
-    @ExecuteDefault
+
+    @Execute
+    @DescriptionDocs(description = "Teleport to your last teleport/death location, depending which one is most recent")
+    public void executeBack(@Sender Player player) {
+        Optional<Position> latestPositionOptional = this.backService.getLatestLocation(player.getUniqueId());
+        if (latestPositionOptional.isEmpty()) {
+            return;
+        }
+        Position latestPosition = latestPositionOptional.get();
+
+
+    }
+
+
     @Execute(name = "teleport")
     @Permission("eternalcore.back.teleport")
     @DescriptionDocs(description = "Teleport to your last teleport location")

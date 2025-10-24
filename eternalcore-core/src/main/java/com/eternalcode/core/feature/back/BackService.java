@@ -4,14 +4,12 @@ import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.teleport.TeleportTaskService;
-import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -22,26 +20,30 @@ public class BackService {
 
     private final TeleportService teleportService;
     private final TeleportTaskService teleportTaskService;
-    private final TeleportRequestSettings settings;
+    private final BackSettings settings;
 
     private final Cache<UUID, Position> deathLocations;
     private final Cache<UUID, Position> teleportLocations;
+    private final Cache<UUID, Position> latestLocations;
 
     @Inject
     public BackService(
         TeleportService teleportService,
         TeleportTaskService teleportTaskService,
-        TeleportRequestSettings settings
+        BackSettings settings
     ) {
         this.teleportService = teleportService;
         this.teleportTaskService = teleportTaskService;
         this.settings = settings;
 
         this.deathLocations = Caffeine.newBuilder()
-            .expireAfterWrite(2, TimeUnit.HOURS)
+            .expireAfterWrite(settings.backLocationCacheDuration())
             .build();
         this.teleportLocations = Caffeine.newBuilder()
-            .expireAfterWrite(2, TimeUnit.HOURS)
+            .expireAfterWrite(settings.backLocationCacheDuration())
+            .build();
+        this.latestLocations = Caffeine.newBuilder()
+            .expireAfterWrite(settings.backLocationCacheDuration())
             .build();
     }
 
@@ -53,12 +55,18 @@ public class BackService {
         return Optional.ofNullable(teleportLocations.getIfPresent(playerId));
     }
 
+    public Optional<Position> getLatestLocation(UUID playerId) {
+        return Optional.ofNullable(latestLocations.getIfPresent(playerId));
+    }
+
     public void markDeathLocation(UUID player, Position position) {
         this.deathLocations.put(player, position);
+        this.latestLocations.put(player, position);
     }
 
     public void markTeleportLocation(UUID player, Position position) {
         this.teleportLocations.put(player, position);
+        this.latestLocations.put(player, position);
     }
 
     public void teleportBack(Player player, Location location) {
@@ -70,7 +78,7 @@ public class BackService {
             player.getUniqueId(),
             PositionAdapter.convert(player.getLocation()),
             PositionAdapter.convert(location),
-            settings.tpaTimer()
+            settings.backTeleportTimer()
         );
     }
 }
