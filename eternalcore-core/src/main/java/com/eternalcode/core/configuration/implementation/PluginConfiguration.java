@@ -217,7 +217,7 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("")
     @Comment("# Back Configuration")
     @Comment("# Settings for the /back command functionality")
-    BackSettings back = new BackConfig();
+    BackConfig back = new BackConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
