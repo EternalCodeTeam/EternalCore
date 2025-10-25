@@ -33,6 +33,7 @@ public class BackCommand {
     public void executeBack(@Sender Player player) {
         Optional<Position> latestPositionOptional = this.backService.getLatestLocation(player.getUniqueId());
         if (latestPositionOptional.isEmpty()) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.back().lastLocationNotFound());
             return;
         }
         Position latestPosition = latestPositionOptional.get();
