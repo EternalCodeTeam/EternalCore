@@ -28,6 +28,7 @@ public class BackCommand {
 
 
     @Execute
+    @Permission("eternalcore.back")
     @DescriptionDocs(description = "Teleport to your last teleport/death location, depending which one is most recent")
     public void executeBack(@Sender Player player) {
         Optional<Position> latestPositionOptional = this.backService.getLatestLocation(player.getUniqueId());
