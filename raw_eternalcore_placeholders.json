@@ -1,40 +1,35 @@
 [
   {
     "name": "%eternalcore_afk%",
-    "description": "Returns true if the player is AFK, false otherwise",
-    "example": "true",
+    "description": "Returns `true` if the player is AFK, `false` otherwise",
     "returnType": "boolean",
     "category": "AFK",
     "requiresPlayer": true
   },
   {
     "name": "%eternalcore_afk_formatted%",
-    "description": "Returns a formatted AFK status message based on player's language settings",
-    "example": "[AFK]",
-    "returnType": "String",
+    "description": "Returns a formatted AFK status message based on player's language settings e.g. `[AFK]` or ``",
+    "returnType": "string",
     "category": "AFK",
     "requiresPlayer": true
   },
   {
     "name": "%eternalcore_afk_playercount%",
     "description": "Returns the total number of AFK players on the server",
-    "example": "3",
     "returnType": "int",
     "category": "AFK",
     "requiresPlayer": false
   },
   {
     "name": "%eternalcore_afk_time%",
-    "description": "Returns the duration the player has been AFK in a formatted string",
-    "example": "5m 30s",
-    "returnType": "String",
+    "description": "Returns the duration the player has been AFK in a formatted string e.g. `5m 30s`",
+    "returnType": "string",
     "category": "AFK",
     "requiresPlayer": true
   },
   {
     "name": "%eternalcore_homes_count%",
     "description": "Returns the number of homes the player currently owns.",
-    "example": "3",
     "returnType": "int",
     "category": "Home",
     "requiresPlayer": true
@@ -42,7 +37,6 @@
   {
     "name": "%eternalcore_homes_left%",
     "description": "Returns how many more homes the player can create before reaching the limit.",
-    "example": "2",
     "returnType": "int",
     "category": "Home",
     "requiresPlayer": true
@@ -50,17 +44,22 @@
   {
     "name": "%eternalcore_homes_limit%",
     "description": "Returns the maximum number of homes the player can have.",
-    "example": "5",
     "returnType": "int",
     "category": "Home",
     "requiresPlayer": true
   },
   {
     "name": "%eternalcore_homes_owned%",
-    "description": "Returns a comma-separated list of all homes owned by the player. If the player has no homes, returns a localized message.",
-    "example": "home1, home2, domek",
-    "returnType": "String",
+    "description": "Returns a comma-separated list of all homes owned by the player. If the player has no homes, returns a localized message. e.g. `home1, home2, domek`",
+    "returnType": "string",
     "category": "Home",
     "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_online%",
+    "description": "Returns the number of online players who are not vanished",
+    "returnType": "int",
+    "category": "General",
+    "requiresPlayer": false
   }
 ]

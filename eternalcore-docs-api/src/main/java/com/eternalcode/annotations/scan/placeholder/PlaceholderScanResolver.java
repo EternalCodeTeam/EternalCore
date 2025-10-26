@@ -1,24 +1,29 @@
 package com.eternalcode.annotations.scan.placeholder;
 
 import com.eternalcode.annotations.scan.EternalScanRecord;
-import com.eternalcode.annotations.scan.SingleAnnotationScanResolver;
+import com.eternalcode.annotations.scan.GroupAnnotationScanResolver;
 
-public class PlaceholderScanResolver extends SingleAnnotationScanResolver<PlaceholderDocs, PlaceholderResult> {
+public class PlaceholderScanResolver extends GroupAnnotationScanResolver<PlaceholdersDocs.Entry, PlaceholdersDocs, PlaceholderResult> {
 
     public PlaceholderScanResolver() {
-        super(PlaceholderDocs.class);
+        super(PlaceholdersDocs.class);
     }
 
     @Override
-    public PlaceholderResult resolve(EternalScanRecord record, PlaceholderDocs annotation) {
-        String prefixedName = "%eternalcore_" + annotation.name() + "%";
+    protected PlaceholdersDocs.Entry[] getAnnotationsForGroup(PlaceholdersDocs group) {
+        return group.placeholders();
+    }
+
+    @Override
+    protected PlaceholderResult resolve(EternalScanRecord record, PlaceholdersDocs group, PlaceholdersDocs.Entry placeholder) {
+        String prefixedName = "%eternalcore_" + placeholder.name() + "%";
         return new PlaceholderResult(
             prefixedName,
-            annotation.description(),
-            annotation.example(),
-            annotation.returnType(),
-            annotation.category(),
-            annotation.requiresPlayer()
+            placeholder.description(),
+            placeholder.returnType().getName(),
+            group.category(),
+            placeholder.requiresPlayer()
         );
     }
+
 }
