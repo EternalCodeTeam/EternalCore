@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
+import com.eternalcode.core.feature.disposal.messages.DisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
 import com.eternalcode.core.feature.feed.messages.FeedMessages;
 import com.eternalcode.core.feature.fly.messages.FlyMessages;
@@ -98,9 +99,7 @@ public interface Translation {
         Notice commandNotFound();
     }
 
-    interface InventorySection {
-        String disposalTitle();
-    }
+    DisposalMessages disposal();
 
     // clear section
     ClearMessages clear();
@@ -188,8 +187,6 @@ public interface Translation {
     AfkMessages afk();
     // death message section
     DeathMessages deathMessage();
-    // inventory section
-    InventorySection inventory();
     //Seen section
     SeenMessages seen();
     // sign editor section

@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.container;
+package com.eternalcode.core.feature.disposal;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
@@ -16,10 +16,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 @Command(name = "disposal")
 @Permission("eternalcore.disposal")
 class DisposalCommand {
+
+    private static final int DISPOSAL_INVENTORY_SIZE = 54;
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
@@ -27,7 +30,12 @@ class DisposalCommand {
     private final Server server;
 
     @Inject
-    DisposalCommand(MiniMessage miniMessage, TranslationManager translationManager, Server server, NoticeService noticeService) {
+    DisposalCommand(
+        MiniMessage miniMessage,
+        TranslationManager translationManager,
+        Server server,
+        NoticeService noticeService
+    ) {
         this.miniMessage = miniMessage;
         this.translationManager = translationManager;
         this.server = server;
@@ -48,21 +56,26 @@ class DisposalCommand {
 
         this.noticeService.create()
             .sender(commandSender)
-            .notice(message -> message.container().targetDisposalOpened())
+            .notice(message -> message.disposal().disposalOpenedForTargetPlayer())
             .placeholder("{PLAYER}", target.getName())
             .send();
     }
 
-    void openDisposal(Player player) {
-        Translation translation = this.translationManager.getMessages();
-        Component containerTitle = this.miniMessage.deserialize(translation.inventory().disposalTitle());
-        String serializedContainerTitle = AdventureUtil.SECTION_SERIALIZER.serialize(containerTitle);
-
-        player.openInventory(this.server.createInventory(null, 54, serializedContainerTitle));
+    private void openDisposal(Player player) {
+        Inventory disposalInventory = this.createDisposalInventory();
+        player.openInventory(disposalInventory);
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(message -> message.container().disposalOpened())
+            .notice(message -> message.disposal().disposalOpened())
             .send();
+    }
+
+    private Inventory createDisposalInventory() {
+        Translation translation = this.translationManager.getMessages();
+        Component containerTitle = this.miniMessage.deserialize(translation.disposal().disposalInventoryTitle());
+        String serializedTitle = AdventureUtil.SECTION_SERIALIZER.serialize(containerTitle);
+
+        return this.server.createInventory(null, DISPOSAL_INVENTORY_SIZE, serializedTitle);
     }
 }
