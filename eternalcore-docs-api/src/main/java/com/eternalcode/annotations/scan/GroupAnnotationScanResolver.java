@@ -3,14 +3,13 @@ package com.eternalcode.annotations.scan;
 import com.eternalcode.annotations.scan.reflect.AnnotationUtil;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.stream.Stream;
 
-public abstract class GroupAnnotationScanResolver<A extends Annotation, G extends Annotation, RESULT> implements EternalScanResolver<RESULT> {
+public abstract class GroupAnnotationScanResolver<A extends Annotation, GROUP extends Annotation, RESULT> implements EternalScanResolver<RESULT> {
 
-    private final Class<A> annotationClass;
-    private final Class<G> annotationGroupClass;
+    private final Class<GROUP> annotationGroupClass;
 
-    public GroupAnnotationScanResolver(Class<A> annotationClass, Class<G> annotationGroupClass) {
-        this.annotationClass = annotationClass;
+    public GroupAnnotationScanResolver(Class<GROUP> annotationGroupClass) {
         this.annotationGroupClass = annotationGroupClass;
     }
 
@@ -21,13 +20,15 @@ public abstract class GroupAnnotationScanResolver<A extends Annotation, G extend
             .toList();
     }
 
-    private List<RESULT> resolveGroup(EternalScanRecord record, G group) {
-        return AnnotationUtil.scanForAnnotations(record.clazz(), this.annotationClass).stream()
+    private List<RESULT> resolveGroup(EternalScanRecord record, GROUP group) {
+        return Stream.of(getAnnotationsForGroup(group))
             .map(annotation -> this.resolve(record, group, annotation))
             .toList();
     }
 
-    protected abstract RESULT resolve(EternalScanRecord record, G group, A annotation);
+    protected abstract A[] getAnnotationsForGroup(GROUP group);
+
+    protected abstract RESULT resolve(EternalScanRecord record, GROUP group, A annotation);
 
 
 }

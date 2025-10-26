@@ -6,7 +6,12 @@ import com.eternalcode.annotations.scan.GroupAnnotationScanResolver;
 public class PlaceholderScanResolver extends GroupAnnotationScanResolver<PlaceholdersDocs.Entry, PlaceholdersDocs, PlaceholderResult> {
 
     public PlaceholderScanResolver() {
-        super(PlaceholdersDocs.Entry.class, PlaceholdersDocs.class);
+        super(PlaceholdersDocs.class);
+    }
+
+    @Override
+    protected PlaceholdersDocs.Entry[] getAnnotationsForGroup(PlaceholdersDocs group) {
+        return group.placeholders();
     }
 
     @Override

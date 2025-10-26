@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AnnotationUtil {
 
-    public static  <A extends Annotation> List<A> scanForAnnotations(Class<?> classToScan, Class<A> annotationClass) {
+    public static <A extends Annotation> List<A> scanForAnnotations(Class<?> classToScan, Class<A> annotationClass) {
         List<A> annotations = new ArrayList<>();
 
         A annotation = classToScan.getAnnotation(annotationClass);
