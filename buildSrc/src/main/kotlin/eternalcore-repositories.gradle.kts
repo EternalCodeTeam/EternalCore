@@ -12,4 +12,5 @@ repositories {
     maven("https://repo.stellardrift.ca/repository/snapshots/")
     maven("https://storehouse.okaeri.eu/repository/maven-public/")
     maven("https://repo.mikeprimm.com/")
+    maven("https://repo.opencollab.dev/maven-releases")
 }

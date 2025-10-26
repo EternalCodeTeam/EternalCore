@@ -49,5 +49,6 @@ object Versions {
     // tests
     const val JUNIT_BOM = "6.0.0"
     const val MOCKITO_CORE = "5.20.0"
+    const val LITEGRATION = "0.2.0"
 
 }
