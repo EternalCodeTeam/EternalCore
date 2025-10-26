@@ -3,8 +3,8 @@ package com.eternalcode.core.feature.disposal.messages;
 import com.eternalcode.multification.notice.Notice;
 
 public interface DisposalMessages {
-    String disposalTitle();
+    String disposalInventoryTitle();
     Notice disposalOpened();
-    Notice disposalForTargetOpened();
+    Notice disposalOpenedForTargetPlayer();
 }
 

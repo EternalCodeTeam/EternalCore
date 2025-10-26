@@ -56,7 +56,7 @@ class DisposalCommand {
 
         this.noticeService.create()
             .sender(commandSender)
-            .notice(message -> message.disposal().disposalForTargetOpened())
+            .notice(message -> message.disposal().disposalOpenedForTargetPlayer())
             .placeholder("{PLAYER}", target.getName())
             .send();
     }
@@ -73,7 +73,7 @@ class DisposalCommand {
 
     private Inventory createDisposalInventory() {
         Translation translation = this.translationManager.getMessages();
-        Component containerTitle = this.miniMessage.deserialize(translation.disposal().disposalTitle());
+        Component containerTitle = this.miniMessage.deserialize(translation.disposal().disposalInventoryTitle());
         String serializedTitle = AdventureUtil.SECTION_SERIALIZER.serialize(containerTitle);
 
         return this.server.createInventory(null, DISPOSAL_INVENTORY_SIZE, serializedTitle);

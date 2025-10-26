@@ -8,9 +8,9 @@ public class Migration_0033_Move_disposal_messages_to_dedicated_section extends 
     Migration_0033_Move_disposal_messages_to_dedicated_section() {
         super(
             "Move disposal messages into dedicated sections",
-            move("inventory.disposalTitle", "disposal.disposalTitle"),
+            move("inventory.disposalTitle", "disposal.disposalInventoryTitle"),
             move("inventory.disposalOpened", "disposal.disposalOpened"),
-            move("inventory.targetDisposalOpened", "disposal.disposalForTargetOpened")
+            move("inventory.targetDisposalOpened", "disposal.disposalOpenedForTargetPlayer")
         );
     }
 }
