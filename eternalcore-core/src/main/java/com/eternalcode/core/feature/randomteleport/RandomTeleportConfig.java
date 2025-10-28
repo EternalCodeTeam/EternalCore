@@ -47,7 +47,7 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
         "# Leave empty (\"\") to use player's current world",
         "# Specify world name to always teleport to that world"
     })
-    public String world = "world_nether";
+    public String world = "world";
 
     @Comment({
         "# Maximum attempts to find a safe teleport location",
