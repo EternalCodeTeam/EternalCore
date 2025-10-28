@@ -14,7 +14,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 @Service
-public class BackService {
+class BackService {
 
     private static final String BYPASS_PERMISSION = "eternalcore.teleport.bypass";
 
@@ -27,7 +27,7 @@ public class BackService {
     private final Cache<UUID, Position> latestLocations;
 
     @Inject
-    public BackService(
+    BackService(
         TeleportService teleportService,
         TeleportTaskService teleportTaskService,
         BackSettings settings
@@ -69,7 +69,29 @@ public class BackService {
         this.latestLocations.put(player, position);
     }
 
-    public void teleportBack(Player player, Location location) {
+    public boolean teleportBack(Player target) {
+        Optional<Position> teleportLocation = this.getTeleportLocation(target.getUniqueId());
+
+        if (teleportLocation.isPresent()) {
+            this.teleportBack(target, PositionAdapter.convert(teleportLocation.get()));
+
+            return true;
+        }
+        return false;
+    }
+
+    public boolean teleportBackDeath(Player target) {
+        Optional<Position> deathLocation = this.getDeathLocation(target.getUniqueId());
+
+        if (deathLocation.isPresent()) {
+            this.teleportBack(target, PositionAdapter.convert(deathLocation.get()));
+
+            return true;
+        }
+        return false;
+    }
+
+    private void teleportBack(Player player, Location location) {
         if (player.hasPermission(BYPASS_PERMISSION)) {
             teleportService.teleport(player, location);
             return;
