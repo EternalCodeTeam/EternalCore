@@ -3,7 +3,7 @@ plugins {
 
     id("com.gradleup.shadow")
     id("net.minecrell.plugin-yml.bukkit")
-    id("xyz.jpenilla.run-paper") version "3.0.2"
+    id("xyz.jpenilla.run-paper")
 }
 
 group = "com.eternalcode"
