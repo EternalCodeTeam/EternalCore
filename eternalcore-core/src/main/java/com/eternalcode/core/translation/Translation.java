@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
+import com.eternalcode.core.feature.chat.messages.ChatMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
@@ -86,18 +87,8 @@ public interface Translation {
         Notice lastLocationNoExist();
     }
 
-    interface ChatSection {
-        Notice disabled();
-        Notice enabled();
-        Notice cleared();
-        Notice alreadyDisabled();
-        Notice alreadyEnabled();
-        Notice slowModeSet();
-        Notice slowModeOff();
-        Notice slowMode();
-        Notice disabledChatInfo();
-        Notice commandNotFound();
-    }
+
+    ChatMessages chat();
 
     DisposalMessages disposal();
 
@@ -171,8 +162,6 @@ public interface Translation {
     TeleportToRandomPlayerMessages teleportToRandomPlayer();
     // Random Teleport Section
     RandomTeleportMessages randomTeleport();
-    // Chat Section
-    ChatSection chat();
     // Broadcast Section
     BroadcastMessages broadcast();
     // Warp Section

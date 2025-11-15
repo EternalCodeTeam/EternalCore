@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.chat;
 
-import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_BYPASS_PERMISSION;
-import static com.eternalcode.core.feature.chat.ChatManagerController.CHAT_SLOWMODE_BYPASS_PERMISSION;
+import static com.eternalcode.core.feature.chat.ChatSlowModeController.CHAT_BYPASS_PERMISSION;
+import static com.eternalcode.core.feature.chat.ChatSlowModeController.CHAT_SLOWMODE_BYPASS_PERMISSION;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.event.EventCaller;
@@ -22,10 +22,10 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 @PermissionDocs(
     name = "Bypass chat slowmode or disabled chat",
     description = "Allows you to bypass chat restrictions such as slowmode or disabled chat.",
-    permission = { CHAT_SLOWMODE_BYPASS_PERMISSION, CHAT_BYPASS_PERMISSION }
+    permission = {CHAT_SLOWMODE_BYPASS_PERMISSION, CHAT_BYPASS_PERMISSION}
 )
 @Controller
-class ChatManagerController implements Listener {
+class ChatSlowModeController implements Listener {
 
     static final String CHAT_SLOWMODE_BYPASS_PERMISSION = "eternalcore.chat.noslowmode";
     static final String CHAT_BYPASS_PERMISSION = "eternalcore.chat.bypass";
@@ -36,7 +36,7 @@ class ChatManagerController implements Listener {
     private final EventCaller eventCaller;
 
     @Inject
-    ChatManagerController(
+    ChatSlowModeController(
         ChatService chatService,
         ChatSettings chatSettings,
         NoticeService noticeService,
@@ -56,11 +56,12 @@ class ChatManagerController implements Listener {
 
         if (!this.chatSettings.chatEnabled() && !player.hasPermission(CHAT_BYPASS_PERMISSION)) {
             this.noticeService.create()
-                .notice(translation -> translation.chat().disabledChatInfo())
+                .notice(translation -> translation.chat().chatDisabledInfo())
                 .player(uniqueId)
                 .send();
 
-            ChatRestrictEvent chatRestrictEvent = this.eventCaller.callEvent(new ChatRestrictEvent(uniqueId, ChatRestrictCause.CHAT_DISABLED));
+            ChatRestrictEvent chatRestrictEvent =
+                this.eventCaller.callEvent(new ChatRestrictEvent(uniqueId, ChatRestrictCause.CHAT_DISABLED));
 
             if (!chatRestrictEvent.isCancelled()) {
                 event.setCancelled(true);
@@ -69,15 +70,15 @@ class ChatManagerController implements Listener {
         }
 
         if (this.chatService.hasSlowedChat(uniqueId) && !player.hasPermission(CHAT_SLOWMODE_BYPASS_PERMISSION)) {
-            ChatRestrictEvent chatRestrictEvent = this.eventCaller.callEvent(new ChatRestrictEvent(uniqueId, ChatRestrictCause.SLOWMODE));
+            ChatRestrictEvent restrictEvent = new ChatRestrictEvent(uniqueId, ChatRestrictCause.SLOWMODE);
+            ChatRestrictEvent chatRestrictEvent = this.eventCaller.callEvent(restrictEvent);
 
             if (!chatRestrictEvent.isCancelled()) {
                 Duration remainingDuration = this.chatService.getRemainingSlowDown(uniqueId);
 
-                this.noticeService
-                    .create()
+                this.noticeService.create()
                     .player(uniqueId)
-                    .notice(translation -> translation.chat().slowMode())
+                    .notice(translation -> translation.chat().slowModeNotReady())
                     .placeholder("{TIME}", DurationUtil.format(remainingDuration, true))
                     .send();
 
