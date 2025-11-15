@@ -70,8 +70,7 @@ class ChatSlowModeController implements Listener {
         }
 
         if (this.chatService.hasSlowedChat(uniqueId) && !player.hasPermission(CHAT_SLOWMODE_BYPASS_PERMISSION)) {
-            ChatRestrictEvent restrictEvent = new ChatRestrictEvent(uniqueId, ChatRestrictCause.SLOWMODE);
-            ChatRestrictEvent chatRestrictEvent = this.eventCaller.callEvent(restrictEvent);
+            ChatRestrictEvent chatRestrictEvent = this.eventCaller.callEvent(new ChatRestrictEvent(uniqueId, ChatRestrictCause.SLOWMODE));
 
             if (!chatRestrictEvent.isCancelled()) {
                 Duration remainingDuration = this.chatService.getRemainingSlowDown(uniqueId);
