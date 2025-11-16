@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.PLButcherMessages;
+import com.eternalcode.core.feature.chat.messages.PLChatMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.PLDeathMessages;
@@ -271,39 +272,10 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment({
         " ",
-        "# Ta sekcja odpowiada za edycję ustawień czatu",
+        "# Ta sekcja odpowiada za wiadomości ustawień czatu",
     })
-    public PLChatSection chat = new PLChatSection();
+    public PLChatMessages chat = new PLChatMessages();
 
-    @Getter
-    public static class PLChatSection extends OkaeriConfig implements ChatSection {
-        @Comment({"# {PLAYER} - Gracz który wykonał akcje dla czatu"})
-        Notice disabled = Notice.chat("<green>► <white>Czat został wyłączony przez <green>{PLAYER}<white>!");
-        Notice enabled = Notice.chat("<green>► <white>Czat został włączony przez <green>{PLAYER}<white>!");
-        Notice cleared = Notice.chat("<green>► <white>Czat został wyczyszczony przez <green>{PLAYER}<white>!");
-
-        @Comment(" ")
-        Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Czat jest już wyłączony!");
-        Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Czat jest już włączony!");
-
-        @Comment({" ", "# {SLOWMODE} - Czas powolnego wysyłania wiadomości"})
-        Notice slowModeSet =
-            Notice.chat("<green>► <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
-
-        @Comment({" ", "# {PLAYER} - Gracz który wyłączył tryb powolnego wysyłania wiadomości"})
-        Notice slowModeOff =
-            Notice.chat("<green>► <white>Tryb powolnego wysyłania został wyłączony przez <green>{PLAYER}<white>!");
-
-        @Comment({" ", "# {TIME} - Czas powolnego wysyłania wiadomości"})
-        Notice slowMode =
-            Notice.chat("<red>✘ <dark_red>Następną wiadomość możesz wysłać za: <red>{TIME}<dark_red>!");
-
-        @Comment(" ")
-        Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Czat jest obecnie wyłączony!");
-
-        @Comment(" ")
-        Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
-    }
 
     @Comment({
         " ",

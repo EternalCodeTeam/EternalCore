@@ -1,7 +1,6 @@
-package com.eternalcode.core.feature.unknowncommand;
+package com.eternalcode.core.feature.chat;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -15,10 +14,10 @@ import org.bukkit.help.HelpTopic;
 @PermissionDocs(
     name = "Bypass Unknown Command Message",
     description = "Bypass replaced unknown command message, and keep the original message.",
-    permission = UnknownCommandMessageController.COMMANDBLOCKER_BYPASS
+    permission = ChatUnknownCommandController.COMMANDBLOCKER_BYPASS
 )
 @Controller
-class UnknownCommandMessageController implements Listener {
+class ChatUnknownCommandController implements Listener {
 
     static final String COMMANDBLOCKER_BYPASS = "eternalcore.commandblocker.bypass";
 
@@ -27,7 +26,7 @@ class UnknownCommandMessageController implements Listener {
     private final Server server;
 
     @Inject
-    UnknownCommandMessageController(
+    ChatUnknownCommandController(
         NoticeService noticeService,
         ChatSettings chatSettings,
         Server server

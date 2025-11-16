@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.ENBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
+import com.eternalcode.core.feature.chat.messages.ENChatMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
@@ -259,37 +260,11 @@ public class ENTranslation extends AbstractTranslation {
     })
     public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
 
-    public ENChatSection chat = new ENChatSection();
-
-    @Getter
-    public static class ENChatSection extends OkaeriConfig implements ChatSection {
-        @Comment({"# {PLAYER} - Player who performed the actions for the chat"})
-        Notice disabled = Notice.chat("<green>► <white>Chat has been disabled by <green>{PLAYER}<white>!");
-        Notice enabled = Notice.chat("<green>► <white>The chat has been enabled by <green>{PLAYER}<white>!");
-        Notice cleared = Notice.chat("<green>► <white>Chat has been cleared by <green>{PLAYER}<white>!");
-
-        @Comment(" ")
-        Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Chat already off!");
-        Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Chat already on!");
-
-        @Comment({" ", "# {SLOWMODE} - Time for next message"})
-        Notice slowModeSet = Notice.chat("<green>► <white>SlowMode set to: {SLOWMODE}");
-
-        @Comment({" ", "# {PLAYER} - Player who performed the actions for the chat"})
-        Notice slowModeOff =
-            Notice.chat("<green>► <white>SlowMode has been disabled by <green>{PLAYER}<white>!");
-
-        @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        Notice slowMode =
-            Notice.chat("<red>✘ <dark_red>You can write the next message for: <red>{TIME}<dark_red>!");
-
-        @Comment(" ")
-        Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Chat is currently disabled!");
-
-        @Comment(" ")
-        Notice commandNotFound =
-            Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
-    }
+    @Comment({
+        " ",
+        "# This section is responsible for messages related to chat",
+    })
+    public ENChatMessages chat = new ENChatMessages();
 
     @Comment({
         " ",
