@@ -22,7 +22,7 @@ public class ENChatMessages extends OkaeriConfig implements ChatMessages {
     Notice slowModeDisabled = Notice.chat("<green>► <white>Slow mode has been disabled by <green>{PLAYER}<white>!");
 
     @Comment({" ", "# {TIME} - Slow mode time"})
-    Notice slowModeNotReady = Notice.chat("<red>✘ <dark_red>You can send the next message in: <red>{TIME}<dark_red>!");
+    Notice slowModeNotReady = Notice.chat("<red>✘ <dark_red>You can send the next message in <red>{TIME}<dark_red>!");
 
     @Comment
     Notice chatDisabledInfo = Notice.chat("<red>✘ <dark_red>Chat is currently disabled!");
