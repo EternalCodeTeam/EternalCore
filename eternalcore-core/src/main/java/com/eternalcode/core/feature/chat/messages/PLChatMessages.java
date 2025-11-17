@@ -21,7 +21,7 @@ public class PLChatMessages extends OkaeriConfig implements ChatMessages {
     Notice slowModeSet = Notice.chat("<green>► <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
     Notice slowModeDisabled = Notice.chat("<green>► <white>Tryb powolnego wysyłania został wyłączony przez <green>{PLAYER}<white>!");
     @Comment({" ", "# {TIME} - Czas powolnego wysyłania wiadomości"})
-    Notice slowModeNotReady = Notice.chat("<red>✘ <dark_red>Następną wiadomość możesz wysłać za: <red>{TIME}<dark_red>!");
+    Notice slowModeNotReady = Notice.chat("<red>✘ <dark_red>Następną wiadomość możesz wysłać za <red>{TIME}<dark_red>!");
 
     @Comment
     Notice chatDisabledInfo = Notice.chat("<red>✘ <dark_red>Czat jest obecnie wyłączony!");
