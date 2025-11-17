@@ -63,126 +63,117 @@ public interface Translation {
         String disable();
     }
 
+    Language getLanguage();
+
+    Format format();
+
+    ArgumentMessages argument();
+
     ChatMessages chat();
+
+    AdminChatMessages adminChat();
+
+    MsgMessages msg();
+
+    BroadcastMessages broadcast();
+
+    AutoMessageMessages autoMessage();
+
+    JoinMessage join();
+
+    QuitMessage quit();
+
+    MotdMessages motd();
+
+    DeathMessages deathMessage();
+
+    AfkMessages afk();
+
+    IgnoreMessages ignore();
+
+    TeleportMessages teleport();
+
+    TeleportRequestMessages tpa();
+
+    TeleportToRandomPlayerMessages teleportToRandomPlayer();
+
+    RandomTeleportMessages randomTeleport();
+
+    TeleportOfflineMessages teleportToOfflinePlayer();
+
+    HomeMessages home();
+
+    WarpMessages warp();
+
+    SpawnMessages spawn();
+
+    NearMessages near();
+
+    HealMessages heal();
+
+    FeedMessages feed();
+
+    FlyMessages fly();
+
+    SpeedMessages speed();
+
+    GodModeMessages godmode();
+
+    FreezeMessages freeze();
+
+    VanishMessages vanish();
+
+    GameModeMessages gamemode();
+
+    TimeAndWeatherMessages timeAndWeather();
+
+    PingMessages ping();
+
+    OnlineMessages online();
+
+    WhoIsMessages whois();
+
+    SeenMessages seen();
+
+    PlaytimeMessages playtime();
+
+    GiveMessages give();
+
+    ClearMessages clear();
 
     DisposalMessages disposal();
 
-    // clear section
-    ClearMessages clear();
+    ContainerMessages container();
 
-    // feed section
-    FeedMessages feed();
+    SetSlotMessages setSlot();
 
-    // heal section
-    HealMessages heal();
+    ItemEditMessages itemEdit();
 
-    // kill section
-    KillMessages kill();
-
-    // speed section
-    SpeedMessages speed();
-
-    // godmode section
-    GodModeMessages godmode();
-
-    // fly section
-    FlyMessages fly();
-
-    // ping section
-    PingMessages ping();
-
-    // gamemode section
-    GameModeMessages gamemode();
-
-    // online section
-    OnlineMessages online();
-
-    // whois section
-    WhoIsMessages whois();
-
-    // butcher section
-    ButcherMessages butcher();
-
-    // give section
-    GiveMessages give();
-
-    // skull section
-    SkullMessages skull();
+    EnchantMessages enchant();
 
     RepairMessages repair();
 
-    EnchantMessages enchant();
-    ElderGuardianMessages elderGuardian();
-    DemoScreenMessages demoScreen();
-    EndScreenMessages endScreen();
+    SkullMessages skull();
 
-    JoinMessage join();
-    QuitMessage quit();
-    Language getLanguage();
-    // argument section
-    ArgumentMessages argument();
-    // format section
-    Format format();
-    // HelpOp Section
-    HelpOpSection helpOp();
-    // AdminChat Section
-    AdminChatMessages adminChat();
-    // Ignore Section
-    IgnoreMessages ignore();
-    // sudo
-    SudoMessages sudo();
-    // Teleport Section
-    TeleportMessages teleport();
-    // teleport to random player section.
-    TeleportToRandomPlayerMessages teleportToRandomPlayer();
-    // Random Teleport Section
-    RandomTeleportMessages randomTeleport();
-    // Broadcast Section
-    BroadcastMessages broadcast();
-    // Warp Section
-    WarpMessages warp();
-    // Home section
-    HomeMessages home();
-    // tpa section
-    TeleportRequestMessages tpa();
-    // private section
-    MsgMessages msg();
-    // afk section
-    AfkMessages afk();
-    // death message section
-    DeathMessages deathMessage();
-    //Seen section
-    SeenMessages seen();
-    // sign editor section
     SignEditorMessages signEditor();
-    // spawn section
-    SpawnMessages spawn();
-    // set slot section
-    SetSlotMessages setSlot();
-    // itemedit
-    ItemEditMessages itemEdit();
-    // time and weather
-    TimeAndWeatherMessages timeAndWeather();
-    // container section
-    ContainerMessages container();
-    // auto message section
-    AutoMessageMessages autoMessage();
-    // jail section
-    JailMessages jailSection();
-    // burn section
-    BurnMessages burn();
-    // vanish section
-    VanishMessages vanish();
-    // near section
-    NearMessages near();
-    // motd section
-    MotdMessages motd();
-    // offlineplayer section
-    TeleportOfflineMessages teleportToOfflinePlayer();
-    // playtime section
-    PlaytimeMessages playtime();
-    // freeze section
-    FreezeMessages freeze();
-    // powertool section
+
     PowertoolMessages powertool();
+
+    KillMessages kill();
+
+    BurnMessages burn();
+
+    ButcherMessages butcher();
+
+    JailMessages jailSection();
+
+    SudoMessages sudo();
+
+    HelpOpSection helpOp();
+
+    ElderGuardianMessages elderGuardian();
+
+    DemoScreenMessages demoScreen();
+
+    EndScreenMessages endScreen();
 }

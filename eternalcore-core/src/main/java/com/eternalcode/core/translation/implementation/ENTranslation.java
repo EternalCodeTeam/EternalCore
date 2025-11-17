@@ -87,7 +87,6 @@ public class ENTranslation extends AbstractTranslation {
         "# Website: https://eternalcode.pl/",
         "# SourceCode: https://github.com/EternalCodeTeam/EternalCore",
     })
-
     @Comment({
         " ",
         "# You can use MiniMessages formatting everywhere, or standard &7, &e etc.",
@@ -136,29 +135,11 @@ public class ENTranslation extends AbstractTranslation {
         "#",
         " "
     })
-    @Comment("# This section is responsible for all messages used during bad of a command argument")
+    @Comment("# Command arguments")
     public ENArgumentMessages argument = new ENArgumentMessages();
 
-    @Comment({
-        " ",
-        "# This answer is responsible for the general formatting of some values",
-        "# The purpose of the section is to reduce the repetition of some messages."
-    })
+    @Comment("# General value formatting")
     public ENFormatSection format = new ENFormatSection();
-
-    @Comment("# This section is responsible for all messages related to item editing.")
-    public ENItemEditMessages itemEdit = new ENItemEditMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /signeditor command",
-    })
-    public ENSignEditorMessages signEditor = new ENSignEditorMessages();
-
-    @Override
-    public File getConfigFile(File dataFolder) {
-        return new File(dataFolder, "lang" + File.separator + "en_messages.yml");
-    }
 
     @Getter
     public static class ENFormatSection extends OkaeriConfig implements Format {
@@ -166,256 +147,170 @@ public class ENTranslation extends AbstractTranslation {
         public String disable = "<red>disabled";
     }
 
-    @Comment({
-        " ",
-        "# This section is responsible for the player support chat /helpop",
-    })
-    public ENHelpOpMessages helpOp = new ENHelpOpMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /seen command"
-    })
-    public ENSeenMessages seen = new ENSeenMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the communication between administration",
-    })
-    public ENAdminChatMessages adminChat = new ENAdminChatMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for ignore-related messages"
-    })
-    public ENIgnoreMessages ignore = new ENIgnoreMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /sudo command",
-    })
-    public ENSudoMessages sudo = new ENSudoMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages related to teleportation",
-    })
-    public ENTeleportMessages teleport = new ENTeleportMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /tprp command",
-    })
-    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages related to random teleport",
-    })
-    public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages related to chat",
-    })
+    @Comment("# Chat")
     public ENChatMessages chat = new ENChatMessages();
 
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /broadcast command",
-    })
-    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
+    @Comment("# Admin chat")
+    public ENAdminChatMessages adminChat = new ENAdminChatMessages();
 
-    @Comment({
-        " ",
-        "# This section is responsible for handling tpa requests,",
-        "# It gives you the ability to edit queries of this type",
-    })
-    public ENTeleportRequestMessages tpa = new ENTeleportRequestMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for setting and editing fast travel points - warp",
-    })
-    public ENWarpMessages warp = new ENWarpMessages();
-
-    @Comment({
-        " ",
-        "# The following section is responsible for setting and editing personal fast travel points - home",
-    })
-    public ENHomeMessages home = new ENHomeMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for setting and editing private messages."
-    })
+    @Comment("# Private messages")
     public ENMsgMessages msg = new ENMsgMessages();
 
-    @Comment({
-        " ",
-        "# Section responsible for AFK."
-    })
-    public ENAfkMessages afk = new ENAfkMessages();
+    @Comment("# Broadcast")
+    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
 
-    @Comment({
-        " ",
-        "# This section is responsible for death messages"
-    })
-    public ENDeathMessages deathMessage = new ENDeathMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for disposal messages"
-    })
-    public ENDisposalMessages disposal = new ENDisposalMessages();
-
-    @Comment("# This section is responsible for /clear command")
-    public ENClearMessages clear = new ENClearMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /feed command messages"
-    })
-    public ENFeedMessages feed = new ENFeedMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /heal command messages"
-    })
-    public ENHealMessages heal = new ENHealMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /kill command messages"
-    })
-    public ENKillMessages kill = new ENKillMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /speed command messages"
-    })
-    public ENSpeedMessages speed = new ENSpeedMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /god command messages"
-    })
-    public ENGodModeMessages godmode = new ENGodModeMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /fly command messages"
-    })
-    public ENFlyMessages fly = new ENFlyMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /ping command messages"
-    })
-    public ENPingMessages ping = new ENPingMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /gamemode command messages"
-    })
-    public ENGameModeMessages gamemode = new ENGameModeMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /online command messages"
-    })
-    public ENOnlineMessages online = new ENOnlineMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /whois command messages"
-    })
-    public ENWhoIsMessages whois = new ENWhoIsMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /butcher command messages"
-    })
-    public ENButcherMessages butcher = new ENButcherMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /give command messages"
-    })
-    public ENGiveMessages give = new ENGiveMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for /skull command messages"
-    })
-    public ENSkullMessages skull = new ENSkullMessages();
-
-    @Comment({" ", "# This section is responsible for spawn-related stuff."})
-    public ENSpawnMessages spawn = new ENSpawnMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for repair messages"
-    })
-    public ENRepairMessages repair = new ENRepairMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for enchant messages"
-    })
-    ENEnchantMessages enchant = new ENEnchantMessages();
-
-    @Comment({" ", "# Messages sent on time and weather change."})
-    public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
-
-    @Comment({" ", "# Messages responsible for containers"})
-    public ENContainerMessages container = new ENContainerMessages();
-
-    @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
-    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
-
-    @Comment({" ", "# Auto message"})
+    @Comment("# Auto messages")
     public ENAutoMessageMessages autoMessage = new ENAutoMessageMessages();
 
-    @Comment({" ", "# This section is responsible for handling jail-related stuff."})
-    public ENJailMessages jailSection = new ENJailMessages();
-
-    @Comment({" ", "# This section is responsible for elder guardian messages."})
-    public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
-
-    @Comment({" ", "# This section is responsible for demo screen messages."})
-    public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
-
-    @Comment({" ", "# This section is responsible for join message."})
+    @Comment("# Join message")
     public ENJoinMessage join = new ENJoinMessage();
 
-    @Comment({" ", "# This section is responsible for quit message."})
+    @Comment("# Quit message")
     public ENQuitMessage quit = new ENQuitMessage();
 
-    @Comment({" ", "# This section is responsible for end screen messages."})
-    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
-
-    @Comment({" ", "# This section is responsible for '/burn' command messages."})
-    public ENBurnMessages burn = new ENBurnMessages();
-
-    @Comment({" ", "# This section is responsible for vanish-related stuff."})
-    public ENVanishMessages vanish = new ENVanishMessages();
-
-    @Comment({" ", "# This section is responsible for '/near' command messages."})
-    public ENNearMessages near = new ENNearMessages();
-
-    @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
+    @Comment("# MOTD (Message of the Day)")
     public ENMotdMessages motd = new ENMotdMessages();
 
-    @Comment({" ", "# This section is responsible for teleporting to offline players."})
+    @Comment("# Death messages")
+    public ENDeathMessages deathMessage = new ENDeathMessages();
+
+    @Comment("# AFK")
+    public ENAfkMessages afk = new ENAfkMessages();
+
+    @Comment("# Ignore")
+    public ENIgnoreMessages ignore = new ENIgnoreMessages();
+
+    @Comment("# Teleportation")
+    public ENTeleportMessages teleport = new ENTeleportMessages();
+
+    @Comment("# Teleport requests (TPA)")
+    public ENTeleportRequestMessages tpa = new ENTeleportRequestMessages();
+
+    @Comment("# Teleport to random player")
+    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
+
+    @Comment("# Random teleport")
+    public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
+
+    @Comment("# Teleport to offline players")
     public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();
 
-    @Comment({" ", "# This section is responsible for information about players' game time."})
-    public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
+    @Comment("# Home")
+    public ENHomeMessages home = new ENHomeMessages();
 
-    @Comment({" ", "# This section is responsible for the messages of the freeze feature."})
+    @Comment("# Warp")
+    public ENWarpMessages warp = new ENWarpMessages();
+
+    @Comment("# Spawn")
+    public ENSpawnMessages spawn = new ENSpawnMessages();
+
+    @Comment("# Near")
+    public ENNearMessages near = new ENNearMessages();
+
+    @Comment("# Heal")
+    public ENHealMessages heal = new ENHealMessages();
+
+    @Comment("# Feed")
+    public ENFeedMessages feed = new ENFeedMessages();
+
+    @Comment("# Fly")
+    public ENFlyMessages fly = new ENFlyMessages();
+
+    @Comment("# Speed")
+    public ENSpeedMessages speed = new ENSpeedMessages();
+
+    @Comment("# God mode")
+    public ENGodModeMessages godmode = new ENGodModeMessages();
+
+    @Comment("# Freeze")
     public ENFreezeMessages freeze = new ENFreezeMessages();
 
-    @Comment({" ", "# This section is responsible for powertool messages."})
+    @Comment("# Vanish")
+    public ENVanishMessages vanish = new ENVanishMessages();
+
+    @Comment("# Game mode")
+    public ENGameModeMessages gamemode = new ENGameModeMessages();
+
+    @Comment("# Time and weather")
+    public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
+
+    @Comment("# Ping")
+    public ENPingMessages ping = new ENPingMessages();
+
+    @Comment("# Online players")
+    public ENOnlineMessages online = new ENOnlineMessages();
+
+    @Comment("# Player information")
+    public ENWhoIsMessages whois = new ENWhoIsMessages();
+
+    @Comment("# Last seen")
+    public ENSeenMessages seen = new ENSeenMessages();
+
+    @Comment("# Playtime")
+    public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
+
+    @Comment("# Give items")
+    public ENGiveMessages give = new ENGiveMessages();
+
+    @Comment("# Clear inventory")
+    public ENClearMessages clear = new ENClearMessages();
+
+    @Comment("# Disposal")
+    public ENDisposalMessages disposal = new ENDisposalMessages();
+
+    @Comment("# Containers")
+    public ENContainerMessages container = new ENContainerMessages();
+
+    @Comment("# Set slot")
+    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
+
+    @Comment("# Item edit")
+    public ENItemEditMessages itemEdit = new ENItemEditMessages();
+
+    @Comment("# Enchant")
+    public ENEnchantMessages enchant = new ENEnchantMessages();
+
+    @Comment("# Repair")
+    public ENRepairMessages repair = new ENRepairMessages();
+
+    @Comment("# Skull")
+    public ENSkullMessages skull = new ENSkullMessages();
+
+    @Comment("# Sign editor")
+    public ENSignEditorMessages signEditor = new ENSignEditorMessages();
+
+    @Comment("# Powertool")
     public ENPowertoolMessages powertool = new ENPowertoolMessages();
+
+    @Comment("# Kill")
+    public ENKillMessages kill = new ENKillMessages();
+
+    @Comment("# Burn")
+    public ENBurnMessages burn = new ENBurnMessages();
+
+    @Comment("# Butcher")
+    public ENButcherMessages butcher = new ENButcherMessages();
+
+    @Comment("# Jail")
+    public ENJailMessages jailSection = new ENJailMessages();
+
+    @Comment("# Sudo")
+    public ENSudoMessages sudo = new ENSudoMessages();
+
+    @Comment("# Help chat")
+    public ENHelpOpMessages helpOp = new ENHelpOpMessages();
+
+    @Comment("# Elder Guardian")
+    public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
+
+    @Comment("# Demo Screen")
+    public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
+
+    @Comment("# End Screen")
+    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
+
+    @Override
+    public File getConfigFile(File dataFolder) {
+        return new File(dataFolder, "lang" + File.separator + "en_messages.yml");
+    }
 }
