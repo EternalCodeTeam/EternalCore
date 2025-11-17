@@ -46,7 +46,8 @@ import com.eternalcode.core.feature.skull.messages.PLSkullMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.speed.messages.PLSpeedMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
-import com.eternalcode.core.feature.teleport.messages.PLTeleportOfflineMessages;
+import com.eternalcode.core.feature.teleport.messages.PLTeleportMessages;
+import com.eternalcode.core.feature.teleportoffline.PLTeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.PLTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
@@ -56,7 +57,6 @@ import com.eternalcode.core.feature.whois.PLWhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
-import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
@@ -202,61 +202,7 @@ public class PLTranslation extends AbstractTranslation {
         " ",
         "# Ta sekcja odpowiada za komunikaty związane z teleportacją",
     })
-    public PLTeleportSection teleport = new PLTeleportSection();
-
-    @Getter
-    public static class PLTeleportSection extends OkaeriConfig implements TeleportSection {
-        // teleport
-        @Comment({"# {PLAYER} - Gracz który został teleportowany"})
-        Notice teleportedToPlayer =
-            Notice.chat("<green>► <white>Przeteleportowano do gracza <green>{PLAYER}<white>!");
-
-        @Comment({
-            "# {PLAYER} - Gracz który został teleportowany, {ARG-PLAYER} - Gracz do którego został teleportowany inny gracz"})
-        Notice teleportedPlayerToPlayer = Notice.chat(
-            "<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do gracza <green>{ARG-PLAYER}<white>!");
-
-        @Comment({"# {Y} - Koordynat Y najwyżej położonego bloku"})
-        Notice teleportedToHighestBlock =
-            Notice.chat("<green>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
-
-        @Comment(" ")
-        Notice teleportedAllToPlayer =
-            Notice.chat("<green>► <white>Przeteleportowano wszystkich graczy do ciebie!");
-
-        // Task
-        @Comment({"# {TIME} - Czas teleportacji"})
-        Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleportacja za <green>{TIME}");
-        @Comment(" ")
-        Notice teleported = Notice.builder()
-            .chat("<green>► <white>Przeteleportowano!")
-            .actionBar("<green>► <white>Przeteleportowano!")
-            .build();
-
-        Notice teleporting = Notice.chat("<green>► <white>Teleportowanie...");
-        Notice teleportTaskCanceled =
-            Notice.chat("<red>✘ <dark_red>Ruszyłeś się, teleportacja została przerwana!");
-        Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>Teleportujesz się już!");
-
-        // Coordinates XYZ
-        @Comment({" ", "# {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
-        Notice teleportedToCoordinates = Notice.chat(
-            "<green>► <white>Przeteleportowano na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-        @Comment({" ",
-                  "# {PLAYER} - Gracz który został teleportowany, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
-        Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
-            "<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-
-        // Back
-        @Comment(" ")
-        Notice teleportedToLastLocation =
-            Notice.chat("<green>► <white>Przeteleportowano do ostatniej lokalizacji!");
-        @Comment({" ", "# {PLAYER} - Gracz który został teleportowany"})
-        Notice teleportedSpecifiedPlayerLastLocation =
-            Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
-        @Comment(" ")
-        Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
-    }
+    public PLTeleportMessages teleport = new PLTeleportMessages();
 
     @Comment({
         " ",

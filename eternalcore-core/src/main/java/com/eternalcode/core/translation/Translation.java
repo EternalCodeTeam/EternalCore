@@ -46,7 +46,8 @@ import com.eternalcode.core.feature.skull.messages.SkullMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.speed.messages.SpeedMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
-import com.eternalcode.core.feature.teleport.messages.TeleportOfflineMessages;
+import com.eternalcode.core.feature.teleport.messages.TeleportMessages;
+import com.eternalcode.core.feature.teleportoffline.TeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
@@ -54,7 +55,6 @@ import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.core.feature.whois.WhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
-import com.eternalcode.multification.notice.Notice;
 
 public interface Translation {
 
@@ -62,31 +62,6 @@ public interface Translation {
         String enable();
         String disable();
     }
-
-    interface TeleportSection {
-        // teleport
-        Notice teleportedToPlayer();
-        Notice teleportedPlayerToPlayer();
-        Notice teleportedToHighestBlock();
-        Notice teleportedAllToPlayer();
-
-        // Task
-        Notice teleportTimerFormat();
-        Notice teleported();
-        Notice teleporting();
-        Notice teleportTaskCanceled();
-        Notice teleportTaskAlreadyExist();
-
-        // Coordinates XYZ
-        Notice teleportedToCoordinates();
-        Notice teleportedSpecifiedPlayerToCoordinates();
-
-        // Back
-        Notice teleportedToLastLocation();
-        Notice teleportedSpecifiedPlayerLastLocation();
-        Notice lastLocationNoExist();
-    }
-
 
     ChatMessages chat();
 
@@ -157,7 +132,7 @@ public interface Translation {
     // sudo
     SudoMessages sudo();
     // Teleport Section
-    TeleportSection teleport();
+    TeleportMessages teleport();
     // teleport to random player section.
     TeleportToRandomPlayerMessages teleportToRandomPlayer();
     // Random Teleport Section
