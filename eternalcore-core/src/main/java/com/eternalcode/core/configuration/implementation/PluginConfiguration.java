@@ -45,6 +45,8 @@ import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.placeholder.PlaceholdersConfig;
+import com.eternalcode.core.placeholder.PlaceholdersSettings;
 import com.eternalcode.core.translation.TranslationConfig;
 import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
@@ -212,6 +214,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Vanish Configuration")
     @Comment("# Settings responsible for player vanish functionality")
     VanishConfig vanish = new VanishConfig();
+
+    @Bean(proxied = PlaceholdersSettings.class)
+    @Comment("")
+    @Comment("# Placeholders Configuration")
+    @Comment("# Settings that define various placeholders used across the plugin")
+    PlaceholdersConfig placeholders = new PlaceholdersConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
