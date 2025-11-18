@@ -37,6 +37,10 @@ dependencies {
 tasks {
     runServer {
         minecraftVersion("1.21.8")
-        downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
+
+        downloadPlugins {
+            modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
+            modrinth("placeholderapi", Versions.PLACEHOLDER_API)
+        }
     }
 }
