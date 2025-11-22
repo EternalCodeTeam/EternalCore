@@ -14,12 +14,10 @@ import org.bukkit.Sound;
 public class ENQuitMessage extends OkaeriConfig implements QuitMessage {
 
     @Comment({
-        " ",
         "# EternalCore will randomly select one of the messages from the list below",
-        "# every time a player leaves the server.",
-        "# {PLAYER} - Player who left the server."
+        "# every time a player leaves the server."
     })
-    public List<Notice> quitMessage = List.of(
+    public List<Notice> playerLeftServer = List.of(
         BukkitNotice.builder()
             .actionBar("<dark_red>{PLAYER} <white>logged off the server!")
             .sound(Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1.8f, 1f)

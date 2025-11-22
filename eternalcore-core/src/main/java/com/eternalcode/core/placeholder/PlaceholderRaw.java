@@ -4,15 +4,7 @@ import org.bukkit.entity.Player;
 
 import java.util.function.Function;
 
-public final class PlaceholderRaw implements PlaceholderReplacer {
-
-    private final String target;
-    private final Function<Player, String> replacement;
-
-    PlaceholderRaw(String target, Function<Player, String> replacement) {
-        this.target = target;
-        this.replacement = replacement;
-    }
+public record PlaceholderRaw(String target, Function<Player, String> replacement) implements Placeholder {
 
     @Override
     public String apply(String text, Player targetPlayer) {

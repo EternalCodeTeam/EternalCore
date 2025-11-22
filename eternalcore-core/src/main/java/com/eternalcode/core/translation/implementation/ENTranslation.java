@@ -7,23 +7,34 @@ import com.eternalcode.core.feature.back.messages.ENBackMessages;
 import com.eternalcode.core.feature.broadcast.messages.ENBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
+import com.eternalcode.core.feature.chat.messages.ENChatMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
+import com.eternalcode.core.feature.disposal.messages.ENDisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
+import com.eternalcode.core.feature.feed.messages.ENFeedMessages;
+import com.eternalcode.core.feature.fly.messages.ENFlyMessages;
 import com.eternalcode.core.feature.freeze.messages.ENFreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.ENDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ENElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.ENEndScreenMessages;
+import com.eternalcode.core.feature.gamemode.messages.ENGameModeMessages;
+import com.eternalcode.core.feature.give.messages.ENGiveMessages;
+import com.eternalcode.core.feature.godmode.messages.ENGodModeMessages;
+import com.eternalcode.core.feature.heal.messages.ENHealMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.ignore.messages.ENIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.joinmessage.messages.ENJoinMessage;
+import com.eternalcode.core.feature.kill.messages.ENKillMessages;
 import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.near.messages.ENNearMessages;
+import com.eternalcode.core.feature.onlineplayers.messages.ENOnlineMessages;
+import com.eternalcode.core.feature.ping.ENPingMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.ENPowertoolMessages;
 import com.eternalcode.core.feature.quitmessage.messages.ENQuitMessage;
@@ -32,22 +43,24 @@ import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
 import com.eternalcode.core.feature.seen.messages.ENSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.ENSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.ENSignEditorMessages;
+import com.eternalcode.core.feature.skull.messages.ENSkullMessages;
 import com.eternalcode.core.feature.spawn.messages.ENSpawnMessages;
+import com.eternalcode.core.feature.speed.messages.ENSpeedMessages;
 import com.eternalcode.core.feature.sudo.messages.ENSudoMessages;
-import com.eternalcode.core.feature.teleport.messages.ENTeleportOfflineMessages;
+import com.eternalcode.core.feature.teleport.messages.ENTeleportMessages;
+import com.eternalcode.core.feature.teleportoffline.ENTeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.ENTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.ENTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.ENTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.ENVanishMessages;
 import com.eternalcode.core.feature.warp.messages.ENWarpMessages;
+import com.eternalcode.core.feature.whois.ENWhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.ENArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
-import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
-import java.util.List;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -75,7 +88,6 @@ public class ENTranslation extends AbstractTranslation {
         "# Website: https://eternalcode.pl/",
         "# SourceCode: https://github.com/EternalCodeTeam/EternalCore",
     })
-
     @Comment({
         " ",
         "# You can use MiniMessages formatting everywhere, or standard &7, &e etc.",
@@ -124,29 +136,11 @@ public class ENTranslation extends AbstractTranslation {
         "#",
         " "
     })
-    @Comment("# This section is responsible for all messages used during bad of a command argument")
+    @Comment("# Command arguments")
     public ENArgumentMessages argument = new ENArgumentMessages();
 
-    @Comment({
-        " ",
-        "# This answer is responsible for the general formatting of some values",
-        "# The purpose of the section is to reduce the repetition of some messages."
-    })
+    @Comment("# General value formatting")
     public ENFormatSection format = new ENFormatSection();
-
-    @Comment("# This section is responsible for all messages related to item editing.")
-    public ENItemEditMessages itemEdit = new ENItemEditMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /signeditor command",
-    })
-    public ENSignEditorMessages signEditor = new ENSignEditorMessages();
-
-    @Override
-    public File getConfigFile(File dataFolder) {
-        return new File(dataFolder, "lang" + File.separator + "en_messages.yml");
-    }
 
     @Getter
     public static class ENFormatSection extends OkaeriConfig implements Format {
@@ -154,411 +148,173 @@ public class ENTranslation extends AbstractTranslation {
         public String disable = "<red>disabled";
     }
 
-    @Comment({
-        " ",
-        "# This section is responsible for the player support chat /helpop",
-    })
-    public ENHelpOpMessages helpOp = new ENHelpOpMessages();
+    @Comment("# Chat")
+    public ENChatMessages chat = new ENChatMessages();
 
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /seen command"
-    })
-    public ENSeenMessages seen = new ENSeenMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the communication between administration",
-    })
+    @Comment("# Admin chat")
     public ENAdminChatMessages adminChat = new ENAdminChatMessages();
 
-    @Comment({
-        " ",
-        "# This section is responsible for ignore-related messages"
-    })
-    public ENIgnoreMessages ignore = new ENIgnoreMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /sudo command",
-    })
-    public ENSudoMessages sudo = new ENSudoMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages related to teleportation",
-    })
-    public ENTeleportSection teleport = new ENTeleportSection();
-
-    @Getter
-    public static class ENTeleportSection extends OkaeriConfig implements TeleportSection {
-        // teleport
-        @Comment({"# {PLAYER} - Teleported players"})
-        public Notice teleportedToPlayer =
-            Notice.chat("<green>► <white>Successfully teleported to <green>{PLAYER}<white>!");
-
-        @Comment({"# {PLAYER} - Teleported player, {ARG-PLAYER} - Player to whom another player has been transferred"})
-        public Notice teleportedPlayerToPlayer =
-            Notice.chat("<green>► <white>Successfully teleported <green>{PLAYER} <white>to <green>{ARG-PLAYER}<white>!");
-
-        @Comment({"# {Y} - Y coordinate of the highest block"})
-        public Notice teleportedToHighestBlock =
-            Notice.chat("<green>► <white>Teleported successfully to the highest block! (Y: {Y})");
-
-        @Comment(" ")
-        public Notice teleportedAllToPlayer = Notice.chat("<green>► <white>All players have been teleported to you!");
-
-        // Task
-        @Comment({"# {TIME} - Teleportation time"})
-        public Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleporting in <green>{TIME}");
-        @Comment(" ")
-        public Notice teleported = Notice.chat("<green>► <white>Teleported!");
-        public Notice teleporting = Notice.chat("<green>► <white>Teleporting...");
-        public Notice teleportTaskCanceled = Notice.chat("<red>✘ <dark_red>You've moved, teleportation canceled!");
-        public Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>You are in teleport!");
-
-        // Coordinates XYZ
-        @Comment({" ", "# {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
-        public Notice teleportedToCoordinates = Notice.chat(
-            "<green>► <white>Teleported to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-        @Comment({" ",
-                  "# {PLAYER} -  Player who has been teleported, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
-        public Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
-            "<green>► <white>Teleported <green>{PLAYER} <white>to location x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-
-        // Back
-        @Comment(" ")
-        public Notice teleportedToLastLocation = Notice.chat("<green>► <white>Teleported to the last location!");
-        @Comment({" ", "# {PLAYER} - Player who has been teleported"})
-        public Notice teleportedSpecifiedPlayerLastLocation =
-            Notice.chat("<green>► <white>Teleported <green>{PLAYER} <white>to the last location!");
-        @Comment(" ")
-        public Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
-    }
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /back command",
-    })
-    public ENBackMessages back = new ENBackMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /tprp command",
-    })
-    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages related to random teleport",
-    })
-    public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
-
-    public ENChatSection chat = new ENChatSection();
-
-    @Getter
-    public static class ENChatSection extends OkaeriConfig implements ChatSection {
-        @Comment({"# {PLAYER} - Player who performed the actions for the chat"})
-        public Notice disabled = Notice.chat("<green>► <white>Chat has been disabled by <green>{PLAYER}<white>!");
-        public Notice enabled = Notice.chat("<green>► <white>The chat has been enabled by <green>{PLAYER}<white>!");
-        public Notice cleared = Notice.chat("<green>► <white>Chat has been cleared by <green>{PLAYER}<white>!");
-
-        @Comment(" ")
-        public Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Chat already off!");
-        public Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Chat already on!");
-
-        @Comment({" ", "# {SLOWMODE} - Time for next message"})
-        public Notice slowModeSet = Notice.chat("<green>► <white>SlowMode set to: {SLOWMODE}");
-
-        @Comment({" ", "# {PLAYER} - Player who performed the actions for the chat"})
-        public Notice slowModeOff =
-            Notice.chat("<green>► <white>SlowMode has been disabled by <green>{PLAYER}<white>!");
-
-        @Comment({" ", "# {TIME} - Time to next use (cooldown)"})
-        public Notice slowMode =
-            Notice.chat("<red>✘ <dark_red>You can write the next message for: <red>{TIME}<dark_red>!");
-
-        @Comment(" ")
-        public Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Chat is currently disabled!");
-
-        @Comment(" ")
-        public Notice commandNotFound =
-            Notice.chat("<red>✘ <dark_red>Command <red>{COMMAND} <dark_red>doesn't exists!");
-    }
-
-    @Comment({
-        " ",
-        "# This section is responsible for the messages of the /broadcast command",
-    })
-    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for handling tpa requests,",
-        "# It gives you the ability to edit queries of this type",
-    })
-    public ENTeleportRequestMessages tpa = new ENTeleportRequestMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for setting and editing fast travel points - warp",
-    })
-    public ENWarpMessages warp = new ENWarpMessages();
-
-    @Comment({
-        " ",
-        "# The following section is responsible for setting and editing personal fast travel points - home",
-    })
-    public ENHomeMessages home = new ENHomeMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for setting and editing private messages."
-    })
+    @Comment("# Private messages")
     public ENMsgMessages msg = new ENMsgMessages();
 
-    @Comment({
-        " ",
-        "# Section responsible for AFK."
-    })
-    public ENAfkMessages afk = new ENAfkMessages();
+    @Comment("# Broadcast")
+    public ENBroadcastMessages broadcast = new ENBroadcastMessages();
 
-    @Comment({
-        " ",
-        "# This section is responsible for death messages"
-    })
-    public ENDeathMessages deathMessage = new ENDeathMessages();
-
-    @Comment({" ", "# Section responsible for inventories-related stuff."})
-    public ENInventorySection inventory = new ENInventorySection();
-
-    @Getter
-    public static class ENInventorySection extends OkaeriConfig implements InventorySection {
-        public String disposalTitle = "<white><bold>Trash";
-    }
-
-    @Comment("# This section is responsible for /clear command")
-    public ENClearMessages clear = new ENClearMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for player-related stuff and interactions with them."
-    })
-    public ENPlayerSection player = new ENPlayerSection();
-
-    @Getter
-    public static class ENPlayerSection extends OkaeriConfig implements PlayerSection {
-        public Notice feedMessage = Notice.chat("<green>► <white>You've been fed!");
-
-        @Comment(" # {PLAYER} - Player who has been fed")
-        public Notice feedMessageBy = Notice.chat("<green>► <white>You've fed the <green>{PLAYER}");
-
-        @Comment(" ")
-        public Notice healMessage = Notice.chat("<green>► <white>You've been healed!");
-
-        @Comment("# {PLAYER} - Healed player")
-        public Notice healMessageBy = Notice.chat("<green>► <white>Healed <green>{PLAYER}");
-
-        @Comment(" ")
-        public Notice killSelf = Notice.chat("<red>► <dark_red>You killed yourself!");
-        @Comment("# {PLAYER} - Killed player")
-        public Notice killedMessage = Notice.chat("<red>► <dark_red>Killed <red>{PLAYER}");
-
-        @Comment(" ")
-        public Notice speedBetweenZeroAndTen = Notice.chat("<red>✘ <dark_red>Enter speed from 0 to 10!");
-        public Notice speedTypeNotCorrect = Notice.chat("<red>✘ <dark_red>Invalid speed type!");
-
-        @Comment("# {SPEED} - Walk or fly speed value")
-        public Notice speedWalkSet = Notice.chat("<green>► <white>Walking speed is set to <green>{SPEED}");
-        public Notice speedFlySet = Notice.chat("<green>► <white>Flying speed is set to <green>{SPEED}");
-
-        @Comment("# {PLAYER} - Target player, {SPEED} - Target player walk or fly speed value")
-        public Notice speedWalkSetBy =
-            Notice.chat("<green>► <white>Walking speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
-        public Notice speedFlySetBy =
-            Notice.chat("<green>► <white>Flying speed for <green>{PLAYER} <white>is set to <green>{SPEED}");
-
-        @Comment({" ", "# {STATE} - Godmode status"})
-        public Notice godEnable = Notice.chat("<green>► <white>God is now {STATE}");
-        public Notice godDisable = Notice.chat("<green>► <white>God is now {STATE}");
-
-        @Comment({" ", "# {PLAYER} - Target player, {STATE} - Target player godmode status"})
-        public Notice godSetEnable = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>god is now: {STATE}");
-        public Notice godSetDisable = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>god is now: {STATE}");
-
-        @Comment({" ", "# {STATE} - Fly status"})
-        public Notice flyEnable = Notice.chat("<green>► <white>Fly is now {STATE}");
-        public Notice flyDisable = Notice.chat("<green>► <white>Fly is now {STATE}");
-
-        @Comment("# {PLAYER} - Target player, {STATE} - Target player fly status")
-        public Notice flySetEnable = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
-        public Notice flySetDisable = Notice.chat("<green>► <white>Fly for <green>{PLAYER} <white>is now {STATE}");
-
-        @Comment({" ", "# {PING} - Current ping"})
-        public Notice pingMessage = Notice.chat("<green>► <white>Your ping is: <green>{PING}<white>ms");
-
-        @Comment("# {PLAYER} - Target player, {PING} - Ping of target player")
-        public Notice pingOtherMessage =
-            Notice.chat("<green>► <white>Ping of the <green>{PLAYER} <white>is: <green>{PING}<white>ms");
-
-        @Comment(" ")
-        public Notice gameModeNotCorrect = Notice.chat("<red>✘ <dark_red>Not a valid gamemode type");
-
-        @Comment("# {GAMEMODE} - Gamemode name")
-        public Notice gameModeMessage = Notice.chat("<green>► <white>Gamemode now is set to: <green>{GAMEMODE}");
-
-        @Comment("# {PLAYER} - Target player, {GAMEMODE} - Gamemode")
-        public Notice gameModeSetMessage =
-            Notice.chat("<green>► <white>Gamemode for <green>{PLAYER} <white>now is set to: <green>{GAMEMODE}");
-
-        @Comment({" ", "# {ONLINE} - Number of online players"})
-        public Notice onlinePlayersCountMessage =
-            Notice.chat("<green>► <white>On server now is: <green>{ONLINE} <white>players!");
-
-        @Comment("# {ONLINE} - Current online players, {PLAYERS} - Player list")
-        public Notice onlinePlayersMessage =
-            Notice.chat("<green>► <white>On server is: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <green>{PLAYERS}");
-
-        public List<String> fullServerSlots = List.of(
-            " ",
-            "<red>✘ <dark_red>Server is full!",
-            "<red>✘ <dark_red>Buy rank on our site!"
-        );
-
-        @Comment({
-            " ",
-            "# {PLAYER} - Player name",
-            "# {UUID} - Player UUID",
-            "# {IP} - Player IP",
-            "# {WALK-SPEED} - Player walk speed",
-            "# {SPEED} - Player fly speed",
-            "# {PING} - Player ping",
-            "# {LEVEL} - Player level",
-            "# {HEALTH} - Player health",
-            "# {FOOD} - Player food level"
-        })
-        public List<String> whoisCommand = List.of(
-            "<green>► <white>Target name: <green>{PLAYER}",
-            "<green>► <white>Target UUID: <green>{UUID}",
-            "<green>► <white>Target address: <green>{IP}",
-            "<green>► <white>Target walk speed: <green>{WALK-SPEED}",
-            "<green>► <white>Target fly speed: <green>{SPEED}",
-            "<green>► <white>Target ping: <green>{PING}<white>ms",
-            "<green>► <white>Target level: <green>{LEVEL}",
-            "<green>► <white>Target health: <green>{HEALTH}",
-            "<green>► <white>Target food level: <green>{FOOD}"
-        );
-
-        @Comment({" ", "# {KILLED} - Number of killed mobs"})
-        public Notice butcherCommand = Notice.chat("<green>► <white>You killed <green>{KILLED} <white>mobs!");
-
-        @Comment({" ", "# {SAFE_CHUNKS} - The number of safe chunks"})
-        public Notice safeChunksMessage =
-            Notice.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
-    }
-
-    @Comment({" ", "# This section is responsible for spawn-related stuff."})
-    public ENSpawnMessages spawn = new ENSpawnMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for messages regarding item attributes."
-    })
-    public ENItemSection item = new ENItemSection();
-
-    @Getter
-    public static class ENItemSection extends OkaeriConfig implements ItemSection {
-        @Comment({" ", "# {ITEM} - Name of received item"})
-        public Notice giveReceived = Notice.chat("<green>► <white>You have received: <green>{ITEM}");
-
-        @Comment({" ", "# {PLAYER} - Name of item receiver, {ITEM} - the item"})
-        public Notice giveGiven =
-            Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has received <green>{ITEM}");
-        public Notice giveNoSpace = Notice.chat("<red>✘ <dark_red>Not enough space in inventory!");
-
-        @Comment(" ")
-        public Notice giveNotItem = Notice.chat("<green>► <white>Not a valid obtainable item!");
-
-        @Comment({" ", "# {SKULL} - Name of the skull owner"})
-        public Notice skullMessage = Notice.chat("<green>► <white>Player <green>{SKULL} <white>heads received");
-
-        @Comment(" ")
-        public Notice enchantedMessage = Notice.chat("<green>► <white>Item in hand is enchanted!");
-        public Notice enchantedMessageFor =
-            Notice.chat("<green>► <white>Item in hand of <green>{PLAYER} <white>is enchanted!");
-        public Notice enchantedMessageBy =
-            Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>enchanted your item!");
-    }
-
-    @Comment({
-        " ",
-        "# This section is responsible for repair messages"
-    })
-    public ENRepairMessages repair = new ENRepairMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for enchant messages"
-    })
-    ENEnchantMessages enchant = new ENEnchantMessages();
-
-    @Comment({
-        " ",
-        "# This section is responsible for butcher messages"
-    })
-    ENButcherMessages butcher = new ENButcherMessages();
-
-    @Comment({" ", "# Messages sent on time and weather change."})
-    public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
-
-    @Comment({" ", "# Messages responsible for containers"})
-    public ENContainerMessages container = new ENContainerMessages();
-
-    @Comment({" ", "# Set's max players on the server, the messages for the /setslot command"})
-    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
-
-    @Comment({" ", "# Auto message"})
+    @Comment("# Auto messages")
     public ENAutoMessageMessages autoMessage = new ENAutoMessageMessages();
 
-    @Comment({" ", "# This section is responsible for handling jail-related stuff."})
-    public ENJailMessages jailSection = new ENJailMessages();
-
-    @Comment({" ", "# This section is responsible for elder guardian messages."})
-    public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
-
-    @Comment({" ", "# This section is responsible for demo screen messages."})
-    public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
-
-    @Comment({" ", "# This section is responsible for join message."})
+    @Comment("# Join message")
     public ENJoinMessage join = new ENJoinMessage();
 
-    @Comment({" ", "# This section is responsible for quit message."})
+    @Comment("# Quit message")
     public ENQuitMessage quit = new ENQuitMessage();
 
-    @Comment({" ", "# This section is responsible for end screen messages."})
-    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
-
-    @Comment({" ", "# This section is responsible for '/burn' command messages."})
-    public ENBurnMessages burn = new ENBurnMessages();
-
-    @Comment({" ", "# This section is responsible for vanish-related stuff."})
-    public ENVanishMessages vanish = new ENVanishMessages();
-
-    @Comment({" ", "# This section is responsible for '/near' command messages."})
-    public ENNearMessages near = new ENNearMessages();
-
-    @Comment({" ", "# This section is responsible for the messages of the MOTD feature."})
+    @Comment("# MOTD (Message of the Day)")
     public ENMotdMessages motd = new ENMotdMessages();
 
-    @Comment({" ", "# This section is responsible for teleporting to offline players."})
+    @Comment("# Death messages")
+    public ENDeathMessages deathMessage = new ENDeathMessages();
+
+    @Comment("# AFK")
+    public ENAfkMessages afk = new ENAfkMessages();
+
+    @Comment("# Ignore")
+    public ENIgnoreMessages ignore = new ENIgnoreMessages();
+
+    @Comment("# Teleportation")
+    public ENTeleportMessages teleport = new ENTeleportMessages();
+
+    @Comment("# Teleport requests (TPA)")
+    public ENTeleportRequestMessages tpa = new ENTeleportRequestMessages();
+
+    @Comment("# Teleport to random player")
+    public ENTeleportToRandomPlayerMessages teleportToRandomPlayer = new ENTeleportToRandomPlayerMessages();
+
+    @Comment("# Random teleport")
+    public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
+
+    @Comment("# Back")
+    public ENBackMessages back = new ENBackMessages();
+
+    @Comment("# Teleport to offline players")
     public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();
 
-    @Comment({" ", "# This section is responsible for information about players' game time."})
-    public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
+    @Comment("# Home")
+    public ENHomeMessages home = new ENHomeMessages();
 
-    @Comment({" ", "# This section is responsible for the messages of the freeze feature."})
+    @Comment("# Warp")
+    public ENWarpMessages warp = new ENWarpMessages();
+
+    @Comment("# Spawn")
+    public ENSpawnMessages spawn = new ENSpawnMessages();
+
+    @Comment("# Near")
+    public ENNearMessages near = new ENNearMessages();
+
+    @Comment("# Heal")
+    public ENHealMessages heal = new ENHealMessages();
+
+    @Comment("# Feed")
+    public ENFeedMessages feed = new ENFeedMessages();
+
+    @Comment("# Fly")
+    public ENFlyMessages fly = new ENFlyMessages();
+
+    @Comment("# Speed")
+    public ENSpeedMessages speed = new ENSpeedMessages();
+
+    @Comment("# God mode")
+    public ENGodModeMessages godmode = new ENGodModeMessages();
+
+    @Comment("# Freeze")
     public ENFreezeMessages freeze = new ENFreezeMessages();
 
-    @Comment({" ", "# This section is responsible for powertool messages."})
+    @Comment("# Vanish")
+    public ENVanishMessages vanish = new ENVanishMessages();
+
+    @Comment("# Game mode")
+    public ENGameModeMessages gamemode = new ENGameModeMessages();
+
+    @Comment("# Time and weather")
+    public ENTimeAndWeatherMessages timeAndWeather = new ENTimeAndWeatherMessages();
+
+    @Comment("# Ping")
+    public ENPingMessages ping = new ENPingMessages();
+
+    @Comment("# Online players")
+    public ENOnlineMessages online = new ENOnlineMessages();
+
+    @Comment("# Player information")
+    public ENWhoIsMessages whois = new ENWhoIsMessages();
+
+    @Comment("# Last seen")
+    public ENSeenMessages seen = new ENSeenMessages();
+
+    @Comment("# Playtime")
+    public ENPlaytimeMessages playtime = new ENPlaytimeMessages();
+
+    @Comment("# Give items")
+    public ENGiveMessages give = new ENGiveMessages();
+
+    @Comment("# Clear inventory")
+    public ENClearMessages clear = new ENClearMessages();
+
+    @Comment("# Disposal")
+    public ENDisposalMessages disposal = new ENDisposalMessages();
+
+    @Comment("# Containers")
+    public ENContainerMessages container = new ENContainerMessages();
+
+    @Comment("# Set slot")
+    public ENSetSlotMessages setSlot = new ENSetSlotMessages();
+
+    @Comment("# Item edit")
+    public ENItemEditMessages itemEdit = new ENItemEditMessages();
+
+    @Comment("# Enchant")
+    public ENEnchantMessages enchant = new ENEnchantMessages();
+
+    @Comment("# Repair")
+    public ENRepairMessages repair = new ENRepairMessages();
+
+    @Comment("# Skull")
+    public ENSkullMessages skull = new ENSkullMessages();
+
+    @Comment("# Sign editor")
+    public ENSignEditorMessages signEditor = new ENSignEditorMessages();
+
+    @Comment("# Powertool")
     public ENPowertoolMessages powertool = new ENPowertoolMessages();
+
+    @Comment("# Kill")
+    public ENKillMessages kill = new ENKillMessages();
+
+    @Comment("# Burn")
+    public ENBurnMessages burn = new ENBurnMessages();
+
+    @Comment("# Butcher")
+    public ENButcherMessages butcher = new ENButcherMessages();
+
+    @Comment("# Jail")
+    public ENJailMessages jailSection = new ENJailMessages();
+
+    @Comment("# Sudo")
+    public ENSudoMessages sudo = new ENSudoMessages();
+
+    @Comment("# Help chat")
+    public ENHelpOpMessages helpOp = new ENHelpOpMessages();
+
+    @Comment("# Elder Guardian")
+    public ENElderGuardianMessages elderGuardian = new ENElderGuardianMessages();
+
+    @Comment("# Demo Screen")
+    public ENDemoScreenMessages demoScreen = new ENDemoScreenMessages();
+
+    @Comment("# End Screen")
+    public ENEndScreenMessages endScreen = new ENEndScreenMessages();
+
+    @Override
+    public File getConfigFile(File dataFolder) {
+        return new File(dataFolder, "lang" + File.separator + "en_messages.yml");
+    }
 }

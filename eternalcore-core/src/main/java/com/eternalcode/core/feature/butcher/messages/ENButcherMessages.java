@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENButcherMessages extends OkaeriConfig implements ButcherMessages {
-
-    public Notice incorrectNumberOfChunks = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
+    Notice killed = Notice.chat("<green>► <white>You killed <green>{KILLED} <white>mobs!");
+    Notice safeChunksLimitExceeded = Notice.chat("<red>✘ <dark_red>You have exceeded the number of safe chunks <red>{SAFE_CHUNKS}");
+    Notice invalidChunkNumber = Notice.chat("<red>✘ <dark_red>Incorrect number of chunks!");
 }

@@ -14,12 +14,10 @@ import org.bukkit.Sound;
 public class PLQuitMessage extends OkaeriConfig implements QuitMessage {
 
     @Comment({
-        " ",
         "# EternalCore będzie losował losową wiadomość z poniższej listy",
-        "# za każdym razem gdy gracz opuści serwer.",
-        "# {PLAYER} - Gracz, który opuścił serwer."
+        "# za każdym razem gdy gracz opuści serwer."
     })
-    public List<Notice> quitMessage = List.of(
+    public List<Notice> playerLeftServer = List.of(
         BukkitNotice.builder()
             .actionBar("<dark_red>{PLAYER} <white>wylogował się z serwera!")
             .sound(Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1.8f, 1f)

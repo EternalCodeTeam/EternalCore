@@ -5,6 +5,7 @@ import eu.okaeri.configs.schema.GenericsDeclaration;
 import eu.okaeri.configs.serdes.DeserializationData;
 import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
+import lombok.NonNull;
 import org.bukkit.util.OldEnum;
 
 import java.lang.reflect.Method;
@@ -16,7 +17,7 @@ public class OldEnumSerializer implements ObjectSerializer<OldEnum<?>> {
     private static final Map<Class<?>, Method> VALUE_OF_METHODS = new HashMap<>();
 
     @Override
-    public boolean supports(Class<? super OldEnum<?>> type) {
+    public boolean supports(@NonNull Class<?> type) {
         return OldEnum.class.isAssignableFrom(type);
     }
 

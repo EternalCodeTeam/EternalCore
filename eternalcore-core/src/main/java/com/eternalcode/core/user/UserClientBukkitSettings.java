@@ -2,10 +2,9 @@ package com.eternalcode.core.user;
 
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import panda.std.Option;
 
 import java.lang.ref.WeakReference;
-import java.util.Locale;
+import java.util.Optional;
 import java.util.UUID;
 
 class UserClientBukkitSettings implements UserClientSettings {
@@ -25,21 +24,21 @@ class UserClientBukkitSettings implements UserClientSettings {
         return this.getPlayer().isPresent();
     }
 
-    private Option<Player> getPlayer() {
+    private Optional<Player> getPlayer() {
         Player player = this.playerReference.get();
 
         if (player == null) {
             Player playerFromServer = this.server.getPlayer(this.uuid);
 
             if (playerFromServer == null) {
-                return Option.none();
+                return Optional.empty();
             }
 
             this.playerReference = new WeakReference<>(playerFromServer);
-            return Option.of(playerFromServer);
+            return Optional.of(playerFromServer);
         }
 
-        return Option.of(player);
+        return Optional.of(player);
     }
 
 }
