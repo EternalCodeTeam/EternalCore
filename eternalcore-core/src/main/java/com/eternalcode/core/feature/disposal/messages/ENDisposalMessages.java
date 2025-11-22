@@ -9,6 +9,6 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENDisposalMessages extends OkaeriConfig implements DisposalMessages {
     String disposalInventoryTitle = "<gray>Trash";
-    Notice disposalOpened = Notice.chat("<green>► <white>Disposal opened!");
-    Notice disposalOpenedForTargetPlayer = Notice.chat("<green>► <white>Opened a disposal for {PLAYER}!");
+    Notice disposalOpened = Notice.chat("<color:#9d6eef>► <white>Disposal opened!");
+    Notice disposalOpenedForTargetPlayer = Notice.chat("<color:#9d6eef>► <white>Opened a disposal for {PLAYER}!");
 }

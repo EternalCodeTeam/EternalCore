@@ -9,17 +9,17 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLFreezeMessages extends OkaeriConfig implements  FreezeMessages {
 
-    Notice frozenSelf = Notice.chat("<green>► <white>Zamroziłeś się na czas <green>{DURATION}</green>!</white>");
+    Notice frozenSelf = Notice.chat("<color:#9d6eef>► <white>Zamroziłeś się na czas <color:#9d6eef>{DURATION}</color:#9d6eef>!</white>");
 
-    Notice unfrozenSelf = Notice.chat("<green>► <white>Odmroziłeś się!</white>");
+    Notice unfrozenSelf = Notice.chat("<color:#9d6eef>► <white>Odmroziłeś się!</white>");
 
-    Notice frozenOther = Notice.chat("<green>► <white>Zamroziłeś gracza <green>{PLAYER}</green> na czas <green>{DURATION}</green>!</white>");
+    Notice frozenOther = Notice.chat("<color:#9d6eef>► <white>Zamroziłeś gracza <color:#9d6eef>{PLAYER}</color:#9d6eef> na czas <color:#9d6eef>{DURATION}</color:#9d6eef>!</white>");
 
-    Notice unfrozenOther = Notice.chat("<green>► <white>Odmroziłeś gracza <green>{PLAYER}</green>!</white>");
+    Notice unfrozenOther = Notice.chat("<color:#9d6eef>► <white>Odmroziłeś gracza <color:#9d6eef>{PLAYER}</color:#9d6eef>!</white>");
 
-    Notice frozenByOther = Notice.chat("<green>► <white>Zostałeś zamrożony przez gracza <green>{PLAYER}</green> na czas <green>{DURATION}</green>!</white>");
+    Notice frozenByOther = Notice.chat("<color:#9d6eef>► <white>Zostałeś zamrożony przez gracza <color:#9d6eef>{PLAYER}</color:#9d6eef> na czas <color:#9d6eef>{DURATION}</color:#9d6eef>!</white>");
 
-    Notice unfrozenByOther = Notice.chat("<green>► <white>Zostałeś odmrożony przez gracza <green>{PLAYER}</green>!</white>");
+    Notice unfrozenByOther = Notice.chat("<color:#9d6eef>► <white>Zostałeś odmrożony przez gracza <color:#9d6eef>{PLAYER}</color:#9d6eef>!</white>");
 
     Notice selfNotFrozen = Notice.chat("<red>► <dark_red>Nie jesteś zamrożony!</dark_red>");
 

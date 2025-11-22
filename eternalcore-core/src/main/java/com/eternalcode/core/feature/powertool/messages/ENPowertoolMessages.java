@@ -15,8 +15,8 @@ public class ENPowertoolMessages extends OkaeriConfig implements PowertoolMessag
               "# {ITEM} - Item that is a power tool"}
     )
     Notice assigned =
-        Notice.chat("<green>► <white>Assigned command <green>/{COMMAND}<white> to tool <green>{ITEM}.");
-    Notice removed = Notice.chat("<green>► <white>Removed command from tool <green>{ITEM}.");
+        Notice.chat("<color:#9d6eef>► <white>Assigned command <color:#9d6eef>/{COMMAND}<white> to tool <color:#9d6eef>{ITEM}.");
+    Notice removed = Notice.chat("<color:#9d6eef>► <white>Removed command from tool <color:#9d6eef>{ITEM}.");
     Notice notAssigned = Notice.chat("<red>✘ <dark_red>This item is not a power tool. Use /powertool <command> "
         + "to assign a command to it.");
     Notice noItemInMainHand = Notice.chat("<red>✘ <dark_red>You must hold an item in your main hand to assign "

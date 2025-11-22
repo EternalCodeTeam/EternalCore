@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.clear.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
-import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -10,7 +9,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENClearMessages extends OkaeriConfig implements ClearMessages {
 
-    Notice inventoryCleared = Notice.chat("<green>► <white>Your inventory has been cleared");
-    Notice targetInventoryCleared = Notice.chat("<green>► <white>Player inventory: <green>{PLAYER} <white>has been cleared");
+    Notice inventoryCleared = Notice.chat("<color:#9d6eef>► <white>Your inventory has been cleared");
+    Notice targetInventoryCleared = Notice.chat("<color:#9d6eef>► <white>Player inventory: <color:#9d6eef>{PLAYER} <white>has been cleared");
 
 }

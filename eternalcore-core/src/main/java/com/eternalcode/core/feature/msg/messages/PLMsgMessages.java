@@ -25,16 +25,16 @@ public class PLMsgMessages extends OkaeriConfig implements MsgMessages {
         "<dark_gray>[<red>ss<dark_gray>] <dark_gray>[<gray>{SENDER} -> <white>{TARGET}<dark_gray>]<gray>: <white>{MESSAGE}");
 
     @Comment(" ")
-    Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy został {STATE}<white>!");
+    Notice socialSpyEnable = Notice.chat("<color:#9d6eef>► <white>SocialSpy został {STATE}<white>!");
     Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy został {STATE}<white>!");
 
     Notice receiverDisabledMessages = Notice.chat("<red>► <dark_red>Wiadomości prywatne zostały wyłączone!");
 
-    Notice selfMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone!");
-    Notice selfMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone!");
+    Notice selfMessagesDisabled = Notice.chat("<color:#9d6eef>► <white>Wiadomości prywatne zostały <red>wyłączone!");
+    Notice selfMessagesEnabled = Notice.chat("<color:#9d6eef>► <white>Wiadomości prywatne zostały <color:#9d6eef>włączone!");
 
     @Comment({" ", "# {PLAYER} - Gracz któremu wyłączono wiadomości prywatne"})
-    Notice otherMessagesDisabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <green>{PLAYER}<white>!");
-    Notice otherMessagesEnabled = Notice.chat("<green>► <white>Wiadomości prywatne zostały <green>włączone <white>dla gracza <green>{PLAYER}<white>!");
+    Notice otherMessagesDisabled = Notice.chat("<color:#9d6eef>► <white>Wiadomości prywatne zostały <red>wyłączone <white>dla gracza <color:#9d6eef>{PLAYER}<white>!");
+    Notice otherMessagesEnabled = Notice.chat("<color:#9d6eef>► <white>Wiadomości prywatne zostały <color:#9d6eef>włączone <white>dla gracza <color:#9d6eef>{PLAYER}<white>!");
 
 }

@@ -11,8 +11,8 @@ public class PLSpeedMessages extends OkaeriConfig implements SpeedMessages {
 
     Notice invalidSpeedRange = Notice.chat("<red>✘ <dark_red>Ustaw prędkość w zakresie 0-10!");
     Notice invalidSpeedType = Notice.chat("<red>✘ <dark_red>Nieprawidłowy typ prędkości");
-    Notice walkSpeedSet = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia na <green>{SPEED}");
-    Notice flySpeedSet = Notice.chat("<green>► <white>Ustawiono prędkość latania na <green>{SPEED}");
-    Notice walkSpeedSetForTargetPlayer = Notice.chat("<green>► <white>Ustawiono prędkość chodzenia gracza <green>{PLAYER} <white>na <green>{SPEED}");
-    Notice flySpeedSetForTargetPlayer = Notice.chat("<green>► <white>Ustawiono prędkość latania gracza <green>{PLAYER} <white>na <green>{SPEED}");
+    Notice walkSpeedSet = Notice.chat("<color:#9d6eef>► <white>Ustawiono prędkość chodzenia na <color:#9d6eef>{SPEED}");
+    Notice flySpeedSet = Notice.chat("<color:#9d6eef>► <white>Ustawiono prędkość latania na <color:#9d6eef>{SPEED}");
+    Notice walkSpeedSetForTargetPlayer = Notice.chat("<color:#9d6eef>► <white>Ustawiono prędkość chodzenia gracza <color:#9d6eef>{PLAYER} <white>na <color:#9d6eef>{SPEED}");
+    Notice flySpeedSetForTargetPlayer = Notice.chat("<color:#9d6eef>► <white>Ustawiono prędkość latania gracza <color:#9d6eef>{PLAYER} <white>na <color:#9d6eef>{SPEED}");
 }

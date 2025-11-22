@@ -28,13 +28,13 @@ public class PLAutoMessageMessages extends OkaeriConfig implements AutoMessageMe
         "2", BukkitNotice.builder()
             .chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?")
             .chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!")
-            .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></green>")
+            .chat("<dark_gray>» <color:#9d6eef><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></color:#9d6eef>")
             .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
             .build()
     );
 
-    Notice enabled = Notice.chat("<green>► <white>Włączono automatyczne wiadomości!");
-    Notice disabled = Notice.chat("<green>► <white>Wyłączono automatyczne wiadomości!");
+    Notice enabled = Notice.chat("<color:#9d6eef>► <white>Włączono automatyczne wiadomości!");
+    Notice disabled = Notice.chat("<color:#9d6eef>► <white>Wyłączono automatyczne wiadomości!");
 
     @Override
     public Collection<Notice> messages() {

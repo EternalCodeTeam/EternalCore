@@ -9,19 +9,19 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENVanishMessages extends OkaeriConfig implements VanishMessages {
 
-    Notice vanishEnabled = Notice.chat("<green>► <white>Vanish mode enabled!");
+    Notice vanishEnabled = Notice.chat("<color:#9d6eef>► <white>Vanish mode enabled!");
     Notice vanishDisabled = Notice.chat("<red>► <white>Vanish mode disabled!");
 
-    Notice vanishEnabledForOther = Notice.chat("<green>► <white>Enabled vanish mode for <green>{PLAYER}!");
-    Notice vanishDisabledForOther = Notice.chat("<red>► <white>Disabled vanish mode for <green>{PLAYER}!");
+    Notice vanishEnabledForOther = Notice.chat("<color:#9d6eef>► <white>Enabled vanish mode for <color:#9d6eef>{PLAYER}!");
+    Notice vanishDisabledForOther = Notice.chat("<red>► <white>Disabled vanish mode for <color:#9d6eef>{PLAYER}!");
 
-    Notice vanishEnabledByStaff = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>has enabled your vanish mode!");
-    Notice vanishDisabledByStaff = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>has disabled your vanish mode!");
+    Notice vanishEnabledByStaff = Notice.chat("<color:#9d6eef>► <white>Administrator <color:#9d6eef>{PLAYER} <white>has enabled your vanish mode!");
+    Notice vanishDisabledByStaff = Notice.chat("<color:#9d6eef>► <white>Administrator <color:#9d6eef>{PLAYER} <white>has disabled your vanish mode!");
 
     Notice currentlyInVanish = Notice.actionbar("<gradient:#9d6eef:#A1AAFF:#9d6eef>You are currently invisible!</gradient> <dark_gray>(<gray>/vanish</gray>)</dark_gray>");
 
-    Notice joinedInVanish = Notice.chat("<green>► <white>You have joined the server in vanish mode.");
-    Notice playerJoinedInVanish = Notice.chat("<green>► <white>{PLAYER} has joined the server in vanish mode.");
+    Notice joinedInVanish = Notice.chat("<color:#9d6eef>► <white>You have joined the server in vanish mode.");
+    Notice playerJoinedInVanish = Notice.chat("<color:#9d6eef>► <white>{PLAYER} has joined the server in vanish mode.");
 
     Notice cantBlockPlaceWhileVanished = Notice.chat("<red>You cannot place blocks while vanished.");
     Notice cantBlockBreakWhileVanished = Notice.chat("<red>You cannot break blocks while vanished.");

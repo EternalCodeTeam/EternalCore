@@ -143,7 +143,7 @@ public class ENTranslation extends AbstractTranslation {
 
     @Getter
     public static class ENFormatSection extends OkaeriConfig implements Format {
-        public String enable = "<green>enabled";
+        public String enable = "<color:#9d6eef>enabled";
         public String disable = "<red>disabled";
     }
 

@@ -13,16 +13,16 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
     Notice tpaAlreadySentMessage =
         Notice.chat("<red>✘ <dark_red>You have already sent a teleportation request!");
     Notice tpaSentMessage =
-        Notice.chat("<green>► <white>You have sent a request for player <green>{PLAYER}<white> to teleport to you!");
+        Notice.chat("<color:#9d6eef>► <white>You have sent a request for player <color:#9d6eef>{PLAYER}<white> to teleport to you!");
 
-    Notice tpaHereSent = Notice.chat("<green>► <white>You have sent a request for teleportation to you for a player: <green>{PLAYER}<white>!");
-    Notice tpaHereSentToAll = Notice.chat("<green>► <white>You have sent a request for teleportation to all players!");
+    Notice tpaHereSent = Notice.chat("<color:#9d6eef>► <white>You have sent a request for teleportation to you for a player: <color:#9d6eef>{PLAYER}<white>!");
+    Notice tpaHereSentToAll = Notice.chat("<color:#9d6eef>► <white>You have sent a request for teleportation to all players!");
     Notice tpaHereReceived = Notice.builder()
-        .chat("<green>► <white>You have received a request for teleportation TO a player: <gray>{PLAYER}<green>!")
+        .chat("<color:#9d6eef>► <white>You have received a request for teleportation TO a player: <gray>{PLAYER}<color:#9d6eef>!")
         .chat(
-            "<hover:show_text:'<green>Teleport to the player?</green>'><gold><click:suggest_command:'/tpahereaccept {PLAYER}'><dark_gray>» <gold>/tpahereaccept {PLAYER} <green>to accept! <gray>(Click)</gray></click></gold></hover>")
+            "<hover:show_text:'<color:#9d6eef>Teleport to the player?</color:#9d6eef>'><gold><click:suggest_command:'/tpahereaccept {PLAYER}'><dark_gray>» <gold>/tpahereaccept {PLAYER} <color:#9d6eef>to accept! <gray>(Click)</gray></click></gold></hover>")
         .chat(
-            "<hover:show_text:'<red>Decline a teleportation request?</red>'><gold><click:suggest_command:'/tpaheredeny {PLAYER}'><dark_gray>» <gold>/tpaheredeny {PLAYER} <red><green>to deny! <gray>(Click)</gray></click></gold></hover>")
+            "<hover:show_text:'<red>Decline a teleportation request?</red>'><gold><click:suggest_command:'/tpaheredeny {PLAYER}'><dark_gray>» <gold>/tpaheredeny {PLAYER} <red><color:#9d6eef>to deny! <gray>(Click)</gray></click></gold></hover>")
         .build();
 
     @Comment({
@@ -33,11 +33,11 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
     })
     @Comment({" ", "# {PLAYER} - Player who sent the request to another player"})
     Notice tpaReceivedMessage = Notice.builder()
-        .chat("<green>► <white>You have received a request for teleportation from a player: <gray>{PLAYER}<green>!")
+        .chat("<color:#9d6eef>► <white>You have received a request for teleportation from a player: <gray>{PLAYER}<color:#9d6eef>!")
         .chat(
-            "<hover:show_text:'<green>Accept request for teleports?</green>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <green>to accept! <gray>(Click)</gray></click></gold></hover>")
+            "<hover:show_text:'<color:#9d6eef>Accept request for teleports?</color:#9d6eef>'><gold><click:suggest_command:'/tpaccept {PLAYER}'><dark_gray>» <gold>/tpaccept {PLAYER} <color:#9d6eef>to accept! <gray>(Click)</gray></click></gold></hover>")
         .chat(
-            "<hover:show_text:'<red>Decline a teleportation request?</red>'><gold><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpdeny {PLAYER} <red><green>to deny! <gray>(Click)</gray></click></gold></hover>")
+            "<hover:show_text:'<red>Decline a teleportation request?</red>'><gold><click:suggest_command:'/tpdeny {PLAYER}'><dark_gray>» <gold>/tpdeny {PLAYER} <red><color:#9d6eef>to deny! <gray>(Click)</gray></click></gold></hover>")
         .build();
 
     @Comment(" ")
@@ -57,7 +57,7 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
 
     @Comment({" ", "# {PLAYER} - Player who sent tpa request to another player"})
     Notice tpaAcceptMessage =
-        Notice.chat("<green>► <white>You have accepted the teleportation from the player: <green>{PLAYER}<white>!");
+        Notice.chat("<color:#9d6eef>► <white>You have accepted the teleportation from the player: <color:#9d6eef>{PLAYER}<white>!");
 
     @Comment(" ")
     Notice tpaAcceptNoRequestMessage =
@@ -65,12 +65,12 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
 
     @Comment({" ", "# {PLAYER} - Player who sent a request to teleport to another player"})
     Notice tpaAcceptReceivedMessage =
-        Notice.chat("<green>► <white>Player: <green>{PLAYER} <white>accepted your teleportation request!");
+        Notice.chat("<color:#9d6eef>► <white>Player: <color:#9d6eef>{PLAYER} <white>accepted your teleportation request!");
 
     @Comment(" ")
     Notice tpaAcceptAllAccepted =
-        Notice.chat("<green>► <white>All players have accepted your teleport request!");
+        Notice.chat("<color:#9d6eef>► <white>All players have accepted your teleport request!");
 
     @Comment(" ")
-    Notice tpaTargetIgnoresYou = Notice.chat("<green>► <red>{PLAYER} <white>is ignoring you!");
+    Notice tpaTargetIgnoresYou = Notice.chat("<color:#9d6eef>► <red>{PLAYER} <white>is ignoring you!");
 }

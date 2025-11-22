@@ -11,26 +11,26 @@ import lombok.experimental.Accessors;
 public class ENItemEditMessages extends OkaeriConfig implements ItemEditMessages {
 
     @Comment("# {ITEM_NAME} - New item name")
-    Notice itemChangeNameMessage = Notice.chat("<green>► <white>Name changed to: <green>{ITEM_NAME}");
+    Notice itemChangeNameMessage = Notice.chat("<color:#9d6eef>► <white>Name changed to: <color:#9d6eef>{ITEM_NAME}");
 
     @Comment(" ")
-    Notice itemClearNameMessage = Notice.chat("<green>► <white>Item name cleared!");
+    Notice itemClearNameMessage = Notice.chat("<color:#9d6eef>► <white>Item name cleared!");
 
     @Comment({" ", "# {ITEM_LORE} - New item lore"})
-    Notice itemChangeLoreMessage = Notice.chat("<green>► <white>Lore changed to: <green>{ITEM_LORE}");
+    Notice itemChangeLoreMessage = Notice.chat("<color:#9d6eef>► <white>Lore changed to: <color:#9d6eef>{ITEM_LORE}");
 
     @Comment(" ")
-    Notice itemClearLoreMessage = Notice.chat("<green>► <white>Item lore cleared!");
+    Notice itemClearLoreMessage = Notice.chat("<color:#9d6eef>► <white>Item lore cleared!");
 
     @Comment({" ", "# {LINE} - Line number removed"})
-    Notice itemLoreLineRemoved = Notice.chat("<green>► <white>Removed lore line: <green>{LINE}");
+    Notice itemLoreLineRemoved = Notice.chat("<color:#9d6eef>► <white>Removed lore line: <color:#9d6eef>{LINE}");
 
     @Comment({" ", "# {ITEM_FLAG} - Flag name"})
-    Notice itemFlagRemovedMessage = Notice.chat("<green>► <white>Removed item flag: <green>{ITEM_FLAG}");
-    Notice itemFlagAddedMessage = Notice.chat("<green>► <white>Added item flag: <green>{ITEM_FLAG}");
+    Notice itemFlagRemovedMessage = Notice.chat("<color:#9d6eef>► <white>Removed item flag: <color:#9d6eef>{ITEM_FLAG}");
+    Notice itemFlagAddedMessage = Notice.chat("<color:#9d6eef>► <white>Added item flag: <color:#9d6eef>{ITEM_FLAG}");
 
     @Comment(" ")
-    Notice itemFlagClearedMessage = Notice.chat("<green>► <white>All item flags cleared!");
+    Notice itemFlagClearedMessage = Notice.chat("<color:#9d6eef>► <white>All item flags cleared!");
 
     @Comment(" ")
     Notice noLore = Notice.chat("<red>✖ <white>This item has no lore!");

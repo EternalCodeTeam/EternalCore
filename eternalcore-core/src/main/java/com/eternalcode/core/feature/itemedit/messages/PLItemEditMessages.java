@@ -11,26 +11,26 @@ import lombok.experimental.Accessors;
 public class PLItemEditMessages extends OkaeriConfig implements ItemEditMessages {
 
     @Comment("# {ITEM_NAME} - Nowa nazwa przedmiotu")
-    Notice itemChangeNameMessage = Notice.chat("<green>► <white>Nowa nazwa przedmiotu: <green>{ITEM_NAME}");
+    Notice itemChangeNameMessage = Notice.chat("<color:#9d6eef>► <white>Nowa nazwa przedmiotu: <color:#9d6eef>{ITEM_NAME}");
 
     @Comment(" ")
-    Notice itemClearNameMessage = Notice.chat("<green>► <white>Wyczyszczono nazwę przedmiotu!");
+    Notice itemClearNameMessage = Notice.chat("<color:#9d6eef>► <white>Wyczyszczono nazwę przedmiotu!");
 
     @Comment({" ", "# {ITEM_LORE} - Nowa linia opisu"})
-    Notice itemChangeLoreMessage = Notice.chat("<green>► <white>Zmieniono linię opisu na: <green>{ITEM_LORE}");
+    Notice itemChangeLoreMessage = Notice.chat("<color:#9d6eef>► <white>Zmieniono linię opisu na: <color:#9d6eef>{ITEM_LORE}");
 
     @Comment(" ")
-    Notice itemClearLoreMessage = Notice.chat("<green>► <white>Wyczyszczono wszystkie linie opisu!");
+    Notice itemClearLoreMessage = Notice.chat("<color:#9d6eef>► <white>Wyczyszczono wszystkie linie opisu!");
 
     @Comment({" ", "# {LINE} - Numer linii usuniętej"})
-    Notice itemLoreLineRemoved = Notice.chat("<green>► <white>Usunięto linię opisu (numer): <green>{LINE}");
+    Notice itemLoreLineRemoved = Notice.chat("<color:#9d6eef>► <white>Usunięto linię opisu (numer): <color:#9d6eef>{LINE}");
 
     @Comment({" ", "# {ITEM_FLAG} - Nazwa flagi"})
-    Notice itemFlagRemovedMessage = Notice.chat("<green>► <white>Usunięto flagę przedmiotu: <green>{ITEM_FLAG}");
-    Notice itemFlagAddedMessage = Notice.chat("<green>► <white>Dodano flagę przedmiotu: <green>{ITEM_FLAG}");
+    Notice itemFlagRemovedMessage = Notice.chat("<color:#9d6eef>► <white>Usunięto flagę przedmiotu: <color:#9d6eef>{ITEM_FLAG}");
+    Notice itemFlagAddedMessage = Notice.chat("<color:#9d6eef>► <white>Dodano flagę przedmiotu: <color:#9d6eef>{ITEM_FLAG}");
 
     @Comment(" ")
-    Notice itemFlagClearedMessage = Notice.chat("<green>► <white>Wyczyszczono wszystkie flagi przedmiotu!");
+    Notice itemFlagClearedMessage = Notice.chat("<color:#9d6eef>► <white>Wyczyszczono wszystkie flagi przedmiotu!");
 
     @Comment(" ")
     Notice noLore = Notice.chat("<red>✖ <white>Ten przedmiot nie ma opisu!");

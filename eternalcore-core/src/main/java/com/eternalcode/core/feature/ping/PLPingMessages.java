@@ -8,6 +8,6 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class PLPingMessages extends OkaeriConfig implements PingMessages {
-    Notice playerPing = Notice.chat("<green>► <white>Twój ping: <green>{PING}<white>ms");
-    Notice targetPlayerPing = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>ma ping: <green>{PING}<white>ms");
+    Notice playerPing = Notice.chat("<color:#9d6eef>► <white>Twój ping: <color:#9d6eef>{PING}ms");
+    Notice targetPlayerPing = Notice.chat("<color:#9d6eef>► <white>Gracz <color:#9d6eef>{PLAYER} <white>ma ping: <color:#9d6eef>{PING}ms");
 }
