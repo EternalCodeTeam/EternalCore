@@ -18,15 +18,15 @@ import org.bukkit.Material;
 public class ENWarpMessages extends OkaeriConfig implements WarpMessages {
     @Comment("# {WARP} - Warp name")
     Notice warpAlreadyExists = Notice.chat("<red>✘ <dark_red>Warp <red>{WARP} <dark_red>already exists!");
-    Notice create = Notice.chat("<green>► <white>Warp <green>{WARP} <white>has been created.");
+    Notice create = Notice.chat("<color:#9d6eef>► <white>Warp <color:#9d6eef>{WARP} <white>has been created.");
     Notice remove = Notice.chat("<red>► <white>Warp <red>{WARP} <white>has been deleted.");
     Notice notExist = Notice.chat("<red>► <dark_red>This warp doesn't exist");
-    Notice itemAdded = Notice.chat("<green>► <white>Warp has been added to GUI!");
+    Notice itemAdded = Notice.chat("<color:#9d6eef>► <white>Warp has been added to GUI!");
     Notice noWarps = Notice.chat("<red>✘ <dark_red>There are no warps!");
     Notice itemLimit =
         Notice.chat("<red>✘ <dark_red>You have reached the limit of warps! Your limit is <red>{LIMIT}<dark_red>.");
     Notice noPermission = Notice.chat("<red>✘ <dark_red>You don't have permission to use this warp ({WARP})!");
-    Notice addPermissions = Notice.chat("<green>► <white>Added permissions to warp <green>{WARP}<white>!");
+    Notice addPermissions = Notice.chat("<color:#9d6eef>► <white>Added permissions to warp <color:#9d6eef>{WARP}<white>!");
     Notice removePermission =
         Notice.chat("<red>► <white>Removed permission <red>{PERMISSION}</red> <white>from warp <red>{WARP}<white>!");
     Notice noPermissionsProvided = Notice.chat("<red>✘ <dark_red>No permissions provided!");
@@ -39,7 +39,7 @@ public class ENWarpMessages extends OkaeriConfig implements WarpMessages {
     Notice missingPermissionArgument = Notice.chat("<red>✘ <dark_red>You must provide a permission!");
 
     @Comment({" ", "# {WARPS} - List of warps (separated by commas)"})
-    Notice available = Notice.chat("<green>► <white>Available warps: <green>{WARPS}");
+    Notice available = Notice.chat("<color:#9d6eef>► <white>Available warps: <color:#9d6eef>{WARPS}");
 
     @Comment({" ", "# Settings for warp inventory"})
     public ENWarpInventory warpInventory = new ENWarpInventory();
@@ -47,7 +47,7 @@ public class ENWarpMessages extends OkaeriConfig implements WarpMessages {
     @Getter
     @Accessors(fluent = true)
     public static class ENWarpInventory extends OkaeriConfig implements WarpInventorySection {
-        public String title = "<dark_gray>» <green>Available warps:";
+        public String title = "<dark_gray>» <color:#9d6eef>Available warps:";
 
         @Comment({" ",
                       "# Warps located inside GUI inventory can be customized here. More warps will be added on creation with /setwarp command. "})

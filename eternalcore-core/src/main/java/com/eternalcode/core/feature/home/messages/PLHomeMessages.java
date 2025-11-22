@@ -10,16 +10,16 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
     @Comment({" ", "# {HOMES} - Lista domów"})
-    Notice homeList = Notice.chat("<green>► <white>Lista domów: <green>{HOMES}!");
+    Notice homeList = Notice.chat("<color:#9d6eef>► <white>Lista domów: <color:#9d6eef>{HOMES}!");
 
     @Comment({" ", "# {HOME} - Nazwa domu"})
-    Notice create = Notice.chat("<green>► <white>Stworzono dom o nazwie <green>{HOME}<white>!");
+    Notice create = Notice.chat("<color:#9d6eef>► <white>Stworzono dom o nazwie <color:#9d6eef>{HOME}<white>!");
     Notice delete = Notice.chat("<red>► <white>Usunięto dom o nazwie <red>{HOME}<white>!");
     Notice overrideHomeLocation =
-        Notice.chat("<green>► <white>Nadpisałeś lokalizację domu <green>{HOME}<white>!");
+        Notice.chat("<color:#9d6eef>► <white>Nadpisałeś lokalizację domu <color:#9d6eef>{HOME}<white>!");
 
     @Comment({" ", "# {LIMIT} - Limit domów"})
-    Notice limit = Notice.chat("<green>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
+    Notice limit = Notice.chat("<color:#9d6eef>► <white>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<white>.");
     Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Nie posiadasz żadnego domu!");
 
     @Comment({" ", "# Wiadomości placeholderów"})
@@ -31,13 +31,13 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
         "# {HOME} - Nazwa domu, {PLAYER} - Gracz, {HOMES} - Lista domów"
     })
     Notice overrideHomeLocationAsAdmin = Notice.chat(
-        "<green>► <white>Nadpisałeś lokalizację domu <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
+        "<color:#9d6eef>► <white>Nadpisałeś lokalizację domu <color:#9d6eef>{HOME} <white>dla gracza <color:#9d6eef>{PLAYER}<white>!");
     Notice playerNoOwnedHomes =
         Notice.chat("<red>✘ <dark_red>Gracz <red>{PLAYER} <dark_red>nie posiada żadnego domu!");
     Notice createAsAdmin =
-        Notice.chat("<green>► <white>Stworzono dom <green>{HOME} <white>dla gracza <green>{PLAYER}<white>!");
+        Notice.chat("<color:#9d6eef>► <white>Stworzono dom <color:#9d6eef>{HOME} <white>dla gracza <color:#9d6eef>{PLAYER}<white>!");
     Notice deleteAsAdmin =
         Notice.chat("<red>► <white>Usunięto dom <red>{HOME} <white>dla gracza <red>{PLAYER}<white>!");
     Notice homeListAsAdmin =
-        Notice.chat("<green>► <white>Lista domów gracza <green>{PLAYER}<white>: <green>{HOMES}!");
+        Notice.chat("<color:#9d6eef>► <white>Lista domów gracza <color:#9d6eef>{PLAYER}<white>: <color:#9d6eef>{HOMES}!");
 }

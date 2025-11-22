@@ -25,15 +25,15 @@ public class ENMsgMessages extends OkaeriConfig implements MsgMessages {
 
     Notice receiverDisabledMessages = Notice.chat("<red>► <dark_red>This player has disabled private messages!");
 
-    Notice selfMessagesDisabled = Notice.chat("<green>► <white>Private messages have been <red>disabled<white>!");
-    Notice selfMessagesEnabled = Notice.chat("<green>► <white>Private messages have been <green>enabled<white>!");
+    Notice selfMessagesDisabled = Notice.chat("<color:#9d6eef>► <white>Private messages have been <red>disabled<white>!");
+    Notice selfMessagesEnabled = Notice.chat("<color:#9d6eef>► <white>Private messages have been <color:#9d6eef>enabled<white>!");
 
     @Comment("# {PLAYER} - Player")
-    Notice otherMessagesDisabled = Notice.chat("<green>► <white>Private messages have been <red>disabled <white>for <green>{PLAYER}<white>!");
-    Notice otherMessagesEnabled = Notice.chat("<green>► <white>Private messages have been <green>enabled <white>for <green>{PLAYER}<white>!");
+    Notice otherMessagesDisabled = Notice.chat("<color:#9d6eef>► <white>Private messages have been <red>disabled <white>for <color:#9d6eef>{PLAYER}<white>!");
+    Notice otherMessagesEnabled = Notice.chat("<color:#9d6eef>► <white>Private messages have been <color:#9d6eef>enabled <white>for <color:#9d6eef>{PLAYER}<white>!");
 
     @Comment(" ")
-    Notice socialSpyEnable = Notice.chat("<green>► <white>SocialSpy has been {STATE}<white>!");
+    Notice socialSpyEnable = Notice.chat("<color:#9d6eef>► <white>SocialSpy has been {STATE}<white>!");
     Notice socialSpyDisable = Notice.chat("<red>► <white>SocialSpy has been {STATE}<white>!");
 
 }

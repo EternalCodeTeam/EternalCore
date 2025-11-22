@@ -13,7 +13,7 @@ public class PLHelpOpMessages extends OkaeriConfig implements HelpOpSection {
     Notice format =
         Notice.chat("<dark_gray>[<dark_red>HelpOp<dark_gray>] <yellow>{PLAYER}<white>: <white>{TEXT}");
     @Comment(" ")
-    Notice send = Notice.chat("<green>► <white>Wiadomość została wysłana do administracji");
+    Notice send = Notice.chat("<color:#9d6eef>► <white>Wiadomość została wysłana do administracji");
     @Comment("# {TIME} - Czas do końca blokady (cooldown)")
-    Notice helpOpDelay = Notice.chat("<white>► <red>Możesz użyć tej komendy dopiero za <gold>{TIME}!");
+    Notice helpOpDelay = Notice.chat("<white>► <red>Możesz użyć tej komendy dopiero za <color:#9d6eef>{TIME}!");
 }

@@ -20,7 +20,8 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 @Permission("eternalcore.eternalcore")
 class EternalCoreCommand {
 
-    private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> <green>Configuration has ben successfully reloaded in %d ms.</green>";
+    private static final String RELOAD_MESSAGE = "<b><gradient:#29fbff:#38b3ff>EternalCore:</gradient></b> "
+        + "<color:#9d6eef>Configuration has been successfully reloaded in %d ms.</color:#9d6eef>";
 
     private final ConfigurationManager configurationManager;
     private final MiniMessage miniMessage;

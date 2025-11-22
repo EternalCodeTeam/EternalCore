@@ -2,8 +2,8 @@ package com.eternalcode.core.feature.afk.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
-import lombok.Getter;
 import eu.okaeri.configs.annotation.Comment;
+import lombok.Getter;
 import lombok.experimental.Accessors;
 
 @Getter
@@ -11,10 +11,10 @@ import lombok.experimental.Accessors;
 public class PLAfkMessages extends OkaeriConfig implements AfkMessages {
 
     @Comment("# {PLAYER} - Gracz ")
-    Notice afkOn = Notice.chat("<green>► <white>{PLAYER} jest AFK!");
+    Notice afkOn = Notice.chat("<color:#9d6eef>► <white>{PLAYER} jest AFK!");
 
     @Comment("# {PLAYER} - Gracz ")
-    Notice afkOff = Notice.chat("<green>► <white>{PLAYER} już nie jest AFK!");
+    Notice afkOff = Notice.chat("<color:#9d6eef>► <white>{PLAYER} już nie jest AFK!");
 
     @Comment({" ", "# {TIME} - Czas po którym gracz może użyć komendy"})
     Notice afkDelay = Notice.chat("<red>► <dark_red>Możesz użyć tej komendy dopiero po <dark_red>{TIME}!");
