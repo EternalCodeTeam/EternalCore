@@ -14,9 +14,9 @@ public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages
         Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
 
     @Comment({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
-    Notice usageMessage = Notice.chat("<red>✘ <white>Poprawne użycie: <color:#9d6eef>{USAGE}");
-    Notice usageMessageHead = Notice.chat("<red>✘ <white>Poprawne użycie:");
-    Notice usageMessageEntry = Notice.chat("<red>✘ <color:#9d6eef>{USAGE}");
+    Notice usageMessage = Notice.chat("<red>✘ <dark_red>Poprawne użycie: <red>{USAGE}");
+    Notice usageMessageHead = Notice.chat("<red>✘ <dark_red>Poprawne użycie:");
+    Notice usageMessageEntry = Notice.chat("<red>✘ <red>{USAGE}");
 
     @Comment(" ")
     Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę gracza!");
