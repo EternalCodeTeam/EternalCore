@@ -9,17 +9,17 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENFreezeMessages extends OkaeriConfig implements FreezeMessages {
 
-    Notice frozenSelf = Notice.chat("<green>► <white>You have frozen yourself for <green>{DURATION}</green>!</white>");
+    Notice frozenSelf = Notice.chat("<color:#9d6eef>► <white>You have frozen yourself for <color:#9d6eef>{DURATION}</color:#9d6eef>!</white>");
 
-    Notice unfrozenSelf = Notice.chat("<green>► <white>You have unfrozen yourself!</white>");
+    Notice unfrozenSelf = Notice.chat("<color:#9d6eef>► <white>You have unfrozen yourself!</white>");
 
-    Notice frozenOther = Notice.chat("<green>► <white>You have frozen player <green>{PLAYER}</green> for <green>{DURATION}</green>!</white>");
+    Notice frozenOther = Notice.chat("<color:#9d6eef>► <white>You have frozen player <color:#9d6eef>{PLAYER}</color:#9d6eef> for <color:#9d6eef>{DURATION}</color:#9d6eef>!</white>");
 
-    Notice unfrozenOther = Notice.chat("<green>► <white>You have unfrozen player <green>{PLAYER}</green>!</white>");
+    Notice unfrozenOther = Notice.chat("<color:#9d6eef>► <white>You have unfrozen player <color:#9d6eef>{PLAYER}</color:#9d6eef>!</white>");
 
-    Notice frozenByOther = Notice.chat("<green>► <white>You have been frozen by player <green>{PLAYER}</green> for <green>{DURATION}</green>!</white>");
+    Notice frozenByOther = Notice.chat("<color:#9d6eef>► <white>You have been frozen by player <color:#9d6eef>{PLAYER}</color:#9d6eef> for <color:#9d6eef>{DURATION}</color:#9d6eef>!</white>");
 
-    Notice unfrozenByOther = Notice.chat("<green>► <white>You have been unfrozen by player <green>{PLAYER}</green>!</white>");
+    Notice unfrozenByOther = Notice.chat("<color:#9d6eef>► <white>You have been unfrozen by player <color:#9d6eef>{PLAYER}</color:#9d6eef>!</white>");
 
     Notice selfNotFrozen = Notice.chat("<red>► <dark_red>You are not frozen!</dark_red>");
 

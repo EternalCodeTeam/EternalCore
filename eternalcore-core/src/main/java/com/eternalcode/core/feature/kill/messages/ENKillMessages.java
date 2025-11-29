@@ -8,8 +8,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENKillMessages extends OkaeriConfig implements KillMessages {
-    Notice killedYourself = Notice.chat("<red>► <dark_red>You have been killed!");
-    Notice killedTargetPlayer = Notice.chat("<red>► <dark_red>Killed <red>{PLAYER}");
-    Notice killedByAdmin = Notice.chat("<red>► <dark_red>You have been killed by admin!");
+    Notice killedYourself = Notice.chat("<red>✘ <dark_red>You have been killed!");
+    Notice killedTargetPlayer = Notice.chat("<color:#9d6eef>► <white>Killed <color:#9d6eef>{PLAYER}");
+    Notice killedByAdmin = Notice.chat("<red>✘ <dark_red>You have been killed by admin!");
 }
-
