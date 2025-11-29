@@ -139,7 +139,7 @@ public class PLTranslation extends AbstractTranslation {
 
     @Getter
     public static class PLFormatSection extends OkaeriConfig implements Format {
-        public String enable = "<color:#9d6eef>włączony/a";
+        public String enable = "<green>włączony/a";
         public String disable = "<red>wyłączony/a";
     }
 
