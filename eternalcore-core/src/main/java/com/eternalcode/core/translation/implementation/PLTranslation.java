@@ -6,9 +6,11 @@ import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.PLButcherMessages;
+import com.eternalcode.core.feature.chat.messages.PLChatMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.PLDeathMessages;
+import com.eternalcode.core.feature.disposal.messages.PLDisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
 import com.eternalcode.core.feature.feed.messages.PLFeedMessages;
 import com.eternalcode.core.feature.fly.messages.PLFlyMessages;
@@ -44,7 +46,8 @@ import com.eternalcode.core.feature.skull.messages.PLSkullMessages;
 import com.eternalcode.core.feature.spawn.messages.PLSpawnMessages;
 import com.eternalcode.core.feature.speed.messages.PLSpeedMessages;
 import com.eternalcode.core.feature.sudo.messages.PLSudoMessages;
-import com.eternalcode.core.feature.teleport.messages.PLTeleportOfflineMessages;
+import com.eternalcode.core.feature.teleport.messages.PLTeleportMessages;
+import com.eternalcode.core.feature.teleportoffline.PLTeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.PLTeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.PLTeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
@@ -54,7 +57,6 @@ import com.eternalcode.core.feature.whois.PLWhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
-import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
@@ -81,7 +83,6 @@ public class PLTranslation extends AbstractTranslation {
         "# Strona internetowa: https://eternalcode.pl/",
         "# Kod źródłowy: https://github.com/EternalCodeTeam/EternalCore",
     })
-
     @Comment({
         " ",
         "# Wszędzie możesz użyć formatowania MiniMessages, bądź standardowego &7, &e itd.",
@@ -130,35 +131,11 @@ public class PLTranslation extends AbstractTranslation {
         "#",
         " "
     })
-
-    @Comment("# Ta sekcja odpowiada za wszystkie wiadomości wykorzystywane podczas złego użycia argumentu komendy")
+    @Comment("# Argumenty komend")
     public PLArgumentMessages argument = new PLArgumentMessages();
 
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za ogólne formatowanie niektórych wartości",
-        "# Celem sekcji jest ograniczenie powtarzania się niektórych wiadomości."
-    })
+    @Comment("# Ogólne formatowanie wartości")
     public PLFormatSection format = new PLFormatSection();
-
-    @Comment("# Ta sekcja odpowiada za wiadomości dotyczące edytowanie itemow")
-    public PLItemEditMessages itemEdit = new PLItemEditMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /signeditor"
-    })
-    public PLSignEditorMessages signEditor = new PLSignEditorMessages();
-
-    @Override
-    public File getConfigFile(File dataFolder) {
-        return new File(dataFolder, "lang" + File.separator + "pl_messages.yml");
-    }
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości w komendzie /near "})
-    public PLNearMessages near = new PLNearMessages();
 
     @Getter
     public static class PLFormatSection extends OkaeriConfig implements Format {
@@ -166,348 +143,170 @@ public class PLTranslation extends AbstractTranslation {
         public String disable = "<red>wyłączony/a";
     }
 
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za czat pomocy dla graczy, który jest widoczny dla administracji"
-    })
-    public PLHelpOpMessages helpOp = new PLHelpOpMessages();
+    @Comment("# Czat")
+    public PLChatMessages chat = new PLChatMessages();
 
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za czat komunikacji między administracją"
-    })
+    @Comment("# Czat administracji")
     public PLAdminChatMessages adminChat = new PLAdminChatMessages();
 
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości dotyczące ignorowania graczy"
-    })
-    public PLIgnoreMessages ignore = new PLIgnoreMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadmości komendy /sudo"
-    })
-    public PLSudoMessages sudo = new PLSudoMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /seen"
-    })
-    public PLSeenMessages seen = new PLSeenMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za komunikaty związane z teleportacją",
-    })
-    public PLTeleportSection teleport = new PLTeleportSection();
-
-    @Getter
-    public static class PLTeleportSection extends OkaeriConfig implements TeleportSection {
-        // teleport
-        @Comment({"# {PLAYER} - Gracz który został teleportowany"})
-        Notice teleportedToPlayer =
-            Notice.chat("<green>► <white>Przeteleportowano do gracza <green>{PLAYER}<white>!");
-
-        @Comment({
-            "# {PLAYER} - Gracz który został teleportowany, {ARG-PLAYER} - Gracz do którego został teleportowany inny gracz"})
-        Notice teleportedPlayerToPlayer = Notice.chat(
-            "<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do gracza <green>{ARG-PLAYER}<white>!");
-
-        @Comment({"# {Y} - Koordynat Y najwyżej położonego bloku"})
-        Notice teleportedToHighestBlock =
-            Notice.chat("<green>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
-
-        @Comment(" ")
-        Notice teleportedAllToPlayer =
-            Notice.chat("<green>► <white>Przeteleportowano wszystkich graczy do ciebie!");
-
-        // Task
-        @Comment({"# {TIME} - Czas teleportacji"})
-        Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleportacja za <green>{TIME}");
-        @Comment(" ")
-        Notice teleported = Notice.builder()
-            .chat("<green>► <white>Przeteleportowano!")
-            .actionBar("<green>► <white>Przeteleportowano!")
-            .build();
-
-        Notice teleporting = Notice.chat("<green>► <white>Teleportowanie...");
-        Notice teleportTaskCanceled =
-            Notice.chat("<red>✘ <dark_red>Ruszyłeś się, teleportacja została przerwana!");
-        Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>Teleportujesz się już!");
-
-        // Coordinates XYZ
-        @Comment({" ", "# {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
-        Notice teleportedToCoordinates = Notice.chat(
-            "<green>► <white>Przeteleportowano na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-        @Comment({" ",
-                  "# {PLAYER} - Gracz który został teleportowany, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
-        Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
-            "<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
-
-        // Back
-        @Comment(" ")
-        Notice teleportedToLastLocation =
-            Notice.chat("<green>► <white>Przeteleportowano do ostatniej lokalizacji!");
-        @Comment({" ", "# {PLAYER} - Gracz który został teleportowany"})
-        Notice teleportedSpecifiedPlayerLastLocation =
-            Notice.chat("<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do ostatniej lokalizacji!");
-        @Comment(" ")
-        Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
-    }
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /tprp"
-    })
-    public PLTeleportToRandomPlayerMessages teleportToRandomPlayer = new PLTeleportToRandomPlayerMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za edycję komunikatów losowej teleportacji",
-    })
-    public PLRandomTeleportMessages randomTeleport = new PLRandomTeleportMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za edycję ustawień czatu",
-    })
-    public PLChatSection chat = new PLChatSection();
-
-    @Getter
-    public static class PLChatSection extends OkaeriConfig implements ChatSection {
-        @Comment({"# {PLAYER} - Gracz który wykonał akcje dla czatu"})
-        Notice disabled = Notice.chat("<green>► <white>Czat został wyłączony przez <green>{PLAYER}<white>!");
-        Notice enabled = Notice.chat("<green>► <white>Czat został włączony przez <green>{PLAYER}<white>!");
-        Notice cleared = Notice.chat("<green>► <white>Czat został wyczyszczony przez <green>{PLAYER}<white>!");
-
-        @Comment(" ")
-        Notice alreadyDisabled = Notice.chat("<red>✘ <dark_red>Czat jest już wyłączony!");
-        Notice alreadyEnabled = Notice.chat("<red>✘ <dark_red>Czat jest już włączony!");
-
-        @Comment({" ", "# {SLOWMODE} - Czas powolnego wysyłania wiadomości"})
-        Notice slowModeSet =
-            Notice.chat("<green>► <white>Tryb powolnego wysyłania został ustawiony na {SLOWMODE}");
-
-        @Comment({" ", "# {PLAYER} - Gracz który wyłączył tryb powolnego wysyłania wiadomości"})
-        Notice slowModeOff =
-            Notice.chat("<green>► <white>Tryb powolnego wysyłania został wyłączony przez <green>{PLAYER}<white>!");
-
-        @Comment({" ", "# {TIME} - Czas powolnego wysyłania wiadomości"})
-        Notice slowMode =
-            Notice.chat("<red>✘ <dark_red>Następną wiadomość możesz wysłać za: <red>{TIME}<dark_red>!");
-
-        @Comment(" ")
-        Notice disabledChatInfo = Notice.chat("<red>✘ <dark_red>Czat jest obecnie wyłączony!");
-
-        @Comment(" ")
-        Notice commandNotFound = Notice.chat("<red>✘ <dark_red>Komenda <red>{COMMAND} <dark_red>nie istnieje!");
-    }
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /broadcast",
-    })
-    public PLBroadcastMessages broadcast = new PLBroadcastMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za obsługę zapytań tpa,",
-        "# Daje możliwość edycji dotyczących tego typu zapytań ",
-    })
-    public PLTeleportRequestMessages tpa = new PLTeleportRequestMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za ustawianie i edycję punktów szybkiej podróży - warp",
-    })
-    public PLWarpMessages warp = new PLWarpMessages();
-
-    @Comment({
-        " ",
-        "# Poniższa sekcja odpowiada za ustawianie i edycję osobistych punktów szybkiej podróży - home",
-    })
-    public PLHomeMessages home = new PLHomeMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za ustawianie i edycję wiadomości prywatnych",
-    })
+    @Comment("# Wiadomości prywatne")
     public PLMsgMessages msg = new PLMsgMessages();
 
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za ustawianie i edycję wiadomości AFK",
-    })
-    public PLAfkMessages afk = new PLAfkMessages();
+    @Comment("# Broadcast")
+    public PLBroadcastMessages broadcast = new PLBroadcastMessages();
 
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości o śmierci graczy",
-    })
-    public PLDeathMessages deathMessage = new PLDeathMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za przeglądanie ekwipunku gracza"
-    })
-    public PLInventorySection inventory = new PLInventorySection();
-
-    @Getter
-    public static class PLInventorySection extends OkaeriConfig implements InventorySection {
-        public String disposalTitle = "<white><bold>Kosz";
-    }
-
-    @Comment("# Ta sekcja odpowiada za komende /clear")
-    public PLClearMessages clear = new PLClearMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /feed"
-    })
-    public PLFeedMessages feed = new PLFeedMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /heal"
-    })
-    public PLHealMessages heal = new PLHealMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /kill"
-    })
-    public PLKillMessages kill = new PLKillMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /speed"
-    })
-    public PLSpeedMessages speed = new PLSpeedMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /god"
-    })
-    public PLGodModeMessages godmode = new PLGodModeMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /fly"
-    })
-    public PLFlyMessages fly = new PLFlyMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /ping"
-    })
-    public PLPingMessages ping = new PLPingMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /gamemode"
-    })
-    public PLGameModeMessages gamemode = new PLGameModeMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /online"
-    })
-    public PLOnlineMessages online = new PLOnlineMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /whois"
-    })
-    public PLWhoIsMessages whois = new PLWhoIsMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /butcher"
-    })
-    public PLButcherMessages butcher = new PLButcherMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /give"
-    })
-    public PLGiveMessages give = new PLGiveMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomości komendy /skull"
-    })
-    public PLSkullMessages skull = new PLSkullMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za zmianę punktu spawn oraz teleportację graczy na spawn"})
-    public PLSpawnMessages spawn = new PLSpawnMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomosci repair"
-    })
-    public PLRepairMessages repair = new PLRepairMessages();
-
-    @Comment({
-        " ",
-        "# Ta sekcja odpowiada za wiadomosci enchant"
-    })
-    PLEnchantMessages enchant = new PLEnchantMessages();
-
-    @Comment({
-        " ",
-        "# Komunikaty odpowiedzialne za ustawianie czasu i pogody"
-    })
-    public PLTimeAndWeatherMessages timeAndWeather = new PLTimeAndWeatherMessages();
-
-    @Comment({
-        " ",
-        "# Komunikaty odpowiedzialne za kontenery",
-    })
-    PLContainerMessages container = new PLContainerMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące pojemnosci serwera"})
-    public PLSetSlotMessages setSlot = new PLSetSlotMessages();
-
-    @Comment({" ", "# Automatyczne wiadomości "})
+    @Comment("# Automatyczne wiadomości")
     public PLAutoMessageMessages autoMessage = new PLAutoMessageMessages();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące jail'a"})
-    public PLJailMessages jailSection = new PLJailMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące Elder Guardian'a"})
-    public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące demo screen'a"})
-    public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące wiadomości dołączenia gracza do serwera"})
+    @Comment("# Wiadomość dołączenia do serwera")
     public PLJoinMessage join = new PLJoinMessage();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące wiadomości wyjścia gracza z serwera"})
+    @Comment("# Wiadomość wyjścia z serwera")
     public PLQuitMessage quit = new PLQuitMessage();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące końca gry"})
-    public PLEndScreenMessages endScreen = new PLEndScreenMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące komendy /burn"})
-    public PLBurnMessages burn = new PLBurnMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące trybu niewidoczności graczy"})
-    public PLVanishMessages vanish = new PLVanishMessages();
-
-    @Comment({" ", "# Ta sekcja odpowiada za funkcję MOTD (Message of the Day)"})
+    @Comment("# MOTD (Message of the Day)")
     public PLMotdMessages motd = new PLMotdMessages();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące teleportu do graczy offline"})
+    @Comment("# Wiadomości o śmierci")
+    public PLDeathMessages deathMessage = new PLDeathMessages();
+
+    @Comment("# AFK")
+    public PLAfkMessages afk = new PLAfkMessages();
+
+    @Comment("# Ignorowanie graczy")
+    public PLIgnoreMessages ignore = new PLIgnoreMessages();
+
+    @Comment("# Teleportacja")
+    public PLTeleportMessages teleport = new PLTeleportMessages();
+
+    @Comment("# Prośby o teleportację (TPA)")
+    public PLTeleportRequestMessages tpa = new PLTeleportRequestMessages();
+
+    @Comment("# Teleportacja do losowego gracza")
+    public PLTeleportToRandomPlayerMessages teleportToRandomPlayer = new PLTeleportToRandomPlayerMessages();
+
+    @Comment("# Losowa teleportacja")
+    public PLRandomTeleportMessages randomTeleport = new PLRandomTeleportMessages();
+
+    @Comment("# Teleportacja do graczy offline")
     public PLTeleportOfflineMessages teleportToOfflinePlayer = new PLTeleportOfflineMessages();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości o czasie gry graczy."})
+    @Comment("# Osobiste punkty teleportacji (home)")
+    public PLHomeMessages home = new PLHomeMessages();
+
+    @Comment("# Punkty teleportacji (warp)")
+    public PLWarpMessages warp = new PLWarpMessages();
+
+    @Comment("# Spawn")
+    public PLSpawnMessages spawn = new PLSpawnMessages();
+
+    @Comment("# Gracze w pobliżu")
+    public PLNearMessages near = new PLNearMessages();
+
+    @Comment("# Leczenie")
+    public PLHealMessages heal = new PLHealMessages();
+
+    @Comment("# Karmienie")
+    public PLFeedMessages feed = new PLFeedMessages();
+
+    @Comment("# Latanie")
+    public PLFlyMessages fly = new PLFlyMessages();
+
+    @Comment("# Prędkość")
+    public PLSpeedMessages speed = new PLSpeedMessages();
+
+    @Comment("# Tryb nieśmiertelności")
+    public PLGodModeMessages godmode = new PLGodModeMessages();
+
+    @Comment("# Zamrażanie graczy")
+    public PLFreezeMessages freeze = new PLFreezeMessages();
+
+    @Comment("# Tryb niewidoczności")
+    public PLVanishMessages vanish = new PLVanishMessages();
+
+    @Comment("# Tryb gry")
+    public PLGameModeMessages gamemode = new PLGameModeMessages();
+
+    @Comment("# Czas i pogoda")
+    public PLTimeAndWeatherMessages timeAndWeather = new PLTimeAndWeatherMessages();
+
+    @Comment("# Ping")
+    public PLPingMessages ping = new PLPingMessages();
+
+    @Comment("# Gracze online")
+    public PLOnlineMessages online = new PLOnlineMessages();
+
+    @Comment("# Informacje o graczu")
+    public PLWhoIsMessages whois = new PLWhoIsMessages();
+
+    @Comment("# Ostatnie logowanie gracza")
+    public PLSeenMessages seen = new PLSeenMessages();
+
+    @Comment("# Czas gry")
     public PLPlaytimeMessages playtime = new PLPlaytimeMessages();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące powertoolsów."})
+    @Comment("# Dawanie przedmiotów")
+    public PLGiveMessages give = new PLGiveMessages();
+
+    @Comment("# Czyszczenie ekwipunku")
+    public PLClearMessages clear = new PLClearMessages();
+
+    @Comment("# Kosz")
+    public PLDisposalMessages disposal = new PLDisposalMessages();
+
+    @Comment("# Kontenery")
+    public PLContainerMessages container = new PLContainerMessages();
+
+    @Comment("# Ustawianie slotów")
+    public PLSetSlotMessages setSlot = new PLSetSlotMessages();
+
+    @Comment("# Edycja przedmiotów")
+    public PLItemEditMessages itemEdit = new PLItemEditMessages();
+
+    @Comment("# Enchant")
+    public PLEnchantMessages enchant = new PLEnchantMessages();
+
+    @Comment("# Naprawa")
+    public PLRepairMessages repair = new PLRepairMessages();
+
+    @Comment("# Czaszki graczy")
+    public PLSkullMessages skull = new PLSkullMessages();
+
+    @Comment("# Edycja tabliczek")
+    public PLSignEditorMessages signEditor = new PLSignEditorMessages();
+
+    @Comment("# Powertool")
     public PLPowertoolMessages powertool = new PLPowertoolMessages();
 
-    @Comment({" ", "# Ta sekcja odpowiada za wiadomości dotyczące zamrażania graczy"})
-    public PLFreezeMessages freeze = new PLFreezeMessages();
+    @Comment("# Zabijanie")
+    public PLKillMessages kill = new PLKillMessages();
+
+    @Comment("# Podpalanie")
+    public PLBurnMessages burn = new PLBurnMessages();
+
+    @Comment("# Usuwanie mobów")
+    public PLButcherMessages butcher = new PLButcherMessages();
+
+    @Comment("# Więzienie")
+    public PLJailMessages jailSection = new PLJailMessages();
+
+    @Comment("# Sudo")
+    public PLSudoMessages sudo = new PLSudoMessages();
+
+    @Comment("# Czat pomocy")
+    public PLHelpOpMessages helpOp = new PLHelpOpMessages();
+
+    @Comment("# Elder Guardian")
+    public PLElderGuardianMessages elderGuardian = new PLElderGuardianMessages();
+
+    @Comment("# Demo Screen")
+    public PLDemoScreenMessages demoScreen = new PLDemoScreenMessages();
+
+    @Comment("# End Screen")
+    public PLEndScreenMessages endScreen = new PLEndScreenMessages();
+
+    @Override
+    public File getConfigFile(File dataFolder) {
+        return new File(dataFolder, "lang" + File.separator + "pl_messages.yml");
+    }
 }

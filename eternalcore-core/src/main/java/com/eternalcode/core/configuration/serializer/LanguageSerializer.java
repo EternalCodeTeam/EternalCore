@@ -5,11 +5,12 @@ import eu.okaeri.configs.schema.GenericsDeclaration;
 import eu.okaeri.configs.serdes.DeserializationData;
 import eu.okaeri.configs.serdes.ObjectSerializer;
 import eu.okaeri.configs.serdes.SerializationData;
+import lombok.NonNull;
 
 public class LanguageSerializer implements ObjectSerializer<Language> {
 
     @Override
-    public boolean supports(Class<? super Language> type) {
+    public boolean supports(@NonNull Class<?> type) {
         return Language.class.isAssignableFrom(type);
     }
 
