@@ -11,8 +11,8 @@ import lombok.experimental.Accessors;
 
 public class ENEndScreenMessages extends OkaeriConfig implements EndScreenMessages {
 
-    Notice shownToSelf = Notice.chat("<color:#9d6eef>► <white>You have shown the end screen to yourself!</white>");
+    Notice shownToSelf = Notice.chat("<color:#9d6eef>► <white>You have shown the end screen to yourself!");
 
     @Comment("# {PLAYER} - returns player's name")
-    Notice shownToOtherPlayer = Notice.chat("<color:#9d6eef>► <white>You have shown the end screen to player <color:#9d6eef>{PLAYER}!</color:#9d6eef>");
+    Notice shownToOtherPlayer = Notice.chat("<color:#9d6eef>► <white>You have shown the end screen to player <color:#9d6eef>{PLAYER}!");
 }

@@ -9,7 +9,8 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENPlaytimeMessages extends OkaeriConfig implements PlaytimeMessages {
 
-    Notice self = Notice.chat("<color:#9d6eef>► <white>Your playing time is <color:#9d6eef>{PLAYTIME}</color:#9d6eef>!</white>");
+    Notice self = Notice.chat("<color:#9d6eef>► <white>Your playing time is <color:#9d6eef>{PLAYTIME}<white>!");
 
-    Notice other = Notice.chat("<color:#9d6eef>► <white>The playing time of <color:#9d6eef>{PLAYER}</color:#9d6eef> is <color:#9d6eef>{PLAYTIME}</color:#9d6eef>!</white>");
+    Notice other = Notice.chat(
+            "<color:#9d6eef>► <white>The playing time of <color:#9d6eef>{PLAYER} <white>is <color:#9d6eef>{PLAYTIME}<white>!");
 }

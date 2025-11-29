@@ -10,8 +10,9 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLEndScreenMessages extends OkaeriConfig implements EndScreenMessages {
 
-    Notice shownToSelf = Notice.chat("<color:#9d6eef>► <white>Pokazałeś ekran końca gry sobie!</white>");
+    Notice shownToSelf = Notice.chat("<color:#9d6eef>► <white>Pokazałeś ekran końca gry sobie!");
 
     @Comment("# {PLAYER} - ten placeholder zostanie zastąpiony przez nazwę gracza, któremu pokazujesz ekran końca gry.")
-    Notice shownToOtherPlayer = Notice.chat("<color:#9d6eef>► <white>Pokazałeś ekran końca gry graczowi <color:#9d6eef>{PLAYER}!</color:#9d6eef>");
+    Notice shownToOtherPlayer = Notice
+            .chat("<color:#9d6eef>► <white>Pokazałeś ekran końca gry graczowi <color:#9d6eef>{PLAYER}!");
 }

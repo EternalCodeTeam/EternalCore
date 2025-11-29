@@ -10,9 +10,9 @@ import lombok.experimental.Accessors;
 public class PLBroadcastMessages extends OkaeriConfig implements BroadcastMessages {
 
     @Comment("# {BROADCAST} - Ogłoszenie")
-    public String messageFormat = "<red><bold>OGŁOSZENIE:</bold> <gray>{BROADCAST}";
+    public String messageFormat = "<color:#9d6eef><bold>OGŁOSZENIE:</bold> <white>{BROADCAST}";
 
     @Comment("# Używane tylko w ogłoszeniach tytułowych")
-    public String titleHeader = "<red><bold>OGŁOSZENIE:</bold>";
+    public String titleHeader = "<color:#9d6eef><bold>OGŁOSZENIE:</bold>";
 
 }

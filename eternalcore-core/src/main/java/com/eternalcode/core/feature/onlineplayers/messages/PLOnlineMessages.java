@@ -10,12 +10,13 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLOnlineMessages extends OkaeriConfig implements OnlineMessages {
 
-    Notice onlinePlayersCount = Notice.chat("<color:#9d6eef>► <white>Na serwerze jest: <color:#9d6eef>{ONLINE} <white>graczy online!");
-    Notice onlinePlayersList = Notice.chat("<color:#9d6eef>► <white>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <color:#9d6eef>{PLAYERS} ");
+    Notice onlinePlayersCount = Notice
+            .chat("<color:#9d6eef>► <white>Na serwerze jest: <color:#9d6eef>{ONLINE} <white>graczy online!");
+    Notice onlinePlayersList = Notice.chat(
+            "<color:#9d6eef>► <white>Na serwerze jest: <dark_gray>(<gray>{ONLINE}<dark_gray>)<gray>: <color:#9d6eef>{PLAYERS} ");
 
     public List<String> serverFull = List.of(
-        " ",
-        "<color:#9d6eef>► <white>Serwer jest pełen!",
-        "<color:#9d6eef>► <white>Zakup rangę na naszej stronie!"
-    );
+            " ",
+            "<red>✘ <dark_red>Serwer jest pełen!",
+            "<red>✘ <dark_red>Zakup rangę na naszej stronie!");
 }

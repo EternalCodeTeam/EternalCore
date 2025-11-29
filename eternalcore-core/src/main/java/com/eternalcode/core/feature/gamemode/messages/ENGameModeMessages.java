@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENGameModeMessages extends OkaeriConfig implements GameModeMessages {
-    
+
     Notice gamemodeTypeInvalid = Notice.chat("<red>✘ <dark_red>Not a valid gamemode type");
 
     @Comment("# {GAMEMODE} - Gamemode name")
@@ -18,4 +18,3 @@ public class ENGameModeMessages extends OkaeriConfig implements GameModeMessages
     @Comment("# {PLAYER} - Target player, {GAMEMODE} - Gamemode")
     Notice gamemodeSetToTarget = Notice.chat("<color:#9d6eef>► <white>Gamemode for <color:#9d6eef>{PLAYER} <white>now is set to: <color:#9d6eef>{GAMEMODE}");
 }
-

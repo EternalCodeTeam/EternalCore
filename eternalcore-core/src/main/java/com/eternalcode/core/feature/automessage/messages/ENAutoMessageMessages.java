@@ -15,24 +15,23 @@ import org.bukkit.Sound;
 public class ENAutoMessageMessages extends OkaeriConfig implements AutoMessageMessages {
 
     @Comment({
-        "",
-        "# If you want to use placeholder %server_online% you need to install",
-        "# PlaceholderAPI plugin and download placeholders for Server",
-        "# like /papi ecloud download Server",
+            "",
+            "# If you want to use placeholder %server_online% you need to install",
+            "# PlaceholderAPI plugin and download placeholders for Server",
+            "# like /papi ecloud download Server",
     })
     public Map<String, Notice> messages = Map.of(
-        "1", BukkitNotice.builder()
-            .actionBar("<dark_gray>» <gold>There are <white>%server_online% <gold>people online on the server!")
-            .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
-            .build(),
+            "1", BukkitNotice.builder()
+                    .actionBar("<color:#9d6eef>► <white>There are <color:#9d6eef>%server_online% <white>people online on the server!")
+                    .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
+                    .build(),
 
-        "2", BukkitNotice.builder()
-            .chat("<dark_gray>» <gold>You need help from an admin?")
-            .chat("<dark_gray>» <gold>Type command <white>/helpop <gold>to ask!")
-            .chat("<dark_gray>» <color:#9d6eef><click:suggest_command:'/helpop'>Click to execute!</click></color:#9d6eef>")
-            .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
-            .build()
-    );
+            "2", BukkitNotice.builder()
+                    .chat("<color:#9d6eef>► <white>You need help from an admin?")
+                    .chat("<color:#9d6eef>► <white>Type command <color:#9d6eef>/helpop <white>to ask!")
+                    .chat("<color:#9d6eef>► <color:#9d6eef><click:suggest_command:'/helpop'>Click to execute!</click></color:#9d6eef>")
+                    .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
+                    .build());
 
     Notice enabled = Notice.chat("<color:#9d6eef>► <white>Enabled auto messages!");
     Notice disabled = Notice.chat("<color:#9d6eef>► <white>Disabled auto messages!");
