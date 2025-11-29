@@ -15,7 +15,6 @@ import org.bukkit.Sound;
 public class ENAutoMessageMessages extends OkaeriConfig implements AutoMessageMessages {
 
     @Comment({
-            "",
             "# If you want to use placeholder %server_online% you need to install",
             "# PlaceholderAPI plugin and download placeholders for Server",
             "# like /papi ecloud download Server",
