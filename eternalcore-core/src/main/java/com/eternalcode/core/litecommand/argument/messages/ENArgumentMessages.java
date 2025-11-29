@@ -14,8 +14,8 @@ public class ENArgumentMessages extends OkaeriConfig implements ArgumentMessages
 
     @Comment({" ", "# {USAGE} - Correct usage"})
     Notice usageMessage = Notice.chat("<gold>✘ <white>Correct usage: <gold>{USAGE}");
-    Notice usageMessageHead = Notice.chat("<color:#9d6eef>► <white>Correct usage:");
-    Notice usageMessageEntry = Notice.chat("<color:#9d6eef>► <white>{USAGE}");
+    Notice usageMessageHead = Notice.chat("<red>✘ <dark_red>Correct usage:");
+    Notice usageMessageEntry = Notice.chat("<red>✘ <red>{USAGE}");
 
     @Comment(" ")
     Notice missingPlayerName = Notice.chat("<red>✘ <dark_red>You must provide a player name!");
