@@ -48,9 +48,4 @@ public class UserRepositoryImpl extends AbstractRepositoryOrmLite implements Use
             .thenApply(status -> null);
     }
 
-    @Override
-    public CompletableFuture<Void> updateUser(User user) {
-        return this.save(UserTable.class, UserTable.from(user))
-            .thenApply(status -> null);
-    }
 }

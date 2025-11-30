@@ -2,6 +2,9 @@ package com.eternalcode.core.user;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import java.util.function.BiConsumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,34 +15,40 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerLoadEvent;
 
 @Controller
-public class UserController implements Listener {
+class UserController implements Listener {
 
     private final UserManager userManager;
     private final Server server;
+    private final Logger logger;
 
     @Inject
-    public UserController(UserManager userManager, Server server) {
+    UserController(UserManager userManager, Server server, Logger logger) {
         this.userManager = userManager;
         this.server = server;
+        this.logger = logger;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onJoin(PlayerJoinEvent event) {
+    void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         this.userManager.findOrCreate(player.getUniqueId(), player.getName())
-            .exceptionally(throwable -> {
-                player.kickPlayer("Failed to load user data. Please try again.");
-                throw new RuntimeException("Failed to load user: " + player.getName(), throwable);
-            });
+            .whenComplete(handleFutureResult(player, "Failed to load user: " + player.getName() + ". Please try again."));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onQuit(PlayerQuitEvent event) {
+    void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         this.userManager.updateLastSeen(player.getUniqueId(), player.getName())
-            .exceptionally(throwable -> {
-                throw new RuntimeException("Failed to update user: " + player.getName(), throwable);
-            });
+            .whenComplete(handleFutureResult(player, "Failed to update user: " + player.getName() + ". Please try again."));
+    }
+
+    private <T> BiConsumer<T, Throwable> handleFutureResult(Player player, String message) {
+        return (user, throwable) -> {
+            if (throwable != null) {
+                player.kickPlayer(message);
+                logger.log(Level.SEVERE, message, throwable);
+            }
+        };
     }
 
     @EventHandler

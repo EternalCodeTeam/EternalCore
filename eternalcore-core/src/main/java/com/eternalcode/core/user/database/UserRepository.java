@@ -13,5 +13,4 @@ public interface UserRepository {
 
     CompletableFuture<Void> saveUser(User user);
 
-    CompletableFuture<Void> updateUser(User user);
 }

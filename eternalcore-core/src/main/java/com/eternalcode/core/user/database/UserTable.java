@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "eternal_core_users")
-public class UserTable {
+class UserTable {
 
     @DatabaseField(columnName = "id", id = true)
     private UUID uniqueId;
@@ -31,11 +31,11 @@ public class UserTable {
         this.lastLogin = lastLogin;
     }
 
-    public User toUser() {
+    User toUser() {
         return new User(this.uniqueId, this.name, this.created.toInstant(), this.lastLogin.toInstant());
     }
 
-    public static UserTable from(User user) {
+    static UserTable from(User user) {
         return new UserTable(user.getUniqueId(), user.getName(), Date.from(user.getCreated()), Date.from(user.getLastLogin()));
     }
 }

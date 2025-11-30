@@ -36,7 +36,7 @@ public class UserManager {
         if (cached != null) {
             User updated = this.updateLastLogin(cached, name);
             this.add(updated);
-            this.userRepository.updateUser(updated);
+            this.userRepository.saveUser(updated);
             return CompletableFuture.completedFuture(updated);
         }
 
@@ -52,6 +52,11 @@ public class UserManager {
             });
     }
 
+    private User createNewUser(UUID uniqueId, String name) {
+        Instant now = Instant.now();
+        return new User(uniqueId, name, now, now);
+    }
+
     public CompletableFuture<Void> updateLastSeen(UUID uniqueId, String name) {
         User cached = this.usersByUniqueId.get(uniqueId);
 
@@ -61,17 +66,12 @@ public class UserManager {
 
         User updated = this.updateLastLogin(cached, name);
         this.add(updated);
-        return this.userRepository.updateUser(updated);
+        return this.userRepository.saveUser(updated);
     }
 
     private User updateLastLogin(User user, String name) {
         Instant now = Instant.now();
         return new User(user.getUniqueId(), name, user.getCreated(), now);
-    }
-
-    private User createNewUser(UUID uniqueId, String name) {
-        Instant now = Instant.now();
-        return new User(uniqueId, name, now, now);
     }
 
     private void add(User user) {

@@ -53,7 +53,28 @@ class MsgServiceImpl implements MsgService {
         this.server = server;
     }
 
-    void privateMessage(User sender, User target, String message) {
+    @Override
+    public void reply(Player sender, String message) {
+        UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
+
+        if (uuid == null) {
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.msg().noReply());
+
+            return;
+        }
+
+        Player target = this.server.getPlayer(uuid);
+        if (target == null) {
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
+
+            return;
+        }
+
+        this.sendMessage(sender, target, message);
+    }
+
+    @Override
+    public void sendMessage(Player sender, Player target, String message) {
         UUID uniqueId = target.getUniqueId();
 
         this.msgToggleService.getState(uniqueId).thenAccept(msgState -> {
@@ -71,28 +92,9 @@ class MsgServiceImpl implements MsgService {
 
                 MsgEvent event = new MsgEvent(sender.getUniqueId(), uniqueId, message);
                 this.eventCaller.callEvent(event);
-                this.presenter.onMessage(new Message(sender, target, event.getContent(), this.socialSpy, isIgnored));
+                this.presenter.onMessage(new Message(toUser(sender), toUser(target), event.getContent(), this.socialSpy, isIgnored));
             });
         });
-    }
-
-    void reply(User sender, String message) {
-        UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
-
-        if (uuid == null) {
-            this.noticeService.player(sender.getUniqueId(), translation -> translation.msg().noReply());
-
-            return;
-        }
-
-        Player target = this.server.getPlayer(uuid);
-        if (target == null) {
-            this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
-
-            return;
-        }
-
-        this.privateMessage(sender, toUser(target), message);
     }
 
     @Override
@@ -110,20 +112,9 @@ class MsgServiceImpl implements MsgService {
         return this.socialSpy.contains(player);
     }
 
-    @Override
-    public void reply(Player sender, String message) {
-        this.reply(toUser(sender), message);
-    }
-
-    @Override
-    public void sendMessage(Player sender, Player target, String message) {
-        User user = toUser(target);
-        this.privateMessage(toUser(sender), user, message);
-    }
-
     private User toUser(Player target) {
-        return this.userManager.getUser(target.getUniqueId()).get();
+        return this.userManager.getUser(target.getUniqueId())
+            .orElseThrow(() -> new IllegalStateException("User not found for player " + target.getName()));
     }
-
 
 }
