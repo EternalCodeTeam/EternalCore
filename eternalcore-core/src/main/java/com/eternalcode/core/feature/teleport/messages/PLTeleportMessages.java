@@ -12,31 +12,31 @@ public class PLTeleportMessages extends OkaeriConfig implements TeleportMessages
     // teleport
     @Comment({"# {PLAYER} - Gracz który został teleportowany"})
     Notice teleportedToPlayer =
-        Notice.chat("<green>► <white>Przeteleportowano do gracza <green>{PLAYER}<white>!");
+        Notice.chat("<color:#9d6eef>► <white>Przeteleportowano do gracza <color:#9d6eef>{PLAYER}<white>!");
 
     @Comment({
         "# {PLAYER} - Gracz który został teleportowany, {ARG-PLAYER} - Gracz do którego został teleportowany inny gracz"})
     Notice teleportedPlayerToPlayer = Notice.chat(
-        "<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>do gracza <green>{ARG-PLAYER}<white>!");
+        "<color:#9d6eef>► <white>Przeteleportowano gracza <color:#9d6eef>{PLAYER} <white>do gracza <color:#9d6eef>{ARG-PLAYER}<white>!");
 
     @Comment({"# {Y} - Koordynat Y najwyżej położonego bloku"})
     Notice teleportedToHighestBlock =
-        Notice.chat("<green>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
+        Notice.chat("<color:#9d6eef>► <white>Pomyślnie przeteleportowano do najwyższego bloku! (Y: {Y})");
 
     @Comment(" ")
     Notice teleportedAllToPlayer =
-        Notice.chat("<green>► <white>Przeteleportowano wszystkich graczy do ciebie!");
+        Notice.chat("<color:#9d6eef>► <white>Przeteleportowano wszystkich graczy do ciebie!");
 
     // Task
     @Comment({"# {TIME} - Czas teleportacji"})
-    Notice teleportTimerFormat = Notice.actionbar("<green>► <white>Teleportacja za <green>{TIME}");
+    Notice teleportTimerFormat = Notice.actionbar("<color:#9d6eef>► <white>Teleportacja za <color:#9d6eef>{TIME}");
     @Comment(" ")
     Notice teleported = Notice.builder()
-        .chat("<green>► <white>Przeteleportowano!")
-        .actionBar("<green>► <white>Przeteleportowano!")
+        .chat("<color:#9d6eef>► <white>Przeteleportowano!")
+        .actionBar("<color:#9d6eef>► <white>Przeteleportowano!")
         .build();
 
-    Notice teleporting = Notice.chat("<green>► <white>Teleportowanie...");
+    Notice teleporting = Notice.chat("<color:#9d6eef>► <white>Teleportowanie...");
     Notice teleportTaskCanceled =
         Notice.chat("<red>✘ <dark_red>Ruszyłeś się, teleportacja została przerwana!");
     Notice teleportTaskAlreadyExist = Notice.chat("<red>✘ <dark_red>Teleportujesz się już!");
@@ -44,9 +44,19 @@ public class PLTeleportMessages extends OkaeriConfig implements TeleportMessages
     // Coordinates XYZ
     @Comment({" ", "# {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
     Notice teleportedToCoordinates = Notice.chat(
-        "<green>► <white>Przeteleportowano na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
+        "<color:#9d6eef>► <white>Przeteleportowano na współrzędne x: <color:#9d6eef>{X}<white>, y: <color:#9d6eef>{Y}<white>, z: <color:#9d6eef>{Z}");
     @Comment({" ",
               "# {PLAYER} - Gracz który został teleportowany, {X} - Koordynat X, {Y} - Koordynat Y, {Z} - Koordynat Z"})
     Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
-        "<green>► <white>Przeteleportowano gracza <green>{PLAYER} <white>na współrzędne x: <green>{X}<white>, y: <green>{Y}<white>, z: <green>{Z}");
+        "<color:#9d6eef>► <white>Przeteleportowano gracza <color:#9d6eef>{PLAYER} <white>na współrzędne x: <color:#9d6eef>{X}<white>, y: <color:#9d6eef>{Y}<white>, z: <color:#9d6eef>{Z}");
+
+    // Back
+    @Comment(" ")
+    Notice teleportedToLastLocation =
+        Notice.chat("<color:#9d6eef>► <white>Przeteleportowano do ostatniej lokalizacji!");
+    @Comment({" ", "# {PLAYER} - Gracz który został teleportowany"})
+    Notice teleportedSpecifiedPlayerLastLocation =
+        Notice.chat("<color:#9d6eef>► <white>Przeteleportowano gracza <color:#9d6eef>{PLAYER} <white>do ostatniej lokalizacji!");
+    @Comment(" ")
+    Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Nie ma zapisanej ostatniej lokalizacji!");
 }

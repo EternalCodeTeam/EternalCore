@@ -13,5 +13,5 @@ public class ENSudoMessages extends OkaeriConfig implements SudoMessages {
     Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> executed command: <white>{COMMAND} <dark_gray>on: <white>{TARGET}");
 
     @Comment({"# {TARGET} - Player or console on which the command was executed, {COMMAND} - Command"})
-    Notice sudoMessage = Notice.chat("<green>► <white>You executed command: <green>{COMMAND} <white>on: <green>{TARGET}");
+    Notice sudoMessage = Notice.chat("<color:#9d6eef>► <white>You executed command: <color:#9d6eef>{COMMAND} <white>on: <color:#9d6eef>{TARGET}");
 }
