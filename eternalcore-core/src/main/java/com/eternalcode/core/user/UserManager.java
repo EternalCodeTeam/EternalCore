@@ -3,92 +3,79 @@ package com.eternalcode.core.user;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.database.UserRepository;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import java.time.Instant;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserManager {
 
-    private final Cache<UUID, User> usersByUUID;
-    private final Cache<String, User> usersByName;
-
+    private final Map<UUID, User> usersByUniqueId = new ConcurrentHashMap<>();
+    private final Map<String, User> usersByName = new ConcurrentHashMap<>();
     private final UserRepository userRepository;
 
     @Inject
     public UserManager(UserRepository userRepository) {
-        this.usersByUUID = Caffeine.newBuilder().build();
-        this.usersByName = Caffeine.newBuilder().build();
-
         this.userRepository = userRepository;
-        this.fetchActiveUsers();
     }
 
     public Optional<User> getUser(UUID uniqueId) {
-        return Optional.ofNullable(this.usersByUUID.getIfPresent(uniqueId));
+        return Optional.ofNullable(this.usersByUniqueId.get(uniqueId));
     }
 
     public Optional<User> getUser(String name) {
-        return Optional.ofNullable(this.usersByName.getIfPresent(name));
+        return Optional.ofNullable(this.usersByName.get(name));
     }
 
-    public CompletableFuture<Optional<User>> getUserFromRepository(UUID uniqueId) {
+    public CompletableFuture<User> findOrCreate(UUID uniqueId, String name) {
+        User cached = this.usersByUniqueId.get(uniqueId);
 
-        User userFromCache = this.usersByUUID.getIfPresent(uniqueId);
-
-        if (userFromCache != null) {
-            return CompletableFuture.completedFuture(Optional.of(userFromCache));
+        if (cached != null) {
+            User updated = this.updateLastLogin(cached, name);
+            this.add(updated);
+            this.userRepository.updateUser(updated);
+            return CompletableFuture.completedFuture(updated);
         }
 
-        CompletableFuture<Optional<User>> userFuture = this.userRepository.getUser(uniqueId);
-        userFuture.thenAccept(optionalUser -> optionalUser.ifPresent(user -> {
-            this.usersByUUID.put(uniqueId, user);
-            this.usersByName.put(user.getName(), user);
-        }));
+        return this.userRepository.getUser(uniqueId)
+            .thenApply(optionalUser -> {
+                User user = optionalUser
+                    .map(existing -> this.updateLastLogin(existing, name))
+                    .orElseGet(() -> this.createNewUser(uniqueId, name));
 
-        return userFuture;
+                this.add(user);
+                this.userRepository.saveUser(user);
+                return user;
+            });
     }
 
-    public CompletableFuture<Optional<User>> getUserFromRepository(String name) {
+    public CompletableFuture<Void> updateLastSeen(UUID uniqueId, String name) {
+        User cached = this.usersByUniqueId.get(uniqueId);
 
-        User userFromCache = this.usersByName.getIfPresent(name);
-
-        if (userFromCache != null) {
-            return CompletableFuture.completedFuture(Optional.of(userFromCache));
+        if (cached == null) {
+            return CompletableFuture.completedFuture(null);
         }
 
-        CompletableFuture<Optional<User>> userFuture = this.userRepository.getUser(name);
-        userFuture.thenAccept(optionalUser -> optionalUser.ifPresent(user -> {
-            this.usersByUUID.put(user.getUniqueId(), user);
-            this.usersByName.put(name, user);
-        }));
-
-        return userFuture;
+        User updated = this.updateLastLogin(cached, name);
+        this.add(updated);
+        return this.userRepository.updateUser(updated);
     }
 
-    public void saveUser(User user) {
-        this.saveInCache(user);
-        this.userRepository.saveUser(user);
+    private User updateLastLogin(User user, String name) {
+        Instant now = Instant.now();
+        return new User(user.getUniqueId(), name, user.getCreated(), now);
     }
 
-    public void updateLastSeen(UUID uniqueId, String name) {
-        this.userRepository.updateUser(uniqueId, name).thenAccept(this::saveInCache);
+    private User createNewUser(UUID uniqueId, String name) {
+        Instant now = Instant.now();
+        return new User(uniqueId, name, now, now);
     }
 
-    private void fetchActiveUsers() {
-        this.userRepository.getActiveUsers().thenAccept(list -> list.forEach(this::saveInCache));
-    }
-
-    void fetchUser(UUID uniqueId) {
-        this.userRepository.getUser(uniqueId).thenAccept(optionalUser -> {
-            optionalUser.ifPresent(user -> this.saveInCache(user));
-        });
-    }
-
-    private void saveInCache(User user) {
-        this.usersByUUID.put(user.getUniqueId(), user);
+    private void add(User user) {
+        this.usersByUniqueId.put(user.getUniqueId(), user);
         this.usersByName.put(user.getName(), user);
     }
 }

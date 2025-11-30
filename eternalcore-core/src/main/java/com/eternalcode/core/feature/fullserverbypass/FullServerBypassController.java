@@ -5,6 +5,8 @@ import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserManager;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -28,11 +30,13 @@ class FullServerBypassController implements Listener {
     private static final String LINE_SEPARATOR = "\n";
 
     private final TranslationManager translationManager;
+    private final UserManager userManager;
     private final MiniMessage miniMessage;
 
     @Inject
-    FullServerBypassController(TranslationManager translationManager, MiniMessage miniMessage) {
+    FullServerBypassController(TranslationManager translationManager, UserManager userManager, MiniMessage miniMessage) {
         this.translationManager = translationManager;
+        this.userManager = userManager;
         this.miniMessage = miniMessage;
     }
 
@@ -49,7 +53,7 @@ class FullServerBypassController implements Listener {
             return;
         }
 
-        String serverFullMessage = this.getServerFullMessage();
+        String serverFullMessage = this.getServerFullMessage(player);
         Component serverFullMessageComponent = this.miniMessage.deserialize(serverFullMessage);
 
         event.disallow(PlayerLoginEvent.Result.KICK_FULL, AdventureUtil.SECTION_SERIALIZER.serialize(serverFullMessageComponent));
