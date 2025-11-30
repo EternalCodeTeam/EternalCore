@@ -67,7 +67,6 @@ public class DatabaseManager {
                     settings.database(),
                     String.valueOf(settings.ssl())
                 );
-                case H2_TEST -> type.formatUrl();
             };
 
             this.dataSource.setJdbcUrl(jdbcUrl);

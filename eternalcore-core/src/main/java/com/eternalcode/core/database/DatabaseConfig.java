@@ -13,7 +13,7 @@ public class DatabaseConfig extends OkaeriConfig implements DatabaseSettings {
     @Comment({"Type of the database driver (e.g., SQLITE, H2, MYSQL, MARIADB, POSTGRESQL).", "Determines the "
         + "database type "
         + "to be used."})
-    public DatabaseDriverType databaseType = DatabaseDriverType.MYSQL;
+    public DatabaseDriverType databaseType = DatabaseDriverType.SQLITE;
 
     @Comment({"Hostname of the database server.", "For local databases, this is usually 'localhost'."})
     public String hostname = "localhost";

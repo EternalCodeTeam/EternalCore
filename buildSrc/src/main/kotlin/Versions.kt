@@ -49,7 +49,5 @@ object Versions {
     // tests
     const val JUNIT_BOM = "6.0.1"
     const val MOCKITO_CORE = "5.20.0"
-    const val TEST_CONTAINERS = "1.21.3"
-    const val MYSQL_CONNECTOR = "8.0.33"
 
 }
