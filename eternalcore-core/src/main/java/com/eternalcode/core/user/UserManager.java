@@ -3,7 +3,6 @@ package com.eternalcode.core.user;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.database.UserRepository;
-import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,44 +33,30 @@ public class UserManager {
         User cached = this.usersByUniqueId.get(uniqueId);
 
         if (cached != null) {
-            User updated = this.updateLastLogin(cached, name);
-            this.add(updated);
-            this.userRepository.saveUser(updated);
-            return CompletableFuture.completedFuture(updated);
+            this.updateNameIfChanged(cached, name);
+            return CompletableFuture.completedFuture(cached);
         }
 
         return this.userRepository.getUser(uniqueId)
             .thenApply(optionalUser -> {
-                User user = optionalUser
-                    .map(existing -> this.updateLastLogin(existing, name))
-                    .orElseGet(() -> this.createNewUser(uniqueId, name));
-
+                User user = optionalUser.orElseGet(() -> this.createNewUser(uniqueId, name));
                 this.add(user);
-                this.userRepository.saveUser(user);
                 return user;
             });
     }
 
     private User createNewUser(UUID uniqueId, String name) {
-        Instant now = Instant.now();
-        return new User(uniqueId, name, now, now);
+        User user = new User(uniqueId, name);
+        this.userRepository.saveUser(user);
+        return user;
     }
 
-    public CompletableFuture<Void> updateLastSeen(UUID uniqueId, String name) {
-        User cached = this.usersByUniqueId.get(uniqueId);
-
-        if (cached == null) {
-            return CompletableFuture.completedFuture(null);
+    private void updateNameIfChanged(User user, String name) {
+        if (!user.getName().equals(name)) {
+            User updated = new User(user.getUniqueId(), name);
+            this.add(updated);
+            this.userRepository.saveUser(updated);
         }
-
-        User updated = this.updateLastLogin(cached, name);
-        this.add(updated);
-        return this.userRepository.saveUser(updated);
-    }
-
-    private User updateLastLogin(User user, String name) {
-        Instant now = Instant.now();
-        return new User(user.getUniqueId(), name, user.getCreated(), now);
     }
 
     private void add(User user) {

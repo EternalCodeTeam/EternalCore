@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerLoadEvent;
 
 @Controller
@@ -32,21 +31,14 @@ class UserController implements Listener {
     void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         this.userManager.findOrCreate(player.getUniqueId(), player.getName())
-            .whenComplete(handleFutureResult(player, "Failed to load user: " + player.getName() + ". Please try again."));
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    void onQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        this.userManager.updateLastSeen(player.getUniqueId(), player.getName())
-            .whenComplete(handleFutureResult(player, "Failed to update user: " + player.getName() + ". Please try again."));
+            .whenComplete(this.handleFutureResult(player, "Failed to load user: " + player.getName() + ". Please try again."));
     }
 
     private <T> BiConsumer<T, Throwable> handleFutureResult(Player player, String message) {
         return (user, throwable) -> {
             if (throwable != null) {
                 player.kickPlayer(message);
-                logger.log(Level.SEVERE, message, throwable);
+                this.logger.log(Level.SEVERE, message, throwable);
             }
         };
     }
