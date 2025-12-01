@@ -7,6 +7,8 @@ import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
+import com.eternalcode.core.feature.back.BackConfig;
+import com.eternalcode.core.feature.back.BackSettings;
 import com.eternalcode.core.feature.broadcast.BroadcastConfig;
 import com.eternalcode.core.feature.broadcast.BroadcastSettings;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
@@ -50,8 +52,6 @@ import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Header;
-import org.bukkit.Sound;
-
 import java.io.File;
 
 @Header({
@@ -212,6 +212,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Vanish Configuration")
     @Comment("# Settings responsible for player vanish functionality")
     VanishConfig vanish = new VanishConfig();
+
+    @Bean(proxied = BackSettings.class)
+    @Comment("")
+    @Comment("# Back Configuration")
+    @Comment("# Settings for the /back command functionality")
+    BackConfig back = new BackConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {

@@ -19,9 +19,4 @@ public interface TeleportMessages {
     // Coordinates XYZ
     Notice teleportedToCoordinates();
     Notice teleportedSpecifiedPlayerToCoordinates();
-
-    // Back
-    Notice teleportedToLastLocation();
-    Notice teleportedSpecifiedPlayerLastLocation();
-    Notice lastLocationNoExist();
 }
