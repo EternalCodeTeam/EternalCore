@@ -100,7 +100,7 @@ class BackService {
             player.getUniqueId(),
             PositionAdapter.convert(player.getLocation()),
             PositionAdapter.convert(location),
-            settings.backTeleportTimer()
+            settings.backTeleportTime()
         );
     }
 }

@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 public class BackConfig extends OkaeriConfig implements BackSettings {
 
     @Comment("# Time of teleportation time in /back command.")
-    public Duration backTeleportTimer = Duration.ofSeconds(5);
+    public Duration backTeleportTime = Duration.ofSeconds(5);
 
     @Comment("# Duration of caching last locations for /back command.")
     public Duration backLocationCacheDuration = Duration.ofHours(1);

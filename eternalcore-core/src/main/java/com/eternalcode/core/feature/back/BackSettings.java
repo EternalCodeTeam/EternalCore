@@ -4,7 +4,7 @@ import java.time.Duration;
 
 public interface BackSettings {
 
-    Duration backTeleportTimer();
+    Duration backTeleportTime();
 
     Duration backLocationCacheDuration();
 }
