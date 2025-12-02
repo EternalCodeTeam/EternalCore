@@ -14,7 +14,7 @@ object Versions {
     const val PAPERLIB = "1.0.8"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.25.0"
     const val ADVENTURE_PLATFORM = "4.4.1"
-    const val OKAERI_CONFIGS = "6.0.0-beta.10"
+    const val OKAERI_CONFIGS = "6.0.0-beta.11"
 
     const val MARIA_DB = "3.5.6"
     const val POSTGRESQL = "42.7.8"
