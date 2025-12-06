@@ -1,11 +1,19 @@
 package com.eternalcode.core.translation;
 
+import com.eternalcode.core.feature.back.messages.BackMessages;
+import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
+import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
+import com.eternalcode.core.feature.clear.messages.ClearMessages;
+import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.repair.messages.RepairMessages;
+import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.AfkMessages;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
+import com.eternalcode.core.feature.chat.messages.ChatMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
@@ -45,7 +53,8 @@ import com.eternalcode.core.feature.skull.messages.SkullMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.speed.messages.SpeedMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
-import com.eternalcode.core.feature.teleport.messages.TeleportOfflineMessages;
+import com.eternalcode.core.feature.teleport.messages.TeleportMessages;
+import com.eternalcode.core.feature.teleportoffline.TeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;
 import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
@@ -53,7 +62,6 @@ import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.core.feature.whois.WhoIsMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
-import com.eternalcode.multification.notice.Notice;
 
 public interface Translation {
 
@@ -62,163 +70,119 @@ public interface Translation {
         String disable();
     }
 
-    interface TeleportSection {
-        // teleport
-        Notice teleportedToPlayer();
-        Notice teleportedPlayerToPlayer();
-        Notice teleportedToHighestBlock();
-        Notice teleportedAllToPlayer();
+    Language getLanguage();
 
-        // Task
-        Notice teleportTimerFormat();
-        Notice teleported();
-        Notice teleporting();
-        Notice teleportTaskCanceled();
-        Notice teleportTaskAlreadyExist();
+    Format format();
 
-        // Coordinates XYZ
-        Notice teleportedToCoordinates();
-        Notice teleportedSpecifiedPlayerToCoordinates();
+    ArgumentMessages argument();
 
-        // Back
-        Notice teleportedToLastLocation();
-        Notice teleportedSpecifiedPlayerLastLocation();
-        Notice lastLocationNoExist();
-    }
+    ChatMessages chat();
 
-    interface ChatSection {
-        Notice disabled();
-        Notice enabled();
-        Notice cleared();
-        Notice alreadyDisabled();
-        Notice alreadyEnabled();
-        Notice slowModeSet();
-        Notice slowModeOff();
-        Notice slowMode();
-        Notice disabledChatInfo();
-        Notice commandNotFound();
-    }
+    AdminChatMessages adminChat();
+
+    MsgMessages msg();
+
+    BroadcastMessages broadcast();
+
+    AutoMessageMessages autoMessage();
+
+    JoinMessage join();
+
+    QuitMessage quit();
+
+    MotdMessages motd();
+
+    DeathMessages deathMessage();
+
+    AfkMessages afk();
+
+    IgnoreMessages ignore();
+
+    TeleportMessages teleport();
+
+    TeleportRequestMessages tpa();
+
+    BackMessages back();
+
+    TeleportToRandomPlayerMessages teleportToRandomPlayer();
+
+    RandomTeleportMessages randomTeleport();
+
+    TeleportOfflineMessages teleportToOfflinePlayer();
+
+    HomeMessages home();
+
+    WarpMessages warp();
+
+    SpawnMessages spawn();
+
+    NearMessages near();
+
+    HealMessages heal();
+
+    FeedMessages feed();
+
+    FlyMessages fly();
+
+    SpeedMessages speed();
+
+    GodModeMessages godmode();
+
+    FreezeMessages freeze();
+
+    VanishMessages vanish();
+
+    GameModeMessages gamemode();
+
+    TimeAndWeatherMessages timeAndWeather();
+
+    PingMessages ping();
+
+    OnlineMessages online();
+
+    WhoIsMessages whois();
+
+    SeenMessages seen();
+
+    PlaytimeMessages playtime();
+
+    GiveMessages give();
+
+    ClearMessages clear();
 
     DisposalMessages disposal();
 
-    // clear section
-    ClearMessages clear();
+    ContainerMessages container();
 
-    // feed section
-    FeedMessages feed();
+    SetSlotMessages setSlot();
 
-    // heal section
-    HealMessages heal();
+    ItemEditMessages itemEdit();
 
-    // kill section
-    KillMessages kill();
-
-    // speed section
-    SpeedMessages speed();
-
-    // godmode section
-    GodModeMessages godmode();
-
-    // fly section
-    FlyMessages fly();
-
-    // ping section
-    PingMessages ping();
-
-    // gamemode section
-    GameModeMessages gamemode();
-
-    // online section
-    OnlineMessages online();
-
-    // whois section
-    WhoIsMessages whois();
-
-    // butcher section
-    ButcherMessages butcher();
-
-    // give section
-    GiveMessages give();
-
-    // skull section
-    SkullMessages skull();
+    EnchantMessages enchant();
 
     RepairMessages repair();
 
-    EnchantMessages enchant();
-    ElderGuardianMessages elderGuardian();
-    DemoScreenMessages demoScreen();
-    EndScreenMessages endScreen();
+    SkullMessages skull();
 
-    JoinMessage join();
-    QuitMessage quit();
-    Language getLanguage();
-    // argument section
-    ArgumentMessages argument();
-    // format section
-    Format format();
-    // HelpOp Section
-    HelpOpSection helpOp();
-    // AdminChat Section
-    AdminChatMessages adminChat();
-    // Ignore Section
-    IgnoreMessages ignore();
-    // sudo
-    SudoMessages sudo();
-    // Teleport Section
-    TeleportSection teleport();
-    // teleport to random player section.
-    TeleportToRandomPlayerMessages teleportToRandomPlayer();
-    // Random Teleport Section
-    RandomTeleportMessages randomTeleport();
-    // Chat Section
-    ChatSection chat();
-    // Broadcast Section
-    BroadcastMessages broadcast();
-    // Warp Section
-    WarpMessages warp();
-    // Home section
-    HomeMessages home();
-    // tpa section
-    TeleportRequestMessages tpa();
-    // private section
-    MsgMessages msg();
-    // afk section
-    AfkMessages afk();
-    // death message section
-    DeathMessages deathMessage();
-    //Seen section
-    SeenMessages seen();
-    // sign editor section
     SignEditorMessages signEditor();
-    // spawn section
-    SpawnMessages spawn();
-    // set slot section
-    SetSlotMessages setSlot();
-    // itemedit
-    ItemEditMessages itemEdit();
-    // time and weather
-    TimeAndWeatherMessages timeAndWeather();
-    // container section
-    ContainerMessages container();
-    // auto message section
-    AutoMessageMessages autoMessage();
-    // jail section
-    JailMessages jailSection();
-    // burn section
-    BurnMessages burn();
-    // vanish section
-    VanishMessages vanish();
-    // near section
-    NearMessages near();
-    // motd section
-    MotdMessages motd();
-    // offlineplayer section
-    TeleportOfflineMessages teleportToOfflinePlayer();
-    // playtime section
-    PlaytimeMessages playtime();
-    // freeze section
-    FreezeMessages freeze();
-    // powertool section
+
     PowertoolMessages powertool();
+
+    KillMessages kill();
+
+    BurnMessages burn();
+
+    ButcherMessages butcher();
+
+    JailMessages jailSection();
+
+    SudoMessages sudo();
+
+    HelpOpSection helpOp();
+
+    ElderGuardianMessages elderGuardian();
+
+    DemoScreenMessages demoScreen();
+
+    EndScreenMessages endScreen();
 }

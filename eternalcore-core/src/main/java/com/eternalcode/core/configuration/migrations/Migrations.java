@@ -32,8 +32,10 @@ public class Migrations {
         new Migration_0028_Move_skull_messages_to_dedicated_section(),
         new Migration_0029_Move_enchant_messages_to_dedicated_section(),
         new Migration_0015_Move_ignore_messages_to_dedicated_section(),
+        new Migration_0030_Move_back_to_dedicated_section(),
         new Migration_0031_Move_death_messages_to_dedicated_section(),
         new Migration_0032_Move_join_quit_messages_to_dedicated_section(),
         new Migration_0033_Move_disposal_messages_to_dedicated_section(),
+        new Migration_0034_Move_chat_settings_messages_to_dedicated_section(),
         };
 }

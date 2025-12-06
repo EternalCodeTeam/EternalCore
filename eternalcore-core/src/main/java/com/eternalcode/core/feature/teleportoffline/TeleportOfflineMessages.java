@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport.messages;
+package com.eternalcode.core.feature.teleportoffline;
 
 import com.eternalcode.multification.notice.Notice;
 

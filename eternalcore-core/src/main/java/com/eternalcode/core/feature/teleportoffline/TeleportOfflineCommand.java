@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport.command;
+package com.eternalcode.core.feature.teleportoffline;
 
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
