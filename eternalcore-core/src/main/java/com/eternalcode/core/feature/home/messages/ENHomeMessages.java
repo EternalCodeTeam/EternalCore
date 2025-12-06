@@ -21,7 +21,7 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
 
     @Comment({ " ", "# Placeholders messages" })
-    public String noHomesOwnedPlaceholder = "You don't have any homes.";
+    String noHomesOwnedPlaceholder = "You don't have any homes.";
 
     @Comment({
             " ",
@@ -33,7 +33,7 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice createAsAdmin = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been created for <color:#9d6eef>{PLAYER}<white>.");
     Notice deleteAsAdmin = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been deleted for <color:#9d6eef>{PLAYER}<white>.");
     Notice homeListAsAdmin = Notice.chat("<color:#9d6eef>► <white>Available homes for <color:#9d6eef>{PLAYER}<white>: <color:#9d6eef>{HOMES}");
-    public Notice noHomesOnListAsAdmin =
+    Notice noHomesOnListAsAdmin =
         Notice.chat("<red>► <dark_red>Player <red>{PLAYER} <dark_red>does not have any homes!");
 
     @Comment({
@@ -41,19 +41,5 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
         "# {PLAYER} - username of home owner whom user teleported by using /homeadmin home",
         "# {HOME} - name of the home"
     })
-    public Notice teleportedAsAdmin =
-        Notice.chat("<green>► <white>Teleported to: <green>{PLAYER}<white> - <green>{HOME}!");
-
-    @Comment({
-        " ",
-        "# Notice sent to wrongly inputed /homeadmin command"
-    })
-    public Notice missingArgument = Notice.chat("<dark_red>✘ <red> Missing argument! Please input: <Player name> and <Home name>");
-
-    @Comment({
-        " ",
-        "# List suggesting available homes for player that can be used in /homeadmin command",
-        "# Placeholder: {PLAYER} - name of the player, {HOMES} - list of available homes"
-    })
-    public Notice homeNotFound = Notice.chat("<dark_red>✘ <red>Home not found! <dark_red> Available homes for <red>{PLAYER}<dark_red>: <red>{HOMES}");
+    Notice teleportedAsAdmin = Notice.chat("<color:#9d6eef>► <white>Teleported to: <green>{PLAYER}<white> - <green>{HOME}!");
 }

@@ -18,7 +18,4 @@ public interface HomeMessages {
     Notice homeListAsAdmin();
     Notice noHomesOnListAsAdmin();
     Notice teleportedAsAdmin();
-
-    Notice homeNotFound();
-    Notice missingArgument();
 }

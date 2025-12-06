@@ -120,14 +120,6 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
 
     private ParseResult<PlayerHomeEntry> handleMissingHomeName(OfflinePlayer player, UUID playerId) {
         Collection<Home> homes = this.homeManager.getHomes(playerId);
-
-        if (homes.isEmpty()) {
-            return ParseResult.failure(this.noticeService.create()
-                .notice(translation -> translation.home().playerNoOwnedHomes())
-                .placeholder(PLAYER_NAME_PLACEHOLDER, this.getPlayerDisplayName(player, playerId))
-                .player(playerId));
-        }
-
         return ParseResult.failure(this.createHomeListNotice(homes, player, playerId));
     }
 
