@@ -4,6 +4,7 @@ import com.eternalcode.core.user.User;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import java.util.Date;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -17,15 +18,15 @@ class UserTable {
     private String name;
 
     @DatabaseField(columnName = "last_seen", dataType = DataType.DATE_STRING)
-    private Instant lastSeen;
+    private Date lastSeen;
 
     @DatabaseField(columnName = "account_created", dataType = DataType.DATE_STRING)
-    private Instant accountCreated;
+    private Date accountCreated;
 
     UserTable() {
     }
 
-    UserTable(UUID uniqueId, String name, Instant lastSeen, Instant accountCreated) {
+    UserTable(UUID uniqueId, String name, Date lastSeen, Date accountCreated) {
         this.uniqueId = uniqueId;
         this.name = name;
         this.lastSeen = lastSeen;
@@ -33,10 +34,11 @@ class UserTable {
     }
 
     User toUser() {
-        return new User(this.uniqueId, this.name, this.lastSeen, this.accountCreated);
+        return new User(this.uniqueId, this.name, this.lastSeen.toInstant(), this.accountCreated.toInstant());
     }
 
     static UserTable from(User user) {
-        return new UserTable(user.getUniqueId(), user.getName(), user.getLastSeen(), user.getAccountCreated());
+        return new UserTable(user.getUniqueId(), user.getName(), Date.from(user.getLastSeen()),
+                Date.from(user.getAccountCreated()));
     }
 }
