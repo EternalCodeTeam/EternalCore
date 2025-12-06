@@ -14,8 +14,7 @@ public class PlaceholdersConfig extends OkaeriConfig implements PlaceholdersSett
 
     @Comment("# Map of available placeholders and their default values")
     public Map<String, String> placeholders = Map.of(
-        "prefix", "&7",
-        "online_count", "{ONLINE}"
+        "prefix", "&7"
     );
 
     @Override
