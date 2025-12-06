@@ -48,7 +48,8 @@ class PlayerHomeMultiArgument implements MultipleArgumentResolver<CommandSender,
         HomeManager homeManager,
         NoticeService noticeService,
         ViewerService viewerService,
-        Server server) {
+        Server server
+    ) {
         this.homeManager = homeManager;
         this.noticeService = noticeService;
         this.viewerService = viewerService;
