@@ -31,4 +31,5 @@ public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages
     Notice worldDoesntExist = Notice.chat("<red>✘ <dark_red>Świat <dark_red>{WORLD} <red>nie istnieje!");
     Notice incorrectLocation = Notice.chat("<red>✘ <dark_red>Niepoprawna lokalizacja! <red>({LOCATION})");
 
+    public Notice missingPlayer = Notice.chat("<red>✘ <dark_red>Nie znaleziono gracza!");
 }

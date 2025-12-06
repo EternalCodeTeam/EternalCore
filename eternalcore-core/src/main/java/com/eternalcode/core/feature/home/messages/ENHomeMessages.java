@@ -21,7 +21,7 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
 
     @Comment({ " ", "# Placeholders messages" })
-    public String noHomesOwnedPlaceholder = "You don't have any homes.";
+    String noHomesOwnedPlaceholder = "You don't have any homes.";
 
     @Comment({
             " ",
@@ -33,4 +33,13 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice createAsAdmin = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been created for <color:#9d6eef>{PLAYER}<white>.");
     Notice deleteAsAdmin = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been deleted for <color:#9d6eef>{PLAYER}<white>.");
     Notice homeListAsAdmin = Notice.chat("<color:#9d6eef>► <white>Available homes for <color:#9d6eef>{PLAYER}<white>: <color:#9d6eef>{HOMES}");
+    Notice noHomesOnListAsAdmin =
+        Notice.chat("<red>► <dark_red>Player <red>{PLAYER} <dark_red>does not have any homes!");
+
+    @Comment({
+        " ",
+        "# {PLAYER} - username of home owner whom user teleported by using /homeadmin home",
+        "# {HOME} - name of the home"
+    })
+    Notice teleportedAsAdmin = Notice.chat("<color:#9d6eef>► <white>Teleported to: <green>{PLAYER}<white> - <green>{HOME}!");
 }

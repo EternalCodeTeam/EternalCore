@@ -16,4 +16,6 @@ public interface HomeMessages {
     Notice createAsAdmin();
     Notice deleteAsAdmin();
     Notice homeListAsAdmin();
+    Notice noHomesOnListAsAdmin();
+    Notice teleportedAsAdmin();
 }

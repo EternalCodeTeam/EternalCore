@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.home.homeadmin;
 
 import com.eternalcode.core.feature.home.Home;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
-record PlayerHomeEntry(Player player, Home home) {
+public record PlayerHomeEntry(OfflinePlayer offlinePlayer, Home home) {
 }

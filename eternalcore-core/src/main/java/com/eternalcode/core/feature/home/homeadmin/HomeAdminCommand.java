@@ -6,7 +6,6 @@ import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -14,10 +13,12 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import io.papermc.lib.PaperLib;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 @Command(name = "homeadmin")
@@ -41,64 +42,44 @@ class HomeAdminCommand {
 
     @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
-    void setHome(@Sender Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry, @Arg Optional<Location> location) {
-        Location optionalLocation = location.orElse(sender.getLocation());
-
-        Home home = playerHomeEntry.home();
-        Player player = playerHomeEntry.player();
-        UUID uniqueId = player.getUniqueId();
-
-        boolean hasHome = this.homeManager.hasHome(uniqueId, home);
-        String name = home.getName();
-
-        if (hasHome) {
-            this.homeManager.createHome(uniqueId, name, optionalLocation);
-            this.noticeService.create()
-                .notice(translate -> translate.home().overrideHomeLocationAsAdmin())
-                .placeholder("{HOME}", name)
-                .placeholder("{PLAYER}", player.getName())
-                .player(player.getUniqueId())
-                .send();
-
+    void setHome(
+        @Sender Player sender,
+        @Arg("target") OfflinePlayer targetPlayer,
+        @Arg("home name") String homeName,
+        @Arg Optional<Location> location
+    ) {
+        if (!this.hasPlayerEverJoined(targetPlayer)) {
+            this.sendPlayerNeverJoinedNotice(sender, targetPlayer);
             return;
         }
 
-        this.homeManager.createHome(uniqueId, name, optionalLocation);
-        this.noticeService.create()
-            .notice(translate -> translate.home().createAsAdmin())
-            .placeholder("{HOME}", name)
-            .placeholder("{PLAYER}", player.getName())
-            .player(player.getUniqueId())
-            .send();
+        Location homeLocation = location.orElse(sender.getLocation());
+        UUID targetId = targetPlayer.getUniqueId();
+        boolean homeExists = this.homeManager.hasHome(targetId, homeName);
+
+        this.homeManager.createHome(targetId, homeName, homeLocation);
+
+        if (homeExists) {
+            this.sendHomeOverrideNotice(sender.getUniqueId(), homeName, targetPlayer);
+        }
+        else {
+            this.sendHomeCreatedNotice(sender.getUniqueId(), homeName, targetPlayer);
+        }
     }
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
     void deleteHome(@Sender Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
-        Player player = playerHomeEntry.player();
+        OfflinePlayer targetPlayer = playerHomeEntry.offlinePlayer();
+        UUID targetId = targetPlayer.getUniqueId();
 
-        UUID uniqueId = player.getUniqueId();
-        boolean hasHome = this.homeManager.hasHome(uniqueId, home);
+        this.homeManager.deleteHome(targetId, home.getName());
 
-        if (!hasHome) {
-            String homes = this.formattedListUserHomes(uniqueId);
-
-            this.noticeService.create()
-                .notice(translate -> translate.home().homeList())
-                .placeholder("{HOMES}", homes)
-                .placeholder("{PLAYER}", player.getName())
-                .player(sender.getUniqueId())
-                .send();
-
-            return;
-        }
-
-        this.homeManager.deleteHome(uniqueId, home.getName());
         this.noticeService.create()
-            .notice(translate -> translate.home().deleteAsAdmin())
+            .notice(translation -> translation.home().deleteAsAdmin())
             .placeholder("{HOME}", home.getName())
-            .placeholder("{PLAYER}", player.getName())
+            .placeholder("{PLAYER}", targetPlayer.getName())
             .player(sender.getUniqueId())
             .send();
     }
@@ -107,41 +88,97 @@ class HomeAdminCommand {
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
     void home(@Sender Player player, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
-        Player user = playerHomeEntry.player();
+        OfflinePlayer targetPlayer = playerHomeEntry.offlinePlayer();
 
-        Optional<Home> homeOption = this.homeManager.getHome(user.getUniqueId(), home.getName());
+        PaperLib.teleportAsync(player, home.getLocation());
 
-        if (homeOption.isEmpty()) {
-            this.noticeService.create()
-                .notice(translate -> translate.home().playerNoOwnedHomes())
-                .placeholder("{HOME}", home.getName())
-                .placeholder("{PLAYER}", user.getName())
-                .player(player.getUniqueId())
-                .send();
-
-            return;
-        }
-
-        PaperLib.teleportAsync(player, homeOption.get().getLocation());
+        this.noticeService.create()
+            .notice(translation -> translation.home().teleportedAsAdmin())
+            .placeholder("{HOME}", home.getName())
+            .placeholder("{PLAYER}", targetPlayer.getName())
+            .player(player.getUniqueId())
+            .send();
     }
 
     @Execute(name = "list")
     @DescriptionDocs(description = "List user homes", arguments = "<user>")
-    void list(@Sender Viewer viewer, @Arg User user) {
-        String homes = this.formattedListUserHomes(user.getUniqueId());
+    void list(@Sender Viewer viewer, @Arg("target") OfflinePlayer targetPlayer) {
+        if (!this.hasPlayerEverJoined(targetPlayer)) {
+            this.sendPlayerNeverJoinedNoticeToViewer(viewer, targetPlayer);
+            return;
+        }
 
+        UUID targetId = targetPlayer.getUniqueId();
+        Collection<Home> homes = this.homeManager.getHomes(targetId);
+
+        if (homes.isEmpty()) {
+            this.sendNoHomesNotice(viewer, targetPlayer);
+            return;
+        }
+
+        this.sendHomeListNotice(viewer, homes, targetPlayer);
+    }
+
+    private boolean hasPlayerEverJoined(OfflinePlayer player) {
+        return player.hasPlayedBefore() || player.isOnline();
+    }
+
+    private void sendPlayerNeverJoinedNotice(Player sender, OfflinePlayer targetPlayer) {
         this.noticeService.create()
-            .notice(translate -> translate.home().homeListAsAdmin())
-            .placeholder("{HOMES}", homes)
-            .placeholder("{PLAYER}", user.getName())
+            .notice(translation -> translation.argument().offlinePlayer())
+            .placeholder("{PLAYER}", targetPlayer.getName())
+            .player(sender.getUniqueId())
+            .send();
+    }
+
+    private void sendPlayerNeverJoinedNoticeToViewer(Viewer viewer, OfflinePlayer targetPlayer) {
+        this.noticeService.create()
+            .notice(translation -> translation.argument().offlinePlayer())
+            .placeholder("{PLAYER}", targetPlayer.getName())
             .viewer(viewer)
             .send();
     }
 
-    private String formattedListUserHomes(UUID uniqueId) {
-        return this.homeManager.getHomes(uniqueId).stream()
-            .map(home -> home.getName())
+    private void sendHomeOverrideNotice(UUID senderId, String homeName, OfflinePlayer targetPlayer) {
+        this.noticeService.create()
+            .notice(translation -> translation.home().overrideHomeLocationAsAdmin())
+            .placeholder("{HOME}", homeName)
+            .placeholder("{PLAYER}", targetPlayer.getName())
+            .player(senderId)
+            .send();
+    }
+
+    private void sendHomeCreatedNotice(UUID senderId, String homeName, OfflinePlayer targetPlayer) {
+        this.noticeService.create()
+            .notice(translation -> translation.home().createAsAdmin())
+            .placeholder("{HOME}", homeName)
+            .placeholder("{PLAYER}", targetPlayer.getName())
+            .player(senderId)
+            .send();
+    }
+
+    private void sendNoHomesNotice(Viewer viewer, OfflinePlayer targetPlayer) {
+        this.noticeService.create()
+            .notice(translation -> translation.home().noHomesOnListAsAdmin())
+            .placeholder("{PLAYER}", targetPlayer.getName())
+            .viewer(viewer)
+            .send();
+    }
+
+    private void sendHomeListNotice(Viewer viewer, Collection<Home> homes, OfflinePlayer targetPlayer) {
+        String formattedHomes = this.formatHomeList(homes);
+
+        this.noticeService.create()
+            .notice(translation -> translation.home().homeListAsAdmin())
+            .placeholder("{HOMES}", formattedHomes)
+            .placeholder("{PLAYER}", targetPlayer.getName())
+            .viewer(viewer)
+            .send();
+    }
+
+    private String formatHomeList(Collection<Home> homes) {
+        return homes.stream()
+            .map(Home::getName)
             .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
 }
-
