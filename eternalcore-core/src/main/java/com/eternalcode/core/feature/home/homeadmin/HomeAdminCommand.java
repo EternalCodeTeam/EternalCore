@@ -33,7 +33,8 @@ class HomeAdminCommand {
     public HomeAdminCommand(
         HomeManager homeManager,
         NoticeService noticeService,
-        PluginConfiguration pluginConfiguration) {
+        PluginConfiguration pluginConfiguration
+    ) {
         this.homeManager = homeManager;
         this.noticeService = noticeService;
         this.pluginConfiguration = pluginConfiguration;
