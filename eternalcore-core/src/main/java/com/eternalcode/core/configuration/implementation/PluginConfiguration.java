@@ -47,6 +47,8 @@ import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.placeholder.PlaceholdersConfig;
+import com.eternalcode.core.placeholder.PlaceholdersSettings;
 import com.eternalcode.core.translation.TranslationConfig;
 import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
@@ -78,6 +80,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings that determine the language used within the server.")
     @Comment("# Choose the preferred language for all messages and interactions in the plugin.")
     TranslationConfig language = new TranslationConfig();
+
+    @Bean(proxied = PlaceholdersSettings.class)
+    @Comment("")
+    @Comment("# Placeholders Configuration")
+    @Comment("# Settings that define various placeholders used across the plugin")
+    PlaceholdersConfig placeholders = new PlaceholdersConfig();
 
     @Bean(proxied = DatabaseSettings.class)
     @Comment("")
