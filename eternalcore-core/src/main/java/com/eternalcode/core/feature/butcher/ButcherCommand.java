@@ -6,18 +6,17 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @SuppressWarnings("SameParameterValue")
 @Command(name = "butcher", aliases = { "killmob" })
@@ -35,19 +34,19 @@ class ButcherCommand {
 
     @Execute
     @DescriptionDocs(description = "Kills all mobs in 2 chunks around you")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         this.execute(player, 2);
     }
 
     @Execute
     @DescriptionDocs(description = "Kills all mobs in specified chunks around you", arguments = "<chunks>")
-    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks) {
+    void execute(@Sender Player player, @Arg(ButcherArgument.KEY) int chunks) {
         this.execute(player, chunks, new MobEntity(MobType.ALL));
     }
 
     @Execute
     @DescriptionDocs(description = "Kills specified mob in specified chunks around you", arguments = "<chunks> <mobType>")
-    void execute(@Context Player player, @Arg(ButcherArgument.KEY) int chunks, @Arg(MobEntityArgument.KEY) MobEntity mobEntity) {
+    void execute(@Sender Player player, @Arg(ButcherArgument.KEY) int chunks, @Arg(MobEntityArgument.KEY) MobEntity mobEntity) {
         this.killMobs(player, chunks, mobEntity::isMatch);
     }
 
@@ -74,7 +73,7 @@ class ButcherCommand {
         }
 
         this.noticeService.create()
-            .notice(translation -> translation.player().butcherCommand())
+            .notice(translation -> translation.butcher().killed())
             .player(player.getUniqueId())
             .placeholder("{KILLED}", String.valueOf(killedMobs))
             .send();

@@ -10,7 +10,7 @@ import com.eternalcode.core.user.User;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import io.papermc.lib.PaperLib;
@@ -45,7 +45,7 @@ class HomeAdminCommand {
 
     @Execute(name = "sethome")
     @DescriptionDocs(description = "Set home for user", arguments = "<user> <home> [location]")
-    void setHome(@Context Player sender, @Arg("player") OfflinePlayer offlinePlayer, @Arg("home name") String homeName, @Arg Optional<Location> location) {
+    void setHome(@Sender Player sender, @Arg("player") OfflinePlayer offlinePlayer, @Arg("home name") String homeName, @Arg Optional<Location> location) {
         Location optionalLocation = location.orElse(sender.getLocation());
 
         UUID uniqueId = offlinePlayer.getUniqueId();
@@ -74,7 +74,7 @@ class HomeAdminCommand {
 
     @Execute(name = "delhome")
     @DescriptionDocs(description = "Delete home for user", arguments = "<user> <home>")
-    void deleteHome(@Context Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
+    void deleteHome(@Sender Player sender, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
         User user = playerHomeEntry.user();
 
@@ -106,7 +106,7 @@ class HomeAdminCommand {
 
     @Execute(name = "home")
     @DescriptionDocs(description = "Teleport to user home", arguments = "<user> <home>")
-    void home(@Context Player player, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
+    void home(@Sender Player player, @Arg("player home") PlayerHomeEntry playerHomeEntry) {
         Home home = playerHomeEntry.home();
         User user = playerHomeEntry.user();
 
@@ -135,7 +135,7 @@ class HomeAdminCommand {
 
     @Execute(name = "list")
     @DescriptionDocs(description = "List user homes", arguments = "<user>")
-    void list(@Context Viewer viewer, @Arg User user) {
+    void list(@Sender Viewer viewer, @Arg User user) {
 
         Collection<Home> homes = this.homeManager.getHomes(user.getUniqueId());
 

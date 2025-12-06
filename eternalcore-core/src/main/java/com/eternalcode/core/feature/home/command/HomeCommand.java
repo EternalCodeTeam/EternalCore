@@ -9,7 +9,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.Collection;
@@ -40,7 +40,7 @@ class HomeCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, if player has eternalcore.home.bypass permission, eternalcore will ignore teleport time")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         Collection<Home> playerHomes = this.homeService.getHomes(player.getUniqueId());
 
         if (playerHomes.isEmpty()) {
@@ -59,7 +59,7 @@ class HomeCommand {
                     .toList());
 
             Optional<Home> mainHome = playerHomes.stream()
-                .filter(home -> home.getName().equals(this.homesSettings.defaultHomeName()))
+                .filter(home -> home.getName().equals(this.homesSettings.defaultName()))
                 .findFirst();
 
             if (mainHome.isPresent()) {
@@ -82,7 +82,7 @@ class HomeCommand {
 
     @Execute
     @DescriptionDocs(description = "Teleport to home, if player has eternalcore.home.bypass permission, eternalcore will be ignore teleport time", arguments = "<home>")
-    void execute(@Context Player player, @Arg Home home) {
+    void execute(@Sender Player player, @Arg Home home) {
         this.homeTeleportService.teleport(player, home);
     }
 }

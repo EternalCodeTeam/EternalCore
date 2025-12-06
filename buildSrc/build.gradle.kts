@@ -7,9 +7,8 @@ repositories {
 }
 
 dependencies {
-    implementation("net.kyori:blossom:1.3.1")
-    implementation("com.gradleup.shadow:shadow-gradle-plugin:9.0.2")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.10")
+    implementation("com.gradleup.shadow:shadow-gradle-plugin:9.3.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.21")
     implementation("net.minecrell:plugin-yml:0.6.0")
 }
 

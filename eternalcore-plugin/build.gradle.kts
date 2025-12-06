@@ -2,7 +2,7 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
-    id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 eternalShadowCompiler {
@@ -17,7 +17,7 @@ eternalShadowCompiler {
         description = "All the most important server functions in one!"
         website = "www.eternalcode.pl"
         version = "${project.version}"
-        softDepend = listOf("PlaceholderAPI")
+        softDepend = listOf("PlaceholderAPI", "dynmap")
         foliaSupported = true
     }
 
@@ -36,7 +36,7 @@ dependencies {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.7")
+        minecraftVersion("1.21.10")
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
     }
 }

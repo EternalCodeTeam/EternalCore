@@ -7,7 +7,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
@@ -27,11 +27,11 @@ class KillCommand {
 
     @Execute
     @DescriptionDocs(description = "Kill yourself")
-    void execute(@Context Player player) {
+    void execute(@Sender Player player) {
         player.setHealth(0);
 
         this.noticeService.create()
-            .notice(translation -> translation.player().killedMessage())
+            .notice(translation -> translation.kill().killedYourself())
             .placeholder("{PLAYER}", player.getName())
             .player(player.getUniqueId())
             .send();
@@ -39,11 +39,12 @@ class KillCommand {
 
     @Execute
     @DescriptionDocs(description = "Kill specified player", arguments = "<player>")
-    void execute(@Context Viewer audience, @Arg Player player) {
+    void execute(@Sender Viewer audience, @Arg Player player) {
         this.scheduler.run(player, () -> player.setHealth(0));
+        this.noticeService.player(player.getUniqueId(), translation -> translation.kill().killedByAdmin());
 
         this.noticeService.create()
-            .notice(translation -> translation.player().killedMessage())
+            .notice(translation -> translation.kill().killedTargetPlayer())
             .placeholder("{PLAYER}", player.getName())
             .viewer(audience)
             .send();

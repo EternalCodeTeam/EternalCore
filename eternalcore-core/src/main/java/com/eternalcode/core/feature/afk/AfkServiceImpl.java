@@ -5,34 +5,34 @@ import com.eternalcode.core.feature.afk.event.AfkSwitchEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.user.UserManager;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 
 @Service
 class AfkServiceImpl implements AfkService {
 
-    private final AfkSettings afkSettings;
     private final NoticeService noticeService;
-    private final UserManager userManager;
+    private final AfkSettings afkSettings;
     private final EventCaller eventCaller;
+    private final Server server;
 
     private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
     private final Map<UUID, Integer> interactionsCount = new HashMap<>();
     private final Map<UUID, Instant> lastInteraction = new HashMap<>();
 
     @Inject
-    AfkServiceImpl(AfkSettings afkSettings, NoticeService noticeService, UserManager userManager, EventCaller eventCaller) {
-        this.afkSettings = afkSettings;
+    public AfkServiceImpl(NoticeService noticeService, AfkSettings afkSettings, EventCaller eventCaller, Server server) {
         this.noticeService = noticeService;
-        this.userManager = userManager;
+        this.afkSettings = afkSettings;
         this.eventCaller = eventCaller;
+        this.server = server;
     }
 
     @Override
@@ -118,11 +118,17 @@ class AfkServiceImpl implements AfkService {
     }
 
     private void sendAfkNotification(UUID playerUniqueId, boolean afk) {
+        Player player = this.server.getPlayer(playerUniqueId);
+
+        if (player == null) {
+            return;
+        }
+
         this.noticeService.create()
             .onlinePlayers()
             .player(playerUniqueId)
             .notice(translation -> afk ? translation.afk().afkOn() : translation.afk().afkOff())
-            .placeholder("{PLAYER}", this.userManager.getUser(playerUniqueId).map(User::getName))
+            .placeholder("{PLAYER}", player.getName())
             .send();
     }
 }

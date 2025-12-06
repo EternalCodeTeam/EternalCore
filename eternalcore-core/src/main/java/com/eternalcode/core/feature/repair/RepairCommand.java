@@ -6,7 +6,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
@@ -35,7 +35,7 @@ class RepairCommand {
     @Execute
     @DescriptionDocs(description = "Repairs item in hand")
     @Permission("eternalcore.repair")
-    void repair(@Context Player player) {
+    void repair(@Sender Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.hasRepairDelay(uuid)) {
@@ -58,7 +58,7 @@ class RepairCommand {
         if (!(handItem.getItemMeta() instanceof Damageable damageable) || damageable.getDamage() == 0) {
             this.noticeService
                 .create()
-                .notice(translation -> translation.argument().noDamaged())
+                .notice(translation -> translation.repair().cannotRepair())
                 .player(player.getUniqueId())
                 .send();
 
@@ -79,7 +79,7 @@ class RepairCommand {
     @Execute(name = "all")
     @Permission("eternalcore.repair.all")
     @DescriptionDocs(description = "Repairs all items in inventory")
-    void repairAll(@Context Player player) {
+    void repairAll(@Sender Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.hasRepairDelay(uuid)) {
@@ -104,7 +104,7 @@ class RepairCommand {
         if (!exists) {
             this.noticeService
                 .create()
-                .notice(translation -> translation.argument().noDamagedItems())
+                .notice(translation -> translation.repair().needDamagedItem())
                 .player(player.getUniqueId())
                 .send();
 
@@ -123,7 +123,7 @@ class RepairCommand {
     @Execute(name = "armor")
     @Permission("eternalcore.repair.armor")
     @DescriptionDocs(description = "Repairs all items in armor")
-    void repairArmor(@Context Player player) {
+    void repairArmor(@Sender Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.hasRepairDelay(uuid)) {
@@ -148,7 +148,7 @@ class RepairCommand {
         if (!exists) {
             this.noticeService
                 .create()
-                .notice(translation -> translation.argument().noDamagedItems())
+                .notice(translation -> translation.repair().needDamagedItem())
                 .player(player.getUniqueId())
                 .send();
 

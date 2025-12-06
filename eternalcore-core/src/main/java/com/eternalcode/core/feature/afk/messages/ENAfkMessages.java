@@ -11,11 +11,11 @@ import lombok.experimental.Accessors;
 public class ENAfkMessages extends OkaeriConfig implements AfkMessages {
 
     @Comment("# {PLAYER} - Player who is in AFK")
-    public Notice afkOn = Notice.chat("<green>► <white>{PLAYER} is AFK!");
-    public Notice afkOff = Notice.chat("<green>► <white>{PLAYER} is no more AFK!");
+    Notice afkOn = Notice.chat("<color:#9d6eef>► <white>{PLAYER} is AFK!");
+    Notice afkOff = Notice.chat("<color:#9d6eef>► <white>{PLAYER} is no more AFK!");
 
     @Comment({" ", "# {TIME} - Time after the player can execute the command."})
-    public Notice afkDelay = Notice.chat("<red>► <dark_red>You can use this command only after <red>{TIME}!");
+    Notice afkDelay = Notice.chat("<red>► <dark_red>You can use this command only after <red>{TIME}!");
 
     @Comment({" "})
     public String afkKickReason = "<red>You have been kicked due to inactivity!";

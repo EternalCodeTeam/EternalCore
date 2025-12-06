@@ -8,7 +8,6 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.multification.notice.resolver.NoticeResolverRegistry;
 import com.eternalcode.multification.okaeri.MultificationNoticeSerializer;
-import eu.okaeri.configs.ConfigManager;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.serdes.OkaeriSerdesPack;
 import eu.okaeri.configs.serdes.commons.SerdesCommons;
@@ -17,7 +16,6 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -65,7 +63,6 @@ public class ConfigurationManager {
             .withSerdesPack(serdesPack)
             .withBindFile(file)
             .saveDefaults()
-            .withRemoveOrphans(true)
             .load(true)
             .migrate(Migrations.ALL); // Remember: migration should be launched after the #load method.
 

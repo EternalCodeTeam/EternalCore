@@ -14,12 +14,13 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import panda.utilities.StringUtils;
 
 @Task(delay = 1L, period = 1L, unit = TimeUnit.SECONDS)
 class TeleportTask implements Runnable {
 
     private static final int SECONDS_OFFSET = 1;
+    private static final double MOVEMENT_THRESHOLD = 0.5;
+    private static final String EMPTY_STRING = "";
 
     private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
@@ -58,7 +59,7 @@ class TeleportTask implements Runnable {
                 teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
 
                 this.noticeService.create()
-                    .notice(translation -> Notice.actionbar(StringUtils.EMPTY))
+                    .notice(translation -> Notice.actionbar(EMPTY_STRING))
                     .notice(translation -> translation.teleport().teleportTaskCanceled())
                     .player(player.getUniqueId())
                     .send();
@@ -102,11 +103,12 @@ class TeleportTask implements Runnable {
     private boolean hasPlayerMovedDuringTeleport(Player player, Teleport teleport) {
         Location startLocation = PositionAdapter.convert(teleport.getStartLocation());
         Location currentLocation = player.getLocation();
+
         if (!currentLocation.getWorld().equals(startLocation.getWorld())) {
-            return true; 
+            return true;
         }
-        return currentLocation.distance(startLocation) > 0.5;
+
+        return currentLocation.distance(startLocation) > MOVEMENT_THRESHOLD;
     }
 
 }
-

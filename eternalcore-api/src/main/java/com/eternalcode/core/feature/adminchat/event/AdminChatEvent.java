@@ -22,7 +22,7 @@ public class AdminChatEvent extends Event implements Cancellable {
     private boolean cancelled;
 
     public AdminChatEvent(@NotNull CommandSender sender, @NotNull String content) {
-        super(true);
+        super(false);
 
         if (sender == null) {
             throw new IllegalArgumentException("Sender cannot be null");

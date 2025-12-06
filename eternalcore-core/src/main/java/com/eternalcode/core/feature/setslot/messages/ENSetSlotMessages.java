@@ -8,5 +8,5 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class ENSetSlotMessages extends OkaeriConfig implements SetSlotMessages {
-    public Notice slotSaved = Notice.chat("<green>► <white>Server slots have been set to <green>{SLOTS} <white>and saved!");
+    Notice slotSaved = Notice.chat("<color:#9d6eef>► <white>Server slots have been set to <color:#9d6eef>{SLOTS} <white>and saved!");
 }

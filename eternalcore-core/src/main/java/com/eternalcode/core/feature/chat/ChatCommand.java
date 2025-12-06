@@ -15,7 +15,7 @@ import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
@@ -57,7 +57,7 @@ class ChatCommand {
 
     @Execute(name = "clear", aliases = "cc")
     @DescriptionDocs(description = "Clears chat")
-    void clear(@Context CommandSender sender) {
+    void clear(@Sender CommandSender sender) {
         ClearChatEvent event = this.eventCaller.callEvent(new ClearChatEvent(sender));
 
         if (event.isCancelled()) {
@@ -71,7 +71,7 @@ class ChatCommand {
         });
 
         this.noticeService.create()
-            .notice(translation -> translation.chat().cleared())
+            .notice(translation -> translation.chat().chatCleared())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
@@ -79,9 +79,9 @@ class ChatCommand {
 
     @Execute(name = "on")
     @DescriptionDocs(description = "Enables chat")
-    void enable(@Context Viewer viewer, @Context CommandSender sender) {
+    void enable(@Sender Viewer viewer, @Sender CommandSender sender) {
         if (this.chatSettings.chatEnabled()) {
-            this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
+            this.noticeService.viewer(viewer, translation -> translation.chat().chatAlreadyEnabled());
             return;
         }
 
@@ -94,7 +94,7 @@ class ChatCommand {
         this.chatSettings.chatEnabled(true);
 
         this.noticeService.create()
-            .notice(translation -> translation.chat().enabled())
+            .notice(translation -> translation.chat().chatEnabled())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
@@ -102,9 +102,9 @@ class ChatCommand {
 
     @Execute(name = "off")
     @DescriptionDocs(description = "Disables chat")
-    void disable(@Context Viewer viewer, @Context CommandSender sender) {
+    void disable(@Sender Viewer viewer, @Sender CommandSender sender) {
         if (!this.chatSettings.chatEnabled()) {
-            this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
+            this.noticeService.viewer(viewer, translation -> translation.chat().chatAlreadyDisabled());
             return;
         }
 
@@ -117,7 +117,7 @@ class ChatCommand {
         this.chatSettings.chatEnabled(false);
 
         this.noticeService.create()
-            .notice(translation -> translation.chat().disabled())
+            .notice(translation -> translation.chat().chatDisabled())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
@@ -125,7 +125,7 @@ class ChatCommand {
 
     @Execute(name = "slowmode")
     @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
-    void slowmode(@Context Viewer viewer, @Arg Duration duration) {
+    void slowmode(@Sender Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
             this.noticeService.viewer(viewer, translation -> translation.argument().numberBiggerThanOrEqualZero());
             return;
@@ -144,7 +144,7 @@ class ChatCommand {
 
         if (duration.isZero()) {
             this.noticeService.create()
-                .notice(translation -> translation.chat().slowModeOff())
+                .notice(translation -> translation.chat().slowModeDisabled())
                 .placeholder("{PLAYER}", viewer.getName())
                 .onlinePlayers()
                 .send();
@@ -161,7 +161,7 @@ class ChatCommand {
 
     @Execute(name = "slowmode 0")
     @DescriptionDocs(description = "Disable SlowMode for chat")
-    void slowmodeOff(@Context Viewer viewer) {
+    void slowmodeOff(@Sender Viewer viewer) {
         Duration noSlowMode = Duration.ZERO;
         this.slowmode(viewer, noSlowMode);
     }

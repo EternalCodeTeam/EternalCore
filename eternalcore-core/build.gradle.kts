@@ -17,6 +17,8 @@ dependencies {
     // Minecraft & Bridges API
     compileOnlyApi("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
     compileOnly("me.clip:placeholderapi:${Versions.PLACEHOLDER_API}")
+    compileOnly("us.dynmap:dynmap-api:${Versions.DYNMAP_API}")
+    compileOnly("us.dynmap:DynmapCoreAPI:${Versions.DYNMAP_API}")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:${Versions.LOMBOK}")
@@ -90,12 +92,9 @@ eternalShadow {
     )
 
     // common libraries
-    library("org.panda-lang:expressible:${Versions.EXPRESSIBLE}")
-    library("org.panda-lang:panda-utilities:${Versions.PANDA_UTILITIES}")
+
     library("commons-io:commons-io:${Versions.APACHE_COMMONS}")
     libraryRelocate(
-        "panda.std",
-        "panda.utilities",
         "org.apache.commons.io",
     )
 

@@ -15,7 +15,7 @@ public class WarpConfig extends AbstractConfigurationFile {
 
     @Override
     public File getConfigFile(File dataFolder) {
-        return new File(dataFolder, "warps.yml");
+        return new File(dataFolder, "data" + File.separator + "warps.yml");
     }
 
     @Comment({"# Warps data", "# These are warp locations, for your own safety, please don't touch it."})

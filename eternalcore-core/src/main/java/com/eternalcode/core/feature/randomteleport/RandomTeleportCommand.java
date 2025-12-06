@@ -13,7 +13,7 @@ import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
+import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
@@ -46,7 +46,7 @@ class RandomTeleportCommand {
     @Execute
     @Permission(RTP_COMMAND_SELF)
     @DescriptionDocs(description = "Teleportation of the sender to a random location, if you want bypass cooldown use eternalcore.rtp.bypass permission")
-    void executeSelf(@Context Player player) {
+    void executeSelf(@Sender Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.hasRandomTeleportDelay(player)) {
@@ -74,7 +74,7 @@ class RandomTeleportCommand {
     @Execute
     @Permission(RTP_COMMAND_OTHER)
     @DescriptionDocs(description = "Teleportation of a player to a random location.", arguments = "<player>")
-    void executeOther(@Context Viewer sender, @Arg Player player) {
+    void executeOther(@Sender Viewer sender, @Arg Player player) {
         UUID uuid = player.getUniqueId();
 
         if (this.hasRandomTeleportDelay(player)) {
