@@ -3,6 +3,8 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseSettings;
+import com.eternalcode.core.util.date.DateConfig;
+import com.eternalcode.core.util.date.DateSettings;
 import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
@@ -50,21 +52,20 @@ import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Header;
-import org.bukkit.Sound;
 
 import java.io.File;
 
 @Header({
-    "#",
-    "# This is the main configuration file for EternalCore.",
-    "#",
-    "# If you need help with the configuration or have any questions related to EternalCore, join our discord, or create an issue on our GitHub.",
-    "#",
-    "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
-    "# Discord: https://discord.gg/FQ7jmGBd6c",
-    "# Website: https://eternalcode.pl/",
-    "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
-    "#",
+        "#",
+        "# This is the main configuration file for EternalCore.",
+        "#",
+        "# If you need help with the configuration or have any questions related to EternalCore, join our discord, or create an issue on our GitHub.",
+        "#",
+        "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
+        "# Discord: https://discord.gg/FQ7jmGBd6c",
+        "# Website: https://eternalcode.pl/",
+        "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
+        "#",
 })
 @ConfigurationFile
 public class PluginConfiguration extends AbstractConfigurationFile {
@@ -84,6 +85,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Database Configuration")
     @Comment("# Settings responsible for the database connection")
     DatabaseConfig database = new DatabaseConfig();
+
+    @Bean(proxied = DateSettings.class)
+    @Comment("")
+    @Comment("# Date Configuration")
+    @Comment("# Settings for date formatting")
+    DateConfig date = new DateConfig();
 
     @Bean(proxied = SpawnJoinSettings.class)
     @Comment("")

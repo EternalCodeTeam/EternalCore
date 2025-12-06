@@ -3,6 +3,7 @@ package com.eternalcode.core.user;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.database.UserRepository;
+import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,29 +35,43 @@ public class UserManager {
 
         if (cached != null) {
             this.updateNameIfChanged(cached, name);
-            return CompletableFuture.completedFuture(cached);
+            return CompletableFuture.completedFuture(this.updateLastSeen(cached));
         }
 
         return this.userRepository.getUser(uniqueId)
             .thenApply(optionalUser -> {
-                User user = optionalUser.orElseGet(() -> this.createNewUser(uniqueId, name));
+                User user = optionalUser
+                    .map(existing -> {
+                        this.updateNameIfChanged(existing, name);
+                        return this.updateLastSeen(existing);
+                    })
+                    .orElseGet(() -> this.createNewUser(uniqueId, name));
+
                 this.add(user);
                 return user;
             });
     }
 
     private User createNewUser(UUID uniqueId, String name) {
-        User user = new User(uniqueId, name);
+        Instant now = Instant.now();
+        User user = new User(uniqueId, name, now, now);
         this.userRepository.saveUser(user);
         return user;
     }
 
     private void updateNameIfChanged(User user, String name) {
         if (!user.getName().equals(name)) {
-            User updated = new User(user.getUniqueId(), name);
+            User updated = new User(user.getUniqueId(), name, user.getLastSeen(), user.getAccountCreated());
             this.add(updated);
             this.userRepository.saveUser(updated);
         }
+    }
+
+    private User updateLastSeen(User user) {
+        User updated = user.updateLastSeen(Instant.now());
+        this.add(updated);
+        this.userRepository.saveUser(updated);
+        return updated;
     }
 
     private void add(User user) {
