@@ -15,17 +15,20 @@ public class CustomCommandBukkitWrapper extends Command {
 
     private final NoticeService noticeService;
     private final Notice message;
+    private final List<String> commands;
 
     protected CustomCommandBukkitWrapper(
             @NotNull String name,
             @NotNull List<String> aliases,
             NoticeService noticeService,
-            Notice message
+            Notice message,
+            List<String> commands
     ) {
         super(name, EMPTY_DESCRIPTION_MESSAGE, EMPTY_USAGE_MESSAGE, aliases);
 
         this.noticeService = noticeService;
         this.message = message;
+        this.commands = commands;
     }
 
     @Override
@@ -34,6 +37,11 @@ public class CustomCommandBukkitWrapper extends Command {
                 .notice(this.message)
                 .sender(commandSender)
                 .send();
+
+        for (String command : this.commands) {
+            String commandToExecute = command.startsWith("/") ? command.substring(1) : command;
+            commandSender.getServer().dispatchCommand(commandSender, commandToExecute);
+        }
 
         return true;
     }
