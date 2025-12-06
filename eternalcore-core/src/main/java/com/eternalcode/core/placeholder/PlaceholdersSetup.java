@@ -3,7 +3,6 @@ package com.eternalcode.core.placeholder;
 import com.eternalcode.annotations.scan.placeholder.PlaceholdersDocs;
 import com.eternalcode.annotations.scan.placeholder.PlaceholdersDocs.Entry;
 import com.eternalcode.annotations.scan.placeholder.PlaceholdersDocs.Entry.Type;
-import com.eternalcode.core.configuration.implementation.PlaceholdersConfiguration;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
@@ -24,9 +23,9 @@ import org.bukkit.Server;
 class PlaceholdersSetup {
 
     @Subscribe(EternalInitializeEvent.class)
-    void setUp(PlaceholderRegistry placeholders, PlaceholdersConfiguration config) {
-        for (String key : config.placeholders.keySet()) {
-            placeholders.register(Placeholder.of(key, player -> config.placeholders.getOrDefault(key, "{" + key + "}")));
+    void setUp(PlaceholderRegistry placeholders, PlaceholdersSettings config) {
+        for (String key : config.placeholders().keySet()) {
+            placeholders.register(Placeholder.of(key, player -> config.placeholders().getOrDefault(key, "{" + key + "}")));
         }
     }
 
