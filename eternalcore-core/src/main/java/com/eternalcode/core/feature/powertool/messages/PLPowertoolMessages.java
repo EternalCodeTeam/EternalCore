@@ -14,9 +14,9 @@ public class PLPowertoolMessages extends OkaeriConfig implements PowertoolMessag
               "# {COMMAND} - Komenda przypisana do narzędzia",
               "# {ITEM} - Przedmiot będący power tool"}
     )
-    Notice assigned = Notice.chat("<green>► <white>Przypisano komendę <green>/{COMMAND}<white> do narzędzia "
-        + "<green>{ITEM}.");
-    Notice removed = Notice.chat("<green>► <white>Usunięto komendę z narzędzia <green>{ITEM}.");
+    Notice assigned = Notice.chat("<color:#9d6eef>► <white>Przypisano komendę <color:#9d6eef>/{COMMAND}<white> do narzędzia "
+        + "<color:#9d6eef>{ITEM}.");
+    Notice removed = Notice.chat("<color:#9d6eef>► <white>Usunięto komendę z narzędzia <color:#9d6eef>{ITEM}.");
     Notice notAssigned = Notice.chat("<red>✘ <dark_red>Ten przedmiot nie jest power toolem. Użyj /powertool "
         + "<command>, aby przypisać do niego komendę.");
     Notice noItemInMainHand =

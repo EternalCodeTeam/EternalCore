@@ -2,9 +2,9 @@ package com.eternalcode.core.feature.whois;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.util.List;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
@@ -25,15 +25,15 @@ public class ENWhoIsMessages extends OkaeriConfig implements WhoIsMessages {
             "# {ACCOUNT-CREATED} - Player account created"
     })
     public List<String> info = List.of(
-            "<green>► <white>Target name: <green>{PLAYER}",
-            "<green>► <white>Target UUID: <green>{UUID}",
-            "<green>► <white>Target address: <green>{IP}",
-            "<green>► <white>Target walk speed: <green>{WALK-SPEED}",
-            "<green>► <white>Target fly speed: <green>{SPEED}",
-            "<green>► <white>Target ping: <green>{PING}<white>ms",
-            "<green>► <white>Target level: <green>{LEVEL}",
-            "<green>► <white>Target health: <green>{HEALTH}",
-            "<green>► <white>Target food level: <green>{FOOD}",
-            "<green>► <white>Last seen: <green>{LAST-SEEN}",
-            "<green>► <white>Account created: <green>{ACCOUNT-CREATED}");
+            "<color:#9d6eef>► <white>Target name: <color:#9d6eef>{PLAYER}",
+            "<color:#9d6eef>► <white>Target UUID: <color:#9d6eef>{UUID}",
+            "<color:#9d6eef>► <white>Target address: <color:#9d6eef>{IP}",
+            "<color:#9d6eef>► <white>Target walk speed: <color:#9d6eef>{WALK-SPEED}",
+            "<color:#9d6eef>► <white>Target fly speed: <color:#9d6eef>{SPEED}",
+            "<color:#9d6eef>► <white>Target ping: <color:#9d6eef>{PING}<white>ms",
+            "<color:#9d6eef>► <white>Target level: <color:#9d6eef>{LEVEL}",
+            "<color:#9d6eef>► <white>Target health: <color:#9d6eef>{HEALTH}",
+            "<color:#9d6eef>► <white>Target food level: <color:#9d6eef>{FOOD}",
+            "<color:#9d6eef>► <white>Last seen: <green>{LAST-SEEN}",
+            "<color:#9d6eef>► <white>Account created: <green>{ACCOUNT-CREATED}");
 }

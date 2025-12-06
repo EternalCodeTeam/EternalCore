@@ -2,9 +2,9 @@ package com.eternalcode.core.feature.whois;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.util.List;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import java.util.List;
 
 @Getter
 @Accessors(fluent = true)
@@ -25,15 +25,15 @@ public class PLWhoIsMessages extends OkaeriConfig implements WhoIsMessages {
             "# {ACCOUNT-CREATED} - Data utworzenia konta"
     })
     public List<String> info = List.of(
-            "<green>► <white>Gracz: <green>{PLAYER}",
-            "<green>► <white>UUID: <green>{UUID}",
-            "<green>► <white>IP: <green>{IP}",
-            "<green>► <white>Szybkość chodzenia: <green>{WALK-SPEED}",
-            "<green>► <white>Szybkość latania: <green>{SPEED}",
-            "<green>► <white>Opóźnienie: <green>{PING}<white>ms",
-            "<green>► <white>Poziom: <green>{LEVEL}",
-            "<green>► <white>Zdrowie: <green>{HEALTH}",
-            "<green>► <white>Poziom najedzenia: <green>{FOOD}",
-            "<green>► <white>Ostatnio widziany: <green>{LAST-SEEN}",
-            "<green>► <white>Data utworzenia konta: <green>{ACCOUNT-CREATED}");
+            "<color:#9d6eef>► <white>Gracz: <color:#9d6eef>{PLAYER}",
+            "<color:#9d6eef>► <white>UUID: <color:#9d6eef>{UUID}",
+            "<color:#9d6eef>► <white>IP: <color:#9d6eef>{IP}",
+            "<color:#9d6eef>► <white>Szybkość chodzenia: <color:#9d6eef>{WALK-SPEED}",
+            "<color:#9d6eef>► <white>Szybkość latania: <color:#9d6eef>{SPEED}",
+            "<color:#9d6eef>► <white>Opóźnienie: <color:#9d6eef>{PING}<white>ms",
+            "<color:#9d6eef>► <white>Poziom: <color:#9d6eef>{LEVEL}",
+            "<color:#9d6eef>► <white>Zdrowie: <color:#9d6eef>{HEALTH}",
+            "<color:#9d6eef>► <white>Poziom najedzenia: <color:#9d6eef>{FOOD}",
+            "<color:#9d6eef>► <white>Ostatnio widziany: <green>{LAST-SEEN}",
+            "<color:#9d6eef>► <white>Data utworzenia konta: <green>{ACCOUNT-CREATED}");
 }

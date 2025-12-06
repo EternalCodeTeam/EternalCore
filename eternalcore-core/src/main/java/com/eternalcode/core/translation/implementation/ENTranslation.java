@@ -3,6 +3,7 @@ package com.eternalcode.core.translation.implementation;
 import com.eternalcode.core.feature.adminchat.messages.ENAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.ENAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.ENAutoMessageMessages;
+import com.eternalcode.core.feature.back.messages.ENBackMessages;
 import com.eternalcode.core.feature.broadcast.messages.ENBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.ENBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
@@ -191,6 +192,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment("# Random teleport")
     public ENRandomTeleportMessages randomTeleport = new ENRandomTeleportMessages();
+
+    @Comment("# Back")
+    public ENBackMessages back = new ENBackMessages();
 
     @Comment("# Teleport to offline players")
     public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();

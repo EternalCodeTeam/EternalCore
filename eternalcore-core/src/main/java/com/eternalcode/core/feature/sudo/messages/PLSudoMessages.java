@@ -13,5 +13,5 @@ public class PLSudoMessages extends OkaeriConfig implements SudoMessages {
     Notice sudoMessageSpy = Notice.chat("<dark_gray>[<dark_red>Sudo<dark_gray>] <red>{PLAYER}<dark_gray> wykonał komendę: <white>{COMMAND} <dark_gray>na: <white>{TARGET}");
 
     @Comment({"# {TARGET} - Gracz lub konsola, na której wykonano komendę, {COMMAND} - Komenda"})
-    Notice sudoMessage = Notice.chat("<green>► <white>Wykonałeś komendę: <green>{COMMAND} <white>na: <green>{TARGET}");
+    Notice sudoMessage = Notice.chat("<color:#9d6eef>► <white>Wykonałeś komendę: <color:#9d6eef>{COMMAND} <white>na: <color:#9d6eef>{TARGET}");
 }
