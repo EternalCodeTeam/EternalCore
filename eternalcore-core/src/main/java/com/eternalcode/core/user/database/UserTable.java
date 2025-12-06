@@ -16,10 +16,10 @@ class UserTable {
     @DatabaseField(columnName = "name")
     private String name;
 
-    @DatabaseField(columnName = "last_seen", dataType = DataType.SERIALIZABLE)
+    @DatabaseField(columnName = "last_seen", dataType = DataType.DATE_STRING)
     private Instant lastSeen;
 
-    @DatabaseField(columnName = "account_created", dataType = DataType.SERIALIZABLE)
+    @DatabaseField(columnName = "account_created", dataType = DataType.DATE_STRING)
     private Instant accountCreated;
 
     UserTable() {
