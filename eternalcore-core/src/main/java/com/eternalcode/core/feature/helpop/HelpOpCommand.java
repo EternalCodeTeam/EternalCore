@@ -42,7 +42,7 @@ class HelpOpCommand {
         this.helpOpSettings = helpOpSettings;
         this.eventCaller = eventCaller;
         this.server = server;
-        this.delay = new Delay<>(() -> this.helpOpSettings.helpOpDelay());
+        this.delay = Delay.withDefault(() -> this.helpOpSettings.helpOpDelay());
     }
 
     @Execute
@@ -58,7 +58,7 @@ class HelpOpCommand {
         }
 
         if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
+            Duration time = this.delay.getRemaining(uuid);
 
             this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
@@ -91,7 +91,7 @@ class HelpOpCommand {
             .notice(translation -> translation.helpOp().send())
             .send();
 
-        this.delay.markDelay(uuid, this.helpOpSettings.helpOpDelay());
+        this.delay.markDelay(uuid);
     }
 
 }
