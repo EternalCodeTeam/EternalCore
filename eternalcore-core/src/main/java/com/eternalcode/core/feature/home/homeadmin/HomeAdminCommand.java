@@ -25,6 +25,8 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.home.admin")
 class HomeAdminCommand {
 
+    private static final String CLICK_SUGGEST_COMMAND_FORMATTED_LIST = "<click:run_command:'/homeadmin home %s %s'>%s</click>";
+
     private final HomeManager homeManager;
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
@@ -45,7 +47,7 @@ class HomeAdminCommand {
     void setHome(
         @Sender Player sender,
         @Arg("target") OfflinePlayer targetPlayer,
-        @Arg("home name") String homeName,
+        @Arg("home") String homeName,
         @Arg Optional<Location> location
     ) {
         if (!this.hasPlayerEverJoined(targetPlayer)) {
@@ -166,19 +168,27 @@ class HomeAdminCommand {
     }
 
     private void sendHomeListNotice(Viewer viewer, Collection<Home> homes, OfflinePlayer targetPlayer) {
-        String formattedHomes = this.formatHomeList(homes);
+        String playerName = targetPlayer.getName();
+        String formattedHomes = this.formatHomeList(homes, playerName);
 
         this.noticeService.create()
             .notice(translation -> translation.home().homeListAsAdmin())
             .placeholder("{HOMES}", formattedHomes)
-            .placeholder("{PLAYER}", targetPlayer.getName())
+            .placeholder("{PLAYER}", playerName)
             .viewer(viewer)
             .send();
     }
 
-    private String formatHomeList(Collection<Home> homes) {
+    private String formatHomeList(Collection<Home> homes, String playerName) {
         return homes.stream()
-            .map(Home::getName)
-            .collect(Collectors.joining(this.pluginConfiguration.format.separator));
+            .map(home -> String.format(
+                CLICK_SUGGEST_COMMAND_FORMATTED_LIST,
+                playerName,
+                home.getName(),
+                home.getName()
+            ))
+            .collect(Collectors.joining(
+                this.pluginConfiguration.format.separator
+            ));
     }
 }
