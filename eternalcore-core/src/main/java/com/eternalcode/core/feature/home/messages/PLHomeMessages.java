@@ -13,7 +13,7 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice homeList = Notice.chat("<color:#9d6eef>► <white>Lista domów: <color:#9d6eef>{HOMES}!");
     @Comment({
         " ",
-        "# Format pojedynczego wpisu w liście domów gracza. Ustaw na \"\" jeśli nie chcesz tego feature'a.",
+        "# Format pojedynczego wpisu w liście domów gracza. Ustaw na \"{HOME}\" jeśli chcesz wyświetlić podstawową listę.",
         "# {HOME} - Nazwa domu"
     })
     String homeListEntryFormat = "<hover:show_text:'<gray>Kliknij aby się teleportować'><click:run_command:'/home {HOME}'>{HOME}</click></hover>";
@@ -48,7 +48,7 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
             .chat("<color:#9d6eef>► <white>Lista domów gracza <color:#9d6eef>{PLAYER}<white>: <color:#9d6eef>{HOMES}!");
     @Comment({
         " ",
-        "# Format pojedynczego wpisu w liście domów (widok admina). Ustaw na \"\" jeśli nie chcesz tego feature'a.",
+        "# Format pojedynczego wpisu w liście domów (widok admina). Ustaw na \"{HOME}\" jeśli nie chcesz tego feature'a.",
         "# {HOME} - Nazwa domu, {PLAYER} - Nick gracza"
     })
     String homeListEntryFormatAsAdmin = "<hover:show_text:'<gray>Kliknij aby się teleportować'><click:run_command:'/homeadmin home {PLAYER} {HOME}'>{HOME}</click></hover>";

@@ -13,7 +13,7 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice homeList = Notice.chat("<color:#9d6eef>► <white>Available homes: <color:#9d6eef>{HOMES}");
     @Comment({
         " ",
-        "# Format for single home entry in user's home list. Set to \"\" if you don't want this feature.",
+        "# Format for single home entry in user's home list. Set to \"{HOME}\" if you want to display basic list.",
         "# {HOME} - Home name"
     })
     String homeListEntryFormat = "<hover:show_text:'<gray>Click to teleport'><click:run_command:'/home {HOME}'>{HOME}</click></hover>";
@@ -41,7 +41,7 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice homeListAsAdmin = Notice.chat("<color:#9d6eef>► <white>Available homes for <color:#9d6eef>{PLAYER}<white>: <color:#9d6eef>{HOMES}");
     @Comment({
         " ",
-        "# Format for single home entry in admin's home list. Set to \"\" if you don't want this feature.",
+        "# Format for single home entry in admin's home list. Set to \"{HOME}\" if you want to display basic list.",
         "# {HOME} - Home name, {PLAYER} - Player name"
     })
     String homeListEntryFormatAsAdmin = "<hover:show_text:'<gray>Click to teleport'><click:run_command:'/homeadmin home {PLAYER} {HOME}'>{HOME}</click></hover>";
