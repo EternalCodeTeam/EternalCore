@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -25,21 +26,22 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.home.admin")
 class HomeAdminCommand {
 
-    private static final String CLICK_SUGGEST_COMMAND_FORMATTED_LIST = "<click:run_command:'/homeadmin home %s %s'>%s</click>";
-
     private final HomeManager homeManager;
     private final NoticeService noticeService;
     private final PluginConfiguration pluginConfiguration;
+    private final TranslationManager translationManager;
 
     @Inject
     public HomeAdminCommand(
         HomeManager homeManager,
         NoticeService noticeService,
-        PluginConfiguration pluginConfiguration
+        PluginConfiguration pluginConfiguration,
+        TranslationManager translationManager
     ) {
         this.homeManager = homeManager;
         this.noticeService = noticeService;
         this.pluginConfiguration = pluginConfiguration;
+        this.translationManager = translationManager;
     }
 
     @Execute(name = "sethome")
@@ -180,15 +182,12 @@ class HomeAdminCommand {
     }
 
     private String formatHomeList(Collection<Home> homes, String playerName) {
+        String format = this.translationManager.getMessages().home().homeListEntryFormatAsAdmin();
+
         return homes.stream()
-            .map(home -> String.format(
-                CLICK_SUGGEST_COMMAND_FORMATTED_LIST,
-                playerName,
-                home.getName(),
-                home.getName()
-            ))
-            .collect(Collectors.joining(
-                this.pluginConfiguration.format.separator
-            ));
+            .map(home -> format
+                .replace("{HOME}", home.getName())
+                .replace("{PLAYER}", playerName))
+            .collect(Collectors.joining(this.pluginConfiguration.format.separator));
     }
 }
