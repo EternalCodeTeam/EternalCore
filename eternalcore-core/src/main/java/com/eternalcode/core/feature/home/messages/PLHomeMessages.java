@@ -11,6 +11,13 @@ import lombok.experimental.Accessors;
 public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
     @Comment({ " ", "# {HOMES} - Lista domów" })
     Notice homeList = Notice.chat("<color:#9d6eef>► <white>Lista domów: <color:#9d6eef>{HOMES}!");
+    @Comment({
+        " ",
+        "# Format pojedynczego wpisu w liście domów gracza. Ustaw na \"{HOME}\" jeśli chcesz wyświetlić podstawową listę.",
+        "# {HOME} - Nazwa domu"
+    })
+    String homeListEntryFormat = "<hover:show_text:'<gray>Kliknij aby się teleportować'><click:run_command:'/home {HOME}'>{HOME}</click></hover>";
+
 
     @Comment({ " ", "# {HOME} - Nazwa domu" })
     Notice create = Notice.chat("<color:#9d6eef>► <white>Stworzono dom o nazwie <color:#9d6eef>{HOME}<white>!");
@@ -23,7 +30,7 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Nie posiadasz żadnego domu!");
 
     @Comment({ " ", "# Wiadomości placeholderów" })
-    public String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
+    String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
 
     @Comment({
             " ",
@@ -39,4 +46,18 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
             "<color:#9d6eef>► <white>Usunięto dom <color:#9d6eef>{HOME} <white>dla gracza <color:#9d6eef>{PLAYER}<white>!");
     Notice homeListAsAdmin = Notice
             .chat("<color:#9d6eef>► <white>Lista domów gracza <color:#9d6eef>{PLAYER}<white>: <color:#9d6eef>{HOMES}!");
+    @Comment({
+        " ",
+        "# Format pojedynczego wpisu w liście domów (widok admina). Ustaw na \"{HOME}\" jeśli nie chcesz tego feature'a.",
+        "# {HOME} - Nazwa domu, {PLAYER} - Nick gracza"
+    })
+    String homeListEntryFormatAsAdmin = "<hover:show_text:'<gray>Kliknij aby się teleportować'><click:run_command:'/homeadmin home {PLAYER} {HOME}'>{HOME}</click></hover>";
+    Notice noHomesOnListAsAdmin = Notice.chat("<red>► <dark_red>Gracz <red>{PLAYER} <dark_red>nie posiada domów.");
+
+    @Comment({
+        " ",
+        "# {PLAYER} - nick właściciela domu na który przeteleportowano się za pomocą /homeadmin home",
+        "# {HOME} - nazwa domu"
+    })
+    Notice teleportedAsAdmin = Notice.chat("<color:#9d6eef>► <white>Przeteleportowano do domu gracza: <green>{PLAYER}<white> - <green>{HOME}!");
 }
