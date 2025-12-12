@@ -40,7 +40,7 @@ class RandomTeleportCommand {
         this.randomTeleportService = randomTeleportService;
         this.randomTeleportTaskService = randomTeleportTaskService;
         this.randomTeleportSettings = randomTeleportSettings;
-        this.cooldown = new Delay<>(() -> this.randomTeleportSettings.cooldown());
+        this.cooldown = Delay.withDefault(() -> this.randomTeleportSettings.cooldown());
     }
 
     @Execute
@@ -68,7 +68,7 @@ class RandomTeleportCommand {
                 this.handleTeleportSuccess(player);
             });
 
-        this.cooldown.markDelay(uuid, this.randomTeleportSettings.cooldown());
+        this.cooldown.markDelay(uuid);
     }
 
     @Execute
@@ -96,7 +96,7 @@ class RandomTeleportCommand {
                 this.handleAdminTeleport(sender, player);
             });
 
-        this.cooldown.markDelay(uuid, this.randomTeleportSettings.cooldown());
+        this.cooldown.markDelay(uuid);
     }
 
     private void handleTeleportSuccess(Player player) {
@@ -129,7 +129,7 @@ class RandomTeleportCommand {
         }
 
         if (this.cooldown.hasDelay(uniqueId)) {
-            Duration time = this.cooldown.getDurationToExpire(uniqueId);
+            Duration time = this.cooldown.getRemaining(uniqueId);
 
             this.noticeService.create()
                 .notice(translation -> translation.randomTeleport().randomTeleportDelay())
