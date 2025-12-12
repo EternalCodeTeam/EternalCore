@@ -85,7 +85,7 @@ jobs:
         run: ./gradlew clean eternalcore-plugin:shadowJar
 
       - name: Upload built JAR
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         id: upload-artifact
         with:
           name: EternalCore Dev Build
