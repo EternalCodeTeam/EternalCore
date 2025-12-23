@@ -104,7 +104,8 @@ public class WarpInventory {
 
         return switch (warpData.border().fillType()) {
             case BORDER, ALL -> (size + GUI_ROW_SIZE_WITH_BORDER - 1) / GUI_ROW_SIZE_WITH_BORDER + BORDER_ROW_COUNT;
-            case TOP, BOTTOM -> (size + GUI_ROW_SIZE_WITHOUT_BORDER - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + UGLY_BORDER_ROW_COUNT;
+            case TOP, BOTTOM ->
+                (size + GUI_ROW_SIZE_WITHOUT_BORDER - 1) / GUI_ROW_SIZE_WITHOUT_BORDER + UGLY_BORDER_ROW_COUNT;
         };
     }
 
@@ -268,21 +269,18 @@ public class WarpInventory {
     }
 
     public CompletableFuture<Void> removeWarp(String warpName) {
-        return this.warpInventoryConfigService.getWarpItems()
-            .thenCompose(items -> {
-                if (!items.containsKey(warpName)) {
-                    return CompletableFuture.completedFuture(null);
-                }
+        Map<String, WarpInventoryItem> items = this.warpInventoryConfigService.getWarpItems();
+        if (!items.containsKey(warpName)) {
+            return CompletableFuture.completedFuture(null);
+        }
 
-                return this.warpInventoryConfigService.removeWarpItem(warpName)
-                    .thenCompose(removed -> {
-                        if (removed != null) {
-                            return this.shiftWarpItems(removed, items);
-                        }
-                        return CompletableFuture.completedFuture(null);
-                    });
-            })
-            .exceptionally(FutureHandler::handleException);
+        return this.warpInventoryConfigService.removeWarpItem(warpName)
+            .thenCompose(removed -> {
+                if (removed != null) {
+                    return this.shiftWarpItems(removed, items);
+                }
+                return CompletableFuture.completedFuture(null);
+            });
     }
 
     private CompletableFuture<Void> shiftWarpItems(WarpInventoryItem removed, Map<String, WarpInventoryItem> items) {
