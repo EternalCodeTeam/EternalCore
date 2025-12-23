@@ -16,7 +16,7 @@ object Versions {
     const val ADVENTURE_PLATFORM = "4.4.1"
     const val OKAERI_CONFIGS = "6.0.0-beta.6"
 
-    const val MARIA_DB = "3.5.6"
+    const val MARIA_DB = "3.5.7"
     const val POSTGRESQL = "42.7.8"
     const val H2 = "2.4.240"
     const val ORMLITE = "6.1"
