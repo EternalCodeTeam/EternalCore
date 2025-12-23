@@ -6,25 +6,43 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Map;
 import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 @Service
 class ChatServiceImpl implements ChatService {
 
     private final ChatSettings chatSettings;
+    private final Server server;
     private final Cache<UUID, Instant> slowdown;
 
     @Inject
-    ChatServiceImpl(ChatSettings chatSettings) {
+    ChatServiceImpl(ChatSettings chatSettings, Server server) {
         this.chatSettings = chatSettings;
+        this.server = server;
         this.slowdown = Caffeine.newBuilder()
-            .expireAfterWrite(this.chatSettings.chatDelay().plus(Duration.ofSeconds(10)))
-            .build();
+                .expireAfterWrite(this.chatSettings.chatDelay().plus(Duration.ofSeconds(10)))
+                .build();
     }
 
     @Override
     public void markUseChat(UUID userUuid) {
         Duration chatDelay = this.chatSettings.chatDelay();
+
+        Player player = this.server.getPlayer(userUuid);
+        if (player != null) {
+            for (Map.Entry<String, Duration> entry : this.chatSettings.chatCooldowns().entrySet()) {
+                if (player.hasPermission(entry.getKey())) {
+                    Duration duration = entry.getValue();
+                    if (duration.compareTo(chatDelay) < 0) {
+                        chatDelay = duration;
+                    }
+                }
+            }
+        }
 
         this.slowdown.put(userUuid, Instant.now().plus(chatDelay));
     }
