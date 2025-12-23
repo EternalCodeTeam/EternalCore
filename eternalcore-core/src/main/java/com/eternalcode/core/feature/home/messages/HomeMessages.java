@@ -4,6 +4,7 @@ import com.eternalcode.multification.notice.Notice;
 
 public interface HomeMessages {
     Notice homeList();
+    String homeListEntryFormat();
     Notice create();
     Notice delete();
     Notice limit();
@@ -16,4 +17,7 @@ public interface HomeMessages {
     Notice createAsAdmin();
     Notice deleteAsAdmin();
     Notice homeListAsAdmin();
+    String homeListEntryFormatAsAdmin();
+    Notice noHomesOnListAsAdmin();
+    Notice teleportedAsAdmin();
 }
