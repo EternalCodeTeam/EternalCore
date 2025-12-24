@@ -34,7 +34,7 @@ object Versions {
 
     const val TRIUMPH_GUI = "3.1.13"
 
-    const val XSERIES = "13.5.1"
+    const val XSERIES = "13.6.0"
 
     const val LUCKPERMS = "5.5.0"
 
