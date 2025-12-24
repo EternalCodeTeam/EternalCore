@@ -7,6 +7,7 @@ import com.eternalcode.core.feature.warp.inventory.WarpInventoryConfig.BorderSec
 import com.eternalcode.core.feature.warp.inventory.WarpInventoryConfig.DecorationItemsSection;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -14,75 +15,65 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class WarpInventoryConfigService {
 
-    private final WarpInventoryConfig warpInventoryConfig;
+    private final WarpInventoryConfig config;
     private final ConfigurationManager configurationManager;
     private final Scheduler scheduler;
 
     @Inject
     public WarpInventoryConfigService(
         ConfigurationManager configurationManager,
-        WarpInventoryConfig warpInventoryConfig,
+        WarpInventoryConfig config,
         Scheduler scheduler
     ) {
         this.configurationManager = configurationManager;
-        this.warpInventoryConfig = warpInventoryConfig;
+        this.config = config;
         this.scheduler = scheduler;
     }
 
     public CompletableFuture<WarpInventoryConfigData> getWarpInventoryData() {
-        return this.scheduler.<Map<String, WarpInventoryItem>>completeAsync(() -> new HashMap<>(
-                this.warpInventoryConfig.items()))
+        return scheduler.<Map<String, WarpInventoryItem>>completeAsync(() -> new HashMap<>(config.items()))
             .thenApply(items -> new WarpInventoryConfigData(
-                this.warpInventoryConfig.display().title(),
-                this.warpInventoryConfig.border(),
-                this.warpInventoryConfig.decorationItems(),
+                config.display().title(),
+                config.border(),
+                config.decorationItems(),
                 items
             ));
     }
 
     public CompletableFuture<Void> addWarpItem(String warpName, WarpInventoryItem item) {
-        return this.scheduler.completeAsync(() -> {
-            this.warpInventoryConfig.items().put(warpName, item);
-            this.configurationManager.save(this.warpInventoryConfig);
+        return scheduler.completeAsync(() -> {
+            config.items().put(warpName, item);
+            configurationManager.save(config);
             return null;
         });
     }
 
     public CompletableFuture<WarpInventoryItem> removeWarpItem(String warpName) {
-        if (warpName == null || warpName.trim().isEmpty()) {
+        if (isBlank(warpName)) {
             return CompletableFuture.completedFuture(null);
         }
 
-        CompletableFuture<WarpInventoryItem> result;
-        if (warpName == null || warpName.trim().isEmpty()) {
-            result = CompletableFuture.completedFuture(null);
-        }
-        else {
-            result =
-                this.scheduler.completeAsync(() -> this.warpInventoryConfig.items()
-                    .get(warpName));
-        }
-
-        return result
+        return scheduler.<WarpInventoryItem>completeAsync(() -> config.items().get(warpName))
             .thenCompose(item -> {
-                if (item != null) {
-                    if (warpName == null || warpName.trim().isEmpty()) {
-                        throw new IllegalArgumentException("Warp name cannot be null or empty");
-                    }
-
-                    return this.scheduler.<Void>completeAsync(() -> {
-                            this.warpInventoryConfig.items().remove(warpName);
-                            this.configurationManager.save(this.warpInventoryConfig);
-                            return null;
-                        })
-                        .thenApply(v -> item);
+                if (item == null) {
+                    return CompletableFuture.completedFuture(null);
                 }
-                return CompletableFuture.completedFuture(null);
+
+                return scheduler.<Void>completeAsync(() -> {
+                        config.items().remove(warpName);
+                        configurationManager.save(config);
+                        return null;
+                    })
+                    .thenApply(v -> item);
             });
     }
 
     public Map<String, WarpInventoryItem> getWarpItems() {
-        return new HashMap<>(this.warpInventoryConfig.items());
+        return new HashMap<>(config.items());
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.trim().isEmpty();
     }
 
     public record WarpInventoryConfigData(

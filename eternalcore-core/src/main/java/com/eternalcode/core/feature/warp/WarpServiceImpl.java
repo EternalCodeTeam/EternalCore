@@ -22,14 +22,14 @@ class WarpServiceImpl implements WarpService {
     private final WarpRepository warpRepository;
 
     @Inject
-    private WarpServiceImpl(WarpRepository warpRepository) {
+    WarpServiceImpl(WarpRepository warpRepository) {
         this.warpRepository = warpRepository;
+        this.loadWarps();
+    }
 
-        warpRepository.getWarps().thenAcceptAsync(warps -> {
-            for (Warp warp : warps) {
-                this.warps.put(warp.getName(), warp);
-            }
-        });
+    private void loadWarps() {
+        this.warpRepository.getWarps()
+                .thenAcceptAsync(warps -> warps.forEach(warp -> this.warps.put(warp.getName(), warp)));
     }
 
     @Override
@@ -43,19 +43,19 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public void removeWarp(String warp) {
-        Warp remove = this.warps.remove(warp);
-        if (remove == null) {
-            return;
-        }
+    public void removeWarp(String warpName) {
+        Warp removed = this.warps.remove(warpName);
 
-        this.warpRepository.removeWarp(remove.getName());
+        if (removed != null) {
+            this.warpRepository.removeWarp(removed.getName());
+        }
     }
 
     @Override
     public Warp addPermissions(String warpName, String... permissions) {
         Warp warp = this.modifyPermissions(warpName, perms -> perms.addAll(List.of(permissions)));
         this.warpRepository.saveWarp(warp);
+
         return warp;
     }
 
@@ -63,11 +63,13 @@ class WarpServiceImpl implements WarpService {
     public Warp removePermissions(String warpName, String... permissions) {
         Warp warp = this.modifyPermissions(warpName, perms -> perms.removeAll(List.of(permissions)));
         this.warpRepository.saveWarp(warp);
+
         return warp;
     }
 
     private Warp modifyPermissions(String warpName, Consumer<List<String>> modifier) {
         Warp warp = this.warps.get(warpName);
+
         if (warp == null) {
             throw new IllegalArgumentException("Warp " + warpName + " does not exist");
         }
@@ -76,10 +78,9 @@ class WarpServiceImpl implements WarpService {
         modifier.accept(updatedPermissions);
 
         Warp updatedWarp = new WarpImpl(
-            warp.getName(),
-            PositionAdapter.convert(warp.getLocation()),
-            updatedPermissions
-        );
+                warp.getName(),
+                PositionAdapter.convert(warp.getLocation()),
+                updatedPermissions);
 
         this.warps.put(warpName, updatedWarp);
         return updatedWarp;

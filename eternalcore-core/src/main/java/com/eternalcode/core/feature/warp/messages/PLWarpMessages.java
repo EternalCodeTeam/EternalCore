@@ -30,6 +30,6 @@ public class PLWarpMessages extends OkaeriConfig implements WarpMessages {
     Notice missingWarpArgument = Notice.chat("<red>✘ <dark_red>Musisz podać nazwę warpu!");
     Notice missingPermissionArgument = Notice.chat("<red>✘ <dark_red>Musisz podać uprawnienie!");
 
-    @Comment({" ", "# {WARPS} - Lista dostępnych warpów"})
+    @Comment({ " ", "# {WARPS} - Lista dostępnych warpów" })
     Notice available = Notice.chat("<color:#9d6eef>► <white>Dostepne warpy: <color:#9d6eef>{WARPS}!");
 }

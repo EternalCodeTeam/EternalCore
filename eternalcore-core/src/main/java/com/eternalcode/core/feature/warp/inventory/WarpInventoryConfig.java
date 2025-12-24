@@ -21,24 +21,24 @@ import org.bukkit.Material;
 public class WarpInventoryConfig extends AbstractConfigurationFile {
 
     @Comment({
-        "# Warp inventory configuration",
-        "# This file contains the GUI layout and item definitions for the warp inventory",
-        "# Text content (titles, names, lore) should be configured in language files"
+            "# Warp inventory configuration",
+            "# This file contains the GUI layout and item definitions for the warp inventory",
+            "# Text content (titles, names, lore) should be configured in language files"
     })
     public DisplaySection display = new DisplaySection();
 
     @Comment({
-        "# Border configuration for the warp inventory"
+            "# Border configuration for the warp inventory"
     })
     public BorderSection border = new BorderSection();
 
     @Comment({
-        "# Decoration items that can be placed in the inventory"
+            "# Decoration items that can be placed in the inventory"
     })
     public DecorationItemsSection decorationItems = new DecorationItemsSection();
 
     @Comment({
-        "# Warp items configuration - maps warp names to their inventory representation"
+            "# Warp items configuration - maps warp names to their inventory representation"
     })
     public Map<String, WarpInventoryItem> items = new HashMap<>();
 
