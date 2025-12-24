@@ -7,7 +7,6 @@ import com.eternalcode.core.feature.warp.inventory.WarpInventoryConfig.BorderSec
 import com.eternalcode.core.feature.warp.inventory.WarpInventoryConfig.DecorationItemsSection;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -23,8 +22,7 @@ public class WarpInventoryConfigService {
     public WarpInventoryConfigService(
         ConfigurationManager configurationManager,
         WarpInventoryConfig config,
-        Scheduler scheduler
-    ) {
+        Scheduler scheduler) {
         this.configurationManager = configurationManager;
         this.config = config;
         this.scheduler = scheduler;
@@ -36,8 +34,8 @@ public class WarpInventoryConfigService {
                 config.display().title(),
                 config.border(),
                 config.decorationItems(),
-                items
-            ));
+                items)
+            );
     }
 
     public CompletableFuture<Void> addWarpItem(String warpName, WarpInventoryItem item) {
@@ -53,7 +51,7 @@ public class WarpInventoryConfigService {
             return CompletableFuture.completedFuture(null);
         }
 
-        return scheduler.<WarpInventoryItem>completeAsync(() -> config.items().get(warpName))
+        return scheduler.completeAsync(() -> config.items().get(warpName))
             .thenCompose(item -> {
                 if (item == null) {
                     return CompletableFuture.completedFuture(null);
@@ -68,6 +66,13 @@ public class WarpInventoryConfigService {
             });
     }
 
+    public CompletableFuture<Void> save() {
+        return scheduler.completeAsync(() -> {
+            configurationManager.save(config);
+            return null;
+        });
+    }
+
     public Map<String, WarpInventoryItem> getWarpItems() {
         return new HashMap<>(config.items());
     }
@@ -80,7 +85,6 @@ public class WarpInventoryConfigService {
         String title,
         BorderSection border,
         DecorationItemsSection decorationItems,
-        Map<String, WarpInventoryItem> items
-    ) {
+        Map<String, WarpInventoryItem> items) {
     }
 }

@@ -51,13 +51,13 @@ public class WarpInventory {
 
     @Inject
     public WarpInventory(
-            WarpService warpService,
-            Server server,
-            MiniMessage miniMessage,
-            WarpTeleportService warpTeleportService,
-            WarpSettings warpSettings,
-            Scheduler scheduler,
-            WarpInventoryConfigService warpInventoryConfigService) {
+        WarpService warpService,
+        Server server,
+        MiniMessage miniMessage,
+        WarpTeleportService warpTeleportService,
+        WarpSettings warpSettings,
+        Scheduler scheduler,
+        WarpInventoryConfigService warpInventoryConfigService) {
         this.warpService = warpService;
         this.server = server;
         this.miniMessage = miniMessage;
@@ -69,23 +69,23 @@ public class WarpInventory {
 
     public void open(Player player) {
         this.warpInventoryConfigService.getWarpInventoryData()
-                .thenAccept(warpData -> {
-                    this.scheduler.run(() -> {
-                        Gui gui = this.create(player, warpData);
-                        gui.open(player);
-                    });
-                })
-                .exceptionally(FutureHandler::handleException);
+            .thenAccept(warpData -> {
+                this.scheduler.run(() -> {
+                    Gui gui = this.create(player, warpData);
+                    gui.open(player);
+                });
+            })
+            .exceptionally(FutureHandler::handleException);
     }
 
     private Gui create(Player player, WarpInventoryConfigService.WarpInventoryConfigData warpData) {
         int rows = calculateRowsCount(warpData);
 
         Gui gui = Gui.gui()
-                .title(this.miniMessage.deserialize(warpData.title()))
-                .rows(rows)
-                .disableAllInteractions()
-                .create();
+            .title(this.miniMessage.deserialize(warpData.title()))
+            .rows(rows)
+            .disableAllInteractions()
+            .create();
 
         this.createWarpItems(player, warpData, gui);
         this.createBorder(warpData, gui);
@@ -133,9 +133,9 @@ public class WarpInventory {
 
         if (!borderSection.lore().isEmpty()) {
             List<Component> loreComponents = borderSection.lore()
-                    .stream()
-                    .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
-                    .toList();
+                .stream()
+                .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
+                .toList();
             borderItem.lore(loreComponents);
         }
 
@@ -205,22 +205,22 @@ public class WarpInventory {
         Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(item.name()));
 
         List<Component> lore = item.lore()
-                .stream()
-                .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
-                .toList();
+            .stream()
+            .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
+            .toList();
 
         if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {
             return ItemBuilder.skull()
-                    .name(name)
-                    .lore(lore)
-                    .texture(item.texture())
-                    .glow(item.glow());
+                .name(name)
+                .lore(lore)
+                .texture(item.texture())
+                .glow(item.glow());
         }
 
         return ItemBuilder.from(item.material())
-                .name(name)
-                .lore(lore)
-                .glow(item.glow());
+            .name(name)
+            .lore(lore)
+            .glow(item.glow());
     }
 
     public CompletableFuture<Void> addWarp(Warp warp) {
@@ -229,28 +229,28 @@ public class WarpInventory {
         }
 
         return this.warpInventoryConfigService.getWarpInventoryData()
-                .thenCompose(warpData -> {
-                    int slot = getSlot(warpData);
+            .thenCompose(warpData -> {
+                int slot = getSlot(warpData);
 
-                    WarpInventoryItem warpInventoryItem = createWarpInventoryItem(warp, slot);
+                WarpInventoryItem warpInventoryItem = createWarpInventoryItem(warp, slot);
 
-                    return this.warpInventoryConfigService.addWarpItem(warp.getName(), warpInventoryItem);
-                })
-                .exceptionally(FutureHandler::handleException);
+                return this.warpInventoryConfigService.addWarpItem(warp.getName(), warpInventoryItem);
+            })
+            .exceptionally(FutureHandler::handleException);
     }
 
     private WarpInventoryItem createWarpInventoryItem(Warp warp, int slot) {
         return WarpInventoryItem.builder()
-                .warpName(warp.getName())
-                .warpItem(ConfigItem.builder()
-                        .withName(this.warpSettings.itemNamePrefix() + warp.getName())
-                        .withLore(Collections.singletonList(this.warpSettings.itemLore()))
-                        .withMaterial(this.warpSettings.itemMaterial())
-                        .withTexture(this.warpSettings.itemTexture())
-                        .withSlot(slot)
-                        .withGlow(true)
-                        .build())
-                .build();
+            .warpName(warp.getName())
+            .warpItem(ConfigItem.builder()
+                .withName(this.warpSettings.itemNamePrefix() + warp.getName())
+                .withLore(Collections.singletonList(this.warpSettings.itemLore()))
+                .withMaterial(this.warpSettings.itemMaterial())
+                .withTexture(this.warpSettings.itemTexture())
+                .withSlot(slot)
+                .withGlow(true)
+                .build())
+            .build();
     }
 
     private int getSlot(WarpInventoryConfigService.WarpInventoryConfigData warpData) {
@@ -274,21 +274,22 @@ public class WarpInventory {
         }
 
         return this.warpInventoryConfigService.removeWarpItem(warpName)
-                .thenCompose(removed -> {
-                    if (removed != null) {
-                        return this.shiftWarpItems(removed, items);
-                    }
-                    return CompletableFuture.completedFuture(null);
-                });
+            .thenCompose(removed -> {
+                if (removed != null) {
+                    return this.shiftWarpItems(removed, items)
+                        .thenCompose(v -> this.warpInventoryConfigService.save());
+                }
+                return CompletableFuture.completedFuture(null);
+            });
     }
 
     private CompletableFuture<Void> shiftWarpItems(WarpInventoryItem removed, Map<String, WarpInventoryItem> items) {
         int removedSlot = removed.warpItem().slot;
 
         List<WarpInventoryItem> itemsToShift = items.values().stream()
-                .filter(item -> item.warpItem().slot > removedSlot)
-                .sorted(Comparator.comparingInt(item -> item.warpItem().slot))
-                .toList();
+            .filter(item -> item.warpItem().slot > removedSlot)
+            .sorted(Comparator.comparingInt(item -> item.warpItem().slot))
+            .toList();
 
         int currentShift = removedSlot;
         for (WarpInventoryItem item : itemsToShift) {

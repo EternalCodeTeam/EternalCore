@@ -9,12 +9,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import lombok.NonNull;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 public class Migration_0035_Move_warp_inventory_to_dedicated_file implements ConfigMigration {
 
+    private static final Logger LOGGER = Logger
+            .getLogger(Migration_0035_Move_warp_inventory_to_dedicated_file.class.getName());
     private static final String ROOT_KEY = "warpInventory";
     private static final String NESTED_KEY = "warp.warpInventory";
     private static final String NESTED_SECTION = "warp";
@@ -26,8 +30,7 @@ public class Migration_0035_Move_warp_inventory_to_dedicated_file implements Con
 
         if (warpInventory != null) {
             foundKey = ROOT_KEY;
-        }
-        else {
+        } else {
             warpInventory = this.getFromView(view, NESTED_KEY);
             if (warpInventory != null) {
                 foundKey = NESTED_KEY;
@@ -50,8 +53,7 @@ public class Migration_0035_Move_warp_inventory_to_dedicated_file implements Con
 
         if (foundKey != null) {
             view.remove(foundKey);
-        }
-        else {
+        } else {
             view.remove(ROOT_KEY);
             view.remove(NESTED_KEY);
         }
@@ -89,9 +91,8 @@ public class Migration_0035_Move_warp_inventory_to_dedicated_file implements Con
                     return (Map<String, Object>) warpSection.get(ROOT_KEY);
                 }
             }
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (Exception exception) {
+            LOGGER.log(Level.SEVERE, "Failed to read configuration file: " + bindFile.getAbsolutePath(), exception);
         }
         return null;
     }
@@ -142,9 +143,8 @@ public class Migration_0035_Move_warp_inventory_to_dedicated_file implements Con
         try (FileWriter writer = new FileWriter(destFile)) {
             new Yaml(options).dump(content, writer);
             return true;
-        }
-        catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to save new configuration file: " + destFile.getAbsolutePath(), e);
             return false;
         }
     }
@@ -169,9 +169,9 @@ public class Migration_0035_Move_warp_inventory_to_dedicated_file implements Con
             }
             Object items = existing.get("items");
             return items instanceof Map && ((Map<?, ?>) items).isEmpty();
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (Exception exception) {
+            LOGGER.log(Level.SEVERE, "Failed to check if target file is safe to write: " + file.getAbsolutePath(),
+                    exception);
             return false;
         }
     }
