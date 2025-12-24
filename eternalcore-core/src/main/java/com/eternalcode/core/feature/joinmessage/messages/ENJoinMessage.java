@@ -17,14 +17,14 @@ public class ENJoinMessage extends OkaeriConfig implements JoinMessage {
         "# EternalCore will randomly select one of the messages from the list below",
         "# every time a player joins the server.",
     })
-    public List<Notice> joinMessages = List.of(
+    public List<Notice> playerJoinedServer = List.of(
         BukkitNotice.builder()
-            .actionBar("<green>► {PLAYER} <white>joined the server!")
+            .actionBar("<color:#9d6eef>► {PLAYER} <white>joined the server!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build(),
 
         BukkitNotice.builder()
-            .actionBar("<green>► <white>Welcome to the server <green>{PLAYER}<white>!")
+            .actionBar("<color:#9d6eef>► <white>Welcome to the server <color:#9d6eef>{PLAYER}<white>!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build()
     );
@@ -33,14 +33,14 @@ public class ENJoinMessage extends OkaeriConfig implements JoinMessage {
         "# EternalCore will randomly select one of the messages from the list below",
         "# every time a player joins the server for the first time.",
     })
-    public List<Notice> firstJoinMessages = List.of(
+    public List<Notice> playerJoinedServerFirstTime = List.of(
         BukkitNotice.builder()
-            .actionBar("<green>► {PLAYER} <white>joined the server for the first time!")
+            .actionBar("<color:#9d6eef>► {PLAYER} <white>joined the server for the first time!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build(),
 
         BukkitNotice.builder()
-            .actionBar("<green>► {PLAYER} <white>joined us for the first time!")
+            .actionBar("<color:#9d6eef>► {PLAYER} <white>joined us for the first time!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build()
     );

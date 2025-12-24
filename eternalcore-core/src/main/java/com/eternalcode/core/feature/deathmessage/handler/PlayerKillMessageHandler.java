@@ -40,7 +40,7 @@ public class PlayerKillMessageHandler {
         String weaponName = this.getWeaponName(weapon);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage().deathMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage().playerKilledByOtherPlayer()))
             .placeholder("{PLAYER}", victimName)
             .placeholder("{KILLER}", killerName)
             .placeholder("{WEAPON}", weaponName)

@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import panda.utilities.StringUtils;
 
 @Controller
 class PlayerQuitMessageController implements Listener {
@@ -38,7 +37,7 @@ class PlayerQuitMessageController implements Listener {
         event.setQuitMessage(EMPTY_MESSAGE);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().quitMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().playerLeftServer()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();

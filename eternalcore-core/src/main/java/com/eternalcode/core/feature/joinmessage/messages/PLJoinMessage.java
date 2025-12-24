@@ -16,16 +16,15 @@ public class PLJoinMessage extends OkaeriConfig implements JoinMessage {
     @Comment({
         "# EternalCore będzie losował losową wiadomość z poniższej listy",
         "# za każdym razem gdy gracz dołączy do serwera.",
-        "# {PLAYER} - Gracz, który dołączył do serwera."
     })
-    public List<Notice> joinMessages = List.of(
+    public List<Notice> playerJoinedServer = List.of(
         BukkitNotice.builder()
-            .actionBar("<green>► {PLAYER} <white>dołączył do serwera!")
+            .actionBar("<color:#9d6eef>► {PLAYER} <white>dołączył do serwera!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build(),
 
         BukkitNotice.builder()
-            .actionBar("<green>► <white>Witaj na serwerze <green>{PLAYER}<white>!")
+            .actionBar("<color:#9d6eef>► <white>Witaj na serwerze <color:#9d6eef>{PLAYER}<white>!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build()
     );
@@ -33,16 +32,15 @@ public class PLJoinMessage extends OkaeriConfig implements JoinMessage {
     @Comment({
         "# EternalCore będzie losował losową wiadomość z poniższej listy",
         "# za każdym razem gdy gracz dołączy do serwera po raz pierwszy.",
-        "# {PLAYER} - Gracz, który dołączył po raz pierwszy."
     })
-    public List<Notice> firstJoinMessages = List.of(
+    public List<Notice> playerJoinedServerFirstTime = List.of(
         BukkitNotice.builder()
-            .actionBar("<green>► {PLAYER} <white>dołączył do serwera po raz pierwszy!")
+            .actionBar("<color:#9d6eef>► {PLAYER} <white>dołączył do serwera po raz pierwszy!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build(),
 
         BukkitNotice.builder()
-            .actionBar("<green>► {PLAYER} <white>zawitał u nas po raz pierwszy!")
+            .actionBar("<color:#9d6eef>► {PLAYER} <white>zawitał u nas po raz pierwszy!")
             .sound(Sound.BLOCK_NOTE_BLOCK_PLING, 1.8f, 1f)
             .build()
     );

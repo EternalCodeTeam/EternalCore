@@ -29,14 +29,14 @@ public class StackAmountArgument extends AbstractViewerArgument<Integer> {
         try {
             int value = Integer.parseInt(argument);
 
-            if (value < 0) {
-                return ParseResult.failure(translation.argument().numberBiggerThanOrEqualZero());
+            if (value <= 0) {
+                return ParseResult.failure(translation.argument().numberBiggerThanZero());
             }
 
             return ParseResult.success(value);
         }
         catch (NumberFormatException exception) {
-            return ParseResult.failure(translation.argument().numberBiggerThanOrEqualZero());
+            return ParseResult.failure(translation.argument().stackNumberIncorrect());
         }
     }
 

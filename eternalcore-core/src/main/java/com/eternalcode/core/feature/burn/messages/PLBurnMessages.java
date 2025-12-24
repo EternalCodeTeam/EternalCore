@@ -11,8 +11,8 @@ import lombok.experimental.Accessors;
 public class PLBurnMessages extends OkaeriConfig implements BurnMessages {
 
     @Comment("# Dostępne placeholdery: {PLAYER} - podpalony gracz, {TICKS} - liczba ticków podpalenia")
-    public Notice burnedSelf = Notice.chat("<green>► <white>Zostałeś podpalony na <green>{TICKS}<white> ticków!");
+    Notice burnedSelf = Notice.chat("<color:#9d6eef>► <white>Zostałeś podpalony na <color:#9d6eef>{TICKS}<white> ticków!");
 
     @Comment(" ")
-    public Notice burnedOther = Notice.chat("<green>► {PLAYER} <white>został podpalony na <green>{TICKS}<white> ticków!");
+    Notice burnedOther = Notice.chat("<color:#9d6eef>► {PLAYER} <white>został podpalony na <color:#9d6eef>{TICKS}<white> ticków!");
 }

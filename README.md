@@ -130,3 +130,9 @@ more.
 [<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="JetBrains" width="150">](https://www.jetbrains.com)
 
 We express our gratitude to JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for their outstanding tools. We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) to work with our projects and boost your productivity!
+
+[<img src="https://www.yourkit.com/images/yklogo.png" alt="YourKit" width="150">](https://www.yourkit.com)
+
+YourKit supports our open-source projects with their advanced tools for profiling and monitoring.  
+Creators of the [YourKit Java Profiler](https://www.yourkit.com/java/profiler/), [.NET Profiler](https://www.yourkit.com/dotnet-profiler/) and [YouMonitor](https://www.yourkit.com/youmonitor/).
+

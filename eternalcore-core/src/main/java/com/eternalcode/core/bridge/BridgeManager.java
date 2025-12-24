@@ -38,7 +38,7 @@ class BridgeManager {
 
     void init() {
         this.setupBridge("PlaceholderAPI", () -> {
-            this.placeholderRegistry.registerPlaceholder(new PlaceholderApiReplacer());
+            this.placeholderRegistry.register(new PlaceholderApiReplacer());
             new PlaceholderApiExtension(this.placeholderRegistry, this.pluginDescriptionFile).initialize();
         });
 

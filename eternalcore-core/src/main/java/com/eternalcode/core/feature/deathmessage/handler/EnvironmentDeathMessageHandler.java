@@ -58,18 +58,18 @@ public class EnvironmentDeathMessageHandler {
 
         this.noticeService.create()
             .noticeOptional(translation -> {
-                List<Notice> mobMessages = translation.deathMessage().deathMessageByMobType().get(mobType);
+                List<Notice> mobMessages = translation.deathMessage().playerKilledByMobType().get(mobType);
 
                 if (mobMessages != null && !mobMessages.isEmpty()) {
                     return RandomElementUtil.randomElement(mobMessages);
                 }
 
-                List<Notice> genericMobMessages = translation.deathMessage().deathMessageByEntity();
+                List<Notice> genericMobMessages = translation.deathMessage().playerKilledByEntity();
                 if (genericMobMessages != null && !genericMobMessages.isEmpty()) {
                     return RandomElementUtil.randomElement(genericMobMessages);
                 }
 
-                return RandomElementUtil.randomElement(translation.deathMessage().unknownDeathCause());
+                return RandomElementUtil.randomElement(translation.deathMessage().playerDiedByUnknownCause());
             })
             .placeholder("{PLAYER}", victimName)
             .placeholder("{MOB}", mobName)
@@ -81,13 +81,13 @@ public class EnvironmentDeathMessageHandler {
     private void handleEnvironmentDeath(String victimName, EntityDamageEvent.DamageCause cause) {
         this.noticeService.create()
             .noticeOptional(translation -> {
-                List<Notice> causeMessages = translation.deathMessage().deathMessageByDamageCause().get(cause);
+                List<Notice> causeMessages = translation.deathMessage().playerDiedByDamageCause().get(cause);
 
                 if (causeMessages != null && !causeMessages.isEmpty()) {
                     return RandomElementUtil.randomElement(causeMessages);
                 }
 
-                return RandomElementUtil.randomElement(translation.deathMessage().unknownDeathCause());
+                return RandomElementUtil.randomElement(translation.deathMessage().playerDiedByUnknownCause());
             })
             .placeholder("{PLAYER}", victimName)
             .placeholder("{CAUSE}", this.formatCauseName(cause))
@@ -98,7 +98,7 @@ public class EnvironmentDeathMessageHandler {
     private void handleUnknownDeath(String victimName) {
         this.noticeService.create()
             .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage()
-                .unknownDeathCause()))
+                .playerDiedByUnknownCause()))
             .placeholder("{PLAYER}", victimName)
             .onlinePlayers()
             .send();

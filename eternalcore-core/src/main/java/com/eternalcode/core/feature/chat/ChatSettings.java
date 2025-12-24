@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.chat;
 
 import java.time.Duration;
+import java.util.Map;
 
 public interface ChatSettings {
 
@@ -9,6 +10,8 @@ public interface ChatSettings {
     boolean chatEnabled();
 
     Duration chatDelay();
+
+    Map<String, Duration> chatCooldowns();
 
     int linesToClear();
 
