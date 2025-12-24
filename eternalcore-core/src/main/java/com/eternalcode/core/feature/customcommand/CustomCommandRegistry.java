@@ -39,7 +39,8 @@ public class CustomCommandRegistry {
             customCommand.getName(),
             customCommand.getAliases(),
             this.noticeService,
-            customCommand.getMessage()
+            customCommand.getMessage(),
+            customCommand.getCommands()
         );
 
         this.commandMap().register(FALLBACK_PREFIX, customCommandBukkitWrapper);

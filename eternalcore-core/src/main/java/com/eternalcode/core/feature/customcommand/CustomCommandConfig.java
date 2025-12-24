@@ -121,9 +121,17 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                                     "<color:#9d6eef>🗺 Live Server Map:",
                                     "<aqua>https://map.yourserver.com</aqua>",
                                     " ",
-                                    "<gray>See what others are building in real time!</gray>"
+                                "<gray>See what others are building in real time!</gray>"
                             ).build()
-            )
+            ),
+        CustomCommand.of(
+            "dom",
+            List.of("chata"),
+            Notice.builder()
+                .chat("<green>Teleportacja do domu...</green>")
+                .build(),
+            List.of("home")
+        )
     );
 
     @Override
