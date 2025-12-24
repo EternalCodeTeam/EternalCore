@@ -42,13 +42,4 @@ public class ENTeleportMessages extends OkaeriConfig implements TeleportMessages
               "# {PLAYER} -  Player who has been teleported, {X} - X coordinate, {Y} - Y coordinate, {Z} - Z coordinate"})
     Notice teleportedSpecifiedPlayerToCoordinates = Notice.chat(
         "<color:#9d6eef>► <white>Teleported <color:#9d6eef>{PLAYER} <white>to location x: <color:#9d6eef>{X}<white>, y: <color:#9d6eef>{Y}<white>, z: <color:#9d6eef>{Z}");
-
-    // Back
-    @Comment(" ")
-    Notice teleportedToLastLocation = Notice.chat("<color:#9d6eef>► <white>Teleported to the last location!");
-    @Comment({" ", "# {PLAYER} - Player who has been teleported"})
-    Notice teleportedSpecifiedPlayerLastLocation =
-        Notice.chat("<color:#9d6eef>► <white>Teleported <color:#9d6eef>{PLAYER} <white>to the last location!");
-    @Comment(" ")
-    Notice lastLocationNoExist = Notice.chat("<red>✘ <dark_red>Last location is not exist!");
 }
