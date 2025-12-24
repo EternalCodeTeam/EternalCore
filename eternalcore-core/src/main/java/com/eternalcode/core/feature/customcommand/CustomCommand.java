@@ -9,16 +9,13 @@ public class CustomCommand implements Serializable {
 
     private String name;
     private List<String> aliases;
-    private List<String> commands;
+    private List<String> commands = Collections.emptyList();
     private Notice message;
 
     public CustomCommand() {}
 
     public CustomCommand(String name, List<String> aliases, Notice message) {
-        this.name = name;
-        this.aliases = aliases;
-        this.message = message;
-        this.commands = Collections.emptyList();
+        this(name, aliases, message, Collections.emptyList());
     }
 
     public CustomCommand(String name, List<String> aliases, Notice message, List<String> commands) {
