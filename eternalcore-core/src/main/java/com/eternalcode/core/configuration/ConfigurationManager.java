@@ -46,7 +46,7 @@ public class ConfigurationManager {
     public <T extends OkaeriConfig & EternalConfigurationFile> T load(T config) {
         File file = config.getConfigFile(this.dataFolder);
         Yaml yaml = this.createYaml();
-        YamlSnakeYamlConfigurer yamlConfigurer = new YamlSnakeYamlConfigurer(yaml);
+        YamlSnakeYamlConfigurer yamlConfigurer = new YamlSnakeYamlConfigurer(this::createYaml);
         CdnConfigMigrator migrator = new CdnConfigMigrator(yaml);
         migrator.runMigrations(file);
 
