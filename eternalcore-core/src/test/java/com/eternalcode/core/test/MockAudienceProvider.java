@@ -18,12 +18,11 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.translation.GlobalTranslator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import panda.std.Blank;
 
 public class MockAudienceProvider extends FacetAudienceProvider<Viewer, MockAudienceProvider.MockAudience> {
 
-    private static final Collection<FacetComponentFlattener.Translator<Blank>> TRANSLATORS = Facet.of();
-    private static final ComponentFlattener FLATTENER = FacetComponentFlattener.get(Blank.BLANK, TRANSLATORS);
+    private static final Collection<FacetComponentFlattener.Translator<Void>> TRANSLATORS = Facet.of();
+    private static final ComponentFlattener FLATTENER = FacetComponentFlattener.get(null, TRANSLATORS);
 
     public MockAudienceProvider() {
         super(GlobalTranslator.renderer().mapContext(ptr -> ptr.getOrDefault(Identity.LOCALE, Locale.US)));
