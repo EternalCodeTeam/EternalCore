@@ -1,17 +1,10 @@
 package com.eternalcode.core.feature.warp.messages;
 
-import com.eternalcode.core.configuration.contextual.ConfigItem;
-import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.Material;
 
 @Getter
 @Accessors(fluent = true)
@@ -39,47 +32,4 @@ public class PLWarpMessages extends OkaeriConfig implements WarpMessages {
 
     @Comment({ " ", "# {WARPS} - Lista dostępnych warpów" })
     Notice available = Notice.chat("<color:#9d6eef>► <white>Dostepne warpy: <color:#9d6eef>{WARPS}!");
-
-    @Comment({ " ", "# Ustawienia gui listy dostępnych warpów" })
-    public PLWarpInventory warpInventory = new PLWarpInventory();
-
-    @Getter
-    @Accessors(fluent = true)
-    public static class PLWarpInventory extends OkaeriConfig implements WarpInventorySection {
-        public String title = "<dark_gray>» <color:#9d6eef>Lista dostępnych warpów";
-
-        @Comment({
-                " ",
-                "# Poniższa lista określa przedmioty w GUI, które są wyświetlane w liście dostępnych warpów.",
-                "# Możesz edytować przedmioty, a dodawanie kolejnych warpów następuje automatycznie za pomocą komendy /setwarp",
-        })
-        public Map<String, WarpInventoryItem> items = new HashMap<>();
-
-        public void setItems(Map<String, WarpInventoryItem> items) {
-            this.items = items;
-        }
-
-        public PLWarpInventory.PLBorderSection border = new PLWarpInventory.PLBorderSection();
-        public PLWarpInventory.PLDecorationItemsSection decorationItems = new PLWarpInventory.PLDecorationItemsSection();
-
-        @Getter
-        public static class PLBorderSection extends OkaeriConfig implements BorderSection {
-            @Comment({ " ",
-                    "# Zmiany w tej sekcji mogą wpłynąć na wygląd GUI, zwróć uwagę na zmiany slotów przedmiotów w GUI." })
-            public boolean enabled = true;
-
-            public Material material = Material.GRAY_STAINED_GLASS_PANE;
-
-            public FillType fillType = FillType.BORDER;
-
-            public String name = "";
-
-            public List<String> lore = Collections.emptyList();
-        }
-
-        @Getter
-        public static class PLDecorationItemsSection extends OkaeriConfig implements DecorationItemsSection {
-            public List<ConfigItem> items = List.of();
-        }
-    }
 }
