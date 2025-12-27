@@ -1,11 +1,22 @@
 package com.eternalcode.core.feature.warp;
 
+import org.bukkit.Material;
+import java.time.Duration;
+
 public interface WarpSettings {
+
     String itemTexture();
-    org.bukkit.Material itemMaterial();
+
+    Material itemMaterial();
+
     String itemLore();
+
     String itemNamePrefix();
+
     boolean autoAddNewWarps();
+
     boolean inventoryEnabled();
-    java.time.Duration teleportTimeToWarp();
+
+    Duration teleportTimeToWarp();
+
 }

@@ -10,10 +10,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import panda.utilities.StringUtils;
 
 @Controller
 class PlayerQuitMessageController implements Listener {
+
+    private static final String EMPTY_MESSAGE = null;
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
@@ -29,14 +30,14 @@ class PlayerQuitMessageController implements Listener {
         Player player = event.getPlayer();
 
         if (this.vanishService.isVanished(player)) {
-            event.setQuitMessage(StringUtils.EMPTY);
+            event.setQuitMessage(EMPTY_MESSAGE);
             return;
         }
 
-        event.setQuitMessage(StringUtils.EMPTY);
+        event.setQuitMessage(EMPTY_MESSAGE);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().quitMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().playerLeftServer()))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .send();

@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.enchant;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -19,18 +18,18 @@ import org.bukkit.inventory.PlayerInventory;
 @Permission("eternalcore.enchant")
 class EnchantCommand {
 
-    private final PluginConfiguration configuration;
+    private final EnchantSettings enchantSettings;
     private final NoticeService noticeService;
 
     @Inject
-    EnchantCommand(PluginConfiguration configuration, NoticeService noticeService) {
-        this.configuration = configuration;
+    EnchantCommand(EnchantSettings enchantSettings, NoticeService noticeService) {
+        this.enchantSettings = enchantSettings;
         this.noticeService = noticeService;
     }
 
     @Execute
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level>")
-    void execute(@Sender Player player, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level) {
+    void execute(@Sender Player player, @Arg Enchantment enchantment, @Arg(EnchantLevelArgument.KEY) int level) {
         PlayerInventory playerInventory = player.getInventory();
         ItemStack handItem = playerInventory.getItem(playerInventory.getHeldItemSlot());
 
@@ -47,13 +46,13 @@ class EnchantCommand {
 
         this.noticeService.create()
             .player(player.getUniqueId())
-            .notice(translation -> translation.item().enchantedMessage())
+            .notice(translation -> translation.enchant().enchantedItem())
             .send();
     }
 
     @Execute
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level> <player>")
-    void execute(@Sender Player sender, @Arg Enchantment enchantment, @Arg(EnchantArgument.KEY) int level, @Arg Player target) {
+    void execute(@Sender Player sender, @Arg Enchantment enchantment, @Arg(EnchantLevelArgument.KEY) int level, @Arg Player target) {
         PlayerInventory targetInventory = target.getInventory();
         ItemStack handItem = targetInventory.getItem(targetInventory.getHeldItemSlot());
 
@@ -70,19 +69,19 @@ class EnchantCommand {
 
         this.noticeService.create()
             .player(sender.getUniqueId())
-            .notice(translation -> translation.item().enchantedMessageFor())
+            .notice(translation -> translation.enchant().enchantedTargetPlayerItem())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService.create()
             .player(target.getUniqueId())
-            .notice(translation -> translation.item().enchantedMessageBy())
+            .notice(translation -> translation.enchant().enchantedItemByAdmin())
             .placeholder("{PLAYER}", sender.getName())
             .send();
     }
 
     private void enchantItem(UUID playerId, ItemStack item, Enchantment enchantment, int level) {
-        if (this.configuration.items.unsafeEnchantments) {
+        if (this.enchantSettings.unsafeEnchantments()) {
             item.addUnsafeEnchantment(enchantment, level);
             return;
         }
@@ -90,7 +89,7 @@ class EnchantCommand {
         if (enchantment.getStartLevel() > level || enchantment.getMaxLevel() < level || !enchantment.canEnchantItem(item)) {
             this.noticeService.create()
                 .player(playerId)
-                .notice(translation -> translation.argument().noValidEnchantmentLevel())
+                .notice(translation -> translation.enchant().enchantmentLevelUnsupported())
                 .send();
             return;
         }

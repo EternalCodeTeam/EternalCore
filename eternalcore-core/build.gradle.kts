@@ -40,6 +40,7 @@ eternalShadow {
     )
 
     // configuration
+    library("eu.okaeri:okaeri-configs-core:${Versions.OKAERI_CONFIGS}")
     library("eu.okaeri:okaeri-configs-yaml-snakeyaml:${Versions.OKAERI_CONFIGS}")
     library("eu.okaeri:okaeri-configs-serdes-commons:${Versions.OKAERI_CONFIGS}")
     libraryRelocate(
@@ -94,12 +95,9 @@ eternalShadow {
     )
 
     // common libraries
-    library("org.panda-lang:expressible:${Versions.EXPRESSIBLE}")
-    library("org.panda-lang:panda-utilities:${Versions.PANDA_UTILITIES}")
+
     library("commons-io:commons-io:${Versions.APACHE_COMMONS}")
     libraryRelocate(
-        "panda.std",
-        "panda.utilities",
         "org.apache.commons.io",
     )
 

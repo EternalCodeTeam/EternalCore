@@ -71,7 +71,7 @@ class ChatCommand {
         });
 
         this.noticeService.create()
-            .notice(translation -> translation.chat().cleared())
+            .notice(translation -> translation.chat().chatCleared())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
@@ -81,7 +81,7 @@ class ChatCommand {
     @DescriptionDocs(description = "Enables chat")
     void enable(@Sender Viewer viewer, @Sender CommandSender sender) {
         if (this.chatSettings.chatEnabled()) {
-            this.noticeService.viewer(viewer, translation -> translation.chat().alreadyEnabled());
+            this.noticeService.viewer(viewer, translation -> translation.chat().chatAlreadyEnabled());
             return;
         }
 
@@ -94,7 +94,7 @@ class ChatCommand {
         this.chatSettings.chatEnabled(true);
 
         this.noticeService.create()
-            .notice(translation -> translation.chat().enabled())
+            .notice(translation -> translation.chat().chatEnabled())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
@@ -104,7 +104,7 @@ class ChatCommand {
     @DescriptionDocs(description = "Disables chat")
     void disable(@Sender Viewer viewer, @Sender CommandSender sender) {
         if (!this.chatSettings.chatEnabled()) {
-            this.noticeService.viewer(viewer, translation -> translation.chat().alreadyDisabled());
+            this.noticeService.viewer(viewer, translation -> translation.chat().chatAlreadyDisabled());
             return;
         }
 
@@ -117,7 +117,7 @@ class ChatCommand {
         this.chatSettings.chatEnabled(false);
 
         this.noticeService.create()
-            .notice(translation -> translation.chat().disabled())
+            .notice(translation -> translation.chat().chatDisabled())
             .placeholder("{PLAYER}", sender.getName())
             .onlinePlayers()
             .send();
@@ -144,7 +144,7 @@ class ChatCommand {
 
         if (duration.isZero()) {
             this.noticeService.create()
-                .notice(translation -> translation.chat().slowModeOff())
+                .notice(translation -> translation.chat().slowModeDisabled())
                 .placeholder("{PLAYER}", viewer.getName())
                 .onlinePlayers()
                 .send();

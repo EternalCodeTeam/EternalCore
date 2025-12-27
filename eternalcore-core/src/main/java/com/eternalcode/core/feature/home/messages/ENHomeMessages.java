@@ -10,33 +10,47 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     @Comment("# {HOMES} - List of homes (separated by commas)")
-    public Notice homeList = Notice.chat("<green>► <white>Available homes: <green>{HOMES}");
+    Notice homeList = Notice.chat("<color:#9d6eef>► <white>Available homes: <color:#9d6eef>{HOMES}");
+    @Comment({
+        " ",
+        "# Format for single home entry in user's home list. Set to \"{HOME}\" if you want to display basic list.",
+        "# {HOME} - Home name"
+    })
+    String homeListEntryFormat = "<hover:show_text:'<gray>Click to teleport'><click:run_command:'/home {HOME}'>{HOME}</click></hover>";
 
-    @Comment({" ", "# {HOME} - Home name"})
-    public Notice create = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been created.");
-    public Notice delete = Notice.chat("<red>► <white>Home <red>{HOME} <white>has been deleted.");
-    public Notice overrideHomeLocation = Notice.chat("<green>► <white>Home <green>{HOME} <white>has been overridden.");
-    @Comment({" ", "# {LIMIT} - Homes limit"})
-    public Notice limit =
-        Notice.chat("<red>► <white>You have reached the limit of homes! Your limit is <red>{LIMIT}<white>.");
-    public Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
+    @Comment({ " ", "# {HOME} - Home name" })
+    Notice create = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been created.");
+    Notice delete = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been deleted.");
+    Notice overrideHomeLocation = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been overridden.");
+    @Comment({ " ", "# {LIMIT} - Homes limit" })
+    Notice limit = Notice.chat("<red>✘ <dark_red>You have reached the limit of homes! Your limit is <red>{LIMIT}<dark_red>.");
+    Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
 
-    @Comment({" ", "# Placeholders messages"})
-    public String noHomesOwnedPlaceholder = "You don't have any homes.";
+    @Comment({ " ", "# Placeholders messages" })
+    String noHomesOwnedPlaceholder = "You don't have any homes.";
+
+    @Comment({
+            " ",
+            "# Home Admin Section, you can edit player homes as admin",
+            "# {HOME} - Home name, {PLAYER} - Player name, {HOMES} - List of homes (separated by commas)"
+    })
+    Notice overrideHomeLocationAsAdmin = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been overridden for <color:#9d6eef>{PLAYER}<white>.");
+    Notice playerNoOwnedHomes = Notice.chat("<dark_red>✘ <red>Player <dark_red>{PLAYER} <red>doesn't have any homes.");
+    Notice createAsAdmin = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been created for <color:#9d6eef>{PLAYER}<white>.");
+    Notice deleteAsAdmin = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been deleted for <color:#9d6eef>{PLAYER}<white>.");
+    Notice homeListAsAdmin = Notice.chat("<color:#9d6eef>► <white>Available homes for <color:#9d6eef>{PLAYER}<white>: <color:#9d6eef>{HOMES}");
+    @Comment({
+        " ",
+        "# Format for single home entry in admin's home list. Set to \"{HOME}\" if you want to display basic list.",
+        "# {HOME} - Home name, {PLAYER} - Player name"
+    })
+    String homeListEntryFormatAsAdmin = "<hover:show_text:'<gray>Click to teleport'><click:run_command:'/homeadmin home {PLAYER} {HOME}'>{HOME}</click></hover>";
+    Notice noHomesOnListAsAdmin = Notice.chat("<red>► <dark_red>Player <red>{PLAYER} <dark_red>does not have any homes!");
 
     @Comment({
         " ",
-        "# Home Admin Section, you can edit player homes as admin",
-        "# {HOME} - Home name, {PLAYER} - Player name, {HOMES} - List of homes (separated by commas)"
+        "# {PLAYER} - username of home owner whom user teleported by using /homeadmin home",
+        "# {HOME} - name of the home"
     })
-    public Notice overrideHomeLocationAsAdmin =
-        Notice.chat("<green>► <white>Home <green>{HOME} <white>has been overridden for <green>{PLAYER}<white>.");
-    public Notice playerNoOwnedHomes =
-        Notice.chat("<dark_red>✘ <red>Player <dark_red>{PLAYER} <red>doesn't have any homes.");
-    public Notice createAsAdmin =
-        Notice.chat("<green>► <white>Home <green>{HOME} <white>has been created for <green>{PLAYER}<white>.");
-    public Notice deleteAsAdmin =
-        Notice.chat("<red>► <white>Home <red>{HOME} <white>has been deleted for <red>{PLAYER}<white>.");
-    public Notice homeListAsAdmin =
-        Notice.chat("<green>► <white>Available homes for <green>{PLAYER}<white>: <green>{HOMES}");
+    Notice teleportedAsAdmin = Notice.chat("<color:#9d6eef>► <white>Teleported to: <green>{PLAYER}<white> - <green>{HOME}!");
 }

@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.item;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.configuration.implementation.PluginConfiguration;
 import com.eternalcode.core.litecommand.argument.StackAmountArgument;
 import com.eternalcode.core.feature.give.GiveService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -11,7 +10,6 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,32 +18,32 @@ import org.bukkit.entity.Player;
 @Permission("eternalcore.item")
 class ItemCommand {
 
+    private static final int DEFAULT_AMOUNT = 1;
+
     private final NoticeService noticeService;
     private final GiveService giveService;
-    private final PluginConfiguration config;
 
     @Inject
-    ItemCommand(NoticeService noticeService, GiveService giveService, PluginConfiguration config) {
+    ItemCommand(NoticeService noticeService, GiveService giveService) {
         this.noticeService = noticeService;
         this.giveService = giveService;
-        this.config = config;
     }
 
     @Execute
     @DescriptionDocs(description = "Gives you an item", arguments = "<item>")
     void execute(@Context Player player, @Arg Material material) {
-        this.execute(player, material, this.config.items.defaultGiveAmount);
+        this.execute(player, material, DEFAULT_AMOUNT);
     }
 
     @Execute
     @DescriptionDocs(description = "Gives an item with a custom amount", arguments = "<item> [amount]")
-    void execute(@Context Player player, @Arg Material material, @OptionalArg(StackAmountArgument.KEY) int amount) {
+    void execute(@Context Player player, @Arg Material material, @Arg(StackAmountArgument.KEY) int amount) {
         boolean isSuccess = this.giveService.giveItem(player, player, material, amount);
 
         if (isSuccess) {
             this.noticeService.create()
                 .placeholder("{ITEM}", MaterialUtil.format(material))
-                .notice(translation -> translation.item().giveReceived())
+                .notice(translation -> translation.give().itemGivenByAdmin())
                 .player(player.getUniqueId())
                 .send();
         }

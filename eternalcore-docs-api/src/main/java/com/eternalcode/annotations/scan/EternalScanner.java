@@ -4,6 +4,7 @@ import com.eternalcode.annotations.scan.reflect.PackageStack;
 import com.eternalcode.annotations.scan.reflect.PackageUtil;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class EternalScanner {
@@ -16,10 +17,13 @@ public class EternalScanner {
         this.packageToScan = packageToScan;
     }
 
-    public <RESULT, RESOLVER extends EternalScanResolver<RESULT>> List<RESULT> scan(RESOLVER resolver) {
+    public <RESULT, RESOLVER extends EternalScanResolver<RESULT>> List<RESULT> scan(RESOLVER resolver, Comparator<RESULT> sort) {
         PackageStack packageStack = PackageUtil.createPackageStack(this.packageToScan, this.classLoader);
 
-        return this.scan(packageStack, resolver);
+        return this.scan(packageStack, resolver).stream()
+            .sorted(sort)
+            .distinct()
+            .toList();
     }
 
     private <RESULT, RESOLVER extends EternalScanResolver<RESULT>> List<RESULT> scan(PackageStack packageStack, RESOLVER resolver) {

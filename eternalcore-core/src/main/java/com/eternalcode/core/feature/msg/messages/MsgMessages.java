@@ -17,12 +17,4 @@ public interface MsgMessages {
     Notice otherMessagesDisabled();
     Notice otherMessagesEnabled();
 
-    Notice ignorePlayer();
-    Notice ignoreAll();
-    Notice unIgnorePlayer();
-    Notice unIgnoreAll();
-    Notice alreadyIgnorePlayer();
-    Notice notIgnorePlayer();
-    Notice cantIgnoreYourself();
-    Notice cantUnIgnoreYourself();
 }

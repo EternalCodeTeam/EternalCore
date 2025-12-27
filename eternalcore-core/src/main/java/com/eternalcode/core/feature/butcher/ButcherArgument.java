@@ -43,12 +43,12 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
             int safeChunkNumber = this.butcherSettings.safeChunkNumber();
 
             if (value <= 0) {
-                return ParseResult.failure(translation.argument().incorrectNumberOfChunks());
+                return ParseResult.failure(translation.butcher().invalidChunkNumber());
             }
 
             if (value > safeChunkNumber) {
                 NoticeBroadcast placeholder = this.noticeService.create()
-                    .notice(translate -> translate.player().safeChunksMessage())
+                    .notice(translate -> translate.butcher().safeChunksLimitExceeded())
                     .viewer(viewer)
                     .placeholder("{SAFE_CHUNKS}", String.valueOf(safeChunkNumber));
 
@@ -58,7 +58,7 @@ class ButcherArgument extends AbstractViewerArgument<Integer> {
             return ParseResult.success(value);
         }
         catch (NumberFormatException exception) {
-            return ParseResult.failure(translation.argument().incorrectNumberOfChunks());
+            return ParseResult.failure(translation.butcher().invalidChunkNumber());
         }
     }
 

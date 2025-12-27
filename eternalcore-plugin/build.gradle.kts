@@ -2,7 +2,7 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
-    id("xyz.jpenilla.run-paper") version "3.0.0"
+    id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 eternalShadowCompiler {
@@ -36,7 +36,7 @@ dependencies {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.8")
+        minecraftVersion("1.21.11")
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
     }
 }

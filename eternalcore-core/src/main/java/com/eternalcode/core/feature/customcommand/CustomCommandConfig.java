@@ -45,7 +45,7 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                             .title("<rainbow>Welcome to EternalCore!</rainbow>")
                             .subtitle("<gray>Use /help to get started</gray>")
                             .times(Duration.ofMillis(500), Duration.ofSeconds(3), Duration.ofMillis(500))
-                            .actionBar("<green>Need support? Try /discord</green>")
+                            .actionBar("<color:#9d6eef>Need support? Try /discord</color:#9d6eef>")
                             .chat(
                                     " ",
                                     "<yellow>To add your own commands, edit <aqua>custom-commands.yml</aqua> and restart the server.",
@@ -118,12 +118,20 @@ public class CustomCommandConfig extends AbstractConfigurationFile {
                     Notice.builder()
                             .chat(
                                     " ",
-                                    "<green>🗺 Live Server Map:",
+                                    "<color:#9d6eef>🗺 Live Server Map:",
                                     "<aqua>https://map.yourserver.com</aqua>",
                                     " ",
-                                    "<gray>See what others are building in real time!</gray>"
+                                "<gray>See what others are building in real time!</gray>"
                             ).build()
-            )
+            ),
+        CustomCommand.of(
+            "dom",
+            List.of("chata"),
+            Notice.builder()
+                .chat("<green>Teleportacja do domu...</green>")
+                .build(),
+            List.of("home")
+        )
     );
 
     @Override

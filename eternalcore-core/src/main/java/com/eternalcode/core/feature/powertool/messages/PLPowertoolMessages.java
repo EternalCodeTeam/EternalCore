@@ -14,17 +14,17 @@ public class PLPowertoolMessages extends OkaeriConfig implements PowertoolMessag
               "# {COMMAND} - Komenda przypisana do narzędzia",
               "# {ITEM} - Przedmiot będący power tool"}
     )
-    public Notice assigned = Notice.chat("<green>► <white>Przypisano komendę <green>/{COMMAND}<white> do narzędzia "
-        + "<green>{ITEM}.");
-    public Notice removed = Notice.chat("<green>► <white>Usunięto komendę z narzędzia <green>{ITEM}.");
-    public Notice notAssigned = Notice.chat("<red>✘ <dark_red>Ten przedmiot nie jest power toolem. Użyj /powertool "
+    Notice assigned = Notice.chat("<color:#9d6eef>► <white>Przypisano komendę <color:#9d6eef>/{COMMAND}<white> do narzędzia "
+        + "<color:#9d6eef>{ITEM}.");
+    Notice removed = Notice.chat("<color:#9d6eef>► <white>Usunięto komendę z narzędzia <color:#9d6eef>{ITEM}.");
+    Notice notAssigned = Notice.chat("<red>✘ <dark_red>Ten przedmiot nie jest power toolem. Użyj /powertool "
         + "<command>, aby przypisać do niego komendę.");
-    public Notice noItemInMainHand =
+    Notice noItemInMainHand =
         Notice.chat("<red>✘ <dark_red>Musisz trzymać przedmiot w głównej ręce, aby przypisać do niego komendę.");
-    public Notice emptyCommand = Notice.chat("<red>✘ <dark_red>Komenda nie może być pusta! Podaj poprawną komendę, "
+    Notice emptyCommand = Notice.chat("<red>✘ <dark_red>Komenda nie może być pusta! Podaj poprawną komendę, "
         + "aby przypisać ją do power toola.");
-    public Notice invalidCommand = Notice.chat("<red>✘ <dark_red>Podana komenda jest nieprawidłowa! Upewnij się, że "
+    Notice invalidCommand = Notice.chat("<red>✘ <dark_red>Podana komenda jest nieprawidłowa! Upewnij się, że "
         + "komenda istnieje.");
-    public Notice executionFailed =
+    Notice executionFailed =
         Notice.chat("<red>✘ <dark_red>Wystąpił błąd podczas wykonywania komendy {COMMAND} przypisanej do power toola.");
 }
