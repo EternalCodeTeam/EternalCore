@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.quitmessage;
 
-
 import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -37,9 +36,9 @@ class PlayerQuitMessageController implements Listener {
         event.setQuitMessage(EMPTY_MESSAGE);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().playerLeftServer()))
-            .placeholder("{PLAYER}", player.getName())
-            .onlinePlayers()
-            .send();
+                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().playerLeftServer()))
+                .placeholder("{PLAYER}", player.getName())
+                .onlinePlayers()
+                .sendAsync();
     }
 }

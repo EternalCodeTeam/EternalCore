@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.joinmessage;
 
-
 import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -34,20 +33,19 @@ class PlayerJoinMessageController implements Listener {
             return;
         }
 
-        if (!player.hasPlayedBefore()) {
-            this.noticeService.create()
-                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.join().playerJoinedServerFirstTime()))
-                .placeholder("{PLAYER}", player.getName())
-                .onlinePlayers()
-                .send();
-        }
-
         event.setJoinMessage(EMPTY_MESSAGE);
 
+        boolean firstTime = !player.hasPlayedBefore();
+
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.join().playerJoinedServer()))
-            .placeholder("{PLAYER}", player.getName())
-            .onlinePlayers()
-            .sendAsync();
+                .noticeOptional(translation -> {
+                    if (firstTime) {
+                        return RandomElementUtil.randomElement(translation.join().playerJoinedServerFirstTime());
+                    }
+                    return RandomElementUtil.randomElement(translation.join().playerJoinedServer());
+                })
+                .placeholder("{PLAYER}", player.getName())
+                .onlinePlayers()
+                .sendAsync();
     }
 }

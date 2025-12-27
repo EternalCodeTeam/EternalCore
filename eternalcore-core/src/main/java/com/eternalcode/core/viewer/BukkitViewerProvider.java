@@ -42,10 +42,10 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
 
     @Override
     public Collection<Viewer> onlinePlayers() {
+        Collection<? extends Player> players = this.server.getOnlinePlayers();
+        Set<Viewer> audiences = new HashSet<>(players.size());
 
-        Set<Viewer> audiences = new HashSet<>();
-
-        for (Player player : this.server.getOnlinePlayers()) {
+        for (Player player : players) {
             audiences.add(this.player(player.getUniqueId()));
         }
 
@@ -54,9 +54,10 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
 
     @Override
     public Collection<Viewer> onlinePlayers(String permission) {
-        Set<Viewer> audiences = new HashSet<>();
+        Collection<? extends Player> players = this.server.getOnlinePlayers();
+        Set<Viewer> audiences = new HashSet<>(players.size());
 
-        for (Player player : this.server.getOnlinePlayers()) {
+        for (Player player : players) {
             if (player.hasPermission(permission)) {
                 audiences.add(this.player(player.getUniqueId()));
             }
@@ -73,8 +74,8 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
     @Override
     public Viewer player(UUID uuid) {
         return this.userManager.getUser(uuid)
-            .map(Viewer.class::cast)
-            .orElseGet(() -> BukkitViewerImpl.player(uuid));
+                .map(Viewer.class::cast)
+                .orElseGet(() -> BukkitViewerImpl.player(uuid));
     }
 
     @Override
@@ -98,7 +99,8 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
             return BukkitViewerImpl.player(player.getUniqueId());
         }
 
-        if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender || any instanceof BlockCommandSender) {
+        if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender
+                || any instanceof BlockCommandSender) {
             return BukkitViewerImpl.console();
         }
 
