@@ -5,19 +5,17 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.multification.viewer.ViewerProvider;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerService {
@@ -74,8 +72,8 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
     @Override
     public Viewer player(UUID uuid) {
         return this.userManager.getUser(uuid)
-                .map(Viewer.class::cast)
-                .orElseGet(() -> BukkitViewerImpl.player(uuid));
+            .map(Viewer.class::cast)
+            .orElseGet(() -> BukkitViewerImpl.player(uuid));
     }
 
     @Override
@@ -100,11 +98,10 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
         }
 
         if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender
-                || any instanceof BlockCommandSender) {
+            || any instanceof BlockCommandSender) {
             return BukkitViewerImpl.console();
         }
 
         throw new IllegalArgumentException("Unsupported sender type: " + any.getClass().getName());
     }
-
 }
