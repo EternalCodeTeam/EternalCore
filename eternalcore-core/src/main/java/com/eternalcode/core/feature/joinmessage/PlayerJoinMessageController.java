@@ -38,14 +38,13 @@ class PlayerJoinMessageController implements Listener {
         boolean firstTime = !player.hasPlayedBefore();
 
         this.noticeService.create()
-                .noticeOptional(translation -> {
-                    if (firstTime) {
-                        return RandomElementUtil.randomElement(translation.join().playerJoinedServerFirstTime());
-                    }
-                    return RandomElementUtil.randomElement(translation.join().playerJoinedServer());
-                })
-                .placeholder("{PLAYER}", player.getName())
-                .onlinePlayers()
-                .sendAsync();
+            .noticeOptional(translation -> RandomElementUtil.randomElement(
+                firstTime
+                    ? translation.join().playerJoinedServerFirstTime()
+                    : translation.join().playerJoinedServer()
+            ))
+            .placeholder("{PLAYER}", player.getName())
+            .onlinePlayers()
+            .sendAsync();
     }
 }
