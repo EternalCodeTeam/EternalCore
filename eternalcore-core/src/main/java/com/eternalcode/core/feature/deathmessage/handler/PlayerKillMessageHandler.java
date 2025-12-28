@@ -35,17 +35,17 @@ public class PlayerKillMessageHandler {
         String killerName = killer.getName();
 
         ItemStack weapon = killer.getInventory().getItemInMainHand().getType() != Material.AIR
-            ? killer.getInventory().getItemInMainHand()
-            : killer.getInventory().getItemInOffHand();
+                ? killer.getInventory().getItemInMainHand()
+                : killer.getInventory().getItemInOffHand();
         String weaponName = this.getWeaponName(weapon);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage().playerKilledByOtherPlayer()))
-            .placeholder("{PLAYER}", victimName)
-            .placeholder("{KILLER}", killerName)
-            .placeholder("{WEAPON}", weaponName)
-            .onlinePlayers()
-            .send();
+                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage().playerKilledByOtherPlayer()))
+                .placeholder("{PLAYER}", victimName)
+                .placeholder("{KILLER}", killerName)
+                .placeholder("{WEAPON}", weaponName)
+                .onlinePlayers()
+                .sendAsync();
     }
 
     private String getWeaponName(ItemStack weapon) {
