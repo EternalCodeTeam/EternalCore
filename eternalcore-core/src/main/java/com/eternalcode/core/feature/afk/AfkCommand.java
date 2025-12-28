@@ -37,7 +37,7 @@ class AfkCommand {
         this.noticeService = noticeService;
         this.afkSettings = afkSettings;
         this.afkService = afkService;
-        this.delay = new Delay<>(() -> this.afkSettings.afkCommandDelay());
+        this.delay = Delay.withDefault(() -> this.afkSettings.afkCommandDelay());
     }
 
     @Execute
@@ -51,7 +51,7 @@ class AfkCommand {
         }
 
         if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
+            Duration time = this.delay.getRemaining(uuid);
 
             this.noticeService
                 .create()
@@ -64,6 +64,6 @@ class AfkCommand {
         }
 
         this.afkService.switchAfk(uuid, AfkReason.COMMAND);
-        this.delay.markDelay(uuid, this.afkSettings.afkCommandDelay());
+        this.delay.markDelay(uuid);
     }
 }
