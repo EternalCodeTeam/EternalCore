@@ -50,5 +50,5 @@ object Versions {
     const val JUNIT_BOM = "6.0.1"
     const val MOCKITO_CORE = "5.21.0"
     const val ASSERTJ_CORE = "3.27.6"
-    const val AWAITILITY = "4.2.2"
+    const val AWAITILITY = "4.3.0"
 }
