@@ -5,19 +5,17 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
 import com.eternalcode.multification.viewer.ViewerProvider;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerService {
@@ -42,10 +40,10 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
 
     @Override
     public Collection<Viewer> onlinePlayers() {
+        Collection<? extends Player> players = this.server.getOnlinePlayers();
+        Set<Viewer> audiences = new HashSet<>(players.size());
 
-        Set<Viewer> audiences = new HashSet<>();
-
-        for (Player player : this.server.getOnlinePlayers()) {
+        for (Player player : players) {
             audiences.add(this.player(player.getUniqueId()));
         }
 
@@ -54,9 +52,10 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
 
     @Override
     public Collection<Viewer> onlinePlayers(String permission) {
-        Set<Viewer> audiences = new HashSet<>();
+        Collection<? extends Player> players = this.server.getOnlinePlayers();
+        Set<Viewer> audiences = new HashSet<>(players.size());
 
-        for (Player player : this.server.getOnlinePlayers()) {
+        for (Player player : players) {
             if (player.hasPermission(permission)) {
                 audiences.add(this.player(player.getUniqueId()));
             }
@@ -98,11 +97,11 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
             return BukkitViewerImpl.player(player.getUniqueId());
         }
 
-        if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender || any instanceof BlockCommandSender) {
+        if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender
+            || any instanceof BlockCommandSender) {
             return BukkitViewerImpl.console();
         }
 
         throw new IllegalArgumentException("Unsupported sender type: " + any.getClass().getName());
     }
-
 }
