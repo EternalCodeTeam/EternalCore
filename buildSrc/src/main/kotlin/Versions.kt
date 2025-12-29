@@ -42,7 +42,7 @@ object Versions {
 
     const val CAFFEINE = "3.2.3"
 
-    const val GLOWING_ENTITIES = "1.4.9"
+    const val GLOWING_ENTITIES = "1.4.10"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
