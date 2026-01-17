@@ -4,7 +4,7 @@ object Versions {
     const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
 
     const val ETERNALCODE_COMMONS = "1.3.1"
-    const val MULTIFICATION = "1.2.3"
+    const val MULTIFICATION = "1.2.4"
 
     const val JETBRAINS_ANNOTATIONS = "26.0.2-1"
     const val PLACEHOLDER_API = "2.11.7"
@@ -42,12 +42,13 @@ object Versions {
 
     const val CAFFEINE = "3.2.3"
 
-    const val GLOWING_ENTITIES = "1.4.9"
+    const val GLOWING_ENTITIES = "1.4.10"
 
     const val SPOTIFY_COMPLETABLE_FUTURES = "0.3.6"
 
     // tests
-    const val JUNIT_BOM = "6.0.1"
-    const val MOCKITO_CORE = "5.20.0"
-
+    const val JUNIT_BOM = "6.0.2"
+    const val MOCKITO_CORE = "5.21.0"
+    const val ASSERTJ_CORE = "3.27.6"
+    const val AWAITILITY = "4.3.0"
 }

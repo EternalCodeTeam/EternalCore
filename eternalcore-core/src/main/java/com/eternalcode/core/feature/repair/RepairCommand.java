@@ -29,7 +29,7 @@ class RepairCommand {
     RepairCommand(NoticeService noticeService, RepairSettings repairSettings) {
         this.noticeService = noticeService;
         this.repairSettings = repairSettings;
-        this.delay = new Delay<>(() -> this.repairSettings.repairDelay());
+        this.delay = Delay.withDefault(() -> this.repairSettings.repairDelay());
     }
 
     @Execute
@@ -73,7 +73,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.repairSettings.repairDelay());
+        this.delay.markDelay(uuid);
     }
 
     @Execute(name = "all")
@@ -117,7 +117,7 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.repairSettings.repairDelay());
+        this.delay.markDelay(uuid);
     }
 
     @Execute(name = "armor")
@@ -161,12 +161,12 @@ class RepairCommand {
             .player(player.getUniqueId())
             .send();
 
-        this.delay.markDelay(uuid, this.repairSettings.repairDelay());
+        this.delay.markDelay(uuid);
     }
 
     private boolean hasRepairDelay(UUID uuid) {
         if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
+            Duration time = this.delay.getRemaining(uuid);
 
             this.noticeService
                 .create()
