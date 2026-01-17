@@ -17,7 +17,7 @@ object Versions {
     const val OKAERI_CONFIGS = "6.0.0-beta.27"
 
     const val MARIA_DB = "3.5.7"
-    const val POSTGRESQL = "42.7.8"
+    const val POSTGRESQL = "42.7.9"
     const val H2 = "2.4.240"
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "7.0.2"
