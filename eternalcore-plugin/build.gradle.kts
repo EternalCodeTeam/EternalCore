@@ -2,7 +2,13 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
+    `eternalcore-publish-plugin`
     id("xyz.jpenilla.run-paper") version "3.0.2"
+}
+
+ext {
+    set("modrinthProjectId", "eternalcore")
+    set("hangarProjectId", "eternalcore")
 }
 
 eternalShadowCompiler {
@@ -40,3 +46,4 @@ tasks {
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
     }
 }
+
