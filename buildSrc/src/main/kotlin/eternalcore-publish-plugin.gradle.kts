@@ -25,7 +25,7 @@ if (buildNumber != null && !isRelease) {
             "0"
         }
     }
-    
+
     val baseVersion = project.version.toString().replace("-SNAPSHOT", "")
     version = "$baseVersion-SNAPSHOT+$offset"
 }
@@ -48,7 +48,7 @@ val releaseChannel = if (isRelease) "Release" else "Snapshot"
 
 afterEvaluate {
     val shadowJarTask = tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar")
-    
+
     modrinth {
         token.set(providers.environmentVariable("MODRINTH_TOKEN"))
         projectId.set(project.findProperty("modrinthProjectId") as String? ?: project.name)
@@ -56,9 +56,9 @@ afterEvaluate {
         versionType.set(if (isRelease) "release" else "beta")
         uploadFile.set(shadowJarTask)
         gameVersions.addAll(paperVersions)
-        loaders.addAll(listOf("paper", "spigot", "folia", "purpur"))
+        loaders.addAll(listOf("paper", "folia", "purpur"))
         changelog.set(changelogText)
-        
+
         val readmeFile = rootProject.file("README.md")
         if (readmeFile.exists()) {
             syncBodyFrom.set(readmeFile.readText())
