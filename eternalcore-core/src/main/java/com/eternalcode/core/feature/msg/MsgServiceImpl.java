@@ -2,8 +2,8 @@ package com.eternalcode.core.feature.msg;
 
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
-import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
 import com.eternalcode.core.feature.msg.toggle.MsgState;
+import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -116,5 +116,4 @@ class MsgServiceImpl implements MsgService {
         return this.userManager.getUser(target.getUniqueId())
             .orElseThrow(() -> new IllegalStateException("User not found for player " + target.getName()));
     }
-
 }

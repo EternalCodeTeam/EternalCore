@@ -3,13 +3,13 @@ package com.eternalcode.core.feature.msg;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.placeholder.Placeholders;
 import com.eternalcode.multification.shared.Formatter;
-
 import java.util.UUID;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 
 class MsgPresenter {
 
     private static final Placeholders<Message> PLACEHOLDERS = Placeholders.<Message>builder()
-        .with("{MESSAGE}", Message::message)
+        .with("{MESSAGE}", message -> MiniMessage.miniMessage().escapeTags(message.message()))
         .with("{TARGET}", message -> message.target().getName())
         .with("{SENDER}", message -> message.sender().getName())
         .build();
@@ -32,5 +32,4 @@ class MsgPresenter {
         this.notice.player(sender, translation -> translation.msg().msgYouToTarget(), formatter);
         this.notice.players(event.spies(), translation -> translation.msg().socialSpyMessage(), formatter);
     }
-
 }

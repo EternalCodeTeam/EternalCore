@@ -16,10 +16,11 @@ import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
 import java.util.UUID;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Command(name = "helpop", aliases = { "report" })
+@Command(name = "helpop", aliases = {"report"})
 @Permission("eternalcore.helpop")
 @PermissionDocs(
     name = "HelpOp Spy",
@@ -73,7 +74,7 @@ class HelpOpCommand {
             .console()
             .notice(translation -> translation.helpOp().format())
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{TEXT}", message);
+            .placeholder("{TEXT}", MiniMessage.miniMessage().escapeTags(message));
 
         for (Player admin : this.server.getOnlinePlayers()) {
             if (!admin.hasPermission(HELPOP_SPY)) {
@@ -93,5 +94,4 @@ class HelpOpCommand {
 
         this.delay.markDelay(uuid);
     }
-
 }
