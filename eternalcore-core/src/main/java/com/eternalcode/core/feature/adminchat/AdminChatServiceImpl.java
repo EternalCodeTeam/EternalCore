@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -77,7 +78,7 @@ final class AdminChatServiceImpl implements AdminChatService {
             .console()
             .notice(translation -> translation.adminChat().format())
             .placeholder("{PLAYER}", sender.getName())
-            .placeholder("{TEXT}", event.getContent());
+            .placeholder("{TEXT}", MiniMessage.miniMessage().escapeTags(event.getContent()));
 
         this.server.getOnlinePlayers().stream()
             .filter(this::canSeeAdminChat)
