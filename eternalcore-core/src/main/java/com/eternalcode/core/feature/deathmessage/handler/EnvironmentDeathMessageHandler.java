@@ -75,7 +75,7 @@ public class EnvironmentDeathMessageHandler {
             .placeholder("{MOB}", mobName)
             .placeholder("{MOB_TYPE}", mobType.name())
             .onlinePlayers()
-            .send();
+            .sendAsync();
     }
 
     private void handleEnvironmentDeath(String victimName, EntityDamageEvent.DamageCause cause) {
@@ -92,7 +92,7 @@ public class EnvironmentDeathMessageHandler {
             .placeholder("{PLAYER}", victimName)
             .placeholder("{CAUSE}", this.formatCauseName(cause))
             .onlinePlayers()
-            .send();
+            .sendAsync();
     }
 
     private void handleUnknownDeath(String victimName) {
@@ -101,7 +101,7 @@ public class EnvironmentDeathMessageHandler {
                 .playerDiedByUnknownCause()))
             .placeholder("{PLAYER}", victimName)
             .onlinePlayers()
-            .send();
+            .sendAsync();
     }
 
     private String getMobName(Entity entity) {

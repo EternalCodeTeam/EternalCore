@@ -40,12 +40,13 @@ public class PlayerKillMessageHandler {
         String weaponName = this.getWeaponName(weapon);
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage().playerKilledByOtherPlayer()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage()
+                .playerKilledByOtherPlayer()))
             .placeholder("{PLAYER}", victimName)
             .placeholder("{KILLER}", killerName)
             .placeholder("{WEAPON}", weaponName)
             .onlinePlayers()
-            .send();
+            .sendAsync();
     }
 
     private String getWeaponName(ItemStack weapon) {
