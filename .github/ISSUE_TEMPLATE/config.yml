@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discord Community
+    url: https://discord.com/invite/FQ7jmGBd6c
+    about: Please ask questions and discuss ideas in our Discord server before opening a generic issue.
+  - name: 📖 Documentation
+    url: https://eternalcode.pl/docs/eternalcore/introduction
+    about: Read the documentation to see if your question is already answered.
