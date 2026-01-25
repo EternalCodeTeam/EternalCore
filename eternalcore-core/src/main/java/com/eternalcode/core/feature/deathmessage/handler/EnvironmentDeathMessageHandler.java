@@ -57,50 +57,51 @@ public class EnvironmentDeathMessageHandler {
         EntityType mobType = killer.getType();
 
         this.noticeService.create()
-                .noticeOptional(translation -> {
-                    List<Notice> mobMessages = translation.deathMessage().playerKilledByMobType().get(mobType);
+            .noticeOptional(translation -> {
+                List<Notice> mobMessages = translation.deathMessage().playerKilledByMobType().get(mobType);
 
-                    if (mobMessages != null && !mobMessages.isEmpty()) {
-                        return RandomElementUtil.randomElement(mobMessages);
-                    }
+                if (mobMessages != null && !mobMessages.isEmpty()) {
+                    return RandomElementUtil.randomElement(mobMessages);
+                }
 
-                    List<Notice> genericMobMessages = translation.deathMessage().playerKilledByEntity();
-                    if (genericMobMessages != null && !genericMobMessages.isEmpty()) {
-                        return RandomElementUtil.randomElement(genericMobMessages);
-                    }
+                List<Notice> genericMobMessages = translation.deathMessage().playerKilledByEntity();
+                if (genericMobMessages != null && !genericMobMessages.isEmpty()) {
+                    return RandomElementUtil.randomElement(genericMobMessages);
+                }
 
-                    return RandomElementUtil.randomElement(translation.deathMessage().playerDiedByUnknownCause());
-                })
-                .placeholder("{PLAYER}", victimName)
-                .placeholder("{MOB}", mobName)
-                .placeholder("{MOB_TYPE}", mobType.name())
-                .onlinePlayers()
-                .sendAsync();
+                return RandomElementUtil.randomElement(translation.deathMessage().playerDiedByUnknownCause());
+            })
+            .placeholder("{PLAYER}", victimName)
+            .placeholder("{MOB}", mobName)
+            .placeholder("{MOB_TYPE}", mobType.name())
+            .onlinePlayers()
+            .sendAsync();
     }
 
     private void handleEnvironmentDeath(String victimName, EntityDamageEvent.DamageCause cause) {
         this.noticeService.create()
-                .noticeOptional(translation -> {
-                    List<Notice> causeMessages = translation.deathMessage().playerDiedByDamageCause().get(cause);
+            .noticeOptional(translation -> {
+                List<Notice> causeMessages = translation.deathMessage().playerDiedByDamageCause().get(cause);
 
-                    if (causeMessages != null && !causeMessages.isEmpty()) {
-                        return RandomElementUtil.randomElement(causeMessages);
-                    }
+                if (causeMessages != null && !causeMessages.isEmpty()) {
+                    return RandomElementUtil.randomElement(causeMessages);
+                }
 
-                    return RandomElementUtil.randomElement(translation.deathMessage().playerDiedByUnknownCause());
-                })
-                .placeholder("{PLAYER}", victimName)
-                .placeholder("{CAUSE}", this.formatCauseName(cause))
-                .onlinePlayers()
-                .sendAsync();
+                return RandomElementUtil.randomElement(translation.deathMessage().playerDiedByUnknownCause());
+            })
+            .placeholder("{PLAYER}", victimName)
+            .placeholder("{CAUSE}", this.formatCauseName(cause))
+            .onlinePlayers()
+            .sendAsync();
     }
 
     private void handleUnknownDeath(String victimName) {
         this.noticeService.create()
-                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage().playerDiedByUnknownCause()))
-                .placeholder("{PLAYER}", victimName)
-                .onlinePlayers()
-                .sendAsync();
+            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.deathMessage()
+                .playerDiedByUnknownCause()))
+            .placeholder("{PLAYER}", victimName)
+            .onlinePlayers()
+            .sendAsync();
     }
 
     private String getMobName(Entity entity) {
@@ -118,8 +119,8 @@ public class EnvironmentDeathMessageHandler {
         for (String word : words) {
             if (word.length() > 0) {
                 formatted.append(Character.toUpperCase(word.charAt(0)))
-                        .append(word.substring(1))
-                        .append(" ");
+                    .append(word.substring(1))
+                    .append(" ");
             }
         }
 
