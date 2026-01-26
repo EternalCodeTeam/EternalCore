@@ -9,17 +9,22 @@
 [![Chat on Discord](https://raw.githubusercontent.com/vLuckyyy/badges/main//chat-with-us-on-discord.svg)](https://discord.com/invite/FQ7jmGBd6c)
 [![Read the Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://docs.eternalcode.pl/eternalcore/introduction)
 [![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/bukkit/EternalCore/13964)
+
+[Report Bug](https://github.com/EternalCodeTeam/EternalCore/issues) • [Request Feature](https://github.com/EternalCodeTeam/EternalCore/issues) • [Join Discord](https://discord.com/invite/FQ7jmGBd6c)
+
+<br>
+
+<a href="https://ko-fi.com/eternalcodeteam">
+  <img src="https://github.com/intergrav/devins-badges/blob/v3/assets/cozy/donate/kofi-plural-alt_64h.png?raw=true" height="64" alt="Support us on Ko-fi">
+</a>
+
 </div>
 
-> [!WARNING]
-> **This branch is currently under active development for EternalCore 2.0.**
-> 
-> This is a major update that includes breaking changes, configuration refactors, translation cleanup, and UX improvements.
-> 
-> ⚠️ Features may be incomplete or unstable. Avoid using in production unless you're contributing or testing the new version.
-> 
-> 🔗 See the full roadmap and discussion: https://github.com/EternalCodeTeam/EternalCore/issues/952
-
+> [!IMPORTANT]
+> 🚀 **EternalCore 2.0 has landed!**  
+> This is a major release with internal changes, new systems, and config updates.  
+> Please read the **changelog** carefully before upgrading:  
+> 👉 https://github.com/EternalCodeTeam/EternalCore/releases/latest
 
 
 # Welcome to EternalCore! 🚀
@@ -93,7 +98,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:2.0.0-SNAPSHOT")
+compileOnly("com.eternalcode:eternalcore-api:2.0.0")
 ```
 
 For Maven projects use:
@@ -101,7 +106,7 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
     <scope>provided</scope>
 </dependency>
 ```
