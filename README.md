@@ -66,7 +66,7 @@ Get the latest development builds from [our website](https://eternalcode.pl/buil
   - Attributes: Gamemode, Fly, Speed, Godmode, Heal, Feed
   - Information: `/whois`, Playtime, Last Seen, Ping check
   - Utilities: Hat `/hat`, Skull `/skull`, Near players via `/near`
-- � **Items & World**:
+- 🌍 **Items & World**:
   - Open Utility Blocks (Workbench, Anvil, Enderchest, etc.)
   - Item Editing (Name, Lore, Flags) and Sign Editing
   - Time, Weather management
