@@ -28,7 +28,7 @@ eternalShadowCompiler {
     }
 
     shadowJar {
-        archiveFileName.set("EternalCore v${project.version} (MC 1.17.x-1.21.x).jar")
+        archiveFileName.set("EternalCore v${project.version} (MC 1.19.x-1.21.x).jar")
 
         exclude(
             "META-INF/**",
