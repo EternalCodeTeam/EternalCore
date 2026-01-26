@@ -61,7 +61,7 @@ Get the latest development builds from [our website](https://eternalcode.pl/buil
 - 🛡️ **Moderation & Administration**:
   - Jail, Freeze, and Vanish Systems
   - Admin Tools: `/sudo`, `/powertool`, `/butcher` (Mob Control)
-  - Inventory Management: `/clear`, `/repair`, and Disposal (`/trash`)
+  - Inventory Management: `/clear`, `/repair`, and Disposal (`/disposal`)
 - 👤 **Player Management**:
   - Attributes: Gamemode, Fly, Speed, Godmode, Heal, Feed
   - Information: `/whois`, Playtime, Last Seen, Ping check
