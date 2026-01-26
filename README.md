@@ -69,7 +69,7 @@ Get the latest development builds from [our website](https://eternalcode.pl/buil
 - � **Items & World**:
   - Open Utility Blocks (Workbench, Anvil, Enderchest, etc.)
   - Item Editing (Name, Lore, Flags) and Sign Editing
-  - Time, Weather, and Server MOTD Management
+  - Time, Weather management
 - ⚙️ **Core & Integration**:
   - 📄 PlaceholderAPI Support
   - 🗂️ Database Integration (PostgresSQL, SQLite, MySQL, MariaDB, H2)
