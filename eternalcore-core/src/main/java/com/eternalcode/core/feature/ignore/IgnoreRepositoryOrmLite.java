@@ -71,8 +71,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
                 }
 
                 return this.save(IgnoreTable.class, new IgnoreTable(by, target))
-                    .thenRun(() -> this.ignores.refresh(by))
-                    .thenApply(unused -> null);
+                    .thenRun(() -> this.ignores.refresh(by));
             });
     }
 
