@@ -57,19 +57,22 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
 
     @Override
     public CompletableFuture<Void> ignore(UUID by, UUID target) {
-        return CompletableFuture.runAsync(() -> {
-            try {
-                Set<UUID> uuids = this.ignores.get(by);
-
-                if (!uuids.contains(target)) {
-                    this.save(IgnoreTable.class, new IgnoreTable(by, target))
-                        .thenRun(() -> this.ignores.refresh(by));
+        return CompletableFuture.supplyAsync(() -> {
+                try {
+                    return this.ignores.get(by);
                 }
-            }
-            catch (ExecutionException exception) {
-                throw new RuntimeException(exception);
-            }
-        });
+                catch (ExecutionException exception) {
+                    throw new RuntimeException(exception);
+                }
+            })
+            .thenCompose(uuids -> {
+                if (uuids.contains(target)) {
+                    return CompletableFuture.completedFuture(null);
+                }
+
+                return this.save(IgnoreTable.class, new IgnoreTable(by, target))
+                    .thenRun(() -> this.ignores.refresh(by));
+            });
     }
 
     @Override
