@@ -4,7 +4,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Event called when an admin chat message is being sent.
@@ -21,7 +21,7 @@ public class AdminChatEvent extends Event implements Cancellable {
     private String content;
     private boolean cancelled;
 
-    public AdminChatEvent(@NotNull CommandSender sender, @NotNull String content) {
+    public AdminChatEvent(@NonNull CommandSender sender, @NonNull String content) {
         super(false);
 
         if (sender == null) {
@@ -36,22 +36,22 @@ public class AdminChatEvent extends Event implements Cancellable {
         this.cancelled = false;
     }
 
-    @NotNull
+    @NonNull
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 
-    @NotNull
+    @NonNull
     public CommandSender getSender() {
         return this.sender;
     }
 
-    @NotNull
+    @NonNull
     public String getContent() {
         return this.content;
     }
 
-    public void setContent(@NotNull String content) {
+    public void setContent(@NonNull String content) {
         if (content == null) {
             throw new IllegalArgumentException("Content cannot be null");
         }
@@ -69,7 +69,7 @@ public class AdminChatEvent extends Event implements Cancellable {
     }
 
     @Override
-    @NotNull
+    @NonNull
     public HandlerList getHandlers() {
         return HANDLER_LIST;
     }

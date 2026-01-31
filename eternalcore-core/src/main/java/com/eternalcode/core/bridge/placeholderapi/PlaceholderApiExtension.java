@@ -3,13 +3,12 @@ package com.eternalcode.core.bridge.placeholderapi;
 import com.eternalcode.core.bridge.BridgeInitializer;
 import com.eternalcode.core.placeholder.PlaceholderRaw;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
+import java.util.Optional;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 public class PlaceholderApiExtension extends PlaceholderExpansion implements BridgeInitializer {
 
@@ -22,7 +21,7 @@ public class PlaceholderApiExtension extends PlaceholderExpansion implements Bri
     }
 
     @Override
-    public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
+    public @NonNull String onPlaceholderRequest(Player player, @NonNull String params) {
         Optional<PlaceholderRaw> optional = this.placeholderRegistry.getRawPlaceholder(params);
 
         if (optional.isPresent()) {
@@ -33,17 +32,17 @@ public class PlaceholderApiExtension extends PlaceholderExpansion implements Bri
     }
 
     @Override
-    public @NotNull String getIdentifier() {
+    public @NonNull String getIdentifier() {
         return "eternalcore";
     }
 
     @Override
-    public @NotNull String getAuthor() {
+    public @NonNull String getAuthor() {
         return "EternalCodeTeam";
     }
 
     @Override
-    public @NotNull String getVersion() {
+    public @NonNull String getVersion() {
         return this.pluginDescriptionFile.getVersion();
     }
 

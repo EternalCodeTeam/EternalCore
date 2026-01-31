@@ -22,7 +22,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
 import org.bukkit.Server;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 @Service
 public class NoticeService extends Multification<Viewer, Translation> {
@@ -60,17 +60,17 @@ public class NoticeService extends Multification<Viewer, Translation> {
     }
 
     @Override
-    public @NotNull ViewerProvider<Viewer> viewerProvider() {
+    public @NonNull ViewerProvider<Viewer> viewerProvider() {
         return new BukkitViewerProvider(this.userManager, this.server);
     }
 
     @Override
-    public @NotNull TranslationProvider<Translation> translationProvider() {
+    public @NonNull TranslationProvider<Translation> translationProvider() {
         return this.translationManager;
     }
 
     @Override
-    public @NotNull AudienceConverter<Viewer> audienceConverter() {
+    public @NonNull AudienceConverter<Viewer> audienceConverter() {
         return viewer -> {
             if (viewer.isConsole()) {
                 return this.audienceProvider.console();
@@ -81,12 +81,12 @@ public class NoticeService extends Multification<Viewer, Translation> {
     }
 
     @Override
-    public @NotNull AsyncExecutor asyncExecutor() {
+    public @NonNull AsyncExecutor asyncExecutor() {
         return this.scheduler::runAsync;
     }
 
     @Override
-    public @NotNull Replacer<Viewer> globalReplacer() {
+    public @NonNull Replacer<Viewer> globalReplacer() {
         return (viewer, text) -> this.registry.format(text, viewer);
     }
 
@@ -101,7 +101,7 @@ public class NoticeService extends Multification<Viewer, Translation> {
     }
 
     @Override
-    protected @NotNull ComponentSerializer<Component, Component, String> serializer() {
+    protected @NonNull ComponentSerializer<Component, Component, String> serializer() {
         return this.miniMessage;
     }
 
