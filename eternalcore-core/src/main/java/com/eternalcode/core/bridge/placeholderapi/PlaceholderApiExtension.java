@@ -21,7 +21,7 @@ public class PlaceholderApiExtension extends PlaceholderExpansion implements Bri
     }
 
     @Override
-    public @Nullable String onPlaceholderRequest(Player player, @NonNull String params) {
+    public @NonNull String onPlaceholderRequest(Player player, @NonNull String params) {
         Optional<PlaceholderRaw> optional = this.placeholderRegistry.getRawPlaceholder(params);
 
         if (optional.isPresent()) {
