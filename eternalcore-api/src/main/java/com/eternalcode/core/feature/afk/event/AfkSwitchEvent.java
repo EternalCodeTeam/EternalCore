@@ -4,6 +4,7 @@ import com.eternalcode.core.feature.afk.Afk;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Called when a player switches their afk status.
@@ -41,7 +42,7 @@ public class AfkSwitchEvent extends Event implements Cancellable {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

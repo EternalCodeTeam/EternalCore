@@ -4,7 +4,7 @@ import java.util.UUID;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * This event is called when a player ignores all other players.
@@ -38,7 +38,7 @@ public class UnIgnoreAllEvent extends Event implements Cancellable {
         this.cancelled = cancel;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public HandlerList getHandlers() {
         return HANDLER_LIST;

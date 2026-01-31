@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.deathmessage;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public record DeathContext(
     Player victim,

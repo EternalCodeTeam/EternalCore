@@ -18,7 +18,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 @Repository
 class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements IgnoreRepository {
@@ -122,7 +122,7 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
     private class IgnoreLoader extends CacheLoader<UUID, Set<UUID>> {
 
         @Override
-        public @NotNull Set<UUID> load(@NotNull UUID key) throws SQLException {
+        public @NonNull Set<UUID> load(@NonNull UUID key) throws SQLException {
             return IgnoreRepositoryOrmLite.this.cachedDao.queryBuilder()
                 .where().eq(IgnoreTable.PLAYER_ID_COLUMN, key)
                 .query()

@@ -31,7 +31,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Controller allowing vanished players to silently access containers
@@ -204,7 +204,7 @@ class OpenSilentController implements Listener {
     private record PlayerRestoreListener(Scheduler scheduler) implements RemovalListener<UUID, ContainerWrapper> {
 
         @Override
-        public void onRemoval(UUID playerId, ContainerWrapper data, @NotNull RemovalCause cause) {
+        public void onRemoval(UUID playerId, ContainerWrapper data, @NonNull RemovalCause cause) {
             if (cause == RemovalCause.EXPIRED && data != null) {
 
                 this.scheduler.run(() -> {

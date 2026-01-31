@@ -3,8 +3,8 @@ package com.eternalcode.core.feature.adminchat;
 import java.util.Collection;
 import java.util.UUID;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Service responsible for managing admin chat functionality.
@@ -20,7 +20,7 @@ public interface AdminChatService {
      * @param playerUuid the UUID of the player to toggle admin chat for
      * @return {@code true} if persistent chat was enabled, {@code false} if it was disabled
      */
-    boolean toggleChat(@NotNull UUID playerUuid);
+    boolean toggleChat(@NonNull UUID playerUuid);
 
     /**
      * Checks if the persistent admin chat mode is enabled for the specified player.
@@ -28,7 +28,7 @@ public interface AdminChatService {
      * @param playerUuid the UUID of the player to check
      * @return {@code true} if persistent chat is enabled, {@code false} otherwise
      */
-    boolean hasEnabledChat(@NotNull UUID playerUuid);
+    boolean hasEnabledChat(@NonNull UUID playerUuid);
 
     /**
      * Retrieves all players who currently have persistent admin chat enabled.
@@ -39,7 +39,7 @@ public interface AdminChatService {
      *
      * @return an unmodifiable collection of player UUIDs with enabled admin chat
      */
-    @NotNull
+    @NonNull
     @Unmodifiable
     Collection<UUID> getPlayersWithEnabledChat();
 
@@ -52,21 +52,21 @@ public interface AdminChatService {
      * @param message the message content to send
      * @param sender  the command sender who is sending the message
      */
-    void sendAdminChatMessage(@NotNull String message, @NotNull CommandSender sender);
+    void sendAdminChatMessage(@NonNull String message, @NonNull CommandSender sender);
 
     /**
      * Enables persistent admin chat for the specified player.
      *
      * @param playerUuid the UUID of the player
      */
-    void enableChat(@NotNull UUID playerUuid);
+    void enableChat(@NonNull UUID playerUuid);
 
     /**
      * Disables persistent admin chat for the specified player.
      *
      * @param playerUuid the UUID of the player
      */
-    void disableChat(@NotNull UUID playerUuid);
+    void disableChat(@NonNull UUID playerUuid);
 
     /**
      * Checks if the specified command sender has permission to see admin chat messages.
@@ -74,5 +74,5 @@ public interface AdminChatService {
      * @param sender the command sender to check
      * @return {@code true} if the sender can see admin chat messages, {@code false} otherwise
      */
-    boolean canSeeAdminChat(@NotNull CommandSender sender);
+    boolean canSeeAdminChat(@NonNull CommandSender sender);
 }

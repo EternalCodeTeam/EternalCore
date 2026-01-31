@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.vanish.event;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 public class DisableVanishEvent extends AbstractVanishEvent {
 
@@ -13,7 +13,7 @@ public class DisableVanishEvent extends AbstractVanishEvent {
     }
 
     @Override
-    public @NotNull HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLERS;
     }
 
