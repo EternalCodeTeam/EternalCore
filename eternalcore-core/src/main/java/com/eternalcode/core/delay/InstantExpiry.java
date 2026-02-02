@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import org.jspecify.annotations.NonNull;
 
-class InstantExpiry<T> implements Expiry<@NonNull T, @NonNull Instant> {
+class InstantExpiry<T> implements Expiry<T, Instant> {
 
     @Override
     public long expireAfterCreate(@NonNull T key, @NonNull Instant expireTime, long currentTime) {
