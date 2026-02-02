@@ -18,7 +18,7 @@ final class AdminChatChannelController implements Listener {
     private final Scheduler scheduler;
 
     @Inject
-    AdminChatChannelController(@NonNull AdminChatService adminChatService, Scheduler scheduler) {
+    AdminChatChannelController(@NonNull AdminChatService adminChatService, @NonNull Scheduler scheduler) {
         this.adminChatService = adminChatService;
         this.scheduler = scheduler;
     }
