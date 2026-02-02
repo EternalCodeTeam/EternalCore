@@ -29,7 +29,7 @@ final class AdminChatCommand {
     @DescriptionDocs(
         description = "Toggles persistent admin chat mode. When enabled, all your messages will be sent to admin chat."
     )
-    void executeToggle(@Context @NonNull Player sender) {
+    void executeToggle(@Context Player sender) {
         boolean enabled = this.adminChatService.toggleChat(sender.getUniqueId());
 
         this.noticeService.create()
