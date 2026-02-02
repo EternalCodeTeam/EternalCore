@@ -45,7 +45,7 @@ final class AdminChatCommand {
         description = "Sends a message to all staff members with admin chat permissions.",
         arguments = "<message>"
     )
-    void executeSendMessage(@Context @NonNull CommandSender sender, @Join @NonNull String message) {
+    void executeSendMessage(@Context CommandSender sender, @Join String message) {
         if (message.trim().isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.argument().noArgument())
