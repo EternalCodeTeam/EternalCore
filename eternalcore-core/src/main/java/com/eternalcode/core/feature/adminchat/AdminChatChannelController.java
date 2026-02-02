@@ -24,7 +24,7 @@ final class AdminChatChannelController implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    void onPlayerChat(@NonNull AsyncPlayerChatEvent event) {
+    void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (!this.adminChatService.hasEnabledChat(player.getUniqueId())) {
