@@ -37,7 +37,7 @@ final class AdminChatChannelController implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    void onPlayerQuit(@NonNull PlayerQuitEvent event) {
+    void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
         if (this.adminChatService.hasEnabledChat(player.getUniqueId())) {
