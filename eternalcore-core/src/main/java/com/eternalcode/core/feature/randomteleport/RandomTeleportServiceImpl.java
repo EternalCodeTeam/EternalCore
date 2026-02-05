@@ -9,10 +9,12 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -25,6 +27,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     private final RandomTeleportSettings randomTeleportSettings;
     private final RandomTeleportSafeLocationService safeLocationService;
     private final EventCaller eventCaller;
+    private final Map<String, RandomTeleportLocationFilter> registeredFilters;
 
     @Inject
     RandomTeleportServiceImpl(
@@ -34,6 +37,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         this.randomTeleportSettings = randomTeleportSettings;
         this.safeLocationService = safeLocationService;
         this.eventCaller = eventCaller;
+        this.registeredFilters = new ConcurrentHashMap<>();
     }
 
     @Override
@@ -149,5 +153,41 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         WorldBorder worldBorder = world.getWorldBorder();
         int borderRadius = (int) (worldBorder.getSize() / 2);
         return RandomTeleportRadius.of(-borderRadius, borderRadius, -borderRadius, borderRadius);
+    }
+
+    @Override
+    public void registerFilter(RandomTeleportLocationFilter filter) {
+        if (filter == null) {
+            throw new IllegalArgumentException("Filter cannot be null");
+        }
+
+        String filterName = filter.getFilterName();
+        if (filterName == null || filterName.isEmpty()) {
+            throw new IllegalArgumentException("Filter name cannot be null or empty");
+        }
+
+        if (this.registeredFilters.containsKey(filterName)) {
+            throw new IllegalArgumentException("Filter with name '" + filterName + "' is already registered");
+        }
+
+        this.registeredFilters.put(filterName, filter);
+    }
+
+    @Override
+    public boolean unregisterFilter(String filterName) {
+        if (filterName == null || filterName.isEmpty()) {
+            return false;
+        }
+
+        return this.registeredFilters.remove(filterName) != null;
+    }
+
+    @Override
+    public Collection<RandomTeleportLocationFilter> getRegisteredFilters() {
+        return Collections.unmodifiableCollection(this.registeredFilters.values());
+    }
+
+    Collection<RandomTeleportLocationFilter> getRegisteredFiltersInternal() {
+        return this.registeredFilters.values();
     }
 }

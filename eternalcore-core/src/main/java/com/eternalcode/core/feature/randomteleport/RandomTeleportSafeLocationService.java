@@ -25,15 +25,18 @@ class RandomTeleportSafeLocationService {
 
     private final RandomTeleportSettings randomTeleportSettings;
     private final LocationsConfiguration locationsConfiguration;
+    private final RandomTeleportServiceImpl randomTeleportService;
     private final Random random = new Random();
 
     @Inject
     RandomTeleportSafeLocationService(
         RandomTeleportSettings randomTeleportSettings,
-        LocationsConfiguration locationsConfiguration
+        LocationsConfiguration locationsConfiguration,
+        RandomTeleportServiceImpl randomTeleportService
     ) {
         this.randomTeleportSettings = randomTeleportSettings;
         this.locationsConfiguration = locationsConfiguration;
+        this.randomTeleportService = randomTeleportService;
     }
 
     public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadius radius, int attemptCount) {
@@ -103,9 +106,21 @@ class RandomTeleportSafeLocationService {
             return false;
         }
 
-        return switch (world.getEnvironment()) {
+        boolean environmentValid = switch (world.getEnvironment()) {
             case NORMAL, THE_END, CUSTOM -> true;
             case NETHER -> location.getY() <= NETHER_MAX_HEIGHT;
         };
+
+        if (!environmentValid) {
+            return false;
+        }
+
+        for (RandomTeleportLocationFilter filter : this.randomTeleportService.getRegisteredFiltersInternal()) {
+            if (!filter.isValid(location)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
