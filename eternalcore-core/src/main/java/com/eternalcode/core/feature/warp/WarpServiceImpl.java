@@ -99,7 +99,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public Collection<@Nullable Warp> getWarps() {
+    public Collection<Warp> getWarps() {
         return Collections.unmodifiableCollection(this.warps.values());
     }
 }
