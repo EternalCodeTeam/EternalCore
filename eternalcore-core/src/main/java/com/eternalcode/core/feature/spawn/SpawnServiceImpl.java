@@ -9,7 +9,6 @@ import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import java.util.logging.Logger;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Service
@@ -29,7 +28,7 @@ public class SpawnServiceImpl implements SpawnService {
     }
 
     @Override
-    public void teleportToSpawn(@NotNull Player player) {
+    public void teleportToSpawn(Player player) {
         if (!isSpawnValid()) {
             this.logger.warning(WARNING);
             return;
@@ -40,7 +39,7 @@ public class SpawnServiceImpl implements SpawnService {
     }
 
     @Override
-    public void setSpawnLocation(@NotNull Location location) {
+    public void setSpawnLocation(Location location) {
         this.locationsConfiguration.spawn = PositionAdapter.convert(location);
         this.configurationManager.save(this.locationsConfiguration);
     }

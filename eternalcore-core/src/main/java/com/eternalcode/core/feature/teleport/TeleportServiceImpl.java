@@ -13,7 +13,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 @Service
 class TeleportServiceImpl implements TeleportService {
@@ -28,7 +27,7 @@ class TeleportServiceImpl implements TeleportService {
     }
 
     @Override
-    public void teleport(@NotNull Player player, @NotNull Location location) {
+    public void teleport(Player player, Location location) {
         EternalTeleportEvent event = this.eventCaller.callEvent(new EternalTeleportEvent(player, location));
 
         if (event.isCancelled()) {
@@ -42,12 +41,12 @@ class TeleportServiceImpl implements TeleportService {
     }
 
     @Override
-    public Optional<Location> getLastLocation(@NotNull UUID player) {
+    public Optional<Location> getLastLocation(UUID player) {
         return Optional.ofNullable(this.lastPosition.get(player)).map(position -> PositionAdapter.convert(position));
     }
 
     @Override
-    public void markLastLocation(@NotNull UUID player, @NotNull Location location) {
+    public void markLastLocation(UUID player, Location location) {
         this.lastPosition.put(player, PositionAdapter.convert(location));
     }
 }

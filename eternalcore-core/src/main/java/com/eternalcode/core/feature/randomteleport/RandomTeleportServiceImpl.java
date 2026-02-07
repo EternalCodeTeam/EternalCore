@@ -18,7 +18,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 @Service
 class RandomTeleportServiceImpl implements RandomTeleportService {
@@ -38,13 +37,13 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<RandomTeleportResult> teleport(@NotNull Player player) {
+    public CompletableFuture<RandomTeleportResult> teleport(Player player) {
         World world = resolveWorld(player, randomTeleportSettings);
         return this.teleport(player, world);
     }
 
     @Override
-    public CompletableFuture<RandomTeleportResult> teleport(@NotNull Player player, @NotNull World world) {
+    public CompletableFuture<RandomTeleportResult> teleport(Player player, World world) {
         PreRandomTeleportEvent preRandomTeleportEvent = this.eventCaller.callEvent(new PreRandomTeleportEvent(player));
 
         if (preRandomTeleportEvent.isCancelled()) {
@@ -63,7 +62,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(@NotNull Collection<Player> players) {
+    public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players) {
         if (players.isEmpty()) {
             return CompletableFuture.completedFuture(Map.of());
         }
@@ -75,7 +74,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(@NotNull Collection<Player> players, @NotNull World world) {
+    public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(Collection<Player> players, World world) {
         if (players.isEmpty()) {
             return CompletableFuture.completedFuture(Map.of());
         }
@@ -86,9 +85,8 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
 
     @Override
     public CompletableFuture<Map<Player, RandomTeleportResult>> teleport(
-        @NotNull Collection<Player> players,
-        @NotNull Location location
-    ) {
+        Collection<Player> players,
+        Location location) {
         if (players.isEmpty()) {
             return CompletableFuture.completedFuture(Map.of());
         }
@@ -119,7 +117,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<Location> getSafeRandomLocation(@NotNull World world, int attemptCount) {
+    public CompletableFuture<Location> getSafeRandomLocation(World world, int attemptCount) {
         RandomTeleportRadius radius = switch (this.randomTeleportSettings.radiusType()) {
             case STATIC_RADIUS -> this.randomTeleportSettings.radius();
             case WORLD_BORDER_RADIUS -> this.getWorldBorderRadius(world);
@@ -129,13 +127,13 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<Location> getSafeRandomLocation(@NotNull World world, int radius, int attemptCount) {
+    public CompletableFuture<Location> getSafeRandomLocation(World world, int radius, int attemptCount) {
         return this.safeLocationService.getSafeRandomLocation(world, RandomTeleportRadius.of(radius), attemptCount);
     }
 
     @Override
     public CompletableFuture<Location> getSafeRandomLocation(
-        @NotNull World world,
+        World world,
         RandomTeleportRadius radius,
         int attemptCount
     ) {
@@ -143,7 +141,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
     }
 
     @Override
-    public CompletableFuture<Location> getSafeRandomLocationInWorldBorder(@NotNull World world, int attemptCount) {
+    public CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount) {
         return this.getSafeRandomLocation(world, this.getWorldBorderRadius(world), attemptCount);
     }
 

@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.Location;
@@ -25,7 +24,6 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Blocking;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
 @Service
@@ -67,7 +65,7 @@ class JailServiceImpl implements JailService {
     }
 
     @Override
-    public boolean detainPlayer(@NotNull Player player, @NotNull CommandSender detainedBy, @Nullable Duration time) {
+    public boolean detainPlayer(Player player, CommandSender detainedBy, @Nullable Duration time) {
         if (time == null) {
             time = this.settings.defaultJailDuration();
         }
@@ -95,7 +93,7 @@ class JailServiceImpl implements JailService {
     }
 
     @Override
-    public boolean releasePlayer(@NotNull Player player) {
+    public boolean releasePlayer(Player player) {
         JailReleaseEvent jailReleaseEvent = new JailReleaseEvent(player.getUniqueId());
         this.eventCaller.callEvent(jailReleaseEvent);
 
@@ -123,7 +121,7 @@ class JailServiceImpl implements JailService {
             }
 
             if (jailedPlayer != null) {
-                this.teleportService.teleport(jailedPlayer, Objects.requireNonNull(this.spawnService.getSpawnLocation()));
+                this.teleportService.teleport(jailedPlayer, this.spawnService.getSpawnLocation());
             }
         });
 
@@ -139,7 +137,7 @@ class JailServiceImpl implements JailService {
     }
 
     @Override
-    public Collection<@Nullable JailedPlayer> getJailedPlayers() {
+    public Collection<JailedPlayer> getJailedPlayers() {
         return Collections.unmodifiableCollection(this.jailedPlayers.values());
     }
 
@@ -164,7 +162,7 @@ class JailServiceImpl implements JailService {
 
     @Override
     @Blocking
-    public void setupJailArea(@NotNull Location jailLocation) {
+    public void setupJailArea(Location jailLocation) {
         this.locationsConfiguration.jail = PositionAdapter.convert(jailLocation);
         this.configurationManager.save(this.locationsConfiguration);
     }
