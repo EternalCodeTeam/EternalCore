@@ -22,6 +22,7 @@ public final class EternalCoreApiProvider {
         return api;
     }
 
+    @ApiStatus.Internal
     static void initialize(EternalCoreApi api) {
         if (EternalCoreApiProvider.api != null) {
             throw new IllegalStateException("EternalCoreApiProvider is already initialized");
