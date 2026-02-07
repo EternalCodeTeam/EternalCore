@@ -2,12 +2,10 @@ package com.eternalcode.core.feature.afk;
 
 import java.time.Instant;
 import java.util.UUID;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Represents a player being away from keyboard (AFK).
  */
-@NullMarked
 public class Afk {
 
     private final UUID player;

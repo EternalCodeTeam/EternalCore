@@ -5,12 +5,11 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
-import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Called after teleportation to home.
  */
-@NullMarked
 public class HomeTeleportEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -38,7 +37,7 @@ public class HomeTeleportEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 }

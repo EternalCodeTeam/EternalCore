@@ -1,11 +1,8 @@
 package com.eternalcode.core;
 
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-@NullMarked
 public final class EternalCoreApiProvider {
 
     @Nullable
@@ -17,7 +14,6 @@ public final class EternalCoreApiProvider {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
-    @NotNull
     public static EternalCoreApi provide() {
         if (api == null) {
             throw new IllegalStateException("EternalCoreApiProvider is not initialized");

@@ -5,12 +5,11 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Called after teleportation to warp
  */
-@NullMarked
 public class WarpTeleportEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -40,7 +39,7 @@ public class WarpTeleportEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

@@ -2,12 +2,10 @@ package com.eternalcode.core.feature.msg.toggle;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * This Service manages player's receiving of private messages
  */
-@NullMarked
 public interface MsgToggleService {
 
     /**

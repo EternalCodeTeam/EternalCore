@@ -2,9 +2,7 @@ package com.eternalcode.core.feature.msg;
 
 import java.util.UUID;
 import org.bukkit.entity.Player;
-import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 public interface MsgService {
 
     void enableSpy(UUID uuid);

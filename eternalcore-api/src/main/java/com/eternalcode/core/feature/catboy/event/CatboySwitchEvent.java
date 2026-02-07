@@ -3,12 +3,11 @@ package com.eternalcode.core.feature.catboy.event;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
-import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Called when a player switches their catboy status.
  */
-@NullMarked
 public class CatboySwitchEvent extends PlayerEvent {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -28,7 +27,7 @@ public class CatboySwitchEvent extends PlayerEvent {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

@@ -3,9 +3,7 @@ package com.eternalcode.core.feature.jail;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
-import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 public class JailedPlayer {
 
     private final UUID player;

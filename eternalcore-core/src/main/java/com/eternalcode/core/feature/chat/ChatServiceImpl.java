@@ -29,7 +29,7 @@ class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void markUseChat(@NotNull UUID userUuid) {
+    public void markUseChat(UUID userUuid) {
         Duration chatDelay = this.chatSettings.chatDelay();
 
         Player player = this.server.getPlayer(userUuid);

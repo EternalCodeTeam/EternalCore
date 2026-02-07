@@ -5,10 +5,8 @@ import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Set;
 import java.util.UUID;
-import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-@NullMarked
 public interface VanishService {
 
     /**

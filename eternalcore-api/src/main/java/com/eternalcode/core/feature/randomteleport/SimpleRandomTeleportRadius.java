@@ -1,8 +1,5 @@
 package com.eternalcode.core.feature.randomteleport;
 
-import org.jspecify.annotations.NullMarked;
-
-@NullMarked
 record SimpleRandomTeleportRadius(int minX, int maxX, int minZ, int maxZ) implements RandomTeleportRadius {
     public SimpleRandomTeleportRadius {
         if (minX > maxX) {

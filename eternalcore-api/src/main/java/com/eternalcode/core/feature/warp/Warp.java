@@ -4,9 +4,7 @@ import org.bukkit.Location;
 
 import java.util.List;
 import org.bukkit.permissions.Permissible;
-import org.jspecify.annotations.NullMarked;
 
-@NullMarked
 public interface Warp {
 
     Location getLocation();

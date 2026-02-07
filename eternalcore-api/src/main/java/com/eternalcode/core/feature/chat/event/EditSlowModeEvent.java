@@ -6,12 +6,11 @@ import org.bukkit.event.HandlerList;
 
 import java.time.Duration;
 import java.util.UUID;
-import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Called when one of the server administrators edit slowmode chat using /chat slowmode command.
  */
-@NullMarked
 public class EditSlowModeEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -56,7 +55,7 @@ public class EditSlowModeEvent extends Event implements Cancellable {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

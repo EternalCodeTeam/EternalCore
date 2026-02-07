@@ -6,12 +6,10 @@ import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Optional;
 import java.util.UUID;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Service for teleporting players.
  */
-@NullMarked
 public interface TeleportService {
 
     /**

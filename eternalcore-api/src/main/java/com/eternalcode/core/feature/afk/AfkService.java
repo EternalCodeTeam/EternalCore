@@ -2,12 +2,10 @@ package com.eternalcode.core.feature.afk;
 
 import java.util.Optional;
 import java.util.UUID;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * This service interface handles AFK (Away From Keyboard) status for players.
  */
-@NullMarked
 public interface AfkService {
 
     /**

@@ -5,7 +5,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.NullMarked;
 
 /**
  * Event called when an admin chat message is being sent.
@@ -14,7 +13,6 @@ import org.jspecify.annotations.NullMarked;
  * Plugins can cancel this event to prevent the message from being sent, or modify
  * the message content before it's delivered.
  */
-@NullMarked
 public class AdminChatEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -23,7 +21,7 @@ public class AdminChatEvent extends Event implements Cancellable {
     private String content;
     private boolean cancelled;
 
-    public AdminChatEvent(@NonNull CommandSender sender, @NonNull String content) {
+    public AdminChatEvent(CommandSender sender, String content) {
         super(false);
 
         this.sender = sender;
@@ -43,10 +41,7 @@ public class AdminChatEvent extends Event implements Cancellable {
         return this.content;
     }
 
-    public void setContent(@NonNull String content) {
-        if (content == null) {
-            throw new IllegalArgumentException("Content cannot be null");
-        }
+    public void setContent(String content) {
         this.content = content;
     }
 
