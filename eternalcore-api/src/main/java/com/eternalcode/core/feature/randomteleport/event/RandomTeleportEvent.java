@@ -4,10 +4,12 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Called after a player is teleported to a random location.
  */
+@NullMarked
 public class RandomTeleportEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

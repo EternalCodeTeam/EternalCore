@@ -2,7 +2,9 @@ package com.eternalcode.core.feature.chat;
 
 import java.time.Duration;
 import java.util.UUID;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public interface ChatService {
 
     /**

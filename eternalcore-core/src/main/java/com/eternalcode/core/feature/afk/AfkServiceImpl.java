@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 @Service
 class AfkServiceImpl implements AfkService {
@@ -36,7 +37,7 @@ class AfkServiceImpl implements AfkService {
     }
 
     @Override
-    public void switchAfk(UUID playerUniqueId, AfkReason reason) {
+    public void switchAfk(@NotNull UUID playerUniqueId, @NotNull AfkReason reason) {
         if (this.isAfk(playerUniqueId)) {
             this.clearAfk(playerUniqueId);
             return;
@@ -46,7 +47,7 @@ class AfkServiceImpl implements AfkService {
     }
 
     @Override
-    public Afk markAfk(UUID playerUniqueId, AfkReason reason) {
+    public Afk markAfk(@NotNull UUID playerUniqueId, @NotNull AfkReason reason) {
         Afk afk = new Afk(playerUniqueId, reason, Instant.now());
         AfkSwitchEvent event = this.eventCaller.callEvent(new AfkSwitchEvent(afk, true));
 
@@ -61,12 +62,12 @@ class AfkServiceImpl implements AfkService {
     }
 
     @Override
-    public Optional<Afk> getAfk(UUID playerUniqueId) {
+    public Optional<Afk> getAfk(@NotNull UUID playerUniqueId) {
         return Optional.ofNullable(this.afkByPlayer.get(playerUniqueId));
     }
 
     @Override
-    public void markInteraction(UUID playerUniqueId) {
+    public void markInteraction(@NotNull UUID playerUniqueId) {
         this.lastInteraction.put(playerUniqueId, Instant.now());
 
         if (!this.isAfk(playerUniqueId)) {
@@ -85,7 +86,7 @@ class AfkServiceImpl implements AfkService {
     }
 
     @Override
-    public void clearAfk(UUID playerUniqueId) {
+    public void clearAfk(@NotNull UUID playerUniqueId) {
         Afk afk = this.afkByPlayer.get(playerUniqueId);
 
         if (afk == null) {
@@ -105,7 +106,7 @@ class AfkServiceImpl implements AfkService {
     }
 
     @Override
-    public boolean isAfk(UUID playerUniqueId) {
+    public boolean isAfk(@NotNull UUID playerUniqueId) {
         return this.afkByPlayer.containsKey(playerUniqueId);
     }
 

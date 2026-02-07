@@ -5,10 +5,12 @@ import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Event called when a home is created.
  */
+@NullMarked
 public class HomeCreateEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

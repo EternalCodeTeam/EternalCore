@@ -6,10 +6,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Event called when a home is deleted.
  */
+@NullMarked
 public class HomeDeleteEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

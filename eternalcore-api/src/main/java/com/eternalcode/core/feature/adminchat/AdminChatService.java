@@ -5,10 +5,12 @@ import java.util.UUID;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.Unmodifiable;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Service responsible for managing admin chat functionality.
  */
+@NullMarked
 public interface AdminChatService {
 
     /**
@@ -39,7 +41,6 @@ public interface AdminChatService {
      *
      * @return an unmodifiable collection of player UUIDs with enabled admin chat
      */
-    @NonNull
     @Unmodifiable
     Collection<UUID> getPlayersWithEnabledChat();
 

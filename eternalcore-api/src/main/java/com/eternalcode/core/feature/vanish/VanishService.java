@@ -5,7 +5,10 @@ import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Set;
 import java.util.UUID;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public interface VanishService {
 
     /**
@@ -60,13 +63,13 @@ public interface VanishService {
      *
      * @return A set containing the unique IDs of all vanished players.
      */
-    Set<UUID> getVanishedPlayers();
+    Set<@Nullable UUID> getVanishedPlayers();
 
     /**
      * Gets a set of names of all vanished players.
      *
      * @return A set containing the names of all vanished players.
      */
-    Set<String> getVanishedPlayerNames();
+    Set<@Nullable String> getVanishedPlayerNames();
 
 }

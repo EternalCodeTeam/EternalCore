@@ -2,7 +2,10 @@ package com.eternalcode.core.feature.spawn;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public interface SpawnService {
 
     /**
@@ -21,5 +24,5 @@ public interface SpawnService {
     /**
      * Provides the spawn location in the game.
      */
-    Location getSpawnLocation();
+    @Nullable Location getSpawnLocation();
 }

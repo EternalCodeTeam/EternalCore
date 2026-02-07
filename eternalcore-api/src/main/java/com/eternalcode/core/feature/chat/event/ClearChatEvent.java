@@ -4,10 +4,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Called when one of the server administrators clear chat using /chat clear command.
  */
+@NullMarked
 public class ClearChatEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

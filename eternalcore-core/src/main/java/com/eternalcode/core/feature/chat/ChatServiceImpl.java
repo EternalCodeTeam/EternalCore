@@ -8,9 +8,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
-import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @Service
 class ChatServiceImpl implements ChatService {
@@ -29,7 +29,7 @@ class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void markUseChat(UUID userUuid) {
+    public void markUseChat(@NotNull UUID userUuid) {
         Duration chatDelay = this.chatSettings.chatDelay();
 
         Player player = this.server.getPlayer(userUuid);
@@ -48,12 +48,12 @@ class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public boolean hasSlowedChat(UUID userUuid) {
+    public boolean hasSlowedChat(@NotNull UUID userUuid) {
         return Instant.now().isBefore(this.slowdown.asMap().getOrDefault(userUuid, Instant.MIN));
     }
 
     @Override
-    public Duration getRemainingSlowDown(UUID userUuid) {
+    public Duration getRemainingSlowDown(@NotNull UUID userUuid) {
         Instant unlockMoment = this.slowdown.asMap().get(userUuid);
 
         if (unlockMoment == null) {

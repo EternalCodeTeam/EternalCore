@@ -1,15 +1,16 @@
 package com.eternalcode.core.feature.home.event;
 
 import com.eternalcode.core.feature.home.Home;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Called after teleportation to home.
  */
+@NullMarked
 public class HomeTeleportEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

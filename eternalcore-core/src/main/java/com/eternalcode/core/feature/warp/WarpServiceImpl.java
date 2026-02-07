@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Service
 class WarpServiceImpl implements WarpService {
@@ -33,7 +35,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public Warp createWarp(String name, Location location) {
+    public Warp createWarp(@NotNull String name, @NotNull Location location) {
         Warp warp = new WarpImpl(name, PositionAdapter.convert(location), new ArrayList<>());
 
         this.warps.put(name, warp);
@@ -43,7 +45,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public void removeWarp(String warpName) {
+    public void removeWarp(@NotNull String warpName) {
         Warp removed = this.warps.remove(warpName);
 
         if (removed != null) {
@@ -52,7 +54,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public Warp addPermissions(String warpName, String... permissions) {
+    public Warp addPermissions(@NotNull String warpName, String @NotNull ... permissions) {
         Warp warp = this.modifyPermissions(warpName, perms -> perms.addAll(List.of(permissions)));
         this.warpRepository.saveWarp(warp);
 
@@ -60,7 +62,7 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public Warp removePermissions(String warpName, String... permissions) {
+    public Warp removePermissions(@NotNull String warpName, String @NotNull ... permissions) {
         Warp warp = this.modifyPermissions(warpName, perms -> perms.removeAll(List.of(permissions)));
         this.warpRepository.saveWarp(warp);
 
@@ -92,12 +94,12 @@ class WarpServiceImpl implements WarpService {
     }
 
     @Override
-    public Optional<Warp> findWarp(String warp) {
+    public Optional<@Nullable Warp> findWarp(@NotNull String warp) {
         return Optional.ofNullable(this.warps.get(warp));
     }
 
     @Override
-    public Collection<Warp> getWarps() {
+    public Collection<@Nullable Warp> getWarps() {
         return Collections.unmodifiableCollection(this.warps.values());
     }
 }

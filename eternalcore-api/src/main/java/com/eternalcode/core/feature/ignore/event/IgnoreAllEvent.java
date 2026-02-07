@@ -4,11 +4,12 @@ import java.util.UUID;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * This event is called when a player wants to ignore all players.
  */
+@NullMarked
 public class IgnoreAllEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
@@ -38,7 +39,6 @@ public class IgnoreAllEvent extends Event implements Cancellable {
         this.cancelled = cancel;
     }
 
-    @NonNull
     @Override
     public HandlerList getHandlers() {
         return HANDLER_LIST;

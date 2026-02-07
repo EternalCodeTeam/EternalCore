@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 @Service
 class MsgServiceImpl implements MsgService {
@@ -54,7 +55,7 @@ class MsgServiceImpl implements MsgService {
     }
 
     @Override
-    public void reply(Player sender, String message) {
+    public void reply(@NotNull Player sender, @NotNull String message) {
         UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
 
         if (uuid == null) {
@@ -74,7 +75,7 @@ class MsgServiceImpl implements MsgService {
     }
 
     @Override
-    public void sendMessage(Player sender, Player target, String message) {
+    public void sendMessage(@NotNull Player sender, @NotNull Player target, @NotNull String message) {
         UUID uniqueId = target.getUniqueId();
 
         this.msgToggleService.getState(uniqueId).thenAccept(msgState -> {
@@ -98,17 +99,17 @@ class MsgServiceImpl implements MsgService {
     }
 
     @Override
-    public void enableSpy(UUID player) {
+    public void enableSpy(@NotNull UUID player) {
         this.socialSpy.add(player);
     }
 
     @Override
-    public void disableSpy(UUID player) {
+    public void disableSpy(@NotNull UUID player) {
         this.socialSpy.remove(player);
     }
 
     @Override
-    public boolean isSpy(UUID player) {
+    public boolean isSpy(@NotNull UUID player) {
         return this.socialSpy.contains(player);
     }
 

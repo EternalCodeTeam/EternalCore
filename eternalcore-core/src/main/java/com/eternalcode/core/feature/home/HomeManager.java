@@ -16,6 +16,8 @@ import java.util.UUID;
 import java.util.stream.Stream;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Service
 public class HomeManager implements HomeService {
@@ -46,7 +48,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public Home createHome(UUID playerUniqueId, String name, Location location) {
+    public @Nullable Home createHome(@NotNull UUID playerUniqueId, @NotNull String name, @NotNull Location location) {
         Map<String, Home> homes = this.userHomes.computeIfAbsent(playerUniqueId, k -> new HashMap<>());
 
         Home home = homes.get(name);
@@ -80,7 +82,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public void deleteHome(UUID playerUniqueId, String name) {
+    public void deleteHome(@NotNull UUID playerUniqueId, @NotNull String name) {
         Map<String, Home> homes = this.userHomes.get(playerUniqueId);
 
         if (homes == null) {
@@ -105,7 +107,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public boolean hasHome(UUID playerUniqueId, String name) {
+    public boolean hasHome(@NotNull UUID playerUniqueId, @NotNull String name) {
         Map<String, Home> homes = this.userHomes.get(playerUniqueId);
 
         if (homes == null) {
@@ -116,7 +118,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public boolean hasHome(UUID playerUniqueId, Home home) {
+    public boolean hasHome(@NotNull UUID playerUniqueId, @NotNull Home home) {
         Map<String, Home> homes = this.userHomes.get(playerUniqueId);
 
         if (homes == null) {
@@ -127,7 +129,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public Optional<Home> getHome(UUID uniqueId, String name) {
+    public Optional<Home> getHome(@NotNull UUID uniqueId, @NotNull String name) {
         Map<String, Home> homes = this.userHomes.get(uniqueId);
 
         if (homes == null) {
@@ -138,12 +140,12 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public Collection<Home> getHomes(UUID user) {
+    public Collection<Home> getHomes(@NotNull UUID user) {
         return Collections.unmodifiableCollection(this.userHomes.getOrDefault(user, new HashMap<>()).values());
     }
 
     @Override
-    public int getAmountOfHomes(UUID user) {
+    public int getAmountOfHomes(@NotNull UUID user) {
         Map<String, Home> homes = this.userHomes.get(user);
 
         if (homes == null) {
@@ -154,7 +156,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public int getHomeLimit(Player player) {
+    public int getHomeLimit(@NotNull Player player) {
         Map<String, Integer> maxHomes = this.homesSettings.maxHomes();
 
         return maxHomes.entrySet().stream()

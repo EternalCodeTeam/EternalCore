@@ -8,8 +8,10 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Blocking;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public interface JailService {
 
     /**
@@ -40,7 +42,7 @@ public interface JailService {
 
     boolean isPlayerJailed(UUID player);
 
-    Collection<JailedPlayer> getJailedPlayers();
+    Collection<@Nullable JailedPlayer> getJailedPlayers();
 
     /**
      * Changes location of the jail.

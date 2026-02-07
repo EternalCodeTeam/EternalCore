@@ -5,8 +5,10 @@ import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public interface HomeService {
 
     int getAmountOfHomes(UUID playerUniqueId);

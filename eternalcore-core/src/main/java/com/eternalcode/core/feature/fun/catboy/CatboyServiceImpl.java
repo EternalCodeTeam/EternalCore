@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
 
 @Service
 class CatboyServiceImpl implements CatboyService {
@@ -38,7 +39,7 @@ class CatboyServiceImpl implements CatboyService {
     }
 
     @Override
-    public void markAsCatboy(Player player, Cat.Type type) {
+    public void markAsCatboy(@NotNull Player player, Cat.@NotNull Type type) {
         Catboy catboy = new Catboy(player.getUniqueId(), type);
         this.catboys.put(player.getUniqueId(), catboy);
 
@@ -49,7 +50,7 @@ class CatboyServiceImpl implements CatboyService {
     }
 
     @Override
-    public void unmarkAsCatboy(Player player) {
+    public void unmarkAsCatboy(@NotNull Player player) {
         this.catboys.remove(player.getUniqueId());
 
         player.getPassengers().forEach(entity -> entity.remove());
@@ -59,7 +60,7 @@ class CatboyServiceImpl implements CatboyService {
     }
 
     @Override
-    public void changeCatboyType(Player target, Cat.Type type) {
+    public void changeCatboyType(@NotNull Player target, @NotNull Cat.Type type) {
         Catboy catboy = this.catboys.get(target.getUniqueId());
 
         if (catboy == null) {
@@ -82,12 +83,12 @@ class CatboyServiceImpl implements CatboyService {
     }
 
     @Override
-    public boolean isCatboy(UUID uuid) {
+    public boolean isCatboy(@NotNull UUID uuid) {
         return this.catboys.containsKey(uuid);
     }
 
     @Override
-    public Optional<Catboy> getCatboy(UUID uuid) {
+    public Optional<Catboy> getCatboy(@NotNull UUID uuid) {
         return Optional.ofNullable(this.catboys.get(uuid));
     }
 

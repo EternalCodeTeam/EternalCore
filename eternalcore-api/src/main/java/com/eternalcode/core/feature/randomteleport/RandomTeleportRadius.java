@@ -1,5 +1,8 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
 public interface RandomTeleportRadius {
     int maxZ();
     int minZ();

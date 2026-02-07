@@ -4,10 +4,12 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.UUID;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Event called when a player tries to create a home but has reached the limit.
  */
+@NullMarked
 public class HomeLimitReachedEvent extends Event {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();

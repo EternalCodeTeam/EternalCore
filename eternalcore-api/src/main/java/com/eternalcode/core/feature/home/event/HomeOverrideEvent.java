@@ -1,15 +1,16 @@
 package com.eternalcode.core.feature.home.event;
 
-import com.eternalcode.core.feature.home.Home;
 import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Event called when a home is overridden with new location.
  */
+@NullMarked
 public class HomeOverrideEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
