@@ -53,6 +53,6 @@ public interface CatboyService {
      * Gets a set of all catboys.
      */
     @Unmodifiable
-    Collection<@Nullable Catboy> getCatboys();
+    Collection<Catboy> getCatboys();
 
 }
