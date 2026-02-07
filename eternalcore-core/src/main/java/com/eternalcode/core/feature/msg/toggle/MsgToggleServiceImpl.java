@@ -5,6 +5,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import org.jetbrains.annotations.NotNull;
 
 @Service
 class MsgToggleServiceImpl implements MsgToggleService {
@@ -21,7 +22,7 @@ class MsgToggleServiceImpl implements MsgToggleService {
 
 
     @Override
-    public CompletableFuture<MsgState> getState(UUID playerUniqueId) {
+    public CompletableFuture<MsgState> getState(@NotNull UUID playerUniqueId) {
         if (this.cachedToggleStates.containsKey(playerUniqueId)) {
             return CompletableFuture.completedFuture(this.cachedToggleStates.get(playerUniqueId));
         }
@@ -30,7 +31,7 @@ class MsgToggleServiceImpl implements MsgToggleService {
     }
 
     @Override
-    public CompletableFuture<Void> setState(UUID playerUniqueId, MsgState state) {
+    public CompletableFuture<Void> setState(@NotNull UUID playerUniqueId, @NotNull MsgState state) {
         this.cachedToggleStates.put(playerUniqueId, state);
 
         return this.msgToggleRepository.setPrivateChatState(playerUniqueId, state)
@@ -41,7 +42,7 @@ class MsgToggleServiceImpl implements MsgToggleService {
     }
 
     @Override
-    public CompletableFuture<MsgState> toggleState(UUID playerUniqueId) {
+    public CompletableFuture<MsgState> toggleState(@NotNull UUID playerUniqueId) {
         return this.getState(playerUniqueId).thenCompose(state -> {
             MsgState newState = state.invert();
             return this.setState(playerUniqueId, newState)

@@ -8,6 +8,8 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.Set;
 import java.util.UUID;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Service
 class VanishServiceImpl implements VanishService {
@@ -28,7 +30,7 @@ class VanishServiceImpl implements VanishService {
     }
 
     @Override
-    public void enableVanish(Player player) {
+    public void enableVanish(@NotNull Player player) {
         EnableVanishEvent event = this.eventCaller.callEvent(new EnableVanishEvent(player));
 
         if (event.isCancelled()) {
@@ -40,7 +42,7 @@ class VanishServiceImpl implements VanishService {
     }
 
     @Override
-    public void disableVanish(Player player) {
+    public void disableVanish(@NotNull Player player) {
         DisableVanishEvent event = this.eventCaller.callEvent(new DisableVanishEvent(player));
 
         if (event.isCancelled()) {
@@ -52,27 +54,27 @@ class VanishServiceImpl implements VanishService {
     }
 
     @Override
-    public boolean isVanished(Player player) {
+    public boolean isVanished(@NotNull Player player) {
         return this.vanishInvisibleService.getVanishedPlayers().contains(player.getUniqueId());
     }
 
     @Override
-    public boolean isVanished(UUID uniqueId) {
+    public boolean isVanished(@NotNull UUID uniqueId) {
         return this.vanishInvisibleService.getVanishedPlayers().contains(uniqueId);
     }
 
     @Override
-    public void hideVanishedPlayersFrom(Player player) {
+    public void hideVanishedPlayersFrom(@NotNull Player player) {
         this.vanishInvisibleService.hideVanishedPlayersFrom(player);
     }
 
     @Override
-    public Set<UUID> getVanishedPlayers() {
+    public Set<@Nullable UUID> getVanishedPlayers() {
         return this.vanishInvisibleService.getVanishedPlayers();
     }
 
     @Override
-    public Set<String> getVanishedPlayerNames() {
+    public Set<@Nullable String> getVanishedPlayerNames() {
         return this.vanishInvisibleService.getVanishedPlayerNames();
     }
 }

@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import org.bukkit.event.Event;
+import org.jetbrains.annotations.NotNull;
 
 @Service
 class IgnoreServiceImpl implements IgnoreService {
@@ -29,12 +30,12 @@ class IgnoreServiceImpl implements IgnoreService {
     }
 
     @Override
-    public CompletableFuture<Boolean> isIgnored(UUID requester, UUID target) {
+    public CompletableFuture<Boolean> isIgnored(@NotNull UUID requester, @NotNull UUID target) {
         return this.ignoreRepository.isIgnored(requester, target);
     }
 
     @Override
-    public CompletableFuture<IgnoreResult> ignore(UUID requester, UUID target) {
+    public CompletableFuture<IgnoreResult> ignore(@NotNull UUID requester, @NotNull UUID target) {
         return this.callEventSync(new IgnoreEvent(requester, target))
             .thenCompose(event -> {
                 if (event.isCancelled()) {
@@ -51,7 +52,7 @@ class IgnoreServiceImpl implements IgnoreService {
     }
 
     @Override
-    public CompletableFuture<IgnoreResult> ignoreAll(UUID requester) {
+    public CompletableFuture<IgnoreResult> ignoreAll(@NotNull UUID requester) {
         return this.callEventSync(new IgnoreAllEvent(requester))
             .thenCompose(event -> {
                 if (event.isCancelled()) {
@@ -68,7 +69,7 @@ class IgnoreServiceImpl implements IgnoreService {
     }
 
     @Override
-    public CompletableFuture<IgnoreResult> unIgnore(UUID requester, UUID target) {
+    public CompletableFuture<IgnoreResult> unIgnore(@NotNull UUID requester, @NotNull UUID target) {
         return this.callEventSync(new UnIgnoreEvent(requester, target))
             .thenCompose(event -> {
                 if (event.isCancelled()) {
@@ -85,7 +86,7 @@ class IgnoreServiceImpl implements IgnoreService {
     }
 
     @Override
-    public CompletableFuture<IgnoreResult> unIgnoreAll(UUID requester) {
+    public CompletableFuture<IgnoreResult> unIgnoreAll(@NotNull UUID requester) {
         return this.callEventSync(new UnIgnoreAllEvent(requester))
             .thenCompose(event -> {
                 if (event.isCancelled()) {
@@ -102,7 +103,7 @@ class IgnoreServiceImpl implements IgnoreService {
     }
 
     @Override
-    public CompletableFuture<Set<UUID>> getIgnoredPlayers(UUID requester) {
+    public CompletableFuture<Set<UUID>> getIgnoredPlayers(@NotNull UUID requester) {
         return this.ignoreRepository.getIgnoredPlayers(requester);
     }
 
