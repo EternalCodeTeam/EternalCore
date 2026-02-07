@@ -78,7 +78,7 @@ public class PreWarpTeleportEvent extends Event implements Cancellable {
         return HANDLER_LIST;
     }
 
-    public static @NonNull HandlerList getHandlerList() {
+    public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 }
