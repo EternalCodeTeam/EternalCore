@@ -1,10 +1,9 @@
 package com.eternalcode.core.feature.vanish;
 
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.Set;
 import java.util.UUID;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 public interface VanishService {
 

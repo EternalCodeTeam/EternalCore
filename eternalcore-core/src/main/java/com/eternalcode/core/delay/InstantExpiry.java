@@ -3,22 +3,22 @@ package com.eternalcode.core.delay;
 import com.github.benmanes.caffeine.cache.Expiry;
 import java.time.Duration;
 import java.time.Instant;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
-class InstantExpiry<T> implements Expiry<@NotNull T, @NotNull Instant> {
+class InstantExpiry<T> implements Expiry<T, Instant> {
 
     @Override
-    public long expireAfterCreate(@NotNull T key, @NotNull Instant expireTime, long currentTime) {
+    public long expireAfterCreate(@NonNull T key, @NonNull Instant expireTime, long currentTime) {
         return timeToExpire(expireTime);
     }
 
     @Override
-    public long expireAfterUpdate(@NotNull T key, @NotNull Instant newExpireTime, long currentTime, long currentDuration) {
+    public long expireAfterUpdate(@NonNull T key, @NonNull Instant newExpireTime, long currentTime, long currentDuration) {
         return timeToExpire(newExpireTime);
     }
 
     @Override
-    public long expireAfterRead(@NotNull T key, @NotNull Instant value, long currentTime, long currentDuration) {
+    public long expireAfterRead(@NonNull T key, @NonNull Instant value, long currentTime, long currentDuration) {
         return currentDuration;
     }
 

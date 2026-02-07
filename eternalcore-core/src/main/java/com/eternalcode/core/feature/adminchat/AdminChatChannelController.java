@@ -9,7 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 @Controller
 final class AdminChatChannelController implements Listener {
@@ -18,13 +18,13 @@ final class AdminChatChannelController implements Listener {
     private final Scheduler scheduler;
 
     @Inject
-    AdminChatChannelController(@NotNull AdminChatService adminChatService, Scheduler scheduler) {
+    AdminChatChannelController(@NonNull AdminChatService adminChatService, @NonNull Scheduler scheduler) {
         this.adminChatService = adminChatService;
         this.scheduler = scheduler;
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    void onPlayerChat(@NotNull AsyncPlayerChatEvent event) {
+    void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         if (!this.adminChatService.hasEnabledChat(player.getUniqueId())) {
@@ -37,7 +37,7 @@ final class AdminChatChannelController implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    void onPlayerQuit(@NotNull PlayerQuitEvent event) {
+    void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
         if (this.adminChatService.hasEnabledChat(player.getUniqueId())) {

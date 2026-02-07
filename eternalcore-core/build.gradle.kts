@@ -12,6 +12,7 @@ dependencies {
     api(project(":eternalcore-docs-api"))
 
     // Base libraries
+    compileOnly("org.jspecify:jspecify:${Versions.JSPECIFY}")
     compileOnly("org.jetbrains:annotations:${Versions.JETBRAINS_ANNOTATIONS}")
 
     // Minecraft & Bridges API
@@ -111,7 +112,7 @@ eternalShadow {
 
     // caffeine
     library("com.github.ben-manes.caffeine:caffeine:${Versions.CAFFEINE}")
-    libraryRelocate("com.github.benmanes.caffeine");
+    libraryRelocate("com.github.benmanes.caffeine")
 
     // glowingentites (nms)
     library("fr.skytasul:glowingentities:${Versions.GLOWING_ENTITIES}")
