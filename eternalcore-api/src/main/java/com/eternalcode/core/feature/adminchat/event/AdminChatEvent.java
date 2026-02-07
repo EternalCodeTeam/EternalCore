@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.adminchat.event;
 
+import java.util.Objects;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -24,8 +25,8 @@ public class AdminChatEvent extends Event implements Cancellable {
     public AdminChatEvent(CommandSender sender, String content) {
         super(false);
 
-        this.sender = java.util.Objects.requireNonNull(sender, "sender cannot be null");
-        this.content = java.util.Objects.requireNonNull(content, "content cannot be null");
+        this.sender = Objects.requireNonNull(sender, "sender cannot be null");
+        this.content = Objects.requireNonNull(content, "content cannot be null");
         this.cancelled = false;
     }
 
@@ -56,7 +57,7 @@ public class AdminChatEvent extends Event implements Cancellable {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 }

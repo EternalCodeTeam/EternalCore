@@ -1,11 +1,9 @@
 package com.eternalcode.core.feature.vanish;
 
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.ApiStatus;
-
 import java.util.Set;
 import java.util.UUID;
-import org.jspecify.annotations.Nullable;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 public interface VanishService {
 
@@ -61,13 +59,13 @@ public interface VanishService {
      *
      * @return A set containing the unique IDs of all vanished players.
      */
-    Set<@Nullable UUID> getVanishedPlayers();
+    Set<UUID> getVanishedPlayers();
 
     /**
      * Gets a set of names of all vanished players.
      *
      * @return A set containing the names of all vanished players.
      */
-    Set<@Nullable String> getVanishedPlayerNames();
+    Set<String> getVanishedPlayerNames();
 
 }

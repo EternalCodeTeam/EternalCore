@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Unmodifiable;
-import org.jspecify.annotations.Nullable;
 
 /**
  * Service for managing catboys.
