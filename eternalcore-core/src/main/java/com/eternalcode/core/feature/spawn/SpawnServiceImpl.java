@@ -9,7 +9,7 @@ import io.papermc.lib.PaperLib;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import java.util.logging.Logger;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @Service
 public class SpawnServiceImpl implements SpawnService {
