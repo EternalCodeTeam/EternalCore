@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jspecify.annotations.Nullable;
 
 @Service
 public class HomeManager implements HomeService {
@@ -46,7 +47,7 @@ public class HomeManager implements HomeService {
     }
 
     @Override
-    public Home createHome(UUID playerUniqueId, String name, Location location) {
+    public @Nullable Home createHome(UUID playerUniqueId, String name, Location location) {
         Map<String, Home> homes = this.userHomes.computeIfAbsent(playerUniqueId, k -> new HashMap<>());
 
         Home home = homes.get(name);

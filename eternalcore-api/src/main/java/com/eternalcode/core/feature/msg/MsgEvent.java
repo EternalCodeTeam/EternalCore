@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.msg;
 import java.util.UUID;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Event that is called when a player sends a private message to another player.
@@ -40,7 +41,7 @@ public class MsgEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

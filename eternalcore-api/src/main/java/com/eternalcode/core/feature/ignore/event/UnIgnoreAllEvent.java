@@ -38,9 +38,8 @@ public class UnIgnoreAllEvent extends Event implements Cancellable {
         this.cancelled = cancel;
     }
 
-    @NonNull
     @Override
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 

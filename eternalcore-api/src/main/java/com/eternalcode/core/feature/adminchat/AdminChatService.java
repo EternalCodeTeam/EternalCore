@@ -39,7 +39,6 @@ public interface AdminChatService {
      *
      * @return an unmodifiable collection of player UUIDs with enabled admin chat
      */
-    @NonNull
     @Unmodifiable
     Collection<UUID> getPlayersWithEnabledChat();
 
