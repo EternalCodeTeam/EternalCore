@@ -8,7 +8,6 @@ public final class EternalCoreApiProvider {
     @Nullable
     private static EternalCoreApi api;
 
-    @ApiStatus.Internal
     private EternalCoreApiProvider() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
