@@ -24,8 +24,8 @@ public class AdminChatEvent extends Event implements Cancellable {
     public AdminChatEvent(CommandSender sender, String content) {
         super(false);
 
-        this.sender = sender;
-        this.content = content;
+        this.sender = java.util.Objects.requireNonNull(sender, "sender cannot be null");
+        this.content = java.util.Objects.requireNonNull(content, "content cannot be null");
         this.cancelled = false;
     }
 
