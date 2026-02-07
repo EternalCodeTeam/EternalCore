@@ -40,7 +40,7 @@ public interface JailService {
 
     boolean isPlayerJailed(UUID player);
 
-    Collection<@Nullable JailedPlayer> getJailedPlayers();
+    Collection<JailedPlayer> getJailedPlayers();
 
     /**
      * Changes location of the jail.
