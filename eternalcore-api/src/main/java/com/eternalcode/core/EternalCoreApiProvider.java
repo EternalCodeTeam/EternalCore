@@ -6,7 +6,6 @@ import org.jspecify.annotations.Nullable;
 public final class EternalCoreApiProvider {
 
     @Nullable
-    @ApiStatus.Internal
     private static EternalCoreApi api;
 
     @ApiStatus.Internal
