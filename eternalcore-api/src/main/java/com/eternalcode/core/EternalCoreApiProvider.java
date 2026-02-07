@@ -33,6 +33,7 @@ public final class EternalCoreApiProvider {
         EternalCoreApiProvider.api = api;
     }
 
+    @ApiStatus.Internal
     static void deinitialize() {
         if (EternalCoreApiProvider.api == null) {
             throw new IllegalStateException("EternalCoreApiProvider is not initialized");
