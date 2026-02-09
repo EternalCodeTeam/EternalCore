@@ -33,14 +33,16 @@ class HelpOpCommand {
 
     private final NoticeService noticeService;
     private final HelpOpSettings helpOpSettings;
+    private final HelpOpService helpOpService;
     private final EventCaller eventCaller;
     private final Server server;
     private final Delay<UUID> delay;
 
     @Inject
-    HelpOpCommand(NoticeService noticeService, HelpOpSettings helpOpSettings, EventCaller eventCaller, Server server) {
+    HelpOpCommand(NoticeService noticeService, HelpOpSettings helpOpSettings, HelpOpService helpOpService, EventCaller eventCaller, Server server) {
         this.noticeService = noticeService;
         this.helpOpSettings = helpOpSettings;
+        this.helpOpService = helpOpService;
         this.eventCaller = eventCaller;
         this.server = server;
         this.delay = Delay.withDefault(() -> this.helpOpSettings.helpOpDelay());
@@ -93,5 +95,6 @@ class HelpOpCommand {
             .send();
 
         this.delay.markDelay(uuid);
+        this.helpOpService.markSender(uuid);
     }
 }
