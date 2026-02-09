@@ -39,7 +39,13 @@ class HelpOpCommand {
     private final Delay<UUID> delay;
 
     @Inject
-    HelpOpCommand(NoticeService noticeService, HelpOpSettings helpOpSettings, HelpOpService helpOpService, EventCaller eventCaller, Server server) {
+    HelpOpCommand(
+        NoticeService noticeService,
+        HelpOpSettings helpOpSettings,
+        HelpOpService helpOpService,
+        EventCaller eventCaller,
+        Server server
+    ) {
         this.noticeService = noticeService;
         this.helpOpSettings = helpOpSettings;
         this.helpOpService = helpOpService;
