@@ -15,6 +15,7 @@ import com.eternalcode.example.feature.privatechat.ApiPrivateChatListener;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportCommand;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportListener;
 import com.eternalcode.example.feature.spawn.ApiSpawnCommand;
+import com.eternalcode.example.feature.teleportrequest.ApiTeleportRequestListener;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
@@ -38,32 +39,33 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
         EternalCoreApi provide = EternalCoreApiProvider.provide();
 
         this.liteCommands = LiteBukkitFactory.builder(FALLBACK_PREFIX, this, server)
-            .message(LiteBukkitMessages.PLAYER_ONLY, input -> "You must be a player to execute this command!")
-            .message(LiteBukkitMessages.PLAYER_NOT_FOUND, input -> "Player not found!")
-            .message(LiteMessages.MISSING_PERMISSIONS, input -> "You don't have permission to execute this command!")
+                .message(LiteBukkitMessages.PLAYER_ONLY, input -> "You must be a player to execute this command!")
+                .message(LiteBukkitMessages.PLAYER_NOT_FOUND, input -> "Player not found!")
+                .message(LiteMessages.MISSING_PERMISSIONS,
+                        input -> "You don't have permission to execute this command!")
 
-            .commands(
-                new ApiAfkCommand(provide.getAfkService()),
-                new ApiIgnoreCommand(provide.getIgnoreService()),
-                new ApiJailCommand(provide.getJailService()),
-                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
-                new ApiSpawnCommand(provide.getSpawnService()),
-                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
-                new ApiHomeCommand(provide.getHomeService())
-            )
+                .commands(
+                        new ApiAfkCommand(provide.getAfkService()),
+                        new ApiIgnoreCommand(provide.getIgnoreService()),
+                        new ApiJailCommand(provide.getJailService()),
+                        new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                        new ApiSpawnCommand(provide.getSpawnService()),
+                        new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                        new ApiHomeCommand(provide.getHomeService()))
 
-            .build();
+                .build();
 
         Stream.of(
-            new ApiAfkListener(),
-            new CatBoyListener(provide.getCatboyService()),
-            new ApiRandomTeleportListener(provide.getRandomTeleportService()),
-            new ApiPrivateChatListener(server),
-            new ApiRandomTeleportListener(provide.getRandomTeleportService()),
-            new ApiHomeListener(server),
-            new ApiJailListener(server),
-            new ApiIgnoreListener()
-        ).forEach(listener -> server.getPluginManager().registerEvents(listener, this));
+                new ApiAfkListener(),
+                new CatBoyListener(provide.getCatboyService()),
+                new ApiRandomTeleportListener(provide.getRandomTeleportService()),
+                new ApiPrivateChatListener(server),
+                new ApiRandomTeleportListener(provide.getRandomTeleportService()),
+                new ApiHomeListener(server),
+                new ApiJailListener(server),
+                new ApiIgnoreListener(),
+                new ApiTeleportRequestListener())
+                .forEach(listener -> server.getPluginManager().registerEvents(listener, this));
     }
 
     @Override
