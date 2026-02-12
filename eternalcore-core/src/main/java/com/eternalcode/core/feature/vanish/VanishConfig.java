@@ -16,6 +16,9 @@ public class VanishConfig extends OkaeriConfig implements VanishSettings {
     @Comment("Should vanished players be invulnerable to damage from other players")
     public boolean godMode = true;
 
+    @Comment("Allow vanished players to fly")
+    public boolean flyMode = true;
+
     @Comment("Give night vision effect to vanished players")
     public boolean nightVision = true;
 
@@ -45,5 +48,4 @@ public class VanishConfig extends OkaeriConfig implements VanishSettings {
 
     @Comment("Prevent vanished players from placing blocks")
     public boolean blockBlockPlacing = false;
-
 }

@@ -8,6 +8,8 @@ public interface VanishSettings {
 
     boolean godMode();
 
+    boolean flyMode();
+
     boolean nightVision();
 
     boolean silentInventoryAccess();
