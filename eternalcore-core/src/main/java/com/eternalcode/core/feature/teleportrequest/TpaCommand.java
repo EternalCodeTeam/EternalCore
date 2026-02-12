@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.teleportrequest;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -19,12 +20,19 @@ class TpaCommand {
     private final TeleportRequestService requestService;
     private final IgnoreService ignoreService;
     private final NoticeService noticeService;
+    private final EventCaller eventCaller;
 
     @Inject
-    TpaCommand(TeleportRequestService requestService, IgnoreService ignoreService, NoticeService noticeService) {
+    TpaCommand(
+        TeleportRequestService requestService,
+        IgnoreService ignoreService,
+        NoticeService noticeService,
+        EventCaller eventCaller
+    ) {
         this.requestService = requestService;
         this.ignoreService = ignoreService;
         this.noticeService = noticeService;
+        this.eventCaller = eventCaller;
     }
 
     @Execute
@@ -39,6 +47,12 @@ class TpaCommand {
         if (this.requestService.hasRequest(player.getUniqueId(), target.getUniqueId())) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAlreadySentMessage());
 
+            return;
+        }
+
+        PreTeleportRequestEvent preEvent = this.eventCaller.callEvent(new PreTeleportRequestEvent(player, target));
+
+        if (preEvent.isCancelled()) {
             return;
         }
 
@@ -67,6 +81,7 @@ class TpaCommand {
                 .send();
 
             this.requestService.createRequest(player.getUniqueId(), target.getUniqueId());
+            this.eventCaller.callEvent(new TeleportRequestEvent(player, target));
         });
     }
 
