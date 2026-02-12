@@ -6,7 +6,7 @@ import dev.rollczi.litecommands.util.StringUtil;
 import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 public class CustomCommandBukkitWrapper extends Command {
 
@@ -18,8 +18,8 @@ public class CustomCommandBukkitWrapper extends Command {
     private final List<String> commands;
 
     protected CustomCommandBukkitWrapper(
-            @NotNull String name,
-            @NotNull List<String> aliases,
+            @NonNull String name,
+            @NonNull List<String> aliases,
             NoticeService noticeService,
             Notice message,
             List<String> commands
@@ -32,7 +32,7 @@ public class CustomCommandBukkitWrapper extends Command {
     }
 
     @Override
-    public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
+    public boolean execute(@NonNull CommandSender commandSender, @NonNull String s, @NonNull String[] strings) {
         this.noticeService.create()
                 .notice(this.message)
                 .sender(commandSender)

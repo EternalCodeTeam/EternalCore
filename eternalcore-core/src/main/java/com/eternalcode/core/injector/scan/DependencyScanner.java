@@ -6,7 +6,6 @@ import com.eternalcode.core.injector.bean.BeanCandidate;
 import com.eternalcode.core.injector.bean.BeanHolder;
 import com.eternalcode.core.injector.bean.LazyFieldBeanCandidate;
 import com.eternalcode.core.util.ReflectUtil;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class DependencyScanner {
 
