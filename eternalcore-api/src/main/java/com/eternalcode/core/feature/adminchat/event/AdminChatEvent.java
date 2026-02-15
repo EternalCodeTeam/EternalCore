@@ -1,10 +1,11 @@
 package com.eternalcode.core.feature.adminchat.event;
 
+import java.util.Objects;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Event called when an admin chat message is being sent.
@@ -21,40 +22,27 @@ public class AdminChatEvent extends Event implements Cancellable {
     private String content;
     private boolean cancelled;
 
-    public AdminChatEvent(@NotNull CommandSender sender, @NotNull String content) {
+    public AdminChatEvent(CommandSender sender, String content) {
         super(false);
 
-        if (sender == null) {
-            throw new IllegalArgumentException("Sender cannot be null");
-        }
-        if (content == null) {
-            throw new IllegalArgumentException("Content cannot be null");
-        }
-
-        this.sender = sender;
-        this.content = content;
+        this.sender = Objects.requireNonNull(sender, "sender cannot be null");
+        this.content = Objects.requireNonNull(content, "content cannot be null");
         this.cancelled = false;
     }
 
-    @NotNull
     public static HandlerList getHandlerList() {
         return HANDLER_LIST;
     }
 
-    @NotNull
     public CommandSender getSender() {
         return this.sender;
     }
 
-    @NotNull
     public String getContent() {
         return this.content;
     }
 
-    public void setContent(@NotNull String content) {
-        if (content == null) {
-            throw new IllegalArgumentException("Content cannot be null");
-        }
+    public void setContent(String content) {
         this.content = content;
     }
 
@@ -69,8 +57,7 @@ public class AdminChatEvent extends Event implements Cancellable {
     }
 
     @Override
-    @NotNull
-    public HandlerList getHandlers() {
+    public @NonNull HandlerList getHandlers() {
         return HANDLER_LIST;
     }
 }

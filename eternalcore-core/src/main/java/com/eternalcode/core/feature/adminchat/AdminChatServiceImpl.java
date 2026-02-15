@@ -15,8 +15,8 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
+import org.jspecify.annotations.NonNull;
 
 @Service
 final class AdminChatServiceImpl implements AdminChatService {
@@ -39,7 +39,7 @@ final class AdminChatServiceImpl implements AdminChatService {
     }
 
     @Override
-    public boolean toggleChat(@NotNull UUID playerUuid) {
+    public boolean toggleChat(@NonNull UUID playerUuid) {
         if (this.playersWithEnabledChat.contains(playerUuid)) {
             this.playersWithEnabledChat.remove(playerUuid);
             return false;
@@ -51,19 +51,19 @@ final class AdminChatServiceImpl implements AdminChatService {
     }
 
     @Override
-    public boolean hasEnabledChat(@NotNull UUID playerUuid) {
+    public boolean hasEnabledChat(@NonNull UUID playerUuid) {
         return this.playersWithEnabledChat.contains(playerUuid);
     }
 
     @Override
-    @NotNull
+    @NonNull
     @Unmodifiable
     public Collection<UUID> getPlayersWithEnabledChat() {
         return Collections.unmodifiableSet(this.playersWithEnabledChat);
     }
 
     @Override
-    public void sendAdminChatMessage(@NotNull String message, @NotNull CommandSender sender) {
+    public void sendAdminChatMessage(@NonNull String message, @NonNull CommandSender sender) {
         if (message == null || message.trim().isEmpty()) {
             throw new IllegalArgumentException("Message cannot be null or empty");
         }
@@ -88,17 +88,17 @@ final class AdminChatServiceImpl implements AdminChatService {
     }
 
     @Override
-    public void enableChat(@NotNull UUID playerUuid) {
+    public void enableChat(@NonNull UUID playerUuid) {
         this.playersWithEnabledChat.add(playerUuid);
     }
 
     @Override
-    public void disableChat(@NotNull UUID playerUuid) {
+    public void disableChat(@NonNull UUID playerUuid) {
         this.playersWithEnabledChat.remove(playerUuid);
     }
 
     @Override
-    public boolean canSeeAdminChat(@NotNull CommandSender sender) {
+    public boolean canSeeAdminChat(@NonNull CommandSender sender) {
         if (sender instanceof ConsoleCommandSender) {
             return true;
         }

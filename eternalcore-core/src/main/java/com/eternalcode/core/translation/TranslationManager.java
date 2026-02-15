@@ -4,7 +4,7 @@ import com.eternalcode.multification.translation.TranslationProvider;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 public class TranslationManager implements TranslationProvider<Translation> {
 
@@ -30,7 +30,7 @@ public class TranslationManager implements TranslationProvider<Translation> {
         return getMessages();
     }
 
-    @NotNull
+    @NonNull
     @Override
     public Translation provide(Locale locale) {
         return getMessages();

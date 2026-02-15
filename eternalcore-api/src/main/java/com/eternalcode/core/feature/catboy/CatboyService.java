@@ -1,12 +1,11 @@
 package com.eternalcode.core.feature.catboy;
 
-import org.bukkit.entity.Cat;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Unmodifiable;
-
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import org.bukkit.entity.Cat;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Unmodifiable;
 
 /**
  * Service for managing catboys.

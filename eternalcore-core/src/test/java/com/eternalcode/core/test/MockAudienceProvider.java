@@ -16,8 +16,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.flattener.ComponentFlattener;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.translation.GlobalTranslator;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import panda.std.Blank;
 
 public class MockAudienceProvider extends FacetAudienceProvider<Viewer, MockAudienceProvider.MockAudience> {
@@ -40,12 +40,12 @@ public class MockAudienceProvider extends FacetAudienceProvider<Viewer, MockAudi
     }
 
     @Override
-    protected @NotNull MockAudienceProvider.MockAudience createAudience(@NotNull Collection<Viewer> viewers) {
+    protected @NonNull MockAudienceProvider.MockAudience createAudience(@NonNull Collection<Viewer> viewers) {
         return new MockAudienceProvider.MockAudience(new MockAudienceProvider.Chat(), viewers);
     }
 
     @Override
-    public @NotNull ComponentFlattener flattener() {
+    public @NonNull ComponentFlattener flattener() {
         return FLATTENER;
     }
 
@@ -72,15 +72,15 @@ public class MockAudienceProvider extends FacetAudienceProvider<Viewer, MockAudi
 
         @Override
         public void sendMessage(
-            @NotNull Viewer viewer,
-            @NotNull Identity source,
-            @NotNull String message,
-            @NotNull Object type) {
+            @NonNull Viewer viewer,
+            @NonNull Identity source,
+            @NonNull String message,
+            @NonNull Object type) {
             messages.add(message);
         }
 
         @Override
-        public @Nullable String createMessage(@NotNull Viewer viewer, @NotNull Component message) {
+        public @Nullable String createMessage(@NonNull Viewer viewer, @NonNull Component message) {
             return MiniMessage.miniMessage().serialize(message);
         }
     }

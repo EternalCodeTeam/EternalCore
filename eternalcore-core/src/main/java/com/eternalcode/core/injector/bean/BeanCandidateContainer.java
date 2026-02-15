@@ -3,7 +3,7 @@ package com.eternalcode.core.injector.bean;
 import dev.rollczi.litecommands.priority.MutablePrioritizedList;
 import dev.rollczi.litecommands.priority.PriorityLevel;
 import java.util.function.Function;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 class BeanCandidateContainer {
 

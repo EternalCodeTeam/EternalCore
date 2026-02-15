@@ -10,7 +10,7 @@ import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 @Command(name = "adminchat", aliases = {"ac"})
 @Permission(AdminChatPermissionConstant.ADMIN_CHAT_PERMISSION)
@@ -20,7 +20,7 @@ final class AdminChatCommand {
     private final NoticeService noticeService;
 
     @Inject
-    AdminChatCommand(@NotNull AdminChatService adminChatService, @NotNull NoticeService noticeService) {
+    AdminChatCommand(@NonNull AdminChatService adminChatService, @NonNull NoticeService noticeService) {
         this.adminChatService = adminChatService;
         this.noticeService = noticeService;
     }
@@ -29,7 +29,7 @@ final class AdminChatCommand {
     @DescriptionDocs(
         description = "Toggles persistent admin chat mode. When enabled, all your messages will be sent to admin chat."
     )
-    void executeToggle(@Context @NotNull Player sender) {
+    void executeToggle(@Context Player sender) {
         boolean enabled = this.adminChatService.toggleChat(sender.getUniqueId());
 
         this.noticeService.create()
@@ -45,7 +45,7 @@ final class AdminChatCommand {
         description = "Sends a message to all staff members with admin chat permissions.",
         arguments = "<message>"
     )
-    void executeSendMessage(@Context @NotNull CommandSender sender, @Join @NotNull String message) {
+    void executeSendMessage(@Context CommandSender sender, @Join String message) {
         if (message.trim().isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.argument().noArgument())

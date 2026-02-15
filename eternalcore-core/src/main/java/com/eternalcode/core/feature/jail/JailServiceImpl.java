@@ -17,15 +17,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Blocking;
-
-import java.util.Optional;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @Service
 class JailServiceImpl implements JailService {
@@ -134,11 +133,7 @@ class JailServiceImpl implements JailService {
     public boolean isPlayerJailed(UUID player) {
         JailedPlayer jailedPlayer = this.jailedPlayers.get(player);
 
-        if (jailedPlayer == null || jailedPlayer.isPrisonExpired()) {
-            return false;
-        }
-
-        return true;
+        return jailedPlayer != null && !jailedPlayer.isPrisonExpired();
     }
 
     @Override
