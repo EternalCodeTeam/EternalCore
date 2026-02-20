@@ -59,6 +59,7 @@ class LiteCommandsSetup {
     public void onEnable(BeanFactory beanFactory, LiteCommandsBuilder<CommandSender, ?, ?> liteCommandsBuilder) {
         LiteCommands<CommandSender> register = liteCommandsBuilder.build();
         beanFactory.addCandidate(LiteCommands.class, () -> register);
+        beanFactory.initializeCandidates(LiteCommands.class);
     }
 
     @Subscribe(EternalShutdownEvent.class)
