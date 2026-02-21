@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.randomteleport;
 
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.randomteleport.event.RandomSafeLocationCandidateEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
@@ -25,15 +27,18 @@ class RandomTeleportSafeLocationService {
 
     private final RandomTeleportSettings randomTeleportSettings;
     private final LocationsConfiguration locationsConfiguration;
+    private final EventCaller eventCaller;
     private final Random random = new Random();
 
     @Inject
     RandomTeleportSafeLocationService(
         RandomTeleportSettings randomTeleportSettings,
-        LocationsConfiguration locationsConfiguration
+        LocationsConfiguration locationsConfiguration,
+        EventCaller eventCaller
     ) {
         this.randomTeleportSettings = randomTeleportSettings;
         this.locationsConfiguration = locationsConfiguration;
+        this.eventCaller = eventCaller;
     }
 
     public CompletableFuture<Location> getSafeRandomLocation(World world, RandomTeleportRadius radius, int attemptCount) {
@@ -103,9 +108,16 @@ class RandomTeleportSafeLocationService {
             return false;
         }
 
-        return switch (world.getEnvironment()) {
+        boolean environmentValid = switch (world.getEnvironment()) {
             case NORMAL, THE_END, CUSTOM -> true;
             case NETHER -> location.getY() <= NETHER_MAX_HEIGHT;
         };
+
+        if (!environmentValid) {
+            return false;
+        }
+
+        RandomSafeLocationCandidateEvent event = this.eventCaller.callEvent(new RandomSafeLocationCandidateEvent(location));
+        return !event.isCancelled();
     }
 }
