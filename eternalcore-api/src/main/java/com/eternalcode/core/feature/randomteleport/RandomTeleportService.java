@@ -99,30 +99,4 @@ public interface RandomTeleportService {
      */
     CompletableFuture<Location> getSafeRandomLocationInWorldBorder(World world, int attemptCount);
 
-    /**
-     * Registers a custom location filter that will be used to validate random teleport locations.
-     * <p>
-     * Filters are checked after the built-in safety checks (unsafe blocks, world border, etc.).
-     * All registered filters must return true for a location to be considered valid.
-     *
-     * @param filter The filter to register
-     * @throws IllegalArgumentException if a filter with the same name is already registered
-     */
-    void registerFilter(RandomTeleportLocationFilter filter);
-
-    /**
-     * Unregisters a previously registered location filter.
-     *
-     * @param filterName The name of the filter to unregister
-     * @return true if the filter was found and removed, false otherwise
-     */
-    boolean unregisterFilter(String filterName);
-
-    /**
-     * Gets all currently registered location filters.
-     *
-     * @return An unmodifiable collection of registered filters
-     */
-    Collection<RandomTeleportLocationFilter> getRegisteredFilters();
-
 }
