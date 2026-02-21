@@ -35,18 +35,13 @@ class PlaceholderAsync<T> implements NamedPlaceholder {
     }
 
     @Override
-    public String apply(String text, Player targetPlayer) {
-        return text.replace(this.target, this.provideValue(targetPlayer));
-    }
-
-    @Override
     public String provideValue(Player targetPlayer) {
         CompletableFuture<T> future = cache.get(targetPlayer.getUniqueId());
         if (future.isDone() && !future.isCompletedExceptionally()) {
             return mapper.apply(future.join());
         }
 
-        return null;
+        return "null";
     }
 
     public void update(UUID uuid, T value) {

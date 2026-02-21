@@ -5,6 +5,8 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.placeholder.watcher.PlaceholderWatcher;
 import com.eternalcode.core.placeholder.watcher.PlaceholderWatcherKey;
 import com.eternalcode.core.viewer.Viewer;
+import java.util.Collections;
+import java.util.List;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -45,9 +47,11 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
     @SuppressWarnings("unchecked")
     public <T> PlaceholderWatcher<T> createWatcher(PlaceholderWatcherKey<T> key) {
         return (player, value) -> {
-            PlaceholderAsync<T> async = (PlaceholderAsync<T>) asyncPlaceholders.get(key);
-            if (async != null) {
-                async.update(player, value);
+            Set<PlaceholderAsync<?>> placeholders = asyncPlaceholders.getOrDefault(key, Collections.emptySet());
+            if (placeholders != null) {
+                for (PlaceholderAsync<?> placeholder : placeholders) {
+                    ((PlaceholderAsync<T>) placeholder).update(player, value);
+                }
             }
             return value;
         };
