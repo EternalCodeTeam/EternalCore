@@ -1,5 +1,7 @@
 package com.eternalcode.core.placeholder;
 
+import com.eternalcode.core.placeholder.watcher.PlaceholderWatcher;
+import com.eternalcode.core.placeholder.watcher.PlaceholderWatcherKey;
 import com.eternalcode.core.viewer.Viewer;
 
 import java.util.Optional;
@@ -8,8 +10,10 @@ public interface PlaceholderRegistry {
 
     void register(Placeholder stack);
 
+    <T> PlaceholderWatcher<T> createWatcher(PlaceholderWatcherKey<T> name);
+
     String format(String text, Viewer target);
 
-    Optional<PlaceholderRaw> getRawPlaceholder(String target);
+    Optional<NamedPlaceholder> getNamedPlaceholder(String name);
 
 }

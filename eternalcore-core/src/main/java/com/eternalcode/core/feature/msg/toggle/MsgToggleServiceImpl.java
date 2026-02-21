@@ -1,43 +1,34 @@
 package com.eternalcode.core.feature.msg.toggle;
 
+import com.eternalcode.core.feature.msg.MsgPlaceholderSetup;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.placeholder.PlaceholderRegistry;
+import com.eternalcode.core.placeholder.watcher.PlaceholderWatcher;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 class MsgToggleServiceImpl implements MsgToggleService {
 
     private final MsgToggleRepository msgToggleRepository;
-    private final ConcurrentHashMap<UUID, MsgState> cachedToggleStates;
+    private final PlaceholderWatcher<MsgState> watcher;
 
     @Inject
-    MsgToggleServiceImpl(MsgToggleRepository msgToggleRepository) {
-        this.cachedToggleStates = new ConcurrentHashMap<>();
+    MsgToggleServiceImpl(MsgToggleRepository msgToggleRepository, PlaceholderRegistry registry) {
         this.msgToggleRepository = msgToggleRepository;
-
-    }
-
-
-    @Override
-    public CompletableFuture<MsgState> getState(UUID playerUniqueId) {
-        if (this.cachedToggleStates.containsKey(playerUniqueId)) {
-            return CompletableFuture.completedFuture(this.cachedToggleStates.get(playerUniqueId));
-        }
-
-        return this.msgToggleRepository.getPrivateChatState(playerUniqueId);
+        this.watcher = registry.createWatcher(MsgPlaceholderSetup.MSG_STATE);
     }
 
     @Override
-    public CompletableFuture<Void> setState(UUID playerUniqueId, MsgState state) {
-        this.cachedToggleStates.put(playerUniqueId, state);
+    public CompletableFuture<MsgState> getState(UUID player) {
+        return this.watcher.track(player, this.msgToggleRepository.getPrivateChatState(player));
+    }
 
-        return this.msgToggleRepository.setPrivateChatState(playerUniqueId, state)
-            .exceptionally(throwable -> {
-                this.cachedToggleStates.remove(playerUniqueId);
-                return null;
-            });
+    @Override
+    public CompletableFuture<Void> setState(UUID player, MsgState state) {
+        return this.watcher.track(player, this.msgToggleRepository.setPrivateChatState(player, state))
+            .thenApply(unused -> null);
     }
 
     @Override
@@ -45,7 +36,8 @@ class MsgToggleServiceImpl implements MsgToggleService {
         return this.getState(playerUniqueId).thenCompose(state -> {
             MsgState newState = state.invert();
             return this.setState(playerUniqueId, newState)
-                .thenApply(aVoid -> newState);
+                .thenApply(unused -> newState);
         });
     }
+
 }
