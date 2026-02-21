@@ -4,6 +4,7 @@ import com.eternalcode.annotations.scan.placeholder.PlaceholdersDocs;
 import com.eternalcode.annotations.scan.placeholder.PlaceholdersDocs.Entry.Type;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.placeholder.Placeholder;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;

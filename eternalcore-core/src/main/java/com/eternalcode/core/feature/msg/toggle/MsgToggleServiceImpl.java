@@ -22,12 +22,12 @@ class MsgToggleServiceImpl implements MsgToggleService {
 
     @Override
     public CompletableFuture<MsgState> getState(UUID player) {
-        return this.watcher.track(player, this.msgToggleRepository.getPrivateChatState(player));
+        return watcher.track(player, msgToggleRepository.getPrivateChatState(player));
     }
 
     @Override
     public CompletableFuture<Void> setState(UUID player, MsgState state) {
-        return this.watcher.track(player, this.msgToggleRepository.setPrivateChatState(player, state))
+        return watcher.track(player, msgToggleRepository.setPrivateChatState(player, state))
             .thenApply(unused -> null);
     }
 
