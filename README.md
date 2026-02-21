@@ -9,63 +9,72 @@
 [![Chat on Discord](https://raw.githubusercontent.com/vLuckyyy/badges/main//chat-with-us-on-discord.svg)](https://discord.com/invite/FQ7jmGBd6c)
 [![Read the Docs](https://raw.githubusercontent.com/vLuckyyy/badges/main/read-the-documentation.svg)](https://docs.eternalcode.pl/eternalcore/introduction)
 [![Available on BStats](https://raw.githubusercontent.com/vLuckyyy/badges/main/available-on-bstats.svg)](https://bstats.org/plugin/bukkit/EternalCore/13964)
+
+[Report Bug](https://github.com/EternalCodeTeam/EternalCore/issues) • [Request Feature](https://github.com/EternalCodeTeam/EternalCore/issues) • [Join Discord](https://discord.com/invite/FQ7jmGBd6c)
+
+<br>
+
+<a href="https://ko-fi.com/eternalcodeteam">
+  <img src="https://github.com/intergrav/devins-badges/blob/v3/assets/cozy/donate/kofi-plural-alt_64h.png?raw=true" height="64" alt="Support us on Ko-fi">
+</a>
+
 </div>
 
-> [!WARNING]
-> **This branch is currently under active development for EternalCore 2.0.**
-> 
-> This is a major update that includes breaking changes, configuration refactors, translation cleanup, and UX improvements.
-> 
-> ⚠️ Features may be incomplete or unstable. Avoid using in production unless you're contributing or testing the new version.
-> 
-> 🔗 See the full roadmap and discussion: https://github.com/EternalCodeTeam/EternalCore/issues/952
-
+> [!IMPORTANT]
+> 🚀 **EternalCore 2.0 has landed!**  
+> This is a major release with internal changes, new systems, and config updates.  
+> Please read the **changelog** carefully before upgrading:  
+> 👉 https://github.com/EternalCodeTeam/EternalCore/releases/latest
 
 
 # Welcome to EternalCore! 🚀
 
-EternalCore is your ultimate companion for enhancing your Minecraft server experience. 💎 Crafted with care, EternalCore is dedicated to incorporating essential and highly practical server functions into a single plugin.
+EternalCore is a modern, actively maintained alternative to **EssentialsX**.
+It provides the most important server features in one plugin, with better configuration, performance, and support for the latest Minecraft versions.
 
 ## ℹ️ Information
 
-- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.17 onward, e.g. `1.17.1`, `1.18.2`, `1.19.4`, `1.20.6`, `1.21.8`.
+- EternalCore fully supports Minecraft's latest minor versions starting from each major version, starting from 1.19 onward, e.g. `1.19.4`, `1.20.6`, `1.21.11`.
 - Requires **Java 21 or later** to work properly. For older versions of Java, this may affect the functionality of the plugin.
-- If you have any questions, perhaps you will find a solution to them in our [documentation](https://docs.eternalcode.pl/eternalcore/introduction.html), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
+- If you have any questions, perhaps you will find a solution to them in our [documentation](https://eternalcode.pl/docs/eternalcore/commands-and-permissions), you can also ask us about it on [discord](https://discord.gg/FQ7jmGBd6c).
 
 ## 🛠️ Development Builds
 
-Get the latest development builds from our [GitHub Actions](https://github.com/EternalCodeTeam/EternalCore/actions?query=branch%3Amaster).
-
-<details><summary>🎥 Video Guide</summary>
-  <img src="https://i.imgur.com/hmv38VS.gif" alt="Video Guide">
-</details>
-
+Get the latest development builds from [our website](https://eternalcode.pl/builds?project=eternalcore)
 ## ✨ Features
 
 - ⌨️ Over **80+** useful commands.
 - ✅ Slot Bypass `(eternalcore.bypass.slot)`
 - 💤 AFK System
-- 💬 Chat Features, including:
-  - Admin Chat
-  - Auto Messages System (with a sequence or random options)
-  - Chat On/Off Switch
-  - Chat Slow Mode
-  - /ignore and /unignore (with `-all` option)
-  - /msg, /msgtoggle, /socialspy, and /reply commands
-  - /helpop command
-  - Advanced Notification System allowing you to customize every message to your liking (Title, Subtitle, Actionbar, Chat, etc.) 
-- 🔨 Open Utility Blocks with simple commands like `/workbench`
-- 💼 ~~Player Inventory Viewer~~ (We recommend using: [OpenInv](https://github.com/Jikoo/OpenInv))
-- ❤️ Player Attribute Management, including healing, feed, teleportation, and godmode modification
-- 🏓 Ping Command to check client-server connectivity
-- 👤 Player Information Command (`/whois`)
-- 🏠 Home, Warp, and Spawn System
-- 📄 PlaceholderAPI Support
-- 📝 Customizable and Translatable Messages (Player language selection available)
-- <details><summary>Server links feature (Click to see how it works)</summary><img src="assets/server-links-showcase.gif" alt="Server Links Showcase"></details>
-- ⚙️ Advanced Configuration System for customization
-- 🗂️ Database Integration (PostgresSQL, SQLite, MySQL, MariaDB, H2)
-- 🌈 Adventure and [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration with legacy color processing (e.g., &7, &e)
+- 💬 **Chat & Interaction**:
+  - Admin Chat, Auto Messages, Chat On/Off, Slow Mode
+  - Private Messaging (`/msg`, `/reply`, `/socialspy`, `/ignore`)
+  - `/helpop` for player support
+  - Advanced Notification System (Title, Actionbar, BossBar, etc.)
+  - Custom Join, Quit, and Death messages
+  - <details><summary>Server links feature (Click to see how it works)</summary><img src="assets/server-links-showcase.gif" alt="Server Links Showcase"></details>
+- 🌌 **Teleportation & Travel**:
+  - Complete Home, Warp, and Spawn System
+  - Random Teleport (RTP) for wild exploration
+  - Teleport Requests (TPA) and `/back` command
+  - Navigation tools: `/tpup`, `/tprp`, `/tppos`, `/tphere`
+- 🛡️ **Moderation & Administration**:
+  - Jail, Freeze, and Vanish Systems
+  - Admin Tools: `/sudo`, `/powertool`, `/butcher` (Mob Control)
+  - Inventory Management: `/clear`, `/repair`, and Disposal (`/disposal`)
+- 👤 **Player Management**:
+  - Attributes: Gamemode, Fly, Speed, Godmode, Heal, Feed
+  - Information: `/whois`, Playtime, Last Seen, Ping check
+  - Utilities: Hat `/hat`, Skull `/skull`, Near players via `/near`
+- 🌍 **Items & World**:
+  - Open Utility Blocks (Workbench, Anvil, Enderchest, etc.)
+  - Item Editing (Name, Lore, Flags) and Sign Editing
+  - Time, Weather management
+- ⚙️ **Core & Integration**:
+  - 📄 PlaceholderAPI Support
+  - 🗂️ Database Integration (PostgresSQL, SQLite, MySQL, MariaDB, H2)
+  - 🌈 Adventure & [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration
+  - 🔨 Advanced Configuration System
 - [...and much more!](https://docs.eternalcode.pl/eternalcore/features.html)
 
 ## 👷 Developer API
@@ -93,7 +102,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:2.0.0-SNAPSHOT")
+compileOnly("com.eternalcode:eternalcore-api:2.0.1-SNAPSHOT")
 ```
 
 For Maven projects use:
@@ -101,7 +110,7 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.1-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -130,3 +139,9 @@ more.
 [<img src="https://user-images.githubusercontent.com/65517973/210912946-447a6b9a-2685-4796-9482-a44bffc727ce.png" alt="JetBrains" width="150">](https://www.jetbrains.com)
 
 We express our gratitude to JetBrains for providing [Open Source Licenses](https://www.jetbrains.com/opensource/) for their outstanding tools. We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) to work with our projects and boost your productivity!
+
+[<img src="https://www.yourkit.com/images/yklogo.png" alt="YourKit" width="150">](https://www.yourkit.com)
+
+YourKit supports our open-source projects with their advanced tools for profiling and monitoring.  
+Creators of the [YourKit Java Profiler](https://www.yourkit.com/java/profiler/), [.NET Profiler](https://www.yourkit.com/dotnet-profiler/) and [YouMonitor](https://www.yourkit.com/youmonitor/).
+

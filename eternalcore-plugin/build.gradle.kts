@@ -2,7 +2,13 @@ plugins {
     `eternalcode-java`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
+    `eternalcore-publish-plugin`
     id("xyz.jpenilla.run-paper") version "3.0.2"
+}
+
+ext {
+    set("modrinthProjectId", "eternalcore")
+    set("hangarProjectId", "eternalcore")
 }
 
 eternalShadowCompiler {
@@ -22,7 +28,7 @@ eternalShadowCompiler {
     }
 
     shadowJar {
-        archiveFileName.set("EternalCore v${project.version} (MC 1.17.x-1.21.x).jar")
+        archiveFileName.set("EternalCore v${project.version} (MC 1.19.x-1.21.x).jar")
 
         exclude(
             "META-INF/**",
@@ -36,7 +42,7 @@ dependencies {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.8")
+        minecraftVersion("1.21.11")
 
         downloadPlugins {
             modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
@@ -44,3 +50,4 @@ tasks {
         }
     }
 }
+

@@ -3,13 +3,13 @@ package com.eternalcode.core.feature.jail;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.UUID;
-import javax.annotation.Nullable;
 import org.bukkit.Location;
 
 import java.util.Optional;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Blocking;
+import org.jetbrains.annotations.Nullable;
 
 public interface JailService {
 

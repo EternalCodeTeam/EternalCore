@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.repair.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
-import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -10,14 +9,14 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENRepairMessages extends OkaeriConfig implements RepairMessages {
 
-    public Notice itemRepaired = Notice.chat("<green>► <white>Item in your hand has been repaired!");
-    public Notice allItemsRepaired = Notice.chat("<green>► <white>All items in your inventory has been repaired!");
-    public Notice armorRepaired = Notice.chat("<green>► <white>Your armor has been repaired!");
+    Notice itemRepaired = Notice.chat("<color:#9d6eef>► <white>Item in your hand has been repaired!");
+    Notice allItemsRepaired = Notice.chat("<color:#9d6eef>► <white>All items in your inventory has been repaired!");
+    Notice armorRepaired = Notice.chat("<color:#9d6eef>► <white>Your armor has been repaired!");
 
-    public Notice delay = Notice.chat("<red>✘ <dark_red>You can use this command in <dark_red>{TIME}!");
+    Notice delay = Notice.chat("<red>✘ <dark_red>You can use this command in <dark_red>{TIME}!");
 
-    public Notice cannotRepair = Notice.chat ("<red>✘ <dark_red>You can't repair this item!");
+    Notice cannotRepair = Notice.chat ("<red>✘ <dark_red>You can't repair this item!");
 
-    public Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>You don't have any damaged items to repair!");
+    Notice needDamagedItem = Notice.chat ("<red>✘ <dark_red>You don't have any damaged items to repair!");
 
 }

@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "local>EternalCodeTeam/.github:renovate-config"
+  ]
+}

@@ -36,13 +36,13 @@ class SpeedArgument extends AbstractViewerArgument<Double> {
             double value = Double.parseDouble(normalized);
 
             if (value < MIN_SPEED || value > MAX_SPEED) {
-                return ParseResult.failure(translation.player().speedBetweenZeroAndTen());
+                return ParseResult.failure(translation.speed().invalidSpeedRange());
             }
 
             return ParseResult.success(value);
         }
         catch (NumberFormatException exception) {
-            return ParseResult.failure(translation.player().speedBetweenZeroAndTen());
+            return ParseResult.failure(translation.speed().invalidSpeedRange());
         }
     }
 

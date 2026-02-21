@@ -10,16 +10,16 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLTimeAndWeatherMessages extends OkaeriConfig implements TimeAndWeatherMessages {
     @Comment("# {WORLD} - Nazwa świata w którym zmieniono czas")
-    public Notice timeSetDay = Notice.chat("<green>► <white>Ustawiono dzień w świecie <green>{WORLD}<white>!");
-    public Notice timeSetNight = Notice.chat("<green>► <white>Ustawiono noc w świecie <green>{WORLD}<white>!");
+    Notice timeSetDay = Notice.chat("<color:#9d6eef>► <white>Ustawiono dzień w świecie <color:#9d6eef>{WORLD}<white>!");
+    Notice timeSetNight = Notice.chat("<color:#9d6eef>► <white>Ustawiono noc w świecie <color:#9d6eef>{WORLD}<white>!");
 
     @Comment({" ", "# {TIME} - Czas"})
-    public Notice timeSet = Notice.chat("<green>► <white>Ustawiono czas na <green>{TIME}<white>!");
-    public Notice timeAdd = Notice.chat("<green>► <white>Zmieniono czas o <green>{TIME}<white>!");
+    Notice timeSet = Notice.chat("<color:#9d6eef>► <white>Ustawiono czas na <color:#9d6eef>{TIME}<white>!");
+    Notice timeAdd = Notice.chat("<color:#9d6eef>► <white>Zmieniono czas o <color:#9d6eef>{TIME}<white>!");
 
     @Comment({" ", "# {WORLD} - Świat w którym ustawiono pogode"})
-    public Notice weatherSetRain = Notice.chat("<green>► <white>Ustawiono deszcz w świecie <green>{WORLD}<white>!");
-    public Notice weatherSetSun =
-        Notice.chat("<green>► <white>Ustawiono słoneczną pogodę w świecie <green>{WORLD}<white>!");
-    public Notice weatherSetThunder = Notice.chat("<green>► <white>Ustawiono burze w świecie <green>{WORLD}<white>!");
+    Notice weatherSetRain = Notice.chat("<color:#9d6eef>► <white>Ustawiono deszcz w świecie <color:#9d6eef>{WORLD}<white>!");
+    Notice weatherSetSun =
+        Notice.chat("<color:#9d6eef>► <white>Ustawiono słoneczną pogodę w świecie <color:#9d6eef>{WORLD}<white>!");
+    Notice weatherSetThunder = Notice.chat("<color:#9d6eef>► <white>Ustawiono burze w świecie <color:#9d6eef>{WORLD}<white>!");
 }

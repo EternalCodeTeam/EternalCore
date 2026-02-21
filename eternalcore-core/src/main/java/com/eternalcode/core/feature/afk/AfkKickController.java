@@ -9,6 +9,7 @@ import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import java.util.Optional;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -56,7 +57,8 @@ class AfkKickController implements Listener {
             return;
         }
 
-        User user = this.userManager.getOrCreate(playerUUID, player.getName());
+        Optional<User> optionalUser = this.userManager.getUser(playerUUID);
+        User user = optionalUser.get();
         Translation translation = this.translationManager.getMessages(user.getUniqueId());
 
         Component component = this.miniMessage.deserialize(translation.afk().afkKickReason());

@@ -1,0 +1,14 @@
+package com.eternalcode.core.feature.kill.messages;
+
+import com.eternalcode.multification.notice.Notice;
+import eu.okaeri.configs.OkaeriConfig;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
+@Getter
+@Accessors(fluent = true)
+public class ENKillMessages extends OkaeriConfig implements KillMessages {
+    Notice killedYourself = Notice.chat("<red>✘ <dark_red>You have been killed!");
+    Notice killedTargetPlayer = Notice.chat("<color:#9d6eef>► <white>Killed <color:#9d6eef>{PLAYER}");
+    Notice killedByAdmin = Notice.chat("<red>✘ <dark_red>You have been killed by admin!");
+}

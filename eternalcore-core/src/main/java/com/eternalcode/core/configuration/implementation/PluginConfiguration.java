@@ -3,16 +3,22 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseSettings;
+import com.eternalcode.core.util.date.DateConfig;
+import com.eternalcode.core.util.date.DateSettings;
 import com.eternalcode.core.feature.afk.AfkConfig;
 import com.eternalcode.core.feature.afk.AfkSettings;
 import com.eternalcode.core.feature.automessage.AutoMessageConfig;
 import com.eternalcode.core.feature.automessage.AutoMessageSettings;
+import com.eternalcode.core.feature.back.BackConfig;
+import com.eternalcode.core.feature.back.BackSettings;
 import com.eternalcode.core.feature.broadcast.BroadcastConfig;
 import com.eternalcode.core.feature.broadcast.BroadcastSettings;
 import com.eternalcode.core.feature.butcher.ButcherConfig;
 import com.eternalcode.core.feature.butcher.ButcherSettings;
 import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.chat.ChatSettings;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageConfig;
+import com.eternalcode.core.feature.deathmessage.config.DeathMessageSettings;
 import com.eternalcode.core.feature.enchant.EnchantConfig;
 import com.eternalcode.core.feature.enchant.EnchantSettings;
 import com.eternalcode.core.feature.give.GiveConfig;
@@ -43,26 +49,27 @@ import com.eternalcode.core.feature.warp.WarpConfig;
 import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.injector.annotations.Bean;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.placeholder.PlaceholdersConfig;
+import com.eternalcode.core.placeholder.PlaceholdersSettings;
 import com.eternalcode.core.translation.TranslationConfig;
 import com.eternalcode.core.translation.TranslationSettings;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Header;
-import org.bukkit.Sound;
 
 import java.io.File;
 
 @Header({
-    "#",
-    "# This is the main configuration file for EternalCore.",
-    "#",
-    "# If you need help with the configuration or have any questions related to EternalCore, join our discord, or create an issue on our GitHub.",
-    "#",
-    "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
-    "# Discord: https://discord.gg/FQ7jmGBd6c",
-    "# Website: https://eternalcode.pl/",
-    "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
-    "#",
+        "#",
+        "# This is the main configuration file for EternalCore.",
+        "#",
+        "# If you need help with the configuration or have any questions related to EternalCore, join our discord, or create an issue on our GitHub.",
+        "#",
+        "# Issues: https://github.com/EternalCodeTeam/EternalCore/issues",
+        "# Discord: https://discord.gg/FQ7jmGBd6c",
+        "# Website: https://eternalcode.pl/",
+        "# Source Code: https://github.com/EternalCodeTeam/EternalCore",
+        "#",
 })
 @ConfigurationFile
 public class PluginConfiguration extends AbstractConfigurationFile {
@@ -76,12 +83,24 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Settings that determine the language used within the server.")
     @Comment("# Choose the preferred language for all messages and interactions in the plugin.")
     TranslationConfig language = new TranslationConfig();
-    
+
+    @Bean(proxied = PlaceholdersSettings.class)
+    @Comment("")
+    @Comment("# Placeholders Configuration")
+    @Comment("# Settings that define various placeholders used across the plugin")
+    PlaceholdersConfig placeholders = new PlaceholdersConfig();
+
     @Bean(proxied = DatabaseSettings.class)
     @Comment("")
     @Comment("# Database Configuration")
     @Comment("# Settings responsible for the database connection")
     DatabaseConfig database = new DatabaseConfig();
+
+    @Bean(proxied = DateSettings.class)
+    @Comment("")
+    @Comment("# Date Configuration")
+    @Comment("# Settings for date formatting")
+    DateConfig date = new DateConfig();
 
     @Bean(proxied = SpawnJoinSettings.class)
     @Comment("")
@@ -94,6 +113,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Teleport Request Configuration")
     @Comment("# Settings for teleport requests between players")
     TeleportRequestConfig teleportAsk = new TeleportRequestConfig();
+
+    @Bean(proxied = DeathMessageSettings.class)
+    @Comment("")
+    @Comment("# Death Message Configuration")
+    @Comment("# Settings for player death messages")
+    DeathMessageConfig deathMessages = new DeathMessageConfig();
 
     @Bean(proxied = TeleportToRandomPlayerSettings.class)
     @Comment("")
@@ -111,32 +136,6 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Homes Configuration")
     @Comment("# Settings for player home management")
     HomesConfig homes = new HomesConfig();
-
-    @Comment("")
-    @Comment("# Sound Configuration")
-    @Comment("# Settings for various sound effects")
-    @Bean
-    public Sounds sound = new Sounds();
-
-    public static class Sounds extends OkaeriConfig {
-        @Comment("# Enable sound when player joins the server")
-        public boolean enabledAfterJoin = true;
-        public Sound afterJoin = Sound.BLOCK_NOTE_BLOCK_PLING;
-        public float afterJoinVolume = 1.8F;
-        public float afterJoinPitch = 1F;
-
-        @Comment("# Enable sound when player leaves the server")
-        public boolean enableAfterQuit = true;
-        public Sound afterQuit = Sound.BLOCK_NOTE_BLOCK_BASEDRUM;
-        public float afterQuitVolume = 1.8F;
-        public float afterQuitPitch = 1F;
-
-        @Comment("# Enable sound when player sends a chat message")
-        public boolean enableAfterChatMessage = true;
-        public Sound afterChatMessage = Sound.ENTITY_ITEM_PICKUP;
-        public float afterChatMessageVolume = 1.8F;
-        public float afterChatMessagePitch = 1F;
-    }
 
     @Bean(proxied = ChatSettings.class)
     @Comment("")
@@ -230,6 +229,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Vanish Configuration")
     @Comment("# Settings responsible for player vanish functionality")
     VanishConfig vanish = new VanishConfig();
+
+    @Bean(proxied = BackSettings.class)
+    @Comment("")
+    @Comment("# Back Configuration")
+    @Comment("# Settings for the /back command functionality")
+    BackConfig back = new BackConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {

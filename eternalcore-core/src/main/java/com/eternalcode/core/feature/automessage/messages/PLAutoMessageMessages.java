@@ -14,27 +14,26 @@ import org.bukkit.Sound;
 @Accessors(fluent = true)
 public class PLAutoMessageMessages extends OkaeriConfig implements AutoMessageMessages {
     @Comment({
-        "",
-        "# Jeżeli chcesz użyć placeholder'a %server_online% musisz zainstalować plugin",
-        "# PlaceholderAPI oraz pobrać placeholdery dla Server'a",
-        "# za pomocą komendy /papi ecloud download Server",
+            "# Jeżeli chcesz użyć placeholder'a %server_online% musisz zainstalować plugin",
+            "# PlaceholderAPI oraz pobrać placeholdery dla Server'a",
+            "# za pomocą komendy /papi ecloud download Server",
     })
     public Map<String, Notice> messages = Map.of(
-        "1", BukkitNotice.builder()
-            .actionBar("<dark_gray>» <gold>Na serwerze jest: <white>%server_online% <gold>graczy online!")
-            .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
-            .build(),
+            "1", BukkitNotice.builder()
+                    .actionBar(
+                            "<color:#9d6eef>► <white>Na serwerze jest: <color:#9d6eef>%server_online% <white>graczy online!")
+                    .sound(Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 1.0f)
+                    .build(),
 
-        "2", BukkitNotice.builder()
-            .chat("<dark_gray>» <gold>Potrzebujesz pomocy od admina?")
-            .chat("<dark_gray>» <gold>Użyj komendy <white>/helpop <gold>aby zgłosić problem!")
-            .chat("<dark_gray>» <green><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></green>")
-            .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
-            .build()
-    );
+            "2", BukkitNotice.builder()
+                    .chat("<color:#9d6eef>► <white>Potrzebujesz pomocy od admina?")
+                    .chat("<color:#9d6eef>► <white>Użyj komendy <color:#9d6eef>/helpop <white>aby zgłosić problem!")
+                    .chat("<color:#9d6eef>► <color:#9d6eef><click:suggest_command:'/helpop'>Kliknij aby wykonać!</click></color:#9d6eef>")
+                    .sound(Sound.BLOCK_ANVIL_BREAK, 1.0f, 1.0f)
+                    .build());
 
-    public Notice enabled = Notice.chat("<green>► <white>Włączono automatyczne wiadomości!");
-    public Notice disabled = Notice.chat("<green>► <white>Wyłączono automatyczne wiadomości!");
+    Notice enabled = Notice.chat("<color:#9d6eef>► <white>Włączono automatyczne wiadomości!");
+    Notice disabled = Notice.chat("<color:#9d6eef>► <white>Wyłączono automatyczne wiadomości!");
 
     @Override
     public Collection<Notice> messages() {

@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.joinmessage;
 
-
 import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -10,10 +9,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import panda.utilities.StringUtils;
 
 @Controller
 class PlayerJoinMessageController implements Listener {
+
+    private static final String EMPTY_MESSAGE = null;
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
@@ -29,22 +29,20 @@ class PlayerJoinMessageController implements Listener {
         Player player = event.getPlayer();
 
         if (this.vanishService.isVanished(player)) {
-            event.setJoinMessage(StringUtils.EMPTY);
+            event.setJoinMessage(EMPTY_MESSAGE);
             return;
         }
 
-        if (!player.hasPlayedBefore()) {
-            this.noticeService.create()
-                .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().firstJoinMessage()))
-                .placeholder("{PLAYER}", player.getName())
-                .onlinePlayers()
-                .send();
-        }
+        event.setJoinMessage(EMPTY_MESSAGE);
 
-        event.setJoinMessage(StringUtils.EMPTY);
+        boolean firstTime = !player.hasPlayedBefore();
 
         this.noticeService.create()
-            .noticeOptional(translation -> RandomElementUtil.randomElement(translation.event().joinMessage()))
+            .noticeOptional(translation -> RandomElementUtil.randomElement(
+                firstTime
+                    ? translation.join().playerJoinedServerFirstTime()
+                    : translation.join().playerJoinedServer()
+            ))
             .placeholder("{PLAYER}", player.getName())
             .onlinePlayers()
             .sendAsync();

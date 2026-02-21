@@ -18,7 +18,7 @@ import java.util.Set;
 public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
 
     private final Server server;
-    private final Set<PlaceholderReplacer> placeholders = new HashSet<>();
+    private final Set<Placeholder> placeholders = new HashSet<>();
     private final Map<String, NamedPlaceholder> namedPlaceholders = new HashMap<>();
     private final Map<PlaceholderWatcherKey<?>, Set<PlaceholderAsync<?>>> asyncPlaceholders = new HashMap<>();
 
@@ -28,8 +28,8 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
     }
 
     @Override
-    public void registerPlaceholder(PlaceholderReplacer placeholder) {
-        this.placeholders.add(placeholder);
+    public void register(Placeholder stack) {
+        this.placeholders.add(stack);
 
         if (placeholder instanceof NamedPlaceholder namedPlaceholder) {
             this.namedPlaceholders.put(namedPlaceholder.getName(), namedPlaceholder);
@@ -59,7 +59,7 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
             Player playerTarget = this.server.getPlayer(target.getUniqueId());
 
             if (playerTarget != null) {
-                for (PlaceholderReplacer replacer : this.placeholders) {
+                for (Placeholder replacer : this.placeholders) {
                     text = replacer.apply(text, playerTarget);
                 }
             }

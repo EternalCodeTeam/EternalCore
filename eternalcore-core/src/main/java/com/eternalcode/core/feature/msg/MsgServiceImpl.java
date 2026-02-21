@@ -2,8 +2,8 @@ package com.eternalcode.core.feature.msg;
 
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
-import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
 import com.eternalcode.core.feature.msg.toggle.MsgState;
+import com.eternalcode.core.feature.msg.toggle.MsgToggleService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
@@ -13,9 +13,9 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import java.time.Duration;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 @Service
@@ -27,6 +27,7 @@ class MsgServiceImpl implements MsgService {
     private final MsgPresenter presenter;
     private final EventCaller eventCaller;
     private final MsgToggleService msgToggleService;
+    private final Server server;
 
     private final Cache<UUID, UUID> replies = CacheBuilder.newBuilder()
         .expireAfterWrite(Duration.ofHours(1))
@@ -40,7 +41,7 @@ class MsgServiceImpl implements MsgService {
         IgnoreService ignoreService,
         UserManager userManager,
         EventCaller eventCaller,
-        MsgToggleService msgToggleService
+        MsgToggleService msgToggleService, Server server
     ) {
         this.noticeService = noticeService;
         this.ignoreService = ignoreService;
@@ -49,15 +50,31 @@ class MsgServiceImpl implements MsgService {
         this.msgToggleService = msgToggleService;
 
         this.presenter = new MsgPresenter(noticeService);
+        this.server = server;
     }
 
-    void privateMessage(User sender, User target, String message) {
-        if (target.getClientSettings().isOffline()) {
+    @Override
+    public void reply(Player sender, String message) {
+        UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
+
+        if (uuid == null) {
+            this.noticeService.player(sender.getUniqueId(), translation -> translation.msg().noReply());
+
+            return;
+        }
+
+        Player target = this.server.getPlayer(uuid);
+        if (target == null) {
             this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
 
             return;
         }
 
+        this.sendMessage(sender, target, message);
+    }
+
+    @Override
+    public void sendMessage(Player sender, Player target, String message) {
         UUID uniqueId = target.getUniqueId();
 
         this.msgToggleService.getState(uniqueId).thenAccept(msgState -> {
@@ -75,31 +92,9 @@ class MsgServiceImpl implements MsgService {
 
                 MsgEvent event = new MsgEvent(sender.getUniqueId(), uniqueId, message);
                 this.eventCaller.callEvent(event);
-                this.presenter.onMessage(new Message(sender, target, event.getContent(), this.socialSpy, isIgnored));
+                this.presenter.onMessage(new Message(toUser(sender), toUser(target), event.getContent(), this.socialSpy, isIgnored));
             });
         });
-    }
-
-    void reply(User sender, String message) {
-        UUID uuid = this.replies.getIfPresent(sender.getUniqueId());
-
-        if (uuid == null) {
-            this.noticeService.player(sender.getUniqueId(), translation -> translation.msg().noReply());
-
-            return;
-        }
-
-        Optional<User> targetOption = this.userManager.getUser(uuid);
-
-        if (targetOption.isEmpty()) {
-            this.noticeService.player(sender.getUniqueId(), translation -> translation.argument().offlinePlayer());
-
-            return;
-        }
-
-        User target = targetOption.get();
-
-        this.privateMessage(sender, target, message);
     }
 
     @Override
@@ -117,14 +112,8 @@ class MsgServiceImpl implements MsgService {
         return this.socialSpy.contains(player);
     }
 
-    @Override
-    public void reply(Player sender, String message) {
-        this.reply(this.userManager.getOrCreate(sender.getUniqueId(), sender.getName()), message);
-    }
-
-    @Override
-    public void sendMessage(Player sender, Player target, String message) {
-        User user = this.userManager.getOrCreate(target.getUniqueId(), target.getName());
-        this.privateMessage(this.userManager.getOrCreate(sender.getUniqueId(), sender.getName()), user, message);
+    private User toUser(Player target) {
+        return this.userManager.getUser(target.getUniqueId())
+            .orElseThrow(() -> new IllegalStateException("User not found for player " + target.getName()));
     }
 }

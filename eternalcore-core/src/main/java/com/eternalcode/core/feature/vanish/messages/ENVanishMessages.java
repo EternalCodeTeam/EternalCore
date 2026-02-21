@@ -9,23 +9,28 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class ENVanishMessages extends OkaeriConfig implements VanishMessages {
 
-    public Notice vanishEnabled = Notice.chat("<green>► <white>Vanish mode enabled!");
-    public Notice vanishDisabled = Notice.chat("<red>► <white>Vanish mode disabled!");
+    Notice vanishEnabled = Notice.chat("<color:#9d6eef>► <white>Vanish mode enabled!");
+    Notice vanishDisabled = Notice.chat("<red>✘ <white>Vanish mode disabled!");
 
-    public Notice vanishEnabledForOther = Notice.chat("<green>► <white>Enabled vanish mode for <green>{PLAYER}!");
-    public Notice vanishDisabledForOther = Notice.chat("<red>► <white>Disabled vanish mode for <green>{PLAYER}!");
+    Notice vanishEnabledForOther = Notice
+            .chat("<color:#9d6eef>► <white>Enabled vanish mode for <color:#9d6eef>{PLAYER}!");
+    Notice vanishDisabledForOther = Notice.chat("<red>✘ <white>Disabled vanish mode for <color:#9d6eef>{PLAYER}!");
 
-    public Notice vanishEnabledByStaff = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>has enabled your vanish mode!");
-    public Notice vanishDisabledByStaff = Notice.chat("<green>► <white>Administrator <green>{PLAYER} <white>has disabled your vanish mode!");
+    Notice vanishEnabledByStaff = Notice
+            .chat("<color:#9d6eef>► <white>Administrator <color:#9d6eef>{PLAYER} <white>has enabled your vanish mode!");
+    Notice vanishDisabledByStaff = Notice
+            .chat("<red>✘ <white>Administrator <color:#9d6eef>{PLAYER} <white>has disabled your vanish mode!");
 
-    public Notice currentlyInVanish = Notice.actionbar("<gradient:#9d6eef:#A1AAFF:#9d6eef>You are currently invisible!</gradient> <dark_gray>(<gray>/vanish</gray>)</dark_gray>");
+    Notice currentlyInVanish = Notice.actionbar(
+            "<gradient:#9d6eef:#A1AAFF:#9d6eef>You are currently invisible!</gradient> <dark_gray>(<gray>/vanish</gray>)</dark_gray>");
 
-    public Notice joinedInVanish = Notice.chat("<green>► <white>You have joined the server in vanish mode.");
-    public Notice playerJoinedInVanish = Notice.chat("<green>► <white>{PLAYER} has joined the server in vanish mode.");
+    Notice joinedInVanish = Notice.chat("<color:#9d6eef>► <white>You have joined the server in vanish mode.");
+    Notice playerJoinedInVanish = Notice.chat("<color:#9d6eef>► <white>{PLAYER} has joined the server in vanish mode.");
 
-    public Notice cantBlockPlaceWhileVanished = Notice.chat("<red>You cannot place blocks while vanished.");
-    public Notice cantBlockBreakWhileVanished = Notice.chat("<red>You cannot break blocks while vanished.");
-    public Notice cantUseChatWhileVanished = Notice.chat("<red>You cannot use chat while vanished.");
-    public Notice cantDropItemsWhileVanished = Notice.chat("<red>You cannot drop items while vanished.");
-    public Notice cantOpenInventoryWhileVanished = Notice.chat("<red>You cannot open your inventory while vanished.");
+    Notice cantBlockPlaceWhileVanished = Notice.chat("<red>✘ <dark_red>You cannot place blocks while vanished.");
+    Notice cantBlockBreakWhileVanished = Notice.chat("<red>✘ <dark_red>You cannot break blocks while vanished.");
+    Notice cantUseChatWhileVanished = Notice.chat("<red>✘ <dark_red>You cannot use chat while vanished.");
+    Notice cantDropItemsWhileVanished = Notice.chat("<red>✘ <dark_red>You cannot drop items while vanished.");
+    Notice cantOpenInventoryWhileVanished = Notice
+            .chat("<red>✘ <dark_red>You cannot open your inventory while vanished.");
 }

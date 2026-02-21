@@ -16,10 +16,11 @@ import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.time.Duration;
 import java.util.UUID;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-@Command(name = "helpop", aliases = { "report" })
+@Command(name = "helpop", aliases = {"report"})
 @Permission("eternalcore.helpop")
 @PermissionDocs(
     name = "HelpOp Spy",
@@ -42,7 +43,7 @@ class HelpOpCommand {
         this.helpOpSettings = helpOpSettings;
         this.eventCaller = eventCaller;
         this.server = server;
-        this.delay = new Delay<>(() -> this.helpOpSettings.helpOpDelay());
+        this.delay = Delay.withDefault(() -> this.helpOpSettings.helpOpDelay());
     }
 
     @Execute
@@ -58,7 +59,7 @@ class HelpOpCommand {
         }
 
         if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getDurationToExpire(uuid);
+            Duration time = this.delay.getRemaining(uuid);
 
             this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
@@ -73,7 +74,7 @@ class HelpOpCommand {
             .console()
             .notice(translation -> translation.helpOp().format())
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{TEXT}", message);
+            .placeholder("{TEXT}", MiniMessage.miniMessage().escapeTags(message));
 
         for (Player admin : this.server.getOnlinePlayers()) {
             if (!admin.hasPermission(HELPOP_SPY)) {
@@ -91,7 +92,6 @@ class HelpOpCommand {
             .notice(translation -> translation.helpOp().send())
             .send();
 
-        this.delay.markDelay(uuid, this.helpOpSettings.helpOpDelay());
+        this.delay.markDelay(uuid);
     }
-
 }

@@ -1,12 +1,16 @@
-# intellij
+# Intellij
+/.idea/**
+!/.idea/icon.svg
 *.iml
 *.ipr
 *.iws
-.idea/
+out/
+
+
+# Gradle
 .gradle/
 .kotlin/
 run/
-out/
 build/
 
 .DS_Store
