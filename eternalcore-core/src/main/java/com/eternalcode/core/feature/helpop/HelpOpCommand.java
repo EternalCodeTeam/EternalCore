@@ -57,7 +57,7 @@ class HelpOpCommand {
     @Execute
     @DescriptionDocs(description = "Send helpop message to all administrator with eternalcore.helpop.spy permission", arguments = "<message>")
     void execute(@Sender Player player, @Join String message) {
-        UUID uuid = player.getUniqueId();
+        UUID sender = player.getUniqueId();
         HelpOpEvent event = new HelpOpEvent(player, message);
 
         this.eventCaller.callEvent(event);
@@ -66,33 +66,25 @@ class HelpOpCommand {
             return;
         }
 
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getRemaining(uuid);
+        if (this.delay.hasDelay(sender)) {
+            Duration time = this.delay.getRemaining(sender);
 
             this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
                 .placeholder("{TIME}", DurationUtil.format(time, true))
-                .player(uuid)
+                .player(sender)
                 .send();
 
             return;
         }
 
-        NoticeBroadcast notice = this.noticeService.create()
+        this.noticeService.create()
             .console()
             .notice(translation -> translation.helpOp().format())
+            .onlinePlayers(HELPOP_SPY)
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{TEXT}", MiniMessage.miniMessage().escapeTags(message));
-
-        for (Player admin : this.server.getOnlinePlayers()) {
-            if (!admin.hasPermission(HELPOP_SPY)) {
-                continue;
-            }
-
-            notice = notice.player(admin.getUniqueId());
-        }
-
-        notice.send();
+            .placeholder("{TEXT}", MiniMessage.miniMessage().escapeTags(message))
+            .send();
 
         this.noticeService
             .create()
@@ -100,7 +92,7 @@ class HelpOpCommand {
             .notice(translation -> translation.helpOp().send())
             .send();
 
-        this.delay.markDelay(uuid);
-        this.helpOpService.markSender(uuid);
+        this.delay.markDelay(sender);
+        this.helpOpService.markSender(sender);
     }
 }

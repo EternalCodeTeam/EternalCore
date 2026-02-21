@@ -6,7 +6,6 @@ import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.helpop.event.HelpOpReplyEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.multification.notice.NoticeBroadcast;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
@@ -14,7 +13,6 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 @Command(name = "helpopreply")
@@ -29,14 +27,12 @@ class HelpOpReplyCommand {
     private final NoticeService noticeService;
     private final HelpOpService helpOpService;
     private final EventCaller eventCaller;
-    private final Server server;
 
     @Inject
-    HelpOpReplyCommand(NoticeService noticeService, HelpOpService helpOpService, EventCaller eventCaller, Server server) {
+    HelpOpReplyCommand(NoticeService noticeService, HelpOpService helpOpService, EventCaller eventCaller) {
         this.noticeService = noticeService;
         this.helpOpService = helpOpService;
         this.eventCaller = eventCaller;
-        this.server = server;
     }
 
     @Execute
@@ -61,23 +57,15 @@ class HelpOpReplyCommand {
 
         String escapedMessage = MiniMessage.miniMessage().escapeTags(event.getContent());
 
-        NoticeBroadcast notice = this.noticeService.create()
+        this.noticeService.create()
             .console()
             .player(target.getUniqueId())
+            .onlinePlayers(HelpOpCommand.HELPOP_SPY)
             .notice(translation -> translation.helpOp().adminReply())
             .placeholder("{ADMIN}", admin.getName())
             .placeholder("{PLAYER}", target.getName())
-            .placeholder("{TEXT}", escapedMessage);
-
-        for (Player onlinePlayer : this.server.getOnlinePlayers()) {
-            if (!onlinePlayer.hasPermission(HelpOpCommand.HELPOP_SPY)) {
-                continue;
-            }
-
-            notice = notice.player(onlinePlayer.getUniqueId());
-        }
-
-        notice.send();
+            .placeholder("{TEXT}", escapedMessage)
+            .send();
 
         this.noticeService.create()
             .player(admin.getUniqueId())
