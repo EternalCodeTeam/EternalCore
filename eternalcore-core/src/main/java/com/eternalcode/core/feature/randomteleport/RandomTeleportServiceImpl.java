@@ -9,12 +9,10 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import io.papermc.lib.PaperLib;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -152,5 +150,4 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         int borderRadius = (int) (worldBorder.getSize() / 2);
         return RandomTeleportRadius.of(-borderRadius, borderRadius, -borderRadius, borderRadius);
     }
-
 }
