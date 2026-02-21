@@ -13,13 +13,13 @@ class PlaceholdersSetup {
     @Subscribe(EternalInitializeEvent.class)
     void setUp(PlaceholderRegistry placeholderRegistry, PlaceholdersConfiguration placeholdersConfiguration) {
         placeholdersConfiguration.placeholders.forEach((key, value) -> {
-            placeholderRegistry.register(Placeholder.of(key, value));
+            placeholderRegistry.registerPlaceholder(Placeholder.of(key, value));
         });
     }
 
     @Subscribe(EternalInitializeEvent.class)
     void setUpPlaceholders(PlaceholderRegistry placeholderRegistry, Server server, VanishService vanishService) {
-        placeholderRegistry.register(Placeholder.of("online", player -> String.valueOf(
+        placeholderRegistry.registerPlaceholder(Placeholder.of("online", player -> String.valueOf(
             server.getOnlinePlayers()
                 .stream()
                 .filter(onlinePlayer -> !vanishService.isVanished(onlinePlayer))

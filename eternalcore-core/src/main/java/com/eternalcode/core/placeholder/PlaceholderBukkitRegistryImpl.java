@@ -28,7 +28,7 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
     }
 
     @Override
-    public void register(Placeholder placeholder) {
+    public void registerPlaceholder(Placeholder placeholder) {
         this.placeholders.add(placeholder);
 
         if (placeholder instanceof NamedPlaceholder namedPlaceholder) {

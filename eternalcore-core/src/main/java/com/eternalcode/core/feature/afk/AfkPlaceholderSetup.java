@@ -28,10 +28,10 @@ class AfkPlaceholderSetup {
 
     @Subscribe(EternalInitializeEvent.class)
     void setUpPlaceholders(PlaceholderRegistry placeholderRegistry, AfkService afkService) {
-        placeholderRegistry.register(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(Placeholder.of(
             "afk",
             player -> String.valueOf(afkService.isAfk(player.getUniqueId()))));
-        placeholderRegistry.register(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(Placeholder.of(
             "afk_formatted",
             player -> {
                 Translation messages = this.translationManager.getMessages(player.getUniqueId());
@@ -39,7 +39,7 @@ class AfkPlaceholderSetup {
                     messages.afk().afkEnabledPlaceholder() : messages.afk().afkDisabledPlaceholder();
             }));
 
-        placeholderRegistry.register(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(Placeholder.of(
             "afk_time",
             player -> {
                 Optional<Afk> afkOptional = afkService.getAfk(player.getUniqueId());
@@ -54,7 +54,7 @@ class AfkPlaceholderSetup {
                 return DurationUtil.format(afkDuration, true);
             }));
 
-        placeholderRegistry.register(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(Placeholder.of(
             "afk_playercount",
             player -> {
                 long afkPlayerCount = this.server.getOnlinePlayers()

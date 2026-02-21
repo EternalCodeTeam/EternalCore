@@ -37,12 +37,12 @@ public class MsgPlaceholderSetup {
     void setUpPlaceholders(PlaceholderRegistry registry) {
         Translation translation = this.translationManager.getMessages();
 
-        registry.register(Placeholder.of(
+        registry.registerPlaceholder(Placeholder.of(
             "socialspy_status",
             player -> String.valueOf(this.msgService.isSpy(player.getUniqueId()))
         ));
 
-        registry.register(Placeholder.of(
+        registry.registerPlaceholder(Placeholder.of(
             "socialspy_status_formatted",
             player -> {
                 UUID uuid = player.getUniqueId();
@@ -52,14 +52,14 @@ public class MsgPlaceholderSetup {
             }
         ));
 
-        registry.register(Placeholder.async(
+        registry.registerPlaceholder(Placeholder.async(
             "msg_status",
             MSG_STATE,
             player -> msgToggleRepository.getPrivateChatState(player),
             state -> state.name().toLowerCase()
         ));
 
-        registry.register(Placeholder.async(
+        registry.registerPlaceholder(Placeholder.async(
             "msg_status_formatted",
             MSG_STATE,
             player -> msgToggleRepository.getPrivateChatState(player),

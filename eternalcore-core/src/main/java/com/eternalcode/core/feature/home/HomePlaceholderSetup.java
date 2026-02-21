@@ -32,7 +32,7 @@ class HomePlaceholderSetup {
             Placeholder.of("homes_count", (text, targetPlayer) -> this.homesCount(targetPlayer)),
             Placeholder.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer)),
             Placeholder.of("homes_left", (text, targetPlayer) -> this.homesLeft(targetPlayer))
-        ).forEach(placeholder -> placeholderRegistry.register(placeholder));
+        ).forEach(placeholder -> placeholderRegistry.registerPlaceholder(placeholder));
     }
 
     private String homesLeft(Player targetPlayer) {
