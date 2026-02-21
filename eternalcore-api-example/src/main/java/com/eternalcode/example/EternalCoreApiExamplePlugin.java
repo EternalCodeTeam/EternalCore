@@ -39,21 +39,21 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
         EternalCoreApi provide = EternalCoreApiProvider.provide();
 
         this.liteCommands = LiteBukkitFactory.builder(FALLBACK_PREFIX, this, server)
-                .message(LiteBukkitMessages.PLAYER_ONLY, input -> "You must be a player to execute this command!")
-                .message(LiteBukkitMessages.PLAYER_NOT_FOUND, input -> "Player not found!")
-                .message(LiteMessages.MISSING_PERMISSIONS,
-                        input -> "You don't have permission to execute this command!")
+            .message(LiteBukkitMessages.PLAYER_ONLY, input -> "You must be a player to execute this command!")
+            .message(LiteBukkitMessages.PLAYER_NOT_FOUND, input -> "Player not found!")
+            .message(LiteMessages.MISSING_PERMISSIONS,
+                input -> "You don't have permission to execute this command!")
 
-                .commands(
-                        new ApiAfkCommand(provide.getAfkService()),
-                        new ApiIgnoreCommand(provide.getIgnoreService()),
-                        new ApiJailCommand(provide.getJailService()),
-                        new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
-                        new ApiSpawnCommand(provide.getSpawnService()),
-                        new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
-                        new ApiHomeCommand(provide.getHomeService()))
+            .commands(
+                new ApiAfkCommand(provide.getAfkService()),
+                new ApiIgnoreCommand(provide.getIgnoreService()),
+                new ApiJailCommand(provide.getJailService()),
+                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                new ApiSpawnCommand(provide.getSpawnService()),
+                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
+                new ApiHomeCommand(provide.getHomeService()))
 
-                .build();
+            .build();
 
         Stream.of(
                 new ApiAfkListener(),
@@ -65,7 +65,7 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
                 new ApiJailListener(server),
                 new ApiIgnoreListener(),
                 new ApiTeleportRequestListener())
-                .forEach(listener -> server.getPluginManager().registerEvents(listener, this));
+            .forEach(listener -> server.getPluginManager().registerEvents(listener, this));
     }
 
     @Override
