@@ -1,7 +1,6 @@
 package com.eternalcode.core.bridge.placeholderapi;
 
 
-import com.eternalcode.core.placeholder.Placeholder;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
 

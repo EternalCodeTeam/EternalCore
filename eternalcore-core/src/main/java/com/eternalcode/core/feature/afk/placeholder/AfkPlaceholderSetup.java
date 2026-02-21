@@ -8,7 +8,6 @@ import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
-import com.eternalcode.core.placeholder.Placeholder;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;

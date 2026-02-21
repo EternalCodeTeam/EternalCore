@@ -28,8 +28,8 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
     }
 
     @Override
-    public void register(Placeholder stack) {
-        this.placeholders.add(stack);
+    public void register(Placeholder placeholder) {
+        this.placeholders.add(placeholder);
 
         if (placeholder instanceof NamedPlaceholder namedPlaceholder) {
             this.namedPlaceholders.put(namedPlaceholder.getName(), namedPlaceholder);
