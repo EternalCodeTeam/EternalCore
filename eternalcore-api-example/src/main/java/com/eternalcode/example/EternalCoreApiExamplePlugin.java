@@ -15,6 +15,7 @@ import com.eternalcode.example.feature.privatechat.ApiPrivateChatListener;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportCommand;
 import com.eternalcode.example.feature.randomteleport.ApiRandomTeleportListener;
 import com.eternalcode.example.feature.spawn.ApiSpawnCommand;
+import com.eternalcode.example.feature.teleportrequest.ApiTeleportRequestListener;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
@@ -62,7 +63,8 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             new ApiRandomTeleportListener(provide.getRandomTeleportService()),
             new ApiHomeListener(server),
             new ApiJailListener(server),
-            new ApiIgnoreListener()
+            new ApiIgnoreListener(),
+            new ApiTeleportRequestListener()
         ).forEach(listener -> server.getPluginManager().registerEvents(listener, this));
     }
 
