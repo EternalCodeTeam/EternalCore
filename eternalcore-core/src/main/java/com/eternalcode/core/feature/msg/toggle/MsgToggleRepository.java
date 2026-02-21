@@ -8,6 +8,6 @@ public interface MsgToggleRepository {
 
     CompletableFuture<MsgState> getPrivateChatState(UUID uuid);
 
-    CompletableFuture<Void> setPrivateChatState(UUID uuid, MsgState toggledOff);
+    CompletableFuture<MsgState> setPrivateChatState(UUID uuid, MsgState state);
 
 }

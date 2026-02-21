@@ -2,6 +2,8 @@ package com.eternalcode.core.placeholder;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.placeholder.watcher.PlaceholderWatcher;
+import com.eternalcode.core.placeholder.watcher.PlaceholderWatcherKey;
 import com.eternalcode.core.viewer.Viewer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -16,8 +18,9 @@ import java.util.Set;
 public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
 
     private final Server server;
-    private final Set<PlaceholderReplacer> replacerPlayers = new HashSet<>();
-    private final Map<String, PlaceholderRaw> rawPlaceholders = new HashMap<>();
+    private final Set<Placeholder> placeholders = new HashSet<>();
+    private final Map<String, NamedPlaceholder> namedPlaceholders = new HashMap<>();
+    private final Map<PlaceholderWatcherKey<?>, Set<PlaceholderAsync<?>>> asyncPlaceholders = new HashMap<>();
 
     @Inject
     public PlaceholderBukkitRegistryImpl(Server server) {
@@ -25,12 +28,29 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
     }
 
     @Override
-    public void registerPlaceholder(PlaceholderReplacer stack) {
-        this.replacerPlayers.add(stack);
+    public void register(Placeholder placeholder) {
+        this.placeholders.add(placeholder);
 
-        if (stack instanceof PlaceholderRaw raw) {
-            this.rawPlaceholders.put(raw.getRawTarget(), raw);
+        if (placeholder instanceof NamedPlaceholder namedPlaceholder) {
+            this.namedPlaceholders.put(namedPlaceholder.getName(), namedPlaceholder);
         }
+
+        if (placeholder instanceof PlaceholderAsync<?> placeholderAsync) {
+            PlaceholderWatcherKey<?> key = placeholderAsync.key();
+            this.asyncPlaceholders.computeIfAbsent(key, k -> new HashSet<>()).add(placeholderAsync);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> PlaceholderWatcher<T> createWatcher(PlaceholderWatcherKey<T> key) {
+        return (player, value) -> {
+            PlaceholderAsync<T> async = (PlaceholderAsync<T>) asyncPlaceholders.get(key);
+            if (async != null) {
+                async.update(player, value);
+            }
+            return value;
+        };
     }
 
     @Override
@@ -39,7 +59,7 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
             Player playerTarget = this.server.getPlayer(target.getUniqueId());
 
             if (playerTarget != null) {
-                for (PlaceholderReplacer replacer : this.replacerPlayers) {
+                for (Placeholder replacer : this.placeholders) {
                     text = replacer.apply(text, playerTarget);
                 }
             }
@@ -49,8 +69,8 @@ public class PlaceholderBukkitRegistryImpl implements PlaceholderRegistry {
     }
 
     @Override
-    public Optional<PlaceholderRaw> getRawPlaceholder(String target) {
-        return Optional.ofNullable(this.rawPlaceholders.get(target));
+    public Optional<NamedPlaceholder> getNamedPlaceholder(String name) {
+        return Optional.ofNullable(this.namedPlaceholders.get(name));
     }
 
 }
