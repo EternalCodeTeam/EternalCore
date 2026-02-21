@@ -12,15 +12,15 @@ public interface PlaceholderReplacer {
     String apply(String text, Player targetPlayer);
 
     static PlaceholderReplacer of(String target, String replacement) {
-        return new StaticValuePlaceholder(target, player -> replacement);
+        return new PlaceholderRaw(target, player -> replacement);
     }
 
     static PlaceholderReplacer of(String target, Function<Player, String> replacement) {
-        return new StaticValuePlaceholder(target, replacement);
+        return new PlaceholderRaw(target, replacement);
     }
 
     static PlaceholderReplacer of(String target, PlaceholderReplacer placeholder) {
-        return new StaticValuePlaceholder(target, player -> placeholder.apply(target, player));
+        return new PlaceholderRaw(target, player -> placeholder.apply(target, player));
     }
 
     static <T> PlaceholderReplacer async(

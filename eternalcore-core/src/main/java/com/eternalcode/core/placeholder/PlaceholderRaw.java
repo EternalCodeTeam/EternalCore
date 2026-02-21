@@ -4,12 +4,12 @@ import org.bukkit.entity.Player;
 
 import java.util.function.Function;
 
-class StaticValuePlaceholder implements NamedPlaceholder {
+class PlaceholderRaw implements NamedPlaceholder {
 
     private final String name;
     private final Function<Player, String> replacement;
 
-    StaticValuePlaceholder(String name, Function<Player, String> replacement) {
+    PlaceholderRaw(String name, Function<Player, String> replacement) {
         this.name = name;
         this.replacement = replacement;
     }
