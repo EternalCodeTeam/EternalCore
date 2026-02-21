@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.afk;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
-import com.eternalcode.core.placeholder.Placeholder;
+import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;
@@ -28,10 +28,10 @@ class AfkPlaceholderSetup {
 
     @Subscribe(EternalInitializeEvent.class)
     void setUpPlaceholders(PlaceholderRegistry placeholderRegistry, AfkService afkService) {
-        placeholderRegistry.registerPlaceholder(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "afk",
             player -> String.valueOf(afkService.isAfk(player.getUniqueId()))));
-        placeholderRegistry.registerPlaceholder(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "afk_formatted",
             player -> {
                 Translation messages = this.translationManager.getMessages(player.getUniqueId());
@@ -39,7 +39,7 @@ class AfkPlaceholderSetup {
                     messages.afk().afkEnabledPlaceholder() : messages.afk().afkDisabledPlaceholder();
             }));
 
-        placeholderRegistry.registerPlaceholder(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "afk_time",
             player -> {
                 Optional<Afk> afkOptional = afkService.getAfk(player.getUniqueId());
@@ -54,7 +54,7 @@ class AfkPlaceholderSetup {
                 return DurationUtil.format(afkDuration, true);
             }));
 
-        placeholderRegistry.registerPlaceholder(Placeholder.of(
+        placeholderRegistry.registerPlaceholder(PlaceholderReplacer.of(
             "afk_playercount",
             player -> {
                 long afkPlayerCount = this.server.getOnlinePlayers()

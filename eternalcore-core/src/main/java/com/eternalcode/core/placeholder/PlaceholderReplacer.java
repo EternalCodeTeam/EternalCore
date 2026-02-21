@@ -7,23 +7,23 @@ import org.bukkit.entity.Player;
 
 import java.util.function.Function;
 
-public interface Placeholder {
+public interface PlaceholderReplacer {
 
     String apply(String text, Player targetPlayer);
 
-    static Placeholder of(String target, String replacement) {
+    static PlaceholderReplacer of(String target, String replacement) {
         return new StaticValuePlaceholder(target, player -> replacement);
     }
 
-    static Placeholder of(String target, Function<Player, String> replacement) {
+    static PlaceholderReplacer of(String target, Function<Player, String> replacement) {
         return new StaticValuePlaceholder(target, replacement);
     }
 
-    static Placeholder of(String target, Placeholder placeholder) {
+    static PlaceholderReplacer of(String target, PlaceholderReplacer placeholder) {
         return new StaticValuePlaceholder(target, player -> placeholder.apply(target, player));
     }
 
-    static <T> Placeholder async(
+    static <T> PlaceholderReplacer async(
         String target,
         PlaceholderWatcherKey<T> key,
         Function<UUID, CompletableFuture<T>> loading,

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PlaceholderRegistry {
 
-    void registerPlaceholder(Placeholder placeholder);
+    void registerPlaceholder(PlaceholderReplacer placeholder);
 
     <T> PlaceholderWatcher<T> createWatcher(PlaceholderWatcherKey<T> name);
 

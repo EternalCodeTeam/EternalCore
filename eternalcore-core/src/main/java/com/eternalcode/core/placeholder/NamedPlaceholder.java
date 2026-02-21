@@ -2,7 +2,7 @@ package com.eternalcode.core.placeholder;
 
 import org.bukkit.entity.Player;
 
-public interface NamedPlaceholder extends Placeholder {
+public interface NamedPlaceholder extends PlaceholderReplacer {
 
     @Override
     default String apply(String text, Player targetPlayer) {

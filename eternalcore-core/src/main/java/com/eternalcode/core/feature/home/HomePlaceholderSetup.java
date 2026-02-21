@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.home;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
-import com.eternalcode.core.placeholder.Placeholder;
+import com.eternalcode.core.placeholder.PlaceholderReplacer;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.translation.Translation;
@@ -28,10 +28,10 @@ class HomePlaceholderSetup {
     @Subscribe(EternalInitializeEvent.class)
     void setUp(PlaceholderRegistry placeholderRegistry) {
         Stream.of(
-            Placeholder.of("homes_owned", (text, targetPlayer) -> this.ownedHomes(targetPlayer)),
-            Placeholder.of("homes_count", (text, targetPlayer) -> this.homesCount(targetPlayer)),
-            Placeholder.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer)),
-            Placeholder.of("homes_left", (text, targetPlayer) -> this.homesLeft(targetPlayer))
+            PlaceholderReplacer.of("homes_owned", (text, targetPlayer) -> this.ownedHomes(targetPlayer)),
+            PlaceholderReplacer.of("homes_count", (text, targetPlayer) -> this.homesCount(targetPlayer)),
+            PlaceholderReplacer.of("homes_limit", (text, targetPlayer) -> this.homesLimit(targetPlayer)),
+            PlaceholderReplacer.of("homes_left", (text, targetPlayer) -> this.homesLeft(targetPlayer))
         ).forEach(placeholder -> placeholderRegistry.registerPlaceholder(placeholder));
     }
 
