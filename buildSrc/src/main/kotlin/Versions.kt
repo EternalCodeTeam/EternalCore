@@ -38,7 +38,7 @@ object Versions {
 
     const val LUCKPERMS = "5.5.0"
 
-    const val BSTATS = "3.1.0"
+    const val BSTATS = "3.2.0"
 
     const val CAFFEINE = "3.2.3"
 
