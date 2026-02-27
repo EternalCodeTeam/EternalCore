@@ -125,17 +125,6 @@ class CommandConfigurator implements Editor<CommandSender> {
             return;
         }
 
-        if (configuredCount > 8 && discoveredCount < (configuredCount / 3)) {
-            this.logger.warning(
-                "[CommandConfigurator] Skipped stale cleanup due to suspiciously low discovered command count (discovered="
-                    + discoveredCount + ", configured=" + configuredCount + ")."
-            );
-            if (changed) {
-                this.configurationManager.save(this.commandConfiguration);
-            }
-            return;
-        }
-
         List<String> staleKeys = this.commandConfiguration.commands.entrySet().stream()
             .filter(entry -> entry.getValue() == null || !runtimeNames.contains(entry.getKey()))
             .map(Map.Entry::getKey)
