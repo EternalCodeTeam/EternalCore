@@ -49,7 +49,6 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
                 new ApiJailCommand(provide.getJailService()),
                 new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
                 new ApiSpawnCommand(provide.getSpawnService()),
-                new ApiRandomTeleportCommand(provide.getRandomTeleportService()),
                 new ApiHomeCommand(provide.getHomeService())
             )
 
@@ -60,7 +59,6 @@ public class EternalCoreApiExamplePlugin extends JavaPlugin {
             new CatBoyListener(provide.getCatboyService()),
             new ApiRandomTeleportListener(provide.getRandomTeleportService()),
             new ApiPrivateChatListener(server),
-            new ApiRandomTeleportListener(provide.getRandomTeleportService()),
             new ApiHomeListener(server),
             new ApiJailListener(server),
             new ApiIgnoreListener(),

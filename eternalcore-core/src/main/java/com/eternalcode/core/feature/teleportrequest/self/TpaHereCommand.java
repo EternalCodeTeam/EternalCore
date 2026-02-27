@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.teleportrequest.self;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
+import com.eternalcode.commons.concurrent.FutureHandler;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.teleportrequest.PreTeleportRequestEvent;
@@ -23,18 +25,21 @@ class TpaHereCommand {
     private final IgnoreService ignoreService;
     private final NoticeService noticeService;
     private final EventCaller eventCaller;
+    private final MinecraftScheduler scheduler;
 
     @Inject
     TpaHereCommand(
         TeleportHereRequestService requestService,
         IgnoreService ignoreService,
         NoticeService noticeService,
-        EventCaller eventCaller
+        EventCaller eventCaller,
+        MinecraftScheduler scheduler
     ) {
         this.requestService = requestService;
         this.ignoreService = ignoreService;
         this.noticeService = noticeService;
         this.eventCaller = eventCaller;
+        this.scheduler = scheduler;
     }
 
     @Execute
@@ -82,8 +87,8 @@ class TpaHereCommand {
                 .send();
 
             this.requestService.createRequest(sender.getUniqueId(), target.getUniqueId());
-            this.eventCaller.callEvent(new TeleportRequestEvent(sender, target));
-        });
+            this.scheduler.run(() -> this.eventCaller.callEvent(new TeleportRequestEvent(sender, target)));
+        }).exceptionally(FutureHandler::handleException);
     }
 
     @Execute(name = "-all", aliases = {"*"})
@@ -117,8 +122,8 @@ class TpaHereCommand {
                     .send();
 
                 this.requestService.createRequest(sender.getUniqueId(), target.getUniqueId());
-                this.eventCaller.callEvent(new TeleportRequestEvent(sender, target));
-            });
+                this.scheduler.run(() -> this.eventCaller.callEvent(new TeleportRequestEvent(sender, target)));
+            }).exceptionally(FutureHandler::handleException);
         }
 
         this.noticeService.create()

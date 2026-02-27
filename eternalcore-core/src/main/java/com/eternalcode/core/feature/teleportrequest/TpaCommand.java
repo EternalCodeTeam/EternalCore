@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.teleportrequest;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
+import com.eternalcode.commons.concurrent.FutureHandler;
 import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -21,18 +23,21 @@ class TpaCommand {
     private final IgnoreService ignoreService;
     private final NoticeService noticeService;
     private final EventCaller eventCaller;
+    private final MinecraftScheduler scheduler;
 
     @Inject
     TpaCommand(
         TeleportRequestService requestService,
         IgnoreService ignoreService,
         NoticeService noticeService,
-        EventCaller eventCaller
+        EventCaller eventCaller,
+        MinecraftScheduler scheduler
     ) {
         this.requestService = requestService;
         this.ignoreService = ignoreService;
         this.noticeService = noticeService;
         this.eventCaller = eventCaller;
+        this.scheduler = scheduler;
     }
 
     @Execute
@@ -81,8 +86,8 @@ class TpaCommand {
                 .send();
 
             this.requestService.createRequest(player.getUniqueId(), target.getUniqueId());
-            this.eventCaller.callEvent(new TeleportRequestEvent(player, target));
-        });
+            this.scheduler.run(() -> this.eventCaller.callEvent(new TeleportRequestEvent(player, target)));
+        }).exceptionally(FutureHandler::handleException);
     }
 
     CompletableFuture<Boolean> isIgnoring(Player target, Player sender) {

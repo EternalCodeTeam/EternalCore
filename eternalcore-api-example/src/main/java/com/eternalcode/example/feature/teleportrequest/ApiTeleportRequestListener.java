@@ -10,8 +10,8 @@ public class ApiTeleportRequestListener implements Listener {
 
     @EventHandler
     public void onPreTeleportRequest(final PreTeleportRequestEvent event) {
-        final Player sender = event.getSender();
-        final Player target = event.getTarget();
+        Player sender = event.getSender();
+        Player target = event.getTarget();
 
         sender.sendMessage(String.format(
             "PreTeleportRequestEvent: %s wants to teleport to %s (EternalCore API).",
@@ -29,8 +29,8 @@ public class ApiTeleportRequestListener implements Listener {
 
     @EventHandler
     public void onTeleportRequest(final TeleportRequestEvent event) {
-        final Player sender = event.getSender();
-        final Player target = event.getTarget();
+        Player sender = event.getSender();
+        Player target = event.getTarget();
 
         sender.sendMessage(String.format(
             "TeleportRequestEvent: %s sent a teleport request to %s (EternalCore API).",
