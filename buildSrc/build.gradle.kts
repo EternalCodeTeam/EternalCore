@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.gradleup.shadow:shadow-gradle-plugin:9.3.1")
+    implementation("com.gradleup.shadow:shadow-gradle-plugin:9.3.2")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.3.10")
     implementation("net.minecrell:plugin-yml:0.6.0")
     implementation("com.modrinth.minotaur:Minotaur:2.8.10")
