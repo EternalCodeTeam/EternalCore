@@ -90,6 +90,7 @@ jobs:
         with:
           name: EternalCore Dev Build
           path: eternalcore-plugin/build/libs/EternalCore*.jar
+          archive: false
           retention-days: 14
           overwrite: true
 
