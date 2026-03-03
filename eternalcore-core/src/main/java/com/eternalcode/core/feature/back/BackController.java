@@ -29,7 +29,7 @@ class BackController implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (event.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN) {
+        if (event.getCause() != PlayerTeleportEvent.TeleportCause.PLUGIN) {
             return;
         }
 
