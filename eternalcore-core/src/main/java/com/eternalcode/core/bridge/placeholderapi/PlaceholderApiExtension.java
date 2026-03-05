@@ -1,7 +1,7 @@
 package com.eternalcode.core.bridge.placeholderapi;
 
 import com.eternalcode.core.bridge.BridgeInitializer;
-import com.eternalcode.core.placeholder.PlaceholderRaw;
+import com.eternalcode.core.placeholder.NamedPlaceholder;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
@@ -23,10 +23,10 @@ public class PlaceholderApiExtension extends PlaceholderExpansion implements Bri
 
     @Override
     public @Nullable String onPlaceholderRequest(Player player, @NotNull String params) {
-        Optional<PlaceholderRaw> optional = this.placeholderRegistry.getRawPlaceholder(params);
+        Optional<NamedPlaceholder> optional = this.placeholderRegistry.getNamedPlaceholder(params);
 
         if (optional.isPresent()) {
-            return optional.get().rawApply(player);
+            return optional.get().provideValue(player);
         }
 
         return "Unknown placeholder!";
