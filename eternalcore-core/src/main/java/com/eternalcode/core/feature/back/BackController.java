@@ -3,15 +3,19 @@ package com.eternalcode.core.feature.back;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import java.util.Set;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 @Controller
 class BackController implements Listener {
+
+    private static final Set<TeleportCause> ALLOWED_TELEPORT_CAUSES = Set.of(TeleportCause.PLUGIN, TeleportCause.COMMAND, TeleportCause.SPECTATE);
 
     private final BackService backService;
 
@@ -29,7 +33,7 @@ class BackController implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (event.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN) {
+        if (!ALLOWED_TELEPORT_CAUSES.contains(event.getCause())) {
             return;
         }
 
