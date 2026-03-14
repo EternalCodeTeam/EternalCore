@@ -33,8 +33,7 @@ class TpaHereCommand {
         IgnoreService ignoreService,
         NoticeService noticeService,
         EventCaller eventCaller,
-        MinecraftScheduler scheduler
-    ) {
+        MinecraftScheduler scheduler) {
         this.requestService = requestService;
         this.ignoreService = ignoreService;
         this.noticeService = noticeService;
@@ -73,8 +72,7 @@ class TpaHereCommand {
                 return;
             }
 
-            this.noticeService
-                .create()
+            this.noticeService.create()
                 .player(sender.getUniqueId())
                 .notice(translation -> translation.tpa().tpaHereSent())
                 .placeholder("{PLAYER}", target.getName())
