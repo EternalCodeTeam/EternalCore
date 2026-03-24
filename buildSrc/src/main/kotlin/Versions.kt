@@ -9,6 +9,7 @@ object Versions {
     const val JETBRAINS_ANNOTATIONS = "26.1.0"
     const val PLACEHOLDER_API = "2.12.2"
     const val DYNMAP_API = "3.7-beta-6"
+    const val SQUAREMAP_API = "1.3.11"
     const val LOMBOK = "1.18.44"
 
     const val PAPERLIB = "1.0.8"

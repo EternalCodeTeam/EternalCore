@@ -19,6 +19,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:${Versions.PLACEHOLDER_API}")
     compileOnly("us.dynmap:dynmap-api:${Versions.DYNMAP_API}")
     compileOnly("us.dynmap:DynmapCoreAPI:${Versions.DYNMAP_API}")
+    compileOnly("xyz.jpenilla:squaremap-api:${Versions.SQUAREMAP_API}")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:${Versions.LOMBOK}")

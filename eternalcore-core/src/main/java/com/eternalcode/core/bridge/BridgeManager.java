@@ -3,6 +3,7 @@ package com.eternalcode.core.bridge;
 import com.eternalcode.core.bridge.dynmap.DynmapBridgeInitializer;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiExtension;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
+import com.eternalcode.core.bridge.squaremap.SquaremapBridgeInitializer;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import org.bukkit.Server;
@@ -44,6 +45,10 @@ class BridgeManager {
 
         this.setupBridge("dynmap", () -> {
             new DynmapBridgeInitializer(this.vanishService, this.plugin).initialize();
+        });
+
+        this.setupBridge("squaremap", () -> {
+            new SquaremapBridgeInitializer(this.vanishService, this.plugin).initialize();
         });
     }
 

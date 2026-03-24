@@ -23,7 +23,7 @@ eternalShadowCompiler {
         description = "All the most important server functions in one!"
         website = "www.eternalcode.pl"
         version = "${project.version}"
-        softDepend = listOf("PlaceholderAPI", "dynmap")
+        softDepend = listOf("PlaceholderAPI", "dynmap", "squaremap")
         foliaSupported = true
     }
 
