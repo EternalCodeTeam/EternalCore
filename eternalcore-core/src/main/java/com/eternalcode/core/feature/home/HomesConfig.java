@@ -27,25 +27,35 @@ public class HomesConfig extends OkaeriConfig implements HomesSettings {
     public Duration delay = Duration.ofSeconds(5);
 
     @Comment({
-        "# Maximum number of homes per permission group",
-        "# Configure how many homes players can set based on their permissions",
-        "# ",
-        "# Permission format: 'permission' -> max_homes",
-        "# Players with higher permissions will get the highest limit they qualify for",
-        "# ",
-        "# Default permissions:",
-        "# - eternalcore.home.default: Basic players (1 home)",
+        "# Configure how many homes a player can set depending on their permissions.",
+        "#",
+        "# Permission format: 'permission.node : max_homes'",
+        "# If user has multiple permissions from the list the highest number will be taken",
+        "#",
+        "# Fallback behavior:",
+        "# - If a player does not have any of the listed permissions,",
+        "# the value from 'defaultLimit' will be used.",
+        "#",
+        "# Example permissions:",
         "# - eternalcore.home.vip: VIP players (2 homes)",
         "# - eternalcore.home.premium: Premium players (3 homes)",
-        "# ",
-        "# You can add custom permission groups and limits as needed",
-        "# Example: 'eternalcore.home.admin' -> 999"
+        "# How it works:",
+        "# If a player has both 'eternalcore.home.vip' and 'eternalcore.home.premium',",
+        "# they will be able to set 3 homes (highest value wins).",
+        "# If the player does not have any permission from the list he will be able to set the limit defined by `defaultLimit`.",
+        "#",
+        "# You can define additional permissions as needed.",
+        "# Example: 'eternalcore.home.admin: 999'"
     })
     public Map<String, Integer> maxHomes = new LinkedHashMap<>() {
         {
-            put("eternalcore.home.default", 1);
             put("eternalcore.home.vip", 2);
             put("eternalcore.home.premium", 3);
         }
     };
+
+    @Comment({
+        "# Default limit of homes used when the player does not have any permission from the list above."
+    })
+    public Integer defaultLimit = 1;
 }

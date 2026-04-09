@@ -7,4 +7,5 @@ public interface HomesSettings {
     Map<String, Integer> maxHomes();
     Duration delay();
     String defaultName();
+    Integer defaultLimit();
 }

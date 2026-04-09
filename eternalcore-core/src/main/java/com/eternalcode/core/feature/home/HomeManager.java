@@ -166,6 +166,6 @@ public class HomeManager implements HomeService {
                 return Stream.empty();
             })
             .max(Integer::compareTo)
-            .orElse(0);
+            .orElse(this.homesSettings.defaultLimit());
     }
 }
