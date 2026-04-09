@@ -157,8 +157,6 @@ public class HomeManager implements HomeService {
     public int getHomeLimit(Player player) {
         Map<String, Integer> maxHomes = this.homesSettings.maxHomes();
 
-        int defaultHomesLimit = maxHomes.getOrDefault("eternalcore.home.default",0);
-
         return maxHomes.entrySet().stream()
             .flatMap(entry -> {
                 if (player.hasPermission(entry.getKey())) {
@@ -168,6 +166,6 @@ public class HomeManager implements HomeService {
                 return Stream.empty();
             })
             .max(Integer::compareTo)
-            .orElse(defaultHomesLimit);
+            .orElse(this.homesSettings.defaultLimit());
     }
 }

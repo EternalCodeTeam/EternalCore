@@ -34,25 +34,28 @@ public class HomesConfig extends OkaeriConfig implements HomesSettings {
         "#",
         "# Fallback behavior:",
         "# - If a player does not have any of the listed permissions,",
-        "# the value from 'eternalcore.homes.default' will be used otherwise the limit will be 0.",
+        "# the value from 'defaultLimit' will be used.",
         "#",
         "# Example permissions:",
-        "# - eternalcore.home.default: All players (1 home)",
         "# - eternalcore.home.vip: VIP players (2 homes)",
         "# - eternalcore.home.premium: Premium players (3 homes)",
         "# How it works:",
         "# If a player has both 'eternalcore.home.vip' and 'eternalcore.home.premium',",
         "# they will be able to set 3 homes (highest value wins).",
-        "# If the player does not have any permission from the group he will be able to set 1 home 'eternalcore.home.default",
+        "# If the player does not have any permission from the list he will be able to set `defaultLimit` of homes.",
         "#",
         "# You can define additional permissions as needed.",
         "# Example: 'eternalcore.home.admin: 999'"
     })
     public Map<String, Integer> maxHomes = new LinkedHashMap<>() {
         {
-            put("eternalcore.home.default", 1);
             put("eternalcore.home.vip", 2);
             put("eternalcore.home.premium", 3);
         }
     };
+
+    @Comment({
+        "# Default limit of homes used when the player does not have any permission from the list above."
+    })
+    public Integer defaultLimit = 1;
 }
