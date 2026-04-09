@@ -42,7 +42,7 @@ public class HomesConfig extends OkaeriConfig implements HomesSettings {
         "# How it works:",
         "# If a player has both 'eternalcore.home.vip' and 'eternalcore.home.premium',",
         "# they will be able to set 3 homes (highest value wins).",
-        "# If the player does not have any permission from the list he will be able to set `defaultLimit` of homes.",
+        "# If the player does not have any permission from the list he will be able to set the limit defined by `defaultLimit`.",
         "#",
         "# You can define additional permissions as needed.",
         "# Example: 'eternalcore.home.admin: 999'"
