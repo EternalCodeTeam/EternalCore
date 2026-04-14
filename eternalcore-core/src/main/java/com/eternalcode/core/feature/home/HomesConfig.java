@@ -47,12 +47,10 @@ public class HomesConfig extends OkaeriConfig implements HomesSettings {
         "# You can define additional permissions as needed.",
         "# Example: 'eternalcore.home.admin: 999'"
     })
-    public Map<String, Integer> maxHomes = new LinkedHashMap<>() {
-        {
-            put("eternalcore.home.vip", 2);
-            put("eternalcore.home.premium", 3);
-        }
-    };
+    public Map<String, Integer> maxHomes = Map.of(
+        "eternalcore.home.vip", 2,
+        "eternalcore.home.premium", 3
+    );
 
     @Comment({
         "# Default limit of homes used when the player does not have any permission from the list above."
