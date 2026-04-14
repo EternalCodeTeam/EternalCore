@@ -25,7 +25,7 @@ object Versions {
     const val LITE_COMMANDS = "3.10.9"
     const val LITE_SKULL_API = "2.0.0"
 
-    const val GUAVA = "33.5.0-jre"
+    const val GUAVA = "33.6.0-jre"
     const val GSON = "2.13.2"
 
     const val EXPRESSIBLE = "1.3.6"
