@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.home;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.time.Duration;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.Getter;
 import lombok.experimental.Accessors;
