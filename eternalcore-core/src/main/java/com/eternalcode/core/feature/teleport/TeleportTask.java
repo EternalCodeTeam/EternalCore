@@ -58,7 +58,7 @@ class TeleportTask implements Runnable {
                 continue;
             }
 
-            if (this.hasPlayerMovedDuringTeleport(player, teleport) && this.teleportSettings.shouldMovementCancelTask()) {
+            if (this.teleportSettings.shouldMovementCancelTask() && this.hasPlayerMovedDuringTeleport(player, teleport)) {
                 this.teleportTaskService.removeTeleport(uuid);
                 teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
 
