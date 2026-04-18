@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.teleport;
 
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.feature.teleport.settings.TeleportSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;
@@ -25,6 +26,7 @@ class TeleportTask implements Runnable {
     private final NoticeService noticeService;
     private final TeleportTaskService teleportTaskService;
     private final TeleportService teleportService;
+    private final TeleportSettings teleportSettings;
     private final Server server;
 
     @Inject
@@ -32,11 +34,13 @@ class TeleportTask implements Runnable {
         NoticeService noticeService,
         TeleportTaskService teleportTaskService,
         TeleportService teleportService,
+        TeleportSettings teleportSettings,
         Server server
     ) {
         this.noticeService = noticeService;
         this.teleportTaskService = teleportTaskService;
         this.teleportService = teleportService;
+        this.teleportSettings = teleportSettings;
         this.server = server;
     }
 
@@ -54,7 +58,7 @@ class TeleportTask implements Runnable {
                 continue;
             }
 
-            if (this.hasPlayerMovedDuringTeleport(player, teleport)) {
+            if (this.hasPlayerMovedDuringTeleport(player, teleport) && this.teleportSettings.shouldMovementCancelTask()) {
                 this.teleportTaskService.removeTeleport(uuid);
                 teleport.completeResult(TeleportResult.MOVED_DURING_TELEPORT);
 
