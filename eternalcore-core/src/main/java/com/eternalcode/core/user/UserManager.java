@@ -34,16 +34,16 @@ public class UserManager {
         User cached = this.usersByUniqueId.get(uniqueId);
 
         if (cached != null) {
-            this.updateNameIfChanged(cached, name);
-            return CompletableFuture.completedFuture(this.updateLastSeen(cached));
+            User updatedUser = this.updateNameIfChanged(cached, name);
+            return CompletableFuture.completedFuture(this.updateLastSeen(updatedUser));
         }
 
         return this.userRepository.getUser(uniqueId)
             .thenApply(optionalUser -> {
                 User user = optionalUser
                     .map(existing -> {
-                        this.updateNameIfChanged(existing, name);
-                        return this.updateLastSeen(existing);
+                        User updatedUser = this.updateNameIfChanged(existing, name);
+                        return this.updateLastSeen(updatedUser);
                     })
                     .orElseGet(() -> this.createNewUser(uniqueId, name));
 
@@ -59,12 +59,16 @@ public class UserManager {
         return user;
     }
 
-    private void updateNameIfChanged(User user, String name) {
-        if (!user.getName().equals(name)) {
-            User updated = new User(user.getUniqueId(), name, user.getLastSeen(), user.getAccountCreated());
-            this.add(updated);
-            this.userRepository.saveUser(updated);
+    private User updateNameIfChanged(User user, String name) {
+        if (user.getName().equals(name)) {
+            return user;
         }
+
+        User updated = new User(user.getUniqueId(), name, user.getLastSeen(), user.getAccountCreated());
+        this.removeNameMapping(user);
+        this.add(updated);
+        this.userRepository.saveUser(updated);
+        return updated;
     }
 
     private User updateLastSeen(User user) {
@@ -72,6 +76,10 @@ public class UserManager {
         this.add(updated);
         this.userRepository.saveUser(updated);
         return updated;
+    }
+
+    private void removeNameMapping(User user) {
+        this.usersByName.remove(user.getName(), user);
     }
 
     private void add(User user) {
