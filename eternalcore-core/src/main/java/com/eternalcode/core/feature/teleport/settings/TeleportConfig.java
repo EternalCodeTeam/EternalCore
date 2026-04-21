@@ -12,5 +12,5 @@ public class TeleportConfig extends OkaeriConfig implements TeleportSettings {
     @Comment({
         "# If true, the teleportation will be cancelled if the player moves during the teleportation process."
     })
-    public boolean shouldMovementCancelTask = true;
+    public boolean movementCancelsTeleport = true;
 }
