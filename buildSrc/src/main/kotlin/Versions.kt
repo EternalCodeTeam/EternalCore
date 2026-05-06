@@ -12,7 +12,7 @@ object Versions {
     const val LOMBOK = "1.18.44"
 
     const val PAPERLIB = "1.0.8"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.26.1"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "5.0.1"
     const val ADVENTURE_PLATFORM = "4.4.1"
     const val OKAERI_CONFIGS = "6.0.0-beta.27"
 
