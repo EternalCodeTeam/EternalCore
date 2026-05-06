@@ -3,6 +3,8 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseSettings;
+import com.eternalcode.core.feature.teleport.settings.TeleportConfig;
+import com.eternalcode.core.feature.teleport.settings.TeleportSettings;
 import com.eternalcode.core.util.date.DateConfig;
 import com.eternalcode.core.util.date.DateSettings;
 import com.eternalcode.core.feature.afk.AfkConfig;
@@ -136,6 +138,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Homes Configuration")
     @Comment("# Settings for player home management")
     HomesConfig homes = new HomesConfig();
+
+    @Bean(proxied = TeleportSettings.class)
+    @Comment("")
+    @Comment("# Teleport configuration")
+    @Comment("# Settings for teleportation task")
+    TeleportConfig teleport = new TeleportConfig();
 
     @Bean(proxied = ChatSettings.class)
     @Comment("")
