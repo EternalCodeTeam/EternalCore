@@ -40,7 +40,7 @@ object Versions {
 
     const val BSTATS = "3.2.1"
 
-    const val CAFFEINE = "3.2.3"
+    const val CAFFEINE = "3.2.4"
 
     const val GLOWING_ENTITIES = "1.4.10"
 
