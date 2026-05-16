@@ -28,8 +28,8 @@ class MsgToggleRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ms
     }
 
     @Override
-    public CompletableFuture<Void> setPrivateChatState(UUID uuid, MsgState state) {
+    public CompletableFuture<MsgState> setPrivateChatState(UUID uuid, MsgState state) {
         return this.save(MsgStateTable.class, new MsgStateTable(uuid, state))
-            .thenApply(status -> null);
+            .thenApply(status -> state);
     }
 }

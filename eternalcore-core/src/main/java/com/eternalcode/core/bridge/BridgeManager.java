@@ -2,7 +2,7 @@ package com.eternalcode.core.bridge;
 
 import com.eternalcode.core.bridge.dynmap.DynmapBridgeInitializer;
 import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiExtension;
-import com.eternalcode.core.bridge.placeholderapi.PlaceholderApiReplacer;
+import com.eternalcode.core.bridge.placeholderapi.PlaceholderAPIPlaceholder;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.placeholder.PlaceholderRegistry;
 import org.bukkit.Server;
@@ -38,7 +38,7 @@ class BridgeManager {
 
     void init() {
         this.setupBridge("PlaceholderAPI", () -> {
-            this.placeholderRegistry.register(new PlaceholderApiReplacer());
+            this.placeholderRegistry.register(new PlaceholderAPIPlaceholder());
             new PlaceholderApiExtension(this.placeholderRegistry, this.pluginDescriptionFile).initialize();
         });
 
