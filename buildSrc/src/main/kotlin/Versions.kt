@@ -1,7 +1,7 @@
 object Versions {
 
     const val SPIGOT_API = "1.21.3-R0.1-SNAPSHOT"
-    const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
+    const val PAPER_API = "26.1.2.build.64-stable"
 
     const val ETERNALCODE_COMMONS = "1.3.4"
     const val MULTIFICATION = "1.2.4"
