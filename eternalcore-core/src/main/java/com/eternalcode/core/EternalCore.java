@@ -80,9 +80,7 @@ class EternalCore {
         }
 
         // TODO: Remove this when we resolve problem with DI - classes with @Subscribe annotation should be loaded first or when event is called
-        if (compatibilityService.isCompatible(ConfigurationCompatibilityV21_2.class)) {
-            beanFactory.initializeCandidates(ConfigurationCompatibilityV21_2.class);
-        }
+        beanFactory.initializeCandidates(ConfigurationCompatibilityV21_2.class);
         beanFactory.initializeCandidates(EternalConfigurationFile.class);
         beanFactory.initializeCandidates();
 
