@@ -5,15 +5,9 @@ import java.util.LinkedHashMap;
 
 public class DependencyCollector {
 
-    private static final String ADVENTURE_GROUP_ID = "net.kyori";
-
     private final LinkedHashMap<String, Dependency> fullScannedDependencies = new LinkedHashMap<>();
 
     public synchronized boolean hasScannedDependency(Dependency dependency) {
-        if (isAdventureDependency(dependency)) {
-            return true;
-        }
-
         Dependency scanned = this.fullScannedDependencies.get(dependency.getGroupArtifactId());
         if (scanned == null) {
             return false;
@@ -27,10 +21,6 @@ public class DependencyCollector {
     }
 
     public synchronized Dependency addScannedDependency(Dependency dependency) {
-        if (isAdventureDependency(dependency)) {
-            return dependency;
-        }
-
         Dependency current = this.fullScannedDependencies.get(dependency.getGroupArtifactId());
 
         if (current == null) {
@@ -58,10 +48,6 @@ public class DependencyCollector {
         return this.fullScannedDependencies.values().stream()
             .filter(dependency -> !dependency.isBom())
             .toList();
-    }
-
-    private static boolean isAdventureDependency(Dependency dependency) {
-        return ADVENTURE_GROUP_ID.equals(dependency.getGroupId());
     }
 
 }
