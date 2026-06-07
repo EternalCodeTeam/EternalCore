@@ -8,7 +8,6 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +37,7 @@ public class PowertoolCommand {
     void clear(@Sender Player player) {
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        if (item.getType() == Material.AIR || meta == null) {
+        if (item.getType().isAir() || meta == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().noItemInMainHand())
@@ -78,7 +77,7 @@ public class PowertoolCommand {
 
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        if (item.getType() == Material.AIR || meta == null) {
+        if (item.getType().isAir() || meta == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().noItemInMainHand())

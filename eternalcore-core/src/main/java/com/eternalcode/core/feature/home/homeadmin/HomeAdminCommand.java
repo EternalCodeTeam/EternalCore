@@ -13,7 +13,6 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import io.papermc.lib.PaperLib;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
@@ -94,7 +93,7 @@ class HomeAdminCommand {
         Home home = playerHomeEntry.home();
         OfflinePlayer targetPlayer = playerHomeEntry.offlinePlayer();
 
-        PaperLib.teleportAsync(player, home.getLocation());
+        player.teleportAsync(home.getLocation());
 
         this.noticeService.create()
             .notice(translation -> translation.home().teleportedAsAdmin())

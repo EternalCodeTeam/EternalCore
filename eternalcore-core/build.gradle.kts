@@ -8,14 +8,13 @@ plugins {
 dependencies {
     // modules
     implementation(project(":eternalcore-api"))
-    implementation(project(":eternalcore-paper"))
     api(project(":eternalcore-docs-api"))
 
     // Base libraries
     compileOnly("org.jetbrains:annotations:${Versions.JETBRAINS_ANNOTATIONS}")
 
     // Minecraft & Bridges API
-    compileOnlyApi("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
+    compileOnlyApi("io.papermc.paper:paper-api:${Versions.PAPER_API}")
     compileOnly("me.clip:placeholderapi:${Versions.PLACEHOLDER_API}")
     compileOnly("us.dynmap:dynmap-api:${Versions.DYNMAP_API}")
     compileOnly("us.dynmap:DynmapCoreAPI:${Versions.DYNMAP_API}")
@@ -29,16 +28,14 @@ dependencies {
     testImplementation("org.awaitility:awaitility:${Versions.AWAITILITY}")
 }
 
-eternalShadow {
-    // Paper and Adventure libraries
-    library("io.papermc:paperlib:${Versions.PAPERLIB}")
-    library("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
-    library("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
-    libraryRelocate(
-        "io.papermc.lib",
-        "net.kyori",
-    )
+configurations.configureEach {
+    exclude(group = "net.kyori", module = "adventure-platform-api")
+    exclude(group = "net.kyori", module = "adventure-platform-bukkit")
+    exclude(group = "net.kyori", module = "adventure-platform-facet")
+    exclude(group = "net.kyori", module = "adventure-platform-viaversion")
+}
 
+eternalShadow {
     // configuration
     library("eu.okaeri:okaeri-configs-core:${Versions.OKAERI_CONFIGS}")
     library("eu.okaeri:okaeri-configs-yaml-snakeyaml:${Versions.OKAERI_CONFIGS}")
@@ -48,6 +45,7 @@ eternalShadow {
     )
 
     // Multification
+    library("com.eternalcode:multification-paper:${Versions.MULTIFICATION}")
     library("com.eternalcode:multification-bukkit:${Versions.MULTIFICATION}")
     library("com.eternalcode:multification-okaeri:${Versions.MULTIFICATION}")
     libraryRelocate(
@@ -88,7 +86,6 @@ eternalShadow {
     library("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")
     library("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
     library("dev.rollczi:litecommands-folia:${Versions.LITE_COMMANDS}")
-    library("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
     libraryRelocate(
         "dev.rollczi.litecommands",
         "dev.rollczi.liteskullapi"

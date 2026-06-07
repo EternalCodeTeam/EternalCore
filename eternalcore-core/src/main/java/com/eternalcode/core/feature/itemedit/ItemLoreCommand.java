@@ -13,7 +13,6 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.ArrayList;
 import java.util.List;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -115,7 +114,7 @@ class ItemLoreCommand {
     private ItemStack validateItemFromMainHand(Player player) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (itemStack.getType() == Material.AIR || itemStack.getItemMeta() == null) {
+        if (itemStack.getType().isAir() || itemStack.getItemMeta() == null) {
             return null;
         }
 

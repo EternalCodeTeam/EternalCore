@@ -8,7 +8,6 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import io.papermc.lib.PaperLib;
 import org.bukkit.entity.Player;
 
 @Command(name = "teleportorandomplayer", aliases = {"tprp"})
@@ -41,7 +40,7 @@ public class TeleportToRandomPlayerCommand {
         }
 
         this.randomPlayerService.updateTeleportationHistory(player, targetPlayer);
-        PaperLib.teleportAsync(player, targetPlayer.getLocation());
+        player.teleportAsync(targetPlayer.getLocation());
 
         this.noticeService.create()
             .player(player.getUniqueId())
@@ -77,7 +76,7 @@ public class TeleportToRandomPlayerCommand {
         }
 
         this.randomPlayerService.updateTeleportationHistory(player, targetPlayer);
-        PaperLib.teleportAsync(player, targetPlayer.getLocation());
+        player.teleportAsync(targetPlayer.getLocation());
 
         this.noticeService.create()
             .player(player.getUniqueId())

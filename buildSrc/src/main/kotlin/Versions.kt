@@ -1,6 +1,6 @@
 object Versions {
 
-    const val SPIGOT_API = "1.21.3-R0.1-SNAPSHOT"
+    // Keep this version for Paper APIs used by modern EternalCore features.
     const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
 
     const val ETERNALCODE_COMMONS = "1.4.1"
@@ -11,9 +11,7 @@ object Versions {
     const val DYNMAP_API = "3.7-beta-6"
     const val LOMBOK = "1.18.46"
 
-    const val PAPERLIB = "1.0.8"
-    const val ADVENTURE_TEXT_MINIMESSAGE = "5.1.1"
-    const val ADVENTURE_PLATFORM = "4.4.1"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "4.26.1"
     const val OKAERI_CONFIGS = "6.0.0-beta.27"
 
     const val MARIA_DB = "3.5.8"

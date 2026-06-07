@@ -2,6 +2,7 @@ package com.eternalcode.core.configuration;
 
 import com.eternalcode.core.configuration.migrations.Migrations;
 import com.eternalcode.core.configuration.serializer.LanguageSerializer;
+import com.eternalcode.core.configuration.transformer.MaterialTransformer;
 import com.eternalcode.core.configuration.transformer.PositionTransformer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -51,6 +52,7 @@ public class ConfigurationManager {
         migrator.runMigrations(file);
 
         OkaeriSerdesPack serdesPack = registry -> {
+            registry.register(new MaterialTransformer());
             registry.register(new PositionTransformer());
             registry.register(new LanguageSerializer());
             registry.register(new MultificationNoticeSerializer(this.resolverRegistry));

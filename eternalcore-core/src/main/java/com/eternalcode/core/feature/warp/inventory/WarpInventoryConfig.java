@@ -1,9 +1,11 @@
 package com.eternalcode.core.feature.warp.inventory;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.warp.WarpInventoryItem;
 import com.eternalcode.core.injector.annotations.component.ConfigurationFile;
+import com.eternalcode.core.util.MaterialUtil;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.io.File;
@@ -68,7 +70,7 @@ public class WarpInventoryConfig extends AbstractConfigurationFile {
         public boolean enabled = true;
 
         @Comment("# Material for border items")
-        public Material material = Material.GRAY_STAINED_GLASS_PANE;
+        public Material material = MaterialUtil.parseRequired(XMaterial.GRAY_STAINED_GLASS_PANE);
 
         @Comment("# How to fill the border")
         public FillType fillType = FillType.BORDER;

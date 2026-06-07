@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Version {
 
+    int major() default 1;
     int minor();
     int patch();
 

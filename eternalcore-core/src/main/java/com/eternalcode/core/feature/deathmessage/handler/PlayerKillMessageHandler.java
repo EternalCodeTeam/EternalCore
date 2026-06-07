@@ -7,7 +7,6 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.MaterialUtil;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,7 +33,7 @@ public class PlayerKillMessageHandler {
         String victimName = victim.getName();
         String killerName = killer.getName();
 
-        ItemStack weapon = killer.getInventory().getItemInMainHand().getType() != Material.AIR
+        ItemStack weapon = !killer.getInventory().getItemInMainHand().getType().isAir()
             ? killer.getInventory().getItemInMainHand()
             : killer.getInventory().getItemInOffHand();
         String weaponName = this.getWeaponName(weapon);
@@ -50,7 +49,7 @@ public class PlayerKillMessageHandler {
     }
 
     private String getWeaponName(ItemStack weapon) {
-        if (weapon == null || weapon.getType() == Material.AIR) {
+        if (weapon == null || weapon.getType().isAir()) {
             return this.translationManager.getMessages().deathMessage().unarmedWeaponName();
         }
 

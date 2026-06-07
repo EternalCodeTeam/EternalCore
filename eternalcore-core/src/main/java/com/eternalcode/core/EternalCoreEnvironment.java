@@ -1,11 +1,9 @@
 package com.eternalcode.core;
 
 import com.google.common.base.Stopwatch;
-import io.papermc.lib.PaperLib;
-import io.papermc.lib.environments.Environment;
-
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+import org.bukkit.Bukkit;
 
 class EternalCoreEnvironment {
 
@@ -23,22 +21,8 @@ class EternalCoreEnvironment {
     }
 
     private void checkSoftware() {
-        Environment environment = PaperLib.getEnvironment();
-
-        if (!environment.isSpigot()) {
-            this.logger.warning("Your server is running on unsupported software, please use Spigot/Paper or their other 1.20+ forks");
-            this.logger.warning("We recommend using Paper, download it from https://papermc.io/downloads");
-            this.logger.warning("WARNING: Supported Minecraft versions are 1.17-1.20x");
-            return;
-        }
-
-        if (!environment.isVersion(17)) {
-            this.logger.warning("EternalCore no longer supports your version, be aware that there may be bugs!");
-            return;
-        }
-
-        this.logger.info("Your server is running on supported software, congratulations!");
-        this.logger.info("Server version: " + environment.getMinecraftVersion());
+        this.logger.info("Your server is running on supported Paper API software");
+        this.logger.info("Server version: " + Bukkit.getBukkitVersion());
     }
 
 }

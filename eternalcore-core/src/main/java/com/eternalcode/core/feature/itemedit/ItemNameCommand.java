@@ -10,7 +10,6 @@ import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -71,7 +70,7 @@ class ItemNameCommand {
     private ItemStack validateItemFromMainHand(Player player) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (itemStack.getType() == Material.AIR || itemStack.getItemMeta() == null) {
+        if (itemStack.getType().isAir() || itemStack.getItemMeta() == null) {
             return null;
         }
 

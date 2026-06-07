@@ -6,7 +6,6 @@ import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.randomteleport.event.RandomSafeLocationCandidateEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import io.papermc.lib.PaperLib;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -57,7 +56,7 @@ class RandomTeleportSafeLocationService {
         int randomX = spawnX + this.random.nextInt(radius.maxX() - radius.minX() + 1) + radius.minX();
         int randomZ = spawnZ + this.random.nextInt(radius.maxZ() - radius.minZ() + 1) + radius.minZ();
 
-        return PaperLib.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
+        return world.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
             int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
 
             if (world.getEnvironment() == World.Environment.NETHER) {

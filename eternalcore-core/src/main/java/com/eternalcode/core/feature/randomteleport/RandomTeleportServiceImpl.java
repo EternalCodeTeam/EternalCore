@@ -7,7 +7,6 @@ import com.eternalcode.core.feature.randomteleport.event.PreRandomTeleportEvent;
 import com.eternalcode.core.feature.randomteleport.event.RandomTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import io.papermc.lib.PaperLib;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
         }
 
         return this.getSafeRandomLocation(world, this.randomTeleportSettings.teleportAttempts())
-            .thenCompose(location -> PaperLib.teleportAsync(player, location).thenApply(success -> {
+            .thenCompose(location -> player.teleportAsync(location).thenApply(success -> {
                 RandomTeleportResult teleportResult = new RandomTeleportResult(success, location);
 
                 RandomTeleportEvent event = new RandomTeleportEvent(player, location);
@@ -102,7 +101,7 @@ class RandomTeleportServiceImpl implements RandomTeleportService {
                     );
                 }
 
-                return PaperLib.teleportAsync(player, location).thenApply(success -> {
+                return player.teleportAsync(location).thenApply(success -> {
                     RandomTeleportResult teleportResult = new RandomTeleportResult(success, location);
                     this.eventCaller.callEvent(new RandomTeleportEvent(player, location));
                     return Map.entry(player, teleportResult);

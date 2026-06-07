@@ -1,3 +1,6 @@
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JavaToolchainService
+
 plugins {
     `eternalcode-java`
     `eternalcore-repositories`
@@ -28,7 +31,7 @@ eternalShadowCompiler {
     }
 
     shadowJar {
-        archiveFileName.set("EternalCore v${project.version} (MC 1.19.x-1.21.x).jar")
+        archiveFileName.set("EternalCore v${project.version}.jar")
 
         exclude(
             "META-INF/**",
@@ -41,8 +44,14 @@ dependencies {
 }
 
 tasks {
+    val javaToolchains = extensions.getByType<JavaToolchainService>()
+
     runServer {
-        minecraftVersion("1.21.11")
+        javaLauncher.set(javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(25))
+        })
+
+        minecraftVersion("26.1.2")
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
     }
 }

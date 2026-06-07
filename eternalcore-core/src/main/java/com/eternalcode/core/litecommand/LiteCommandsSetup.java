@@ -9,13 +9,10 @@ import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
-import dev.rollczi.litecommands.adventure.bukkit.platform.LiteAdventurePlatformExtension;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
 import dev.rollczi.litecommands.folia.FoliaExtension;
-import net.kyori.adventure.platform.AudienceProvider;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
@@ -27,8 +24,6 @@ class LiteCommandsSetup {
     public LiteCommandsBuilder<CommandSender, ?, ?> liteCommandsBuilder(
         Plugin plugin,
         Server server,
-        AudienceProvider audiencesProvider,
-        MiniMessage miniMessage,
         NoticeService noticeService,
         LiteCommandsAnnotations<CommandSender> liteCommandsAnnotations
     ) {
@@ -44,9 +39,6 @@ class LiteCommandsSetup {
                 .sender(invocation.sender())
                 .notice(translation -> translation.argument().incorrectLocation())
                 .placeholder("{LOCATION}", input)
-            )
-            .extension(new LiteAdventurePlatformExtension<CommandSender>(audiencesProvider), extension -> extension
-                .serializer(miniMessage)
             );
     }
 

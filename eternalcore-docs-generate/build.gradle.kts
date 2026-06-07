@@ -11,12 +11,9 @@ dependencies {
     implementation("com.google.code.gson:gson:${Versions.GSON}")
     implementation("dev.rollczi:litecommands-framework:${Versions.LITE_COMMANDS}")
     implementation("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
-    implementation("dev.rollczi:litecommands-adventure-platform:${Versions.LITE_COMMANDS}")
 
-    runtimeOnly("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
-    runtimeOnly("net.kyori:adventure-platform-bukkit:${Versions.ADVENTURE_PLATFORM}")
+    runtimeOnly("io.papermc.paper:paper-api:${Versions.PAPER_API}")
     runtimeOnly("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
-    runtimeOnly("io.papermc:paperlib:${Versions.PAPERLIB}")
     runtimeOnly("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
     runtimeOnly("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
     runtimeOnly("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")

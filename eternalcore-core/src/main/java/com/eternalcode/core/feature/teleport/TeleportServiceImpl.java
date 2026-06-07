@@ -6,7 +6,6 @@ import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.feature.teleport.event.EternalTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import io.papermc.lib.PaperLib;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -36,7 +35,7 @@ class TeleportServiceImpl implements TeleportService {
 
         Location last = player.getLocation().clone();
 
-        PaperLib.teleportAsync(player, event.getLocation());
+        player.teleportAsync(event.getLocation());
         this.markLastLocation(player.getUniqueId(), last);
     }
 
