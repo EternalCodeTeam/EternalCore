@@ -21,7 +21,6 @@ public class MaterialTransformer extends BidirectionalTransformer<Material, Stri
 
     @Override
     public Material rightToLeft(@NonNull String materialName, @NonNull SerdesContext context) {
-        return MaterialUtil.parse(materialName)
-            .orElseThrow(() -> new IllegalArgumentException("Unsupported material: " + materialName));
+        return MaterialUtil.parseOrFallback(materialName);
     }
 }

@@ -135,13 +135,21 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
     public RandomTeleportHeightRange heightRange = RandomTeleportHeightRange.of(60, 160);
 
     private static Set<Material> createMaterialSet(XMaterial firstMaterial, XMaterial... otherMaterials) {
-        EnumSet<Material> materials = EnumSet.of(MaterialUtil.parseRequired(firstMaterial));
+        EnumSet<Material> materials = EnumSet.noneOf(Material.class);
 
+        addMaterial(materials, firstMaterial);
         for (XMaterial material : otherMaterials) {
-            materials.add(MaterialUtil.parseRequired(material));
+            addMaterial(materials, material);
         }
 
         return materials;
+    }
+
+    private static void addMaterial(Set<Material> materials, XMaterial material) {
+        MaterialUtil.parse(material).ifPresentOrElse(
+            materials::add,
+            () -> MaterialUtil.warnUnsupported(material.name())
+        );
     }
 
 }

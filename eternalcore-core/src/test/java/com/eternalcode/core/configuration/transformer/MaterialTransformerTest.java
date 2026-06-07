@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 class MaterialTransformerTest {
@@ -28,8 +27,10 @@ class MaterialTransformerTest {
     }
 
     @Test
-    void shouldThrowWhenMaterialIsUnsupported() {
-        assertThrows(IllegalArgumentException.class, () -> this.transformer.rightToLeft("UNKNOWN_MATERIAL", dummyContext()));
+    void shouldUseFallbackWhenMaterialIsUnsupported() {
+        Material material = this.transformer.rightToLeft("UNKNOWN_MATERIAL", dummyContext());
+
+        assertEquals(Material.STONE, material);
     }
 
     private static SerdesContext dummyContext() {
