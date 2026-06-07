@@ -11,7 +11,6 @@ object Versions {
     const val DYNMAP_API = "3.7-beta-6"
     const val LOMBOK = "1.18.46"
 
-    const val PAPERLIB = "1.0.8"
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.26.1"
     const val OKAERI_CONFIGS = "6.0.0-beta.27"
 

@@ -14,7 +14,6 @@ dependencies {
 
     runtimeOnly("io.papermc.paper:paper-api:${Versions.PAPER_API}")
     runtimeOnly("net.kyori:adventure-text-minimessage:${Versions.ADVENTURE_TEXT_MINIMESSAGE}")
-    runtimeOnly("io.papermc:paperlib:${Versions.PAPERLIB}")
     runtimeOnly("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
     runtimeOnly("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
     runtimeOnly("dev.rollczi:liteskullapi:${Versions.LITE_SKULL_API}")

@@ -5,7 +5,6 @@ import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import io.papermc.lib.PaperLib;
 import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -63,6 +62,6 @@ public class SpawnTeleportJoinController implements Listener {
         }
 
         Location spawnLocation = PositionAdapter.convert(spawnPosition);
-        PaperLib.teleportAsync(player, spawnLocation);
+        player.teleportAsync(spawnLocation);
     }
 }

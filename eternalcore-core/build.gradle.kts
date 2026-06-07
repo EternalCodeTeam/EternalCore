@@ -36,12 +36,6 @@ configurations.configureEach {
 }
 
 eternalShadow {
-    // Paper and Adventure libraries
-    library("io.papermc:paperlib:${Versions.PAPERLIB}")
-    libraryRelocate(
-        "io.papermc.lib",
-    )
-
     // configuration
     library("eu.okaeri:okaeri-configs-core:${Versions.OKAERI_CONFIGS}")
     library("eu.okaeri:okaeri-configs-yaml-snakeyaml:${Versions.OKAERI_CONFIGS}")
