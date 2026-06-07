@@ -1,9 +1,11 @@
 package com.eternalcode.core.feature.itemedit;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
@@ -21,6 +23,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 @Command(name = "itemlore")
 @Permission("eternalcore.itemlore")
 class ItemLoreCommand {
+
+    private static final Material AIR = MaterialUtil.parseRequired(XMaterial.AIR);
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
@@ -115,7 +119,7 @@ class ItemLoreCommand {
     private ItemStack validateItemFromMainHand(Player player) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (itemStack.getType() == Material.AIR || itemStack.getItemMeta() == null) {
+        if (itemStack.getType() == AIR || itemStack.getItemMeta() == null) {
             return null;
         }
 

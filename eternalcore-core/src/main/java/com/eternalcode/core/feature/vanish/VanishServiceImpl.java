@@ -14,16 +14,19 @@ class VanishServiceImpl implements VanishService {
 
     private final VanishInvisibleService vanishInvisibleService;
     private final VanishMetaDataService vanishMetaDataService;
+    private final VanishCollisionService vanishCollisionService;
     private final EventCaller eventCaller;
 
     @Inject
     VanishServiceImpl(
         VanishInvisibleService vanishInvisibleService,
         VanishMetaDataService vanishMetaDataService,
+        VanishCollisionService vanishCollisionService,
         EventCaller eventCaller
     ) {
         this.vanishInvisibleService = vanishInvisibleService;
         this.vanishMetaDataService = vanishMetaDataService;
+        this.vanishCollisionService = vanishCollisionService;
         this.eventCaller = eventCaller;
     }
 
@@ -37,6 +40,7 @@ class VanishServiceImpl implements VanishService {
 
         this.vanishInvisibleService.hidePlayer(player);
         this.vanishMetaDataService.addMetadata(player);
+        this.vanishCollisionService.disableCollision(player);
     }
 
     @Override
@@ -49,6 +53,7 @@ class VanishServiceImpl implements VanishService {
 
         this.vanishInvisibleService.showPlayer(player);
         this.vanishMetaDataService.removeMetadata(player);
+        this.vanishCollisionService.restoreCollision(player);
     }
 
     @Override

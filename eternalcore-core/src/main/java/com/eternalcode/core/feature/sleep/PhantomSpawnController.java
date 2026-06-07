@@ -1,14 +1,11 @@
 package com.eternalcode.core.feature.sleep;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
-import com.eternalcode.paper.phantom.PhantomEventInitializer;
-import com.eternalcode.paper.phantom.PhantomSpawnAttemptEvent;
+import com.destroystokyo.paper.event.entity.PhantomPreSpawnEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 
 @Controller
 @PermissionDocs(
@@ -18,17 +15,14 @@ import org.bukkit.plugin.Plugin;
 )
 class PhantomSpawnController implements Listener {
 
-    @Inject
-    PhantomSpawnController(Plugin plugin) {
-        new PhantomEventInitializer(plugin).initialize();
-    }
-
     @EventHandler
-    void onPhantomSpawnAttempt(PhantomSpawnAttemptEvent event) {
-        if (event.getEntity() instanceof Player player) {
-            if (player.hasPermission("eternalcore.sleep.noinsomnia")) {
-                event.setCancelled(true);
-            }
+    void onPhantomSpawnAttempt(PhantomPreSpawnEvent event) {
+        if (!(event.getSpawningEntity() instanceof Player player)) {
+            return;
+        }
+
+        if (player.hasPermission("eternalcore.sleep.noinsomnia")) {
+            event.setCancelled(true);
         }
     }
 }

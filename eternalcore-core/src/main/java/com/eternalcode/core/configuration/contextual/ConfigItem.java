@@ -1,5 +1,7 @@
 package com.eternalcode.core.configuration.contextual;
 
+import com.cryptomorin.xseries.XMaterial;
+import com.eternalcode.core.util.MaterialUtil;
 import eu.okaeri.configs.OkaeriConfig;
 import org.bukkit.Material;
 
@@ -11,7 +13,7 @@ public class ConfigItem extends OkaeriConfig {
 
     public String name = "&6Item";
     public List<String> lore = Collections.singletonList("&7Default lore");
-    public Material material = Material.PLAYER_HEAD;
+    public Material material = MaterialUtil.parseRequired(XMaterial.PLAYER_HEAD);
     public String texture = "none";
     public boolean glow = false;
     public int slot = 0;

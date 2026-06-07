@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.warp.inventory;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.commons.concurrent.FutureHandler;
 import com.eternalcode.commons.scheduler.Scheduler;
@@ -11,6 +12,7 @@ import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.feature.warp.WarpTeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.util.MaterialUtil;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -40,6 +42,7 @@ public class WarpInventory {
 
     private static final int BORDER_ROW_COUNT = 2;
     private static final int UGLY_BORDER_ROW_COUNT = 1;
+    private static final Material PLAYER_HEAD = MaterialUtil.parseRequired(XMaterial.PLAYER_HEAD);
 
     private final WarpService warpService;
     private final Server server;
@@ -57,7 +60,8 @@ public class WarpInventory {
         WarpTeleportService warpTeleportService,
         WarpSettings warpSettings,
         Scheduler scheduler,
-        WarpInventoryConfigService warpInventoryConfigService) {
+        WarpInventoryConfigService warpInventoryConfigService
+    ) {
         this.warpService = warpService;
         this.server = server;
         this.miniMessage = miniMessage;
@@ -209,7 +213,7 @@ public class WarpInventory {
             .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
             .toList();
 
-        if (item.material() == Material.PLAYER_HEAD && !item.texture().isEmpty()) {
+        if (item.material() == PLAYER_HEAD && !item.texture().isEmpty()) {
             return ItemBuilder.skull()
                 .name(name)
                 .lore(lore)

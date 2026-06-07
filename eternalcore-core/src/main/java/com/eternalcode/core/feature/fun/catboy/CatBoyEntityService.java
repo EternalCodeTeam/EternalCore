@@ -28,13 +28,13 @@ class CatBoyEntityService {
         cat.setCatType(type);
 
         PersistentDataContainer persistentDataContainer = cat.getPersistentDataContainer();
-        persistentDataContainer.set(catboyNamespacedKey, PersistentDataType.BOOLEAN, true);
+        persistentDataContainer.set(catboyNamespacedKey, PersistentDataType.BYTE, (byte) 1);
 
         return cat;
     }
 
     boolean isCatboy(Cat cat) {
-        return cat.getPersistentDataContainer().has(catboyNamespacedKey, PersistentDataType.BOOLEAN);
+        return cat.getPersistentDataContainer().has(catboyNamespacedKey, PersistentDataType.BYTE);
     }
 
 }

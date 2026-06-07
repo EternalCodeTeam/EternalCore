@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.randomteleport;
 
+import com.cryptomorin.xseries.XMaterial;
+import com.eternalcode.core.util.MaterialUtil;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.time.Duration;
@@ -62,21 +64,21 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
         "# Players will never be teleported directly onto these blocks",
         "# Add or remove materials as needed for your server"
     })
-    public Set<Material> unsafeBlocks = EnumSet.of(
-        Material.LAVA,
-        Material.WATER,
-        Material.CACTUS,
-        Material.FIRE,
-        Material.COBWEB,
-        Material.SWEET_BERRY_BUSH,
-        Material.MAGMA_BLOCK,
-        Material.BEDROCK,
-        Material.TNT,
-        Material.SEAGRASS,
-        Material.TALL_SEAGRASS,
-        Material.BUBBLE_COLUMN,
-        Material.POWDER_SNOW,
-        Material.WITHER_ROSE
+    public Set<Material> unsafeBlocks = createMaterialSet(
+        XMaterial.LAVA,
+        XMaterial.WATER,
+        XMaterial.CACTUS,
+        XMaterial.FIRE,
+        XMaterial.COBWEB,
+        XMaterial.SWEET_BERRY_BUSH,
+        XMaterial.MAGMA_BLOCK,
+        XMaterial.BEDROCK,
+        XMaterial.TNT,
+        XMaterial.SEAGRASS,
+        XMaterial.TALL_SEAGRASS,
+        XMaterial.BUBBLE_COLUMN,
+        XMaterial.POWDER_SNOW,
+        XMaterial.WITHER_ROSE
     );
 
     @Comment({
@@ -85,42 +87,42 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
         "# Players can safely spawn in these blocks or pass through them",
         "# Includes air, grass, flowers, and other non-solid blocks"
     })
-    public Set<Material> airBlocks = EnumSet.of(
-        Material.AIR,
-        Material.CAVE_AIR,
-        Material.SHORT_GRASS,
-        Material.TALL_GRASS,
-        Material.VINE,
-        Material.STRUCTURE_VOID,
-        Material.DEAD_BUSH,
-        Material.DANDELION,
-        Material.POPPY,
-        Material.BLUE_ORCHID,
-        Material.ALLIUM,
-        Material.AZURE_BLUET,
-        Material.RED_TULIP,
-        Material.ORANGE_TULIP,
-        Material.WHITE_TULIP,
-        Material.PINK_TULIP,
-        Material.OXEYE_DAISY,
-        Material.CORNFLOWER,
-        Material.LILY_OF_THE_VALLEY,
-        Material.SUNFLOWER,
-        Material.LILAC,
-        Material.ROSE_BUSH,
-        Material.PEONY,
-        Material.LARGE_FERN,
-        Material.RAIL,
-        Material.POWERED_RAIL,
-        Material.DETECTOR_RAIL,
-        Material.ACTIVATOR_RAIL,
-        Material.REDSTONE_WIRE,
-        Material.WALL_TORCH,
-        Material.COMPARATOR,
-        Material.REPEATER,
-        Material.LEVER,
-        Material.STRING,
-        Material.SNOW
+    public Set<Material> airBlocks = createMaterialSet(
+        XMaterial.AIR,
+        XMaterial.CAVE_AIR,
+        XMaterial.SHORT_GRASS,
+        XMaterial.TALL_GRASS,
+        XMaterial.VINE,
+        XMaterial.STRUCTURE_VOID,
+        XMaterial.DEAD_BUSH,
+        XMaterial.DANDELION,
+        XMaterial.POPPY,
+        XMaterial.BLUE_ORCHID,
+        XMaterial.ALLIUM,
+        XMaterial.AZURE_BLUET,
+        XMaterial.RED_TULIP,
+        XMaterial.ORANGE_TULIP,
+        XMaterial.WHITE_TULIP,
+        XMaterial.PINK_TULIP,
+        XMaterial.OXEYE_DAISY,
+        XMaterial.CORNFLOWER,
+        XMaterial.LILY_OF_THE_VALLEY,
+        XMaterial.SUNFLOWER,
+        XMaterial.LILAC,
+        XMaterial.ROSE_BUSH,
+        XMaterial.PEONY,
+        XMaterial.LARGE_FERN,
+        XMaterial.RAIL,
+        XMaterial.POWERED_RAIL,
+        XMaterial.DETECTOR_RAIL,
+        XMaterial.ACTIVATOR_RAIL,
+        XMaterial.REDSTONE_WIRE,
+        XMaterial.WALL_TORCH,
+        XMaterial.COMPARATOR,
+        XMaterial.REPEATER,
+        XMaterial.LEVER,
+        XMaterial.STRING,
+        XMaterial.SNOW
     );
 
     @Comment({
@@ -131,5 +133,15 @@ public class RandomTeleportConfig extends OkaeriConfig implements RandomTeleport
         "# Values are automatically adjusted to world height limits"
     })
     public RandomTeleportHeightRange heightRange = RandomTeleportHeightRange.of(60, 160);
+
+    private static Set<Material> createMaterialSet(XMaterial firstMaterial, XMaterial... otherMaterials) {
+        EnumSet<Material> materials = EnumSet.of(MaterialUtil.parseRequired(firstMaterial));
+
+        for (XMaterial material : otherMaterials) {
+            materials.add(MaterialUtil.parseRequired(material));
+        }
+
+        return materials;
+    }
 
 }

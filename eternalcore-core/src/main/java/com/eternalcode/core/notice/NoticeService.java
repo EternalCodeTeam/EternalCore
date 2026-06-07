@@ -17,11 +17,12 @@ import com.eternalcode.multification.platform.PlatformBroadcaster;
 import com.eternalcode.multification.shared.Replacer;
 import com.eternalcode.multification.translation.TranslationProvider;
 import com.eternalcode.multification.viewer.ViewerProvider;
-import net.kyori.adventure.platform.AudienceProvider;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.ComponentSerializer;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @Service
@@ -31,7 +32,6 @@ public class NoticeService extends Multification<Viewer, Translation> {
     private final Scheduler scheduler;
     private final Server server;
 
-    private final AudienceProvider audienceProvider;
     private final TranslationManager translationManager;
     private final PlaceholderRegistry registry;
     private final MiniMessage miniMessage;
@@ -43,7 +43,6 @@ public class NoticeService extends Multification<Viewer, Translation> {
         UserManager userManager,
         Scheduler scheduler,
         Server server,
-        AudienceProvider audienceProvider,
         TranslationManager translationManager,
         PlaceholderRegistry registry,
         MiniMessage miniMessage,
@@ -52,7 +51,6 @@ public class NoticeService extends Multification<Viewer, Translation> {
         this.userManager = userManager;
         this.scheduler = scheduler;
         this.server = server;
-        this.audienceProvider = audienceProvider;
         this.translationManager = translationManager;
         this.registry = registry;
         this.miniMessage = miniMessage;
@@ -73,10 +71,16 @@ public class NoticeService extends Multification<Viewer, Translation> {
     public @NotNull AudienceConverter<Viewer> audienceConverter() {
         return viewer -> {
             if (viewer.isConsole()) {
-                return this.audienceProvider.console();
+                return this.server.getConsoleSender();
             }
 
-            return this.audienceProvider.player(viewer.getUniqueId());
+            Player player = this.server.getPlayer(viewer.getUniqueId());
+
+            if (player == null) {
+                return Audience.empty();
+            }
+
+            return player;
         };
     }
 

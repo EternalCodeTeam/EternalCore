@@ -1,6 +1,8 @@
 package com.eternalcode.core.feature.warp;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.core.util.MaterialUtil;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.AllArgsConstructor;
@@ -33,7 +35,7 @@ public class WarpConfig extends OkaeriConfig implements WarpSettings {
 
     public String itemLore = "&7Click to teleport!";
 
-    public Material itemMaterial = Material.PLAYER_HEAD;
+    public Material itemMaterial = MaterialUtil.parseRequired(XMaterial.PLAYER_HEAD);
 
     @Comment("# Texture of the item (only for PLAYER_HEAD material)")
     public String itemTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzk4ODVlODIzZmYxNTkyNjdjYmU4MDkwOTNlMzNhNDc2ZTI3NDliNjU5OGNhNGEyYTgxZWU2OTczODAzZmI2NiJ9fX0=";

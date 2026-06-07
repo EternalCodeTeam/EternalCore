@@ -47,6 +47,6 @@ class SpawnRespawnController implements Listener {
     }
 
     private boolean hasRespawnPoint(Player player) {
-        return player.getRespawnLocation() != null;
+        return player.getBedSpawnLocation() != null;
     }
 }

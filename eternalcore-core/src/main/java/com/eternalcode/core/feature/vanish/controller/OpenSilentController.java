@@ -1,11 +1,13 @@
 package com.eternalcode.core.feature.vanish.controller;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.feature.vanish.VanishSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.MaterialUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.RemovalCause;
@@ -49,6 +51,10 @@ class OpenSilentController implements Listener {
     private static final Vector ZERO_VELOCITY = new Vector(0.0, 0.0, 0.0);
     private static final int TICK_DURATION_MILLIS = 50;
     private static final int CACHE_EXPIRE_SECONDS = 5;
+    private static final Material CHEST = MaterialUtil.parseRequired(XMaterial.CHEST);
+    private static final Material TRAPPED_CHEST = MaterialUtil.parseRequired(XMaterial.TRAPPED_CHEST);
+    private static final Material BARREL = MaterialUtil.parseRequired(XMaterial.BARREL);
+    private static final Material ENDER_CHEST = MaterialUtil.parseRequired(XMaterial.ENDER_CHEST);
 
     private final NoticeService noticeService;
     private final VanishService vanishService;
@@ -103,7 +109,7 @@ class OpenSilentController implements Listener {
         Block clickedBlock = event.getClickedBlock();
         Material type = clickedBlock.getType();
 
-        if (type == Material.ENDER_CHEST) {
+        if (type == ENDER_CHEST) {
             event.setCancelled(true);
             player.openInventory(player.getEnderChest());
             return;
@@ -195,10 +201,11 @@ class OpenSilentController implements Listener {
     }
 
     private boolean isContainerType(Material type) {
-        return switch (type) {
-            case CHEST, TRAPPED_CHEST, BARREL, ENDER_CHEST -> true;
-            default -> Tag.SHULKER_BOXES.isTagged(type);
-        };
+        return type == CHEST
+            || type == TRAPPED_CHEST
+            || type == BARREL
+            || type == ENDER_CHEST
+            || Tag.SHULKER_BOXES.isTagged(type);
     }
 
     private record PlayerRestoreListener(Scheduler scheduler) implements RemovalListener<UUID, ContainerWrapper> {

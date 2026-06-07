@@ -1,6 +1,9 @@
 package com.eternalcode.core.util;
 
+import com.cryptomorin.xseries.XMaterial;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.bukkit.Material;
 
@@ -16,6 +19,14 @@ public final class MaterialUtil {
     public static String format(Material material) {
         String formattedName = material.name().toLowerCase().replace(UNDERSCORE, SPACE);
         return capitalize(formattedName);
+    }
+
+    public static Material parseRequired(XMaterial material) {
+        return Objects.requireNonNull(material.get(), "Material " + material.name() + " is not supported by this server version");
+    }
+
+    public static Optional<Material> parse(String materialName) {
+        return XMaterial.matchXMaterial(materialName).map(XMaterial::get);
     }
 
     private static String capitalize(String text) {

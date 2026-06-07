@@ -5,7 +5,7 @@ import com.eternalcode.core.compatibility.Compatibility;
 import com.eternalcode.core.compatibility.Version;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.paper.PaperOverlay;
+import com.eternalcode.core.feature.fun.PaperOverlay;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;

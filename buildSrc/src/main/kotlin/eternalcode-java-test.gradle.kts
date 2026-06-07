@@ -11,8 +11,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("org.mockito:mockito-core:${Versions.MOCKITO_CORE}")
-    testImplementation("net.kyori:adventure-platform-facet:${Versions.ADVENTURE_PLATFORM}")
-    testImplementation("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
+    testImplementation("io.papermc.paper:paper-api:${Versions.PAPER_API}")
 }
 
 tasks.getByName<Test>("test") {

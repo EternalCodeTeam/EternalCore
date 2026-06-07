@@ -1,9 +1,11 @@
 package com.eternalcode.core.litecommand.argument;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.argument.Argument;
 import dev.rollczi.litecommands.argument.parser.ParseResult;
 import dev.rollczi.litecommands.invocation.Invocation;
@@ -16,8 +18,8 @@ import org.bukkit.command.CommandSender;
 @LiteArgument(type = Material.class)
 public class MaterialArgument extends AbstractViewerArgument<Material> {
 
-    private static final SuggestionResult CACHED_SUGGESTIONS = Arrays.stream(Material.values())
-        .map(Material::name)
+    private static final SuggestionResult CACHED_SUGGESTIONS = Arrays.stream(XMaterial.values())
+        .map(XMaterial::name)
         .map(String::toLowerCase)
         .collect(SuggestionResult.collector());
 
@@ -28,11 +30,9 @@ public class MaterialArgument extends AbstractViewerArgument<Material> {
 
     @Override
     public ParseResult<Material> parse(Invocation<CommandSender> invocation, String argument, Translation translation) {
-        Material material = Material.matchMaterial(argument);
-        if (material == null) {
-            return ParseResult.failure(translation.argument().noMaterial());
-        }
-        return ParseResult.success(material);
+        return MaterialUtil.parse(argument)
+            .map(ParseResult::success)
+            .orElseGet(() -> ParseResult.failure(translation.argument().noMaterial()));
     }
 
     @Override

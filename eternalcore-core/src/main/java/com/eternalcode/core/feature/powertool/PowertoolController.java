@@ -38,7 +38,7 @@ public class PowertoolController implements Listener {
         .with("{Z}", player -> Integer.toString(player.getLocation().getBlockZ()))
         .with("{YAW}", player -> Float.toString(player.getLocation().getYaw()))
         .with("{PITCH}", player -> Float.toString(player.getLocation().getPitch()))
-        .with("{ITEM}", player -> player.getInventory().getItemInMainHand().getItemMeta().getItemName())
+        .with("{ITEM}", PowertoolController::getItemName)
         .with("{ITEM_TYPE}", player -> player.getInventory().getItemInMainHand().getType().name())
         .build();
 
@@ -92,5 +92,17 @@ public class PowertoolController implements Listener {
                 .send();
         }
     }
+
+    private static String getItemName(Player player) {
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if (itemMeta != null && itemMeta.hasDisplayName()) {
+            return itemMeta.getDisplayName();
+        }
+
+        return itemStack.getType().name();
+    }
+
 }
 

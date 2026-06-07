@@ -1,7 +1,9 @@
 package com.eternalcode.core.feature.powertool;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.annotations.argument.Key;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
@@ -22,6 +24,7 @@ import org.bukkit.plugin.Plugin;
 public class PowertoolCommand {
 
     public static final String KEY = "eternalcore_powertool";
+    private static final Material AIR = MaterialUtil.parseRequired(XMaterial.AIR);
     private final NamespacedKey key;
 
     private final Plugin plugin;
@@ -38,7 +41,7 @@ public class PowertoolCommand {
     void clear(@Sender Player player) {
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        if (item.getType() == Material.AIR || meta == null) {
+        if (item.getType() == AIR || meta == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().noItemInMainHand())
@@ -78,7 +81,7 @@ public class PowertoolCommand {
 
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        if (item.getType() == Material.AIR || meta == null) {
+        if (item.getType() == AIR || meta == null) {
             this.noticeService.create()
                 .player(player.getUniqueId())
                 .notice(translation -> translation.powertool().noItemInMainHand())

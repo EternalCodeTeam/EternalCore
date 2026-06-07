@@ -12,7 +12,7 @@ version = "1.3.2"
 repositories {
     mavenCentral()
 
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // spigot
+    maven("https://repo.papermc.io/repository/maven-public/") // paper
     maven("https://repo.panda-lang.org/releases/") // expressible
 
     // maven("https://repo.eternalcode.pl/releases/") // eternalcode
@@ -22,7 +22,7 @@ repositories {
 dependencies {
     implementation("dev.rollczi:litecommands-bukkit:${Versions.LITE_COMMANDS}")
 
-    compileOnly("org.spigotmc:spigot-api:${Versions.SPIGOT_API}")
+    compileOnly("io.papermc.paper:paper-api:${Versions.PAPER_API}")
     compileOnly(project(":eternalcore-api")) // <-- This is the eternalcore-api module,
     // replace it with compileOnly("com.eternalcode:eternalcore-api:<version>")
 }

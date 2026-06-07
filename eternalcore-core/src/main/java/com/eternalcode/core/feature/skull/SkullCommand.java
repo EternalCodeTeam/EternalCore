@@ -1,8 +1,10 @@
 package com.eternalcode.core.feature.skull;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
@@ -18,6 +20,8 @@ import org.bukkit.inventory.ItemStack;
 @Command(name = "skull")
 @Permission("eternalcore.skull")
 class SkullCommand {
+
+    private static final Material PLAYER_HEAD = MaterialUtil.parseRequired(XMaterial.PLAYER_HEAD);
 
     private final NoticeService noticeService;
     private final SkullAPI skullAPI;
@@ -39,7 +43,7 @@ class SkullCommand {
 
             ItemStack mainHand = sender.getInventory().getItemInMainHand();
 
-            if (mainHand.getType() == Material.PLAYER_HEAD) {
+            if (mainHand.getType() == PLAYER_HEAD) {
                 mainHand.setItemMeta(namedSkull.getItemMeta());
             }
             else {

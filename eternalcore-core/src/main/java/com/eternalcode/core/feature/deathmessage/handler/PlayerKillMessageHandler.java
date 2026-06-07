@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.deathmessage.handler;
 
+import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.commons.RandomElementUtil;
 import com.eternalcode.core.feature.deathmessage.DeathContext;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -13,6 +14,8 @@ import org.bukkit.inventory.ItemStack;
 
 @Service
 public class PlayerKillMessageHandler {
+
+    private static final Material AIR = MaterialUtil.parseRequired(XMaterial.AIR);
 
     private final NoticeService noticeService;
     private final TranslationManager translationManager;
@@ -34,7 +37,7 @@ public class PlayerKillMessageHandler {
         String victimName = victim.getName();
         String killerName = killer.getName();
 
-        ItemStack weapon = killer.getInventory().getItemInMainHand().getType() != Material.AIR
+        ItemStack weapon = killer.getInventory().getItemInMainHand().getType() != AIR
             ? killer.getInventory().getItemInMainHand()
             : killer.getInventory().getItemInOffHand();
         String weaponName = this.getWeaponName(weapon);
@@ -50,7 +53,7 @@ public class PlayerKillMessageHandler {
     }
 
     private String getWeaponName(ItemStack weapon) {
-        if (weapon == null || weapon.getType() == Material.AIR) {
+        if (weapon == null || weapon.getType() == AIR) {
             return this.translationManager.getMessages().deathMessage().unarmedWeaponName();
         }
 
