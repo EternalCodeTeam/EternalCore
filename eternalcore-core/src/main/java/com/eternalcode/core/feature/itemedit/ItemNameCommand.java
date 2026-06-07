@@ -1,18 +1,15 @@
 package com.eternalcode.core.feature.itemedit;
 
-import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,8 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 @Command(name = "itemname", aliases = { "itemrename" })
 @Permission("eternalcore.itemname")
 class ItemNameCommand {
-
-    private static final Material AIR = MaterialUtil.parseRequired(XMaterial.AIR);
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
@@ -75,7 +70,7 @@ class ItemNameCommand {
     private ItemStack validateItemFromMainHand(Player player) {
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        if (itemStack.getType() == AIR || itemStack.getItemMeta() == null) {
+        if (itemStack.getType().isAir() || itemStack.getItemMeta() == null) {
             return null;
         }
 
