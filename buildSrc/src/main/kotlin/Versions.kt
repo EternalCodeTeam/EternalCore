@@ -1,7 +1,7 @@
 object Versions {
 
     // Keep this version for Paper APIs used by modern EternalCore features.
-    const val PAPER_API = "1.21.3-R0.1-SNAPSHOT"
+    const val PAPER_API = "26.1.2.build.72-stable"
 
     const val ETERNALCODE_COMMONS = "1.4.1"
     const val MULTIFICATION = "1.2.4"
