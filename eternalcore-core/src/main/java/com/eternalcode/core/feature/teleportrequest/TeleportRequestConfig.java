@@ -16,5 +16,5 @@ public class TeleportRequestConfig extends OkaeriConfig implements TeleportReque
     public Duration tpaTimer = Duration.ofSeconds(10);
 
     @Comment("# Minimum Y level required for accepting /tpa requests")
-    public int minimumTpaAcceptY = -30;
+    public int minimumTpaAcceptY = -1;
 }
