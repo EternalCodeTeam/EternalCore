@@ -37,6 +37,12 @@ class TpaAcceptCommand {
     @Execute
     @DescriptionDocs(description = "Accept teleport request", arguments = "<player>")
     void executeTarget(@Sender Player player, @Arg(RequesterArgument.KEY) Player target) {
+        if (!this.canAcceptTeleportRequest(player)) {
+            this.sendTooLowMessage(player);
+
+            return;
+        }
+
         this.teleportTaskService.createTeleport(
             target.getUniqueId(),
             PositionAdapter.convert(target.getLocation()),
@@ -64,6 +70,12 @@ class TpaAcceptCommand {
     @Execute(name = "-all", aliases = "*")
     @DescriptionDocs(description = "Accept all teleport requests")
     void executeAll(@Sender Player player) {
+        if (!this.canAcceptTeleportRequest(player)) {
+            this.sendTooLowMessage(player);
+
+            return;
+        }
+
         List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
 
         if (requests.isEmpty()) {
@@ -96,5 +108,18 @@ class TpaAcceptCommand {
         }
 
         this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptAllAccepted());
+    }
+
+    private boolean canAcceptTeleportRequest(Player player) {
+        return player.getLocation().getY() >= this.settings.minimumTpaAcceptY();
+    }
+
+    private void sendTooLowMessage(Player player) {
+        this.noticeService
+            .create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.tpa().tpaAcceptTooLowMessage())
+            .placeholder("{Y}", String.valueOf(this.settings.minimumTpaAcceptY()))
+            .send();
     }
 }

@@ -61,6 +61,10 @@ public class PLTeleportRequestMessages extends OkaeriConfig implements TeleportR
     Notice tpaAcceptMessage = Notice.chat(
             "<color:#9d6eef>► <white>Zaakceptowałeś prośbę o teleportację od gracza: <color:#9d6eef>{PLAYER}<white>!");
 
+    @Comment({ " ", "# {Y} - Minimalny poziom Y wymagany do zaakceptowania prośby /tpa" })
+    Notice tpaAcceptTooLowMessage = Notice.chat(
+            "<red>✘ <dark_red>Musisz być co najmniej na poziomie Y <red>{Y}<dark_red>, aby zaakceptować tę prośbę o teleportację!");
+
     @Comment(" ")
     Notice tpaAcceptNoRequestMessage = Notice
             .chat("<red>✘ <dark_red>Ten gracz nie wysłał do ciebie prośby o teleportację!");
