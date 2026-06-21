@@ -19,6 +19,7 @@ public interface TeleportRequestMessages {
     Notice tpaDenyAllDenied();
 
     Notice tpaAcceptMessage();
+    Notice tpaAcceptTooLowMessage();
     Notice tpaAcceptNoRequestMessage();
     Notice tpaAcceptReceivedMessage();
     Notice tpaAcceptAllAccepted();
