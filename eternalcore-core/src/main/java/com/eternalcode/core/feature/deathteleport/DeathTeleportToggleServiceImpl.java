@@ -38,7 +38,7 @@ class DeathTeleportToggleServiceImpl implements DeathTeleportToggleService {
 
         return this.repository.setState(playerUniqueId, state)
             .exceptionally(throwable -> {
-                this.cachedStates.remove(playerUniqueId);
+                this.cachedStates.remove(playerUniqueId, state);
                 return null;
             });
     }

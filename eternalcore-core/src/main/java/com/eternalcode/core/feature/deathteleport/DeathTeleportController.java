@@ -70,6 +70,10 @@ class DeathTeleportController implements Listener {
                 return;
             }
 
+            if (!player.isOnline()) {
+                return;
+            }
+
             this.noticeService.create()
                 .player(playerId)
                 .notice(translation -> translation.deathTeleport().deathTeleportStarted())
@@ -79,6 +83,11 @@ class DeathTeleportController implements Listener {
             this.scheduler.runLater(
                 () -> {
                     if (!player.isOnline() || player.isDead()) {
+                        return;
+                    }
+
+                    Optional<Position> currentDeathLocation = this.deathTeleportService.getDeathLocation(playerId);
+                    if (currentDeathLocation.isEmpty() || !currentDeathLocation.get().equals(deathLocation.get())) {
                         return;
                     }
 
