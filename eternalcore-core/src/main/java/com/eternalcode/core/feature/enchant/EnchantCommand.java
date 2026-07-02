@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 @Command(name = "enchant")
-@Permission("eternalcore.enchant")
 class EnchantCommand {
 
     private final EnchantSettings enchantSettings;
@@ -28,6 +27,7 @@ class EnchantCommand {
     }
 
     @Execute
+    @Permission("eternalcore.enchant")
     @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level>")
     void execute(@Sender Player player, @Arg Enchantment enchantment, @Arg(EnchantLevelArgument.KEY) int level) {
         PlayerInventory playerInventory = player.getInventory();
@@ -51,7 +51,8 @@ class EnchantCommand {
     }
 
     @Execute
-    @DescriptionDocs(description = "Enchants item in hand", arguments = "<enchantment> <level> <player>")
+    @Permission("eternalcore.enchant.other")
+    @DescriptionDocs(description = "Enchants the item held by the specified player", arguments = "<enchantment> <level> <player>")
     void execute(@Sender Player sender, @Arg Enchantment enchantment, @Arg(EnchantLevelArgument.KEY) int level, @Arg Player target) {
         PlayerInventory targetInventory = target.getInventory();
         ItemStack handItem = targetInventory.getItem(targetInventory.getHeldItemSlot());
