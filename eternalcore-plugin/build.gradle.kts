@@ -3,6 +3,7 @@ import org.gradle.jvm.toolchain.JavaToolchainService
 
 plugins {
     `eternalcode-java`
+    `eternalcode-java-test`
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
     `eternalcore-publish-plugin`
