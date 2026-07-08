@@ -1,6 +1,3 @@
-import org.gradle.jvm.toolchain.JavaLanguageVersion
-import org.gradle.jvm.toolchain.JavaToolchainService
-
 plugins {
     `eternalcode-java`
     `eternalcode-java-test`
@@ -52,7 +49,7 @@ tasks {
             languageVersion.set(JavaLanguageVersion.of(25))
         })
 
-        minecraftVersion("26.1.2")
+        minecraftVersion("26.2")
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
     }
 }
