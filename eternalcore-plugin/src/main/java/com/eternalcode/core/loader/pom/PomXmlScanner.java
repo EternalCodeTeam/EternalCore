@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class PomXmlScanner implements DependencyScanner {
+
+    private static final int CONNECT_TIMEOUT_MILLIS = 15_000;
+    private static final int READ_TIMEOUT_MILLIS = 30_000;
 
     private static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
 
@@ -91,7 +95,11 @@ public class PomXmlScanner implements DependencyScanner {
 
         URL url = dependency.toPomXml(repository).toURL();
 
-        try (InputStream inputStream = url.openStream()) {
+        URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(CONNECT_TIMEOUT_MILLIS);
+        connection.setReadTimeout(READ_TIMEOUT_MILLIS);
+
+        try (InputStream inputStream = connection.getInputStream()) {
             Files.createDirectories(localFile.toPath());
             Files.copy(inputStream, localFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
