@@ -44,11 +44,6 @@ public class Dependency {
         return toResource(repository, JAR_MAVEN_FORMAT_WITH_CLASSIFIER.formatted(this.artifactId, this.version, classifier));
     }
 
-    public ResourceLocator toMavenJarChecksum(Repository repository, String checksumExtension) {
-        String jarName = JAR_MAVEN_FORMAT.formatted(this.artifactId, this.version);
-        return toResource(repository, jarName + "." + checksumExtension);
-    }
-
     public ResourceLocator toPomXml(Repository repository) {
         return toResource(repository, POM_XML_FORMAT.formatted(this.artifactId, this.version));
     }
