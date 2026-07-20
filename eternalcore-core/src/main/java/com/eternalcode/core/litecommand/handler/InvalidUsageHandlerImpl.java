@@ -32,6 +32,11 @@ class InvalidUsageHandlerImpl implements InvalidUsageHandler<CommandSender> {
         Viewer viewer = this.viewerService.any(invocation.sender());
         Schematic schematic = result.getSchematic();
 
+        if (schematic.all().isEmpty()) {
+            this.noticeService.viewer(viewer, translation -> translation.argument().permissionMessageGeneric());
+            return;
+        }
+
         if (schematic.isOnlyFirst()) {
             this.noticeService.create()
                 .viewer(viewer)

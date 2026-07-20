@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 public class ENArgumentMessages extends OkaeriConfig implements ArgumentMessages {
     @Comment("# {PERMISSIONS} - Required permission")
     Notice permissionMessage = Notice.chat("<red>✘ <dark_red>You don't have permission to perform this command! <red>({PERMISSIONS})");
+    Notice permissionMessageGeneric = Notice.chat(
+        "<red>✘ <dark_red>You don't have permission to perform this command!");
 
     @Comment({" ", "# {USAGE} - Correct usage"})
     Notice usageMessage = Notice.chat("<gold>✘ <white>Correct usage: <gold>{USAGE}");
