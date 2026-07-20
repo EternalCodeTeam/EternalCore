@@ -12,7 +12,7 @@ public class ENTeleportRequestMessages extends OkaeriConfig implements TeleportR
     Notice tpaSelfMessage = Notice.chat("<red>✘ <dark_red>You can't teleport to yourself!");
     Notice tpaAlreadySentMessage = Notice.chat("<red>✘ <dark_red>You have already sent a teleportation request!");
     Notice tpaSentMessage = Notice.chat(
-            "<color:#9d6eef>► <white>You have sent a request for player <color:#9d6eef>{PLAYER}<white> to teleport to you!");
+            "<color:#9d6eef>► <white>You have sent a request to teleport to player <color:#9d6eef>{PLAYER}<white>!");
 
     Notice tpaHereSent = Notice.chat(
             "<color:#9d6eef>► <white>You have sent a request for teleportation to you for a player: <color:#9d6eef>{PLAYER}<white>!");
