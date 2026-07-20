@@ -12,9 +12,9 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.concurrent.TimeUnit;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.command.CommandSender;
 
 @Command(name = "eternalcore")
 @Permission("eternalcore.eternalcore")
@@ -37,11 +37,11 @@ class EternalCoreCommand {
     @Async
     @Execute(name = "reload")
     @DescriptionDocs(description = "Reloads EternalCore configuration")
-    void reload(@Sender Audience audience) {
+    void reload(@Sender CommandSender sender) {
         long millis = this.reload();
         Component message = this.miniMessage.deserialize(RELOAD_MESSAGE.formatted(millis));
 
-        audience.sendMessage(message);
+        sender.sendMessage(message);
     }
 
     private long reload() {
