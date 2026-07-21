@@ -9,6 +9,7 @@ import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.LiteCommandsBuilder;
+import dev.rollczi.litecommands.adventure.LiteAdventureExtension;
 import dev.rollczi.litecommands.annotations.LiteCommandsAnnotations;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
@@ -29,6 +30,7 @@ class LiteCommandsSetup {
     ) {
         return LiteBukkitFactory.builder("eternalcore", plugin, server)
             .extension(new FoliaExtension(plugin))
+            .extension(new LiteAdventureExtension<>())
             .commands(liteCommandsAnnotations)
             .message(LiteBukkitMessages.WORLD_NOT_EXIST, (invocation, world) -> noticeService.create()
                 .sender(invocation.sender())
