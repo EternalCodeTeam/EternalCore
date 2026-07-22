@@ -12,7 +12,7 @@ public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages
     @Comment("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
     Notice permissionMessage =
         Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
-    Notice permissionMessageGeneric = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy!");
+    Notice permissionMessageGeneric = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
 
     @Comment({" ", "# {USAGE} - Wyświetla poprawne użycie komendy"})
     Notice usageMessage = Notice.chat("<red>✘ <dark_red>Poprawne użycie: <red>{USAGE}");
