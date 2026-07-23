@@ -12,4 +12,6 @@ public interface TimeAndWeatherMessages {
     Notice weatherSetRain();
     Notice weatherSetSun();
     Notice weatherSetThunder();
+    Notice weatherPersistenceEnabled();
+    Notice weatherPersistenceDisabled();
 }
