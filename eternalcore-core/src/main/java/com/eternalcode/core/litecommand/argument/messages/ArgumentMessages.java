@@ -5,6 +5,7 @@ import com.eternalcode.multification.notice.Notice;
 public interface ArgumentMessages {
     Notice missingPlayerName();
     Notice permissionMessage();
+    Notice permissionMessageGeneric();
     Notice usageMessage();
     Notice usageMessageHead();
     Notice usageMessageEntry();
