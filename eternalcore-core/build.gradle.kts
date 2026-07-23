@@ -63,6 +63,8 @@ eternalShadow {
     library("com.eternalcode:eternalcode-commons-adventure:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-folia:${Versions.ETERNALCODE_COMMONS}")
     library("com.eternalcode:eternalcode-commons-updater:${Versions.ETERNALCODE_COMMONS}")
+    library("dev.rollczi:litecommands-adventure:${Versions.LITE_COMMANDS}")
+
     libraryRelocate(
         "com.eternalcode.commons"
     )
