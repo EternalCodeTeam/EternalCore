@@ -21,6 +21,8 @@ import com.eternalcode.core.feature.chat.ChatConfig;
 import com.eternalcode.core.feature.chat.ChatSettings;
 import com.eternalcode.core.feature.deathmessage.config.DeathMessageConfig;
 import com.eternalcode.core.feature.deathmessage.config.DeathMessageSettings;
+import com.eternalcode.core.feature.deathteleport.DeathTeleportConfig;
+import com.eternalcode.core.feature.deathteleport.DeathTeleportSettings;
 import com.eternalcode.core.feature.enchant.EnchantConfig;
 import com.eternalcode.core.feature.enchant.EnchantSettings;
 import com.eternalcode.core.feature.give.GiveConfig;
@@ -243,6 +245,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Back Configuration")
     @Comment("# Settings for the /back command functionality")
     BackConfig back = new BackConfig();
+
+    @Bean(proxied = DeathTeleportSettings.class)
+    @Comment("")
+    @Comment("# Death Teleport Configuration")
+    @Comment("# Automatically teleports players back to their death location after respawning")
+    DeathTeleportConfig deathTeleport = new DeathTeleportConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
