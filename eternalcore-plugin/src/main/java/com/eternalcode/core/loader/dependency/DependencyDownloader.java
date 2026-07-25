@@ -132,7 +132,7 @@ public class DependencyDownloader {
 
     private String downloadChecksum(Repository repository, Dependency dependency, Checksum checksum) {
         try (InputStream in = openStream(dependency.toMavenJarChecksum(repository, checksum.extension()).toURL().openConnection())) {
-            byte[] bytes = ByteStreams.toByteArray(in);
+            byte[] bytes = ByteStreams.toByteArray(ByteStreams.limit(in, 1024));
 
             if (bytes.length == 0) {
                 return null;
