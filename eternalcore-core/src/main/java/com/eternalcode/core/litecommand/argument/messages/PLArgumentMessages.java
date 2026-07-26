@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true)
 public class PLArgumentMessages extends OkaeriConfig implements ArgumentMessages {
+    Notice permissionMessageGeneric = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy!");
     @Comment("# {PERMISSIONS} - Wyświetla wymagane uprawnienia")
     Notice permissionMessage =
         Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do tej komendy! <red>({PERMISSIONS})");
