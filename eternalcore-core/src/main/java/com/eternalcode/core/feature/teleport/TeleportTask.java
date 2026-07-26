@@ -64,6 +64,7 @@ class TeleportTask implements Runnable {
             World world = this.server.getWorld(position.world());
 
             if  (world == null) {
+                this.teleportTaskService.removeTeleport(uuid);
                 continue;
             }
 
