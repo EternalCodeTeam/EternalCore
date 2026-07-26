@@ -57,14 +57,15 @@ class TeleportTask implements Runnable {
 
             if (player == null) {
                 this.teleportTaskService.removeTeleport(uuid);
+                teleport.completeResult(TeleportResult.PLAYER_OFFLINE);
                 continue;
             }
 
-            Position position = teleport.getDestinationLocation();
-            World world = this.server.getWorld(position.world());
+            Position destination = teleport.getDestinationLocation();
 
-            if  (world == null) {
+            if (this.server.getWorld(destination.world()) == null) {
                 this.teleportTaskService.removeTeleport(uuid);
+                teleport.completeResult(TeleportResult.WORLD_NOT_FOUND);
                 continue;
             }
 
