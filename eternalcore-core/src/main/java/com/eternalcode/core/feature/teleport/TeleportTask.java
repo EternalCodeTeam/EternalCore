@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.teleport;
 
+import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.settings.TeleportSettings;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Location;
 import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 @Task(delay = 1L, period = 1L, unit = TimeUnit.SECONDS)
@@ -55,6 +57,13 @@ class TeleportTask implements Runnable {
 
             if (player == null) {
                 this.teleportTaskService.removeTeleport(uuid);
+                continue;
+            }
+
+            Position position = teleport.getDestinationLocation();
+            World world = this.server.getWorld(position.world());
+
+            if  (world == null) {
                 continue;
             }
 

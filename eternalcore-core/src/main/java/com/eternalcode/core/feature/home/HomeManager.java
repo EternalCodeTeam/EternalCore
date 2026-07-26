@@ -10,7 +10,9 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -167,5 +169,21 @@ public class HomeManager implements HomeService {
             })
             .max(Integer::compareTo)
             .orElse(this.homesSettings.defaultLimit());
+    }
+
+    public void removeHomesInWorld(String worldName) {
+        for (Map<String, Home> homes : this.userHomes.values()) {
+            Iterator<Entry<String, Home>> iterator = homes.entrySet().iterator();
+
+            while (iterator.hasNext()) {
+                Map.Entry<String, Home> entry = iterator.next();
+                Home home = entry.getValue();
+
+                if (home.getLocation().getWorld().getName().equals(worldName)) {
+                    iterator.remove();
+                    this.repository.deleteHome(home.getOwner(), entry.getKey());
+                }
+            }
+        }
     }
 }
