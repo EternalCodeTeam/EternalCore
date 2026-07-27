@@ -5,7 +5,8 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import java.util.ArrayList;
+import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Service
 class TeleportHereRequestService {
 
-    private final Cache<UUID, UUID> requests;
+    private final Cache<UUID, Request> requests;
 
     @Inject
     TeleportHereRequestService(TeleportRequestSettings settings) {
@@ -24,7 +25,7 @@ class TeleportHereRequestService {
     }
 
     void createRequest(UUID requester, UUID target) {
-        this.requests.put(requester, target);
+        this.requests.put(requester, new Request(target, Instant.now()));
     }
 
     void removeRequest(UUID requester) {
@@ -32,29 +33,18 @@ class TeleportHereRequestService {
     }
 
     boolean hasRequest(UUID requester, UUID target) {
-        Map<UUID, UUID> map = this.requests.asMap();
-
-        for (Map.Entry<UUID, UUID> entry : map.entrySet()) {
-            if (entry.getKey().equals(requester) && entry.getValue().equals(target)) {
-                return true;
-            }
-        }
-
-        return false;
+        Request request = this.requests.getIfPresent(requester);
+        return request != null && request.target().equals(target);
     }
 
     List<UUID> findRequests(UUID target) {
-        Map<UUID, UUID> map = this.requests.asMap();
-
-        List<UUID> requesters = new ArrayList<>();
-
-        for (Map.Entry<UUID, UUID> entry : map.entrySet()) {
-            if (entry.getValue().equals(target)) {
-                requesters.add(entry.getKey());
-            }
-        }
-
-        return requesters;
+        return this.requests.asMap().entrySet().stream()
+            .filter(entry -> entry.getValue().target().equals(target))
+            .sorted(Map.Entry.comparingByValue(Comparator.comparing(Request::createdAt).reversed()))
+            .map(Map.Entry::getKey)
+            .toList();
     }
+
+    private record Request(UUID target, Instant createdAt) {}
 
 }
