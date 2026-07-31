@@ -23,7 +23,6 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 
 @Command(name = "chat")
-@Permission("eternalcore.chat")
 class ChatCommand {
 
     private static final String EMPTY_CHAT_STRING = " ";
@@ -56,6 +55,7 @@ class ChatCommand {
     }
 
     @Execute(name = "clear", aliases = "cc")
+    @Permission("eternalcore.chat.clear")
     @DescriptionDocs(description = "Clears chat")
     void clear(@Sender CommandSender sender) {
         ClearChatEvent event = this.eventCaller.callEvent(new ClearChatEvent(sender));
@@ -78,6 +78,7 @@ class ChatCommand {
     }
 
     @Execute(name = "on")
+    @Permission("eternalcore.chat.on")
     @DescriptionDocs(description = "Enables chat")
     void enable(@Sender Viewer viewer, @Sender CommandSender sender) {
         if (this.chatSettings.chatEnabled()) {
@@ -101,6 +102,7 @@ class ChatCommand {
     }
 
     @Execute(name = "off")
+    @Permission("eternalcore.chat.off")
     @DescriptionDocs(description = "Disables chat")
     void disable(@Sender Viewer viewer, @Sender CommandSender sender) {
         if (!this.chatSettings.chatEnabled()) {
@@ -124,6 +126,7 @@ class ChatCommand {
     }
 
     @Execute(name = "slowmode")
+    @Permission("eternalcore.chat.slowmode")
     @DescriptionDocs(description = "Sets slowmode for chat", arguments = "<time>")
     void slowmode(@Sender Viewer viewer, @Arg Duration duration) {
         if (duration.isNegative()) {
@@ -160,6 +163,7 @@ class ChatCommand {
     }
 
     @Execute(name = "slowmode 0")
+    @Permission("eternalcore.chat.slowmode")
     @DescriptionDocs(description = "Disable SlowMode for chat")
     void slowmodeOff(@Sender Viewer viewer) {
         Duration noSlowMode = Duration.ZERO;
