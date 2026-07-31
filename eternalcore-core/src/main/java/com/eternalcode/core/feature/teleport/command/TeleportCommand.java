@@ -17,7 +17,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 @Command(name = "teleport", aliases = { "tp" })
-@Permission("eternalcore.teleport")
 class TeleportCommand {
 
     private static final Placeholders<TeleportContext> CONTEXT = Placeholders.<TeleportContext>builder()
@@ -44,6 +43,7 @@ class TeleportCommand {
     }
 
     @Execute
+    @Permission("eternalcore.teleport")
     @DescriptionDocs(description = "Teleport to specified player", arguments = "<player>")
     void execute(@Sender Player sender, @Sender Viewer senderViewer, @Arg Player player) {
         this.teleportService.teleport(sender, player.getLocation());
@@ -54,6 +54,7 @@ class TeleportCommand {
     }
 
     @Execute
+    @Permission("eternalcore.teleport.other")
     @DescriptionDocs(description = "Teleport player to player", arguments = "<player> <target-player>")
     void other(@Sender Viewer sender, @Arg Player player, @Arg Player target) {
         this.teleportService.teleport(player, target.getLocation());
@@ -65,6 +66,7 @@ class TeleportCommand {
     }
 
     @Execute
+    @Permission("eternalcore.teleport.coordinates")
     @DescriptionDocs(description = "Teleport to specified location", arguments = "<x> <y> <z>")
     void to(@Sender Player sender, @Arg Location location) {
         location.setWorld(sender.getWorld());
@@ -77,6 +79,7 @@ class TeleportCommand {
     }
 
     @Execute
+    @Permission("eternalcore.teleport.coordinates")
     @DescriptionDocs(description = "Teleport to specified location and world", arguments = "<x> <y> <z> <world>")
     void to(@Sender Player sender, @Arg Location location, @Arg World world) {
         location.setWorld(world);
@@ -89,6 +92,7 @@ class TeleportCommand {
     }
 
     @Execute
+    @Permission("eternalcore.teleport.coordinates.other")
     @DescriptionDocs(description = "Teleport player to specified location and world", arguments = "<player> <x> <y> <z>")
     void to(@Sender Viewer sender, @Arg Player target, @Arg Location location) {
         location.setWorld(target.getWorld());
@@ -100,6 +104,7 @@ class TeleportCommand {
     }
 
     @Execute
+    @Permission("eternalcore.teleport.coordinates.other")
     @DescriptionDocs(description = "Teleport player to specified player, location and world", arguments = "<player> <x> <y> <z> <world>")
     void to(@Sender Viewer sender, @Arg Player target, @Arg Location location, @Arg World world) {
         location.setWorld(world);
