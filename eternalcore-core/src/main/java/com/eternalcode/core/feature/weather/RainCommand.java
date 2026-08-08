@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.weather;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
@@ -18,12 +17,12 @@ import org.bukkit.World;
 class RainCommand {
 
     private final NoticeService noticeService;
-    private final MinecraftScheduler scheduler;
+    private final WeatherService weatherService;
 
     @Inject
-    RainCommand(NoticeService noticeService, MinecraftScheduler scheduler) {
+    RainCommand(NoticeService noticeService, WeatherService weatherService) {
         this.noticeService = noticeService;
-        this.scheduler = scheduler;
+        this.weatherService = weatherService;
     }
 
     @Execute
@@ -39,10 +38,7 @@ class RainCommand {
     }
 
     private void setRain(Viewer viewer, World world) {
-        this.scheduler.run(() -> {
-            world.setStorm(true);
-            world.setThundering(false);
-        });
+        this.weatherService.setWeather(world, WeatherType.RAIN, false);
 
         this.noticeService.create()
             .viewer(viewer)
