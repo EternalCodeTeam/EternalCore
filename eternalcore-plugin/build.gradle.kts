@@ -3,7 +3,7 @@ plugins {
     `eternalcore-repositories`
     `eternalcore-shadow-compiler`
     `eternalcore-publish-plugin`
-    id("xyz.jpenilla.run-paper") version "3.0.2"
+    id("xyz.jpenilla.run-paper") version "3.1.0"
 }
 
 ext {
