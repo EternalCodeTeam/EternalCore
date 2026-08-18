@@ -10,6 +10,8 @@ public interface VanishSettings {
 
     boolean nightVision();
 
+    boolean allowFlight();
+
     boolean silentInventoryAccess();
 
     boolean glowEffect();
