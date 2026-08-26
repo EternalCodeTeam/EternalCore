@@ -3,12 +3,12 @@ package com.eternalcode.core.translation.implementation;
 import com.eternalcode.core.feature.back.messages.PLBackMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
+import com.eternalcode.core.feature.notarget.messages.PLNoTargetMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
-import com.eternalcode.core.configuration.contextual.ConfigItem;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
 import com.eternalcode.core.feature.afk.messages.PLAfkMessages;
 import com.eternalcode.core.feature.automessage.messages.PLAutoMessageMessages;
@@ -16,14 +16,11 @@ import com.eternalcode.core.feature.broadcast.messages.PLBroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.PLBurnMessages;
 import com.eternalcode.core.feature.butcher.messages.PLButcherMessages;
 import com.eternalcode.core.feature.chat.messages.PLChatMessages;
-import com.eternalcode.core.feature.clear.messages.PLClearMessages;
-import com.eternalcode.core.feature.container.messages.PLContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.PLDeathMessages;
 import com.eternalcode.core.feature.disposal.messages.PLDisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.PLEnchantMessages;
 import com.eternalcode.core.feature.feed.messages.PLFeedMessages;
 import com.eternalcode.core.feature.fly.messages.PLFlyMessages;
-import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.PLDemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.PLElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.PLEndScreenMessages;
@@ -40,14 +37,11 @@ import com.eternalcode.core.feature.joinmessage.messages.PLJoinMessage;
 import com.eternalcode.core.feature.kill.messages.PLKillMessages;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
-import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.onlineplayers.messages.PLOnlineMessages;
 import com.eternalcode.core.feature.ping.PLPingMessages;
-import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.PLPowertoolMessages;
 import com.eternalcode.core.feature.quitmessage.messages.PLQuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
-import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.feature.seen.messages.PLSeenMessages;
 import com.eternalcode.core.feature.setslot.messages.PLSetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.PLSignEditorMessages;
@@ -63,7 +57,6 @@ import com.eternalcode.core.feature.time.messages.PLTimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.PLVanishMessages;
 import com.eternalcode.core.feature.warp.messages.PLWarpMessages;
 import com.eternalcode.core.feature.whois.PLWhoIsMessages;
-import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.translation.AbstractTranslation;
 import com.eternalcode.core.translation.Language;
 import eu.okaeri.configs.OkaeriConfig;
@@ -214,6 +207,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# Gracze w pobliżu")
     public PLNearMessages near = new PLNearMessages();
+
+    @Comment("# Ignorowanie prze moby")
+    public PLNoTargetMessages noTarget = new PLNoTargetMessages();
 
     @Comment("# Leczenie")
     public PLHealMessages heal = new PLHealMessages();
