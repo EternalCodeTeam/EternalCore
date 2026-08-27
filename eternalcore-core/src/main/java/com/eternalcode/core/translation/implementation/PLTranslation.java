@@ -208,7 +208,7 @@ public class PLTranslation extends AbstractTranslation {
     @Comment("# Gracze w pobliżu")
     public PLNearMessages near = new PLNearMessages();
 
-    @Comment("# Ignorowanie prze moby")
+    @Comment("# Ignorowanie przez moby")
     public PLNoTargetMessages noTarget = new PLNoTargetMessages();
 
     @Comment("# Leczenie")
