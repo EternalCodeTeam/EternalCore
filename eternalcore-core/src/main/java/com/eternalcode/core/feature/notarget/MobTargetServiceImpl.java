@@ -13,7 +13,7 @@ public class MobTargetServiceImpl implements MobTargetService {
     private final HashSet<UUID> mobTargetMap = new HashSet<>();
 
     @Override
-    public void ignorePlayer(Player player) {
+    public void removeTracking(Player player) {
         this.mobTargetMap.add(player.getUniqueId());
 
         this.enableNoTarget(player);
@@ -25,7 +25,7 @@ public class MobTargetServiceImpl implements MobTargetService {
     }
 
     @Override
-    public void removeMobIgnore(UUID uniqueId) {
+    public void startTracking(UUID uniqueId) {
         this.mobTargetMap.remove(uniqueId);
     }
 

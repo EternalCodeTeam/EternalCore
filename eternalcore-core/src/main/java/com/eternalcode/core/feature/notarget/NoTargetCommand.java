@@ -26,14 +26,14 @@ public class NoTargetCommand {
 
     @Execute
     void execute(@Sender Player player) {
-
         UUID uniqueId = player.getUniqueId();
 
         if (this.mobTargetService.doMobsIgnore(uniqueId)) {
             this.turnOff(uniqueId);
-        } else {
-            this.turnOn(player);
+            return;
         }
+
+        this.turnOn(player);
     }
 
     @Execute
@@ -48,19 +48,19 @@ public class NoTargetCommand {
                 .send();
 
             this.turnOn(target);
-        } else {
-            this.noticeService.create()
-                .notice(translation -> translation.noTarget().turnedOff())
-                .placeholder("{PLAYER}", target.getName())
-                .sender(sender)
-                .send();
-
-            this.turnOff(uniqueId);
+            return;
         }
+        this.noticeService.create()
+            .notice(translation -> translation.noTarget().turnedOff())
+            .placeholder("{PLAYER}", target.getName())
+            .sender(sender)
+            .send();
+
+        this.turnOff(uniqueId);
     }
 
     private void turnOn(Player player) {
-        this.mobTargetService.ignorePlayer(player);
+        this.mobTargetService.removeTracking(player);
 
         this.noticeService.create()
             .notice(translation -> translation.noTarget().enabled())
@@ -69,7 +69,7 @@ public class NoTargetCommand {
     }
 
     private void turnOff(UUID uniqueId) {
-        this.mobTargetService.removeMobIgnore(uniqueId);
+        this.mobTargetService.startTracking(uniqueId);
 
         this.noticeService.create()
             .notice(translation -> translation.noTarget().disabled())
