@@ -22,4 +22,8 @@ public class ENTimeAndWeatherMessages extends OkaeriConfig implements TimeAndWea
     Notice weatherSetSun = Notice.chat("<color:#9d6eef>► <white>Weather set to sun in the <color:#9d6eef>{WORLD}<white>!");
     Notice weatherSetThunder =
         Notice.chat("<color:#9d6eef>► <white>Weather set to thunder in the <color:#9d6eef>{WORLD}<white>!");
+    Notice weatherPersistenceEnabled =
+        Notice.chat("<color:#9d6eef>► <white>Locked <color:#9d6eef>{WEATHER}<white> weather in the <color:#9d6eef>{WORLD}<white> world.");
+    Notice weatherPersistenceDisabled =
+        Notice.chat("<color:#9d6eef>► <white>Natural weather cycle enabled again in the <color:#9d6eef>{WORLD}<white> world.");
 }
