@@ -2,6 +2,7 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
+import com.eternalcode.core.feature.helpop.HelpOpService;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.jail.JailService;
@@ -33,6 +34,11 @@ class EternalCoreApiImpl implements EternalCoreApi {
     @Override
     public IgnoreService getIgnoreService() {
         return this.dependencyProvider.getDependency(IgnoreService.class);
+    }
+
+    @Override
+    public HelpOpService getHelpOpService() {
+        return this.dependencyProvider.getDependency(HelpOpService.class);
     }
 
     @Override
