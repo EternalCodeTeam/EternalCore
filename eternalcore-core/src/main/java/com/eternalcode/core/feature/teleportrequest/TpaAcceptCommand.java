@@ -35,6 +35,22 @@ class TpaAcceptCommand {
     }
 
     @Execute
+    @DescriptionDocs(description = "Accept the last received teleport request")
+    void executeLatest(@Sender Player player) {
+        Player target = this.requestService.findLatestRequest(player.getUniqueId())
+            .map(this.server::getPlayer)
+            .orElse(null);
+
+        if (target == null) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptNoRequestMessage());
+
+            return;
+        }
+
+        this.executeTarget(player, target);
+    }
+
+    @Execute
     @DescriptionDocs(description = "Accept teleport request", arguments = "<player>")
     void executeTarget(@Sender Player player, @Arg(RequesterArgument.KEY) Player target) {
         if (!this.canAcceptTeleportRequest(player)) {

@@ -36,26 +36,46 @@ class TpaHereActionCommand {
 
     @Execute(name = "tpahereaccept")
     @Permission("eternalcore.tpaccept")
+    @DescriptionDocs(description = "Accept the last received teleport here request")
+    void acceptLatest(@Sender Player player) {
+        Player target = this.requestService.findLatestRequest(player.getUniqueId())
+            .map(this.server::getPlayer)
+            .orElse(null);
+
+        if (target == null) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptNoRequestMessage());
+
+            return;
+        }
+
+        this.accept(player, target);
+    }
+
+    @Execute(name = "tpahereaccept")
+    @Permission("eternalcore.tpaccept")
     void accept(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
+        UUID playerId = player.getUniqueId();
+        UUID targetId = target.getUniqueId();
+
         this.teleportTaskService.createTeleport(
-            player.getUniqueId(),
+            playerId,
             PositionAdapter.convert(player.getLocation()),
             PositionAdapter.convert(target.getLocation()),
             this.settings.tpaTimer()
         );
 
-        this.requestService.removeRequest(target.getUniqueId());
+        this.requestService.removeRequest(targetId);
 
         this.noticeService
             .create()
-            .player(player.getUniqueId())
+            .player(playerId)
             .notice(translation -> translation.tpa().tpaAcceptMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
-            .player(target.getUniqueId())
+            .player(targetId)
             .notice(translation -> translation.tpa().tpaAcceptReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
@@ -65,18 +85,21 @@ class TpaHereActionCommand {
     @Permission("eternalcore.tpahere.deny")
     @DescriptionDocs(description = "Deny a teleport here request")
     void executeTarget(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
-        this.requestService.removeRequest(target.getUniqueId());
+        UUID playerId = player.getUniqueId();
+        UUID targetId = target.getUniqueId();
+
+        this.requestService.removeRequest(targetId);
 
         this.noticeService
             .create()
-            .player(player.getUniqueId())
+            .player(playerId)
             .notice(translation -> translation.tpa().tpaDenyDoneMessage())
             .placeholder("{PLAYER}", target.getName())
             .send();
 
         this.noticeService
             .create()
-            .player(target.getUniqueId())
+            .player(targetId)
             .notice(translation -> translation.tpa().tpaDenyReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
@@ -86,10 +109,11 @@ class TpaHereActionCommand {
     @Permission("eternalcore.tpahere.deny")
     @DescriptionDocs(description = "Deny all teleport here requests")
     void executeAll(@Sender Player player) {
-        List<UUID> requests = this.requestService.findRequests(player.getUniqueId());
+        UUID playerId = player.getUniqueId();
+        List<UUID> requests = this.requestService.findRequests(playerId);
 
         if (requests.isEmpty()) {
-            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaDenyNoRequestMessage());
+            this.noticeService.player(playerId, translation -> translation.tpa().tpaDenyNoRequestMessage());
             return;
         }
 
@@ -107,7 +131,7 @@ class TpaHereActionCommand {
             }
         }
 
-        this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaDenyAllDenied());
+        this.noticeService.player(playerId, translation -> translation.tpa().tpaDenyAllDenied());
     }
 
 }
