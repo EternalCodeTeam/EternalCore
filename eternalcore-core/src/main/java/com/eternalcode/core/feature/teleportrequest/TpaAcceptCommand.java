@@ -11,7 +11,6 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -38,10 +37,8 @@ class TpaAcceptCommand {
     @Execute
     @DescriptionDocs(description = "Accept the last received teleport request")
     void executeLatest(@Sender Player player) {
-        Player target = this.requestService.findRequests(player.getUniqueId()).stream()
+        Player target = this.requestService.findLatestRequest(player.getUniqueId())
             .map(this.server::getPlayer)
-            .filter(Objects::nonNull)
-            .findFirst()
             .orElse(null);
 
         if (target == null) {
