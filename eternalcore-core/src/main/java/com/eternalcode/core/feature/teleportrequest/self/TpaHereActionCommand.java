@@ -55,6 +55,7 @@ class TpaHereActionCommand {
     @Permission("eternalcore.tpaccept")
     void accept(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         UUID playerId = player.getUniqueId();
+        UUID targetId = target.getUniqueId();
 
         this.teleportTaskService.createTeleport(
             playerId,
@@ -63,7 +64,7 @@ class TpaHereActionCommand {
             this.settings.tpaTimer()
         );
 
-        this.requestService.removeRequest(playerId);
+        this.requestService.removeRequest(targetId);
 
         this.noticeService
             .create()
@@ -74,7 +75,7 @@ class TpaHereActionCommand {
 
         this.noticeService
             .create()
-            .player(playerId)
+            .player(targetId)
             .notice(translation -> translation.tpa().tpaAcceptReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
@@ -85,7 +86,9 @@ class TpaHereActionCommand {
     @DescriptionDocs(description = "Deny a teleport here request")
     void executeTarget(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
         UUID playerId = player.getUniqueId();
-        this.requestService.removeRequest(playerId);
+        UUID targetId = target.getUniqueId();
+
+        this.requestService.removeRequest(targetId);
 
         this.noticeService
             .create()
@@ -96,7 +99,7 @@ class TpaHereActionCommand {
 
         this.noticeService
             .create()
-            .player(playerId)
+            .player(targetId)
             .notice(translation -> translation.tpa().tpaDenyReceivedMessage())
             .placeholder("{PLAYER}", player.getName())
             .send();
