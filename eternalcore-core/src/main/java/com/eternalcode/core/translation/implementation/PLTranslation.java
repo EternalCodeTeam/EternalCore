@@ -1,6 +1,7 @@
 package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.feature.back.messages.PLBackMessages;
+import com.eternalcode.core.feature.deathteleport.messages.PLDeathTeleportMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
@@ -196,6 +197,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# Powrót do poprzedniej lokalizacji")
     public PLBackMessages back = new PLBackMessages();
+
+    @Comment("# Automatyczna teleportacja do miejsca śmierci po odrodzeniu")
+    public PLDeathTeleportMessages deathTeleport = new PLDeathTeleportMessages();
 
     @Comment("# Losowa teleportacja")
     public PLRandomTeleportMessages randomTeleport = new PLRandomTeleportMessages();
