@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.msg.toggle;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,17 +18,25 @@ class MsgToggleServiceImpl implements MsgToggleService {
     MsgToggleServiceImpl(MsgToggleRepository msgToggleRepository) {
         this.cachedToggleStates = new ConcurrentHashMap<>();
         this.msgToggleRepository = msgToggleRepository;
-
     }
-
 
     @Override
     public CompletableFuture<MsgState> getState(UUID playerUniqueId) {
-        if (this.cachedToggleStates.containsKey(playerUniqueId)) {
-            return CompletableFuture.completedFuture(this.cachedToggleStates.get(playerUniqueId));
+        MsgState cached = this.cachedToggleStates.get(playerUniqueId);
+        if (cached != null) {
+            return CompletableFuture.completedFuture(cached);
         }
 
-        return this.msgToggleRepository.getPrivateChatState(playerUniqueId);
+        return this.msgToggleRepository.getPrivateChatState(playerUniqueId)
+            .thenApply(state -> {
+               this.cachedToggleStates.put(playerUniqueId, state);
+               return state;
+            });
+    }
+
+    @Override
+    public Optional<MsgState> getCachedState(UUID playerUniqueId) {
+        return Optional.ofNullable(this.cachedToggleStates.get(playerUniqueId));
     }
 
     @Override
