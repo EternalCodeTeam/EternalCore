@@ -10,6 +10,7 @@ import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.chat.messages.ENChatMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.deathteleport.messages.ENDeathTeleportMessages;
 import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
 import com.eternalcode.core.feature.disposal.messages.ENDisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.ENEnchantMessages;
@@ -195,6 +196,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment("# Back")
     public ENBackMessages back = new ENBackMessages();
+
+    @Comment("# Automatic teleportation back to the last death location after respawning")
+    public ENDeathTeleportMessages deathTeleport = new ENDeathTeleportMessages();
 
     @Comment("# Teleport to offline players")
     public ENTeleportOfflineMessages teleportToOfflinePlayer = new ENTeleportOfflineMessages();
