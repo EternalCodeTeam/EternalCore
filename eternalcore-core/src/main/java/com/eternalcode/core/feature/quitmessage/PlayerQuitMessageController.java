@@ -13,8 +13,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 @Controller
 class PlayerQuitMessageController implements Listener {
 
-    private static final String EMPTY_MESSAGE = null;
-
     private final NoticeService noticeService;
     private final VanishService vanishService;
 
@@ -28,12 +26,11 @@ class PlayerQuitMessageController implements Listener {
     void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
+        event.quitMessage(null);
+
         if (this.vanishService.isVanished(player)) {
-            event.setQuitMessage(EMPTY_MESSAGE);
             return;
         }
-
-        event.setQuitMessage(EMPTY_MESSAGE);
 
         this.noticeService.create()
             .noticeOptional(translation -> RandomElementUtil.randomElement(translation.quit().playerLeftServer()))
