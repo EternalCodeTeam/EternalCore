@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.punishment.messages.PLPunishmentMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.configuration.contextual.ConfigItem;
@@ -316,6 +317,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# End Screen")
     public PLEndScreenMessages endScreen = new PLEndScreenMessages();
+
+    @Comment("# Blokady")
+    public PLPunishmentMessages punishment = new PLPunishmentMessages();
 
     @Override
     public File getConfigFile(File dataFolder) {

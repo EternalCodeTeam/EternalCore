@@ -37,6 +37,7 @@ import com.eternalcode.core.feature.onlineplayers.messages.ENOnlineMessages;
 import com.eternalcode.core.feature.ping.ENPingMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.ENPowertoolMessages;
+import com.eternalcode.core.feature.punishment.messages.ENPunishmentMessages;
 import com.eternalcode.core.feature.quitmessage.messages.ENQuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.ENRandomTeleportMessages;
 import com.eternalcode.core.feature.repair.messages.ENRepairMessages;
@@ -312,6 +313,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment("# End Screen")
     public ENEndScreenMessages endScreen = new ENEndScreenMessages();
+
+    @Comment("# Punishments")
+    public ENPunishmentMessages punishment = new ENPunishmentMessages();
 
     @Override
     public File getConfigFile(File dataFolder) {

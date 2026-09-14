@@ -5,6 +5,7 @@ import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
+import com.eternalcode.core.feature.punishment.messages.PunishmentMessages;
 import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 import com.eternalcode.core.feature.adminchat.messages.AdminChatMessages;
@@ -185,4 +186,6 @@ public interface Translation {
     DemoScreenMessages demoScreen();
 
     EndScreenMessages endScreen();
+
+    PunishmentMessages punishment();
 }

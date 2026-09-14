@@ -14,6 +14,7 @@ object Versions {
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.26.1"
     const val OKAERI_CONFIGS = "6.0.0-beta.27"
 
+    const val JOOQ = "3.19.3"
     const val MARIA_DB = "3.5.9"
     const val POSTGRESQL = "42.7.13"
     const val H2 = "2.4.240"
