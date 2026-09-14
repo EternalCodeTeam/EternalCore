@@ -97,7 +97,7 @@ class BanCommand {
         }
 
         Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
-        String expiresText = expiresAt == null ? "Permanentnie" : DurationUtil.format(duration, true);
+        String expiresText = expiresAt == null ? this.punishmentSettings.permanentLabel() : DurationUtil.format(duration, true);
 
         List<Component> kickMessage = this.templateRenderer.render(
             this.punishmentSettings.banKickScreen(),
