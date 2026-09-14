@@ -2,6 +2,7 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.feature.back.messages.BackMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
+import com.eternalcode.core.feature.notarget.messages.NoTargetMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
@@ -14,14 +15,11 @@ import com.eternalcode.core.feature.broadcast.messages.BroadcastMessages;
 import com.eternalcode.core.feature.burn.messages.BurnMessages;
 import com.eternalcode.core.feature.butcher.messages.ButcherMessages;
 import com.eternalcode.core.feature.chat.messages.ChatMessages;
-import com.eternalcode.core.feature.clear.messages.ClearMessages;
-import com.eternalcode.core.feature.container.messages.ContainerMessages;
 import com.eternalcode.core.feature.deathmessage.messages.DeathMessages;
 import com.eternalcode.core.feature.disposal.messages.DisposalMessages;
 import com.eternalcode.core.feature.enchant.messages.EnchantMessages;
 import com.eternalcode.core.feature.feed.messages.FeedMessages;
 import com.eternalcode.core.feature.fly.messages.FlyMessages;
-import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.fun.demoscreen.messages.DemoScreenMessages;
 import com.eternalcode.core.feature.fun.elderguardian.messages.ElderGuardianMessages;
 import com.eternalcode.core.feature.fun.endscreen.messages.EndScreenMessages;
@@ -41,11 +39,9 @@ import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.onlineplayers.messages.OnlineMessages;
 import com.eternalcode.core.feature.ping.PingMessages;
-import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.PowertoolMessages;
 import com.eternalcode.core.feature.quitmessage.messages.QuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
-import com.eternalcode.core.feature.repair.messages.RepairMessages;
 import com.eternalcode.core.feature.seen.messages.SeenMessages;
 import com.eternalcode.core.feature.setslot.messages.SetSlotMessages;
 import com.eternalcode.core.feature.signeditor.messages.SignEditorMessages;
@@ -61,7 +57,6 @@ import com.eternalcode.core.feature.time.messages.TimeAndWeatherMessages;
 import com.eternalcode.core.feature.vanish.messages.VanishMessages;
 import com.eternalcode.core.feature.warp.messages.WarpMessages;
 import com.eternalcode.core.feature.whois.WhoIsMessages;
-import com.eternalcode.core.litecommand.argument.messages.ArgumentMessages;
 
 public interface Translation {
 
@@ -117,6 +112,8 @@ public interface Translation {
     SpawnMessages spawn();
 
     NearMessages near();
+
+    NoTargetMessages noTarget();
 
     HealMessages heal();
 
