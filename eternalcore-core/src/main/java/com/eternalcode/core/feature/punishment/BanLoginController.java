@@ -65,6 +65,6 @@ class BanLoginController implements Listener {
 
         Component joined = Component.join(JoinConfiguration.newlines(), kickMessage);
 
-        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, AdventureUtil.SECTION_SERIALIZER.serialize(joined));
+        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, joined);
     }
 }
