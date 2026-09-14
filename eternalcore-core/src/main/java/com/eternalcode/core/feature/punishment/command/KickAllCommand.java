@@ -72,9 +72,6 @@ class KickAllCommand {
         PunishmentTarget operatorTarget = PunishmentTarget.of(operator);
         int kicked = this.kickEveryoneExceptBypassed(operator, operatorTarget, reason);
 
-        return this.punishmentRepository.save(punishment)
-            .thenCompose(none -> this.recordHistory(punishment, HistoryAction.KICK));
-
         this.noticeService.create()
             .notice(translation -> translation.punishment().kickAllBroadcast())
             .placeholder("{OPERATOR}", operator.getName())
@@ -101,7 +98,7 @@ class KickAllCommand {
                 )
             );
 
-            this.punishmentService.kick(PunishmentTarget.of(target), operatorTarget, reason, kickMessage);
+            this.punishmentService.kick(PunishmentTarget.of(target), operatorTarget, reason, kickMessage, true);
             kicked++;
         }
 
