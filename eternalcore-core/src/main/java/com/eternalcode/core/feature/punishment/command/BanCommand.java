@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.punishment.command;
 
+import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_BYPASS;
+
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
@@ -34,12 +36,10 @@ import java.util.Map;
 @Permission("eternalcore.ban")
 @PermissionDocs(
     name = "Ban Bypass",
-    permission = BanCommand.BAN_BYPASS,
+    permission = BAN_BYPASS,
     description = "Permission allows to bypass being banned"
 )
 class BanCommand {
-
-    static final String BAN_BYPASS = "eternalcore.ban.bypass";
 
     private final PunishmentService punishmentService;
     private final PunishmentSettings punishmentSettings;

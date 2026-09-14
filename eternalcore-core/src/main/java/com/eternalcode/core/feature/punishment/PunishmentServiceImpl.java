@@ -218,7 +218,6 @@ class PunishmentServiceImpl implements PunishmentService {
         this.scheduler.run(() -> {
             Player player = this.server.getPlayer(targetUuid);
 
-            // TODO: dopytać się czy wypierdalamy tego spigota
             if (player != null) {
                 player.kick(Component.join(JoinConfiguration.newlines(), message));
             }
