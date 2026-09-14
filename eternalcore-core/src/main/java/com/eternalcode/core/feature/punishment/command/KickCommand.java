@@ -96,7 +96,8 @@ class KickCommand {
             PunishmentTarget.of(target),
             PunishmentTarget.of(operator),
             reason,
-            kickMessage
+            kickMessage,
+            false
         );
 
         var broadcast = this.noticeService.create()

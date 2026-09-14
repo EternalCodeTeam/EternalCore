@@ -32,6 +32,7 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice kickInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice kickSuccessPrivate = Notice.chat("<red>► <white>You kicked player <red>{PLAYER}!");
     Notice kickNotOnline = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not online!");
+    Notice kickAllBroadcast = Notice.chat("<red>► <white>Server has been cleared by <red>{OPERATOR}<white>! Reason: <gray>{REASON} <white>(<red>{COUNT}<white> players)");
 
     @Comment({ " ", "# Mute section" })
     Notice muteBroadcast = Notice.chat("<red>► <white>Player <red>{PLAYER} <white>has been muted by <red>{OPERATOR} <white>for <red>{EXPIRES}<white>! Reason: <gray>{REASON}");

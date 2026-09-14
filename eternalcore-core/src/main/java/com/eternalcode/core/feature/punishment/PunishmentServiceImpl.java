@@ -73,7 +73,7 @@ class PunishmentServiceImpl implements PunishmentService {
     }
 
     @Override
-    public CompletableFuture<Void> kick(PunishmentTarget target, PunishmentTarget operator, String reason, List<Component> kickMessage) {
+    public CompletableFuture<Void> kick(PunishmentTarget target, PunishmentTarget operator, String reason, List<Component> kickMessage, boolean massKick) {
         this.requireNonEmpty(kickMessage);
 
         Punishment punishment = Punishment.builder()
@@ -86,8 +86,10 @@ class PunishmentServiceImpl implements PunishmentService {
 
         this.kickIfOnline(target.uuid(), kickMessage);
 
+        HistoryAction action = massKick ? HistoryAction.KICK_ALL : HistoryAction.KICK;
+
         return this.punishmentRepository.save(punishment)
-            .thenCompose(none -> this.recordHistory(punishment, HistoryAction.KICK));
+            .thenCompose(none -> this.recordHistory(punishment, action));
     }
 
     @Override
@@ -126,7 +128,7 @@ class PunishmentServiceImpl implements PunishmentService {
 
     @Override
     public boolean isBanned(UUID targetUuid) {
-       return this.getActiveBan(targetUuid).isPresent();
+        return this.getActiveBan(targetUuid).isPresent();
     }
 
     @Override

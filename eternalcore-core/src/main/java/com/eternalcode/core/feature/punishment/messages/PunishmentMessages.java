@@ -24,6 +24,7 @@ public interface PunishmentMessages {
     Notice kickInvalidReason();
     Notice kickSuccessPrivate();
     Notice kickNotOnline();
+    Notice kickAllBroadcast();
 
     // Mute
     Notice muteBroadcast();

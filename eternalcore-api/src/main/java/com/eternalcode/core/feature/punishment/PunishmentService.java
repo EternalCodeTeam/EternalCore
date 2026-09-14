@@ -13,7 +13,7 @@ public interface PunishmentService {
 
     CompletableFuture<Void> unban(PunishmentTarget target, PunishmentTarget operator);
 
-    CompletableFuture<Void> kick(PunishmentTarget target, PunishmentTarget operator, String reason, List<Component> kickMessage);
+    CompletableFuture<Void> kick(PunishmentTarget target, PunishmentTarget operator, String reason, List<Component> kickMessage, boolean massKick);
 
     CompletableFuture<Punishment> mute(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt);
 

@@ -55,6 +55,6 @@ public final class PunishmentHistoryEntry {
     }
 
     public enum HistoryAction {
-        BAN, UNBAN, KICK, MUTE, UNMUTE, WARN, EXPIRE
+        BAN, UNBAN, KICK, KICK_ALL, MUTE, UNMUTE, WARN, EXPIRE
     }
 }

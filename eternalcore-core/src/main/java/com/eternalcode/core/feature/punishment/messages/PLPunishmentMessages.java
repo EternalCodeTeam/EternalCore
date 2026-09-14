@@ -34,6 +34,9 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice kickInvalidReason = Notice.chat("<red>✘ <dark_red>Powód musi mieć od {MIN} do {MAX} znaków!");
     Notice kickSuccessPrivate = Notice.chat("<red>► <white>Wyrzuciłeś gracza <red>{PLAYER}!");
     Notice kickNotOnline = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest online!");
+    @Comment({ " ", "# {OPERATOR} - Administrator, {REASON} - Powód, {COUNT} - Liczba wyrzuconych graczy" })
+    Notice kickAllBroadcast = Notice.chat("<red>► <white>Serwer został wyczyszczony przez <red>{OPERATOR}<white>! "
+        + "Powód: <gray>{REASON} <white>(<red>{COUNT}<white> graczy)");
 
     @Comment({ " ", "# Sekcja odpowiedzialna za wyciszanie graczy" })
     Notice muteBroadcast = Notice.chat("<red>► <white>Gracz <red>{PLAYER} <white>został wyciszony przez <red>{OPERATOR} <white>na <red>{EXPIRES}<white>! Powód: <gray>{REASON}");
