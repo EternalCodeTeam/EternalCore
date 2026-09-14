@@ -50,7 +50,4 @@ class TeleportRequestService {
             .map(Map.Entry::getKey)
             .toList();
     }
-
-    private record Request(UUID target, Instant createdAt) {}
-
 }

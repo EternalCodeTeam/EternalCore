@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.teleportrequest.self;
 
+import com.eternalcode.core.feature.teleportrequest.Request;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -51,7 +52,5 @@ class TeleportHereRequestService {
             .map(Map.Entry::getKey)
             .toList();
     }
-
-    private record Request(UUID target, Instant createdAt) {}
 
 }
