@@ -1,7 +1,5 @@
 package com.eternalcode.core.feature.punishment;
 
-import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
-
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry.HistoryAction;
@@ -10,6 +8,7 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import org.bukkit.Server;
@@ -127,12 +126,22 @@ class PunishmentServiceImpl implements PunishmentService {
 
     @Override
     public boolean isBanned(UUID targetUuid) {
-        return this.isActiveAndNotExpired(this.activeBans, targetUuid);
+       return this.getActiveBan(targetUuid).isPresent();
     }
 
     @Override
     public boolean isMuted(UUID targetUuid) {
-        return this.isActiveAndNotExpired(this.activeMutes, targetUuid);
+        return this.getActiveMute(targetUuid).isPresent();
+    }
+
+    @Override
+    public Optional<Punishment> getActiveBan(UUID targetUuid) {
+        return this.getActiveFromCache(this.activeBans, targetUuid);
+    }
+
+    @Override
+    public Optional<Punishment> getActiveMute(UUID targetUuid) {
+        return this.getActiveFromCache(this.activeMutes, targetUuid);
     }
 
     @Override
@@ -140,19 +149,19 @@ class PunishmentServiceImpl implements PunishmentService {
         return this.punishmentRepository.findActive(targetUuid);
     }
 
-    private boolean isActiveAndNotExpired(Map<UUID, Punishment> cache, UUID targetUuid) {
+    private Optional<Punishment> getActiveFromCache(Map<UUID, Punishment> cache, UUID targetUuid) {
         Punishment punishment = cache.get(targetUuid);
 
         if (punishment == null) {
-            return false;
+            return Optional.empty();
         }
 
         if (this.isExpired(punishment)) {
             cache.remove(targetUuid);
-            return false;
+            return Optional.empty();
         }
 
-        return true;
+        return Optional.of(punishment);
     }
 
     private boolean isExpired(Punishment punishment) {
