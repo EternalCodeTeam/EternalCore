@@ -35,6 +35,15 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
         "<white>Wygasa: <gray>{EXPIRES}"
     );
 
+    @Comment({ " ", "# Screen shown to a player when they get banned. {OPERATOR}, {REASON}, {EXPIRES} available." })
+    public List<String> banIpKickScreen = List.of(
+        "<red><bold>Zostałeś zbanowany na IP!",
+        " ",
+        "<white>Powód: <gray>{REASON}",
+        "<white>Kto: <gray>{OPERATOR}",
+        "<white>Wygasa: <gray>{EXPIRES}"
+    );
+
     @Comment({ " ", "# Screen shown to a player when they get kicked. {OPERATOR}, {REASON} available." })
     public List<String> kickScreen = List.of(
         "<red><bold>Zostałeś wyrzucony z serwera!",

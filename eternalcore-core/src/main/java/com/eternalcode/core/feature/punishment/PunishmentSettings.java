@@ -17,5 +17,7 @@ public interface PunishmentSettings {
 
     List<String> banKickScreen();
 
+    List<String> banIpKickScreen();
+
     List<String> kickScreen();
 }

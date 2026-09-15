@@ -12,6 +12,10 @@ public interface PunishmentMessages {
     Notice banSuccessPrivate();
     Notice banAlreadyBanned();
 
+    // Banip
+    Notice banIpSuccessPrivate();
+    Notice banIpNoAddress();
+
     // Unban
     Notice unbanBroadcast();
     Notice unbanSuccessPrivate();
