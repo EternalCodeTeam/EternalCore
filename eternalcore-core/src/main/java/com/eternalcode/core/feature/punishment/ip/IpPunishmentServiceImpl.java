@@ -2,10 +2,13 @@ package com.eternalcode.core.feature.punishment.ip;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry.HistoryAction;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-
 import com.eternalcode.core.ip.IpCryptoService;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,16 +30,24 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
     private final Map<String, IpPunishment> activeByIpHash = new ConcurrentHashMap<>();
 
     private final IpPunishmentRepository ipPunishmentRepository;
+    private final PunishmentHistoryService punishmentHistoryService;
     private final IpCryptoService ipCryptoService;
     private final Server server;
     private final Scheduler scheduler;
 
     @Inject
-    IpPunishmentServiceImpl(IpPunishmentRepository ipPunishmentRepository, IpCryptoService ipCryptoService, Server server, Scheduler scheduler) {
-        this.ipPunishmentRepository = ipPunishmentRepository;
-        this.ipCryptoService = ipCryptoService;
-        this.server = server;
-        this.scheduler = scheduler;
+    IpPunishmentServiceImpl(
+        IpPunishmentRepository ipPunishmentRepository,
+        PunishmentHistoryService punishmentHistoryService,
+        IpCryptoService ipCryptoService,
+        Server server,
+        Scheduler scheduler
+    ) {
+        this.ipPunishmentRepository = Objects.requireNonNull(ipPunishmentRepository, "ipPunishmentRepository cannot be null");
+        this.punishmentHistoryService = Objects.requireNonNull(punishmentHistoryService, "punishmentHistoryService cannot be null");
+        this.ipCryptoService = Objects.requireNonNull(ipCryptoService, "ipCryptoService cannot be null");
+        this.server = Objects.requireNonNull(server, "server cannot be null");
+        this.scheduler = Objects.requireNonNull(scheduler, "scheduler cannot be null");
 
         this.loadActivePunishments();
     }
@@ -55,6 +67,7 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             .build();
 
         return this.ipPunishmentRepository.save(ipPunishment)
+            .thenCompose(none -> this.recordHistory(ipPunishment, HistoryAction.BAN_IP))
             .thenApply(none -> {
                 this.activeByIpHash.put(this.ipCryptoService.hash(ip), ipPunishment);
                 this.kickEveryoneOnIp(ip, kickMessage);
@@ -73,7 +86,18 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             return CompletableFuture.completedFuture(null);
         }
 
-        return this.ipPunishmentRepository.deactivate(cached.id());
+        PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
+            UUID.randomUUID(),
+            cached.id(),
+            cached.target(),
+            operator,
+            HistoryAction.UNBAN_IP,
+            "",
+            Instant.now()
+        );
+
+        return this.ipPunishmentRepository.deactivate(cached.id())
+            .thenCompose(none -> this.punishmentHistoryService.record(entry));
     }
 
     @Override
@@ -98,6 +122,20 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
         }
 
         return Optional.of(punishment);
+    }
+
+    private CompletableFuture<Void> recordHistory(IpPunishment punishment, HistoryAction action) {
+        PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
+            UUID.randomUUID(),
+            punishment.id(),
+            punishment.target(),
+            punishment.operator(),
+            action,
+            punishment.reason(),
+            punishment.createdAt()
+        );
+
+        return this.punishmentHistoryService.record(entry);
     }
 
     private boolean isExpired(IpPunishment punishment) {

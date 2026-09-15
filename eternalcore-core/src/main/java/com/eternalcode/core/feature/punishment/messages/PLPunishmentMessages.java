@@ -31,6 +31,11 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś gracza <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest zbanowany!");
 
+    @Comment({ " ", "# {IP} - Adres IP, {OPERATOR} - Administrator" })
+    Notice unbanIpBroadcast = Notice.chat("<green>► <white>Adres IP <green>{IP} <white>został odbanowany przez <green>{OPERATOR}!");
+    Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś adres IP <green>{IP}!");
+    Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>Adres IP {IP} nie jest zbanowany!");
+
     @Comment({ " ", "# Sekcja odpowiedzialna za wyrzucanie graczy" })
     Notice kickBroadcast = Notice.chat("<red>► <white>Gracz <red>{PLAYER} <white>został wyrzucony przez <red>{OPERATOR}<white>! Powód: <gray>{REASON}");
     Notice kickBroadcastSilent = Notice.chat("<dark_red>[CICHY KICK] <white>Gracz <red>{PLAYER} <white>został wyrzucony przez <red>{OPERATOR}<white>! Powód: <gray>{REASON}");
@@ -62,4 +67,8 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice warnCannotWarnAdmin = Notice.chat("<red>✘ <dark_red>Nie możesz ostrzec administratora <red>{PLAYER}!");
     Notice warnInvalidReason = Notice.chat("<red>✘ <dark_red>Powód musi mieć od {MIN} do {MAX} znaków!");
     Notice warnSuccessPrivate = Notice.chat("<yellow>► <white>Ostrzegłeś gracza <yellow>{PLAYER}!");
+
+    @Comment({ " ", "# {PLAYER} - Sprawdzany gracz, {ACCOUNTS} - Lista alt-kont oddzielona przecinkami" })
+    Notice altAccountsFound = Notice.chat("<yellow>► <white>Konta powiązane z <yellow>{PLAYER}<white>: <gray>{ACCOUNTS}");
+    Notice altAccountsNone = Notice.chat("<yellow>► <white>Nie znaleziono kont powiązanych z <yellow>{PLAYER}");
 }

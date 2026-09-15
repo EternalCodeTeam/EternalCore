@@ -29,6 +29,11 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>You unbanned player <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not banned!");
 
+    @Comment({ " ", "# Unipban section" })
+    Notice unbanIpBroadcast = Notice.chat("<green>► <white>IP address <green>{IP} <white>has been unbanned by <green>{OPERATOR}!");
+    Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>You unbanned IP address <green>{IP}!");
+    Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>IP address {IP} is not banned!");
+
     @Comment({ " ", "# Kick section" })
     Notice kickBroadcast = Notice.chat("<red>► <white>Player <red>{PLAYER} <white>has been kicked by <red>{OPERATOR}<white>! Reason: <gray>{REASON}");
     Notice kickBroadcastSilent = Notice.chat("<dark_red>[SILENT KICK] <white>Player <red>{PLAYER} <white>has been kicked by <red>{OPERATOR}<white>! Reason: <gray>{REASON}");
@@ -58,4 +63,7 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice warnCannotWarnAdmin = Notice.chat("<red>✘ <dark_red>You cannot warn administrator <red>{PLAYER}!");
     Notice warnInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice warnSuccessPrivate = Notice.chat("<yellow>► <white>You warned player <yellow>{PLAYER}!");
+
+    Notice altAccountsFound = Notice.chat("<yellow>► <white>Accounts linked to <yellow>{PLAYER}<white>: <gray>{ACCOUNTS}");
+    Notice altAccountsNone = Notice.chat("<yellow>► <white>No accounts linked to <yellow>{PLAYER}");
 }

@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.punishment;
 
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -17,6 +18,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Controller
+@PermissionDocs(
+    name = "Mute Bypass",
+    permission = PunishmentPermissions.MUTE_BYPASS,
+    description = "Permission allows to bypass being muted"
+)
 class MuteChatController implements Listener {
 
     private final PunishmentSettings punishmentSettings;

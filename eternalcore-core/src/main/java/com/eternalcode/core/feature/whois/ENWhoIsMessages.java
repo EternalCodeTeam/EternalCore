@@ -36,4 +36,17 @@ public class ENWhoIsMessages extends OkaeriConfig implements WhoIsMessages {
             "<color:#9d6eef>► <white>Target food level: <color:#9d6eef>{FOOD}",
             "<color:#9d6eef>► <white>Last seen: <green>{LAST-SEEN}",
             "<color:#9d6eef>► <white>Account created: <green>{ACCOUNT-CREATED}");
+
+    public List<String> infoWithIp = List.of(
+        "<color:#9d6eef>► <white>Target name: <color:#9d6eef>{PLAYER}",
+        "<color:#9d6eef>► <white>Target UUID: <color:#9d6eef>{UUID}",
+        "<color:#9d6eef>► <white>Target address: <hover:show_text:'<red>{IP}'><color:#9d6eef>[Check, too see]</color:#9d6eef></hover>",
+        "<color:#9d6eef>► <white>Target walk speed: <color:#9d6eef>{WALK-SPEED}",
+        "<color:#9d6eef>► <white>Target fly speed: <color:#9d6eef>{SPEED}",
+        "<color:#9d6eef>► <white>Target ping: <color:#9d6eef>{PING}<white>ms",
+        "<color:#9d6eef>► <white>Target level: <color:#9d6eef>{LEVEL}",
+        "<color:#9d6eef>► <white>Target health: <color:#9d6eef>{HEALTH}",
+        "<color:#9d6eef>► <white>Target food level: <color:#9d6eef>{FOOD}",
+        "<color:#9d6eef>► <white>Last seen: <green>{LAST-SEEN}",
+        "<color:#9d6eef>► <white>Account created: <green>{ACCOUNT-CREATED}");
 }

@@ -21,6 +21,11 @@ public interface PunishmentMessages {
     Notice unbanSuccessPrivate();
     Notice unbanNotBanned();
 
+    // Unbanip
+    Notice unbanIpBroadcast();
+    Notice unbanIpSuccessPrivate();
+    Notice unbanIpNotBanned();
+
     // Kick
     Notice kickBroadcast();
     Notice kickBroadcastSilent();
@@ -50,4 +55,7 @@ public interface PunishmentMessages {
     Notice warnCannotWarnAdmin();
     Notice warnInvalidReason();
     Notice warnSuccessPrivate();
+
+    Notice altAccountsFound();
+    Notice altAccountsNone();
 }

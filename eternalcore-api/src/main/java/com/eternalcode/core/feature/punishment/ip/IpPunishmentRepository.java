@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.punishment.ip;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,4 +15,6 @@ public interface IpPunishmentRepository {
     CompletableFuture<Optional<IpPunishment>> findActiveByIp(String ip);
 
     CompletableFuture<List<IpPunishment>> findAllActive();
+
+    CompletableFuture<List<IpPunishment>> findExpired(Instant now);
 }

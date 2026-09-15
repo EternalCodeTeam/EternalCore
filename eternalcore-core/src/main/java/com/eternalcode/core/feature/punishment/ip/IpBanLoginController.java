@@ -1,6 +1,5 @@
 package com.eternalcode.core.feature.punishment.ip;
 
-import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -72,6 +71,6 @@ class IpBanLoginController implements Listener {
 
         Component joined = Component.join(JoinConfiguration.newlines(), kickMessage);
 
-        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, AdventureUtil.SECTION_SERIALIZER.serialize(joined));
+        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, joined);
     }
 }

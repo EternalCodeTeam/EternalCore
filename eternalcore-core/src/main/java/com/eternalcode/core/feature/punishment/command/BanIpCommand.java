@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.command;
+package com.eternalcode.core.feature.punishment.ip.command;
 
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
 
