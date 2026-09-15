@@ -43,11 +43,11 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
         Server server,
         Scheduler scheduler
     ) {
-        this.ipPunishmentRepository = Objects.requireNonNull(ipPunishmentRepository, "ipPunishmentRepository cannot be null");
-        this.punishmentHistoryService = Objects.requireNonNull(punishmentHistoryService, "punishmentHistoryService cannot be null");
-        this.ipCryptoService = Objects.requireNonNull(ipCryptoService, "ipCryptoService cannot be null");
-        this.server = Objects.requireNonNull(server, "server cannot be null");
-        this.scheduler = Objects.requireNonNull(scheduler, "scheduler cannot be null");
+        this.ipPunishmentRepository = ipPunishmentRepository;
+        this.punishmentHistoryService = punishmentHistoryService;
+        this.ipCryptoService = ipCryptoService;
+        this.server = server;
+        this.scheduler = scheduler;
 
         this.loadActivePunishments();
     }
