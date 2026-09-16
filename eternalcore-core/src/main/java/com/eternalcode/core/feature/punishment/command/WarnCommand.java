@@ -69,8 +69,9 @@ class WarnCommand {
                 .send();
             return;
         }
+        boolean isConsole = !(operator instanceof Player);
 
-        if (target instanceof Player targetPlayer && targetPlayer.hasPermission(WARN_BYPASS)) {
+        if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(WARN_BYPASS)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().warnCannotWarnAdmin())
                 .placeholder("{PLAYER}", target.getName())

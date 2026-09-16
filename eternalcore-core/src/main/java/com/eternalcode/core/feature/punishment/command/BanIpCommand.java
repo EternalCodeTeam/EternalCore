@@ -29,6 +29,7 @@ import net.kyori.adventure.text.Component;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -95,8 +96,9 @@ class BanIpCommand {
                 .send();
             return;
         }
+        boolean isConsole = !(operator instanceof Player);
 
-        if (target instanceof Player targetPlayer && targetPlayer.hasPermission(BAN_IP_BYPASS)) {
+        if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(BAN_IP_BYPASS)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banCannotBanAdmin())
                 .placeholder("{PLAYER}", target.getName())

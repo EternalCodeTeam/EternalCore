@@ -87,8 +87,9 @@ class MuteCommand {
                 .send();
             return;
         }
+        boolean isConsole = !(operator instanceof Player);
 
-        if (target instanceof Player targetPlayer && targetPlayer.hasPermission(MUTE_BYPASS)) {
+        if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(MUTE_BYPASS)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().muteCannotMuteAdmin())
                 .placeholder("{PLAYER}", target.getName())
