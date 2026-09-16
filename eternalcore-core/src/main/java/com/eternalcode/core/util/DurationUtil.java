@@ -48,4 +48,8 @@ public final class DurationUtil {
     private static String reformat(String input) {
         return REFORMAT_PATTERN.matcher(input).replaceAll(REFORMAT_REPLACEMENT).trim();
     }
+
+    public static Duration parse(String input) {
+        return DURATION_STANDARD.parse(input);
+    }
 }

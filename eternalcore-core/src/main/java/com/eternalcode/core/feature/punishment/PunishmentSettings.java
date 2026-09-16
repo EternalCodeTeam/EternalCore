@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.punishment;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 
 public interface PunishmentSettings {
 
@@ -20,6 +21,10 @@ public interface PunishmentSettings {
     int maxReasonLength();
 
     String permanentLabel();
+
+    int historyPageSize();
+
+    Map<Integer, String> warnEscalations();
 
     List<String> banKickScreen();
 

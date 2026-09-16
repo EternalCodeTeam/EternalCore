@@ -19,6 +19,7 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice banInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice banSuccessPrivate = Notice.chat("<red>► <white>You banned player <red>{PLAYER}!");
     Notice banAlreadyBanned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is already banned!");
+    Notice banPlayerTriesJoin = Notice.chat("<bold><red>Player {PLAYER} is trying to join the server but is banned!!");
 
     @Comment({ " ", "# Banip section" })
     Notice banIpSuccessPrivate = Notice.chat("<red>► <white>You banned player <red>{PLAYER} <white>and their IP address!");
@@ -29,7 +30,7 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>You unbanned player <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not banned!");
 
-    @Comment({ " ", "# Unipban section" })
+    @Comment({ " ", "# Unbanip section" })
     Notice unbanIpBroadcast = Notice.chat("<green>► <white>IP address <green>{IP} <white>has been unbanned by <green>{OPERATOR}!");
     Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>You unbanned IP address <green>{IP}!");
     Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>IP address {IP} is not banned!");
@@ -51,7 +52,6 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice muteSuccessPrivate = Notice.chat("<red>► <white>You muted player <red>{PLAYER}!");
     Notice muteAlreadyMuted = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is already muted!");
     Notice muteBlockedChat = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
-    Notice banPlayerTriesJoin = Notice.chat("<bold><red>Player {PLAYER} is trying to join the server but is banned!!");
 
     @Comment({ " ", "# Unmute section" })
     Notice unmuteBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been unmuted by <green>{OPERATOR}!");
@@ -64,7 +64,14 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice warnCannotWarnAdmin = Notice.chat("<red>✘ <dark_red>You cannot warn administrator <red>{PLAYER}!");
     Notice warnInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice warnSuccessPrivate = Notice.chat("<yellow>► <white>You warned player <yellow>{PLAYER}!");
+    Notice warnEscalationBroadcast = Notice.chat("<gold>► <white>Player <yellow>{PLAYER} <white>received an automatic punishment (<yellow>{ACTION}<white>, {EXPIRES}) for reaching <yellow>{COUNT} <white>warns!");
 
     Notice altAccountsFound = Notice.chat("<yellow>► <white>Accounts linked to <yellow>{PLAYER}<white>: <gray>{ACCOUNTS}");
     Notice altAccountsNone = Notice.chat("<yellow>► <white>No accounts linked to <yellow>{PLAYER}");
+
+    @Comment({ " ", "# History section" })
+    Notice historyHeaderRecent = Notice.chat("<gray>► <white>Recent server punishments <gray>(page {PAGE}):");
+    Notice historyHeaderPlayer = Notice.chat("<gray>► <white>Punishment history for <yellow>{PLAYER} <gray>(page {PAGE}):");
+    Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>by <white>{OPERATOR} <gray>- <white>{REASON}");
+    Notice historyEmpty = Notice.chat("<gray>No entries found in the history.");
 }

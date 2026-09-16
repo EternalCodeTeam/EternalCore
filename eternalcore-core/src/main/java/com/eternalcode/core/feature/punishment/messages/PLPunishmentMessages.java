@@ -25,7 +25,7 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
 
     @Comment({ " ", "# Sekcja odpowiedzialna za banowanie ip graczy" })
     Notice banIpSuccessPrivate = Notice.chat("<red>► <white>Zbanowałeś gracza <red>{PLAYER} <white>oraz jego adres IP!");
-    Notice banIpNoAddress = Notice.chat("<red>✘ <dark_red>Nie udało się ustalić adresu IP gracza {PLAYER}!");
+    Notice banIpNoAddress = Notice.chat("<red>✘ <dark_red>Nie udało się ustalić adresu IP gracza {PLAYER}! (może nigdy nie dołączył?)");
 
     @Comment({ " ", "# Sekcja odpowiedzialna za odbanowywanie graczy" })
     Notice unbanBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został odbanowany przez <green>{OPERATOR}!");
@@ -68,8 +68,19 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice warnCannotWarnAdmin = Notice.chat("<red>✘ <dark_red>Nie możesz ostrzec administratora <red>{PLAYER}!");
     Notice warnInvalidReason = Notice.chat("<red>✘ <dark_red>Powód musi mieć od {MIN} do {MAX} znaków!");
     Notice warnSuccessPrivate = Notice.chat("<yellow>► <white>Ostrzegłeś gracza <yellow>{PLAYER}!");
+    @Comment({ " ", "# {PLAYER} - Ukarany, {ACTION} - Rodzaj kary, {EXPIRES} - Czas wygaśnięcia, {COUNT} - Liczba ostrzeżeń" })
+    Notice warnEscalationBroadcast = Notice.chat("<gold>► <white>Gracz <yellow>{PLAYER} <white>otrzymał automatyczną karę (<yellow>{ACTION}<white>, {EXPIRES}) za osiągnięcie <yellow>{COUNT} <white>ostrzeżeń!");
 
     @Comment({ " ", "# {PLAYER} - Sprawdzany gracz, {ACCOUNTS} - Lista alt-kont oddzielona przecinkami" })
     Notice altAccountsFound = Notice.chat("<yellow>► <white>Konta powiązane z <yellow>{PLAYER}<white>: <gray>{ACCOUNTS}");
     Notice altAccountsNone = Notice.chat("<yellow>► <white>Nie znaleziono kont powiązanych z <yellow>{PLAYER}");
+
+    @Comment({ " ", "# Sekcja odpowiedzialna za historię kar" })
+    @Comment({ " ", "# {PAGE} - Numer strony" })
+    Notice historyHeaderRecent = Notice.chat("<gray>► <white>Ostatnie kary na serwerze <gray>(strona {PAGE}):");
+    @Comment({ " ", "# {PLAYER} - Sprawdzany gracz, {PAGE} - Numer strony" })
+    Notice historyHeaderPlayer = Notice.chat("<gray>► <white>Historia kar gracza <yellow>{PLAYER} <gray>(strona {PAGE}):");
+    @Comment({ " ", "# {DATE} - Data, {ACTION} - Typ kary, {PLAYER} - Ukarany, {OPERATOR} - Administrator, {REASON} - Powód" })
+    Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>przez <white>{OPERATOR} <gray>- <white>{REASON}");
+    Notice historyEmpty = Notice.chat("<gray>Brak wpisów w historii.");
 }

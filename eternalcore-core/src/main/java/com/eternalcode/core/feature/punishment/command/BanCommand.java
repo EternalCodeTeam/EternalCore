@@ -24,6 +24,7 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import net.kyori.adventure.text.Component;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -64,17 +65,17 @@ class BanCommand {
 
     @Execute
     @DescriptionDocs(description = "Ban a player permanently", arguments = "<player> <reason>")
-    void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg Player target, @Join String reason) {
+    void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String reason) {
         this.ban(operator, target, null, reason, silent);
     }
 
     @Execute
     @DescriptionDocs(description = "Ban a player for a specified duration", arguments = "<player> <time> <reason>")
-    void executeBanFor(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg Player target, @Arg Duration duration, @Join String reason) {
+    void executeBanFor(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Arg Duration duration, @Join String reason) {
         this.ban(operator, target, duration, reason, silent);
     }
 
-    private void ban(CommandSender operator, Player target, Duration duration, String reason, boolean silent) {
+    private void ban(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent) {
         if (!this.reasonValidator.isValid(reason)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banInvalidReason())
@@ -85,9 +86,16 @@ class BanCommand {
             return;
         }
 
-        boolean isConsole = !(operator instanceof Player);
-        
-        if (!isConsole && target.hasPermission(BAN_BYPASS)) {
+        if (this.punishmentService.isBanned(target.getUniqueId())) {
+            this.noticeService.create()
+                .notice(translation -> translation.punishment().banAlreadyBanned())
+                .placeholder("{PLAYER}", target.getName())
+                .sender(operator)
+                .send();
+            return;
+        }
+
+        if (target instanceof Player targetPlayer && targetPlayer.hasPermission(BAN_BYPASS)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banCannotBanAdmin())
                 .placeholder("{PLAYER}", target.getName())

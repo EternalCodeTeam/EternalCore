@@ -19,5 +19,6 @@ public class PunishmentPermissions {
     public static final String KICKALL_BYPASS = "eternalcore.kickall.bypass";
 
     public static final String MUTE_BYPASS = "eternalcore.mute.bypass";
+    public static final String WARN_BYPASS = "eternalcore.warn.bypass";
 
 }

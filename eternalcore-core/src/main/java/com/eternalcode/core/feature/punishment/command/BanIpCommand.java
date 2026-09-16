@@ -12,6 +12,7 @@ import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.feature.punishment.ip.IpPunishmentService;
 import com.eternalcode.core.injector.annotations.Inject;
+import com.eternalcode.core.ip.PlayerIpService;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 
@@ -25,14 +26,16 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import net.kyori.adventure.text.Component;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Command(name = "banip")
 @Permission("eternalcore.banip")
@@ -45,6 +48,7 @@ class BanIpCommand {
 
     private final PunishmentService punishmentService;
     private final IpPunishmentService ipPunishmentService;
+    private final PlayerIpService playerIpService;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
     private final PunishmentReasonValidator reasonValidator;
@@ -54,6 +58,7 @@ class BanIpCommand {
     BanIpCommand(
         PunishmentService punishmentService,
         IpPunishmentService ipPunishmentService,
+        PlayerIpService playerIpService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentReasonValidator reasonValidator,
@@ -61,6 +66,7 @@ class BanIpCommand {
     ) {
         this.punishmentService = punishmentService;
         this.ipPunishmentService = ipPunishmentService;
+        this.playerIpService = playerIpService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.reasonValidator = reasonValidator;
@@ -69,17 +75,17 @@ class BanIpCommand {
 
     @Execute
     @DescriptionDocs(description = "Ban a player and their IP address permanently", arguments = "<player> <reason>")
-    void executeBanIp(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg Player target, @Join String reason) {
+    void executeBanIp(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String reason) {
         this.banIp(operator, target, null, reason, silent);
     }
 
     @Execute
     @DescriptionDocs(description = "Ban a player and their IP address for a specified duration", arguments = "<player> <time> <reason>")
-    void executeBanIpFor(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg Player target, @Arg Duration duration, @Join String reason) {
+    void executeBanIpFor(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Arg Duration duration, @Join String reason) {
         this.banIp(operator, target, duration, reason, silent);
     }
 
-    private void banIp(CommandSender operator, Player target, Duration duration, String reason, boolean silent) {
+    private void banIp(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent) {
         if (!this.reasonValidator.isValid(reason)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banInvalidReason())
@@ -90,9 +96,7 @@ class BanIpCommand {
             return;
         }
 
-        boolean isConsole = !(operator instanceof Player);
-
-        if (!isConsole && target.hasPermission(BAN_IP_BYPASS)) {
+        if (target instanceof Player targetPlayer && targetPlayer.hasPermission(BAN_IP_BYPASS)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banCannotBanAdmin())
                 .placeholder("{PLAYER}", target.getName())
@@ -101,18 +105,29 @@ class BanIpCommand {
             return;
         }
 
-        InetSocketAddress socketAddress = target.getAddress();
+        this.resolveIp(target).thenAccept(ipOptional -> {
+            if (ipOptional.isEmpty()) {
+                this.noticeService.create()
+                    .notice(translation -> translation.punishment().banIpNoAddress())
+                    .placeholder("{PLAYER}", target.getName())
+                    .sender(operator)
+                    .send();
+                return;
+            }
 
-        if (socketAddress == null || socketAddress.getAddress() == null) {
-            this.noticeService.create()
-                .notice(translation -> translation.punishment().banIpNoAddress())
-                .placeholder("{PLAYER}", target.getName())
-                .sender(operator)
-                .send();
-            return;
+            this.finishBanIp(operator, target, duration, reason, silent, ipOptional.get());
+        });
+    }
+
+    private CompletableFuture<Optional<String>> resolveIp(OfflinePlayer target) {
+        if (target instanceof Player onlinePlayer && onlinePlayer.getAddress() != null && onlinePlayer.getAddress().getAddress() != null) {
+            return CompletableFuture.completedFuture(Optional.of(onlinePlayer.getAddress().getAddress().getHostAddress()));
         }
 
-        String ip = socketAddress.getAddress().getHostAddress();
+        return this.playerIpService.findLastKnownIp(target.getUniqueId());
+    }
+
+    private void finishBanIp(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent, String ip) {
         Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
         String expiresText = expiresAt == null ? this.punishmentSettings.permanentLabel() : DurationUtil.format(duration, true);
 

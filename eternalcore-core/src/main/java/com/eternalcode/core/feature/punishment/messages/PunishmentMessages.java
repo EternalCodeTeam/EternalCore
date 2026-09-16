@@ -56,7 +56,14 @@ public interface PunishmentMessages {
     Notice warnCannotWarnAdmin();
     Notice warnInvalidReason();
     Notice warnSuccessPrivate();
+    Notice warnEscalationBroadcast();
 
     Notice altAccountsFound();
     Notice altAccountsNone();
+
+    // History
+    Notice historyHeaderRecent();
+    Notice historyHeaderPlayer();
+    Notice historyEntry();
+    Notice historyEmpty();
 }

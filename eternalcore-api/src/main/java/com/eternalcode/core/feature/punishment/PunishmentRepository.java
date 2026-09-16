@@ -19,4 +19,6 @@ public interface PunishmentRepository {
     CompletableFuture<List<Punishment>> findExpired(Instant now);
 
     CompletableFuture<List<Punishment>> findAllActive(PunishmentType type);
+
+    CompletableFuture<Integer> countByTargetAndType(UUID targetUuid, PunishmentType type);
 }

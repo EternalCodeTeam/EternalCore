@@ -4,8 +4,12 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry.HistoryAction;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
+import com.eternalcode.core.feature.punishment.warn.WarnEscalation;
+import com.eternalcode.core.feature.punishment.warn.WarnEscalationParser;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.DurationUtil;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -29,6 +33,9 @@ class PunishmentServiceImpl implements PunishmentService {
 
     private final PunishmentRepository punishmentRepository;
     private final PunishmentHistoryService punishmentHistoryService;
+    private final PunishmentSettings punishmentSettings;
+    private final TemplateMessageRenderer templateRenderer;
+    private final NoticeService noticeService;
     private final Server server;
     private final Scheduler scheduler;
 
@@ -36,11 +43,17 @@ class PunishmentServiceImpl implements PunishmentService {
     PunishmentServiceImpl(
         PunishmentRepository punishmentRepository,
         PunishmentHistoryService punishmentHistoryService,
+        PunishmentSettings punishmentSettings,
+        TemplateMessageRenderer templateRenderer,
+        NoticeService noticeService,
         Server server,
         Scheduler scheduler
     ) {
         this.punishmentRepository = punishmentRepository;
         this.punishmentHistoryService = punishmentHistoryService;
+        this.punishmentSettings = punishmentSettings;
+        this.templateRenderer = templateRenderer;
+        this.noticeService = noticeService;
         this.server = server;
         this.scheduler = scheduler;
 
@@ -123,7 +136,62 @@ class PunishmentServiceImpl implements PunishmentService {
 
         return this.punishmentRepository.save(punishment)
             .thenCompose(none -> this.recordHistory(punishment, HistoryAction.WARN))
-            .thenApply(none -> punishment);
+            .thenCompose(none -> this.punishmentRepository.countByTargetAndType(target.uuid(), PunishmentType.WARN))
+            .thenApply(warnCount -> {
+                this.applyEscalationIfConfigured(target, operator, warnCount);
+                return punishment;
+            });
+    }
+
+    private void applyEscalationIfConfigured(PunishmentTarget target, PunishmentTarget operator, int warnCount) {
+        String raw = this.punishmentSettings.warnEscalations().get(warnCount);
+
+        if (raw == null) {
+            return;
+        }
+
+        WarnEscalation escalation = WarnEscalationParser.parse(raw);
+        String autoReason = "Automatic punishment - reached " + warnCount + " warns";
+        Instant expiresAt = escalation.duration().map(duration -> Instant.now().plus(duration)).orElse(null);
+        String expiresText = expiresAt == null ? this.punishmentSettings.permanentLabel() : DurationUtil.format(escalation.duration().orElseThrow(), true);
+
+        switch (escalation.action()) {
+            case KICK -> this.kick(target, operator, autoReason, this.renderKickScreen(target, operator, autoReason), false);
+            case MUTE -> this.mute(target, operator, autoReason, expiresAt);
+            case BAN -> this.ban(target, operator, autoReason, expiresAt, this.renderBanScreen(target, operator, autoReason, expiresText));
+        }
+
+        this.noticeService.create()
+            .notice(translation -> translation.punishment().warnEscalationBroadcast())
+            .placeholder("{PLAYER}", target.name())
+            .placeholder("{ACTION}", escalation.action().name())
+            .placeholder("{EXPIRES}", expiresText)
+            .placeholder("{COUNT}", String.valueOf(warnCount))
+            .all()
+            .send();
+    }
+
+    private List<Component> renderKickScreen(PunishmentTarget target, PunishmentTarget operator, String reason) {
+        return this.templateRenderer.render(
+            this.punishmentSettings.kickScreen(),
+            Map.of(
+                "{PLAYER}", target.name(),
+                "{OPERATOR}", operator.name(),
+                "{REASON}", reason
+            )
+        );
+    }
+
+    private List<Component> renderBanScreen(PunishmentTarget target, PunishmentTarget operator, String reason, String expiresText) {
+        return this.templateRenderer.render(
+            this.punishmentSettings.banKickScreen(),
+            Map.of(
+                "{PLAYER}", target.name(),
+                "{OPERATOR}", operator.name(),
+                "{REASON}", reason,
+                "{EXPIRES}", expiresText
+            )
+        );
     }
 
     @Override
