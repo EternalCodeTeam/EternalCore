@@ -52,12 +52,12 @@ class BanLoginController implements Listener {
         NoticeService noticeService,
         Server server
     ) {
-        this.punishmentService = Objects.requireNonNull(punishmentService, "punishmentService cannot be null");
-        this.ipPunishmentService = Objects.requireNonNull(ipPunishmentService, "ipPunishmentService cannot be null");
-        this.punishmentSettings = Objects.requireNonNull(punishmentSettings, "punishmentSettings cannot be null");
-        this.templateRenderer = Objects.requireNonNull(templateRenderer, "templateRenderer cannot be null");
-        this.noticeService = Objects.requireNonNull(noticeService, "noticeService cannot be null");
-        this.server = Objects.requireNonNull(server, "server cannot be null");
+        this.punishmentService = punishmentService;
+        this.ipPunishmentService = ipPunishmentService;
+        this.punishmentSettings = punishmentSettings;
+        this.templateRenderer = templateRenderer;
+        this.noticeService = noticeService;
+        this.server = server;
     }
 
     @EventHandler
