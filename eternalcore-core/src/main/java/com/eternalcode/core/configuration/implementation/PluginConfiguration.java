@@ -3,8 +3,12 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseSettings;
+import com.eternalcode.core.feature.punishment.PunishmentConfig;
+import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.teleport.settings.TeleportConfig;
 import com.eternalcode.core.feature.teleport.settings.TeleportSettings;
+import com.eternalcode.core.ip.PlayerIpConfig;
+import com.eternalcode.core.ip.PlayerIpSettings;
 import com.eternalcode.core.util.date.DateConfig;
 import com.eternalcode.core.util.date.DateSettings;
 import com.eternalcode.core.feature.afk.AfkConfig;
@@ -150,6 +154,14 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Chat Configuration")
     @Comment("# Settings for chat management and formatting")
     ChatConfig chat = new ChatConfig();
+
+    @Bean(proxied = PunishmentSettings.class)
+    @Comment("")
+    PunishmentConfig punishment = new PunishmentConfig();
+
+    @Bean(proxied = PlayerIpSettings.class)
+    @Comment("")
+    PlayerIpConfig ip = new PlayerIpConfig();
 
     @Bean(proxied = BroadcastSettings.class)
     @Comment("")
