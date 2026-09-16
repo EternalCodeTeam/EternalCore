@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.notarget;
+package com.eternalcode.core.feature.mobignore;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -11,16 +11,16 @@ import java.util.UUID;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@Command(name = "notarget")
-@Permission("eternalcore.notarget")
-public class NoTargetCommand {
+@Command(name = "mobignore", aliases = { "notarget", "nomobtarget" })
+@Permission("eternalcore.mobignore")
+public class MobIgnoreCommand {
 
-    private final MobTargetService mobTargetService;
+    private final MobIgnoreService mobIgnoreService;
     private final NoticeService noticeService;
 
     @Inject
-    public NoTargetCommand(MobTargetService mobTargetService, NoticeService noticeService) {
-        this.mobTargetService = mobTargetService;
+    public MobIgnoreCommand(MobIgnoreService mobIgnoreService, NoticeService noticeService) {
+        this.mobIgnoreService = mobIgnoreService;
         this.noticeService = noticeService;
     }
 
@@ -28,7 +28,7 @@ public class NoTargetCommand {
     void execute(@Sender Player player) {
         UUID uniqueId = player.getUniqueId();
 
-        if (this.mobTargetService.doMobsIgnore(uniqueId)) {
+        if (this.mobIgnoreService.isIgnored(uniqueId)) {
             this.turnOff(uniqueId);
             return;
         }
@@ -40,9 +40,9 @@ public class NoTargetCommand {
     void execute(@Sender CommandSender sender, @Arg Player target) {
         UUID uniqueId = target.getUniqueId();
 
-        if (this.mobTargetService.doMobsIgnore(uniqueId)) {
+        if (this.mobIgnoreService.isIgnored(uniqueId)) {
             this.noticeService.create()
-                .notice(translation -> translation.noTarget().turnedOn())
+                .notice(translation -> translation.noTarget().mobIgnoreTarget())
                 .placeholder("{PLAYER}", target.getName())
                 .sender(sender)
                 .send();
@@ -51,7 +51,7 @@ public class NoTargetCommand {
             return;
         }
         this.noticeService.create()
-            .notice(translation -> translation.noTarget().turnedOff())
+            .notice(translation -> translation.noTarget().noMobIgnoreTarget())
             .placeholder("{PLAYER}", target.getName())
             .sender(sender)
             .send();
@@ -60,19 +60,19 @@ public class NoTargetCommand {
     }
 
     private void turnOn(Player player) {
-        this.mobTargetService.removeTracking(player);
+        this.mobIgnoreService.removeTracking(player);
 
         this.noticeService.create()
-            .notice(translation -> translation.noTarget().enabled())
+            .notice(translation -> translation.noTarget().mobIgnore())
             .player(player.getUniqueId())
             .send();
     }
 
     private void turnOff(UUID uniqueId) {
-        this.mobTargetService.startTracking(uniqueId);
+        this.mobIgnoreService.startTracking(uniqueId);
 
         this.noticeService.create()
-            .notice(translation -> translation.noTarget().disabled())
+            .notice(translation -> translation.noTarget().noMobIgnore())
             .player(uniqueId)
             .send();
     }

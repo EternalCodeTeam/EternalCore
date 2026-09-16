@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.notarget;
+package com.eternalcode.core.feature.mobignore;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -10,18 +10,18 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 @Controller
 public class MobTargetListener implements Listener {
 
-    private final MobTargetService mobTargetService;
+    private final MobIgnoreService mobIgnoreService;
 
     @Inject
-    public MobTargetListener(MobTargetService mobTargetService) {
-        this.mobTargetService = mobTargetService;
+    public MobTargetListener(MobIgnoreService mobIgnoreService) {
+        this.mobIgnoreService = mobIgnoreService;
     }
 
     @EventHandler
     public void onMobTarget(EntityTargetLivingEntityEvent event) {
-        if (event.getTarget() instanceof Player player && this.mobTargetService.doMobsIgnore(player.getUniqueId())) {
-                event.setCancelled(true);
-            }
+        if (event.getTarget() instanceof Player player && this.mobIgnoreService.isIgnored(player.getUniqueId())) {
+            event.setCancelled(true);
+        }
 
     }
 }

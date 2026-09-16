@@ -33,7 +33,7 @@ import com.eternalcode.core.feature.kill.messages.ENKillMessages;
 import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.near.messages.ENNearMessages;
-import com.eternalcode.core.feature.notarget.messages.ENNoTargetMessages;
+import com.eternalcode.core.feature.mobignore.messages.ENMobIgnoreMessages;
 import com.eternalcode.core.feature.onlineplayers.messages.ENOnlineMessages;
 import com.eternalcode.core.feature.ping.ENPingMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
@@ -213,7 +213,7 @@ public class ENTranslation extends AbstractTranslation {
     public ENNearMessages near = new ENNearMessages();
 
     @Comment("# No Target")
-    public ENNoTargetMessages noTarget = new ENNoTargetMessages();
+    public ENMobIgnoreMessages noTarget = new ENMobIgnoreMessages();
 
     @Comment("# Heal")
     public ENHealMessages heal = new ENHealMessages();

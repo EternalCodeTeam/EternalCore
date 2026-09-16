@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.notarget;
+package com.eternalcode.core.feature.mobignore;
 
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.HashSet;
@@ -8,25 +8,25 @@ import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 
 @Service
-public class MobTargetServiceImpl implements MobTargetService {
+public class MobIgnoreServiceImpl implements MobIgnoreService {
 
-    private final HashSet<UUID> mobTargetMap = new HashSet<>();
+    private final HashSet<UUID> ignoredPlayers = new HashSet<>();
 
     @Override
     public void removeTracking(Player player) {
-        this.mobTargetMap.add(player.getUniqueId());
+        this.ignoredPlayers.add(player.getUniqueId());
 
         this.enableNoTarget(player);
     }
 
     @Override
-    public boolean doMobsIgnore(UUID uniqueId) {
-        return this.mobTargetMap.contains(uniqueId);
+    public boolean isIgnored(UUID uniqueId) {
+        return this.ignoredPlayers.contains(uniqueId);
     }
 
     @Override
     public void startTracking(UUID uniqueId) {
-        this.mobTargetMap.remove(uniqueId);
+        this.ignoredPlayers.remove(uniqueId);
     }
 
     private void enableNoTarget(Player player) {
