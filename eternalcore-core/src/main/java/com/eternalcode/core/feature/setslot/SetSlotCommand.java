@@ -33,7 +33,7 @@ public class SetSlotCommand {
     public void execute(@Sender Viewer viewer, @Arg int slots) {
         if (slots <= 0) {
             this.noticeService.create()
-                .notice(notice -> notice.argument().numberBiggerThanOrEqualZero())
+                .notice(notice -> notice.argument().numberBiggerThanZero())
                 .viewer(viewer)
                 .send();
             return;
