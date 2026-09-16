@@ -24,6 +24,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Command(name = "warn")
 @Permission("eternalcore.warn")
 @PermissionDocs(
@@ -37,18 +40,21 @@ class WarnCommand {
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
     private final PunishmentReasonValidator reasonValidator;
+    private final Logger logger;
 
     @Inject
     WarnCommand(
         PunishmentService punishmentService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
-        PunishmentReasonValidator reasonValidator
+        PunishmentReasonValidator reasonValidator,
+        Logger logger
     ) {
         this.punishmentService = punishmentService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.reasonValidator = reasonValidator;
+        this.logger = logger;
     }
 
     @Execute
@@ -74,11 +80,15 @@ class WarnCommand {
         }
 
         this.punishmentService.warn(
-            PunishmentTarget.of(target),
-            PunishmentTarget.of(operator),
-            reason
-        );
+                PunishmentTarget.of(target),
+                PunishmentTarget.of(operator),
+                reason
+            )
+            .thenAccept(punishment -> this.onSuccess(operator, target, reason, silent))
+            .exceptionally(throwable -> this.onFailure(operator, "warn", throwable));
+    }
 
+    private void onSuccess(CommandSender operator, OfflinePlayer target, String reason, boolean silent) {
         var broadcast = this.noticeService.create()
             .notice(translation -> silent
                 ? translation.punishment().warnBroadcastSilent()
@@ -105,5 +115,16 @@ class WarnCommand {
             .placeholder("{PLAYER}", target.getName())
             .sender(operator)
             .send();
+    }
+
+    private Void onFailure(CommandSender operator, String operation, Throwable throwable) {
+        this.logger.log(Level.SEVERE, "Failed to execute punishment action (" + operation + ")", throwable);
+
+        this.noticeService.create()
+            .notice(translation -> translation.punishment().punishmentActionError())
+            .sender(operator)
+            .send();
+
+        return null;
     }
 }

@@ -15,6 +15,8 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Command(name = "altaccounts", aliases = { "alts" })
@@ -23,36 +25,49 @@ class AltAccountsCommand {
 
     private final PlayerIpService playerIpService;
     private final NoticeService noticeService;
+    private final Logger logger;
 
     @Inject
-    AltAccountsCommand(PlayerIpService playerIpService, NoticeService noticeService) {
+    AltAccountsCommand(PlayerIpService playerIpService, NoticeService noticeService, Logger logger) {
         this.playerIpService = playerIpService;
         this.noticeService = noticeService;
+        this.logger = logger;
     }
 
     @Execute
     @DescriptionDocs(description = "Show accounts that share an IP address with the given player", arguments = "<player>")
     void execute(@Sender CommandSender operator, @Arg OfflinePlayer target) {
-        this.playerIpService.findAltAccounts(target.getUniqueId()).thenAccept(alts -> {
-            if (alts.isEmpty()) {
+        this.playerIpService.findAltAccounts(target.getUniqueId())
+            .thenAccept(alts -> {
+                if (alts.isEmpty()) {
+                    this.noticeService.create()
+                        .notice(translation -> translation.punishment().altAccountsNone())
+                        .placeholder("{PLAYER}", target.getName())
+                        .sender(operator)
+                        .send();
+                    return;
+                }
+
+                String accounts = alts.stream()
+                    .map(AltAccount::name)
+                    .collect(Collectors.joining(", "));
+
                 this.noticeService.create()
-                    .notice(translation -> translation.punishment().altAccountsNone())
+                    .notice(translation -> translation.punishment().altAccountsFound())
                     .placeholder("{PLAYER}", target.getName())
+                    .placeholder("{ACCOUNTS}", accounts)
                     .sender(operator)
                     .send();
-                return;
-            }
+            })
+            .exceptionally(throwable -> {
+                this.logger.log(Level.SEVERE, "Failed to look up alt accounts for " + target.getName(), throwable);
 
-            String accounts = alts.stream()
-                .map(AltAccount::name)
-                .collect(Collectors.joining(", "));
+                this.noticeService.create()
+                    .notice(translation -> translation.punishment().punishmentActionError())
+                    .sender(operator)
+                    .send();
 
-            this.noticeService.create()
-                .notice(translation -> translation.punishment().altAccountsFound())
-                .placeholder("{PLAYER}", target.getName())
-                .placeholder("{ACCOUNTS}", accounts)
-                .sender(operator)
-                .send();
-        });
+                return null;
+            });
     }
 }

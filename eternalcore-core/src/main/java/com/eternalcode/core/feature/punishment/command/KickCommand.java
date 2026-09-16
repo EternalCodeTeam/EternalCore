@@ -28,6 +28,8 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Command(name = "kick")
 @Permission("eternalcore.kick")
@@ -43,6 +45,7 @@ class KickCommand {
     private final NoticeService noticeService;
     private final PunishmentReasonValidator reasonValidator;
     private final TemplateMessageRenderer templateRenderer;
+    private final Logger logger;
 
     @Inject
     KickCommand(
@@ -50,13 +53,15 @@ class KickCommand {
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentReasonValidator reasonValidator,
-        TemplateMessageRenderer templateRenderer
+        TemplateMessageRenderer templateRenderer,
+        Logger logger
     ) {
         this.punishmentService = punishmentService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.reasonValidator = reasonValidator;
         this.templateRenderer = templateRenderer;
+        this.logger = logger;
     }
 
     @Execute
@@ -93,13 +98,17 @@ class KickCommand {
         );
 
         this.punishmentService.kick(
-            PunishmentTarget.of(target),
-            PunishmentTarget.of(operator),
-            reason,
-            kickMessage,
-            false
-        );
+                PunishmentTarget.of(target),
+                PunishmentTarget.of(operator),
+                reason,
+                kickMessage,
+                false
+            )
+            .thenAccept(none -> this.onSuccess(operator, target, reason, silent))
+            .exceptionally(throwable -> this.onFailure(operator, "kick", throwable));
+    }
 
+    private void onSuccess(CommandSender operator, Player target, String reason, boolean silent) {
         var broadcast = this.noticeService.create()
             .notice(translation -> silent
                 ? translation.punishment().kickBroadcastSilent()
@@ -126,5 +135,16 @@ class KickCommand {
             .placeholder("{PLAYER}", target.getName())
             .sender(operator)
             .send();
+    }
+
+    private Void onFailure(CommandSender operator, String operation, Throwable throwable) {
+        this.logger.log(Level.SEVERE, "Failed to execute punishment action (" + operation + ")", throwable);
+
+        this.noticeService.create()
+            .notice(translation -> translation.punishment().punishmentActionError())
+            .sender(operator)
+            .send();
+
+        return null;
     }
 }

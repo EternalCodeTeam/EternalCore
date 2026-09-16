@@ -4,12 +4,13 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
 import com.eternalcode.core.feature.punishment.PunishmentReasonValidator;
 import com.eternalcode.core.feature.punishment.PunishmentService;
+import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
-import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -32,6 +33,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Command(name = "ban")
 @Permission("eternalcore.ban")
@@ -47,6 +50,7 @@ class BanCommand {
     private final NoticeService noticeService;
     private final PunishmentReasonValidator reasonValidator;
     private final TemplateMessageRenderer templateRenderer;
+    private final Logger logger;
 
     @Inject
     BanCommand(
@@ -54,25 +58,22 @@ class BanCommand {
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentReasonValidator reasonValidator,
-        TemplateMessageRenderer templateRenderer
+        TemplateMessageRenderer templateRenderer,
+        Logger logger
     ) {
         this.punishmentService = punishmentService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.reasonValidator = reasonValidator;
         this.templateRenderer = templateRenderer;
+        this.logger = logger;
     }
 
     @Execute
-    @DescriptionDocs(description = "Ban a player permanently", arguments = "<player> <reason>")
-    void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String reason) {
-        this.ban(operator, target, null, reason, silent);
-    }
-
-    @Execute
-    @DescriptionDocs(description = "Ban a player for a specified duration", arguments = "<player> <time> <reason>")
-    void executeBanFor(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Arg Duration duration, @Join String reason) {
-        this.ban(operator, target, duration, reason, silent);
+    @DescriptionDocs(description = "Ban a player, optionally for a specified duration", arguments = "<player> [time] <reason>")
+    void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
+        DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason);
+        this.ban(operator, target, parsed.duration(), parsed.reason(), silent);
     }
 
     private void ban(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent) {
@@ -118,13 +119,17 @@ class BanCommand {
         );
 
         this.punishmentService.ban(
-            PunishmentTarget.of(target),
-            PunishmentTarget.of(operator),
-            reason,
-            expiresAt,
-            kickMessage
-        );
+                PunishmentTarget.of(target),
+                PunishmentTarget.of(operator),
+                reason,
+                expiresAt,
+                kickMessage
+            )
+            .thenAccept(punishment -> this.onSuccess(operator, target, reason, expiresText, silent))
+            .exceptionally(throwable -> this.onFailure(operator, "ban", throwable));
+    }
 
+    private void onSuccess(CommandSender operator, OfflinePlayer target, String reason, String expiresText, boolean silent) {
         var broadcast = this.noticeService.create()
             .notice(translation -> silent
                 ? translation.punishment().banBroadcastSilent()
@@ -152,5 +157,16 @@ class BanCommand {
             .placeholder("{PLAYER}", target.getName())
             .sender(operator)
             .send();
+    }
+
+    private Void onFailure(CommandSender operator, String operation, Throwable throwable) {
+        this.logger.log(Level.SEVERE, "Failed to execute punishment action (" + operation + ")", throwable);
+
+        this.noticeService.create()
+            .notice(translation -> translation.punishment().punishmentActionError())
+            .sender(operator)
+            .send();
+
+        return null;
     }
 }

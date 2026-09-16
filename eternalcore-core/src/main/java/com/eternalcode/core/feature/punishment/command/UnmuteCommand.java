@@ -15,17 +15,22 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Command(name = "unmute")
 @Permission("eternalcore.unmute")
 class UnmuteCommand {
 
     private final PunishmentService punishmentService;
     private final NoticeService noticeService;
+    private final Logger logger;
 
     @Inject
-    UnmuteCommand(PunishmentService punishmentService, NoticeService noticeService) {
+    UnmuteCommand(PunishmentService punishmentService, NoticeService noticeService, Logger logger) {
         this.punishmentService = punishmentService;
         this.noticeService = noticeService;
+        this.logger = logger;
     }
 
     @Execute
@@ -40,8 +45,21 @@ class UnmuteCommand {
             return;
         }
 
-        this.punishmentService.unmute(PunishmentTarget.of(target), PunishmentTarget.of(operator));
+        this.punishmentService.unmute(PunishmentTarget.of(target), PunishmentTarget.of(operator))
+            .thenAccept(none -> this.onSuccess(operator, target))
+            .exceptionally(throwable -> {
+                this.logger.log(Level.SEVERE, "Failed to execute punishment action (unmute)", throwable);
 
+                this.noticeService.create()
+                    .notice(translation -> translation.punishment().punishmentActionError())
+                    .sender(operator)
+                    .send();
+
+                return null;
+            });
+    }
+
+    private void onSuccess(CommandSender operator, OfflinePlayer target) {
         this.noticeService.create()
             .notice(translation -> translation.punishment().unmuteBroadcast())
             .placeholder("{PLAYER}", target.getName())

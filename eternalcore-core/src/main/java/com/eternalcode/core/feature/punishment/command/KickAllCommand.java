@@ -25,6 +25,8 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Command(name = "kickall")
 @Permission("eternalcore.kickall")
@@ -40,6 +42,7 @@ class KickAllCommand {
     private final NoticeService noticeService;
     private final PunishmentReasonValidator reasonValidator;
     private final TemplateMessageRenderer templateRenderer;
+    private final Logger logger;
 
     @Inject
     KickAllCommand(
@@ -47,13 +50,15 @@ class KickAllCommand {
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentReasonValidator reasonValidator,
-        TemplateMessageRenderer templateRenderer
+        TemplateMessageRenderer templateRenderer,
+        Logger logger
     ) {
         this.punishmentService = punishmentService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.reasonValidator = reasonValidator;
         this.templateRenderer = templateRenderer;
+        this.logger = logger;
     }
 
     @Execute
@@ -98,7 +103,12 @@ class KickAllCommand {
                 )
             );
 
-            this.punishmentService.kick(PunishmentTarget.of(target), operatorTarget, reason, kickMessage, true);
+            this.punishmentService.kick(PunishmentTarget.of(target), operatorTarget, reason, kickMessage, true)
+                .exceptionally(throwable -> {
+                    this.logger.log(Level.SEVERE, "Failed to kick " + target.getName() + " as part of /kickall", throwable);
+                    return null;
+                });
+
             kicked++;
         }
 

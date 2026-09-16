@@ -66,4 +66,7 @@ public interface PunishmentMessages {
     Notice historyHeaderPlayer();
     Notice historyEntry();
     Notice historyEmpty();
+    Notice historyError();
+
+    Notice punishmentActionError();
 }

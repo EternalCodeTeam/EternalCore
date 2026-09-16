@@ -74,4 +74,7 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice historyHeaderPlayer = Notice.chat("<gray>► <white>Punishment history for <yellow>{PLAYER} <gray>(page {PAGE}):");
     Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>by <white>{OPERATOR} <gray>- <white>{REASON}");
     Notice historyEmpty = Notice.chat("<gray>No entries found in the history.");
+    Notice historyError = Notice.chat("<red>✘ <dark_red>An error occurred while loading the history. Check the console.");
+
+    Notice punishmentActionError = Notice.chat("<red>✘ <dark_red>An error occurred while performing this action. Check the console.");
 }
