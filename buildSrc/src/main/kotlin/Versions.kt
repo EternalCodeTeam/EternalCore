@@ -12,7 +12,7 @@ object Versions {
     const val SQUAREMAP_API = "1.3.15"
     const val LOMBOK = "1.18.48"
 
-    const val ADVENTURE_TEXT_MINIMESSAGE = "4.26.1"
+    const val ADVENTURE_TEXT_MINIMESSAGE = "5.2.0"
     const val OKAERI_CONFIGS = "6.0.0-beta.27"
 
     const val MARIA_DB = "3.5.10"
