@@ -9,6 +9,12 @@ public interface PunishmentSettings {
 
     Duration defaultMuteDuration();
 
+    boolean messageWhenBanned();
+
+    Duration messageWhenBannedCooldown();
+
+    boolean reasonLegthEnabled();
+
     int minReasonLength();
 
     int maxReasonLength();

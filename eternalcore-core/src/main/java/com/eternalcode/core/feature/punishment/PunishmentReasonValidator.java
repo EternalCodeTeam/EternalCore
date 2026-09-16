@@ -18,6 +18,10 @@ public class PunishmentReasonValidator {
     public boolean isValid(String reason) {
         Objects.requireNonNull(reason, "reason cannot be null");
 
+        if (!this.punishmentSettings.reasonLegthEnabled()) {
+            return true;
+        }
+
         int length = reason.length();
         return length >= this.punishmentSettings.minReasonLength() && length <= this.punishmentSettings.maxReasonLength();
     }

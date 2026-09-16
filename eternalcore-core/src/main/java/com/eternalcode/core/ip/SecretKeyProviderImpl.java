@@ -1,5 +1,6 @@
 package com.eternalcode.core.ip;
 
+import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
@@ -16,6 +17,7 @@ import java.util.Objects;
 class SecretKeyProviderImpl implements SecretKeyProvider {
 
     private static final String SECRET_FILE_NAME = "secret.key";
+    private static final String SECRET_ENV_VARIABLE = "ETERNALCORE_IP_SECRET_KEY";
     private static final int MASTER_SECRET_LENGTH = 32;
     private static final int DERIVED_KEY_LENGTH = 32;
 
@@ -29,7 +31,7 @@ class SecretKeyProviderImpl implements SecretKeyProvider {
     SecretKeyProviderImpl(File dataFolder) {
         Objects.requireNonNull(dataFolder, "dataFolder cannot be null");
 
-        byte[] masterSecret = this.loadOrGenerateMasterSecret(new File(dataFolder, SECRET_FILE_NAME));
+        byte[] masterSecret = this.resolveMasterSecret(dataFolder);
 
         this.aesKey = Hkdf.deriveKey(masterSecret, AES_INFO, DERIVED_KEY_LENGTH);
         this.hmacKey = Hkdf.deriveKey(masterSecret, HMAC_INFO, DERIVED_KEY_LENGTH);
@@ -43,6 +45,31 @@ class SecretKeyProviderImpl implements SecretKeyProvider {
     @Override
     public byte[] hmacKey() {
         return Arrays.copyOf(this.hmacKey, this.hmacKey.length);
+    }
+
+    // TODO: Ktoś to musi ładnie opisać xD
+    @DescriptionDocs(
+        description = "SecretKey for undecode IP from database using environmental variable using ETERNALCORE_IP_SECRET_KEY",
+        arguments = ""
+    )
+    private byte[] resolveMasterSecret(File dataFolder) {
+        String fromEnv = System.getenv(SECRET_ENV_VARIABLE);
+
+        if (fromEnv != null && !fromEnv.isBlank()) {
+            return this.decodeFromEnv(fromEnv.strip());
+        }
+
+        return this.loadOrGenerateMasterSecret(new File(dataFolder, SECRET_FILE_NAME));
+    }
+
+    private byte[] decodeFromEnv(String encoded) {
+        byte[] decoded = Base64.getDecoder().decode(encoded);
+
+        if (decoded.length != MASTER_SECRET_LENGTH) {
+            throw new IllegalStateException(SECRET_ENV_VARIABLE + " has an unexpected length - expected a base64-encoded 32-byte key");
+        }
+
+        return decoded;
     }
 
     private byte[] loadOrGenerateMasterSecret(File secretFile) {
@@ -96,7 +123,6 @@ class SecretKeyProviderImpl implements SecretKeyProvider {
     }
 
     private void restrictPermissions(File secretFile) {
-        // Best-effort: works reliably on POSIX filesystems, silently ignored on platforms that don't support it (e.g. some Windows setups).
         boolean ownerOnly = secretFile.setReadable(false, false)
             & secretFile.setReadable(true, true)
             & secretFile.setWritable(false, false)

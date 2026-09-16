@@ -11,6 +11,7 @@ public interface PunishmentMessages {
     Notice banInvalidReason();
     Notice banSuccessPrivate();
     Notice banAlreadyBanned();
+    Notice banPlayerTriesJoin();
 
     // Banip
     Notice banIpSuccessPrivate();

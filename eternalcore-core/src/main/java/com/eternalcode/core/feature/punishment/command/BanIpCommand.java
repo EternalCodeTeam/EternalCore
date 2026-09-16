@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.ip.command;
+package com.eternalcode.core.feature.punishment.command;
 
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
 
@@ -117,7 +117,7 @@ class BanIpCommand {
         String expiresText = expiresAt == null ? this.punishmentSettings.permanentLabel() : DurationUtil.format(duration, true);
 
         List<Component> kickMessage = this.templateRenderer.render(
-            this.punishmentSettings.banKickScreen(),
+            this.punishmentSettings.banIpKickScreen(),
             Map.of(
                 "{PLAYER}", target.getName(),
                 "{OPERATOR}", operator.getName(),

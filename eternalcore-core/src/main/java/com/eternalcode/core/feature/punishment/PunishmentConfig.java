@@ -17,6 +17,15 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
     @Comment("# Default mute duration used when no duration is specified in the command")
     public Duration defaultMuteDuration = Duration.ofHours(1);
 
+    @Comment("# Should a message be sent when a banned player tries to join the server?")
+    public boolean messageWhenBanned = true;
+
+    @Comment("# Message delay when a player is obsessively trying to log in")
+    public Duration messageWhenBannedCooldown = Duration.ofSeconds(60);
+
+    @Comment("# Checking length of reason?")
+    public boolean reasonLegthEnabled = true;
+
     @Comment("# Minimum length of a punishment reason")
     public int minReasonLength = 3;
 
@@ -28,27 +37,27 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
 
     @Comment({ " ", "# Screen shown to a player when they get banned. {OPERATOR}, {REASON}, {EXPIRES} available." })
     public List<String> banKickScreen = List.of(
-        "<red><bold>Zostałeś zbanowany!",
+        "<red><bold>You have been banned!!",
         " ",
-        "<white>Powód: <gray>{REASON}",
-        "<white>Kto: <gray>{OPERATOR}",
-        "<white>Wygasa: <gray>{EXPIRES}"
+        "<white>Reason: <gray>{REASON}",
+        "<white>Who: <gray>{OPERATOR}",
+        "<white>Expires: <gray>{EXPIRES}"
     );
 
     @Comment({ " ", "# Screen shown to a player when they get banned. {OPERATOR}, {REASON}, {EXPIRES} available." })
     public List<String> banIpKickScreen = List.of(
-        "<red><bold>Zostałeś zbanowany na IP!",
+        "<red><bold>You have been banned! (IP)",
         " ",
-        "<white>Powód: <gray>{REASON}",
-        "<white>Kto: <gray>{OPERATOR}",
-        "<white>Wygasa: <gray>{EXPIRES}"
+        "<white>Reason: <gray>{REASON}",
+        "<white>Who: <gray>{OPERATOR}",
+        "<white>Expires: <gray>{EXPIRES}"
     );
 
     @Comment({ " ", "# Screen shown to a player when they get kicked. {OPERATOR}, {REASON} available." })
     public List<String> kickScreen = List.of(
-        "<red><bold>Zostałeś wyrzucony z serwera!",
+        "<red><bold>You have been kicked!",
         " ",
-        "<white>Powód: <gray>{REASON}",
-        "<white>Kto: <gray>{OPERATOR}"
+        "<white>Reason: <gray>{REASON}",
+        "<white>Who: <gray>{OPERATOR}"
     );
 }

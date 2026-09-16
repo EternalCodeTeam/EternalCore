@@ -51,6 +51,7 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice muteSuccessPrivate = Notice.chat("<red>► <white>You muted player <red>{PLAYER}!");
     Notice muteAlreadyMuted = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is already muted!");
     Notice muteBlockedChat = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
+    Notice banPlayerTriesJoin = Notice.chat("<bold><red>Player {PLAYER} is trying to join the server but is banned!!");
 
     @Comment({ " ", "# Unmute section" })
     Notice unmuteBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been unmuted by <green>{OPERATOR}!");

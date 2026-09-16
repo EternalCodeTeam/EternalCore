@@ -21,6 +21,7 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice banInvalidReason = Notice.chat("<red>✘ <dark_red>Powód musi mieć od {MIN} do {MAX} znaków!");
     Notice banSuccessPrivate = Notice.chat("<red>► <white>Zbanowałeś gracza <red>{PLAYER}!");
     Notice banAlreadyBanned = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} jest już zbanowany!");
+    Notice banPlayerTriesJoin = Notice.chat("<bold><red>Gracz {PLAYER} próbuje wejść na serwer ale jest zbanowany!");
 
     @Comment({ " ", "# Sekcja odpowiedzialna za banowanie ip graczy" })
     Notice banIpSuccessPrivate = Notice.chat("<red>► <white>Zbanowałeś gracza <red>{PLAYER} <white>oraz jego adres IP!");
