@@ -13,6 +13,9 @@ dependencies {
     // Base libraries
     compileOnly("org.jetbrains:annotations:${Versions.JETBRAINS_ANNOTATIONS}")
 
+    implementation("org.reactivestreams:reactive-streams:1.0.4")
+    implementation("io.r2dbc:r2dbc-spi:1.0.0.RELEASE")
+
     // Minecraft & Bridges API
     compileOnlyApi("io.papermc.paper:paper-api:${Versions.PAPER_API}")
     compileOnly("me.clip:placeholderapi:${Versions.PLACEHOLDER_API}")
