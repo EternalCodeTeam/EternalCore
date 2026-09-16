@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.msg.toggle;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -15,6 +16,16 @@ public interface MsgToggleService {
      * @return state of player's private chat messages blocking.
      */
     CompletableFuture<MsgState> getState(UUID playerUniqueId);
+
+    /**
+     * Returns the currently cached state of player's private chat messages blocking,
+     * without performing any I/O. Useful for synchronous contexts (e.g. placeholders)
+     * that cannot wait on a {@link CompletableFuture}.
+     *
+     * @param playerUniqueId player's UUID.
+     * @return cached state, or empty if the state has not been loaded into the cache yet.
+     */
+    Optional<MsgState> getCachedState(UUID playerUniqueId);
 
     /**
      * Sets blocking of incoming private messages.
