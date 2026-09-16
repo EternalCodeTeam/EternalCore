@@ -32,11 +32,6 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś gracza <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest zbanowany!");
 
-    @Comment({ " ", "# {IP} - Adres IP, {OPERATOR} - Administrator" })
-    Notice unbanIpBroadcast = Notice.chat("<green>► <white>Adres IP <green>{IP} <white>został odbanowany przez <green>{OPERATOR}!");
-    Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś adres IP <green>{IP}!");
-    Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>Adres IP {IP} nie jest zbanowany!");
-
     @Comment({ " ", "# Sekcja odpowiedzialna za wyrzucanie graczy" })
     Notice kickBroadcast = Notice.chat("<red>► <white>Gracz <red>{PLAYER} <white>został wyrzucony przez <red>{OPERATOR}<white>! Powód: <gray>{REASON}");
     Notice kickBroadcastSilent = Notice.chat("<dark_red>[CICHY KICK] <white>Gracz <red>{PLAYER} <white>został wyrzucony przez <red>{OPERATOR}<white>! Powód: <gray>{REASON}");
