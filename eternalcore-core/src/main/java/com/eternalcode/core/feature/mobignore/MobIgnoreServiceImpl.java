@@ -13,7 +13,7 @@ public class MobIgnoreServiceImpl implements MobIgnoreService {
     private final HashSet<UUID> ignoredPlayers = new HashSet<>();
 
     @Override
-    public void removeTracking(Player player) {
+    public void stopTracking(Player player) {
         this.ignoredPlayers.add(player.getUniqueId());
 
         this.enableNoTarget(player);

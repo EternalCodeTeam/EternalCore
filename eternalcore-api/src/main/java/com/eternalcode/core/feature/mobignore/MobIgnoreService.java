@@ -8,7 +8,7 @@ public interface MobIgnoreService {
     /*
      * Removes mob tracking for player.
      */
-    void removeTracking(Player player);
+    void stopTracking(Player player);
 
     /*
      * Checks if a player is ignored for mob targeting.
