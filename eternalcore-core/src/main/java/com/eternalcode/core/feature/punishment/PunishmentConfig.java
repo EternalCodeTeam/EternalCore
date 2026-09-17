@@ -107,7 +107,8 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
     public List<String> historyGuiEntryLore = List.of(
         "<gray>Operator: <white>{OPERATOR}",
         "<gray>Reason: <white>{REASON}",
-        "<gray>Date: <white>{DATE} <dark_gray>({RELATIVE_TIME})"
+        "<gray>Expires: <white>{EXPIRES}",
+        "<gray>Date: <white>{DATE} <dark_gray>({RELATIVE_TIME} ago)"
     );
 
     @Comment({ " ", "# Item material per history action type. Keys must match HistoryAction enum names exactly." })
