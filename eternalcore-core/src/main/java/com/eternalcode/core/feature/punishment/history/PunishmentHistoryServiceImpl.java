@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 class PunishmentHistoryServiceImpl implements PunishmentHistoryService {
 
-    private static final int MAX_PAGE_SIZE = 100;
+    private static final int MAX_PAGE_SIZE = 150;
 
     private final PunishmentHistoryRepository punishmentHistoryRepository;
 
@@ -55,7 +55,7 @@ class PunishmentHistoryServiceImpl implements PunishmentHistoryService {
             throw new IllegalArgumentException("page cannot be negative");
         }
         if (pageSize <= 0 || pageSize > MAX_PAGE_SIZE) {
-            throw new IllegalArgumentException("pageSize must be between 1 and " + MAX_PAGE_SIZE);
+            throw new IllegalArgumentException("pageSize must be between 1 and " + MAX_PAGE_SIZE + " historyGuiFetchBatchSize=" + MAX_PAGE_SIZE);
         }
     }
 }

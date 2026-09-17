@@ -47,10 +47,9 @@ import java.util.Map;
  * Handles class runtime relocation of packages in downloaded dependencies
  */
 public class RelocationHandler implements AutoCloseable {
-
     private static final List<Dependency> DEPENDENCIES = List.of(
-        Dependency.of("org.ow2.asm", "asm", "9.7.1"),
-        Dependency.of("org.ow2.asm", "asm-commons", "9.7.1"),
+        Dependency.of("org.ow2.asm", "asm", "9.9"),
+        Dependency.of("org.ow2.asm", "asm-commons", "9.9"),
         Dependency.of("me.lucko", "jar-relocator", "1.7")
     );
 

@@ -9,10 +9,10 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PlayerIpConfig extends OkaeriConfig implements PlayerIpSettings {
 
-    @Comment("# Czy stare wpisy historii logowań (adresy IP graczy) mają być automatycznie usuwane")
-    @Comment("# false = przechowuj bezterminowo (nic nie jest usuwane)")
+    @Comment("# Should old login history entries (player IP addresses) be deleted automatically")
+    @Comment("# false = keep forever (nothing gets deleted)")
     public boolean retentionEnabled = false;
 
-    @Comment("# Ile dni historii logowań przechowywać, jeśli retentionEnabled = true")
+    @Comment("# How many days of login history to keep, if retentionEnabled = true")
     public int retentionDays = 90;
 }

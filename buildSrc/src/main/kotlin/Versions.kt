@@ -27,11 +27,10 @@ object Versions {
     const val GUAVA = "33.6.0-jre"
     const val GSON = "2.14.0"
 
-    const val EXPRESSIBLE = "1.3.6"
-    const val PANDA_UTILITIES = "0.5.3-alpha"
     const val APACHE_COMMONS = "2.22.0"
 
     const val TRIUMPH_GUI = "3.1.13"
+    const val INV_UI = "2.4.0"
 
     const val XSERIES = "13.7.1"
 

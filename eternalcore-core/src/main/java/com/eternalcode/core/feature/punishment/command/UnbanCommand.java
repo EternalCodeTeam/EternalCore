@@ -62,8 +62,6 @@ class UnbanCommand {
         this.punishmentService.unban(PunishmentTarget.of(target), operatorTarget)
             .thenAccept(none -> this.onSuccess(operator, target))
             .exceptionally(throwable -> this.onFailure(operator, "unban", throwable));
-
-        this.unbanLinkedIpIfNeeded(target, operatorTarget);
     }
 
     private void onSuccess(CommandSender operator, OfflinePlayer target) {
@@ -79,29 +77,6 @@ class UnbanCommand {
             .placeholder("{PLAYER}", target.getName())
             .sender(operator)
             .send();
-    }
-
-    private void unbanLinkedIpIfNeeded(OfflinePlayer target, PunishmentTarget operatorTarget) {
-        this.playerIpResolver.resolve(target)
-            .thenAccept(ipOptional -> {
-                if (ipOptional.isEmpty()) {
-                    return;
-                }
-
-                String ip = ipOptional.get();
-
-                if (this.ipPunishmentService.isIpBanned(ip)) {
-                    this.ipPunishmentService.unbanIp(ip, operatorTarget)
-                        .exceptionally(throwable -> {
-                            this.logger.log(Level.SEVERE, "Failed to lift linked IP ban for " + target.getName(), throwable);
-                            return null;
-                        });
-                }
-            })
-            .exceptionally(throwable -> {
-                this.logger.log(Level.SEVERE, "Failed to resolve IP for " + target.getName() + " during unban", throwable);
-                return null;
-            });
     }
 
     private Void onFailure(CommandSender operator, String operation, Throwable throwable) {

@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.punishment.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
+import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
+import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryGui;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -16,6 +18,7 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -32,6 +35,8 @@ class PunishmentHistoryCommand {
     private final NoticeService noticeService;
     private final DateFormatter dateFormatter;
     private final Logger logger;
+    private final PunishmentHistoryGui punishmentHistoryGui;
+    private final PlayerPunishmentHistoryGui playerPunishmentHistoryGui;
 
     @Inject
     PunishmentHistoryCommand(
@@ -39,13 +44,17 @@ class PunishmentHistoryCommand {
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         DateFormatter dateFormatter,
-        Logger logger
+        Logger logger,
+        PunishmentHistoryGui punishmentHistoryGui,
+        PlayerPunishmentHistoryGui playerPunishmentHistoryGui
     ) {
         this.punishmentHistoryService = punishmentHistoryService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.dateFormatter = dateFormatter;
         this.logger = logger;
+        this.punishmentHistoryGui = punishmentHistoryGui;
+        this.playerPunishmentHistoryGui = playerPunishmentHistoryGui;
     }
 
     @Execute
@@ -73,6 +82,11 @@ class PunishmentHistoryCommand {
     }
 
     private void showRecent(CommandSender operator, int humanPage) {
+        if (operator instanceof Player player) {
+            this.punishmentHistoryGui.open(player);
+            return;
+        }
+
         int page = this.toZeroIndexed(humanPage);
 
         this.punishmentHistoryService.findRecent(page, this.punishmentSettings.historyPageSize())
@@ -89,6 +103,11 @@ class PunishmentHistoryCommand {
     }
 
     private void showForPlayer(CommandSender operator, OfflinePlayer target, int humanPage) {
+        if (operator instanceof Player player) {
+            this.playerPunishmentHistoryGui.open(player, target.getUniqueId(), target.getName());
+            return;
+        }
+
         int page = this.toZeroIndexed(humanPage);
 
         this.punishmentHistoryService.findByTarget(target.getUniqueId(), page, this.punishmentSettings.historyPageSize())
