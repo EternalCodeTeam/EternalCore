@@ -127,11 +127,33 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
     }
 
     @Override
+    public CompletableFuture<List<Punishment>> findAllUnexpired(PunishmentType type, Instant now) {
+        Objects.requireNonNull(type, "type cannot be null");
+        Objects.requireNonNull(now, "now cannot be null");
+
+        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
+            .where(TYPE.eq(type.name()))
+            .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(this.toOffsetDateTime(now))))
+            .fetch(this::map));
+    }
+
+    @Override
     public CompletableFuture<Integer> countByTargetAndType(UUID targetUuid, PunishmentType type) {
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
             .where(TYPE.eq(type.name()))
             .and(TARGET_UUID.eq(targetUuid.toString()))
-            .fetch(this::map)).thenApply(list -> list.size());
+            .fetch(this::map))
+            .thenApply(List::size);
+    }
+
+    @Override
+    public CompletableFuture<Integer> countByTargetAndType(UUID targetUuid, PunishmentType type, Instant now) {
+        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
+            .where(TYPE.eq(type.name()))
+            .and(TARGET_UUID.eq(targetUuid.toString()))
+            .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(this.toOffsetDateTime(now))))
+            .fetch(this::map))
+            .thenApply(List::size);
     }
 
     private Punishment map(Record record) {

@@ -8,6 +8,8 @@ import java.util.Map;
 
 public interface PunishmentSettings {
 
+    boolean blockUsingSignOnMute();
+
     boolean messageWhenBanned();
 
     Duration messageWhenBannedCooldown();

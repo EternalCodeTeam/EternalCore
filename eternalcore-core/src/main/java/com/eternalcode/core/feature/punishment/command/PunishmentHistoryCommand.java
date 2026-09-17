@@ -1,5 +1,8 @@
 package com.eternalcode.core.feature.punishment.command;
 
+import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HISTORY_SELF;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HISTORY_STAFF;
+
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
@@ -8,24 +11,24 @@ import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.util.date.DateFormatter;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
-import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Command(name = "punishmenthistory", aliases = { "history" })
-@Permission("eternalcore.punishmenthistory")
 class PunishmentHistoryCommand {
 
     private static final int FIRST_PAGE = 1;
@@ -60,25 +63,62 @@ class PunishmentHistoryCommand {
     @Execute
     @DescriptionDocs(description = "Shows recent punishments across the server")
     void executeRecent(@Sender CommandSender operator) {
+        if (!operator.hasPermission(HISTORY_STAFF)) {
+            this.sendNoPermission(operator);
+            return;
+        }
+
         this.showRecent(operator, FIRST_PAGE);
     }
 
     @Execute
     @DescriptionDocs(description = "Shows recent punishments across the server, at a specific page", arguments = "<page>")
     void executeRecentPage(@Sender CommandSender operator, @Arg int page) {
+        if (!operator.hasPermission(HISTORY_STAFF)) {
+            this.sendNoPermission(operator);
+            return;
+        }
+
         this.showRecent(operator, page);
     }
 
     @Execute
-    @DescriptionDocs(description = "Shows punishment history for a specific player", arguments = "<player>")
+    @DescriptionDocs(description = "Shows punishment history for a specific player (staff only, unless viewing your own with eternalcore.history.self)", arguments = "<player>")
     void executeForPlayer(@Sender CommandSender operator, @Arg OfflinePlayer target) {
+        if (!this.canView(operator, target)) {
+            this.sendNoPermission(operator);
+            return;
+        }
+
         this.showForPlayer(operator, target, FIRST_PAGE);
     }
 
     @Execute
     @DescriptionDocs(description = "Shows punishment history for a specific player, at a specific page", arguments = "<player> <page>")
     void executeForPlayerPage(@Sender CommandSender operator, @Arg OfflinePlayer target, @Arg int page) {
+        if (!this.canView(operator, target)) {
+            this.sendNoPermission(operator);
+            return;
+        }
+
         this.showForPlayer(operator, target, page);
+    }
+
+    private boolean canView(CommandSender operator, OfflinePlayer target) {
+        if (operator.hasPermission(HISTORY_STAFF)) {
+            return true;
+        }
+
+        return operator instanceof Player player
+            && player.getUniqueId().equals(target.getUniqueId())
+            && player.hasPermission(HISTORY_SELF);
+    }
+
+    private void sendNoPermission(CommandSender operator) {
+        this.noticeService.create()
+            .notice(translation -> translation.punishment().historyNoPermission())
+            .sender(operator)
+            .send();
     }
 
     private void showRecent(CommandSender operator, int humanPage) {
@@ -157,8 +197,15 @@ class PunishmentHistoryCommand {
                 .placeholder("{PLAYER}", entry.target().name())
                 .placeholder("{OPERATOR}", entry.operator().name())
                 .placeholder("{REASON}", entry.reason())
+                .placeholder("{EXPIRES}", this.formatExpires(entry))
                 .sender(operator)
                 .send();
         }
+    }
+
+    private String formatExpires(PunishmentHistoryEntry entry) {
+        return entry.expiresAt()
+            .map(expiresAt -> DurationUtil.format(Duration.between(entry.timestamp(), expiresAt), true))
+            .orElse(this.punishmentSettings.permanentLabel());
     }
 }

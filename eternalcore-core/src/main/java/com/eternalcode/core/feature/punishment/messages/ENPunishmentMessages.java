@@ -30,6 +30,10 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>You unbanned player <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not banned!");
 
+    Notice unbanIpBroadcast = Notice.chat("<green>► <white>IP address <green>{IP} <white>has been unbanned by <green>{OPERATOR}!");
+    Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>You unbanned IP address <green>{IP}!");
+    Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>IP address {IP} is not banned!");
+
     @Comment({ " ", "# Kick section" })
     Notice kickBroadcast = Notice.chat("<red>► <white>Player <red>{PLAYER} <white>has been kicked by <red>{OPERATOR}<white>! Reason: <gray>{REASON}");
     Notice kickBroadcastSilent = Notice.chat("<dark_red>[SILENT KICK] <white>Player <red>{PLAYER} <white>has been kicked by <red>{OPERATOR}<white>! Reason: <gray>{REASON}");
@@ -47,6 +51,7 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice muteSuccessPrivate = Notice.chat("<red>► <white>You muted player <red>{PLAYER}!");
     Notice muteAlreadyMuted = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is already muted!");
     Notice muteBlockedChat = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
+    Notice muteBlockedSign = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
 
     @Comment({ " ", "# Unmute section" })
     Notice unmuteBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been unmuted by <green>{OPERATOR}!");
@@ -67,9 +72,10 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     @Comment({ " ", "# History section" })
     Notice historyHeaderRecent = Notice.chat("<gray>► <white>Recent server punishments <gray>(page {PAGE}):");
     Notice historyHeaderPlayer = Notice.chat("<gray>► <white>Punishment history for <yellow>{PLAYER} <gray>(page {PAGE}):");
-    Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>by <white>{OPERATOR} <gray>- <white>{REASON}");
+    Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>by <white>{OPERATOR} <gray>- <white>{REASON}({EXPIRES})");
     Notice historyEmpty = Notice.chat("<gray>No entries found in the history.");
     Notice historyError = Notice.chat("<red>✘ <dark_red>An error occurred while loading the history. Check the console.");
+    Notice historyNoPermission = Notice.chat("<red>✘ <dark_red>You dont have permission to check history!");
 
     Notice punishmentActionError = Notice.chat("<red>✘ <dark_red>An error occurred while performing this action. Check the console.");
 }

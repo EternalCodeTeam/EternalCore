@@ -13,6 +13,8 @@ public interface IpPunishmentService {
 
     CompletableFuture<Void> banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage);
 
+    CompletableFuture<Void> unbanIp(String ip, PunishmentTarget target);
+
     boolean isIpBanned(String ip);
 
     Optional<IpPunishment> getActiveIpBan(String ip);

@@ -20,6 +20,7 @@ final class PunishmentHistorySchema {
     static final Field<String> ACTION = DSL.field("action", SQLDataType.VARCHAR(16).nullable(false));
     static final Field<String> REASON = DSL.field("reason", SQLDataType.VARCHAR(255).nullable(false));
     static final Field<OffsetDateTime> TIMESTAMP = DSL.field("timestamp", SQLDataType.TIMESTAMPWITHTIMEZONE.nullable(false));
+    static final Field<OffsetDateTime> EXPIRES_AT = DSL.field("expires_at", SQLDataType.TIMESTAMPWITHTIMEZONE.nullable(true));
 
     private PunishmentHistorySchema() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");

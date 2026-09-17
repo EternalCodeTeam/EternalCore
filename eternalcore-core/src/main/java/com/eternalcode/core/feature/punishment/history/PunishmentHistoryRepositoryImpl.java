@@ -9,6 +9,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -43,6 +44,7 @@ class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
             .column(ACTION)
             .column(REASON)
             .column(TIMESTAMP)
+            .column(EXPIRES_AT)
             .constraints(DSL.constraint("pk_eternalcore_punishment_history").primaryKey(ID))
             .execute();
     }
@@ -61,7 +63,8 @@ class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
                 .set(OPERATOR_NAME, entry.operator().name())
                 .set(ACTION, entry.action().name())
                 .set(REASON, entry.reason())
-                .set(TIMESTAMP, this.toOffsetDateTime(entry))
+                .set(TIMESTAMP, this.toOffsetDateTime(entry.timestamp()))
+                .set(EXPIRES_AT, entry.expiresAt().map(this::toOffsetDateTime).orElse(null))
                 .execute();
             return null;
         });
@@ -111,6 +114,8 @@ class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
             record.get(OPERATOR_NAME)
         );
 
+        OffsetDateTime expiresAt = record.get(EXPIRES_AT);
+
         return new PunishmentHistoryEntry(
             UUID.fromString(record.get(ID)),
             UUID.fromString(record.get(PUNISHMENT_ID)),
@@ -118,11 +123,12 @@ class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
             operator,
             PunishmentHistoryEntry.HistoryAction.valueOf(record.get(ACTION)),
             record.get(REASON),
-            record.get(TIMESTAMP).toInstant()
+            record.get(TIMESTAMP).toInstant(),
+            expiresAt == null ? null : expiresAt.toInstant()
         );
     }
 
-    private OffsetDateTime toOffsetDateTime(PunishmentHistoryEntry entry) {
-        return entry.timestamp().atOffset(ZoneOffset.UTC);
+    private OffsetDateTime toOffsetDateTime(Instant instant) {
+        return instant.atOffset(ZoneOffset.UTC);
     }
 }

@@ -30,6 +30,7 @@ class PunishmentServiceImpl implements PunishmentService {
 
     private final Map<UUID, Punishment> activeBans = new ConcurrentHashMap<>();
     private final Map<UUID, Punishment> activeMutes = new ConcurrentHashMap<>();
+    private final Map<UUID, Punishment> activeWarns = new ConcurrentHashMap<>();
 
     private final PunishmentRepository punishmentRepository;
     private final PunishmentHistoryService punishmentHistoryService;
@@ -126,19 +127,26 @@ class PunishmentServiceImpl implements PunishmentService {
 
     @Override
     public CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason) {
+        return this.warn(target, operator, reason, null);
+    }
+
+    @Override
+    public CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
         Punishment punishment = Punishment.builder()
             .target(target)
             .operator(operator)
             .type(PunishmentType.WARN)
             .reason(reason)
+            .expiresAt(expiresAt)
             .active(false)
             .build();
 
         return this.punishmentRepository.save(punishment)
             .thenCompose(none -> this.recordHistory(punishment, HistoryAction.WARN))
-            .thenCompose(none -> this.punishmentRepository.countByTargetAndType(target.uuid(), PunishmentType.WARN))
+            .thenCompose(none -> this.punishmentRepository.countByTargetAndType(target.uuid(), PunishmentType.WARN, Instant.now()))
             .thenApply(warnCount -> {
                 this.applyEscalationIfConfigured(target, operator, warnCount);
+                this.activeWarns.put(target.uuid(), punishment);
                 return punishment;
             });
     }
@@ -263,7 +271,8 @@ class PunishmentServiceImpl implements PunishmentService {
             operator,
             action,
             "",
-            Instant.now()
+            Instant.now(),
+            null
         );
 
         return this.punishmentRepository.deactivate(cached.id())
@@ -278,7 +287,8 @@ class PunishmentServiceImpl implements PunishmentService {
             punishment.operator(),
             action,
             punishment.reason(),
-            punishment.createdAt()
+            punishment.createdAt(),
+            punishment.expiresAt().orElse(null)
         );
 
         return this.punishmentHistoryService.record(entry);
@@ -305,6 +315,7 @@ class PunishmentServiceImpl implements PunishmentService {
     private void loadActivePunishments() {
         this.loadActiveInto(this.activeBans, PunishmentType.BAN);
         this.loadActiveInto(this.activeMutes, PunishmentType.MUTE);
+        this.loadUnexpiredWarnsInto(this.activeWarns);
     }
 
     private void loadActiveInto(Map<UUID, Punishment> cache, PunishmentType type) {
@@ -315,5 +326,30 @@ class PunishmentServiceImpl implements PunishmentService {
                 }
             }
         });
+    }
+
+    private void loadUnexpiredWarnsInto(Map<UUID, Punishment> cache) {
+        this.punishmentRepository.findAllUnexpired(PunishmentType.WARN, Instant.now()).thenAccept(punishments -> {
+            for (Punishment punishment : punishments) {
+                cache.put(punishment.target().uuid(), punishment);
+            }
+        });
+    }
+
+    @Override
+    public List<Punishment> activeBans() {
+        return List.copyOf(this.activeBans.values());
+    }
+
+    @Override
+    public List<Punishment> activeMutes() {
+        return List.copyOf(this.activeMutes.values());
+    }
+
+    @Override
+    public List<Punishment> activeWarns() {
+        return this.activeWarns.values().stream()
+            .filter(punishment -> !this.isExpired(punishment))
+            .toList();
     }
 }

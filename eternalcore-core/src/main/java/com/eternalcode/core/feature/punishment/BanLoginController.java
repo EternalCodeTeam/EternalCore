@@ -1,7 +1,5 @@
 package com.eternalcode.core.feature.punishment;
 
-import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.feature.punishment.ip.IpPunishmentService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -16,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import java.net.InetAddress;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
@@ -27,17 +24,11 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Controller
-@PermissionDocs(
-    name = "Notify when banned",
-    permission = PunishmentPermissions.STAFF_MESSAGES,
-    description = "Sending a message to the staff when a banned player attempts to log in."
-)
 class BanLoginController implements Listener {
 
     private final Map<UUID, Instant> lastStaffNotification = new ConcurrentHashMap<>();
 
     private final PunishmentService punishmentService;
-    private final IpPunishmentService ipPunishmentService;
     private final PunishmentSettings punishmentSettings;
     private final TemplateMessageRenderer templateRenderer;
     private final NoticeService noticeService;
@@ -46,14 +37,12 @@ class BanLoginController implements Listener {
     @Inject
     BanLoginController(
         PunishmentService punishmentService,
-        IpPunishmentService ipPunishmentService,
         PunishmentSettings punishmentSettings,
         TemplateMessageRenderer templateRenderer,
         NoticeService noticeService,
         Server server
     ) {
         this.punishmentService = punishmentService;
-        this.ipPunishmentService = ipPunishmentService;
         this.punishmentSettings = punishmentSettings;
         this.templateRenderer = templateRenderer;
         this.noticeService = noticeService;
@@ -86,8 +75,6 @@ class BanLoginController implements Listener {
             )
         );
 
-        this.banEvasionIpIfNeeded(event.getAddress(), punishment, kickMessage);
-
         Component joined = Component.join(JoinConfiguration.newlines(), kickMessage);
 
         event.disallow(PlayerLoginEvent.Result.KICK_BANNED, joined);
@@ -95,27 +82,6 @@ class BanLoginController implements Listener {
         if (this.punishmentSettings.messageWhenBanned() && this.shouldNotifyStaff(targetUuid)) {
             this.notifyStaff(event.getPlayer().getName());
         }
-    }
-
-    private void banEvasionIpIfNeeded(InetAddress address, Punishment punishment, List<Component> kickMessage) {
-        if (address == null) {
-            return;
-        }
-
-        String ip = address.getHostAddress();
-
-        if (this.ipPunishmentService.isIpBanned(ip)) {
-            return;
-        }
-
-        this.ipPunishmentService.banIp(
-            ip,
-            punishment.target(),
-            punishment.operator(),
-            punishment.reason(),
-            punishment.expiresAt().orElse(null),
-            kickMessage
-        );
     }
 
     private boolean shouldNotifyStaff(UUID targetUuid) {

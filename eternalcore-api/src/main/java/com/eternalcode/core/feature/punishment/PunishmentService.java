@@ -21,6 +21,8 @@ public interface PunishmentService {
 
     CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason);
 
+    CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt);
+
     Optional<Punishment> getActiveBan(UUID targetUuid);
 
     Optional<Punishment> getActiveMute(UUID targetUuid);
@@ -30,4 +32,10 @@ public interface PunishmentService {
     boolean isBanned(UUID targetUuid);
 
     boolean isMuted(UUID targetUuid);
+
+    List<Punishment> activeBans();
+
+    List<Punishment> activeMutes();
+
+    List<Punishment> activeWarns();
 }

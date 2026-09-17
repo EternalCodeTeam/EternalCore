@@ -47,7 +47,10 @@ final class PunishmentHistoryItemFactory {
         String operator = entry.operator().name();
         String reason = entry.reason();
         String date = dateFormatter.format(entry.timestamp());
-        String relativeTime = DurationUtil.format(Duration.between(entry.timestamp(), Instant.now()), true) + " temu";
+        String relativeTime = DurationUtil.format(Duration.between(entry.timestamp(), Instant.now()), true);
+        String expires = entry.expiresAt()
+            .map(expiresAt -> DurationUtil.format(Duration.between(entry.timestamp(), expiresAt), true))
+            .orElse(punishmentSettings.permanentLabel());
 
         String nameTemplate = punishmentSettings.historyGuiEntryName()
             .replace("{ACTION}", action)
@@ -55,6 +58,7 @@ final class PunishmentHistoryItemFactory {
             .replace("{OPERATOR}", operator)
             .replace("{REASON}", reason)
             .replace("{DATE}", date)
+            .replace("{EXPIRES}", expires)
             .replace("{RELATIVE_TIME}", relativeTime);
 
         Component name = miniMessage.deserialize(nameTemplate);

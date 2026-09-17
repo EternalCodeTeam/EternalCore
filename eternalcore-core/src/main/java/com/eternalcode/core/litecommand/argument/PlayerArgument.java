@@ -16,7 +16,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @LiteArgument(type = Player.class)
-
 public class PlayerArgument extends AbstractViewerArgument<Player> {
 
     private final Server server;

@@ -32,6 +32,11 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś gracza <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest zbanowany!");
 
+    @Comment({ " ", "# {IP} - Adres IP, {OPERATOR} - Administrator" })
+    Notice unbanIpBroadcast = Notice.chat("<green>► <white>Adres IP <green>{IP} <white>został odbanowany przez <green>{OPERATOR}!");
+    Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś adres IP <green>{IP}!");
+    Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>Adres IP {IP} nie jest zbanowany!");
+
     @Comment({ " ", "# Sekcja odpowiedzialna za wyrzucanie graczy" })
     Notice kickBroadcast = Notice.chat("<red>► <white>Gracz <red>{PLAYER} <white>został wyrzucony przez <red>{OPERATOR}<white>! Powód: <gray>{REASON}");
     Notice kickBroadcastSilent = Notice.chat("<dark_red>[CICHY KICK] <white>Gracz <red>{PLAYER} <white>został wyrzucony przez <red>{OPERATOR}<white>! Powód: <gray>{REASON}");
@@ -51,6 +56,7 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice muteSuccessPrivate = Notice.chat("<red>► <white>Wyciszyłeś gracza <red>{PLAYER}!");
     Notice muteAlreadyMuted = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} jest już wyciszony!");
     Notice muteBlockedChat = Notice.chat("<red>✘ <dark_red>Jesteś wyciszony! Powód: <gray>{REASON} <dark_red>Pozostało: <gray>{REMAINING_TIME}");
+    Notice muteBlockedSign = Notice.chat("<red>✘ <dark_red>Jesteś wyciszony! Powód: <gray>{REASON} <dark_red>Pozostało: <gray>{REMAINING_TIME}");
 
     @Comment({ " ", "# Sekcja odpowiedzialna za odciszanie graczy" })
     Notice unmuteBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został odciszony przez <green>{OPERATOR}!");
@@ -76,9 +82,10 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     @Comment({ " ", "# {PLAYER} - Sprawdzany gracz, {PAGE} - Numer strony" })
     Notice historyHeaderPlayer = Notice.chat("<gray>► <white>Historia kar gracza <yellow>{PLAYER} <gray>(strona {PAGE}):");
     @Comment({ " ", "# {DATE} - Data, {ACTION} - Typ kary, {PLAYER} - Ukarany, {OPERATOR} - Administrator, {REASON} - Powód" })
-    Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>przez <white>{OPERATOR} <gray>- <white>{REASON}");
+    Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>przez <white>{OPERATOR} <gray>- <white>{REASON} <dark_gray>({EXPIRES})");
     Notice historyEmpty = Notice.chat("<gray>Brak wpisów w historii.");
     Notice historyError = Notice.chat("<red>✘ <dark_red>Wystąpił błąd podczas wczytywania historii. Sprawdź konsolę.");
+    Notice historyNoPermission = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do przeglądania tej historii!");
 
     Notice punishmentActionError = Notice.chat("<red>✘ <dark_red>Wystąpił błąd podczas wykonywania tej akcji. Sprawdź konsolę.");
 }

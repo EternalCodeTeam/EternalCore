@@ -22,6 +22,10 @@ public interface PunishmentMessages {
     Notice unbanSuccessPrivate();
     Notice unbanNotBanned();
 
+    Notice unbanIpBroadcast();
+    Notice unbanIpSuccessPrivate();
+    Notice unbanIpNotBanned();
+
     // Kick
     Notice kickBroadcast();
     Notice kickBroadcastSilent();
@@ -39,6 +43,7 @@ public interface PunishmentMessages {
     Notice muteSuccessPrivate();
     Notice muteAlreadyMuted();
     Notice muteBlockedChat();
+    Notice muteBlockedSign();
 
     // Unmute
     Notice unmuteBroadcast();
@@ -62,6 +67,7 @@ public interface PunishmentMessages {
     Notice historyEntry();
     Notice historyEmpty();
     Notice historyError();
+    Notice historyNoPermission();
 
     Notice punishmentActionError();
 }

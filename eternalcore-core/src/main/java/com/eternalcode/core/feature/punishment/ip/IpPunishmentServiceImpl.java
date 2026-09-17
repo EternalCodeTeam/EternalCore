@@ -76,6 +76,32 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
     }
 
     @Override
+    public CompletableFuture<Void> unbanIp(String ip, PunishmentTarget operator) {
+        Objects.requireNonNull(ip, "ip cannot be null");
+
+        String hash = this.ipCryptoService.hash(ip);
+        IpPunishment cached = this.activeByIpHash.remove(hash);
+
+        if (cached == null) {
+            return CompletableFuture.completedFuture(null);
+        }
+
+        PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
+            UUID.randomUUID(),
+            cached.id(),
+            cached.target(),
+            operator,
+            HistoryAction.UNBAN_IP,
+            "",
+            Instant.now(),
+            null
+        );
+
+        return this.ipPunishmentRepository.deactivate(cached.id())
+            .thenCompose(none -> this.punishmentHistoryService.record(entry));
+    }
+
+    @Override
     public boolean isIpBanned(String ip) {
         return this.getActiveIpBan(ip).isPresent();
     }
@@ -107,7 +133,8 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             punishment.operator(),
             action,
             punishment.reason(),
-            punishment.createdAt()
+            punishment.createdAt(),
+            punishment.expiresAt().orElse(null)
         );
 
         return this.punishmentHistoryService.record(entry);

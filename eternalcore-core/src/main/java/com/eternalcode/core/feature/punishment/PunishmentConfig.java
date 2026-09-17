@@ -14,6 +14,9 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings {
 
+    @Comment("# Should muted players be blocked from writing text on signs?")
+    public boolean blockUsingSignOnMute = true;
+
     @Comment("# Should a message be sent when a banned player tries to join the server?")
     public boolean messageWhenBanned = true;
 
