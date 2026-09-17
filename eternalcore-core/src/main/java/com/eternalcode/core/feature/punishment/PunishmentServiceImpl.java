@@ -126,11 +126,6 @@ class PunishmentServiceImpl implements PunishmentService {
     }
 
     @Override
-    public CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason) {
-        return this.warn(target, operator, reason, null);
-    }
-
-    @Override
     public CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
         Punishment punishment = Punishment.builder()
             .target(target)

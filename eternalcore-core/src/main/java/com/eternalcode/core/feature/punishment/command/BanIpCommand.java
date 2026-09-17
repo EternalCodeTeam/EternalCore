@@ -140,10 +140,7 @@ class BanIpCommand {
         PunishmentTarget targetPunishmentTarget = PunishmentTarget.of(target);
         PunishmentTarget operatorPunishmentTarget = PunishmentTarget.of(operator);
 
-        CompletableFuture<?> banFuture = this.punishmentService.ban(targetPunishmentTarget, operatorPunishmentTarget, reason, expiresAt, kickMessage);
-        CompletableFuture<?> banIpFuture = this.ipPunishmentService.banIp(ip, targetPunishmentTarget, operatorPunishmentTarget, reason, expiresAt, kickMessage);
-
-        CompletableFuture.allOf(banFuture, banIpFuture)
+        this.ipPunishmentService.banIp(ip, targetPunishmentTarget, operatorPunishmentTarget, reason, expiresAt, kickMessage)
             .thenAccept(none -> this.onSuccess(operator, target, reason, expiresText, silent))
             .exceptionally(throwable -> this.onFailure(operator, "banIp", throwable));
     }

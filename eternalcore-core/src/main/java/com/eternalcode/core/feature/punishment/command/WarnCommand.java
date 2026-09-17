@@ -4,6 +4,7 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissions.WARN
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
 import com.eternalcode.core.feature.punishment.PunishmentReasonValidator;
 import com.eternalcode.core.feature.punishment.PunishmentService;
@@ -20,6 +21,8 @@ import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
+import java.time.Duration;
+import java.time.Instant;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -59,8 +62,11 @@ class WarnCommand {
 
     @Execute
     @DescriptionDocs(description = "Warn a player", arguments = "<player> <reason>")
-    void execute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String reason) {
-        if (!this.reasonValidator.isValid(reason)) {
+    void execute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
+        DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason);
+        String reason = parsed.reason();
+
+        if (!this.reasonValidator.isValid(parsed.reason())) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().warnInvalidReason())
                 .placeholder("{MIN}", String.valueOf(this.punishmentSettings.minReasonLength()))
@@ -80,11 +86,11 @@ class WarnCommand {
             return;
         }
 
+        Duration duration = parsed.duration();
+        Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
+
         this.punishmentService.warn(
-                PunishmentTarget.of(target),
-                PunishmentTarget.of(operator),
-                reason
-            )
+            PunishmentTarget.of(target), PunishmentTarget.of(operator), reason, expiresAt)
             .thenAccept(punishment -> this.onSuccess(operator, target, reason, silent))
             .exceptionally(throwable -> this.onFailure(operator, "warn", throwable));
     }

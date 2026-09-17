@@ -19,8 +19,6 @@ public interface PunishmentService {
 
     CompletableFuture<Void> unmute(PunishmentTarget target, PunishmentTarget operator);
 
-    CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason);
-
     CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt);
 
     Optional<Punishment> getActiveBan(UUID targetUuid);

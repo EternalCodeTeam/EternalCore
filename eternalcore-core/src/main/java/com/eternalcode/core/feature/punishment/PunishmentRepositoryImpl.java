@@ -138,15 +138,6 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
     }
 
     @Override
-    public CompletableFuture<Integer> countByTargetAndType(UUID targetUuid, PunishmentType type) {
-        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
-            .where(TYPE.eq(type.name()))
-            .and(TARGET_UUID.eq(targetUuid.toString()))
-            .fetch(this::map))
-            .thenApply(List::size);
-    }
-
-    @Override
     public CompletableFuture<Integer> countByTargetAndType(UUID targetUuid, PunishmentType type, Instant now) {
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
             .where(TYPE.eq(type.name()))

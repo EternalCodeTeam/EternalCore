@@ -7,7 +7,7 @@ public class PunishmentPermissions {
     @PermissionDocs(
         name = "Punishment Staff Messages",
         permission = PunishmentPermissions.STAFF_MESSAGES,
-        description = "Permission allows to see silent punishment broadcasts (e.g. /ban -s)"
+        description = "Permission allows to see silent punishment broadcasts (e.g. /ban -s) && login attemt when banned"
     )
     public static final String STAFF_MESSAGES = "eternalcore.punishment.messages";
 
@@ -19,13 +19,13 @@ public class PunishmentPermissions {
     public static final String HISTORY_SELF = "eternalcore.punishment.history-self";
     public static final String HISTORY_STAFF = "eternalcore.punishment.history";
 
-    public static final String BAN_BYPASS = "eternalcore.ban.bypass";
-    public static final String BAN_IP_BYPASS = "eternalcore.banip.bypass";
+    public static final String BAN_BYPASS = "eternalcore.punishment.ban.bypass";
+    public static final String BAN_IP_BYPASS = "eternalcore.punishment.banip.bypass";
 
-    public static final String KICK_BYPASS = "eternalcore.kick.bypass";
-    public static final String KICKALL_BYPASS = "eternalcore.kickall.bypass";
+    public static final String KICK_BYPASS = "eternalcore.punishment.kick.bypass";
+    public static final String KICKALL_BYPASS = "eternalcore.punishment.kickall.bypass";
 
-    public static final String MUTE_BYPASS = "eternalcore.mute.bypass";
-    public static final String WARN_BYPASS = "eternalcore.warn.bypass";
+    public static final String MUTE_BYPASS = "eternalcore.punishment.mute.bypass";
+    public static final String WARN_BYPASS = "eternalcore.punishment.warn.bypass";
 
 }

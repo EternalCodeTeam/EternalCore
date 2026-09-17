@@ -17,7 +17,7 @@ public class PlayerIpResolver {
 
     @Inject
     PlayerIpResolver(PlayerIpService playerIpService) {
-        this.playerIpService = Objects.requireNonNull(playerIpService, "playerIpService cannot be null");
+        this.playerIpService = playerIpService;
     }
 
     public CompletableFuture<Optional<String>> resolve(OfflinePlayer target) {
