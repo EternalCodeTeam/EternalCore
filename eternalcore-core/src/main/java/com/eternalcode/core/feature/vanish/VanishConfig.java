@@ -19,6 +19,9 @@ public class VanishConfig extends OkaeriConfig implements VanishSettings {
     @Comment("Give night vision effect to vanished players")
     public boolean nightVision = true;
 
+    @Comment("Allow vanished players to fly while vanish is enabled")
+    public boolean allowFlight = true;
+
     @Comment("Should vanished players be able to silently view other players' inventories?")
     public boolean silentInventoryAccess = true;
 
