@@ -30,7 +30,7 @@ object Versions {
     const val APACHE_COMMONS = "2.22.0"
 
     const val TRIUMPH_GUI = "3.1.13"
-    const val INV_UI = "2.4.0"
+    const val INV_UI = "2.3.2"
 
     const val XSERIES = "13.7.1"
 
