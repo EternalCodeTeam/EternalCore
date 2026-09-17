@@ -34,7 +34,7 @@ import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
 import com.eternalcode.core.feature.near.messages.ENNearMessages;
 import com.eternalcode.core.feature.onlineplayers.messages.ENOnlineMessages;
-import com.eternalcode.core.feature.ping.ENPingMessages;
+import com.eternalcode.core.feature.ping.messages.ENPingMessages;
 import com.eternalcode.core.feature.playtime.messages.ENPlaytimeMessages;
 import com.eternalcode.core.feature.powertool.messages.ENPowertoolMessages;
 import com.eternalcode.core.feature.quitmessage.messages.ENQuitMessage;
