@@ -2,6 +2,7 @@ package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.feature.back.messages.PLBackMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
+import com.eternalcode.core.feature.lag.messages.PLLagMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
@@ -316,6 +317,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# End Screen")
     public PLEndScreenMessages endScreen = new PLEndScreenMessages();
+
+    @Comment("# Lag")
+    public PLLagMessages lag = new PLLagMessages();
 
     @Override
     public File getConfigFile(File dataFolder) {
