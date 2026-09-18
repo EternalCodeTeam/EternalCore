@@ -18,6 +18,7 @@ public class ENLagMessages extends OkaeriConfig implements LagMessages {
             "# {MSPT} - Average tick time in milliseconds",
             "# {MEMORY-USED} - Used memory in megabytes",
             "# {MEMORY-MAX} - Max allocated memory in megabytes",
+            "# {MEMORY-FREE} - Free memory in megabytes",
             "# {UPTIME} - Server uptime",
             "# {ONLINE} - Online players count",
             "# {MAX-PLAYERS} - Max players slots",
