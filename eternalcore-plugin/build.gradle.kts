@@ -51,6 +51,7 @@ tasks {
 
         minecraftVersion("26.2")
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
+        downloadPlugins.modrinth("placeholderapi", Versions.PLACEHOLDER_API)
     }
 }
 
