@@ -49,7 +49,7 @@ import java.util.UUID;
         ),
         @PlaceholdersDocs.Entry(
             name = "chat_slowmode_remaining_formatted",
-            description = "Returns the remaining time until the player can send the next message as a formatted duration. e.g. `3s`",
+            description = "Returns the remaining time until the player can send the next message as a formatted duration. e.g. `2h 5m 3s`",
             returnType = Type.STRING,
             requiresPlayer = true
         )
