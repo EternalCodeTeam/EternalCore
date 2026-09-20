@@ -2,6 +2,7 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.feature.back.messages.BackMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
+import com.eternalcode.core.feature.lag.messages.LagMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
@@ -179,4 +180,6 @@ public interface Translation {
     DemoScreenMessages demoScreen();
 
     EndScreenMessages endScreen();
+
+    LagMessages lag();
 }
