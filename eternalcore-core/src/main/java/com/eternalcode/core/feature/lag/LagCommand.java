@@ -41,13 +41,13 @@ class LagCommand {
         long freeMemory = runtime.freeMemory();
 
         this.noticeService.create()
-            .placeholder("{TPS-1M}", LagStatsUtil.formatTps(tps[0]))
-            .placeholder("{TPS-5M}", LagStatsUtil.formatTps(tps[1]))
-            .placeholder("{TPS-15M}", LagStatsUtil.formatTps(tps[2]))
-            .placeholder("{MSPT}", LagStatsUtil.formatMspt(this.server.getAverageTickTime()))
-            .placeholder("{MEMORY-USED}", LagStatsUtil.formatMemoryMb(usedMemory))
-            .placeholder("{MEMORY-MAX}", LagStatsUtil.formatMemoryMb(maxMemory))
-            .placeholder("{MEMORY-FREE}", LagStatsUtil.formatMemoryMb(freeMemory))
+            .placeholder("{TPS-1M}", LagStatsFormatter.formatTps(tps[0]))
+            .placeholder("{TPS-5M}", LagStatsFormatter.formatTps(tps[1]))
+            .placeholder("{TPS-15M}", LagStatsFormatter.formatTps(tps[2]))
+            .placeholder("{MSPT}", LagStatsFormatter.formatMspt(this.server.getAverageTickTime()))
+            .placeholder("{MEMORY-USED}", LagStatsFormatter.formatMemoryMb(usedMemory))
+            .placeholder("{MEMORY-MAX}", LagStatsFormatter.formatMemoryMb(maxMemory))
+            .placeholder("{MEMORY-FREE}", LagStatsFormatter.formatMemoryMb(freeMemory))
             .placeholder("{UPTIME}", DurationUtil.format(uptime, true))
             .placeholder("{ONLINE}", String.valueOf(this.server.getOnlinePlayers().size()))
             .placeholder("{MAX-PLAYERS}", String.valueOf(this.server.getMaxPlayers()))
@@ -63,8 +63,8 @@ class LagCommand {
         lines.add(worldsHeader);
 
         for (World world : this.server.getWorlds()) {
-            WorldStats stats = WorldStatsUtil.collect(world);
-            lines.add(LagStatsUtil.formatWorldEntry(worldEntryTemplate, stats));
+            WorldStats stats = WorldStatsCollector.collect(world);
+            lines.add(LagStatsFormatter.formatWorldEntry(worldEntryTemplate, stats));
         }
 
         return lines;

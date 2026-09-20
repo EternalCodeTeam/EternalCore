@@ -1,11 +1,10 @@
 package com.eternalcode.core.feature.lag;
 
-import org.bukkit.Chunk;
 import org.bukkit.World;
 
-public final class WorldStatsUtil {
+public final class WorldStatsCollector {
 
-    private WorldStatsUtil() {
+    private WorldStatsCollector() {
         throw new UnsupportedOperationException("Cannot instantiate utility class");
     }
 
@@ -18,18 +17,8 @@ public final class WorldStatsUtil {
             world.getName(),
             world.getChunkCount(),
             world.getEntityCount(),
-            countTileEntities(world),
+            world.getTileEntityCount(),
             world.getPlayers().size()
         );
-    }
-
-    private static int countTileEntities(World world) {
-        int tileEntities = 0;
-
-        for (Chunk chunk : world.getLoadedChunks()) {
-            tileEntities += chunk.getTileEntities(false).length;
-        }
-
-        return tileEntities;
     }
 }

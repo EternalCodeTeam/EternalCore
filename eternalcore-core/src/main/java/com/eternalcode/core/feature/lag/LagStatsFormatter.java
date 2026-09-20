@@ -2,15 +2,16 @@ package com.eternalcode.core.feature.lag;
 
 import java.util.Locale;
 
-public final class LagStatsUtil {
+public final class LagStatsFormatter {
 
     public static final double TARGET_TPS = 20.0;
 
     private static final double TPS_GOOD_THRESHOLD = 18.0;
     private static final double TPS_MEDIUM_THRESHOLD = 15.0;
     private static final double BYTES_IN_MEGABYTE = 1024.0 * 1024.0;
+    private static final double MILLIS_PER_SECOND = 1000.0;
 
-    private LagStatsUtil() {
+    private LagStatsFormatter() {
         throw new UnsupportedOperationException("Cannot instantiate utility class");
     }
 
@@ -20,7 +21,7 @@ public final class LagStatsUtil {
     }
 
     public static String formatMspt(double mspt) {
-        double equivalentTps = Math.min(TARGET_TPS, 1000.0 / mspt);
+        double equivalentTps = mspt <= 0.0 ? TARGET_TPS : Math.min(TARGET_TPS, MILLIS_PER_SECOND / mspt);
         return colorFor(equivalentTps) + String.format(Locale.ROOT, "%.2f", mspt) + "ms";
     }
 
@@ -50,10 +51,10 @@ public final class LagStatsUtil {
         }
 
         return template
-            .replace("{WORLD}", stats.name())
             .replace("{CHUNKS}", String.valueOf(stats.chunks()))
             .replace("{ENTITIES}", String.valueOf(stats.entities()))
             .replace("{TILE-ENTITIES}", String.valueOf(stats.tileEntities()))
-            .replace("{PLAYERS}", String.valueOf(stats.players()));
+            .replace("{PLAYERS}", String.valueOf(stats.players()))
+            .replace("{WORLD}", stats.name());
     }
 }
