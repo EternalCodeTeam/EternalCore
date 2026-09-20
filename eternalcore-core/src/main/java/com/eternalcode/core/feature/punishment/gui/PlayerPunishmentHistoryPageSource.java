@@ -5,7 +5,6 @@ import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 final class PlayerPunishmentHistoryPageSource implements PunishmentHistoryPageSource {
 
@@ -18,7 +17,7 @@ final class PlayerPunishmentHistoryPageSource implements PunishmentHistoryPageSo
     }
 
     @Override
-    public CompletableFuture<List<PunishmentHistoryEntry>> fetch(int page, int pageSize) {
+    public List<PunishmentHistoryEntry> fetch(int page, int pageSize) {
         return this.punishmentHistoryService.findByTarget(this.targetUuid, page, pageSize);
     }
 }

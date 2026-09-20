@@ -29,10 +29,15 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been unbanned by <green>{OPERATOR}!");
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>You unbanned player <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not banned!");
+    @Comment("# {PLAYER} - Player, {OPERATOR} - Staff member")
+    Notice unbanBroadcastSilent = Notice.chat("<dark_gray>[<red>Silent<dark_gray>] <color:#9d6eef>► <white>{PLAYER} <white>was unbanned by <color:#9d6eef>{OPERATOR}");
+
 
     Notice unbanIpBroadcast = Notice.chat("<green>► <white>IP address <green>{IP} <white>has been unbanned by <green>{OPERATOR}!");
     Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>You unbanned IP address <green>{IP}!");
     Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>IP address {IP} is not banned!");
+    @Comment("# {IP} - IP address, {OPERATOR} - Staff member")
+    Notice unbanIpBroadcastSilent = Notice.chat("<dark_gray>[<red>Silent<dark_gray>] <color:#9d6eef>► <white>Address {IP} <white>was unbanned by <color:#9d6eef>{OPERATOR}");
 
     @Comment({ " ", "# Kick section" })
     Notice kickBroadcast = Notice.chat("<red>► <white>Player <red>{PLAYER} <white>has been kicked by <red>{OPERATOR}<white>! Reason: <gray>{REASON}");
@@ -40,7 +45,6 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice kickCannotKickAdmin = Notice.chat("<red>✘ <dark_red>You cannot kick administrator <red>{PLAYER}!");
     Notice kickInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice kickSuccessPrivate = Notice.chat("<red>► <white>You kicked player <red>{PLAYER}!");
-    Notice kickNotOnline = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not online!");
     Notice kickAllBroadcast = Notice.chat("<red>► <white>Server has been cleared by <red>{OPERATOR}<white>! Reason: <gray>{REASON} <white>(<red>{COUNT}<white> players)");
 
     @Comment({ " ", "# Mute section" })
@@ -52,11 +56,14 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice muteAlreadyMuted = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is already muted!");
     Notice muteBlockedChat = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
     Notice muteBlockedSign = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
+    Notice muteBlockedCommand = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
 
     @Comment({ " ", "# Unmute section" })
     Notice unmuteBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been unmuted by <green>{OPERATOR}!");
     Notice unmuteSuccessPrivate = Notice.chat("<green>► <white>You unmuted player <green>{PLAYER}!");
     Notice unmuteNotMuted = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not muted!");
+    @Comment("# {PLAYER} - Player, {OPERATOR} - Staff member")
+    Notice unmuteBroadcastSilent = Notice.chat("<dark_gray>[<red>Silent<dark_gray>] <color:#9d6eef>► <white>{PLAYER} <white>was unmuted by <color:#9d6eef>{OPERATOR}");
 
     @Comment({ " ", "# Warn section" })
     Notice warnBroadcast = Notice.chat("<yellow>► <white>Player <yellow>{PLAYER} <white>has been warned by <yellow>{OPERATOR}<white>! Reason: <gray>{REASON}");

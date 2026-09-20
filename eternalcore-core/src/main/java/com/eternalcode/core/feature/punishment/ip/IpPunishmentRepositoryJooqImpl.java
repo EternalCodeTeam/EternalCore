@@ -16,7 +16,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Base64;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -24,14 +23,14 @@ import java.util.concurrent.CompletableFuture;
 import static com.eternalcode.core.feature.punishment.ip.IpPunishmentSchema.*;
 
 @Repository
-class IpPunishmentRepositoryImpl implements IpPunishmentRepository {
+class IpPunishmentRepositoryJooqImpl implements IpPunishmentRepository {
 
     private final DSLContext dslContext;
     private final Scheduler scheduler;
     private final IpCryptoService ipCryptoService;
 
     @Inject
-    IpPunishmentRepositoryImpl(DSLContext dslContext, Scheduler scheduler, IpCryptoService ipCryptoService) {
+    IpPunishmentRepositoryJooqImpl(DSLContext dslContext, Scheduler scheduler, IpCryptoService ipCryptoService) {
         this.dslContext = dslContext;
         this.scheduler = scheduler;
         this.ipCryptoService = ipCryptoService;
@@ -52,15 +51,13 @@ class IpPunishmentRepositoryImpl implements IpPunishmentRepository {
             .column(REASON)
             .column(CREATED_AT)
             .column(EXPIRES_AT)
-            .column(ACTIVE)
+            .column(REVOKED_AT)
             .constraints(DSL.constraint("pk_eternalcore_punishment_ips").primaryKey(ID))
             .execute();
     }
 
     @Override
     public CompletableFuture<Void> save(IpPunishment ipPunishment) {
-        Objects.requireNonNull(ipPunishment, "ipPunishment cannot be null");
-
         return this.scheduler.completeAsync(() -> {
             EncryptedValue encrypted = this.ipCryptoService.encrypt(ipPunishment.ip());
             String hash = this.ipCryptoService.hash(ipPunishment.ip());
@@ -76,8 +73,8 @@ class IpPunishmentRepositoryImpl implements IpPunishmentRepository {
                 .set(OPERATOR_NAME, ipPunishment.operator().name())
                 .set(REASON, ipPunishment.reason())
                 .set(CREATED_AT, this.toOffsetDateTime(ipPunishment.createdAt()))
-                .set(EXPIRES_AT, ipPunishment.expiresAt().map(this::toOffsetDateTime).orElse(null))
-                .set(ACTIVE, ipPunishment.active())
+                .set(EXPIRES_AT, ipPunishment.expiresAtOptional().map(this::toOffsetDateTime).orElse(null))
+                .set(REVOKED_AT, ipPunishment.revokedAtOptional().map(this::toOffsetDateTime).orElse(null))
                 .execute();
 
             return null;
@@ -86,12 +83,11 @@ class IpPunishmentRepositoryImpl implements IpPunishmentRepository {
 
     @Override
     public CompletableFuture<Void> deactivate(UUID id) {
-        Objects.requireNonNull(id, "id cannot be null");
-
         return this.scheduler.completeAsync(() -> {
             this.dslContext.update(PUNISHMENT_IPS)
-                .set(ACTIVE, false)
+                .set(REVOKED_AT, this.toOffsetDateTime(Instant.now()))
                 .where(ID.eq(id.toString()))
+                .and(REVOKED_AT.isNull())
                 .execute();
 
             return null;
@@ -100,29 +96,35 @@ class IpPunishmentRepositoryImpl implements IpPunishmentRepository {
 
     @Override
     public CompletableFuture<Optional<IpPunishment>> findActiveByIp(String ip) {
-        Objects.requireNonNull(ip, "ip cannot be null");
-
         String hash = this.ipCryptoService.hash(ip);
 
-        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENT_IPS)
-            .where(IP_HASH.eq(hash))
-            .and(ACTIVE.eq(true))
-            .fetchOptional(this::map));
+        return this.scheduler.completeAsync(() -> {
+            OffsetDateTime now = this.toOffsetDateTime(Instant.now());
+
+            return this.dslContext.selectFrom(PUNISHMENT_IPS)
+                .where(IP_HASH.eq(hash))
+                .and(REVOKED_AT.isNull())
+                .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(now)))
+                .fetchOptional(this::map);
+        });
     }
 
     @Override
     public CompletableFuture<List<IpPunishment>> findAllActive() {
-        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENT_IPS)
-            .where(ACTIVE.eq(true))
-            .fetch(this::map));
+        return this.scheduler.completeAsync(() -> {
+            OffsetDateTime now = this.toOffsetDateTime(Instant.now());
+
+            return this.dslContext.selectFrom(PUNISHMENT_IPS)
+                .where(REVOKED_AT.isNull())
+                .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(now)))
+                .fetch(this::map);
+        });
     }
 
     @Override
-   public CompletableFuture<List<IpPunishment>> findExpired(Instant now) {
-        Objects.requireNonNull(now, "now cannot be null");
-
+    public CompletableFuture<List<IpPunishment>> findExpired(Instant now) {
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENT_IPS)
-            .where(ACTIVE.eq(true))
+            .where(REVOKED_AT.isNull())
             .and(EXPIRES_AT.isNotNull())
             .and(EXPIRES_AT.le(this.toOffsetDateTime(now)))
             .fetch(this::map));
@@ -144,6 +146,7 @@ class IpPunishmentRepositoryImpl implements IpPunishmentRepository {
         );
 
         OffsetDateTime expiresAt = record.get(EXPIRES_AT);
+        OffsetDateTime revokedAt = record.get(REVOKED_AT);
 
         return IpPunishment.builder()
             .id(UUID.fromString(record.get(ID)))
@@ -153,7 +156,7 @@ class IpPunishmentRepositoryImpl implements IpPunishmentRepository {
             .reason(record.get(REASON))
             .createdAt(record.get(CREATED_AT).toInstant())
             .expiresAt(expiresAt == null ? null : expiresAt.toInstant())
-            .active(record.get(ACTIVE))
+            .revokedAt(revokedAt == null ? null : revokedAt.toInstant())
             .build();
     }
 

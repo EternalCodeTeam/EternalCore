@@ -5,7 +5,6 @@ import com.eternalcode.core.injector.annotations.component.Task;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Task(delay = 20L, period = 5L * 60, unit = TimeUnit.SECONDS)

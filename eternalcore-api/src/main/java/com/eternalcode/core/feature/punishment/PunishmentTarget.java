@@ -1,30 +1,13 @@
 package com.eternalcode.core.feature.punishment;
 
-import java.util.Objects;
 import java.util.UUID;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public final class PunishmentTarget {
+public record PunishmentTarget(UUID uuid, String name) {
 
-    public static final UUID CONSOLE_UUID = new UUID(0L, 0L);
-
-    private final UUID uuid;
-    private final String name;
-
-    public PunishmentTarget(UUID uuid, String name) {
-        this.uuid = Objects.requireNonNull(uuid, "uuid cannot be null");
-        this.name = Objects.requireNonNull(name, "name cannot be null");
-    }
-
-    public UUID uuid() {
-        return this.uuid;
-    }
-
-    public String name() {
-        return this.name;
-    }
+    public static final UUID CONSOLE_UUID = UUID.nameUUIDFromBytes("CONSOLE_UUID".getBytes());
 
     public static PunishmentTarget of(OfflinePlayer player) {
         return new PunishmentTarget(player.getUniqueId(), player.getName());
@@ -47,10 +30,8 @@ public final class PunishmentTarget {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof PunishmentTarget other)) {
-            return false;
-        }
-        return this.uuid.equals(other.uuid);
+
+        return obj instanceof PunishmentTarget other && this.uuid.equals(other.uuid);
     }
 
     @Override

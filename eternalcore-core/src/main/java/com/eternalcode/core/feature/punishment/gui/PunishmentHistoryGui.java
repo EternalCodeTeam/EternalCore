@@ -27,8 +27,8 @@ public class PunishmentHistoryGui {
 
     public void open(Player viewer) {
         PunishmentHistoryPageSource pageSource = new RecentPunishmentHistoryPageSource(this.punishmentHistoryService);
-        PunishmentHistoryGuiSession session = new PunishmentHistoryGuiSession(pageSource, this.punishmentSettings.historyGuiFetchBatchSize());
+        PunishmentHistoryGuiSession session = new PunishmentHistoryGuiSession(pageSource, 90);
 
-        this.guiBuilder.open(viewer, this.punishmentSettings.historyGuiTitle(), session);
+        this.guiBuilder.open(viewer, "", session);
     }
 }

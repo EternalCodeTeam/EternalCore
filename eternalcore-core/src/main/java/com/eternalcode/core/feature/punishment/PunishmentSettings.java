@@ -10,6 +10,10 @@ public interface PunishmentSettings {
 
     boolean blockUsingSignOnMute();
 
+    boolean blockCommandsOnMute();
+
+    List<String> blockedMuteCommands();
+
     boolean messageWhenBanned();
 
     Duration messageWhenBannedCooldown();
@@ -28,35 +32,9 @@ public interface PunishmentSettings {
 
     List<String> kickScreen();
 
-    int historyPageSize();
-
     Map<Integer, String> warnEscalations();
 
-    int historyGuiEntryUpdateIntervalTicks();
+    String warnEscalationReason();
 
-    int historyGuiPageSize();
 
-    int historyGuiFetchBatchSize();
-
-    String historyGuiTitle();
-
-    String historyGuiPlayerTitle();
-
-    Material historyGuiFillerMaterial();
-
-    Material historyGuiBackArrowMaterial();
-
-    String historyGuiBackArrowName();
-
-    Material historyGuiForwardArrowMaterial();
-
-    String historyGuiForwardArrowName();
-
-    String historyGuiEntryName();
-
-    List<String> historyGuiEntryLore();
-
-    Map<String, Material> historyGuiEntryMaterials();
-
-    Material historyGuiEntryDefaultMaterial();
 }

@@ -16,9 +16,11 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -77,6 +79,40 @@ class MuteController implements Listener {
         });
     }
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    void onCommand(PlayerCommandPreprocessEvent event) {
+        if (!this.punishmentSettings.blockCommandsOnMute()) {
+            return;
+        }
+
+        String commandLabel = this.extractCommandLabel(event.getMessage());
+
+        if (!this.punishmentSettings.blockedMuteCommands().contains(commandLabel)) {
+            return;
+        }
+
+        Optional<Punishment> activeMute = this.resolveBlockingMute(event, event.getPlayer());
+
+        activeMute.ifPresent(punishment -> {
+            String remainingText = this.remainingText(punishment);
+
+            this.noticeService.create()
+                .notice(translation -> translation.punishment().muteBlockedCommand())
+                .placeholder("{REASON}", punishment.reason())
+                .placeholder("{REMAINING_TIME}", remainingText)
+                .player(event.getPlayer().getUniqueId())
+                .send();
+        });
+    }
+
+    private String extractCommandLabel(String message) {
+        String withoutSlash = message.startsWith("/") ? message.substring(1) : message;
+        String firstToken = withoutSlash.split(" ", 2)[0];
+        String label = firstToken.contains(":") ? firstToken.substring(firstToken.indexOf(':') + 1) : firstToken;
+
+        return label.toLowerCase(Locale.ROOT);
+    }
+
     private Optional<Punishment> resolveBlockingMute(Cancellable event, Player player) {
         if (player.hasPermission(MUTE_BYPASS)) {
             return Optional.empty();
@@ -93,6 +129,6 @@ class MuteController implements Listener {
     private String remainingText(Punishment punishment) {
         return punishment.isPermanent()
             ? this.punishmentSettings.permanentLabel()
-            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAt().orElseThrow()), true);
+            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAtOptional().orElseThrow()), true);
     }
 }

@@ -10,7 +10,5 @@ interface PunishmentHistoryRepository {
 
     CompletableFuture<List<PunishmentHistoryEntry>> findByTarget(UUID targetUuid, int page, int pageSize);
 
-    CompletableFuture<List<PunishmentHistoryEntry>> findByOperator(UUID operatorUuid, int page, int pageSize);
-
     CompletableFuture<List<PunishmentHistoryEntry>> findRecent(int page, int pageSize);
 }

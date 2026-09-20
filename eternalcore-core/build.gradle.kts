@@ -110,10 +110,6 @@ eternalShadow {
     library("dev.triumphteam:triumph-gui:${Versions.TRIUMPH_GUI}")
     libraryRelocate("dev.triumphteam")
 
-    // Invui
-    library("xyz.xenondevs.invui:invui:${Versions.INV_UI}")
-    libraryRelocate("xyz.xenondevs.invui")
-
     // metrics
     library("org.bstats:bstats-bukkit:${Versions.BSTATS}")
     libraryRelocate("org.bstats")

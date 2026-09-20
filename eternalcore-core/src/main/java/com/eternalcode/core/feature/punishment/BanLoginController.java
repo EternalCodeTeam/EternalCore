@@ -18,7 +18,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,7 +62,7 @@ class BanLoginController implements Listener {
 
         String expiresText = punishment.isPermanent()
             ? this.punishmentSettings.permanentLabel()
-            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAt().orElseThrow()), true);
+            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAtOptional().orElseThrow()), true);
 
         List<Component> kickMessage = this.templateRenderer.render(
             this.punishmentSettings.banKickScreen(),

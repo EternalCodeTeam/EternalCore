@@ -12,8 +12,6 @@ public final class DurationReasonParser {
     }
 
     public static Result parse(String input) {
-        Objects.requireNonNull(input, "input cannot be null");
-
         String trimmed = input.trim();
         int spaceIndex = trimmed.indexOf(' ');
         String firstToken = spaceIndex == -1 ? trimmed : trimmed.substring(0, spaceIndex);

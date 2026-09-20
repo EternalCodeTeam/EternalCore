@@ -16,6 +16,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -27,7 +28,6 @@ import net.kyori.adventure.text.Component;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -49,6 +49,7 @@ class BanCommand {
     private final PunishmentService punishmentService;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
+    private final PunishmentBroadcastService broadcastService;
     private final PunishmentReasonValidator reasonValidator;
     private final TemplateMessageRenderer templateRenderer;
     private final Logger logger;
@@ -58,6 +59,7 @@ class BanCommand {
         PunishmentService punishmentService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
+        PunishmentBroadcastService broadcastService,
         PunishmentReasonValidator reasonValidator,
         TemplateMessageRenderer templateRenderer,
         Logger logger
@@ -65,12 +67,14 @@ class BanCommand {
         this.punishmentService = punishmentService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
+        this.broadcastService = broadcastService;
         this.reasonValidator = reasonValidator;
         this.templateRenderer = templateRenderer;
         this.logger = logger;
     }
 
     @Execute
+    @Async
     @DescriptionDocs(description = "Ban a player, optionally for a specified duration", arguments = "<player> [time] <reason>")
     void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
         DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason);
@@ -121,55 +125,48 @@ class BanCommand {
             )
         );
 
-        this.punishmentService.ban(
+        try {
+            this.punishmentService.ban(
                 PunishmentTarget.of(target),
                 PunishmentTarget.of(operator),
                 reason,
                 expiresAt,
                 kickMessage
-            )
-            .thenAccept(punishment -> this.onSuccess(operator, target, reason, expiresText, silent))
-            .exceptionally(throwable -> this.onFailure(operator, "ban", throwable));
+            );
+
+            this.onSuccess(operator, target, reason, expiresText, silent);
+        }
+        catch (Exception exception) {
+            this.onFailure(operator, "ban", exception);
+        }
     }
 
     private void onSuccess(CommandSender operator, OfflinePlayer target, String reason, String expiresText, boolean silent) {
-        var broadcast = this.noticeService.create()
-            .notice(translation -> silent
-                ? translation.punishment().banBroadcastSilent()
-                : translation.punishment().banBroadcast())
-            .placeholder("{PLAYER}", target.getName())
-            .placeholder("{OPERATOR}", operator.getName())
-            .placeholder("{REASON}", reason)
-            .placeholder("{EXPIRES}", expiresText);
+        this.broadcastService.broadcast(
+            translation -> silent ? translation.punishment().banBroadcastSilent() : translation.punishment().banBroadcast(),
+            Map.of(
+                "{PLAYER}", target.getName(),
+                "{OPERATOR}", operator.getName(),
+                "{REASON}", reason,
+                "{EXPIRES}", expiresText
+            ),
+            silent,
+            PunishmentPermissions.STAFF_MESSAGES
+        );
 
-        if (silent) {
-            for (Player staff : operator.getServer().getOnlinePlayers()) {
-                if (staff.hasPermission(PunishmentPermissions.STAFF_MESSAGES)) {
-                    broadcast = broadcast.player(staff.getUniqueId());
-                }
-            }
-        }
-        else {
-            broadcast = broadcast.all();
-        }
-
-        broadcast.send();
-
-        this.noticeService.create()
-            .notice(translation -> translation.punishment().banSuccessPrivate())
-            .placeholder("{PLAYER}", target.getName())
-            .sender(operator)
-            .send();
+        this.broadcastService.privateConfirmation(
+            translation -> translation.punishment().banSuccessPrivate(),
+            Map.of("{PLAYER}", target.getName()),
+            operator
+        );
     }
 
-    private Void onFailure(CommandSender operator, String operation, Throwable throwable) {
+    private void onFailure(CommandSender operator, String operation, Throwable throwable) {
         this.logger.log(Level.SEVERE, "Failed to execute punishment action (" + operation + ")", throwable);
 
         this.noticeService.create()
             .notice(translation -> translation.punishment().punishmentActionError())
             .sender(operator)
             .send();
-
-        return null;
     }
 }

@@ -7,5 +7,5 @@ import java.util.concurrent.CompletableFuture;
 
 interface PunishmentHistoryPageSource {
 
-    CompletableFuture<List<PunishmentHistoryEntry>> fetch(int page, int pageSize);
+    List<PunishmentHistoryEntry> fetch(int page, int pageSize);
 }

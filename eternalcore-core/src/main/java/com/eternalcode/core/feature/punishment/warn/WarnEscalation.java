@@ -10,7 +10,7 @@ public final class WarnEscalation {
     private final Duration duration;
 
     public WarnEscalation(WarnEscalationAction action, Duration duration) {
-        this.action = Objects.requireNonNull(action, "action cannot be null");
+        this.action = action;
         this.duration = duration;
     }
 

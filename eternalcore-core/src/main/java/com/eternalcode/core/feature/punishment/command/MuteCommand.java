@@ -15,6 +15,7 @@ import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -28,6 +29,7 @@ import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,6 +45,7 @@ class MuteCommand {
     private final PunishmentService punishmentService;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
+    private final PunishmentBroadcastService broadcastService;
     private final PunishmentReasonValidator reasonValidator;
     private final Logger logger;
 
@@ -51,17 +54,20 @@ class MuteCommand {
         PunishmentService punishmentService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
+        PunishmentBroadcastService broadcastService,
         PunishmentReasonValidator reasonValidator,
         Logger logger
     ) {
         this.punishmentService = punishmentService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
+        this.broadcastService = broadcastService;
         this.reasonValidator = reasonValidator;
         this.logger = logger;
     }
 
     @Execute
+    @Async
     @DescriptionDocs(description = "Mute a player, optionally for a specified duration", arguments = "<player> [time] <reason>")
     void executeMute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
         DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason);
@@ -101,54 +107,47 @@ class MuteCommand {
         Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
         String expiresText = expiresAt == null ? this.punishmentSettings.permanentLabel() : DurationUtil.format(duration, true);
 
-        this.punishmentService.mute(
+        try {
+            this.punishmentService.mute(
                 PunishmentTarget.of(target),
                 PunishmentTarget.of(operator),
                 reason,
                 expiresAt
-            )
-            .thenAccept(punishment -> this.onSuccess(operator, target, reason, expiresText, silent))
-            .exceptionally(throwable -> this.onFailure(operator, "mute", throwable));
+            );
+
+            this.onSuccess(operator, target, reason, expiresText, silent);
+        }
+        catch (Exception exception) {
+            this.onFailure(operator, "mute", exception);
+        }
     }
 
     private void onSuccess(CommandSender operator, OfflinePlayer target, String reason, String expiresText, boolean silent) {
-        var broadcast = this.noticeService.create()
-            .notice(translation -> silent
-                ? translation.punishment().muteBroadcastSilent()
-                : translation.punishment().muteBroadcast())
-            .placeholder("{PLAYER}", target.getName())
-            .placeholder("{OPERATOR}", operator.getName())
-            .placeholder("{REASON}", reason)
-            .placeholder("{EXPIRES}", expiresText);
+        this.broadcastService.broadcast(
+            translation -> silent ? translation.punishment().muteBroadcastSilent() : translation.punishment().muteBroadcast(),
+            Map.of(
+                "{PLAYER}", target.getName(),
+                "{OPERATOR}", operator.getName(),
+                "{REASON}", reason,
+                "{EXPIRES}", expiresText
+            ),
+            silent,
+            PunishmentPermissions.STAFF_MESSAGES
+        );
 
-        if (silent) {
-            for (Player staff : operator.getServer().getOnlinePlayers()) {
-                if (staff.hasPermission(PunishmentPermissions.STAFF_MESSAGES)) {
-                    broadcast = broadcast.player(staff.getUniqueId());
-                }
-            }
-        }
-        else {
-            broadcast = broadcast.all();
-        }
-
-        broadcast.send();
-
-        this.noticeService.create()
-            .notice(translation -> translation.punishment().muteSuccessPrivate())
-            .placeholder("{PLAYER}", target.getName())
-            .sender(operator)
-            .send();
+        this.broadcastService.privateConfirmation(
+            translation -> translation.punishment().muteSuccessPrivate(),
+            Map.of("{PLAYER}", target.getName()),
+            operator
+        );
     }
 
-    private Void onFailure(CommandSender operator, String operation, Throwable throwable) {
+    private void onFailure(CommandSender operator, String operation, Throwable throwable) {
         this.logger.log(Level.SEVERE, "Failed to execute punishment action (" + operation + ")", throwable);
 
         this.noticeService.create()
             .notice(translation -> translation.punishment().punishmentActionError())
             .sender(operator)
             .send();
-
-        return null;
     }
 }

@@ -7,72 +7,69 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class IpPunishment {
+/**
+ * Immutable IP punishment. Active state is derived, never stored:
+ * a punishment is active when it is not revoked and not expired.
+ *
+ * @param expiresAt null = permanent
+ * @param revokedAt null = not revoked
+ */
+public record IpPunishment(
+    UUID id,
+    String ip,
+    PunishmentTarget target,
+    PunishmentTarget operator,
+    String reason,
+    Instant createdAt,
+    Instant expiresAt,
+    Instant revokedAt
+) {
 
-    private final UUID id;
-    private final String ip;
-    private final PunishmentTarget target;
-    private final PunishmentTarget operator;
-    private final String reason;
-    private final Instant createdAt;
-    private final Instant expiresAt;
-    private final boolean active;
-
-    private IpPunishment(Builder builder) {
-        this.id = Objects.requireNonNull(builder.id, "id cannot be null");
-        this.ip = Objects.requireNonNull(builder.ip, "ip cannot be null");
-        this.target = Objects.requireNonNull(builder.target, "target cannot be null");
-        this.operator = Objects.requireNonNull(builder.operator, "operator cannot be null");
-        this.reason = Objects.requireNonNull(builder.reason, "reason cannot be null");
-        this.createdAt = Objects.requireNonNull(builder.createdAt, "createdAt cannot be null");
-        this.expiresAt = builder.expiresAt;
-        this.active = builder.active;
-
-        if (this.ip.isBlank()) {
-            throw new IllegalArgumentException("ip cannot be blank");
-        }
-        if (this.reason.isBlank()) {
-            throw new IllegalArgumentException("reason cannot be blank");
-        }
-        if (this.expiresAt != null && this.expiresAt.isBefore(this.createdAt)) {
-            throw new IllegalArgumentException("expiresAt cannot be before createdAt");
-        }
-    }
-
-    public UUID id() {
-        return this.id;
-    }
-
-    public String ip() {
-        return this.ip;
-    }
-
-    public PunishmentTarget target() {
-        return this.target;
-    }
-
-    public PunishmentTarget operator() {
-        return this.operator;
-    }
-
-    public String reason() {
-        return this.reason;
-    }
-
-    public Instant createdAt() {
-        return this.createdAt;
-    }
-
-    public Optional<Instant> expiresAt() {
+    public Optional<Instant> expiresAtOptional() {
         return Optional.ofNullable(this.expiresAt);
+    }
+
+    public Optional<Instant> revokedAtOptional() {
+        return Optional.ofNullable(this.revokedAt);
     }
 
     public boolean isPermanent() {
         return this.expiresAt == null;
     }
 
-    public boolean active() {
-        return this.active;
+    public boolean isRevoked() {
+        return this.revokedAt != null;
+    }
+
+    public boolean isExpired(Instant now) {
+        Objects.requireNonNull(now, "now cannot be null");
+
+        return this.expiresAt != null && !now.isBefore(this.expiresAt);
+    }
+
+    public boolean isActive(Instant now) {
+        return !this.isRevoked() && !this.isExpired(now);
+    }
+
+    public boolean isActive() {
+        return this.isActive(Instant.now());
+    }
+
+    public IpPunishment revoke(Instant revokedAt) {
+        if (this.isRevoked()) {
+            throw new IllegalStateException("IP punishment " + this.id + " is already revoked");
+        }
+
+        return new IpPunishment(
+            this.id,
+            this.ip,
+            this.target,
+            this.operator,
+            this.reason,
+            this.createdAt,
+            this.expiresAt,
+            revokedAt
+        );
     }
 
     public static Builder builder() {
@@ -88,7 +85,7 @@ public final class IpPunishment {
         private String reason;
         private Instant createdAt = Instant.now();
         private Instant expiresAt;
-        private boolean active = true;
+        private Instant revokedAt;
 
         public Builder id(UUID id) {
             this.id = id;
@@ -125,13 +122,22 @@ public final class IpPunishment {
             return this;
         }
 
-        public Builder active(boolean active) {
-            this.active = active;
+        public Builder revokedAt(Instant revokedAt) {
+            this.revokedAt = revokedAt;
             return this;
         }
 
         public IpPunishment build() {
-            return new IpPunishment(this);
+            return new IpPunishment(
+                this.id,
+                this.ip,
+                this.target,
+                this.operator,
+                this.reason,
+                this.createdAt,
+                this.expiresAt,
+                this.revokedAt
+            );
         }
     }
 }

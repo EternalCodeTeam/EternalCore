@@ -5,8 +5,6 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HIST
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
-import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
-import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryGui;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -15,6 +13,7 @@ import com.eternalcode.core.util.DurationUtil;
 import com.eternalcode.core.util.date.DateFormatter;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
+import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -24,6 +23,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,8 +38,6 @@ class PunishmentHistoryCommand {
     private final NoticeService noticeService;
     private final DateFormatter dateFormatter;
     private final Logger logger;
-    private final PunishmentHistoryGui punishmentHistoryGui;
-    private final PlayerPunishmentHistoryGui playerPunishmentHistoryGui;
 
     @Inject
     PunishmentHistoryCommand(
@@ -47,20 +45,17 @@ class PunishmentHistoryCommand {
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         DateFormatter dateFormatter,
-        Logger logger,
-        PunishmentHistoryGui punishmentHistoryGui,
-        PlayerPunishmentHistoryGui playerPunishmentHistoryGui
+        Logger logger
     ) {
         this.punishmentHistoryService = punishmentHistoryService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.dateFormatter = dateFormatter;
         this.logger = logger;
-        this.punishmentHistoryGui = punishmentHistoryGui;
-        this.playerPunishmentHistoryGui = playerPunishmentHistoryGui;
     }
 
     @Execute
+    @Async
     @DescriptionDocs(description = "Shows recent punishments across the server")
     void executeRecent(@Sender CommandSender operator) {
         if (!operator.hasPermission(HISTORY_STAFF)) {
@@ -72,6 +67,7 @@ class PunishmentHistoryCommand {
     }
 
     @Execute
+    @Async
     @DescriptionDocs(description = "Shows recent punishments across the server, at a specific page", arguments = "<page>")
     void executeRecentPage(@Sender CommandSender operator, @Arg int page) {
         if (!operator.hasPermission(HISTORY_STAFF)) {
@@ -83,6 +79,7 @@ class PunishmentHistoryCommand {
     }
 
     @Execute
+    @Async
     @DescriptionDocs(description = "Shows punishment history for a specific player (staff only, unless viewing your own with eternalcore.history.self)", arguments = "<player>")
     void executeForPlayer(@Sender CommandSender operator, @Arg OfflinePlayer target) {
         if (!this.canView(operator, target)) {
@@ -94,6 +91,7 @@ class PunishmentHistoryCommand {
     }
 
     @Execute
+    @Async
     @DescriptionDocs(description = "Shows punishment history for a specific player, at a specific page", arguments = "<player> <page>")
     void executeForPlayerPage(@Sender CommandSender operator, @Arg OfflinePlayer target, @Arg int page) {
         if (!this.canView(operator, target)) {
@@ -122,57 +120,51 @@ class PunishmentHistoryCommand {
     }
 
     private void showRecent(CommandSender operator, int humanPage) {
-        if (operator instanceof Player player) {
-            this.punishmentHistoryGui.open(player);
-            return;
-        }
-
         int page = this.toZeroIndexed(humanPage);
 
-        this.punishmentHistoryService.findRecent(page, this.punishmentSettings.historyPageSize())
-            .thenAccept(entries -> {
-                this.noticeService.create()
-                    .notice(translation -> translation.punishment().historyHeaderRecent())
-                    .placeholder("{PAGE}", String.valueOf(humanPage))
-                    .sender(operator)
-                    .send();
+        try {
+            List<PunishmentHistoryEntry> entries = this.punishmentHistoryService.findRecent(page, 10);
 
-                this.send(operator, entries);
-            })
-            .exceptionally(throwable -> this.handleFailure(operator, "findRecent", throwable));
+            this.noticeService.create()
+                .notice(translation -> translation.punishment().historyHeaderRecent())
+                .placeholder("{PAGE}", String.valueOf(humanPage))
+                .sender(operator)
+                .send();
+
+            this.send(operator, entries);
+        }
+        catch (Exception exception) {
+            this.handleFailure(operator, "findRecent", exception);
+        }
     }
 
     private void showForPlayer(CommandSender operator, OfflinePlayer target, int humanPage) {
-        if (operator instanceof Player player) {
-            this.playerPunishmentHistoryGui.open(player, target.getUniqueId(), target.getName());
-            return;
-        }
-
         int page = this.toZeroIndexed(humanPage);
 
-        this.punishmentHistoryService.findByTarget(target.getUniqueId(), page, this.punishmentSettings.historyPageSize())
-            .thenAccept(entries -> {
-                this.noticeService.create()
-                    .notice(translation -> translation.punishment().historyHeaderPlayer())
-                    .placeholder("{PLAYER}", target.getName())
-                    .placeholder("{PAGE}", String.valueOf(humanPage))
-                    .sender(operator)
-                    .send();
+        try {
+            List<PunishmentHistoryEntry> entries = this.punishmentHistoryService.findByTarget(target.getUniqueId(), page, 10);
 
-                this.send(operator, entries);
-            })
-            .exceptionally(throwable -> this.handleFailure(operator, "findByTarget", throwable));
+            this.noticeService.create()
+                .notice(translation -> translation.punishment().historyHeaderPlayer())
+                .placeholder("{PLAYER}", target.getName())
+                .placeholder("{PAGE}", String.valueOf(humanPage))
+                .sender(operator)
+                .send();
+
+            this.send(operator, entries);
+        }
+        catch (Exception exception) {
+            this.handleFailure(operator, "findByTarget", exception);
+        }
     }
 
-    private Void handleFailure(CommandSender operator, String operation, Throwable throwable) {
+    private void handleFailure(CommandSender operator, String operation, Throwable throwable) {
         this.logger.log(Level.SEVERE, "Failed to load punishment history (" + operation + ")", throwable);
 
         this.noticeService.create()
             .notice(translation -> translation.punishment().historyError())
             .sender(operator)
             .send();
-
-        return null;
     }
 
     private int toZeroIndexed(int humanPage) {
@@ -204,8 +196,10 @@ class PunishmentHistoryCommand {
     }
 
     private String formatExpires(PunishmentHistoryEntry entry) {
-        return entry.expiresAt()
-            .map(expiresAt -> DurationUtil.format(Duration.between(entry.timestamp(), expiresAt), true))
-            .orElse(this.punishmentSettings.permanentLabel());
+        Instant expiresAt = entry.expiresAt();
+
+        return expiresAt == null
+            ? this.punishmentSettings.permanentLabel()
+            : DurationUtil.format(Duration.between(entry.timestamp(), expiresAt), true);
     }
 }

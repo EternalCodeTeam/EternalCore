@@ -14,8 +14,6 @@ public final class WarnEscalationParser {
     }
 
     public static WarnEscalation parse(String raw) {
-        Objects.requireNonNull(raw, "raw cannot be null");
-
         String[] parts = raw.split(":", 2);
         WarnEscalationAction action = WarnEscalationAction.valueOf(parts[0].trim().toUpperCase(Locale.ROOT));
 

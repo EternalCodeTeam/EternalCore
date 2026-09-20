@@ -22,9 +22,6 @@ public class TemplateMessageRenderer {
     }
 
     public List<Component> render(List<String> template, Map<String, String> placeholders) {
-        Objects.requireNonNull(template, "template cannot be null");
-        Objects.requireNonNull(placeholders, "placeholders cannot be null");
-
         return template.stream()
             .map(line -> this.replacePlaceholders(line, placeholders))
             .map(this.miniMessage::deserialize)

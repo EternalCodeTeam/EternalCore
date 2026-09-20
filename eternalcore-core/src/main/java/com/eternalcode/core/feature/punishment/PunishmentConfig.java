@@ -17,6 +17,20 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
     @Comment("# Should muted players be blocked from writing text on signs?")
     public boolean blockUsingSignOnMute = true;
 
+    @Comment("# Should muted players be blocked from using messaging commands (e.g. /msg, /tell)?")
+    public boolean blockCommandsOnMute = true;
+
+    @Comment({ " ", "# Commands (without leading slash, without arguments) blocked while muted. Aliases and plugin-prefixed forms (e.g. \"eternalcore:msg\") are matched by their base label." })
+    public List<String> blockedMuteCommands = List.of(
+        "msg",
+        "tell",
+        "w",
+        "whisper",
+        "r",
+        "reply",
+        "mail"
+    );
+
     @Comment("# Should a message be sent when a banned player tries to join the server?")
     public boolean messageWhenBanned = true;
 
@@ -61,9 +75,6 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
         "<white>Who: <gray>{OPERATOR}"
     );
 
-    @Comment("# How many punishment history entries are shown per page in the chat-based /history command")
-    public int historyPageSize = 10;
-
     @Comment({ " ", "# Automatic punishment applied when a player reaches a given number of warns." })
     @Comment({ " ", "# Format: \"ACTION:DURATION\" - ACTION is KICK, MUTE or BAN. DURATION is e.g. 1d, 7d, or \"permanent\"." })
     public Map<Integer, String> warnEscalations = Map.of(
@@ -72,58 +83,6 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
         10, "BAN:permanent"
     );
 
-    @Comment({ " ", "# How many entries are shown per page in the /history GUI. Must be between 9 and 36 (rounded up to a multiple of 9)." })
-    public int historyGuiPageSize = 36;
-
-    @Comment("# How many entries are fetched from the database at once when the GUI needs more (must be <= 100, should be a multiple of historyGuiPageSize)")
-    public int historyGuiFetchBatchSize = 90;
-
-    @Comment({ " ", "# How often (in ticks, 20 = 1 second) history entry items refresh their {RELATIVE_TIME} text. Set to 0 to disable live updates." })
-    public int historyGuiEntryUpdateIntervalTicks = 20;
-
-    @Comment({ " ", "# Title of the global punishment history GUI window. {PAGE} - current page, {PAGES} - total known pages (shows \"+\" if more might exist)." })
-    public String historyGuiTitle = "<dark_gray>Punishments ({PAGE}/{PAGES})";
-
-    @Comment({ " ", "# Title of the per-player punishment history GUI window. {PLAYER}, {PAGE}, {PAGES} available." })
-    public String historyGuiPlayerTitle = "<dark_gray>Punishments - <white>{PLAYER} <dark_gray>({PAGE}/{PAGES})";
-
-    @Comment("# Material used for the border/filler slots in the history GUI")
-    public Material historyGuiFillerMaterial = Material.BLACK_STAINED_GLASS_PANE;
-
-    @Comment("# Material and name of the \"previous page\" button")
-    public Material historyGuiBackArrowMaterial = Material.RED_DYE;
-
-    public String historyGuiBackArrowName = "<gray>Previous page";
-
-    @Comment("# Material and name of the \"next page\" button")
-    public Material historyGuiForwardArrowMaterial = Material.LIME_DYE;
-
-    public String historyGuiForwardArrowName = "<gray>Next page";
-
-    @Comment({ " ", "# Name of each history entry item. {ACTION}, {PLAYER}, {OPERATOR}, {REASON}, {DATE} available." })
-    public String historyGuiEntryName = "<white>{ACTION} <gray>- <yellow>{PLAYER}";
-
-    @Comment({ " ", "# Lore of each history entry item. {ACTION}, {PLAYER}, {OPERATOR}, {REASON}, {DATE} available." })
-    public List<String> historyGuiEntryLore = List.of(
-        "<gray>Operator: <white>{OPERATOR}",
-        "<gray>Reason: <white>{REASON}",
-        "<gray>Expires: <white>{EXPIRES}",
-        "<gray>Date: <white>{DATE} <dark_gray>({RELATIVE_TIME} ago)"
-    );
-
-    @Comment({ " ", "# Item material per history action type. Keys must match HistoryAction enum names exactly." })
-    public Map<String, Material> historyGuiEntryMaterials = Map.ofEntries(
-        Map.entry("BAN", Material.BARRIER),
-        Map.entry("UNBAN", Material.LIME_DYE),
-        Map.entry("KICK", Material.LEATHER_BOOTS),
-        Map.entry("KICK_ALL", Material.LEATHER_BOOTS),
-        Map.entry("MUTE", Material.PAPER),
-        Map.entry("UNMUTE", Material.MAP),
-        Map.entry("WARN", Material.YELLOW_DYE),
-        Map.entry("BAN_IP", Material.IRON_BARS),
-        Map.entry("EXPIRE", Material.CLOCK)
-    );
-
-    @Comment("# Fallback material used when a history action has no entry in historyGuiEntryMaterials")
-    public Material historyGuiEntryDefaultMaterial = Material.BOOK;
+    @Comment({ " ", "# Reason set on the automatic punishment applied by warnEscalations. {COUNT} available." })
+    public String warnEscalationReason = "Automatic punishment - reached {COUNT} warns";
 }

@@ -16,8 +16,6 @@ public class PunishmentReasonValidator {
     }
 
     public boolean isValid(String reason) {
-        Objects.requireNonNull(reason, "reason cannot be null");
-
         if (!this.punishmentSettings.reasonLegthEnabled()) {
             return true;
         }

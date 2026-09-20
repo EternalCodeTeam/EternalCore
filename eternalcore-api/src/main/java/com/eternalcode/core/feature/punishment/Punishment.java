@@ -6,69 +6,76 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Immutable punishment record. Use {@link Builder} to construct.
- * KICK is instantaneous (no expiresAt, active is meaningless -> false).
+ * Immutable punishmentapi record. Active state is derived, never stored:
+ * a punishment is active when it is not revoked and not expired.
+ * KICK is instantaneous and has no meaningful active state.
+ *
+ * @param expiresAt null = permanent
+ * @param revokedAt null = not revoked
  */
-public final class Punishment {
+public record Punishment(
+    UUID id,
+    PunishmentTarget target,
+    PunishmentTarget operator,
+    PunishmentType type,
+    String reason,
+    Instant createdAt,
+    Instant expiresAt,
+    Instant revokedAt
+) {
 
-    private final UUID id;
-    private final PunishmentTarget target;
-    private final PunishmentTarget operator;
-    private final PunishmentType type;
-    private final String reason;
-    private final Instant createdAt;
-    private final Instant expiresAt; // null = permanent
-    private final boolean active;
-
-    private Punishment(Builder builder) {
-        this.id = Objects.requireNonNull(builder.id, "id cannot be null");
-        this.target = Objects.requireNonNull(builder.target, "target cannot be null");
-        this.operator = Objects.requireNonNull(builder.operator, "operator cannot be null");
-        this.type = Objects.requireNonNull(builder.type, "type cannot be null");
-        this.reason = Objects.requireNonNull(builder.reason, "reason cannot be null");
-        this.createdAt = Objects.requireNonNull(builder.createdAt, "createdAt cannot be null");
-        this.expiresAt = builder.expiresAt;
-        this.active = builder.active;
-
-        if (this.expiresAt != null && this.expiresAt.isBefore(this.createdAt)) {
+    public Punishment {
+        if (expiresAt != null && expiresAt.isBefore(createdAt)) {
             throw new IllegalArgumentException("expiresAt cannot be before createdAt");
+        }
+        if (revokedAt != null && revokedAt.isBefore(createdAt)) {
+            throw new IllegalArgumentException("revokedAt cannot be before createdAt");
         }
     }
 
-    public UUID id() {
-        return this.id;
-    }
-
-    public PunishmentTarget target() {
-        return this.target;
-    }
-
-    public PunishmentTarget operator() {
-        return this.operator;
-    }
-
-    public PunishmentType type() {
-        return this.type;
-    }
-
-    public String reason() {
-        return this.reason;
-    }
-
-    public Instant createdAt() {
-        return this.createdAt;
-    }
-
-    public Optional<Instant> expiresAt() {
+    public Optional<Instant> expiresAtOptional() {
         return Optional.ofNullable(this.expiresAt);
+    }
+
+    public Optional<Instant> revokedAtOptional() {
+        return Optional.ofNullable(this.revokedAt);
     }
 
     public boolean isPermanent() {
         return this.expiresAt == null;
     }
 
-    public boolean active() {
-        return this.active;
+    public boolean isRevoked() {
+        return this.revokedAt != null;
+    }
+
+    public boolean isExpired(Instant now) {
+        return this.expiresAt != null && !now.isBefore(this.expiresAt);
+    }
+
+    public boolean isActive(Instant now) {
+        return !this.isRevoked() && !this.isExpired(now);
+    }
+
+    public boolean isActive() {
+        return this.isActive(Instant.now());
+    }
+
+    public Punishment revoke(Instant revokedAt) {
+        if (this.isRevoked()) {
+            throw new IllegalStateException("Punishment " + this.id + " is already revoked");
+        }
+
+        return new Punishment(
+            this.id,
+            this.target,
+            this.operator,
+            this.type,
+            this.reason,
+            this.createdAt,
+            this.expiresAt,
+            revokedAt
+        );
     }
 
     public static Builder builder() {
@@ -84,7 +91,7 @@ public final class Punishment {
         private String reason;
         private Instant createdAt = Instant.now();
         private Instant expiresAt;
-        private boolean active = true;
+        private Instant revokedAt;
 
         public Builder id(UUID id) {
             this.id = id;
@@ -121,13 +128,22 @@ public final class Punishment {
             return this;
         }
 
-        public Builder active(boolean active) {
-            this.active = active;
+        public Builder revokedAt(Instant revokedAt) {
+            this.revokedAt = revokedAt;
             return this;
         }
 
         public Punishment build() {
-            return new Punishment(this);
+            return new Punishment(
+                this.id,
+                this.target,
+                this.operator,
+                this.type,
+                this.reason,
+                this.createdAt,
+                this.expiresAt,
+                this.revokedAt
+            );
         }
     }
 }

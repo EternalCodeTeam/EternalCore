@@ -22,7 +22,7 @@ final class IpPunishmentSchema {
     static final Field<String> REASON = DSL.field("reason", SQLDataType.VARCHAR(255).nullable(false));
     static final Field<OffsetDateTime> CREATED_AT = DSL.field("created_at", SQLDataType.TIMESTAMPWITHTIMEZONE.nullable(false));
     static final Field<OffsetDateTime> EXPIRES_AT = DSL.field("expires_at", SQLDataType.TIMESTAMPWITHTIMEZONE.nullable(true));
-    static final Field<Boolean> ACTIVE = DSL.field("active", SQLDataType.BOOLEAN.nullable(false));
+    static final Field<OffsetDateTime> REVOKED_AT = DSL.field("revoked_at", SQLDataType.TIMESTAMPWITHTIMEZONE.nullable(true));
 
     private IpPunishmentSchema() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");

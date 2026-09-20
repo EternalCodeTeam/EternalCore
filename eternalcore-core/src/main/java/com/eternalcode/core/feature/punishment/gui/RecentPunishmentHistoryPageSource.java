@@ -15,7 +15,7 @@ final class RecentPunishmentHistoryPageSource implements PunishmentHistoryPageSo
     }
 
     @Override
-    public CompletableFuture<List<PunishmentHistoryEntry>> fetch(int page, int pageSize) {
+    public List<PunishmentHistoryEntry> fetch(int page, int pageSize) {
         return this.punishmentHistoryService.findRecent(page, pageSize);
     }
 }

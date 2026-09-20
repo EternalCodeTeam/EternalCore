@@ -7,13 +7,12 @@ import net.kyori.adventure.text.Component;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 public interface IpPunishmentService {
 
-    CompletableFuture<Void> banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage);
+    void banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage);
 
-    CompletableFuture<Void> unbanIp(String ip, PunishmentTarget target);
+    void unbanIp(String ip, PunishmentTarget target);
 
     boolean isIpBanned(String ip);
 

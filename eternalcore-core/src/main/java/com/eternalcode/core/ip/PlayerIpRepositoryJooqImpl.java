@@ -13,7 +13,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Base64;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -21,14 +20,14 @@ import java.util.concurrent.CompletableFuture;
 import static com.eternalcode.core.ip.PlayerIpSchema.*;
 
 @Repository
-class PlayerIpRepositoryImpl implements PlayerIpRepository {
+class PlayerIpRepositoryJooqImpl implements PlayerIpRepository {
 
     private final DSLContext dslContext;
     private final Scheduler scheduler;
     private final IpCryptoService ipCryptoService;
 
     @Inject
-    PlayerIpRepositoryImpl(DSLContext dslContext, Scheduler scheduler, IpCryptoService ipCryptoService) {
+    PlayerIpRepositoryJooqImpl(DSLContext dslContext, Scheduler scheduler, IpCryptoService ipCryptoService) {
         this.dslContext = dslContext;
         this.scheduler = scheduler;
         this.ipCryptoService = ipCryptoService;
@@ -52,10 +51,6 @@ class PlayerIpRepositoryImpl implements PlayerIpRepository {
 
     @Override
     public CompletableFuture<Void> recordLogin(UUID targetUuid, String targetName, String ip) {
-        Objects.requireNonNull(targetUuid, "targetUuid cannot be null");
-        Objects.requireNonNull(targetName, "targetName cannot be null");
-        Objects.requireNonNull(ip, "ip cannot be null");
-
         return this.scheduler.completeAsync(() -> {
             String hash = this.ipCryptoService.hash(ip);
             OffsetDateTime now = this.toOffsetDateTime(Instant.now());
@@ -95,8 +90,6 @@ class PlayerIpRepositoryImpl implements PlayerIpRepository {
 
     @Override
     public CompletableFuture<Optional<PlayerIpEntry>> findLatest(UUID targetUuid) {
-        Objects.requireNonNull(targetUuid, "targetUuid cannot be null");
-
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PLAYER_IPS)
             .where(TARGET_UUID.eq(targetUuid.toString()))
             .orderBy(LAST_SEEN.desc())
@@ -106,8 +99,6 @@ class PlayerIpRepositoryImpl implements PlayerIpRepository {
 
     @Override
     public CompletableFuture<List<PlayerIpEntry>> findAllByTarget(UUID targetUuid) {
-        Objects.requireNonNull(targetUuid, "targetUuid cannot be null");
-
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PLAYER_IPS)
             .where(TARGET_UUID.eq(targetUuid.toString()))
             .orderBy(LAST_SEEN.desc())
@@ -116,8 +107,6 @@ class PlayerIpRepositoryImpl implements PlayerIpRepository {
 
     @Override
     public CompletableFuture<List<PlayerIpEntry>> findAllByIp(String ip) {
-        Objects.requireNonNull(ip, "ip cannot be null");
-
         String hash = this.ipCryptoService.hash(ip);
 
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PLAYER_IPS)
@@ -127,8 +116,6 @@ class PlayerIpRepositoryImpl implements PlayerIpRepository {
 
     @Override
     public CompletableFuture<Void> deleteOlderThan(Instant threshold) {
-        Objects.requireNonNull(threshold, "threshold cannot be null");
-
         return this.scheduler.completeAsync(() -> {
             this.dslContext.deleteFrom(PLAYER_IPS)
                 .where(LAST_SEEN.lt(this.toOffsetDateTime(threshold)))

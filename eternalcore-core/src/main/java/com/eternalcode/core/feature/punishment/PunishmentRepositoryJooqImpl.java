@@ -11,7 +11,6 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -20,13 +19,13 @@ import org.jooq.impl.DSL;
 import static com.eternalcode.core.feature.punishment.PunishmentSchema.*;
 
 @Repository
-class PunishmentRepositoryImpl implements PunishmentRepository {
+class PunishmentRepositoryJooqImpl implements PunishmentRepository {
 
     private final DSLContext dslContext;
     private final Scheduler scheduler;
 
     @Inject
-    PunishmentRepositoryImpl(DSLContext dslContext, Scheduler scheduler) {
+    PunishmentRepositoryJooqImpl(DSLContext dslContext, Scheduler scheduler) {
         this.dslContext = dslContext;
         this.scheduler = scheduler;
 
@@ -44,15 +43,13 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
             .column(REASON)
             .column(CREATED_AT)
             .column(EXPIRES_AT)
-            .column(ACTIVE)
+            .column(REVOKED_AT)
             .constraints(DSL.constraint("pk_eternalcore_punishments").primaryKey(ID))
             .execute();
     }
 
     @Override
     public CompletableFuture<Void> save(Punishment punishment) {
-        Objects.requireNonNull(punishment, "punishment cannot be null");
-
         return this.scheduler.completeAsync(() -> {
             this.dslContext.insertInto(PUNISHMENTS)
                 .set(ID, punishment.id().toString())
@@ -63,8 +60,8 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
                 .set(TYPE, punishment.type().name())
                 .set(REASON, punishment.reason())
                 .set(CREATED_AT, this.toOffsetDateTime(punishment.createdAt()))
-                .set(EXPIRES_AT, punishment.expiresAt().map(this::toOffsetDateTime).orElse(null))
-                .set(ACTIVE, punishment.active())
+                .set(EXPIRES_AT, punishment.expiresAtOptional().map(this::toOffsetDateTime).orElse(null))
+                .set(REVOKED_AT, punishment.revokedAtOptional().map(this::toOffsetDateTime).orElse(null))
                 .execute();
             return null;
         });
@@ -72,12 +69,11 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
 
     @Override
     public CompletableFuture<Void> deactivate(UUID punishmentId) {
-        Objects.requireNonNull(punishmentId, "punishmentId cannot be null");
-
         return this.scheduler.completeAsync(() -> {
             this.dslContext.update(PUNISHMENTS)
-                .set(ACTIVE, false)
+                .set(REVOKED_AT, this.toOffsetDateTime(Instant.now()))
                 .where(ID.eq(punishmentId.toString()))
+                .and(REVOKED_AT.isNull())
                 .execute();
             return null;
         });
@@ -85,32 +81,35 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
 
     @Override
     public CompletableFuture<Optional<Punishment>> findActive(UUID targetUuid, PunishmentType type) {
-        Objects.requireNonNull(targetUuid, "targetUuid cannot be null");
-        Objects.requireNonNull(type, "type cannot be null");
+        return this.scheduler.completeAsync(() -> {
+            OffsetDateTime now = this.toOffsetDateTime(Instant.now());
 
-        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
-            .where(TARGET_UUID.eq(targetUuid.toString()))
-            .and(TYPE.eq(type.name()))
-            .and(ACTIVE.eq(true))
-            .fetchOptional(this::map));
+            return this.dslContext.selectFrom(PUNISHMENTS)
+                .where(TARGET_UUID.eq(targetUuid.toString()))
+                .and(TYPE.eq(type.name()))
+                .and(REVOKED_AT.isNull())
+                .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(now)))
+                .fetchOptional(this::map);
+        });
     }
 
     @Override
     public CompletableFuture<List<Punishment>> findActive(UUID targetUuid) {
-        Objects.requireNonNull(targetUuid, "targetUuid cannot be null");
+        return this.scheduler.completeAsync(() -> {
+            OffsetDateTime now = this.toOffsetDateTime(Instant.now());
 
-        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
-            .where(TARGET_UUID.eq(targetUuid.toString()))
-            .and(ACTIVE.eq(true))
-            .fetch(this::map));
+            return this.dslContext.selectFrom(PUNISHMENTS)
+                .where(TARGET_UUID.eq(targetUuid.toString()))
+                .and(REVOKED_AT.isNull())
+                .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(now)))
+                .fetch(this::map);
+        });
     }
 
     @Override
     public CompletableFuture<List<Punishment>> findExpired(Instant now) {
-        Objects.requireNonNull(now, "now cannot be null");
-
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
-            .where(ACTIVE.eq(true))
+            .where(REVOKED_AT.isNull())
             .and(EXPIRES_AT.isNotNull())
             .and(EXPIRES_AT.le(this.toOffsetDateTime(now)))
             .fetch(this::map));
@@ -118,19 +117,19 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
 
     @Override
     public CompletableFuture<List<Punishment>> findAllActive(PunishmentType type) {
-        Objects.requireNonNull(type, "type cannot be null");
+        return this.scheduler.completeAsync(() -> {
+            OffsetDateTime now = this.toOffsetDateTime(Instant.now());
 
-        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
-            .where(TYPE.eq(type.name()))
-            .and(ACTIVE.eq(true))
-            .fetch(this::map));
+            return this.dslContext.selectFrom(PUNISHMENTS)
+                .where(TYPE.eq(type.name()))
+                .and(REVOKED_AT.isNull())
+                .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(now)))
+                .fetch(this::map);
+        });
     }
 
     @Override
     public CompletableFuture<List<Punishment>> findAllUnexpired(PunishmentType type, Instant now) {
-        Objects.requireNonNull(type, "type cannot be null");
-        Objects.requireNonNull(now, "now cannot be null");
-
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
             .where(TYPE.eq(type.name()))
             .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(this.toOffsetDateTime(now))))
@@ -140,10 +139,10 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
     @Override
     public CompletableFuture<Integer> countByTargetAndType(UUID targetUuid, PunishmentType type, Instant now) {
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENTS)
-            .where(TYPE.eq(type.name()))
-            .and(TARGET_UUID.eq(targetUuid.toString()))
-            .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(this.toOffsetDateTime(now))))
-            .fetch(this::map))
+                .where(TYPE.eq(type.name()))
+                .and(TARGET_UUID.eq(targetUuid.toString()))
+                .and(EXPIRES_AT.isNull().or(EXPIRES_AT.gt(this.toOffsetDateTime(now))))
+                .fetch(this::map))
             .thenApply(List::size);
     }
 
@@ -159,6 +158,7 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
         );
 
         OffsetDateTime expiresAt = record.get(EXPIRES_AT);
+        OffsetDateTime revokedAt = record.get(REVOKED_AT);
 
         return Punishment.builder()
             .id(UUID.fromString(record.get(ID)))
@@ -168,7 +168,7 @@ class PunishmentRepositoryImpl implements PunishmentRepository {
             .reason(record.get(REASON))
             .createdAt(record.get(CREATED_AT).toInstant())
             .expiresAt(expiresAt == null ? null : expiresAt.toInstant())
-            .active(record.get(ACTIVE))
+            .revokedAt(revokedAt == null ? null : revokedAt.toInstant())
             .build();
     }
 

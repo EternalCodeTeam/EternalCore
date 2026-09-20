@@ -31,11 +31,16 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został odbanowany przez <green>{OPERATOR}!");
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś gracza <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest zbanowany!");
+    @Comment("# {PLAYER} - Gracz, {OPERATOR} - Administrator")
+    Notice unbanBroadcastSilent = Notice.chat("<dark_gray>[<red>Cichy<dark_gray>] <color:#9d6eef>► <white>{PLAYER} <white>został odbanowany przez <color:#9d6eef>{OPERATOR}");
+
 
     @Comment({ " ", "# {IP} - Adres IP, {OPERATOR} - Administrator" })
     Notice unbanIpBroadcast = Notice.chat("<green>► <white>Adres IP <green>{IP} <white>został odbanowany przez <green>{OPERATOR}!");
     Notice unbanIpSuccessPrivate = Notice.chat("<green>► <white>Odbanowałeś adres IP <green>{IP}!");
     Notice unbanIpNotBanned = Notice.chat("<red>✘ <dark_red>Adres IP {IP} nie jest zbanowany!");
+    @Comment("# {IP} - Adres IP, {OPERATOR} - Administrator")
+    Notice unbanIpBroadcastSilent = Notice.chat("<dark_gray>[<red>Cichy<dark_gray>] <color:#9d6eef>► <white>Adres {IP} <white>został odbanowany przez <color:#9d6eef>{OPERATOR}");
 
     @Comment({ " ", "# Sekcja odpowiedzialna za wyrzucanie graczy" })
     Notice kickBroadcast = Notice.chat("<red>► <white>Gracz <red>{PLAYER} <white>został wyrzucony przez <red>{OPERATOR}<white>! Powód: <gray>{REASON}");
@@ -43,7 +48,6 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice kickCannotKickAdmin = Notice.chat("<red>✘ <dark_red>Nie możesz wyrzucić administratora <red>{PLAYER}!");
     Notice kickInvalidReason = Notice.chat("<red>✘ <dark_red>Powód musi mieć od {MIN} do {MAX} znaków!");
     Notice kickSuccessPrivate = Notice.chat("<red>► <white>Wyrzuciłeś gracza <red>{PLAYER}!");
-    Notice kickNotOnline = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest online!");
     @Comment({ " ", "# {OPERATOR} - Administrator, {REASON} - Powód, {COUNT} - Liczba wyrzuconych graczy" })
     Notice kickAllBroadcast = Notice.chat("<red>► <white>Serwer został wyczyszczony przez <red>{OPERATOR}<white>! "
         + "Powód: <gray>{REASON} <white>(<red>{COUNT}<white> graczy)");
@@ -57,11 +61,15 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice muteAlreadyMuted = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} jest już wyciszony!");
     Notice muteBlockedChat = Notice.chat("<red>✘ <dark_red>Jesteś wyciszony! Powód: <gray>{REASON} <dark_red>Pozostało: <gray>{REMAINING_TIME}");
     Notice muteBlockedSign = Notice.chat("<red>✘ <dark_red>Jesteś wyciszony! Powód: <gray>{REASON} <dark_red>Pozostało: <gray>{REMAINING_TIME}");
+    Notice muteBlockedCommand = Notice.chat("<red>✘ <dark_red>Jesteś wyciszony! Powód: <gray>{REASON} <dark_red>Pozostało: <gray>{REMAINING_TIME}");
 
     @Comment({ " ", "# Sekcja odpowiedzialna za odciszanie graczy" })
     Notice unmuteBroadcast = Notice.chat("<green>► <white>Gracz <green>{PLAYER} <white>został odciszony przez <green>{OPERATOR}!");
     Notice unmuteSuccessPrivate = Notice.chat("<green>► <white>Odciszyłeś gracza <green>{PLAYER}!");
     Notice unmuteNotMuted = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest wyciszony!");
+    @Comment("# {PLAYER} - Gracz, {OPERATOR} - Administrator")
+    Notice unmuteBroadcastSilent = Notice.chat("<dark_gray>[<red>Cichy<dark_gray>] <color:#9d6eef>► <white>{PLAYER} <white>został wyciszony przez <color:#9d6eef>{OPERATOR}");
+
 
     @Comment({ " ", "# Sekcja odpowiedzialna za ostrzeżenia graczy" })
     Notice warnBroadcast = Notice.chat("<yellow>► <white>Gracz <yellow>{PLAYER} <white>otrzymał ostrzeżenie od <yellow>{OPERATOR}<white>! Powód: <gray>{REASON}");

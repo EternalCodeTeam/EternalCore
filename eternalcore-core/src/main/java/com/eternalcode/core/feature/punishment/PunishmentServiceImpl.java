@@ -22,7 +22,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -62,7 +61,8 @@ class PunishmentServiceImpl implements PunishmentService {
     }
 
     @Override
-    public CompletableFuture<Punishment> ban(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
+    public Punishment ban(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
+        this.assertNotPrimaryThread();
         this.requireNonEmpty(kickMessage);
 
         Punishment punishment = Punishment.builder()
@@ -71,23 +71,23 @@ class PunishmentServiceImpl implements PunishmentService {
             .type(PunishmentType.BAN)
             .reason(reason)
             .expiresAt(expiresAt)
-            .active(true)
             .build();
 
-        return this.persistAndCache(punishment, this.activeBans, HistoryAction.BAN)
-            .thenApply(saved -> {
-                this.kickIfOnline(target.uuid(), kickMessage);
-                return saved;
-            });
+        Punishment saved = this.persistAndCache(punishment, this.activeBans, HistoryAction.BAN);
+        this.kickIfOnline(target.uuid(), kickMessage);
+
+        return saved;
     }
 
     @Override
-    public CompletableFuture<Void> unban(PunishmentTarget target, PunishmentTarget operator) {
-        return this.deactivateAndUncache(target, operator, this.activeBans, HistoryAction.UNBAN);
+    public void unban(PunishmentTarget target, PunishmentTarget operator) {
+        this.assertNotPrimaryThread();
+        this.deactivateAndUncache(target, operator, this.activeBans, HistoryAction.UNBAN);
     }
 
     @Override
-    public CompletableFuture<Void> kick(PunishmentTarget target, PunishmentTarget operator, String reason, List<Component> kickMessage, boolean massKick) {
+    public void kick(PunishmentTarget target, PunishmentTarget operator, String reason, List<Component> kickMessage, boolean massKick) {
+        this.assertNotPrimaryThread();
         this.requireNonEmpty(kickMessage);
 
         Punishment punishment = Punishment.builder()
@@ -95,55 +95,58 @@ class PunishmentServiceImpl implements PunishmentService {
             .operator(operator)
             .type(PunishmentType.KICK)
             .reason(reason)
-            .active(false)
             .build();
 
         this.kickIfOnline(target.uuid(), kickMessage);
 
         HistoryAction action = massKick ? HistoryAction.KICK_ALL : HistoryAction.KICK;
 
-        return this.punishmentRepository.save(punishment)
-            .thenCompose(none -> this.recordHistory(punishment, action));
+        this.punishmentRepository.save(punishment).join();
+        this.recordHistory(punishment, action);
     }
 
     @Override
-    public CompletableFuture<Punishment> mute(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
+    public Punishment mute(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
+        this.assertNotPrimaryThread();
+
         Punishment punishment = Punishment.builder()
             .target(target)
             .operator(operator)
             .type(PunishmentType.MUTE)
             .reason(reason)
             .expiresAt(expiresAt)
-            .active(true)
             .build();
 
         return this.persistAndCache(punishment, this.activeMutes, HistoryAction.MUTE);
     }
 
     @Override
-    public CompletableFuture<Void> unmute(PunishmentTarget target, PunishmentTarget operator) {
-        return this.deactivateAndUncache(target, operator, this.activeMutes, HistoryAction.UNMUTE);
+    public void unmute(PunishmentTarget target, PunishmentTarget operator) {
+        this.assertNotPrimaryThread();
+        this.deactivateAndUncache(target, operator, this.activeMutes, HistoryAction.UNMUTE);
     }
 
     @Override
-    public CompletableFuture<Punishment> warn(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
+    public Punishment warn(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
+        this.assertNotPrimaryThread();
+
         Punishment punishment = Punishment.builder()
             .target(target)
             .operator(operator)
             .type(PunishmentType.WARN)
             .reason(reason)
             .expiresAt(expiresAt)
-            .active(false)
             .build();
 
-        return this.punishmentRepository.save(punishment)
-            .thenCompose(none -> this.recordHistory(punishment, HistoryAction.WARN))
-            .thenCompose(none -> this.punishmentRepository.countByTargetAndType(target.uuid(), PunishmentType.WARN, Instant.now()))
-            .thenApply(warnCount -> {
-                this.applyEscalationIfConfigured(target, operator, warnCount);
-                this.activeWarns.put(target.uuid(), punishment);
-                return punishment;
-            });
+        this.punishmentRepository.save(punishment).join();
+        this.recordHistory(punishment, HistoryAction.WARN);
+
+        int warnCount = this.punishmentRepository.countByTargetAndType(target.uuid(), PunishmentType.WARN, Instant.now()).join();
+
+        this.applyEscalationIfConfigured(target, operator, warnCount);
+        this.activeWarns.put(target.uuid(), punishment);
+
+        return punishment;
     }
 
     private void applyEscalationIfConfigured(PunishmentTarget target, PunishmentTarget operator, int warnCount) {
@@ -154,7 +157,7 @@ class PunishmentServiceImpl implements PunishmentService {
         }
 
         WarnEscalation escalation = WarnEscalationParser.parse(raw);
-        String autoReason = "Automatic punishment - reached " + warnCount + " warns";
+        String autoReason = this.punishmentSettings.warnEscalationReason().replace("{COUNT}", String.valueOf(warnCount));
         Instant expiresAt = escalation.duration().map(duration -> Instant.now().plus(duration)).orElse(null);
         String expiresText = expiresAt == null ? this.punishmentSettings.permanentLabel() : DurationUtil.format(escalation.duration().orElseThrow(), true);
 
@@ -218,8 +221,9 @@ class PunishmentServiceImpl implements PunishmentService {
     }
 
     @Override
-    public CompletableFuture<List<Punishment>> findActive(UUID targetUuid) {
-        return this.punishmentRepository.findActive(targetUuid);
+    public List<Punishment> findActive(UUID targetUuid) {
+        this.assertNotPrimaryThread();
+        return this.punishmentRepository.findActive(targetUuid).join();
     }
 
     private Optional<Punishment> getActiveFromCache(Map<UUID, Punishment> cache, UUID targetUuid) {
@@ -229,7 +233,7 @@ class PunishmentServiceImpl implements PunishmentService {
             return Optional.empty();
         }
 
-        if (this.isExpired(punishment)) {
+        if (!punishment.isActive()) {
             cache.remove(targetUuid);
             return Optional.empty();
         }
@@ -237,26 +241,19 @@ class PunishmentServiceImpl implements PunishmentService {
         return Optional.of(punishment);
     }
 
-    private boolean isExpired(Punishment punishment) {
-        return punishment.expiresAt()
-            .map(expiresAt -> expiresAt.isBefore(Instant.now()))
-            .orElse(false);
+    private Punishment persistAndCache(Punishment punishment, Map<UUID, Punishment> cache, HistoryAction action) {
+        this.punishmentRepository.save(punishment).join();
+        this.recordHistory(punishment, action);
+
+        cache.put(punishment.target().uuid(), punishment);
+        return punishment;
     }
 
-    private CompletableFuture<Punishment> persistAndCache(Punishment punishment, Map<UUID, Punishment> cache, HistoryAction action) {
-        return this.punishmentRepository.save(punishment)
-            .thenCompose(none -> this.recordHistory(punishment, action))
-            .thenApply(none -> {
-                cache.put(punishment.target().uuid(), punishment);
-                return punishment;
-            });
-    }
-
-    private CompletableFuture<Void> deactivateAndUncache(PunishmentTarget target, PunishmentTarget operator, Map<UUID, Punishment> cache, HistoryAction action) {
+    private void deactivateAndUncache(PunishmentTarget target, PunishmentTarget operator, Map<UUID, Punishment> cache, HistoryAction action) {
         Punishment cached = cache.remove(target.uuid());
 
         if (cached == null) {
-            return CompletableFuture.completedFuture(null);
+            return;
         }
 
         PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
@@ -270,11 +267,11 @@ class PunishmentServiceImpl implements PunishmentService {
             null
         );
 
-        return this.punishmentRepository.deactivate(cached.id())
-            .thenCompose(none -> this.punishmentHistoryService.record(entry));
+        this.punishmentRepository.deactivate(cached.id()).join();
+        this.punishmentHistoryService.record(entry);
     }
 
-    private CompletableFuture<Void> recordHistory(Punishment punishment, HistoryAction action) {
+    private void recordHistory(Punishment punishment, HistoryAction action) {
         PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
             UUID.randomUUID(),
             punishment.id(),
@@ -283,10 +280,10 @@ class PunishmentServiceImpl implements PunishmentService {
             action,
             punishment.reason(),
             punishment.createdAt(),
-            punishment.expiresAt().orElse(null)
+            punishment.expiresAtOptional().orElse(null)
         );
 
-        return this.punishmentHistoryService.record(entry);
+        this.punishmentHistoryService.record(entry);
     }
 
     private void kickIfOnline(UUID targetUuid, List<Component> message) {
@@ -300,10 +297,14 @@ class PunishmentServiceImpl implements PunishmentService {
     }
 
     private void requireNonEmpty(List<Component> kickMessage) {
-        Objects.requireNonNull(kickMessage, "kickMessage cannot be null");
-
         if (kickMessage.isEmpty()) {
             throw new IllegalArgumentException("kickMessage cannot be empty");
+        }
+    }
+
+    private void assertNotPrimaryThread() {
+        if (this.server.isPrimaryThread()) {
+            throw new IllegalStateException("PunishmentService must not be called from the main thread");
         }
     }
 
@@ -316,7 +317,7 @@ class PunishmentServiceImpl implements PunishmentService {
     private void loadActiveInto(Map<UUID, Punishment> cache, PunishmentType type) {
         this.punishmentRepository.findAllActive(type).thenAccept(punishments -> {
             for (Punishment punishment : punishments) {
-                if (!this.isExpired(punishment)) {
+                if (punishment.isActive()) {
                     cache.put(punishment.target().uuid(), punishment);
                 }
             }
@@ -344,7 +345,7 @@ class PunishmentServiceImpl implements PunishmentService {
     @Override
     public List<Punishment> activeWarns() {
         return this.activeWarns.values().stream()
-            .filter(punishment -> !this.isExpired(punishment))
+            .filter(Punishment::isActive)
             .toList();
     }
 }

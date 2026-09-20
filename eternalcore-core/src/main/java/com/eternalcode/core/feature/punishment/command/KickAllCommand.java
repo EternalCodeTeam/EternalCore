@@ -4,6 +4,7 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissions.KICK
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.feature.punishment.PunishmentPermissions;
 import com.eternalcode.core.feature.punishment.PunishmentReasonValidator;
 import com.eternalcode.core.feature.punishment.PunishmentService;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
@@ -12,6 +13,7 @@ import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 
+import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -40,6 +42,7 @@ class KickAllCommand {
     private final PunishmentService punishmentService;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
+    private final PunishmentBroadcastService broadcastService;
     private final PunishmentReasonValidator reasonValidator;
     private final TemplateMessageRenderer templateRenderer;
     private final Logger logger;
@@ -49,6 +52,7 @@ class KickAllCommand {
         PunishmentService punishmentService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
+        PunishmentBroadcastService broadcastService,
         PunishmentReasonValidator reasonValidator,
         TemplateMessageRenderer templateRenderer,
         Logger logger
@@ -56,12 +60,14 @@ class KickAllCommand {
         this.punishmentService = punishmentService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
+        this.broadcastService = broadcastService;
         this.reasonValidator = reasonValidator;
         this.templateRenderer = templateRenderer;
         this.logger = logger;
     }
 
     @Execute
+    @Async
     @DescriptionDocs(description = "Kick all online players from the server", arguments = "<reason>")
     void executeKickAll(@Sender CommandSender operator, @Join String reason) {
         if (!this.reasonValidator.isValid(reason)) {
@@ -77,13 +83,16 @@ class KickAllCommand {
         PunishmentTarget operatorTarget = PunishmentTarget.of(operator);
         int kicked = this.kickEveryoneExceptBypassed(operator, operatorTarget, reason);
 
-        this.noticeService.create()
-            .notice(translation -> translation.punishment().kickAllBroadcast())
-            .placeholder("{OPERATOR}", operator.getName())
-            .placeholder("{REASON}", reason)
-            .placeholder("{COUNT}", String.valueOf(kicked))
-            .all()
-            .send();
+        this.broadcastService.broadcast(
+            translation -> translation.punishment().kickAllBroadcast(),
+            Map.of(
+                "{OPERATOR}", operator.getName(),
+                "{REASON}", reason,
+                "{COUNT}", String.valueOf(kicked)
+            ),
+            false,
+            PunishmentPermissions.STAFF_MESSAGES
+        );
     }
 
     private int kickEveryoneExceptBypassed(CommandSender operator, PunishmentTarget operatorTarget, String reason) {
@@ -103,13 +112,13 @@ class KickAllCommand {
                 )
             );
 
-            this.punishmentService.kick(PunishmentTarget.of(target), operatorTarget, reason, kickMessage, true)
-                .exceptionally(throwable -> {
-                    this.logger.log(Level.SEVERE, "Failed to kick " + target.getName() + " as part of /kickall", throwable);
-                    return null;
-                });
-
-            kicked++;
+            try {
+                this.punishmentService.kick(PunishmentTarget.of(target), operatorTarget, reason, kickMessage, true);
+                kicked++;
+            }
+            catch (Exception exception) {
+                this.logger.log(Level.SEVERE, "Failed to kick " + target.getName() + " as part of /kickall", exception);
+            }
         }
 
         return kicked;

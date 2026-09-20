@@ -29,10 +29,9 @@ public class PlayerPunishmentHistoryGui {
 
     public void open(Player viewer, UUID targetUuid, String targetName) {
         PunishmentHistoryPageSource pageSource = new PlayerPunishmentHistoryPageSource(this.punishmentHistoryService, targetUuid);
-        PunishmentHistoryGuiSession session = new PunishmentHistoryGuiSession(pageSource, this.punishmentSettings.historyGuiFetchBatchSize());
+        PunishmentHistoryGuiSession session = new PunishmentHistoryGuiSession(pageSource, 90);
 
-        String title = this.punishmentSettings.historyGuiPlayerTitle().replace("{PLAYER}", targetName);
 
-        this.guiBuilder.open(viewer, title, session);
+        this.guiBuilder.open(viewer, "title", session);
     }
 }

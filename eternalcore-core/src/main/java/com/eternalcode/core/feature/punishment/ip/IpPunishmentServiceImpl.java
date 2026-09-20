@@ -22,7 +22,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 class IpPunishmentServiceImpl implements IpPunishmentService {
@@ -53,8 +52,8 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
     }
 
     @Override
-    public CompletableFuture<Void> banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
-        Objects.requireNonNull(ip, "ip cannot be null");
+    public void banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
+        this.assertNotPrimaryThread();
         this.requireNonEmpty(kickMessage);
 
         IpPunishment ipPunishment = IpPunishment.builder()
@@ -63,27 +62,24 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             .operator(operator)
             .reason(reason)
             .expiresAt(expiresAt)
-            .active(true)
             .build();
 
-        return this.ipPunishmentRepository.save(ipPunishment)
-            .thenCompose(none -> this.recordHistory(ipPunishment, HistoryAction.BAN_IP))
-            .thenApply(none -> {
-                this.activeByIpHash.put(this.ipCryptoService.hash(ip), ipPunishment);
-                this.kickEveryoneOnIp(ip, kickMessage);
-                return null;
-            });
+        this.ipPunishmentRepository.save(ipPunishment).join();
+        this.recordHistory(ipPunishment, HistoryAction.BAN_IP);
+
+        this.activeByIpHash.put(this.ipCryptoService.hash(ip), ipPunishment);
+        this.kickEveryoneOnIp(ip, kickMessage);
     }
 
     @Override
-    public CompletableFuture<Void> unbanIp(String ip, PunishmentTarget operator) {
-        Objects.requireNonNull(ip, "ip cannot be null");
+    public void unbanIp(String ip, PunishmentTarget operator) {
+        this.assertNotPrimaryThread();
 
         String hash = this.ipCryptoService.hash(ip);
         IpPunishment cached = this.activeByIpHash.remove(hash);
 
         if (cached == null) {
-            return CompletableFuture.completedFuture(null);
+            return;
         }
 
         PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
@@ -97,8 +93,8 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             null
         );
 
-        return this.ipPunishmentRepository.deactivate(cached.id())
-            .thenCompose(none -> this.punishmentHistoryService.record(entry));
+        this.ipPunishmentRepository.deactivate(cached.id()).join();
+        this.punishmentHistoryService.record(entry);
     }
 
     @Override
@@ -108,8 +104,6 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
 
     @Override
     public Optional<IpPunishment> getActiveIpBan(String ip) {
-        Objects.requireNonNull(ip, "ip cannot be null");
-
         String hash = this.ipCryptoService.hash(ip);
         IpPunishment punishment = this.activeByIpHash.get(hash);
 
@@ -117,7 +111,7 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             return Optional.empty();
         }
 
-        if (this.isExpired(punishment)) {
+        if (!punishment.isActive()) {
             this.activeByIpHash.remove(hash);
             return Optional.empty();
         }
@@ -125,7 +119,7 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
         return Optional.of(punishment);
     }
 
-    private CompletableFuture<Void> recordHistory(IpPunishment punishment, HistoryAction action) {
+    private void recordHistory(IpPunishment punishment, HistoryAction action) {
         PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
             UUID.randomUUID(),
             punishment.id(),
@@ -134,16 +128,10 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             action,
             punishment.reason(),
             punishment.createdAt(),
-            punishment.expiresAt().orElse(null)
+            punishment.expiresAt()
         );
 
-        return this.punishmentHistoryService.record(entry);
-    }
-
-    private boolean isExpired(IpPunishment punishment) {
-        return punishment.expiresAt()
-            .map(expiresAt -> expiresAt.isBefore(Instant.now()))
-            .orElse(false);
+        this.punishmentHistoryService.record(entry);
     }
 
     private void kickEveryoneOnIp(String ip, List<Component> message) {
@@ -166,10 +154,16 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
         }
     }
 
+    private void assertNotPrimaryThread() {
+        if (this.server.isPrimaryThread()) {
+            throw new IllegalStateException("IpPunishmentService must not be called from the main thread");
+        }
+    }
+
     private void loadActivePunishments() {
         this.ipPunishmentRepository.findAllActive().thenAccept(punishments -> {
             for (IpPunishment punishment : punishments) {
-                if (!this.isExpired(punishment)) {
+                if (punishment.isActive()) {
                     this.activeByIpHash.put(this.ipCryptoService.hash(punishment.ip()), punishment);
                 }
             }

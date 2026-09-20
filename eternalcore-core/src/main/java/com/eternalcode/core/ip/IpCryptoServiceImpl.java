@@ -31,8 +31,6 @@ class IpCryptoServiceImpl implements IpCryptoService {
 
     @Override
     public EncryptedValue encrypt(String plainIp) {
-        Objects.requireNonNull(plainIp, "plainIp cannot be null");
-
         try {
             byte[] iv = new byte[GCM_IV_LENGTH_BYTES];
             new SecureRandom().nextBytes(iv);
@@ -51,8 +49,6 @@ class IpCryptoServiceImpl implements IpCryptoService {
 
     @Override
     public String decrypt(EncryptedValue encryptedValue) {
-        Objects.requireNonNull(encryptedValue, "encryptedValue cannot be null");
-
         try {
             Cipher cipher = Cipher.getInstance(AES_TRANSFORMATION);
             cipher.init(Cipher.DECRYPT_MODE, this.aesKeySpec(), new GCMParameterSpec(GCM_TAG_LENGTH_BITS, encryptedValue.iv()));
@@ -68,8 +64,6 @@ class IpCryptoServiceImpl implements IpCryptoService {
 
     @Override
     public String hash(String plainIp) {
-        Objects.requireNonNull(plainIp, "plainIp cannot be null");
-
         try {
             Mac mac = Mac.getInstance(HMAC_ALGORITHM);
             mac.init(new SecretKeySpec(this.secretKeyProvider.hmacKey(), HMAC_ALGORITHM));

@@ -57,7 +57,7 @@ class IpBanLoginController implements Listener {
 
         String expiresText = punishment.isPermanent()
             ? this.punishmentSettings.permanentLabel()
-            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAt().orElseThrow()), true);
+            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAtOptional().orElseThrow()), true);
 
         List<Component> kickMessage = this.templateRenderer.render(
             this.punishmentSettings.banKickScreen(),

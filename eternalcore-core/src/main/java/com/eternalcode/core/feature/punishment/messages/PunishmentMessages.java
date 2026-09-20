@@ -21,10 +21,12 @@ public interface PunishmentMessages {
     Notice unbanBroadcast();
     Notice unbanSuccessPrivate();
     Notice unbanNotBanned();
+    Notice unbanBroadcastSilent();
 
     Notice unbanIpBroadcast();
     Notice unbanIpSuccessPrivate();
     Notice unbanIpNotBanned();
+    Notice unbanIpBroadcastSilent();
 
     // Kick
     Notice kickBroadcast();
@@ -32,7 +34,6 @@ public interface PunishmentMessages {
     Notice kickCannotKickAdmin();
     Notice kickInvalidReason();
     Notice kickSuccessPrivate();
-    Notice kickNotOnline();
     Notice kickAllBroadcast();
 
     // Mute
@@ -44,11 +45,13 @@ public interface PunishmentMessages {
     Notice muteAlreadyMuted();
     Notice muteBlockedChat();
     Notice muteBlockedSign();
+    Notice muteBlockedCommand();
 
     // Unmute
     Notice unmuteBroadcast();
     Notice unmuteSuccessPrivate();
     Notice unmuteNotMuted();
+    Notice unmuteBroadcastSilent();
 
     // Warn
     Notice warnBroadcast();

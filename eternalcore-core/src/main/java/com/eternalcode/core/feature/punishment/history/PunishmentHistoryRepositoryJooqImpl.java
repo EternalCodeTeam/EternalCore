@@ -4,7 +4,6 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
-
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
@@ -20,13 +19,13 @@ import java.util.concurrent.CompletableFuture;
 import static com.eternalcode.core.feature.punishment.history.PunishmentHistorySchema.*;
 
 @Repository
-class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
+class PunishmentHistoryRepositoryJooqImpl implements PunishmentHistoryRepository {
 
     private final DSLContext dslContext;
     private final Scheduler scheduler;
 
     @Inject
-    PunishmentHistoryRepositoryImpl(DSLContext dslContext, Scheduler scheduler) {
+    PunishmentHistoryRepositoryJooqImpl(DSLContext dslContext, Scheduler scheduler) {
         this.dslContext = dslContext;
         this.scheduler = scheduler;
 
@@ -51,8 +50,6 @@ class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
 
     @Override
     public CompletableFuture<Void> save(PunishmentHistoryEntry entry) {
-        Objects.requireNonNull(entry, "entry cannot be null");
-
         return this.scheduler.completeAsync(() -> {
             this.dslContext.insertInto(PUNISHMENT_HISTORY)
                 .set(ID, entry.id().toString())
@@ -64,7 +61,7 @@ class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
                 .set(ACTION, entry.action().name())
                 .set(REASON, entry.reason())
                 .set(TIMESTAMP, this.toOffsetDateTime(entry.timestamp()))
-                .set(EXPIRES_AT, entry.expiresAt().map(this::toOffsetDateTime).orElse(null))
+                .set(EXPIRES_AT, entry.expiresAtOptional().map(this::toOffsetDateTime).orElse(null))
                 .execute();
             return null;
         });
@@ -72,22 +69,8 @@ class PunishmentHistoryRepositoryImpl implements PunishmentHistoryRepository {
 
     @Override
     public CompletableFuture<List<PunishmentHistoryEntry>> findByTarget(UUID targetUuid, int page, int pageSize) {
-        Objects.requireNonNull(targetUuid, "targetUuid cannot be null");
-
         return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENT_HISTORY)
             .where(TARGET_UUID.eq(targetUuid.toString()))
-            .orderBy(TIMESTAMP.desc())
-            .limit(pageSize)
-            .offset(page * pageSize)
-            .fetch(this::map));
-    }
-
-    @Override
-    public CompletableFuture<List<PunishmentHistoryEntry>> findByOperator(UUID operatorUuid, int page, int pageSize) {
-        Objects.requireNonNull(operatorUuid, "operatorUuid cannot be null");
-
-        return this.scheduler.completeAsync(() -> this.dslContext.selectFrom(PUNISHMENT_HISTORY)
-            .where(OPERATOR_UUID.eq(operatorUuid.toString()))
             .orderBy(TIMESTAMP.desc())
             .limit(pageSize)
             .offset(page * pageSize)

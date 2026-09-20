@@ -16,10 +16,9 @@ final class PunishmentHistoryGuiSession {
 
     private int nextDatabasePage = 0;
     private boolean hasMore = true;
-    private boolean loading = false;
 
     PunishmentHistoryGuiSession(PunishmentHistoryPageSource pageSource, int fetchBatchSize) {
-        this.pageSource = Objects.requireNonNull(pageSource, "pageSource cannot be null");
+        this.pageSource = pageSource;
 
         if (fetchBatchSize <= 0) {
             throw new IllegalArgumentException("fetchBatchSize must be positive");
@@ -36,19 +35,15 @@ final class PunishmentHistoryGuiSession {
         return this.hasMore;
     }
 
-    CompletableFuture<Void> loadNextBatch() {
-        if (this.loading || !this.hasMore) {
-            return CompletableFuture.completedFuture(null);
+    void loadNextBatch() {
+        if (!this.hasMore) {
+            return;
         }
 
-        this.loading = true;
+        List<PunishmentHistoryEntry> entries = this.pageSource.fetch(this.nextDatabasePage, this.fetchBatchSize);
 
-        return this.pageSource.fetch(this.nextDatabasePage, this.fetchBatchSize)
-            .thenAccept(entries -> {
-                this.loadedEntries.addAll(entries);
-                this.nextDatabasePage++;
-                this.hasMore = entries.size() == this.fetchBatchSize;
-                this.loading = false;
-            });
+        this.loadedEntries.addAll(entries);
+        this.nextDatabasePage++;
+        this.hasMore = entries.size() == this.fetchBatchSize;
     }
 }
