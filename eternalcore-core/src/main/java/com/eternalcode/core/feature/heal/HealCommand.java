@@ -62,6 +62,7 @@ class HealCommand {
 
         player.setHealth(maxHealth);
         player.setFoodLevel(20);
+        player.setSaturation(20.0f);
         player.setFireTicks(0);
         player.setRemainingAir(player.getMaximumAir());
 

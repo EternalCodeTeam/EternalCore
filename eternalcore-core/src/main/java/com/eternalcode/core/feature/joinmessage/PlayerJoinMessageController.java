@@ -13,8 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 @Controller
 class PlayerJoinMessageController implements Listener {
 
-    private static final String EMPTY_MESSAGE = null;
-
     private final NoticeService noticeService;
     private final VanishService vanishService;
 
@@ -28,12 +26,11 @@ class PlayerJoinMessageController implements Listener {
     void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        event.joinMessage(null);
+
         if (this.vanishService.isVanished(player)) {
-            event.setJoinMessage(EMPTY_MESSAGE);
             return;
         }
-
-        event.setJoinMessage(EMPTY_MESSAGE);
 
         boolean firstTime = !player.hasPlayedBefore();
 
