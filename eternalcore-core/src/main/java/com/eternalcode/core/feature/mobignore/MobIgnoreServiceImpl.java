@@ -20,11 +20,6 @@ public class MobIgnoreServiceImpl implements MobIgnoreService {
 
     @Override
     public void ignore(UUID uniqueId) {
-        this.ignoredPlayers.remove(uniqueId);
-    }
-
-    @Override
-    public void unignore(UUID uniqueId) {
         this.ignoredPlayers.add(uniqueId);
 
         Player player = this.server.getPlayer(uniqueId);
@@ -34,6 +29,11 @@ public class MobIgnoreServiceImpl implements MobIgnoreService {
         }
 
         this.enableNoTarget(player);
+    }
+
+    @Override
+    public void unignore(UUID uniqueId) {
+        this.ignoredPlayers.remove(uniqueId);
     }
 
     @Override
