@@ -4,6 +4,7 @@ import com.eternalcode.core.feature.back.messages.PLBackMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
 import com.eternalcode.core.feature.lag.messages.PLLagMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
+import com.eternalcode.core.feature.mobignore.messages.PLMobIgnoreMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
@@ -207,6 +208,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# Gracze w pobliżu")
     public PLNearMessages near = new PLNearMessages();
+
+    @Comment("# Ignorowanie przez moby")
+    public PLMobIgnoreMessages noTarget = new PLMobIgnoreMessages();
 
     @Comment("# Leczenie")
     public PLHealMessages heal = new PLHealMessages();

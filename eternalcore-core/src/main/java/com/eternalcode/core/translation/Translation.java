@@ -2,6 +2,7 @@ package com.eternalcode.core.translation;
 
 import com.eternalcode.core.feature.back.messages.BackMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
+import com.eternalcode.core.feature.mobignore.messages.MobIgnoreMessages;
 import com.eternalcode.core.feature.lag.messages.LagMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
@@ -112,6 +113,8 @@ public interface Translation {
     SpawnMessages spawn();
 
     NearMessages near();
+
+    MobIgnoreMessages noTarget();
 
     HealMessages heal();
 
