@@ -12,6 +12,7 @@ import com.eternalcode.core.feature.warp.WarpSettings;
 import com.eternalcode.core.feature.warp.WarpTeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.util.ItemStackDisplayUtil;
 import com.eternalcode.core.util.MaterialUtil;
 import dev.triumphteam.gui.builder.item.BaseItemBuilder;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
@@ -28,6 +29,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 @Service
 public class WarpInventory {
@@ -129,10 +131,11 @@ public class WarpInventory {
     }
 
     private GuiItem createBorderItem(WarpInventoryConfig.BorderSection borderSection) {
-        ItemBuilder borderItem = ItemBuilder.from(borderSection.material());
+        ItemStack borderItem = ItemBuilder.from(borderSection.material()).build();
 
         if (!borderSection.name().isBlank()) {
-            borderItem.name(AdventureUtil.resetItalic(this.miniMessage.deserialize(borderSection.name())));
+            Component name = AdventureUtil.resetItalic(this.miniMessage.deserialize(borderSection.name()));
+            ItemStackDisplayUtil.applyDisplayName(borderItem, name);
         }
 
         if (!borderSection.lore().isEmpty()) {
@@ -140,10 +143,10 @@ public class WarpInventory {
                 .stream()
                 .map(entry -> AdventureUtil.resetItalic(this.miniMessage.deserialize(entry)))
                 .toList();
-            borderItem.lore(loreComponents);
+            ItemStackDisplayUtil.applyLore(borderItem, loreComponents);
         }
 
-        return new GuiItem(borderItem.build());
+        return new GuiItem(borderItem);
     }
 
     private void createDecorations(WarpInventoryConfigService.WarpInventoryConfigData warpData, Gui gui) {
@@ -214,16 +217,18 @@ public class WarpInventory {
             .toList();
 
         if (item.material() == PLAYER_HEAD && !item.texture().isEmpty()) {
-            return ItemBuilder.skull()
-                .name(name)
-                .lore(lore)
+            ItemStack skullStack = ItemBuilder.skull().build();
+            ItemStackDisplayUtil.applyDisplayNameAndLore(skullStack, name, lore);
+
+            return ItemBuilder.skull(skullStack)
                 .texture(item.texture())
                 .glow(item.glow());
         }
 
-        return ItemBuilder.from(item.material())
-            .name(name)
-            .lore(lore)
+        ItemStack itemStack = ItemBuilder.from(item.material()).build();
+        ItemStackDisplayUtil.applyDisplayNameAndLore(itemStack, name, lore);
+
+        return ItemBuilder.from(itemStack)
             .glow(item.glow());
     }
 

@@ -105,6 +105,10 @@ eternalShadow {
     library("dev.triumphteam:triumph-gui:${Versions.TRIUMPH_GUI}")
     libraryRelocate("dev.triumphteam")
 
+    // sign input library (used by the home GUI to prompt for a home name)
+    library("de.rapha149.signgui:signgui:${Versions.SIGN_GUI}")
+    libraryRelocate("de.rapha149.signgui")
+
     // metrics
     library("org.bstats:bstats-bukkit:${Versions.BSTATS}")
     libraryRelocate("org.bstats")

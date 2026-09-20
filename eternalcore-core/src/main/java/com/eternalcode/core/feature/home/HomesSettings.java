@@ -8,4 +8,5 @@ public interface HomesSettings {
     Duration delay();
     String defaultName();
     Integer defaultLimit();
+    boolean inventoryEnabled();
 }

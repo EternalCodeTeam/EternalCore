@@ -1,95 +1,47 @@
 package com.eternalcode.core.feature.home.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.core.event.EventCaller;
-import com.eternalcode.core.feature.home.HomeService;
+import com.eternalcode.core.feature.home.HomeMutationService;
 import com.eternalcode.core.feature.home.HomesSettings;
-import com.eternalcode.core.feature.home.event.HomeLimitReachedEvent;
+import com.eternalcode.core.feature.home.inventory.HomeInventory;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.user.User;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
-import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
-import java.util.UUID;
 import org.bukkit.entity.Player;
 
 @Command(name = "sethome")
 @Permission("eternalcore.sethome")
 class SetHomeCommand {
 
-    private final HomeService homeService;
-    private final NoticeService noticeService;
+    private final HomeMutationService homeMutationService;
     private final HomesSettings homesSettings;
-    private final EventCaller eventCaller;
+    private final HomeInventory homeInventory;
 
     @Inject
-    SetHomeCommand(
-        HomeService homeService,
-        NoticeService noticeService,
-        HomesSettings homesSettings,
-        EventCaller eventCaller
-    ) {
-        this.homeService = homeService;
-        this.noticeService = noticeService;
+    SetHomeCommand(HomeMutationService homeMutationService, HomesSettings homesSettings, HomeInventory homeInventory) {
+        this.homeMutationService = homeMutationService;
         this.homesSettings = homesSettings;
-        this.eventCaller = eventCaller;
+        this.homeInventory = homeInventory;
     }
 
     @Execute
     @DescriptionDocs(description = "Set home location with specified name", arguments = "<home>")
     void execute(@Sender User user, @Sender Player player, @Arg String home) {
-        this.setOrOverrideHome(user, player, home);
+        this.homeMutationService.setOrOverrideHome(user, player, home);
     }
 
     @Execute
-    @DescriptionDocs(description = "Set home location")
+    @DescriptionDocs(description = "Set home location, opens the home GUI instead if it's enabled")
     void execute(@Sender User user, @Sender Player player) {
-        this.setOrOverrideHome(user, player, this.homesSettings.defaultName());
-    }
-
-    private void setOrOverrideHome(User user, Player player, String homeName) {
-        UUID uniqueId = user.getUniqueId();
-
-        if (this.homeService.hasHome(uniqueId, homeName)) {
-            this.homeService.createHome(uniqueId, homeName, player.getLocation());
-
-            this.noticeService.create()
-                .user(user)
-                .placeholder("{HOME}", homeName)
-                .notice(translation -> translation.home().overrideHomeLocation())
-                .send();
-
+        if (this.homesSettings.inventoryEnabled()) {
+            this.homeInventory.open(player);
             return;
         }
 
-        int amountOfUserHomes = this.homeService.getHomes(player.getUniqueId()).size();
-        int maxAmountOfUserHomes = this.homeService.getHomeLimit(player);
-
-        if (amountOfUserHomes >= maxAmountOfUserHomes) {
-            this.noticeService.create()
-                .user(user)
-                .placeholder("{LIMIT}", String.valueOf(maxAmountOfUserHomes))
-                .notice(translation -> translation.home().limit())
-                .send();
-
-            this.eventCaller.callEvent(new HomeLimitReachedEvent(
-                player.getUniqueId(),
-                maxAmountOfUserHomes,
-                amountOfUserHomes
-            ));
-
-            return;
-        }
-
-        this.homeService.createHome(uniqueId, homeName, player.getLocation());
-        this.noticeService.create()
-            .user(user)
-            .notice(translation -> translation.home().create())
-            .placeholder("{HOME}", homeName)
-            .send();
+        this.homeMutationService.setOrOverrideHome(user, player, this.homesSettings.defaultName());
     }
 }

@@ -2,8 +2,10 @@ package com.eternalcode.core.feature.skull;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.util.ItemStackDisplayUtil;
 import com.eternalcode.core.util.MaterialUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.Command;
@@ -37,9 +39,10 @@ class SkullCommand {
     void execute(@Sender Player sender, @Arg(SkullNicknameArgument.KEY) String name) {
         this.skullAPI.acceptSkullData(name, skull -> {
             ItemStack namedSkull = ItemBuilder.skull()
-                .name(Component.text(name))
                 .texture(skull.getValue())
                 .build();
+
+            ItemStackDisplayUtil.applyDisplayName(namedSkull, AdventureUtil.resetItalic(Component.text(name)));
 
             ItemStack mainHand = sender.getInventory().getItemInMainHand();
 

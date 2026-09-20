@@ -26,6 +26,13 @@ public class HomesConfig extends OkaeriConfig implements HomesSettings {
     public Duration delay = Duration.ofSeconds(5);
 
     @Comment({
+        "# Should /home and /sethome (with no name given) open a GUI showing all home slots?",
+        "# When false (default), /home and /sethome behave exactly as before - no GUI, plain commands only.",
+        "# /home <name>, /sethome <name> and /delhome <name> always work directly regardless of this setting."
+    })
+    public boolean inventoryEnabled = false;
+
+    @Comment({
         "# Configure how many homes a player can set depending on their permissions.",
         "#",
         "# Permission format: 'permission.node : max_homes'",

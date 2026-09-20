@@ -9,8 +9,11 @@ public interface HomeMessages {
     Notice delete();
     Notice limit();
     Notice overrideHomeLocation();
+    Notice renamed();
+    Notice renameNameTaken();
     Notice noHomesOwned();
     String noHomesOwnedPlaceholder();
+    Notice signOpenFailed();
 
     Notice overrideHomeLocationAsAdmin();
     Notice playerNoOwnedHomes();

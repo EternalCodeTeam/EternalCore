@@ -25,12 +25,19 @@ public class PLHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice overrideHomeLocation = Notice
             .chat("<color:#9d6eef>► <white>Nadpisałeś lokalizację domu <color:#9d6eef>{HOME}<white>!");
 
+    @Comment({ " ", "# {HOME_OLD} - Stara nazwa domu, {HOME_NEW} - Nowa nazwa domu" })
+    Notice renamed = Notice.chat("<color:#9d6eef>► <white>Zmieniono nazwę domu z <color:#9d6eef>{HOME_OLD} <white>na <color:#9d6eef>{HOME_NEW}<white>!");
+    @Comment({ " ", "# {HOME} - Nazwa domu" })
+    Notice renameNameTaken = Notice.chat("<red>✘ <dark_red>Posiadasz już dom o nazwie <red>{HOME}<dark_red>!");
+
     @Comment({ " ", "# {LIMIT} - Limit domów" })
     Notice limit = Notice.chat("<red>✘ <dark_red>Osiągnąłeś limit domów! Twój limit to <red>{LIMIT}<dark_red>.");
     Notice noHomesOwned = Notice.chat("<red>✘ <dark_red>Nie posiadasz żadnego domu!");
 
     @Comment({ " ", "# Wiadomości placeholderów" })
     String noHomesOwnedPlaceholder = "Nie posiadasz żadnego domu.";
+
+    Notice signOpenFailed = Notice.chat("<red>✘ <dark_red>Nie udało się otworzyć okna edycji nazwy. Skontaktuj się z administracją.");
 
     @Comment({
             " ",

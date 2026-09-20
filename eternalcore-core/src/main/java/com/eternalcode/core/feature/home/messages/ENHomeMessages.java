@@ -22,12 +22,20 @@ public class ENHomeMessages extends OkaeriConfig implements HomeMessages {
     Notice create = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been created.");
     Notice delete = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been deleted.");
     Notice overrideHomeLocation = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME} <white>has been overridden.");
+
+    @Comment({ " ", "# {HOME_OLD} - Old home name, {HOME_NEW} - New home name" })
+    Notice renamed = Notice.chat("<color:#9d6eef>► <white>Home <color:#9d6eef>{HOME_OLD} <white>has been renamed to <color:#9d6eef>{HOME_NEW}<white>.");
+    @Comment({ " ", "# {HOME} - Home name" })
+    Notice renameNameTaken = Notice.chat("<dark_red>✘ <red>You already have a home named <dark_red>{HOME}<red>!");
+
     @Comment({ " ", "# {LIMIT} - Homes limit" })
     Notice limit = Notice.chat("<red>✘ <dark_red>You have reached the limit of homes! Your limit is <red>{LIMIT}<dark_red>.");
     Notice noHomesOwned = Notice.chat("<dark_red>✘ <red>You don't have any homes.");
 
     @Comment({ " ", "# Placeholders messages" })
     String noHomesOwnedPlaceholder = "You don't have any homes.";
+
+    Notice signOpenFailed = Notice.chat("<dark_red>✘ <red>Failed to open the name editor. Please contact an administrator.");
 
     @Comment({
             " ",

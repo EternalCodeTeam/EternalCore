@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.home.Home;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.home.HomeTeleportService;
 import com.eternalcode.core.feature.home.HomesSettings;
+import com.eternalcode.core.feature.home.inventory.HomeInventory;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.TranslationManager;
@@ -27,6 +28,7 @@ class HomeCommand {
     private final NoticeService noticeService;
     private final HomeService homeService;
     private final HomeTeleportService homeTeleportService;
+    private final HomeInventory homeInventory;
     private final PluginConfiguration pluginConfiguration;
     private final TranslationManager translationManager;
 
@@ -36,6 +38,7 @@ class HomeCommand {
         NoticeService noticeService,
         HomeService homeService,
         HomeTeleportService homeTeleportService,
+        HomeInventory homeInventory,
         PluginConfiguration pluginConfiguration,
         TranslationManager translationManager
     ) {
@@ -43,6 +46,7 @@ class HomeCommand {
         this.noticeService = noticeService;
         this.homeService = homeService;
         this.homeTeleportService = homeTeleportService;
+        this.homeInventory = homeInventory;
         this.pluginConfiguration = pluginConfiguration;
         this.translationManager = translationManager;
     }
@@ -50,6 +54,11 @@ class HomeCommand {
     @Execute
     @DescriptionDocs(description = "Teleports to the first home if the player has no other homes set, if player has eternalcore.home.bypass permission, eternalcore will ignore teleport time")
     void execute(@Sender Player player) {
+        if (this.homesSettings.inventoryEnabled()) {
+            this.homeInventory.open(player);
+            return;
+        }
+
         Collection<Home> playerHomes = this.homeService.getHomes(player.getUniqueId());
 
         if (playerHomes.isEmpty()) {
