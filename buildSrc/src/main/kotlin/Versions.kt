@@ -9,15 +9,15 @@ object Versions {
     const val JETBRAINS_ANNOTATIONS = "26.1.0"
     const val PLACEHOLDER_API = "2.12.3"
     const val DYNMAP_API = "3.7-beta-6"
-    const val SQUAREMAP_API = "1.3.15"
-    const val LOMBOK = "1.18.46"
+    const val SQUAREMAP_API = "1.4.0"
+    const val LOMBOK = "1.18.48"
 
     const val ADVENTURE_TEXT_MINIMESSAGE = "4.26.1"
     const val OKAERI_CONFIGS = "6.0.0-beta.27"
 
     const val MARIA_DB = "3.5.10"
     const val POSTGRESQL = "42.7.13"
-    const val H2 = "2.4.240"
+    const val H2 = "2.5.250"
     const val ORMLITE = "6.1"
     const val HIKARI_CP = "7.1.0"
 

@@ -54,6 +54,7 @@ class FeedCommand {
 
     void feed(Player player) {
         player.setFoodLevel(20);
+        player.setSaturation(20.0f); // without this, the hunger bar starts depleting right after the next action
     }
 }
 

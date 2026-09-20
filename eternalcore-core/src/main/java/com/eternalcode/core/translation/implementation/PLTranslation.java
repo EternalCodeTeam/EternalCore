@@ -2,6 +2,7 @@ package com.eternalcode.core.translation.implementation;
 
 import com.eternalcode.core.feature.back.messages.PLBackMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
+import com.eternalcode.core.feature.lag.messages.PLLagMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.mobignore.messages.PLMobIgnoreMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
@@ -38,7 +39,7 @@ import com.eternalcode.core.feature.kill.messages.PLKillMessages;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
 import com.eternalcode.core.feature.msg.messages.PLMsgMessages;
 import com.eternalcode.core.feature.onlineplayers.messages.PLOnlineMessages;
-import com.eternalcode.core.feature.ping.PLPingMessages;
+import com.eternalcode.core.feature.ping.messages.PLPingMessages;
 import com.eternalcode.core.feature.powertool.messages.PLPowertoolMessages;
 import com.eternalcode.core.feature.quitmessage.messages.PLQuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.PLRandomTeleportMessages;
@@ -312,6 +313,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# End Screen")
     public PLEndScreenMessages endScreen = new PLEndScreenMessages();
+
+    @Comment("# Lag")
+    public PLLagMessages lag = new PLLagMessages();
 
     @Override
     public File getConfigFile(File dataFolder) {

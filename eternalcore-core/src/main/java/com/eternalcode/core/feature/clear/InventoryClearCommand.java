@@ -12,7 +12,7 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@Command(name = "clear")
+@Command(name = "clear", aliases = {"clearinventory", "ci"})
 @Permission("eternalcore.clear")
 class InventoryClearCommand {
 

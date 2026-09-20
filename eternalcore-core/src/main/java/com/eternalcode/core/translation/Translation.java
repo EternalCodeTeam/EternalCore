@@ -3,6 +3,7 @@ package com.eternalcode.core.translation;
 import com.eternalcode.core.feature.back.messages.BackMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.mobignore.messages.MobIgnoreMessages;
+import com.eternalcode.core.feature.lag.messages.LagMessages;
 import com.eternalcode.core.feature.playtime.messages.PlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.ClearMessages;
 import com.eternalcode.core.feature.container.messages.ContainerMessages;
@@ -38,7 +39,7 @@ import com.eternalcode.core.feature.motd.messages.MotdMessages;
 import com.eternalcode.core.feature.msg.messages.MsgMessages;
 import com.eternalcode.core.feature.near.messages.NearMessages;
 import com.eternalcode.core.feature.onlineplayers.messages.OnlineMessages;
-import com.eternalcode.core.feature.ping.PingMessages;
+import com.eternalcode.core.feature.ping.messages.PingMessages;
 import com.eternalcode.core.feature.powertool.messages.PowertoolMessages;
 import com.eternalcode.core.feature.quitmessage.messages.QuitMessage;
 import com.eternalcode.core.feature.randomteleport.messages.RandomTeleportMessages;
@@ -182,4 +183,6 @@ public interface Translation {
     DemoScreenMessages demoScreen();
 
     EndScreenMessages endScreen();
+
+    LagMessages lag();
 }

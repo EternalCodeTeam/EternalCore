@@ -21,8 +21,10 @@ import java.util.concurrent.CompletableFuture;
 @Service
 class RandomTeleportSafeLocationService {
 
-    private static final int DEFAULT_NETHER_HEIGHT = 125;
-    private static final int NETHER_MAX_HEIGHT = 127;
+    // Vanilla Nether has a solid bedrock ceiling starting around y=121-127,
+    // so both rolling and validating a Nether candidate must stay strictly below it.
+    // Kept as a single constant so the two checks can never drift apart.
+    private static final int NETHER_SAFE_MAX_HEIGHT = 120;
 
     private final RandomTeleportSettings randomTeleportSettings;
     private final LocationsConfiguration locationsConfiguration;
@@ -57,16 +59,9 @@ class RandomTeleportSafeLocationService {
         int randomZ = spawnZ + this.random.nextInt(radius.maxZ() - radius.minZ() + 1) + radius.minZ();
 
         return world.getChunkAtAsync(new Location(world, randomX, 100, randomZ)).thenCompose(chunk -> {
-            int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
-
-            if (world.getEnvironment() == World.Environment.NETHER) {
-                randomY = this.random.nextInt(DEFAULT_NETHER_HEIGHT);
-            }
-
-            RandomTeleportHeightRange heightRange = this.randomTeleportSettings.heightRange();
-            int minHeight = heightRange.getMinY();
-            int maxHeight = heightRange.getMaxY() - 1;
-            randomY = Math.min(Math.max(randomY, minHeight), maxHeight);
+            int randomY = world.getEnvironment() == World.Environment.NETHER
+                ? this.rollNetherHeight(world)
+                : this.rollSurfaceHeight(chunk, randomX, randomZ);
 
             Location generatedLocation = new Location(world, randomX, randomY, randomZ).add(0.5, 1, 0.5);
 
@@ -76,6 +71,23 @@ class RandomTeleportSafeLocationService {
 
             return this.getSafeRandomLocation(world, radius, attemptCount - 1);
         });
+    }
+
+    private int rollNetherHeight(World world) {
+        int minHeight = world.getMinHeight();
+        int range = NETHER_SAFE_MAX_HEIGHT - minHeight;
+
+        return minHeight + this.random.nextInt(range);
+    }
+
+    private int rollSurfaceHeight(Chunk chunk, int randomX, int randomZ) {
+        int randomY = chunk.getWorld().getHighestBlockYAt(randomX, randomZ);
+
+        RandomTeleportHeightRange heightRange = this.randomTeleportSettings.heightRange();
+        int minHeight = heightRange.getMinY();
+        int maxHeight = heightRange.getMaxY() - 1;
+
+        return Math.min(Math.max(randomY, minHeight), maxHeight);
     }
 
     private boolean isSafeLocation(Chunk chunk, Location location) {
@@ -109,7 +121,7 @@ class RandomTeleportSafeLocationService {
 
         boolean environmentValid = switch (world.getEnvironment()) {
             case NORMAL, THE_END, CUSTOM -> true;
-            case NETHER -> location.getY() <= NETHER_MAX_HEIGHT;
+            case NETHER -> location.getY() <= NETHER_SAFE_MAX_HEIGHT;
         };
 
         if (!environmentValid) {

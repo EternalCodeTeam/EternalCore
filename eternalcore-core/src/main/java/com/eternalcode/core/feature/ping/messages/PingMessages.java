@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.ping;
+package com.eternalcode.core.feature.ping.messages;
 
 import com.eternalcode.multification.notice.Notice;
 
