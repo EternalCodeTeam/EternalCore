@@ -20,13 +20,6 @@
 
 </div>
 
-> [!IMPORTANT]
-> 🚀 **EternalCore 2.0 has landed!**  
-> This is a major release with internal changes, new systems, and config updates.  
-> Please read the **changelog** carefully before upgrading:  
-> 👉 https://github.com/EternalCodeTeam/EternalCore/releases/latest
-
-
 # Welcome to EternalCore! 🚀
 
 EternalCore is a modern, actively maintained alternative to **EssentialsX**.
@@ -43,7 +36,7 @@ It provides the most important server features in one plugin, with better config
 Get the latest development builds from [our website](https://eternalcode.pl/builds?project=eternalcore)
 ## ✨ Features
 
-- ⌨️ Over **80+** useful commands.
+- ⌨️ Over **90+** useful commands.
 - ✅ Slot Bypass `(eternalcore.bypass.slot)`
 - 💤 AFK System
 - 💬 **Chat & Interaction**:
@@ -55,13 +48,16 @@ Get the latest development builds from [our website](https://eternalcode.pl/buil
   - <details><summary>Server links feature (Click to see how it works)</summary><img src="assets/server-links-showcase.gif" alt="Server Links Showcase"></details>
 - 🌌 **Teleportation & Travel**:
   - Complete Home, Warp, and Spawn System
-  - Random Teleport (RTP) for wild exploration
+  - Random Teleport (RTP), now nether-aware for wild exploration
   - Teleport Requests (TPA) and `/back` command
   - Navigation tools: `/tpup`, `/tprp`, `/tppos`, `/tphere`
+  - Configurable automatic teleport back to your death location (`/deathteleport`)
 - 🛡️ **Moderation & Administration**:
-  - Jail, Freeze, and Vanish Systems
+  - Jail, Freeze, and Vanish Systems, with Squaremap integration so vanished staff stay hidden on the map
+  - Mob Ignore system, so hostile mobs can be set to ignore players
   - Admin Tools: `/sudo`, `/powertool`, `/butcher` (Mob Control)
   - Inventory Management: `/clear`, `/repair`, and Disposal (`/disposal`)
+  - Performance insight via `/lag`
 - 👤 **Player Management**:
   - Attributes: Gamemode, Fly, Speed, Godmode, Heal, Feed
   - Information: `/whois`, Playtime, Last Seen, Ping check
@@ -72,7 +68,7 @@ Get the latest development builds from [our website](https://eternalcode.pl/buil
   - Time, Weather management
 - ⚙️ **Core & Integration**:
   - 📄 PlaceholderAPI Support
-  - 🗂️ Database Integration (PostgresSQL, SQLite, MySQL, MariaDB, H2)
+  - 🗂️ Database Integration (PostgreSQL, SQLite, MySQL, MariaDB, H2)
   - 🌈 Adventure & [MiniMessage](https://docs.advntr.dev/minimessage/format.html) integration
   - 🔨 Advanced Configuration System
 - [...and much more!](https://docs.eternalcode.pl/eternalcore/features.html)
