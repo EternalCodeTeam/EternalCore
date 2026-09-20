@@ -1,6 +1,7 @@
 package com.eternalcode.core.translation;
 
 import com.eternalcode.core.feature.back.messages.BackMessages;
+import com.eternalcode.core.feature.deathteleport.messages.DeathTeleportMessages;
 import com.eternalcode.core.feature.freeze.messages.FreezeMessages;
 import com.eternalcode.core.feature.mobignore.messages.MobIgnoreMessages;
 import com.eternalcode.core.feature.lag.messages.LagMessages;
@@ -99,6 +100,8 @@ public interface Translation {
     TeleportRequestMessages tpa();
 
     BackMessages back();
+
+    DeathTeleportMessages deathTeleport();
 
     TeleportToRandomPlayerMessages teleportToRandomPlayer();
 
