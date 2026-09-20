@@ -9,9 +9,6 @@ public final class EncryptedValue {
     private final byte[] iv;
 
     public EncryptedValue(byte[] ciphertext, byte[] iv) {
-        Objects.requireNonNull(ciphertext, "ciphertext cannot be null");
-        Objects.requireNonNull(iv, "iv cannot be null");
-
         this.ciphertext = Arrays.copyOf(ciphertext, ciphertext.length);
         this.iv = Arrays.copyOf(iv, iv.length);
     }

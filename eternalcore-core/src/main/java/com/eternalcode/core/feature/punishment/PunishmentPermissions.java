@@ -14,7 +14,7 @@ public class PunishmentPermissions {
     @PermissionDocs(
         name = "History Self",
         permission = PunishmentPermissions.HISTORY_SELF,
-        description = "Permission allows a player to view their own punishment history"
+        description = "Permission allows a player to view their own punishment history (/history <my_nickname>)"
     )
     public static final String HISTORY_SELF = "eternalcore.punishment.history-self";
     public static final String HISTORY_STAFF = "eternalcore.punishment.history";
