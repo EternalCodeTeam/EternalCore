@@ -10,7 +10,7 @@ class IgnoreTable {
     public static final String PLAYER_ID_COLUMN = "player_id";
     public static final String IGNORED_ID_COLUMN = "ignored_id";
 
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
     Long id;
 
     @DatabaseField(columnName = PLAYER_ID_COLUMN, uniqueCombo = true)
