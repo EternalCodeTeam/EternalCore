@@ -17,7 +17,6 @@ import com.eternalcode.core.util.DurationUtil;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
-import org.bukkit.Server;
 
 @PlaceholdersDocs(
     category = "AFK",
@@ -52,12 +51,10 @@ import org.bukkit.Server;
 class AfkPlaceholderSetup {
 
     private final TranslationManager translationManager;
-    private final Server server;
 
     @Inject
-    AfkPlaceholderSetup(TranslationManager translationManager, Server server) {
+    AfkPlaceholderSetup(TranslationManager translationManager) {
         this.translationManager = translationManager;
-        this.server = server;
     }
 
     @Subscribe(EternalInitializeEvent.class)
@@ -80,12 +77,6 @@ class AfkPlaceholderSetup {
             Duration afkDuration = Duration.between(start, now);
             return DurationUtil.format(afkDuration, true);
         }));
-        placeholders.register(Placeholder.ofLong("afk_playercount", player -> {
-            long afkPlayerCount = this.server.getOnlinePlayers()
-                .stream()
-                .filter(onlinePlayer -> afkService.isAfk(onlinePlayer.getUniqueId()))
-                .count();
-            return afkPlayerCount;
-        }));
+        placeholders.register(Placeholder.ofLong("afk_playercount", player -> (long) afkService.getAfkPlayerCount()));
     }
 }

@@ -7,10 +7,10 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
@@ -23,9 +23,9 @@ class AfkServiceImpl implements AfkService {
     private final EventCaller eventCaller;
     private final Server server;
 
-    private final Map<UUID, Afk> afkByPlayer = new HashMap<>();
-    private final Map<UUID, Integer> interactionsCount = new HashMap<>();
-    private final Map<UUID, Instant> lastInteraction = new HashMap<>();
+    private final Map<UUID, Afk> afkByPlayer = new ConcurrentHashMap<>();
+    private final Map<UUID, Integer> interactionsCount = new ConcurrentHashMap<>();
+    private final Map<UUID, Instant> lastInteraction = new ConcurrentHashMap<>();
 
     @Inject
     public AfkServiceImpl(NoticeService noticeService, AfkSettings afkSettings, EventCaller eventCaller, Server server) {
@@ -107,6 +107,11 @@ class AfkServiceImpl implements AfkService {
     @Override
     public boolean isAfk(UUID playerUniqueId) {
         return this.afkByPlayer.containsKey(playerUniqueId);
+    }
+
+    @Override
+    public int getAfkPlayerCount() {
+        return this.afkByPlayer.size();
     }
 
     @ApiStatus.Internal

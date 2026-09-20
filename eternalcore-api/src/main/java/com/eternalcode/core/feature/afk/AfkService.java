@@ -55,4 +55,11 @@ public interface AfkService {
      * @return Afk object representing player's AFK status.
      */
     Optional<Afk> getAfk(UUID playerUniqueId);
+
+    /**
+     * Gets the number of players currently marked as AFK.
+     *
+     * @return the amount of AFK players.
+     */
+    int getAfkPlayerCount();
 }
