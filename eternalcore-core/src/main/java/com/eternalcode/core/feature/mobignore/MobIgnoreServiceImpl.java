@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.mobignore;
 
+import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.HashSet;
 import java.util.UUID;
@@ -14,6 +15,7 @@ public class MobIgnoreServiceImpl implements MobIgnoreService {
     private final HashSet<UUID> ignoredPlayers = new HashSet<>();
     private final Server server;
 
+    @Inject
     public MobIgnoreServiceImpl(Server server) {
         this.server = server;
     }
