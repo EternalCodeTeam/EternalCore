@@ -8,12 +8,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 
 @Controller
-public class MobTargetListener implements Listener {
+public class MobTargetController implements Listener {
 
     private final MobIgnoreService mobIgnoreService;
 
     @Inject
-    public MobTargetListener(MobIgnoreService mobIgnoreService) {
+    public MobTargetController(MobIgnoreService mobIgnoreService) {
         this.mobIgnoreService = mobIgnoreService;
     }
 
@@ -22,6 +22,5 @@ public class MobTargetListener implements Listener {
         if (event.getTarget() instanceof Player player && this.mobIgnoreService.isIgnored(player.getUniqueId())) {
             event.setCancelled(true);
         }
-
     }
 }

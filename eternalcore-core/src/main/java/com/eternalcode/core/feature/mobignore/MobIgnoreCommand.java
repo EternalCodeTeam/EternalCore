@@ -60,7 +60,7 @@ public class MobIgnoreCommand {
     }
 
     private void turnOn(Player player) {
-        this.mobIgnoreService.stopTracking(player);
+        this.mobIgnoreService.ignore(player);
 
         this.noticeService.create()
             .notice(translation -> translation.noTarget().mobIgnore())
@@ -69,7 +69,7 @@ public class MobIgnoreCommand {
     }
 
     private void turnOff(UUID uniqueId) {
-        this.mobIgnoreService.startTracking(uniqueId);
+        this.mobIgnoreService.unignore(uniqueId);
 
         this.noticeService.create()
             .notice(translation -> translation.noTarget().noMobIgnore())
