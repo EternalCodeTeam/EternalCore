@@ -11,6 +11,5 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.stellardrift.ca/repository/snapshots/")
     maven("https://storehouse.okaeri.eu/repository/maven-public/")
-    maven("https://repo.xenondevs.xyz/releases")
     maven("https://repo.mikeprimm.com/")
 }
