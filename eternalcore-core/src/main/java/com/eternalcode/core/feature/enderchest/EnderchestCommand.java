@@ -48,7 +48,7 @@ class EnderchestCommand {
     @Execute
     @Permission("eternalcore.enderchest")
     @DescriptionDocs(description = "Opens selected page of your ender chest", arguments = "<page>")
-    void execute(@Sender Player player, @Arg int page) {
+    void executePage(@Sender Player player, @Arg int page) {
         if (this.enderchestService.areEnderchestsBlocked()) {
             this.sendBlockedNotice(player);
             return;
