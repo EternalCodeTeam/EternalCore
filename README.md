@@ -98,7 +98,7 @@ For Maven projects use:
 
 For Gradle projects use:
 ```kts
-compileOnly("com.eternalcode:eternalcore-api:2.0.1-SNAPSHOT")
+compileOnly("com.eternalcode:eternalcore-api:2.1.0")
 ```
 
 For Maven projects use:
@@ -106,7 +106,7 @@ For Maven projects use:
 <dependency>
     <groupId>com.eternalcode</groupId>
     <artifactId>eternalcore-api</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.1.0</version>
     <scope>provided</scope>
 </dependency>
 ```
