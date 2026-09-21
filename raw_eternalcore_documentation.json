@@ -320,7 +320,7 @@
         "chat, cc"
       ],
       "permissions": [
-        "eternalcore.chat"
+        "eternalcore.chat.clear"
       ],
       "descriptions": [
         "Clears chat"
@@ -333,7 +333,7 @@
       "name": "chat off",
       "aliases": [],
       "permissions": [
-        "eternalcore.chat"
+        "eternalcore.chat.off"
       ],
       "descriptions": [
         "Disables chat"
@@ -346,7 +346,7 @@
       "name": "chat on",
       "aliases": [],
       "permissions": [
-        "eternalcore.chat"
+        "eternalcore.chat.on"
       ],
       "descriptions": [
         "Enables chat"
@@ -359,7 +359,7 @@
       "name": "chat slowmode",
       "aliases": [],
       "permissions": [
-        "eternalcore.chat"
+        "eternalcore.chat.slowmode"
       ],
       "descriptions": [
         "Sets slowmode for chat"
@@ -372,7 +372,7 @@
       "name": "chat slowmode 0",
       "aliases": [],
       "permissions": [
-        "eternalcore.chat"
+        "eternalcore.chat.slowmode"
       ],
       "descriptions": [
         "Disable SlowMode for chat"
@@ -432,6 +432,59 @@
       ],
       "arguments": [
         "<world>"
+      ]
+    },
+    {
+      "name": "deathteleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.deathteleport"
+      ],
+      "descriptions": [
+        "Toggle automatic teleportation to your last death location after respawning"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "deathteleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.deathteleport.other",
+        "eternalcore.deathteleport"
+      ],
+      "descriptions": [
+        "Toggle automatic death teleportation for another player"
+      ],
+      "arguments": [
+        "<player>"
+      ]
+    },
+    {
+      "name": "deathteleport disable",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.deathteleport"
+      ],
+      "descriptions": [
+        "Disable automatic teleportation to your last death location after respawning"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
+      "name": "deathteleport enable",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.deathteleport"
+      ],
+      "descriptions": [
+        "Enable automatic teleportation to your last death location after respawning"
+      ],
+      "arguments": [
+        ""
       ]
     },
     {
@@ -531,10 +584,10 @@
       "name": "enchant ",
       "aliases": [],
       "permissions": [
-        "eternalcore.enchant"
+        "eternalcore.enchant.other"
       ],
       "descriptions": [
-        "Enchants item in hand"
+        "Enchants the item held by the specified player"
       ],
       "arguments": [
         "<enchantment> <level> <player>"
@@ -1275,6 +1328,19 @@
       ]
     },
     {
+      "name": "lag ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.lag"
+      ],
+      "descriptions": [
+        "Shows server performance information"
+      ],
+      "arguments": [
+        ""
+      ]
+    },
+    {
       "name": "lightning ",
       "aliases": [],
       "permissions": [
@@ -1321,6 +1387,15 @@
       "arguments": [
         "<player>"
       ]
+    },
+    {
+      "name": "mobignore ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.mobignore"
+      ],
+      "descriptions": [],
+      "arguments": []
     },
     {
       "name": "msg",
@@ -1945,32 +2020,6 @@
         "eternalcore.teleport"
       ],
       "descriptions": [
-        "Teleport to specified location"
-      ],
-      "arguments": [
-        "<x> <y> <z>"
-      ]
-    },
-    {
-      "name": "teleport ",
-      "aliases": [],
-      "permissions": [
-        "eternalcore.teleport"
-      ],
-      "descriptions": [
-        "Teleport player to specified player, location and world"
-      ],
-      "arguments": [
-        "<player> <x> <y> <z> <world>"
-      ]
-    },
-    {
-      "name": "teleport ",
-      "aliases": [],
-      "permissions": [
-        "eternalcore.teleport"
-      ],
-      "descriptions": [
         "Teleport to specified player"
       ],
       "arguments": [
@@ -1981,20 +2030,20 @@
       "name": "teleport ",
       "aliases": [],
       "permissions": [
-        "eternalcore.teleport"
+        "eternalcore.teleport.coordinates"
       ],
       "descriptions": [
-        "Teleport to specified location and world"
+        "Teleport to specified location"
       ],
       "arguments": [
-        "<x> <y> <z> <world>"
+        "<x> <y> <z>"
       ]
     },
     {
       "name": "teleport ",
       "aliases": [],
       "permissions": [
-        "eternalcore.teleport"
+        "eternalcore.teleport.other"
       ],
       "descriptions": [
         "Teleport player to player"
@@ -2007,13 +2056,39 @@
       "name": "teleport ",
       "aliases": [],
       "permissions": [
-        "eternalcore.teleport"
+        "eternalcore.teleport.coordinates"
+      ],
+      "descriptions": [
+        "Teleport to specified location and world"
+      ],
+      "arguments": [
+        "<x> <y> <z> <world>"
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport.coordinates.other"
       ],
       "descriptions": [
         "Teleport player to specified location and world"
       ],
       "arguments": [
         "<player> <x> <y> <z>"
+      ]
+    },
+    {
+      "name": "teleport ",
+      "aliases": [],
+      "permissions": [
+        "eternalcore.teleport.coordinates.other"
+      ],
+      "descriptions": [
+        "Teleport player to specified player, location and world"
+      ],
+      "arguments": [
+        "<player> <x> <y> <z> <world>"
       ]
     },
     {

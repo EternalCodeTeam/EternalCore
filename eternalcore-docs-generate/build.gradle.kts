@@ -32,4 +32,5 @@ dependencies {
     runtimeOnly("us.dynmap:dynmap-api:${Versions.DYNMAP_API}")
     runtimeOnly("us.dynmap:DynmapCoreAPI:${Versions.DYNMAP_API}")
     runtimeOnly("fr.skytasul:glowingentities:${Versions.GLOWING_ENTITIES}")
+    runtimeOnly("xyz.jpenilla:squaremap-api:${Versions.SQUAREMAP_API}")
 }

@@ -1,5 +1,19 @@
 [
   {
+    "name": "%eternalcore_adminchat%",
+    "description": "Returns `true` if the player has persistent admin chat mode enabled, `false` otherwise.",
+    "returnType": "boolean",
+    "category": "AdminChat",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_adminchat_formatted%",
+    "description": "Returns a localized admin chat status (the same enable/disable format used in messages), based on the player's language settings.",
+    "returnType": "string",
+    "category": "AdminChat",
+    "requiresPlayer": true
+  },
+  {
     "name": "%eternalcore_afk%",
     "description": "Returns `true` if the player is AFK, `false` otherwise",
     "returnType": "boolean",
@@ -25,6 +39,76 @@
     "description": "Returns the duration the player has been AFK in a formatted string e.g. `5m 30s`",
     "returnType": "string",
     "category": "AFK",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_chat_enabled%",
+    "description": "Returns `true` if the chat is currently enabled on the server, `false` otherwise.",
+    "returnType": "boolean",
+    "category": "Chat",
+    "requiresPlayer": false
+  },
+  {
+    "name": "%eternalcore_chat_enabled_formatted%",
+    "description": "Returns a localized chat status (the same enable/disable format used in messages), based on the player's language settings.",
+    "returnType": "string",
+    "category": "Chat",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_chat_slowmode%",
+    "description": "Returns the server-wide chat slowmode delay in seconds. Returns 0 if slowmode is disabled.",
+    "returnType": "string",
+    "category": "Chat",
+    "requiresPlayer": false
+  },
+  {
+    "name": "%eternalcore_chat_slowmode_formatted%",
+    "description": "Returns the server-wide chat slowmode delay as a formatted duration. e.g. `5s`",
+    "returnType": "string",
+    "category": "Chat",
+    "requiresPlayer": false
+  },
+  {
+    "name": "%eternalcore_chat_slowmode_remaining%",
+    "description": "Returns how many seconds the player has to wait before sending the next message. Returns 0 if the player can chat right now.",
+    "returnType": "string",
+    "category": "Chat",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_chat_slowmode_remaining_formatted%",
+    "description": "Returns the remaining time until the player can send the next message as a formatted duration. e.g. `2h 5m 3s`",
+    "returnType": "string",
+    "category": "Chat",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_fly%",
+    "description": "Returns `true` if the player has fly mode enabled, `false` otherwise.",
+    "returnType": "boolean",
+    "category": "Fly",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_fly_formatted%",
+    "description": "Returns a localized fly mode status (the same enable/disable format used in messages), based on the player's language settings.",
+    "returnType": "string",
+    "category": "Fly",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_godmode%",
+    "description": "Returns `true` if the player has god mode (invulnerability) enabled, `false` otherwise.",
+    "returnType": "boolean",
+    "category": "GodMode",
+    "requiresPlayer": true
+  },
+  {
+    "name": "%eternalcore_godmode_formatted%",
+    "description": "Returns a localized god mode status (the same enable/disable format used in messages), based on the player's language settings.",
+    "returnType": "string",
+    "category": "GodMode",
     "requiresPlayer": true
   },
   {
@@ -56,10 +140,31 @@
     "requiresPlayer": true
   },
   {
+    "name": "%eternalcore_is_vanished%",
+    "description": "Returns `true` if the player is currently vanished, `false` otherwise.",
+    "returnType": "boolean",
+    "category": "Vanish",
+    "requiresPlayer": true
+  },
+  {
     "name": "%eternalcore_online%",
     "description": "Returns the number of online players who are not vanished",
     "returnType": "int",
     "category": "General",
+    "requiresPlayer": false
+  },
+  {
+    "name": "%eternalcore_vanished_count%",
+    "description": "Returns the number of currently vanished players.",
+    "returnType": "int",
+    "category": "Vanish",
+    "requiresPlayer": false
+  },
+  {
+    "name": "%eternalcore_vanished_list%",
+    "description": "Returns a comma-separated list of all vanished players. If nobody is vanished, returns an empty string. e.g. `Steve, Alex`",
+    "returnType": "string",
+    "category": "Vanish",
     "requiresPlayer": false
   }
 ]
