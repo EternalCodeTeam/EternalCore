@@ -1,10 +1,11 @@
 package com.eternalcode.core.feature.enderchest.database;
 
+import com.eternalcode.core.database.persister.ItemStackArrayPersister;
 import com.eternalcode.core.feature.enderchest.PageContents;
-import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.UUID;
+import org.bukkit.inventory.ItemStack;
 
 @DatabaseTable(tableName = EnderchestPageTable.TABLE_NAME)
 class EnderchestPageTable {
@@ -23,12 +24,12 @@ class EnderchestPageTable {
     @DatabaseField(columnName = PAGE_COLUMN)
     private int page;
 
-    @DatabaseField(columnName = CONTENTS_COLUMN, dataType = DataType.BYTE_ARRAY)
-    private byte[] contents;
+    @DatabaseField(columnName = CONTENTS_COLUMN, persisterClass = ItemStackArrayPersister.class)
+    private ItemStack[] contents;
 
     EnderchestPageTable() {}
 
-    private EnderchestPageTable(UUID ownerUniqueId, int page, byte[] contents) {
+    private EnderchestPageTable(UUID ownerUniqueId, int page, ItemStack[] contents) {
         this.id = idOf(ownerUniqueId, page);
         this.ownerUniqueId = ownerUniqueId;
         this.page = page;
@@ -40,10 +41,10 @@ class EnderchestPageTable {
     }
 
     static EnderchestPageTable from(UUID ownerUniqueId, PageContents contents) {
-        return new EnderchestPageTable(ownerUniqueId, contents.page(), ItemCodec.encode(contents.items()));
+        return new EnderchestPageTable(ownerUniqueId, contents.page(), contents.items());
     }
 
     PageContents toContents() {
-        return new PageContents(this.page, ItemCodec.decode(this.contents));
+        return new PageContents(this.page, this.contents);
     }
 }
