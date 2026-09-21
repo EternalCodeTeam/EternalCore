@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.enderchest;
 
 import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
+import com.eternalcode.core.database.DatabaseException;
 import com.eternalcode.core.feature.enderchest.database.EnderchestRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +21,6 @@ import org.jetbrains.annotations.Nullable;
 @Service
 class EnderchestManager {
 
-    private static final Duration SHUTDOWN_WRITE_TIMEOUT = Duration.ofSeconds(10);
     private static final int MIN_PAGES = 1;
     private static final Predicate<Enderchest> UNVIEWED = Predicate.not(Enderchest::hasViewers);
 
@@ -75,6 +74,10 @@ class EnderchestManager {
     }
 
     void saveEnderchest(Enderchest enderchest) {
+        if (enderchest.isWriting()) {
+            return;
+        }
+
         EnderchestWrite write = enderchest.prepareWrite();
         if (write.isEmpty()) {
             return;
@@ -155,18 +158,20 @@ class EnderchestManager {
                 continue;
             }
 
-            this.repository.savePages(enderchest.getOwnerUniqueId(), write)
-                .whenComplete((unused, throwable) -> {
-                    enderchest.finishWrite();
+            this.saveDuringShutdown(enderchest, write);
+        }
+    }
 
-                    if (throwable != null) {
-                        this.logger.log(Level.SEVERE, "Failed to save ender chest of " + enderchest.getOwnerName()
-                            + " during shutdown, its changes are lost", throwable);
-                    }
-                });
+    private void saveDuringShutdown(Enderchest enderchest, EnderchestWrite write) {
+        try {
+            this.repository.savePagesNow(enderchest.getOwnerUniqueId(), write);
+        }
+        catch (DatabaseException exception) {
+            this.logger.log(Level.SEVERE, "Failed to save ender chest of " + enderchest.getOwnerName()
+                + " during shutdown, its changes are lost", exception);
         }
 
-        this.repository.shutdownWrites(SHUTDOWN_WRITE_TIMEOUT);
+        enderchest.finishWrite();
     }
 
     private void unloadEnderchestIf(UUID ownerUniqueId, Predicate<Enderchest> idle) {

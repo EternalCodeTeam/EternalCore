@@ -16,17 +16,11 @@ import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 @Repository
 class EnderchestRepositoryOrmLite extends AbstractRepositoryOrmLite implements EnderchestRepository {
@@ -39,18 +33,9 @@ class EnderchestRepositoryOrmLite extends AbstractRepositoryOrmLite implements E
 
     private static final Set<String> WIDE_BLOB_TYPES = Set.of("mediumblob", "longblob");
 
-    private final ExecutorService writer = Executors.newSingleThreadExecutor(runnable -> {
-        Thread thread = new Thread(runnable, "EternalCore Enderchest Writer");
-        thread.setDaemon(true);
-        return thread;
-    });
-
-    private final Logger logger;
-
     @Inject
-    private EnderchestRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler, Logger logger) throws SQLException {
+    private EnderchestRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
-        this.logger = logger;
 
         ConnectionSource connectionSource = databaseManager.connectionSource();
         TableUtils.createTableIfNotExists(connectionSource, EnderchestPageTable.class);
@@ -74,35 +59,19 @@ class EnderchestRepositoryOrmLite extends AbstractRepositoryOrmLite implements E
 
     @Override
     public CompletableFuture<Void> savePages(UUID ownerUniqueId, EnderchestWrite write) {
-        try {
-            return CompletableFuture.runAsync(() -> this.writePages(ownerUniqueId, write), this.writer);
-        }
-        catch (RejectedExecutionException exception) {
-            return CompletableFuture.failedFuture(
-                new DatabaseException("Ender chest writes are already closed, cannot save pages of " + ownerUniqueId, exception));
-        }
+        return this.<EnderchestPageTable, String, Void>action(EnderchestPageTable.class, dao -> {
+            this.writeInTransaction(dao, ownerUniqueId, write);
+            return null;
+        });
     }
 
-    private void writePages(UUID ownerUniqueId, EnderchestWrite write) {
+    @Override
+    public void savePagesNow(UUID ownerUniqueId, EnderchestWrite write) {
         try {
             this.writeInTransaction(this.databaseManager.getDao(EnderchestPageTable.class), ownerUniqueId, write);
         }
         catch (Exception exception) {
             throw new DatabaseException("Failed to save ender chest pages of " + ownerUniqueId, exception);
-        }
-    }
-
-    @Override
-    public void shutdownWrites(Duration timeout) {
-        this.writer.shutdown();
-
-        try {
-            if (!this.writer.awaitTermination(timeout.toMillis(), TimeUnit.MILLISECONDS)) {
-                this.logger.severe("Ender chest writes did not reach the database within " + timeout.toSeconds() + "s, the remaining ones are lost");
-            }
-        }
-        catch (InterruptedException exception) {
-            Thread.currentThread().interrupt();
         }
     }
 
