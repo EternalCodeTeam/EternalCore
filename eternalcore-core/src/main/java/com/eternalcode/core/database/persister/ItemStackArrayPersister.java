@@ -18,8 +18,7 @@ public class ItemStackArrayPersister extends BaseDataType {
 
     private static final ItemStackArrayPersister INSTANCE = new ItemStackArrayPersister();
 
-    private static final byte FORMAT_VERSION = 2;
-    private static final int EMPTY_SLOT = -1;
+    private static final byte FORMAT_VERSION = 3;
     private static final int MAX_SLOTS = 1024;
 
     private ItemStackArrayPersister() {
@@ -66,14 +65,16 @@ public class ItemStackArrayPersister extends BaseDataType {
         try (DataOutputStream output = new DataOutputStream(buffer)) {
             output.writeByte(FORMAT_VERSION);
             output.writeInt(items.length);
+            output.writeInt(countStored(items));
 
-            for (ItemStack item : items) {
+            for (int slot = 0; slot < items.length; slot++) {
+                ItemStack item = items[slot];
                 if (item == null) {
-                    output.writeInt(EMPTY_SLOT);
                     continue;
                 }
 
                 byte[] serialized = item.serializeAsBytes();
+                output.writeInt(slot);
                 output.writeInt(serialized.length);
                 output.write(serialized);
             }
@@ -83,6 +84,18 @@ public class ItemStackArrayPersister extends BaseDataType {
         }
 
         return buffer.toByteArray();
+    }
+
+    private static int countStored(ItemStack[] items) {
+        int stored = 0;
+
+        for (ItemStack item : items) {
+            if (item != null) {
+                stored++;
+            }
+        }
+
+        return stored;
     }
 
     private static ItemStack[] decode(byte[] bytes) {
@@ -105,14 +118,20 @@ public class ItemStackArrayPersister extends BaseDataType {
                 throw new IllegalStateException("Item array declares " + slots + " slots");
             }
 
+            int stored = input.readInt();
+            if (stored < 0 || stored > slots) {
+                throw new IllegalStateException("Item array declares " + stored + " items in " + slots + " slots");
+            }
+
             ItemStack[] items = new ItemStack[slots];
-            for (int slot = 0; slot < slots; slot++) {
-                int length = input.readInt();
-                if (length == EMPTY_SLOT) {
-                    continue;
+            for (int index = 0; index < stored; index++) {
+                int slot = input.readInt();
+                if (slot < 0 || slot >= slots) {
+                    throw new IllegalStateException("Item points at slot " + slot + " outside of " + slots);
                 }
 
-                if (length < 0 || length > bytes.length) {
+                int length = input.readInt();
+                if (length <= 0 || length > bytes.length) {
                     throw new IllegalStateException("Slot " + slot + " declares " + length + " bytes");
                 }
 
