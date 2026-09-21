@@ -17,17 +17,11 @@ public class EnderchestConfig extends OkaeriConfig implements EnderchestSettings
 
     @Comment({
         "# Replace the vanilla ender chest with the one from EternalCore, kept in the database",
+        "# This is the switch for the whole feature, with it off nothing else here does anything",
         "#",
-        "# This is the switch for the whole feature, not only for the extra pages. It turns on the custom",
-        "# inventory, the page limits per permission and everything in the 'pages' section below.",
-        "# With it off nothing else here does anything and players use their plain vanilla ender chest.",
-        "#",
-        "# WARNING: Make a backup of your database before you turn this on.",
-        "# After the next restart or /eternalcore reload everything from the vanilla ender chests is moved",
-        "# into the database and the vanilla ones are emptied. This cannot be undone.",
-        "# Online players are migrated right away, everyone else when they join the server.",
-        "#",
-        "# Turning it off later leaves the items in the database and players go back to the vanilla chest."
+        "# WARNING: Make a backup of your database first. On the next restart or /eternalcore reload",
+        "# the vanilla ender chests are moved into the database and emptied, this cannot be undone.",
+        "# Online players are migrated right away, everyone else when they join."
     })
     public boolean replaceVanillaEnderchest = false;
 
@@ -35,11 +29,10 @@ public class EnderchestConfig extends OkaeriConfig implements EnderchestSettings
     public boolean enderchestsBlocked = false;
 
     @Comment({
-        "# Block more than one player from having the same ender chest open at once",
-        "# Opening one that somebody else is already viewing closes it for them and has to be repeated",
+        "# While somebody inspects an ender chest with /enderchest <player>, its owner cannot open it",
+        "# Opening one that is already open closes it for the other player and has to be repeated",
         "#",
-        "# Keep this on when you run Folia, two viewers from different regions share one inventory there,",
-        "# which the server does not guard and which can duplicate or destroy items"
+        "# Recommended to keep on, two players sharing one ender chest can duplicate or lose items"
     })
     public boolean sharedViewingBlocked = true;
 
