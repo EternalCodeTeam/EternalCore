@@ -7,8 +7,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import org.bukkit.inventory.ItemStack;
 
-// Bukkit only got serializeItemsAsBytes in 1.21.1, so we write every item on its own
-// with serializeAsBytes to keep the same rows readable all the way down to 1.19.3.
+// Paper only added serializeItemsAsBytes in 1.21.1, so we encode item by item to stay usable on 1.19.3.
+// The per item serializeAsBytes we call here differs by one word, easy to mix the two up.
 final class ItemCodec {
 
     private static final byte FORMAT_VERSION = 2;
