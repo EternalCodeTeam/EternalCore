@@ -20,6 +20,7 @@ class Enderchest {
 
     private String ownerName;
     private UUID viewerUniqueId;
+    private boolean importing;
     private ItemStack[] slots;
     private boolean rewriteRequired;
     private int viewers;
@@ -251,6 +252,18 @@ class Enderchest {
 
     boolean isPersisted() {
         return !this.rewriteRequired && this.dirtyPages.isEmpty() && this.pendingWrite.isDone();
+    }
+
+    boolean isImporting() {
+        return this.importing;
+    }
+
+    void beginImport() {
+        this.importing = true;
+    }
+
+    void finishImport() {
+        this.importing = false;
     }
 
     boolean isWriting() {

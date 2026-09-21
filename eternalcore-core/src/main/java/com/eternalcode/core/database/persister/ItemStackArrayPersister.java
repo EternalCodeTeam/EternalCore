@@ -86,8 +86,12 @@ public class ItemStackArrayPersister extends BaseDataType {
     }
 
     private static ItemStack[] decode(byte[] bytes) {
-        if (bytes == null || bytes.length == 0) {
+        if (bytes == null) {
             return new ItemStack[0];
+        }
+
+        if (bytes.length == 0) {
+            throw new IllegalStateException("Stored items are empty, the row is corrupted");
         }
 
         try (DataInputStream input = new DataInputStream(new ByteArrayInputStream(bytes))) {

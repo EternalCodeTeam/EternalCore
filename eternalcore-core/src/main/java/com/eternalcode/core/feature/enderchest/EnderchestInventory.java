@@ -118,6 +118,11 @@ class EnderchestInventory {
             return;
         }
 
+        if (enderchest.isImporting()) {
+            this.sendEnderchestInUseNotice(viewer, enderchest);
+            return;
+        }
+
         if (!viewer.getUniqueId().equals(ownerUniqueId) && enderchest.getUsedPages() == 0) {
             this.sendEnderchestEmptyNotice(viewer, enderchest);
             this.enderchestManager.unloadIdleEnderchest(ownerUniqueId);

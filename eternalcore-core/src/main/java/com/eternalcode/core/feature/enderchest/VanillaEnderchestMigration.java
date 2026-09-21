@@ -5,9 +5,7 @@ import com.eternalcode.commons.concurrent.FutureHandler;
 import com.eternalcode.core.feature.enderchest.database.EnderchestRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Server;
@@ -17,8 +15,6 @@ import org.bukkit.inventory.ItemStack;
 
 @Service
 class VanillaEnderchestMigration {
-
-    private final Set<UUID> runningImports = ConcurrentHashMap.newKeySet();
 
     private final EnderchestManager enderchestManager;
     private final EnderchestRepository repository;
@@ -67,7 +63,7 @@ class VanillaEnderchestMigration {
             return;
         }
 
-        if (enderchest.hasViewers() || enderchest.isWriting() || this.runningImports.contains(ownerUniqueId)) {
+        if (enderchest.hasViewers() || enderchest.isWriting() || enderchest.isImporting()) {
             return;
         }
 
@@ -95,12 +91,12 @@ class VanillaEnderchestMigration {
             return;
         }
 
-        this.runningImports.add(ownerUniqueId);
+        enderchest.beginImport();
 
         this.repository.savePages(ownerUniqueId, write)
             .whenComplete((unused, throwable) -> this.scheduler.run(() -> {
                 this.applyImportResult(player, enderchest, write, filledSlots, throwable);
-                this.runningImports.remove(ownerUniqueId);
+                enderchest.finishImport();
                 enderchest.finishWrite();
                 this.enderchestManager.unloadUnviewedEnderchest(ownerUniqueId);
             }));

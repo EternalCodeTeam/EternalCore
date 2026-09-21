@@ -88,9 +88,16 @@ class EnderchestManager {
                 this.applyWriteResult(enderchest, write, throwable);
                 enderchest.finishWrite();
 
-                if (enderchest.hasNothingToWrite()) {
-                    this.unloadIdleEnderchest(enderchest.getOwnerUniqueId());
+                if (throwable != null) {
+                    return;
                 }
+
+                if (!enderchest.hasNothingToWrite()) {
+                    this.saveEnderchest(enderchest);
+                    return;
+                }
+
+                this.unloadIdleEnderchest(enderchest.getOwnerUniqueId());
             }));
     }
 
