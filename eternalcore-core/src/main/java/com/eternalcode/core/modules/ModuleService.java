@@ -54,12 +54,6 @@ public class ModuleService {
         }
     }
 
-    /**
-     * Only listeners and commands are gated by modules.yml - everything else (services, tasks,
-     * config, repositories) is always created, regardless of a module's enabled state. This keeps
-     * a disabled module's functionality fully hidden from players while other, still-enabled
-     * modules can keep depending on its services without breaking.
-     */
     public boolean isEnabled(Class<?> type) {
         if (!isGated(type)) {
             return true;
