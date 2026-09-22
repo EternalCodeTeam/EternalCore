@@ -1,15 +1,22 @@
 package com.eternalcode.core.modules;
 
+import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.injector.annotations.lite.LiteArgument;
+import com.eternalcode.core.injector.annotations.lite.LiteCommandEditor;
+import com.eternalcode.core.injector.annotations.lite.LiteContextual;
+import com.eternalcode.core.injector.annotations.lite.LiteHandler;
 import com.eternalcode.core.util.ReflectUtil;
+import dev.rollczi.litecommands.annotations.command.Command;
+import dev.rollczi.litecommands.annotations.command.RootCommand;
 import eu.okaeri.configs.annotation.Header;
 import eu.okaeri.configs.yaml.snakeyaml.YamlSnakeYamlConfigurer;
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,11 +28,20 @@ public class ModuleService {
     private static final String FEATURE_PACKAGE_PREFIX = FEATURE_PACKAGE + ".";
     private static final String[] HEADER = ModulesConfig.class.getAnnotation(Header.class).value();
 
+    private static final Set<Class<? extends Annotation>> GATED_ANNOTATIONS = Set.of(
+        Controller.class,
+        Command.class,
+        RootCommand.class,
+        LiteArgument.class,
+        LiteHandler.class,
+        LiteContextual.class,
+        LiteCommandEditor.class
+    );
+
     private final File file;
     private final ModulesConfig config;
     private final Logger logger;
     private final Map<String, String> descriptions = new LinkedHashMap<>();
-    private Map<String, Boolean> effectiveState;
 
     public ModuleService(File dataFolder, Logger logger) {
         this.logger = logger;
@@ -36,14 +52,22 @@ public class ModuleService {
         if (this.file.exists()) {
             this.config.load(true);
         }
-
-        this.effectiveState = new LinkedHashMap<>(this.config.modules);
     }
 
+    /**
+     * Only listeners and commands are gated by modules.yml - everything else (services, tasks,
+     * config, repositories) is always created, regardless of a module's enabled state. This keeps
+     * a disabled module's functionality fully hidden from players while other, still-enabled
+     * modules can keep depending on its services without breaking.
+     */
     public boolean isEnabled(Class<?> type) {
+        if (!isGated(type)) {
+            return true;
+        }
+
         String moduleId = resolveModuleId(type);
 
-        return moduleId == null || this.effectiveState.getOrDefault(moduleId, true);
+        return moduleId == null || this.config.modules.getOrDefault(moduleId, true);
     }
 
     public void registerDiscoveredModules(Collection<Class<?>> discoveredTypes) {
@@ -78,42 +102,10 @@ public class ModuleService {
         }
     }
 
-    public void resolveEffectiveState(Collection<Class<?>> discoveredTypes) {
-        ModuleDependencyGraph graph = ModuleDependencyGraph.build(discoveredTypes);
-        Map<String, Boolean> effective = new LinkedHashMap<>(this.config.modules);
-
-        boolean changed = true;
-        while (changed) {
-            changed = false;
-
-            for (String moduleId : this.config.modules.keySet()) {
-                if (effective.getOrDefault(moduleId, true)) {
-                    continue;
-                }
-
-                List<String> blockingDependents = graph.dependentsOf(moduleId).stream()
-                    .filter(dependent -> effective.getOrDefault(dependent, true))
-                    .sorted()
-                    .toList();
-
-                if (blockingDependents.isEmpty()) {
-                    continue;
-                }
-
-                effective.put(moduleId, true);
-                changed = true;
-
-                this.warnAboutConflict(moduleId, blockingDependents);
-            }
-        }
-
-        this.effectiveState = effective;
-    }
-
     public void logDisabledModules() {
-        for (Map.Entry<String, Boolean> entry : this.effectiveState.entrySet()) {
+        for (Map.Entry<String, Boolean> entry : this.config.modules.entrySet()) {
             if (Boolean.FALSE.equals(entry.getValue())) {
-                this.logger.info("Module '" + entry.getKey() + "' is disabled in modules.yml, its commands, listeners, tasks and config will not be loaded.");
+                this.logger.info("Module '" + entry.getKey() + "' is disabled in modules.yml, its commands and listeners will not be registered.");
             }
         }
     }
@@ -157,14 +149,14 @@ public class ModuleService {
         }
     }
 
-    private void warnAboutConflict(String moduleId, List<String> blockingDependents) {
-        String dependents = String.join(", ", blockingDependents);
+    private static boolean isGated(Class<?> type) {
+        for (Class<? extends Annotation> annotationType : GATED_ANNOTATIONS) {
+            if (type.isAnnotationPresent(annotationType)) {
+                return true;
+            }
+        }
 
-        this.logger.warning("============================================================");
-        this.logger.warning("You can't disable module '" + moduleId + "' - it is required by: " + dependents);
-        this.logger.warning("Keeping '" + moduleId + "' ENABLED to avoid starting in a broken state.");
-        this.logger.warning("If you really want to disable '" + moduleId + "', disable " + dependents + " in modules.yml too.");
-        this.logger.warning("============================================================");
+        return false;
     }
 
     static String resolveModuleId(Class<?> type) {

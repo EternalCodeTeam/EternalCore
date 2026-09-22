@@ -84,7 +84,6 @@ class EternalCore {
 
         moduleService.registerDiscoveredModules(scannedTypes);
         moduleService.loadModuleDescriptions(EternalCore.class.getClassLoader());
-        moduleService.resolveEffectiveState(scannedTypes);
         moduleService.writeModulesFile();
         moduleService.logDisabledModules();
 
