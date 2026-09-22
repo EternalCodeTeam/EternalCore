@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport;
+package com.eternalcode.core.teleport;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.core.injector.annotations.component.Service;

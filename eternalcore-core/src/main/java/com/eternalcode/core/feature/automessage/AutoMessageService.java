@@ -5,6 +5,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.automessage.messages.AutoMessageMessages;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.modules.GatedByModule;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.multification.notice.Notice;
 import java.util.Collection;
@@ -18,6 +19,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Entity;
 
 @Service
+@GatedByModule
 class AutoMessageService {
 
     private final AutoMessageRepository repository;

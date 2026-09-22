@@ -51,7 +51,7 @@ import com.eternalcode.core.feature.skull.messages.SkullMessages;
 import com.eternalcode.core.feature.spawn.messages.SpawnMessages;
 import com.eternalcode.core.feature.speed.messages.SpeedMessages;
 import com.eternalcode.core.feature.sudo.messages.SudoMessages;
-import com.eternalcode.core.feature.teleport.messages.TeleportMessages;
+import com.eternalcode.core.teleport.messages.TeleportMessages;
 import com.eternalcode.core.feature.teleportoffline.TeleportOfflineMessages;
 import com.eternalcode.core.feature.teleportrandomplayer.messages.TeleportToRandomPlayerMessages;
 import com.eternalcode.core.feature.teleportrequest.messages.TeleportRequestMessages;

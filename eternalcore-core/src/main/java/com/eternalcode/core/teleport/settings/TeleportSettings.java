@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport.settings;
+package com.eternalcode.core.teleport.settings;
 
 public interface TeleportSettings {
     boolean movementCancelsTeleport();

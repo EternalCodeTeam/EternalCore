@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.jail;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
+import com.eternalcode.core.modules.GatedByModule;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import java.util.concurrent.TimeUnit;
@@ -9,6 +10,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 @Task(period = 1, delay = 1, unit = TimeUnit.SECONDS)
+@GatedByModule
 class JailTask implements Runnable {
 
     private final JailService jailService;

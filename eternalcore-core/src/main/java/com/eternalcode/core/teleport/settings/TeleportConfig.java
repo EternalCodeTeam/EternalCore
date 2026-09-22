@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.teleport.settings;
+package com.eternalcode.core.teleport.settings;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;

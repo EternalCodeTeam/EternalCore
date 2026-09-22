@@ -1,8 +1,9 @@
-package com.eternalcode.core.feature.teleport;
+package com.eternalcode.core.teleport;
 
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.feature.teleport.settings.TeleportSettings;
+import com.eternalcode.core.feature.teleport.TeleportService;
+import com.eternalcode.core.teleport.settings.TeleportSettings;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 import com.eternalcode.core.notice.NoticeService;

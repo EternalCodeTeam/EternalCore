@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.customcommand;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.modules.GatedByModule;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.util.StringUtil;
 import java.lang.reflect.Field;
@@ -9,6 +10,7 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandMap;
 
 @Service
+@GatedByModule
 public class CustomCommandRegistry {
 
     private static final String FALLBACK_PREFIX = "eternalcore";

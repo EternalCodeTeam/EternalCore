@@ -3,12 +3,14 @@ package com.eternalcode.core.feature.afk;
 import com.eternalcode.core.feature.vanish.VanishService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
+import com.eternalcode.core.modules.GatedByModule;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 @Task(delay = 1L, period = 1L, unit = TimeUnit.MINUTES)
+@GatedByModule
 class AfkTask implements Runnable {
 
     private final AfkService afkService;

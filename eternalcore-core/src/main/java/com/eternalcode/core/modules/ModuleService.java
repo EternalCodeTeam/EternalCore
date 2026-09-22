@@ -144,6 +144,10 @@ public class ModuleService {
     }
 
     private static boolean isGated(Class<?> type) {
+        if (type.isAnnotationPresent(GatedByModule.class)) {
+            return true;
+        }
+
         for (Class<? extends Annotation> annotationType : GATED_ANNOTATIONS) {
             if (type.isAnnotationPresent(annotationType)) {
                 return true;

@@ -1,5 +1,6 @@
-package com.eternalcode.core.feature.teleport;
+package com.eternalcode.core.teleport;
 
+import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import org.bukkit.entity.Player;

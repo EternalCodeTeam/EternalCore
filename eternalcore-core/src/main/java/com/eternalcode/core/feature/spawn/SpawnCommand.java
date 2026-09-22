@@ -4,7 +4,7 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
-import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
