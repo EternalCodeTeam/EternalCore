@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.punishment;
 
+import com.eternalcode.core.feature.punishment.database.PunishmentRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 

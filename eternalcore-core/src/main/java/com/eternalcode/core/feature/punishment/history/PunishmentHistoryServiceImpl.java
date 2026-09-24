@@ -6,7 +6,6 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.Server;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service

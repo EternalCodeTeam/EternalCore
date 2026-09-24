@@ -1,5 +1,7 @@
-package com.eternalcode.core.feature.punishment;
+package com.eternalcode.core.feature.punishment.database;
 
+import com.eternalcode.core.feature.punishment.Punishment;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;

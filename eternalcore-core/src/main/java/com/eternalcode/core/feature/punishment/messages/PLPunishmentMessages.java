@@ -93,7 +93,7 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice historyEntry = Notice.chat("<gray>[<white>{DATE}<gray>] <yellow>{ACTION} <white>{PLAYER} <gray>przez <white>{OPERATOR} <gray>- <white>{REASON} <dark_gray>({EXPIRES})");
     Notice historyEmpty = Notice.chat("<gray>Brak wpisów w historii.");
     Notice historyError = Notice.chat("<red>✘ <dark_red>Wystąpił błąd podczas wczytywania historii. Sprawdź konsolę.");
-    Notice historyNoPermission = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do przeglądania tej historii!");
+    Notice historyNoPermission = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do przeglądania historii! <red>(Chcesz sprawdzić swoją? /history <twoj_nick>)");
 
     Notice punishmentActionError = Notice.chat("<red>✘ <dark_red>Wystąpił błąd podczas wykonywania tej akcji. Sprawdź konsolę.");
 }

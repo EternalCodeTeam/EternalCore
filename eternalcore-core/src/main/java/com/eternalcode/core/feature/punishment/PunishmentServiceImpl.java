@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.punishment;
 
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.feature.punishment.database.PunishmentRepository;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry.HistoryAction;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
@@ -11,7 +12,6 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 
-import java.util.Objects;
 import java.util.Optional;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;

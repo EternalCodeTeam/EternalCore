@@ -77,7 +77,6 @@ eternalShadow {
     library("org.postgresql:postgresql:${Versions.POSTGRESQL}")
     library("com.h2database:h2:${Versions.H2}")
 
-    library("org.jooq:jooq:${Versions.JOOQ}")
     library("com.j256.ormlite:ormlite-core:${Versions.ORMLITE}")
     library("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
     library("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
