@@ -23,7 +23,7 @@ class PunishmentTable {
     static final String EXPIRES_AT_COLUMN = "expires_at";
     static final String REVOKED_AT_COLUMN = "revoked_at";
 
-    private static final int PLAYER_NAME_MAX_LENGTH = 16;
+    private static final int PLAYER_NAME_MAX_LENGTH = 32;
     private static final int TYPE_MAX_LENGTH = 16;
     private static final int REASON_MAX_LENGTH = 255;
 

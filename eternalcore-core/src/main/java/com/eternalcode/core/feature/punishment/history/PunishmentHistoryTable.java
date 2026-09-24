@@ -21,7 +21,7 @@ class PunishmentHistoryTable {
     static final String TIMESTAMP_COLUMN = "timestamp";
     static final String EXPIRES_AT_COLUMN = "expires_at";
 
-    private static final int PLAYER_NAME_MAX_LENGTH = 16;
+    private static final int PLAYER_NAME_MAX_LENGTH = 32;
     private static final int ACTION_MAX_LENGTH = 16;
     private static final int REASON_MAX_LENGTH = 255;
 

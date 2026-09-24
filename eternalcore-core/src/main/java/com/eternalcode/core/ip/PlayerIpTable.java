@@ -21,7 +21,7 @@ class PlayerIpTable {
     private static final int IP_CIPHERTEXT_MAX_LENGTH = 255;
     private static final int IP_IV_MAX_LENGTH = 64;
     private static final int IP_HASH_MAX_LENGTH = 64;
-    private static final int PLAYER_NAME_MAX_LENGTH = 16;
+    private static final int PLAYER_NAME_MAX_LENGTH = 32;
 
     private static final Base64.Encoder BASE64_ENCODER = Base64.getEncoder();
     private static final Base64.Decoder BASE64_DECODER = Base64.getDecoder();
