@@ -43,4 +43,12 @@ public interface PunishmentGuiSettings {
     Material emptyMaterial();
 
     String emptyName();
+
+    Material filterMaterial();
+
+    String filterName();
+
+    List<String> filterLore();
+
+    Map<PunishmentHistoryFilter, String> filterLabels();
 }

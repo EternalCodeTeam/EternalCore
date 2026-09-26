@@ -34,7 +34,8 @@ public class PlayerPunishmentHistoryGui {
         PunishmentHistoryGuiSession session = new PunishmentHistoryGuiSession(
             new PlayerPunishmentHistoryPageSource(this.punishmentRepository, targetUuid),
             new PunishmentHistoryGuiLayout(gui.contentRows()),
-            gui.pagesPerFetch()
+            gui.pagesPerFetch(),
+            PunishmentHistoryFilter.ALL
         );
 
         this.guiBuilder.open(viewer, gui.playerTitle().replace(PLAYER_PLACEHOLDER, targetName), session);

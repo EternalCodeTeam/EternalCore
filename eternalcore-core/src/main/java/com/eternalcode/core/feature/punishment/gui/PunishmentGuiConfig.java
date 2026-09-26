@@ -14,11 +14,11 @@ import org.bukkit.Material;
 @Accessors(fluent = true)
 public class PunishmentGuiConfig extends OkaeriConfig implements PunishmentGuiSettings {
 
-    @Comment("# Title of player punishment GUI. {PLAYER}, {PAGE} available.")
-    public String playerTitle = "<dark_gray>Punishments of <red>{PLAYER} <dark_gray>(#{PAGE})";
+    @Comment("# Title of player punishment GUI. {PLAYER}, {PAGE}, {FILTER} available.")
+    public String playerTitle = "<dark_gray>Punishments of <red>{PLAYER} <dark_gray>» {FILTER} <dark_gray>(#{PAGE})";
 
-    @Comment("# Title of recent punishments GUI. {PAGE} available.")
-    public String recentTitle = "<dark_gray>Recent punishments <dark_gray>(#{PAGE})";
+    @Comment("# Title of recent punishments GUI. {PAGE}, {FILTER} available.")
+    public String recentTitle = "<dark_gray>Recent punishments » {FILTER} <dark_gray>(#{PAGE})";
 
     @Comment("# Number of content rows (1-4). Top and bottom rows are reserved for border and navigation.")
     public int contentRows = 4;
@@ -77,4 +77,21 @@ public class PunishmentGuiConfig extends OkaeriConfig implements PunishmentGuiSe
     @Comment("# Item shown when there are no punishments.")
     public Material emptyMaterial = Material.STRUCTURE_VOID;
     public String emptyName = "<gray>No punishments";
+
+    @Comment({ " ", "# Filter button - each click switches to the next filter. {FILTER} - current, {NEXT} - next filter." })
+    public Material filterMaterial = Material.HOPPER;
+    public String filterName = "<yellow>Filter: <white>{FILTER}";
+    public List<String> filterLore = List.of(
+        "<gray>Click to show: <white>{NEXT}"
+    );
+
+    @Comment("# Filter labels used as {FILTER} and {NEXT}.")
+    public Map<PunishmentHistoryFilter, String> filterLabels = Map.of(
+        PunishmentHistoryFilter.ALL, "<white>All",
+        PunishmentHistoryFilter.BAN, "<red>Bans",
+        PunishmentHistoryFilter.BAN_IP, "<dark_red>IP bans",
+        PunishmentHistoryFilter.MUTE, "<gold>Mutes",
+        PunishmentHistoryFilter.WARN, "<yellow>Warns",
+        PunishmentHistoryFilter.KICK, "<gray>Kicks"
+    );
 }

@@ -6,6 +6,7 @@ import com.eternalcode.core.feature.punishment.PunishmentType;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -23,9 +24,9 @@ public interface PunishmentRepository {
 
     CompletableFuture<List<Punishment>> findAllUnexpired(PunishmentType type, Instant now);
 
-    CompletableFuture<List<Punishment>> findRecent(int page, int pageSize);
+    CompletableFuture<List<Punishment>> findByTarget(UUID targetUuid, Set<PunishmentType> types, int page, int pageSize);
+
+    CompletableFuture<List<Punishment>> findRecent(Set<PunishmentType> types, int page, int pageSize);
 
     CompletableFuture<Integer> countByTargetAndType(UUID targetUuid, PunishmentType type, Instant now);
-
-    CompletableFuture<List<Punishment>> findByTarget(UUID targetUuid, int page, int pageSize);
 }

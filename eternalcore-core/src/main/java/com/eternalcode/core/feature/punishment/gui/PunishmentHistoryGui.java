@@ -30,7 +30,8 @@ public class PunishmentHistoryGui {
         PunishmentHistoryGuiSession session = new PunishmentHistoryGuiSession(
             new RecentPunishmentHistoryPageSource(this.punishmentRepository),
             new PunishmentHistoryGuiLayout(gui.contentRows()),
-            gui.pagesPerFetch()
+            gui.pagesPerFetch(),
+            PunishmentHistoryFilter.ALL
         );
 
         this.guiBuilder.open(viewer, gui.recentTitle(), session);

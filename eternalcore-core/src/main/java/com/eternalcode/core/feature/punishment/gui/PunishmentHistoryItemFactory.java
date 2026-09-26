@@ -35,6 +35,8 @@ class PunishmentHistoryItemFactory {
     private static final String EXPIRES = "{EXPIRES}";
     private static final String REVOKED_BY = "{REVOKED_BY}";
     private static final String REVOKED_AT = "{REVOKED_AT}";
+    private static final String FILTER = "{FILTER}";
+    private static final String NEXT_FILTER = "{NEXT}";
 
     private static final boolean REMOVE_MILLIS = true;
     private static final int SINGLE_LINE_INDEX = 0;
@@ -79,6 +81,25 @@ class PunishmentHistoryItemFactory {
 
     MenuItem nextPage(Consumer<Player> onClick) {
         return this.navigation(this.gui().nextPageMaterial(), this.gui().nextPageName(), onClick);
+    }
+
+    MenuItem filter(PunishmentHistoryFilter current, Consumer<Player> onClick) {
+        PunishmentGuiSettings gui = this.gui();
+        Map<String, String> placeholders = Map.of(
+            FILTER, this.filterLabel(current),
+            NEXT_FILTER, this.filterLabel(current.next())
+        );
+
+        return MenuItem.clickable(
+            gui.filterMaterial(),
+            this.renderLine(gui.filterName(), placeholders),
+            this.renderLines(gui.filterLore(), placeholders),
+            onClick
+        );
+    }
+
+    String filterLabel(PunishmentHistoryFilter filter) {
+        return this.gui().filterLabels().getOrDefault(filter, filter.name());
     }
 
     private Map<String, String> placeholders(Punishment punishment, Instant now) {

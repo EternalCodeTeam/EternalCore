@@ -16,6 +16,7 @@ final class PunishmentHistoryGuiLayout {
     private static final int FIRST_CONTENT_ROW = 1;
     private static final int SINGLE_ROW = 1;
     private static final int PREVIOUS_PAGE_COLUMN = 3;
+    private static final int FILTER_COLUMN = 4;
     private static final int NEXT_PAGE_COLUMN = 5;
 
     private final int contentRows;
@@ -53,11 +54,19 @@ final class PunishmentHistoryGuiLayout {
     }
 
     int previousPageSlot() {
-        return this.bottomRow() * SLOTS_PER_ROW + PREVIOUS_PAGE_COLUMN;
+        return this.bottomRowSlot(PREVIOUS_PAGE_COLUMN);
+    }
+
+    int filterSlot() {
+        return this.bottomRowSlot(FILTER_COLUMN);
     }
 
     int nextPageSlot() {
-        return this.bottomRow() * SLOTS_PER_ROW + NEXT_PAGE_COLUMN;
+        return this.bottomRowSlot(NEXT_PAGE_COLUMN);
+    }
+
+    private int bottomRowSlot(int column) {
+        return this.bottomRow() * SLOTS_PER_ROW + column;
     }
 
     private int bottomRow() {

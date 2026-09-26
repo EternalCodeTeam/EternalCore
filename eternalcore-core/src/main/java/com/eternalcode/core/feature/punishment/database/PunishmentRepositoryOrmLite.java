@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -125,30 +126,42 @@ class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements P
     }
 
     @Override
-    public CompletableFuture<List<Punishment>> findByTarget(UUID targetUuid, int page, int pageSize) {
-        this.validatePagination(page, pageSize);
+    public CompletableFuture<List<Punishment>> findByTarget(UUID targetUuid, Set<PunishmentType> types, int page, int pageSize) {
+        this.validateQuery(types, page, pageSize);
+
+        return this.action(PunishmentTable.class, dao -> {
+            Where<PunishmentTable, Object> where = dao.queryBuilder()
+                .orderBy(CREATED_AT_COLUMN, DESCENDING)
+                .offset((long) page * pageSize)
+                .limit((long) pageSize)
+                .where();
+
+            where.and(
+                where.eq(TARGET_UUID_COLUMN, targetUuid),
+                where.in(TYPE_COLUMN, types)
+            );
+
+            return this.toPunishments(where.query());
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<Punishment>> findRecent(Set<PunishmentType> types, int page, int pageSize) {
+        this.validateQuery(types, page, pageSize);
 
         return this.action(PunishmentTable.class, dao -> this.toPunishments(dao.queryBuilder()
             .orderBy(CREATED_AT_COLUMN, DESCENDING)
             .offset((long) page * pageSize)
             .limit((long) pageSize)
             .where()
-            .eq(TARGET_UUID_COLUMN, targetUuid)
+            .in(TYPE_COLUMN, types)
             .query()));
     }
 
-    @Override
-    public CompletableFuture<List<Punishment>> findRecent(int page, int pageSize) {
-        this.validatePagination(page, pageSize);
-
-        return this.action(PunishmentTable.class, dao -> this.toPunishments(dao.queryBuilder()
-            .orderBy(CREATED_AT_COLUMN, DESCENDING)
-            .offset((long) page * pageSize)
-            .limit((long) pageSize)
-            .query()));
-    }
-
-    private void validatePagination(int page, int pageSize) {
+    private void validateQuery(Set<PunishmentType> types, int page, int pageSize) {
+        if (types.isEmpty()) {
+            throw new IllegalArgumentException("types cannot be empty");
+        }
         if (page < 0) {
             throw new IllegalArgumentException("page cannot be negative, got " + page);
         }

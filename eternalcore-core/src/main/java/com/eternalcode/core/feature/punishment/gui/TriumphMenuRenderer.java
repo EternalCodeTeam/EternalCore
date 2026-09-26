@@ -2,11 +2,11 @@ package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
-import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 @Service
 class TriumphMenuRenderer implements MenuRenderer {
@@ -35,13 +35,21 @@ class TriumphMenuRenderer implements MenuRenderer {
     }
 
     private GuiItem toGuiItem(MenuItem item) {
-        return ItemBuilder.from(item.material())
-            .name(item.name())
-            .lore(item.lore())
-            .asGuiItem(event -> {
-                if (event.getWhoClicked() instanceof Player clicker) {
-                    item.click(clicker);
-                }
-            });
+        return new GuiItem(this.toItemStack(item), event -> {
+            if (event.getWhoClicked() instanceof Player clicker) {
+                item.click(clicker);
+            }
+        });
+    }
+
+    private ItemStack toItemStack(MenuItem item) {
+        ItemStack itemStack = new ItemStack(item.material());
+
+        itemStack.editMeta(meta -> {
+            meta.displayName(item.name());
+            meta.lore(item.lore());
+        });
+
+        return itemStack;
     }
 }

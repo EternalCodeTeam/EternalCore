@@ -21,6 +21,7 @@ class PunishmentHistoryGuiBuilder {
     private static final int EMPTY_ITEM_SLOT_INDEX = 0;
     private static final int HUMAN_PAGE_OFFSET = 1;
     private static final String PAGE_PLACEHOLDER = "{PAGE}";
+    private static final String FILTER_PLACEHOLDER = "{FILTER}";
 
     private final MenuRenderer menuRenderer;
     private final PunishmentHistoryItemFactory itemFactory;
@@ -61,14 +62,16 @@ class PunishmentHistoryGuiBuilder {
 
     private Menu createMenu(String titleTemplate, PunishmentHistoryGuiSession session, int page) {
         PunishmentHistoryGuiLayout layout = session.layout();
-        Component title = this.miniMessage.deserialize(
-            titleTemplate.replace(PAGE_PLACEHOLDER, String.valueOf(page + HUMAN_PAGE_OFFSET)));
+        Component title = this.miniMessage.deserialize(titleTemplate
+            .replace(PAGE_PLACEHOLDER, String.valueOf(page + HUMAN_PAGE_OFFSET))
+            .replace(FILTER_PLACEHOLDER, this.itemFactory.filterLabel(session.filter())));
 
         Menu.Builder menu = Menu.builder(title, layout.rows())
             .items(layout.borderSlots(), this.itemFactory.border());
 
         this.placeEntries(menu, layout, session.page(page));
         this.placeNavigation(menu, layout, session, titleTemplate, page);
+        this.placeFilter(menu, layout, session, titleTemplate);
 
         return menu.build();
     }
@@ -103,5 +106,17 @@ class PunishmentHistoryGuiBuilder {
             menu.item(layout.nextPageSlot(), this.itemFactory.nextPage(
                 clicker -> this.openPage(clicker, titleTemplate, session, page + 1)));
         }
+    }
+
+    private void placeFilter(
+        Menu.Builder menu,
+        PunishmentHistoryGuiLayout layout,
+        PunishmentHistoryGuiSession session,
+        String titleTemplate
+    ) {
+        PunishmentHistoryFilter current = session.filter();
+
+        menu.item(layout.filterSlot(), this.itemFactory.filter(current, clicker ->
+            this.openPage(clicker, titleTemplate, session.withFilter(current.next()), FIRST_PAGE)));
     }
 }

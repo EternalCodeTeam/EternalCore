@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * Per-viewer paging state. Loads punishments lazily in batches of several GUI pages.
- * Thread-safe: batches are appended from async threads, pages are read on the main thread.
- */
 final class PunishmentHistoryGuiSession {
 
     private final PunishmentHistoryPageSource pageSource;
     private final PunishmentHistoryGuiLayout layout;
+    private final PunishmentHistoryFilter filter;
+    private final int pagesPerFetch;
     private final int fetchBatchSize;
     private final List<Punishment> loadedPunishments = new ArrayList<>();
 
@@ -21,19 +19,34 @@ final class PunishmentHistoryGuiSession {
     private boolean hasMore = true;
     private CompletableFuture<Void> pendingLoad = CompletableFuture.completedFuture(null);
 
-    PunishmentHistoryGuiSession(PunishmentHistoryPageSource pageSource, PunishmentHistoryGuiLayout layout, int pagesPerFetch) {
+    PunishmentHistoryGuiSession(
+        PunishmentHistoryPageSource pageSource,
+        PunishmentHistoryGuiLayout layout,
+        int pagesPerFetch,
+        PunishmentHistoryFilter filter
+    ) {
         this.pageSource = pageSource;
         this.layout = layout;
+        this.filter = filter;
 
         if (pagesPerFetch <= 0) {
             throw new IllegalArgumentException("pagesPerFetch must be positive, got " + pagesPerFetch);
         }
 
+        this.pagesPerFetch = pagesPerFetch;
         this.fetchBatchSize = layout.pageSize() * pagesPerFetch;
     }
 
     PunishmentHistoryGuiLayout layout() {
         return this.layout;
+    }
+
+    PunishmentHistoryFilter filter() {
+        return this.filter;
+    }
+
+    PunishmentHistoryGuiSession withFilter(PunishmentHistoryFilter filter) {
+        return new PunishmentHistoryGuiSession(this.pageSource, this.layout, this.pagesPerFetch, filter);
     }
 
     synchronized CompletableFuture<Void> loadPage(int page) {
@@ -47,7 +60,8 @@ final class PunishmentHistoryGuiSession {
             return this.pendingLoad;
         }
 
-        this.pendingLoad = this.pageSource.fetch(this.nextBatch, this.fetchBatchSize).thenAccept(this::append);
+        this.pendingLoad = this.pageSource.fetch(this.filter.types(), this.nextBatch, this.fetchBatchSize)
+            .thenAccept(this::append);
         return this.pendingLoad;
     }
 
