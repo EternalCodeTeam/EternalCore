@@ -13,9 +13,6 @@ dependencies {
     // Base libraries
     compileOnly("org.jetbrains:annotations:${Versions.JETBRAINS_ANNOTATIONS}")
 
-    implementation("org.reactivestreams:reactive-streams:1.0.4")
-    implementation("io.r2dbc:r2dbc-spi:1.0.0.RELEASE")
-
     // Minecraft & Bridges API
     compileOnlyApi("io.papermc.paper:paper-api:${Versions.PAPER_API}")
     compileOnly("me.clip:placeholderapi:${Versions.PLACEHOLDER_API}")
@@ -76,7 +73,6 @@ eternalShadow {
     library("org.mariadb.jdbc:mariadb-java-client:${Versions.MARIA_DB}")
     library("org.postgresql:postgresql:${Versions.POSTGRESQL}")
     library("com.h2database:h2:${Versions.H2}")
-
     library("com.j256.ormlite:ormlite-core:${Versions.ORMLITE}")
     library("com.j256.ormlite:ormlite-jdbc:${Versions.ORMLITE}")
     library("com.zaxxer:HikariCP:${Versions.HIKARI_CP}")
@@ -85,7 +81,6 @@ eternalShadow {
         "com.j256.ormlite",
         "org.mariadb.jdbc",
         "org.postgresql",
-        "org.jooq",
         "com.h2",
     )
 
