@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.punishment.ip;
 
+import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
+
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -9,7 +11,9 @@ import com.eternalcode.core.util.DurationUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
@@ -22,6 +26,12 @@ import java.util.Optional;
 
 @Controller
 class IpBanLoginController implements Listener {
+
+    private static final String PLAYER_PLACEHOLDER = "{PLAYER}";
+    private static final String OPERATOR_PLACEHOLDER = "{OPERATOR}";
+    private static final String REASON_PLACEHOLDER = "{REASON}";
+    private static final String EXPIRES_PLACEHOLDER = "{EXPIRES}";
+    private static final boolean REMOVE_MILLIS = true;
 
     private final IpPunishmentService ipPunishmentService;
     private final PunishmentSettings punishmentSettings;
@@ -38,39 +48,50 @@ class IpBanLoginController implements Listener {
         this.templateRenderer = templateRenderer;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     void onLogin(PlayerLoginEvent event) {
-        InetAddress realAddress = event.getRealAddress();
-
-        if (realAddress == null) {
+        if (event.getResult() != PlayerLoginEvent.Result.ALLOWED) {
             return;
         }
 
-        String ip = realAddress.getHostAddress();
-        Optional<IpPunishment> activeBan = this.ipPunishmentService.getActiveIpBan(ip);
+        Player player = event.getPlayer();
+
+        if (player.hasPermission(BAN_IP_BYPASS)) {
+            return;
+        }
+
+        InetAddress address = event.getAddress();
+
+        if (address == null) {
+            return;
+        }
+
+        Optional<IpPunishment> activeBan = this.ipPunishmentService.getActiveIpBan(address.getHostAddress());
 
         if (activeBan.isEmpty()) {
             return;
         }
 
-        IpPunishment punishment = activeBan.get();
+        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, this.renderKickScreen(player, activeBan.get()));
+    }
 
-        String expiresText = punishment.isPermanent()
-            ? this.punishmentSettings.permanentLabel()
-            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAtOptional().orElseThrow()), true);
-
-        List<Component> kickMessage = this.templateRenderer.render(
-            this.punishmentSettings.banKickScreen(),
+    private Component renderKickScreen(Player player, IpPunishment punishment) {
+        List<Component> lines = this.templateRenderer.render(
+            this.punishmentSettings.banIpKickScreen(),
             Map.of(
-                "{PLAYER}", event.getPlayer().getName(),
-                "{OPERATOR}", punishment.operator().name(),
-                "{REASON}", punishment.reason(),
-                "{EXPIRES}", expiresText
+                PLAYER_PLACEHOLDER, player.getName(),
+                OPERATOR_PLACEHOLDER, punishment.operator().name(),
+                REASON_PLACEHOLDER, punishment.reason(),
+                EXPIRES_PLACEHOLDER, this.expiresText(punishment)
             )
         );
 
-        Component joined = Component.join(JoinConfiguration.newlines(), kickMessage);
+        return Component.join(JoinConfiguration.newlines(), lines);
+    }
 
-        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, joined);
+    private String expiresText(IpPunishment punishment) {
+        return punishment.expiresAtOptional()
+            .map(expiresAt -> DurationUtil.format(Duration.between(Instant.now(), expiresAt), REMOVE_MILLIS))
+            .orElse(this.punishmentSettings.permanentLabel());
     }
 }

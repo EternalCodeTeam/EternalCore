@@ -29,6 +29,8 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unbanBroadcast = Notice.chat("<green>► <white>Player <green>{PLAYER} <white>has been unbanned by <green>{OPERATOR}!");
     Notice unbanSuccessPrivate = Notice.chat("<green>► <white>You unbanned player <green>{PLAYER}!");
     Notice unbanNotBanned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is not banned!");
+    @Comment("# Sent to operator when the player's IP is banned for someone else. {PLAYER}, {OWNER}, {IP} available.")
+    Notice unbanIpBannedForOther = Notice.chat("<yellow>⚠ <white>IP address of <yellow>{PLAYER} <white>is still banned (ban issued for <yellow>{OWNER}<white>). Use <yellow>/unban {IP} <white>to lift it.");
     @Comment("# {PLAYER} - Player, {OPERATOR} - Staff member")
     Notice unbanBroadcastSilent = Notice.chat("<dark_gray>[<red>Silent<dark_gray>] <color:#9d6eef>► <white>{PLAYER} <white>was unbanned by <color:#9d6eef>{OPERATOR}");
 

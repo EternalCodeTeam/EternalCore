@@ -21,6 +21,7 @@ public interface PunishmentMessages {
     Notice unbanBroadcast();
     Notice unbanSuccessPrivate();
     Notice unbanNotBanned();
+    Notice unbanIpBannedForOther();
     Notice unbanBroadcastSilent();
 
     Notice unbanIpBroadcast();

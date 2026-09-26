@@ -10,7 +10,13 @@ public record PunishmentTarget(UUID uuid, String name) {
     public static final UUID CONSOLE_UUID = UUID.nameUUIDFromBytes("CONSOLE_UUID".getBytes());
 
     public static PunishmentTarget of(OfflinePlayer player) {
-        return new PunishmentTarget(player.getUniqueId(), player.getName());
+        String name = player.getName();
+
+        if (name == null) {
+            throw new IllegalArgumentException("Player " + player.getUniqueId() + " has no known name - resolve the player before punishing");
+        }
+
+        return new PunishmentTarget(player.getUniqueId(), name);
     }
 
     public static PunishmentTarget of(Player player) {

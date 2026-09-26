@@ -24,6 +24,6 @@ public record PunishmentHistoryEntry(
     }
 
     public enum HistoryAction {
-        BAN, UNBAN, KICK, KICK_ALL, MUTE, UNMUTE, WARN, EXPIRE, BAN_IP, UNBAN_IP
+        BAN, UNBAN, KICK, KICK_ALL, MUTE, UNMUTE, WARN, BAN_IP, UNBAN_IP
     }
 }
