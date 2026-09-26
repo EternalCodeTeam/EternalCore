@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.teleportrequest;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;

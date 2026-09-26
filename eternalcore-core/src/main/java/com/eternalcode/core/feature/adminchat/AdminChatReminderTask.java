@@ -3,11 +3,13 @@ package com.eternalcode.core.feature.adminchat;
 import com.eternalcode.commons.bukkit.runnable.OnlinePlayersRunnable;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
+import com.eternalcode.core.modules.GatedByModule;
 import com.eternalcode.core.notice.NoticeService;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.entity.Player;
 
 @Task(period = 1, delay = 1, unit = TimeUnit.SECONDS)
+@GatedByModule
 final class AdminChatReminderTask extends OnlinePlayersRunnable {
 
     private final AdminChatService adminChatService;

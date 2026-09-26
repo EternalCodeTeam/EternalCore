@@ -5,9 +5,9 @@ import static com.eternalcode.core.feature.randomteleport.RandomTeleportResolveW
 
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
-import com.eternalcode.core.feature.teleport.Teleport;
-import com.eternalcode.core.feature.teleport.TeleportResult;
-import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.teleport.Teleport;
+import com.eternalcode.core.teleport.TeleportResult;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;

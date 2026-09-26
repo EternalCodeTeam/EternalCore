@@ -21,17 +21,20 @@ import com.eternalcode.core.injector.bean.BeanCandidatePriorityProvider;
 import com.eternalcode.core.injector.bean.processor.BeanProcessor;
 import com.eternalcode.core.injector.bean.processor.BeanProcessorFactory;
 import com.eternalcode.core.injector.scan.DependencyScanner;
+import com.eternalcode.core.modules.ModuleService;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.event.EternalInitializeEvent;
 import com.eternalcode.core.publish.event.EternalShutdownEvent;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
+import java.util.stream.Collectors;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
 
 class EternalCore {
@@ -42,6 +45,7 @@ class EternalCore {
         EternalCoreEnvironment environment = new EternalCoreEnvironment(plugin.getLogger());
 
         CompatibilityService compatibilityService = new CompatibilityService();
+        ModuleService moduleService = new ModuleService(plugin.getDataFolder(), plugin.getLogger());
         BeanProcessor beanProcessor = BeanProcessorFactory.defaultProcessors(plugin);
         BeanFactory beanFactory = new BeanFactory(beanProcessor)
             .withCandidateSelf()
@@ -75,7 +79,19 @@ class EternalCore {
 
         beanFactory.addCandidate(DependencyInjector.class, () -> injector);
 
-        for (BeanCandidate beanCandidate : scanner.scan(EternalCore.class.getPackage())) {
+        List<BeanCandidate> beanCandidates = scanner.scan(EternalCore.class.getPackage());
+        List<Class<?>> scannedTypes = beanCandidates.stream().map(BeanCandidate::getType).collect(Collectors.toList());
+
+        moduleService.registerDiscoveredModules(scannedTypes);
+        moduleService.loadModuleDescriptions(EternalCore.class.getClassLoader());
+        moduleService.writeModulesFile();
+        moduleService.logDisabledModules();
+
+        for (BeanCandidate beanCandidate : beanCandidates) {
+            if (!moduleService.isEnabled(beanCandidate.getType())) {
+                continue;
+            }
+
             beanFactory.addCandidate(beanCandidate);
         }
 

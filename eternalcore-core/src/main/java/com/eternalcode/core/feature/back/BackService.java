@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.back;
 import com.eternalcode.commons.bukkit.position.Position;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.feature.teleport.TeleportService;
-import com.eternalcode.core.feature.teleport.TeleportTaskService;
+import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.github.benmanes.caffeine.cache.Cache;

@@ -5,6 +5,7 @@ import com.eternalcode.core.feature.catboy.Catboy;
 import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
+import com.eternalcode.core.modules.GatedByModule;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Particle;
@@ -18,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 @Task(delay = 400L, period = 400L, unit = TimeUnit.MILLISECONDS)
+@GatedByModule
 class CatboyTask implements Runnable {
 
     private static final String CATBOY_NAME = "Catboy";
