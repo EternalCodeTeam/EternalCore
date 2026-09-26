@@ -33,14 +33,22 @@ class HelpOpCommand {
 
     private final NoticeService noticeService;
     private final HelpOpSettings helpOpSettings;
+    private final HelpOpService helpOpService;
     private final EventCaller eventCaller;
     private final Server server;
     private final Delay<UUID> delay;
 
     @Inject
-    HelpOpCommand(NoticeService noticeService, HelpOpSettings helpOpSettings, EventCaller eventCaller, Server server) {
+    HelpOpCommand(
+        NoticeService noticeService,
+        HelpOpSettings helpOpSettings,
+        HelpOpService helpOpService,
+        EventCaller eventCaller,
+        Server server
+    ) {
         this.noticeService = noticeService;
         this.helpOpSettings = helpOpSettings;
+        this.helpOpService = helpOpService;
         this.eventCaller = eventCaller;
         this.server = server;
         this.delay = Delay.withDefault(() -> this.helpOpSettings.helpOpDelay());
@@ -49,7 +57,7 @@ class HelpOpCommand {
     @Execute
     @DescriptionDocs(description = "Send helpop message to all administrator with eternalcore.helpop.spy permission", arguments = "<message>")
     void execute(@Sender Player player, @Join String message) {
-        UUID uuid = player.getUniqueId();
+        UUID sender = player.getUniqueId();
         HelpOpEvent event = new HelpOpEvent(player, message);
 
         this.eventCaller.callEvent(event);
@@ -58,33 +66,25 @@ class HelpOpCommand {
             return;
         }
 
-        if (this.delay.hasDelay(uuid)) {
-            Duration time = this.delay.getRemaining(uuid);
+        if (this.delay.hasDelay(sender)) {
+            Duration time = this.delay.getRemaining(sender);
 
             this.noticeService.create()
                 .notice(translation -> translation.helpOp().helpOpDelay())
                 .placeholder("{TIME}", DurationUtil.format(time, true))
-                .player(uuid)
+                .player(sender)
                 .send();
 
             return;
         }
 
-        NoticeBroadcast notice = this.noticeService.create()
+        this.noticeService.create()
             .console()
             .notice(translation -> translation.helpOp().format())
+            .onlinePlayers(HELPOP_SPY)
             .placeholder("{PLAYER}", player.getName())
-            .placeholder("{TEXT}", MiniMessage.miniMessage().escapeTags(message));
-
-        for (Player admin : this.server.getOnlinePlayers()) {
-            if (!admin.hasPermission(HELPOP_SPY)) {
-                continue;
-            }
-
-            notice = notice.player(admin.getUniqueId());
-        }
-
-        notice.send();
+            .placeholder("{TEXT}", MiniMessage.miniMessage().escapeTags(message))
+            .send();
 
         this.noticeService
             .create()
@@ -92,6 +92,7 @@ class HelpOpCommand {
             .notice(translation -> translation.helpOp().send())
             .send();
 
-        this.delay.markDelay(uuid);
+        this.delay.markDelay(sender);
+        this.helpOpService.markSender(sender);
     }
 }
