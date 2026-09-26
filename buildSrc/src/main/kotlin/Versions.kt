@@ -47,7 +47,7 @@ object Versions {
 
     // tests
     const val JUNIT_BOM = "6.1.3"
-    const val MOCKITO_CORE = "5.23.0"
+    const val MOCKITO_CORE = "5.24.0"
     const val ASSERTJ_CORE = "3.27.7"
     const val AWAITILITY = "4.3.0"
 }
